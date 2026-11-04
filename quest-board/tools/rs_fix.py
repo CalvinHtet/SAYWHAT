@@ -2,6 +2,7 @@
 
   rs_fix.py art <name> ...     fixes art/app/<name>.webp in place
   rs_fix.py old <key> ...      writes art/app/fix_<key>.webp, which replaces that old sprite
+  rs_fix.py green <name> ...   removes leftover flat green (a patch left under an object)
 """
 import base64
 import io
@@ -79,5 +80,21 @@ def main(mode, names):
     json.dump(index, open(INDEX, "w"), indent=0, sort_keys=True)
 
 
+def drop_green(name):
+    """Bright green that survived keying is background, not paint. Clear it and soften the edge."""
+    path = os.path.join(ART, name + ".webp")
+    a = np.array(Image.open(path).convert("RGBA")).astype(float)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    hit = (g > r * 1.3 + 6) & (g > b * 1.3 + 6) & (g > 60)
+    hit = ndimage.binary_dilation(hit, iterations=1)
+    a[..., 3][hit] = 0
+    Image.fromarray(a.astype(np.uint8)).save(path, "WEBP", quality=90, method=6)
+    print(name, "green cleared", int(hit.sum()))
+
+
+if __name__ == "__main__" and sys.argv[1] == "green":
+    for n in sys.argv[2:]:
+        drop_green(n)
+    sys.exit()
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2:])

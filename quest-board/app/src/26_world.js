@@ -4,76 +4,110 @@
    a glowing door with a floating arrow. New rooms are data: see roomDef and 27_rooms.js. */
 var BLD=[{id:"home",name:"HOME",ac:"#b9a7ff"},{id:"biz",name:"BUSINESS",ac:"#ffb066"},{id:"fun",name:"ENTERTAINMENT",ac:"#ff6a9a"}];
 /* room: [building, column, floor] */
-var ROOMCELL={bedroom:[0,0,0],patio:[0,0,1],closet:[0,1,0],lair:[0,1,1],gameroom:[0,2,0],
+var ROOMCELL={lair:[0,0,0],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
  restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],boba:[1,1,0],dessert:[1,1,1],speakeasy:[1,1,2],garden:[1,2,0],
- theater:[2,0,0],auditorium:[2,0,1],club:[2,0,2],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0]};
-/* rooms you buy from an empty lot. Everything else opens from an upgrade. */
-var ROOMBUY=[["restaurant",null],["garden","restaurant"],["boba","restaurant"],["theater","restaurant"]];
-ROOMSOPEN={restaurant:1,garden:1,boba:1,theater:1};
+ theater:[2,0,0],auditorium:[2,0,1],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0],club:[2,4,0]};
+/* rooms you buy from an empty lot on the street. Everything else opens from an upgrade inside a room. */
+var ROOMBUY=[["restaurant",null],["garden","restaurant"],["boba","restaurant"],["theater","restaurant"],["mall","auditorium"],["club","mall"]];
+ROOMSOPEN={restaurant:1,garden:1,boba:1,theater:1,mall:1,club:1};
 function lotsOpen(){return ROOMBUY.filter(function(q){return !hasRoom(q[0])&&(!q[1]||hasRoom(q[1]))}).map(function(q){return q[0]})}
 nextRoom=function(){return lotsOpen()[0]||null};
 buildableList=function(){return lotsOpen().filter(function(k){return ROOMT[k].lv<=effLvl()})};
-var LFCELLW=620,LFBGAP=200;
-function worldLayout(){var B=S.base,used=BLD.map(function(){return {c:1,f:1}}),put=function(t){var q=ROOMCELL[t];if(!q)return;var u=used[q[0]];u.c=Math.max(u.c,q[1]+1);u.f=Math.max(u.f,q[2]+1)};
+var LFCELLW=600,LFBGAP=240;LFFP=440;
+function worldLayout(){var B=S.base,used=BLD.map(function(){return {a:99,c:-1,f:1}}),put=function(t){var q=ROOMCELL[t];if(!q)return;var u=used[q[0]];u.a=Math.min(u.a,q[1]);u.c=Math.max(u.c,q[1]);u.f=Math.max(u.f,q[2]+1)};
   B.slots.forEach(function(r){if(r)put(r.t)});lotsOpen().forEach(put);
   var rows=Math.max.apply(0,used.map(function(u){return u.f})),x=60,out=[];
-  used.forEach(function(u,i){out.push({i:i,x:x,w:u.c*LFCELLW,f:u.f});x+=u.c*LFCELLW+LFBGAP});
+  used.forEach(function(u,i){if(u.c<0){u.a=0;u.c=0}var n=u.c-u.a+1;out.push({i:i,x:x,w:n*LFCELLW,f:u.f,a:u.a});x+=n*LFCELLW+LFBGAP});
   return {rows:rows,b:out,w:x-LFBGAP+60}}
-function cellXY(t,L){var q=ROOMCELL[t]||[0,0,0],b=L.b[q[0]];return {x:b.x+LFCELLW*(q[1]+.5),y:LFROOF+118+(L.rows-1-q[2])*LFFP}}
-function worldFacade(L){var bot=LFROOF+L.rows*LFFP-14,s='';
-  s+='<defs><linearGradient id="lffg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe6f1"/><stop offset="1" stop-color="#c3cddd"/></linearGradient></defs>';
-  L.b.forEach(function(b){var top=LFROOF+(L.rows-b.f)*LFFP-40,B=BLD[b.i];
-    s+='<rect x="'+b.x+'" y="'+top+'" width="'+b.w+'" height="'+(bot-top)+'" rx="12" fill="url(#lffg)" stroke="rgba(60,72,98,.35)" stroke-width="2"/>';
-    for(var f=1;f<b.f;f++){var y=bot-f*LFFP+2;s+='<rect x="'+b.x+'" y="'+(y-5)+'" width="'+b.w+'" height="10" fill="#8d99b0"/>'}
-    for(var c=1;c*LFCELLW<b.w;c++)s+='<rect x="'+(b.x+c*LFCELLW-3)+'" y="'+(top+24)+'" width="6" height="'+(bot-top-30)+'" fill="rgba(90,104,130,.22)"/>';
-    s+='<rect x="'+(b.x-10)+'" y="'+(top-14)+'" width="'+(b.w+20)+'" height="22" rx="7" fill="#8d99b0"/>';
-    var cx=b.x+b.w/2;s+='<g transform="translate('+cx+','+(top-40)+')"><rect x="-96" y="-18" width="192" height="36" rx="9" fill="#14121c" stroke="'+B.ac+'" stroke-width="2"/><text y="6" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="17" letter-spacing="2" fill="'+B.ac+'">'+B.name+'</text></g>'});
-  /* ground and road run under all of them */
-  s+='<rect x="-600" y="'+bot+'" width="'+(LFWW+1200)+'" height="34" fill="#cfd4dc"/><rect x="-600" y="'+(bot+34)+'" width="'+(LFWW+1200)+'" height="82" fill="#59606f"/>';
-  for(var x=-560;x<LFWW+600;x+=110)s+='<rect x="'+x+'" y="'+(bot+73)+'" width="56" height="5" rx="2.5" fill="rgba(235,235,225,.55)"/>';
+function cellRect(t,L){var q=ROOMCELL[t]||[0,0,0],b=L.b[q[0]];return {x:b.x+LFCELLW*(q[1]-b.a),y:LFROOF+(L.rows-1-q[2])*LFFP}}
+function cellXY(t,L){var c=cellRect(t,L);return {x:c.x+LFCELLW/2,y:c.y+LFFP/2}}
+/* every room is scaled to fill its own square on the building view */
+function roomTop(t){var D=ROOMDEF[t];return D&&D.shell===2?46:(LFWH[t]||136)}
+lfRsc=function(t){var d=lfDimOf(t),n=d[0]+d[1];return Math.min(1.7,(LFCELLW-28)/(n*26),(LFFP-28)/(roomTop(t)+n*13+14))};
+function roomOpen(t){var D=ROOMDEF[t];return t==="garden"||(D&&(D.out||D.shell===2))}
+/* The block only exists where a room does. Nothing is built until the room is. */
+function worldFacade(L){var bot=LFROOF+L.rows*LFFP,LS=lfLS(),dk=LS.dark,s='',cells={},mark=function(b,c,f,t){cells[b+":"+c+":"+f]=t||cells[b+":"+c+":"+f]||"x"};
+  S.base.slots.forEach(function(r){if(!r||!ROOMCELL[r.t])return;var q=ROOMCELL[r.t];mark(q[0],q[1],q[2],r.t);for(var f=0;f<q[2];f++)mark(q[0],q[1],f)});
+  var wall=lfMix(lfMix("#dbe1ea","#ffd9b0",LS.golden*.35),"#23283f",dk*.9),inner=lfMix(lfMix("#bcc6d6","#d9a988",LS.golden*.3),"#151930",dk*.92),edge=lfMix("#7f8ba3","#3b4263",dk);
+  Object.keys(cells).forEach(function(k){var q=k.split(":").map(Number),t=cells[k],b=L.b[q[0]],x=b.x+LFCELLW*(q[1]-b.a),y=LFROOF+(L.rows-1-q[2])*LFFP,o=t!=="x"&&roomOpen(t);
+    s+='<g'+(o?' opacity=".32"':'')+'><rect x="'+x+'" y="'+y+'" width="'+LFCELLW+'" height="'+LFFP+'" fill="'+wall+'"/><rect x="'+(x+7)+'" y="'+(y+7)+'" width="'+(LFCELLW-14)+'" height="'+(LFFP-14)+'" rx="4" fill="'+inner+'"/></g><rect x="'+x+'" y="'+y+'" width="'+LFCELLW+'" height="'+LFFP+'" fill="none" stroke="'+edge+'" stroke-width="3"/>';
+    if(!cells[q[0]+":"+q[1]+":"+(q[2]+1)])s+='<rect x="'+(x-6)+'" y="'+(y-12)+'" width="'+(LFCELLW+12)+'" height="14" rx="3" fill="'+edge+'"/>'});
+  var pave=lfMix("#c9ced6","#2a2d3e",dk*.9),road=lfMix("#565c6b","#14162a",dk*.9);
+  s+='<rect x="-1800" y="'+bot+'" width="'+(LFWW+3600)+'" height="34" fill="'+pave+'"/><rect x="-1800" y="'+(bot+34)+'" width="'+(LFWW+3600)+'" height="96" fill="'+road+'"/><rect x="-1800" y="'+(bot+130)+'" width="'+(LFWW+3600)+'" height="1600" fill="'+lfMix("#3c4150","#0c0e1c",dk*.9)+'"/>';
+  for(var x=-1760;x<LFWW+1800;x+=110)s+='<rect x="'+x+'" y="'+(bot+78)+'" width="56" height="5" rx="2.5" fill="rgba(235,235,225,'+(.55-dk*.3).toFixed(2)+')"/>';
   return s}
-function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;lfSetDim("");var N=LF.W,s=lfSlab();
-  s+=lfPoly([lfP(0,0,0),lfP(N,0,0),lfP(N,N,0),lfP(0,N,0)],"#23212f","rgba(255,255,255,.22)",1.2,' stroke-dasharray="6 5"');
-  s+=lfPoly([lfP(0,0,0),lfP(0,N,0),lfP(0,N,40),lfP(0,0,40)],"rgba(255,255,255,.05)","rgba(255,255,255,.14)",1,' stroke-dasharray="6 5"')+lfPoly([lfP(0,0,0),lfP(N,0,0),lfP(N,0,40),lfP(0,0,40)],"rgba(255,255,255,.07)","rgba(255,255,255,.14)",1,' stroke-dasharray="6 5"');
-  s+=lk?'<g transform="translate(0,100)"><circle r="26" fill="rgba(20,18,28,.85)" stroke="rgba(255,200,87,.7)" stroke-width="2"/><rect x="-10" y="-3" width="20" height="15" rx="3" fill="#ffc857"/><path d="M-6 -3V-9a6 6 0 0 1 12 0V-3" fill="none" stroke="#ffc857" stroke-width="3"/></g>':lfPlusG();
-  s+='<rect x="-128" y="136" width="256" height="40" rx="20" fill="#14121c" stroke="rgba(255,255,255,.4)" stroke-width="2"/><text y="162" text-anchor="middle" font-size="17" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+esc(T.name)+(lk?' &middot; Level '+T.lv:' &middot; Build')+'</text>';
-  return '<g data-lf="'+(lk?'lock:'+esc(T.name)+':'+T.lv:'build:'+S.base.slots.length)+'">'+s+'</g>'}
+/* The city behind everything. Same towers all day; the light on them follows the real sun. */
+lfSkyline=function(rows){var Ls=lfLS(),sk=lfSkyCols(Ls),gy=LFROOF+rows*LFFP,X0=-1800,X1=LFWW+1800,dk=Ls.dark,gd=Ls.golden,cx=LFWW/2,hz=lfMix(sk[1],"#ff9458",gd*.6),hr=Ls.S.hr,R=lfSeed(19),o='';
+  var winC=lfMix("#eef4fb","#ffd98a",dk);
+  o+='<defs><linearGradient id="lfskyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+sk[0]+'"/><stop offset=".6" stop-color="'+lfMix(sk[0],sk[1],.7)+'"/><stop offset="1" stop-color="'+hz+'"/></linearGradient><radialGradient id="lfsung"><stop offset="0" stop-color="#fff4cf" stop-opacity=".85"/><stop offset=".3" stop-color="#ffd690" stop-opacity=".4"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>';
+  [[60,76,1],[44,60,2],[32,44,3]].forEach(function(q){var t='',P=lfSeed(q[2]*31),cw=q[0]/4,ch=q[1]/4;for(var i=0;i<4;i++)for(var j=0;j<4;j++)if(P()<.56)t+='<rect x="'+(i*cw+cw*.25)+'" y="'+(j*ch+ch*.22)+'" width="'+(cw*.5)+'" height="'+(ch*.52)+'" fill="'+winC+'" opacity="'+(.45+P()*.55).toFixed(2)+'"/>';o+='<pattern id="lfw'+q[2]+'" width="'+q[0]+'" height="'+q[1]+'" patternUnits="userSpaceOnUse">'+t+'</pattern>'});
+  o+='</defs><rect x="'+X0+'" y="-5000" width="'+(X1-X0)+'" height="'+(gy+5000-1700)+'" fill="'+sk[0]+'"/><rect x="'+X0+'" y="'+(gy-1701)+'" width="'+(X1-X0)+'" height="1702" fill="url(#lfskyg)"/>';
+  var so=lfCl((dk-.35)/.45,0,1);if(so>0){for(var i=0;i<130;i++)o+='<circle cx="'+(X0+R()*(X1-X0)).toFixed(0)+'" cy="'+(gy-500-R()*2000).toFixed(0)+'" r="'+(.8+R()*1.6).toFixed(1)+'" fill="#fff" opacity="'+((.3+R()*.7)*so).toFixed(2)+'"/>'}else for(var i2=0;i2<390;i2++)R();
+  if(Ls.el>-7){var sx=cx+(hr-12)/7*Math.min(LFWW/2+500,1300),sy=gy-420-Ls.el*22;o+='<circle cx="'+sx.toFixed(0)+'" cy="'+sy.toFixed(0)+'" r="340" fill="url(#lfsung)"/><circle cx="'+sx.toFixed(0)+'" cy="'+sy.toFixed(0)+'" r="52" fill="'+lfMix("#fffbe6","#ffc27a",gd)+'"/>'}
+  if(dk>.45&&Ls.wx!=="rain"){var h2=((hr+12)%24)-12,mx=cx+h2/7*900,my=gy-1250+Math.abs(h2)*70,ill=Ls.mo.ill;o+='<circle cx="'+mx.toFixed(0)+'" cy="'+my.toFixed(0)+'" r="120" fill="url(#lfsung)" opacity=".28"/><circle cx="'+mx.toFixed(0)+'" cy="'+my.toFixed(0)+'" r="38" fill="#f4f0dc"/><circle cx="'+(mx+(1-ill)*46).toFixed(0)+'" cy="'+(my-4).toFixed(0)+'" r="36" fill="'+sk[0]+'" opacity="'+(1-ill).toFixed(2)+'"/>'}
+  var cc=lfMix(lfMix("#ffffff","#ffb48a",gd*.8),"#242a4c",dk*.92),nC=Math.round(6+Ls.cl*24);for(var c=0;c<nC;c++){var ex=X0+R()*(X1-X0),ey=gy-620-R()*1200,ew=110+R()*220;o+='<g fill="'+cc+'" opacity="'+(.3+Ls.cl*.5).toFixed(2)+'"><ellipse cx="'+ex.toFixed(0)+'" cy="'+ey.toFixed(0)+'" rx="'+ew.toFixed(0)+'" ry="'+(ew*.16).toFixed(0)+'"/><ellipse cx="'+(ex-ew*.25).toFixed(0)+'" cy="'+(ey-ew*.1).toFixed(0)+'" rx="'+(ew*.45).toFixed(0)+'" ry="'+(ew*.17).toFixed(0)+'"/></g>'}
+  var hC=lfMix(lfMix("#8fa0ba",hz,.5),"#141836",dk*.92),hl='M'+X0+' '+gy;for(var hx=X0;hx<=X1;hx+=70)hl+=' L'+hx+' '+(gy-230-Math.sin(hx/310)*70-Math.sin(hx/97)*22).toFixed(0);o+='<path d="'+hl+' L'+X1+' '+gy+'Z" fill="'+hC+'"/>';
+  var rim=hr<12?-1:1,rimO=(gd*.5+(1-dk)*.08).toFixed(2),winO=(.06+dk*.88).toFixed(2),tower=function(x,w,h,col,pid,kind){var y=gy-h,t='';
+    if(kind===1)t+='<rect x="'+(x+w/2-2)+'" y="'+(y-70)+'" width="4" height="70" fill="'+col+'"/><path d="M'+x+' '+y+' L'+(x+w/2)+' '+(y-26)+' L'+(x+w)+' '+y+'Z" fill="'+col+'"/>';
+    if(kind===2)t+='<rect x="'+(x+w*.14)+'" y="'+(y-22)+'" width="'+(w*.72)+'" height="24" fill="'+col+'"/><rect x="'+(x+w*.3)+'" y="'+(y-44)+'" width="'+(w*.4)+'" height="24" fill="'+col+'"/>';
+    if(kind===3)t+='<path d="M'+x+' '+y+' Q'+(x+w/2)+' '+(y-44)+' '+(x+w)+' '+y+'Z" fill="'+col+'"/>';
+    if(kind===4)t+='<path d="M'+x+' '+y+' L'+(x+w)+' '+(y-34)+' V'+y+'Z" fill="'+col+'"/>';
+    t+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+col+'"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#'+pid+')" opacity="'+winO+'"/><rect x="'+(rim>0?x+w*.74:x)+'" y="'+y+'" width="'+(w*.26)+'" height="'+h+'" fill="#ffd2a0" opacity="'+rimO+'"/>';return t},
+   layer=function(col,pid,wa,wb,ha,hb,gap){var x=X0,t='';while(x<X1){var w=Math.round(wa+R()*(wb-wa)),h=Math.round(ha+R()*(hb-ha)),kind=R()<.55?0:1+Math.floor(R()*4);t+=tower(Math.round(x),w,h,col,pid,kind);x+=w+R()*gap}return t};
+  o+=layer(lfMix(lfMix("#a3b6d2",hz,.3+gd*.35),"#171b3e",dk*.92),"lfw3",46,96,560,1320,26);
+  o+='<rect x="'+X0+'" y="'+(gy-760)+'" width="'+(X1-X0)+'" height="760" fill="'+hz+'" opacity="'+(.12+gd*.14).toFixed(2)+'"/>';
+  var midC=lfMix(lfMix("#7488ad",hz,.16+gd*.3),"#10132e",dk*.95);o+=layer(midC,"lfw2",60,120,300,860,46);
+  for(var lk=X0+500;lk<X1;lk+=1360){var kk=Math.floor(R()*3);o+=tower(Math.round(lk),kk===0?96:82,kk===0?1180:kk===1?1040:1290,midC,"lfw2",kk===0?2:kk===1?3:1)}
+  var nearC=lfMix(lfMix("#4c5e84","#78485a",gd*.6),"#0a0c20",dk*.96);o+=layer(nearC,"lfw1",80,170,110,380,70);
+  for(var px=X0+60;px<X1;px+=340+R()*260){var ph=120+R()*90,tc=lfMix(lfMix("#3b4a58","#5a3a3a",gd*.5),"#07081a",dk*.95);o+='<g fill="none" stroke="'+tc+'" stroke-linecap="round"><path d="M'+px.toFixed(0)+' '+gy+' Q'+(px+5).toFixed(0)+' '+(gy-ph/2).toFixed(0)+' '+(px+3).toFixed(0)+' '+(gy-ph).toFixed(0)+'" stroke-width="5"/>';[-1,-.55,0,.55,1].forEach(function(a){o+='<path d="M'+(px+3).toFixed(0)+' '+(gy-ph).toFixed(0)+' q'+(a*24).toFixed(0)+' -'+(16-Math.abs(a)*8).toFixed(0)+' '+(a*46).toFixed(0)+' '+(Math.abs(a)*16).toFixed(0)+'" stroke-width="4"/>'});o+='</g>'}
+  return o};
+/* nothing on an empty lot but a small marker on the ground. Tapping it says what goes there. */
+function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;
+  return '<g data-lf="'+(lk?'lock:'+esc(T.name)+':'+T.lv:'build:'+S.base.slots.length)+'" style="cursor:pointer"><rect x="-70" y="-70" width="140" height="140" fill="rgba(0,0,0,.001)"/>'+(lk?'<g opacity=".6"><circle r="20" fill="rgba(20,18,28,.7)" stroke="rgba(255,200,87,.55)" stroke-width="2"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#ffc857"/><path d="M-5 -2V-7a5 5 0 0 1 10 0V-2" fill="none" stroke="#ffc857" stroke-width="2.5"/></g>':'<g class="lfplus"><circle r="24" fill="rgba(20,18,28,.75)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><path d="M-10 0H10M0 -10V10" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></g>')+'</g>'}
+function worldBack(L){return lfSkyline(L.rows)+worldFacade(L)}
 lfWorld=function(){
-  var B=S.base,L=worldLayout(),rows=L.rows;LFWW=L.w;
+  var B=S.base,L=worldLayout(),rows=L.rows;LFWW=L.w;window.LFLAY=L;
   var bed=cellXY("bedroom",L);LFOX[0]=bed.x;LFOX[1]=bed.x+LFCELLW;
-  var Hh=LFROOF+rows*LFFP+LFSTREET,s='';
-  s+=lfSkyline(rows)+worldFacade(L);
+  var Hh=LFROOF+rows*LFFP+LFSTREET,s='';window.LFSKYK=lfLS().key;
+  s+='<g id="lfback">'+worldBack(L)+'</g>';
   var order=[];B.slots.forEach(function(r,i){if(r)order.push(i)});
   order.sort(function(a,b){return ((ROOMCELL[B.slots[b].t]||[0,0,0])[2])-((ROOMCELL[B.slots[a].t]||[0,0,0])[2])||a-b});
-  var meta={};
-  lotsOpen().forEach(function(k){var p=cellXY(k,L);s+='<g class="lfroom" transform="translate('+p.x+','+p.y+')">'+lotHtml(k)+'</g>'});
-  order.forEach(function(i){var r=B.slots[i],p=cellXY(r.t,L),DM=lfDimOf(r.t),LOFF=(DM[0]-DM[1])*13,RS=lfRsc(r.t);
-    s+='<g class="lfroom" data-i="'+i+'" transform="'+(RS===1?'translate('+(p.x-LOFF)+','+p.y+')':'translate('+p.x+','+p.y+') scale('+RS+') translate('+(-LOFF)+',0)')+'">';
+  var meta={},bot=LFROOF+rows*LFFP;
+  lotsOpen().forEach(function(k){var p=cellXY(k,L);s+='<g class="lfroom" transform="translate('+p.x+','+(bot-34)+')">'+lotHtml(k)+'</g>'});
+  order.forEach(function(i){var r=B.slots[i],p=cellXY(r.t,L),DM=lfDimOf(r.t),LOFF=(DM[0]-DM[1])*13,RS=lfRsc(r.t),MID=((DM[0]+DM[1])*13+14-roomTop(r.t))/2;
+    s+='<g class="lfroom" data-i="'+i+'" transform="translate('+p.x+','+p.y+') scale('+RS.toFixed(4)+') translate('+(-LOFF)+','+(-MID).toFixed(1)+')">';
     var C=lfRoomCtx(r,i);meta[i]={C:C,p:p,r:r};
     s+='<g data-lf="room:'+i+'">'+lfRoomSvg(r,i,C)+'<g class="lfag" id="lfag'+i+'"></g>'+(C.LT?C.LT.post:'')+'</g>';
     if(LFW.wx==="rain"&&C.T.out)s+='<g class="lfrain" clip-path="url(#lfclip)" transform="translate('+LOFF+',150)">'+lfRainG(300,260,i+4)+'</g>';
-    s+=lfRoomLabel(r,i);
-    var pend=Math.floor(r.pend||0);
-    if(pend>=1)s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+',-70) scale('+(1/RS)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle cy="-4" r="7" fill="#ffc857"/><text y="14" text-anchor="middle" class="lflbl" fill="#fff">'+pend+'</text></g></g>';
+    if(Math.floor(r.pend||0)>=1)s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+','+(MID-(LFFP/2-34)/RS).toFixed(1)+') scale('+(1/RS).toFixed(4)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle r="9" fill="#ffc857"/></g></g>';
     s+='</g>'});
   s+='<g id="lfagS"></g><g id="lfwxo" pointer-events="none"></g>';
   window.LFMETA=meta;window.LFDIM={w:LFWW,h:Hh,rows:rows,F:rows,lockF:0};
-  return '<defs><clipPath id="lfclip"><rect x="-240" y="-140" width="480" height="362"/></clipPath><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs><g id="lfw">'+s+'</g>'};
-function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520;LFV.s=Math.min(1.5,Math.max(.5,cw/700));var gy=LFROOF+118+(LFDIM.rows-1)*LFFP+20;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.5-gy*LFV.s;LFV.init=1;lfClamp();lfApply()}
+  return '<defs><filter id="prtBlur" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="lfclip"><rect x="-240" y="-140" width="480" height="362"/></clipPath><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs><g id="lfw">'+s+'</g>'};
+/* the light on the city moves with the clock, without redrawing the rooms */
+setInterval(function(){var g=document.getElementById("lfback");if(!g||!window.LFLAY)return;var k=lfLS().key;if(k===window.LFSKYK)return;window.LFSKYK=k;g.innerHTML=worldBack(window.LFLAY);var w=document.getElementById("lfwrap"),c=lfSkyCols();if(w)w.style.background="linear-gradient(180deg,"+c[0]+" 0,"+c[1]+" 100%)"},20000);
+function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520;LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply()}
 lfInitView=lfInitViewOf;
 /* ---- doors between rooms ----
    [from, to, wall, position, color, label]. "L" is the left wall at height y=position,
    "R" the back wall at x=position. The door shows once the target room exists. */
 var PORTALS=[];
 function portal(from,to,wall,pos,col,label){PORTALS.push([from,to,wall,pos,col||"#ffd27a",label||""])}
-function rmPortals(C,r){PORTALS.forEach(function(q,n){if(q[0]!==r.t||!hasRoom(q[1]))return;var U=LF.U,w=1.5,hh=94,col=q[4],wall=q[2],pos=q[3];
-    var door='<g><rect x="-4" y="-4" width="'+(U*w+8)+'" height="'+(hh+4)+'" fill="#17141f"/><rect class="prtG" width="'+(U*w)+'" height="'+hh+'" fill="'+col+'"/><rect class="prtH" x="-10" y="-10" width="'+(U*w+20)+'" height="'+(hh+12)+'" fill="none" stroke="'+col+'" stroke-width="5"/></g>';
-    var hit=' data-act="gotoroom" data-t="'+q[1]+'" style="cursor:pointer"';
-    C.walls.push('<g'+hit+'>'+(wall==="L"?lfFaceX(0,pos,hh+6,door):lfFaceY(pos,0,hh+6,door))+'</g>');
-    /* the arrow floats outside the room, past the wall, pointing the way */
-    var a=wall==="L"?lfP(-1.9,pos-w/2,70):lfP(pos+w/2,-1.9,70),rot=wall==="L"?-153:-27,nm=ROOMT[q[1]].name;
-    C.front.push('<g'+hit+' transform="translate('+a[0].toFixed(1)+','+a[1].toFixed(1)+')"><g class="prtA"><g transform="rotate('+rot+')"><path d="M-24 -9H4V-20L30 0L4 20V9H-24Z" fill="'+col+'" stroke="#14121c" stroke-width="2.5" stroke-linejoin="round"/></g></g><rect x="-58" y="24" width="116" height="20" rx="10" fill="#14121c" stroke="'+col+'" stroke-width="1.2"/><text y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+esc(q[5]||nm)+'</text></g>');
-    C.portal=1;lfLight(C,wall==="L"?.6:pos-w/2,wall==="L"?pos-w/2:.6,50,col,2.2,.45)})}
+/* a door is only a soft glow on the floor. The arrow floats outside the room and points at where that room really is. */
+function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var col=q[4],side=q[2],W=C.W,D=C.D,len=.75,dp=.55,lim=side==="BR"||side==="FL"?W:D,p=Math.min(q[3],lim-1);
+    var quad=side==="BR"?[[p-len,.02],[p+len,.02],[p+len,dp],[p-len,dp]]:side==="BL"?[[.02,p-len],[.02,p+len],[dp,p+len],[dp,p-len]]:side==="FL"?[[p-len,D-dp],[p+len,D-dp],[p+len,D-.02],[p-len,D-.02]]:[[W-dp,p-len],[W-.02,p-len],[W-.02,p+len],[W-dp,p+len]];
+    var hit=' data-act="gotoroom" data-t="'+q[1]+'" style="cursor:pointer"',pts=quad.map(function(k){return lfP(k[0],k[1],0)}).map(lfPt).join(" ");
+    C.decals.push('<polygon class="prtG" pointer-events="none" points="'+pts+'" fill="'+col+'" filter="url(#prtBlur)"/>');
+    /* arrows sit in the empty corners of the picture, off the edge of the room and inside the frame */
+    var pa=side==="FR"||side==="FL"?Math.max(p,3.6):Math.min(p,lim-2.1),at=side==="BR"?lfP(pa,0,LF.H+36):side==="BL"?lfP(0,pa,LF.H+36):side==="FL"?lfP(pa,D+1.5,0):lfP(W+1.5,pa,0);
+    if(C.noshell===1)at=side==="BR"?lfP(pa,-1,LF.H+10):side==="BL"?lfP(-1,pa,LF.H+10):at;
+    var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],rot=b[2]>a[2]?-90:b[2]<a[2]?90:b[1]<a[1]?180:0;
+    (C.pfront=C.pfront||[]).push('<polygon'+hit+' points="'+pts+'" fill="rgba(0,0,0,.001)"/><g'+hit+' transform="translate('+at[0].toFixed(1)+','+at[1].toFixed(1)+')"><circle r="36" fill="rgba(0,0,0,.001)"/><g class="prtA"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+col+'" stroke="#14121c" stroke-width="2.5" stroke-linejoin="round"/></g></g><rect x="-52" y="24" width="104" height="19" rx="9.5" fill="#14121c" stroke="'+col+'" stroke-width="1.1"/><text y="37.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+esc(q[5]||ROOMT[q[1]].name)+'</text></g>');
+    C.portal=1})}
+/* tapping an arrow or a glow: drag handlers can swallow the click, so read what is under the finger */
+(function(){var dn=null;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
+  document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("[data-act=gotoroom]");if(!g)return;var t=g.getAttribute("data-t");
+    setTimeout(function(){var ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===t)ix=k});if(ix>=0)roomModal(ix)},30)},true)})();
 var lfRoomCtxBase=lfRoomCtx;
 var RMPORTAL_OK=1;
 /* ---- rooms from data ----
@@ -83,6 +117,7 @@ var RMPORTAL_OK=1;
 var ROOMDEF={};
 function roomDef(t,d){ROOMDEF[t]=d;
   ROOMT[t]={name:d.name,lv:d.lv||0,cost:d.cost||0,coin:d.coin||0,store:d.store||8,desc:d.desc,bundled:!d.buy,dark:d.dark,note:d.note||'Yours to fill.'};
+  if(d.xpBase){ROOMT[t].buff={special:"all"};ROOMT[t].pct=d.xpBase}
   LFTH[t]={wall:d.wall,wain:d.wain,acc:d.acc,fl:d.fl||"w",out:d.out};
   if(d.H)LFWH[t]=d.H;LFRS[t]=.86;
   (d.ups||[]).forEach(function(u){u[3].fp=1;u[3].lv=u[3].lv||d.lv});
@@ -98,9 +133,11 @@ var dimGenBase=lfDimOf;
 lfDimOf=function(t){var d=ROOMDEF[t];if(!d)return dimGenBase(t);var r=S&&S.base&&S.base.slots.filter(function(q){return q&&q.t===t})[0];return d.size[Math.min(d.size.length-1,roomStageOf(t,r&&r.a))]};
 function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
   if(d.out)C.out=1;
-  if(!d.out){var wc=d.walls?d.walls(H):[d.wall,d.wain];thWalls(C,wc[0],wc[1],wc[2])}
+  if(!d.out&&d.shell==null){var wc=d.walls?d.walls(H):[d.wall,d.wain];thWalls(C,wc[0],wc[1],wc[2])}
   var fc=d.floor?d.floor(H):d.dark?["#1d1a22","rgba(255,255,255,.04)",1]:null;if(fc)roomFloor(C,fc);
-  if(!d.out)lfDoorAt(C,C.W);else{C.s("door",C.W-.5,C.D-.5,1,"look",[1,1]);C.door={x:C.W-.5,y:C.D-.5}}
+  if(d.shell!=null)C.noshell=d.shell;
+  if(d.door===false){C.s("door",C.W-.6,C.D-.6,1,"look",[1,1]);C.door={x:C.W-.6,y:C.D-.6}}else if(!d.out)lfDoorAt(C,C.W);else{C.s("door",C.W-.5,C.D-.5,1,"look",[1,1]);C.door={x:C.W-.5,y:C.D-.5}}
+  (d.jogs||[]).forEach(function(q){C._lb=[q[0],q[1],q[0]+q[2],q[1]+q[3]];C.box(q[0],q[1],0,q[2],q[3],LF.H-4,d.wall,{top:d.wain});if(LFREC)lfRecBox(q[0],q[1],0,q[2],q[3],40)});
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
   var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];lfSpr(C,k,q[1],q[2],q[3],q[4],o)};
@@ -108,23 +145,37 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     if(e.art){(Array.isArray(e.art[0])?e.art:[e.art]).forEach(one)}
     if(e.light)lfLight(C,e.light[0],e.light[1],e.light[2],e.light[3],e.light[4],e.light[5]);
+    (e.sit||[]).forEach(function(q){var n0=C.st.length;C.s("sit",q[0],q[1],q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:q[0],wy:q[1]+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
     (e.cust||[]).forEach(function(s,i){lfCust(C,s[0],s[1],s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
     if(e.fx)e.fx(C)})}
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}
 function genPeople(r,i,C,out){var d=ROOMDEF[r.t];if(!d)return;var a=r.a||{},seats=C.st.filter(function(s){return s.cust}).length;
   (d.staff||[]).forEach(function(q,j){if(!q[0]||a[q[0]])out.push({id:"st:"+r.t+j,room:i,role:"crew",look:rsNpc(q[1]),ix:j})});
-  var n=Math.min(seats,(d.guests||2)+Math.floor(addonsOf(r).length/3));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
+  var n=d.guests===0?0:Math.min(seats,(d.guests||2)+Math.floor(addonsOf(r).length/3));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
 function genNote(r){var d=ROOMDEF[r.t];if(!d||!d.stageNames)return "";return '<p class="note"><b>'+esc(d.stageNames[roomStageOf(r.t,r.a)]||d.name)+'.</b></p>'}
 /* ---- the Restaurant: small and plain to start, dark and spacious at the end ---- */
-RSSIZE=[[11,9],[18,12],[26,16]];RSNAME=["Hole in the Wall","Corner Diner","Noir"];
+RSSIZE=[[10,8],[15,12],[19,14]];RSNAME=["Hole in the Wall","Corner Diner","Noir"];
 var RSCH=[["rtx_tb0","rtx_ch0",34,46],["rtx_tb1","rtx_ch1",38,50],["rtx_tb2","rtx_ch2",42,52],["rtx_tb3","rtx_ch3",44,54]];
 function rsTier(C){return C.has("r_t3")?3:C.has("r_t2")?2:C.has("r_t1")?1:0}
 /* guests sit behind the table, facing out, so a table never cuts through anyone */
-function rsDinner(C,cx,cy,lbl){var T=RSCH[rsTier(C)],pair=[[cx-1.15,cy-.1,1],[cx-.1,cy-1.15,-1]];
-  pair.forEach(function(p){lfSpr(C,T[1],p[0]-.3,p[1]-.3,.6,.6,{h:1,H:T[3],flip:p[2]>0?1:0,dk:.6,nob:1,nosh:1,ctr:1});
-    var n0=C.st.length;C.s("sit",p[0],p[1],p[2],"eat",[10,20],{tag:"diner",lift:1,sz:5,wx:cx+1.3,wy:cy+1.3,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"})});
-  lfSpr(C,T[0],cx-.8,cy-.8,1.6,1.6,{h:28,H:T[2],ctr:1})}
+/* these sheets are drawn to true proportions, so a height passed in would only squash them */
+var lfSprNat=lfSpr;lfSpr=function(C,k,x,y,w,d,o){if(o&&o.H&&/^(rdx|sbx|rfx|bbx|dsx|spx|acx|rhx|vrx|bwx|kax|cbx|gmx|mlx|hmx)_/.test(k)){o=Object.assign({},o);delete o.H}return lfSprNat(C,k,x,y,w,d,o)};
+var RDT=[null,["rdx_tlong",2.5,1.5,46],["rdx_tround",2.0,2.0,50],["rdx_tsq",2.2,2.0,50]];
+function rsSitAt(C,x,y,face,cx,cy,back,lbl){var n0=C.st.length;C.s("sit",x,y,face,"eat",[10,20],back?{tag:"diner",lift:1,sz:5,facewall:1,dk:0,wx:x,wy:y+1,tb:[cx,cy]}:{tag:"diner",lift:1,sz:5,wx:cx+1.8,wy:cy+1.8,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"})}
+function rsDinner(C,cx,cy,lbl){var tr=rsTier(C),T=RSCH[tr];
+  if(tr===0||!LFSPR.rdx_chairf){[[cx-1.15,cy-.1,1],[cx-.1,cy-1.15,-1]].forEach(function(p){lfSpr(C,T[1],p[0]-.3,p[1]-.3,.6,.6,{h:1,H:T[3],flip:p[2]>0?1:0,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,p[0],p[1],p[2],cx,cy,0,lbl)});lfSpr(C,T[0],cx-.9,cy-.9,1.8,1.8,{h:28,H:T[2],ctr:1});return}
+  var K=RDT[tr],w=K[1],d=K[2];
+  var chF=tr===1?"rdx_wchf":"rdx_chairf",chB=tr===1?"rdx_wchb":"rdx_chairb";
+  [cx-.62,cx+.62].forEach(function(x){var y=cy-d/2-.28;lfSpr(C,chF,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,x,y,-1,cx,cy,0,lbl)});
+  lfSpr(C,K[0],cx-w/2,cy-d/2,w,d,{h:28,ctr:1,flip:1,dk:1.7});
+  [cx-.62,cx+.62].forEach(function(x){var y=cy+d/2+.28;rsSitAt(C,x,y,1,cx,cy,1,lbl);lfSpr(C,chB,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:0,nob:1,nosh:1,ctr:1})})}
+/* a booth is two high-backed benches and a table, so a guest can really sit inside one */
+function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2,.9,{h:28,H:74,flip:1,dk:.5,nosh:1,ctr:1});
+  [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+.62,-1,x0+1.6,Y+1.65,0,"B")});
+  lfSpr(C,"rdx_tlong",x0+.3,Y+1.0,2.6,1.35,{h:26,H:46,flip:1,dk:1.7,ctr:1});
+  [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+2.72,1,x0+1.6,Y+1.65,1,"B")});
+  lfSpr(C,"rdx_benchb",x0,Y+2.45,3.2,.9,{h:28,H:74,flip:1,dk:0,nosh:1,ctr:1})}
 function rsWalls(C){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8])}
 LFROOM.restaurant=function(C){
   rsArtReady();
@@ -133,55 +184,59 @@ LFROOM.restaurant=function(C){
   C.rsW=patio?Wi:0;
   if(noir)rsWalls(C);
   lfDoorAt(C,Wi);
-  [[4.2],[3.6,8.0],[4.0,9.5,13.2]][st].forEach(function(y){lfSprWin(C,"w_winrs2",.05,y,.1,.05,{H:92,dy:-34})});
+  [[4.2],[5.0,8.6],[5.0,8.6,12.0]][st].forEach(function(y){lfSprWin(C,"w_winrs2",.05,y,.1,.05,{H:92,dy:-34})});
   C.obsc=.7;
-  if(H("r_s1"))lfOrderBoard(C,1.0,96,"ORDERS");
-  if(st>0)lfSpr(C,noir?"rtx_pass":"w_pass",7.6,.05,.1,.05,{flip:1,h:1,H:150,dy:-8,nosh:1});
-  if(H("r_d2")&&!noir)lfSpr(C,"gdx_seat",0,0,0,0,{}),rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
-  if(H("r_scr")&&C.room)C.walls.push(lfFaceY(st>0?4.0:2.8,0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
-  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",13.2,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
-  if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?10.4:5.6,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
-  if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",3.0,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
-  if(H("r_star"))lfSpr(C,"rs_star",.05,2.2,.1,.1,{h:1,H:34,dy:-108,nosh:1});
-  if(H("r_d7"))lfSpr(C,"rtx_art",.05,D-1.3,.1,.1,{h:1,H:84,dy:-40,nosh:1});
-  /* the kitchen keeps to the back wall */
-  var ky=.15;
-  rsS(C,H("r_k8")?"rsx_grand":H("r_k1")?"rsx_range":"rsx_hotplate",.5,ky,1.2,1.0,30,{flip:1});
-  C.s("work",1.1,1.5,-1,"work",[8,16],{tag:"cook"});
-  if(H("r_k2"))rsS(C,"rsx_prep",2.0,ky,2.2,1.0,30,{flip:1});
-  C.s("work",3.1,1.5,-1,"work",[6,10],{tag:"prep"});
-  rsS(C,H("r_k3")?"rsx_fridge":"rsx_minifridge",4.6,ky,1.1,.9,50,{flip:1});
-  if(st===0||!H("r_k3"))rsS(C,"rsx_rack",6.0,ky,1.0,.8,50,{flip:1});
-  if(H("r_cf2"))rsS(C,"rs_coffee",st>0?14.8:7.6,ky,1.6,1.0,26,{flip:1});else if(H("r_cf1"))rsS(C,"rsx_drip",7.6,ky,.8,.7,26,{flip:1});
-  if(st>0){if(H("r_k4"))rsS(C,"rsx_grill",8.6,ky,1.6,1.0,40,{flip:1});if(H("r_k5"))rsS(C,"rsx_fryer",10.6,ky,2.0,1.0,30,{flip:1});if(H("r_k9")&&st>1)rsS(C,"rsx_dish",17,ky,1.6,.9,30,{flip:1});if(H("r_k6"))rsS(C,"rsx_bake",13.2,ky,.9,.8,50,{flip:1})}
-  if(st>1&&H("r_k7")){rsS(C,"rsx_oven",19.2,ky,1.8,1.5,44,{flip:1});C.s("work",20,2.2,-1,"work",[6,12],{tag:"oven"});lfLight(C,20,1.2,40,"#ff9a3a",1.6,.6)}
-  /* the counter */
-  var cy=2.5,cl=[4.2,7.0,9.0][st],cx0=1.0;
-  if(H("r_c2")&&st>1)rsS(C,"rtx_ctr",cx0,cy,cl,1.1,34,{flip:1,dk:cl*.5});else if(H("r_c1"))rsS(C,"rs2_counter",cx0,cy,cl,1.1,34,{flip:1,dk:cl*.5});else rsS(C,"rsx_counter0",cx0,cy,4.0,1.2,34,{flip:1,dk:2});
-  lfPrep(C,"pass",cx0+cl*.5,1.6);
-  /* stools: guests face the counter with their backs to us */
-  if(H("r_c1")||H("r_c2")){var fancy=H("r_c2")&&st>1;[0,1,2,3,4].slice(0,[0,4,5][st]).forEach(function(k){var x=cx0+1.0+k*1.55,y=cy+1.75;lfSpr(C,fancy?"rtx_stool":"rs2_stool",x-.3,y-.3,.6,.6,{h:1,H:fancy?52:48,dk:.5,nob:1,nosh:1});
-    var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,facewall:1,dk:0,wx:x,wy:y+1});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})})}
-  /* banquette along the window wall, once there is room */
-  if(H("r_b1")&&st>0){var by=st===2?[5.8,10.0]:[6.0];by.forEach(function(Y){lfSpr(C,"rtx_banq",.1,Y,1.1,3.0,{h:24,H:72,nosh:1});[[.8,Y+.8],[.8,Y+2.2]].forEach(function(p){var n0=C.st.length;C.s("sit",p[0],p[1],1,"eat",[10,20],{tag:"diner",lift:1,sz:6,wx:3.6,wy:p[1],tb:[2.1,Y+1.5]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"B",grp:"b"})});var T=RSCH[rsTier(C)];lfSpr(C,T[0],1.5,Y+.8,1.4,1.4,{h:28,H:T[2],ctr:1})})}
-  /* tables, far apart */
-  var spots=[[[3.0,6.2],[7.4,6.2]],[[5.4,7.0],[10.0,7.0],[14.6,7.0]],[[7.2,7.6],[12.4,7.6],[17.6,7.6],[22.4,7.6]]][st];
-  spots.forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  if(H("r_more1")&&st>0)({1:[[7.7,10.0],[12.3,10.0]],2:[[9.8,11.8],[15.0,11.8]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  if(H("r_more2")&&st>1)[[20.2,11.8],[5.8,13.4]].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  lfWander(C,[[Wi*.5,cy+2.6,-1],[Wi*.75,cy+2.6,1],[Wi-1.6,D*.5,-1]]);
+  /* the kitchen: the top right corner, behind a partition, with its own floor */
+  var kx=[5.2,8.4,10.2][st],kd=[2.7,3.9,4.7][st],kf=lfPoly([lfP(kx,0,0),lfP(Wi,0,0),lfP(Wi,kd,0),lfP(kx,kd,0)],noir?"#34383c":"#c9d2d0","none");
+  for(var kq=1;kq<Wi-kx;kq++)kf+='<path d="M'+lfPt(lfP(kx+kq,0,0))+' L'+lfPt(lfP(kx+kq,kd,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
+  for(var kr=1;kr<kd;kr++)kf+='<path d="M'+lfPt(lfP(kx,kr,0))+' L'+lfPt(lfP(Wi,kr,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
+  C.decals.push(kf);
+  var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1",wall=function(x,y,w,d,h){C._lb=[x,y,x+w,y+d];C.box(x,y,0,w,d,h,pc,{top:pt});if(LFREC)lfRecBox(x,y,0,w,d,40)};
+  wall(kx-.16,0,.16,kd-1.5,78);wall(kx-.16,kd-.2,.16,.2,78);wall(kx,kd-.14,Wi-kx,.14,26);
+  if(H("r_s1"))lfOrderBoard(C,kx+.5,96,"ORDERS");
+  if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
+  if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,kx-6.6),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
+  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",kx+3.6,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
+  if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?kx-1.4:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
+  if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",kx+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
+  if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:34,dy:-108,nosh:1});
+  if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
+  /* along the back of the kitchen, then an island in front of it */
+  var isl=[0,1.85,2.2][st],bx=kx+.35,ix=kx+.45,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.12;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
+  var cookAt=back(H("r_k8")?"rsx_grand":H("r_k1")?"rsx_range":"rsx_hotplate",1.3,1.0,30);C.s("work",cookAt,1.5,-1,"work",[8,16],{tag:"cook"});
+  back(H("r_k3")?"rsx_fridge":"rsx_minifridge",1.1,.9,50);
+  if(st>0){if(H("r_k4"))back("rsx_grill",1.6,1.0,40);if(H("r_k5"))back("rsx_fryer",1.9,1.0,30);
+    if(st>1&&H("r_k7")){var ov=back("rsx_oven",1.7,1.2,44);C.s("work",ov,1.8,-1,"work",[6,12],{tag:"oven"});lfLight(C,ov,1.0,40,"#ff9a3a",1.4,.5)}
+    var prepAt=H("r_k2")?front("rsx_prep",2.0,.95,30):ix+1;C.s("work",prepAt,isl-.45,-1,"work",[6,10],{tag:"prep"});
+    if(H("r_k6"))front("rsx_bake",.9,.8,50);if(H("r_k9")&&st>1)front("rsx_dish",1.6,.9,30)}
+  else{var pz=H("r_k2")?back("rsx_prep",1.8,.95,30):bx+.8;C.s("work",pz,1.5,-1,"work",[6,10],{tag:"prep"})}
+  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",Wi-1.5,isl,1.3,.9,26,{flip:1});else if(H("r_cf1"))rsS(C,st>0?"rsx_drip":"rsx_drip",st>0?Wi-1.1:Wi-.9,st>0?isl:1.2,.7,.6,26,{flip:1});
+  /* the pass: food comes over this, and the good seats face it */
+  var tiles=[1,2,3][st],fine=H("r_c2")&&st>1,tw=2.5,gap=(Wi-kx-tiles*tw)/(tiles+1);
+  for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",kx+gap+ti*(tw+gap),kd-.08,tw,.9,{h:34,flip:1,ctr:1,dk:1});
+  lfPrep(C,"pass",Math.max(.8,kx-.9),kd+.3);
+  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.65,1.85].forEach(function(o){var x=kx+gap+tj*(tw+gap)+o,y=kd+1.25,k=fine?"rtx_stool":"rs2_stool";lfSpr(C,k,x-.3,y-.3,.6,.6,{h:1,H:fine?52:48,dk:.5,nob:1,nosh:1});
+    var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,facewall:1,dk:0,wx:x,wy:y+1});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
+  /* booths down the window wall, tables on the rest of the floor with room to walk between them */
+  if(H("r_b1")&&st>0)(st===2?[.7,4.3,7.9]:[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
+  ([[[2.6,3.2],[6.6,5.9]],[[5.7,2.4],[5.7,5.9],[10.6,7.3]],[[5.7,2.4],[5.7,6.2],[10.8,8.6],[15.2,8.6]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  if(H("r_more1")&&st>0)({1:[[5.7,9.5],[10.6,10.4]],2:[[5.7,10.2],[10.8,12.1]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  if(H("r_more2")&&st>1&&LFSPR.rdx_curve){var cvx=13.8,cvy=10.5;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});[[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V")});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx-.8,cvy+2.1,.6,.6,{h:30,ctr:1})}
+  lfWander(C,[[kx-1.2,1.6,-1],[Wi*.62,kd+2.2,1],[Wi-1.6,D*.5+.6,-1]]);
   /* light */
-  if(H("r_l2")&&st>1)[[7.2,7.6],[12.4,7.6],[17.6,7.6],[22.4,7.6]].forEach(function(p){lfSpr(C,"rtx_pend",p[0],p[1],.2,.2,{h:1,H:150,dy:-74,nosh:1,dk:-6,nob:1});lfLight(C,p[0],p[1],60,"#ffb46a",2.6,.7)});
-  else if(H("r_l1"))[0,1,2].forEach(function(i){var x=cx0+cl*(.2+.3*i);lfSpr(C,["rs_pend1","rs_pend2","rs_pend3"][i],x,cy+.7,.2,.2,{h:1,H:[84,92,88][i],dy:-70,nosh:1,dk:-5,nob:1});lfLight(C,x,cy+.9,70,"#ffc968",2.3,.45)});
-  else{var bx=Wi*.46,by2=D*.6;rsS(C,"rsx_bulb",bx,by2,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,bx,by2,80,"#ffe2a8",2.6,.4)}
-  /* a few things, against the walls, with air around them */
+  if(H("r_l2")&&st>1)[[5.7,6.2],[15.2,8.6],[10.8,12.1]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
+  if(H("r_l1"))(st===0?[1.6]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
+  else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.6,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.6,4.4,60,"#ffe2a8",2.2,.28)}
+  /* a few things in the corners, with air around them */
   if(!H("r_d1"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
-  if(H("r_d1")&&!noir)lfSpr(C,"bd_plant",.3,D-1.2,.8,.8,{h:40,H:78});
-  if(H("r_d8")&&noir){lfSpr(C,"rtx_vase",.3,D-1.3,.7,.7,{h:40,H:96});lfSpr(C,"rtx_vase",Wi-1.4,.4,.7,.7,{h:40,H:96})}
-  if(H("r_cool")&&st>0&&!noir)rsS(C,"rsx_cooler",Wi-1.8,.3,1.1,.9,50,{flip:1});
-  if(H("r_d5")&&st>0)rsS(C,"rtx_wine",Wi-3.4,.1,1.4,.5,50,{flip:1,H:118});
-  if(H("r_hd2")&&noir)lfSpr(C,"rtx_host",Wi-1.7,D*.5-2.3,.9,.7,{h:30,flip:1,H:66});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5-2.3,.8,.8,{h:30,flip:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5-2.3,.8,.8,30,{flip:1});
-  if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+1.6,.7,.5,24);
+  if(H("r_d1"))lfSpr(C,"rdx_olive",.3,D-1.3,1,1,{h:40,ctr:1});
+  if(H("r_d8")&&st>1)lfSpr(C,"rdx_olive",Wi-1.3,D-1.3,1,1,{h:40,ctr:1});
+  if(H("r_d3")&&st>0)(st===2?[.9,4.5,8.1]:[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
+  if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?7.2:6.9,.1,st===2?1.9:1.3,.5,{h:60,flip:1,ctr:1,nosh:1});
+  if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",kx-1.1,kd+1.0,.8,.8,{h:30,ctr:1});
+  if(H("r_cool")&&st>0)lfSpr(C,"rsx_cooler",Wi-1.0,D*.5+2.7,.8,.7,{h:50,ctr:1});
+  if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.7,D*.5+1.2,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5+1.2,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5+1.2,.8,.8,30,{});
+  if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5-1.6,.7,.5,24);
   if(patio){var P=[lfP(px,0,0),lfP(C.W,0,0),lfP(C.W,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<RSPATIO;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,0,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,0,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,0,0)],"#6d4c2e","none");C.decals.push(pl);
@@ -196,7 +251,7 @@ LFROOM.restaurant=function(C){
     if(H("r_p7"))rsS(C,"rsx_firepit",px+.6,D-3.2,2.6,2.6,24,{});
   }
 };
-(function(){var drop={r_b2:1,r_bar:0,r_more2:0};RS_UPS=RS_UPS.filter(function(u){return !drop[u[0]]});
+(function(){RS_UPS.forEach(function(u){var n={r_t1:["Walnut Dining Tables","Long walnut tables for four, plates set, velvet chairs."],r_t2:["Marble Round Tables","Round marble tops, brass pedestals, flowers on every table."],r_t3:["White Linen Service","Square linen tables, crystal and candles. Tips go up."],r_b1:["Leather Booths","Real high-backed booths down the window wall. Guests sit inside them."],r_more2:["Curved Corner Booth","A big crescent banquette around a marble table. The best seat in the house."],r_more1:["Second Row of Tables","Two more tables means two more parties at once."],r_l2:["Brass Chandeliers","Sculptural brass over the room. Everything looks more expensive."],r_d7:["Oil Painting","One big piece on the wall, deep red and gold."],r_d8:["Olive Tree","A real tree in the corner of the dining room."],r_d3:["Walnut Dividers","Slatted screens give the booths some privacy."],r_d6:["Dessert Trolley","Cakes under glass come right to the table."],r_l1:["Brass Sconces","Warm light along the window wall."],r_d5:["Glass Wine Wall","Bottles lit from inside, right where guests can see them."],r_k7:["Wood-Fired Oven","A brick dome in the kitchen with a real fire."]}[u[0]];if(n){u[1]=n[0];u[4]=n[1]}});var drop={r_b2:1,r_bar:0,r_more2:0};RS_UPS=RS_UPS.filter(function(u){return !drop[u[0]]});
   RS_UPS.forEach(function(u){var e=u[3];
     if(u[0]==="r_more1"){e.also="r_x1"}
     if(u[0]==="r_t3"){u[1]="Fine Dining Sets";u[4]="Black lacquer, charcoal velvet, one candle per table."}

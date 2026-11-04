@@ -559,7 +559,7 @@ function lfSprWin(C,key,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[key];if(!S)
   if(window.LFSPR[key+"_m"]){var L=lfLS(),id="lfsw"+key+Math.round(x*10)+"_"+Math.round(L.el),sky=lfSkyArt(L,x,id).replace("M5 56 L5 25 Q5 6 26 6 Q47 6 47 25 L47 56Z","M-30 -30 H90 V100 H-30Z"),sc=Math.max(W/52,Hh/60)*1.1;
     var mk='<mask id="m'+id+'" maskUnits="userSpaceOnUse" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'"><image href="'+lfSprUrl(key+"_m")+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"/></mask>';
     C.add(x+w+y+d-(o.dk||0)-.02,'<g transform="translate('+a[0].toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)">'+mk+'<g mask="url(#m'+id+')"><g transform="translate('+(-26*sc).toFixed(1)+','+(-Hh/2-30*sc).toFixed(1)+') scale('+sc.toFixed(3)+')">'+sky+'</g></g></g>');
-    LFWINS.push(x+w*.5)}
+    if(o.flip)LFWINS.push(x+w*.5)}
   return lfSpr(C,key,x,y,w,d,Object.assign({},o,{nosh:1}))}
 
 /* v2 furniture: overrides earlier helpers with better proportions */
@@ -1081,10 +1081,10 @@ function lfRoomCtx(r,i){
 /* static room (no agents). C.items kept as separate <g data-k> so agents can be interleaved. */
 function lfRoomSvg(r,i,C,opt){
   lfSetDim(r.t);opt=opt||{};var uid=opt.uid||(i+1),t=r.t,out=C.T.out,s='',st=r.st||0;
-  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg)s=C.bg+s;s+=lfSlab();
+  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg&&opt.uid)s=C.bg+s;if(C.noshell!==1)s+=lfSlab();
   if(out&&!C.bg)s+=lfOutBack(t,LFW.wx,uid);
-  s+=lfFloor(C.T,C.T.fl,st,uid);
-  if(!out){var wlW=LF.W,wlN=LF.N;if(C.rsW){LF.W=C.rsW;LF.N=C.rsW}var wls=lfWalls(t,st,uid,LFW.wx);LF.W=wlW;LF.N=wlN;s+=hole?'<g clip-path="url(#'+hole.id+')">'+wls+'</g>':wls}
+  if(!C.noshell)s+=lfFloor(C.T,C.T.fl,st,uid);
+  if(!out&&!C.noshell){var wlW=LF.W,wlN=LF.N;if(C.rsW){LF.W=C.rsW;LF.N=C.rsW}var wls=lfWalls(t,st,uid,LFW.wx);LF.W=wlW;LF.N=wlN;s+=hole?'<g clip-path="url(#'+hole.id+')">'+wls+'</g>':wls}
   s+=C.decals.join("")+C.walls.join("");
   if(C.LT)s+=C.LT.defs+C.LT.pre;
   s+='<g class="lfitems" data-i="'+i+'">';
@@ -1093,6 +1093,7 @@ function lfRoomSvg(r,i,C,opt){
   if(out)s+=lfOutFront(t,uid);
   s+=C.front.join("");
   if(C.LT)s+=C.LT.mid;
+  if(opt.uid&&C.pfront)s+=C.pfront.join("");
   return s;
 }
 function lfRainG(w,h,seed){var R=lfSeed(seed),s='';for(var k=0;k<26;k++){var x=-w/2+R()*w,y=-h+R()*h,d=(R()*1.2).toFixed(2);s+='<path d="M'+x.toFixed(0)+' '+y.toFixed(0)+' l-4 11" stroke="rgba(200,225,255,.7)" stroke-width="1.2" class="lfdrop" style="animation-delay:-'+d+'s"/>'}return s}
@@ -1213,20 +1214,22 @@ function lfWorld(){
 }
 function lfPreview(r,uid){
   var C=lfRoomCtx(r,uid||90),dm=lfDimOf(r.t),LRX=C.annex&&C.annex.lr,ex=C.annex?(LRX?300:60):0,lx=C.annex?(LRX?700:150):0,vb=[-dm[1]*26-14-lx,-(LF.H+10)-ex,(dm[0]+dm[1])*26+28+lx,(dm[0]+dm[1])*13+LF.H+40+ex];
-  LFPCS[uid||90]=C;if(C.portal){vb[0]-=110;vb[1]-=90;vb[2]+=220;vb[3]+=90}
-  return '<svg class="lfprev" viewBox="'+vb.join(" ")+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs>'+lfRoomSvg(r,uid||90,C,{uid:uid||90})+(C.LT?C.LT.post:'')+'</svg>';
+  LFPCS[uid||90]=C;if(C.portal){vb[1]-=46;vb[3]+=76}
+  return '<svg class="lfprev" viewBox="'+vb.join(" ")+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><filter id="prtBlur" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs>'+lfRoomSvg(r,uid||90,C,{uid:uid||90})+(C.LT?C.LT.post:'')+'</svg>';
 }
 
 /* Zoom for the room preview in the upgrade screen: buttons, wheel, pinch and drag.
    Zoom survives the screen redrawing after a purchase, so the change stays in view. */
 var LFPZ={};
 function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z)return;svg.dataset.z=1;wrap.classList.add("rbigz");
-  var base=svg.getAttribute("viewBox").split(" ").map(Number),key=base.join(" "),v=(LFPZ[key]||base).slice(),MAX=5;
+  var base=svg.getAttribute("viewBox").split(" ").map(Number),key=base.join(" "),MAX=5;wrap.style.setProperty("aspect-ratio",base[2]+" / "+base[3],"important");wrap.style.setProperty("height","auto","important");
+  /* widest zoom: the room reaches both sides of the frame. If the frame is too short for all of it, drag up and down. */
+  var ar=Math.min(base[3]/base[2],(wrap.clientHeight/wrap.clientWidth)||base[3]/base[2]),v0=[base[0],base[1]+(base[3]-base[2]*ar)*.42,base[2],base[2]*ar],v=(LFPZ[key]||v0).slice();
   var clamp=function(){v[0]=Math.min(base[0]+base[2]-v[2],Math.max(base[0],v[0]));v[1]=Math.min(base[1]+base[3]-v[3],Math.max(base[1],v[1]))};
   var show=function(){clamp();svg.setAttribute("viewBox",v.map(function(n){return n.toFixed(2)}).join(" "));LFPZ[key]=v.slice()};
-  var zoom=function(f,fx,fy){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*base[3]/base[2];v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show()};
+  var zoom=function(f,fx,fy){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show()};
   var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML='<button type="button" aria-label="Zoom in">+</button><button type="button" aria-label="Zoom out">−</button><button type="button" aria-label="Reset zoom">◎</button>';wrap.appendChild(ctl);
-  ctl.children[0].onclick=function(){zoom(1.4,.5,.5)};ctl.children[1].onclick=function(){zoom(1/1.4,.5,.5)};ctl.children[2].onclick=function(){v=base.slice();show()};
+  show();ctl.children[0].onclick=function(){zoom(1.4,.5,.5)};ctl.children[1].onclick=function(){zoom(1/1.4,.5,.5)};ctl.children[2].onclick=function(){v=v0.slice();show()};
   if(wrap.dataset.room!=null&&lfLightUseful()){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
   var at=function(e){var r=svg.getBoundingClientRect();return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
   svg.addEventListener("wheel",function(e){e.preventDefault();var q=at(e);zoom(Math.exp(-e.deltaY*.0022),q[0],q[1])},{passive:false});
@@ -1236,7 +1239,7 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
     if(ids.length===2){P[e.pointerId]=[e.clientX,e.clientY];var A=P[ids[0]],B=P[ids[1]],d=Math.hypot(A[0]-B[0],A[1]-B[1]);if(pinch)zoom(d/pinch,((A[0]+B[0])/2-r.left)/r.width,((A[1]+B[1])/2-r.top)/r.height);pinch=d;return}
     var dx=e.clientX-o[0],dy=e.clientY-o[1];P[e.pointerId]=[e.clientX,e.clientY];
     // Not zoomed in, a drag should scroll the screen as usual.
-    if(v[2]>=base[2]-.01){var sc=wrap.closest(".modal")||wrap.parentElement;if(sc)sc.scrollTop-=dy;return}
+    if(v[2]>=base[2]-.01&&v[3]>=base[3]-.01){var sc=wrap.closest(".modal")||wrap.parentElement;if(sc)sc.scrollTop-=dy;return}
     v[0]-=dx*v[2]/r.width;v[1]-=dy*v[3]/r.height;show()});
   var up=function(e){delete P[e.pointerId];pinch=0};svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
   show()}
@@ -3142,7 +3145,7 @@ LFROOM.bedroom=function(C){
   if(!AN){var _cp=[[.1,5.6,0],[1.3,5.6,0],[1.3,7.8,0],[.1,7.8,0],[.1,5.6,74],[1.3,5.6,74],[1.3,7.8,74],[.1,7.8,74]].map(function(q){return lfP(q[0],q[1],q[2])}),_hx=_cp.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]}),_cr=function(o,a,b){return (a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0])},_lo=[],_up=[];
     _hx.forEach(function(p){while(_lo.length>1&&_cr(_lo[_lo.length-2],_lo[_lo.length-1],p)<=0)_lo.pop();_lo.push(p)});_hx.slice().reverse().forEach(function(p){while(_up.length>1&&_cr(_up[_up.length-2],_up[_up.length-1],p)<=0)_up.pop();_up.push(p)});
     var _hl=_lo.slice(0,-1).concat(_up.slice(0,-1)),_tp=lfP(.7,6.7,92);
-    C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/><g transform="translate('+_tp[0].toFixed(1)+','+_tp[1].toFixed(1)+')" pointer-events="none"><rect x="-27" y="-9" width="54" height="15" rx="7.5" fill="#14121c" stroke="#ffc857" stroke-width="1.2"/><text y="2.4" text-anchor="middle" font-size="7.4" font-family="monospace" font-weight="700" fill="#ffc857">WARDROBE</text></g></g>')}
+    C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/></g>')}
   if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",4.75,.05,.85,.4,{h:70,H:96});C.s("art",5.15,1.5,1,"look",[6,11],{tag:"mirror",fxwall:1})}
   var dk=H("bd_pc2")?"bd4_pc2":H("bd_pc1")?"bd4_pc1":H("bd_desk1")?"bd4_desk1":"bd4_desk0";
   var PCt=H("bd_pc1")||H("bd_pc2");
