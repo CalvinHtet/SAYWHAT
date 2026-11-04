@@ -132,7 +132,10 @@ var SVCGEN={};
 function roomStageOf(t,a){var d=ROOMDEF[t],s=0;(d.stages||[]).forEach(function(k,i){if(a&&a[k])s=i+1});return s}
 var dimGenBase=lfDimOf;
 lfDimOf=function(t){var d=ROOMDEF[t];if(!d)return dimGenBase(t);var r=S&&S.base&&S.base.slots.filter(function(q){return q&&q.t===t})[0];return d.size[Math.min(d.size.length-1,roomStageOf(t,r&&r.a))]};
-function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
+/* A hand-drawn plan keeps working when a room grows. d.layout=[W0,D0,pivotX,pivotY]: anything before the pivot stays
+   put (things against the walls, a bar and its stools), anything past it spreads out to fill the room. */
+function roomSpread(t,v,size,ax){var d=ROOMDEF[t],L=d&&d.layout;if(!L)return v;var S=d.size[0][ax],p=L[2+ax]||.6,c=v+size/2;if(v<.6||c<=p)return v;return +(p+(c-p)*(S-p)/(L[ax]-p)-size/2).toFixed(2)}
+function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=function(v,w){return roomSpread(t,v,w||0,0)},sy=function(v,w){return roomSpread(t,v,w||0,1)};
   if(d.out)C.out=1;
   if(!d.out&&d.shell==null){var wc=d.walls?d.walls(H):[d.wall,d.wain];thWalls(C,wc[0],wc[1],wc[2])}
   var fc=d.floor?d.floor(H):d.dark?["#1d1a22","rgba(255,255,255,.04)",1]:null;if(fc)roomFloor(C,fc);
@@ -141,13 +144,13 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
   (d.jogs||[]).forEach(function(q){C._lb=[q[0],q[1],q[0]+q[2],q[1]+q[3]];C.box(q[0],q[1],0,q[2],q[3],LF.H-4,d.wall,{top:d.wain});if(LFREC)lfRecBox(q[0],q[1],0,q[2],q[3],40)});
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
-  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,q[1],q[2],q[3],q[4],o)};
+  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,sx(q[1],q[3]),sy(q[2],q[4]),q[3],q[4],o)};
   (ADDONS[t]||[]).concat(d.base?[["",0,0,d.base]]:[]).forEach(function(u){var e=u[3];if(u[0]&&!H(u[0]))return;
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     if(e.art){(Array.isArray(e.art[0])?e.art:[e.art]).forEach(one)}
-    if(e.light)lfLight(C,e.light[0],e.light[1],e.light[2],e.light[3],e.light[4],e.light[5]);
-    (e.sit||[]).forEach(function(q){var n0=C.st.length;C.s("sit",q[0],q[1],q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:q[0],wy:q[1]+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
-    (e.cust||[]).forEach(function(s,i){lfCust(C,s[0],s[1],s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
+    if(e.light)lfLight(C,sx(e.light[0]),sy(e.light[1]),e.light[2],e.light[3],e.light[4],e.light[5]);
+    (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=sx(q[0]),qy=sy(q[1]);C.s("sit",qx,qy,q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
+    (e.cust||[]).forEach(function(s,i){lfCust(C,sx(s[0]),sy(s[1]),s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
     if(e.fx)e.fx(C)})}
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}

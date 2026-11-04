@@ -46,6 +46,8 @@ free Claude account can use the AI features.
 
 ## Cal's later notes, in his words
 
+> check all the assets in all the rooms and make sure they are positioned correctly and have proper spacing inside all the rooms. things should not be too close together so people have room to walk. some rooms should be bigger and some appropriately sized to fit all the upgrades that we have planned
+>
 > The game room and walk in closet are way bigger than the bedroom... I want it to look like an actual walk in closet with lit up wardrobes.
 > i also want each room to fit snuggly into each square in the building view instead of bleeding into each other. Also remove the arrows and any text on the building view... When the rooms dont exist yet, i want there to be empty space and no building. The background of the building view could also have a better background city skyline that reacts with the time of day
 > this restaurant is not very cohesive. the seats are very cheap and the table is super tiny... that is technically not a booth.
