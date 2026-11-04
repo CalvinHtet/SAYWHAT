@@ -36,8 +36,21 @@ Rules for placing things: flip 0 stands along the left wall facing lower right, 
 lower left. New art keeps its natural proportions, never pass a height. Do not reuse a sprite in two rooms. A couch
 that faces a TV needs a rear-view sprite.
 
-Still to do: clothes for OVERPASS shoes and the two new brands (`soon:1` in `15_shop.js`, needs Cal's Chrome),
-a test of every asset for clipping and direction once clothes are in, a phone test.
+Room sizes: `d.layout=[W0,D0,pivotX,pivotY]` in a room def means its plan was drawn for W0 x D0 and is spread to the real
+size by `roomSpread` in `26_world.js`. Anything before the pivot stays put, such as a bar and its stools.
+Spacing audit, all upgrades owned (floor coverage): Rooftop 37%, Game Room 29%, Club 28%, Speakeasy 27%, Bar 22%, Bowling 22%,
+all others under 20%. Nothing sits outside its room. Remaining gaps under .35 tile are wall pieces, stools at the bar and the band on its stage.
+Bedroom (52% with its rug), Garden and Theater were only measured, not re-spaced.
+
+Clothes: 29 of the 33 unfinished items are unlocked. Still marked `soon:1` because `ingest_items.py` rejected the sheet as stray:
+`v_tulle` (twice, too wide for the silhouette, try a narrower skirt), `al_flap`, `al_goggle`, `al_buff`. These were being re-fired.
+Chrome freezes the Higgsfield tab while idle, so the page loop only moves while something keeps calling into the tab.
+
+Still to do, in order:
+1. Wear the new clothes on both bodies in every pose. Only front icons were looked at. This is Cal's rule, do not skip it.
+2. Watch guests in every room for clipping. Only the Restaurant was watched with people in it.
+3. Check every room for items facing the wrong way, room by room, in screenshots.
+4. Phone test, then remove the Testing row and the `window.__qb` hooks before release.
 
 ## Not yet verified
 
