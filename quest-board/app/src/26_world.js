@@ -82,7 +82,7 @@ var RMPORTAL_OK=1;
    effect.cust:[[x,y,face],...] are spots guests stop at; effect.opens names the room it adds. */
 var ROOMDEF={};
 function roomDef(t,d){ROOMDEF[t]=d;
-  ROOMT[t]={name:d.name,lv:d.lv||0,cost:d.cost||0,coin:d.coin||0,store:d.store||8,desc:d.desc,bundled:!d.buy,dark:d.dark};
+  ROOMT[t]={name:d.name,lv:d.lv||0,cost:d.cost||0,coin:d.coin||0,store:d.store||8,desc:d.desc,bundled:!d.buy,dark:d.dark,note:d.note||'Yours to fill.'};
   LFTH[t]={wall:d.wall,wain:d.wain,acc:d.acc,fl:d.fl||"w",out:d.out};
   if(d.H)LFWH[t]=d.H;LFRS[t]=.86;
   (d.ups||[]).forEach(function(u){u[3].fp=1;u[3].lv=u[3].lv||d.lv});
@@ -98,8 +98,8 @@ var dimGenBase=lfDimOf;
 lfDimOf=function(t){var d=ROOMDEF[t];if(!d)return dimGenBase(t);var r=S&&S.base&&S.base.slots.filter(function(q){return q&&q.t===t})[0];return d.size[Math.min(d.size.length-1,roomStageOf(t,r&&r.a))]};
 function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
   if(d.out)C.out=1;
-  if(d.walls){var wc=d.walls(H);thWalls(C,wc[0],wc[1],wc[2])}
-  if(d.floor){var fc=d.floor(H);if(fc)roomFloor(C,fc)}
+  if(!d.out){var wc=d.walls?d.walls(H):[d.wall,d.wain];thWalls(C,wc[0],wc[1],wc[2])}
+  var fc=d.floor?d.floor(H):d.dark?["#1d1a22","rgba(255,255,255,.04)",1]:null;if(fc)roomFloor(C,fc);
   if(!d.out)lfDoorAt(C,C.W);else{C.s("door",C.W-.5,C.D-.5,1,"look",[1,1]);C.door={x:C.W-.5,y:C.D-.5}}
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
@@ -129,6 +129,7 @@ function rsWalls(C){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");roomF
 LFROOM.restaurant=function(C){
   rsArtReady();
   var H=function(k){return C.has(k)},st=H("r_x2")?2:H("r_x1")?1:0,Wi=RSSIZE[st][0],D=RSSIZE[st][1],patio=H("r_patio"),px=Wi,noir=H("r_noir")&&st===2;
+  LFTH.restaurant.wall=noir?"#2c262a":"#7db3ae";LFTH.restaurant.wain=noir?"#1a1619":"#4c8a86";
   C.rsW=patio?Wi:0;
   if(noir)rsWalls(C);
   lfDoorAt(C,Wi);

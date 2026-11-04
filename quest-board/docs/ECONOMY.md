@@ -43,19 +43,21 @@ A day comes to about 800 coins at level 5, 1,500 at level 20 and 2,300 at level 
 
 ## Prices
 
-The check is days of income at the level an item unlocks:
+Cal's rule: a task pays about 50 coins, a good day about 1,000, and each upgrade should fit inside
+one day unless it is a huge moment. `app/src/29_prices.js` sets them:
 
-| What | Days of income |
+| What | Coins |
 | --- | --- |
-| Basics | 0.2 to 0.6 |
-| Brand clothes | 0.8 to 2 |
-| Interface items | 0.5 to 3, top pets 5 |
-| Permanent buffs | 2 to 6 |
-| Restaurant upgrades | 0.1 to 4 early, up to 15 for the last few |
+| Small things, decor, menus | 200, all the same |
+| Normal equipment and furniture | 400, all the same |
+| Big single pieces | 800, all the same |
+| Moments that change a room (expansions, new rooms) | 1,000 to 4,000 |
+| Brand clothes | 600 to 1,700 |
+| Interface items and buffs | 1,000 to 2,500 at most |
 
-A new item should land in its row. Restaurant upgrades also pay back: about 10 to 40 days
-early on, up to about 150 days for the last status pieces. The Kitchen only runs at full
-speed after 3 quests that day (20% with none), so chores still drive everything.
+Nothing should ever cost more than a few days of play. Level gates do the pacing, not prices.
+A kitchen runs at full speed only after 3 quests that day (20% with none), so chores still drive
+everything. Set `fp:1` on an upgrade to keep its price exactly as written.
 
 ## Testing
 

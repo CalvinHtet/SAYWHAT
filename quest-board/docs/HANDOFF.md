@@ -12,15 +12,22 @@ and brand splashes, `15_shop.js` the shop, `16_interface.js` interface items. Ec
 are in `30_app_b.js` (`cum`, `levelPay`) and `10_app_a.js` (`coinsFor`, `simulate`).
 Testing helper: `window.__qb.x()` returns state and internals.
 
-## Built but not finished
+## Status of Cal's request below
 
-- OVERPASS streetwear brand (start date 2026-11-16, reach it with Skip ahead one week): 16 of 19
-  items are in. `o_hoop`, `o_slides`, `o_rigg` are marked `soon:1` in `15_shop.js` and have no art.
-- Brand logos: `brandLogo` looks for `art/logo_<brand id>.webp`, which do not exist yet.
-- Garden: code, 38 upgrades, pantry bonus for the Restaurant. Almost all its `gdx_*` art is missing,
-  so **most upgrades are invisible after purchase**. Cal hit this.
-- Theater and Auditorium: code, queue, double doors, upgrades. `thx_*` art is missing.
-- Generation prompts for the missing art are at the bottom of this file.
+Done and in the code: sticky install text, upgrade list scrolls on its own with the room pinned,
+flat prices (`app/src/29_prices.js`), three buildings (`26_world.js`), glowing doors with floating
+arrows (`portal()` in `27_rooms.js`), data-driven rooms (`autoRoom`), Closet, Lair, Patio with LA
+sunset, Game Room, Upstairs Bar, Boba, Dessert, Rooftop, Speakeasy, Mall, Arcade, Rhythm, VR, Bowling,
+Karaoke, Nightclub (art may still be arriving, missing sprites skip softly), Shop opens with the
+Closet, Dungeons open with the Lair, 5 missions a day with team sizes (`28_missions.js`), dogs with
+poop and a Clean up button, dark spacious Restaurant with guests behind tables, Garden with spacing
+and fountain plaza, Auditorium above the Theater, screen that grows the room, six-scene movie, seats
+seen from behind, speakers flanking the screen, Theater closed until the Auditorium opens.
+
+Still to do: two more clothing brands (30 items, needs Chrome), OVERPASS shoes, wiring brand logo
+files (`logo_<brand id>.webp`, the emblem sheet is `cbB` in the art list), bring the Restaurant's
+other tiers up to the same polish, check every room with people in it for clipping, make big upgrades
+in the newer rooms more dramatic (animation, ground changes), and a phone test.
 
 ## Not yet verified
 

@@ -12,7 +12,7 @@ function autoRoom(t,o){var W0=o.size[o.size.length-1][0],D0=o.size[o.size.length
       else if(where==="L"){x=.25;y=ly;ly+=d+1.2;e.cust=e.cust||[[x+w+1,y+d/2,-1]]}
       else{x=2.4+(fi%cols)*4.2;y=3.6+Math.floor(fi/cols)*3.6;fi++;e.cust=e.cust||[[x+w/2,y+d+.9,1]]}
       e.art=[q[3],x,y,w,d,q[7],{flip:flip?1:0}]}
-    if(q[3]==="")delete e.art;
+    if(!q[3])delete e.art;
     return [q[0],q[1],q[2],e,q[8]]});
   roomDef(t,Object.assign({},o,{ups:ups}))}
 /* ---- home ---- */

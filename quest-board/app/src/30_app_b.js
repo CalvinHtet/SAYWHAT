@@ -20,7 +20,7 @@ function baseHtml(){
 var DROP=null;
 function dropCrate(){return '<svg viewBox="0 0 16 16" width="64" height="64" shape-rendering="crispEdges"><rect x="1" y="3" width="14" height="12" fill="#8a5a30"/><rect x="1" y="3" width="14" height="2" fill="#c08a4c"/><rect x="7" y="3" width="2" height="12" fill="#ffc857"/><rect x="1" y="8" width="14" height="2" fill="#6b4524"/><rect x="5" y="0" width="6" height="3" fill="#ffc857"/><rect x="2" y="14" width="12" height="1" fill="#4a2f17"/></svg>'}
 function decorHtml(i,r){
-  var th=LFTH[r.t];if(!window.LFTEX||!th||th.out||r.t==="theater"||r.t==="auditorium")return "";
+  var th=LFTH[r.t];if(!window.LFTEX||!th||th.out||r.t==="theater"||r.t==="auditorium"||ROOMDEF[r.t])return "";
   var sets=lfDecSets(r.t),cur=lfDecFor(r,th),s='<details class="acol" data-k="st"'+(LFACOL.st?' open':'')+'><summary>Room style</summary><div class="dstyles">';
   sets.forEach(function(q){var un=lfDecUnlocked(r,q),on=cur&&cur.id===q.id,acc=q.acc?'<i style="'+(q.acc.tex?'background-image:url('+lfTexUrl("w_"+q.acc.tex)+')':'background:'+q.acc.c)+'"></i>':'';
     s+='<div class="dst'+(on?' on':'')+'"><div class="dsprev"><i style="background-image:url('+lfTexUrl("f_"+q.fl)+')"></i><i style="background:'+(q.wc||'#ccc')+'"></i>'+acc+'</div><b>'+esc(q.name)+'</b>'+(on?'<span class="chip">Active</span>':un?'<button class="btn ghost" data-act="decuse" data-i="'+i+'" data-v="'+q.id+'">Use</button>':'<button class="btn" data-act="decbuy" data-i="'+i+'" data-v="'+q.id+'"><i class="coin"></i>&nbsp;'+q.cost+'</button>')+'</div>'});
@@ -39,7 +39,7 @@ function roomModal(i){
   var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% until you finish 3 quests today.':'Full speed today.')+'</p>';
   if(r.t==="garden")h+=gdNote(r);if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
-  if(!T.fixed&&!T.home&&!ROOMSOPEN[r.t]&&r.t!=="auditorium"){
+  if(false){
     var rc=roomCrew(i), free=crewUnlocked().filter(function(k){return S.base.crew[k]==null});
     h+='<span class="label">Crew '+rc.length+'/'+crewCap(r)+'</span><div class="crewpick">'+rc.map(function(k){return '<button class="cpk on" data-act="runassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>'+esc(CREW[k].name)+'</small></button>'}).join("")
       +(rc.length<crewCap(r)?free.map(function(k){return '<button class="cpk" data-act="rassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>+ '+esc(CREW[k].name)+'</small></button>'}).join(""):'')
