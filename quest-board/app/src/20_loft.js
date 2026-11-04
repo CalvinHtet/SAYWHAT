@@ -1214,7 +1214,7 @@ function lfWorld(){
 }
 function lfPreview(r,uid){
   var C=lfRoomCtx(r,uid||90),dm=lfDimOf(r.t),LRX=C.annex&&C.annex.lr,ex=C.annex?(LRX?300:60):0,lx=C.annex?(LRX?700:150):0,vb=[-dm[1]*26-14-lx,-(LF.H+10)-ex,(dm[0]+dm[1])*26+28+lx,(dm[0]+dm[1])*13+LF.H+40+ex];
-  LFPCS[uid||90]=C;if(C.portal){vb[1]-=46;vb[3]+=76}
+  LFPCS[uid||90]=C;
   return '<svg class="lfprev" viewBox="'+vb.join(" ")+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><filter id="prtBlur" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs>'+lfRoomSvg(r,uid||90,C,{uid:uid||90})+(C.LT?C.LT.post:'')+'</svg>';
 }
 

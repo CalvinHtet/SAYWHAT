@@ -14,26 +14,46 @@ Testing helper: `window.__qb.x()` returns state and internals.
 
 ## Status of Cal's request below
 
-Done and in the code: sticky install text, upgrade list scrolls on its own with the room pinned,
-flat prices (`app/src/29_prices.js`), three buildings (`26_world.js`), glowing doors with floating
-arrows (`portal()` in `27_rooms.js`), data-driven rooms (`autoRoom`), Closet, Lair, Patio with LA
-sunset, Game Room, Upstairs Bar, Boba, Dessert, Rooftop, Speakeasy, Mall, Arcade, Rhythm, VR, Bowling,
-Karaoke, Nightclub (art may still be arriving, missing sprites skip softly), Shop opens with the
-Closet, Dungeons open with the Lair, 5 missions a day with team sizes (`28_missions.js`), dogs with
-poop and a Clean up button, dark spacious Restaurant with guests behind tables, Garden with spacing
-and fountain plaza, Auditorium above the Theater, screen that grows the room, six-scene movie, seats
-seen from behind, speakers flanking the screen, Theater closed until the Auditorium opens.
+Done: flat prices, three buildings, shop and dungeon gates, 5 missions a day, dogs with poop and clean up,
+garden with fountain plaza, auditorium above the theater, six-scene movie, seats from behind.
 
-Still to do: art for two more clothing brands and the OVERPASS shoes. Their shop lines are already
-in `15_shop.js` marked `soon:1` and their entries are in `data/items.json`; remove `soon:1` as each
-item gets art (ids `o_hoop o_slides o_rigg`, `v_*`, `al_*`; needs Cal's Chrome). Bring the Restaurant's
-other tiers up to the same polish, check every room with people in it for clipping, make big upgrades
-in the newer rooms more dramatic (animation, ground changes), and a phone test.
+Building view (`lfWorld` in `26_world.js`): every room is scaled to fill its own square, no arrows or text
+there, a block only exists where a room does, empty lots are just a small marker on the ground, and the city
+behind (`lfSkyline`) follows the real sun. The patio skyline only draws inside the room view.
+
+Doors (`rmPortals`): a soft glow on the floor, and an arrow outside the room that only appears in the room view.
+The arrow points where that room really is in the building. `ROOMCELL` is the map.
+
+Room view: at the widest zoom the room reaches both sides of the frame, drag up and down if it does not all fit.
+
+Restaurant (`LFROOM.restaurant` in `26_world.js`): kitchen behind a partition in the top right corner, booths
+on the left wall (two bench sprites and a table, so a guest sits inside), tables with four chairs, curved booth.
+Bar, Rooftop with pool and glass rail, marble strip Mall with empty storefronts: hand-placed in `27_rooms.js`.
+Game Room, Boba, Dessert, Speakeasy, Arcade, Rhythm, VR, Bowling, Karaoke, Nightclub: hand-placed in
+`27b_skins.js`, each with its own floor and wall painted in code (`roomSkin`).
+
+Rules for placing things: flip 0 stands along the left wall facing lower right, flip 1 along the back wall facing
+lower left. New art keeps its natural proportions, never pass a height. Do not reuse a sprite in two rooms. A couch
+that faces a TV needs a rear-view sprite.
+
+Still to do: clothes for OVERPASS shoes and the two new brands (`soon:1` in `15_shop.js`, needs Cal's Chrome),
+a test of every asset for clipping and direction once clothes are in, a phone test.
 
 ## Not yet verified
 
 Phone. Motion as judged by a person. The cloud save path after publishing. Whether a friend on a
 free Claude account can use the AI features.
+
+## Cal's later notes, in his words
+
+> The game room and walk in closet are way bigger than the bedroom... I want it to look like an actual walk in closet with lit up wardrobes.
+> i also want each room to fit snuggly into each square in the building view instead of bleeding into each other. Also remove the arrows and any text on the building view... When the rooms dont exist yet, i want there to be empty space and no building. The background of the building view could also have a better background city skyline that reacts with the time of day
+> this restaurant is not very cohesive. the seats are very cheap and the table is super tiny... that is technically not a booth.
+> Every room and every upgrade should have a meaningful purpose
+> When i click into a room, the minimum zoom size should have the room fill up to the left and right sides of the screen... don't reuse assets. make everything unique
+> The mall is build with wooden floors... Make it an empty strip mall with marble floors and some cutouts for the doors as the base starting build. Then some upgrades would be the karaoke room, arcade which has a rhythm game upgrade and VR game upgrade, and a bowling alley. these are all their own separate room upgrades
+> Once done with the clothes and test, i need you to do an extensive test on every asset in this game to make sure nothing is clipping, and every item is placed and positioned correctly in the room relative to its direction (a sofa should not be facing the wall or a desk should not be positioned sideways unless intentionally). Every room should feel unique
+> a majority of the kitchen appliances like that brick stove belongs in the kitchen. Create an extension on the top right that leads to the kitchen, but don't need to create a separate room in the building view for it. Just create a partition
 
 ## Cal's request, in his words
 

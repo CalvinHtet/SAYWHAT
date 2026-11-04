@@ -98,12 +98,12 @@ function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]
     var quad=side==="BR"?[[p-len,.02],[p+len,.02],[p+len,dp],[p-len,dp]]:side==="BL"?[[.02,p-len],[.02,p+len],[dp,p+len],[dp,p-len]]:side==="FL"?[[p-len,D-dp],[p+len,D-dp],[p+len,D-.02],[p-len,D-.02]]:[[W-dp,p-len],[W-.02,p-len],[W-.02,p+len],[W-dp,p+len]];
     var hit=' data-act="gotoroom" data-t="'+q[1]+'" style="cursor:pointer"',pts=quad.map(function(k){return lfP(k[0],k[1],0)}).map(lfPt).join(" ");
     C.decals.push('<polygon class="prtG" pointer-events="none" points="'+pts+'" fill="'+col+'" filter="url(#prtBlur)"/>');
-    /* arrows sit in the empty corners of the picture, off the edge of the room and inside the frame */
-    var pa=side==="FR"||side==="FL"?Math.max(p,3.6):Math.min(p,lim-2.1),at=side==="BR"?lfP(pa,0,LF.H+36):side==="BL"?lfP(0,pa,LF.H+36):side==="FL"?lfP(pa,D+1.5,0):lfP(W+1.5,pa,0);
-    if(C.noshell===1)at=side==="BR"?lfP(pa,-1,LF.H+10):side==="BL"?lfP(-1,pa,LF.H+10):at;
-    var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],rot=b[2]>a[2]?-90:b[2]<a[2]?90:b[1]<a[1]?180:0;
-    (C.pfront=C.pfront||[]).push('<polygon'+hit+' points="'+pts+'" fill="rgba(0,0,0,.001)"/><g'+hit+' transform="translate('+at[0].toFixed(1)+','+at[1].toFixed(1)+')"><circle r="36" fill="rgba(0,0,0,.001)"/><g class="prtA"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+col+'" stroke="#14121c" stroke-width="2.5" stroke-linejoin="round"/></g></g><rect x="-52" y="24" width="104" height="19" rx="9.5" fill="#14121c" stroke="'+col+'" stroke-width="1.1"/><text y="37.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+esc(q[5]||ROOMT[q[1]].name)+'</text></g>');
-    C.portal=1})}
+    (C.pfront=C.pfront||[]).push('<polygon'+hit+' points="'+pts+'" fill="rgba(0,0,0,.001)"/>');C.portal=1})}
+/* the arrows live on the frame, in its empty corners: always in view, never over the room, whatever the zoom.
+   They point where the next room really is on the building. */
+function rmArrows(r){var at={tl:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k=up?"tl":left?"bl":"br";
+    at[k]+='<button type="button" class="prtb-b" data-act="gotoroom" data-t="'+q[1]+'" style="--c:'+q[4]+'"><svg viewBox="-28 -20 56 40" width="20" height="16" aria-hidden="true"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+q[4]+'"/></g></svg>'+esc(q[5]||ROOMT[q[1]].name)+'</button>'});
+  return Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'">'+at[k]+'</div>':''}).join("")}
 /* tapping an arrow or a glow: drag handlers can swallow the click, so read what is under the finger */
 (function(){var dn=null;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
   document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("[data-act=gotoroom]");if(!g)return;var t=g.getAttribute("data-t");
@@ -240,13 +240,13 @@ LFROOM.restaurant=function(C){
   if(patio){var P=[lfP(px,0,0),lfP(C.W,0,0),lfP(C.W,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<RSPATIO;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,0,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,0,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,0,0)],"#6d4c2e","none");C.decals.push(pl);
-    if(H("r_sign"))rsS(C,"rsx_aframe",C.W-.9,D*.5+1.6,.7,.5,24);
+    if(H("r_sign"))rsS(C,"rsx_aframe",C.W-.9,D*.5-2.8,.7,.5,24);
     for(var rx=px+.3;rx<C.W-1;rx+=2.2)rsS(C,"rsx_rail",rx,.1,2.2,.2,20,{flip:1,nosh:1,nob:1,dk:99});
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,.5,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",C.W-1.2,.5,.9,.9,50)}
     if(H("r_p1"))[[px+2.0,3.2],[px+5.2,3.2]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
     if(H("r_p2"))[[px+2.0,D-4.2]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
     if(H("r_p4")){rsS(C,"rsx_heater",px+3.6,4.6,.6,.6,60,{H:96});lfLight(C,px+3.9,4.9,70,"#ff9a3a",2.4,.5)}
-    if(H("r_p6"))rsS(C,"rsx_bbq",C.W-2.1,D-5.8,1.7,1.0,28,{flip:1});
+    if(H("r_p6"))rsS(C,"rsx_bbq",C.W-2.1,D-6.6,1.7,1.0,28,{flip:1});
     if(H("r_p5")){rsS(C,"rsx_pergola",px+3.6,D-5,3.2,3.2,90,{dk:-4});lfLight(C,px+5.2,D-3.4,90,"#ffd890",3,.5)}
     if(H("r_p7"))rsS(C,"rsx_firepit",px+.6,D-3.2,2.6,2.6,24,{});
   }
