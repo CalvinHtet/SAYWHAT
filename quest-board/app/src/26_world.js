@@ -103,7 +103,8 @@ function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]
    They point where the next room really is on the building. */
 function rmArrows(r){var at={tl:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k=up?"tl":left?"bl":"br";
     at[k]+='<button type="button" class="prtb-b" data-act="gotoroom" data-t="'+q[1]+'" style="--c:'+q[4]+'"><svg viewBox="-28 -20 56 40" width="20" height="16" aria-hidden="true"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+q[4]+'"/></g></svg>'+esc(q[5]||ROOMT[q[1]].name)+'</button>'});
-  return Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'">'+at[k]+'</div>':''}).join("")}
+  var clean=r.t==="bedroom"&&(S.base.poops||[]).length?'<div class="prtb bc"><button type="button" class="prtb-b" data-act="dogclean" style="--c:#ffc857">Clean up</button></div>':"";
+  return clean+Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'">'+at[k]+'</div>':''}).join("")}
 /* tapping an arrow or a glow: drag handlers can swallow the click, so read what is under the finger */
 (function(){var dn=null;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
   document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("[data-act=gotoroom]");if(!g)return;var t=g.getAttribute("data-t");
@@ -140,7 +141,7 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)};
   (d.jogs||[]).forEach(function(q){C._lb=[q[0],q[1],q[0]+q[2],q[1]+q[3]];C.box(q[0],q[1],0,q[2],q[3],LF.H-4,d.wall,{top:d.wain});if(LFREC)lfRecBox(q[0],q[1],0,q[2],q[3],40)});
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
-  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];lfSpr(C,k,q[1],q[2],q[3],q[4],o)};
+  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,q[1],q[2],q[3],q[4],o)};
   (ADDONS[t]||[]).concat(d.base?[["",0,0,d.base]]:[]).forEach(function(u){var e=u[3];if(u[0]&&!H(u[0]))return;
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     if(e.art){(Array.isArray(e.art[0])?e.art:[e.art]).forEach(one)}
@@ -215,7 +216,7 @@ LFROOM.restaurant=function(C){
   var tiles=[1,2,3][st],fine=H("r_c2")&&st>1,tw=2.5,gap=(Wi-kx-tiles*tw)/(tiles+1);
   for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",kx+gap+ti*(tw+gap),kd-.08,tw,.9,{h:34,flip:1,ctr:1,dk:1});
   lfPrep(C,"pass",Math.max(.8,kx-.9),kd+.3);
-  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.65,1.85].forEach(function(o){var x=kx+gap+tj*(tw+gap)+o,y=kd+1.25,k=fine?"rtx_stool":"rs2_stool";lfSpr(C,k,x-.3,y-.3,.6,.6,{h:1,H:fine?52:48,dk:.5,nob:1,nosh:1});
+  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.65,1.85].forEach(function(o){var x=kx+gap+tj*(tw+gap)+o,y=kd+1.25;lfSpr(C,"sbx_mchair",x-.3,y-.3,.6,.6,{h:1,flip:1,dk:0,nob:1,nosh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,facewall:1,dk:0,wx:x,wy:y+1});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
   if(H("r_b1")&&st>0)(st===2?[.7,4.3,7.9]:[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});

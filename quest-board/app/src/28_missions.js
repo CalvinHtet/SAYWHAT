@@ -24,4 +24,6 @@ var dogNextBase=lfDogNext;
 lfDogNext=function(a,C){if(!a.visitor&&!a.pv&&Math.random()<.06&&(S.base.poops||[]).length<3&&!lfBlockedAt(C,a.x,a.y)){S.base.poops=S.base.poops||[];S.base.poops.push({x:+a.x.toFixed(1),y:+a.y.toFixed(1)});a.mode="do";a.act="sit";a.t=2.4;a.at=0;a.last="poop";persist();setTimeout(function(){if(!document.querySelector("#layer .modal"))render()},2600);return}return dogNextBase(a,C)};
 var bedDogs=LFROOM.bedroom;
 LFROOM.bedroom=function(C){bedDogs(C);(S.base.poops||[]).forEach(function(p){var q=lfP(p.x,p.y,0);C.decals.push('<g transform="translate('+q[0]+','+q[1]+')"><ellipse rx="7" ry="3.4" fill="#6b4524"/><ellipse cy="-3" rx="5" ry="2.6" fill="#7c5230"/><ellipse cy="-5.6" rx="3" ry="1.8" fill="#8a5c36"/></g>')});
-  if((S.base.poops||[]).length){var w=lfP(C.W*.5,C.D-.5,0);C.front.push('<g data-act="dogclean" style="cursor:pointer" transform="translate('+w[0]+','+(w[1]+22)+')"><rect x="-60" y="-14" width="120" height="28" rx="14" fill="#ffc857" stroke="#14121c" stroke-width="2"/><text y="5" text-anchor="middle" font-size="13" font-weight="800" fill="#14121c" font-family="Inter,sans-serif">Clean up</text></g>')}};
+};
+/* the Dungeons tab opens on today's missions; the old delves stay below them */
+var dngBase=dngHtml;dngHtml=function(){return awayHtml()+dngBase()};
