@@ -1,0 +1,48 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rig Audit</title>
+<style>
+  body { margin: 0; padding: 4px; background: #6d6e80; color: #fff; font: 10px system-ui, sans-serif; }
+  #grid { display: grid; grid-template-columns: repeat(var(--cols, 6), 1fr); gap: 0; }
+  figure { margin: 0; text-align: center; }
+  canvas { display: block; width: 100%; }
+  #err { color: #ffb4b4; white-space: pre-wrap; }
+</style>
+<div id="err"></div>
+<div id="grid"></div>
+<script src="../src/rig.js"></script>
+<script src="../src/look.js"></script>
+<script>
+// Renders each option of one creator group on both bodies, front and back.
+// ?group=hairStyle|top|bottom|shoe|skin|eyeColor|hairColor   &color=grey   &crop=head|feet   &cols=6
+(async () => {
+  try {
+    const q = new URLSearchParams(location.search);
+    const get = (p) => fetch("../data/" + p).then((r) => r.json());
+    const [rigData, bodies, allPoses, data] = await Promise.all([get("rig.json"), get("bodies.json"), get("poses.json"), get("creator.json")]);
+    const { clips, ...poses } = allPoses;
+    const rig = await QBRig.create({ rig: rigData, bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+    const group = q.get("group"), color = q.get("color") || "grey";
+    const lists = { hairStyle: (b) => data.hairStyles[b], top: () => data.tops, bottom: () => data.bottoms, shoe: () => data.shoes, skin: () => data.skin, eyeColor: () => data.eyeColors, hairColor: () => data.hairColors };
+    const colorKey = { top: "topColor", bottom: "bottomColor", shoe: "shoeColor" }[group];
+    document.getElementById("grid").style.setProperty("--cols", q.get("cols") || 6);
+    const [W, H] = rigData.frame;
+    const crop = { head: [40, 0, W - 80, H * 0.62], feet: [60, H * 0.62, W - 120, H * 0.38] }[q.get("crop")] || [0, 0, W, H];
+    for (const b of ["m", "f"]) for (const o of lists[group](b)) for (const pose of ["rest", "sitBack"]) {
+      const choice = { body: b, [group]: o.id, ...(colorKey ? { [colorKey]: color } : group === "hairStyle" ? { hairColor: "brown" } : {}) };
+      const frame = await rig.render(QBLook.build(data, choice), pose === "rest" ? "idle" : "rearStand");
+      const c = document.createElement("canvas");
+      c.width = crop[2]; c.height = crop[3];
+      c.getContext("2d").drawImage(frame, -crop[0], -crop[1]);
+      const fig = document.createElement("figure");
+      fig.append(c, Object.assign(document.createElement("figcaption"), { textContent: `${b} ${o.label} ${pose === "rest" ? "front" : "back"}` }));
+      document.getElementById("grid").append(fig);
+    }
+    document.title = "ready";
+  } catch (e) {
+    document.getElementById("err").textContent = e.stack || e;
+    document.title = "error";
+  }
+})();
+</script>

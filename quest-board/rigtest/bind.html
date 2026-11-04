@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Binding Map</title>
+<script>
+for (const f of ["../dist/qbdata.js", "../src/rig.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<canvas id="out"></canvas>
+<script>
+// Which bone owns each part of a layer: one colour per bone over the art. ?layers=base,h_boots
+(async () => {
+  const q = new URLSearchParams(location.search), D = window.QBDATA, { clips, ...poses } = D.poses;
+  const rig = await QBRig.create({ rig: D.rig, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+  const names = (q.get("layers") || "base").split(","), bodies = ["m", "f"], views = ["front", "back"];
+  const W = 420, H = 626, out = document.getElementById("out");
+  out.width = W * names.length * 4; out.height = H;
+  const g = out.getContext("2d"), hue = {};
+  rig.boneIds.forEach((b, i) => (hue[b] = `hsla(${(i * 47) % 360},90%,50%,.55)`));
+  const slotOf = { base: "body", h1: "hair", h2: "hair", h3: "hair" };
+  let x = 0;
+  for (const n of names) for (const b of bodies) for (const v of views) {
+    const path = `${b}_${n}_${v}.webp`;
+    const slotId = slotOf[n] || (D.items[n] ? { hat: "hat", top: "top", pants: "pants", shoes: "shoes" }[D.items[n].slot] : n);
+    const slot = D.rig.slots.find((s) => s.id === slotId);
+    const m = await rig.mesh(path, b, v, slot);
+    const s = W / D.rig.canvas[0];
+    g.drawImage(await rig.image(path), x, 0, W, D.rig.canvas[1] * s);
+    for (const grp of m.groups) for (const t of grp) {
+      g.fillStyle = hue[t[0].b0];
+      g.beginPath();
+      t.forEach((p, i) => g[i ? "lineTo" : "moveTo"](x + p.x * s, p.y * s));
+      g.fill();
+    }
+    x += W;
+  }
+  const blob = await new Promise((r) => out.toBlob(r, "image/png"));
+  if (q.get("save")) await fetch("http://127.0.0.1:8766/" + q.get("save") + ".png", { method: "POST", mode: "no-cors", body: blob });
+  document.title = "ready";
+})().catch((e) => { document.body.append(String(e.stack || e)); document.title = "error"; });
+</script>

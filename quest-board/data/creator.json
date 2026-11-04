@@ -1,0 +1,371 @@
+{
+ "bodies": [
+  {
+   "id": "m",
+   "label": "Male"
+  },
+  {
+   "id": "f",
+   "label": "Female"
+  }
+ ],
+ "skin": [
+  {
+   "id": "s1",
+   "label": "Fair",
+   "a": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "s2",
+   "label": "Warm",
+   "a": [
+    0.95,
+    0.87,
+    0.78
+   ]
+  },
+  {
+   "id": "s3",
+   "label": "Tan",
+   "a": [
+    0.84,
+    0.7,
+    0.56
+   ]
+  },
+  {
+   "id": "s4",
+   "label": "Brown",
+   "a": [
+    0.66,
+    0.5,
+    0.38
+   ]
+  },
+  {
+   "id": "s5",
+   "label": "Deep",
+   "a": [
+    0.47,
+    0.34,
+    0.26
+   ]
+  }
+ ],
+ "hairStyles": {
+  "m": [
+   {
+    "id": "h1",
+    "label": "Tousled"
+   },
+   {
+    "id": "h2",
+    "label": "Crop"
+   },
+   {
+    "id": "h3",
+    "label": "Curtains"
+   }
+  ],
+  "f": [
+   {
+    "id": "h1",
+    "label": "Long"
+   },
+   {
+    "id": "h2",
+    "label": "Bob"
+   },
+   {
+    "id": "h3",
+    "label": "Ponytail"
+   }
+  ]
+ },
+ "hairColors": [
+  {
+   "id": "black",
+   "label": "Black",
+   "swatch": "#17151c",
+   "a": [
+    0.05,
+    0.04,
+    0.06
+   ],
+   "b": [
+    0.13,
+    0.11,
+    0.15
+   ],
+   "c": [
+    0.4,
+    0.37,
+    0.44
+   ]
+  },
+  {
+   "id": "brown",
+   "label": "Brown",
+   "swatch": "#5b3a24",
+   "a": [
+    0.13,
+    0.07,
+    0.05
+   ],
+   "b": [
+    0.33,
+    0.2,
+    0.12
+   ],
+   "c": [
+    0.66,
+    0.46,
+    0.3
+   ]
+  },
+  {
+   "id": "blonde",
+   "label": "Blonde",
+   "swatch": "#d9b56c",
+   "a": [
+    0.36,
+    0.23,
+    0.11
+   ],
+   "b": [
+    0.74,
+    0.56,
+    0.3
+   ],
+   "c": [
+    0.97,
+    0.87,
+    0.62
+   ]
+  },
+  {
+   "id": "auburn",
+   "label": "Auburn",
+   "swatch": "#8a3a22",
+   "a": [
+    0.2,
+    0.06,
+    0.04
+   ],
+   "b": [
+    0.47,
+    0.17,
+    0.1
+   ],
+   "c": [
+    0.8,
+    0.42,
+    0.26
+   ]
+  }
+ ],
+ "eyeColors": [
+  {
+   "id": "brown",
+   "label": "Brown",
+   "swatch": "#5e3b25",
+   "a": [
+    0.18,
+    0.09,
+    0.05
+   ],
+   "b": [
+    0.46,
+    0.28,
+    0.16
+   ],
+   "c": [
+    0.8,
+    0.58,
+    0.4
+   ]
+  },
+  {
+   "id": "hazel",
+   "label": "Hazel",
+   "swatch": "#7b6a2f",
+   "a": [
+    0.2,
+    0.14,
+    0.05
+   ],
+   "b": [
+    0.54,
+    0.43,
+    0.18
+   ],
+   "c": [
+    0.86,
+    0.76,
+    0.4
+   ]
+  },
+  {
+   "id": "blue",
+   "label": "Blue",
+   "swatch": "#3f6f9e",
+   "a": [
+    0.06,
+    0.13,
+    0.25
+   ],
+   "b": [
+    0.2,
+    0.4,
+    0.62
+   ],
+   "c": [
+    0.58,
+    0.78,
+    0.92
+   ]
+  },
+  {
+   "id": "green",
+   "label": "Green",
+   "swatch": "#3f7d58",
+   "a": [
+    0.05,
+    0.16,
+    0.1
+   ],
+   "b": [
+    0.2,
+    0.45,
+    0.3
+   ],
+   "c": [
+    0.58,
+    0.82,
+    0.62
+   ]
+  }
+ ],
+ "tops": [
+  {
+   "id": "tee",
+   "label": "Tee"
+  },
+  {
+   "id": "hoodie",
+   "label": "Hoodie"
+  },
+  {
+   "id": "bomber",
+   "label": "Bomber"
+  }
+ ],
+ "bottoms": [
+  {
+   "id": "joggers",
+   "label": "Joggers"
+  },
+  {
+   "id": "jeans",
+   "label": "Jeans"
+  },
+  {
+   "id": "shorts",
+   "label": "Shorts"
+  }
+ ],
+ "shoes": [
+  {
+   "id": "sneakers",
+   "label": "Sneakers"
+  },
+  {
+   "id": "boots",
+   "label": "Boots",
+   "over": true
+  },
+  {
+   "id": "flipflops",
+   "label": "Flip-flops"
+  }
+ ],
+ "clothColors": [
+  {
+   "id": "white",
+   "label": "White",
+   "swatch": "#ecebe6",
+   "a": [
+    0.34,
+    0.33,
+    0.36
+   ],
+   "b": [
+    0.82,
+    0.81,
+    0.8
+   ],
+   "c": [
+    1.0,
+    1.0,
+    0.98
+   ]
+  },
+  {
+   "id": "grey",
+   "label": "Grey",
+   "swatch": "#85868c",
+   "a": [
+    0.14,
+    0.14,
+    0.16
+   ],
+   "b": [
+    0.42,
+    0.42,
+    0.45
+   ],
+   "c": [
+    0.72,
+    0.72,
+    0.74
+   ]
+  },
+  {
+   "id": "black",
+   "label": "Black",
+   "swatch": "#232327",
+   "a": [
+    0.03,
+    0.03,
+    0.04
+   ],
+   "b": [
+    0.11,
+    0.11,
+    0.13
+   ],
+   "c": [
+    0.3,
+    0.3,
+    0.34
+   ]
+  }
+ ],
+ "defaults": {
+  "body": "m",
+  "skin": "s1",
+  "hairStyle": "h1",
+  "hairColor": "black",
+  "eyeColor": "brown",
+  "top": "tee",
+  "topColor": "white",
+  "bottom": "joggers",
+  "bottomColor": "black",
+  "shoe": "sneakers",
+  "shoeColor": "white"
+ }
+}

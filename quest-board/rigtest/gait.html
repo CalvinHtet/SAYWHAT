@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Gait Check</title>
+<script>
+for (const f of ["../dist/qbdata.js", "../src/rig.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<script>
+// Numbers for the walk: both strides must match, arms must oppose legs, and nothing jumps.
+(async () => {
+  const D = window.QBDATA, { clips, ...poses } = D.poses;
+  const rig = await QBRig.create({ rig: D.rig, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+  const at = (m, p) => [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]];
+  const corr = (a, b) => {
+    const ma = a.reduce((x, y) => x + y) / a.length, mb = b.reduce((x, y) => x + y) / b.length;
+    let n = 0, da = 0, db = 0;
+    a.forEach((v, i) => { n += (v - ma) * (b[i] - mb); da += (v - ma) ** 2; db += (b[i] - mb) ** 2; });
+    return +(n / Math.sqrt(da * db)).toFixed(2);
+  };
+  const out = {};
+  for (const body of ["m", "f"]) for (const [clip, view] of [["walk", "front"], ["walkBack", "back"]]) {
+    const j = D.bodies[body][view].joints, n = clips[clip].frames, S = [];
+    for (let f = 0; f < n; f++) {
+      const w = rig.solve(body, view, rig.clipPose(clip, f));
+      S.push({ head: at(w.head, j.headC)[1], handN: at(w.hnN, j.handN)[0], handF: at(w.hnF, j.handF)[0], footN: at(w.ftN, j.ankleN)[0], footF: at(w.ftF, j.ankleF)[0] });
+    }
+    const head = S.map((s) => s.head), half = n / 2;
+    const stride = Math.max(...head.map((v, i) => Math.abs(v - head[(i + half) % n])));
+    const jump = Math.max(...head.map((v, i) => Math.abs(v - head[(i + 1) % n])));
+    out[body + " " + view] = {
+      bob: +(Math.max(...head) - Math.min(...head)).toFixed(0),
+      strideDifference: +stride.toFixed(1),
+      biggestStep: +jump.toFixed(1),
+      nearArmVsNearLeg: corr(S.map((s) => s.handN), S.map((s) => s.footN)),
+      farArmVsFarLeg: corr(S.map((s) => s.handF), S.map((s) => s.footF)),
+      legsVsEachOther: corr(S.map((s) => s.footN), S.map((s) => s.footF)),
+    };
+  }
+  // Does the new floor rule move any pose that is not a walk?
+  const moved = {};
+  for (const body of ["m", "f"]) for (const [name, p] of Object.entries(poses)) {
+    if (!p.ground) continue;
+    const j = D.bodies[body][p.view].joints, w = rig.solve(body, p.view, { ...p, ground: false });
+    const low = (m, q) => m[1] * q[0] + m[3] * q[1] + m[5];
+    const y0 = Math.max(low(w.ftN, j.toeN), low(w.ftN, j.ankleN), low(w.ftF, j.toeF), low(w.ftF, j.ankleF));
+    const before = Math.max(j.toeN[1], j.toeF[1]) - y0;
+    const sink = (m, q) => low(m, q) - q[1];
+    const after = -Math.max(sink(w.ftN, j.ankleN), sink(w.ftF, j.ankleF));
+    if (Math.abs(before - after) > 4) moved[body + " " + name] = +(after - before).toFixed(0);
+  }
+  window.__gait = { out, moved };
+  document.title = "ready";
+})().catch((e) => { window.__gait = String(e.stack || e); document.title = "error"; });
+</script>

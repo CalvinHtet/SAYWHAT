@@ -1,0 +1,301 @@
+{
+ "canvas": [
+  1696,
+  2528
+ ],
+ "frame": [
+  360,
+  414
+ ],
+ "trunk": ["pelvis", "spine"],
+ "baseArt": "base",
+ "frameScale": 0.14,
+ "anchor": [
+  900,
+  2380
+ ],
+ "anchorPad": 38,
+ "meshStep": 24,
+ "blend": 70,
+ "rootJoint": "pelvis",
+ "bones": {
+  "pelvis": {
+   "parent": null,
+   "seg": [
+    "pelvis",
+    "hips"
+   ],
+   "radius": 190
+  },
+  "spine": {
+   "parent": "pelvis",
+   "seg": [
+    "pelvis",
+    "neck"
+   ],
+   "radius": 215
+  },
+  "head": {
+   "parent": "spine",
+   "seg": [
+    "neck",
+    "headTop"
+   ],
+   "core": [
+    "headC",
+    "headC"
+   ],
+   "radius": 450
+  },
+  "uaN": {
+   "parent": "spine",
+   "seg": [
+    "shoulderN",
+    "elbowN"
+   ],
+   "radius": 80,
+   "blend": 210
+  },
+  "faN": {
+   "parent": "uaN",
+   "seg": [
+    "elbowN",
+    "wristN"
+   ],
+   "radius": 75
+  },
+  "hnN": {
+   "parent": "faN",
+   "seg": [
+    "wristN",
+    "handN"
+   ],
+   "radius": 70
+  },
+  "uaF": {
+   "parent": "spine",
+   "seg": [
+    "shoulderF",
+    "elbowF"
+   ],
+   "radius": 80,
+   "blend": 210
+  },
+  "faF": {
+   "parent": "uaF",
+   "seg": [
+    "elbowF",
+    "wristF"
+   ],
+   "radius": 75
+  },
+  "hnF": {
+   "parent": "faF",
+   "seg": [
+    "wristF",
+    "handF"
+   ],
+   "radius": 70
+  },
+  "thN": {
+   "parent": "pelvis",
+   "seg": [
+    "hipN",
+    "kneeN"
+   ],
+   "radius": 120
+  },
+  "snN": {
+   "parent": "thN",
+   "seg": [
+    "kneeN",
+    "ankleN"
+   ],
+   "radius": 100
+  },
+  "ftN": {
+   "parent": "snN",
+   "seg": [
+    "ankleN",
+    "toeN"
+   ],
+   "radius": 85
+  },
+  "thF": {
+   "parent": "pelvis",
+   "seg": [
+    "hipF",
+    "kneeF"
+   ],
+   "radius": 120
+  },
+  "snF": {
+   "parent": "thF",
+   "seg": [
+    "kneeF",
+    "ankleF"
+   ],
+   "radius": 100
+  },
+  "ftF": {
+   "parent": "snF",
+   "seg": [
+    "ankleF",
+    "toeF"
+   ],
+   "radius": 85
+  }
+ },
+ "drawOrder": [
+  [],
+  [
+   "uaF",
+   "faF",
+   "hnF"
+  ],
+  [
+   "thF",
+   "snF",
+   "ftF"
+  ],
+  [
+   "thN",
+   "snN",
+   "ftN"
+  ],
+  [
+   "pelvis",
+   "spine"
+  ],
+  [
+   "head"
+  ],
+  [
+   "uaN",
+   "faN",
+   "hnN"
+  ]
+ ],
+ "slots": [
+  {
+   "id": "hairBack",
+   "bones": [
+    "head"
+   ],
+   "group": 0
+  },
+  {
+   "id": "body",
+   "bones": "*"
+  },
+  {
+   "id": "shoes",
+   "bones": [
+    "snN",
+    "ftN",
+    "snF",
+    "ftF"
+   ]
+  },
+  {
+   "id": "pants",
+   "bones": [
+    "pelvis",
+    "thN",
+    "snN",
+    "thF",
+    "snF"
+   ]
+  },
+  {
+   "id": "shoesOver",
+   "bones": [
+    "snN",
+    "ftN",
+    "snF",
+    "ftF"
+   ]
+  },
+  {
+   "id": "top",
+   "bones": [
+    "pelvis",
+    "spine",
+    "uaN",
+    "faN",
+    "uaF",
+    "faF"
+   ]
+  },
+  {
+   "id": "neck",
+   "bones": [
+    "spine"
+   ]
+  },
+  {
+   "id": "blush",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "face",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "iris",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "mask",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "hair",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "hat",
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "id": "glasses",
+   "bones": [
+    "head"
+   ]
+  }
+ ],
+ "frameCache": 96,
+ "drawSequence": {
+  "front": [
+   0,
+   2,
+   3,
+   4,
+   5,
+   1,
+   6
+  ],
+  "back": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   6,
+   5
+  ]
+ },
+ "maxStretch": 1.5
+}

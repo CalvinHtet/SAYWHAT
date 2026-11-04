@@ -1,0 +1,206 @@
+{
+ "artBase": "art/",
+ "frame": [
+  240,
+  273
+ ],
+ "frameScale": 0.0933,
+ "anchorPad": 23,
+ "standPx": 208,
+ "headPx": 84,
+ "urlCache": 900,
+ "seats": {
+  "turnMs": 320
+ },
+ "beds": {
+  "bed0": {
+   "sprite": "bd4_bed0",
+   "w": 526,
+   "h": 468,
+   "head": [
+    138,
+    154
+   ],
+   "size": 110,
+   "fold": [
+    [
+     51,
+     124
+    ],
+    [
+     134,
+     77
+    ],
+    [
+     300,
+     77
+    ],
+    [
+     300,
+     260
+    ],
+    [
+     20,
+     260
+    ],
+    [
+     20,
+     150
+    ]
+   ]
+  },
+  "bed1": {
+   "sprite": "bd4_bed1",
+   "w": 630,
+   "h": 490,
+   "head": [
+    178,
+    174
+   ],
+   "size": 136,
+   "fold": [
+    [
+     45,
+     144
+    ],
+    [
+     201,
+     78
+    ],
+    [
+     340,
+     78
+    ],
+    [
+     340,
+     270
+    ],
+    [
+     20,
+     270
+    ],
+    [
+     20,
+     160
+    ]
+   ]
+  },
+  "bed2": {
+   "sprite": "bd4_bed2",
+   "w": 600,
+   "h": 526,
+   "head": [
+    220,
+    260
+   ],
+   "size": 112,
+   "fold": [
+    [
+     49,
+     182
+    ],
+    [
+     222,
+     117
+    ],
+    [
+     320,
+     117
+    ],
+    [
+     320,
+     290
+    ],
+    [
+     20,
+     290
+    ],
+    [
+     20,
+     195
+    ]
+   ]
+  }
+ },
+ "desks": {
+  "bd4_desk0": {
+   "flip": 1,
+   "seatX": 7.1
+  },
+  "bd4_desk1": {
+   "flip": 0,
+   "seatX": 6.6
+  },
+  "bd4_pc1": {
+   "flip": 1,
+   "seatX": 7.4
+  },
+  "bd4_pc2": {
+   "flip": 1,
+   "seatX": 7.05
+  }
+ },
+ "seatY": 2.5,
+ "chairs": {
+  "bd_chair0": {
+   "front": "bd4_ch0_0",
+   "back": "bd4_ch0_2",
+   "pp": 0.293,
+   "sit": {
+    "x": 2,
+    "y": -16,
+    "scale": 1,
+    "flip": true
+   },
+   "type": {
+    "x": 3,
+    "y": -14,
+    "scale": 1,
+    "flip": false
+   }
+  },
+  "bd_chair1": {
+   "front": "bd4_ch1_0",
+   "back": "bd4_ch1_2",
+   "pp": 0.293,
+   "sit": {
+    "x": 2,
+    "y": -16,
+    "scale": 1,
+    "flip": true
+   },
+   "type": {
+    "x": 3,
+    "y": -14,
+    "scale": 1,
+    "flip": false
+   }
+  },
+  "bd_chair2": {
+   "front": "bd4_gch_0",
+   "back": "bd4_gch_4",
+   "pp": 0.293,
+   "sit": {
+    "x": 2,
+    "y": -16,
+    "scale": 1,
+    "flip": true
+   },
+   "type": {
+    "x": 3,
+    "y": -14,
+    "scale": 1,
+    "flip": false
+   }
+  }
+ },
+ "eggLift": -18,
+ "bakedSeats": {
+  "lair": {
+   "chair": "bd4_gch_4",
+   "pp": 0.293,
+   "x": -3,
+   "y": 14
+  }
+ }
+}

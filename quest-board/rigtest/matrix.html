@@ -1,0 +1,123 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Item Matrix</title>
+<body style="margin:0;background:#6d6e80;color:#fff;font:12px system-ui">
+<div id="err"></div>
+<canvas id="out"></canvas>
+<script>
+// Always the files on disk, not a copy the browser kept.
+for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<script>
+// Contact sheets of item combinations, for review by eye.
+// ?sheet=hats|hatface|neck|waist&body=m|legs&body=m|poses&from=0&to=10|base|hair  &save=name posts the PNG to the local receiver.
+(async () => {
+  try {
+    const q = new URLSearchParams(location.search), D = window.QBDATA, I = D.items;
+    const { clips, ...poses } = D.poses;
+    const zoom = +(q.get("scale") || 1);
+    const cfg = { ...D.rig, frame: D.rig.frame.map((n) => n * zoom), frameScale: (D.rig.frameScale || 0.14) * zoom, anchorPad: D.rig.anchorPad * zoom };
+    const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+    const [W, H] = cfg.frame;
+    const by = (slot) => Object.keys(I).filter((k) => I[k].slot === slot);
+    const fits = (art, b) => !art || !I[art] || !((I[art].femaleOnly && b === "m") || (I[art].maleOnly && b === "f"));
+    const eq = (...arts) => Object.fromEntries(arts.filter(Boolean).map((a) => [I[a].slot, { art: a, frontOnly: I[a].frontOnly, over: I[a].over, wide: I[a].wide, lift: I[a].lift, clip: I[a].clip }]));
+    const solo = q.get("solo");
+    const look = (body, o, arts) => {
+      const L = QBLook.build(D.creator, { body, ...o, equipped: eq(...arts) });
+      if (solo) for (const k of Object.keys(L.layers)) if (!solo.split(",").includes(k)) delete L.layers[k];
+      return L;
+    };
+    const BASE = { tops: D.creator.tops.map((x) => x.id), bottoms: D.creator.bottoms.map((x) => x.id), shoes: D.creator.shoes.map((x) => x.id) };
+    // A cell: { label, body, opts, arts, clip, f, crop:[x,y,w,h] as fractions }
+    const cells = [], sheet = q.get("sheet") || "hats", bodyQ = q.get("body");
+    const HEAD = [0.14, 0, 0.72, 0.5], TORSO = [0.2, 0.28, 0.6, 0.42], WAIST = [0.2, 0.5, 0.6, 0.3], LEGS = [0.2, 0.62, 0.6, 0.38], FULL = [0, 0, 1, 1];
+    let cols = 12, cw = 125, ch = 145;
+    const color = q.get("hair") || "black";
+    if (sheet === "hats") {
+      for (const hat of by("hat")) for (const body of ["m", "f"]) for (const hair of ["h1", "h2", "h3"]) for (const clip of ["idle", "back"])
+        cells.push({ label: `${hat} ${body} ${hair} ${clip}`, body, opts: { hairStyle: hair, hairColor: color }, arts: [hat], clip, crop: HEAD });
+    } else if (sheet === "hatface") {
+      cols = 12;
+      for (const hat of [null, ...by("hat")]) for (const face of [...by("glasses"), ...by("mask")]) for (const body of ["m", "f"]) for (const hair of ["h1", "h3"])
+        cells.push({ label: `${hat || "-"} ${face} ${body} ${hair}`, body, opts: { hairStyle: hair, hairColor: color }, arts: [hat, face], clip: "idle", crop: HEAD });
+    } else if (sheet === "neck") {
+      cols = 12; cw = 120; ch = 110;
+      const tops = [...BASE.tops, ...by("top")];
+      for (const t of tops) for (const n of by("neck")) for (const body of ["m", "f"]) for (const hair of ["h2", "h1"]) {
+        if (!fits(t, body)) { cells.push(null); continue; }
+        cells.push({ label: `${t} ${n} ${body} ${hair}`, body, opts: { hairStyle: hair, hairColor: "brown", top: I[t] ? undefined : t }, arts: [I[t] ? t : null, n], clip: "idle", crop: TORSO });
+      }
+    } else if (sheet === "waist") {
+      const body = bodyQ || "m"; cols = 18; cw = 85; ch = 70;
+      const tops = [...BASE.tops, ...by("top")].filter((t) => fits(t, body)), bots = [...BASE.bottoms, ...by("pants")].filter((b) => fits(b, body));
+      for (const t of tops) for (const b of bots) for (const clip of ["idle", "back"])
+        cells.push({ label: `${t}+${b}${clip === "back" ? " B" : ""}`, body, opts: { hairStyle: "h2", hairColor: "brown", top: I[t] ? undefined : t, bottom: I[b] ? undefined : b }, arts: [I[t] ? t : null, I[b] ? b : null], clip, crop: WAIST });
+      cols = bots.length * 2;
+    } else if (sheet === "legs") {
+      const body = bodyQ || "m"; cw = 85; ch = 75;
+      const shoes = [...BASE.shoes, ...by("shoes")].filter((t) => fits(t, body)), bots = [...BASE.bottoms, ...by("pants")].filter((b) => fits(b, body));
+      for (const b of bots) for (const s of shoes) for (const clip of ["idle", "back"])
+        cells.push({ label: `${b}+${s}${clip === "back" ? " B" : ""}`, body, opts: { hairStyle: "h2", hairColor: "brown", shoe: I[s] ? undefined : s, bottom: I[b] ? undefined : b }, arts: [I[s] ? s : null, I[b] ? b : null], clip, crop: LEGS });
+      cols = shoes.length * 2;
+    } else if (sheet === "poses") {
+      const names = Object.keys(I).slice(+(q.get("from") || 0), +(q.get("to") || 10));
+      const P = [["walk", 1], ["walk", 3], ["walkBack", 1], ["stretch", 1], ["sit", 1], ["type", 0], ["back", 0]];
+      cols = P.length * 2; cw = 100; ch = 118;
+      for (const art of names) for (const body of ["m", "f"]) for (const [clip, f] of P) {
+        if (!fits(art, body)) { cells.push(null); continue; }
+        cells.push({ label: `${art} ${body} ${clip}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts: [art], clip, f, crop: FULL });
+      }
+    } else if (sheet === "base") {
+      cols = 12; cw = 100; ch = 118;
+      for (const [slot, list, key, colorKey] of [["top", BASE.tops, "top", "topColor"], ["bottom", BASE.bottoms, "bottom", "bottomColor"], ["shoe", BASE.shoes, "shoe", "shoeColor"]])
+        for (const id of list) for (const c of D.creator.clothColors) for (const body of ["m", "f"]) for (const clip of ["idle", "back"])
+          cells.push({ label: `${id} ${c.id} ${body}${clip === "back" ? " B" : ""}`, body, opts: { hairStyle: "h2", hairColor: "brown", [key]: id, [colorKey]: c.id }, arts: [], clip, crop: FULL });
+    } else if (sheet === "walk") {
+      cols = 16; cw = 92; ch = 108;
+      for (const [body, hair] of [["m", "h1"], ["f", "h1"]]) for (const clip of ["walk", "walkBack"]) for (let f = 0; f < 16; f++)
+        cells.push({ label: `${body} ${clip} ${f}`, body, opts: { hairStyle: hair, hairColor: "brown" }, arts: [], clip, f, crop: FULL });
+    } else if (sheet === "hair") {
+      cols = 12; cw = 100; ch = 118;
+      for (const c of D.creator.hairColors) for (const body of ["m", "f"]) for (const hair of ["h1", "h2", "h3"]) for (const clip of ["idle", "back"])
+        cells.push({ label: `${hair} ${c.id} ${body}`, body, opts: { hairStyle: hair, hairColor: c.id }, arts: [], clip, crop: HEAD });
+    }
+    if (q.get("cw")) cw = +q.get("cw");
+    if (q.get("ch")) ch = +q.get("ch");
+    if (q.get("cols")) cols = +q.get("cols");
+    const cropQ = q.get("crop") && q.get("crop").split(",").map(Number);
+    if (cropQ) cells.forEach((c) => { if (c) c.crop = cropQ; });
+    const only = q.get("only");
+    const use = only ? cells.filter((c) => c && c.label.includes(only)) : cells;
+    const rows = Math.ceil(use.length / cols), out = document.getElementById("out"), LBL = q.get("nolabel") ? 0 : 11;
+    out.width = cols * cw; out.height = rows * (ch + LBL);
+    const g = out.getContext("2d");
+    g.fillStyle = "#8d8e9e"; g.fillRect(0, 0, out.width, out.height);
+    g.font = "9px system-ui"; g.imageSmoothingQuality = "high";
+    window.__fail = [];
+    for (let i = 0; i < use.length; i++) {
+      const c = use[i]; if (!c) continue;
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * (ch + LBL);
+      if (Math.floor(i / cols) % 2 === 0 && false) continue;
+      try {
+        const opts = Object.fromEntries(Object.entries(c.opts).filter(([, v]) => v !== undefined));
+        const fr = await rig.render(look(c.body, opts, c.arts), rig.clipPose(c.clip, c.f || 0));
+        const [a, b, w, h] = c.crop;
+        const sw = W * w, sh = H * h, s = Math.min(cw / sw, ch / sh);
+        g.drawImage(fr, W * a, H * b, sw, sh, x + (cw - sw * s) / 2, y + LBL, sw * s, sh * s);
+      } catch (e) { window.__fail.push(c.label + " " + e.message); }
+      if (LBL) { g.fillStyle = "#fff"; g.fillText(c.label, x + 2, y + 9, cw - 3); }
+      g.strokeStyle = "rgba(0,0,0,.18)"; g.strokeRect(x + .5, y + .5, cw, ch + LBL);
+    }
+    const save = q.get("save");
+    if (save) {
+      const blob = await new Promise((r) => out.toBlob(r, "image/png"));
+      await fetch("http://127.0.0.1:8766/" + save + ".png", { method: "POST", mode: "no-cors", body: blob });
+    }
+    document.title = "ready " + use.length + " fail " + window.__fail.length;
+  } catch (e) {
+    document.getElementById("err").textContent = e.stack || e;
+    document.title = "error";
+  }
+})();
+</script>

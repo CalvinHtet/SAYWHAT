@@ -1,0 +1,27 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Style Reference</title>
+<body style="margin:0;background:#00ff00"><canvas id="out"></canvas>
+<script>
+for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<script>
+// The plain man and woman on flat green, used as the style reference for exercise art.
+(async () => {
+  const D = window.QBDATA, { clips, ...poses } = D.poses;
+  const cfg = { ...D.rig, frame: [760, 760], frameScale: 0.29, anchorPad: 40 };
+  const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+  const out = document.getElementById("out"); out.width = 1536; out.height = 1536;
+  const g = out.getContext("2d"); g.fillStyle = "#00ff00"; g.fillRect(0, 0, 1536, 1536);
+  const opts = { hairColor: "brown", top: "tee", topColor: "white", bottom: "joggers", bottomColor: "black", shoe: "sneakers", shoeColor: "white" };
+  const cells = [["m", "h1", "idle"], ["m", "h1", "back"], ["f", "h3", "idle"], ["f", "h3", "back"]];
+  for (let i = 0; i < 4; i++) {
+    const [body, hairStyle, clip] = cells[i];
+    const f = await rig.render(QBLook.build(D.creator, { body, hairStyle, ...opts }), rig.clipPose(clip, 0));
+    g.drawImage(f, (i % 2) * 768 + 4, Math.floor(i / 2) * 768 + 4);
+  }
+  const blob = await new Promise((r) => out.toBlob(r, "image/png"));
+  await fetch("http://127.0.0.1:8766/style_ref.png", { method: "POST", mode: "no-cors", body: blob });
+  document.title = "ready";
+})().catch((e) => { document.body.append(String(e.stack || e)); document.title = "error"; });
+</script>

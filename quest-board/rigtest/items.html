@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Item Review</title>
+<style>
+  body { margin: 0; padding: 4px; background: #6d6e80; color: #fff; font: 10px system-ui, sans-serif; }
+  #grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0; }
+  figure { margin: 0; text-align: center; }
+  canvas { display: block; width: 100%; }
+  #err { color: #ffb4b4; white-space: pre-wrap; }
+</style>
+<div id="err"></div>
+<div id="grid"></div>
+<script src="../dist/qbdata.js"></script>
+<script src="../src/rig.js"></script>
+<script src="../src/look.js"></script>
+<script>
+// Every shop item on both bodies, front and at the desk, plus a walking frame.
+// ?from=0&to=8&clip=walk
+(async () => {
+  try {
+    const q = new URLSearchParams(location.search), D = window.QBDATA;
+    const { clips, ...poses } = D.poses;
+    const cfg = { ...D.rig, frame: [240, 276], frameScale: 0.0933, anchorPad: 23 };
+    const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+    const names = Object.keys(D.items).slice(+(q.get("from") || 0), +(q.get("to") || 8));
+    const grid = document.getElementById("grid");
+    window.__fail = [];
+    for (const art of names) {
+      const M = D.items[art];
+      for (const body of ["m", "f"]) {
+        if (M.femaleOnly && body === "m") { grid.append(document.createElement("figure"), document.createElement("figure"), document.createElement("figure"), document.createElement("figure")); continue; }
+        const look = QBLook.build(D.creator, { body, hairStyle: "h1", hairColor: "brown", equipped: { [M.slot]: { art, frontOnly: M.frontOnly, over: M.over, clip: M.clip } } });
+        for (const [clip, f] of [["idle", 0], ["back", 0], ["walk", 3], ["type", 0]]) {
+          const c = document.createElement("canvas");
+          c.width = 240; c.height = 276;
+          try {
+            c.getContext("2d").drawImage(await rig.render(look, rig.clipPose(clip, f)), 0, 0);
+          } catch (e) { window.__fail.push(art + " " + body + " " + clip + " " + e.message); }
+          const fig = document.createElement("figure");
+          fig.append(c, Object.assign(document.createElement("figcaption"), { textContent: body + " " + art + " " + clip }));
+          grid.append(fig);
+        }
+      }
+    }
+    document.title = "ready";
+  } catch (e) {
+    document.getElementById("err").textContent = e.stack || e;
+    document.title = "error";
+  }
+})();
+</script>

@@ -1,0 +1,47 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Rig Timing</title>
+<script>
+for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<script>
+// How long the rig takes: building a layer's mesh, first frames in each view, later frames.
+(async () => {
+  const D = window.QBDATA, { clips, ...poses } = D.poses, out = {};
+  const t = () => performance.now();
+  const t0 = t();
+  const rig = await QBRig.create({ rig: D.rig, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+  out.create = Math.round(t() - t0);
+  const look = QBLook.build(D.creator, { body: "m", hairStyle: "h1", hairColor: "brown" });
+  const timed = async (name, clip, f) => { const a = t(); await rig.render(look, rig.clipPose(clip, f)); out[name] = +(t() - a).toFixed(1); };
+  await timed("firstFront", "idle", 0);
+  await timed("secondFront", "idle", 1);
+  await timed("thirdFront", "idle", 2);
+  await timed("firstBack", "back", 0);
+  await timed("secondBack", "back", 1);
+  await timed("stretchFirst", "stretch", 3);
+  const a = t();
+  for (let f = 0; f < 16; f++) await rig.render(look, rig.clipPose("walk", f));
+  out.walk16 = +((t() - a) / 16).toFixed(1);
+  const fr = await rig.render(look, rig.clipPose("idle", 3));
+  const b = t();
+  for (let i = 0; i < 10; i++) fr.toDataURL("image/webp", 0.92);
+  out.toDataURL = +((t() - b) / 10).toFixed(1);
+  // One layer's mesh, by parts.
+  // Longest stall while a fresh look builds, seen from a timer.
+  const other = QBLook.build(D.creator, { body: "f", hairStyle: "h2", hairColor: "brown" });
+  let last = t(), worst = 0, ticking = true;
+  const tick = () => { const n = t(); worst = Math.max(worst, n - last); last = n; if (ticking) setTimeout(tick, 0); };
+  tick();
+  const c = t();
+  await rig.render(other, rig.clipPose("idle", 0));
+  out.freshLookFront = Math.round(t() - c);
+  const e = t();
+  await rig.render(other, rig.clipPose("back", 0));
+  out.freshLookBackAfter = Math.round(t() - e);
+  ticking = false;
+  out.worstStall = Math.round(worst);
+  window.__perf = out;
+  document.title = "ready";
+})().catch((e) => { window.__perf = String(e.stack || e); document.title = "error"; });
+</script>

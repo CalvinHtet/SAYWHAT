@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Character Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14141c; --panel: #1e1e29; --line: #33333f; --text: #f2f1ec; --muted: #a4a4b2;
+    --accent: #ffcf5c; --stage: #2a2a38;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 "DM Sans", system-ui, sans-serif; }
+  #app { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(320px, 1fr); gap: 16px; height: 100vh; padding: 16px; max-width: 980px; margin: auto; }
+  .cc-stage { display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--stage); border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-height: 0; }
+  .cc-canvas { flex: 1 1 0; min-height: 0; width: 100%; object-fit: contain; }
+  .cc-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+  .cc-tab, .cc-opt { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 9px; cursor: pointer; min-height: 40px; padding: 6px 12px; }
+  .cc-tab[aria-pressed="true"], .cc-opt[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .cc-tab:focus-visible, .cc-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .cc-menu { overflow-y: auto; min-height: 0; padding-right: 4px; overscroll-behavior: contain; }
+  .cc-section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; }
+  .cc-section h3 { margin: 0 0 8px; font: 700 16px "Chakra Petch", sans-serif; letter-spacing: .02em; }
+  .cc-row + .cc-row { margin-top: 10px; }
+  .cc-label { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+  .cc-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cc-opt { display: inline-flex; align-items: center; gap: 7px; background: #262632; }
+  .cc-dot { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); flex: none; }
+  .cc-footer { position: sticky; bottom: 0; padding: 8px 0 2px; background: linear-gradient(transparent, var(--bg) 35%); }
+  .cc-done { width: 100%; min-height: 46px; font: 700 16px "Chakra Petch", sans-serif; color: #1a1408; background: var(--accent); border: 0; border-radius: 10px; cursor: pointer; }
+  .cc-done:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  #err { position: fixed; left: 16px; bottom: 16px; color: #ffb4b4; white-space: pre-wrap; }
+  @media (max-width: 720px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: 42vh 1fr; padding: 16px; gap: 12px; }
+  }
+</style>
+<div id="app"></div>
+<div id="err"></div>
+<script src="../src/rig.js"></script>
+<script src="../src/look.js"></script>
+<script src="../src/creator.js"></script>
+<script>
+(async () => {
+  try {
+    const get = (p) => fetch("../data/" + p).then((r) => r.json());
+    const [rigData, bodies, allPoses, data] = await Promise.all([get("rig.json"), get("bodies.json"), get("poses.json"), get("creator.json")]);
+    const { clips, ...poses } = allPoses;
+    const rig = await QBRig.create({ rig: rigData, bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem("qb.character")); } catch (e) {}
+    window.__creator = QBCreator.mount(document.getElementById("app"), {
+      rig, data, clips, initial: saved,
+      onChange: (c) => { try { localStorage.setItem("qb.character", JSON.stringify(c)); } catch (e) {} },
+      onDone: () => { document.querySelector(".cc-done").textContent = "Saved"; },
+    });
+    document.title = "Character Creator";
+  } catch (e) {
+    document.getElementById("err").textContent = e.stack || e;
+  }
+})();
+</script>
+</html>

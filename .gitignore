@@ -1,0 +1,8 @@
+.DS_Store
+.claude/
+quest-board/.claude/
+quest-board/dist/
+quest-board/art/raw/
+quest-board/art/layers/
+quest-board/art/parts/
+__pycache__/
