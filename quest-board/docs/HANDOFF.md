@@ -24,8 +24,9 @@ poop and a Clean up button, dark spacious Restaurant with guests behind tables, 
 and fountain plaza, Auditorium above the Theater, screen that grows the room, six-scene movie, seats
 seen from behind, speakers flanking the screen, Theater closed until the Auditorium opens.
 
-Still to do: two more clothing brands (30 items, needs Chrome), OVERPASS shoes, wiring brand logo
-files (`logo_<brand id>.webp`, the emblem sheet is `cbB` in the art list), bring the Restaurant's
+Still to do: art for two more clothing brands and the OVERPASS shoes. Their shop lines are already
+in `15_shop.js` marked `soon:1` and their entries are in `data/items.json`; remove `soon:1` as each
+item gets art (ids `o_hoop o_slides o_rigg`, `v_*`, `al_*`; needs Cal's Chrome). Bring the Restaurant's
 other tiers up to the same polish, check every room with people in it for clipping, make big upgrades
 in the newer rooms more dramatic (animation, ground changes), and a phone test.
 

@@ -1365,7 +1365,9 @@ THUMB.a_hat=1;
 var BRANDS=[
  {id:"hanga",name:"HANGANG",tag:"Seoul oversized streetwear",c:["#15151b","#2a2a36","#e9e2d0"],ac:"#c9ff3d",start:"2026-11-03",sub:"한강"},
  {id:"y2k",name:"DIAL-UP",tag:"Rhinestones, low-rise and butterfly clips",c:["#ff4fa3","#b46bff","#6cf0ff"],ac:"#fff",start:"2026-11-09",sub:"y2k thrift"},
- {id:"over",name:"OVERPASS",tag:"Concrete, spray paint and skate shops",c:["#141416","#3a3a40","#ff6a1a"],ac:"#ff6a1a",start:"2026-11-16",sub:"street supply"}];
+ {id:"over",name:"OVERPASS",tag:"Concrete, spray paint and skate shops",c:["#141416","#3a3a40","#ff6a1a"],ac:"#ff6a1a",start:"2026-11-16",sub:"street supply"},
+ {id:"rose",name:"VENOM ROSE",tag:"Black leather, velvet and thorns",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
+ {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-11-30",sub:"mountain supply"}];
 var GITEMS=[
  ["gx_h_snap","a_hat","Flat-brim Snapback",90,1,"Black cap, cream HANGANG patch.",{gar:"h_snap",b:"hanga"}],
  ["gx_h_beret","a_hat","Wool Beret",80,1,"Charcoal wool, tilted.",{gar:"h_beret",b:"hanga"}],
