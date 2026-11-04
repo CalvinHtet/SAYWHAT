@@ -70,7 +70,10 @@ for art, meta in items.items():
     tile.alpha_composite(crop, ((ICON - crop.width) // 2, (ICON - crop.height) // 2))
     tile.save(os.path.join(app, f"icon_{art}.webp"), "WEBP", quality=92, alpha_quality=95, method=6)
 
-    if meta.get("slot") == "hat":
+    # noClip: a band or a clip that sits in the hair, so the hair above it stays.
+    if meta.get("noClip"):
+        meta.pop("clip", None)
+    elif meta.get("slot") == "hat":
         meta["clip"] = {}
         for b in ("m", "f"):
             meta["clip"][b] = {}
