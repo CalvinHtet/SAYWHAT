@@ -45,10 +45,10 @@ Bedroom (52% with its rug), Garden and Theater were only measured, not re-spaced
 Clothes: 32 of the 33 unfinished items are unlocked. `v_tulle` still has `soon:1`: three sheets were rejected as stray by `ingest_items.py`, so it needs a different design. Generating, the Chrome tab freezes while idle, so the page loop only moves while something keeps calling into the tab.
 
 Still to do, in order:
-1. Wear the new clothes on both bodies in every pose. Only front icons were looked at. This is Cal's rule, do not skip it.
+1. Wear the new clothes on both bodies in every pose. So far: icons of 29 items looked at, and two full outfits seen standing in the Bedroom at small size (one on each body). Nothing else. This is Cal's rule, do not skip it.
 2. Watch guests in every room for clipping. Only the Restaurant was watched with people in it.
 3. Check every room for items facing the wrong way, room by room, in screenshots.
-4. Phone test, then remove the Testing row and the `window.__qb` hooks before release.
+4. Phone test (a narrow window showed the bottom nav cut off at Trophies and the Collect button wrapping), then remove the Testing row and the `window.__qb` hooks before release.
 
 ## Not yet verified
 
