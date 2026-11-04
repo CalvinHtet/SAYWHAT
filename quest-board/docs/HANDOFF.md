@@ -42,9 +42,7 @@ Spacing audit, all upgrades owned (floor coverage): Rooftop 37%, Game Room 29%, 
 all others under 20%. Nothing sits outside its room. Remaining gaps under .35 tile are wall pieces, stools at the bar and the band on its stage.
 Bedroom (52% with its rug), Garden and Theater were only measured, not re-spaced.
 
-Clothes: 29 of the 33 unfinished items are unlocked. Still marked `soon:1` because `ingest_items.py` rejected the sheet as stray:
-`v_tulle` (twice, too wide for the silhouette, try a narrower skirt), `al_flap`, `al_goggle`, `al_buff`. These were being re-fired.
-Chrome freezes the Higgsfield tab while idle, so the page loop only moves while something keeps calling into the tab.
+Clothes: 32 of the 33 unfinished items are unlocked. `v_tulle` still has `soon:1`: three sheets were rejected as stray by `ingest_items.py`, so it needs a different design. Generating, the Chrome tab freezes while idle, so the page loop only moves while something keeps calling into the tab.
 
 Still to do, in order:
 1. Wear the new clothes on both bodies in every pose. Only front icons were looked at. This is Cal's rule, do not skip it.
