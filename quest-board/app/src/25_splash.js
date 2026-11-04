@@ -24,5 +24,5 @@ function brandSplash(b){var picks=brandPicks(b);
   var m=modal('<div class="card box2 bsplash" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'"><div class="bs-burst">NOW ON SALE</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
   return m}
 /* the newest live brand this player has not been shown yet */
-function brandCheck(){if(!S.created||effLvl()<3||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;
+function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;
   live.forEach(function(b){S.brandSeen[b.id]=1});persist();brandSplash(fresh[fresh.length-1])}

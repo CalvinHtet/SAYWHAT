@@ -29,12 +29,14 @@ function decorSet(i,act,v){var r=bslot(i);if(!r)return;var q=lfDecSets(r.t).filt
   if(act==="decbuy"&&!lfDecUnlocked(r,q)){if(S.coins<q.cost){pop("Need "+(q.cost-S.coins)+" more coins");return}S.coins-=q.cost;S.spent+=q.cost;if(!r.du)r.du={};r.du[q.id]=1;pop(q.name+" unlocked")}
   if(!lfDecUnlocked(r,q))return;r.ds=q.id;render();persist();roomModal(i)}
 var LFACOL={av:1,in:0,st:0};
+var LFRMS={};
 function roomModal(i){
+  var osc=document.querySelector(".rmodal .rm-scroll");if(osc&&osc.dataset.i===String(i))LFRMS[i]=osc.scrollTop;else if(!osc)LFRMS[i]=0;
   closeModals();
   simulate();
   var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
   var stat=T.coin?Math.round(coinRate(i))+' coins/hr, holds '+roomStore(r)+' hrs':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+'/hr':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Crew without a job relax here.');
-  var h='<div class="card box2 rmodal">'+(ART["room_"+r.t]?'<div class="rhero" style="background-image:url('+ART["room_"+r.t]+')"><span class="label">Room</span><h2>'+esc(T.name)+'</h2></div>':'<span class="label">Room</span><h2 style="font-size:30px">'+esc(T.name)+'</h2>')+'<div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+'</div><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
+  var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% until you finish 3 quests today.':'Full speed today.')+'</p>';
   if(r.t==="garden")h+=gdNote(r);if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
   if(!T.fixed&&!T.home&&!ROOMSOPEN[r.t]&&r.t!=="auditorium"){
@@ -57,11 +59,12 @@ function roomModal(i){
   });
   h=h.replace("@@AV@@",avail.length?"Available upgrades ("+avail.length+")":"All upgrades installed");
   h+=avail.join("")+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
-  h+='<div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>';
+  h+='</div><div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>';
   var dp=(DROP&&DROP.i===i)?DROP:null;DROP=null;
   var mm=modal(h);
   mm.querySelectorAll("details.acol").forEach(function(d){d.addEventListener("toggle",function(){LFACOL[d.getAttribute("data-k")]=d.open?1:0})});
   try{lfPvStart(i,mm)}catch(e){}
+  var rsc=mm.querySelector(".rm-scroll");if(rsc){rsc.scrollTop=LFRMS[i]||0;requestAnimationFrame(function(){rsc.scrollTop=LFRMS[i]||0});rsc.addEventListener("scroll",function(){LFRMS[i]=rsc.scrollTop},{passive:true})}
   if(dp){var w=mm.querySelector('#rbigw');if(w){try{lfInstallFx(w,r,dp,i,mm)}catch(e){}}}
 }
 /*V32-INSTALL*/
@@ -93,7 +96,7 @@ function lfInstallFx(w,r,dp,i,mm){
   setTimeout(function(){if(!w.isConnected)return;cr.remove();sh.remove();w.classList.remove("dropshake2");
     fresh.forEach(function(e){e.style.opacity="1";e.classList.add("isonew")});
     var g=document.createElement("div");g.className="isoglow";g.style.left=(tx-60)+"px";g.style.top=(ty-90)+"px";w.appendChild(g);setTimeout(function(){g.remove()},1600);
-    var n=document.createElement("div");n.className="dropname";n.style.animationDelay="0s";n.textContent=dp.name+(fresh.length?" installed":" upgrade active");w.appendChild(n);
+    var n=document.createElement("div");n.className="dropname";n.style.animationDelay="0s";n.textContent=dp.name+(fresh.length?" installed":" upgrade active");w.appendChild(n);setTimeout(function(){n.remove()},2600);
     setTimeout(function(){fresh.forEach(function(e){e.classList.remove("isonew")})},1800)},1400);
 }
 function buildModal(i){
@@ -133,7 +136,7 @@ function baseAct(a,b,e){
   if(a==="raddon"){var r=bslot(i),ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===b.dataset.id})[0];if(!ad||r.a[ad[0]])return true;
     if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].lv&&effLvl()<ad[3].lv){pop("Reach level "+ad[3].lv+" first");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
     if(S.coins<ad[2]){pop("Need "+(ad[2]-S.coins)+" more coins");return true}
-    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[0]==="t_aud"&&!hasRoom("auditorium"))S.base.slots.push({t:"auditorium",a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[0]==="t_aud")roomSplash("auditorium");else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw){fw.classList.add("rflash");fw.scrollIntoView({block:"center",behavior:"smooth"})}}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
+    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
   if(a==="decuse"||a==="decbuy"){decorSet(i,a,b.dataset.v||"");return true}
   if(a==="rpaint"){var r2=bslot(i);if(S.coins<150){pop("Need 150 coins");return true}S.coins-=150;S.spent+=150;r2.st=((r2.st||0)+1)%4;render();persist();roomModal(i);return true}
   if(a==="rassign"){var r3=bslot(i);if(roomCrew(i).length>=crewCap(r3))return true;simulate();S.base.crew[b.dataset.c]=i;render();persist();roomModal(i);pop(CREW[b.dataset.c].name+" clocked in");return true}
@@ -828,7 +831,7 @@ if(S.coins>=1e7){S.coins=2000+300*lvlOf(S.xp||0);S.earnedC=S.coins;S.spent=0}/*r
 if(!S.v001){S.v001=1;if(S.xp<cum(3))S.xp=cum(3)}
 if(!S.base.t53){S.base.slots=["bedroom"].map(function(t){return {t:t,a:{},st:0,pend:0}});S.base.t53=1;S.base.loungeT=Date.now()}/*v53 TEST ROOMS*/
 S.base.slots=S.base.slots.map(function(r){return r&&ROOMT[r.t]?Object.assign({a:{},st:0,pend:0},r):null});
-var rsKeep=S.base.slots.filter(function(r){return r&&(ROOMSOPEN[r.t]||r.t==="auditorium")});S.base.slots=S.base.slots.filter(function(r){return r&&r.t==="bedroom"}).slice(0,1);if(!S.base.slots.length)S.base.slots=[{t:"bedroom",a:{},st:0,pend:0}];S.base.slots=S.base.slots.concat(rsKeep);S.base.crew={};/*only the bedroom and restaurant are open*/
+var rsKeep=S.base.slots.filter(function(r){return r&&r.t!=="bedroom"&&ROOMCELL[r.t]});S.base.slots=S.base.slots.filter(function(r){return r&&r.t==="bedroom"}).slice(0,1);if(!S.base.slots.length)S.base.slots=[{t:"bedroom",a:{},st:0,pend:0}];S.base.slots=S.base.slots.concat(rsKeep);S.base.crew={};try{worldMigrate()}catch(e){}
   S.quests.forEach(function(q){if(!q.rep){var d=DEFAULTS.filter(function(x){return x[0]===q.name})[0];q.rep=d?d[5]:"once"}});
 }
 function rollover(){
@@ -1358,7 +1361,8 @@ document.addEventListener("click",function(e){
   if(/^wk/.test(a)&&trainAct(a,b))return;
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="gotoroom"){var gi=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===b.dataset.t)gi=k});if(gi>=0)roomModal(gi);return}
   if(a==="rhelp"){roomSplash(b.dataset.t,1);return}
   if(a==="thdoorlock"){pop("Open the Auditorium to see what is behind these doors");return}
   if(a==="bsgo"){var bm=b.closest(".modal");if(bm)bm.remove();view="shop";shopTab=b.dataset.b;render();window.scrollTo(0,0);return}
@@ -1370,7 +1374,7 @@ document.addEventListener("click",function(e){
   if(a==="qsdeny"){var cd=b.closest(".qs-card");if(cd){cd.classList.remove("deny");void cd.offsetWidth;cd.classList.add("deny")}return}
   if(a==="char"){charModal();return}
   if(a==="mclose"){var m2=b.closest(".modal");if(m2)m2.remove();return}
-  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(effLvl()<3){pop("The Shop opens at level 3");return}view="shop";shopTab="wardrobe";render();window.scrollTo(0,0);return}
+  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(areaGate("shop")){pop("Build the Walk-in Closet in your Bedroom to open the Shop");return}view="shop";shopTab="wardrobe";render();window.scrollTo(0,0);return}
   if(a==="stab"){shopTab=b.dataset.v;render();return}
   if(a==="story")storyModal();
   if(a==="spin")spin();

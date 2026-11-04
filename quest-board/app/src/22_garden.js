@@ -45,17 +45,20 @@ var GD_UPS=[
  ["g_bench2","Garden Benches",3000,{p:.08,lv:29,g:"Grounds"},"Somewhere to sit and look at it all."],
  ["g_lant","Lantern Posts",6000,{p:.1,lv:34,g:"Grounds"},"The path glows after dark."],
  ["g_arch","Rose Archway",8000,{p:.15,lv:32,g:"Grounds"},"Climbing roses over the path."],
+ ["g_sun","Sundial",2000,{p:.06,lv:30,g:"Grounds"},"Tells the time, slowly."],
+ ["g_birdb","Bird Bath",2000,{p:.06,lv:31,g:"Grounds"},"Small visitors."],
+ ["g_topi","Clipped Topiary",2000,{p:.06,lv:33,g:"Grounds"},"Round, tidy and a little smug."],
  ["g_gate","Iron Garden Gate",12000,{p:.15,lv:38,g:"Grounds",also:"g_x2"},"Black iron and a little ceremony."],
  ["g_koi","Koi Pond",14000,{p:.2,lv:40,g:"Grounds",also:"g_x2"},"The plants seem calmer."],
- ["g_fount","Stone Fountain",18000,{p:.3,lv:44,g:"Grounds",also:"g_x2"},"The center of the whole garden."]
+ ["g_fount","Stone Fountain",18000,{p:.3,lv:44,g:"Grounds",also:"g_x2",splash:"The grounds now center on a stone plaza and a working fountain. A new path leads up to it, and visitors stop to admire it."},"Reshapes the grounds around a stone plaza and running water."]
 ];
 GD_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});
 ADDONS.garden=GD_UPS;
-Object.assign(ADDREQ,{g_x2:"g_x1",g_green2:"g_green1",g_spr:"g_can",g_drip:"g_spr",g_pump:"g_drip",g_p2:"g_p1",g_p3:"g_p2",g_gard2:"g_gard",g_bench2:"g_walk",g_lant:"g_walk",g_arch:"g_walk",g_gate:"g_arch",g_fount:"g_walk",g_koi:"g_walk"});
+Object.assign(ADDREQ,{g_x2:"g_x1",g_green2:"g_green1",g_spr:"g_can",g_drip:"g_spr",g_pump:"g_drip",g_p2:"g_p1",g_p3:"g_p2",g_gard2:"g_gard",g_bench2:"g_walk",g_lant:"g_walk",g_arch:"g_walk",g_gate:"g_arch",g_fount:"g_walk",g_koi:"g_walk",g_sun:"g_walk",g_birdb:"g_walk",g_topi:"g_walk"});
 Object.assign(window.RSSUP,{g_green1:["g_green2"],g_gard:["g_gard2"]});
-Object.assign(window.RSTCH,{g_x2:1,g_green2:1,g_drip:1,g_pump:1,g_p3:1,g_gard2:1,g_bench2:1,g_lant:1,g_arch:1,g_gate:1,g_fount:1,g_koi:1});
+Object.assign(window.RSTCH,{g_x2:1,g_green2:1,g_drip:1,g_pump:1,g_p3:1,g_gard2:1,g_bench2:1,g_lant:1,g_arch:1,g_gate:1,g_fount:1,g_koi:1,g_sun:1,g_birdb:1,g_topi:1});
 
-var GDSIZE=[[10,8],[14,10],[18,12]],GDNAME=["Back Plot","Kitchen Garden","Garden Estate"];
+var GDSIZE=[[12,10],[18,13],[24,16]],GDNAME=["Back Plot","Kitchen Garden","Garden Estate"];
 function gdRoom(){var B=S&&S.base;return B&&B.slots?B.slots.filter(function(r){return r&&r.t==="garden"})[0]:null}
 function gdStage(a){return a&&a.g_x2?2:a&&a.g_x1?1:0}
 var gdDimBase=lfDimOf;
@@ -79,58 +82,65 @@ function gdS(C,k,x,y,w,d,h,o){return lfSpr(C,k,x,y,w,d,Object.assign({h:h,ctr:1}
 function gdMist(C,x,y){var q=lfP(x,y,6);C.add(x+y+.2,'<rect x="'+(q[0]-1.5)+'" y="'+(q[1]-6)+'" width="3" height="6" fill="#aab"/><path d="M'+q[0]+' '+(q[1]-8)+' q-12 -14 -18 -4 M'+q[0]+' '+(q[1]-8)+' q12 -14 18 -4" stroke="rgba(180,225,255,.8)" stroke-width="1.4" fill="none" class="lfmist"/>')}
 LFROOM.garden=function(C){
   rsArtReady();
-  var H=function(k){return C.has(k)},st=H("g_x2")?2:H("g_x1")?1:0,W=C.W,D=C.D;
+  var H=function(k){return C.has(k)},st=H("g_x2")?2:H("g_x1")?1:0,W=C.W,D=C.D,BX=[1.2,6.2,11.2],BY=[1.4,4.6,7.8,11];
   C.out=1;
   C.s("door",W-.5,D-.5,1,"look",[1,1]);C.door={x:W-.5,y:D-.5};
-  /* fences on the two back edges */
-  for(var fx=.2;fx<W-.4;fx+=1.7)lfSpr(C,"w_gfence",fx,.08,1.6,.1,{flip:1,h:1,H:50,ctr:1,nosh:1,dk:-1});
-  for(var fy=.2;fy<D-.4;fy+=1.7)lfSpr(C,"w_gfence",.05,fy,.1,1.6,{h:1,H:50,ctr:1,nosh:1,dk:-1});
-  /* beds fill from the fence out, newest crops first in line */
-  var cols=[[1.0,4.7],[1.0,4.7],[1.0,4.7,8.4]][st],rows=[[1.3,3.6,5.9],[1.3,3.6,5.9],[1.3,3.6,5.9,8.2]][st],spots=[];
-  rows.forEach(function(y){cols.forEach(function(x){spots.push([x,y])})});
+  for(var fx=.2;fx<W-.4;fx+=1.7)lfSpr(C,"w_gfence",fx,.08,1.6,.1,{flip:1,h:1,H:50,ctr:1,nosh:1,dk:99});
+  for(var fy=.2;fy<D-.4;fy+=1.7)lfSpr(C,"w_gfence",.05,fy,.1,1.6,{h:1,H:50,ctr:1,nosh:1,dk:99});
+  /* beds, with a walkable lane all round each one */
+  var cols=[2,2,3][st],rows=[3,3,4][st],spots=[];
+  for(var ry=0;ry<rows;ry++)for(var cx=0;cx<cols;cx++){if(!(st===2&&H("g_koi")&&cx===2&&ry===3))spots.push([BX[cx],BY[ry]])}
   var beds=["gdx_seed","gdx_seed"];
   if(H("g_p1"))beds.push("gdx_raised");if(H("g_let"))beds.push("gd_bed2");if(H("g_tom"))beds.push("gdx_tomato");if(H("g_herb"))beds.push("gdx_herb");
   if(H("g_p2")){beds.push("gd_bed1");beds.push("gdx_raised")}if(H("g_berry"))beds.push("gd_berry");if(H("g_p3")){beds.push("gd_bed2");beds.push("gdx_tomato");beds.push("gd_bed1")}
-  beds.slice(0,spots.length).forEach(function(k,i){var p=spots[i];gdS(C,k,p[0],p[1],3.1,1.5,18,{dk:.5})});
-  C.s("work",2.6,3.05,1,"water",[6,12],{tag:"water"});C.s("work",6.3,3.05,-1,"water",[6,12],{tag:"water"});C.s("work",2.6,5.35,1,"reach",[6,12],{tag:"weed"});
-  if(H("g_spr")){var sn=Math.min(spots.length,beds.length);for(var si=0;si<sn;si+=2){var sp=spots[si];gdMist(C,sp[0]+3.3,sp[1]+.7)}}
-  if(H("g_drip"))spots.slice(0,beds.length).forEach(function(p){C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.55,0),lfP(p[0]+3.2,p[1]+1.55,0),lfP(p[0]+3.2,p[1]+1.62,0),lfP(p[0]-.1,p[1]+1.62,0)],"#27303a"))});
-  /* the tool line down the far side */
-  var Rx=W-1.8;
-  if(H("g_can"))gdS(C,"gdx_can",Rx,.5,1.1,.9,16);
-  if(H("g_bench"))gdS(C,"gdx_bench",Rx,1.5,1.3,.9,26);
-  if(H("g_comp"))gdS(C,"gdx_comp",Rx,2.8,1.1,1.0,24);
-  if(H("g_barrel"))gdS(C,"gdx_barrel",Rx+.1,4.0,.9,.9,28);
-  if(H("g_wheel"))gdS(C,"gdx_wheel",Rx-.1,5.1,1.3,.9,16);
-  if(H("g_stand"))gdS(C,"gdx_stand",Rx-.3,6.2,1.7,1.0,28);
-  if(H("g_scare"))gdS(C,"gd_scare",st===0?8.4:Rx,st===0?.4:D-3.2,.7,.7,50,{H:100});
-  /* the open ground between the beds and the tools */
-  if(st>0){var zx=st===2?12.2:8.4;
-    if(H("g_green2")){gdS(C,"gdx_conserv",zx-.1,.3,3.9,3.2,90,{H:150});lfLight(C,zx+1.9,1.9,70,"#c8f0ff",3,.35)}
-    else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.4,3.0,2.4,70,{H:112});lfLight(C,zx+1.5,1.6,50,"#c8f0ff",2.4,.3)}
-    if(H("g_shed"))gdS(C,"gdx_shed",st===2?Rx-2.2:zx+.1,st===2?.3:2.9,1.9,1.5,60,{H:86});
-    if(H("g_orch")){gdS(C,"gdx_tree",zx+.1,3.5,1.2,1.2,70,{H:106});gdS(C,"gdx_tree",zx+2.0,3.5,1.2,1.2,70,{H:112})}
-    if(H("g_grape"))gdS(C,"gdx_grape",zx,5.0,3.1,.8,50,{H:84});
-    if(H("g_bee")){gdS(C,"gdx_hive",zx+.1,6.1,1.2,.9,30,{H:60});var bp=lfP(zx+.7,6.5,44);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
-    if(H("g_coop"))gdS(C,"gdx_coop",zx+1.7,6.0,1.7,1.2,40,{H:74});
-    if(H("g_mush"))gdS(C,"gdx_logs",zx+.1,7.2,1.3,.8,20,{H:46});
-    if(H("g_lamp"))[[3.4,.15],[7.1,.15]].forEach(function(p){gdS(C,"gd_lamp",p[0]+.6,p[1],.7,.7,40,{H:84,dk:-1});lfLight(C,p[0]+.9,p[1]+.6,60,"#d68aff",2.8,.6)});
-    if(H("g_fount")){gdS(C,"gdx_fount",zx+.5,st===2?7.4:6.0,2.2,2.2,30,{H:92});lfLight(C,zx+1.6,8.5,30,"#9ad8ff",1.8,.2)}
-    if(H("g_koi"))gdS(C,"gd_koi",zx+1.3,st===2?9.0:7.8,2.2,1.2,18,{dk:1});
-    if(H("g_pump"))gdS(C,"gdx_pump",Rx-.1,D-4.3,1.2,1.0,34,{H:66})
-    /* the walkway along the front */
-    if(H("g_walk")){var py=D-1.75,pl='',R=lfSeed(11);for(var sx=.5;sx<W-.2;sx+=.62){var a0=sx,a1=sx+.54,w1=py+R()*.2,w2=py+1.2-R()*.2;
-        pl+=lfPoly([lfP(a0,w1,0),lfP(a1,w1,0),lfP(a1,w2,0),lfP(a0,w2,0)],["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)],"rgba(50,40,30,.45)",.8)}
-      C.decals.push(pl);
+  beds=beds.slice(0,spots.length);
+  beds.forEach(function(k,i){var p=spots[i];gdS(C,k,p[0],p[1],3.4,1.6,16);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
+  if(H("g_spr"))beds.forEach(function(k,i){if(i%2===0){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)}});
+  if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.72,0),lfP(p[0]-.1,p[1]+1.72,0)],"#27303a"))});
+  /* tools down the far side */
+  var Rx=W-2.0,tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
+  tool("g_can","gdx_can",.7,1.2,1.0,14);tool("g_bench","gdx_bench",2.3,1.4,1.0,26);tool("g_comp","gdx_comp",3.9,1.2,1.1,24);tool("g_barrel","gdx_barrel",5.5,.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",7.0,1.4,1.0,16);
+  if(H("g_scare"))gdS(C,"gd_scare",st===0?10:Rx,st===0?8.6:8.6,.7,.7,50,{H:100});
+  if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
+  if(st>0){var zx=st===2?16.4:11.2;
+    if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
+    else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
+    if(H("g_orch")){gdS(C,"gdx_tree",zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",zx+2.6,4.8,1.1,1.1,70,{H:120})}
+    if(H("g_grape"))gdS(C,"gdx_grape",zx,6.6,3.6,1.0,50,{H:96});
+    var hx=st===2?Rx:zx,hy=st===2?9.9:8.6;
+    if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
+    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:zx+2.1,st===2?11.6:8.4,1.7,1.3,36,{H:78});
+    if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+.2:zx+2.4,st===2?8.4:.0+10.6-2.1,1.6,1.3,50,{H:92});
+    if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+2.6:zx,st===2?8.5:9.9,1.4,.8,16,{H:48});
+    if(H("g_pump"))gdS(C,"gdx_pump",Rx+.2,D-3.6,.9,.8,40,{H:70});
+    if(H("g_stand"))gdS(C,"gdx_stand",W-3.2,D-.9-1.1+.3-1.9,1.8,1.0,34,{H:86,dk:-.2});
+    if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[i];if(i%2){gdS(C,"gd_lamp",p[0]+3.6,p[1]-.5,.5,.5,40,{H:80});lfLight(C,p[0]+2,p[1]+.8,60,"#d68aff",2.6,.5)}});
+    if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
+      C.decals.push(stones(.4,W-.2,py,py+1.25));
       lfWander(C,[[W*.25,py+.6,1],[W*.55,py+.6,-1],[W*.8,py+.6,1]]);
-      C.s("smell",3.0,py-.4,-1,"smell",[5,9],{tag:"smell"});C.s("smell",7.0,py-.4,1,"smell",[5,9],{tag:"smell"});
-      if(H("g_bench2"))[W*.3,W*.62].forEach(function(x){gdS(C,"gdx_seat",x,py+1.3,1.5,.5,18,{nosh:1,dk:-.5})});
-      if(H("g_lant"))[.25,.5,.75].forEach(function(f){var lx=W*f;gdS(C,"gdx_lantern",lx,py-.5,.4,.4,60,{H:82,dk:-1});lfLight(C,lx,py,50,"#ffcf7a",2.2,.5)});
-      if(H("g_arch"))gdS(C,"gdx_arch",W*.68,py-.2,1.0,1.6,80,{H:128,nosh:1,dk:-2});
-      if(H("g_gate"))gdS(C,"gdx_gate",W-1.1,py-.2,.5,1.6,50,{H:80,nosh:1,dk:-2})}
+      if(H("g_fount")&&st===2){var fc=[19.4,11.2];
+        var ring=[];for(var a=0;a<28;a++){var t=a/28*6.283;ring.push(lfP(fc[0]+Math.cos(t)*2.6,fc[1]+Math.sin(t)*2.6,0))}
+        C.decals.push(lfPoly(ring,"#cfc7b8","rgba(60,50,40,.5)",1.2)+stones(18.7,20.1,fc[1]+2.3,py+.05));
+        gdFountain(C,fc[0],fc[1]);
+        [[-2.3,.6,1],[.5,-2.3,1],[2.0,-.9,-1],[-1.1,2.1,1],[1.3,2.0,-1]].forEach(function(o){C.s("look",fc[0]+o[0],fc[1]+o[1],o[2],"look",[6,12],{tag:"admire"})})}
+      if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,nob:1})});
+      if(H("g_lant"))[.12,.38,.62,.86].forEach(function(f){var lx=W*f;gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
+      var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
+      if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
+      if(H("g_gate"))open("gdx_gate",W-1.2,py-.2,.5,1.6,92);
+      if(H("g_sun"))gdS(C,"gdx_sundial",W*.34,py-.95,.6,.6,30,{H:52});
+      if(H("g_topi"))[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
+      if(H("g_birdb"))gdS(C,"gdx_birdbath",W*.46,py-.95,.6,.6,30,{H:52});
+      if(H("g_koi")&&st===2)gdS(C,"gd_koi",11.3,11,3.4,2.0,16,{dk:1});
+    }
   }
-  if(st===0)lfWander(C,[[8.3,2.0,1]]);
 };
+/* water that actually moves, and it sits in a new stone plaza */
+function gdFountain(C,cx,cy){gdS(C,"gdx_fount",cx-1.5,cy-1.5,3,3,26,{H:126});var t=lfP(cx,cy,92),s='',k=C.items.length?cx+1.5+cy+1.5+.02:0;
+  [-1,-.55,.55,1].forEach(function(d,i){var ex=t[0]+d*36,ey=t[1]+70-Math.abs(d)*14;s+='<path class="gfw" style="animation-delay:-'+(i*.3)+'s" d="M'+t[0]+' '+(t[1]-14)+' Q'+(t[0]+d*22)+' '+(t[1]-34)+' '+ex+' '+ey+'" fill="none" stroke="rgba(190,232,255,.95)" stroke-width="2.4" stroke-linecap="round"/>'});
+  s+='<path class="gfw" d="M'+t[0]+' '+t[1]+' V'+(t[1]-30)+'" stroke="rgba(225,245,255,.95)" stroke-width="3.2" stroke-linecap="round"/>';
+  [0,1,2].forEach(function(i){s+='<ellipse class="gfr" style="animation-delay:-'+(i*.6)+'s" cx="'+t[0]+'" cy="'+(t[1]+68)+'" rx="30" ry="12" fill="none" stroke="rgba(235,250,255,.8)" stroke-width="1.2"/>'});
+  C.add(k,'<g pointer-events="none">'+s+'</g>')}
 function gdPeople(r,i,C,out){var a=r.a||{};
   if(a.g_gard)out.push({id:"gd:g1",room:i,role:"crew",look:rsNpc({body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"grey",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black"}),ix:0});
   if(a.g_gard2)out.push({id:"gd:g2",room:i,role:"crew",look:rsNpc({body:"f",skin:"s3",hairStyle:"h2",hairColor:"auburn",top:"hoodie",topColor:"grey",bottom:"joggers",bottomColor:"black",shoe:"boots",shoeColor:"black"}),ix:1});

@@ -535,6 +535,7 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
   var a=lfP(x+w,y+d,0),W=(w+d)*LF.sx*(o.sc||1),Hh=W*S.h/S.w,fx=o.flip?-1:1;if(o.H){Hh=o.H;W=Hh*S.w/S.h}
   var sh='<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.22)"/>';
   if(!o.nosh)C.add(x+w+y+d-(o.dk||0)-.01,sh);
+  C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   C.add(x+w+y+d-(o.dk||0),'<g transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/></g>');
   return true}
 function lfSprFloor(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return false;
@@ -1072,7 +1073,7 @@ var LFFP=400,LFCOLW=600,LFOX=[300,900],LFWW=1200,LFROOF=168,LFSTREET=130;
 function lfRoomCtx(r,i){
   lfSetDim(r.t);window.LFCR=r.t;
   var uid=i+1,C=lfCtx(r.t,r.a||{},uid,r.st||0,LFW.wx);
-  C.room=r;C.key=i;var rec=[];LFREC=rec;LFWINS=[];try{lfMigA(r);LFROOM[r.t](C)}finally{LFREC=null}
+  C.room=r;C.key=i;var rec=[];LFREC=rec;LFWINS=[];try{lfMigA(r);LFROOM[r.t](C);if(window.rmPortalsOn)rmPortals(C,r)}finally{LFREC=null}
   C.items.sort(function(a,b){return a.k-b.k});C.obsRaw=rec;C.wins=LFWINS.slice();lfNavBuild(C,rec);
   /* Standing spots may never sit inside furniture, whatever upgrades are owned. */
   C.st.forEach(function(s){if(s.exit&&lfBlockedAt(C,s.exit[0],s.exit[1]))s.exit=lfFreeSpot(C,s.exit[0],s.exit[1],4);if(s.kind==="door"||lfSeatish(s)||s.lift||s.onspot||!lfBlockedAt(C,s.x,s.y))return;var f=lfFreeNear(C,s.x,s.y,3);s.x=f[0];s.y=f[1]});try{C.LT=lfRoomLight(C,uid,r.t,!!C.T.out)}catch(e){C.LT={pre:"",mid:"",post:"",defs:""}}return C;
@@ -1080,8 +1081,8 @@ function lfRoomCtx(r,i){
 /* static room (no agents). C.items kept as separate <g data-k> so agents can be interleaved. */
 function lfRoomSvg(r,i,C,opt){
   lfSetDim(r.t);opt=opt||{};var uid=opt.uid||(i+1),t=r.t,out=C.T.out,s='',st=r.st||0;
-  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');s+=lfSlab();
-  if(out)s+=lfOutBack(t,LFW.wx,uid);
+  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg)s=C.bg+s;s+=lfSlab();
+  if(out&&!C.bg)s+=lfOutBack(t,LFW.wx,uid);
   s+=lfFloor(C.T,C.T.fl,st,uid);
   if(!out){var wlW=LF.W,wlN=LF.N;if(C.rsW){LF.W=C.rsW;LF.N=C.rsW}var wls=lfWalls(t,st,uid,LFW.wx);LF.W=wlW;LF.N=wlN;s+=hole?'<g clip-path="url(#'+hole.id+')">'+wls+'</g>':wls}
   s+=C.decals.join("")+C.walls.join("");
@@ -1212,7 +1213,7 @@ function lfWorld(){
 }
 function lfPreview(r,uid){
   var C=lfRoomCtx(r,uid||90),dm=lfDimOf(r.t),LRX=C.annex&&C.annex.lr,ex=C.annex?(LRX?300:60):0,lx=C.annex?(LRX?700:150):0,vb=[-dm[1]*26-14-lx,-(LF.H+10)-ex,(dm[0]+dm[1])*26+28+lx,(dm[0]+dm[1])*13+LF.H+40+ex];
-  LFPCS[uid||90]=C;
+  LFPCS[uid||90]=C;if(C.portal){vb[0]-=110;vb[1]-=90;vb[2]+=220;vb[3]+=90}
   return '<svg class="lfprev" viewBox="'+vb.join(" ")+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs>'+lfRoomSvg(r,uid||90,C,{uid:uid||90})+(C.LT?C.LT.post:'')+'</svg>';
 }
 
@@ -1275,7 +1276,7 @@ function lfCoachSplit(){
   rk.forEach(function(c){if(hasGym&&o.gym.length<2)o.gym.push(c);else if(o.lounge.length<3)o.lounge.push(c)});
   return o;
 }
-function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;if(r.t==="bedroom"&&!me){me=1;o.push({id:"me",room:i,role:"me",look:lookOf()})}if(r.t==="restaurant")rsPeople(r,i,LFMETA[i].C,o);if(r.t==="garden")gdPeople(r,i,LFMETA[i].C,o);if(r.t==="theater")thPeople(r,i,LFMETA[i].C,o);if(r.t==="auditorium")auPeople(r,i,LFMETA[i].C,o)});return o}
+function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;if(r.t==="bedroom"&&!me){me=1;o.push({id:"me",room:i,role:"me",look:lookOf()})}if(ROOMDEF[r.t])genPeople(r,i,LFMETA[i].C,o);if(LFMETA[i].C.dogs)LFMETA[i].C.dogs.forEach(function(d){o.push({id:"dog:"+d.id,room:i,role:"dog",dname:d.id,bed:d.bed})});if(r.t==="restaurant")rsPeople(r,i,LFMETA[i].C,o);if(r.t==="garden")gdPeople(r,i,LFMETA[i].C,o);if(r.t==="theater")thPeople(r,i,LFMETA[i].C,o);if(r.t==="auditorium")auPeople(r,i,LFMETA[i].C,o)});return o}
   var out=[],B=S.base,vw0=lfVisitors(),cs0=lfCoachSplit(),hasLg=lfLoungeIdx()>=0;
   B.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;var C=LFMETA[i].C;
     if(r.t==="bedroom"){
@@ -1379,7 +1380,7 @@ function lfDogNext(a,C){
   var me=LFA[a.pv?"pv:me":"me"];if(me&&me.room===a.room){a.last="near";a.speed=1.4;lfGo(a,me.x+lfRand(-.7,.7),me.y+lfRand(.3,.9),{kind:"dognear"});return}
   a.mode="do";a.act="stand";a.t=lfRand(1.5,3);
 }
-var LFEMO={smell:"♥",art:"★",stool:"♪",diner:"♥",tv:"♪",look:"?"};
+var LFEMO={admire:"★",smell:"♥",art:"★",stool:"♪",diner:"♥",tv:"♪",look:"?"};
 var LFACT={type:[["type"],1],sit:[["sit"],1],chair:[["sit"],1],read:[["read"],1],eat:[["eat","sit","eat"],.9],work:[["work2","reach"],.55],up:[["up","down"],.9],look:[[null],1],water:[["water","reach"],.7],run:[["pose"],1],smell:[["lean"],1],fish:[["reach","lean"],1.6],carry:[["carry"],1],reach:[["reach"],1],wave:[["wave"],1],lie:[["lie"],1],dance:[["up","wave","down","wave","up","pose"],.42]};
 function lfArrive(a,s){
   var C=lfC(a);a.mode="do";a.tag=s.tag||s.kind;
@@ -1574,8 +1575,8 @@ function lfBind(c){
     if(drag){var p=P[e.pointerId],dx=p[0]-drag.x,dy=p[1]-drag.y;if(moved||Math.hypot(dx,dy)>6){if(!moved){try{c.setPointerCapture(e.pointerId)}catch(x){}}moved=1;c.classList.add("grab");LFV.x=drag.vx+dx;LFV.y=drag.vy+dy;lfClamp();lfApply()}}});
   function up(e){if(!P[e.pointerId])return;delete P[e.pointerId];
     if(!Object.keys(P).length){c.classList.remove("grab");
-      if(!moved&&tgt){var el=tgt.closest&&tgt.closest("[data-lf]");if(el){var q=el.getAttribute("data-lf").split(":"),i=+q[1];
-        if(q[0]==="room")roomModal(i);else if(q[0]==="build"){var nxr=nextRoom();if(nxr&&effLvl()<ROOMT[nxr].lv)pop("Expand \u00b7 The "+ROOMT[nxr].name+" unlocks at level "+ROOMT[nxr].lv);else buildModal(i)}else if(q[0]==="collect"){baseAct("rcollect",{dataset:{i:i}},e)}else if(q[0]==="closet"){wardrobeModal()}}}
+      if(!moved&&tgt){var el=tgt.closest&&!tgt.closest("[data-act=gotoroom]")&&tgt.closest("[data-lf]");if(el){var q=el.getAttribute("data-lf").split(":"),i=+q[1];
+        if(q[0]==="lock"){pop("The "+q[1]+" unlocks at level "+q[2])}else if(q[0]==="room")roomModal(i);else if(q[0]==="build"){buildModal(i)}else if(q[0]==="collect"){baseAct("rcollect",{dataset:{i:i}},e)}else if(q[0]==="closet"){wardrobeModal()}}}
       drag=null;pinch=null;tgt=null}else if(Object.keys(P).length===1){var k=Object.keys(P)[0];drag={x:P[k][0],y:P[k][1],vx:LFV.x,vy:LFV.y};pinch=null;moved=99}}
   c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up);
   c.addEventListener("wheel",function(e){e.preventDefault();var p=pt(e);lfZoomAt(e.deltaY<0?1.12:.89,p[0],p[1])},{passive:false});
@@ -1613,7 +1614,7 @@ function lfPvStart(i,mm){
   lfPvStop();var r=S.base.slots[i];if(!r||!LFMETA[i])return;
   var it=mm.querySelector(".lfitems");if(!it)return;var uid=+it.getAttribute("data-i"),C=LFPCS[uid];if(!C)return;
   LFMETA[uid]={C:C,p:{x:0,y:0},r:r,slot:i};
-  if(SVC[r.t]&&!document.getElementById("obpanel")){var rb=mm.querySelector(".rbig");if(rb){var d=document.createElement("div");d.id="obpanel";d.className="obpanel mono";rb.parentNode.insertBefore(d,rb.nextSibling)}}
+  if(SVC[r.t]&&!document.getElementById("obpanel")){var rb=mm.querySelector(".rm-scroll");if(rb){var d=document.createElement("div");d.id="obpanel";d.className="obpanel mono";rb.insertBefore(d,rb.firstChild)}}
   lfDesired().filter(function(w){return w.room===i}).forEach(function(w){
     var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:w.visitor?0:0});
     var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
@@ -3258,7 +3259,7 @@ function lfRigState(a){var ch=a.look&&a.look.rig;if(!ch)return null;
   var now=performance.now();
   if(a.mode==="walk"){var cl=a.back?"walkBack":"walk";return {ch:ch,clip:cl,f:QBLoft.walkFrame(a.ph||0,cl)}}
   if(a.mode==="do"&&(a.act==="up"||a.act==="stretch")){if(!a._st0)a._st0=now;var c=QBLoft.clips.stretch;return {ch:ch,clip:"stretch",f:Math.min(c.frames-1,Math.floor((now-a._st0)/1000*c.fps))}}
-  a._st0=0;if(a.mode==="do"&&/^(sit|read|eat)$/.test(a.act||"")){return {ch:ch,clip:"sit",f:QBLoft.clipFrame("sit",now)}}
+  a._st0=0;if(a.mode==="do"&&/^(sit|read|eat)$/.test(a.act||"")){var bk=a.st&&a.st.facewall;return {ch:ch,clip:bk?"sitBack":"sit",f:QBLoft.clipFrame(bk?"sitBack":"sit",now)}}
   if(a.mode==="do"&&a.st&&a.st.fxwall){return {ch:ch,clip:"back",f:QBLoft.clipFrame("back",now)}}return {ch:ch,clip:"idle",f:QBLoft.clipFrame("idle",now)}}
 function lfRigKey(a){var r=lfRigState(a);return r?(r.hide?"h":r.clip+r.f+(r.seat||"")):""}
 function lfCalImg(a,f,img){var r=lfRigState(a);if(!r)return false;if(!a.look.npc)QBLoft.warm(r.ch);img.style.imageRendering="auto";

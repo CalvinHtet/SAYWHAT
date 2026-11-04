@@ -43,7 +43,7 @@ var TH_UPS=[
  ["t_st2","Concession Staff",5000,{p:.25,lv:31,g:"Staff",also:"t_ctr"},"Someone behind the counter."],
  ["t_st3","Hire a Bartender",7000,{p:.25,lv:39,g:"Staff",also:"t_bar"},"Knows your usual."],
  /* the building */
- ["t_aud","Open the Auditorium",15000,{p:.5,lv:30,g:"Expansion",splash:"You can finally see what is behind the double doors. The Auditorium is now a room of its own, with its own upgrades: seats, projector, walls, floors and, one day, an IMAX screen."},"Builds the room behind the double doors."],
+ ["t_aud","Open the Auditorium",15000,{p:.5,lv:25,g:"Expansion",opens:"auditorium",splash:"You can finally see what is behind the double doors. The Auditorium is now a room of its own, with its own upgrades: seats, projector, walls, floors and, one day, an IMAX screen."},"Builds the room behind the double doors."],
  ["t_wing","Expand the Lobby",12000,{p:.4,cap:2,lv:34,g:"Expansion",splash:"The lobby is much bigger now, with room for a bar and a longer line."},"A bigger lobby, a longer line and room for a bar."]
 ];
 TH_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});
@@ -153,11 +153,11 @@ function thGuest(a,C,r){
 }
 var thGuestBase=lfGuestNext;
 lfGuestNext=function(a,C,r){return r.t==="theater"?thGuest(a,C,r):thGuestBase(a,C,r)};
-function thPeople(r,i,C,out){var a=r.a||{},mk=function(id,sp,ix){out.push({id:"th:"+id,room:i,role:"crew",look:rsNpc(sp),ix:ix})};
+function thPeople(r,i,C,out){var a=r.a||{};if(!a.t_aud){out.push({id:"th:clerk",room:i,role:"crew",look:rsNpc(RSSTAFF.r_s2),ix:0});return}var mk=function(id,sp,ix){out.push({id:"th:"+id,room:i,role:"crew",look:rsNpc(sp),ix:ix})};
   mk("clerk",RSSTAFF.r_s2,0);
   if(a.t_st1)mk("usher",RSSTAFF.r_s3,1);
   if(a.t_st2)mk("conc",RSSTAFF.r_s1,2);
   if(a.t_st3)mk("bar",{body:"f",skin:"s5",hairStyle:"h1",hairColor:"black",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["npc_vest"]},3);
   var n=3+(a.t_marq?1:0)+(a.t_ctr?1:0)+(a.t_tv?1:0)+(a.t_aud?1:0)+(a.t_wing?2:0)+(a.t_bar?1:0);for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
 function auPeople(r,i,C,out){var seats=C.st.filter(function(s){return s.cust}).length,n=Math.min(seats,4+Math.floor(addonsOf(r).length/2),10);for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
-function thNote(r){var a=r.a||{},m=thSnackFor(r);return '<p class="note"><b>'+(a.t_wing?"Grand Lobby":"Small Lobby")+'.</b> '+(a.t_aud?'The Auditorium is open.':'What is behind the double doors? Open the Auditorium at level 30 to find out.')+(m.length?' Selling: '+esc(m.join(", "))+'.':'')+'</p>'}
+function thNote(r){var a=r.a||{},m=thSnackFor(r);return '<p class="note"><b>'+(a.t_wing?"Grand Lobby":"Small Lobby")+'.</b> '+(a.t_aud?'The Auditorium is open.':'Closed until the Auditorium opens: no customers and no money yet. Open it from the upgrades below.')+(m.length?' Selling: '+esc(m.join(", "))+'.':'')+'</p>'}

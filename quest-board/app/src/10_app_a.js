@@ -592,7 +592,7 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",3],["hall","Hall",4],["trophy","Trophies",5],["wheel","Wheel",6],["away","Dungeons",7]];
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Trophies",5],["wheel","Wheel",6],["away","Dungeons",1]];
 var AREALINE={shop:"A real shop. Every quest pays coins now. Spend them on themes, frames, pets and more.",trophy:"Every achievement gets its own trophy on a shelf. Each one pays a 250 coin bonus.",hall:"Your Class Hall. Your story, perks and the full advancement ladder live here.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your crew on real-time expeditions. They come back with coins."};
 var view="board";
 function coinsFor(xp){return Math.max(10,Math.round(xp*2.5*(1+.01*(effLvl()-1))))}
@@ -731,7 +731,7 @@ function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
-    var lk=lv<a[2];
+    var lk=lv<a[2]||areaGate(a[0]);
     return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:"")+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>Lv '+a[2]+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
@@ -1429,7 +1429,7 @@ function vaultHtml(d){
   return h+'</section>';
 }
 function dropCheck(){
-  if(!S||!S.created||ccEdit||effLvl()<3||document.querySelector(".dropsplash"))return;
+  if(!S||!S.created||ccEdit||areaGate("shop")||document.querySelector(".dropsplash"))return;
   S.seenDr=S.seenDr||{};var d=dropState(),b=d.live.filter(function(x){return !S.seenDr[x.id]})[0];if(!b)return;
   var prev=GORDER.map(function(g){var it=SHOP.filter(function(x){return x[6].b===b.id&&x[1]===g[0]&&itemFits(x)})[0];return it?'<div class="dsp"><img src="'+itemArt(it)+'" alt=""><small>'+g[1]+'</small></div>':''}).join("");
   var el=document.createElement("div");el.className="dropsplash";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");
