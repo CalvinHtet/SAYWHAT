@@ -1,6 +1,6 @@
 # Task board
 
-The one list all three chats share (see `TEAMWORK.md` at the top of the repo). LEAD keeps it tidy. Re-read it right
+The one list both chats share (see `TEAMWORK.md` at the top of the repo). ROOMS keeps it tidy. Re-read it right
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
@@ -10,7 +10,7 @@ Live on the phone: `APPV` 41 (page version 12), 2026-11-05.
 
 ---
 
-## LEAD: board, quality of life, publishing
+## ROOMS as lead: board, quality of life, publishing
 
 Doing:
 
@@ -18,15 +18,15 @@ To do:
 - [ ] Ask Cal for his phone-test feedback list, sort it onto this board by owner.
 - [ ] Confirm on Cal's phone that the Loft fills the screen inside the Claude app, with the bottom nav showing.
 - [ ] Confirm the phone shows the newest version (the header `v` number) after a publish.
-- [ ] Stretch pose: Cal to choose (a) gentler "yawn" stretch (recommended, `data/poses.json`; ask SHOP, which owns it),
+- [ ] Stretch pose: Cal to choose (a) gentler "yawn" stretch (recommended, `data/poses.json`; SHOP owns that file),
       (b) keep it, or (c) painted arms-up art for every top.
 - [ ] UI pictures redrawn in the game's style (`ui_*`: classes, coaches, crew, ranks, rewards), with a Chrome turn.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks.
 
-Ready to publish (SHOP and ROOMS add lines here):
+Ready to publish (SHOP adds lines here):
 
-Requests for LEAD:
+Requests for the lead:
 
 ---
 
