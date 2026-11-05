@@ -18,6 +18,12 @@ Doing:
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
+- [ ] Dungeon gifts, Relics and Trophies (Cal, Goblin King set): gifts on mission return with a reveal; loot per mission;
+      the Trophies tab becomes Relics, with tiered relics hidden until earned (old badges carry over) and a Trophies sub-tab
+      that opens after the first piece and the Lair's Trophy Room; piece buffs and the set bonus; the crew fix (nobody has
+      joined since the lounge was removed). Art requested from ROOMS below. QA to simulate drop odds.
+- [ ] Economy: waiting on Cal. Upgrades unlock up to level 62 while levels take about 6 days each past 80 (Cal: wants 2 or 3
+      levels on a busy day, and no level locks on upgrades, 4 at a time).
 - [x] (from ROOMS) Saves: online saving fixed, an old online save never replaces newer progress (9c3bd78). Goes live in the
       next publish. Each device asks once, "Two saves found", when its save and the online one disagree.
 - [x] (from ROOMS, ade6cd0) Shop banners, Cal on approving the art: each brand's title stylized and unique (not plain white text or a
@@ -49,6 +55,20 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Dungeon gifts and the Goblin King set (Cal, 2026-11-05: "Goblin King set"). Missions sometimes bring home a gift: coins, XP,
+  a dungeon-only wearable, or one piece of The Goblin King's Regalia (helm, chestplate, greaves, boots, sword). The first piece
+  opens a Trophy Room upgrade in the Hero's Lair; pieces fill an armor mannequin there; the full set gives the team a big
+  boost. LEAD writes the gifts, loot, Relics and Trophies tabs and the bonuses; ROOMS paints and builds the room. Art, in this
+  order, all original (a goblin king of our own, no franchise look):
+  1. Five piece icons and a set emblem, 256 x 256, painted fantasy game style, on transparent: `ui_tr_goblin_helm.webp`,
+     `_chest`, `_greaves`, `_boots`, `_sword`, `ui_tr_goblin_set.webp`. Shown in the gift reveal and the Trophies tab.
+  2. The gift: `ui_gift.webp` (a closed dungeon loot chest or wrapped bundle, 256 x 256). The reveal opens it in code.
+  3. The Trophy Room: a Lair upgrade (`lr_troph`, add it to the Lair's upgrades with `{trophy:1}`: LEAD's menu shows it as
+     "Bring home your first trophy" until one exists, then sells it) and its picture: glass trophy cases and an armor
+     mannequin, drawn empty, plus each piece as a layer on the mannequin, so it dresses piece by piece (read `S.trophy.goblin`,
+     an object of piece ids that are owned). Show Cal the room and the full mannequin side by side first.
+  4. One dungeon-only wearable: the Rift Mask, a mask from another dimension (one sheet, every angle, both bodies, item id
+     `dg_riftmask`, slot mask). Never sold in the Shop; LEAD adds its line with a `dungeon` flag. Wear-test it.
 - Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). The code is in (`src/rig.js`, the
   `stretch` pose has `"painted":"yawn"`). Template: serve `quest-board/` and open `rigtest/template.html?pose=stretch&scale=2`:
   the bare body in the peak of the yawn, man then woman, on flat green, each half exactly one frame (720 x 828). One
@@ -104,12 +124,12 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
 - Street view (51a9506, checked on 59eeaf7 at 390 x 844): works. The street runs 2 animations and no room images; The Loft
   loads 5 rooms (35 animations), Kode Plaza 7 (99), Calibur Mall 9 (375); Street drops back to 2. Saves, every tab: pass.
   Wrong: Calibur Mall opens with its end rooms cut off left and right (Theater and Club half off screen), The Loft and Kode
-  Plaza fit. `shots/inside_calibur_mall_390.png`. Owner: LEAD.
+  Plaza fit. `shots/inside_calibur_mall_390.png`. Owner: LEAD. DONE in 861bee1 (all three fit at 390 px).
 - Street view: the hint at the bottom still says "tap a room" on the street (should be "tap a building"), and it is pale
-  grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD.
+  grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
-- Yawn pilot painted, sent to Cal as approval 4 (`art/raw/yawn/yawn_pilot.png`, git-ignored; layers in
+- TAKEN by LEAD, done in 861bee1. Yawn pilot painted, sent to Cal as approval 4 (`art/raw/yawn/yawn_pilot.png`, git-ignored; layers in
   `art/raw/yawn/layers/`, 720x828, frame-sized; the cutter is `tools/yawn_cut.py`). Not in `art/app` until Cal approves.
   One change needed in `src/rig.js` (yours): a painted BODY layer is drawn in the body mesh's last group, so it covers the
   face, hair, trousers and shoes. Drawn in its FIRST group it works (tested in a scratch copy, that is what the sheet shows).
