@@ -40,6 +40,13 @@ To do:
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
 - PUBLISHED in v45. READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
+- READY TO PUBLISH: Bedroom patio door and view (17ab80d). Once the Patio room exists the Bedroom has a sliding glass door
+  onto it (the last pane of the glass wall, or a door of its own in the back wall without the glass upgrade), and through
+  the glass you see the Patio room as it is furnished, with its skyline. Look at: the Bedroom on a phone, with Floor-to-
+  Ceiling Glass, the Patio's furniture behind the glass; buy something for the Patio and check it shows from the Bedroom.
+  Checked headless: four cases (glass and patio with Cal's furniture, glass and every patio item, plain wall and patio,
+  glass without a patio), plus the building view, no errors. Not checked: on a phone; with the plain wall the bookshelf
+  stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
 - Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). One sheet per cosmetic, both bodies,
@@ -101,8 +108,9 @@ To do:
 - [ ] Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
       the wall colour options, the Loft should be the most customizable: a painted version of each tier per colour scheme;
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
-      furniture he owns in the Patio room (the old Bedroom patio view looked great). Tiers are in `art/raw/walls/bedroom/`;
-      the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
+      furniture he owns in the Patio room (the old Bedroom patio view looked great): DONE in 17ab80d. Tiers are in
+      `art/raw/walls/bedroom/`; the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
+- [ ] (LEAD's request) Yawn pilot: bare body, `y_vjkt`, `o_puffer`, `h_hoodie`, both bodies. Next after the Closet sheet.
 - [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand).
