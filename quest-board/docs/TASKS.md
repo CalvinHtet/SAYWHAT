@@ -88,10 +88,14 @@ Art and room code requests (LEAD asks, ROOMS does):
      `_f.webp` for tamer, swiftblade, runeweaver, vanguard (360 x 480 portrait, the player's chibi in the class gear). The class
      screen and the job banner pick the one matching the player's body; the old picture shows until then.
   2. A join banner per team member, anime style, 720 x 400: `ui_team_sable.webp` (scout, rescued in the dungeon),
-     `ui_team_mara.webp` (chef), `ui_team_desmond.webp` (investor, Lock and Key), `ui_team_priya.webp` (investor, the mall),
-     `ui_team_theo.webp` (theater crew). Original designs. The banner, team cards and scene portraits use them automatically.
+     `ui_team_mara.webp` (chef), `ui_team_rafe.webp` (Rafe Calloway, a sunburnt travelling adventurer with a map tattoo,
+     an Old Fashioned in hand), `ui_team_nova.webp` (Nova Lin, a fashion vlogger with a ring light on her phone),
+     `ui_team_theo.webp` (theater crew). Original designs. The investors (Desmond Hale, Priya Okafor) are not team members:
+     they only need their scene portraits (`ui_story_lockkey.webp`, `ui_story_mall.webp`); Rafe's and Nova's scenes use
+     `ui_story_rafe.webp` and `ui_story_nova.webp` if painted, else their team banner.
   3. In the building view: draw each team member who has joined (`window.__qbTeam.list()`, ids above) in their own room
-     (Mara the restaurant, Desmond Lock and Key, Priya the mall, Theo the theater, Sable the Lair) with their signature look
+     (Mara the restaurant, Rafe at the end of Lock and Key's bar with a crowd round him, Nova filming in the mall, Theo the
+     theater, Sable the Lair) with their signature look
      from `TEAM[id].look` and something that makes them stand out from the guests (a name tag, a glow ring, a signature prop).
      Better still, a signature cosmetic each, painted as items (Mara's chef whites exist already as `npc_chef`).
   4. The theater's basics as their own upgrades: a ticket stand and a popcorn and soda machine. Tell LEAD their ids, and Theo's
