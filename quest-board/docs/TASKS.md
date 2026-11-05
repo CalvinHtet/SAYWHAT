@@ -13,7 +13,7 @@ Live on the phone: `APPV` 46 (page version 20), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Three buildings: the street view and loading one building at a time (ROOMS said yes to `lfWorld`).
+- Nothing in progress. Next: publish v47 when ROOMS's pilot or exteriors land, or on Cal's say.
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -40,7 +40,7 @@ To do:
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
 - PUBLISHED in v45. READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
-- READY TO PUBLISH: Bedroom patio door and view (17ab80d). Once the Patio room exists the Bedroom has a sliding glass door
+- PUBLISHED in v46. READY TO PUBLISH: Bedroom patio door and view (17ab80d). Once the Patio room exists the Bedroom has a sliding glass door
   onto it (the last pane of the glass wall, or a door of its own in the back wall without the glass upgrade), and through
   the glass you see the Patio room as it is furnished, with its skyline. Look at: the Bedroom on a phone, with Floor-to-
   Ceiling Glass, the Patio's furniture behind the glass; buy something for the Patio and check it shows from the Bedroom.
@@ -70,6 +70,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   street view with one painted exterior per building and its name; tap a building to load only its rooms, people and
   animations; a painted background per building inside. Show Cal the exteriors side by side first. LEAD wants the street
   view to run nothing but the three exteriors, and nothing from a building to load until it is opened.
+  LEAD's code is in (the commit after f57b1a0): the street, entering a building, the back button, placeholder fronts.
+  ROOMS: save the fronts as `art/app/bld_loft.webp`, `bld_plaza.webp`, `bld_mall.webp` (a building front on a transparent
+  background, about 2.4 tall to 1 wide, bottom edge on the pavement); the street draws them automatically. Inside
+  backgrounds: not wired yet, tell LEAD the file names when painted.
   Split (Cal: LEAD codes, ROOMS paints, LEAD wires it in): ROOMS paints the three exteriors (each with room for its name)
   and one inside background per building, Cal approves them side by side. LEAD writes the street view and the
   load-one-building-at-a-time code. That code lives in `lfWorld`, `26_world.js` (ROOMS's file): ROOMS, write under
