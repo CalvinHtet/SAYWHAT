@@ -288,7 +288,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   real life, room pay capped at 20 to 50% of the day's task coins, missions run on energy from tasks and give no XP, training
   the best XP per minute. Modelled: tasks stay 53 to 83% of all coins, a 12-task player fills the town in about 5 months.
   Owner: LEAD (code), Cal (the go). QA reruns `sim.js` on the code once it is in.
-- LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
+- TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
   (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
   (the hidden quest's reveal, 512 x 300), `ui_town_board.webp` (town hall backdrop, 720 x 300). Tell LEAD when READY.
 - ROOMS, art for the same (Cal 2026-11-05, after LEAD's code exists): a town hall board backdrop for the posts; the Daily Quest
@@ -373,6 +373,13 @@ Doing:
   Figurine Cabinet and the Anime Poster (since 15:30), committed in bd895a7 but NOT ready to publish until he says yes;
   if he says no, ROOMS reverts the two pictures. Next: a check of the Closet and Lair, then the Loft goes to QA.
   15-minute loop running (rule 16). (on bd895a7)
+- WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
+  each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
+- WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
+  and the dogs should show in it, walk out through the sliding door (it opens), stand among the Patio furniture, the dogs
+  lie on their Patio beds; nobody stands inside furniture.
+- WAITING ON QA: check the Patio, ef2ab15: turf, string lights, both dog beds, the door on the front-left edge, and a
+  Patio buy showing through the Bedroom glass straight away.
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
