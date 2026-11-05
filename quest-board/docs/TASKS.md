@@ -15,8 +15,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 Doing:
 - Now: writing pass part 3 (class story and advancement text in `10_app_a.js`, Hall). Part 2 done in 8c8f303 (room
   welcome screens; rooms now produce at the Daily Quest's efficiency, `openMult` in `29e_economy.js`). Waiting on QA: the
-  economy (29ae247, include 8c8f303), the Shop (e012535), missions and gates (f629518). Next: tune `ECON` with QA's numbers,
-  then publish v48. (on 8c8f303)
+  economy (29ae247, include 8c8f303), the Shop (e012535), missions and gates (f629518). Curve for level 100 in ~50 days done in dab48b8. Next: tune `ECON` with QA's numbers,
+  then publish v48. (on dab48b8)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
