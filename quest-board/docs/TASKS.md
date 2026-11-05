@@ -13,10 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: ROOMS's Trophy Room hook (`qbRaidTrophies()`, `29d_dungeon.js`), then QA's effort-first economy (Cal approved):
-  all numbers in `ECON` in `29e_economy.js`; the Daily Quest, room share of task coins, mission energy, no XP outside real
-  life, prices by kind (`29_prices.js`), training stat points. Also touches `28_missions.js`, `29b_story.js`, `30_app_b.js`,
-  `10_app_a.js`, `index.html`. Next: `WAITING ON QA: check the economy`; then the rest of the writing pass. (on d9b782c)
+- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Waiting on QA's
+  economy check (29ae247). Next: tune `ECON` with QA's numbers, then publish v48. (on 29ae247)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -229,7 +227,13 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
   15-minute loop and start it.
-- TAKEN by LEAD (building now). WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
+- WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
+  (`29e_economy.js`), hook `window.__qbEcon`. Look at: the Daily Quest card on the board (goal, efficiency, chest, hidden
+  quest at 2x), room payouts against today's task coins, mission energy on the Dungeons tab, no XP from missions, delves,
+  gifts or story visits, training (50 XP and a stat point for 3+ exercises), new prices. Rerun `sim.js` for the three
+  players, 60 days (Cal: "step by step until it feels right ... it could be tightened more"). Not done yet: the hidden quest's
+  rare furniture and cosmetic shards (it gives a streak freeze or INT until ROOMS's art exists), stat icons.
+- DONE by LEAD in 29ae247. WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
   what it would feel like for a long term play of this game. So we should take it step by step until it feels right. Your
   coin estimations and pricing feels good, but it could be tightened more."** Build it as written in `docs/QA.md` (Proposal:
   an effort-first economy; Cal's requests 2 and 3 are now approved too), keep the numbers in one place so they are easy to
