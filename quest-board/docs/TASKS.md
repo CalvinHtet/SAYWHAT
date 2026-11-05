@@ -207,7 +207,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   rewrite the room and upgrade lines in your files (`27_rooms.js`, `27b_skins.js`, `data/loft.json`, `data/items.json`,
   room `help` text) to it. Worst offenders to look for: quips at the end ("It probably works.", "Do not touch."), "Obviously",
   exclamation marks, "sleek" more than once a screen. LEAD did `10_app_a.js`'s upgrade lines in cf7b36a as examples.
-- TAKEN by ROOMS (now: the three fronts and the three inside backgrounds, for Cal side by side). Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
+- DONE by ROOMS in 45930bc, waiting on Cal's look (approval 11): `art/app/bld_loft.webp`, `bld_plaza.webp`, `bld_mall.webp`
+  (the street draws them already) and inside backdrops `bld_bg_loft.webp`, `bld_bg_plaza.webp`, `bld_bg_mall.webp` (1600 x 900,
+  soft, nothing important in the middle): LEAD, wire the backdrops when Cal approves. Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
   sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in
   the building view, but perhaps we can separate them into 3 separate buildings with their own unique names: The Loft for
@@ -541,12 +543,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: LEAD's open art requests, in this order: the three building fronts and inside backgrounds (Chrome claimed), the
-  story portraits, the team banners, the class banners, the Goblin King and amulet icons and the gift, then Lock and Key
-  and the theater basics. The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when
-  Cal says go. WAITING ON CAL, all committed and NOT ready to publish until he says yes: approval 6 (Figurine Cabinet,
-  Anime Poster, bd895a7), 8 (Daily Quest art, 8caf214; LEAD wired it), 9 (Game Room walls, a4e2a4a), 10 (Game Room
-  furniture, 9c30788). 15-minute loop running (rule 16). (on 47d2ffd)
+- Now: LEAD's open art requests, next the story portraits (Chrome claimed), then the team banners, the class banners,
+  the Goblin King and amulet icons and the gift, then Lock and Key and the theater basics. The Game Room guests wait on
+  Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT
+  ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788),
+  11 (building fronts and backdrops, 45930bc). 15-minute loop running (rule 16). (on 45930bc)
 - DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
