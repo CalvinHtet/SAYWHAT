@@ -297,5 +297,6 @@
    5
   ]
  },
- "maxStretch": 1.5
+ "maxStretch": 1.5,
+ "armpit": {"slots": {"top": {"sleeves": true, "cap": 2}, "body": {"sleeves": false, "cap": 0}}, "arms": ["uaN", "uaF"], "joints": ["shoulderN", "shoulderF"], "above": 80, "armsAbove": 0}
 }

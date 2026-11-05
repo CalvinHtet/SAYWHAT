@@ -154,7 +154,7 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
     /* e.plat: the piece is a stage or a dance floor people stand on, this many units high. It is no obstacle, and
        anyone inside it is lifted onto it and drawn over it, instead of standing inside it with only a head showing. */
     if(e.art){var arts0=Array.isArray(e.art[0])?e.art:[e.art];if(e.plat){var RR=LFREC;LFREC=null;arts0.forEach(one);LFREC=RR;
-      arts0.forEach(function(a){var x0=sx(a[1],a[3]),y0=sy(a[2],a[4]);C.plat.push({x0:x0,y0:y0,x1:x0+a[3],y1:y0+a[4],z:e.plat,key:x0+a[3]+y0+a[4]-((a[6]&&a[6].dk)||0)+.01})})}
+      arts0.forEach(function(a){var x0=sx(a[1],a[3]),y0=sy(a[2],a[4]);C.plat.push({k:a[0],x0:x0,y0:y0,x1:x0+a[3],y1:y0+a[4],z:e.plat,key:x0+a[3]+y0+a[4]-((a[6]&&a[6].dk)||0)+.01})})}
       else arts0.forEach(one)}
     if(e.light)lfLight(C,sx(e.light[0]),sy(e.light[1]),e.light[2],e.light[3],e.light[4],e.light[5]);
     /* A spot belongs to the piece nearest it, and moves with that piece when the room spreads. Spread on its own
@@ -171,6 +171,8 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}
 function genPeople(r,i,C,out){var d=ROOMDEF[r.t];if(!d)return;var a=r.a||{},seats=C.st.filter(function(s){return s.cust}).length;
   (d.staff||[]).forEach(function(q,j){if(!q[0]||a[q[0]])out.push({id:"st:"+r.t+j,room:i,role:"crew",look:rsNpc(q[1]),ix:j})});
+  /* d.visitors: a room only these people visit (the Game Room's friends). Nobody else comes in, and with an empty list nobody does. */
+  if(d.visitors){var vs=d.visitors.filter(function(v){return v&&v.look});for(var v=0;v<Math.min(seats,vs.length);v++)out.push({id:"g:"+i+":"+v,room:i,role:"guest",gi:v,vis:vs[v].id});return}
   var n=d.guests===0?0:Math.min(seats,(d.guests||2)+Math.floor(addonsOf(r).length/3));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
 function genNote(r){var d=ROOMDEF[r.t];if(!d||!d.stageNames)return "";return '<p class="note"><b>'+esc(d.stageNames[roomStageOf(r.t,r.a)]||d.name)+'.</b></p>'}
 /* ---- the Restaurant: small and plain to start, dark and spacious at the end ---- */

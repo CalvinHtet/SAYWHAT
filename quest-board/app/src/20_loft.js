@@ -1730,7 +1730,8 @@ function lfGuestNext(a,C,r){
     a.wait=0;a.sat=0;a.st=null;var d=lfDoorOf(C);a.speed=1;lfGo(a,d.x,d.y+.3,"leave");return}
   if(a.alpha>0&&a.mode!=="idle"){a.mode="idle";a.t=1;return}
   var f=lfFree(C,a,function(s){return s.cust});if(!f.length){a.alpha=0;a.mode="idle";a.t=6;return}
-  var o=lfPick(f);a.look=lfGuestLook(r.t);a.si=o.i;o.s.by=a.id;o.s.ord=0;o.s.served=0;o.s.hand=null;o.s.stage=0;
+  var dv=ROOMDEF[r.t]&&ROOMDEF[r.t].visitors,me=dv&&a.vis&&dv.filter(function(v){return v.id===a.vis})[0];
+  var o=lfPick(f);a.look=me?rsNpc(me.look):lfGuestLook(r.t);a.si=o.i;o.s.by=a.id;o.s.ord=0;o.s.served=0;o.s.hand=null;o.s.stage=0;
   var d=lfDoorOf(C);a.x=d.x;a.y=d.y+.3;a.alpha=0;a.fade=1;a.sat=0;a.speed=lfRand(.85,1.1);
   lfGo(a,o.s.x,o.s.y,o.s);
 }
@@ -3478,7 +3479,12 @@ var LFFX={
   birds:function(C,k){var p=lfP(C.W*.2,-.5,130),s='';for(var i=0;i<4;i++)s+='<path d="M'+(p[0]+i*14)+' '+(p[1]+(i%2)*8)+' q4 -4 8 0 q4 -4 8 0" stroke="#2a2a3a" stroke-width="1.6" fill="none" class="lfwing"/>';lfFxAdd(k,'<g class="lfbirds">'+s+'</g>',7000)},
   jump:function(C,k){var x=lfRand(1.8,4.2),y=lfRand(1.8,3.8),p=lfP(x,y,0);lfFxAdd(k,'<g class="lfjump"><ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="6" ry="2.6" fill="'+lfPick(["#ff8a3a","#fff3e0","#ffd24a"])+'"/></g><ellipse class="lfsplash1" cx="'+p[0]+'" cy="'+p[1]+'" rx="10" ry="4" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.2"/>',2200)},
   star:function(C,k){var p=lfP(1,-1,170);lfFxAdd(k,'<path class="lfstar" d="M'+p[0]+' '+p[1]+' l60 18" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',1800)},
-  strobe:function(C,k){var a=lfP(0,0,120),b=lfP(C.W,0,120),c=lfP(C.W,C.D,0),d=lfP(0,C.D,0);lfFxAdd(k,'<polygon class="lfstrobe" points="'+[a,b,c,d].map(function(q){return q[0]+','+q[1]}).join(" ")+'" fill="rgba(255,255,255,.35)"/>',1600)},
+  /* Club lights: mostly a soft pulse of colour over the dance floor, and now and then the whole room flashes. Both are
+     radial glows, so the light has no hard edge. */
+  strobe:function(C,k){var F=(C.plat||[]).filter(function(p){return p.k==="cbx_floor"})[0],gid="lfsg"+(++LFEVN),full=!F||Math.random()<.18;
+    var x0=full?0:F.x0,y0=full?0:F.y0,x1=full?C.W:F.x1,y1=full?C.D:F.y1,z=full?60:(F.z||0)+2,c=lfP((x0+x1)/2,(y0+y1)/2,z),a=lfP(x1,y0,z),b=lfP(x0,y1,z);
+    var rx=Math.abs(a[0]-b[0])/2*(full?1.25:1),ry=full?rx*.75:Math.abs(lfP(x1,y1,z)[1]-lfP(x0,y0,z)[1])/2,col=full?"#ffffff":lfPick(["#ff3df0","#3dc8ff","#a66bff","#ff7ad8"]);
+    lfFxAdd(k,'<defs><radialGradient id="'+gid+'"><stop offset="0" stop-color="'+col+'" stop-opacity="'+(full?.55:.6)+'"/><stop offset=".55" stop-color="'+col+'" stop-opacity="'+(full?.25:.3)+'"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></radialGradient></defs><ellipse class="'+(full?"lfstrobe":"lfsoftglow")+'" cx="'+c[0].toFixed(1)+'" cy="'+c[1].toFixed(1)+'" rx="'+rx.toFixed(1)+'" ry="'+ry.toFixed(1)+'" fill="url(#'+gid+')" style="mix-blend-mode:screen"/>',full?1600:1900)},
   butterfly:function(C,k){var p=lfP(lfRand(1,4),lfRand(1,4),30);lfFxAdd(k,'<g class="lfbfly" style="transform-origin:'+p[0]+'px '+p[1]+'px"><path d="M'+p[0]+' '+p[1]+' q-6 -6 -6 0 q0 4 6 0 q6 -6 6 0 q0 4 -6 0" fill="'+lfPick(["#ff8ab8","#ffd24a","#8ad6ff"])+'"/></g>',8000)},
   flare:function(C,k){var p=C.prep&&C.prep.pass?lfP(.75,2.9,26):lfP(.8,2.6,28);lfFxAdd(k,'<path class="lfflare" d="M'+(p[0]-6)+' '+p[1]+' q4 -26 8 -10 q6 -24 8 10Z" fill="#ff9d3a"/>',1400)},
   pop:function(C,k){var p=lfP(lfRand(2,C.W-2),lfRand(2,C.D-2),60);lfFxAdd(k,'<g class="lfconf">'+[0,1,2,3,4,5,6,7].map(function(i){return '<rect x="'+(p[0]+(i-4)*5)+'" y="'+p[1]+'" width="3" height="5" fill="'+["#ff3df0","#4dd2ff","#ffd24a","#9cff8a"][i%4]+'" style="animation-delay:'+(i*.05)+'s"/>'}).join("")+'</g>',2600)},
@@ -3501,7 +3507,7 @@ function lfAmbient(ts){
   if(t==="pond")o.push("jump","jump","jump");
   if(t==="garden"||t==="farm")o.push("butterfly","butterfly");
   if(t==="sky"&&lfNight())o.push("star","star");
-  if(t==="club")o.push("strobe","pop");
+  if(t==="club")o.push("strobe","strobe","pop");
   if(t==="restaurant")o.push("flare");
   if(t==="bar")o.push("pop");
   

@@ -117,7 +117,15 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    the fire bowl in the middle look right. Found and not fixed, needs art: the Bowling lane seats and the Game Room gaming
    chairs face away from what they are for (the lanes, the TV), because their pins and screen sit against a back wall and
    there is only front-view art. Each needs a rear-view sprite, like `gmx_couchb`. Listed under Art below.
-4. Phone width: fixed. The nav needed 467px for eight names, so on a phone it scrolled with Wheel and Dungeons out of sight
+4. Phone (2026-11-05, second pass after Cal saw lag and could not see other rooms): measured at 390x844 with the CPU
+   slowed 4x (`rigtest/browser/perf.js`, `prof.js`, `trace.js`). Character frames were WebP-encoded on the main thread
+   (81% of CPU on an idle Board); they are now blob URLs, stale requests are dropped, a look warms only the clips it shows,
+   and breathing clips use every other frame. The building view hides rooms off screen and does not draw their people,
+   redraws at 15 fps (26 in a room view on a wide screen), and when zoomed out people hold still. It opens on the whole
+   Home building and zooms out until the whole street fits. Shop went from 6 to 47 fps, Hall 8 to 36. The building view
+   and a busy room view still spend about half the main thread on image decodes under 4x slowdown with software
+   rendering; a real phone with a GPU should do far better, but that has not been seen.
+   Phone width: fixed. The nav needed 467px for eight names, so on a phone it scrolled with Wheel and Dungeons out of sight
    and Trophies cut in half. Under 541px each tab shows its icon and only the open tab keeps its name. Measured with no
    overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Later the same day every tab (Board,
    Training, The Loft, Shop, Hall, Trophies, Wheel, Dungeons) and a room view were opened at 360px (`rigtest/browser/screens.js`):
@@ -134,22 +142,24 @@ The kitchen wing was looked at closely and draws right. The Game Room and Closet
 Guests were then put on every spot again in the rooms the new upgrades changed (Bowling, Mall, Upstairs Bar, VR,
 Speakeasy, Club): nobody inside furniture, and the new rear-view lane seats face the lanes. The Speakeasy front corner
 (armchairs, jukebox, barrels) reads crowded with four guests in it, though no two pieces are closer than .45 of a tile.
-The Club strobe (`strobe` in `lfFx`, `20_loft.js`) flashes a hard-edged white slab over the whole room for 1.5 seconds;
-it is meant to, but a person should judge whether a soft glow over the dance floor would read better.
+Club lights (`strobe` in `LFFX`, `20_loft.js`), per Cal: mostly a soft pulse of pink, blue or violet over the dance floor,
+and about one time in six a soft-edged white flash over the whole room. Without the dance floor it is always the room flash.
+Visitors, per Cal: the Game Room is visited only by game versions of his friends, listed in `GMR.visitors` in
+`27b_skins.js` (empty for now, so nobody comes in; the comment there shows the line to add). The Closet has no visitors.
+Phone speed and The Loft on a phone: see "Phone" under What was checked.
 
 Published: the page is pinned in Cal's sidebar. `dist` has 437 files; character layers and icons are bundled into `art_rig.js` and
 `art_icon.js`. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
 
 Still to do, in order:
 1. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
-2. Look at the stretch-pose sleeve streaks with a person's eye and decide whether they are acceptable. What was tried
-   (2026-11-05, reverted, nothing shipped): the trunk's bone list includes both upper arms, so in `bindLayer` torso fabric
-   next to the arm can follow it overhead. (a) Letting trunk fabric more than 60 canvas px below the shoulders follow only
-   the trunk closed a torn gap on the men's Spray Paint Boxy Tee and thinned the streaks a little, with no visible change
-   in walking, typing or sitting; most streaks stayed. (b) Also making sleeves below that line follow only their arm tore
-   a piece off the raised sleeve. The streaks that remain are sleeve cells blending back to the spine across the wide
-   shoulder band (`blend: 210` on `uaN`/`uaF` in `data/rig.json`). (a) changes how every top and the base body bind, so
-   shipping it means re-running the whole wear test.
+2. Stretch-pose sleeve streaks: fixed 2026-11-05 (Cal: "they look weird"). Poses marked `"armsUp": true` in
+   `data/poses.json` (`stretchUp`, `stretch`, and any blend with them) bind clothes with `rig.armpit` in `data/rig.json`: below a
+   line 80 canvas px above the shoulder joints, a cell of trunk art follows the trunk only, a cell of sleeve follows its arm
+   only, and a top's piece stretched past 2 cells there is dropped. The base body gets only the trunk part (its arms keep
+   their usual binding). Every other pose keeps the old binding, so it renders exactly as before: `rigtest/browser/regress.js`
+   renders every top on both bodies in all 22 poses with the rule on and off and lists any cell outside the stretch poses
+   that changed. `&armpit=off` on `rigtest/matrix.html` draws without it.
 3. Before sharing widely: test on a real phone. The Test panel and Shop Testing row only show for the owner; remove them and the `window.__qb` and `window.__qbLoft` hooks before release.
 
 ## Not yet verified
@@ -234,7 +244,7 @@ Note that two passages conflict: he first asks for the auditorium to the right o
     `coach_pixie`, `coach_vanta`, `coach_mags`, `coach_ryo`, `coach_hikari`, `coach_quill`, `coach_dot`.
   - Crew, 240x320 card, chibi: `crew_mochi`, `crew_juno`, `crew_rook`, `crew_nova`, `crew_bleep`, `crew_vex`, `crew_ko`,
     `crew_echo`, `crew_brisa`, `crew_dax`, `crew_luna`.
-  - Rewards, 240x240 scene, painted chibi props: `rew_5`, `rew_10` ... `rew_100` (the 15 in the game), and the class-event
+  - Rewards, 240x240 scene, painted chibi props: `rew_5`, `rew_10` ... `rew_100` (13 of them), and the class-event
     banners `cl_home`, `cl_body`, `cl_boss`, `cl_social`, `cl_create`, `cl_admin`, `cl_reset`, `cl_out` (720x250).
   - Ask Cal first: `friend_cynthia`, `friend_memo`, `friend_vega`, `friend_justin`, `friend_logan` (his real friends) and
     `dog_pluto`, `dog_chopstick`. The `room_*` thumbnails belong to rooms the game no longer shows and can be skipped.

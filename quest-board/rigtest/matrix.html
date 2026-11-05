@@ -17,6 +17,9 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
     const { clips, ...poses } = D.poses;
     const zoom = +(q.get("scale") || 1);
     const cfg = { ...D.rig, frame: D.rig.frame.map((n) => n * zoom), frameScale: (D.rig.frameScale || 0.14) * zoom, anchorPad: D.rig.anchorPad * zoom };
+    // &armpit=off draws without the armpit rule (data/rig.json), for comparing.
+    if (q.get("armpit") === "off") delete cfg.armpit;
+    if (q.get("bodyrule")) cfg.armpit = { ...cfg.armpit, slots: { ...cfg.armpit.slots, body: JSON.parse(q.get("bodyrule")) } };
     const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
     const [W, H] = cfg.frame;
     const by = (slot) => Object.keys(I).filter((k) => I[k].slot === slot);
@@ -78,7 +81,7 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
       cols = +(q.get("cols") || 11); cw = +(q.get("cw") || 130); ch = +(q.get("ch") || 150);
       for (const body of ["m", "f"]) {
         if (!arts.every((a) => fits(a, body))) continue;
-        for (const pose of P) cells.push({ label: `${body} ${pose}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts, pose, crop: /^sleep/.test(pose) ? FULL : crop });
+        for (const pose of P) cells.push({ label: `${body} ${pose}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown", top: q.get("top") || undefined }, arts, pose, crop: /^sleep/.test(pose) ? FULL : crop });
       }
     } else if (sheet === "onepose") {
       // Many items side by side in one pose: ?sheet=onepose&pose=stretchUp&arts=o_tee,o_puffer

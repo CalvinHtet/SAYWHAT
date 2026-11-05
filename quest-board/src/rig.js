@@ -218,12 +218,14 @@
     }
 
     /* One layer ready to draw: its binding plus this rig's textures. */
-    mesh(path, bodyId, view, slot) {
-      const key = [path, bodyId, view].join("|");
+    mesh(path, bodyId, view, slot, armsUp) {
+      // Poses with the arms overhead use their own binding of the clothes (see rig.armpit); every other pose the usual one.
+      armsUp = !!(armsUp && this.cfg.rig.armpit && this.cfg.rig.armpit.slots[slot.id]);
+      const key = [path, bodyId, view, armsUp ? "up" : ""].join("|");
       if (this.meshes.has(key)) return this.meshes.get(key);
       const made = (async () => {
         const im = await this.image(path);
-        const bound = await this.bind(im, path, bodyId, view, slot);
+        const bound = await this.bind(im, path, bodyId, view, slot, armsUp);
         const gl = this.gl, tex = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
@@ -254,15 +256,15 @@
 
     /* Bind one layer to the skeleton once. Weights come from geometry, so a new
        item needs no authoring: it just has to be painted on the rest pose. */
-    bind(im, path, bodyId, view, slot) {
-      const key = [path, bodyId, view, slot.id].join("|");
+    bind(im, path, bodyId, view, slot, armsUp) {
+      const key = [path, bodyId, view, slot.id, armsUp ? "up" : ""].join("|");
       if (sharedBindings.has(key)) return sharedBindings.get(key);
-      const made = this.bindLayer(im, bodyId, view, slot);
+      const made = this.bindLayer(im, bodyId, view, slot, armsUp);
       sharedBindings.set(key, made);
       return made;
     }
 
-    async bindLayer(im, bodyId, view, slot) {
+    async bindLayer(im, bodyId, view, slot, armsUp) {
       const { rig } = this.cfg, bv = this.cfg.bodies[bodyId][view];
       const W = rig.canvas[0], H = rig.canvas[1], step = rig.meshStep;
       const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
@@ -287,6 +289,14 @@
         }
       }
       const ownOf = {};
+      // rig.armpit (poses marked armsUp only): in the listed slots, art beside the arms stops being shared between an arm and the trunk. Below `above`
+      // px over the shoulder joints a cell of trunk art follows the trunk only, below `armsAbove` a cell of sleeve follows
+      // its arm only, and any piece below the first line stretched past `cap` cells is left out (it is the armpit). Otherwise, with an arm overhead, the side of a shirt
+      // is dragged up with it and smears from the armpit to the hip.
+      const ap = armsUp && rig.armpit && rig.armpit.slots[slot.id] ? { ...rig.armpit, ...rig.armpit.slots[slot.id] } : null;
+      const armLimbs = new Set(ap ? ap.arms.map((id) => this.limbOf[id]) : []);
+      const shoulderY = ap ? Math.max(...ap.joints.map((j) => bv.joints[j][1])) : Infinity;
+      const armpitY = shoulderY - (ap ? ap.above : 0), sleeveY = shoulderY - (ap ? ap.armsAbove : 0);
       const verts = new Array((cols + 1) * (rows + 1));
       const vertex = (cx, cy) => {
         const k = cy * (cols + 1) + cx;
@@ -366,6 +376,7 @@
                 const t = corners.map((v) => (this.limbOf[v.b0] === limb || related(v.b0, bone) ? v : follow(v, bone)));
                 // Cut to its own pixels, this copy has little to smear, so it may stretch further.
                 t.loose = 2;
+                if (cy * step > armpitY && ap.cap) t.cap = ap.cap;
                 const seam = seams[slot.group != null ? slot.group : groupOf[bone]];
                 if (!seam.has(limb)) seam.set(limb, []);
                 seam.get(limb).push(t);
@@ -375,7 +386,13 @@
             // Corners claimed by an unrelated bone follow this cell's own art instead.
             const keep = here.length === 1 ? here[0][1]
               : corners.map((v) => v.b0).sort((a, b) => corners.filter((v) => related(v.b0, b)).length - corners.filter((v) => related(v.b0, a)).length)[0];
-            const t = corners.map((v) => (related(v.b0, keep) ? v : follow(v, keep)));
+            let t = corners.map((v) => (related(v.b0, keep) ? v : follow(v, keep)));
+            const L = here.length === 1 ? here[0][0] : null;
+            if (cy * step > armpitY) {
+              if (L === 1) t = t.map((v) => (armLimbs.has(this.limbOf[v.b0]) ? follow(v, keep) : armLimbs.has(this.limbOf[v.b1]) ? { ...v, b1: v.b0, w: 0 } : v));
+              else if (ap.sleeves && armLimbs.has(L) && cy * step > sleeveY) t = t.map((v) => (this.limbOf[v.b0] !== L ? follow(v, keep) : this.limbOf[v.b1] !== L ? { ...v, b1: v.b0, w: 0 } : v));
+              if (ap.cap) t.cap = ap.cap;
+            }
             // Outline edges of a joint must not smear when pulled apart.
             t.loose = loose;
             const owner = t[0].b0 === t[1].b0 ? t[0].b0 : t[2].b0;
@@ -538,7 +555,7 @@
       }
       const ra = a.root || {}, rb = b.root || {};
       return {
-        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, bones,
+        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, armsUp: !!(a.armsUp || b.armsUp), bones,
         root: { x: num(ra.x, rb.x, 0), y: num(ra.y, rb.y, 0), r: num(ra.r, rb.r, 0) },
       };
     }
@@ -557,7 +574,7 @@
         bones[id] = { r: at("r", 0), l: at("l", 1), w: at("w", 1) };
       }
       const root = (name) => field((k) => (k.root || {})[name], 0);
-      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, bones, root: { x: root("x"), y: root("y"), r: root("r") } };
+      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, armsUp: !!(k1.armsUp || k2.armsUp), bones, root: { x: root("x"), y: root("y"), r: root("r") } };
     }
 
     /* Frame f of a clip. Clips are data in poses.json. A loop of three or more keys follows
@@ -598,7 +615,7 @@
       const art = (s) => (pose.swap && s.id in pose.swap ? pose.swap[s.id] : s.id);
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
-      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s)));
+      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp)));
       this.prepare(look);
 
       const gl = this.gl, [W, H] = rig.frame, k = rig.frameScale;
@@ -660,6 +677,10 @@
               // Solid fabric may stretch freely; loose triangles past the limit are skipped.
               const tooLong = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.loose * rig.maxStretch * rig.meshStep * k;
               if (t.loose && (tooLong(p[0], p[1], 1) || tooLong(p[1], p[2], 1.42) || tooLong(p[2], p[0], 1))) continue;
+              if (t.cap) {
+                const far = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.cap * rig.meshStep * k;
+                if (far(p[0], p[1], 1) || far(p[1], p[2], 1.42) || far(p[2], p[0], 1)) continue;
+              }
               t.forEach((v, i) => { data[n++] = p[i][0]; data[n++] = p[i][1] - up; data[n++] = v.u; data[n++] = v.v; });
             }
             if (!n) continue;
