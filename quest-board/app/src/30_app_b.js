@@ -771,10 +771,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
 /* a level a day early on, about ten days a level at the cap. See docs/ECONOMY.md */
 /* XP to reach level L. Cal, 2026-11-05 (docs/PROGRESSION.md): level L to L+1 costs min(600, 50+6L+0.2L²), so level 10 comes in
    about 4 days and no level takes more than about 3 normal days. cumOld is the old curve, kept for moving old saves over. */
-/* QA's simulator (2026-11-05): players really earn about twice the XP on paper (proof, streaks, combos, crits), so each
-   level costs twice what the first plan said, and at most 1200. */
-var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(1200,Math.round(2*(50+6*L+.2*L*L))))})();
-function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*1200}
+/* Cal, 2026-11-05: "a serious player can get to lvl 100 in 50 ish days". With XP only from real life a heavy player earns
+   about 950 a day, so level 100 costs about 46,700 XP: min(ECON.xpCap, ECON.xpK x (50 + 6L + 0.2L^2)), xpK 1, cap 600. */
+var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(ECON.xpCap,Math.round(ECON.xpK*(50+6*L+.2*L*L))))})();
+function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*ECON.xpCap}
 function cumOld(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
 function levelPay(L){return 100+10*L}
 function lvlOf(xp){var L=1;while(L<MAXL&&xp>=cum(L+1))L++;return L}

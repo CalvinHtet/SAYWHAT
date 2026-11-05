@@ -5,7 +5,7 @@ two early on, bigger goals later, and about a year of play to reach the top.
 
 ## XP and levels
 
-Cal, 2026-11-05 (`docs/PROGRESSION.md`): level L to L+1 costs `min(1200, 2 x (50 + 6L + 0.2L²))` XP (`cum` in `30_app_b.js`, doubled after QA's simulator).
+Cal, 2026-11-05 (`docs/PROGRESSION.md`): level L to L+1 costs `min(600, 50 + 6L + 0.2L²)` XP (`ECON.xpK`, `ECON.xpCap`): level 100 in about 50 days for a serious player (Cal).
 Businesses pay out each day at most 200 coins plus 1.5 times the coins the day's quests earned (`29e_economy.js`); the rest
 waits in the room. Missions pay coins growing 1% a level and 30% of their listed XP, flat (`msPay`, `28_missions.js`).
 At 200 XP a day (about a dozen ordinary tasks): level 10 on day 4, 20 on day 13, 30 on day 29, 50 on day 84, 100 in about

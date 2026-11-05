@@ -13,9 +13,10 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Waiting on QA:
-  the economy (29ae247), the Shop (e012535), missions and gates (f629518). Next: tune `ECON` with QA's numbers, then
-  publish v48. (on f629518)
+- Now: writing pass part 3 (class story and advancement text in `10_app_a.js`, Hall). Part 2 done in 8c8f303 (room
+  welcome screens; rooms now produce at the Daily Quest's efficiency, `openMult` in `29e_economy.js`). Waiting on QA: the
+  economy (29ae247, include 8c8f303), the Shop (e012535), missions and gates (f629518). Next: tune `ECON` with QA's numbers,
+  then publish v48. (on 8c8f303)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -75,6 +76,9 @@ To do:
       `user.id()`). Board posts and visit pings use `<uid>_<time>` ids, which `{self}` cannot match: move them to
       `board/<uid>/posts/<time>` and `pings/<uid>/sent/<id>` first, then the same two rules for each. Test with two accounts
       (one Contributor, one Viewer) before inviting anyone: QA's 15-player test.
+- [ ] Later (Cal, 2026-11-05, "much later down the road"): prestige worlds after level 100. The same model with a
+      different building view and new assets made from the current ones as reference (cyberpunk, alien, horror), starting
+      again at level 1, prestige 1. Not before the first world feels right.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
       sooner if the Loft height is sorted first.
@@ -240,6 +244,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
   The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
+- WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
+  that 50 could easily be 100 days if you play every other day." The whole game (level 100 and the town bought out) takes a
+  serious daily player about 50 days. LEAD set the curve back to `min(600, 50+6L+0.2L²)` (46,738 XP, day 49 at 950 a day;
+  `ECON.xpK`, `xpCap`). Tune prices so everything is bought around day 50 for the grinder, and say what `ECON` should change.
 - WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
   shows the wait and "Run n of 2"), pity stays 5; Lock and Key and the Mall now wait on every coin earned (`ECON.gateLockKey`
   25,000, `gateMall` 80,000, my guesses). In the economy run: days with nothing to buy (target zero), and tune those two.

@@ -6,20 +6,21 @@ then. Nothing a player already owns is ever taken away.
 
 ## Levels
 
-XP to go from level L to L+1: `min(1200, 2 x (50 + 6L + 0.2L²))`. Doubled after QA's simulator (2026-11-05): proof, streaks,
-combos, crits and bounties turn about 200 XP of tasks on paper into about 420 a day, and a busy 450 into about 950.
+XP to go from level L to L+1: `min(600, 50 + 6L + 0.2L²)` (`ECON.xpK` 1, `ECON.xpCap` 600 in `29e_economy.js`).
+Cal, 2026-11-05: "a serious player can get to lvl 100 in 50 ish days ... that 50 could easily be 100 days if you play every
+other day." XP comes only from real life now; a heavy player earns about 950 a day, a regular one about 420.
 
-| Level | XP for that level | Day reached at 420 real XP a day | Busy days (950) |
+| Level | XP for that level | Day reached, serious player (950 a day) | Regular player (420 a day) |
 |---|---|---|---|
-| 5 | 170 | 1.3 | 0.6 |
-| 10 | 260 | 3.7 | 1.6 |
-| 20 | 500 | 12.3 | 5.4 |
-| 30 | 820 | 27.5 | 12.1 |
-| 40 | 1200 | 51.1 | 22.6 |
-| 50 | 1200 | 79.7 | 35.2 |
-| 100 | 1200 | 222.6 | 98.4 |
+| 5 | 85 | 0.3 | 0.6 |
+| 10 | 130 | 0.8 | 1.9 |
+| 20 | 250 | 2.7 | 6.2 |
+| 30 | 410 | 6.1 | 13.7 |
+| 40 | 600 | 11.3 | 25.6 |
+| 50 | 600 | 17.6 | 39.9 |
+| 100 | 600 | 49.2 | 111.3 |
 
-A normal day of about a dozen tasks earns about 420 XP. Past level 40 a level is about three normal days.
+Level 100 is 46,738 XP: day 49 for a serious daily player, about 100 to 110 days playing every other day or lightly.
 Existing saves: XP stays as it is; anyone whose level would drop keeps their current level until the new curve catches up.
 
 ## Room upgrades
