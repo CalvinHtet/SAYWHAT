@@ -53,13 +53,17 @@ function roomModal(i){
     if(a[3]&&a[3].retired)return;/* retired upgrades stay in saves but are never shown or sold */
     var got=r.a&&r.a[a[0]];if((TSUP[a[0]]||[]).some(function(k){return r.a&&r.a[k]}))return;if(TCH[a[0]]&&ADDREQ[a[0]]&&!(r.a&&r.a[ADDREQ[a[0]]]))return;
     if(got){inst.push('<div class="addon got"><b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small><span class="chip" style="color:var(--done);border-color:var(--done)">Installed</span></div>');return}
-    var e=a[3],pre=ADDREQ[a[0]],price=a[2]?'<i class="coin"></i>&nbsp;'+a[2]:'Claim';if(e.lv&&e.lv>effLvl()+6)return;
+    var e=a[3],pre=ADDREQ[a[0]],price=a[2]?'<i class="coin"></i>&nbsp;'+a[2]:'Claim';
     if(pre&&!(r.a&&r.a[pre])){lockd.push('<div class="addon sealed"><b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small><span class="chip">Needs '+esc(addonName(r,pre))+'</span></div>');return}
+    /* Cal: keep the next upgrade a surprise. One level up shows its name; two or more is a mystery card. */
+    if(e.lv&&e.lv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
     var blk=e.lv&&effLvl()<e.lv?'Reach level '+e.lv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
     avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
   });
-  h=h.replace("@@AV@@",avail.length?"Available upgrades ("+avail.length+")":"All upgrades installed");
-  h+=avail.join("")+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
+  /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
+  var more=avail.length>5;avail=avail.slice(0,5);
+  h=h.replace("@@AV@@",avail.length?"Next upgrades":lockd.length?"Next upgrades: install the ones before them first":"All upgrades installed");
+  h+=avail.join("")+(more?'<p class="note addmore">More appear as you install these.</p>':'')+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
   /* owner-only testing link (hidden from guests like the Shop's Testing row; remove both before release): refunds this
      room's upgrades so its stages can be bought again one at a time. Upgrades that open another room stay. */
   if(inst.length)h+='<p class="qs-dev">Testing: <button class="qs-link" data-act="simundo" data-i="'+i+'">Undo this room\'s upgrades</button></p>';
