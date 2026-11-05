@@ -411,7 +411,7 @@ var LFDEFFL={w:"oak",d:"walnut",g:"concrete",t:"bamboo"};
 var LFDS={
  bedroom:[
   {id:"mid",name:"Neutral Loft",cost:0,fl:"oak",wl:"plaster",wc:"#ddd8cf",wr:"plaster",wcr:"#cfcac1"},
-  {id:"brick",name:"Brick Studio",cost:3000,fl:"concrete",wl:"plaster",wc:"#d9d2c6",wr:"plaster",wcr:"#c9c2b6",acc:{w:"R",a:5.4,b:9,tex:"brick"}},
+  {id:"brick",name:"Brick Studio",cost:3000,fl:"concrete",wl:"plaster",wc:"#d9d2c6",wr:"plaster",wcr:"#c9c2b6",acc:{w:"L",a:4.3,b:9,tex:"brick"}},/* left wall (Cal): the patio glass covers the back-right wall */
   {id:"warm",name:"Warm Oak",cost:2200,fl:"oak",wl:"plaster",wc:"#ead7cd",wr:"plaster",wcr:"#bfd0c2",acc:{w:"L",a:4.3,b:8.2,c:"#c98a8a"}},
   {id:"noir",name:"Neon Noir",cost:5200,fl:"walnut",wl:"plaster",wc:"#5a6486",wr:"plaster",wcr:"#4a5374",acc:{w:"L",a:4.3,b:8.2,tex:"slat"}}],
  lounge:[
@@ -3186,9 +3186,11 @@ LFROOM.bedroom=function(C){
   if(C.patio&&C.patio.deck){C.s("look",7.7,-.95,1,"look",[8,14],{tag:"deck"});if(C.patio.swing)C.s("sit",3.0,-1.0,1,"sit",[14,30],{tag:"egg",lift:1,exit:[4.6,-.45],sz:QBLoft.data.loft.eggLift});if(!C.patio.swing){C.s("look",4.0,-1.9,-1,"look",[8,14],{tag:"deck"});C.s("look",2.6,-1.6,1,"look",[6,10],{tag:"deck"})}}
   if(H("bd_nstand")){lfSpr4(C,"bd4_nstand",.15,4.3,.9,.8,{h:12,fit:1,flip:1,dk:-1.8});lfLight(C,.6,4.7,34,"#ffc27a",1.7,.5)}
   if(H("bd_plant"))lfSpr4(C,"bd4_plant",9.0,7.9,.8,.8,{h:40,H:84,occ:.9});
-  var wk=H("bd_ward1")?"bd4_ward2":"bd4_ward1";
-  if(!AN)lfSpr4(C,wk,.1,5.6,1.2,2.2,{h:70,flip:1,H:112});
-  if(!AN){var _cp=[[.1,5.6,0],[1.3,5.6,0],[1.3,7.8,0],[.1,7.8,0],[.1,5.6,74],[1.3,5.6,74],[1.3,7.8,74],[.1,7.8,74]].map(function(q){return lfP(q[0],q[1],q[2])}),_hx=_cp.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]}),_cr=function(o,a,b){return (a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0])},_lo=[],_up=[];
+  /* The Closet door is in the left wall where the wardrobe stood (Cal, 2026-11-05). The wardrobe upgrade became a
+     figurine cabinet hung on the wall over the nightstand, clear of the door. Without its art nothing shows there. */
+  if(H("bd_ward1"))lfSpr(C,"bdx_figcab",.02,4.45,.3,1.2,{h:1,H:64,dy:-54,nosh:1,nob:1,dk:-3});
+  if(typeof hasRoom==="function"&&hasRoom("closet"))lfDoorL(C,5.85,7.15,100,"#ffd27a");
+  if(false){var _cp=[[.1,5.6,0],[1.3,5.6,0],[1.3,7.8,0],[.1,7.8,0],[.1,5.6,74],[1.3,5.6,74],[1.3,7.8,74],[.1,7.8,74]].map(function(q){return lfP(q[0],q[1],q[2])}),_hx=_cp.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]}),_cr=function(o,a,b){return (a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0])},_lo=[],_up=[];
     _hx.forEach(function(p){while(_lo.length>1&&_cr(_lo[_lo.length-2],_lo[_lo.length-1],p)<=0)_lo.pop();_lo.push(p)});_hx.slice().reverse().forEach(function(p){while(_up.length>1&&_cr(_up[_up.length-2],_up[_up.length-1],p)<=0)_up.pop();_up.push(p)});
     var _hl=_lo.slice(0,-1).concat(_up.slice(0,-1)),_tp=lfP(.7,6.7,92);
     C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/></g>')}
@@ -3207,12 +3209,27 @@ LFROOM.bedroom=function(C){
   if(ck){lfChairDyn(C,ck,CX,CY);C.s("sit",CX,CY,1,"type",[10,25],{dk:2,tag:"pc",lift:1,exit:[CX+.1,CY+1.05]})}
   else C.s("work",CX,CY-.25,1,"work",[10,25],{tag:"deskstand",fxwall:1});
   if(H("bd_shelf"))lfSpr4(C,"bd4_shelf",w3?1.2:8.85,.05,1.1,.55,{h:60,flip:1,fit:1});
-  if(H("bd_art1")&&!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});/* above the desk: the mirror fills the wall at x=5 */
-  if(H("bd_fshelf")&&!w3)lfSpr4(C,"bd4_fshelf",9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:-80,nosh:1});
+  /* above the desk: the mirror fills the wall at x=5. The glass wall leaves no room there, so then the canvas hangs on
+     the left wall in front of the Closet door and the figurine shelf in the back corner (both used to vanish). */
+  if(H("bd_art1"))if(!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});else lfSpr4(C,"bd4_art1",.05,7.7,.05,.1,{h:1,H:40,dy:-84,nosh:1});
+  if(H("bd_fshelf"))lfSpr4(C,"bd4_fshelf",w3?.45:9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:w3?-62:-80,nosh:1});
   if(H("bd_lights"))lfLedWall(C);
   lfWallArtL(C,H);
   if(H("bd_neon"))lfLight(C,.3,4.0,70,"#7aa8ff",1.4,.4);
 };
+/* A doorway cut into the left wall (x=0) from y=a to y=b, h px tall, with the next room's light beyond it. From the
+   room you see into it: the floor running on behind the wall and the back jamb (it faces the front); the front jamb and
+   the head face away. */
+function lfDoorL(C,a,b,h,glow){var th=.42,u=C.chu||0,id="lfdl"+u,P=function(x,y,z){return lfPt(lfP(x,y,z))},
+  hole=[P(0,a,0),P(0,b,0),P(0,b,h),P(0,a,h)].join(" "),g=lfP(0,(a+b)/2,0),t=lfP(0,(a+b)/2,h);
+  C.decals.push('<linearGradient id="'+id+'g" gradientUnits="userSpaceOnUse" x1="'+g[0]+'" y1="'+t[1]+'" x2="'+g[0]+'" y2="'+g[1]+'"><stop offset="0" stop-color="#140f14"/><stop offset=".55" stop-color="#3a2a22"/><stop offset="1" stop-color="'+glow+'" stop-opacity=".85"/></linearGradient>'
+    +'<clipPath id="'+id+'"><polygon points="'+hole+'"/></clipPath><g clip-path="url(#'+id+')" pointer-events="none">'
+    +'<polygon points="'+hole+'" fill="url(#'+id+'g)"/>'
+    +'<polygon points="'+[P(-th,a,0),P(-2.5,a,0),P(-2.5,b+.6,0),P(-th,b+.6,0)].join(" ")+'" fill="'+glow+'" opacity=".35"/>'
+    +'<polygon points="'+[P(-th,a,0),P(0,a,0),P(0,a,h),P(-th,a,h)].join(" ")+'" fill="#d9d0c3"/>'
+    +'<polygon points="'+[P(-th,a,0),P(0,a,0),P(0,a,h),P(-th,a,h)].join(" ")+'" fill="'+glow+'" opacity=".18"/></g>'
+    +'<polyline points="'+[P(.01,a,0),P(.01,a,h),P(.01,b,h),P(.01,b,0)].join(" ")+'" fill="none" stroke="#f1eadf" stroke-width="2.4" stroke-linejoin="miter"/>'
+    +'<polyline points="'+[P(.01,a,0),P(.01,a,h),P(.01,b,h),P(.01,b,0)].join(" ")+'" fill="none" stroke="rgba(40,30,30,.45)" stroke-width=".6"/>')}
 /* ---- Cal (male chibi sprite) ---- */
 var LFCALH=74;
 var LFRC={};
@@ -3473,7 +3490,8 @@ function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function
     for(var i=0;i<3;i++)tg+=fr(i*11,0,9.6,21,tp[i]);s+=put(1.12,31,80,tg)}
   if(H("bd_neon")){var nb='<rect x="0" y="0" width="15" height="30" rx="3" fill="#15161c" stroke="#3a3b46" stroke-width=".8"/>',bp='M9 3 L3.5 16 H7.5 L5.6 27.5 L12 12 H8.2 Z';
     nb+='<path d="'+bp+'" fill="none" stroke="#7aa8ff" stroke-width="5" opacity=".28" stroke-linejoin="round"/><path d="'+bp+'" fill="none" stroke="#fff6d8" stroke-width="1.6" stroke-linejoin="round"/>';s+=put(4.2,15,96,nb)}
-  if(H("bd_lights")){var G=R(7),gw=66,gh=34,gm='<defs><radialGradient id="lfgw'+C.chu+'" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffd08a" stop-opacity=".55"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient><linearGradient id="lfgp'+C.chu+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2a8" stop-opacity=".62"/><stop offset=".55" stop-color="#ffcf86" stop-opacity=".12"/><stop offset="1" stop-color="#ffcf86" stop-opacity="0"/></linearGradient></defs>';
+  /* the moss panel; from the Grass Wall tier the whole wall behind the bed is grass, so it is left out */
+  if(H("bd_lights")&&!H("bd_wt3")){var G=R(7),gw=66,gh=34,gm='<defs><radialGradient id="lfgw'+C.chu+'" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffd08a" stop-opacity=".55"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient><linearGradient id="lfgp'+C.chu+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2a8" stop-opacity=".62"/><stop offset=".55" stop-color="#ffcf86" stop-opacity=".12"/><stop offset="1" stop-color="#ffcf86" stop-opacity="0"/></linearGradient></defs>';
     gm+='<ellipse cx="'+gw/2+'" cy="'+(gh/2+3)+'" rx="'+(gw*.78)+'" ry="'+(gh*.95)+'" fill="url(#lfgw'+C.chu+')"/>';
     gm+='<clipPath id="lfgc'+C.chu+'"><rect x="1.6" y="1.6" width="'+(gw-3.2)+'" height="'+(gh-3.2)+'"/></clipPath><rect x="1.6" y="2.2" width="'+gw+'" height="'+gh+'" fill="rgba(30,20,40,.25)"/><rect x="0" y="0" width="'+gw+'" height="'+gh+'" fill="#b8884a" stroke="#6d4b22" stroke-width=".6"/><rect x="1.6" y="1.6" width="'+(gw-3.2)+'" height="'+(gh-3.2)+'" fill="#2f5d27"/>';
     var gs=["#3d7a2c","#4f9234","#69ad3c","#86c34a","#a8d85a","#2a5a26","#5a9d38"];

@@ -241,10 +241,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Finishing the Loft (Cal, 2026-11-05: "Bedroom, patio, closet, and lair should be in good working condition", then QA
-  checks every Loft asset across every upgrade; the Trophy Room waits). Order: Bedroom painted walls with colour options,
-  figurine cabinet and the Closet door, Canvas Art and Figurine Shelf bug, then the Patio (turf, light tower, Chopstick's
-  bed, walking through the door, dogs), then the Lair. Claims Chrome for the art.
+- Bedroom, editing `app/src/20_loft.js`, `app/src/27_rooms.js`, `tools/shell_styles.py`: the Closet door in the left
+  wall, Canvas Art and Figurine Shelf shown with the glass wall, and the painted-wall loader, being committed now. Held back
+  uncommitted until Cal approves: the wall tiers (`art/app/bdw_*.webp`, their lines in `data/rsart.json`, the three
+  `bd_wt*` upgrades in `27_rooms.js`). Cal on approval 5: Tier 3 must not be walnut slats like Neon Noir (repainting it as
+  living grass panels, then Tier 4 on top), brick moves to the left wall. Chrome claimed (Higgsfield). QA's art lessons
+  read. Next: Patio, then the Lair, then hand the Loft to QA. (on 98210a2)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files

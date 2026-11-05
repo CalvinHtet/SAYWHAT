@@ -29,9 +29,26 @@ ADDONS.bedroom.push(["bd_pluto","Adopt Pluto",400,{fp:1,g:"Dogs"},"A toy poodle 
 ADDONS.bedroom.push(["bd_dbed2","Second Dog Bed",200,{fp:1,g:"Dogs"},"So nobody has to share."]);
 ADDONS.bedroom.push(["bd_chop","Adopt Chopstick",400,{fp:1,g:"Dogs"},"A chihuahua dachshund mix. Very fast, very long."]);
 Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"});
+/* Painted walls (Cal approved the four tiers 2026-11-05). Tier 1 is the bare start; each tier is a painting of the walls
+   and floor, in each Room style's colours (tools/shell_styles.py): art/app/bdw_t<tier>[_<style>].webp. */
+/* A painted shell is drawn as the room's floor and walls, clipped to the same shapes the game draws them in. Its frame is
+   tools/shell_guide.py's: floor corners 12 px in from the sides and 12 px above the bottom, 5:4. */
+var LFSHELLK=null;
+function lfShellPart(uid,part){var k=LFSHELLK,S0=k&&window.LFSPR&&LFSPR[k];if(!S0)return null;var N=LF.W,M=LF.D,H=LF.H,th=.42,
+  w=(N+M)*26+24,h=w/1.25,x=-M*26-12,y=(N+M)*13+12-h,id="lfshc"+part+uid,
+  P=function(a){return a.map(function(q){return lfPt(lfP(q[0],q[1],q[2]||0))}).join(" ")},
+  polys=part==="floor"?[[[0,0],[N,0],[N,M],[0,M]]]:[[[-th,M,0],[0,M,0],[0,0,0],[0,0,H],[-th,-th,H],[-th,M,H]],[[0,0,0],[N,0,0],[N,-th,0],[N,-th,H],[-th,-th,H],[0,0,H]]];
+  return '<clipPath id="'+id+'">'+polys.map(function(a){return '<polygon points="'+P(a)+'"/>'}).join("")+'</clipPath><image href="'+S0.u+'" x="'+x+'" y="'+y.toFixed(1)+'" width="'+w+'" height="'+h.toFixed(1)+'" preserveAspectRatio="none" clip-path="url(#'+id+')"/>'}
+(function(){var f=lfFloor,w=lfWalls,r=lfRoomSvg;
+  lfFloor=function(T,kind,st,uid){return lfShellPart(uid,"floor")||f(T,kind,st,uid)};
+  lfWalls=function(t,st,uid,wx){return lfShellPart(uid,"walls")||w(t,st,uid,wx)};
+  /* nested rooms (the Patio seen through the Bedroom glass) draw their own shell, so the key is saved and put back */
+  lfRoomSvg=function(rr,i,C){var prev=LFSHELLK;LFSHELLK=(C&&C.shellK)||null;try{return r.apply(this,arguments)}finally{LFSHELLK=prev}}})();
+function bdShellKey(C){var H=C.has,t=H("bd_wt4")?4:H("bd_wt3")?3:H("bd_wt2")?2:1,d=C.room&&C.T?lfDecFor(C.room,C.T):null,
+  k="bdw_t"+t+(d&&d.id!=="mid"?"_"+d.id:"");return LFSPR[k]?k:LFSPR["bdw_t"+t]?"bdw_t"+t:null}
 /* the old Bedroom drew these rooms inside itself. They are their own rooms now. */
 var bedBase=LFROOM.bedroom;
-LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};bedBase(C);C.has=h;rsArtReady();
+LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};bedBase(C);C.has=h;rsArtReady();C.shellK=bdShellKey(C);
   /* Both dog beds along the front edge on the closet side, well apart: the corner by the plant stays clear. */
   /* each bed is a low platform: a dog in it sits on the cushion, drawn over the bed (without it the bed hid the dog) */
   var dbed=function(x){lfSpr(C,"hmx_dogbed",x,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});C.plat.push({x0:x,y0:7.8,x1:x+1.2,y1:8.8,z:7,key:x+1.2+8.8+.01})};
@@ -141,7 +158,7 @@ autoRoom("mall",{name:"Mall",lv:30,cost:3000,buy:1,startLv:30,step:1,wall:"#efe9
  help:{k:"New room",t:"The Mall is open!",sub:"For now it is an empty marble strip mall with a row of empty storefronts.",pts:[["Fill the storefronts","Each shop or kiosk draws a bigger crowd and earns more."],["Three doors to more","The Arcade, the Bowling Alley and Karaoke are their own rooms. Open them from here."]]},
  items:[["ml_shop1","Clothing Store",UP_M,"mlx_shop1","",0,0,0,"Fills the first storefront.",{art:["mlx_shop1",.5,.15,3.8,.6,120,{flip:1}],cust:[[2.4,1.7,-1]]}],["ml_kiosk1","Phone Case Kiosk",UP_S,"mlx_kiosk1","",0,0,0,"Every mall has one.",{art:["mlx_kiosk1",2.8,3.0,1.6,1.4,70,{}],cust:[[3.6,5.0,-1]]}],["ml_shop2","Sneaker Store",UP_M,"mlx_shop2","",0,0,0,"Fills the second storefront.",{art:["mlx_shop2",5.0,.15,3.8,.6,120,{flip:1}],cust:[[6.9,1.7,-1]]}],["ml_bench","Benches & Planters",UP_S,"mlx_bench","",0,0,0,"Where dads wait.",{art:["mlx_bench",3.0,7.4,2.2,.8,50,{}],cust:[[2.6,8.6,1]]}],["ml_kiosk2","Pretzel Kiosk",UP_S,"mlx_kiosk2","",0,0,0,"You smell it first.",{art:["mlx_kiosk2",10.4,7.0,1.6,1.4,70,{}],cust:[[11.2,9.0,-1]]}],PL("ml_palm","Indoor Palm",UP_S,"mlx_palm",1.3,8.8,.8,.8,0,"A little green on all that marble."),["ml_dir","Directory Screen",UP_S,"","",0,0,0,"A screen that cycles through the stores.",{fx:function(C){C.walls.push(lfFaceX(0,1.3,122,scrMenu(["Clothing","Sneakers","Pretzels","Phones","Arcade","Bowling","Karaoke"],LF.U*1.2,58)))}}],["ml_shop3","Toy Store",UP_M,"mlx_shop3","",0,0,0,"Fills the storefront on the left wall.",{art:["mlx_shop3",.15,6.0,.6,3.4,120,{}],cust:[[1.7,7.7,1]]}],["ml_foun","Mall Fountain",UP_L,"mlx_foun","",0,0,0,"Pennies and all. Everyone meets here.",{art:["mlx_foun",5.6,3.2,3.2,3.2,100,{}],cust:[[5.0,5.0,1],[7.2,6.9,-1],[9.2,4.8,-1]],splash:"A fountain at the center of the mall. Everyone meets here."}],["ml_esc","Escalator",UP_L,"mlx_esc","",0,0,0,"Up to the Bowling Alley, against the back wall.",{art:["mlx_esc",10.6,.3,1.7,3.4,120,{}]}],PL("ml_food","Food Court Table",UP_S,"mlx_food",7.5,7.6,2,2,0,"Four stools, shared fries.",{cust:[[9.8,10,-1]]}),PL("ml_photo","Photo Booth",UP_S,"mlx_photo",12.4,4.2,1.2,1.2,0,"Four poses, one good one.",{cust:[[11.8,4.8,1]]}),PL("ml_gum","Gumball Machines",UP_S,"mlx_gum",0.9,4.3,1.3,0.7,0,"Every kid needs a coin.",{cust:[[1.55,5.7,1]]}),PL("ml_ride","Coin Rocket Ride",UP_S,"mlx_ride",5.4,7.4,1,1,0,"It goes up four inches.",{cust:[[5.9,9.1,-1]]}),PL("ml_flower","Flower Kiosk",UP_M,"mlx_flower",12.3,5.8,1.4,1.2,0,"The whole corner smells good.",{cust:[[12.5,9.5,-1]]}),["ml_arc","Open the Arcade",2000,"","",0,0,0,"Its own room, through a door on the right.",{g:"Expansion",opens:"arcade",lv:34}],["ml_bow","Open the Bowling Alley",2500,"","",0,0,0,"Its own room, up from the last storefront.",{g:"Expansion",opens:"bowling",lv:38}],["ml_kar","Open Karaoke",2000,"","",0,0,0,"Its own room, up from the left wall.",{g:"Expansion",opens:"karaoke",lv:42}]]});
 /* ---- doors ---- [from, to, side, position, color, label]. BL/BR are the back walls, FL/FR the open front edges. */
-portal("bedroom","closet","FL",2.2,"#ffd27a","Closet");portal("closet","bedroom","FR",2.6,"#ffd27a","Bedroom");
+portal("bedroom","closet","BL",6.5,"#ffd27a","Closet");portal("closet","bedroom","FR",2.6,"#ffd27a","Bedroom");
 portal("bedroom","patio","BR",8.9,"#ffb070","Patio");portal("patio","bedroom","FR",2.4,"#ffb070","Bedroom");
 portal("bedroom","gameroom","FR",7.2,"#7df9ff","Game Room");portal("gameroom","bedroom","FL",2.4,"#7df9ff","Bedroom");
 /* Cal: the Closet's upper (back-right) wall leads up, so the Lair sits above the Closet, its door the painted secret one. */
