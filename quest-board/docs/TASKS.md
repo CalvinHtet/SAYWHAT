@@ -4,23 +4,23 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). ROOMS 
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: SHOP (since 10:00 am)
 
-Live on the phone: `APPV` 41 (page version 12), 2026-11-05.
+Live on the phone: `APPV` 42 (page version 14), 2026-11-05.
 
 ---
 
 ## ROOMS as lead: board, quality of life, publishing
 
 Doing:
+- Waiting on Cal's phone-test feedback list (v42 is up for it); sort it onto this board by owner.
 
 To do:
 - [ ] Review the `dropbox-leftovers` branch: uncommitted edits found in the old Dropbox folder, 2 lines each in
       `app/src/27_rooms.js` and `app/src/27b_skins.js`, made against a copy 22 commits behind `main`. Show Cal what
       they did, bring over anything still wanted by hand (don't merge the branch), then delete the branch.
-- [ ] Ask Cal for his phone-test feedback list, sort it onto this board by owner.
 - [ ] Confirm on Cal's phone that the Loft fills the screen inside the Claude app, with the bottom nav showing.
-- [ ] Confirm the phone shows the newest version (the header `v` number) after a publish.
+- [ ] Confirm the phone shows the newest version after a publish: the header should now read v42.
 - [ ] Stretch pose: Cal to choose (a) gentler "yawn" stretch (recommended, `data/poses.json`; SHOP owns that file),
       (b) keep it, or (c) painted arms-up art for every top.
 - [ ] UI pictures redrawn in the game's style (`ui_*`: classes, coaches, crew, ranks, rewards), with a Chrome turn.

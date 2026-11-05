@@ -226,6 +226,7 @@ files: `dist` plus `lfvar.json`, which lives only on the page and must be kept. 
 `art_rig.js` and `art_icon.js`, and redrawn UI pictures into `art_ui.js` (empty until Cal makes them, so the old ones show).
 The sprites went up in two batches with the old page, then the code; each batch was safe to run with the other side's
 version. Old save test before publishing: load, reload, buy, reload, all kept. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
+`APPV` 42 (2026-11-05, page version 14, because `app.js` and `index.html` went up as two publishes): the same game as 41, only the number and `app.js`'s fingerprint changed, so Cal can check his phone picks up a new version. Done with `edit_version`, so no other file on the page changed and SHOP's work in progress stayed out. Old save test passed; at 390x844 headless the header read v42 with no page errors or failed requests. The page's files match the tested copy by checksum, and the live `index.html` is 364 bytes larger, the same gap v41 had, from a wrapper at the top of the page. The live page itself was not opened: the Browser pane is not signed in to claude.ai. Not yet seen on a real phone.
 
 Open asks from Cal (2026-11-05, latest first):
 - Game Room, new art needed (Cal's Chrome), then wire it into `GMR` in `27b_skins.js`:
