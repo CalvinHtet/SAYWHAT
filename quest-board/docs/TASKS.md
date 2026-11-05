@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: waiting on QA's economy check at level-80 prices (e64f93f). Then publish v48 with ROOMS's READY TO PUBLISH lines and
-  the town's database rules. (on e64f93f)
+- Now: waiting on QA's economy check at level-80 prices (3a6ff08's parent) and Cal's approval 8 (ROOMS's Daily Quest art,
+  wired in a60b175). Then publish v48 with ROOMS's READY TO PUBLISH lines and the town's database rules. (on a60b175)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -421,6 +421,8 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   shows the banner for the brand"). One per brand, the same scene and logo as its landscape banner, 720 x 1080:
   `ui_banner_<id>_p.webp` for hanga, y2k, over, rose, alt. LEAD's code (e012535) uses it when present, the landscape
   banner cropped until then. Show Cal side by side first.
+- LEAD wired all seven in (a60b175): the Daily Quest chest, stat chips, hidden quest picture, town hall backdrop. v48 waits for
+  Cal's approval 8; if he turns one down, delete its file and the stand-in comes back.
 - DONE by ROOMS in 8caf214, waiting on Cal's look (approval 8): all seven files at these names and sizes are in `art/app`;
   LEAD, the game does not read them yet (no `ui_dq_chest` etc. in the code), so wire them when Cal approves. TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
   (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
