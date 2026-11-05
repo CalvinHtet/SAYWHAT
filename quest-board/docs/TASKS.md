@@ -223,7 +223,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
   The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
-- WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
+- TAKEN by LEAD (now). WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
   (a) Missions: "a piece after 5 is fine but allow them to do each mission twice a day with a 3 hr timer in between each
   mission. if this still feels unfair, then bring it to 4." QA ran it (`dropodds.py 2 5`): twice a day halves the wait, Goblin
   King 9 days median (90% by 14, unluckiest 27), Amulet 8 (90% by 12, unluckiest 22). A pity of 4 changes almost nothing
