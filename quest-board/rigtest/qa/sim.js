@@ -79,7 +79,7 @@ const P = {
         ['m1', 'm2', 'm3', 'm4', 'm5'].forEach((id) => { const run = S.ms && S.ms.run && S.ms.run[id]; if (run && run.end <= Date.now()) sim.track('missions', () => sim.act('msclaim', { id })); });
         sim.clear();
         // only what the Missions screen would offer: not done today and not already out (its buttons do not check)
-        if (S.base.slots.some((r) => r && r.t === 'lair')) ['m5', 'm4', 'm3', 'm2', 'm1'].forEach((id) => { const m = S.ms; if (m && m.d === S.runDate && ((m.done || {})[id] || (m.run || {})[id])) return; sim.act('msgo', { id }); });
+        if (S.base.slots.some((r) => r && r.t === 'lair')) ['m5', 'm4', 'm3', 'm2', 'm1'].forEach((id) => { const m = S.ms; if (m && m.d === S.runDate && (m.run || {})[id]) return; sim.act('msgo', { id }); }); // since f629518 the Send button checks runs and the 3-hour gap itself
         // the day's tasks, spread over the visits
         if (P.tasks) {
           const qs = S.quests.filter((q) => q.rep === 'daily'), per = Math.ceil(qs.length / P.visits.length);

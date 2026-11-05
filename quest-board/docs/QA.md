@@ -441,3 +441,16 @@ workout days. 60 days each.
 
 XP comes only from tasks, training and the weekly bonus. The Daily Quest goal is reached two to eight times over every
 day, so its hidden quest is not hidden. No page errors.
+
+### Effort-first run 2: Cal's target (d7ae577)
+
+Cal: a serious player reaches level 100 and owns the whole town in about 50 days. Regular (12 tasks) 60 days, grinder (20) 70.
+
+| | Regular | Grinder |
+|---|---|---|
+| Level 100 | day 60 | day 26 |
+| Everything bought | not yet (270 of about 380, 14 rooms, on day 60) | day 58 |
+| Days with nothing to buy | 0 | only after buying everything |
+| Coins from day 31 | missions 32%, tasks 30%, rooms 13% | tasks 46%, missions 25%, rooms 18% |
+
+Missions twice a day doubled mission coins. Suggested: mission energy doubled, `xpK` 0.85, `price.moment` 2.5.

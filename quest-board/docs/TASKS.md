@@ -218,6 +218,23 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, economy against Cal's target (d7ae577, `sim.js`, regular 60 days and grinder 70; `docs/QA.md`, Effort-first run 2).
+  Level 100: the 12-task player on day 60, the 20-task grinder on day 26 (the curve's 46,738 XP at 830 and 2,300 XP a day).
+  Everything bought: the grinder on day 58; the 12-task player owns 270 of about 380 upgrades and 14 rooms on day 60.
+  Days with nothing to buy: zero for the 12-task player (target met; Lock and Key and Mall gates on every coin earned never
+  stalled anyone), the grinder only after buying everything. **Wrong: missions twice a day doubled their coins**: from day 31
+  missions are 32% of the 12-task player's coins and real tasks 30%, against Cal's rule. Suggested `ECON`: (1) missions:
+  double `mcost` (m1 50, m2 80, m3 200, m4 300, m5 500) so a normal day's energy pays for about one round, target missions
+  under 20%; (2) curve: `xpK` 0.85 puts the 12-task player at level 100 near day 51 (the grinder near 22: 20 proven tasks a
+  day is more than "serious"); (3) prices: after the mission cut, lower `price.moment` from 3 to 2.5 so the grinder still
+  buys out near day 50. QA reruns once these are in. Owner: LEAD.
+- QA, missions twice a day (f629518, on d7ae577): pass. The card shows cost, pay and "Run 1 of 2 today", then "Back out in
+  2 h 55 min" (the 3 hours count from sending), then "Done for today"; energy is spent per run; a third run is refused.
+- QA, the Shop (e012535, 3a6fdd5, on d7ae577, `rigtest/qa/shopcheck.js`, 1280 and 390 wide): pass. The mirror stays in view
+  after scrolling 1,600 px; Try on charges nothing, the mirror and basket show both pieces, the Checkout window lists them,
+  Buy all pays the total and wears them; each tab's text reads at 6.6:1 or better on its colour; View then Checkout works
+  (an upgrade then reads Active, an interface item Equipped · Remove); the drop window shows its painted banner; no screen
+  scrolls sideways; no page errors. Seen in passing: story scenes can open over the Shop mid-purchase. Owner: LEAD.
 - QA, the Patio (ROOMS's ef2ab15, on 331bd7f): pass. Turf, string lights strung overhead between posts, both dog beds, the
   egg swing; its door back to the Bedroom is on the front-left edge (Cal's rule: Bedroom back-right to Patio front-left); a
   Patio buy shows through the Bedroom glass at once (the telescope changes 2,148 pixels of the Bedroom). `shots/patio_full.png`.
@@ -257,11 +274,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
 - WAITING ON QA, a second target from Cal (2026-11-05), for the economy check you have TAKEN: "all upgrades can be purchased
   around lvl 80 ish" (level 80 is day 37 for the serious player). Levels 90 to 100 are kept for the artifact
   (`docs/PRESTIGE.md`, later). Tune prices until a serious player can own every upgrade around level 80, not day 50.
-- TAKEN by QA. WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
+- DONE by QA (QA findings). WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
   that 50 could easily be 100 days if you play every other day." The whole game (level 100 and the town bought out) takes a
   serious daily player about 50 days. LEAD set the curve back to `min(600, 50+6L+0.2L²)` (46,738 XP, day 49 at 950 a day;
   `ECON.xpK`, `xpCap`). Tune prices so everything is bought around day 50 for the grinder, and say what `ECON` should change.
-- TAKEN by QA. WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
+- DONE by QA (QA findings). WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
   shows the wait and "Run n of 2"), pity stays 5; Lock and Key and the Mall now wait on every coin earned (`ECON.gateLockKey`
   25,000, `gateMall` 80,000, my guesses). In the economy run: days with nothing to buy (target zero), and tune those two.
 - DONE by LEAD in f629518. WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
@@ -288,7 +305,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
   15-minute loop and start it.
-- TAKEN by QA. WAITING ON QA: check the Shop, e012535 and 3a6fdd5 (rule 17). Look at: the character stays in view while scrolling (desktop and
+- DONE by QA (QA findings). WAITING ON QA: check the Shop, e012535 and 3a6fdd5 (rule 17). Look at: the character stays in view while scrolling (desktop and
   phone); Try on for clothes, the basket and its confirm window; each tab's colour (brands, Basics and Vault cream, Wardrobe
   champagne, Upgrades and Interface navy) and that text stays readable; View then Checkout on upgrades and interface, then
   Equip or Equipped · Remove; the drop window with banner art. The body is now `overflow-x:clip`: check no screen scrolls
@@ -522,8 +539,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the economy target (level 100 and the town bought out near day 50), missions twice a day and the story gates, then
-  the Shop check; test copies only. Next: LEAD's story-scene walk. (on 9f3cb00)
+- Now: nothing running. Next: LEAD's story-scene walk (`29b_story.js`), unless a WAITING ON QA comes first. (on e1f3704)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
