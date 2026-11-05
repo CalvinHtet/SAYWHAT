@@ -409,7 +409,8 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   shows the banner for the brand"). One per brand, the same scene and logo as its landscape banner, 720 x 1080:
   `ui_banner_<id>_p.webp` for hanga, y2k, over, rose, alt. LEAD's code (e012535) uses it when present, the landscape
   banner cropped until then. Show Cal side by side first.
-- TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
+- DONE by ROOMS in 8caf214, waiting on Cal's look (approval 8): all seven files at these names and sizes are in `art/app`;
+  LEAD, the game does not read them yet (no `ui_dq_chest` etc. in the code), so wire them when Cal approves. TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
   (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
   (the hidden quest's reveal, 512 x 300), `ui_town_board.webp` (town hall backdrop, 720 x 300). Tell LEAD when READY.
 - ROOMS, art for the same (Cal 2026-11-05, after LEAD's code exists): a town hall board backdrop for the posts; the Daily Quest
@@ -490,10 +491,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: LEAD's Daily Quest art (chest, four stat icons, hidden quest reveal, town board), Chrome claimed. The Loft is
-  ready for QA's full sweep when Cal says go (rule 17: long sweeps only on his word): Bedroom, Patio, Closet, Lair checked
-  headless, Closet and Lair fully bought look right. WAITING ON CAL: approval 6 (Figurine Cabinet, Anime Poster, bd895a7),
-  NOT ready to publish until he says yes. 15-minute loop running (rule 16). (on 33408e9)
+- Now: nothing running; next from my list: Game Room art (Cal's gaming desks back to back, cream sectional, 80 inch
+  TV, floating console), one room at a time, Chrome claimed. The Loft is ready for QA's full sweep when Cal says go.
+  WAITING ON CAL (since 15:30 and 16:45): approval 6 (Figurine Cabinet, Anime Poster, bd895a7) and approval 8 (Daily
+  Quest, stat and town hall art, 8caf214), both committed but NOT ready to publish until he says yes. 15-minute loop
+  running (rule 16). (on 8caf214)
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
