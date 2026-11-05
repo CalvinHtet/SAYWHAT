@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Waiting on QA's
-  economy check (29ae247). Next: tune `ECON` with QA's numbers, then publish v48. (on 29ae247)
+- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Waiting on QA:
+  the economy (29ae247) and the Shop (e012535). Next: tune `ECON` with QA's numbers, then publish v48. (on e012535)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -247,6 +247,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
   15-minute loop and start it.
+- WAITING ON QA: check the Shop, e012535 and 3a6fdd5 (rule 17). Look at: the character stays in view while scrolling (desktop and
+  phone); Try on for clothes, the basket and its confirm window; each tab's colour (brands, Basics and Vault cream, Wardrobe
+  champagne, Upgrades and Interface navy) and that text stays readable; View then Checkout on upgrades and interface, then
+  Equip or Equipped · Remove; the drop window with banner art. The body is now `overflow-x:clip`: check no screen scrolls
+  sideways.
 - TAKEN by QA. WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
   (`29e_economy.js`), hook `window.__qbEcon`. Look at: the Daily Quest card on the board (goal, efficiency, chest, hidden
   quest at 2x), room payouts against today's task coins, mission energy on the Dungeons tab, no XP from missions, delves,
@@ -293,6 +298,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   real life, room pay capped at 20 to 50% of the day's task coins, missions run on energy from tasks and give no XP, training
   the best XP per minute. Modelled: tasks stay 53 to 83% of all coins, a 12-task player fills the town in about 5 months.
   Owner: LEAD (code), Cal (the go). QA reruns `sim.js` on the code once it is in.
+- Portrait brand banners (Cal, 2026-11-05: the drop window "to have the banner art but in a portrait style, whereas the shop
+  shows the banner for the brand"). One per brand, the same scene and logo as its landscape banner, 720 x 1080:
+  `ui_banner_<id>_p.webp` for hanga, y2k, over, rose, alt. LEAD's code (e012535) uses it when present, the landscape
+  banner cropped until then. Show Cal side by side first.
 - TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
   (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
   (the hidden quest's reveal, 512 x 300), `ui_town_board.webp` (town hall backdrop, 720 x 300). Tell LEAD when READY.
