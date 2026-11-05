@@ -13,8 +13,10 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Parked on Cal:
-  QA's effort-first economy (a98abb6). Next: with v48, the town's database rules below. (on 52c6dda)
+- Now: ROOMS's Trophy Room hook (`qbRaidTrophies()`, `29d_dungeon.js`), then QA's effort-first economy (Cal approved):
+  all numbers in `ECON` in `29e_economy.js`; the Daily Quest, room share of task coins, mission energy, no XP outside real
+  life, prices by kind (`29_prices.js`), training stat points. Also touches `28_missions.js`, `29b_story.js`, `30_app_b.js`,
+  `10_app_a.js`, `index.html`. Next: `WAITING ON QA: check the economy`; then the rest of the writing pass. (on d9b782c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -219,7 +221,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Goblin King set finished in 18 days median, 90% within 27, unluckiest 51 (87 missions median); Amulet set 16 days median,
   90% within 23, unluckiest 39. The pity never fired twice running. Fine for a set; the unluckiest month-plus may sting, a
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
-- WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
+- TAKEN by LEAD (building now). WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
   what it would feel like for a long term play of this game. So we should take it step by step until it feels right. Your
   coin estimations and pricing feels good, but it could be tightened more."** Build it as written in `docs/QA.md` (Proposal:
   an effort-first economy; Cal's requests 2 and 3 are now approved too), keep the numbers in one place so they are easy to
@@ -297,7 +299,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
-- Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
+- TAKEN by LEAD (doing first). Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
   brings back the first trophy from the dungeon raid. we can add the trophy room above the lair." The dungeon has no trophy
   yet (`28_missions.js`). Please add: raids can bring back a trophy, the first one is announced, and a global
   `qbRaidTrophies()` returns how many have come back (0 before the first). ROOMS shows the Lair's "Open the Trophy Room"
