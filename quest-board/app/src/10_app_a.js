@@ -592,7 +592,7 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Trophies",5],["wheel","Wheel",6],["away","Dungeons",1]];
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",5],["wheel","Wheel",6],["away","Dungeons",1]];
 var AREALINE={shop:"A real shop. Every quest pays coins now. Spend them on themes, frames, pets and more.",trophy:"Every achievement gets its own trophy on a shelf. Each one pays a 250 coin bonus.",hall:"Your Class Hall. Your story, perks and the full advancement ladder live here.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your crew on real-time expeditions. They come back with coins."};
 var view="board";
 function coinsFor(xp){return Math.max(10,Math.round(xp*2.5*(1+.01*(effLvl()-1))))}

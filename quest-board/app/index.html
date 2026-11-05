@@ -1233,6 +1233,21 @@ body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::b
 .tm-card{display:flex;flex-direction:column;gap:3px;padding:10px;border-radius:14px;border:1px solid var(--tac);background:var(--surface2,#1c1a2a)}
 .tm-card img,.tm-card>i{width:100%;height:90px;object-fit:cover;border-radius:10px;display:grid;place-items:center;font:800 34px var(--font-display);font-style:normal;color:#fff;background:radial-gradient(circle,var(--tac),#14121c 80%)}
 .tm-card small{color:var(--muted)}.tm-card span{font-size:12px;color:var(--tac)}
+/* LEAD: dungeon gifts, trophies and relics (29d_dungeon.js). */
+.dgg{text-align:center;align-items:center}.dgg h3{margin:4px 0}
+.dg-gift{width:150px;height:150px;object-fit:contain}.dg-gift0{display:grid;place-items:center;animation:dgBob 1.6s ease-in-out infinite}.dg-gift0 svg{width:120px;height:128px}
+@keyframes dgBob{50%{transform:translateY(-6px)}}
+.dg-ic{width:56px;height:56px;object-fit:contain;flex:none}.dg-ic.big{width:140px;height:140px}
+.dg-ic0{display:grid;place-items:center;border-radius:14px;font-size:28px;color:var(--accent);background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);border:1px solid var(--line)}
+.dg-ic0.big{font-size:64px;border-radius:24px}
+.dg-buff{margin:4px 0;font-weight:700;color:var(--accent)}.dg-buff.lock{color:var(--muted);font-weight:400}
+.dg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.dg-pc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--surface2,#1c1a2a)}
+.dg-pc.lock{opacity:.5}.dg-pc small{color:var(--muted)}
+.dg-tabs{display:flex;gap:8px;margin:0 0 12px}
+.dg-tab{min-height:40px;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:600 14px/1 inherit;cursor:pointer}
+.dg-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.dg-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

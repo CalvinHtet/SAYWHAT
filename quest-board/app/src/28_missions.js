@@ -4,6 +4,8 @@ var MS_HERO=["Mina","Jae","Rook","Sol","Dae","Vera"];
 function msState(){var t=today();if(!S.ms||S.ms.d!==t){var run=(S.ms&&S.ms.run)||{};S.ms={d:t,done:{},run:run}}return S.ms}
 function msHeroes(){var lair=S.base.slots.filter(function(r){return r&&r.t==="lair"})[0],n=lair?addonsOf(lair).length:0;return MS_HERO.slice(0,Math.min(6,3+Math.floor(n/2)))}
 function msBusy(){var m=msState(),b={};Object.keys(m.run).forEach(function(id){m.run[id].party.forEach(function(h){b[h]=1})});return b}
+/* minutes a mission takes; trophies can shorten it (29d_dungeon.js) */
+function msMins(q){return q.mins}
 function msPay(q){var f=1+.02*effLvl();return {c:Math.round(q.c*f),x:Math.round(q.x*f)}}
 awayHtml=function(){var m=msState(),hs=msHeroes(),busy=msBusy(),free=hs.filter(function(h){return !busy[h]}),now=Date.now();
   var h='<section class="card panel"><h3 class="label">Missions</h3><p class="note">Send your people out from the Hero\'s Lair. Five jobs a day. Bigger jobs need more people and pay far more.</p><p class="note"><b>Your team:</b> '+hs.map(function(n){return busy[n]?'<s>'+esc(n)+'</s>':esc(n)}).join(", ")+'. Upgrade the Lair to recruit more.</p></section>';
@@ -12,12 +14,12 @@ awayHtml=function(){var m=msState(),hs=msHeroes(),busy=msBusy(),free=hs.filter(f
     else if(run&&run.end<=now)body='<button class="btn" data-act="msclaim" data-id="'+q.id+'">Collect +'+pay.c+' coins, +'+pay.x+' XP</button>';
     else if(run){var mn=Math.ceil((run.end-now)/6e4);body='<span class="chip">'+esc(run.party.join(", "))+' back in '+mn+' min</span>'}
     else body='<button class="btn'+(free.length<q.k?' ghost':'')+'" data-act="msgo" data-id="'+q.id+'"'+(free.length<q.k?' disabled':'')+'>Send '+q.k+(q.k>1?' people':' person')+'</button>';
-    h+='<section class="card panel"><h3 style="margin:0 0 4px">'+esc(q.n)+'</h3><p class="note">'+esc(q.t)+' '+q.mins+' min. Team of '+q.k+'. Pays '+pay.c+' coins and '+pay.x+' XP.</p>'+body+'</section>'});
+    h+='<section class="card panel"><h3 style="margin:0 0 4px">'+esc(q.n)+'</h3><p class="note">'+esc(q.t)+' '+msMins(q)+' min. Team of '+q.k+'. Pays '+pay.c+' coins and '+pay.x+' XP.</p>'+body+'</section>'});
   return h};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msgo],[data-act=msclaim],[data-act=dogclean]");if(!b)return;var a=b.dataset.act;
   if(a==="dogclean"){var P=S.base.poops||[];P.shift();S.base.poops=P;S.coins+=20;S.earnedC+=20;S.xp+=5;pop("Cleaned up. +20 coins, +5 XP");persist();render();var om=document.querySelector(".rmodal .rm-scroll");if(om)roomModal(+om.dataset.i);return}
   var q=MS_LIST.filter(function(x){return x.id===b.dataset.id})[0];if(!q)return;var m=msState();
-  if(a==="msgo"){var busy=msBusy(),free=msHeroes().filter(function(h){return !busy[h]});if(free.length<q.k)return;m.run[q.id]={end:Date.now()+q.mins*6e4,party:free.slice(0,q.k)};persist();render();pop(free.slice(0,q.k).join(" and ")+" set out")}
+  if(a==="msgo"){var busy=msBusy(),free=msHeroes().filter(function(h){return !busy[h]});if(free.length<q.k)return;m.run[q.id]={end:Date.now()+msMins(q)*6e4,party:free.slice(0,q.k)};persist();render();pop(free.slice(0,q.k).join(" and ")+" set out")}
   else{var pay=msPay(q),before=effLvl();delete m.run[q.id];m.done[q.id]=1;S.coins+=pay.c;S.earnedC+=pay.c;S.xp+=pay.x;persist();render();pop("+"+pay.c+" coins  +"+pay.x+" XP");var af=effLvl();if(af>before)levelUp(af,null,before)}});
 /* ---------- the dogs ---------- */
 var dogNextBase=lfDogNext;
