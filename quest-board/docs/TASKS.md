@@ -22,7 +22,9 @@ To do:
       the Trophies tab becomes Relics, with tiered relics hidden until earned (old badges carry over) and a Trophies sub-tab
       that opens after the first piece and the Lair's Trophy Room; piece buffs and the set bonus; the crew fix (nobody has
       joined since the lounge was removed). Art requested from ROOMS below. QA to simulate drop odds.
-- [ ] Progression (Cal, 2026-11-05): plan in `docs/PROGRESSION.md`, waiting on Cal's go and two questions. New XP curve
+- [x] Progression parts 1 and 2 (d5fba8f, aa0d9ed): new curve, no level locks, story prices, the story scenes. Not published until QA's
+      simulation. Next: tune the gates with QA's numbers; swap in ROOMS's portraits and merged room.
+- [ ] (was) Progression (Cal, 2026-11-05): plan in `docs/PROGRESSION.md`. New XP curve
       (level 10 in about 4 days, at most 3 days a level), no level locks on room upgrades (4 shown, the 4th a mystery),
       prices rising along the story, and rooms opening through a story (garden, sell produce, a partner opens the restaurant,
       boba, dessert, an investor's speakeasy, rooftop, the strip mall, theater and auditorium, arcade, bowling, karaoke).
@@ -77,6 +79,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   (original designs, portrait 300 x 400 like the coaches, file names `ui_story_<id>.webp`); (3) a produce stand in the
   Garden; (4) the theater's basics as their own upgrades: ticket stand, popcorn and soda machine, and an employee, which
   open the Auditorium free. LEAD writes the scenes, the gates and the money. Show Cal the characters side by side.
+  Update (LEAD, aa0d9ed): Cal named the room **Lock and Key**. The scenes are in (`29b_story.js`) with stand-in initials; portraits
+  as `ui_story_chef.webp` (Mara, chef), `ui_story_lockkey.webp` (Desmond Hale, investor), `ui_story_mall.webp` (Priya
+  Okafor, investor), `ui_story_auditorium.webp` (Theo, theater crew), 300 x 400; the scene picks them up by name. When the
+  merged room exists, tell LEAD its id; when the theater basics exist, tell LEAD their ids (Theo waits for any 3 upgrades now).
 - Dungeon gifts and the Goblin King set (Cal, 2026-11-05: "Goblin King set"). Missions sometimes bring home a gift: coins, XP,
   a dungeon-only wearable, or one piece of The Goblin King's Regalia (helm, chestplate, greaves, boots, sword). The first piece
   opens a Trophy Room upgrade in the Hero's Lair; pieces fill an armor mannequin there; the full set gives the team a big
@@ -318,6 +324,9 @@ To do:
       wheel, level pay and passive income, buying the cheapest next upgrade whenever affordable. Report: level reached, days to
       fill each room, coins piling up unspent. Cal's targets: level 10 in 3 or 4 days, something to buy every day or two, no
       upgrade a week away.
+- [ ] (from LEAD) Story scenes (aa0d9ed, `29b_story.js`, test hook `window.__qbStory`): walk a new save from level 1 to the club, every
+      scene, "Not yet" and back, lots on the street in order, nothing opening early, and old saves at every stage (no scenes for
+      rooms already owned). Add the gates to the economy simulator: how many days each step takes.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 

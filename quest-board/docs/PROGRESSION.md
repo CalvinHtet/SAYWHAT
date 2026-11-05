@@ -83,5 +83,17 @@ The Loft building (Bedroom, Closet, Lair, Patio, Game Room) keeps opening as it 
 ## Decided (Cal, 2026-11-05)
 
 - The Upstairs Bar and the Speakeasy are one room. Saves that own both keep everything: the merged room keeps the ids.
-- The speakeasy needs a creative name (Cal to pick).
+- The speakeasy is called **Lock and Key**.
 - Rhythm, VR and the Club: as in step 9, unless Cal says otherwise.
+
+## Built (LEAD, aa0d9ed)
+
+`app/src/29b_story.js`. Gates, to tune with QA's simulator: Garden lot at level 3; 60 produce sold (sold from the Garden
+window, 4 coins each) brings Mara the chef (restaurant lot, your coins, joins the team); 80 dishes served opens the boba lot;
+4 boba upgrades let its Dessert upgrade be bought; dessert open and 12 restaurant upgrades bring Desmond Hale (Lock and Key
+opens free, joins); 6 Lock and Key upgrades open the rooftop upgrade; rooftop open and 50,000 coins earned bring Priya Okafor
+(strip mall lot, your coins, joins); 4 mall upgrades open the theater lot; 3 theater upgrades bring Theo (Auditorium free,
+joins); 3 auditorium upgrades open the arcade upgrade; 4 arcade upgrades open Rhythm and VR; 6 open bowling; 6 bowling open
+karaoke; 6 karaoke open the club lot. "Not yet" asks again after 30 minutes. Until ROOMS merges the rooms, Lock and Key is
+the `skybar` room, and the old speakeasy door never opens. Theo's basics are "any 3 theater upgrades" until ROOMS adds the
+ticket stand, popcorn and soda machine and employee as their own upgrades.
