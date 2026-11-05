@@ -421,10 +421,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: you and the dogs inside the Patio's own window (`20_loft.js`, `27_rooms.js`). WAITING ON CAL: approval 6, the
-  Figurine Cabinet and the Anime Poster (since 15:30), committed in bd895a7 but NOT ready to publish until he says yes;
-  if he says no, ROOMS reverts the two pictures. Next: a check of the Closet and Lair, then the Loft goes to QA.
-  15-minute loop running (rule 16). (on bd895a7)
+- Now: a check of the Closet and Lair, then the Loft goes to QA. WAITING ON CAL (since 15:30 and 16:00): approval 6
+  (Figurine Cabinet, Anime Poster, bd895a7) and approval 7 (Pocket Radio, Bluetooth Speaker, Bluetooth Record Player,
+  Digital Clock, 8c2c459). Both committed but NOT ready to publish until he says yes; on a no, ROOMS reverts the art.
+  Done meanwhile: you and the dogs in the Patio window, the RGB strip gone, Canvas Art and Figurine Shelf retired.
+  Next: LEAD's Daily Quest art. 15-minute loop running (rule 16). (on 8c2c459)
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
