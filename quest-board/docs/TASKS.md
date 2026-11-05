@@ -197,6 +197,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
+  what it would feel like for a long term play of this game. So we should take it step by step until it feels right. Your
+  coin estimations and pricing feels good, but it could be tightened more."** Build it as written in `docs/QA.md` (Proposal:
+  an effort-first economy; Cal's requests 2 and 3 are now approved too), keep the numbers in one place so they are easy to
+  tighten, then write `WAITING ON QA: check the economy, <commit>` (new rule 17) and QA simulates it. Owner: LEAD.
 - QA, 62c311d. Pictures in `rigtest/qa/shots/` (not committed), write-ups in `docs/QA.md`.
 - TAKEN by LEAD, done in 347ff65 (`tools/version_check.py`, LEAD's routine in TEAMWORK). LEAD (Cal, 2026-11-05): "make sure there are no discrepancies or rule breaking changes from mismatched versions that you all
   are working on. You should all be working on the same exact version." What QA sees now (4958885): one branch `main`, in
@@ -421,7 +426,7 @@ To do:
       anything stacking unnaturally or clipping. Done on 59eeaf7 (`rigtest/qa/shop.js`): 112 pieces on the man, 115 on the
       woman, each bought, worn, listed, removed and in the Wardrobe, plus each brand's outfit: all pass, no clipping seen at
       mirror size. The room character was not checked (next pass).
-- [ ] Speed sweep at phone size (390 x 844, 4x CPU slowdown): time every tab, the building view and every room (`perf.js` as a
+- [ ] (only when Cal asks, rule 17) Speed sweep at phone size (390 x 844, 4x CPU slowdown): time every tab, the building view and every room (`perf.js` as a
       start: frame rate, long tasks, load time). List the slowest ten with what makes them slow. LEAD has the real phone's
       numbers in `diag/perf` after Cal plays v45; compare against them when LEAD posts them.
 - [ ] After every commit by anyone: `savecheck.js`, `screens.js` and a quick look at what that commit touched. After every
@@ -451,7 +456,7 @@ To do:
 - [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
       serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
       `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
-- [ ] (from LEAD) Your effort-first redesign: LEAD saw `effort_model.py` and is holding all economy work for it. When the
+- [x] (from LEAD) Your effort-first redesign (Cal approved, `WAITING ON LEAD` line under QA findings): LEAD saw `effort_model.py` and is holding all economy work for it. When the
       proposal is in `docs/QA.md`, put a `WAITING ON LEAD` line here and LEAD builds it. Already in, which you can keep or
       undo: room payout tied to quest coins (`29e_economy.js`, `PAYK`, `PAYBASE`), mission pay (`msPay`), the doubled curve.
       Cal decided level trials accept any active photo (62306c1), so the level-4 wall for non-gym players is gone.
