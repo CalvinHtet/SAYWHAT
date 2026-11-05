@@ -71,10 +71,9 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    outfits in all 22 poses (two per brand, so each brand was seen on both bodies; seven outfit and body pairs), every hat with all three hair styles on both bodies front and
    back, every hat with every glasses and mask, every new neck piece over seven collared and hooded tops front and back, and
    every top over every bottom and every bottom over every shoe (front and back, at thumbnail size). Found and fixed: the
-   four baked-in mannequins and the headband above. Found and not fixed: with an arm raised (`stretchUp`, `stretch`) most
-   long-sleeve and boxy tops show dark streaks fanning from the armpit to the hip, because one mesh cell stretches between
-   the arm and the torso. A stretch cap in `rig.js` was tried and tore the shoulders instead, so it was reverted. It is a
-   rig limit that also affects the older jackets, not the new art. Not checked: every pose of a full outfit for every
+   four baked-in mannequins and the headband above. Also found: with an arm raised (`stretchUp`, `stretch`) most
+   long-sleeve and boxy tops showed dark streaks fanning from the armpit to the hip, because one mesh cell stretched between
+   the arm and the torso. Fixed later the same day (see Still to do, item 2). Not checked: every pose of a full outfit for every
    combination (the pairing sheets cover pairs, not triples), and anything in motion at full speed.
 2. Guests in every room with people (16 rooms; the Closet, Lair, Patio and Game Room never have anyone in them, and the
    Bedroom has only you and the dogs):
@@ -148,8 +147,22 @@ Visitors, per Cal: the Game Room is visited only by game versions of his friends
 `27b_skins.js` (empty for now, so nobody comes in; the comment there shows the line to add). The Closet has no visitors.
 Phone speed and The Loft on a phone: see "Phone" under What was checked.
 
-Published: the page is pinned in Cal's sidebar. `dist` has 437 files; character layers and icons are bundled into `art_rig.js` and
-`art_icon.js`. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
+Asset quality pass (2026-11-05, every room fully upgraded, after the streak fix): every room sprite was looked at alone and
+in its room. Fixed:
+- Two sprites were whole generator sheets with a grid line through them: the Bowling towel warmer (`bwx_towel`) and the
+  Rhythm trophy (`rhx_trophy`). Each is now one cell cut out, and `data/rsart.json` has their new sizes.
+- A thin green-screen line round the outside of about 250 sprites. `tools/rs_fix.py edge-all` cleans only the outer 3 px band
+  (plus pure lime anywhere), so plants and green art inside a sprite keep their colour. `rs_fix.py edge <name>` does one.
+- Green spill inside the Lair hologram map, drone and paint cans (`hmx_map`, `hmx_drone`, `hmx_cans`), and the Dessert lantern.
+- The Karaoke tambourine stand stood in the walkway; it is beside the stage now.
+Looked at and left: the Patio telescope overlaps the fire bowl on screen but not on the floor (it is behind it). The
+Speakeasy front corner reads crowded (see above). The depth audit flags rugs under furniture, which is correct.
+
+Published 2026-11-05 as `APPV` 37 (version 8 of the page), pinned in Cal's sidebar for phone testing. The page holds 501
+files: `dist` plus `lfvar.json`, which lives only on the page and must be kept. Character layers and icons are bundled into
+`art_rig.js` and `art_icon.js`, and redrawn UI pictures into `art_ui.js` (empty until Cal makes them, so the old ones show).
+The sprites went up in two batches with the old page, then the code; each batch was safe to run with the other side's
+version. Old save test before publishing: load, reload, buy, reload, all kept. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
 
 Still to do, in order:
 1. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
@@ -160,6 +173,11 @@ Still to do, in order:
    their usual binding). Every other pose keeps the old binding, so it renders exactly as before: `rigtest/browser/regress.js`
    renders every top on both bodies in all 22 poses with the rule on and off and lists any cell outside the stretch poses
    that changed. `&armpit=off` on `rigtest/matrix.html` draws without it.
+   Waiting on Cal: the long streaks are gone, but the stretch frames still show small ragged bits at the shoulders,
+   because one flat picture cannot bend to arms straight overhead. Offered: (a) a gentler wide "yawn" stretch, arms to
+   about 60 to 70 degrees, a `data/poses.json` change only (recommended); (b) keep it as is; (c) a painted arms-up picture
+   for every top on both bodies and the base body, about 60 generations in Cal's Chrome, plus one per future top. Art
+   cannot be generated in a cloud session.
 3. Before sharing widely: test on a real phone. The Test panel and Shop Testing row only show for the owner; remove them and the `window.__qb` and `window.__qbLoft` hooks before release.
 
 ## Not yet verified
