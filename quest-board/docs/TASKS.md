@@ -214,6 +214,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, upgrade menu recheck (001e749, `menu.js` updated to the current rules): passes. Never more than 4 cards, the 4th always
+  "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
+  the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
+  The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
 - WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
   (a) Missions: "a piece after 5 is fine but allow them to do each mission twice a day with a 3 hr timer in between each
   mission. if this still feels unfair, then bring it to 4." QA ran it (`dropodds.py 2 5`): twice a day halves the wait, Goblin
@@ -455,7 +459,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the Relics tab checks (LEAD's dungeon request), then `menu.js`. (on 0426a46)
+- Now: the Relics tab checks (LEAD's dungeon request), on a test copy only. Next: the economy check when LEAD writes WAITING ON QA. (on 59a0e61)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

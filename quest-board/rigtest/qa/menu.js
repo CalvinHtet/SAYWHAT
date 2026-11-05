@@ -29,29 +29,22 @@ const ONLY = (process.argv[2] || '').split(',').filter(Boolean);
           const cards = [...document.querySelectorAll('.rmodal details.acol[data-k="av"] .addon.next')];
           const summary = ((document.querySelector('.rmodal details.acol[data-k="av"] summary') || {}).textContent || '').trim();
           const left = list.filter((u) => !(r.a && r.a[u[0]]));
-          if (cards.length > 5) bad(t, 'L' + L + ': ' + cards.length + ' cards');
+          // the menu since d5fba8f: no level locks, at most 4 cards, the 4th always a mystery card; earlier mystery cards only
+          // for a room the story has not opened yet, or the Trophy Wall before the first trophy
+          if (cards.length > 4) bad(t, 'L' + L + ': ' + cards.length + ' cards (at most 4)');
           if (/All upgrades installed/.test(summary) && left.length) bad(t, 'L' + L + ': "All upgrades installed" with ' + left.length + ' unbought');
-          cards.forEach((c) => {
-            const mys = c.classList.contains('mystery'), name = (c.querySelector('b') || {}).textContent || '';
-            const btn = c.querySelector('button'), txt = btn ? btn.textContent.trim() : '';
-            out.seen.cards++; if (mys) out.seen.mystery++; else if (/Reach level/.test(txt)) out.seen.reach++;
-            if (mys) {
-              const m = (c.getAttribute('aria-label') || '').match(/level (\d+)/); const lv = m ? +m[1] : 0;
-              if (lv - eff < 2) bad(t, 'L' + L + ': mystery card for level ' + lv);
-            } else {
-              const u = list.find((u) => u[1] === name);
-              if (!u) return;
-              const lv = (u[3] && u[3].lv) || 0;
-              if (lv - eff >= 2) bad(t, 'L' + L + ': ' + name + ' (level ' + lv + ') shown by name, should be a mystery card');
-              if (lv > eff && !/Reach level/.test(txt)) bad(t, 'L' + L + ': ' + name + ' (level ' + lv + ') buyable before its level: "' + txt + '"');
-            }
+          cards.forEach((c, k) => {
+            const mys = c.classList.contains('mystery'), btn = c.querySelector('button'), txt = btn ? btn.textContent.trim() : '';
+            out.seen.cards++; if (mys) out.seen.mystery++;
+            if (k === 3 && !mys) bad(t, 'L' + L + ': the 4th card is not a mystery card');
+            if (mys && k < 3 && !/story|trophy|first|open|lot|investor|regular|plaza|mall/i.test(c.textContent)) bad(t, 'L' + L + ': early mystery card: "' + c.textContent.trim().slice(0, 70) + '"');
+            if (!mys && /Reach level|Unlocks at level/.test(txt)) bad(t, 'L' + L + ': level lock still shown: "' + txt + '"');
           });
           const bt = [...document.querySelectorAll('.rmodal button[data-act="raddon"]')].find((e) => !e.disabled);
           if (!bt) break;
           const id = bt.dataset.id, u = list.find((u) => u[0] === id), c0 = S.coins;
           bt.click();
           if (!(r.a && r.a[id])) { bad(t, 'L' + L + ': pressing Buy on ' + u[1] + ' did nothing (' + (c0 - S.coins) + ' coins)'); break; }
-          if ((u[3] && u[3].lv || 0) > L) bad(t, 'L' + L + ': bought ' + u[1] + ' below its level ' + u[3].lv);
           (bought[t] = bought[t] || []).push([L, u[1]]);
         }
       }
