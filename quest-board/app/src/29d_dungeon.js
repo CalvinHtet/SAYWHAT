@@ -22,7 +22,7 @@ var TSETS={
       {id:"dusk",name:"Shard of Dusk",d:"Violet glass, cool to the touch. It darkens at sunset.",buff:{text:"Quests pay 2% more coins",coin:2}},
       {id:"ember",name:"Shard of Embers",d:"Warm in the hand, even in winter.",buff:{text:"Quests pay 2% more coins",coin:2}},
       {id:"tide",name:"Shard of Tides",d:"Hold it to your ear and you hear water that isn't there.",buff:{text:"Quests pay 2% more coins",coin:2}},
-      {id:"thorn",name:"Shard of Thorns",d:"Its edges are sharp. It has never cut anyone it likes.",buff:{text:"Quests pay 2% more coins",coin:2}},
+      {id:"thorn",name:"Shard of Thorns",d:"Dark red, with edges sharp enough to draw blood.",buff:{text:"Quests pay 2% more coins",coin:2}},
       {id:"silence",name:"Shard of Silence",d:"Rooms go quiet when it is unwrapped.",buff:{text:"Quests pay 2% more coins",coin:2}}
     ]}
 };
@@ -66,8 +66,8 @@ function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=P.g,h;
     h='<span class="label">'+esc(T.name)+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
       +(dgDone(g.set)?'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
       +(first?'<p class="note">A trophy needs somewhere to stand. The Trophy Wall in the Hero\'s Lair is now ready to build.</p>':'')}
-  else if(g.kind==="coins"){S.coins+=g.n;S.earnedC+=g.n;h='<h3>'+g.n.toLocaleString()+' coins</h3><p class="note">Found in a strongbox nobody else had opened.</p>'}
-  else{S.xp+=g.n;h='<h3>+'+g.n+' XP</h3><p class="note">Hard-won experience. Nothing else came back this time.</p>'}
+  else if(g.kind==="coins"){S.coins+=g.n;S.earnedC+=g.n;h='<h3>'+g.n.toLocaleString()+' coins</h3><p class="note">From a strongbox nobody had opened in years.</p>'}
+  else{S.xp+=g.n;h='<h3>+'+g.n+' XP</h3><p class="note">Nothing else came back this time.</p>'}
   persist();render();modal('<div class="card box2 dgg">'+h+'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>');try{burst(innerWidth/2,innerHeight/3,24)}catch(e){}}
 /* before 28_missions pays the mission, remember who went and where; after it, roll the gift */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(!b)return;var m=msState(),run=m.run[b.dataset.id];if(!run)return;
