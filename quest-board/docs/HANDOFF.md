@@ -70,6 +70,10 @@ disagree, the Shop's new lettering, taglines, countdown and painted banners, the
 behind room windows. Old-save test and `rigtest/browser/savecheck.js` passed on that build. Only `app.js`, `art_ui.js`,
 `index.html` and `qbdata.js` changed; every live file was checked against the build by hash.
 
+`APPV` 46 (page version 20): only the next 5 room upgrades show, 2+ levels away as mystery cards; ROOMS's Bedroom patio door.
+`APPV` 47 (page version 21): the street of three buildings (The Loft, Kode Plaza, Calibur Mall) with placeholder fronts, only
+the building you are in draws; the rig's painted-pose support (no painted art yet). Old-save test and savecheck passed on each.
+
 ## What was checked on 2026-11-05, and what was not
 
 1. Clothes, both bodies, every pose: done in the rig, not in a room. All 48 `gx_o_*`, `gx_v_*` and `gx_al_*` items (tulle

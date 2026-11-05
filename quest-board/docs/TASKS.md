@@ -6,7 +6,7 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 11:05 am)
 
-Live on the phone: `APPV` 46 (page version 20), 2026-11-05.
+Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 
 ---
 
