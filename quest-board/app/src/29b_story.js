@@ -8,22 +8,22 @@
 var STORY=[
   {id:"garden",room:"garden",how:"lot",why:"A plot of land in Kode Plaza is up for sale. Grow something you can sell.",gate:function(){return effLvl()>=3}},
   {id:"chef",room:"restaurant",how:"lot",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
-    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Everything I cook with them sells out. Imagine what we could do with a real kitchen.","Put up the money for a little restaurant and I'll run the stove. Partners?"],yes:"Partners. Let's open it",team:"mara"}},
+    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Put up the money for a little restaurant and I'll run the stove. Partners?"],yes:"Partners. Let's open it",team:"mara"}},
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner next door is empty. A boba shop would print money."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
   {id:"lockkey",room:"skybar",how:"free",why:"An investor is watching how much the plaza earns.",gate:function(){return styHas("dessert")&&styState().biz>=15000},
-    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. I had to meet the owner.","Whatever you're doing down here, it's working. And your second floor is just storage?","Let me fund it: an upscale speakeasy upstairs. Live band, singers, the works. Lock and Key."],yes:"Open Lock and Key"}},
+    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
   {id:"rafe",room:null,how:"team",why:"Someone has become a regular at Lock and Key.",gate:function(){return styUps("skybar")>=3},
-    scene:{who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred, not shaken.","\"Best drink I've had since a dockside bar off the Coral Reach. And I've had a few.\"","By midnight half the room is gathered round him for the one about the sunken temple. He's back the next night, and the next.","\"I'm in town between expeditions. Mind if I make this my spot? I'll bring the crowd.\""],yes:"Pour him another",team:"rafe"}},
+    scene:{who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred.","\"Best drink since a dockside bar off the Coral Reach. I'm in town between expeditions. Mind if I make this my spot?\""],yes:"Pour him another",team:"rafe"}},
   {id:"rooftop",room:"rooftop",how:"upgrade",why:"Lock and Key's regulars keep asking about the roof.",gate:function(){return styUps("skybar")>=6}},
   {id:"mall",room:"mall",how:"lot",why:"Another investor is watching the plaza's earnings.",gate:function(){return styHas("rooftop")&&styState().biz>=60000},
-    scene:{who:"Priya Okafor",role:"Investor",lines:["I've been studying your business model. Restaurant, drinks, dessert, a speakeasy. It works.","One plaza, and look at it. Imagine what you'd do with a bigger lot.","There's a small strip mall up the street, completely empty. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
+    scene:{who:"Priya Okafor",role:"Investor",lines:["I've been studying your business model. Restaurant, drinks, dessert, a speakeasy. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
   {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3},
-    scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store. Her chat is scrolling faster than you can read.","\"Sorry, are you the owner? My followers are obsessed with this place. Half of them are already on their way.\"","\"Let me make it my home base. Weekly hauls, store tours, all of it. You get the crowd, I get the content.\""],yes:"Deal. Roll the camera",team:"nova"}},
+    scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers are obsessed with this place. Let me make it my home base?\""],yes:"Deal. Roll the camera",team:"nova"}},
   {id:"auditorium",room:"auditorium",how:"free",why:"A theater needs its basics in the lobby, and someone to run it.",gate:function(){return styHas("theater")&&styUps("theater")>=2},
-    scene:{who:"Theo",role:"Theater crew",lines:["Saw the ticket stand go up. You're going to need someone behind it.","I'll sell the tickets, run the popcorn and keep the projector alive. Hire me and we can open the screen room tonight."],yes:"Hire Theo, open the Auditorium",team:"theo"}},
+    scene:{who:"Theo",role:"Theater crew",lines:["Saw the ticket stand go up. You're going to need someone behind it.","Hire me and we can open the screen room tonight."],yes:"Hire Theo, open the Auditorium",team:"theo"}},
   {id:"arcade",room:"arcade",how:"upgrade",why:"Movie crowds want something to do before the show: the mall can open an arcade.",gate:function(){return styUps("auditorium")>=3}},
   {id:"rhythm",room:"rhythm",how:"upgrade",why:"When the arcade is packed, its back room can become a rhythm floor.",gate:function(){return styUps("arcade")>=4}},
   {id:"vr",room:"vr",how:"upgrade",why:"When the arcade is packed, its other back room can become a VR arena.",gate:function(){return styUps("arcade")>=4}},
@@ -54,11 +54,40 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
 function styWhy(room){var s=styStep(room);return s&&s.why||"Keep growing your business."}
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(s.scene.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
-function styScene(s){var c=s.scene,o=styState();
-  var h='<div class="card box2 sty">'+(c.at?'<span class="label">At '+esc(c.at)+'</span>':'')+'<div class="sty-who">'+styPortrait(s)+'<div><b>'+esc(c.who)+'</b><small>'+esc(c.role)+'</small></div></div>'
-    +c.lines.map(function(l,i){return '<p class="sty-line" style="animation-delay:'+(i*.9).toFixed(1)+'s">'+esc(typeof l==="function"?l():l)+'</p>'}).join("")
-    +'<div class="sty-act"><button class="btn" data-act="styyes" data-v="'+s.id+'">'+esc(c.yes)+'</button><button class="btn ghost" data-act="styno" data-v="'+s.id+'">Not yet</button></div></div>';
-  o.seen=o.seen||{};o.seen[s.id]=1;modal(h)}
+/* one line per screen, tap to continue (Cal: a lot of reading for one screen); the choices come with the last line */
+function styCard(c,pic,acts){var n=c.lines.length;
+  return '<div class="card box2 sty">'+(c.at?'<span class="label">At '+esc(c.at)+'</span>':'')+'<div class="sty-who">'+pic+'<div><b>'+esc(c.who)+'</b><small>'+esc(c.role)+'</small></div></div>'
+    +c.lines.map(function(l,i){return '<p class="sty-line"'+(i?' hidden':'')+' data-k="'+i+'">'+esc(typeof l==="function"?l():l)+'</p>'}).join("")
+    +(n>1?'<div class="sty-act sty-more"><button class="btn ghost" data-act="stynext">Next &rsaquo;</button><small>1 / '+n+'</small></div>':'')
+    +'<div class="sty-act sty-last"'+(n>1?' hidden':'')+'>'+acts+'</div></div>'}
+function styScene(s){var c=s.scene,o=styState();o.seen=o.seen||{};o.seen[s.id]=1;o.lastScene=Date.now();
+  modal(styCard(c,styPortrait(s),'<button class="btn" data-act="styyes" data-v="'+s.id+'">'+esc(c.yes)+'</button><button class="btn ghost" data-act="styno" data-v="'+s.id+'">Not yet</button>'))}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=stynext]");if(!b)return;var card=b.closest(".sty"),ls=card.querySelectorAll(".sty-line"),k=0;
+  ls.forEach(function(p,i){if(!p.hidden)k=i});if(k+1>=ls.length)return;ls[k].hidden=true;ls[k+1].hidden=false;var sm=card.querySelector(".sty-more small");if(sm)sm.textContent=(k+2)+" / "+ls.length;
+  if(k+2>=ls.length){card.querySelector(".sty-more").hidden=true;card.querySelector(".sty-last").hidden=false}});
+
+/* Return visits: the people you have met drop by as the businesses grow, so they are part of the world, not a one-time
+   conversation. Each plays once, at most one every 25 minutes, never over a story step that opens something. */
+var BEATS=[
+  {id:"mara1",pic:"mara",who:"Mara",role:"Chef",at:"the restaurant",gate:function(){return styUps("restaurant")>=5},lines:["Table six sent their compliments to the chef.","That's me. I'm framing it."]},
+  {id:"mara2",pic:"mara",who:"Mara",role:"Chef",at:"the boba shop",gate:function(){return styUps("boba")>=2},lines:["Your boba kid keeps borrowing my tapioca for dessert experiments.","I'm allowing it. Some of them are genius."]},
+  {id:"mara3",pic:"mara",who:"Mara",role:"Chef",at:"the dessert parlour",gate:function(){return styUps("dessert")>=3},lines:["Someone proposed at table four tonight. She said yes.","I sent out dessert on the house. Don't tell the accountant."]},
+  {id:"desmond2",pic:"lockkey",who:"Desmond Hale",role:"Investor",at:"Lock and Key",gate:function(){return styUps("skybar")>=6},lines:["The singer you booked? Sold out three weekends running.","I told my wife this would work. She'll never let me forget I was right."]},
+  {id:"rafe2",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"the rooftop",gate:function(){return teamHas("rafe")&&styHas("rooftop")},lines:["You can see the whole city from up here. Reminds me of the lighthouse at the edge of the Coral Reach.","Did I ever tell you about the sunken temple? Pull up a chair."]},
+  {id:"rafe3",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&teamHas("sable")&&(styState().missions||0)>=5},lines:["Your scouts have been down in the Old Metro? Next time, take me.","I know a thing or two about tunnels. And about what lives in them."]},
+  {id:"sable2",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",gate:function(){return teamHas("sable")&&(styState().missions||0)>=8},lines:["The Old Metro's gone quiet. Too quiet.","Something deeper down is collecting crowns. I've seen the scratch marks."]},
+  {id:"priya2",pic:"mall",who:"Priya Okafor",role:"Investor",at:"the strip mall",gate:function(){return styHas("theater")},lines:["A movie theater. In our strip mall.","Do you have any idea what this does to foot traffic? I love it."]},
+  {id:"nova2",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",gate:function(){return teamHas("nova")&&styUps("mall")>=6},lines:["The haul video just passed a million views.","Brace yourself for Saturday."]},
+  {id:"nova3",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the arcade",gate:function(){return teamHas("nova")&&styHas("arcade")},lines:["I'm streaming from the arcade tonight.","If I lose at the claw machine, we never speak of it."]},
+  {id:"theo2",pic:"theo",who:"Theo",role:"Theater crew",at:"the auditorium",gate:function(){return teamHas("theo")&&styUps("auditorium")>=3},lines:["First sold-out screening.","I may have cried a little in the projection booth. Don't tell anyone."]}
+];
+function styBeatPic(b){var u=window.QBART&&(QBART["ui_story_"+b.pic+".webp"]||QBART["ui_team_"+b.pic+".webp"]);
+  return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(b.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
+function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o.lastScene||0)<25*60000)return false;
+  for(var i=0;i<BEATS.length;i++){var b=BEATS[i],ok=false;if(o.beats[b.id])continue;try{ok=b.gate()}catch(e){}if(!ok)continue;
+    o.beats[b.id]=1;o.lastScene=now;S.xp+=15;persist();modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+15 XP</small>'));return true}
+  return false}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(b){var o=styState();o.missions=(o.missions||0)+1}},true);
 /* look for the next step now and then, never over another window, one scene at a time */
 function styCheck(){if(!loaded||!S.base||!S.created)return;var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
@@ -66,7 +95,8 @@ function styCheck(){if(!loaded||!S.base||!S.created)return;var o=styState(),now=
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()}catch(e){}if(!ok)continue;
     if(s.scene){if((o.later[s.id]||0)>now)continue;styScene(s);return}
-    styOpen(s);return}}
+    styOpen(s);return}
+  styBeat()}
 setInterval(styCheck,15000);setTimeout(styCheck,4000);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=styyes],[data-act=styno],[data-act=stysell]");if(!b)return;
   var a=b.dataset.act,o=styState();
@@ -78,4 +108,4 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function stySellHtml(){var n=Math.floor((S.base.food&&S.base.food.veg)||0),o=styState();
   return '<div class="sty-sell"><span>'+n+' produce ready'+(o.sold?' &middot; '+o.sold+' sold so far':'')+'</span><button class="btn'+(n?'':' ghost')+'" data-act="stysell"'+(n?'':' disabled')+'>Sell for '+(n*4)+' coins</button></div>'}
 /* test hook, removed at release with window.__qb */
-window.__qbStory={check:styCheck,state:styState,steps:STORY,lots:function(){return lotsOpen()},allows:styAllows};
+window.__qbStory={check:styCheck,state:styState,steps:STORY,beats:BEATS,lots:function(){return lotsOpen()},allows:styAllows};
