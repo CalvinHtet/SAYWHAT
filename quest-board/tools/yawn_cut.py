@@ -55,6 +55,11 @@ def main():
             yt, xt = np.nonzero(tm)
             print(body, "silhouette drift (px at 4x): left %d right %d top %d bottom %d" % (xs.min() - xt.min(), xs.max() - xt.max(), ys.min() - yt.min(), ys.max() - yt.max()))
         else:
+            # the generator keeps a faint trace of the mannequin's outline: thin lines that survive keying. Keep only what is
+            # thick enough to be cloth (survives an opening), plus a margin for the garment's own edges and drawstrings.
+            solid = ndi.binary_opening(a > 60, iterations=6)
+            keep = ndi.gaussian_filter(ndi.binary_dilation(solid, iterations=8).astype(float), 1.5)
+            a = (a * keep).astype(np.uint8)
             inside = (a > 128) & tm
             print(body, "garment px %d, share on the body %.0f%%" % ((a > 128).sum(), 100 * inside.sum() / max(1, (a > 128).sum())))
         layer = Image.fromarray(np.dstack([rgb[:, sl], a]).astype(np.uint8), "RGBA").resize(OUT, Image.LANCZOS)
