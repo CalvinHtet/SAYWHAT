@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal's go for QA's effort-first economy (a98abb6, `docs/QA.md`: rooms earn only after a task, the
-  Daily Quest, missions on energy with no XP, prices by what a thing is). Next, already decided by Cal: the rotating daily and
-  3-day bounties with suggested tasks, the weekly town meter, the town hall (after Contributor rules). (on a98abb6)
+- Now: bounties (Cal's request 5): a rotating daily bounty and a 3-day bounty, with suggested chores. Files: new
+  `app/src/29f_bounty.js`, small hooks in `30_app_b.js` (board) and `index.html` CSS. Parked on Cal: QA's effort-first
+  economy (a98abb6). Next: the weekly town meter (request 4), then the town hall (request 1). (on 0426a46)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -208,18 +208,18 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   version check in LEAD's routine, before each publish and at wrap-up: everyone committed and pushed, `git worktree list`
   only holds today's test copies, each chat's last test names the commit it ran on, and the live `APPV` matches TASKS.md;
   and a rule that work another chat builds on is committed first. QA tags every result with its commit. Owner: LEAD.
-- LEAD (Cal asked whether friends must be Editors): no. On the platform an Editor is an admin who can republish the page and
+- TAKEN by LEAD (text done in 4a2a143; database rules and the two-friend test with v48). LEAD (Cal asked whether friends must be Editors): no. On the platform an Editor is an admin who can republish the page and
   change database rules; a Contributor can write data, which is all a player needs. The Neighbors text in `30_app_b.js` says
   "Share this page with a friend as an Editor": make it Contributor, add database rules so each player writes only their own
   `worlds/`, `pings/` and `board/` rows, and test one friend as Contributor (online save, Neighbors, a photo check) and one as
   Viewer (expected: plays, saves on that device only) before inviting 15. `docs/QA.md`, Town hall. Owner: LEAD.
-- LEAD, economy simulator done (your request; 12a46ba, `rigtest/qa/sim.js`, numbers in `docs/QA.md`, Economy and play
+- TAKEN by LEAD (stopgap 5082b0c; trials 62306c1; the real fix is QA's proposal, waiting on Cal's go). LEAD, economy simulator done (your request; 12a46ba, `rigtest/qa/sim.js`, numbers in `docs/QA.md`, Economy and play
   simulation): do not publish the progression as is. A 12-task-a-day player owns every room and all 370 upgrades by day 33
   and level 100 by day 40, then nothing to buy (970,000 coins unspent by day 60); a 20-task player by day 21. Causes: room
   income (70% of coins in month 2, about 21,000 a day), missions (more XP than real tasks by day 60, pay +2% per level), and
   XP bonuses doubling the curve's 200 a day. Level trials need a gym photo, so a friend who never works out stops at
   level 4. Owner: LEAD (Cal to decide the trials).
-- LEAD, Cal's six requests (2026-11-05), his words and QA's notes in `docs/QA.md` ("Cal's six requests" and "Proposal: an
+- TAKEN by LEAD: (6) done in 62306c1; (5) bounties now; (4) town meter and (1) town hall next; (2) and (3) wait on Cal's go. LEAD, Cal's six requests (2026-11-05), his words and QA's notes in `docs/QA.md` ("Cal's six requests" and "Proposal: an
   effort-first economy"). Decided by Cal, ready to build: (1) "turn on the town hall and allow you to post a picture of your
   character with your current outfit and a short message for everyone to read" (`socialHtml` exists, never shown; Contributor
   access and database rules first); (4) a weekly town meter everyone fills, showing each player's coins and XP gained, "but it
