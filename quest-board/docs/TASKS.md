@@ -225,6 +225,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, story scenes (LEAD's aa0d9ed request, on c7151e1, `rigtest/qa/story.js`): pass. A new save walked from the Garden to the
+  Auditorium, each gate held one short and then met: nothing opens early, each opens on its gate (Garden at level 3, Mara at 60
+  produce sold, Boba at 80 served, Dessert at 4 Boba upgrades, Lock and Key at 25,000 earned, Rooftop at 6 Lock and Key
+  upgrades, Mall at 80,000, Theater at 4 Mall upgrades, Auditorium at 2 Theater upgrades); "Not yet" keeps Mara away, she
+  returns after 30 minutes; lots reach the street in order; an old save owning every room gets no room scene and no lot (only
+  Rafe's team scene, which is not a room). Days each room opened (d7ae577, prices as built), 12-task player: Garden 3,
+  Restaurant 4, Boba 6, Closet 13, Patio 22, Game Room 24, Lair 36, Dessert 39, Lock and Key 39, Rooftop 50, Mall 51,
+  Theater 52, Auditorium 53; grinder: everything by day 54. The 33 days from Boba to Dessert come from prices (the player buys
+  cheaper Loft pieces first); the level-80 prices will shorten it, and QA reports these days again on that rerun. Owner: LEAD.
 - QA, upgrade income (LEAD's d523cf1 request, on 37b053a, all 357 business upgrades read from the live game: 66 looks only,
   291 earn). Fix: (1) three looks-only upgrades still tell the player "Earns +6% here": Banker's Lamp Table (speakeasy
   `sp_lamp`), Trophy Case (rhythm `rh_trophy`), Stage Lights (karaoke `ka_light`); (2) the Theater's Arcade Cabinet (`t_arc`)
@@ -568,8 +577,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's story-scene walk (`29b_story.js`, `window.__qbStory`) on a test copy. Next: the economy rerun when LEAD writes
-  WAITING ON QA. (on 49f7e09)
+- Now: nothing running. Next: the economy rerun to level 80 when LEAD writes WAITING ON QA; the team-buff part of LEAD's
+  upgrade-income request meanwhile. (on c7151e1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -617,7 +626,7 @@ To do:
       wheel, level pay and passive income, buying the cheapest next upgrade whenever affordable. Report: level reached, days to
       fill each room, coins piling up unspent. Cal's targets: level 10 in 3 or 4 days, something to buy every day or two, no
       upgrade a week away.
-- [ ] (from LEAD) Story scenes (aa0d9ed, `29b_story.js`, test hook `window.__qbStory`): walk a new save from level 1 to the club, every
+- [x] (from LEAD, done: QA findings) Story scenes (aa0d9ed, `29b_story.js`, test hook `window.__qbStory`): walk a new save from level 1 to the club, every
       scene, "Not yet" and back, lots on the street in order, nothing opening early, and old saves at every stage (no scenes for
       rooms already owned). Add the gates to the economy simulator: how many days each step takes.
 - [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
