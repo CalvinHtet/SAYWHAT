@@ -17,13 +17,14 @@ var ECON={
   shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */
   mcost:{m1:50,m2:80,m3:200,m4:300,m5:500},       /* mission energy (QA: doubled once missions ran twice a day; target under 20% of coins) */
   mcoinLv:.01,                                    /* mission coins grow 1% a level */
-  xpK:.85,xpCap:600,                                /* the level curve (Cal: level 100 in about 50 days for a serious player) */
+  xpK:1,xpCap:600,                                /* the level curve (Cal: level 100 in about 50 days for a serious player) */
   msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
   gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
   trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
   chest:1.0,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
-  price:{decor:200,furniture:500,equipment:1200,big:3000,moment:2.5}
+  price:{decor:150,furniture:300,equipment:600,big:1200,moment:1},  /* QA, for Cal's "all upgrades ... around lvl 80" */
+  stepK:.25,stepMax:2,                            /* the room's story step, softened: min(2, 1 + (ROOMSTEP-1) x 0.25) */
 };
 /* ---- today's effort ---- */
 function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d:t,tx:0,spent:0,paid:0,done:0,hid:0,buff:prev.hidFor===t?1:0}}return S.dq}
@@ -81,5 +82,5 @@ boardHtml=function(){var h=econBoardBase(),i=h.indexOf('<section class="card pan
 var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowers?|rug|curtains?|frames?|prints|clock|sign|garland|neon|lamp|lights?|palm|fern|leaf|trim|plaque)\b/i;
 (function(){Object.keys(ADDONS).forEach(function(k){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;(ADDONS[k]||[]).forEach(function(a){if(!a[2])return;var base=a[2]/st,P=ECON.price,b;
   if((a[3]&&a[3].decor)||DECORW.test(a[1]))b=P.decor;else if(base<=250)b=P.furniture;else if(base<=500)b=P.equipment;else if(base<=1000)b=P.big;else b=base*P.moment;
-  a[2]=Math.round(b*st/50)*50})})})();
+  var st2=Math.min(ECON.stepMax,1+(st-1)*ECON.stepK);a[2]=Math.round(b*st2/50)*50})})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,energy:msEnergy,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
