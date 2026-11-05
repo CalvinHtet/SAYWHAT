@@ -18,3 +18,11 @@ Before publishing:
 The first load on a new `APPV` copies the save to `data/users/<id>/backup`. That copy is private to the player, so only
 their own page can read it. Restore backup is in the Test panel, which only the owner sees. If a release goes wrong, publish the
 previous version again; saves are not affected.
+
+An artifact version holds at most 511 files and `dist` is at about 500. Before adding many more sprites, bundle another group
+into a pack in `tools/build.py` (`ex_` is the next candidate; it would also need its image paths routed through `QBART`).
+
+## Testing upgrade tiers
+
+In the page, buy each upgrade one at a time in unlock order and rebuild the room with `window.__qbLoft().roomCtx` and `roomSvg` after each
+purchase, reading the footprints from `.lfitems > g[data-b]`. Overlaps at mid tiers do not show up when a room is only checked fully upgraded.

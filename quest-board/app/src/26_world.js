@@ -182,7 +182,7 @@ var RSCH=[["rtx_tb0","rtx_ch0",34,46],["rtx_tb1","rtx_ch1",38,50],["rtx_tb2","rt
 function rsTier(C){return C.has("r_t3")?3:C.has("r_t2")?2:C.has("r_t1")?1:0}
 /* guests sit behind the table, facing out, so a table never cuts through anyone */
 /* these sheets are drawn to true proportions, so a height passed in would only squash them */
-var lfSprNat=lfSpr;lfSpr=function(C,k,x,y,w,d,o){if(o&&o.H&&/^(rdx|sbx|rfx|bbx|dsx|spx|acx|rhx|vrx|bwx|kax|cbx|gmx|mlx|hmx)_/.test(k)){o=Object.assign({},o);delete o.H}return lfSprNat(C,k,x,y,w,d,o)};
+var lfSprNat=lfSpr;lfSpr=function(C,k,x,y,w,d,o){if(o&&o.H&&/^(rdx|sbx|rfx|bbx|dsx|spx|acx|rhx|vrx|bwx|kax|cbx|gmx|mlx|hmx|clx)_/.test(k)){o=Object.assign({},o);delete o.H}return lfSprNat(C,k,x,y,w,d,o)};
 var RDT=[null,["rdx_tlong",2.5,1.5,46],["rdx_tround",2.0,2.0,50],["rdx_tsq",2.2,2.0,50]];
 function rsSitAt(C,x,y,face,cx,cy,back,lbl){var n0=C.st.length;C.s("sit",x,y,face,"eat",[10,20],back?{tag:"diner",lift:1,sz:5,facewall:1,dk:0,wx:x,wy:y+1,tb:[cx,cy]}:{tag:"diner",lift:1,sz:5,wx:cx+1.8,wy:cy+1.8,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"})}
 function rsDinner(C,cx,cy,lbl){var tr=rsTier(C),T=RSCH[tr];
@@ -246,7 +246,7 @@ LFROOM.restaurant=function(C){
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
   if(H("r_b1")&&st>0)(st===2?[.7,4.3,7.9]:[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
-  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[5.7,6.2],[9.8,6.2],[13.4,7.6]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[5.7,6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more2")&&st>1&&LFSPR.rdx_curve){var cvx=12.2,cvy=10.4;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});/* the crescent opens toward you: its guests sort after its tall back and before the round table in front of them */
     [[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+3.6+cvy+3.3-2.4+.5)-(C.st[k].x+C.st[k].y)});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx-.8,cvy+2.1,.6,.6,{h:30,ctr:1})}
@@ -262,14 +262,14 @@ LFROOM.restaurant=function(C){
   if(H("r_d3")&&st>0)(st===2?[.9,4.5,8.1]:[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
-  if(H("r_cool")&&st>0)lfSpr(C,"rsx_cooler",Wi-1.0,D*.5+2.7,.8,.7,{h:50,ctr:1});
-  if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.7,D*.5+1.2,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5+1.2,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5+1.2,.8,.8,30,{});
-  if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5-1.2,.7,.5,24);
+  if(H("r_cool")&&st>0)lfSpr(C,"rsx_cooler",Wi-1.0,kd+.3,.8,.7,{h:50,ctr:1});
+  if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.5,D*.5+2.2,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5+2.2,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5+2.2,.8,.8,30,{});
+  if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
   /* the patio fills the corner below the kitchen wing */
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<kw;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,kd,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,kd,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,kd,0)],"#6d4c2e","none");C.decals.push(pl);
-    if(H("r_sign"))rsS(C,"rsx_aframe",Wt-.9,D-1.0,.7,.5,24);
+    if(H("r_sign"))rsS(C,"rsx_aframe",px+3.4,D-.75,.7,.5,24);
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,kd+.4,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",Wt-1.1,kd+.3,.9,.9,50)}
     if(H("r_p1"))[[px+2.2,kd+2.4],[px+5.6,kd+2.4]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
     if(H("r_p2"))[[px+4.3,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
