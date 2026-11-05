@@ -175,8 +175,21 @@ To do:
 - [ ] Closet (Cal, on v43): Wardrobe Lights and Super Sleek Modern look like nothing changed. Make each one obvious.
 - [ ] Closet (Cal, on v43): Jewelry Tower stops being the `clx_jewel` sprite. Another part of the closet opens up and shows
       jewelry, just like the shoe and bag wall. Art for his approval.
-- [ ] Every upgrade in every room clearly visible, even a poster or a clock (Cal, on v43). Buy each one at a time in
-      every room, measure what actually changed on screen, then fix the weak ones or list the art they need.
+- [ ] Every upgrade in every room clearly visible (Cal, on v43). MEASURED 2026-11-05 (all 21 rooms, 397 upgrades, each bought
+      alone in unlock order; report, numbers and before/after sheets in `art/raw/audit/`, git-ignored): 318 OK, 33 WEAK,
+      9 NONE, 35 not visual by design (staff, menus, money caps, pets, expansions). Fix, worst first:
+      - Bugs, bought but never drawn: Bedroom Canvas Art and Figurine Shelf vanish once Floor-to-Ceiling Glass is owned
+        (`!w3` in `20_loft.js`), and the shop sells them after it; Restaurant Walnut Dividers, Drinks Cooler and Dish Station
+        only draw after expansions they are sold before; Garden More Plots adds no bed until Buy the Empty Lot; Theater Film
+        Reel Wall Art sits behind the movie poster; Arcade Neon Trim is only a glow (nothing by day).
+      - Can never be bought (their prerequisite left the room's list): Restaurant Chef's Neon; Game Room Couch & Console, Pool
+        Table, Snack Bar; Garden Scarecrow, Berry Patch, Beehive; Theater Cocktail Bar and the three that need it.
+      - WEAK, needs a bigger change or new art: 10 in the Restaurant (Star Plaque, Grand French Range, Brass Chandeliers by
+        day, Black Marble Counter, Sculptural Vases, Espresso Bar, Charcoal Grill Station, Patio Heaters, Host Desk, Brass
+        Sconces), 4 in the Auditorium (Aisle Lights, Digital Projector, Surround Sound; Bigger and IMAX Screen grow the room
+        but the view shrinks to fit), Bedroom Neon Sign and Racing Chair, Game Room RGB Floor Lamp, Sky Bar Champagne Trolley
+        (behind the piano), Club Laser Rig and Smoke Machine. Closet Wardrobe Lights and Super Sleek Modern: new art done.
+      Not measured: expansions (their doors), people, pets and animation.
 - [ ] Game Room art: back-to-back gaming rigs at the front with the racing chairs facing them, a cream three-piece
       sectional with a futon piece, then an 80 inch TV and a floating modern media console as later upgrades.
 - [ ] Club (optional): back-view booth art if Cal wants booths along the bottom edge too.
