@@ -13,10 +13,9 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON QA's redesign (Cal, 2026-11-05: QA is redesigning; LEAD checks QA's progress before continuing). QA's
-  `rigtest/qa/effort_model.py` (uncommitted) models an effort-first economy; LEAD's 5082b0c is a stopgap and gets replaced
-  by QA's proposal once it is in `docs/QA.md`. No economy, price or mission changes from LEAD until then.
-  Next: build QA's proposal; publish v48 after QA's simulator passes it. (on 62306c1)
+- Now: WAITING ON Cal's go for QA's effort-first economy (a98abb6, `docs/QA.md`: rooms earn only after a task, the
+  Daily Quest, missions on energy with no XP, prices by what a thing is). Next, already decided by Cal: the rotating daily and
+  3-day bounties with suggested tasks, the weekly town meter, the town hall (after Contributor rules). (on a98abb6)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
