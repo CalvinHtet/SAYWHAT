@@ -147,7 +147,11 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
   var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,sx(q[1],q[3]),sy(q[2],q[4]),q[3],q[4],o)};
   (ADDONS[t]||[]).concat(d.base?[["",0,0,d.base]]:[]).forEach(function(u){var e=u[3];if(u[0]&&!H(u[0]))return;
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
-    if(e.art){(Array.isArray(e.art[0])?e.art:[e.art]).forEach(one)}
+    /* e.plat: the piece is a stage or a dance floor people stand on, this many units high. It is no obstacle, and
+       anyone inside it is lifted onto it and drawn over it, instead of standing inside it with only a head showing. */
+    if(e.art){var arts0=Array.isArray(e.art[0])?e.art:[e.art];if(e.plat){var RR=LFREC;LFREC=null;arts0.forEach(one);LFREC=RR;
+      arts0.forEach(function(a){var x0=sx(a[1],a[3]),y0=sy(a[2],a[4]);C.plat.push({x0:x0,y0:y0,x1:x0+a[3],y1:y0+a[4],z:e.plat,key:x0+a[3]+y0+a[4]+.01})})}
+      else arts0.forEach(one)}
     if(e.light)lfLight(C,sx(e.light[0]),sy(e.light[1]),e.light[2],e.light[3],e.light[4],e.light[5]);
     /* A spot belongs to the piece nearest it, and moves with that piece when the room spreads. Spread on its own
        as a point, a spot just past a table's edge used to land inside the table. */
