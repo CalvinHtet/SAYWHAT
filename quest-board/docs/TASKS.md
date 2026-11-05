@@ -365,9 +365,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: figurine cabinet art (Sleek Wardrobe) and a readable Anime Poster for the Bedroom, Chrome claimed (Higgsfield),
-  then `20_loft.js` to place them. Next: you and the dogs inside the Patio's own window, a check of the Closet and Lair,
-  then the Loft goes to QA. 15-minute loop running (rule 16). (on 63ac9f3)
+- Now: you and the dogs inside the Patio's own window (`20_loft.js`, `27_rooms.js`). WAITING ON CAL: approval 6, the
+  Figurine Cabinet and the Anime Poster (since 15:30), committed in bd895a7 but NOT ready to publish until he says yes;
+  if he says no, ROOMS reverts the two pictures. Next: a check of the Closet and Lair, then the Loft goes to QA.
+  15-minute loop running (rule 16). (on bd895a7)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
