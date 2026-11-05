@@ -171,6 +171,19 @@ const CASES = {
     check('no page errors', !errs.length, errs);
     await ctx.close();
   },
+  async curve_keeps_level(b) {
+    // Saves from before the new XP curve (no xpc2): level 8 (cheaper now: may rise), 30 and 60 (dearer now: must not drop).
+    const old = (L) => Math.round(((L - 1) * 100 + .19 * (L - 2) * (L - 1) * (2 * L - 3) / 6) / 5) * 5;
+    for (const L of [8, 30, 60]) {
+      const xp = Math.round((old(L) + old(L + 1)) / 2);
+      const { ctx, p, errs } = await start(b, { online: save({ xp, lvPaid: L, char: { name: 'Old' + L, sex: 'f' } }) });
+      await open(p);
+      const r = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; return { lv: x.lvlOf(S.xp), xp: S.xp, c2: S.xpc2, need: x.need(x.lvlOf(S.xp)) }; });
+      check('old level ' + L + ' does not drop (now ' + r.lv + ')', r.lv >= L && r.c2 === 1, r);
+      check('no page errors', !errs.length, errs);
+      await ctx.close();
+    }
+  },
   async new_player(b) {
     const { ctx, p, errs } = await start(b, { online: null, device: null });
     await open(p);

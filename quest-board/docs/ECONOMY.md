@@ -5,21 +5,10 @@ two early on, bigger goals later, and about a year of play to reach the top.
 
 ## XP and levels
 
-`cum(L)` in `app/src/30_app_b.js` is the XP needed to reach a level. Early levels cost
-100 XP each. By level 50 a level costs about 575 XP, and by level 100 about 1,950 XP.
-
-At 200 XP a day, which is roughly a dozen ordinary tasks:
-
-| Level | Day reached | Coins earned so far |
-| --- | --- | --- |
-| 5 | 2 | 1,800 |
-| 8 (Restaurant) | 3 | 3,000 |
-| 10 | 4 | 4,400 |
-| 20 | 11 | 14,700 |
-| 30 | 21 | 31,000 |
-| 50 | 60 | 104,000 |
-| 80 | 192 | 394,000 |
-| 100 | 352 | 760,000 |
+Cal, 2026-11-05 (`docs/PROGRESSION.md`): level L to L+1 costs `min(600, 50 + 6L + 0.2L²)` XP (`cum` in `30_app_b.js`).
+At 200 XP a day (about a dozen ordinary tasks): level 10 on day 4, 20 on day 13, 30 on day 29, 50 on day 84, 100 in about
+eight months; busy 450 XP days roughly halve that. No level ever takes more than about three normal days. Saves from the old
+curve keep their level and their progress through it (`xpc2` in `merge`).
 
 Quest XP stays on the 5 to 100 scale. Honor system on a 50+ XP task pays half, photo proof
 on 25+ XP pays 2x (a live camera photo; Cal doubled it 2026-11-05 so proof is always worth taking), a streak adds up to 30%, and combos, bounties and crits stack on top
@@ -55,7 +44,9 @@ one day unless it is a huge moment. `app/src/29_prices.js` sets them:
 | Brand clothes | 600 to 1,700 |
 | Interface items and buffs | 1,000 to 2,500 at most |
 
-Nothing should ever cost more than a few days of play. Level gates do the pacing, not prices.
+Room upgrades have no level locks (Cal, 2026-11-05): each room shows its next 4, the 4th a mystery, and coins pace them.
+Rooms later in the story cost more (`ROOMSTEP` in `29_prices.js`: Garden x1 up to the Club x6), because passive income and
+dungeons pay more by then. Only an upgrade that opens a new room keeps a level until the story scenes open rooms instead.
 A kitchen runs at full speed only after 3 quests that day (20% with none), so chores still drive
 everything. Set `fp:1` on an upgrade to keep its price exactly as written.
 

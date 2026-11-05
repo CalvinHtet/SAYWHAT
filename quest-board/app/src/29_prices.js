@@ -16,6 +16,9 @@ ROOMT.restaurant.cost=1000;ROOMT.garden.cost=1500;ROOMT.theater.cost=2500;ADDONS
 SHOP.forEach(function(it){var e=it[6]||{};if(it[1]==="buff")it[3]=it[3]<=1500?1000:it[3]<=6000?1500:2500;
   else if(!e.gar&&!e.basic&&it[3]>800)it[3]=it[3]<=2000?1000:it[3]<=5000?1500:2500});
 LFDS.restaurant.forEach(function(q){if(q.cost)q.cost=q.cost>=10000?1500:600});
+/* Cal, 2026-11-05 (docs/PROGRESSION.md): rooms later in the story cost more, since passive income and dungeons pay more by then. */
+var ROOMSTEP={garden:1,restaurant:1.25,boba:1.5,dessert:1.75,skybar:2,speakeasy:2,rooftop:2.5,mall:3,theater:3.5,auditorium:3.5,arcade:4.5,rhythm:4.5,vr:4.5,bowling:5,karaoke:5.5,club:6};
+Object.keys(ROOMSTEP).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[2])a[2]=Math.round(a[2]*ROOMSTEP[k]/50)*50})});
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
 function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;persist();render();pop("Skipped one week");setTimeout(brandCheck,200)}
 function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}

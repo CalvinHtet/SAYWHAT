@@ -57,12 +57,14 @@ function roomModal(i){
     var e=a[3],pre=ADDREQ[a[0]],price=a[2]?'<i class="coin"></i>&nbsp;'+a[2]:'Claim';
     if(pre&&!(r.a&&r.a[pre])){lockd.push('<div class="addon sealed"><b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small><span class="chip">Needs '+esc(addonName(r,pre))+'</span></div>');return}
     /* Cal: keep the next upgrade a surprise. One level up shows its name; two or more is a mystery card. */
-    if(e.lv&&e.lv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
-    var blk=e.lv&&effLvl()<e.lv?'Reach level '+e.lv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
+    /* Cal, 2026-11-05: no level locks on upgrades. Only an upgrade that opens a new room keeps its level until the story opens it. */
+    var elv=e.opens?e.lv:0;
+    if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
+    var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
     avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
   });
   /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
-  var more=avail.length>5;avail=avail.slice(0,5);
+  var more=avail.length>4;avail=avail.slice(0,4);if(avail.length===4&&avail[3].indexOf(' mystery')<0)avail[3]='<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Buy one above to reveal it</button></div>';
   h=h.replace("@@AV@@",avail.length?"Next upgrades":lockd.length?"Next upgrades: install the ones before them first":"All upgrades installed");
   h+=avail.join("")+(more?'<p class="note addmore">More appear as you install these.</p>':'')+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
   /* owner-only testing link (hidden from guests like the Shop's Testing row; remove both before release): refunds this
@@ -143,7 +145,7 @@ function baseAct(a,b,e){
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
     S.coins-=hc;S.spent+=hc;S.hired[hk]=1;render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
   if(a==="raddon"){var r=bslot(i),ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===b.dataset.id})[0];if(!ad||r.a[ad[0]])return true;
-    if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].lv&&effLvl()<ad[3].lv){pop("Reach level "+ad[3].lv+" first");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
+    if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].opens&&ad[3].lv&&effLvl()<ad[3].lv){pop("Reach level "+ad[3].lv+" first");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
     if(S.coins<ad[2]){pop("Need "+(ad[2]-S.coins)+" more coins");return true}
     simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
   if(a==="decuse"||a==="decbuy"){decorSet(i,a,b.dataset.v||"");return true}
@@ -747,7 +749,7 @@ try{Object.assign(FRIENDS.logan.look,{hair_s:"slick",hair:"#1d1a22",eyeT:"sharp"
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -764,7 +766,11 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
 
 /* level, gates, ranks */
 /* a level a day early on, about ten days a level at the cap. See docs/ECONOMY.md */
-function cum(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
+/* XP to reach level L. Cal, 2026-11-05 (docs/PROGRESSION.md): level L to L+1 costs min(600, 50+6L+0.2L²), so level 10 comes in
+   about 4 days and no level takes more than about 3 normal days. cumOld is the old curve, kept for moving old saves over. */
+var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(600,Math.round(50+6*L+.2*L*L)))})();
+function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*600}
+function cumOld(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
 function levelPay(L){return 100+10*L}
 function lvlOf(xp){var L=1;while(L<MAXL&&xp>=cum(L+1))L++;return L}
 function need(L){return cum(L+1)-cum(L)}
@@ -822,7 +828,7 @@ function persist(){
    which sent every device to "this device only" from about v37 on). So it works on its own copy. */
 function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d));window.__qbShift=d.tshift||0;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -836,6 +842,9 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   if(d&&d.lvPaid==null)S.lvPaid=Math.max(1,lvlOf(S.xp||0));
   if(!S.char||typeof S.char!=="object")S.char=defChar("");S.char=Object.assign(defChar(""),S.char);if(!S.created&&!isNewPlayer()){S.created=true;if(!S.char.name)S.char.name="Hunter"}
   if(needFix)fix1022();
+  /* the new curve (xpc2): a save keeps its level and its progress through it; it never drops */
+  if(curve2){var ox=S.xp||0,oL=1;while(oL<MAXL&&ox>=cumOld(oL+1))oL++;if(lvlOf(ox)<oL){var fr=(ox-cumOld(oL))/Math.max(1,cumOld(oL+1)-cumOld(oL));S.xp=Math.round(cum(oL)+fr*(cum(oL+1)-cum(oL)))}}
+  S.xpc2=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}

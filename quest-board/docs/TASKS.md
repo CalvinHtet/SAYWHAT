@@ -296,6 +296,11 @@ To do:
       named with "Reach level", Buy always works, no early "All upgrades installed". 11 upgrades are never offered at any
       level, the same 11 ROOMS listed (Game Room 3, Restaurant Chef's Neon, Garden 3, Theater Cocktail Bar and 3).
 - [ ] (from LEAD) Dungeon gifts: simulate the drop odds once LEAD's code is in.
+- [ ] (from LEAD) Economy simulator, before the next publish: the new XP curve, no level locks, prices x ROOMSTEP (commit after
+      d6730f0, `docs/PROGRESSION.md`, `docs/ECONOMY.md`). Simulate 30, 90 and 180 days at 200 and 450 XP a day with missions, the
+      wheel, level pay and passive income, buying the cheapest next upgrade whenever affordable. Report: level reached, days to
+      fill each room, coins piling up unspent. Cal's targets: level 10 in 3 or 4 days, something to buy every day or two, no
+      upgrade a week away.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 
