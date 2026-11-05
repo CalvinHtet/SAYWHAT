@@ -19,6 +19,17 @@ LFDS.restaurant.forEach(function(q){if(q.cost)q.cost=q.cost>=10000?1500:600});
 /* Cal, 2026-11-05 (docs/PROGRESSION.md): rooms later in the story cost more, since passive income and dungeons pay more by then. */
 var ROOMSTEP={garden:1,restaurant:1.25,boba:1.5,dessert:1.75,skybar:2,speakeasy:2,rooftop:2.5,mall:3,theater:3.5,auditorium:3.5,arcade:4.5,rhythm:4.5,vr:4.5,bowling:5,karaoke:5.5,club:6};
 Object.keys(ROOMSTEP).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[2])a[2]=Math.round(a[2]*ROOMSTEP[k]/50)*50})});
+/* Cal, 2026-11-05: equipment earns, decor does not. Better kitchen gear means more coins; new art or a nicer table design does
+   not. Decor's share of a room's income moves onto its equipment, so a fully upgraded room earns what it did before. A room's
+   own data can say {decor:1} or {earn:1} to settle any upgrade this guesses wrong. */
+var UPEARN=/^(Kitchen|Menu|Seating|Staff|Money|Counter|Expansion|Snacks|Screen|Projector|Sound|Seats|Plots|Tools|Water|Orchard|Bar)$/,
+    UPDECO=/^(Decor|Walls|Floors|Grounds)$/,
+    UPSELLN=/\b(cooler|menu|ticket|booth|bar|counter|register|oven|grill|stove|fryer|machine|kiosk|stand|cart|tap|station|press)\b/i,
+    UPDECON=/\b(art|painting|poster|mural|vases?|sculpt\w*|sconces?|chandeliers?|neon|sign|plants?|planters?|flowers?|rug|curtains?|frames?|lamps?|lights|lanterns?|garland|mirror|wallpaper|statue|pictures|olive trees?|candles?|disco ball|trophy|trophies)\b/i;
+function upIsDecor(a){var e=a[3]||{};if(e.decor)return true;if(e.earn||e.opens)return false;if(UPEARN.test(e.g||"")||UPSELLN.test(a[1]))return false;return UPDECO.test(e.g||"")||UPDECON.test(a[1])}
+Object.keys(ADDONS).forEach(function(k){if(!ROOMT[k]||!(ROOMT[k].coin||ROOMT[k].food))return;var L=ADDONS[k]||[],p0=0,p1=0;
+  L.forEach(function(a){var e=a[3]||{};p0+=e.p||0;if(!upIsDecor(a))p1+=e.p||0});if(!p0||!p1)return;
+  L.forEach(function(a){var e=a[3];if(!e||!e.p)return;e.p=upIsDecor(a)?0:Math.round(e.p*p0/p1*1000)/1000;if(upIsDecor(a))e.decor=1})});
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
 function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;persist();render();pop("Skipped one week");setTimeout(brandCheck,200)}
 function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}

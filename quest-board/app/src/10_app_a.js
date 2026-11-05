@@ -371,8 +371,8 @@ function pickClass(cb){
   var opts=classChoices().map(function(id){var c=CLASSES[id];
     var pn=c.specs.map(function(x){return SPECS[x].name}).join(", ");
     return {id:id,name:c.name,
-    html:(ART["class_"+id]?'<img class="clthumb" src="'+ART["class_"+id]+'" alt="">':emblem(id,52,0))+'<span><b>'+esc(c.name)+'</b><small>'+esc(c.tag)+'</small></span>',
-    info:(ART["class_"+id]?'<img class="clsplash" src="'+ART["class_"+id]+'" alt="'+esc(c.name)+'">':'')+'<span>'+esc(c.role)+'</span><span class="chip mult">'+esc(c.perk.text)+'</span><span class="chip mult">'+esc(c.sig.name)+': '+esc(c.sig.text)+'</span>'
+    html:(clsArt(id)?'<img class="clthumb" src="'+clsArt(id)+'" alt="">':emblem(id,52,0))+'<span><b>'+esc(c.name)+'</b><small>'+esc(c.tag)+'</small></span>',
+    info:(clsArt(id)?'<img class="clsplash" src="'+clsArt(id)+'" alt="'+esc(c.name)+'">':'')+'<span>'+esc(c.role)+'</span><span class="chip mult">'+esc(c.perk.text)+'</span><span class="chip mult">'+esc(c.sig.name)+': '+esc(c.sig.text)+'</span>'
       +'<span class="note">Level 20: choose a path. '+esc(pn)+'.</span><span class="note">Level 80: choose a final form. Level 100: ascend.</span><span class="note">UI skin '+swatch(c.p)+'</span>',
     preview:function(){document.documentElement.setAttribute("data-cls",id)}}});
   pickModal("Class awakening","Choose your class","Your three strongest stats open these classes. You evolve at every advancement and this choice is permanent. Tap each one to read what it does and preview its look.",opts,function(o){
@@ -425,7 +425,7 @@ function classBanner(){
   var t=S.gates.length;
   if(!S.cls||!CLASSES[S.cls])return '<section class="card panel"><span class="label">Class awakening</span><p class="note">At level 5 you pass your first gate and choose a class. It changes your UI, your story and your perks, and you can read exactly what each one does before you commit.</p></section>';
   var c=CLASSES[S.cls], sp=S.spec&&SPECS[S.spec], oa=oathOf(), ng=openGate();
-  return '<section class="card banner'+(ART["class_"+S.cls]?' hasart" style="--clsart:url('+ART["class_"+S.cls]+')':'')+'"><div>'+emblem(S.cls,76,t)+'</div><div><h3>'+esc(tierName(t))+'</h3><div class="sub">'+esc(c.name)+(sp?' &middot; '+esc(sp.name):'')+' &middot; Tier '+t+' of 9</div>'
+  return '<section class="card banner'+(clsArt(S.cls)?' hasart" style="--clsart:url('+clsArt(S.cls)+')':'')+'"><div>'+emblem(S.cls,76,t)+'</div><div><h3>'+esc(tierName(t))+'</h3><div class="sub">'+esc(c.name)+(sp?' &middot; '+esc(sp.name):'')+' &middot; Tier '+t+' of 9</div>'
    +'<div class="row2"><span class="chip mult">'+esc(c.sig.name)+'</span>'+(sp?'<span class="chip mult">'+esc(sp.skill)+'</span>':'')+(oa?'<span class="chip mult">'+esc(oa.skill)+'</span>':'')+'</div>'
    +'<div class="row2"><span class="note">'+(ng?'Next advancement at level '+ng:'Fully ascended')+'</span><button class="btn ghost" data-act="story">Story</button></div></div></section>';
 }

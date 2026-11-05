@@ -1218,6 +1218,21 @@ body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::b
 @keyframes styIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .sty-act{display:flex;gap:8px;flex-wrap:wrap}.sty-act .btn{flex:1 1 140px;font-size:14px;letter-spacing:.04em}
 .sty-sell{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px 0;padding:10px 12px;border:1px dashed var(--accent);border-radius:12px}
+/* LEAD: what an upgrade does for a business room: income or looks only (Cal). */
+.addon .uptag{display:inline-block;margin-top:4px;font-style:normal;font-size:11px;letter-spacing:.06em;color:var(--muted)}
+.addon .uptag.up{color:var(--done,#4dffc3)}
+/* LEAD: the team (29c_team.js): the join banner and the team cards. */
+.tmj{text-align:center;align-items:center;border-color:var(--tac)!important}
+.tmj-art{width:100%;max-height:260px;object-fit:cover;border-radius:14px}
+.tmj-art0{height:180px;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,var(--tac),#14121c 75%)}
+.tmj-art0 b{font:800 64px var(--font-display);color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.5)}
+.tmj h2{margin:4px 0 0}.tmj-buff{margin:4px 0;font-weight:700;color:var(--tac)}
+.tm-st{display:grid;grid-template-columns:62px 1fr 22px;align-items:center;gap:8px;width:100%;font-size:12px;text-align:left}
+.tm-st i{height:7px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}.tm-st i b{display:block;height:100%;background:var(--tac)}
+.tm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tm-card{display:flex;flex-direction:column;gap:3px;padding:10px;border-radius:14px;border:1px solid var(--tac);background:var(--surface2,#1c1a2a)}
+.tm-card img,.tm-card>i{width:100%;height:90px;object-fit:cover;border-radius:10px;display:grid;place-items:center;font:800 34px var(--font-display);font-style:normal;color:#fff;background:radial-gradient(circle,var(--tac),#14121c 80%)}
+.tm-card small{color:var(--muted)}.tm-card span{font-size:12px;color:var(--tac)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
