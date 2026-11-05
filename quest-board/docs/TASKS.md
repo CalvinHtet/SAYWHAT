@@ -13,15 +13,21 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: bounties (Cal's request 5): a rotating daily bounty and a 3-day bounty, with suggested chores. Files: new
-  `app/src/29f_bounty.js`, small hooks in `30_app_b.js` (board) and `index.html` CSS. Parked on Cal: QA's effort-first
-  economy (a98abb6). Next: the weekly town meter (request 4), then the town hall (request 1). (on 0426a46)
+- Now: friends' database rules for the town (each player writes only their own `worlds/`, `pings/`, `board/` rows),
+  ready to apply with the v48 publish. Parked on Cal: QA's effort-first economy (a98abb6). Next: the rest of the writing
+  pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. (on 62c0c47)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
       Not published (QA's economy simulation first).
+- [x] Bounties (Cal's request 5), c243433, `29f_bounty.js`: today's bounty and a 3-day bounty on the board, chores
+      people put off; Take it adds a quest paying 1.5x (3-day 2x) that leaves when its window ends; Another swaps it up to
+      three times a day (Claude suggests one not already on the list, else the next of 40). Tested headless.
+- [x] Town hall and town meter (Cal's requests 1 and 4), 62c0c47, `29g_town.js`: the Neighbors panel at the top of the
+      Hall tab, posts with the poster's look, a weekly meter of everyone's XP and coins (never tasks). Not testable
+      headless: posting, other players and the meter with real data need the cloud save (QA's 15-player test after v48).
 - [x] Level trials accept any active photo (Cal, 2026-11-05), 62306c1: a run, a dog walk, a hike, a sport, a class or a
       home workout passes, not only a gym. Trial card text checked headless; the photo judgement needs Claude on the live
       page, so it is checked after v48 goes out.
