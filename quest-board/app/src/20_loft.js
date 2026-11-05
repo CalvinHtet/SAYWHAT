@@ -3146,7 +3146,8 @@ LFROOM.bedroom=function(C){
     _hx.forEach(function(p){while(_lo.length>1&&_cr(_lo[_lo.length-2],_lo[_lo.length-1],p)<=0)_lo.pop();_lo.push(p)});_hx.slice().reverse().forEach(function(p){while(_up.length>1&&_cr(_up[_up.length-2],_up[_up.length-1],p)<=0)_up.pop();_up.push(p)});
     var _hl=_lo.slice(0,-1).concat(_up.slice(0,-1)),_tp=lfP(.7,6.7,92);
     C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/></g>')}
-  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",4.75,.05,.85,.4,{h:70,H:96});C.s("art",5.15,1.5,1,"look",[6,11],{tag:"mirror",fxwall:1})}
+  /* on the bare wall between the bed and the desk; at 4.75 the PC tower stood in front of it */
+  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",3.2,.05,.85,.4,{h:70,H:96});C.s("art",3.8,1.3,1,"look",[6,11],{tag:"mirror",fxwall:1})}
   var dk=H("bd_pc2")?"bd4_pc2":H("bd_pc1")?"bd4_pc1":H("bd_desk1")?"bd4_desk1":"bd4_desk0";
   var PCt=H("bd_pc1")||H("bd_pc2");
   var LH=PCt?17:0;

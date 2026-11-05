@@ -33,7 +33,9 @@ Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"
 var bedBase=LFROOM.bedroom;
 LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};bedBase(C);C.has=h;rsArtReady();
   /* Both dog beds along the front edge on the closet side, well apart: the corner by the plant stays clear. */
-  if(h("bd_dbed1")){lfSpr(C,"hmx_dogbed",2.0,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});lfSpr(C,h("bd_dbed2")?"hmx_dogbed":"",4.7,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5})}
+  /* each bed is a low platform: a dog in it sits on the cushion, drawn over the bed (without it the bed hid the dog) */
+  var dbed=function(x){lfSpr(C,"hmx_dogbed",x,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});C.plat.push({x0:x,y0:7.8,x1:x+1.2,y1:8.8,z:7,key:x+1.2+8.8+.01})};
+  if(h("bd_dbed1")){dbed(2.0);if(h("bd_dbed2"))dbed(4.7)}
   C.dogs=[];if(h("bd_pluto"))C.dogs.push({id:"pluto",bed:[2.6,8.3]});if(h("bd_chop"))C.dogs.push({id:"chopstick",bed:[5.3,8.3]})};
 /* A lit shelf along the cornice of the back wall, above the wardrobes, so it covers none of them. It fits the
    wall whatever the room's width, and with nothing bought yet it shows empty glass cubbies, not a dark slab. */
