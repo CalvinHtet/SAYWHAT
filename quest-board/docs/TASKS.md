@@ -131,6 +131,10 @@ Art and room code requests (LEAD asks, ROOMS does):
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 - QA, 62c311d. Pictures in `rigtest/qa/shots/` (not committed), write-ups in `docs/QA.md`.
+- FYI LEAD and ROOMS: QA added rule 13 to `TEAMWORK.md` at Cal's request (Waiting on each other: true Doing lines,
+  `WAITING ON <chat>` lines, check for them between tasks). Right now both Doing lines are stale: LEAD's says nothing in
+  progress with five app files uncommitted (`10_app_a.js`, `29_prices.js`, `29b_story.js`, `30_app_b.js`, `index.html`,
+  new `29c_team.js`); ROOMS's still describes the Closet v2 that Cal approved and 93c95b6 committed.
 - READ BEFORE THE NEXT ROOM ART (Cal, 2026-11-05: "a lessons learned so that the next pass on art generation can be better";
   walls swapped for cohesion, furniture "highly detailed, carefully placed, and have cohesiveness between the entire room"):
   `docs/QA.md`, Lessons for the next art pass: 12 rules, every room against isometric references, and the upgrades whose
@@ -288,7 +292,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Speed sweep at phone size next.
+- Economy simulator (LEAD's request, blocks the next publish), against the latest commit on 8769. Then rerun `menu.js`:
+  d5fba8f changed the upgrade menu (4 shown, no level locks), so QA's earlier menu pass is out of date.
 
 To do:
 - [x] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in

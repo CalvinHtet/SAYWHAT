@@ -86,6 +86,17 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
    upgrade id.
 11. **When a piece is done:** tick it in `TASKS.md` and add a line to `HANDOFF.md`.
 12. **Cal has the final say on art.** Show new art before putting it in the game.
+13. **Waiting on each other (Cal, 2026-11-05: all three chats "constantly checking if there are pending actions that are
+    waiting on each other").** Between every task, and at least every 30 minutes during a long one:
+    - Keep your Doing line true: what you are editing right now, file names included, and clear it when you commit.
+      A stale Doing line hides clashes.
+    - Anything you are blocked on goes in your own Doing line as `WAITING ON <LEAD|ROOMS|QA|CAL>: <what> (since <time>)`.
+    - Search `TASKS.md` for `WAITING ON <you>`, for requests to you not yet `TAKEN`, and for lines that say they wait on
+      your work ("Not published until QA's simulation"). Do them first, or answer in `TASKS.md` when they can happen.
+    - Before touching a file or function another chat's Doing line names, or starting a heavy headless run while
+      another chat is publishing or timing, write the possible clash in `TASKS.md` and tell Cal in one line.
+    - Tell Cal only when he must act: his decision or approval, a `WAITING ON` line older than 30 minutes that nobody has
+      taken, or a clash. Say exactly what to tell which chat.
 
 ---
 
