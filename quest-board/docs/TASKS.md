@@ -13,15 +13,19 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the writing pass (Cal: professional, not corny, not obviously AI): `docs/VOICE.md`, then LEAD's text in
-  `15_shop.js`, `10_app_a.js`, `29b_story.js`, `29c_team.js`, `29d_dungeon.js`, `30_app_b.js`. Next: ROOMS rewrites room and
-  upgrade lines to the guide; QA reviews. Not publishing until QA's simulator reruns. (on 9b4cf3a)
+- Now: waiting on QA's economy simulator (blocks the next publish); meanwhile the rest of the writing pass in LEAD's
+  files (help screens, class story text). Next: publish v48 once QA clears it, then tune the story gates with QA's
+  numbers. (on cf7b36a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
       Not published (QA's economy simulation first).
+- [x] Writing pass, part 1 (Cal: "professional and not corny or too obvious that it is AI"), cf7b36a. `docs/VOICE.md` is
+      the guide every chat writes to. Rewritten: about 90 lines across upgrades, delve logs, visitor events, story
+      dialogue and the coaches. Left as they were: Cal's own quest and reward lines, shop item lines (already plain), and
+      the hype and anime coaches' shouting (they are personas the player picks; only the worst clichés went).
 - [x] Dungeon gifts, Relics and Trophies (Cal: gifts, relics, the Goblin King set and an amulet set), 9b4cf3a, `29d_dungeon.js`.
       A claimed mission rolls a gift (30 to 55% by mission): coins, XP, or a piece from that mission's loot, forced after
       five dry gifts. The Goblin King's Regalia (m1, m2, m4: mission pay, XP, time, gift odds) and the Hollow Amulet (m3, m5:
@@ -141,6 +145,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   `<m|f>_<id>_yawn.webp` (and `<m|f>_base_yawn.webp`) in `art/app/` at 720 x 828; the build packs them. Nothing changes
   for any top without one. `rigtest/template.html?pose=stretch&check=<id>` is the alignment self-check. Show Cal the pilot
   side by side before it goes in; QA checks every outfit combination after.
+- Writing pass (Cal, 2026-11-05: "professional and not corny or too obvious that it is AI"). Read `docs/VOICE.md`, then
+  rewrite the room and upgrade lines in your files (`27_rooms.js`, `27b_skins.js`, `data/loft.json`, `data/items.json`,
+  room `help` text) to it. Worst offenders to look for: quips at the end ("It probably works.", "Do not touch."), "Obviously",
+  exclamation marks, "sleek" more than once a screen. LEAD did `10_app_a.js`'s upgrade lines in cf7b36a as examples.
 - Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
   sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in
@@ -399,6 +407,8 @@ To do:
 - [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
       serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
       `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
+- [ ] (from LEAD) Writing pass review: read every screen against `docs/VOICE.md` (LEAD's cf7b36a, ROOMS's when done) and
+      list lines that still read as corny or written by AI, file and line, with a suggested rewrite. Do not edit them.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 
