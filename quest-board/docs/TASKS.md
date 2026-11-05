@@ -112,6 +112,12 @@ To do:
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
       furniture he owns in the Patio room (the old Bedroom patio view looked great): DONE in 17ab80d. Tiers are in
       `art/raw/walls/bedroom/`; the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
+- [ ] Patio (Cal, 2026-11-05): (1) replace the fairy-light tower on the left (`pt_lights`, `hmx_strings`) with something
+      else, keep the id; (2) the Artificial Grass reads as a green square tile: paint real, comfy, plush artificial turf;
+      (3) a second patio dog bed, for Chopstick; (4) the character and the dogs walk in and out between the Bedroom and the
+      Patio through the new door; (5) once the dogs are bought, see them run around and interact with the room. Cal sent
+      photos for the dog art (study only): Pluto is a beige, curly toy poodle; Chopstick is a black-and-tan
+      chihuahua-dachshund mix with long feathered ears. Art for Cal's approval first.
 - [ ] (LEAD's request) Yawn pilot: bare body, `y_vjkt`, `o_puffer`, `h_hoodie`, both bodies. Next after the Closet sheet.
 - [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
