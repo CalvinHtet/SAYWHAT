@@ -96,9 +96,10 @@ function qsCard(it){
   var btn=!fits?'<button class="qs-btn" data-act="qsdeny" data-id="'+it[0]+'">'+price+'</button>'
     :on?(orig?'<button class="qs-btn ghost" disabled>Wearing</button>':'<button class="qs-btn ghost" data-act="unequip" data-id="'+it[1]+'">Equipped · Remove</button>')
     :own?'<button class="qs-btn alt" data-act="equip" data-id="'+it[0]+'">Equip</button>'
+    :QS_TRYSL.indexOf(it[1])>=0?(QS_TRY[it[1]]===it[0]?'<button class="qs-btn alt" data-act="qstry" data-id="'+it[0]+'">Trying on · '+price+'</button>':'<button class="qs-btn" data-act="qstry" data-id="'+it[0]+'">Try on · '+price+'</button>')
     :can?'<button class="qs-btn" data-act="buy" data-id="'+it[0]+'">'+price+'</button>'
     :'<button class="qs-btn ghost" disabled>'+price+' · need '+(it[3]-S.coins)+' more</button>';
-  return '<article class="qs-card'+(on?" on":"")+'" data-card="'+it[0]+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5])+'</p>'+btn+'</article>';
+  return '<article class="qs-card'+(on?" on":"")+(QS_TRY[it[1]]===it[0]?" trying":"")+'" data-card="'+it[0]+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5])+'</p>'+btn+'</article>';
 }
 var QS_GROUPS=[["a_hat","Hats"],["a_acc","Accessories"],["a_top","Tops"],["a_pants","Bottoms"],["a_shoes","Shoes"],["a_hair","Hair"],["a_hairc","Hair color"],["a_eyes","Eye color"]];
 function qsGroups(pick){
@@ -112,11 +113,28 @@ function qsLegacy(tab){
     if(!vis.length&&!nxt)return "";
     return '<section class="qs-sec"><h3>'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")+(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>'}).join("");
 }
-/* Stays in view beside the rack, so you can see each piece on as you buy or equip it. */
+/* Try before you buy (Cal, 2026-11-05: "a preview option that allows me to try on the clothes before committing ... and
+   then a final button to confirm purchase"). Clothes go on the mirror one per slot without being bought; the basket under
+   the mirror buys them all at once, after a confirm. Nothing tried on is saved. */
+var QS_TRY={},QS_TRYSL=["a_hat","a_top","a_pants","a_shoes","a_acc"];
+function qsTryList(){return Object.keys(QS_TRY).map(function(k){return shopItem(QS_TRY[k])}).filter(function(it){return it&&!S.owned[it[0]]&&itemFits(it)})}
+/* Stays in view beside the rack (sticky), so you can see each piece on as you try, buy or equip it. */
 function qsMirror(){
-  var worn=SHOP.filter(function(x){return isRigItem(x)&&S.eq[x[1]]===x[0]}).map(function(x){return esc(x[2])});
-  return '<aside class="qs-mirror"><div class="qs-glass">'+calImg(lookOf(),"idle",window.innerWidth<=640?92:150,"")+'</div><div class="qs-worn"><b>'+esc((S.char&&S.char.name)||"You")+'</b><small>'+(worn.length?worn.join(" · "):"Just the basics")+'</small></div></aside>';
+  var tl=qsTryList(),ovr={};tl.forEach(function(it){ovr[it[1]]=it[0]});
+  var worn=SHOP.filter(function(x){return isRigItem(x)&&(ovr[x[1]]?ovr[x[1]]===x[0]:S.eq[x[1]]===x[0])}).map(function(x){return esc(x[2])});
+  var cost=tl.reduce(function(a,it){return a+it[3]},0),bask=tl.length?'<div class="qs-bask"><small>Trying on '+tl.length+' piece'+(tl.length>1?'s':'')+'</small>'
+    +(S.coins>=cost?'<button class="qs-btn" data-act="qscheck">Buy '+(tl.length>1?'all ':'')+'· <i class="coin"></i>'+cost.toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+cost.toLocaleString()+' · need '+(cost-S.coins).toLocaleString()+' more</button>')
+    +'<button class="qs-link" data-act="qsclear">Take them off</button></div>':'';
+  return '<aside class="qs-mirror'+(tl.length?' trying':'')+'"><div class="qs-glass">'+calImg(lookOf(ovr),"idle",window.innerWidth<=640?92:150,"")+'</div><div class="qs-worn"><b>'+esc((S.char&&S.char.name)||"You")+'</b><small>'+(worn.length?worn.join(" · "):"Just the basics")+'</small>'+bask+'</div></aside>';
 }
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=qstry],[data-act=qsclear],[data-act=qscheck],[data-act=qsconfirm]");if(!b)return;var a=b.dataset.act;
+  if(a==="qstry"){var it=shopItem(b.dataset.id);if(!it)return;if(QS_TRY[it[1]]===it[0])delete QS_TRY[it[1]];else QS_TRY[it[1]]=it[0];render();return}
+  if(a==="qsclear"){QS_TRY={};render();return}
+  var tl=qsTryList(),cost=tl.reduce(function(x,it){return x+it[3]},0);if(!tl.length)return;
+  if(a==="qscheck"){modal('<div class="card box2 qs-confirm"><span class="label">Checkout</span><h3>'+tl.length+' piece'+(tl.length>1?'s':'')+'</h3><ul>'+tl.map(function(it){return '<li><span>'+esc(it[2])+'</span><b><i class="coin"></i>'+it[3].toLocaleString()+'</b></li>'}).join("")+'</ul><p class="note">Total <b><i class="coin"></i>'+cost.toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="qsconfirm">Confirm purchase</button><button class="btn ghost" data-act="mclose">Keep looking</button></div></div>');return}
+  if(a==="qsconfirm"){if(S.coins<cost){pop("Need "+(cost-S.coins)+" more coins");return}var m=b.closest(".modal");if(m)m.remove();
+    tl.forEach(function(it){S.coins-=it[3];S.spent+=it[3];S.owned[it[0]]=true;S.eq[it[1]]=it[0]});QS_TRY={};try{ifSound("buy")}catch(x){}
+    checkBadges();render();persist();try{burst(innerWidth/2,innerHeight/3,30)}catch(x){}pop("Bought "+(tl.length>1?tl.length+" pieces":tl[0][2])+". Wearing "+(tl.length>1?"them":"it")+" now.")}});
 shopHtml=function(){
   var d=dropState(),live=d.live.slice().reverse();
   qsGrantOriginals();

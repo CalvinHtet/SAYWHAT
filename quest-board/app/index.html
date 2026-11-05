@@ -45,7 +45,7 @@ body{margin:0;background:
     radial-gradient(60% 30% at -6% 4%,var(--glow1),transparent 70%),
     var(--bg);
   background-repeat:no-repeat;background-attachment:fixed;color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.45;
-  padding-block:22px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));position:relative;overflow-x:hidden}
+  padding-block:22px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));position:relative;overflow-x:clip}
 .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px;position:relative;z-index:1}
 h1,h2,h3,p{margin:0}
 h2,h3{font-family:var(--font-display);text-wrap:balance}
@@ -1264,6 +1264,13 @@ body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::b
 .dq-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
 .dq-g{min-width:52px;min-height:36px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:600 14px/1 inherit;cursor:pointer}
 .dq-g.on{background:var(--accent);border-color:var(--accent);color:#fff}.dqc{text-align:center;align-items:center}
+/* LEAD: Shop try-on (15_shop.js). */
+.qs-card.trying{outline:2px solid var(--ink);outline-offset:-2px}
+.qs-mirror.trying{border-color:var(--ink)}
+.qs-bask{display:flex;flex-direction:column;gap:6px;margin-top:8px}.qs-bask small{color:var(--soft)}
+.qs-confirm ul{list-style:none;margin:8px 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.qs-confirm li{display:flex;justify-content:space-between;gap:12px}
+@media (max-width:640px){.qs-bask{flex-direction:row;flex-wrap:wrap;align-items:center}.qs-bask small{width:100%}}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
