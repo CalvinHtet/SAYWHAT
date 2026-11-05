@@ -103,8 +103,11 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
     } else if (sheet === "base") {
       cols = 12; cw = 100; ch = 118;
       for (const [slot, list, key, colorKey] of [["top", BASE.tops, "top", "topColor"], ["bottom", BASE.bottoms, "bottom", "bottomColor"], ["shoe", BASE.shoes, "shoe", "shoeColor"]])
-        for (const id of list) for (const c of D.creator.clothColors) for (const body of ["m", "f"]) for (const clip of ["idle", "back"])
-          cells.push({ label: `${id} ${c.id} ${body}${clip === "back" ? " B" : ""}`, body, opts: { hairStyle: "h2", hairColor: "brown", [key]: id, [colorKey]: c.id }, arts: [], clip, crop: FULL });
+        for (const id of list) for (const c of D.creator.clothColors) for (const body of ["m", "f"]) for (const clip of (q.get("pose") ? [q.get("pose")] : ["idle", "back"])) {
+          // &pose=stretch: the starter clothes in one key pose, tops only (&pose= takes any key in data/poses.json)
+          if (q.get("pose") && slot !== "top") continue;
+          cells.push({ label: `${id} ${c.id} ${body}${clip === "back" ? " B" : ""}`, body, opts: { hairStyle: "h2", hairColor: "brown", [key]: id, [colorKey]: c.id }, arts: [], ...(q.get("pose") ? { pose: clip } : { clip }), crop: FULL });
+        }
     } else if (sheet === "walk") {
       cols = 16; cw = 92; ch = 108;
       for (const [body, hair] of [["m", "h1"], ["f", "h1"]]) for (const clip of ["walk", "walkBack"]) for (let f = 0; f < 16; f++)
