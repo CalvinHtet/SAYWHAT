@@ -239,17 +239,25 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Upgrade sweep, every room, against 62c311d (clean copy on 8769), with LEAD's new upgrade menu checked on the way.
+- Lessons for the next art pass (Cal, below): upgrade sweep's last rooms and close-ups, then the room-by-room write-up.
 
 To do:
-- [ ] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
-      `rigtest/browser/` (README) and write your own in `rigtest/qa/`. Start `docs/QA.md` with a run log.
+- [x] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
+      `rigtest/browser/` (README) and write your own in `rigtest/qa/`. Start `docs/QA.md` with a run log. `rigtest/qa/setup.sh`.
+- [ ] Lessons for the next art pass (Cal, 2026-11-05): "keep in mind that a lot of these assets will change. This sweep you are
+      doing is more of a lessons learned so that the next pass on art generation can be better." Compare every room with
+      isometric game-art references of its kind and write down what is awkwardly placed, so ROOMS generates it better. "We
+      will be swapping out all the walls on the rooms so it looks cohesive. And all the furniture going forward should be
+      highly detailed, carefully placed, and have cohesiveness between the entire room." In `docs/QA.md`, Lessons for the
+      next art pass: 12 rules and 16 rooms written, Arcade, Rhythm, VR, Club and Lair still to add.
 - [ ] Upgrade sweep, every room: buy each upgrade one at a time in unlock order (the method in `docs/RELEASING.md`, Testing
       upgrade tiers), screenshot each step, and flag anything stacking, overlapping, floating, facing the wrong way or not
       visibly changing the room (Cal: "every upgrade clearly visible, even a poster or a clock"). Run `gaps.js`, `depth.js` and
       `stations.js` at every tier, not only fully upgraded.
-- [ ] Shop sweep: buy and equip every item on both bodies, check the mirror, the wardrobe and the room character, and flag
-      anything stacking unnaturally or clipping.
+- [x] Shop sweep: buy and equip every item on both bodies, check the mirror, the wardrobe and the room character, and flag
+      anything stacking unnaturally or clipping. Done on 59eeaf7 (`rigtest/qa/shop.js`): 112 pieces on the man, 115 on the
+      woman, each bought, worn, listed, removed and in the Wardrobe, plus each brand's outfit: all pass, no clipping seen at
+      mirror size. The room character was not checked (next pass).
 - [ ] Speed sweep at phone size (390 x 844, 4x CPU slowdown): time every tab, the building view and every room (`perf.js` as a
       start: frame rate, long tasks, load time). List the slowest ten with what makes them slow. LEAD has the real phone's
       numbers in `diag/perf` after Cal plays v45; compare against them when LEAD posts them.
@@ -265,6 +273,7 @@ To do:
       room's menu offers, 7,300 cards looked at): passes. Never more than 5 cards, "? ? ?" only 2+ levels up, one level up
       named with "Reach level", Buy always works, no early "All upgrades installed". 11 upgrades are never offered at any
       level, the same 11 ROOMS listed (Game Room 3, Restaurant Chef's Neon, Garden 3, Theater Cocktail Bar and 3).
+- [ ] (from LEAD) Dungeon gifts: simulate the drop odds once LEAD's code is in.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 

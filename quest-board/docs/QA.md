@@ -36,7 +36,19 @@ motion, and a real phone.
 - `savecheck.js`, `screens.js` at 360 and 390: run on fd14fad (the latest commit when QA started): all passed, nothing wider
   than the screen, no page errors.
 - `doors.js` and `doorcrops.js`: see Doors below.
-- `upgrades.js`, every room: running.
+- `upgrades.js`, every room: see Lessons below. 397 upgrades bought one at a time through the room windows.
+- `menu.js` on 59eeaf7, levels 1 to 80: the upgrade menu passes (never more than 5 cards, "? ? ?" only 2+ levels up, one
+  level up named with "Reach level", Buy always works, no early "All upgrades installed", 7,300 cards). 11 upgrades are
+  never offered at any level (Game Room Couch & Console, Pool Table, Snack Bar; Restaurant Chef's Neon; Garden Scarecrow,
+  Berry Patch, Beehive; Theater Cocktail Bar, Hire a Bartender, Liquor Wall, Brass Tap Bar), the same ones ROOMS found.
+  The Auditorium's IMAX Screen (level 62) and Premium Power Recliners (level 65) need levels above 60.
+- `shop.js` on 59eeaf7: male body 112 pieces, female body 115, every one bought through the Shop's buttons (brand by
+  brand, weeks skipped so each brand is live), worn, listed in the mirror, taken off with Remove, and present in the
+  Wardrobe; each brand's outfit worn at once. All pass. Two purchases paid less than the price because a badge reward
+  (first purchase, fifth item) lands in the same step: not a bug. No clipping seen at mirror size (`shots/shop_m.png`,
+  `shop_f.png`, `outfits_m.png`, `outfits_f.png`). Not checked: every pose (HANDOFF's rig sheets cover that), the room
+  character, motion.
+- Street view (51a9506, on 59eeaf7): see TASKS.md, QA findings. `savecheck.js` and `screens.js` pass on 59eeaf7.
 
 ## Doors between rooms (2026-11-05, 62c311d)
 
@@ -84,3 +96,119 @@ Wrong:
 4. **The Mall opens straight into the Karaoke room two floors up**, with Bowling between them in the building view (mall
    floor 0, bowling floor 1, karaoke floor 2). Small, but going "up" from the Mall lands you over the Bowling alley.
 5. Every door is only a faint glow on the floor, easy to miss once a room is full (most of the close-ups above). Not a bug.
+
+## Lessons for the next art pass (2026-11-05, for ROOMS)
+
+Cal, 2026-11-05: most room art will change. Every room's walls get swapped so the rooms look cohesive, and all furniture
+from now on must be "highly detailed, carefully placed, and have cohesiveness between the entire room". So this is not a
+list of fixes for today's sprites: it is what the upgrade sweep (every upgrade bought one at a time, 62c311d) and a study
+of isometric game-art rooms of each kind taught, so the next generation pass comes out right. References were looked at
+for study only, with DuckDuckGo image search in the built-in browser ("isometric <room> interior game art"); nothing is
+to be copied.
+
+### Rules for every room
+
+1. **One painted shell per room, lit like its furniture.** In the references, walls carry the room's identity: trim,
+   wainscot, panelling, windows with curtains, built-in shelves, sconces, a skirting line, and the floor has a material
+   and a rug that zone it. Today most walls are flat code-drawn colour behind painted sprites, so the furniture looks
+   pasted on. Paint the shell and the furniture in one palette, one light direction, one line weight.
+2. **Fill each wall at three heights.** Reference rooms put big pieces against the walls (floor), counters and shelves at
+   waist height, and art, shelves, lights and signs up high. Ours stop at the floor: the top half of nearly every wall is
+   bare, and the middle of the floor is empty. Dress the walls first, keep the middle as the walkway.
+3. **A hero piece that owns the room, at the right size.** Theater: the screen. Bowling: the lanes. Karaoke: the screen
+   flanked by speakers. Boba: the wall of tea jars behind the counter. Closet: the built-ins. Game Room: the TV wall.
+   Speakeasy: the lit back bar. In ours the hero is often small (the Game Room's Big TV is about the size of a poster).
+4. **Furniture in groups that face something.** Sofa, rug and low table facing the TV; dining tables each under a pendant
+   light; seats facing the lanes, the stage, the screen. Ours are mostly single pieces spread out on their own.
+5. **Wall art you can read on a phone.** One large piece centred over the furniture it belongs to beats three small frames.
+   It must show what its name says (an anime poster shows an anime character, a menu shows drinks, a movie poster shows a
+   movie scene), and it sits at least a tile from the wall's end, a window or a door (Cal on the Bedroom's Anime Poster:
+   "not obvious... 3 random pictures... too close to the right side of the wall").
+6. **Built-ins, not standalone sprites,** for wardrobes, shelves, back bars, display walls: painted into the shell so they
+   sit flush, with no gap, no floating and no seam.
+7. **Every door is a painted doorway** (frame, threshold, a light) in the shell, on the side Cal's rule says (a back-left
+   door comes out of the next room's front-right edge, back-right to front-left), with 1.5 tiles kept clear in front. Today
+   doors are faint floor glows and 8 have furniture on them (Doors, above).
+8. **Light you can see.** Lamps, pendants, neon and screens cast pools of light on the floor and walls in the references;
+   ours are mostly flat. A glow-only upgrade must still read by day (the Arcade's Neon Trim shows nothing by day).
+9. **One scale.** Size everything to the 74 px chibi: a microphone is hand height, a tower of macarons is waist height, a
+   TV is wider than a person. Today scales jump (the Speakeasy microphone is tiny next to life-size musicians).
+10. **Plan the final size first.** Rooms that grow with an expansion (Garden, Auditorium) zoom the view out, so everything
+    bought later looks smaller: the Garden's Glass Conservatory (4000 coins) ends up a speck in a corner. Lay a room out
+    at its final size and let early tiers leave parts empty, or let an expansion reveal more instead of shrinking it.
+11. **Every upgrade a change you notice in one glance.** A better version of a piece (bed, chair, counter) needs a new
+    silhouette or colour, not a texture tweak. Small decor (clock, sundial, sprinklers, garland, microphone) either grows
+    or comes as a set. 9 upgrades draw nothing at all and 33 are weak (ROOMS's own measure, TASKS.md), and the sweep agrees.
+12. **Screens and signs carry their picture in the art,** not only in code: a menu screen, TV or LED wall that is a plain
+    black slab whenever its animation is paused reads as broken.
+
+### Room by room (current build against the references)
+
+Each line: what the references do, what ours does, the lesson. Sheets of every tier: `rigtest/qa/upgrades.js`.
+
+- **Bedroom.** References: the bed's headboard on a wall with a nightstand and lamp each side and a rug under it, a desk
+  zone with shelves stacked above it, big posters centred over the bed or desk, warm lamp light. Ours: the middle of the
+  floor is empty, the wall art is three small frames near the wall's end, the wardrobe stands where the Closet door
+  belongs, Canvas Art and the Figurine Shelf are hidden by the glass wall. Lesson: zone it (sleep, desk, dress), keep the
+  Closet door's wall free, one big readable anime poster (or a set of three large ones) centred over the desk.
+- **Closet.** References: continuous built-ins on every wall, floor to ceiling, an island with a rug, a mirror, soft
+  strip light. Ours (the painted stages) already follow this and read well. The Jewelry Tower is a cyan glass sprite in
+  a different style from the painting (already on ROOMS's list). The way to the Lair is only a blue floor glow; Cal's
+  sliding cabinet (approval 3) is the right fix.
+- **Game Room.** References: a TV media wall (TV with shelves of collectibles around it), a sofa facing it on a rug,
+  light panels clustered beside the TV, posters, dense corners. Ours: most of the floor is empty, the "Big TV" is about
+  poster size, the LED panels are in a different corner from the TV, every piece stands alone. Lesson: build the TV wall
+  as one hero piece and group the seats on a rug in front of it; Cal's gaming desks back to back and cream sectional
+  (HANDOFF, Open asks) fit this.
+- **Patio.** References: string lights strung overhead between posts across the space, seats grouped around a rug or a
+  fire table, planters along the rail, and the building's wall with its glass door visible. Ours: String Lights is one
+  tall post in a corner, the seats are spread out one by one, and the Patio floats with a glass rail on every side and no
+  wall or door back into the Bedroom. Lesson: paint the building wall and the sliding door on the Bedroom side.
+- **Boba.** References: the hero is a wall of tea jars and canisters on open shelves behind the counter, a menu board
+  with pictures of drinks above it, a window bar with stools, string lights. Ours: the Tea Jar Wall is a small shelf,
+  the menu screen is a black slab at rest, the Neon Cup Sign is squeezed into the far end of the left wall, the middle is
+  empty. Lesson: counter plus jar wall plus menu board as one back wall.
+- **Dessert.** References: glass pastry cases are the counter, shelves of cakes and jars and chalk menus fill the walls,
+  a few cafe tables by a window. Ours: the cases are good; the Macaron Tower and Cake Stand stand on the door to Boba, the
+  Blossom Garland is a thin line high on the wall, the Teacup Shelf is tiny in a corner.
+- **Speakeasy.** References: the hero is a back bar of tall lit bottle shelves behind the counter, a small stage with a
+  spotlight and a mic stand, candlelit round tables, booths along the walls, art deco panelling. Ours: the bar and stage
+  are there, but the front half of the floor is empty, the microphone is tiny next to life-size musicians, the velvet
+  curtain is a small piece in one corner. Lesson: spotlight and curtain framing the stage, tables between stage and bar.
+- **Upstairs Bar.** Ours: the right half is crowded (high tops, piano, the Jazz Corner stage on top of the entry mat by the
+  door, the Champagne Trolley hidden behind the piano) while the left half holds one sofa. Lesson: balance the room,
+  lounge on one side, music on the other, the door kept clear.
+- **Rooftop.** Works best of all the rooms: a clear pool as the hero, zones round it. The DJ Booth reads as a black grill,
+  the Stone Shower stands on the door, the Towel Station is small.
+- **Restaurant.** Dark and moody as Cal asked, tables in a clear grid under pendant lights, a strong kitchen wing. Weak
+  spots: the patio deck runs straight into the dining room with no rail, step or planter between them, so the curved
+  booth, the fire bowl, the sofa and the umbrella pile up at the seam; a white drinks cooler stands in a fine-dining aisle;
+  a black slab hangs on the back wall beside the painting.
+- **Garden.** References: beds in a regular grid with paths between, a fence, one building (shed or greenhouse) as the
+  focus in a corner. Ours: the beds start in rows but later pieces are dotted around, and each land expansion zooms the
+  view out so the last and most expensive pieces (Stone Fountain 1500, Glass Conservatory 4000) are specks. Root Cellar
+  shows nothing at all; Sprinklers and Drip Irrigation change under 800 pixels.
+- **Theater lobby.** References: one long concession counter against a wall with lit menu boards above it, poster frames
+  with lights along the walls, a ticket booth at the entrance, patterned carpet. Ours: the popcorn cart, soda fountain,
+  concession stand, candy case, hot dog roller and nacho station stand in a row of separate red boxes in the middle of
+  the floor; the trailer screen is a black slab at rest. Lesson: one concession counter, built along a wall, that grows.
+  The wall upgrades (Painted Walls, Velvet Walls, Gold Trim, Marble Lobby) are the best tier changes in the game.
+- **Auditorium.** References: the screen fills a wall and glows, stepped stadium rows climb toward a projection booth high
+  in the back wall with a beam across the room. Ours: the projector stands on a tripod on the floor behind the seats,
+  the rows sit on a flat floor, and the Leather Recliners turn the seats from red to near-black on a dark room, so the
+  room gets darker and flatter as it is upgraded. Bigger Screen and IMAX grow the room and the view shrinks to fit.
+- **Mall.** References: storefronts fill the bays along the walls (sign, awning, lit window, shop visible inside), the
+  atrium holds the fountain, planters and benches, kiosks line the aisle, escalators connect floors. Ours: each store is a
+  separate facade sprite stood in front of the walls rather than filling a bay, so they overlap the pillars and leave
+  shuttered bays empty even when everything is bought; the directory screen is a black slab. Lesson: paint each store
+  into a bay of the shell, so buying a store opens that bay.
+- **Bowling.** References: the lanes are the room: they run the full length from the seating to a pin deck flush against
+  the far wall, with masking panels and score screens above the pins, ball returns between lanes, seats behind the foul
+  line. Ours: two short lanes float in the middle of the carpet with the pins in open floor, the score screens hang on
+  another wall, the snack bar stands in the aisle between the lanes and the seats, and Ball Return and Ball Rack change
+  about 1,300 pixels each. Lesson: lanes wall to wall, everything else around them.
+- **Karaoke.** References: a big screen on the main wall flanked by speaker towers, a sofa curving round a low table
+  facing the screen, a small stage between them, coloured spotlights on the floor. Ours: the screen and stage are right,
+  but the Purple Couch and the Private Booth sit side-on to the screen, the lyric screen only says "la la la", and the
+  Neon Microphone, Tambourine Stand and Stage Lights change about 1,500 pixels each. Lesson: seats face the screen, the
+  screen shows a lyric scene.

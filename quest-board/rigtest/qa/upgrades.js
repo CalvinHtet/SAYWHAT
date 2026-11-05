@@ -50,6 +50,7 @@ const FAINT = 2500; // changed pixels (of 630,000) below which an upgrade counts
       if (!st.next || t.buyFail) break;
     }
     all[room] = tiers;
+    fs.writeFileSync(path.join(dir, 'tiers.json'), JSON.stringify(tiers));
     // labelled sheet: every tier in order
     const cells = tiers.filter((t) => !t.err).map((t) => {
       const src = 'data:image/png;base64,' + fs.readFileSync(path.join(dir, 't' + String(t.k).padStart(2, '0') + '.png')).toString('base64');
