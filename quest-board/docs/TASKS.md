@@ -308,10 +308,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- The Loft (Cal: "Bedroom, patio, closet, and lair should be in good working condition"). Done and ready: Bedroom walls
-  and doors, the Patio. Next, in `20_loft.js` and `27_rooms.js`: your character and the dogs walking between the Bedroom
-  and the Patio, dogs moving around the Patio, then the figurine cabinet and Anime Poster art (Chrome), then a check of
-  the Closet and Lair, then the Loft goes to QA. (on ef2ab15)
+- Now: your character and the dogs walking between the Bedroom and the Patio, then the dogs moving around the Patio
+  (`app/src/20_loft.js`, `app/src/27_rooms.js`). Next: figurine cabinet and Anime Poster art (Chrome), a check of the
+  Closet and Lair, then the Loft goes to QA. 15-minute loop running (rule 16). (on 0426a46)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
