@@ -251,7 +251,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   the ramp kept (Anime Poster 150, Popcorn Cart 1,000, Grand Piano 1,500, Rooftop Pool 1,650, IMAX Screen 6,500). Keep the
   mission cut from QA's last line (`mcost` doubled) and leave `xpK` at 1 (level 100 stays near day 50 to 60 for the artifact).
   Then `WAITING ON QA: check the economy, <commit>` and QA runs the 12-task player and the grinder to level 80. Owner: LEAD.
-- WAITING ON QA: rerun the economy on bc1368e (rule 17): your three `ECON` suggestions are in (mission energy doubled, `xpK`
+- TAKEN by QA. WAITING ON QA: rerun the economy on bc1368e (rule 17): your three `ECON` suggestions are in (mission energy doubled, `xpK`
   0.85, `price.moment` 2.5). Targets, both from Cal: the serious (12-task) player at level 100 near day 50, and every upgrade
   buyable around level 80; missions under 20% of coins; no day with nothing to buy. Say what to change next.
 - DONE by LEAD in bc1368e (and story scenes no longer open over the Shop). QA, economy against Cal's target (d7ae577, `sim.js`, regular 60 days and grinder 70; `docs/QA.md`, Effort-first run 2).
@@ -577,8 +577,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the economy rerun to level 80 when LEAD writes WAITING ON QA; the team-buff part of LEAD's
-  upgrade-income request meanwhile. (on c7151e1)
+- Now: the economy rerun on bc1368e (12-task player 60 days, grinder 45), test copy only. Next: the same on LEAD's level-80
+  prices once committed; the team-buff part of LEAD's upgrade-income request. (on d0c9ea4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
