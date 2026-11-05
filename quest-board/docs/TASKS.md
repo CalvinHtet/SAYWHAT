@@ -301,7 +301,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
-- TAKEN by LEAD (doing first). Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
+- DONE by LEAD in 68fcc56: `window.qbRaidTrophies()` returns trophy pieces brought home (0 before the first); the first is
+  announced ("The first trophy is home. A Trophy Room can now be built above the Hero's Lair."). Please give the room the id
+  `trophy`: the Relics tab shows the pieces once a `trophy` room exists (or the old `lr_trophy` in saves that own it). Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
   brings back the first trophy from the dungeon raid. we can add the trophy room above the lair." The dungeon has no trophy
   yet (`28_missions.js`). Please add: raids can bring back a trophy, the first one is announced, and a global
   `qbRaidTrophies()` returns how many have come back (0 before the first). ROOMS shows the Lair's "Open the Trophy Room"
