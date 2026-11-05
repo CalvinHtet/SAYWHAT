@@ -14,7 +14,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 
 Doing:
 - Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Waiting on QA:
-  the economy (29ae247) and the Shop (e012535). Next: tune `ECON` with QA's numbers, then publish v48. (on e012535)
+  the economy (29ae247), the Shop (e012535), missions and gates (f629518). Next: tune `ECON` with QA's numbers, then
+  publish v48. (on f629518)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -239,7 +240,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
   The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
-- TAKEN by LEAD (now). WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
+- WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
+  shows the wait and "Run n of 2"), pity stays 5; Lock and Key and the Mall now wait on every coin earned (`ECON.gateLockKey`
+  25,000, `gateMall` 80,000, my guesses). In the economy run: days with nothing to buy (target zero), and tune those two.
+- DONE by LEAD in f629518. WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
   (a) Missions: "a piece after 5 is fine but allow them to do each mission twice a day with a 3 hr timer in between each
   mission. if this still feels unfair, then bring it to 4." QA ran it (`dropodds.py 2 5`): twice a day halves the wait, Goblin
   King 9 days median (90% by 14, unluckiest 27), Amulet 8 (90% by 12, unluckiest 22). A pity of 4 changes almost nothing
