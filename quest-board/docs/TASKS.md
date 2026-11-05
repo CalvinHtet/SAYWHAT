@@ -46,6 +46,13 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: the Hero's Lair moves above the Closet (Cal, 2026-11-05). In the building view the Lair is now directly
+  above the Closet (it was to its left). The Closet's last upgrade (`cl_lair`, now after Super Sleek Modern) shows the corner
+  cabinet on the upper wall slid away from a glowing stair; right after buying it, once the "You found the Hero's Lair"
+  window is closed, the cabinet slides into the wall over 2 seconds. Doors: Closet upper wall to the Lair, the Lair's
+  bottom-left edge back. Door arrows now sit in the frame corner on their door's side (QA). Look at: the building view,
+  buying the Lair in the Closet and watching the slide, walking Closet to Lair and back. Checked headless: building view,
+  the slide (caught mid-slide), both doors, no errors. Not checked: on a phone, and the slide at full frame rate.
 - READY TO PUBLISH: Closet stages (Cal approved the paintings 2026-11-05). Every Closet upgrade now shows its own painting of
   the same room: lights off, Wardrobe Lights (LED strips top and base), Shoe & Bag Wall, Jewelry Wall (renamed from Jewelry
   Tower: two doors open onto a jewelry display, no more sprite), Center Island, Glass Closet, Super Sleek Modern (smoked

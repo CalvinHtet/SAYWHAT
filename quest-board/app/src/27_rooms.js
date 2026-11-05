@@ -52,12 +52,25 @@ function artRoom(C,k,T,a,b,c,d){var Sp=LFSP4[k];if(!Sp)return;var t=lfP(0,0,0),e
    hidden from the shop, drawn nowhere. Any stage picture that is missing falls back to the finished painting. */
 function clPaint(C,k,dim){var S0=LFSPR[k];if(!S0)return false;var W=C.W,D=C.D,x0=-D*26-6,w=(W+D)*26+12,h=w*S0.h/S0.w,y0=(W+D)*13+16-h;
   C.decals.push('<image href="'+S0.u+'" x="'+x0+'" y="'+y0.toFixed(1)+'" width="'+w+'" height="'+h.toFixed(1)+'"'+(dim?' style="filter:brightness(.62) saturate(.8)"':'')+'/>');return {x0:x0,y0:y0,k:w/S0.w}}
+/* The closed corner cabinet (clx_lairdoor, cut from the Super Sleek Modern painting) slides along the upper wall into the
+   wall, clipped to its own doorway, uncovering the Lair painting under it. Painting px: at (302.9, 106.4), 85 x 255. */
+function clLairSlide(C,P){var S0=LFSPR.clx_lairdoor;if(!S0)return;var k=P.k,x=P.x0+302.9*k,y=P.y0+106.4*k,w=85*k,h=255*k,id="cllair"+(window.__clLairN=(window.__clLairN||0)+1),
+  q=[[0,0],[w,w*.5],[w,h],[0,h-w*.5]].map(function(p){return (x+p[0]).toFixed(1)+","+(y+p[1]).toFixed(1)}).join(" ");
+  C.decals.push('<clipPath id="'+id+'"><polygon points="'+q+'"/></clipPath><g clip-path="url(#'+id+')" pointer-events="none"><image href="'+S0.u+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'"><animateTransform id="'+id+'a" attributeName="transform" type="translate" from="0 0" to="'+w.toFixed(1)+' '+(w*.5).toFixed(1)+'" begin="indefinite" dur="2.2s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .3 1"/></image></g>');
+  /* Buying it opens the "You found the Hero's Lair" window over the room: slide only once that is closed and you can see it. */
+  (function go(n){if(n<0){setTimeout(function(){go(0)},1500);return}var a=document.getElementById(id+"a");if(a&&!document.querySelector(".dropsplash,.rsplash")&&document.querySelectorAll("#layer .modal").length<=1){setTimeout(function(){try{a.beginElement()}catch(e){}},500);return}if(n<300)setTimeout(function(){go(n+1)},300)})(-1)}
 autoRoom("closet",{name:"Walk-in Closet",lv:1,startLv:3,step:1,wall:"#3a2a20",wain:"#2a1e16",acc:"#ffd27a",fl:"w",size:[[7,7]],H:200,shell:1,door:false,guests:0,group:"Closet",desc:"Your clothes finally have a room of their own. Everything you buy in the Shop lives here.",
- req:[["cl_shoe","cl_glow"],["cl_jewel","cl_shoe"],["cl_isl","cl_jewel"],["cl_mirror","cl_isl"],["cl_disp","cl_mirror"]],
+ req:[["cl_shoe","cl_glow"],["cl_jewel","cl_shoe"],["cl_isl","cl_jewel"],["cl_mirror","cl_isl"],["cl_disp","cl_mirror"],["cl_lair","cl_disp"]],
  /* Every stage is its own painting of the same room (Cal approved them 2026-11-05): lights off, Wardrobe Lights (LED strips
-    top and base), the shoe wall opens, the jewelry wall opens, the island, glass doors, Super Sleek Modern. */
- draw:function(C,H){var k=H("cl_disp")?"clx_modern":H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_jewel")?"clx_stj":H("cl_shoe")?"clx_st1":H("cl_glow")?"clx_st0l":"clx_st0";
-  clPaint(C,k,0)||clPaint(C,"clx_room",0);
+    top and base), the shoe wall opens, the jewelry wall opens, the island, glass doors, Super Sleek Modern, and last the
+    Hero's Lair: the corner cabinet on the upper wall has slid away from a secret stair up. Right after buying it the
+    cabinet slides into the wall once (clLairSlide). A save that opened the Lair before Super Sleek Modern keeps its stage. */
+ draw:function(C,H){var lair=H("cl_lair")&&H("cl_disp"),k=lair?"clx_lair":H("cl_disp")?"clx_modern":H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_jewel")?"clx_stj":H("cl_shoe")?"clx_st1":H("cl_glow")?"clx_st0l":"clx_st0";
+  var P=clPaint(C,k,0)||clPaint(C,"clx_room",0);
+  /* bought just now: this closet was last drawn without it. Every copy drawn in the next few seconds slides (the room
+     window's picture is built a moment after the purchase). Opening the game with it owned plays nothing. */
+  var had=window.__clLair;window.__clLair=lair;if(had===false&&lair)window.__clLairT=Date.now();
+  if(lair&&P&&k==="clx_lair"&&window.__clLairT&&Date.now()-window.__clLairT<5000)clLairSlide(C,P);
   C.s("look",2.6,1.2,1,"look",[6,11],{fxwall:1});C.s("look",1.2,3.9,-1,"look",[6,11],{fxwall:1});if(H("cl_shoe"))C.s("look",4.4,1.2,1,"look",[6,11],{fxwall:1})},
  help:{k:"New room",t:"The Closet is open!",sub:"Your own room for clothes, and it opens the Shop.",pts:[["The Shop is open","Buy clothes from the brands that drop every week."],["Build it up","Lights, a shoe wall, jewelry and an island, then glass doors. There may be a secret door."]]},
  items:[["cl_glow","Wardrobe Lights",UP_M,"","",0,0,0,"The closet lights up, top to bottom."],
@@ -131,7 +144,8 @@ autoRoom("mall",{name:"Mall",lv:30,cost:3000,buy:1,startLv:30,step:1,wall:"#efe9
 portal("bedroom","closet","FL",2.2,"#ffd27a","Closet");portal("closet","bedroom","FR",2.6,"#ffd27a","Bedroom");
 portal("bedroom","patio","BR",8.9,"#ffb070","Patio");portal("patio","bedroom","FR",2.4,"#ffb070","Bedroom");
 portal("bedroom","gameroom","FR",7.2,"#7df9ff","Game Room");portal("gameroom","bedroom","FL",2.4,"#7df9ff","Bedroom");
-portal("closet","lair","BL",2.6,"#2a6bff","Hidden Door");portal("lair","closet","FR",3,"#2a6bff","Closet");
+/* Cal: the Closet's upper (back-right) wall leads up, so the Lair sits above the Closet, its door the painted secret one. */
+portal("closet","lair","BR",1.1,"#2a6bff","Hidden Door");portal("lair","closet","FL",6,"#2a6bff","Closet");
 portal("restaurant","skybar","BR",4.2,"#ffb46a","Upstairs");portal("skybar","restaurant","FR",3,"#ffb46a","Downstairs");
 portal("skybar","rooftop","BR",12.5,"#ffb36b","Roof");portal("rooftop","skybar","FR",3,"#ffb36b","Bar");
 portal("boba","dessert","BR",8.8,"#c79aff","Upstairs");portal("dessert","boba","FR",3,"#ff9ec4","Downstairs");

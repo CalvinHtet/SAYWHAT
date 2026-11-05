@@ -25,7 +25,7 @@ function bldStreet(L,wall,inner,edge,dk){var s='',bot=LFROOF+L.rows*LFFP,lit=lfM
     s+='<g data-act="bldgo" data-v="'+bi+'" style="cursor:pointer"><rect x="'+(x-20)+'" y="'+(top-200)+'" width="'+(BLDW+40)+'" height="'+(h+200)+'" fill="rgba(0,0,0,.001)"/></g>'});
   return s}
 /* room: [building, column, floor] */
-var ROOMCELL={lair:[0,0,0],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
+var ROOMCELL={lair:[0,1,1],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
  restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],boba:[1,1,0],dessert:[1,1,1],speakeasy:[1,1,2],garden:[1,2,0],
  theater:[2,0,0],auditorium:[2,0,1],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0],club:[2,4,0]};
 /* rooms you buy from an empty lot on the street. Everything else opens from an upgrade inside a room. */
@@ -148,7 +148,9 @@ function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]
     (C.pfront=C.pfront||[]).push('<polygon'+hit+' points="'+pts+'" fill="rgba(0,0,0,.001)"/>');C.portal=1})}
 /* the arrows live on the frame, in its empty corners: always in view, never over the room, whatever the zoom.
    They point where the next room really is on the building. */
-function rmArrows(r){var at={tl:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k=up?"tl":left?"bl":"br";
+/* Each arrow sits in the frame corner on its own door's side (QA): left wall top-left, upper wall top-right (left of the
+   zoom buttons), front-left edge bottom-left, front-right edge bottom-right. */
+function rmArrows(r){var at={tl:'',tr:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k={BL:"tl",BR:"tr",FL:"bl",FR:"br"}[q[2]]||"br";
     at[k]+='<button type="button" class="prtb-b" data-act="gotoroom" data-t="'+q[1]+'" style="--c:'+q[4]+'"><svg viewBox="-28 -20 56 40" width="20" height="16" aria-hidden="true"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+q[4]+'"/></g></svg>'+esc(q[5]||ROOMT[q[1]].name)+'</button>'});
   var clean=r.t==="bedroom"&&(S.base.poops||[]).length?'<div class="prtb bc"><button type="button" class="prtb-b" data-act="dogclean" style="--c:#ffc857">Clean up</button></div>':"";
   return clean+Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'">'+at[k]+'</div>':''}).join("")}

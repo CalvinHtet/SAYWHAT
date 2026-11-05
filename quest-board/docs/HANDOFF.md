@@ -200,6 +200,12 @@ Workbench (`hmx_bench`) with its pegboard against the armory wall. Reactor core 
 racks, the drone dock on the right edge, the teleport pad in front of the war table with a spot to stand on. Checked: depth
 0 bad, stations fine. The painted suit cases and trophy layers were not changed.
 
+Doors and the building map (Cal, 2026-11-05): a door on a room's upper (back-right) wall leads to the room above, entered
+from its front-left edge; the left wall leads to the room on the left, entered from its front-right edge. Before painting
+a new room, check the free cells in `ROOMCELL` (`26_world.js`) and the building view, then paint the doorway to match.
+The Lair moved to `[0,1,1]`, above the Closet; its secret door is the painted one on the Closet's upper wall, and
+`clLairSlide` (`27_rooms.js`) slides the cut-out cabinet (`clx_lairdoor`) into the wall once, right after buying it.
+
 Closet repainted (2026-11-05, Cal approved): every stage is its own Nano Banana painting of the same room, made by image
 edits stripping back from the finished one (sources in `art/raw/walls/closet/`, keyed off green with `tools/key_green.py`,
 607x614): `clx_st0` lights off, `clx_st0l` Wardrobe Lights, `clx_st1` shoe wall, `clx_stj` jewelry wall, `clx_st2` island,
