@@ -3,6 +3,7 @@
   rs_fix.py art <name> ...     fixes art/app/<name>.webp in place
   rs_fix.py old <key> ...      writes art/app/fix_<key>.webp, which replaces that old sprite
   rs_fix.py green <name> ...   removes leftover flat green (a patch left under an object)
+  rs_fix.py edge <name> ...    neutralises a green line round the outside of a sprite; edge-all does every room sprite
   rs_fix.py halo <name> ...    removes a warm glow disc around a lamp, working in from the outside
   rs_fix.py cool <name> ...    turns neon green into cyan
   rs_fix.py rim <name> ...     trims a few pixels off the edge of a cutout
@@ -135,9 +136,40 @@ def rim(name):
     print(name, "rim trimmed")
 
 
-if __name__ == "__main__" and sys.argv[1] in ("halo", "cool", "rim"):
+def edge(name, report=True):
+    """Green screen left a bright green line round the outside of most sprites, invisible at room size but plain when
+    zoomed in. Pull green back to grey in the outer 3px band only; in art that is green inside, like plants, only lime
+    green (the key colour), so leaves keep theirs. The outline goes neutral and nothing inside changes. Returns the number of pixels changed."""
+    path, a = load(name)
+    r, g, b, al = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+    vis = al > 8
+    inner = ndimage.binary_erosion(vis, iterations=6)
+    bright = (g > 110) & (g > r + 45) & (g > b + 30)
+    green_inside = (inner & bright).sum() / max(inner.sum(), 1) > 0.02
+    band = vis & ~ndimage.binary_erosion(vis, iterations=3)
+    spill = band & (g > np.maximum(r, b) + 12)
+    if green_inside:
+        # key spill is lime (red under .45 of green); leaves in this art are olive to grass, red .5 to .8 of green
+        spill &= (r < 0.45 * g) & (g > 100)
+        # and pure lime anywhere: it glows between leaves too, and no leaf is that colour
+        spill |= vis & (r < 0.3 * g) & (b < 0.6 * g) & (g > 110)
+    a[..., 1][spill] = np.maximum(r, b)[spill] + 4
+    save(path, a)
+    if report:
+        print(name, "edge despilled", int(spill.sum()), "(green inside)" if green_inside else "")
+    return int(spill.sum())
+
+
+if __name__ == "__main__" and sys.argv[1] == "edge-all":
+    # every room sprite listed in data/rsart.json
+    names = [n for n in json.load(open(INDEX)) if os.path.exists(os.path.join(ART, n + ".webp"))]
+    total = sum(edge(n, report=False) for n in names)
+    print(len(names), "sprites,", total, "edge pixels despilled")
+    sys.exit(0)
+
+if __name__ == "__main__" and sys.argv[1] in ("halo", "cool", "rim", "edge"):
     for n in sys.argv[2:]:
-        {"halo": halo, "cool": cool, "rim": rim}[sys.argv[1]](n)
+        {"halo": halo, "cool": cool, "rim": rim, "edge": edge}[sys.argv[1]](n)
     sys.exit()
 if __name__ == "__main__" and sys.argv[1] == "green":
     for n in sys.argv[2:]:
