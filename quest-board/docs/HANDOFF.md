@@ -54,7 +54,7 @@ table, grow lamps beside their beds). The Garden Estate was re-spaced: its tight
 of a tile. The Bedroom's dog beds were moved apart. The Theater lobby measured fine (tightest .2, the arcade beside the
 claw machine, both against the wall).
 
-Clothes: 32 of the 33 unfinished items are unlocked. `v_tulle` still has `soon:1`: three sheets were rejected as stray by `ingest_items.py`, so it needs a different design. Generating, the Chrome tab freezes while idle, so the page loop only moves while something keeps calling into the tab.
+Clothes: all 33 unfinished items are unlocked. `v_tulle` (Black Tulle Skirt) no longer has `soon:1` in `15_shop.js`, so it is on sale, and it has its raw sheet, layers, game files and icon. Nobody has looked at how it renders since (on ROOMS's list). Generating, the Chrome tab freezes while idle, so the page loop only moves while something keeps calling into the tab.
 
 Four items had the whole template body baked into their layers, so whoever wore them got a purple cape, ghost legs and
 an outline: Padlock Chain (`o_lock`), Carabiner Lanyard (`al_carab`), Tiny Oval Shades (`v_shade`) and Lace Corset Top
@@ -359,6 +359,17 @@ Note that two passages conflict: he first asks for the auditorium to the right o
   `ui_banner_y2k` (chrome, pink and butterflies, 2000s glam), `ui_banner_over` (concrete overpass, spray paint, skate
   shop), `ui_banner_rose` (black velvet, roses and thorns), `ui_banner_alt` (snowy peaks at dawn, outdoor gear). Save as
   `art/app/ui_banner_<id>.webp`; the build bundles them into `art_ui.js` and the banner uses them automatically.
+  State 2026-11-05: all five painted, not yet approved by Cal, not in the game. Paintings (3168x1344), game files and the
+  labeled sheet are in `art/raw/banners/` (git-ignored). Made with Nano Banana Pro, 21:9, 2K, Unlimited on, one image at a
+  time. Encode: `cwebp -resize 1280 0 -q 80 -m 6` (1280x544, about 100 KB each; the full height shows, because a phone
+  shows the whole painting). Prompt base: "Wide panoramic banner illustration, fully stylized painted game art, cosy anime
+  game style, clean dark ink outlines, soft painted cel shading, rich saturated colour, intricate fine detail in every corner,
+  glowing rim light. Not a photograph, not realistic, not a 3D render." Then the scene and palette, then "The middle of the
+  picture is darker in value but still finely detailed, so white title text can sit on it later. No people, no characters.
+  No text, no letters, no numbers, no writing on signs, no logos, no watermark, no border. Original design." Lessons: name
+  shops "unbranded, blank signboard" or a real-looking logo appears (a first HANGANG got a "7" on its shop, rejected); add
+  "full bleed, no frame, no white margin" (a first OVERPASS came framed, rejected). Check the Generate button reads
+  UNLIMITED before each click: the toggle was off when the page opened, showing a cost of 2 credits.
 - **Pictures in the game's own style (Cal asked 2026-11-05).** The class pictures, coaches, crew, rank badges, level-up
   splash and reward scenes are semi-realistic anime or glossy fantasy art; the game itself is chibi characters with clean
   dark outlines and soft painted shading, and painted isometric rooms. Redraw each one in that style and save it as
