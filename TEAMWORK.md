@@ -117,6 +117,16 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
     chats' Now and Next: if neither touches your files, start without waiting; if one does, take another task and write
     `WAITING ON <chat>: <files>` in your own line. Nobody asks permission for work the rules already allow.
 
+16. **Keep running on a 15-minute loop (Cal, 2026-11-05: "have every chat work continuously without stopping").** Every
+    chat runs this in its own session, once, and keeps it running:
+    `/loop 15m Re-read TEAMWORK.md (rules 13 to 16) and docs/TASKS.md. First do anything marked WAITING ON you and any
+    request to you not yet TAKEN. If there is none, continue the next task on your own list. Stop only for Cal's approval
+    or decisions, credits or logins, or a clash with another chat. Keep your Doing line true and say which commit you are on.`
+    - Inside a turn, keep working through your list as before; the loop only wakes a chat that has gone idle.
+    - A wake-up with nothing to do ends at once: check, write nothing, wait for the next one. No made-up work.
+    - Work waiting on Cal's approval stays parked; take your next task meanwhile.
+    - Not faster than 15 minutes: every wake-up re-reads the whole chat and costs usage. Loops pause while the Mac sleeps.
+
 ---
 
 ## How LEAD runs the work
