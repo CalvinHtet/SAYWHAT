@@ -50,8 +50,16 @@ function PLn(id,nm,pr,list,line,ex){var e=Object.assign({},ex||{});e.art=list.ma
    (y 4.7 to 6.1); the band in front of the couch is the walkway. Drawn to its real size, so nothing spreads. */
 var GMB={fxwall:1};
 var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",acc:"#7df9ff",fl:"d",size:[[13,10]],coin:0,guests:0,group:"Games",xpBase:2,desc:"A room with one job: having fun. Rested people level faster.",
- draw:function(C){roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall});lfDoorL(C,7.65,8.95,100,"#ffd27a",1)},/* the door to the Bedroom, in the left wall */
- items:[PL("gm_tv","Big TV",UP_S,"gmx_tv",5.4,.05,2.6,.2,0,"The screen is always on.",{o:{dy:-44,h:1,nob:1,nosh:1,dk:30}}),
+ /* painted walls and floor in four tiers (gmw_t1..4); the code-drawn skin is the fallback without the art */
+ draw:function(C){var H=C.has,k="gmw_t"+(H("gm_wt4")?4:H("gm_wt3")?3:H("gm_wt2")?2:1);
+  if(window.LFSPR&&LFSPR[k]){var sv=LFSHELLK;LFSHELLK=k;try{C.decals.push(lfShellPart(C.chu,"floor"));C.walls.push(lfShellPart(C.chu,"walls"))}finally{LFSHELLK=sv}}
+  else roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall});
+  lfDoorL(C,7.65,8.95,100,"#ffd27a",1)},/* the door to the Bedroom, in the left wall */
+ req:[["gm_wt3","gm_wt2"],["gm_wt4","gm_wt3"]],
+ items:[["gm_wt2","Carpet & Wall Panels",UP_M,"","",0,0,0,"Plush dark carpet and panelled walls. Goodbye, bare concrete."],
+  ["gm_wt3","Hex Acoustic Panels",UP_M,"","",0,0,0,"A wall of hexagon felt panels behind the TV. Sounds better, looks better."],
+  ["gm_wt4","LED Lighting Rig",UP_L,"","",0,0,0,"Cove lights, light bars and glowing hex panels. The room comes alive."],
+  PL("gm_tv","Big TV",UP_S,"gmx_tv",5.4,.05,2.6,.2,0,"The screen is always on.",{o:{dy:-44,h:1,nob:1,nosh:1,dk:30}}),
   PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",4.3,3.5,3.2,1.3,0,"You sit facing the TV, the way a couch should.",{sit:[[5.2,4.05,1,10,1],[6.6,4.05,-1,10,1]]}),
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"Pulls the room together.",{o:{dk:9}}),
   PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
