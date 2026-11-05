@@ -39,7 +39,8 @@ for art in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")):
 
 # character layers and icons travel as two packs, so a published page stays under its file limit
 import base64
-for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",))):
+# ui_<name>.webp replaces the built-in picture <name> (a class, coach, rank or reward picture), see docs/HANDOFF.md
+for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_",))):
     parts = []
     for art in sorted(glob.glob(os.path.join(DIST, "art", "*.webp"))):
         name = os.path.basename(art)
@@ -50,7 +51,7 @@ for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",))
     with open(os.path.join(DIST, pack), "w") as f:
         f.write("window.QBART=Object.assign(window.QBART||{},{" + ",".join(parts) + "});\n")
 
-tags = "".join('<script src="%s"></script>\n' % s for s in ("art_rig.js", "art_icon.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
+tags = "".join('<script src="%s"></script>\n' % s for s in ("art_rig.js", "art_icon.js", "art_ui.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)

@@ -220,6 +220,28 @@ Note that two passages conflict: he first asks for the auditorium to the right o
 
 ## Art still to generate (Cal's Chrome, Unlimited toggle, Nano Banana Pro, never credits)
 
+- **Pictures in the game's own style (Cal asked 2026-11-05).** The class pictures, coaches, crew, rank badges, level-up
+  splash and reward scenes are semi-realistic anime or glossy fantasy art; the game itself is chibi characters with clean
+  dark outlines and soft painted shading, and painted isometric rooms. Redraw each one in that style and save it as
+  `art/app/ui_<name>.webp`: the build bundles it into `art_ui.js` and it replaces the built-in picture of that name with
+  no code change. Keep each picture's size and layout. Names, in order of how often they are seen:
+  - Classes, 360x480 portrait, the player's own chibi in the class gear, full body, dramatic but soft background:
+    `class_tamer` (beast tamer with a small poodle and a chihuahua-dachshund at heel), `class_swiftblade` (light armour,
+    twin short blades, mid-dash), `class_runeweaver` (robe, floating glowing runes), `class_vanguard` (heavy shield, steady stance).
+  - Rank badges, 256x256, a flat emblem with one letter, chunky outline, same palette per rank as now: `rank_E`, `rank_D`,
+    `rank_C`, `rank_B`, `rank_A`, `rank_S`. Then `levelup` (720x360 banner) and `chest` (256x256).
+  - Coaches, 300x400 card, chibi, one per name: `coach_brick`, `coach_tam`, `coach_oru`, `coach_lio`, `coach_blaze`,
+    `coach_pixie`, `coach_vanta`, `coach_mags`, `coach_ryo`, `coach_hikari`, `coach_quill`, `coach_dot`.
+  - Crew, 240x320 card, chibi: `crew_mochi`, `crew_juno`, `crew_rook`, `crew_nova`, `crew_bleep`, `crew_vex`, `crew_ko`,
+    `crew_echo`, `crew_brisa`, `crew_dax`, `crew_luna`.
+  - Rewards, 240x240 scene, painted chibi props: `rew_5`, `rew_10` ... `rew_100` (the 15 in the game), and the class-event
+    banners `cl_home`, `cl_body`, `cl_boss`, `cl_social`, `cl_create`, `cl_admin`, `cl_reset`, `cl_out` (720x250).
+  - Ask Cal first: `friend_cynthia`, `friend_memo`, `friend_vega`, `friend_justin`, `friend_logan` (his real friends) and
+    `dog_pluto`, `dog_chopstick`. The `room_*` thumbnails belong to rooms the game no longer shows and can be skipped.
+  Prompt base: chibi game character art, big head small body, clean dark outlines, soft painted cel shading, warm
+  rim light, plain soft gradient background, no text, no logos, original design. One picture per sheet, or a 2x2 sheet
+  cut with `tools/rs_art.py`.
+
 Furniture sheets go through `tools/rs_art.py <sheet> <names in reading order>`; `tools/rs_fix.py art <name>` for anything glowing. Base prompt for each: isometric game furniture sprites on flat pure green, three-quarter camera, clean dark outlines, soft painted shading, nine separate objects in a 3 by 3 grid, long sides lower left to upper right, fronts facing lower right, no text, no floor, no shadow.
 
 - Garden 1: `gdx_seed` dirt bed with seedlings, `gdx_raised` timber bed with lettuce, `gdx_tomato` bed with staked tomatoes, `gdx_herb` herb trough, `gdx_can` watering can and coiled hose, `gdx_comp` compost bin, `gdx_wheel` wheelbarrow of soil, `gdx_barrel` rain barrel, `gdx_bench` potting bench.
