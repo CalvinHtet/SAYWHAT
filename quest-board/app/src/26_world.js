@@ -245,15 +245,16 @@ LFROOM.restaurant=function(C){
   if(patio){var P=[lfP(px,0,0),lfP(C.W,0,0),lfP(C.W,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<RSPATIO;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,0,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,0,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,0,0)],"#6d4c2e","none");C.decals.push(pl);
-    if(H("r_sign"))rsS(C,"rsx_aframe",C.W-.9,D*.5-2.8,.7,.5,24);
+    if(H("r_sign"))rsS(C,"rsx_aframe",C.W-.9,D*.5-1.6,.7,.5,24);
     for(var rx=px+.3;rx<C.W-1;rx+=2.2)rsS(C,"rsx_rail",rx,.1,2.2,.2,20,{flip:1,nosh:1,nob:1,dk:99});
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,.5,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",C.W-1.2,.5,.9,.9,50)}
     if(H("r_p1"))[[px+2.0,3.2],[px+5.2,3.2]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
-    if(H("r_p2"))[[px+2.0,D-4.2]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
+    if(H("r_p2"))[[px+2.0,D-4.6]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
     if(H("r_p4")){rsS(C,"rsx_heater",px+3.6,4.6,.6,.6,60,{H:96});lfLight(C,px+3.9,4.9,70,"#ff9a3a",2.4,.5)}
     if(H("r_p6"))rsS(C,"rsx_bbq",C.W-2.1,D-6.6,1.7,1.0,28,{flip:1});
     if(H("r_p5")){rsS(C,"rsx_pergola",px+3.6,D-5,3.2,3.2,90,{dk:-4});lfLight(C,px+5.2,D-3.4,90,"#ffd890",3,.5)}
-    if(H("r_p7"))rsS(C,"rsx_firepit",px+.6,D-3.2,2.6,2.6,24,{});
+    /* the fire pit lounge keeps half a tile from the umbrella table behind it */
+    if(H("r_p7"))rsS(C,"rsx_firepit",px+.6,D-3.1,2.6,2.6,24,{});
   }
 };
 (function(){RS_UPS.forEach(function(u){var n={r_t1:["Walnut Dining Tables","Long walnut tables for four, plates set, velvet chairs."],r_t2:["Marble Round Tables","Round marble tops, brass pedestals, flowers on every table."],r_t3:["White Linen Service","Square linen tables, crystal and candles. Tips go up."],r_b1:["Leather Booths","Real high-backed booths down the window wall. Guests sit inside them."],r_more2:["Curved Corner Booth","A big crescent banquette around a marble table. The best seat in the house."],r_more1:["Second Row of Tables","Two more tables means two more parties at once."],r_l2:["Brass Chandeliers","Sculptural brass over the room. Everything looks more expensive."],r_d7:["Oil Painting","One big piece on the wall, deep red and gold."],r_d8:["Olive Tree","A real tree in the corner of the dining room."],r_d3:["Walnut Dividers","Slatted screens give the booths some privacy."],r_d6:["Dessert Trolley","Cakes under glass come right to the table."],r_l1:["Brass Sconces","Warm light along the window wall."],r_d5:["Glass Wine Wall","Bottles lit from inside, right where guests can see them."],r_k7:["Wood-Fired Oven","A brick dome in the kitchen with a real fire."]}[u[0]];if(n){u[1]=n[0];u[4]=n[1]}});var drop={r_b2:1,r_bar:0,r_more2:0};RS_UPS=RS_UPS.filter(function(u){return !drop[u[0]]});

@@ -195,7 +195,8 @@ LFROOM.auditorium=function(C){rsArtReady();
   C.decals.push('<ellipse class="lfglow" cx="'+lfP(2.0,D/2,0)[0]+'" cy="'+lfP(2.0,D/2,0)[1]+'" rx="'+(U*sw*.45)+'" ry="'+(U*1.4)+'" fill="rgba(170,190,255,.2)"/>');
   /* speakers stand either side of the screen, aimed into the room, and never in front of it */
   var tall=H("au_lux3")?"aux_ref":"aux_spk",spkH=H("au_lux3")?150:118;[y0+.15,y0-sw-1.05].forEach(function(y){if(y>=.1&&y<D-.8)lfSpr(C,tall,.12,y,.8,.8,{h:30,H:spkH,flip:0})});
-  if(H("au_sound")){lfSpr(C,"aux_sub",.5,y0-sw/2-.6,1.0,.9,{h:20,H:50,nosh:1});lfSpr(C,"aux_spk",W-.9,D-1,.7,.7,{h:30,H:96,flip:1,dy:-DZ})}
+  if(H("au_sound")){lfSpr(C,"aux_sub",.5,y0-sw/2-.6,1.0,.9,{h:20,H:50,nosh:1});/* the rear surround stands on the back deck against the side wall, firing across the seats, not out at the camera */
+    lfSpr(C,"aux_spk",W-1.6,.15,.7,.7,{h:30,H:96,flip:1,dy:-DZ})}
   if(H("au_wall1")&&!H("au_wall2"))[1.2,3.4,5.6].forEach(function(x){lfSpr(C,"aux_panel",x,.05,.1,.05,{h:1,flip:1,H:80,dy:-60,nosh:1})});
   if(H("au_lux2"))[2,6,10].forEach(function(x){lfSpr(C,"aux_sconce",x,.05,.1,.05,{h:1,flip:1,H:40,dy:-90,nosh:1});lfLight(C,x,.6,70,"#6cc0ff",1.8,.35)});
   /* seats from behind, everybody watching the screen */
