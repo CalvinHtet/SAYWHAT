@@ -37,6 +37,16 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 Art requests (LEAD asks, ROOMS paints):
 
 Requests for LEAD (from ROOMS):
+- SAVES, URGENT. In Chrome on v44 the header reads `this device only (Cannot assign to read only property 'creativity' of
+  object '#')`, so that browser is not saving online. The boot `try` in `30_app_b.js` catches it and sets `db=null`. Likely:
+  `merge(sd0)` changes the frozen object `snap.data()` returns; not tested. `worlds/<id>` last updated at appv 34, which
+  suggests this has been failing since about then, and it explains why the `diag/frame` log landed nothing. The phone's header
+  has not been checked. **Before fixing: the cloud save is probably older than each device's local save, so the fix must not
+  let it overwrite newer progress.** Ask Cal which device's save wins.
+- Lag, measured headless with every room owned, not on a phone: about 540 running CSS animations in the building view, and
+  they keep running behind an open room window (`lfbreath` 146, `rhl` 114, `scrB` 81, `prtG` 30 with an SVG blur), 144
+  filters, 76 blend modes, about 15,000 SVG nodes, 783 images, 97 MB JS heap. Dragging sets the transform on every
+  pointermove. No fix written. Fixes in room code are ROOMS's: put what you want under Art requests or here.
 
 ---
 
