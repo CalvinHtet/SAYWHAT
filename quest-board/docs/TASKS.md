@@ -27,9 +27,10 @@ To do:
       broken (`db` was null), so it lands again after the next publish, and a new `diag/perf` log records frame rates on the
       real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below). Done so far (4b71234):
       a room window pauses the building view's animations (532 running, 30 with a window open).
-- [ ] `dropbox-leftovers` reviewed: it moves seven guest spots (Bar Chesterfield, three Mall spots, two VR pods) and drops
-      the Pin Lamp spot. One move is already on `main` as is; `main` fixed the rest in code (spots stay inside spread rooms
-      and move with their piece) and its station audits pass. Nothing to bring over. Waiting on Cal's OK to delete the branch.
+- [x] `dropbox-leftovers` reviewed (nothing worth bringing over) and deleted with Cal's OK.
+- [ ] Yawn pilot, code: when a character is at the peak of the stretch, swap in a top's painted yawn layers
+      (`m_<id>_yawn.webp`, `f_<id>_yawn.webp`, and `m_base_yawn` / `f_base_yawn` for bare arms) if they exist, and keep
+      today's yawn for every top that has none. In `src/rig.js`. Write it while ROOMS paints; QA tests it.
 - [x] Stretch pose: the gentler yawn (Cal's pick), 0959719. Dark long sleeves still look torn at the elbow, as before.
 - [x] `lfvar.json`: a copy is in git at `app/lfvar.json` (0959719). `build.py` does not use it.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
@@ -41,6 +42,12 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). One sheet per cosmetic, both bodies,
+  holding the peak of the yawn (`stretch` in `data/poses.json`: arms out wide a little below the shoulders, forearms curled
+  up, head tipped back). Render the pose as your template with `rigtest/matrix.html?sheet=base&pose=stretch`. Pilot:
+  the bare body (arms), `y_vjkt` (zip jacket, tears worst today), `o_puffer` (bulky) and `h_hoodie` (soft sleeves). Save the
+  layers on the same canvas and registration as each item's `_front` layer, named `<m|f>_<id>_yawn.webp` and
+  `<m|f>_base_yawn.webp`. Show Cal the pilot side by side before anything goes in; QA checks every outfit combination after.
 - Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
   sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in
@@ -60,6 +67,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   Requests for LEAD whether LEAD may change it, or whether you would rather do that part.
 - Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
+
+QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 
 Requests for LEAD (from ROOMS):
 - Three buildings: yes, LEAD may write the street view and the load-one-building code in `lfWorld` (`26_world.js`). Tell
@@ -122,6 +131,30 @@ To do:
 - [ ] Speakeasy: `depth.js` flags the piano drawn over the stage; look at it.
 
 ---
+
+## QA: tests, pilots, quality checks
+
+Doing:
+
+To do:
+- [ ] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
+      `rigtest/browser/` (README) and write your own in `rigtest/qa/`. Start `docs/QA.md` with a run log.
+- [ ] Upgrade sweep, every room: buy each upgrade one at a time in unlock order (the method in `docs/RELEASING.md`, Testing
+      upgrade tiers), screenshot each step, and flag anything stacking, overlapping, floating, facing the wrong way or not
+      visibly changing the room (Cal: "every upgrade clearly visible, even a poster or a clock"). Run `gaps.js`, `depth.js` and
+      `stations.js` at every tier, not only fully upgraded.
+- [ ] Shop sweep: buy and equip every item on both bodies, check the mirror, the wardrobe and the room character, and flag
+      anything stacking unnaturally or clipping.
+- [ ] Speed sweep at phone size (390 x 844, 4x CPU slowdown): time every tab, the building view and every room (`perf.js` as a
+      start: frame rate, long tasks, load time). List the slowest ten with what makes them slow. LEAD has the real phone's
+      numbers in `diag/perf` after Cal plays v45; compare against them when LEAD posts them.
+- [ ] After every commit by anyone: `savecheck.js`, `screens.js` and a quick look at what that commit touched. After every
+      publish: the same against the published build. Post only what fails.
+- [ ] References: for each room, look up isometric game art of that kind of room (built-in browser, never Chrome) and
+      compare layout, detail, lighting and how alive it feels. Write art ideas for ROOMS with the link and what to learn.
+      Study only, never copy.
+- [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
+      saved as one labeled sheet for Cal.
 
 ## Done (latest first, keep about ten)
 

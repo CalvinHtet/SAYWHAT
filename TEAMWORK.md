@@ -1,12 +1,13 @@
-# Working on Quest Board with two Claude chats
+# Working on Quest Board with three Claude chats
 
-Two Claude Code chats work in **one folder on Cal's computer** at the same time, each on its own part of the game.
+Three Claude Code chats work in **one folder on Cal's computer** at the same time, each on its own part of the game.
 They see each other's changes the moment they are saved, so art and code are always tested together.
 
 | Chat | Owns |
 |---|---|
 | **LEAD** | The task board, quality of life, the Shop and Training code and everything else in the app, the docs, and **publishing to Cal's phone**. The only chat that publishes, bumps `APPV` or pulls from GitHub. Never generates art. |
 | **ROOMS** | **All art generation** (rooms, walls, outfits, items, banners, ui pictures), the art tools and the room code. The only chat that uses Chrome or Higgsfield. Wear-tests the outfits it brings in. Never publishes. |
+| **QA** | **Testing, pilots and quality checks, all the time.** Buys every upgrade and item one step at a time, times every screen at phone speed, re-runs the checks after every commit and publish, and compares rooms with real isometric references. Owns `rigtest/qa/` and `docs/QA.md`. Never changes game code, data or art, never publishes, never uses Chrome or Higgsfield. |
 
 ---
 
@@ -19,7 +20,7 @@ They see each other's changes the moment they are saved, so art and code are alw
 published page.
 
 **Step 2. The home for the code is outside Dropbox.**
-Why not Dropbox: Dropbox copies files while two chats and git are writing them. That makes "conflicted copy" files and
+Why not Dropbox: Dropbox copies files while the chats and git are writing them. That makes "conflicted copy" files and
 can break git. The code lives in a normal folder (`Documents/github/saywhat`); GitHub is its backup.
 
 **Step 3. The big art folders (ROOMS needs them).** Copied from Dropbox on 2026-11-05 and checked file for file:
@@ -28,17 +29,17 @@ can break git. The code lives in a normal folder (`Documents/github/saywhat`); G
 **Step 4. Check Chrome is ready.** Chrome open with the Claude in Chrome extension connected, signed into
 Higgsfield, the **Unlimited toggle on**. Only ROOMS uses it.
 
-**Step 5. Open the two chats.** Start two Claude Code sessions, both on `Documents/github/saywhat`. Name them LEAD and
-ROOMS. Paste each one's starter prompt (Part 3) as its first message.
+**Step 5. Open the chats.** Start three Claude Code sessions, all on `Documents/github/saywhat`. Name them LEAD,
+ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
 
 **Every day after that:**
-- Give a request to either chat. Anything that needs both goes to LEAD, which splits it (below).
+- Give a request to any chat. Anything that needs more than one goes to LEAD, which splits it (below).
 - Want to try it on your phone? Tell **LEAD**: *"Publish."*
-- Done for the day? Tell **LEAD**: *"Wrap up: make sure everything from both chats is committed and pushed."*
+- Done for the day? Tell **LEAD**: *"Wrap up: make sure everything from every chat is committed and pushed."*
 
 ---
 
-## Part 2: the rules both chats follow
+## Part 2: the rules every chat follows
 
 1. **Read first.** Before any work, read `CLAUDE.md`, this file, `quest-board/docs/TASKS.md` and
    `quest-board/docs/HANDOFF.md`.
@@ -94,6 +95,20 @@ Cal, 2026-11-05: LEAD manages the other chats. Cal can give a request to ROOMS d
   changing it (rule 4).
 - After each publish LEAD marks the `READY TO PUBLISH` lines it shipped `PUBLISHED in v<APPV>`.
 - LEAD tells Cal if a third chat would drastically help, and only then: not while the risk of broken code is high.
+
+## How QA works
+
+- **Never waits on anyone.** It tests whatever is committed and starts the next check without asking.
+- **Tests clean copies.** Each run builds from a clean temporary copy of the latest commit (`git worktree add --detach` into a
+  temp folder outside this folder), never from the working folder, so half-finished edits don't show up as bugs. Port 8769.
+- **Reports, doesn't fix.** Findings go under *QA findings* in `TASKS.md`, one line each: what, where, how to see it,
+  a screenshot path, and the owner it thinks it belongs to (LEAD or ROOMS). LEAD moves each one into the right list.
+  Longer write-ups and run logs go in `docs/QA.md`.
+- **Writes its own tests only** in `rigtest/qa/`. A change to an existing script in `rigtest/browser/` is a request to LEAD.
+- **Heavy runs one at a time.** No full sweep while LEAD's Doing line says it is publishing.
+- **References are for study.** It looks up isometric game room art with the built-in browser (never Chrome) and writes
+  art ideas for ROOMS, with the reference link and what to learn from it. Never copy anyone's art.
+- **Approvals stay batched.** Anything for Cal goes through LEAD, saved up so he sees several at once.
 
 ## Working on your own
 
@@ -167,11 +182,19 @@ LEAD:
 > your own files only, careful git, never publish, claim Chrome in TASKS.md before generating, and mark finished work
 > "READY TO PUBLISH: <what>, look at: <what>". Show me your open tasks in a few lines, then start.
 
+**QA**
+> You are QA on Quest Board. Read CLAUDE.md, TEAMWORK.md (especially "How QA works"), quest-board/docs/TASKS.md,
+> quest-board/docs/HANDOFF.md and quest-board/rigtest/browser/README.md first. You test, run pilots and check quality all
+> the time, so Cal doesn't have to buy things by hand to find problems. You own rigtest/qa/ and docs/QA.md only: you never
+> change game code, data or art, never publish, never use Chrome or Higgsfield. Test clean copies of the latest commit on
+> port 8769, write findings under "QA findings" in TASKS.md with an owner, and keep going without waiting on anyone.
+> Show me your open tasks in a few lines, then start.
+
 ---
 
 ## Part 4: who owns which files
 
-All paths are inside `quest-board/`. **Anything not listed under ROOMS belongs to LEAD.**
+All paths are inside `quest-board/`. **Anything not listed under ROOMS or QA belongs to LEAD.**
 
 | | LEAD | ROOMS |
 |---|---|---|
@@ -181,6 +204,8 @@ All paths are inside `quest-board/`. **Anything not listed under ROOMS belongs t
 | Tools | `tools/build.py` | `tools/rs_art.py`, `rs_fix.py`, `closet_stages.py`, `items.py`, `ingest_items.py`, `pack.py`, `strip_mannequin.py` and the other item tools |
 | Docs | `TEAMWORK.md`, `CLAUDE.md`, `docs/RELEASING.md`, `ADDING_CONTENT.md`, `ECONOMY.md` and the rest of `docs/` | |
 | Shared | `app/index.html`, `docs/HANDOFF.md`, `docs/TASKS.md`: both, small careful edits (rule 5) | |
+
+QA owns `rigtest/qa/` and `docs/QA.md`. In `TASKS.md` it writes only its own section and *QA findings*.
 
 ---
 
@@ -192,4 +217,5 @@ All paths are inside `quest-board/`. **Anything not listed under ROOMS belongs t
 - **A change broke the game.** Tell LEAD *"undo the last commit from ROOMS"* (or from LEAD). Every commit can be undone.
 - **Both chats changed the same thing.** Nothing is lost if both committed. LEAD sorts it out from `git log`.
 - **Art looks wrong or Chrome is stuck.** Tell ROOMS. LEAD never touches Chrome or Higgsfield.
+- **Something looks off and you don't know whose it is.** Tell QA to find it, or LEAD to sort it.
 - **Unsure?** Ask Cal before running anything that could touch the other chat's files.
