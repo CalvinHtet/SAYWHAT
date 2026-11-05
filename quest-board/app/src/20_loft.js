@@ -3264,9 +3264,10 @@ LFROOM.bedroom=function(C){
 /* A doorway cut into the left wall (x=0) from y=a to y=b, h px tall, with the next room's light beyond it. From the
    room you see into it: the floor running on behind the wall and the back jamb (it faces the front); the front jamb and
    the head face away. */
-function lfDoorL(C,a,b,h,glow){var th=.42,u=C.chu||0,id="lfdl"+u,P=function(x,y,z){return lfPt(lfP(x,y,z))},
+function lfDoorL(C,a,b,h,glow,onWall){var th=.42,u=C.chu||0,id="lfdl"+u,P=function(x,y,z){return lfPt(lfP(x,y,z))},
   hole=[P(0,a,0),P(0,b,0),P(0,b,h),P(0,a,h)].join(" "),g=lfP(0,(a+b)/2,0),t=lfP(0,(a+b)/2,h);
-  C.decals.push('<linearGradient id="'+id+'g" gradientUnits="userSpaceOnUse" x1="'+g[0]+'" y1="'+t[1]+'" x2="'+g[0]+'" y2="'+g[1]+'"><stop offset="0" stop-color="#140f14"/><stop offset=".55" stop-color="#3a2a22"/><stop offset="1" stop-color="'+glow+'" stop-opacity=".85"/></linearGradient>'
+  /* onWall: for rooms whose walls are drawn as room art (C.walls, after the decals) */
+  (onWall?C.walls:C.decals).push('<linearGradient id="'+id+'g" gradientUnits="userSpaceOnUse" x1="'+g[0]+'" y1="'+t[1]+'" x2="'+g[0]+'" y2="'+g[1]+'"><stop offset="0" stop-color="#140f14"/><stop offset=".55" stop-color="#3a2a22"/><stop offset="1" stop-color="'+glow+'" stop-opacity=".85"/></linearGradient>'
     +'<clipPath id="'+id+'"><polygon points="'+hole+'"/></clipPath><g clip-path="url(#'+id+')" pointer-events="none">'
     +'<polygon points="'+hole+'" fill="url(#'+id+'g)"/>'
     +'<polygon points="'+[P(-th,a,0),P(-2.5,a,0),P(-2.5,b+.6,0),P(-th,b+.6,0)].join(" ")+'" fill="'+glow+'" opacity=".35"/>'

@@ -50,7 +50,7 @@ function PLn(id,nm,pr,list,line,ex){var e=Object.assign({},ex||{});e.art=list.ma
    (y 4.7 to 6.1); the band in front of the couch is the walkway. Drawn to its real size, so nothing spreads. */
 var GMB={fxwall:1};
 var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",acc:"#7df9ff",fl:"d",size:[[13,10]],coin:0,guests:0,group:"Games",xpBase:2,desc:"A room with one job: having fun. Rested people level faster.",
- draw:function(C){roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall})},
+ draw:function(C){roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall});lfDoorL(C,7.65,8.95,100,"#ffd27a",1)},/* the door to the Bedroom, in the left wall */
  items:[PL("gm_tv","Big TV",UP_S,"gmx_tv",5.4,.05,2.6,.2,0,"The screen is always on.",{o:{dy:-44,h:1,nob:1,nosh:1,dk:30}}),
   PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",4.3,3.5,3.2,1.3,0,"You sit facing the TV, the way a couch should.",{sit:[[5.2,4.05,1,10,1],[6.6,4.05,-1,10,1]]}),
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"Pulls the room together.",{o:{dk:9}}),
@@ -148,3 +148,8 @@ autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"
   cbU("cb_hi","LED High Tables",UP_S,"cbx_hi",cbP("cbx_hi",[[5.55,8.35,.62,.62],[7.55,8.35,.62,.62],[9.55,8.35,.62,.62]]),"Somewhere to put your drink.",{cust:[[5.85,9.35,1,CBB],[6.95,8.65,-1],[7.85,9.35,-1,CBB],[8.95,8.65,1],[9.85,9.35,1,CBB]]}),
   /* two booths down the left wall above the VIP booth, opening onto the floor */
   cbU("cb_booths","Wall Booths",UP_M,"cbx_vip",cbP("cbx_vip",[[.25,2.6,2.2,2.4,1],[.25,5.05,2.2,2.4,1]]),"Two more booths along the wall. Everyone wants one.",{sit:[[.95,3.3,1,9,0,CBS],[.95,4.2,1,9,0,CBS],[.95,5.75,1,9,0,CBS],[.95,6.65,1,9,0,CBS]]})]});
+/* An upgrade whose prerequisite is no longer sold in any room could never be bought (QA: Game Room Couch & Console, Pool
+   Table, Snack Bar; Restaurant Chef's Neon; Garden Scarecrow, Berry Patch, Beehive; the Theater bar). Drop those stale
+   prerequisites once every room's list is built. Saves are untouched: nothing is renamed or removed. */
+(function(){var sold={};Object.keys(ADDONS).forEach(function(t){(ADDONS[t]||[]).forEach(function(a){sold[a[0]]=1})});
+  var freed=[];Object.keys(ADDREQ).forEach(function(k){if(sold[k]&&!sold[ADDREQ[k]]){freed.push(k+"<"+ADDREQ[k]);delete ADDREQ[k]}});window.__qbFreedReq=freed})();

@@ -199,7 +199,7 @@ autoRoom("mall",{name:"Mall",lv:30,cost:3000,buy:1,startLv:30,step:1,wall:"#efe9
 /* ---- doors ---- [from, to, side, position, color, label]. BL/BR are the back walls, FL/FR the open front edges. */
 portal("bedroom","closet","BL",6.5,"#ffd27a","Closet");portal("closet","bedroom","FR",2.6,"#ffd27a","Bedroom");
 portal("bedroom","patio","BR",8.9,"#ffb070","Patio");portal("patio","bedroom","FL",6.6,"#ffb070","Bedroom");/* under the Bedroom's sliding door */
-portal("bedroom","gameroom","FR",7.2,"#7df9ff","Game Room");portal("gameroom","bedroom","FL",2.4,"#7df9ff","Bedroom");
+portal("bedroom","gameroom","FR",7.2,"#7df9ff","Game Room");portal("gameroom","bedroom","BL",8.3,"#7df9ff","Bedroom");/* Cal's rule: the Bedroom's front-right edge comes out of the Game Room's left wall */
 /* Cal: the Closet's upper (back-right) wall leads up, so the Lair sits above the Closet, its door the painted secret one. */
 portal("closet","lair","BR",1.1,"#2a6bff","Hidden Door");portal("lair","closet","FL",6,"#2a6bff","Closet");
 portal("restaurant","skybar","BR",4.2,"#ffb46a","Upstairs");portal("skybar","restaurant","FR",3,"#ffb46a","Downstairs");
