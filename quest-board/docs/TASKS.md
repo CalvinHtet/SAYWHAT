@@ -18,6 +18,8 @@ Doing:
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
+- [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
+      Not published (QA's economy simulation first).
 - [ ] Dungeon gifts, Relics and Trophies (Cal, Goblin King set): gifts on mission return with a reveal; loot per mission;
       the Trophies tab becomes Relics, with tiered relics hidden until earned (old badges carry over) and a Trophies sub-tab
       that opens after the first piece and the Lair's Trophy Room; piece buffs and the set bonus; the crew fix (nobody has
@@ -48,6 +50,15 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: yawn pilot (Cal approved 2026-11-05), b506b8c. Eight painted layers in `art/app`: the bare body
+  (`m_base_yawn`, `f_base_yawn`) and the zip jacket, puffer and hoodie (`<m|f>_<id>_yawn`), drawn by the `stretch` pose
+  through LEAD's `rig.js` change. The body is the rig's own render except around the shoulders and armpits, where the
+  painting fills the tear (`tools/yawn_body_mix.py`), so trousers, shoes and hair line up; the garment cuts drop the faint
+  mannequin outline the generator left. Look at: a character at the peak of the yawn wearing each of the three tops, both
+  bodies, and bare-armed with no top. Checked headless in the rig: the three tops on both bodies, no double outline, no
+  stray lines, no errors. Not checked: on a phone, in a room, with other trousers, hair, hats or accessories (QA's
+  combination sweep), and the starter tee still tears at the armpit because it has no painted layer. Known small flaw:
+  a sliver of skin at the man's left hip under the zip jacket.
 - READY TO PUBLISH: the Hero's Lair moves above the Closet (Cal, 2026-11-05). In the building view the Lair is now directly
   above the Closet (it was to its left). The Closet's last upgrade (`cl_lair`, now after Super Sleek Modern) shows the corner
   cabinet on the upper wall slid away from a glowing stair; right after buying it, once the "You found the Hero's Lair"
@@ -72,6 +83,19 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Team, class art and team looks (Cal, 2026-11-05; code in d523cf1, `29c_team.js`). Show Cal each set side by side:
+  1. Class banners in the game's own chibi style, a man's and a woman's version of each: `ui_class_<id>_m.webp` and
+     `_f.webp` for tamer, swiftblade, runeweaver, vanguard (360 x 480 portrait, the player's chibi in the class gear). The class
+     screen and the job banner pick the one matching the player's body; the old picture shows until then.
+  2. A join banner per team member, anime style, 720 x 400: `ui_team_sable.webp` (scout, rescued in the dungeon),
+     `ui_team_mara.webp` (chef), `ui_team_desmond.webp` (investor, Lock and Key), `ui_team_priya.webp` (investor, the mall),
+     `ui_team_theo.webp` (theater crew). Original designs. The banner, team cards and scene portraits use them automatically.
+  3. In the building view: draw each team member who has joined (`window.__qbTeam.list()`, ids above) in their own room
+     (Mara the restaurant, Desmond Lock and Key, Priya the mall, Theo the theater, Sable the Lair) with their signature look
+     from `TEAM[id].look` and something that makes them stand out from the guests (a name tag, a glow ring, a signature prop).
+     Better still, a signature cosmetic each, painted as items (Mara's chef whites exist already as `npc_chef`).
+  4. The theater's basics as their own upgrades: a ticket stand and a popcorn and soda machine. Tell LEAD their ids, and Theo's
+     scene will wait for exactly those (he is the employee).
 - Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
   Speakeasy into one second-floor room above the restaurant, an upscale speakeasy with a live band and singers, starting
   really bare; keep every id saves already own (retire, never delete) and tell LEAD which room id survives; (2) chibi looks
@@ -203,12 +227,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Closet second version painted and sent to Cal (approval 3, `art/raw/walls/closet/closet_stages_v2.png`): LED strips on
-  every stage from Wardrobe Lights on, no floor circles, and a Hero's Lair stage (`st_lair.png`). Next: Patio art (turf,
-  a replacement for the light tower, Chopstick's bed) and the Bedroom figurine cabinet, then the doors code.
+- Finishing the Loft (Cal, 2026-11-05: "Bedroom, patio, closet, and lair should be in good working condition", then QA
+  checks every Loft asset across every upgrade; the Trophy Room waits). Order: Bedroom painted walls with colour options,
+  figurine cabinet and the Closet door, Canvas Art and Figurine Shelf bug, then the Patio (turf, light tower, Chopstick's
+  bed, walking through the door, dogs), then the Lair. Claims Chrome for the art.
 
 To do:
-- [ ] Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
+- [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
       `art/raw/walls/closet/st_dark, st_lit2, st_shoe2, st_jewel2, st_island2, room_jewel2, st_modern2`. Put them in
       (`clPaint` stages, sizes in `data/rsart.json`, drop the `clx_jewel` sprite and the LED overlay). The Lair stage waits
       on Cal's answer about doors vs the building layout (asked 2026-11-05): ROOMS recommends keeping the building as is
@@ -246,7 +271,7 @@ To do:
       Patio through the new door; (5) once the dogs are bought, see them run around and interact with the room. Cal sent
       photos for the dog art (study only): Pluto is a beige, curly toy poodle; Chopstick is a black-and-tan
       chihuahua-dachshund mix with long feathered ears. Art for Cal's approval first.
-- [ ] Yawn pilot: painted and sent to Cal (approval 4). Waiting on him and on LEAD's one-line `rig.js` change (Requests for LEAD).
+- [x] Yawn pilot: Cal approved, in `art/app` (b506b8c), see Ready to publish. Next, ask Cal: roll it out to every top?
 - [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand).
@@ -336,6 +361,9 @@ To do:
 - [ ] (from LEAD) Story scenes (aa0d9ed, `29b_story.js`, test hook `window.__qbStory`): walk a new save from level 1 to the club, every
       scene, "Not yet" and back, lots on the street in order, nothing opening early, and old saves at every stage (no scenes for
       rooms already owned). Add the gates to the economy simulator: how many days each step takes.
+- [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
+      serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
+      `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 
