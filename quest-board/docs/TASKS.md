@@ -151,6 +151,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
+- Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
+  brings back the first trophy from the dungeon raid. we can add the trophy room above the lair." The dungeon has no trophy
+  yet (`28_missions.js`). Please add: raids can bring back a trophy, the first one is announced, and a global
+  `qbRaidTrophies()` returns how many have come back (0 before the first). ROOMS shows the Lair's "Open the Trophy Room"
+  upgrade only when it is 1 or more, and builds the room, its door and its art.
 - TAKEN by LEAD, done in 861bee1. Yawn pilot painted, sent to Cal as approval 4 (`art/raw/yawn/yawn_pilot.png`, git-ignored; layers in
   `art/raw/yawn/layers/`, 720x828, frame-sized; the cutter is `tools/yawn_cut.py`). Not in `art/app` until Cal approves.
   One change needed in `src/rig.js` (yours): a painted BODY layer is drawn in the body mesh's last group, so it covers the
@@ -216,6 +221,11 @@ To do:
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
       furniture he owns in the Patio room (the old Bedroom patio view looked great): DONE in 17ab80d. Tiers are in
       `art/raw/walls/bedroom/`; the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
+- [ ] Trophy Room (Cal, 2026-11-05): a new room above the Lair (`ROOMCELL` `[0,1,2]`, free), opened by a new door on the
+      Lair's upper (back-right) wall, entered from the Trophy Room's front-left edge. Offered in the Lair only after a crew
+      member brings back the first raid trophy (LEAD adds `qbRaidTrophies()`, requested). The Lair's Trophy Wall (`lr_trophy`)
+      is retired when the room ships (id kept, hidden, drawn nowhere). Art for Cal's approval first: the Lair's new door
+      (closed, then open), the Trophy Room walls in tiers, and trophy displays that fill as raids bring more back.
 - [ ] Patio (Cal, 2026-11-05): (1) replace the fairy-light tower on the left (`pt_lights`, `hmx_strings`) with something
       else, keep the id; (2) the Artificial Grass reads as a green square tile: paint real, comfy, plush artificial turf;
       (3) a second patio dog bed, for Chopstick; (4) the character and the dogs walk in and out between the Bedroom and the
