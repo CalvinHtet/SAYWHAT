@@ -202,7 +202,9 @@ LFROOM.auditorium=function(C){rsArtReady();
   /* seats from behind, everybody watching the screen */
   var key=H("au_lux1")?"aux_seat3":H("au_recline")?"aux_seat2":"aux_seat1",blocks=Math.floor((D-ty0-.4)/2.9);
   TX.slice(0,nrow).forEach(function(x,r){for(var b=0;b<blocks;b++){var yb=ty0+.2+b*2.9;lfSpr(C,key,x+.3,yb,1.2,2.7,{h:20,H:74,dy:-TZ[r],fl:"lfdk"});
-    for(var s=0;s<3;s++)lfCust(C,x+.55,yb+.5+s*.85,-1,{sit:1,sz:4,facewall:1,uact:"eat",wact:"sit",lbl:String.fromCharCode(65+r),grp:"r"+r,num:b*3+s+1,wx:x+1.6,wy:yb+.5+s*.85,udur:[40,70]})}});
+    /* Seen from behind, a seated guest is drawn just before their own row of seats, so its backs hide them below
+       the shoulders, and after the row in front of them. (dk:99 drew them over every seat, perched on top.) */
+    for(var s=0;s<3;s++)lfCust(C,x+.55,yb+.5+s*.85,-1,{sit:1,sz:4,facewall:1,dk:3.1-.85*s,uact:"eat",wact:"sit",lbl:String.fromCharCode(65+r),grp:"r"+r,num:b*3+s+1,wx:x+1.6,wy:yb+.5+s*.85,udur:[40,70]})}});
   /* projector, and its beam across the room */
   lfSpr(C,H("au_proj2")?"thx_proj2":H("au_proj1")?"thx_proj1":"th_proj",W-1.4,D*.5-.5,1.0,1.0,{h:30,ctr:1,H:H("au_proj2")?96:80,dy:-DZ});
   var pj=lfP(W-1.2,D*.5,DZ+50),s1=lfP(0,y0-sw,z0+sh/2),s2=lfP(0,y0,z0+sh/2);C.front.push('<polygon class="mvBeam" points="'+pj.join(",")+' '+s1.join(",")+' '+s2.join(",")+'" fill="rgba(200,220,255,.09)" pointer-events="none"/>');
