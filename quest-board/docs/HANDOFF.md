@@ -74,7 +74,30 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    the arm and the torso. A stretch cap in `rig.js` was tried and tore the shoulders instead, so it was reverted. It is a
    rig limit that also affects the older jackets, not the new art. Not checked: every pose of a full outfit for every
    combination (the pairing sheets cover pairs, not triples), and anything in motion at full speed.
-2. Guests in every room: see "Guest pass" below.
+2. Guests in every room with people (18 rooms; the Bedroom, Closet, Lair, Patio and Game Room have none, see below):
+   with every upgrade owned, guests were put on every guest spot and staff on every staff spot, pass after pass until
+   every spot had been used, and each pass was screenshotted (headless Chromium, software WebGL). The Restaurant was
+   also left to run on its own for four minutes. A station audit checked every spot in every room against the furniture
+   footprints. Found and fixed:
+   - Restaurant: guests on the far side of the two tables nearest the kitchen were drawn over the tablecloth (the low
+     kitchen counter was one long box that sorted after them; it is now built in one-tile pieces). Guests in the curved
+     corner booth were hidden behind its back, only their order bubble showing. A patio diner at the umbrella table was
+     drawn over the pergola roof (patio diners now sort with their own table, not over everything).
+   - Auditorium: seated guests were drawn over every seat, perched on top of their own seat backs. From behind they
+     now show head and shoulders over the seat back, row by row.
+   - Karaoke stage and the Club dance floor: guests stood inside them with only a head showing. Upgrades can now be
+     platforms (`plat: height` on the upgrade): walkable, and anyone on them is lifted and drawn on top.
+   - Rooftop: two pool spots were behind the raised pool wall, hiding the guest below the shoulders; they are at the
+     pool's open sides now.
+   - Spots inside furniture: Upstairs Bar lounge (in the side table), Boba second table (in its table), Bowling snack
+     bar (in the counter), Karaoke couch (in the drinks table), Arcade prize counter (behind it, like a clerk).
+   - Rooms drawn on a small plan and spread to fit (`d.layout`) spread their furniture by its centre but their spots
+     as bare points, so a spot could land inside the piece it belongs to. Spots now move with their nearest piece.
+   Looked at and fine: Upstairs Bar, Boba, Dessert, Speakeasy, Garden, Theater lobby, Mall, Bowling, Arcade, Rhythm,
+   VR, Club. Small things left alone: guests at the Speakeasy bar stand among its baked-in stools; the DJ-game player in
+   Rhythm is half hidden by the dance machine in front of them (correct depth, but you see less of them).
+   Not checked: guests while walking between spots (only standing and seated poses were frozen and looked at, apart
+   from the Restaurant's free run), and every room at every upgrade level (all rooms were checked fully upgraded only).
 3. Facing and spacing, room by room: every one of the 21 rooms was screenshotted with every upgrade owned and looked at, and
    a depth audit compared draw order against footprints for every overlapping pair. Fixed: Upstairs Bar stools were drawn
    behind the counter (its footrail ran across their legs); the Restaurant kitchen partition cut the corner off the range;
