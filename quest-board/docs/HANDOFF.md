@@ -1,6 +1,6 @@
 # Handoff
 
-State as of 2026-11-04. Work top to bottom. Commit and push often. Update this file as items
+State as of 2026-11-05. Work top to bottom. Commit and push often. Update this file as items
 finish, so the next session never has to guess.
 
 ## How the code is laid out
@@ -11,6 +11,12 @@ earlier function. Rooms: `20_loft.js` (world, agents, Bedroom and old rooms), `2
 and brand splashes, `15_shop.js` the shop, `16_interface.js` interface items. Economy formulas
 are in `30_app_b.js` (`cum`, `levelPay`) and `10_app_a.js` (`coinsFor`, `simulate`).
 Testing helper: `window.__qb.x()` returns state and internals.
+
+Test pages (not shipped): `rigtest/matrix.html` renders contact sheets straight from the rig. `?sheet=wear&arts=o_tee`
+puts one item (or a comma list, a whole outfit) on both bodies in all 22 key poses; `?sheet=grid&arts=a,b&poses=idle,sitBack`
+is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up in one pose (`%2B` combines). The older
+`hats`, `hatface`, `neck`, `waist` and `legs` sheets check every pairing. Add `&scale=2` to zoom, `&nolabel=1` to drop labels.
+`tools/strip_mannequin.py` removes a template body that got baked into an item layer (see Clothes below).
 
 ## Status of Cal's request below
 
@@ -39,20 +45,63 @@ that faces a TV needs a rear-view sprite.
 Room sizes: `d.layout=[W0,D0,pivotX,pivotY]` in a room def means its plan was drawn for W0 x D0 and is spread to the real
 size by `roomSpread` in `26_world.js`. Anything before the pivot stays put, such as a bar and its stools.
 Spacing audit, all upgrades owned (floor coverage): Rooftop 37%, Game Room 29%, Club 28%, Speakeasy 27%, Bar 22%, Bowling 22%,
-all others under 20%. Nothing sits outside its room. Remaining gaps under .35 tile are wall pieces, stools at the bar and the band on its stage.
-Bedroom (52% with its rug), Garden and Theater were only measured, not re-spaced.
+all others under 20%. Nothing sits outside its room.
+Gap audit on 2026-11-05 (every footprint pair in every room, all upgrades owned): no two pieces overlap except on purpose
+(booth benches against their table, the pass on the kitchen partition, the band on its stage, the curved booth round its
+table, grow lamps beside their beds). The Garden Estate was re-spaced: its tightest pairs are now the tool column at .3 to .4
+of a tile. The Bedroom's dog beds were moved apart. The Theater lobby measured fine (tightest .2, the arcade beside the
+claw machine, both against the wall).
 
 Clothes: 32 of the 33 unfinished items are unlocked. `v_tulle` still has `soon:1`: three sheets were rejected as stray by `ingest_items.py`, so it needs a different design. Generating, the Chrome tab freezes while idle, so the page loop only moves while something keeps calling into the tab.
 
+Four items had the whole template body baked into their layers, so whoever wore them got a purple cape, ghost legs and
+an outline: Padlock Chain (`o_lock`), Carabiner Lanyard (`al_carab`), Tiny Oval Shades (`v_shade`) and Lace Corset Top
+(`v_corset`). `tools/strip_mannequin.py` cut the mannequin out of their runtime `.webp` files (`--lens` for glasses,
+`--garment` for the corset) and their shop icons were rebuilt from the cleaned layers. The source layers in Cal's Dropbox
+still have the mannequin: if `pack.py` is ever rerun on them, run `strip_mannequin.py` again on those ten files, or better,
+regenerate those four sheets. The Lace Headband (`v_lace`) trimmed the hair like a hat and left the head bald from
+behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects.
+
+## What was checked on 2026-11-05, and what was not
+
+1. Clothes, both bodies, every pose: done in the rig, not in a room. All 48 `gx_o_*`, `gx_v_*` and `gx_al_*` items (tulle
+   excluded) were rendered alone on each body they fit in all 22 key poses (`rigtest/matrix.html?sheet=wear`), plus six whole
+   outfits (two per brand, one on each body) in all 22 poses, every hat with all three hair styles on both bodies front and
+   back, every hat with every glasses and mask, every new neck piece over seven collared and hooded tops front and back, and
+   every top over every bottom and every bottom over every shoe (front and back, at thumbnail size). Found and fixed: the
+   four baked-in mannequins and the headband above. Found and not fixed: with an arm raised (`stretchUp`, `stretch`) most
+   long-sleeve and boxy tops show dark streaks fanning from the armpit to the hip, because one mesh cell stretches between
+   the arm and the torso. A stretch cap in `rig.js` was tried and tore the shoulders instead, so it was reverted. It is a
+   rig limit that also affects the older jackets, not the new art. Not checked: every pose of a full outfit for every
+   combination (the pairing sheets cover pairs, not triples), and anything in motion at full speed.
+2. Guests in every room: see "Guest pass" below.
+3. Facing and spacing, room by room: every one of the 21 rooms was screenshotted with every upgrade owned and looked at, and
+   a depth audit compared draw order against footprints for every overlapping pair. Fixed: Upstairs Bar stools were drawn
+   behind the counter (its footrail ran across their legs); the Restaurant kitchen partition cut the corner off the range;
+   the Speakeasy piano stood side-on to the wall; the Dessert garland, Boba neon sign and Club neon sculpture were wall
+   pieces standing on the floor (the garland also had a green halo, cleaned with `rs_fix.py art`); the Speakeasy microphone
+   was the size of the singer; the Closet's Featured Rail was a dark slab 5 tiles wide on a 7 tile wall, hanging off the room
+   over the wardrobes (it is now a lit shelf in the cornice, sized to the wall); the Mall escalator stood in the open front
+   corner climbing into the pretzel kiosk (it now rises against the back wall toward the Bowling door, and the kiosk has the
+   open floor); the Auditorium's rear surround stood in the open front corner aimed at the camera (it now stands on the back
+   deck against the side wall); the Patio string lights stood outside the glass rail. The Patio table in the back corner and
+   the fire bowl in the middle look right. Found and not fixed, needs art: the Bowling lane seats and the Game Room gaming
+   chairs face away from what they are for (the lanes, the TV), because their pins and screen sit against a back wall and
+   there is only front-view art. Each needs a rear-view sprite, like `gmx_couchb`. Listed under Art below.
+4. Phone width: fixed. The nav needed 467px for eight names, so on a phone it scrolled with Wheel and Dungeons out of sight
+   and Trophies cut in half. Under 541px each tab shows its icon and only the open tab keeps its name. Measured with no
+   overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Not checked: a real phone, and every other
+   screen at phone width (only the Board and The Loft were looked at).
+
 Still to do, in order:
-1. Wear the new clothes on both bodies in every pose. So far: icons of 29 items looked at, and two full outfits seen standing in the Bedroom at small size (one on each body). Nothing else. This is Cal's rule, do not skip it.
-2. Watch guests in every room for clipping. Only the Restaurant was watched with people in it.
-3. Check every room for items facing the wrong way, room by room, in screenshots.
-4. Phone test (a narrow window showed the bottom nav cut off at Trophies and the Collect button wrapping), then remove the Testing row and the `window.__qb` hooks before release.
+1. Rear-view art for the Bowling lane seats and the Game Room gaming chairs (Cal's Chrome), then place them facing the lanes and the TV.
+2. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
+3. Look at the stretch-pose sleeve streaks with a person's eye: decide whether it needs a rig change (pin armpit cells to the torso) or is acceptable.
+4. Before release: remove the Shop's Testing row and the `window.__qb` and `window.__qbLoft` hooks, and test on a real phone.
 
 ## Not yet verified
 
-Phone. Motion as judged by a person. The cloud save path after publishing. Whether a friend on a
+A real phone (only a narrow headless window). Motion as judged by a person. The cloud save path after publishing. Whether a friend on a
 free Claude account can use the AI features.
 
 ## Cal's later notes, in his words
@@ -124,5 +173,8 @@ Furniture sheets go through `tools/rs_art.py <sheet> <names in reading order>`; 
 - Garden 2: `gdx_shed` tool shed, `gdx_hive` two beehives on a stand, `gdx_tree` young apple tree, `gdx_grape` grape trellis, `gdx_coop` chicken coop with hens, `gdx_logs` mushroom logs, `gdx_stand` farm stand with crates, `gdx_pump` solar water pump, `gdx_seat` wooden garden bench.
 - Garden 3: `gdx_ghouse` small glass greenhouse, `gdx_conserv` large Victorian conservatory, `gdx_arch` rose archway, `gdx_gate` iron garden gate, `gdx_fount` tiered stone fountain, `gdx_lantern` lantern post, then sundial, topiary, bird bath.
 - Theater: `thx_booth0` plain plywood ticket booth, `thx_rope` velvet rope section, `thx_arcade` arcade cabinet, `thx_claw` claw machine, `thx_standee` cardboard rocket standee, `thx_liquor` backlit liquor wall, `thx_proj1` digital projector, `thx_proj2` large laser projector, a simple lobby bench.
+- Rear views, same prompt but backs facing the camera (fronts facing upper left): `bwx_seatb` the orange bowling lane seats
+  from behind, `gmx_chairb` the two red and black gaming chairs from behind. Then place them in `27b_skins.js` (`bw_seat`,
+  `gm_chair`) so they face the lanes and the TV.
 - Logos, one row of three on green, no letters: `logo_hanga` river and bridge roundel, `logo_y2k` chrome and pink butterfly, `logo_over` spray-paint overpass arch with drips.
 - OVERPASS shoes via `art/sil/all_2x2.png`: `o_hoop`, `o_slides`, `o_rigg`. Then `tools/ingest_items.py`, `tools/pack.py art/layers art/app`, `tools/items.py art/layers art/app data/items.json`.
