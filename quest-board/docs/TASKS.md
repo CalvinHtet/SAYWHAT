@@ -13,7 +13,7 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Nothing in progress. Next: publish v47 when ROOMS's pilot or exteriors land, or on Cal's say.
+- Version check (QA's finding, rule 14): `tools/version_check.py`, then `TASKS.md`, `TEAMWORK.md`. (on 98210a2)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
