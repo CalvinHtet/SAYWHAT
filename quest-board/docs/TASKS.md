@@ -13,8 +13,10 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Next: dungeon gifts, Relics and the Goblin King set (`28_missions.js`, `10_app_a.js`, a new `29d_dungeon.js`). Not
-  publishing: QA's economy simulator first. (on f74a6ba)
+- Now: dungeon gifts, the Goblin King and Hollow Amulet sets, the Relics tab: new `app/src/29d_dungeon.js`, and small
+  hooks in `28_missions.js`, `10_app_a.js` (`trophyHtml`, the nav name), `30_app_b.js` (`roomModal`), `index.html` CSS.
+  Next: the writing pass (Cal: professional, not corny, not obviously AI): `docs/VOICE.md`, then LEAD's text in
+  `15_shop.js`, `10_app_a.js`, `29b_story.js`, `29c_team.js`, `30_app_b.js`. Not publishing until QA's simulator reruns. (on 12a46ba)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line

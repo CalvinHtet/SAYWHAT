@@ -111,6 +111,12 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
       test copies, every test result naming its commit, and the live `APPV` matching `TASKS.md`. LEAD publishes nothing
       until all of that matches, and fixes or reports any rule a mismatched version broke.
 
+15. **Now and Next, so nobody has to ask (Cal, 2026-11-05: "all 3 chats essentially autonomous").** Every Doing line has two
+    parts: `Now:` what you are doing this minute, with the files and functions you are editing, and `Next:` what you will
+    start after it, with the files it will touch. Update it at every switch. Before starting anything, read the other two
+    chats' Now and Next: if neither touches your files, start without waiting; if one does, take another task and write
+    `WAITING ON <chat>: <files>` in your own line. Nobody asks permission for work the rules already allow.
+
 ---
 
 ## How LEAD runs the work
