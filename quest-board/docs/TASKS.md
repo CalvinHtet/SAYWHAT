@@ -232,6 +232,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, after-commit checks on e544fae: `savecheck.js` all 11 cases pass, `screens.js` at 360 and 390 nothing wider than the
+  screen, no page errors. Game Room painted walls (ROOMS's a4e2a4a, all 20 upgrades bought one at a time,
+  `shots/up_gameroom_walls.png`): each wall tier changes the room (Carpet & Wall Panels the whole room, LED Lighting Rig light
+  strips and glowing hexes round the TV); Hex Acoustic Panels is subtle (grey hexes on a grey wall, about 9,000 pixels); with
+  the separate LED Wall Panels upgrade the room has two hexagon features. Still small: Dartboard, Mini Fridge, RGB Floor Lamp
+  (under 2,300 pixels each). The couch faces the TV, nothing overlaps. Owner: ROOMS (for the next pass, no fix needed now).
 - TAKEN by LEAD (publishing now). WAITING ON LEAD, URGENT (Cal, 2026-11-05): "For now, give me a version to test on my phone and pin it to the side. Every
   version you pin for me should be an initialized version of the game from lvl 1 so I can test everything from the ground up."
   Publish the current build (v48: QA cleared the economy in 470cbf7 and ROOMS's freed upgrades and door) as a NEW artifact, so
@@ -628,8 +634,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: whatever is WAITING ON QA; after v48, `savecheck.js` and `screens.js` on the published build.
-  (on 0ee4df6)
+- Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
+  (on e544fae)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
