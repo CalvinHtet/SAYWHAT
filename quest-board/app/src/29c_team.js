@@ -31,9 +31,9 @@ function teamJoin(id){var t=TEAM[id];if(!t)return;var o=styState();o.team[id]=1;
     +'<p class="tmj-buff">'+esc(t.buff.text)+'</p><div class="row"><button class="btn" data-act="mclose">Welcome aboard</button></div></div>');try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}},400)}
 /* their buffs: business rooms earn more, missions pay more */
 var teamRoomMultBase=roomMult;
-roomMult=function(i){var m=teamRoomMultBase(i),r=bslot(i);if(!r)return m;teamList().forEach(function(id){var b=TEAM[id].buff;if(b.rooms&&b.rooms.indexOf(r.t)>=0)m*=1+b.pct/100});return m};
+roomMult=function(i){var m=teamRoomMultBase(i),r=bslot(i);if(!r)return m;var k=S.cls==="tamer"?1.5:1;/* the Tamer's Bond: team buffs 50% stronger */teamList().forEach(function(id){var b=TEAM[id].buff;if(b.rooms&&b.rooms.indexOf(r.t)>=0)m*=1+k*b.pct/100});return m};
 var teamMsPayBase=msPay;
-msPay=function(q){var p=teamMsPayBase(q),f=1;teamList().forEach(function(id){f+=TEAM[id].buff.mission||0});return {c:Math.round(p.c*f),x:Math.round(p.x*f)}};
+msPay=function(q){var p=teamMsPayBase(q),f=1,k=S.cls==="tamer"?1.5:1;teamList().forEach(function(id){f+=k*(TEAM[id].buff.mission||0)});return {c:Math.round(p.c*f),x:Math.round(p.x*f)}};
 /* team members lead the missions; hired hands fill the rest */
 var teamHeroesBase=msHeroes;
 msHeroes=function(){var base=teamHeroesBase(),names=teamList().map(function(id){return TEAM[id].name.split(" ")[0]});return names.concat(base.filter(function(n){return names.indexOf(n)<0})).slice(0,Math.max(base.length,names.length))};

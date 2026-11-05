@@ -225,7 +225,7 @@ var CLASSES={
   sig:{name:"Iron Will",text:"Your streak bonus can climb to +40% instead of +30%."},
   perk:{stat:"fitness",pct:15,text:"Fitness quests +15% XP"},
   tiers:["Novice Vanguard","Adept Vanguard"],
-  story:["You kneel at the gate and a worn shield is placed in your hands. It is heavier than it looks. That is the point.","The training yard has no shortcuts. You show up in the cold, in the dark, in the rain, and the old hunters begin to nod."],
+  story:["You kneel at the gate and a worn shield is placed in your hands. It is heavier than it looks.","The training yard has no shortcuts. You show up in the cold, in the dark, in the rain, and the old hunters begin to nod."],
   fork:"Three roads leave the training yard. One is built on raw power, one on never falling, and one on going the distance.",specs:["berserker","bulwark","lancer"],
   p:{bg:"#0c0606",s:"#1a0e0e",s2:"#271616",line:"#5a2222",fg:"#fbeeee",muted:"#b99a9a",a:"#ef4444",b:"#94a3b8",ink:"#1a0505"}},
  runeweaver:{name:"Runeweaver",tag:"Shape sound into spells.",
@@ -233,7 +233,7 @@ var CLASSES={
   sig:{name:"Encore",text:"Every creative quest after your first one each day pays +20% XP."},
   perk:{stat:"creativity",pct:15,text:"Creativity quests +15% XP"},
   tiers:["Novice Runeweaver","Adept Runeweaver"],
-  story:["A quiet road, a chipped rune stone, and a tune you cannot stop humming. The first town goes silent when you play. You have your first audience of one.","Word travels faster than any carriage. Strangers hum your melody back to you in the market, slightly wrong and entirely theirs."],
+  story:["A quiet road, a chipped rune stone, and a tune you cannot stop humming. The first town goes quiet when you play.","In the market, strangers hum your melody back to you, a little off."],
   fork:"Three roads open. One leads to grand stages, one to a quiet tower where spells are written note by note, and one to a cathedral where music heals.",specs:["songcaller","spellwright","cantor"],
   p:{bg:"#07060d",s:"#100f1c",s2:"#1a1830",line:"#2a2650",fg:"#f1f0fb",muted:"#8d89ad",a:"#ff3d81",b:"#8b5cff",ink:"#16050c"}},
  swiftblade:{name:"Swiftblade",tag:"Fast, clean, finished.",
@@ -246,10 +246,10 @@ var CLASSES={
   p:{bg:"#030a14",s:"#08121f",s2:"#0e1d30",line:"#17406a",fg:"#e8f6ff",muted:"#7ea2bd",a:"#22d3ee",b:"#818cf8",ink:"#021018"}},
  tamer:{name:"Tamer",tag:"You never walk alone.",
   role:"For people and companions: friends, your partner, your dogs. Pick this if your best moments are shared.",
-  sig:{name:"Bond",text:"Every crew member's buff is 50% stronger."},
+  sig:{name:"Bond",text:"Every team member's buff is 50% stronger."},
   perk:{stat:"social",pct:15,text:"Social quests +15% XP"},
   tiers:["Novice Tamer","Adept Tamer"],
-  story:["A whistle, an open field, and something small and curious steps out of the tall grass. It looks at you like it has been waiting.","More follow. Each one brings a different gift and a different laugh. You learn that a party is strongest when everyone is heard."],
+  story:["A whistle, an open field, and something small and curious steps out of the tall grass. It does not run.","More follow. Each one brings something different, and each one stays."],
   fork:"Three trails leave the meadow. One follows the wild creatures, one follows the people who light the way home, and one leads back to the hearth.",specs:["beastlord","spiritcaller","hearthkeeper"],
   p:{bg:"#050b07",s:"#0b1610",s2:"#122319",line:"#1f5a35",fg:"#ecfbf1",muted:"#86b399",a:"#4ade80",b:"#fbbf24",ink:"#04150a"}}
 };
@@ -313,13 +313,13 @@ function chapter(t){
   if(t<=2)return {title:c.tiers[t-1],text:c.story[t-1]};
   var sp=S.spec&&SPECS[S.spec]; if(!sp)return {title:"The fork",text:c.fork};
   var T=tierName(t);
-  var tx={3:"You take the road to "+sp.place+". "+T+" is the name they give you now. The old one falls away.",
-   4:"They say "+T+" like it was always yours. Word travels to "+sp.place+", and "+sp.rival+" takes notice.",
+  var tx={3:"You take the road to "+sp.place+". They call you "+T+" now.",
+   4:"People in "+sp.place+" use the name "+T+" without being told. "+sp.rival+" hears it too.",
    5:sp.rival+" tests you where nobody is watching. You win by doing the small thing again, and again.",
    6:"Deep in "+sp.place+" you find the "+sp.relic+". It brightens whenever you finish what you started. You are "+T+".",
-   7:"Your name travels far beyond "+sp.place+". As "+T+", you stand at the edge of the final split.",
-   8:"The road splits one last time. You choose, and become "+T+". "+sp.rival+" watches from the dark, knowing exactly what you are.",
-   9:sp.rival+" falls. The board bows. "+T+". Level 100. Ascended."};
+   7:"As "+T+", you are known well beyond "+sp.place+". One more choice is coming.",
+   8:"The road splits one last time. You choose, and become "+T+". "+sp.rival+" is watching.",
+   9:sp.rival+" falls. "+T+". Level 100."};
   return {title:T,text:tx[t]};
 }
 function gateTitle(){var t=S.gates.length;return t===0?"Class awakening trial":t===2?"Path trial":t===7?"Final split trial":"Tier "+(t+1)+" advancement trial"}
