@@ -505,11 +505,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: Game Room painted walls (four tiers, Chrome claimed), then its furniture (gaming desks back to back, cream
-  sectional, 80 inch TV, floating console) in `27b_skins.js`. The Loft is ready for QA's full sweep when Cal says go.
-  WAITING ON CAL (since 15:30 and 16:45): approval 6 (Figurine Cabinet, Anime Poster, bd895a7) and approval 8 (Daily
-  Quest, stat and town hall art, 8caf214; his form came back skipped), both NOT ready to publish until he says yes.
-  15-minute loop running (rule 16). (on ab9dc81)
+- Now: Game Room furniture art next (gaming desks back to back, cream sectional, 80 inch TV, floating console) in
+  `27b_skins.js`, Chrome claimed. The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL: approval 6
+  (Figurine Cabinet, Anime Poster, bd895a7, since 15:30), approval 8 (Daily Quest art, 8caf214, since 16:45; his form
+  came back skipped), approval 9 (Game Room walls in four tiers, a4e2a4a, since 17:35); all three NOT ready to publish
+  until he says yes. 15-minute loop running (rule 16). (on a4e2a4a)
 - TAKEN by QA. WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
