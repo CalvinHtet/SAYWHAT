@@ -39,7 +39,7 @@ function roomModal(i){
   var stat=T.coin?Math.round(coinRate(i))+' coins/hr, holds '+roomStore(r)+' hrs':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+'/hr':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Crew without a job relax here.');
   var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% until you finish 3 quests today.':'Full speed today.')+'</p>';
-  if(r.t==="garden")h+=gdNote(r);if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
+  if(r.t==="garden")h+=gdNote(r)+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
   if(false){
     var rc=roomCrew(i), free=crewUnlocked().filter(function(k){return S.base.crew[k]==null});
     h+='<span class="label">Crew '+rc.length+'/'+crewCap(r)+'</span><div class="crewpick">'+rc.map(function(k){return '<button class="cpk on" data-act="runassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>'+esc(CREW[k].name)+'</small></button>'}).join("")
@@ -57,8 +57,8 @@ function roomModal(i){
     var e=a[3],pre=ADDREQ[a[0]],price=a[2]?'<i class="coin"></i>&nbsp;'+a[2]:'Claim';
     if(pre&&!(r.a&&r.a[pre])){lockd.push('<div class="addon sealed"><b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small><span class="chip">Needs '+esc(addonName(r,pre))+'</span></div>');return}
     /* Cal: keep the next upgrade a surprise. One level up shows its name; two or more is a mystery card. */
-    /* Cal, 2026-11-05: no level locks on upgrades. Only an upgrade that opens a new room keeps its level until the story opens it. */
-    var elv=e.opens?e.lv:0;
+    /* Cal, 2026-11-05: no level locks on upgrades. An upgrade that opens a new room waits for the story (29b_story.js). */
+    var elv=0;if(e.opens&&!styAllows(e.opens)){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>Something new, once business grows</small><button class="btn ghost" disabled>Keep growing</button></div>');return}
     if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
     var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
     avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
@@ -145,7 +145,7 @@ function baseAct(a,b,e){
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
     S.coins-=hc;S.spent+=hc;S.hired[hk]=1;render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
   if(a==="raddon"){var r=bslot(i),ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===b.dataset.id})[0];if(!ad||r.a[ad[0]])return true;
-    if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].opens&&ad[3].lv&&effLvl()<ad[3].lv){pop("Reach level "+ad[3].lv+" first");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
+    if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].opens&&!styAllows(ad[3].opens)){pop("Not yet. Keep growing your business");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
     if(S.coins<ad[2]){pop("Need "+(ad[2]-S.coins)+" more coins");return true}
     simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
   if(a==="decuse"||a==="decbuy"){decorSet(i,a,b.dataset.v||"");return true}

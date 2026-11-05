@@ -1209,6 +1209,15 @@ body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::b
 .lfhint{color:#fff!important;font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 8px rgba(0,0,0,.5)}
 /* ROOMS: door arrows for a door on the upper (back-right) wall, top right, clear of the zoom buttons. */
 .prtb.tr{top:6px;right:52px;align-items:flex-end}
+/* LEAD: story scenes (31_story.js): someone walks in and offers the next step. */
+.sty .sty-who{display:flex;align-items:center;gap:12px}
+.sty-pic{width:72px;height:96px;border-radius:14px;object-fit:cover;flex:none;border:1px solid var(--accent)}
+.sty-pic0{display:grid;place-items:center;font:700 26px var(--font-display);color:#fff;background:linear-gradient(160deg,var(--accent),var(--accent2,#7c4dff))}
+.sty-who b{display:block;font-size:20px}.sty-who small{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.sty-line{margin:0;padding:10px 12px;border-radius:12px;background:var(--surface2,#1c1a2a);opacity:0;animation:styIn .5s ease forwards}
+@keyframes styIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sty-act{display:flex;gap:8px;flex-wrap:wrap}.sty-act .btn{flex:1 1 140px;font-size:14px;letter-spacing:.04em}
+.sty-sell{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px 0;padding:10px 12px;border:1px dashed var(--accent);border-radius:12px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
