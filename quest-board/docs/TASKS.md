@@ -75,9 +75,9 @@ To do:
       `user.id()`). Board posts and visit pings use `<uid>_<time>` ids, which `{self}` cannot match: move them to
       `board/<uid>/posts/<time>` and `pings/<uid>/sent/<id>` first, then the same two rules for each. Test with two accounts
       (one Contributor, one Viewer) before inviting anyone: QA's 15-player test.
-- [ ] Later (Cal, 2026-11-05, "much later down the road"): prestige worlds after level 100. The same model with a
-      different building view and new assets made from the current ones as reference (cyberpunk, alien, horror), starting
-      again at level 1, prestige 1. Not before the first world feels right.
+- [ ] Later (Cal, 2026-11-05, "for a much later build"): the level 90 to 100 artifact (ten stone pieces, one a level) and the
+      portal to a prestige world (level 1 with a star, a new Loft, currency, characters and story). Full plan in
+      `docs/PRESTIGE.md`. Not before the first world feels right.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
       sooner if the Loft height is sorted first.
@@ -254,6 +254,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
   The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
+- WAITING ON QA, a second target from Cal (2026-11-05), for the economy check you have TAKEN: "all upgrades can be purchased
+  around lvl 80 ish" (level 80 is day 37 for the serious player). Levels 90 to 100 are kept for the artifact
+  (`docs/PRESTIGE.md`, later). Tune prices until a serious player can own every upgrade around level 80, not day 50.
 - TAKEN by QA. WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
   that 50 could easily be 100 days if you play every other day." The whole game (level 100 and the town bought out) takes a
   serious daily player about 50 days. LEAD set the curve back to `min(600, 50+6L+0.2L²)` (46,738 XP, day 49 at 950 a day;
