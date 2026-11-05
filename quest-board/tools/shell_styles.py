@@ -1,6 +1,6 @@
 """Make a painted wall shell in each of a room's Room style colours, so painted walls keep the colour options.
 
-  shell_styles.py <painting.png> <W> <D> <H> <tex_dir> <out_prefix> <paint walls: L,R | R | ...> <styles.json>
+  shell_styles.py <painting.png> <W> <D> <H> <tex_dir> <out_prefix> <paint walls: L,R | L:3-9,R | ...> <styles.json> [tol]
 
 The painting is a wall-and-floor shell in the frame of tools/shell_guide.py (5:4, any size, stretched to the frame like the
 game does). Every pixel is mapped back to the room: floor (x, y), the left wall (y, z) or the back-right wall (x, z).
@@ -51,6 +51,9 @@ def tile(tex, u, v, tw, th):
 
 def main():
     src, W, D, H, tex_dir, out_prefix, paint, styles = sys.argv[1:9]
+    # optional 9th: how far (RGB distance) a paint pixel's brightness may stray from the wall's median; raise it for
+    # walls washed by strong light (a cove strip), keep it low where trim and paint are close in colour
+    tol = float(sys.argv[9]) if len(sys.argv) > 9 else 70
     W, D, H = float(W), float(D), float(H)
     # "L,R" or with a range along the wall where the plain paint is: "L:4.5-9,R"
     rng = {}
@@ -84,7 +87,7 @@ def main():
         med = np.median(px, axis=0)
         d = np.sqrt(((img - med) ** 2).sum(-1))
         dc = np.abs((img - img.mean(-1, keepdims=True)) - (med - med.mean())).sum(-1)
-        w = np.clip(1.6 - dc / 14, 0, 1) * np.clip(1.6 - d / 70, 0, 1) * region
+        w = np.clip(1.6 - dc / (14 * max(1, tol / 70) ** .7), 0, 1) * np.clip(1.6 - d / tol, 0, 1) * region
         w = ndi.median_filter(w, 3)
         return ndi.gaussian_filter(w, .8), med
 
