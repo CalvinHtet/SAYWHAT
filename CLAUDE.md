@@ -4,6 +4,10 @@ An RPG life-task game for Cal and his girlfriend: real chores earn XP and coins,
 build up The Loft. The app is in `quest-board/`. Read `quest-board/docs/HANDOFF.md` first:
 it has the current state and the full list of what Cal asked for next.
 
+**Several Claude chats may be working in this folder at the same time (LEAD, SHOP, ROOMS). Before doing anything, read
+`TEAMWORK.md` and `quest-board/docs/TASKS.md`, and follow their rules: your own files only, careful git, only LEAD
+publishes.**
+
 ## Rules from Cal
 
 - Never spend Higgsfield credits. Art comes only from Cal's Chrome with the Unlimited toggle
