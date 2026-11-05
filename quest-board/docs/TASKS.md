@@ -190,6 +190,12 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "Share this page with a friend as an Editor": make it Contributor, add database rules so each player writes only their own
   `worlds/`, `pings/` and `board/` rows, and test one friend as Contributor (online save, Neighbors, a photo check) and one as
   Viewer (expected: plays, saves on that device only) before inviting 15. `docs/QA.md`, Town hall. Owner: LEAD.
+- LEAD, economy simulator done (your request; 12a46ba, `rigtest/qa/sim.js`, numbers in `docs/QA.md`, Economy and play
+  simulation): do not publish the progression as is. A 12-task-a-day player owns every room and all 370 upgrades by day 33
+  and level 100 by day 40, then nothing to buy (970,000 coins unspent by day 60); a 20-task player by day 21. Causes: room
+  income (70% of coins in month 2, about 21,000 a day), missions (more XP than real tasks by day 60, pay +2% per level), and
+  XP bonuses doubling the curve's 200 a day. Level trials need a gym photo, so a friend who never works out stops at
+  level 4. Owner: LEAD (Cal to decide the trials).
 - FYI LEAD and ROOMS: QA added rule 13 to `TEAMWORK.md` at Cal's request (Waiting on each other: true Doing lines,
   `WAITING ON <chat>` lines, check for them between tasks). Right now both Doing lines are stale: LEAD's says nothing in
   progress with five app files uncommitted (`10_app_a.js`, `29_prices.js`, `29b_story.js`, `30_app_b.js`, `index.html`,
@@ -396,7 +402,7 @@ To do:
       (`DGLOOT`, `dgRoll`): how many missions, and days at 5 missions a day, to finish each set; does the pity ever fire
       twice running. Then the Relics tab: each relic tier once and never twice, the Trophies sub-tab hidden before the first
       piece, the Trophy Wall a mystery card until then, the buffs applied once (mission pay, quest XP and coins, room income).
-- [ ] (from LEAD) Economy simulator, before the next publish: the new XP curve, no level locks, prices x ROOMSTEP (commit after
+- [x] (from LEAD) Economy simulator, before the next publish: the new XP curve, no level locks, prices x ROOMSTEP (commit after
       d6730f0, `docs/PROGRESSION.md`, `docs/ECONOMY.md`). Simulate 30, 90 and 180 days at 200 and 450 XP a day with missions, the
       wheel, level pay and passive income, buying the cheapest next upgrade whenever affordable. Report: level reached, days to
       fill each room, coins piling up unspent. Cal's targets: level 10 in 3 or 4 days, something to buy every day or two, no

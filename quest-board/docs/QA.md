@@ -311,3 +311,41 @@ usually fine; to make it fair enough:
 **Chat:** the platform has a `room` capability for whoever has the page open right now (live presence), and the database
 can push changes as they happen (`onSnapshot`). A live town chat and an "online now" list are possible; moderation
 (delete, mute) should stay with Cal.
+
+## Economy and play simulation (2026-11-05, 12a46ba, `rigtest/qa/sim.js`)
+
+A new player plays the real game through its own buttons while the game's clock moves forward: tasks (with photo proof
+where the player type uses it), the weekly workout, the wheel, missions, room income collected at each visit, Garden
+produce sold, every story scene accepted, every lot built, and coins spent on the cheapest room upgrade on offer until
+nothing affordable is left. Level trials (the gym photo) are cleared the day after they appear. Not modelled: clothes,
+classes and their bonuses, training sessions (15 XP at most), delves, crew, neighbours. `python3 simsum.py <out>` prints
+the tables. Players: casual 6 tasks (95 XP on paper) 5 days a week, no proof; regular 12 tasks (200 XP on paper), proof on
+two, 4 workouts a week; grinder 20 tasks (450 XP), proof on every 25+ task.
+
+| | Casual | Regular | Grinder |
+|---|---|---|---|
+| Day 1 | (rests: starts on a weekend day) | level 4, 1,900 coins, 9 Bedroom upgrades | level 4 (trial waiting), 4,400 coins, 14 upgrades, Garden |
+| Week 1 | level 9, Bedroom only, 24 upgrades | level 19, 4 rooms, 62 upgrades | level 36, 7 rooms, 130 upgrades |
+| Month 1 | level 25, 5 rooms, 79 upgrades | level 79, 19 rooms, 344 upgrades | level 100 (cap) on day 21, all 20 rooms and 370 upgrades on day 21 |
+| Month 2 | level 49, 11 rooms, 230 upgrades | everything bought by day 33, level 100 by day 40, 970,000 coins unspent on day 60 | 1.6 million coins unspent, nothing to buy since day 21 |
+
+What it shows:
+1. **The game runs out.** A player who does a dozen tasks a day owns every room and every upgrade in about five weeks; a
+   busy one in three. After that there are no levels and nothing to buy, so the loop "chores, coins, build" stops.
+2. **Room income runs away.** For the regular player, coins in month 2 come about 70% from room income (about 21,000 a day
+   by day 45), 20% from missions (8,000) and 10% from tasks (4,000). The kitchens' "3 quests a day" rule is the only link
+   between chores and room income, and it is easy to meet. Prices go up to x6 by the Club, income far more.
+3. **Missions pay more XP than real tasks.** By day 60 the regular player has 64,000 XP from missions against 41,000 from
+   tasks (the grinder 79,000 against 118,000). Mission pay grows 2% per level, so at level 60 it is 2.2x. Sending a mission
+   is a tap; a task is real effort.
+4. **Levels come about twice as fast as `docs/PROGRESSION.md` planned** even before missions: photo proof, streak, combos,
+   crits and bounties turn the regular player's 200 XP on paper into about 420 (level 19 on day 7, plan: level 20 on day 13).
+5. **Level trials need a gym photo** at levels 5, 10, 20, 30... ("Doesn't look like a workout spot"). A friend who never
+   works out stops at level 4, permanently. In the runs a trial blocked 10 to 13 days' end, cleared the next day.
+6. The casual player is paced about right for two months, until the Lair opens missions on day 45: level 31 to 49 in 15 days.
+7. No page errors in any run.
+
+For LEAD (economy, owner): tie room income to the day's tasks (for example: rooms earn only on days with N tasks done, or
+income scaled by the day's task XP), give missions coins but little or no XP and no per-level growth, tune the curve to
+what players really earn (about 2x the paper XP), and add things worth buying after the last room. For Cal: whether level
+trials should accept other proof than a gym photo.
