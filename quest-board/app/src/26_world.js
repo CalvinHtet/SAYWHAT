@@ -195,8 +195,9 @@ LFROOM.restaurant=function(C){
   for(var kq=1;kq<Wi-kx;kq++)kf+='<path d="M'+lfPt(lfP(kx+kq,0,0))+' L'+lfPt(lfP(kx+kq,kd,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
   for(var kr=1;kr<kd;kr++)kf+='<path d="M'+lfPt(lfP(kx,kr,0))+' L'+lfPt(lfP(Wi,kr,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
   C.decals.push(kf);
-  var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1",wall=function(x,y,w,d,h){C._lb=[x,y,x+w,y+d];C.box(x,y,0,w,d,h,pc,{top:pt});if(LFREC)lfRecBox(x,y,0,w,d,40)};
-  wall(kx-.16,0,.16,kd-1.5,78);wall(kx-.16,kd-.2,.16,.2,78);wall(kx,kd-.14,Wi-kx,.14,26);
+  var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1",wall=function(x,y,w,d,h,dk){C._lb=[x,y,x+w,y+d];C.box(x,y,0,w,d,h,pc,{top:pt,dk:dk||0});if(LFREC)lfRecBox(x,y,0,w,d,40)};
+  /* The partition is long, so by its far corner it would sort after the range beside it and cut the range's corner off. */
+  wall(kx-.16,0,.16,kd-1.5,78,kd-1.5);wall(kx-.16,kd-.2,.16,.2,78);wall(kx,kd-.14,Wi-kx,.14,26);
   if(H("r_s1"))lfOrderBoard(C,kx+.5,96,"ORDERS");
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
   if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,kx-6.6),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));

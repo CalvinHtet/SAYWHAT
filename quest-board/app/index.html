@@ -259,6 +259,18 @@ body.fx-gilded h2{background:linear-gradient(90deg,var(--gold),#fff,var(--gold))
 .nav button.lk{opacity:.55}
 .nav svg{width:22px;height:22px}
 .nav small{font-size:9px;font-family:var(--font-mono);letter-spacing:0;color:var(--gold)}
+.nav button span{white-space:nowrap}
+/* Phones: eight tabs do not fit with their names, and a row that scrolls hides Wheel and Dungeons with no hint.
+   Every tab shows its icon and only the open one keeps its name, so all eight are always in view. */
+@media (max-width:540px){
+.nav{padding-left:8px;padding-right:8px}
+.nav .bar{gap:2px;padding:5px;overflow-x:visible}
+.nav button{flex:1 1 0;min-width:0;padding:6px 0;letter-spacing:.04em}
+.nav button span{display:none}
+.nav button.on{flex:2.6 1 0}
+.nav button.on span{display:block;font-size:9.5px}
+.nav small{font-size:8px}
+}
 .strip{flex-wrap:wrap}
 .strip .right{display:flex;gap:8px;align-items:center}
 .ttl{font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-top:3px;letter-spacing:.06em}
@@ -475,7 +487,7 @@ body.fx-glowtext .now h2,body.fx-glowtext .hero .xp{text-shadow:0 0 18px var(--s
 /*v49*/.rmodal .rbig{background:none!important;border-radius:0!important;overflow:visible!important;box-shadow:none!important;border:0!important}
 /*v50*/#app .lfwrap{position:fixed!important;left:0;right:0;top:0;bottom:0;height:100dvh!important;min-height:0!important;border:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important;z-index:5;background:radial-gradient(120% 90% at 50% 0,#1d2646 0,#10101c 60%,#0a0a12 100%)}
 .lfhud{position:absolute;left:12px;top:56px;display:flex;gap:8px;z-index:3;pointer-events:none}.lfhud span{background:rgba(14,14,26,.75);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;font-size:12px;color:#fff}
-.lfcol{position:absolute;left:50%;transform:translateX(-50%);bottom:96px;z-index:4}
+.lfcol{position:absolute;left:50%;transform:translateX(-50%);bottom:96px;z-index:4;white-space:nowrap;width:max-content;max-width:calc(100vw - 32px)}
 .lfhint{bottom:74px!important}
 .dng{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:var(--surface2)}.dng.lock{opacity:.45}.dng.run{border:1px solid var(--accent)}
 .dmeta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.dmeta span{background:rgba(255,255,255,.06);padding:2px 8px;border-radius:999px}
