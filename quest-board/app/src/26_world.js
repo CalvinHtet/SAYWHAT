@@ -149,8 +149,13 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     if(e.art){(Array.isArray(e.art[0])?e.art:[e.art]).forEach(one)}
     if(e.light)lfLight(C,sx(e.light[0]),sy(e.light[1]),e.light[2],e.light[3],e.light[4],e.light[5]);
-    (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=sx(q[0]),qy=sy(q[1]);C.s("sit",qx,qy,q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
-    (e.cust||[]).forEach(function(s,i){lfCust(C,sx(s[0]),sy(s[1]),s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
+    /* A spot belongs to the piece nearest it, and moves with that piece when the room spreads. Spread on its own
+       as a point, a spot just past a table's edge used to land inside the table. */
+    var arts=e.art?(Array.isArray(e.art[0])?e.art:[e.art]):[],near=function(x,y,ax){if(!d.layout||!arts.length)return ax?sx(x):sy(y);
+      var best=null,bd=1e9;arts.forEach(function(a){var dd=Math.hypot(Math.max(0,a[1]-x,x-a[1]-a[3]),Math.max(0,a[2]-y,y-a[2]-a[4]));if(dd<bd){bd=dd;best=a}});
+      return ax?sx(best[1],best[3])+(x-best[1]):sy(best[2],best[4])+(y-best[2])};
+    (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=near(q[0],q[1],1),qy=near(q[0],q[1],0);C.s("sit",qx,qy,q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
+    (e.cust||[]).forEach(function(s,i){lfCust(C,near(s[0],s[1],1),near(s[0],s[1],0),s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
     if(e.fx)e.fx(C)})}
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}
