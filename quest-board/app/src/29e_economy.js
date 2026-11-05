@@ -15,15 +15,15 @@ var ECON={
   dqGoals:[100,150,200,300],dqGoal:150,          /* Daily Quest goal choices, in today's task XP */
   effFirst:.25,effOver:1.5,hidden:2,              /* efficiency after the first task; cap in overtime; hidden quest at 2x goal */
   shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */
-  mcost:{m1:25,m2:40,m3:100,m4:150,m5:250},       /* mission energy */
+  mcost:{m1:50,m2:80,m3:200,m4:300,m5:500},       /* mission energy (QA: doubled once missions ran twice a day; target under 20% of coins) */
   mcoinLv:.01,                                    /* mission coins grow 1% a level */
-  xpK:1,xpCap:600,                                /* the level curve (Cal: level 100 in about 50 days for a serious player) */
+  xpK:.85,xpCap:600,                                /* the level curve (Cal: level 100 in about 50 days for a serious player) */
   msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
   gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
   trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
   chest:1.0,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
-  price:{decor:200,furniture:500,equipment:1200,big:3000,moment:3}
+  price:{decor:200,furniture:500,equipment:1200,big:3000,moment:2.5}
 };
 /* ---- today's effort ---- */
 function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d:t,tx:0,spent:0,paid:0,done:0,hid:0,buff:prev.hidFor===t?1:0}}return S.dq}

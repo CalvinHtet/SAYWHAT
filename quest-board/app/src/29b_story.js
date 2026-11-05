@@ -90,7 +90,7 @@ function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o
   return false}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(b){var o=styState();o.missions=(o.missions||0)+1}},true);
 /* look for the next step now and then, never over another window, one scene at a time */
-function styCheck(){if(!loaded||!S.base||!S.created)return;var o=styState(),now=Date.now();
+function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
