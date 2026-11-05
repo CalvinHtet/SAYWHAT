@@ -12,6 +12,7 @@ and brand splashes, `15_shop.js` the shop, `16_interface.js` interface items. Ec
 are in `30_app_b.js` (`cum`, `levelPay`) and `10_app_a.js` (`coinsFor`, `simulate`).
 Testing helper: `window.__qb.x()` returns state and internals.
 
+Browser checks (not shipped): `rigtest/browser/` drives the real app headless; its README lists each script.
 Test pages (not shipped): `rigtest/matrix.html` renders contact sheets straight from the rig. `?sheet=wear&arts=o_tee`
 puts one item (or a comma list, a whole outfit) on both bodies in all 22 key poses; `?sheet=grid&arts=a,b&poses=idle,sitBack`
 is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up in one pose (`%2B` combines). The older
@@ -74,7 +75,8 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    the arm and the torso. A stretch cap in `rig.js` was tried and tore the shoulders instead, so it was reverted. It is a
    rig limit that also affects the older jackets, not the new art. Not checked: every pose of a full outfit for every
    combination (the pairing sheets cover pairs, not triples), and anything in motion at full speed.
-2. Guests in every room with people (18 rooms; the Bedroom, Closet, Lair, Patio and Game Room have none, see below):
+2. Guests in every room with people (16 rooms; the Closet, Lair, Patio and Game Room never have anyone in them, and the
+   Bedroom has only you and the dogs):
    with every upgrade owned, guests were put on every guest spot and staff on every staff spot, pass after pass until
    every spot had been used, and each pass was screenshotted (headless Chromium, software WebGL). The Restaurant was
    also left to run on its own for four minutes. A station audit checked every spot in every room against the furniture
@@ -96,6 +98,9 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    Looked at and fine: Upstairs Bar, Boba, Dessert, Speakeasy, Garden, Theater lobby, Mall, Bowling, Arcade, Rhythm,
    VR, Club. Small things left alone: guests at the Speakeasy bar stand among its baked-in stools; the DJ-game player in
    Rhythm is half hidden by the dance machine in front of them (correct depth, but you see less of them).
+   Bedroom: your character was put on every spot (standing, bed, mirror, desk chair) and the dogs left to sleep. Fixed:
+   both dogs were drawn underneath their beds and could not be seen (beds are now low platforms); the full-length
+   mirror stood behind the PC tower, which hid it (it now stands between the bookshelf and the desk).
    Not checked: guests while walking between spots (only standing and seated poses were frozen and looked at, apart
    from the Restaurant's free run), and every room at every upgrade level (all rooms were checked fully upgraded only).
 3. Facing and spacing, room by room: every one of the 21 rooms was screenshotted with every upgrade owned and looked at, and
