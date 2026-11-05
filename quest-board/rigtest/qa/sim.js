@@ -15,12 +15,13 @@
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const { BASE } = require('./lib.js');
+// 2026-11-05: the effort-first economy (29e_economy.js): each player has a Daily Quest goal, logs training on workout days
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const TYPE = process.argv[2] || 'regular', DAYS = +(process.argv[3] || 30);
 const P = {
-  casual: { tasks: [10, 10, 10, 10, 25, 30], proof: 0, workouts: [1, 4], play: [1, 2, 3, 4, 5], visits: [9, 20] },
-  regular: { tasks: [10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 15, 25], proof: 2, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
-  grinder: { tasks: [10, 10, 10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 25, 25, 25, 25, 50, 50, 25, 25], proof: 99, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
+  casual: { goal: 100, tasks: [10, 10, 10, 10, 25, 30], proof: 0, workouts: [1, 4], play: [1, 2, 3, 4, 5], visits: [9, 20] },
+  regular: { goal: 150, tasks: [10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 15, 25], proof: 2, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
+  grinder: { goal: 300, tasks: [10, 10, 10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 25, 25, 25, 25, 50, 50, 25, 25], proof: 99, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
 }[TYPE];
 
 (async () => {
@@ -33,7 +34,7 @@ const P = {
   // a new player, created today; the board holds this player type's own daily tasks and the weekly workout
   await p.evaluate((P) => {
     const x = window.__qb.x(), S = x.S;
-    S.created = true; S.char = window.__qb.fixChar({ name: 'Sim', sex: 'm' });
+    S.created = true; S.char = window.__qb.fixChar({ name: 'Sim', sex: 'm' }); S.dqg = P.goal;
     const wk = S.quests.find((q) => q.rep === 'weekly4');
     S.quests = P.tasks.map((xp, k) => ({ id: 'sim' + k, name: 'Task ' + k, xp, stat: ['discipline', 'fitness', 'productivity', 'creativity'][k % 4], cl: 'home', rep: 'daily' }));
     if (wk) S.quests.push(wk);
@@ -45,7 +46,7 @@ const P = {
       at(day, hour) { const target = mid.getTime() + day * 864e5 + hour * 36e5; window.__qbShift = target - (Date.now() - (window.__qbShift || 0)); },
       clear() { try { window.lfPvStop(); } catch (e) {} document.querySelectorAll('#layer .modal,.modal,.overlay,.dropsplash').forEach((e) => { if (!e.querySelector('#wwok')) e.remove(); }); },
       act(a, d) { const el = document.createElement('button'); el.dataset.act = a; Object.assign(el.dataset, d || {}); el.style.display = 'none'; document.body.appendChild(el); el.click(); el.remove(); },
-      led: { quests: 0, level: 0, missions: 0, rooms: 0, produce: 0, wheel: 0, weekly: 0, other: 0 },
+      led: { quests: 0, level: 0, missions: 0, rooms: 0, produce: 0, wheel: 0, weekly: 0, dq: 0, training: 0, other: 0 },
       spend: { upgrades: 0, lots: 0 },
       xpled: {},
       track(k, f) { const S = window.__qb.x().S, c0 = S.coins, x0 = S.xp, lp = S.lvPaid, b0 = Object.keys(S.badges || {}).length; f(); const S2 = window.__qb.x().S; let d = S2.coins - c0;
@@ -87,7 +88,12 @@ const P = {
           mine.forEach((q) => { if (S.done[q.id]) return; const v = q.xp >= 25 && proofs < P.proof; if (v) proofs++; sim.track('quests', () => x.toggle(q.id, null, v ? 'v' : undefined)); sim.clear(); });
           S.__proofs = proofs;
         }
-        if (first && P.workouts.includes(dow)) { const w = S.quests.find((q) => q.rep === 'weekly4'); if (w && !S.done[w.id]) sim.track('quests', () => x.toggle(w.id, null, 'v')); }
+        if (first && P.workouts.includes(dow)) { const w = S.quests.find((q) => q.rep === 'weekly4'); if (w && !S.done[w.id]) sim.track('quests', () => x.toggle(w.id, null, 'v'));
+          // and logs the session in Training: a plan, every set of every exercise ticked, Done
+          const plan = ['push', 'legs', 'pull', 'full'][(d + dow) % 4]; sim.act('wkplan', { v: plan }); sim.clear();
+          if (S.wk) { (S.wk.list || []).forEach((id) => { const n = (S.wk.setsN && S.wk.setsN[id]) || 3; S.wk.sets[id] = Array.from({ length: n }, () => true); }); sim.track('training', () => sim.act('wkdone')); sim.clear(); } }
+        // the Daily Quest's chest and the hidden quest pay when the game checks (every few seconds in the page)
+        if (window.__qbEcon) { sim.track('dq', () => window.__qbEcon.check()); sim.clear(); }
         // story: let it look for the next step, say yes to any scene, build any open lot
         for (let k = 0; k < 4; k++) {
           sim.clear(); window.__qbStory.check();

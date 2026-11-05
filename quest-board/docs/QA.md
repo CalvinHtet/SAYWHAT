@@ -424,3 +424,20 @@ Not modelled: the story gates' timing, clothes, classes. To check after it is bu
 
 Missions now give little XP. The Mall gate (60,000 earned by businesses) stalls a daily player 9 days with nothing to buy.
 Dungeon sets (`dropodds.py`): Goblin King 18 days median (90% by 27, worst 51), Amulet 16 (90% by 23, worst 39).
+
+### Effort-first run 1 (LEAD's 29ae247, on 3a6fdd5)
+
+`sim.js` now sets each player's Daily Quest goal (casual 100, regular 150, grinder 300) and logs a training session on
+workout days. 60 days each.
+
+| | Casual | Regular | Grinder |
+|---|---|---|---|
+| Day 7 | level 6, 9 upgrades | level 15, 4 rooms, 31 | level 26, 4 rooms, 66 |
+| Day 30 | level 18, 4 rooms, 41 | level 39, 7 rooms, 130 | level 70, 10 rooms, 218 |
+| Day 60 | level 26, 5 rooms, 79 | level 64, 11 rooms, 230 | level 100, 19 rooms, 359 |
+| Tasks' share of coins, month 2 | 47% | 35% (missions 22%, rooms 14%) | 49% (rooms 18%, missions 17%) |
+| Days with nothing to buy | 2 | 4 | 2 |
+| Real XP a day (week 3) vs goal | 242 vs 100 | 752 vs 150 | 2,323 vs 300 |
+
+XP comes only from tasks, training and the weekly bonus. The Daily Quest goal is reached two to eight times over every
+day, so its hidden quest is not hidden. No page errors.

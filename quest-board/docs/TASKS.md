@@ -214,6 +214,22 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, economy check DONE (LEAD's 29ae247, run on 3a6fdd5, `sim.js` adapted: Daily Quest goal 100/150/300, training logged on
+  workout days; numbers in `docs/QA.md`, Effort-first run 1). It works: XP is 100% real life (no mission XP), real tasks are
+  the biggest coin source for every player at every stage (35 to 59%; with the Daily Quest chest, training, the weekly bonus,
+  level pay and trophies, 58 to 80% of coins come from effort), and nobody runs out: day 60 the 12-task player owns 230 of
+  about 380 upgrades and 11 rooms, never holds more than 13,000 coins, and had 4 days with nothing to buy (the grinder 2).
+  Tighten (Cal: "step by step"): (1) **the Daily Quest goals are far below what players really earn**: with proof, streak
+  and combos a player makes 240 XP a day (casual), 750 (regular), 2,300 (grinder) against goals of 100, 150 and 300, so the
+  "hidden" quest fires every day for everyone and the town is always at 150%. Count the goal in base task XP (before
+  bonuses) or offer goals about 3x higher; (2) missions reach 22% of the regular player's coins in month 2 (energy covers all
+  five every day): raise `mcost` or drop `mcoinLv`; (3) the casual player opens only 5 rooms in 60 days and buys 1 to 2
+  things a playing day: fine for "something every day or two", watch it. Owner: LEAD.
+- QA, Bedroom wall tiers (ROOMS's f4362b1, on 3a6fdd5, `rigtest/qa/loft.js`, `shots/loft_walls.png`): each tier changes the
+  walls in all four styles (Neutral Loft, Brick Studio, Warm Oak, Neon Noir; 28,000 to 171,000 pixels a step), brick and slats
+  run the whole left wall. Fails "nothing hangs on the grass": the LED strip from "LED Strips & Grass Panels" (`bd_lights`)
+  still runs diagonally across the Living Grass Wall with a see-through rectangle under it, in every style; the floating book
+  shelf overlaps the grass's right edge a little. Owner: ROOMS.
 - QA, Relics and trophies (001e749, `rigtest/qa/relics.js`): pass. A new player has the Relics tab and no Trophies sub-tab;
   the Trophy Wall is "? ? ?" ("Bring home your first trophy") and becomes buyable with the first piece, when the Trophies
   sub-tab appears; each relic tier pays once (600 coins, then nothing on two more checks); the full Goblin King set counts
@@ -252,7 +268,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   champagne, Upgrades and Interface navy) and that text stays readable; View then Checkout on upgrades and interface, then
   Equip or Equipped · Remove; the drop window with banner art. The body is now `overflow-x:clip`: check no screen scrolls
   sideways.
-- TAKEN by QA. WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
+- DONE by QA (QA findings). WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
   (`29e_economy.js`), hook `window.__qbEcon`. Look at: the Daily Quest card on the board (goal, efficiency, chest, hidden
   quest at 2x), room payouts against today's task coins, mission energy on the Dungeons tab, no XP from missions, delves,
   gifts or story visits, training (50 XP and a stat point for 3+ exercises), new prices. Rerun `sim.js` for the three
@@ -387,7 +403,7 @@ Doing:
   Figurine Cabinet and the Anime Poster (since 15:30), committed in bd895a7 but NOT ready to publish until he says yes;
   if he says no, ROOMS reverts the two pictures. Next: a check of the Closet and Lair, then the Loft goes to QA.
   15-minute loop running (rule 16). (on bd895a7)
-- TAKEN by QA. WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
+- DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - TAKEN by QA. WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
   and the dogs should show in it, walk out through the sliding door (it opens), stand among the Patio furniture, the dogs
