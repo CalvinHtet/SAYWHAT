@@ -206,7 +206,18 @@ LFROOM.restaurant=function(C){
   C.decals.push(kf);
   var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1",wall=function(x,y,w,d,h,dk){C._lb=[x,y,x+w,y+d];C.box(x,y,0,w,d,h,pc,{top:pt,dk:dk||0});if(LFREC)lfRecBox(x,y,0,w,d,40)};
   /* The partition is long, so by its far corner it would sort after the range beside it and cut the range's corner off. */
-  wall(kx-.16,0,.16,kd-1.5,78,kd-1.5);wall(kx-.16,kd-.2,.16,.2,78);wall(kx,kd-.14,Wi-kx,.14,26);
+  wall(kx-.16,0,.16,kd-1.5,78,kd-1.5);wall(kx-.16,kd-.2,.16,.2,78);
+  /* The low kitchen counter runs the whole width of the kitchen. As one long piece it sorted after every table in
+     front of it, so a guest seated behind one of those tables jumped past the table and was drawn over it. Built in
+     one-tile pieces, each sorts where it stands; the outline is drawn so no seams show. */
+  (function(x,y,w,d,h){if(LFREC)lfRecBox(x,y,0,w,d,40);var ln=function(a,b){return '<path d="M'+lfPt(a)+' L'+lfPt(b)+'" stroke="'+LFOL+'" stroke-width=".8" fill="none"/>'};
+    for(var sx=x;sx<x+w-.01;sx+=1){var sw=Math.min(1,x+w-sx),last=sx+sw>=x+w-.01,o='';
+      o+=lfPolyS([lfP(sx,y+d,0),lfP(sx+sw,y+d,0),lfP(sx+sw,y+d,h),lfP(sx,y+d,h)],pc);
+      o+=lfPolyS([lfP(sx,y,h),lfP(sx+sw,y,h),lfP(sx+sw,y+d,h),lfP(sx,y+d,h)],pt);
+      if(last)o+=lfPoly([lfP(sx+sw,y,0),lfP(sx+sw,y+d,0),lfP(sx+sw,y+d,h),lfP(sx+sw,y,h)],lfSh(pc,-.24),LFOL);
+      o+=ln(lfP(sx,y+d,0),lfP(sx+sw,y+d,0))+ln(lfP(sx,y+d,h),lfP(sx+sw,y+d,h))+ln(lfP(sx,y,h),lfP(sx+sw,y,h));
+      if(sx===x)o+=ln(lfP(sx,y+d,0),lfP(sx,y+d,h))+ln(lfP(sx,y,h),lfP(sx,y+d,h));
+      C._lb=[sx,y,sx+sw,y+d];C.add(sx+sw+y+d,o)}})(kx,kd-.14,Wi-kx,.14,26);
   if(H("r_s1"))lfOrderBoard(C,kx+.5,96,"ORDERS");
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
   if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,kx-6.6),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
@@ -235,7 +246,8 @@ LFROOM.restaurant=function(C){
   if(H("r_b1")&&st>0)(st===2?[.7,4.3,7.9]:[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
   ([[[2.6,3.2],[6.6,5.9]],[[5.7,2.4],[5.7,5.9],[10.6,7.3]],[[5.7,2.4],[5.7,6.2],[10.8,8.6],[15.2,8.6]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[10.6,10.4]],2:[[5.7,10.2],[10.8,12.1]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  if(H("r_more2")&&st>1&&LFSPR.rdx_curve){var cvx=13.8,cvy=10.5;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});[[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V")});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx-.8,cvy+2.1,.6,.6,{h:30,ctr:1})}
+  if(H("r_more2")&&st>1&&LFSPR.rdx_curve){var cvx=13.8,cvy=10.5;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});/* the crescent opens toward you: its guests sort after its tall back and before the round table in front of them */
+    [[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+3.6+cvy+3.3-2.4+.5)-(C.st[k].x+C.st[k].y)});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx-.8,cvy+2.1,.6,.6,{h:30,ctr:1})}
   lfWander(C,[[kx-1.2,1.6,-1],[Wi*.62,kd+2.2,1],[Wi-1.6,D*.5+.6,-1]]);
   /* light */
   if(H("r_l2")&&st>1)[[5.7,6.2],[15.2,8.6],[10.8,12.1]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
