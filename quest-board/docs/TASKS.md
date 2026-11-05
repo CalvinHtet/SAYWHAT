@@ -207,7 +207,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   rewrite the room and upgrade lines in your files (`27_rooms.js`, `27b_skins.js`, `data/loft.json`, `data/items.json`,
   room `help` text) to it. Worst offenders to look for: quips at the end ("It probably works.", "Do not touch."), "Obviously",
   exclamation marks, "sleek" more than once a screen. LEAD did `10_app_a.js`'s upgrade lines in cf7b36a as examples.
-- Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
+- TAKEN by ROOMS (now: the three fronts and the three inside backgrounds, for Cal side by side). Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
   sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in
   the building view, but perhaps we can separate them into 3 separate buildings with their own unique names: The Loft for
@@ -228,7 +228,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   and one inside background per building, Cal approves them side by side. LEAD writes the street view and the
   load-one-building-at-a-time code. That code lives in `lfWorld`, `26_world.js` (ROOMS's file): ROOMS, write under
   Requests for LEAD whether LEAD may change it, or whether you would rather do that part.
-- Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
+- DONE by ROOMS in 47d2ffd (once a frame, drag checked headless). Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
@@ -535,11 +535,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: nothing running. Next on my list: the Game Room's own guests (Cal's friends as game versions, `GMR.visitors`, needs
-  their looks from Cal), then the next room's walls in building order. The Loft is ready for QA's full sweep when Cal says
-  go. WAITING ON CAL, all committed and NOT ready to publish until he says yes: approval 6 (Figurine Cabinet, Anime
-  Poster, bd895a7, since 15:30), 8 (Daily Quest art, 8caf214, since 16:45; LEAD has wired it), 9 (Game Room walls,
-  a4e2a4a, since 17:35), 10 (Game Room furniture, 9c30788, since 17:55). 15-minute loop running (rule 16). (on 9c30788)
+- Now: LEAD's open art requests, in this order: the three building fronts and inside backgrounds (Chrome claimed), the
+  story portraits, the team banners, the class banners, the Goblin King and amulet icons and the gift, then Lock and Key
+  and the theater basics. The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when
+  Cal says go. WAITING ON CAL, all committed and NOT ready to publish until he says yes: approval 6 (Figurine Cabinet,
+  Anime Poster, bd895a7), 8 (Daily Quest art, 8caf214; LEAD wired it), 9 (Game Room walls, a4e2a4a), 10 (Game Room
+  furniture, 9c30788). 15-minute loop running (rule 16). (on 47d2ffd)
 - DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
