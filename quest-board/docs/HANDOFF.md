@@ -183,6 +183,33 @@ ordinary guests), `gaps.js`, `depth.js` (one flag: the rug under the shelf, corr
 test. `guests.js` had been setting guest counts on `window.ROOMDEF`, which does not exist, so earlier runs used each room's
 real guest count; it now uses `__qbLoft().defs`. Published as `APPV` 39.
 
+Lair (2026-11-05, Cal: floor pieces strange, the canister rack crowding the chair, two hologram tables). The room is one
+painting with painted upgrade layers; the war table's layer is now drawn moved onto the floor emblem in the middle of the
+room and sorted with people (`27_rooms.js`, Lair `draw`). The second holo table (`lr_map`, id kept) is now a Gadget
+Workbench (`hmx_bench`) with its pegboard against the armory wall. Reactor core and its spare canisters stand by the server
+racks, the drone dock on the right edge, the teleport pad in front of the war table with a spot to stand on. Checked: depth
+0 bad, stations fine. The painted suit cases and trophy layers were not changed.
+
+Closet (2026-11-05, Cal: it started full and upgrades changed nothing; the recent-orders shelf looked out of place; every
+stage should be the glass closet room, less finished, not a different room). Every stage is the glass closet painting
+(`clx_room`) with less in it, cut by `tools/closet_stages.py` into `clx_st0` (closed walnut doors over every pane and the
+shoe wall, bare herringbone floor), `clx_st1` (shoe and bag wall open) and `clx_st2` (island and rug back). Stages: start
+(st0, lights down) > Wardrobe Lights (`cl_glow`) > Shoe & Bag Wall (`cl_shoe`, st1) > Jewelry Tower (`cl_jewel`, sprite) >
+Center Island (`cl_isl`, st2) > Glass Closet (`cl_mirror`, the painting) > Super Sleek Modern (`cl_disp`, LED strips along
+the plinths and over the doors). Each needs the one before. The old ids were renamed into these stages, so saves keep what
+they paid for; the Velvet Ottoman and Shoe Bench are retired (`retired:1`, hidden from the shop and drawn nowhere); the
+Featured Rail is gone. Every room window has an owner-only Testing link, "Undo this room's upgrades", that refunds them so
+stages can be bought again; it goes at release with the Shop's Testing row. Checked: every stage screenshotted, the old-save
+test with a Closet owning old ids. Not done: Cal asked for sliding doors as the first step; no art shows an open closet, so
+the start already has closed doors and the first upgrade is the lights. Super Sleek Modern is a light treatment, not a new
+room: both need painting (see Art).
+
+Prove it (2026-11-05, Cal: screenshots defeat the point; the bonus was too small to bother). The Screenshot button is gone,
+the picker takes a camera JPEG only, and anything else is refused before review. A verified quest pays 2x XP and coins
+(2.1x with the verify perk), up from 1.2x. Checked: the window shows only Open camera; a 40 XP quest shows +108 verified
+against +54 honor. Shop: the brand hero is now a framed banner in the brand's colours with its logo as a watermark
+(`qsBanner` in `15_shop.js`); all five brands were screenshotted. The header showed a fixed "v0.06"; it now shows `APPV`.
+
 Asset quality pass (2026-11-05, every room fully upgraded, after the streak fix): every room sprite was looked at alone and
 in its room. Fixed:
 - Two sprites were whole generator sheets with a grid line through them: the Bowling towel warmer (`bwx_towel`) and the
@@ -284,6 +311,19 @@ Note that two passages conflict: he first asks for the auditorium to the right o
 
 ## Art still to generate (Cal's Chrome, Unlimited toggle, Nano Banana Pro, never credits)
 
+- **Closet stages, as image edits of `art/app/clx_room.webp` (same room, same camera, same size; Cal wants every stage
+  to be this room, less finished).** Save each over the stand-in of the same name; no code change. `clx_st0`: every glass
+  door replaced by plain closed walnut sliding doors, the open shoe and bag shelves closed in the same way, no island, no
+  rug, bare herringbone floor. `clx_st1`: as st0 but the shoe and bag wall open and lit. `clx_st2`: as st1 with the marble
+  island and the round rug. `clx_modern`: the finished room taken further for Super Sleek Modern (handleless gloss fronts,
+  cool white LED lines, a statement light over the island); add it to `data/rsart.json` with its size and the Closet uses it
+  for Super Sleek Modern in place of the LED overlay.
+  For sliding doors as a real first step, also an `clx_open`: the same room with no doors at all, open wardrobes.
+- **Shop brand banners, 1200x480, one per brand, no text and no logo (the game puts those on top), dark enough at the
+  centre for white text:** `ui_banner_hanga` (the Han river at night under a lit bridge, Seoul streetwear mood),
+  `ui_banner_y2k` (chrome, pink and butterflies, 2000s glam), `ui_banner_over` (concrete overpass, spray paint, skate
+  shop), `ui_banner_rose` (black velvet, roses and thorns), `ui_banner_alt` (snowy peaks at dawn, outdoor gear). Save as
+  `art/app/ui_banner_<id>.webp`; the build bundles them into `art_ui.js` and the banner uses them automatically.
 - **Pictures in the game's own style (Cal asked 2026-11-05).** The class pictures, coaches, crew, rank badges, level-up
   splash and reward scenes are semi-realistic anime or glossy fantasy art; the game itself is chibi characters with clean
   dark outlines and soft painted shading, and painted isometric rooms. Redraw each one in that style and save it as

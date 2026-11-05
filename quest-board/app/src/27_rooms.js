@@ -61,9 +61,9 @@ function clLed(C,P){var L=function(x){return 446-(x-60)*.565},R=function(x){retu
   C.decals.push('<g pointer-events="none" transform="translate('+P.x0+','+P.y0.toFixed(1)+') scale('+P.k.toFixed(4)+')" style="mix-blend-mode:screen"><g stroke="#bfe6ff" stroke-width="7" opacity=".35" filter="url(#lfneon)" fill="none">'+d+'</g><g stroke="#f2fbff" stroke-width="1.8" fill="none" opacity=".95">'+d+'</g></g>')}
 autoRoom("closet",{name:"Walk-in Closet",lv:1,startLv:3,step:1,wall:"#3a2a20",wain:"#2a1e16",acc:"#ffd27a",fl:"w",size:[[7,7]],H:200,shell:1,door:false,guests:0,group:"Closet",desc:"Your clothes finally have a room of their own. Everything you buy in the Shop lives here.",
  req:[["cl_shoe","cl_glow"],["cl_jewel","cl_shoe"],["cl_isl","cl_jewel"],["cl_mirror","cl_isl"],["cl_disp","cl_mirror"]],
- draw:function(C,H){var k=H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_shoe")?"clx_st1":"clx_st0",P=clPaint(C,k,!H("cl_glow"))||clPaint(C,"clx_room",!H("cl_glow"));
+ draw:function(C,H){var k=H("cl_disp")&&LFSPR.clx_modern?"clx_modern":H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_shoe")?"clx_st1":"clx_st0",P=clPaint(C,k,!H("cl_glow"))||clPaint(C,"clx_room",!H("cl_glow"));
   if(H("cl_jewel"))lfSpr(C,"clx_jewel",.35,5.95,.7,.7,{h:40,ctr:1});
-  if(H("cl_disp")&&P)clLed(C,P);
+  if(H("cl_disp")&&P&&k!=="clx_modern")clLed(C,P);
   C.s("look",2.6,1.2,1,"look",[6,11],{fxwall:1});C.s("look",1.2,3.9,-1,"look",[6,11],{fxwall:1});if(H("cl_shoe"))C.s("look",4.4,1.2,1,"look",[6,11],{fxwall:1})},
  help:{k:"New room",t:"The Closet is open!",sub:"Your own room for clothes, and it opens the Shop.",pts:[["The Shop is open","Buy clothes from the brands that drop every week."],["Build it up","Lights, a shoe wall, jewelry and an island, then glass doors. There may be a secret door."]]},
  items:[["cl_glow","Wardrobe Lights",UP_M,"","",0,0,0,"The closet lights up, top to bottom."],
