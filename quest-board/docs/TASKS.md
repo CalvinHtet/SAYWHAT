@@ -81,6 +81,12 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: walking out onto the Patio, and people back in the Bedroom window, 63ac9f3. BUG FIX first: since
+  v46, once a Patio existed, opening the Bedroom window showed no people (you and the dogs vanished). Now, seen from the
+  Bedroom, you and both dogs sometimes walk out through the sliding door, stand among the Patio's real furniture, and
+  the dogs lie on their own Patio beds. Look at: the Bedroom window with a Patio and the dogs, on a phone, for a few
+  minutes. Checked headless: the walk out (you and both dogs), every earlier Bedroom, Patio and Closet check, no errors.
+  Not checked: on a phone; you and the dogs do not show in the Patio's own window yet.
 - READY TO PUBLISH: Bedroom painted walls (Cal approved 2026-11-05 with his changes), f4362b1, b92a6dd, 050c10e. Three new
   Bedroom upgrades, Fresh Paint & Oak Floors, Living Grass Wall, Cove Lighting (`bd_wt2..4`, in order; tier 1 is the
   bare start), each painted in all four Room styles (Neutral Loft, Brick Studio, Warm Oak, Neon Noir; brick, blush and
@@ -341,9 +347,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: your character and the dogs walking between the Bedroom and the Patio, then the dogs moving around the Patio
-  (`app/src/20_loft.js`, `app/src/27_rooms.js`). Next: figurine cabinet and Anime Poster art (Chrome), a check of the
-  Closet and Lair, then the Loft goes to QA. 15-minute loop running (rule 16). (on 0426a46)
+- Now: figurine cabinet art (Sleek Wardrobe) and a readable Anime Poster for the Bedroom, Chrome claimed (Higgsfield),
+  then `20_loft.js` to place them. Next: you and the dogs inside the Patio's own window, a check of the Closet and Lair,
+  then the Loft goes to QA. 15-minute loop running (rule 16). (on 63ac9f3)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
