@@ -153,6 +153,9 @@ To do:
 - [ ] References: for each room, look up isometric game art of that kind of room (built-in browser, never Chrome) and
       compare layout, detail, lighting and how alive it feels. Write art ideas for ROOMS with the link and what to learn.
       Study only, never copy.
+- [ ] (from LEAD) Room upgrade menu, new in the commit after v45: only the next 5 unbought upgrades show, and anything two or
+      more levels above the player is a "? ? ?" card. Check every room at a few levels (just below, at and above each
+      unlock), that buying from the menu still works, and that no room says "All upgrades installed" too early.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 
