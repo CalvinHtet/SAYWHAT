@@ -105,10 +105,17 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Closet stages: the jewelry section is painted (`art/raw/walls/closet/room_jewel.png`); stripping it back into the other
-  stages, then one sheet for Cal.
+- Yawn pilot (LEAD's request). Closet stages: all seven painted and sent to Cal (approval 3), waiting on him;
+  `art/raw/walls/closet/closet_stages.png`.
 
 To do:
+- [ ] Doors that make sense (Cal, 2026-11-05): "make sure that the entrances from each room to the other room make sense."
+      Bedroom: the Closet entrance goes where the wardrobe upgrade stands (left wall, front part). The wardrobe upgrade
+      becomes a wall-mounted figurine cabinet that never covers that door (keep the ids `bd_ward1`, `bd_ward2`). Closet: you
+      enter from the bottom-right edge, since in the Bedroom you leave by the upper left. "Take this logic and apply it to
+      every room going forward so it mimics proper room traversal": a door on one room's back-left wall comes out of the
+      next room's front-right edge, back-right to front-left, and the other way round, at matching positions. Check every
+      `portal(...)` pair in `27_rooms.js`.
 - [ ] Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
       the wall colour options, the Loft should be the most customizable: a painted version of each tier per colour scheme;
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
@@ -153,6 +160,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
+- Upgrade sweep, every room, against 62c311d (clean copy on 8769), with LEAD's new upgrade menu checked on the way.
 
 To do:
 - [ ] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
