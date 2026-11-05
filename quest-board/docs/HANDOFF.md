@@ -131,6 +131,11 @@ spots more than 1.5 tiles from any piece spread with the room, not with a piece.
 over the champagne trolley, Garden conservatory over the apple tree and a bed over the farm stand (both from the
 re-space), Club coat check under the dance floor, patio A-frame under the umbrella table, Rooftop pool over a lounger.
 The kitchen wing was looked at closely and draws right. The Game Room and Closet have guest spots but no guests yet.
+Guests were then put on every spot again in the rooms the new upgrades changed (Bowling, Mall, Upstairs Bar, VR,
+Speakeasy, Club): nobody inside furniture, and the new rear-view lane seats face the lanes. The Speakeasy front corner
+(armchairs, jukebox, barrels) reads crowded with four guests in it, though no two pieces are closer than .45 of a tile.
+The Club strobe (`strobe` in `lfFx`, `20_loft.js`) flashes a hard-edged white slab over the whole room for 1.5 seconds;
+it is meant to, but a person should judge whether a soft glow over the dance floor would read better.
 
 Published: the page is pinned in Cal's sidebar. `dist` has 437 files; character layers and icons are bundled into `art_rig.js` and
 `art_icon.js`. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
