@@ -123,6 +123,11 @@ Cal, 2026-11-05: LEAD manages the other chats. Cal can give a request to ROOMS d
   changing it (rule 4).
 - After each publish LEAD marks the `READY TO PUBLISH` lines it shipped `PUBLISHED in v<APPV>`.
 - LEAD tells Cal if a third chat would drastically help, and only then: not while the risk of broken code is high.
+- **Version check (rule 14).** LEAD runs `python3 quest-board/tools/version_check.py` between tasks, before every publish
+  and at every wrap-up. It reads the folder, GitHub, every Doing line, the test copies and the APPVs, and lists what to fix,
+  by chat. A commit that only touches docs does not put anyone out of date: it compares game files (code, data, art).
+  Nothing is published until it says "clear" for LEAD's own items and every other chat's mismatch is either fixed or
+  written in `TASKS.md` as a `WAITING ON <chat>` line.
 
 ## How QA works
 
