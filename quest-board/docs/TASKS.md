@@ -83,6 +83,14 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: Bedroom music, clocks and wall tidy (Cal approved approval 7, 2026-11-05), 8c2c459 and 65cf7fd.
+  Pocket Radio, then Bluetooth Speaker, then Bluetooth Record Player (`bd_radio`, `bd_spk`, `bd_vinyl`, in order), between
+  the bookshelf and the mirror; Digital Clock (`bd_clock2`, after the Wall Clock) over the Closet door; both clocks show
+  the real time, live; no RGB strip (LED Strips & Grass Panels is the Moss Art Panel); Canvas Art and the Figurine Shelf
+  retired from sale (no place once the glass wall is in; owners keep them without it); the Neon Sign now waits for the
+  Gallery Prints; you and the dogs show in the Patio window too. Look at: the Bedroom on a phone, buying the three music
+  steps, the clocks against your phone's time. Checked headless: each music step, both clocks on plain and grass walls,
+  the Patio window with you and the dogs, no errors. Not checked: on a phone.
 - READY TO PUBLISH: walking out onto the Patio, and people back in the Bedroom window, 63ac9f3. BUG FIX first: since
   v46, once a Patio existed, opening the Bedroom window showed no people (you and the dogs vanished). Now, seen from the
   Bedroom, you and both dogs sometimes walk out through the sliding door, stand among the Patio's real furniture, and
@@ -443,7 +451,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now: a check of the Closet and Lair, then the Loft goes to QA. WAITING ON CAL (since 15:30 and 16:00): approval 6
   (Figurine Cabinet, Anime Poster, bd895a7) and approval 7 (Pocket Radio, Bluetooth Speaker, Bluetooth Record Player,
-  Digital Clock, 8c2c459). Both committed but NOT ready to publish until he says yes; on a no, ROOMS reverts the art.
+  Digital Clock, 8c2c459: APPROVED, see Ready to publish). Approval 6 is NOT ready to publish until he says yes.
   Done meanwhile: you and the dogs in the Patio window, the RGB strip gone, Canvas Art and Figurine Shelf retired.
   Next: LEAD's Daily Quest art. 15-minute loop running (rule 16). (on 8c2c459)
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
