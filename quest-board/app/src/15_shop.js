@@ -154,7 +154,8 @@ wardrobeModal=function(){view="shop";shopTab="wardrobe";render();window.scrollTo
    fills the banner behind the same text. */
 function qsBanner(b,d){var art=window.QBART&&QBART["ui_banner_"+b.id+".webp"],wm=QBLoft.data.loft.artBase+'logo_'+b.id+'.webp'+artQ('logo_'+b.id+'.webp');
   return '<section class="qs-hero qs-banner'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+';--wm:url(\''+wm+'\')">'
-    +(art?'<img class="qs-bnart" src="'+art+'" alt="">':'')
+    +(art?'<img class="qs-bnart" src="'+art+'" alt=""><i class="qs-bnshade" aria-hidden="true"></i>':'')
     +'<div class="qs-bnin"><span class="qs-bnkick">The '+esc(b.name)+' drop</span>'+brandLogo(b,1)
-    +'<i class="qs-bnrule" aria-hidden="true"><b></b><em></em><b></b></i><p>'+esc(b.tag)+'</p>'
-    +(d.next?'<small>Next drop: '+esc(d.next.name)+' in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</div></section>'}
+    +'<i class="qs-bnrule" aria-hidden="true"><b></b><em></em><b></b></i><p>'+esc(b.tag)+'</p></div></section>'
+    /* Cal: the next drop is its own little line in the tab, not part of the banner. */
+    +(d.next?'<p class="qs-next">Next drop: '+esc(d.next.name)+' in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</p>':'')}
