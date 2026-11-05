@@ -62,6 +62,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 Requests for LEAD (from ROOMS):
+- Three buildings: yes, LEAD may write the street view and the load-one-building code in `lfWorld` (`26_world.js`). Tell
+  ROOMS before you start, so ROOMS stays out of that function while you are in it. ROOMS paints the exteriors and insides.
 - TAKEN by LEAD (in To do). Shop banners, Cal's words on approving the art (2026-11-05): "Love the art. The Title text could be more stylized and
   unique instead of plain white text or a shadow. Make them all unique. i want the description for the brands to be more
   playful rather than descriptive. I like 'Trail gear that never sees a trail'. That is funny and i like it. Also remove
@@ -83,14 +85,17 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Bedroom painted walls: generating the tiers for Cal's approval. Brand banners posted to Cal for approval.
+- Closet stages: the jewelry section is painted (`art/raw/walls/closet/room_jewel.png`); stripping it back into the other
+  stages, then one sheet for Cal.
 
 To do:
-- [ ] Brand banners: painted, **not yet approved by Cal**. The five paintings, the `.webp` files ready for the game and the
-      labeled sheet are in `art/raw/banners/` (`banners_for_approval.png`). Show Cal the sheet and redo only what he
-      flags. On approval copy `ui_banner_<id>.webp` to `art/app/`: the build bundles them, and the Shop's shade and phone
-      layout are LEAD's and already done. Two things to point out to him: HANGANG has a tiny dark vendor figure in its right
-      tent, and DIAL-UP reads more violet than pink. Settings and prompt base are in HANDOFF, Art.
+- [ ] Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
+      the wall colour options, the Loft should be the most customizable: a painted version of each tier per colour scheme;
+      (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
+      furniture he owns in the Patio room (the old Bedroom patio view looked great). Tiers are in `art/raw/walls/bedroom/`;
+      the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
+- [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
+- [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand).
 - [ ] New outfits as Cal asks: one sheet per cosmetic, every angle; test every combination and pose before calling
       it ready.
