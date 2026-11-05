@@ -101,8 +101,22 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
 - Bedroom: Canvas Art (200) and Figurine Shelf (200) are never drawn once Floor-to-Ceiling Glass is owned (`&&!w3`,
   `20_loft.js` ~3210), and the menu sells the glass first, so both are paid for and invisible: 0 px change. Tiers 17 and 21
   in `shots/up_bedroom.png`. Owner: ROOMS.
+- Street view (51a9506, checked on 59eeaf7 at 390 x 844): works. The street runs 2 animations and no room images; The Loft
+  loads 5 rooms (35 animations), Kode Plaza 7 (99), Calibur Mall 9 (375); Street drops back to 2. Saves, every tab: pass.
+  Wrong: Calibur Mall opens with its end rooms cut off left and right (Theater and Club half off screen), The Loft and Kode
+  Plaza fit. `shots/inside_calibur_mall_390.png`. Owner: LEAD.
+- Street view: the hint at the bottom still says "tap a room" on the street (should be "tap a building"), and it is pale
+  grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD.
 
 Requests for LEAD (from ROOMS):
+- Yawn pilot painted, sent to Cal as approval 4 (`art/raw/yawn/yawn_pilot.png`, git-ignored; layers in
+  `art/raw/yawn/layers/`, 720x828, frame-sized; the cutter is `tools/yawn_cut.py`). Not in `art/app` until Cal approves.
+  One change needed in `src/rig.js` (yours): a painted BODY layer is drawn in the body mesh's last group, so it covers the
+  face, hair, trousers and shoes. Drawn in its FIRST group it works (tested in a scratch copy, that is what the sheet shows).
+  The line, in `render`: `const lastGroup = slots.map((x, i) => { let g = -1; if (flats[i]) for (const gg of
+  rig.drawSequence[view]) if ((x.s.id !== "body" || g < 0) && [meshes[i].groups[gg], ...].some(...)) g = gg; return g; });`
+  i.e. only the condition gains `(x.s.id !== "body" || g < 0) &&`. Known small issue for ROOMS to fix before it goes in: a
+  faint double outline along the legs and at the hair edge, where the painted body sits a pixel off the mesh drawn over it.
 - FYI: ROOMS added one rule to `TEAMWORK.md` (under "Every day after that") at Cal's request: whichever chat gets a request
   does its own parts and writes the rest as tasks for the owning chat; every chat re-reads `TASKS.md` between tasks.
 - Three buildings: yes, LEAD may write the street view and the load-one-building code in `lfWorld` (`26_world.js`). Tell
@@ -128,7 +142,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Yawn pilot (LEAD's request): bare body repaint generating, then the three items on its clean mannequin.
+- Closet: LED strips on the later stages, no floor circles, Hero's Lair stage (Chrome); doors that make sense (code).
 
 To do:
 - [ ] Closet stages (Cal on approval 3: "I love this"), changes before they go in: (1) the LED wardrobe strips from
@@ -154,7 +168,7 @@ To do:
       Patio through the new door; (5) once the dogs are bought, see them run around and interact with the room. Cal sent
       photos for the dog art (study only): Pluto is a beige, curly toy poodle; Chopstick is a black-and-tan
       chihuahua-dachshund mix with long feathered ears. Art for Cal's approval first.
-- [ ] (LEAD's request) Yawn pilot: bare body, `y_vjkt`, `o_puffer`, `h_hoodie`, both bodies. Next after the Closet sheet.
+- [ ] Yawn pilot: painted and sent to Cal (approval 4). Waiting on him and on LEAD's one-line `rig.js` change (Requests for LEAD).
 - [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand).
