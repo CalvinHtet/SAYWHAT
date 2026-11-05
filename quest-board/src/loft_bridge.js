@@ -14,7 +14,7 @@
   const rigP = g.QBRig.create({
     rig: { ...D.rig, frame: D.loft.frame, frameScale: SC, anchorPad: PAD, frameCache: 4 },
     bodies: D.bodies, poses, clips,
-    assetUrl: (p) => (window.QBART && QBART[p]) || D.loft.artBase + p,
+    assetUrl: (p) => (window.QBART && QBART[p]) || D.loft.artBase + p + (D.arthash && D.arthash[p] ? "?h=" + D.arthash[p] : ""),
   });
 
   const urls = new Map();

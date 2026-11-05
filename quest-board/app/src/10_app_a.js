@@ -1298,7 +1298,7 @@ function ccMount(){var el=document.getElementById("qbcc");if(!el||el.dataset.on|
   cc.rig=cc.rig||rigChoice(cc);QBLoft.warm(cc.rig);
   var rig=QBCreatorRig();rig.then(function(r){if(!el.isConnected||!cc)return;QBCreator.mount(el,{rig:r,data:QBLoft.data.creator,clips:QBLoft.clips,initial:cc.rig,showDone:false,onChange:function(c){if(cc){cc.rig=c;cc.sex=c.body}}})})}
 var _ccRig=null;
-function QBCreatorRig(){if(!_ccRig){var D=QBLoft.data,{clips:clips,...poses}=D.poses;_ccRig=QBRig.create({rig:D.rig,bodies:D.bodies,poses:poses,clips:clips,assetUrl:function(p){return (window.QBART&&QBART[p])||D.loft.artBase+p}})}return _ccRig}
+function QBCreatorRig(){if(!_ccRig){var D=QBLoft.data,{clips:clips,...poses}=D.poses;_ccRig=QBRig.create({rig:D.rig,bodies:D.bodies,poses:poses,clips:clips,assetUrl:function(p){return (window.QBART&&QBART[p])||D.loft.artBase+p+artQ(p)}})}return _ccRig}
 function ccAct(a,b,e){
   if(a==="ccpose"){ccPose=b.dataset.v!=null?+b.dataset.v:(ccPose+1)%3;render();return}
   if(a==="cco"&&b.dataset.k==="outfit"){Object.assign(cc,OUTFITS[b.dataset.v]);render();return}
@@ -1402,7 +1402,9 @@ function dropState(){var n=dropNow(),rel=BRANDS.filter(function(b){return ptMidn
 function cdTxt(ms){if(ms<=0)return "now";var m=Math.floor(ms/6e4),d=Math.floor(m/1440),hh=Math.floor(m%1440/60),mm=m%60;return d?d+"d "+hh+"h":hh?hh+"h "+mm+"m":mm+"m"}
 function gDot(it){var f=it[6].fo;return '<span class="gdot g_'+(f?"f":"u")+'" title="'+(f?"Female":"Unisex")+'">'+(f?"♀":"U")+'</span>'}
 function garThumb(it){var g=window.LFVAR&&LFVAR.gar&&LFVAR.gar[it[6].gar];return '<div class="thumb">'+(g?'<img class="garth" src="'+g[2]+'" alt="">':'<b class="mono" style="color:var(--muted)">...</b>')+gDot(it)+'</div>'}
-function brandLogo(b,big){return '<div class="blg'+(big?" big":"")+' blg_'+b.id+'"><img class="blg_e" src="'+QBLoft.data.loft.artBase+'logo_'+b.id+'.webp" alt="" onerror="this.remove()"><span><b>'+b.name+'</b><small>'+b.sub+'</small></span></div>'}
+/* an art file's URL with its content fingerprint (tools/build.py), so a phone never shows a cached old picture */
+function artQ(n){var H=QBLoft.data.arthash;return H&&H[n]?"?h="+H[n]:""}
+function brandLogo(b,big){return '<div class="blg'+(big?" big":"")+' blg_'+b.id+'"><img class="blg_e" src="'+QBLoft.data.loft.artBase+'logo_'+b.id+'.webp'+artQ('logo_'+b.id+'.webp')+'" alt="" onerror="this.remove()"><span><b>'+b.name+'</b><small>'+b.sub+'</small></span></div>'}
 var _shopOld=shopHtml;
 shopHtml=function(){
   var d=dropState();

@@ -115,9 +115,9 @@ autoRoom("karaoke",{name:"Karaoke",lv:1,startLv:42,step:1,wall:"#2b1236",wain:"#
  items:[["ka_scr","Lyric Screen",UP_S,"","",0,0,0,"The words, slightly too fast.",{fx:function(C){C.walls.push(lfFaceY(4.2,0,128,scrFrame(LF.U*3.6,70,'<g class="scrbars"></g><text x="'+(LF.U*1.8)+'" y="42" text-anchor="middle" font-size="18" font-weight="800" fill="#ff7ad8" font-family="Inter,sans-serif">la la la</text>')))}}],PL("ka_stage","Little Stage",UP_M,"kax_stage",4.0,.7,3.6,2.8,0,"Two mics and nowhere to hide.",{plat:24,cust:[[5.0,2.0,-1],[6.4,2.0,-1]],light:[5.8,2,70,"#ff7ad8",3,.6]}),PL("ka_couch","Purple Couch",UP_S,"kax_couch",.25,2.4,1.5,3.6,0,"Everyone on it is next, supposedly.",{cust:[[2.4,5.4,-1]]}),PL("ka_table","Drinks Table",UP_S,"kax_table",2.1,3.3,1.4,1.3,0,"Liquid courage."),PL("ka_kiosk","Song Kiosk",UP_S,"kax_kiosk",8.2,.3,.9,.9,1,"Twenty thousand songs, four of them good."),PL("ka_mic","Neon Microphone",UP_S,"kax_mic",.05,3.4,.05,1.6,0,"Pink and very encouraging.",{o:{dy:-70,nosh:1,nob:1,h:1}}),PL("ka_book","Song Binders",UP_S,"kax_book",.4,.3,1.0,.9,1,"Old school."),PL("ka_booth","Private Booth",UP_M,"kax_booth",5.3,5,2.6,2.2,0,"A curved magenta sofa for the shy ones.",{cust:[[6.6,7.9,-1]]}),PL("ka_tamb","Tambourine Stand",UP_S,"kax_tamb",9.3,4.0,0.7,0.7,0,"Everyone is in the band now.",{cust:[[8.95,4,-1]]}),PL("ka_fridge","Drinks Fridge",UP_S,"kax_fridge",0.3,6,0.9,0.8,0,"Pink light, cold courage.",{cust:[[0.75,7.5,1]]}),PL("ka_light","Stage Lights",UP_S,"kax_light",3,0.4,0.9,0.9,1,"Two lights on the little stage.",{cust:[[3.45,2,1]]}),PL("ka_disco","Disco Ball",UP_S,"kax_disco",3.0,2.0,.9,.9,0,"Spins whether you are good or not.",{o:{dy:-92,nosh:1,nob:1,dk:-8},light:[3.9,2.1,100,"#ffffff",3,.3]})]});
 /* ---- club: laid out like a real club ----
    Club art is drawn running along the back wall, facing out into the room; flipped, it runs along the left wall
-   facing right. So: the DJ on the back wall facing a big floor, the bar's bottle shelf against the left wall, booths
-   against the walls opening onto the floor, high tables along the front of the floor, and the rope and coat check by
-   the door (the door is on the right edge at y 4.7 to 6.1). The room is drawn to its real size, so nothing spreads.
+   facing right. So: the DJ, its speakers and the bar along the back wall (bottle shelf against it) facing a big floor,
+   every booth down the left wall opening onto the floor, high tables along the front of the floor, and the coat check,
+   rope and podium on the right by the door (the door is on the right edge at y 4.7 to 6.1). Drawn to its real size.
    A cust spot may carry options: {fxwall:1} stands with its back to the camera (facing a bar, a table or the DJ).
    A sit spot's sixth value {over:1} sorts the sitter just after the booth they sit in, so its back never hides them. */
 function cbP(k,list,o){return list.map(function(q){return [k,q[0],q[1],q[2],q[3],0,Object.assign({flip:q[4]?1:0},o||{})]})}
@@ -127,21 +127,24 @@ autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"
  draw:function(C,H){roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C)},
  items:[
   /* 6 x 5 tiles of floor (four panels, 8 x 8 lights) straight in front of the DJ */
-  cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.0,2.5,3,2.5],[7.0,2.5,3,2.5],[4.0,5.0,3,2.5],[7.0,5.0,3,2.5]],{fit:1}),"The whole floor changes color, and lasers come on.",
-   {plat:5,cust:[[5.0,3.4,1,CBB],[7.0,3.3,-1,CBB],[9.0,3.5,1,CBB],[5.6,5.2,-1,CBB],[8.2,5.0,1,CBB],[4.9,6.8,1],[7.0,6.6,-1],[9.1,6.9,-1]],light:[7,5,46,"#ff3df0",4.2,.6],splash:"The floor lights up and the lasers come on. Now it is a club."}),
-  PL("cb_dj","DJ Booth",UP_M,"cbx_dj",5.4,.2,3.2,1.6,0,"Your name on the screen."),
-  cbU("cb_spk","Speaker Stacks",UP_M,"cbx_spk",cbP("cbx_spk",[[3.75,.2,1.3,1.2],[9.0,.2,1.3,1.2]]),"You feel it before you hear it."),
-  PL("cb_bar","Neon Bar",UP_M,"cbx_bar",.25,.4,1.6,4.0,1,"Lit from the inside.",{cust:[[2.45,1.3,1,CBB],[2.45,2.5,1,CBB],[2.45,3.7,1,CBB]]}),
-  PL("cb_rope","Velvet Rope",UP_S,"cbx_rope",11.9,3.3,1.3,.9,0,"Now there is a list.",{cust:[[11.5,4.4,1]]}),
-  PL("cb_smoke","Smoke Machine",UP_S,"cbx_smoke",2.55,.3,.8,.8,0,"Low fog right on the drop."),
-  PL("cb_coat","Coat Check",UP_M,"cbx_coat",11.5,7.5,2.2,1.0,1,"A rail of coats and a small tip jar.",{cust:[[12.6,9.3,-1,CBB]]}),
-  PL("cb_cart","Glow Cocktail Cart",UP_S,"cbx_cart",10.6,2.9,.8,.8,0,"The bar comes to you."),
-  PL("cb_laser","Laser Rig",UP_M,"cbx_laser",4.25,1.55,.85,.85,0,"Green beams across the room."),
-  /* a corner booth in the back right: its back to the wall, opening onto the floor */
-  cbU("cb_vip","VIP Booth",UP_L,"cbx_vip",cbP("cbx_vip",[[11.3,.2,2.6,2.2]]),"Ropes, a sofa and a bill you will regret.",{sit:[[12.0,.95,-1,9,0,CBS],[12.9,.95,-1,9,0,CBS],[13.4,1.6,-1,9,0,CBS]]}),
-  PL("cb_pod","Dance Podium",UP_S,"cbx_pod",2.95,8.6,1.1,1.1,0,"Somebody always gets up there.",{plat:12,cust:[[3.5,9.15,1]]}),
-  PL("cb_neon","Neon Sculpture",UP_S,"cbx_neon",6.0,.08,2.0,.05,1,"Pink and blue, very expensive.",{o:{dy:-78,h:1,nosh:1,dk:60}}),
+  cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.8,2.5,3,2.5],[7.8,2.5,3,2.5],[4.8,5.0,3,2.5],[7.8,5.0,3,2.5]],{fit:1}),"The whole floor changes color, and lasers come on.",
+   {plat:5,cust:[[5.8,3.4,1,CBB],[7.8,3.3,-1,CBB],[9.8,3.5,1,CBB],[6.4,5.2,-1,CBB],[9.0,5.0,1,CBB],[5.7,6.8,1],[7.8,6.6,-1],[9.9,6.9,-1]],light:[7.8,5,46,"#ff3df0",4.2,.6],splash:"The floor lights up and the lasers come on. Now it is a club."}),
+  PL("cb_dj","DJ Booth",UP_M,"cbx_dj",6.2,.2,3.2,1.6,0,"Your name on the screen."),
+  cbU("cb_spk","Speaker Stacks",UP_M,"cbx_spk",cbP("cbx_spk",[[4.6,.2,1.3,1.2],[9.7,.2,1.3,1.2]]),"You feel it before you hear it."),
+  /* Cal, 2026-11-05: every booth on the left wall and the entrance on the right, so the bar moves to the back wall, its
+     bottle shelf against the wall, beside the DJ's speakers */
+  PL("cb_bar","Neon Bar",UP_M,"cbx_bar",.3,.2,4.0,1.6,0,"Lit from the inside.",{cust:[[2.0,2.3,1,CBB],[3.1,2.3,-1,CBB]]}),
+  PL("cb_rope","Velvet Rope",UP_S,"cbx_rope",12.3,3.4,1.3,.9,0,"Now there is a list.",{cust:[[11.9,4.5,1]]}),
+  PL("cb_smoke","Smoke Machine",UP_S,"cbx_smoke",3.95,1.95,.75,.75,0,"Low fog right on the drop."),
+  PL("cb_coat","Coat Check",UP_M,"cbx_coat",11.6,.2,2.2,1.0,1,"A rail of coats and a small tip jar.",{cust:[[12.7,1.9,1,CBB]]}),
+  PL("cb_cart","Glow Cocktail Cart",UP_S,"cbx_cart",3.0,9.0,.8,.8,0,"The bar comes to you, or at least to the booths."),
+  PL("cb_laser","Laser Rig",UP_M,"cbx_laser",10.95,1.7,.7,.7,0,"Green beams across the room."),
+  /* the VIP booth closes the row of booths down the left wall, in the front corner, opening onto the floor */
+  cbU("cb_vip","VIP Booth",UP_L,"cbx_vip",cbP("cbx_vip",[[.25,7.5,2.2,2.4,1]]),"Ropes, a sofa and a bill you will regret.",{sit:[[.95,8.2,1,9,0,CBS],[.95,9.05,1,9,0,CBS],[1.7,9.5,1,9,0,CBS]]}),
+  PL("cb_pod","Dance Podium",UP_S,"cbx_pod",11.7,7.0,1.1,1.1,0,"Somebody always gets up there.",{plat:12,cust:[[12.25,7.55,-1]]}),
+  /* drawn for the back wall: unflipped */
+  PL("cb_neon","Neon Sculpture",UP_S,"cbx_neon",6.8,.08,2.0,.05,0,"Pink and blue, very expensive.",{o:{dy:-78,h:1,nosh:1,dk:60}}),
   /* a rail of high tables along the front of the floor, people at them watching it */
-  cbU("cb_hi","LED High Tables",UP_S,"cbx_hi",cbP("cbx_hi",[[4.75,8.35,.62,.62],[6.75,8.35,.62,.62],[8.75,8.35,.62,.62]]),"Somewhere to put your drink.",{cust:[[5.05,9.35,1,CBB],[6.15,8.65,-1],[7.05,9.35,-1,CBB],[8.15,8.65,1],[9.05,9.35,1,CBB]]}),
-  /* new 2026-11-05: two more booths down the left wall, past the bar, opening onto the floor */
-  cbU("cb_booths","Wall Booths",UP_M,"cbx_vip",cbP("cbx_vip",[[.25,4.85,2.2,2.5,1],[.25,7.45,2.2,2.5,1]]),"Two more booths along the wall. Everyone wants one.",{sit:[[.95,5.6,1,9,0,CBS],[.95,6.5,1,9,0,CBS],[.95,8.2,1,9,0,CBS],[.95,9.1,1,9,0,CBS]]})]});
+  cbU("cb_hi","LED High Tables",UP_S,"cbx_hi",cbP("cbx_hi",[[5.55,8.35,.62,.62],[7.55,8.35,.62,.62],[9.55,8.35,.62,.62]]),"Somewhere to put your drink.",{cust:[[5.85,9.35,1,CBB],[6.95,8.65,-1],[7.85,9.35,-1,CBB],[8.95,8.65,1],[9.85,9.35,1,CBB]]}),
+  /* two booths down the left wall above the VIP booth, opening onto the floor */
+  cbU("cb_booths","Wall Booths",UP_M,"cbx_vip",cbP("cbx_vip",[[.25,2.6,2.2,2.4,1],[.25,5.05,2.2,2.4,1]]),"Two more booths along the wall. Everyone wants one.",{sit:[[.95,3.3,1,9,0,CBS],[.95,4.2,1,9,0,CBS],[.95,5.75,1,9,0,CBS],[.95,6.65,1,9,0,CBS]]})]});

@@ -99,7 +99,7 @@ var RSSIZE=[[11,8],[16,10],[21,12]],RSNAME=["Hole in the Wall","Corner Diner","N
 var rsDimBase=lfDimOf;
 lfDimOf=function(t){if(t!=="restaurant")return rsDimBase(t);var r=window.__rsDraw||rsRoom(),a=r&&r.a,d=RSSIZE[rsStage(a)];return [d[0]+(a&&a.r_patio?RSPATIO:0),d[1]]};
 LFRS.restaurant=.86;
-function rsArtReady(){if(window.__rsa||!window.LFSPR)return;window.__rsa=1;var A=QBLoft.data.rsart||{},base=QBLoft.data.loft.artBase;Object.keys(A).forEach(function(k){LFSPR[k.replace(/^fix_/,"")]={w:A[k].w,h:A[k].h,u:base+k+".webp"}});
+function rsArtReady(){if(window.__rsa||!window.LFSPR)return;window.__rsa=1;var A=QBLoft.data.rsart||{},base=QBLoft.data.loft.artBase;Object.keys(A).forEach(function(k){LFSPR[k.replace(/^fix_/,"")]={w:A[k].w,h:A[k].h,u:base+k+".webp"+artQ(k+".webp")}});
   /* until a room's new art arrives, its basics borrow the nearest old sprite */
   var RSFALL={gdx_seed:"gd_bed2",gdx_raised:"gd_bed1",gdx_tomato:"gd_bed1",gdx_herb:"gd_bed2",gdx_ghouse:"gd_green",gdx_conserv:"gd_green",gdx_stand:"gd_crate",gdx_hive:"gd_bee",thx_booth0:"lo_booth"};Object.keys(RSFALL).forEach(function(k){if(!LFSPR[k]&&LFSPR[RSFALL[k]])LFSPR[k]=LFSPR[RSFALL[k]]})}
 function rsNote(r){var a=r.a||{},st=rsStage(a),nx=st===0?"r_x1":st===1?"r_x2":a.r_patio?null:"r_patio",N=nx&&RS_UPS.filter(function(u){return u[0]===nx})[0],q=S.base.rstat&&S.base.rstat[S.base.slots.indexOf(r)],stars=q&&q.n?(q.sum/q.n).toFixed(1)+" stars from "+q.n+" reviews. ":"";

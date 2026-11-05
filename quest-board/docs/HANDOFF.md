@@ -227,6 +227,21 @@ files: `dist` plus `lfvar.json`, which lives only on the page and must be kept. 
 The sprites went up in two batches with the old page, then the code; each batch was safe to run with the other side's
 version. Old save test before publishing: load, reload, buy, reload, all kept. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
 
+Open asks from Cal (2026-11-05, latest first):
+- Painted wall environments for every room, upgraded in stages like the Closet: Cal sent a theater example (four images,
+  same angle, green background: bare lit wood panelling growing into a poster wall with gold trim and sconces). Each room
+  gets a wall shell painted per stage (walls and floor only), with the existing furniture sprites placed on top. Needs:
+  the shells generated in Cal's Chrome (final stage first, then image edits stripping it back), and a generic loader like
+  `clPaint` in `27_rooms.js` that draws the highest owned stage over the room (fitted to its size, green removed with
+  `tools/rs_fix.py`). Ideas from Cal: the Club bar wall with a hanging wall of drinks; the theater with posters.
+- Jewelry tower in the Closet looks out of style: make jewelry part of the painting (e.g. the island's glass trays lit as
+  the jewelry stage) instead of the `clx_jewel` sprite.
+- Brand banners need real art, intricate and colourful scenes, not the procedural treatment (prompts under Art).
+- The Loft on Cal's phone (inside the Claude app) filled only half the screen with no bottom nav. `.lfwrap` was fixed at
+  `100dvh`; it now stretches with top and bottom 0. Not yet seen on his phone.
+- Scripts and images are now asked for with a content fingerprint (`?h=`, `tools/build.py`), because Cal's phone kept an
+  old `app.js` (it still said v0.06 after v40 was live). If the page still shows an old version, close and reopen it.
+
 Still to do, in order:
 1. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
 2. Stretch-pose sleeve streaks: fixed 2026-11-05 (Cal: "they look weird"). Poses marked `"armsUp": true` in
