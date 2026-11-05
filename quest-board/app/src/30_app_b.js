@@ -558,10 +558,10 @@ async function socLoad(){
   if(!socOn()||SOC.busy)return;SOC.busy=1;
   try{
     var ws=await db.collection("worlds").limit(60).get();
-    SOC.worlds=(ws.docs||[]).map(function(d){var x=d.data();x.id=d.id;return x}).filter(function(x){return x&&x.id!==MYUID&&x.name});
+    SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name});
     SOC.worlds.sort(function(a,b){return (b.t||0)-(a.t||0)});
     var ps=await db.collection("board").orderBy("t","desc").limit(30).get();
-    SOC.posts=(ps.docs||[]).map(function(d){var x=d.data();x.id=d.id;return x});
+    SOC.posts=(ps.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})});
     await socCheckPings();
     SOC.loaded=Date.now();SOC.err="";
   }catch(e){SOC.err=(e&&e.code)||"error"}
@@ -790,7 +790,7 @@ function mults(q,o){
   return {m:m,tags:tags,xp:Math.max(1,Math.round(q.xp*m))};
 }
 
-var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
+var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
 var DOC="player/state", ownerView=false, APPV=44, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
@@ -807,12 +807,15 @@ function persist(){
   S.appv=APPV;S.epoch=QB_EPOCH;S.tshift=window.__qbShift||0;
   clearTimeout(saveT);
   saveT=setTimeout(function(){
+    S.savedAt=Date.now();if(MYUID)S.uid=MYUID;
     var js=JSON.stringify(S);
     try{localStorage.setItem("quest-board",js)}catch(e){}
     try{ if(db&&!blank){ db.doc(DOC).set(JSON.parse(js)).then(function(){SAVEOK=Date.now();SAVEERR="";var el=document.getElementById("savest");if(el)el.textContent=saveLbl()}).catch(function(er){SAVEERR=(er&&er.code)||"error";var el=document.getElementById("savest");if(el)el.textContent=saveLbl();if(!saveWarned){saveWarned=true;pop("Not saving: "+SAVEERR+". Reload the page.")}}) } }catch(e){}
   },350);
 }
-function merge(d){if(!d||d.epoch!==QB_EPOCH)return;window.__qbShift=d.tshift||0;
+/* The database hands back deep frozen objects, and merge writes into what it is given (S.stats below threw on `creativity`,
+   which sent every device to "this device only" from about v37 on). So it works on its own copy. */
+function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d));window.__qbShift=d.tshift||0;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
   var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0);
   S=Object.assign(f,d||{});
@@ -1422,6 +1425,24 @@ setInterval(function(){if(view==="away"&&!document.hidden&&!spinning)render()},3
 document.addEventListener("visibilitychange",function(){if(!document.hidden)checkInbox();if(!document.hidden&&rollover()){render();persist()}});
 
 buildSkinCss();
+/* Which save to play when the database and this device disagree. Online saves stopped working for a while, so both can
+   hold progress the other lacks. Saves with a savedAt are compared by it. Older ones cannot be, and more progress is not
+   proof of the right one (testing can inflate it), so the player picks once and the other is kept in backup_choice. */
+function saveOnDevice(uid){try{var r=localStorage.getItem("quest-board"),d=r?JSON.parse(r):null;
+  if(!d||d.epoch!==QB_EPOCH||!(d.created||d.total||d.xp))return null;if(d.uid&&d.uid!==uid)return null;return d}catch(e){return null}}
+function saveSame(a,b){return ["xp","total","earnedC","spent","coins"].every(function(k){return (+a[k]||0)===(+b[k]||0)})}
+function saveWhich(cloud,local){
+  if(!local)return {use:"cloud"};if(!cloud)return {use:"local"};if(saveSame(cloud,local))return {use:"cloud"};
+  if(cloud.savedAt&&local.savedAt)return {use:+local.savedAt>+cloud.savedAt?"local":"cloud"};
+  return new Promise(function(done){
+    var line=function(d){var rooms=((d.base&&d.base.slots)||[]).filter(Boolean).length,when=d.savedAt?new Date(+d.savedAt):d.lastDone?new Date(d.lastDone+"T12:00:00"):null;
+      return '<b>Level '+lvlOf(+d.xp||0)+'</b><span>'+(+d.total||0)+' quests done</span><span>'+Math.floor(+d.coins||0).toLocaleString()+' coins</span><span>'+rooms+' room'+(rooms===1?'':'s')+'</span>'
+        +(when&&!isNaN(when)?'<span>Last played '+when.toLocaleDateString(undefined,{month:"short",day:"numeric"})+'</span>':'')};
+    var m=document.createElement("div");m.className="modal qbsv";m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");
+    m.innerHTML='<div class="card box2"><h3>Two saves found</h3><p class="note">This device and your online save don\'t match. Pick the one to keep playing. The other is kept as a backup.</p>'
+      +'<div class="qbsv-r"><button class="qbsv-c" data-pick="local"><small>This device</small>'+line(local)+'</button><button class="qbsv-c" data-pick="cloud"><small>Online save</small>'+line(cloud)+'</button></div></div>';
+    m.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-pick]");if(!b)return;var use=b.getAttribute("data-pick");m.remove();done({use:use,asked:true,keep:use==="local"?cloud:local})});
+    document.body.appendChild(m)})}
 render();try{chLoad()}catch(e){}
 (async function(){
   var migrated=false;
@@ -1433,10 +1454,13 @@ render();try{chLoad()}catch(e){}
     /* every save, the owner's too, lives in a private per-person path */
     if(db&&uid){
       DOC="data/users/"+uid+"/state";
-      var snap=await db.doc(DOC).get();
+      var snap=await db.doc(DOC).get(),sd0=snap.exists?snap.data():null,ld0=saveOnDevice(uid);
       /* a copy of the save from the last version, before this version writes anything */
-      if(snap.exists){var sd0=snap.data();if((+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup").set(sd0).catch(function(){});merge(sd0)}
-      else if(own){var old=await db.doc("player/state").get();if(old.exists){merge(old.data());migrated=true;db.doc("player/state").delete().catch(function(){})}}
+      if(sd0&&(+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup").set(sd0).catch(function(){});
+      if(!sd0&&!ld0&&own){var old=await db.doc("player/state").get();if(old.exists){merge(old.data());migrated=true;db.doc("player/state").delete().catch(function(){})}}
+      else{var pick=await saveWhich(sd0&&sd0.epoch===QB_EPOCH?sd0:null,ld0);
+        if(pick.keep)db.doc("data/users/"+uid+"/backup_choice").set(pick.keep).catch(function(){});
+        if(pick.use==="local"){merge(ld0);migrated=true}else if(sd0){merge(sd0);if(pick.asked)migrated=true}}
     }else if(db&&own){var s2=await db.doc("player/state").get();if(s2.exists)merge(s2.data());else{var rw=localStorage.getItem("quest-board");if(rw)merge(JSON.parse(rw))}}
     else{window.__qbBootErr=!window.claude?"no runtime":!db?"no database":"no id";db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
   }catch(e){window.__qbBootErr=String((e&&(e.code||e.message))||e);db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}

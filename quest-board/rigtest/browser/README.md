@@ -18,5 +18,8 @@ with a save that owns every room and every upgrade.
 - `screens.js` (W=360) opens every bottom-nav tab and a room, screenshots each and lists anything wider than the screen.
 - `zoom.js room out.png sprite [sprite]` crops the room view around named sprites at 2.5x.
 - `sortwatch.js room [seconds]` lets a room run and lists anyone drawn under a piece they stand in front of (`START`, `STEP` in ms).
+- `savecheck.js [case,case]` (`BASE=http://127.0.0.1:8766`) saving against a fake database that freezes what it returns, like the
+  real one: online only, device only, both (the Two saves found choice, both ways), newest wins, a stranger's save, a new player.
+  Run it after any change to `merge()`, `persist()` or the boot code in `30_app_b.js`.
 
 They run on software WebGL, so a room of guests takes about a minute per pass.
