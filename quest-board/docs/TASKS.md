@@ -169,7 +169,12 @@ Doing:
   a replacement for the light tower, Chopstick's bed) and the Bedroom figurine cabinet, then the doors code.
 
 To do:
-- [ ] Closet stages (Cal on approval 3: "I love this"), changes before they go in: (1) the LED wardrobe strips from
+- [ ] Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
+      `art/raw/walls/closet/st_dark, st_lit2, st_shoe2, st_jewel2, st_island2, room_jewel2, st_modern2`. Put them in
+      (`clPaint` stages, sizes in `data/rsart.json`, drop the `clx_jewel` sprite and the LED overlay). The Lair stage waits
+      on Cal's answer about doors vs the building layout (asked 2026-11-05): ROOMS recommends keeping the building as is
+      and moving the sliding cabinet to the back corner of the LEFT wall, since the Lair sits left of the Closet.
+      Earlier notes on approval 3: (1) the LED wardrobe strips from
       Wardrobe Lights on every later stage (Shoe & Bag Wall through Super Sleek Modern); (2) remove the eight round light
       pools on the floor in Wardrobe Lights; (3) a new last step, the Hero's Lair (`cl_lair`, id kept): the cabinet in the
       far corner (top of the picture) slides open, animated, to reveal a hidden entrance that leads to the Lair. Paintings in
