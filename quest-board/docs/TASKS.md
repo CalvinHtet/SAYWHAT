@@ -398,7 +398,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Nothing running. Next: rerun `menu.js` (d5fba8f changed the menu), then the 15-player shared-database test if Cal says go. (on 12a46ba)
+- Economy simulator rerun for v48 (LEAD's request): three players, 60 days, coins by source, set finish days. Then `menu.js`. (on 0426a46)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
