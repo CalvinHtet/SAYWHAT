@@ -80,7 +80,7 @@ EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 })();
 
 function isRigItem(x){return !!(x[6]&&(x[6].gar||x[6].basic))}
-function itemArt(it){return "art/icon_"+(it[6].icon||it[6].gar)+".webp"}
+function itemArt(it){var k="icon_"+(it[6].icon||it[6].gar)+".webp";return (window.QBART&&QBART[k])||"art/"+k}
 /* Every piece carries its mark. Anyone can browse anything; only your own can be bought. */
 function qsMark(it){var f=it[6].fo,m=it[6].mo;return '<span class="qs-mark '+(f?"f":m?"m":"u")+'" title="'+(f?"Women's":m?"Men's":"Unisex")+'" aria-label="'+(f?"Women's":m?"Men's":"Unisex")+'">'+(f?"♀":m?"♂":"⚥")+'</span>'}
 function qsThumb(it){return '<div class="qs-img">'+(it[6].swatch?'<i class="qs-swatch'+(it[6].round?" round":"")+'" style="background:'+it[6].swatch+'"></i>':'<img src="'+itemArt(it)+'" alt="" loading="lazy">')+qsMark(it)+'</div>'}

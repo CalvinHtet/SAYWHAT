@@ -797,7 +797,7 @@ function persist(){
   if(!loaded)return;
   var blank=!S.created&&isNewPlayer();
   if(newerSeen){pop("A newer version saved your progress. Reload to continue.");return}
-  S.appv=APPV;
+  S.appv=APPV;S.epoch=QB_EPOCH;S.tshift=window.__qbShift||0;
   clearTimeout(saveT);
   saveT=setTimeout(function(){
     var js=JSON.stringify(S);
@@ -805,7 +805,7 @@ function persist(){
     try{ if(db&&!blank){ db.doc(DOC).set(JSON.parse(js)).then(function(){SAVEOK=Date.now();SAVEERR="";var el=document.getElementById("savest");if(el)el.textContent=saveLbl()}).catch(function(er){SAVEERR=(er&&er.code)||"error";var el=document.getElementById("savest");if(el)el.textContent=saveLbl();if(!saveWarned){saveWarned=true;pop("Not saving: "+SAVEERR+". Reload the page.")}}) } }catch(e){}
   },350);
 }
-function merge(d){
+function merge(d){if(!d||d.epoch!==QB_EPOCH)return;window.__qbShift=d.tshift||0;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
   var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0);
   S=Object.assign(f,d||{});

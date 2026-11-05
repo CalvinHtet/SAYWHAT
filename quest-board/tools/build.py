@@ -37,7 +37,20 @@ shutil.copy(os.path.join(APP, "blobs.js"), os.path.join(DIST, "blobs.js"))
 for art in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")):
     shutil.copy(art, os.path.join(DIST, "art", os.path.basename(art)))
 
-tags = "".join('<script src="%s"></script>\n' % s for s in ("blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
+# character layers and icons travel as two packs, so a published page stays under its file limit
+import base64
+for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",))):
+    parts = []
+    for art in sorted(glob.glob(os.path.join(DIST, "art", "*.webp"))):
+        name = os.path.basename(art)
+        if name.startswith(prefixes):
+            with open(art, "rb") as f:
+                parts.append('"%s":"data:image/webp;base64,%s"' % (name, base64.b64encode(f.read()).decode()))
+            os.remove(art)
+    with open(os.path.join(DIST, pack), "w") as f:
+        f.write("window.QBART=Object.assign(window.QBART||{},{" + ",".join(parts) + "});\n")
+
+tags = "".join('<script src="%s"></script>\n' % s for s in ("art_rig.js", "art_icon.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)

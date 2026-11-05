@@ -16,3 +16,8 @@ ROOMT.restaurant.cost=1000;ROOMT.garden.cost=1500;ROOMT.theater.cost=2500;ADDONS
 SHOP.forEach(function(it){var e=it[6]||{};if(it[1]==="buff")it[3]=it[3]<=1500?1000:it[3]<=6000?1500:2500;
   else if(!e.gar&&!e.basic&&it[3]>800)it[3]=it[3]<=2000?1000:it[3]<=5000?1500:2500});
 LFDS.restaurant.forEach(function(q){if(q.cost)q.cost=q.cost>=10000?1500:600});
+/* ---------- test controls: a small button on every screen. Remove before release. ---------- */
+function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;persist();render();pop("Skipped one week");setTimeout(brandCheck,200)}
+function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
+setTimeout(function(){if(document.getElementById("qbt"))return;var d=document.createElement("div");d.id="qbt";d.innerHTML='<div class="qbt-m" hidden><button data-q="w">Skip a week</button><button data-act="simlvl">Level up</button><button data-act="simcoin">Get 10,000 coins</button><button data-q="r">Reset everything</button></div><button class="qbt-t" data-q="t">Test</button>';document.body.appendChild(d);var m=d.querySelector(".qbt-m"),armed=0;
+  d.addEventListener("click",function(e){var b=e.target.closest("[data-q]");if(!b)return;var q=b.dataset.q;if(q==="t")m.hidden=!m.hidden;if(q==="w")qbWeek();if(q==="r"){if(armed)qbReset();else{armed=1;b.textContent="Tap again to wipe it all";setTimeout(function(){armed=0;b.textContent="Reset everything"},4000)}}})},600);
