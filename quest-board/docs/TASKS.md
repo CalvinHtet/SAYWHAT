@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: waiting on QA's economy rerun (bc1368e). Then publish v48 with ROOMS's READY TO PUBLISH lines and the town's
-  database rules. (on bc1368e)
+- Now: waiting on QA's economy check at level-80 prices (e64f93f). Then publish v48 with ROOMS's READY TO PUBLISH lines and
+  the town's database rules. (on e64f93f)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -234,7 +234,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Restaurant 4, Boba 6, Closet 13, Patio 22, Game Room 24, Lair 36, Dessert 39, Lock and Key 39, Rooftop 50, Mall 51,
   Theater 52, Auditorium 53; grinder: everything by day 54. The 33 days from Boba to Dessert come from prices (the player buys
   cheaper Loft pieces first); the level-80 prices will shorten it, and QA reports these days again on that rerun. Owner: LEAD.
-- TAKEN by LEAD (now). QA, upgrade income (LEAD's d523cf1 request, on 37b053a, all 357 business upgrades read from the live game: 66 looks only,
+- DONE by LEAD in e64f93f ((1) to (3); Cal to say on the Mall Fountain and the VR Projection Wall). QA, upgrade income (LEAD's d523cf1 request, on 37b053a, all 357 business upgrades read from the live game: 66 looks only,
   291 earn). Fix: (1) three looks-only upgrades still tell the player "Earns +6% here": Banker's Lamp Table (speakeasy
   `sp_lamp`), Trophy Case (rhythm `rh_trophy`), Stage Lights (karaoke `ka_light`); (2) the Theater's Arcade Cabinet (`t_arc`)
   is a coin machine people play, but looks only: `{earn:1}`; (3) decor that earns: Tea Prints (`bo_art`, "two small prints"),
@@ -242,7 +242,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Wall (+24%) are decor that draw a crowd. Looked at and fine: plots, trees and grow lamps in the Garden (they grow produce),
   Soda Fountain, Liquor Wall, Tea Jar Wall (stock), the expansions. Not done yet: the team buffs part (each buff applies,
   the join banner, missions led by the team). Owner: LEAD.
-- TAKEN by LEAD (now). WAITING ON LEAD, prices for Cal's level-80 target ("all upgrades can be purchased around lvl 80 ish"; worked from QA's d7ae577
+- WAITING ON QA: check the economy, e64f93f (rule 17): your level-80 prices are in as written (`ECON.price`, `stepK` 0.25,
+  `stepMax` 2, `xpK` 1, mission energy doubled). Everything totals 377,100 in the live list (your estimate was about 300,000:
+  say if the step or a category should come down further). Run the 12-task player and the grinder to level 80, report coins
+  by source (missions under 20%), days with nothing to buy, and the days each room opens.
+- DONE by LEAD in e64f93f. WAITING ON LEAD, prices for Cal's level-80 target ("all upgrades can be purchased around lvl 80 ish"; worked from QA's d7ae577
   runs and the live upgrade list, `effort_model.py` method): a serious player earns about 250,000 to 290,000 coins by level 80
   (12-task player: level 80 on day 47; grinder: day 21; with mission pay cut as suggested below). Everything costs about
   1,205,000 now, so prices must come down to about a quarter. Set `ECON.price` to decor 150, furniture 300, equipment 600,
