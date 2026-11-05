@@ -164,7 +164,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Closet: LED strips on the later stages, no floor circles, Hero's Lair stage (Chrome); doors that make sense (code).
+- Closet second version painted and sent to Cal (approval 3, `art/raw/walls/closet/closet_stages_v2.png`): LED strips on
+  every stage from Wardrobe Lights on, no floor circles, and a Hero's Lair stage (`st_lair.png`). Next: Patio art (turf,
+  a replacement for the light tower, Chopstick's bed) and the Bedroom figurine cabinet, then the doors code.
 
 To do:
 - [ ] Closet stages (Cal on approval 3: "I love this"), changes before they go in: (1) the LED wardrobe strips from
