@@ -157,6 +157,11 @@ To do:
       every room going forward so it mimics proper room traversal": a door on one room's back-left wall comes out of the
       next room's front-right edge, back-right to front-left, and the other way round, at matching positions. Check every
       `portal(...)` pair in `27_rooms.js`.
+      Measured 2026-11-05 (every upgrade owned, a glow is 1.5 tiles along its side): the rule's side is clear of furniture
+      for most pairs, but no clear spot exists on the Bedroom left wall (wardrobe, until it becomes the figurine cabinet), the
+      Bedroom back-right wall at the Patio door, the Boba, Dessert and Mall back-right walls (way up), the Arcade back-right
+      wall (Rhythm) and the Arcade left wall (Mall): those rooms need pieces moved before their doors can go there. Also from
+      QA: put each way-up arrow on its own door's side (`rmArrows`), and nothing standing on a door glow.
 - [ ] Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
       the wall colour options, the Loft should be the most customizable: a painted version of each tier per colour scheme;
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
