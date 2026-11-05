@@ -247,7 +247,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Restaurant 4, Boba 6, Closet 13, Patio 22, Game Room 24, Lair 36, Dessert 39, Lock and Key 39, Rooftop 50, Mall 51,
   Theater 52, Auditorium 53; grinder: everything by day 54. The 33 days from Boba to Dessert come from prices (the player buys
   cheaper Loft pieces first); the level-80 prices will shorten it, and QA reports these days again on that rerun. Owner: LEAD.
-- DONE by LEAD in e64f93f ((1) to (3); Cal to say on the Mall Fountain and the VR Projection Wall). QA, upgrade income (LEAD's d523cf1 request, on 37b053a, all 357 business upgrades read from the live game: 66 looks only,
+- DONE by LEAD in e64f93f ((1) to (3)); Cal, 2026-11-05: the Mall Fountain and the Projection Wall earn (they draw a crowd), 3a6ff08, which also makes every "Earns +N% here" line show the real share. QA, upgrade income (LEAD's d523cf1 request, on 37b053a, all 357 business upgrades read from the live game: 66 looks only,
   291 earn). Fix: (1) three looks-only upgrades still tell the player "Earns +6% here": Banker's Lamp Table (speakeasy
   `sp_lamp`), Trophy Case (rhythm `rh_trophy`), Stage Lights (karaoke `ka_light`); (2) the Theater's Arcade Cabinet (`t_arc`)
   is a coin machine people play, but looks only: `{earn:1}`; (3) decor that earns: Tea Prints (`bo_art`, "two small prints"),
