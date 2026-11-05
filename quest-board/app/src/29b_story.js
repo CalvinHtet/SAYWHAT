@@ -85,7 +85,7 @@ function styBeatPic(b){var u=window.QBART&&(QBART["ui_story_"+b.pic+".webp"]||QB
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(b.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
 function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o.lastScene||0)<25*60000)return false;
   for(var i=0;i<BEATS.length;i++){var b=BEATS[i],ok=false;if(o.beats[b.id])continue;try{ok=b.gate()}catch(e){}if(!ok)continue;
-    o.beats[b.id]=1;o.lastScene=now;S.xp+=15;persist();modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+15 XP</small>'));return true}
+    o.beats[b.id]=1;o.lastScene=now;S.coins+=60;S.earnedC+=60;persist();modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+60 coins</small>'));return true}
   return false}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(b){var o=styState();o.missions=(o.missions||0)+1}},true);
 /* look for the next step now and then, never over another window, one scene at a time */

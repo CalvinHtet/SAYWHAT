@@ -334,8 +334,8 @@ function trainAct(a,b){
       S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:isNaN(w)?0:w,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:"lb"}]).slice(-12)});
     if(!done){pop("Tap the sets you finished first");return true}
     S.sessions=(S.sessions||[]).concat([{d:t,plan:S.wk.plan,n:done}]).slice(-30);var cgm=coachGain(S.wk.coach,done,full);S.wk=null;
-    var x=Math.min(15,full*2+(done-full));
-    grantXp(x,Math.max(10,Math.round(x*2)),"fitness");pop("Workout logged. +"+x+" XP");if(cgm)setTimeout(function(){pop(cgm)},2800);
+    var x=econTrainXp(done,full);
+    grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,S.sessions[S.sessions.length-1].plan);pop("Workout logged. +"+x+" XP");if(cgm)setTimeout(function(){pop(cgm)},2800);
     var gq=S.quests.filter(function(q){return q.stat==="fitness"&&!S.done[q.id]&&/gym|workout|lift|train/i.test(q.name)})[0];
     if(gq)setTimeout(function(){onTap(gq.id)},1200);
     return true}

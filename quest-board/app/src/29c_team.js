@@ -4,7 +4,7 @@
    guests (ROOMS draws them in their rooms from TEAM[id].look). They also lead the Lair's missions before any hired hands. */
 var TEAM={
   sable:{name:"Sable",role:"Scout",how:"Found trapped in the Old Metro on your first mission. Stayed to repay the favour.",
-    stats:{Cook:2,Charm:4,Hustle:6,Grit:9,Luck:7},buff:{text:"Missions pay 10% more coins and XP",mission:.10},
+    stats:{Cook:2,Charm:4,Hustle:6,Grit:9,Luck:7},buff:{text:"Missions pay 10% more coins",mission:.10},
     look:{body:"f",hairStyle:"h3",hairColor:"black",equipped:{top:{art:"al_shell"},hat:{art:"y_bucket"}}},ac:"#4dffc3"},
   mara:{name:"Mara",role:"Chef",how:"Bought your vegetables all week, then partnered on the restaurant.",
     stats:{Cook:9,Charm:6,Hustle:7,Grit:5,Luck:4},buff:{text:"Restaurant, Boba and Dessert earn 15% more",rooms:["restaurant","boba","dessert"],pct:15},

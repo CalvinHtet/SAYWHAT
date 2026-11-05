@@ -527,12 +527,12 @@ function dngStart(id){
 }
 function dngClaim(k,ev){
   var D=dngInit(),r=D.runs[k];if(!r||Date.now()<r.end)return;
-  var d=DNG.filter(function(q){return q.id===r.id})[0],m=Math.max(.5,openMult()),c=Math.max(5,Math.round(r.c*m)),x=Math.max(1,Math.round(r.x*m)),n=r.npc&&DNPC.filter(function(q){return q.id===r.npc})[0];
+  var d=DNG.filter(function(q){return q.id===r.id})[0],m=Math.max(.5,openMult()),c=Math.max(5,Math.round(r.c*m)),x=0,n=r.npc&&DNPC.filter(function(q){return q.id===r.npc})[0];
   D.runs.splice(k,1);if(n)D.npcs[n.id]=1;
   D.log.unshift({d:d.name,c:c,x:x,bad:r.bad,t:Date.now()});D.log=D.log.slice(0,6);
   var rel=(m<1?'<p class="note">Quest effort is '+Math.round(m*100)+'%, so the loot was trimmed. Finish 3 quests a day for the full haul.</p>':'');
   var mm=modal('<div class="card box2 adv"><span class="label">'+(r.bad?'Setback':'Delve complete')+'</span><h2>'+esc(d.name)+'</h2><p class="note">'+esc(r.story)+'</p>'
-    +'<div class="reward reveal">+'+c+' coins</div><div class="reward reveal">+'+x+' XP</div>'+rel
+    +'<div class="reward reveal">+'+c+' coins</div>'+rel
     +(n?'<div class="card panel" style="margin-top:10px"><span class="label">Rescued!</span><b>'+esc(n.name)+'</b><p class="note">'+esc(n.line)+' Now lives in your Loft.</p><span class="chip mult">'+esc(n.buff.text)+'</span></div>':'')
     +'<div class="row"><button class="btn" id="dgok">Nice</button></div></div>');
   var b=mm&&mm.querySelector("#dgok");if(b)b.onclick=function(){mm.remove()};

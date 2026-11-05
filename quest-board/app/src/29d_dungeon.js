@@ -7,9 +7,9 @@
 var TSETS={
   goblin:{name:"The Goblin King's Regalia",art:"goblin",
     lore:"Something under the city has been crowning itself with whatever the trains leave behind.",
-    bonus:{text:"Missions pay 20% more coins and XP, and bring home gifts more often",mission:.20,gift:.10},
+    bonus:{text:"Missions pay 20% more coins and bring home gifts more often",mission:.20,gift:.10},
     pieces:[
-      {id:"helm",name:"Iron Crown-Helm",d:"Hammered from stolen rail iron. The crown points are filed sharp.",buff:{text:"Missions earn 5% more XP",mxp:.05}},
+      {id:"helm",name:"Iron Crown-Helm",d:"Hammered from stolen rail iron. The crown points are filed sharp.",buff:{text:"Missions pay 5% more coins",mc:.05}},
       {id:"chest",name:"Scrap-Plate Cuirass",d:"Salvaged signage, riveted and laced with copper wire. Heavier than it looks.",buff:{text:"Missions pay 5% more coins",mc:.05}},
       {id:"greaves",name:"Tunnel-Runner Greaves",d:"Worn smooth from years of service tunnels.",buff:{text:"Missions come back 10% sooner",mt:.10}},
       {id:"boots",name:"Hushstep Boots",d:"Soles wrapped in felt. His patrols never heard him coming.",buff:{text:"Gifts come home a little more often",gift:.05}},
@@ -56,7 +56,7 @@ function dgRoll(mid){var L=DGLOOT[mid];if(!L)return null;var chance=L.gift+dgBuf
   var r=Math.random();
   if(miss.length&&(pity||r<.32)){S.trophy._dry=0;return {kind:"piece",set:L.set,id:miss[Math.floor(Math.random()*miss.length)]}}
   S.trophy._dry=(S.trophy._dry||0)+1;var q=MS_LIST.filter(function(x){return x.id===mid})[0]||{c:150,x:30};
-  return r<.7?{kind:"coins",n:Math.round(q.c*(.6+Math.random()*.6)/10)*10}:{kind:"xp",n:Math.round(q.x*(.8+Math.random()*.7))}}
+  return {kind:"coins",n:Math.round(q.c*(.6+Math.random()*.6)/10)*10}}
 function dgIcon(set,id,big){var u=window.QBART&&QBART["ui_tr_"+TSETS[set].art+"_"+id+".webp"];
   return u?'<img class="dg-ic'+(big?' big':'')+'" src="'+u+'" alt="">':'<span class="dg-ic dg-ic0'+(big?' big':'')+'" aria-hidden="true">'+(set==="goblin"?"&#9813;":"&#9670;")+'</span>'}
 function dgGiftArt(){var u=window.QBART&&QBART["ui_gift.webp"];return u?'<img class="dg-gift" src="'+u+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>'}
