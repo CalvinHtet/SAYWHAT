@@ -122,12 +122,27 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Not checked: a real phone, and every other
    screen at phone width (only the Board and The Loft were looked at).
 
+Recheck after the 57 new upgrades (2026-11-05, every room fully upgraded, `rigtest/browser` audits): new guest spots inside
+furniture (Mall photo booth in the flower kiosk, Bowling trophies in the lane seats, Game Room beanbags in the mini fridge)
+were moved into the open; spots past a spread room's edge (Upstairs Bar Chesterfield, VR racing pod) now stay .3 inside;
+spots more than 1.5 tiles from any piece spread with the room, not with a piece. Draw order fixed: Upstairs Bar end stool
+over the champagne trolley, Garden conservatory over the apple tree and a bed over the farm stand (both from the
+re-space), Club coat check under the dance floor, patio A-frame under the umbrella table, Rooftop pool over a lounger.
+The kitchen wing was looked at closely and draws right. The Game Room and Closet have guest spots but no guests yet.
+
 Published: the page is pinned in Cal's sidebar. `dist` has 437 files; character layers and icons are bundled into `art_rig.js` and
 `art_icon.js`. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
 
 Still to do, in order:
 1. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
-2. Look at the stretch-pose sleeve streaks with a person's eye: decide whether it needs a rig change (pin armpit cells to the torso) or is acceptable.
+2. Look at the stretch-pose sleeve streaks with a person's eye and decide whether they are acceptable. What was tried
+   (2026-11-05, reverted, nothing shipped): the trunk's bone list includes both upper arms, so in `bindLayer` torso fabric
+   next to the arm can follow it overhead. (a) Letting trunk fabric more than 60 canvas px below the shoulders follow only
+   the trunk closed a torn gap on the men's Spray Paint Boxy Tee and thinned the streaks a little, with no visible change
+   in walking, typing or sitting; most streaks stayed. (b) Also making sleeves below that line follow only their arm tore
+   a piece off the raised sleeve. The streaks that remain are sleeve cells blending back to the spine across the wide
+   shoulder band (`blend: 210` on `uaN`/`uaF` in `data/rig.json`). (a) changes how every top and the base body bind, so
+   shipping it means re-running the whole wear test.
 3. Before sharing widely: test on a real phone. The Test panel and Shop Testing row only show for the owner; remove them and the `window.__qb` and `window.__qbLoft` hooks before release.
 
 ## Not yet verified
