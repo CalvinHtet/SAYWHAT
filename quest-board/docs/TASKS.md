@@ -109,10 +109,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Yawn pilot (LEAD's request). Closet stages: all seven painted and sent to Cal (approval 3), waiting on him;
-  `art/raw/walls/closet/closet_stages.png`.
+- Yawn pilot (LEAD's request): bare body repaint generating, then the three items on its clean mannequin.
 
 To do:
+- [ ] Closet stages (Cal on approval 3: "I love this"), changes before they go in: (1) the LED wardrobe strips from
+      Wardrobe Lights on every later stage (Shoe & Bag Wall through Super Sleek Modern); (2) remove the eight round light
+      pools on the floor in Wardrobe Lights; (3) a new last step, the Hero's Lair (`cl_lair`, id kept): the cabinet in the
+      far corner (top of the picture) slides open, animated, to reveal a hidden entrance that leads to the Lair. Paintings in
+      `art/raw/walls/closet/`.
 - [ ] Doors that make sense (Cal, 2026-11-05): "make sure that the entrances from each room to the other room make sense."
       Bedroom: the Closet entrance goes where the wardrobe upgrade stands (left wall, front part). The wardrobe upgrade
       becomes a wall-mounted figurine cabinet that never covers that door (keep the ids `bd_ward1`, `bd_ward2`). Closet: you
