@@ -3,6 +3,9 @@
   rs_fix.py art <name> ...     fixes art/app/<name>.webp in place
   rs_fix.py old <key> ...      writes art/app/fix_<key>.webp, which replaces that old sprite
   rs_fix.py green <name> ...   removes leftover flat green (a patch left under an object)
+  rs_fix.py halo <name> ...    removes a warm glow disc around a lamp, working in from the outside
+  rs_fix.py cool <name> ...    turns neon green into cyan
+  rs_fix.py rim <name> ...     trims a few pixels off the edge of a cutout
 """
 import base64
 import io
@@ -92,6 +95,50 @@ def drop_green(name):
     print(name, "green cleared", int(hit.sum()))
 
 
+def load(name):
+    path = os.path.join(ART, name + ".webp")
+    return path, np.array(Image.open(path).convert("RGBA")).astype(float)
+
+
+def save(path, a):
+    Image.fromarray(a.clip(0, 255).astype(np.uint8)).save(path, "WEBP", quality=90, method=6)
+
+
+def halo(name):
+    """A glow is bright, warm and soft, and it touches the outside. Dark outlines stop the flood, so the lamp itself stays."""
+    path, a = load(name)
+    r, g, b, al = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+    glow = (r > 150) & (g > 110) & (b < r - 25) & (al > 0)
+    lab, _ = ndimage.label(glow | (al < 8))
+    out = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1], lab[al < 8]]))
+    hit = np.isin(lab, out[out > 0]) & glow
+    a[..., 3][hit] = 0
+    save(path, a)
+    print(name, "halo cleared", int(hit.sum()))
+
+
+def cool(name):
+    path, a = load(name)
+    r, g, b = a[..., 0].copy(), a[..., 1].copy(), a[..., 2].copy()
+    hit = (g > r * 1.15) & (g > b * 1.05) & (g > 70)
+    a[..., 0][hit] = r[hit] * .5
+    a[..., 1][hit] = g[hit] * .92
+    a[..., 2][hit] = g[hit]
+    save(path, a)
+    print(name, "cooled", int(hit.sum()))
+
+
+def rim(name):
+    path, a = load(name)
+    a[..., 3] = np.minimum(a[..., 3], ndimage.binary_erosion(a[..., 3] > 60, iterations=5) * 255.0)
+    save(path, a)
+    print(name, "rim trimmed")
+
+
+if __name__ == "__main__" and sys.argv[1] in ("halo", "cool", "rim"):
+    for n in sys.argv[2:]:
+        {"halo": halo, "cool": cool, "rim": rim}[sys.argv[1]](n)
+    sys.exit()
 if __name__ == "__main__" and sys.argv[1] == "green":
     for n in sys.argv[2:]:
         drop_green(n)

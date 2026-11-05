@@ -1081,9 +1081,10 @@ function lfRoomCtx(r,i){
 /* static room (no agents). C.items kept as separate <g data-k> so agents can be interleaved. */
 function lfRoomSvg(r,i,C,opt){
   lfSetDim(r.t);opt=opt||{};var uid=opt.uid||(i+1),t=r.t,out=C.T.out,s='',st=r.st||0;
-  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg&&opt.uid)s=C.bg+s;if(C.noshell!==1)s+=lfSlab();
+  LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg&&opt.uid)s=C.bg+s;var s0=s.length;if(C.noshell!==1)s+=lfSlab();
   if(out&&!C.bg)s+=lfOutBack(t,LFW.wx,uid);
   if(!C.noshell)s+=lfFloor(C.T,C.T.fl,st,uid);
+  if(C.notch)s=s.slice(0,s0)+rsNotchShell(C,uid,s.slice(s0));
   if(!out&&!C.noshell){var wlW=LF.W,wlN=LF.N;if(C.rsW){LF.W=C.rsW;LF.N=C.rsW}var wls=lfWalls(t,st,uid,LFW.wx);LF.W=wlW;LF.N=wlN;s+=hole?'<g clip-path="url(#'+hole.id+')">'+wls+'</g>':wls}
   s+=C.decals.join("")+C.walls.join("");
   if(C.LT)s+=C.LT.defs+C.LT.pre;

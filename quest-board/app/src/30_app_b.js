@@ -784,7 +784,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only";if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=34, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=35, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1419,12 +1419,13 @@ render();try{chLoad()}catch(e){}
     db=window.claude?await window.claude.use("db"):null;
     var usr=null; try{usr=window.claude?await window.claude.use("user"):null}catch(e){}
     var uid=null, own=true; if(usr){try{uid=await usr.id();own=await usr.isOwner()}catch(e){}}
-    MYUID=uid||null;
+    MYUID=uid||null;if(usr&&!own){window.__qbGuest=1;document.body.classList.add("qb-guest");var qt=document.getElementById("qbt");if(qt)qt.remove()}
     /* every save, the owner's too, lives in a private per-person path */
     if(db&&uid){
       DOC="data/users/"+uid+"/state";
       var snap=await db.doc(DOC).get();
-      if(snap.exists)merge(snap.data());
+      /* a copy of the save from the last version, before this version writes anything */
+      if(snap.exists){var sd0=snap.data();if((+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup").set(sd0).catch(function(){});merge(sd0)}
       else if(own){var old=await db.doc("player/state").get();if(old.exists){merge(old.data());migrated=true;db.doc("player/state").delete().catch(function(){})}}
     }else if(db&&own){var s2=await db.doc("player/state").get();if(s2.exists)merge(s2.data());else{var rw=localStorage.getItem("quest-board");if(rw)merge(JSON.parse(rw))}}
     else{db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}

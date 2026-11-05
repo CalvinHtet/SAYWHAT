@@ -33,8 +33,9 @@ The arrow points where that room really is in the building. `ROOMCELL` is the ma
 
 Room view: at the widest zoom the room reaches both sides of the frame, drag up and down if it does not all fit.
 
-Restaurant (`LFROOM.restaurant` in `26_world.js`): kitchen behind a partition in the top right corner, booths
-on the left wall (two bench sprites and a table, so a guest sits inside), tables with four chairs, curved booth.
+Restaurant (`LFROOM.restaurant` in `26_world.js`): `RSSIZE` is the dining room. The kitchen is a wing off its top right corner, sized by
+`RSKIT`, outside the dining room's square. With no patio the floor is an L (`C.notch`, `rsNotchShell`); the patio fills the corner below the
+wing. Booths on the left wall (two bench sprites and a table, so a guest sits inside), tables with four chairs, curved booth, pass with stools on the dining side of the wall.
 Bar, Rooftop with pool and glass rail, marble strip Mall with empty storefronts: hand-placed in `27_rooms.js`.
 Game Room, Boba, Dessert, Speakeasy, Arcade, Rhythm, VR, Bowling, Karaoke, Nightclub: hand-placed in
 `27b_skins.js`, each with its own floor and wall painted in code (`roomSkin`).
@@ -121,11 +122,13 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Not checked: a real phone, and every other
    screen at phone width (only the Board and The Loft were looked at).
 
+Published: the page is pinned in Cal's sidebar. `dist` has 437 files; character layers and icons are bundled into `art_rig.js` and
+`art_icon.js`. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
+
 Still to do, in order:
-1. Rear-view art for the Bowling lane seats and the Game Room gaming chairs (Cal's Chrome), then place them facing the lanes and the TV.
-2. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
-3. Look at the stretch-pose sleeve streaks with a person's eye: decide whether it needs a rig change (pin armpit cells to the torso) or is acceptable.
-4. Before release: remove the Shop's Testing row and the `window.__qb` and `window.__qbLoft` hooks, and test on a real phone.
+1. Regenerate `o_lock`, `al_carab`, `v_shade` and `v_corset` cleanly when Cal is next generating, so the Dropbox sources match.
+2. Look at the stretch-pose sleeve streaks with a person's eye: decide whether it needs a rig change (pin armpit cells to the torso) or is acceptable.
+3. Before sharing widely: test on a real phone. The Test panel and Shop Testing row only show for the owner; remove them and the `window.__qb` and `window.__qbLoft` hooks before release.
 
 ## Not yet verified
 

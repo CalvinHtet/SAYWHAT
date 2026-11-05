@@ -47,7 +47,7 @@ var EXTRA_ITEMS=[
  ["gx_v_rose","a_top","Rose Print Tee",950,1,"Black with a big red rose.",{gar:"v_rose",b:"rose"}],
  ["gx_v_blazer","a_top","Wine Velvet Blazer",1600,1,"Deep red velvet.",{gar:"v_blazer",b:"rose",mo:1}],
  ["gx_v_leather","a_pants","Leather Pants",1400,1,"Black, straight leg.",{gar:"v_leather",b:"rose"}],
- ["gx_v_tulle","a_pants","Black Tulle Skirt",1300,1,"Layers and layers.",{gar:"v_tulle",b:"rose",fo:1,soon:1}],
+ ["gx_v_tulle","a_pants","Black Tulle Skirt",1300,1,"Layers and layers.",{gar:"v_tulle",b:"rose",fo:1}],
  ["gx_v_flare","a_pants","Velvet Flares",1300,1,"Wine velvet, wide hem.",{gar:"v_flare",b:"rose"}],
  ["gx_v_boot","a_shoes","Platform Combat Boots",1600,1,"Black, buckled, tall.",{gar:"v_boot",b:"rose"}],
  ["gx_v_heel","a_shoes","Strappy Heeled Boots",1500,1,"Black straps and a block heel.",{gar:"v_heel",b:"rose",fo:1}],
