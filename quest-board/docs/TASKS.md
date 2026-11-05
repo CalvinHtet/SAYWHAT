@@ -22,8 +22,10 @@ To do:
       the Trophies tab becomes Relics, with tiered relics hidden until earned (old badges carry over) and a Trophies sub-tab
       that opens after the first piece and the Lair's Trophy Room; piece buffs and the set bonus; the crew fix (nobody has
       joined since the lounge was removed). Art requested from ROOMS below. QA to simulate drop odds.
-- [ ] Economy: waiting on Cal. Upgrades unlock up to level 62 while levels take about 6 days each past 80 (Cal: wants 2 or 3
-      levels on a busy day, and no level locks on upgrades, 4 at a time).
+- [ ] Progression (Cal, 2026-11-05): plan in `docs/PROGRESSION.md`, waiting on Cal's go and two questions. New XP curve
+      (level 10 in about 4 days, at most 3 days a level), no level locks on room upgrades (4 shown, the 4th a mystery),
+      prices rising along the story, and rooms opening through a story (garden, sell produce, a partner opens the restaurant,
+      boba, dessert, an investor's speakeasy, rooftop, the strip mall, theater and auditorium, arcade, bowling, karaoke).
 - [x] (from ROOMS) Saves: online saving fixed, an old online save never replaces newer progress (9c3bd78). Goes live in the
       next publish. Each device asks once, "Two saves found", when its save and the online one disagree.
 - [x] (from ROOMS, ade6cd0) Shop banners, Cal on approving the art: each brand's title stylized and unique (not plain white text or a
