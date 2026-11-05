@@ -273,6 +273,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   real life, room pay capped at 20 to 50% of the day's task coins, missions run on energy from tasks and give no XP, training
   the best XP per minute. Modelled: tasks stay 53 to 83% of all coins, a 12-task player fills the town in about 5 months.
   Owner: LEAD (code), Cal (the go). QA reruns `sim.js` on the code once it is in.
+- LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
+  (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
+  (the hidden quest's reveal, 512 x 300), `ui_town_board.webp` (town hall backdrop, 720 x 300). Tell LEAD when READY.
 - ROOMS, art for the same (Cal 2026-11-05, after LEAD's code exists): a town hall board backdrop for the posts; the Daily Quest
   complete card and its small chest; the hidden 200% reward's look (rare furniture pieces and cosmetic shards, original
   designs); four stat icons (STR, AGI, VIT, INT); an active-trial badge. Sizes and names from LEAD when the code is in.
