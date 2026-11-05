@@ -1592,7 +1592,10 @@ function lfVisRooms(){var c=document.getElementById("lfwrap"),L=window.LFLAY;if(
   document.querySelectorAll("#lfw > g.lfroom[data-i]").forEach(function(g){var on=vis[g.getAttribute("data-i")]!==false;if(g._vis!==on){g._vis=on;g.style.display=on?"":"none"}});
   LFVISK=k;LFVIS=vis;return vis}
 /* ---- drag / zoom ---- */
-function lfApply(){var w=document.getElementById("lfw");if(w)w.setAttribute("transform","translate("+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+") scale("+LFV.s.toFixed(3)+")");var c=document.getElementById("lfwrap");if(c){if(LFV.s0&&LFV.s>=LFV.s0*1.18)c.setAttribute("data-zin","1");else c.removeAttribute("data-zin")}}
+/* Dragging and pinching call this on every pointer move; the transform is applied at most once a frame (lag, LEAD's
+   request). The first call in a frame schedules it, later ones in the same frame only update LFV. */
+var LFAPR=0;function lfApply(){if(LFAPR)return;LFAPR=requestAnimationFrame(function(){LFAPR=0;lfApplyNow()})}
+function lfApplyNow(){var w=document.getElementById("lfw");if(w)w.setAttribute("transform","translate("+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+") scale("+LFV.s.toFixed(3)+")");var c=document.getElementById("lfwrap");if(c){if(LFV.s0&&LFV.s>=LFV.s0*1.18)c.setAttribute("data-zin","1");else c.removeAttribute("data-zin")}}
 function lfClamp(){var c=document.getElementById("lfwrap");if(!c)return;var cw=c.clientWidth,ch=c.clientHeight,W=LFWW*LFV.s,H=LFDIM.h*LFV.s,m=90;
   LFV.x=Math.min(m,Math.max(cw-W-m,LFV.x));if(W+2*m<cw)LFV.x=(cw-W)/2;LFV.y=Math.min(m+640*LFV.s,Math.max(ch-H-m,LFV.y))}
 function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
