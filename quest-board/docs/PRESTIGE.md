@@ -42,8 +42,13 @@ Cal: "Entering it starts your level at 1 but with a prestige star next to it."
 - Art: made from the current assets as reference, with the prompts changed to fit the world. Everything already has a
   placement, so a world is mostly new paintings in the same slots.
 
+## Decided (Cal, 2026-11-05)
+
+- Clothes, relics and classes carry over into a new world.
+- Each new world adds more class options of its own, which change how you progress there.
+
 ## Open questions for later
 
-- What carries over: cosmetics, relics, trophies, team members, classes?
+- Do trophies and team members carry over?
 - Can a player go back to the human world, and does it keep earning?
 - Does the prestige star give a lasting bonus?
