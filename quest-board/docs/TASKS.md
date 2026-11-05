@@ -15,6 +15,9 @@ Live on the phone: `APPV` 41 (page version 12), 2026-11-05.
 Doing:
 
 To do:
+- [ ] Review the `dropbox-leftovers` branch: uncommitted edits found in the old Dropbox folder, 2 lines each in
+      `app/src/27_rooms.js` and `app/src/27b_skins.js`, made against a copy 22 commits behind `main`. Show Cal what
+      they did, bring over anything still wanted by hand (don't merge the branch), then delete the branch.
 - [ ] Ask Cal for his phone-test feedback list, sort it onto this board by owner.
 - [ ] Confirm on Cal's phone that the Loft fills the screen inside the Claude app, with the bottom nav showing.
 - [ ] Confirm the phone shows the newest version (the header `v` number) after a publish.
