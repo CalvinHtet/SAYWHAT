@@ -109,16 +109,21 @@ lfWorld=function(){
     s+='</g>'});
   s+='<g id="lfagS"></g><g id="lfwxo" pointer-events="none"></g>';
   window.LFMETA=meta;window.LFDIM={w:LFWW,h:Hh,rows:rows,F:rows,lockF:0};
+  setTimeout(function(){var h=document.querySelector(".lfhint");if(h)h.innerHTML="Drag to move &middot; pinch to zoom &middot; tap a "+(LFBSEL==null?"building":"room")},0);
   return '<defs><filter id="prtBlur" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="lfclip"><rect x="-240" y="-140" width="480" height="362"/></clipPath><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs><g id="lfw">'+s+'</g>'};
 /* the light on the city moves with the clock, without redrawing the rooms */
 setInterval(function(){var g=document.getElementById("lfback");if(!g||!window.LFLAY)return;var k=lfLS().key;if(k===window.LFSKYK)return;window.LFSKYK=k;g.innerHTML=worldBack(window.LFLAY);var w=document.getElementById("lfwrap"),c=lfSkyCols();if(w)w.style.background="linear-gradient(180deg,"+c[0]+" 0,"+c[1]+" 100%)"},20000);
 /* The view opens on the whole Home building, every room of it in sight, wide screen or phone. Zoom in from there. */
 function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520,L=window.LFLAY,b=L&&L.b&&(LFBSEL==null?{x:60,w:streetW()-120,f:Math.max(2,Math.ceil(Math.max.apply(0,bldList().map(function(o){return o.f}).concat([2]))*BLDF/LFFP)+1)}:L.b[LFBSEL]);
   if(!b){LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply();return}
-  var f=b.f||1,s=Math.max(lfMinS(),Math.min(1.4,(cw-24)/(b.w+60),(ch-110)/(f*LFFP+170)));
-  LFV.s=LFV.s0=s;LFV.x=cw/2-(b.x+b.w/2)*s;LFV.y=ch*.47-(LFROOF+(L.rows-f/2)*LFFP+30)*s;LFV.init=1;lfClamp();lfApply()}
+  var f=b.f||1,s=Math.max(lfMinS(),Math.min(1.4,(cw-24)/(b.w+(LFBSEL==null?60:Math.max(420,b.w*.24))),(ch-110)/(f*LFFP+170)));
+  /* rooms draw past their grid cells, more to the right: inside a building, fit a wider box shifted right (measured by QA and LEAD) */
+  var ox=LFBSEL==null?0:Math.min(170,b.w*.06);LFV.s=LFV.s0=s;LFV.x=cw/2-(b.x+b.w/2+ox)*s;LFV.y=ch*.47-(LFROOF+(L.rows-f/2)*LFFP+30)*s;LFV.init=1;lfClamp();lfApply()}
 /* The frame a phone app gives the page can change size: refit the building when the height really changed, so it is never
    left framed for the old size. A small change (a bar sliding away) only re-clamps. */
+/* Zoomed all the way out, everything in view fits: the street, or the building you are in. lfMinS in 20_loft.js read
+   window.LFWW, which is never set, so it stopped at a 2400-wide world and Calibur Mall (3000) never fit (QA). */
+lfMinS=function(){var c=document.getElementById("lfwrap"),cw=(c&&c.clientWidth)||360,L=window.LFLAY,w=LFBSEL!=null&&L&&L.b[LFBSEL]?L.b[LFBSEL].w*1.3+600:LFWW+120;return Math.min(.32,cw/w)};
 var LFVH=0;
 lfInitView=function(c){lfInitViewOf(c);LFVH=c.clientHeight};
 addEventListener("resize",function(){var c=document.getElementById("lfwrap");if(!c||!LFV.init)return;if(Math.abs(c.clientHeight-LFVH)>=120){LFV.init=0;lfInitView(c)}else{lfClamp();lfApply()}});

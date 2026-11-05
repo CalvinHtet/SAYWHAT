@@ -642,7 +642,8 @@
       const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp)));
       const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat(l.front.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
       // A painted layer is drawn once, in the last group its mesh would use, so everything it should cover is already down.
-      const lastGroup = slots.map((x, i) => { let g = -1; if (flats[i]) for (const gg of rig.drawSequence[view]) if ([meshes[i].groups[gg], ...meshes[i].seams[gg].map((z) => z[1])].some((t) => t && t.length)) g = gg; return g; });
+      // The bare body goes in its first group instead, under the face, hair and clothes (ROOMS, yawn pilot).
+      const lastGroup = slots.map((x, i) => { let g = -1; if (flats[i]) for (const gg of rig.drawSequence[view]) if ((x.s.id !== "body" || g < 0) && [meshes[i].groups[gg], ...meshes[i].seams[gg].map((z) => z[1])].some((t) => t && t.length)) g = gg; return g; });
       this.prepare(look);
 
       const gl = this.gl, [W, H] = rig.frame, k = rig.frameScale;
