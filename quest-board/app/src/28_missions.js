@@ -6,7 +6,8 @@ function msHeroes(){var lair=S.base.slots.filter(function(r){return r&&r.t==="la
 function msBusy(){var m=msState(),b={};Object.keys(m.run).forEach(function(id){m.run[id].party.forEach(function(h){b[h]=1})});return b}
 /* minutes a mission takes; trophies can shorten it (29d_dungeon.js) */
 function msMins(q){return q.mins}
-function msPay(q){var f=1+.02*effLvl();return {c:Math.round(q.c*f),x:Math.round(q.x*f)}}
+/* QA's simulator: a tap should not out-earn real tasks. Missions pay coins (1% more per level) and a little XP, flat. */
+function msPay(q){return {c:Math.round(q.c*(1+.01*effLvl())),x:Math.round(q.x*.3)}}
 awayHtml=function(){var m=msState(),hs=msHeroes(),busy=msBusy(),free=hs.filter(function(h){return !busy[h]}),now=Date.now();
   var h='<section class="card panel"><h3 class="label">Missions</h3><p class="note">Send your people out from the Hero\'s Lair. Five jobs a day. Bigger jobs need more people and pay far more.</p><p class="note"><b>Your team:</b> '+hs.map(function(n){return busy[n]?'<s>'+esc(n)+'</s>':esc(n)}).join(", ")+'. Upgrade the Lair to recruit more.</p></section>';
   MS_LIST.forEach(function(q){var pay=msPay(q),run=m.run[q.id],done=m.done[q.id],body;

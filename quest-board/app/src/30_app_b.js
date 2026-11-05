@@ -36,7 +36,7 @@ function roomModal(i){
   closeModals();
   simulate();
   var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
-  var stat=T.coin?Math.round(coinRate(i))+' coins/hr, holds '+roomStore(r)+' hrs':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+'/hr':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Crew without a job relax here.');
+  var stat=T.coin?Math.round(coinRate(i))+' coins/hr, holds '+roomStore(r)+' hrs. Your businesses can pay out '+payRoom().toLocaleString()+' more today':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+'/hr':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Crew without a job relax here.');
   var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% until you finish 3 quests today.':'Full speed today.')+'</p>';
   if(r.t==="garden")h+=gdNote(r)+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
@@ -142,7 +142,8 @@ function baseAct(a,b,e){
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
-  if(a==="rcollect"||a==="rall"){simulate();var got=0;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.floor(r.pend||0);r.pend-=n;got+=n}});
+  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got));if(n<Math.floor(r.pend||0))capped=true;r.pend-=n;got+=n}});payTake(got);
+    if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
     if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
     S.coins-=hc;S.spent+=hc;S.hired[hk]=1;render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
@@ -770,8 +771,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
 /* a level a day early on, about ten days a level at the cap. See docs/ECONOMY.md */
 /* XP to reach level L. Cal, 2026-11-05 (docs/PROGRESSION.md): level L to L+1 costs min(600, 50+6L+0.2L²), so level 10 comes in
    about 4 days and no level takes more than about 3 normal days. cumOld is the old curve, kept for moving old saves over. */
-var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(600,Math.round(50+6*L+.2*L*L)))})();
-function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*600}
+/* QA's simulator (2026-11-05): players really earn about twice the XP on paper (proof, streaks, combos, crits), so each
+   level costs twice what the first plan said, and at most 1200. */
+var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(1200,Math.round(2*(50+6*L+.2*L*L))))})();
+function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*1200}
 function cumOld(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
 function levelPay(L){return 100+10*L}
 function lvlOf(xp){var L=1;while(L<MAXL&&xp>=cum(L+1))L++;return L}

@@ -6,19 +6,20 @@ then. Nothing a player already owns is ever taken away.
 
 ## Levels
 
-XP to go from level L to L+1: `min(600, 50 + 6L + 0.2L²)`.
+XP to go from level L to L+1: `min(1200, 2 x (50 + 6L + 0.2L²))`. Doubled after QA's simulator (2026-11-05): proof, streaks,
+combos, crits and bounties turn about 200 XP of tasks on paper into about 420 a day, and a busy 450 into about 950.
 
-| Level | XP for that level | Day reached at 200 XP a day | Busy days (450 XP) |
+| Level | XP for that level | Day reached at 420 real XP a day | Busy days (950) |
 |---|---|---|---|
-| 5 | 77 | 1.3 | 0.6 |
-| 10 | 120 | 3.9 | 1.7 |
-| 20 | 236 | 12.9 | 5.7 |
-| 30 | 392 | 28.9 | 12.8 |
-| 40 | 588 | 53.7 | 23.9 |
-| 50 | 600 | 83.7 | 37.2 |
-| 100 | 600 | 233.7 | 103.9 |
+| 5 | 170 | 1.3 | 0.6 |
+| 10 | 260 | 3.7 | 1.6 |
+| 20 | 500 | 12.3 | 5.4 |
+| 30 | 820 | 27.5 | 12.1 |
+| 40 | 1200 | 51.1 | 22.6 |
+| 50 | 1200 | 79.7 | 35.2 |
+| 100 | 1200 | 222.6 | 98.4 |
 
-A normal day of about a dozen tasks is 200 XP. Past level 40 a level is three normal days at most, or one busy day and a half.
+A normal day of about a dozen tasks earns about 420 XP. Past level 40 a level is about three normal days.
 Existing saves: XP stays as it is; anyone whose level would drop keeps their current level until the new curve catches up.
 
 ## Room upgrades

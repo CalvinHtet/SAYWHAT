@@ -8,7 +8,7 @@ const ONLY = (process.argv[2] || '').split(',').filter(Boolean);
 const UID = 'u_test', STATE = 'data/users/' + UID + '/state', BACKUP = 'data/users/' + UID + '/backup', OTHER = 'data/users/' + UID + '/backup_choice';
 
 // A save as an older version wrote it: no savedAt. Flags that make merge() leave the numbers alone.
-const save = (over) => Object.assign({ epoch: 2, appv: 34, created: true, rst2: true, v001: 1, k10: 1, hire1: true, char: { name: 'Tester', sex: 'f' }, xp: 700, total: 10, coins: 1000, earnedC: 1000, spent: 0, lvPaid: 8, runDate: '2026-11-05', quests: [], stats: { creativity: 2, discipline: 3, fitness: 0, productivity: 7, social: 0 } }, over);
+const save = (over) => Object.assign({ epoch: 2, appv: 34, created: true, rst2: true, xpc2: 1, v001: 1, k10: 1, hire1: true, char: { name: 'Tester', sex: 'f' }, xp: 700, total: 10, coins: 1000, earnedC: 1000, spent: 0, lvPaid: 8, runDate: '2026-11-05', quests: [], stats: { creativity: 2, discipline: 3, fitness: 0, productivity: 7, social: 0 } }, over);
 const ONLINE = save({ xp: 715, total: 12, coins: 8000, char: { name: 'Online', sex: 'f' } });
 const DEVICE = save({ xp: 980, total: 31, coins: 2500, char: { name: 'Device', sex: 'f' }, appv: 44 });
 
@@ -176,7 +176,7 @@ const CASES = {
     const old = (L) => Math.round(((L - 1) * 100 + .19 * (L - 2) * (L - 1) * (2 * L - 3) / 6) / 5) * 5;
     for (const L of [8, 30, 60]) {
       const xp = Math.round((old(L) + old(L + 1)) / 2);
-      const { ctx, p, errs } = await start(b, { online: save({ xp, lvPaid: L, char: { name: 'Old' + L, sex: 'f' } }) });
+      const { ctx, p, errs } = await start(b, { online: save({ xp, xpc2: undefined, lvPaid: L, char: { name: 'Old' + L, sex: 'f' } }) });
       await open(p);
       const r = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; return { lv: x.lvlOf(S.xp), xp: S.xp, c2: S.xpc2, need: x.need(x.lvlOf(S.xp)) }; });
       check('old level ' + L + ' does not drop (now ' + r.lv + ')', r.lv >= L && r.c2 === 1, r);
