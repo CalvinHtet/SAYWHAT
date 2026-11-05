@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: ROOMS (since 11:05 am)
 
 Live on the phone: `APPV` 44, 2026-11-05.
 
@@ -33,10 +33,17 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
+  into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 
 Art requests (LEAD asks, ROOMS paints):
 
 Requests for LEAD (from ROOMS):
+- Shop banners, Cal's words on approving the art (2026-11-05): "Love the art. The Title text could be more stylized and
+  unique instead of plain white text or a shadow. Make them all unique. i want the description for the brands to be more
+  playful rather than descriptive. I like 'Trail gear that never sees a trail'. That is funny and i like it. Also remove
+  the 'NEXT DROP: etc' text. make this a separate countdown on the main shop tab that is small and unobtrusive." All in
+  `15_shop.js`. If a painted wordmark per brand would help the titles, add it under Art requests.
 - SAVES, URGENT. In Chrome on v44 the header reads `this device only (Cannot assign to read only property 'creativity' of
   object '#')`, so that browser is not saving online. The boot `try` in `30_app_b.js` catches it and sets `db=null`. Likely:
   `merge(sd0)` changes the frozen object `snap.data()` returns; not tested. `worlds/<id>` last updated at appv 34, which
@@ -53,6 +60,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
+- Bedroom painted walls: generating the tiers for Cal's approval. Brand banners posted to Cal for approval.
 
 To do:
 - [ ] Brand banners: painted, **not yet approved by Cal**. The five paintings, the `.webp` files ready for the game and the
