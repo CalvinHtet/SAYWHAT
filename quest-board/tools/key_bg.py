@@ -5,7 +5,7 @@
 strict: the object has none of the backdrop's colour in it, so every pixel leaning that way goes too (backdrop seen
 between chair legs, through glass, or in a cast shadow). strict:N sets how far a pixel may lean first (default 22).
 neutral: instead, the backdrop's tint reflected in the object (polished metal) is pulled back to grey everywhere;
-strict+neutral does both.
+strict+neutral does both. holes: also clear backdrop patches the object encloses.
 
 The background colour is the median of the picture's border. Only background that connects to the border is removed, so
 parts of the object in a similar colour (a green dragon on a green backdrop) stay. The edge is softened and despilled,
@@ -30,6 +30,13 @@ def main():
     lab, _ = ndi.label(d < tol)
     edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     bgm = ndi.binary_opening(np.isin(lab, list(edge)), iterations=1)
+    if len(sys.argv) > 5 and "holes" in sys.argv[5]:
+        # backdrop shut in by the object (between rooftop walls, inside a handle): very close in colour, a real patch
+        hl, n = ndi.label(d < tol * .6)
+        if n:
+            sizes = ndi.sum(np.ones_like(d), hl, range(1, n + 1))
+            big = [i + 1 for i, z in enumerate(sizes) if z > 400]
+            bgm |= ndi.binary_dilation(np.isin(hl, big), iterations=1)
     rim = ndi.binary_dilation(bgm, iterations=3) & ~bgm
     alpha = np.where(bgm, 0.0, 1.0)
     alpha = np.where(rim, np.clip((d - tol * .45) / (tol * .8), 0, 1), alpha)
