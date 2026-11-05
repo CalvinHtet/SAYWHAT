@@ -54,11 +54,20 @@ Each new room opens with a short scene (a card with a character), and most bring
    rescued on a dungeon mission, or a passer-by who loved your garden. They join your team.
 3. **Boba shop**: once the restaurant has served enough dishes.
 4. **Dessert parlour**: once the boba shop is doing well.
-5. **Speakeasy upstairs**: an investor notices how well the restaurant is doing and wants a bar upstairs.
+5. **The speakeasy upstairs** (one room: the Upstairs Bar and the Speakeasy become the same room, on the second floor above
+   the restaurant; name to pick). A scene in the style of Dave the Diver: an investor walks into the restaurant, is impressed
+   by how much it has earned and grown, and offers to turn the second floor into an upscale speakeasy with a live band and
+   singers. Free, and it starts really bare.
 6. **Rooftop lounge**: grows out of the speakeasy.
-7. **Strip mall**: an investor loves your business model and wants to buy a small strip mall with you. It starts empty.
-8. **Movie theater**, then the **Auditorium**. The theater earns once the auditorium opens.
-9. **Arcade**, then **Bowling**, then **Karaoke**.
+7. **Strip mall**: another investor loves your business model and wants to buy a small strip mall nearby with you. Bought
+   with your own coins. It starts empty.
+8. **Movie theater**, then the **Auditorium**. The auditorium opens free once the lobby has the basics: a ticket stand, a
+   popcorn and soda machine, and an employee working it. From then on the lobby and the auditorium upgrade separately, and
+   better things bring happier customers and more income. The theater earns once the auditorium is open.
+9. **Arcade** (Rhythm and VR as its expansions), then **Bowling**, then **Karaoke**, then the **Club** last.
+
+Who pays: the Restaurant and the Strip mall cost your own coins. The speakeasy and the Auditorium are free once their scene
+or their basics are done.
 
 The Loft building (Bedroom, Closet, Lair, Patio, Game Room) keeps opening as it does now.
 
@@ -66,12 +75,13 @@ The Loft building (Bedroom, Closet, Lair, Patio, Game Room) keeps opening as it 
 
 - LEAD: the curve and old-save rule, prices, the upgrade menu, the story scenes and what opens each room, team members from
   the story, `ECONOMY.md`.
-- ROOMS: a chibi look and a portrait for each story character (the partner chef, the first investor, the mall investor),
-  a produce stand in the Garden, and anything a room needs to show its story start. Room order in `ROOMCELL` stays.
+- ROOMS: merge the Upstairs Bar and the Speakeasy into one second-floor room (room code, art, the bare start); a chibi look
+  and a portrait for each story character (the partner chef, the speakeasy investor, the mall investor, the theater employee);
+  a produce stand in the Garden; the theater basics as separate upgrades (ticket stand, popcorn and soda, an employee).
 - QA: an economy simulator over 30, 90 and 180 days, the story gates, and old saves at every stage.
 
-## Open questions for Cal
+## Decided (Cal, 2026-11-05)
 
-- The Upstairs Bar (`skybar`) and the Speakeasy are two rooms today. One investor scene for both, or does the Upstairs Bar
-  open with the restaurant as it does now?
-- Rhythm, VR and the Club are not in the story yet. Suggested: Rhythm and VR as arcade expansions, the Club last.
+- The Upstairs Bar and the Speakeasy are one room. Saves that own both keep everything: the merged room keeps the ids.
+- The speakeasy needs a creative name (Cal to pick).
+- Rhythm, VR and the Club: as in step 9, unless Cal says otherwise.

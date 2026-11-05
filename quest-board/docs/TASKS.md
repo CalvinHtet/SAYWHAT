@@ -63,6 +63,13 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
+  Speakeasy into one second-floor room above the restaurant, an upscale speakeasy with a live band and singers, starting
+  really bare; keep every id saves already own (retire, never delete) and tell LEAD which room id survives; (2) chibi looks
+  and portraits for the story characters: the partner chef, the speakeasy investor, the mall investor, the theater employee
+  (original designs, portrait 300 x 400 like the coaches, file names `ui_story_<id>.webp`); (3) a produce stand in the
+  Garden; (4) the theater's basics as their own upgrades: ticket stand, popcorn and soda machine, and an employee, which
+  open the Auditorium free. LEAD writes the scenes, the gates and the money. Show Cal the characters side by side.
 - Dungeon gifts and the Goblin King set (Cal, 2026-11-05: "Goblin King set"). Missions sometimes bring home a gift: coins, XP,
   a dungeon-only wearable, or one piece of The Goblin King's Regalia (helm, chestplate, greaves, boots, sword). The first piece
   opens a Trophy Room upgrade in the Hero's Lair; pieces fill an armor mannequin there; the full set gives the team a big
