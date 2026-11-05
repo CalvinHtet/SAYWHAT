@@ -15,5 +15,7 @@ with a save that owns every room and every upgrade.
 - `stations.js` lists spots that stand inside furniture or seats with nothing under them.
 - `rdepth.js` checks each Restaurant table seat is drawn on the right side of its table.
 - `phone.js` (W=360 TAG=p) measures the bottom nav and the Collect button at phone width.
+- `screens.js` (W=360) opens every bottom-nav tab and a room, screenshots each and lists anything wider than the screen.
+- `zoom.js room out.png sprite [sprite]` crops the room view around named sprites at 2.5x.
 
 They run on software WebGL, so a room of guests takes about a minute per pass.

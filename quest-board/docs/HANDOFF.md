@@ -119,8 +119,10 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
    there is only front-view art. Each needs a rear-view sprite, like `gmx_couchb`. Listed under Art below.
 4. Phone width: fixed. The nav needed 467px for eight names, so on a phone it scrolled with Wheel and Dungeons out of sight
    and Trophies cut in half. Under 541px each tab shows its icon and only the open tab keeps its name. Measured with no
-   overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Not checked: a real phone, and every other
-   screen at phone width (only the Board and The Loft were looked at).
+   overflow at 320, 360, 430, 540 and 600px. The Collect button no longer wraps. Later the same day every tab (Board,
+   Training, The Loft, Shop, Hall, Trophies, Wheel, Dungeons) and a room view were opened at 360px (`rigtest/browser/screens.js`):
+   nothing wider than the screen, all readable. The owner-only Test button sits over the bottom-left of the content on a
+   phone; it goes at release anyway. Not checked: a real phone.
 
 Recheck after the 57 new upgrades (2026-11-05, every room fully upgraded, `rigtest/browser` audits): new guest spots inside
 furniture (Mall photo booth in the flower kiosk, Bowling trophies in the lane seats, Game Room beanbags in the mini fridge)
