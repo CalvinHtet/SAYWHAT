@@ -13,7 +13,7 @@ Live on the phone: `APPV` 46 (page version 20), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Yawn pilot code in `src/rig.js` (swap in painted arms where they exist).
+- Three buildings: the street view and loading one building at a time (ROOMS said yes to `lfWorld`).
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -28,9 +28,9 @@ To do:
       real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below). Done so far (4b71234):
       a room window pauses the building view's animations (532 running, 30 with a window open).
 - [x] `dropbox-leftovers` reviewed (nothing worth bringing over) and deleted with Cal's OK.
-- [ ] Yawn pilot, code: when a character is at the peak of the stretch, swap in a top's painted yawn layers
-      (`m_<id>_yawn.webp`, `f_<id>_yawn.webp`, and `m_base_yawn` / `f_base_yawn` for bare arms) if they exist, and keep
-      today's yawn for every top that has none. In `src/rig.js`. Write it while ROOMS paints; QA tests it.
+- [x] Yawn pilot, code (rig.js flat painted layers, `rigtest/template.html`). Without painted art the stretch renders
+      byte for byte as before. Self-check feeding a top's own render back in: about 0.7% of pixels differ on the man (edges),
+      2 to 5% on the woman (her long hair over the sleeves: a flat picture sits over or under all of it). Waiting on ROOMS.
 - [x] Stretch pose: the gentler yawn (Cal's pick), 0959719. Dark long sleeves still look torn at the elbow, as before.
 - [x] `lfvar.json`: a copy is in git at `app/lfvar.json` (0959719). `build.py` does not use it.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
@@ -49,12 +49,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
-- Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). One sheet per cosmetic, both bodies,
-  holding the peak of the yawn (`stretch` in `data/poses.json`: arms out wide a little below the shoulders, forearms curled
-  up, head tipped back). Render the pose as your template with `rigtest/matrix.html?sheet=base&pose=stretch`. Pilot:
-  the bare body (arms), `y_vjkt` (zip jacket, tears worst today), `o_puffer` (bulky) and `h_hoodie` (soft sleeves). Save the
-  layers on the same canvas and registration as each item's `_front` layer, named `<m|f>_<id>_yawn.webp` and
-  `<m|f>_base_yawn.webp`. Show Cal the pilot side by side before anything goes in; QA checks every outfit combination after.
+- Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). The code is in (`src/rig.js`, the
+  `stretch` pose has `"painted":"yawn"`). Template: serve `quest-board/` and open `rigtest/template.html?pose=stretch&scale=2`:
+  the bare body in the peak of the yawn, man then woman, on flat green, each half exactly one frame (720 x 828). One
+  sheet per cosmetic, painted over that template: the bare body (clean arms and armpits, the template's armpit shards are
+  the rig's tearing), `y_vjkt`, `o_puffer` and `h_hoodie`. Cut each sheet back into its two halves, green removed, and save
+  `<m|f>_<id>_yawn.webp` (and `<m|f>_base_yawn.webp`) in `art/app/` at 720 x 828; the build packs them. Nothing changes
+  for any top without one. `rigtest/template.html?pose=stretch&check=<id>` is the alignment self-check. Show Cal the pilot
+  side by side before it goes in; QA checks every outfit combination after.
 - Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
   sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in

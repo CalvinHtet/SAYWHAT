@@ -23,3 +23,5 @@ with a save that owns every room and every upgrade.
   Run it after any change to `merge()`, `persist()` or the boot code in `30_app_b.js`.
 
 They run on software WebGL, so a room of guests takes about a minute per pass.
+
+`../template.html?pose=stretch&scale=2` is the template for painted poses (the yawn); `&check=<id>` checks a painted layer lines up.

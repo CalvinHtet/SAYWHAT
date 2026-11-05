@@ -254,6 +254,30 @@
       return made;
     }
 
+    /* A painted pose (pose.painted, e.g. "yawn"): a layer can have a picture already drawn in that pose, frame-sized and
+       lined up with the rig's own render of the pose (rigtest/template.html makes the template). It is drawn flat in place
+       of the bent mesh. Optional: anything without one keeps the mesh, and a missing file is never an error. */
+    flat(path) {
+      const key = "flat|" + path;
+      if (this.meshes.has(key)) return this.meshes.get(key);
+      const has = this.cfg.hasArt || ((p) => { const D = global.QBLoft && global.QBLoft.data; return !(D && D.arthash) || !!(D.arthash[p] || (global.QBART && global.QBART[p])); });
+      const made = !has(path) ? Promise.resolve(null) : this.image(path).then((im) => {
+        const gl = this.gl, tex = gl.createTexture();
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        return { tex };
+      }, () => null);
+      this.meshes.set(key, made);
+      return made;
+    }
+
     /* Bind one layer to the skeleton once. Weights come from geometry, so a new
        item needs no authoring: it just has to be painted on the rest pose. */
     bind(im, path, bodyId, view, slot, armsUp) {
@@ -555,7 +579,7 @@
       }
       const ra = a.root || {}, rb = b.root || {};
       return {
-        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, armsUp: !!(a.armsUp || b.armsUp), bones,
+        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, painted: t < 0.5 ? a.painted : b.painted, armsUp: !!(a.armsUp || b.armsUp), bones,
         root: { x: num(ra.x, rb.x, 0), y: num(ra.y, rb.y, 0), r: num(ra.r, rb.r, 0) },
       };
     }
@@ -574,7 +598,7 @@
         bones[id] = { r: at("r", 0), l: at("l", 1), w: at("w", 1) };
       }
       const root = (name) => field((k) => (k.root || {})[name], 0);
-      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, armsUp: !!(k1.armsUp || k2.armsUp), bones, root: { x: root("x"), y: root("y"), r: root("r") } };
+      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, painted: t < 0.5 ? k1.painted : k2.painted, armsUp: !!(k1.armsUp || k2.armsUp), bones, root: { x: root("x"), y: root("y"), r: root("r") } };
     }
 
     /* Frame f of a clip. Clips are data in poses.json. A loop of three or more keys follows
@@ -616,6 +640,9 @@
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
       const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp)));
+      const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat(l.front.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
+      // A painted layer is drawn once, in the last group its mesh would use, so everything it should cover is already down.
+      const lastGroup = slots.map((x, i) => { let g = -1; if (flats[i]) for (const gg of rig.drawSequence[view]) if ([meshes[i].groups[gg], ...meshes[i].seams[gg].map((z) => z[1])].some((t) => t && t.length)) g = gg; return g; });
       this.prepare(look);
 
       const gl = this.gl, [W, H] = rig.frame, k = rig.frameScale;
@@ -651,6 +678,20 @@
       gl.uniform1i(this.u.uPart, 1);
       for (const g of rig.drawSequence[view]) {
         slots.forEach(({ s, l }, i) => {
+          if (flats[i]) {
+            if (g !== lastGroup[i]) return;
+            const tint = l.tint || (s.id === "body" && look.skin) || null;
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, flats[i].tex);
+            gl.uniform1i(this.u.uMode, tint ? tint.mode : 0);
+            gl.uniform1fv(this.u.uClip, NO_CLIP);
+            if (tint) { gl.uniform3fv(this.u.uA, tint.a); gl.uniform3fv(this.u.uB, tint.b || tint.a); gl.uniform3fv(this.u.uC, tint.c || tint.a); }
+            const up = (l.lift || 0) * k;
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, -up, 0, 0, W, -up, 1, 0, 0, H - up, 0, 1, W, -up, 1, 0, W, H - up, 1, 1, 0, H - up, 0, 1]), gl.DYNAMIC_DRAW);
+            gl.uniform1f(this.u.uOnly, -1);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+            return;
+          }
           const m = meshes[i], batches = [[-1, m.groups[g]], ...m.seams[g]];
           if (batches.every(([, tris]) => !tris.length)) return;
           // A hat can sit higher than it was painted, to keep its brim off the eyes.

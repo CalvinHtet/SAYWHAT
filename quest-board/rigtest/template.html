@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Pose template</title>
+<body style="margin:0;background:#222;color:#fff;font:12px system-ui">
+<canvas id="out"></canvas>
+<pre id="log"></pre>
+<script>
+for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) document.write(`<script src="${f}?t=${Date.now()}"><\/script>`);
+</script>
+<script>
+// Templates for painted poses (data/poses.json "painted", e.g. the yawn). ROOMS paints over these; the rig then draws the
+// painted layer flat, in place of the bent mesh, at exactly this frame.
+//   ?pose=stretch&scale=2           the bare body in the pose, man then woman, on flat green, each half one frame.
+//                                    Cut the painted sheet back into halves and save <m|f>_<id>_<painted>.webp.
+//   ?pose=stretch&check=o_puffer    self-check: the item's own mesh render, fed back in as if painted, must match the
+//                                    normal render. Reports the share of pixels that differ.
+(async () => {
+  const log = (t) => (document.getElementById("log").textContent += t + "\n");
+  try {
+    const q = new URLSearchParams(location.search), D = window.QBDATA, I = D.items;
+    const { clips, ...poses } = D.poses, name = q.get("pose") || "stretch", zoom = +(q.get("scale") || 1);
+    const cfg = { ...D.rig, frame: D.rig.frame.map((n) => n * zoom), frameScale: (D.rig.frameScale || 0.14) * zoom, anchorPad: D.rig.anchorPad * zoom };
+    const [W, H] = cfg.frame, base = poses[name], plain = { ...base, painted: undefined };
+    const eq = (a) => (a ? { [I[a].slot]: { art: a, frontOnly: I[a].frontOnly, over: I[a].over, lift: I[a].lift, clip: I[a].clip } } : {});
+    const look = (body, art, keep) => { const L = QBLook.build(D.creator, { body, equipped: eq(art) }); if (keep) for (const k of Object.keys(L.layers)) if (!keep.includes(k)) delete L.layers[k]; return L; };
+    const fakes = {};
+    const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => fakes[p] || "../art/app/" + p, hasArt: (p) => !!fakes[p] });
+    const out = document.getElementById("out");
+    const check = q.get("check");
+    if (!check) {
+      out.width = W * 2; out.height = H;
+      const c = out.getContext("2d");
+      c.fillStyle = "#00ff00"; c.fillRect(0, 0, W * 2, H);
+      for (const [i, body] of ["m", "f"].entries()) c.drawImage(await rig.render(look(body, null, ["body", "face", "faceClosed"]), plain), i * W, 0);
+      document.title = "ready";
+      return;
+    }
+    const slot = I[check].slot, results = [];
+    out.width = W * 2; out.height = H;
+    for (const [i, body] of ["m", "f"].entries()) {
+      if ((I[check].femaleOnly && body === "m") || (I[check].maleOnly && body === "f")) continue;
+      const only = await rig.render(look(body, check, [slot]), plain);
+      fakes[`${body}_${check}_${base.painted}.webp`] = only.toDataURL("image/png");
+      const normal = await rig.render(look(body, check), plain), painted = await rig.render(look(body, check), base);
+      const a = normal.getContext("2d").getImageData(0, 0, W, H).data, b = painted.getContext("2d").getImageData(0, 0, W, H).data;
+      let diff = 0, ink = 0;
+      for (let p = 0; p < a.length; p += 4) { if (a[p + 3] > 8) ink++; if (Math.abs(a[p] - b[p]) + Math.abs(a[p + 1] - b[p + 1]) + Math.abs(a[p + 2] - b[p + 2]) + Math.abs(a[p + 3] - b[p + 3]) > 24) diff++; }
+      out.getContext("2d").drawImage(painted, i * W, 0);
+      results.push(`${body}: ${(100 * diff / ink).toFixed(2)}% of drawn pixels differ`);
+    }
+    log(results.join("\n"));
+    document.title = "ready " + results.join(" | ");
+  } catch (e) { document.title = "error " + e.message; log(e.stack); }
+})();
+</script>
