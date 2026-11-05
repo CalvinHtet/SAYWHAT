@@ -13,9 +13,10 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: waiting on QA's economy simulator (blocks the next publish); meanwhile the rest of the writing pass in LEAD's
-  files (help screens, class story text). Next: publish v48 once QA clears it, then tune the story gates with QA's
-  numbers. (on cf7b36a)
+- Now: the economy fix from QA's simulator (game runs out in 5 weeks): room income tied to the day's tasks, missions pay
+  coins with little XP and no per-level growth, the XP curve tuned to what players really earn. Files: `10_app_a.js`,
+  `28_missions.js`, `29_prices.js`, `29d_dungeon.js`, `30_app_b.js`. Next: QA reruns `sim.js` on it; Cal decides the
+  gym-photo trials; then publish v48. (on f4362b1)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
