@@ -214,6 +214,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Relics and trophies (001e749, `rigtest/qa/relics.js`): pass. A new player has the Relics tab and no Trophies sub-tab;
+  the Trophy Wall is "? ? ?" ("Bring home your first trophy") and becomes buyable with the first piece, when the Trophies
+  sub-tab appears; each relic tier pays once (600 coins, then nothing on two more checks); the full Goblin King set counts
+  each buff once (quests +3% XP, missions +20%, gifts +15%). Not seen: where the trophy buffs are listed (not on the Board).
+  No page errors. Owner: LEAD, nothing to fix.
 - QA, upgrade menu recheck (001e749, `menu.js` updated to the current rules): passes. Never more than 4 cards, the 4th always
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
@@ -466,7 +471,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Relics tab checks (LEAD's dungeon request), on a test copy only. Next: the economy check when LEAD writes WAITING ON QA. (on 59a0e61)
+- Now: nothing running. Next: the economy check when LEAD writes WAITING ON QA. (on b9e7386)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -505,7 +510,7 @@ To do:
       room's menu offers, 7,300 cards looked at): passes. Never more than 5 cards, "? ? ?" only 2+ levels up, one level up
       named with "Reach level", Buy always works, no early "All upgrades installed". 11 upgrades are never offered at any
       level, the same 11 ROOMS listed (Game Room 3, Restaurant Chef's Neon, Garden 3, Theater Cocktail Bar and 3).
-- [ ] (from LEAD) Dungeon gifts, now in (9b4cf3a, `29d_dungeon.js`, hook `window.__qbDungeon`): simulate the drop odds
+- [x] (from LEAD, done: QA findings, drop odds and Relics) Dungeon gifts, now in (9b4cf3a, `29d_dungeon.js`, hook `window.__qbDungeon`): simulate the drop odds
       (`DGLOOT`, `dgRoll`): how many missions, and days at 5 missions a day, to finish each set; does the pity ever fire
       twice running. Then the Relics tab: each relic tier once and never twice, the Trophies sub-tab hidden before the first
       piece, the Trophy Wall a mystery card until then, the buffs applied once (mission pay, quest XP and coins, room income).
