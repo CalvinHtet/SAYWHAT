@@ -150,14 +150,16 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
     /* e.plat: the piece is a stage or a dance floor people stand on, this many units high. It is no obstacle, and
        anyone inside it is lifted onto it and drawn over it, instead of standing inside it with only a head showing. */
     if(e.art){var arts0=Array.isArray(e.art[0])?e.art:[e.art];if(e.plat){var RR=LFREC;LFREC=null;arts0.forEach(one);LFREC=RR;
-      arts0.forEach(function(a){var x0=sx(a[1],a[3]),y0=sy(a[2],a[4]);C.plat.push({x0:x0,y0:y0,x1:x0+a[3],y1:y0+a[4],z:e.plat,key:x0+a[3]+y0+a[4]+.01})})}
+      arts0.forEach(function(a){var x0=sx(a[1],a[3]),y0=sy(a[2],a[4]);C.plat.push({x0:x0,y0:y0,x1:x0+a[3],y1:y0+a[4],z:e.plat,key:x0+a[3]+y0+a[4]-((a[6]&&a[6].dk)||0)+.01})})}
       else arts0.forEach(one)}
     if(e.light)lfLight(C,sx(e.light[0]),sy(e.light[1]),e.light[2],e.light[3],e.light[4],e.light[5]);
     /* A spot belongs to the piece nearest it, and moves with that piece when the room spreads. Spread on its own
        as a point, a spot just past a table's edge used to land inside the table. */
     var arts=e.art?(Array.isArray(e.art[0])?e.art:[e.art]):[],near=function(x,y,ax){if(!d.layout||!arts.length)return ax?sx(x):sy(y);
       var best=null,bd=1e9;arts.forEach(function(a){var dd=Math.hypot(Math.max(0,a[1]-x,x-a[1]-a[3]),Math.max(0,a[2]-y,y-a[2]-a[4]));if(dd<bd){bd=dd;best=a}});
-      return ax?sx(best[1],best[3])+(x-best[1]):sy(best[2],best[4])+(y-best[2])};
+      if(bd>1.5)return ax?sx(x):sy(y);/* a spot out on the floor (watching a band) spreads with the room, not with a piece */
+      /* and never past the room's edge, where a spot in front of a piece near the front can end up once it spreads */
+      return ax?Math.min(C.W-.3,sx(best[1],best[3])+(x-best[1])):Math.min(C.D-.3,sy(best[2],best[4])+(y-best[2]))};
     (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=near(q[0],q[1],1),qy=near(q[0],q[1],0);C.s("sit",qx,qy,q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
     (e.cust||[]).forEach(function(s,i){lfCust(C,near(s[0],s[1],1),near(s[0],s[1],0),s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
@@ -269,7 +271,7 @@ LFROOM.restaurant=function(C){
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<kw;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,kd,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,kd,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,kd,0)],"#6d4c2e","none");C.decals.push(pl);
-    if(H("r_sign"))rsS(C,"rsx_aframe",px+3.4,D-.75,.7,.5,24);
+    if(H("r_sign"))rsS(C,"rsx_aframe",px+3.4,D-.75,.7,.5,24,{dk:-.5});/* in front of the umbrella table, so drawn after it */
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,kd+.4,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",Wt-1.1,kd+.3,.9,.9,50)}
     if(H("r_p1"))[[px+2.2,kd+2.4],[px+5.6,kd+2.4]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
     if(H("r_p2"))[[px+4.3,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});

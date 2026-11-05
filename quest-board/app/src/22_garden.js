@@ -105,7 +105,7 @@ LFROOM.garden=function(C){
   if(H("g_scare"))gdS(C,"gd_scare",st===0?10:Rx,E?9.3:8.6,.7,.7,50,{H:100});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
   if(st>0){var zx=st===2?16.4:11.2;
-    if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
+    if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184,dk:1});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
     else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
     if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.5,4.8,1.1,1.1,70,{H:120})}
     if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx,E?6.8:6.6,3.6,1.0,50,{H:96});
@@ -115,7 +115,8 @@ LFROOM.garden=function(C){
     if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+3.7:zx+2.4,st===2?4.8:8.5,1.6,1.3,50,{H:92});
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
     if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:Rx+.2,E?7.8:D-3.6,.9,.8,40,{H:70});
-    if(H("g_stand"))gdS(C,"gdx_stand",st===2?.4:zx+2.8,st===2?12.9:4.8,1.8,1.0,34,{H:86});
+    /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
+    if(H("g_stand"))gdS(C,"gdx_stand",st===2?.4:zx+2.8,st===2?12.9:4.8,1.8,1.0,34,{H:86,dk:st===2?-1.12:0});
     if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[i];if(i%2){gdS(C,"gd_lamp",p[0]+3.6,p[1]-.5,.5,.5,40,{H:80});lfLight(C,p[0]+2,p[1]+.8,60,"#d68aff",2.6,.5)}});
     if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
       C.decals.push(stones(.4,W-.2,py,py+1.25));
