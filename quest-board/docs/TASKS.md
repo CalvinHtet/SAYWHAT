@@ -13,14 +13,19 @@ Live on the phone: `APPV` 44, 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Shop main text in Bebas Neue, and the Shop banner as a real rectangle on a phone (not committed yet, testing).
+- Phone lag: room windows pause the building view's animations, and an owner-only speed log (`diag/perf`). Then publish.
 
 To do:
-- [ ] Shop text (Cal: "something more stylized and sleek", Bebas Neue light or thin for the main text, titles stay as they
-      are) and the Shop banner on a phone (Cal: Hangang looks square, make it fit the phone view). Then publish.
-- [ ] Phone lag (Cal, on v43: "very laggy on the phone"). Find what is slow on a real phone and fix it. The `diag/frame`
-      log landed nothing on v43: work out why, because it is the only way to get real phone numbers. Taken over from ROOMS,
-      who had it as Doing: anything ROOMS found goes under Requests for LEAD. Room code changes go through ROOMS.
+- [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
+      (47f3af4). Goes live in the next publish.
+- [x] (from ROOMS) Saves: online saving fixed, an old online save never replaces newer progress (9c3bd78). Goes live in the
+      next publish. Each device asks once, "Two saves found", when its save and the online one disagree.
+- [ ] (from ROOMS) Shop banners, Cal on approving the art: each brand's title stylized and unique (not plain white text or a
+      shadow), playful taglines instead of descriptive ones (keep ALTITUDE's "Trail gear that never sees a trail"), and the
+      next drop as a small, unobtrusive countdown on the Shop's main tab, not in the banner. Publish with ROOMS's banners.
+- [ ] (from ROOMS) Phone lag (Cal, on v43: "very laggy on the phone"). The `diag/frame` log landed nothing because saves were
+      broken (`db` was null), so it lands again after the next publish, and a new `diag/perf` log records frame rates on the
+      real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below).
 - [ ] Review the `dropbox-leftovers` branch: uncommitted edits found in the old Dropbox folder, 2 lines each in
       `app/src/27_rooms.js` and `app/src/27b_skins.js`, made against a copy 22 commits behind `main`. Show Cal what
       they did, bring over anything still wanted by hand (don't merge the branch), then delete the branch.
@@ -36,21 +41,23 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 
-Art requests (LEAD asks, ROOMS paints):
+Art and room code requests (LEAD asks, ROOMS does):
+- Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
+  most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 Requests for LEAD (from ROOMS):
-- Shop banners, Cal's words on approving the art (2026-11-05): "Love the art. The Title text could be more stylized and
+- TAKEN by LEAD (in To do). Shop banners, Cal's words on approving the art (2026-11-05): "Love the art. The Title text could be more stylized and
   unique instead of plain white text or a shadow. Make them all unique. i want the description for the brands to be more
   playful rather than descriptive. I like 'Trail gear that never sees a trail'. That is funny and i like it. Also remove
   the 'NEXT DROP: etc' text. make this a separate countdown on the main shop tab that is small and unobtrusive." All in
   `15_shop.js`. If a painted wordmark per brand would help the titles, add it under Art requests.
-- SAVES, URGENT. In Chrome on v44 the header reads `this device only (Cannot assign to read only property 'creativity' of
+- TAKEN by LEAD, done in 9c3bd78. SAVES, URGENT. In Chrome on v44 the header reads `this device only (Cannot assign to read only property 'creativity' of
   object '#')`, so that browser is not saving online. The boot `try` in `30_app_b.js` catches it and sets `db=null`. Likely:
   `merge(sd0)` changes the frozen object `snap.data()` returns; not tested. `worlds/<id>` last updated at appv 34, which
   suggests this has been failing since about then, and it explains why the `diag/frame` log landed nothing. The phone's header
   has not been checked. **Before fixing: the cloud save is probably older than each device's local save, so the fix must not
   let it overwrite newer progress.** Ask Cal which device's save wins.
-- Lag, measured headless with every room owned, not on a phone: about 540 running CSS animations in the building view, and
+- TAKEN by LEAD (in To do). Lag, measured headless with every room owned, not on a phone: about 540 running CSS animations in the building view, and
   they keep running behind an open room window (`lfbreath` 146, `rhl` 114, `scrB` 81, `prtG` 30 with an SVG blur), 144
   filters, 76 blend modes, about 15,000 SVG nodes, 783 images, 97 MB JS heap. Dragging sets the transform on every
   pointermove. No fix written. Fixes in room code are ROOMS's: put what you want under Art requests or here.

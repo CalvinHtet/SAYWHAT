@@ -43,21 +43,28 @@ ROOMS. Paste each one's starter prompt (Part 3) as its first message.
 1. **Read first.** Before any work, read `CLAUDE.md`, this file, `quest-board/docs/TASKS.md` and
    `quest-board/docs/HANDOFF.md`.
 2. **Stay in your own files** (the list in Part 4). If you need a change in the other chat's file, write it in `TASKS.md`
-   and tell Cal: LEAD writes under *Art requests*, ROOMS under *Requests for LEAD*. A one-line fix is fine: re-read the
-   file right before editing, keep it tiny, and note it in `TASKS.md`. That covers the line ROOMS adds to `EXTRA_ITEMS` in
-   `app/src/15_shop.js` for a cosmetic Cal approved.
-3. **Shared files** (`app/index.html`, `docs/HANDOFF.md`, `docs/TASKS.md`): re-read right before every edit and keep
+   and tell Cal: LEAD writes under *Art and room code requests*, ROOMS under *Requests for LEAD*. A one-line fix is fine:
+   re-read the file right before editing, keep it tiny, and note it in `TASKS.md`. That covers the line ROOMS adds to
+   `EXTRA_ITEMS` in `app/src/15_shop.js` for a cosmetic Cal approved.
+3. **Check requests often.** Before starting each task and after each commit, read the requests the other chat wrote for
+   you in `TASKS.md`. Copy each new one into your own To do, marked `(from LEAD)` or `(from ROOMS)`, and mark the request
+   line in place `TAKEN by <you>`. When it is done, mark it `TAKEN by <you>, done in <commit>`. Only the chat that wrote a
+   request removes it.
+4. **Nothing is overwritten without the other chat's OK.** Never change, reword, move or delete what the other chat wrote:
+   its files, its lines in `TASKS.md` and `HANDOFF.md`, its CSS, its uncommitted work. The only exception is marking a
+   request to you as taken or done (rule 3). Anything else goes through a request, and waits for the answer.
+5. **Shared files** (`app/index.html`, `docs/HANDOFF.md`, `docs/TASKS.md`): re-read right before every edit and keep
    edits small. New CSS goes at the end of the `<style>` block in `app/index.html`, under a comment with your name
    (`/* LEAD */`, `/* ROOMS */`). If Claude Code says a file changed since you read it, the other chat is at work:
    re-read and redo your edit. That is normal.
-4. **Git, carefully. Both chats share one folder, so one careless command can wipe the other chat's unsaved work.**
+6. **Git, carefully. Both chats share one folder, so one careless command can wipe the other chat's unsaved work.**
    - Commit only your own files: `git add <your files>`. Never `git add -A` or `git add .`.
    - Commit only finished, tested work. Push right after each commit.
    - Never run anything that changes files you didn't edit: no `git checkout <file>`, `git restore`, `git reset`,
      `git stash`, `git clean`, `git rebase`, `git pull --rebase`, and no switching branches.
    - If git says `index.lock` exists, the other chat is committing. Wait ten seconds and try again.
    - Only LEAD pulls from GitHub, and only when Cal says something changed elsewhere.
-5. **Only LEAD publishes.** Only LEAD bumps `APPV`, builds the release and publishes to the phone page. The last
+7. **Only LEAD publishes.** Only LEAD bumps `APPV`, builds the release and publishes to the phone page. The last
    publish wins, so two publishers wipe each other out. ROOMS writes
    `READY TO PUBLISH: <what>, look at: <what>` in `TASKS.md` instead.
    - Publish only committed work: build from a clean temporary copy of the latest commit (`git worktree add` into a temp
@@ -66,14 +73,14 @@ ROOMS. Paste each one's starter prompt (Part 3) as its first message.
      still has in progress.
    - Either chat can build and test locally any time (`python3 quest-board/tools/build.py`), each on its own port:
      ROOMS 8765, LEAD 8766 (`python3 -m http.server 8766 --bind 127.0.0.1` from `quest-board/`).
-6. **Chrome and Higgsfield are ROOMS only.** LEAD never generates art: when the app needs art, LEAD adds it under
-   *Art requests* in `TASKS.md`.
-7. **The rules in `CLAUDE.md` still apply:** no spending Higgsfield credits, original designs only, Cal's tone, and
+8. **Chrome and Higgsfield are ROOMS only.** LEAD never generates art: when the app needs art, LEAD adds it under
+   *Art and room code requests* in `TASKS.md`.
+9. **The rules in `CLAUDE.md` still apply:** no spending Higgsfield credits, original designs only, Cal's tone, and
    honest status.
-8. **Saves are sacred** (`quest-board/docs/RELEASING.md`): never bump `QB_EPOCH`, and never rename or delete an item or
+10. **Saves are sacred** (`quest-board/docs/RELEASING.md`): never bump `QB_EPOCH`, and never rename or delete an item or
    upgrade id.
-9. **When a piece is done:** tick it in `TASKS.md` and add a line to `HANDOFF.md`.
-10. **Cal has the final say on art.** Show new art before putting it in the game.
+11. **When a piece is done:** tick it in `TASKS.md` and add a line to `HANDOFF.md`.
+12. **Cal has the final say on art.** Show new art before putting it in the game.
 
 ---
 
@@ -137,7 +144,7 @@ LEAD:
 > You are LEAD on Quest Board. Read CLAUDE.md, TEAMWORK.md, quest-board/docs/TASKS.md and quest-board/docs/HANDOFF.md
 > first. You own the task board, quality of life, the Shop and Training code and everything else in the app, the docs,
 > and publishing to my phone. You are the only chat that publishes, bumps APPV or pulls from GitHub. You never generate
-> art: when the app needs art, add it under "Art requests" in TASKS.md. Another chat, ROOMS, works in this same folder on
+> art: when the app needs art, add it under "Art and room code requests" in TASKS.md. Another chat, ROOMS, works in this same folder on
 > all art and the room code: follow the TEAMWORK rules so you never touch its work. Show me your open tasks in a few lines,
 > then start.
 
@@ -162,7 +169,7 @@ All paths are inside `quest-board/`. **Anything not listed under ROOMS belongs t
 | Art | none | every file in `art/app/`, and `art/raw`, `art/layers`, `art/ref`, `art/sil` |
 | Tools | `tools/build.py` | `tools/rs_art.py`, `rs_fix.py`, `closet_stages.py`, `items.py`, `ingest_items.py`, `pack.py`, `strip_mannequin.py` and the other item tools |
 | Docs | `TEAMWORK.md`, `CLAUDE.md`, `docs/RELEASING.md`, `ADDING_CONTENT.md`, `ECONOMY.md` and the rest of `docs/` | |
-| Shared | `app/index.html`, `docs/HANDOFF.md`, `docs/TASKS.md`: both, small careful edits (rule 3) | |
+| Shared | `app/index.html`, `docs/HANDOFF.md`, `docs/TASKS.md`: both, small careful edits (rule 5) | |
 
 ---
 
