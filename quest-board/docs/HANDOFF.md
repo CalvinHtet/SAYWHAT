@@ -200,6 +200,13 @@ Workbench (`hmx_bench`) with its pegboard against the armory wall. Reactor core 
 racks, the drone dock on the right edge, the teleport pad in front of the war table with a spot to stand on. Checked: depth
 0 bad, stations fine. The painted suit cases and trophy layers were not changed.
 
+Closet repainted (2026-11-05, Cal approved): every stage is its own Nano Banana painting of the same room, made by image
+edits stripping back from the finished one (sources in `art/raw/walls/closet/`, keyed off green with `tools/key_green.py`,
+607x614): `clx_st0` lights off, `clx_st0l` Wardrobe Lights, `clx_st1` shoe wall, `clx_stj` jewelry wall, `clx_st2` island,
+`clx_room` glass, `clx_modern` Super Sleek Modern. The stand-ins below (cut by `tools/closet_stages.py`), the dimming filter,
+the LED overlay and the `clx_jewel` sprite are no longer used. A Hero's Lair stage (`st_lair.png`, the corner cabinet
+slides open) is painted but not in: it waits on which wall the Lair door goes on.
+
 Closet (2026-11-05, Cal: it started full and upgrades changed nothing; the recent-orders shelf looked out of place; every
 stage should be the glass closet room, less finished, not a different room). Every stage is the glass closet painting
 (`clx_room`) with less in it, cut by `tools/closet_stages.py` into `clx_st0` (closed walnut doors over every pane and the

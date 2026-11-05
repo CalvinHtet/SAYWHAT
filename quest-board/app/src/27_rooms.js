@@ -39,39 +39,33 @@ LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swin
   C.dogs=[];if(h("bd_pluto"))C.dogs.push({id:"pluto",bed:[2.6,8.3]});if(h("bd_chop"))C.dogs.push({id:"chopstick",bed:[5.3,8.3]})};
 /* the Closet and the Lair are single painted rooms: the art is the room */
 function artRoom(C,k,T,a,b,c,d){var Sp=LFSP4[k];if(!Sp)return;var t=lfP(0,0,0),e=t[0]-(a*T[0]+c*T[1]),f=t[1]-(b*T[0]+d*T[1]);return '<image href="'+lfSp4Url(k,"d")+'" preserveAspectRatio="none" width="'+Sp.w+'" height="'+Sp.h+'" transform="matrix('+[a,b,c,d,e,f].map(function(v){return v.toFixed(5)}).join(",")+')"/>'}
-/* The Closet grows in stages you can see (Cal, 2026-11-05), all one room: the glass closet painting (clx_room) is the
-   finished look, and the earlier stages are cut from it by tools/closet_stages.py:
-     start        clx_st0  closed walnut doors, bare herringbone floor, lights down
-     cl_glow      Wardrobe Lights: the same, lit
-     cl_shoe      clx_st1  the shoe and bag wall opens
-     cl_jewel     a jewelry tower in the front corner (sprite)
-     cl_isl       clx_st2  the marble island and the rug
-     cl_mirror    clx_room the glass doors, lit from inside
-     cl_disp      Super Sleek Modern: LED strips along the plinths and over the doors (a stand-in until a painted version)
+/* The Closet grows in stages you can see (Cal approved the paintings 2026-11-05), all the same room, one painting each
+   (art/raw/walls/closet, keyed with tools/key_green.py):
+     start        clx_st0   closed walnut doors, lights off
+     cl_glow      clx_st0l  Wardrobe Lights: warm LED strips along the top and the base of every wardrobe
+     cl_shoe      clx_st1   the shoe and bag wall opens
+     cl_jewel     clx_stj   two doors on the left wall open onto the jewelry display
+     cl_isl       clx_st2   the marble island and the rug
+     cl_mirror    clx_room  the glass doors, lit from inside
+     cl_disp      clx_modern Super Sleek Modern: smoked glass, black marble, white light on every edge
    The ids are the old upgrades', renamed, so saves keep what they paid for. The Velvet Ottoman and Shoe Bench are retired:
-   hidden from the shop, drawn nowhere. The Featured Rail (the shelf of recent Shop orders) is gone. Any stage picture
-   that is missing falls back to the finished painting. */
+   hidden from the shop, drawn nowhere. Any stage picture that is missing falls back to the finished painting. */
 function clPaint(C,k,dim){var S0=LFSPR[k];if(!S0)return false;var W=C.W,D=C.D,x0=-D*26-6,w=(W+D)*26+12,h=w*S0.h/S0.w,y0=(W+D)*13+16-h;
   C.decals.push('<image href="'+S0.u+'" x="'+x0+'" y="'+y0.toFixed(1)+'" width="'+w+'" height="'+h.toFixed(1)+'"'+(dim?' style="filter:brightness(.62) saturate(.8)"':'')+'/>');return {x0:x0,y0:y0,k:w/S0.w}}
-/* cool white LED strips, drawn in the painting's own pixels: along both plinths and over the glass doors */
-function clLed(C,P){var L=function(x){return 446-(x-60)*.565},R=function(x){return 312+(x-305)*.555},TL=function(x){return 250-(x-62)*.58},TR=function(x){return 120+(x-321)*.6},
-  ln=function(x1,y1,x2,y2){return '<path d="M'+x1+' '+y1.toFixed(1)+'L'+x2+' '+y2.toFixed(1)+'"/>'},
-  d=ln(58,L(58)+6,300,L(300)+6)+ln(303,R(303)+6,312,R(312)+6)+ln(414,R(414)+6,548,R(548)+6)+ln(58,TL(58)-4,300,TL(300)-4)+ln(303,TR(303)-4,548,TR(548)-4);
-  /* on the floor layer, so the jewelry tower stands in front; the right plinth's strip stops behind the painted island */
-  C.decals.push('<g pointer-events="none" transform="translate('+P.x0+','+P.y0.toFixed(1)+') scale('+P.k.toFixed(4)+')" style="mix-blend-mode:screen"><g stroke="#bfe6ff" stroke-width="7" opacity=".35" filter="url(#lfneon)" fill="none">'+d+'</g><g stroke="#f2fbff" stroke-width="1.8" fill="none" opacity=".95">'+d+'</g></g>')}
 autoRoom("closet",{name:"Walk-in Closet",lv:1,startLv:3,step:1,wall:"#3a2a20",wain:"#2a1e16",acc:"#ffd27a",fl:"w",size:[[7,7]],H:200,shell:1,door:false,guests:0,group:"Closet",desc:"Your clothes finally have a room of their own. Everything you buy in the Shop lives here.",
  req:[["cl_shoe","cl_glow"],["cl_jewel","cl_shoe"],["cl_isl","cl_jewel"],["cl_mirror","cl_isl"],["cl_disp","cl_mirror"]],
- draw:function(C,H){var k=H("cl_disp")&&LFSPR.clx_modern?"clx_modern":H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_shoe")?"clx_st1":"clx_st0",P=clPaint(C,k,!H("cl_glow"))||clPaint(C,"clx_room",!H("cl_glow"));
-  if(H("cl_jewel"))lfSpr(C,"clx_jewel",.35,5.95,.7,.7,{h:40,ctr:1});
-  if(H("cl_disp")&&P&&k!=="clx_modern")clLed(C,P);
+ /* Every stage is its own painting of the same room (Cal approved them 2026-11-05): lights off, Wardrobe Lights (LED strips
+    top and base), the shoe wall opens, the jewelry wall opens, the island, glass doors, Super Sleek Modern. */
+ draw:function(C,H){var k=H("cl_disp")?"clx_modern":H("cl_mirror")?"clx_room":H("cl_isl")?"clx_st2":H("cl_jewel")?"clx_stj":H("cl_shoe")?"clx_st1":H("cl_glow")?"clx_st0l":"clx_st0";
+  clPaint(C,k,0)||clPaint(C,"clx_room",0);
   C.s("look",2.6,1.2,1,"look",[6,11],{fxwall:1});C.s("look",1.2,3.9,-1,"look",[6,11],{fxwall:1});if(H("cl_shoe"))C.s("look",4.4,1.2,1,"look",[6,11],{fxwall:1})},
  help:{k:"New room",t:"The Closet is open!",sub:"Your own room for clothes, and it opens the Shop.",pts:[["The Shop is open","Buy clothes from the brands that drop every week."],["Build it up","Lights, a shoe wall, jewelry and an island, then glass doors. There may be a secret door."]]},
  items:[["cl_glow","Wardrobe Lights",UP_M,"","",0,0,0,"The closet lights up, top to bottom."],
   ["cl_shoe","Shoe & Bag Wall",UP_S,"","",0,0,0,"One wardrobe opens into lit shelves for every pair and every bag."],
-  ["cl_jewel","Jewelry Tower",UP_S,"","",0,0,0,"Velvet shelves under glass."],
+  ["cl_jewel","Jewelry Wall",UP_S,"","",0,0,0,"Two wardrobe doors open onto velvet trays of rings, watches and necklaces."],
   ["cl_isl","Center Island",UP_M,"","",0,0,0,"Marble top, jewelry drawers and a soft rug, right in the middle."],
   ["cl_mirror","Glass Closet",UP_L,"","",0,0,0,"Every wardrobe door turns to glass, lit from inside."],
-  ["cl_disp","Super Sleek Modern",UP_L,"","",0,0,0,"Cool white LED lines along every edge."],
+  ["cl_disp","Super Sleek Modern",UP_L,"","",0,0,0,"Smoked glass, black marble and white light along every edge."],
   ["cl_ott","Velvet Ottoman",UP_S,"","",0,0,0,"Retired.",{retired:1}],["cl_bench","Shoe Bench",UP_S,"","",0,0,0,"Retired.",{retired:1}],
   ["cl_lair","???",2500,"","",0,0,0,"A panel at the back of the closet sounds hollow.",{g:"Expansion",opens:"lair",lv:12}]]});
 LFRS.closet=1.15;

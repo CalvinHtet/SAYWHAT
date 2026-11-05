@@ -46,6 +46,12 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: Closet stages (Cal approved the paintings 2026-11-05). Every Closet upgrade now shows its own painting of
+  the same room: lights off, Wardrobe Lights (LED strips top and base), Shoe & Bag Wall, Jewelry Wall (renamed from Jewelry
+  Tower: two doors open onto a jewelry display, no more sprite), Center Island, Glass Closet, Super Sleek Modern (smoked
+  glass, black marble). Look at: the Closet on a phone, buy each upgrade in turn and check each one changes the room.
+  Checked headless: each stage bought in order draws its own painting, no errors. Not checked: on a phone. The Hero's Lair
+  stage is not in yet (waits on Cal's answer about the door side).
 - PUBLISHED in v45. READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 - PUBLISHED in v46. READY TO PUBLISH: Bedroom patio door and view (17ab80d). Once the Patio room exists the Bedroom has a sliding glass door
