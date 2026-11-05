@@ -1515,8 +1515,8 @@ function lfDraw(a,force){
   var gx=a.role==="dog"?1:1;
   var plz=0,C2=lfC(a);if(C2&&C2.plat){for(var q=0;q<C2.plat.length;q++){var P=C2.plat[q];if(a.x>=P.x0&&a.x<=P.x1&&a.y>=P.y0&&a.y<=P.y1){plz=P.z;dkey=Math.max(dkey,P.key+.25);break}}}
   var lift=seat*LFK-plz;
-  g.setAttribute("transform","translate("+p[0].toFixed(1)+","+p[1].toFixed(1)+")");
-  g.style.opacity=a.alpha;
+  var gtf="translate("+p[0].toFixed(1)+","+p[1].toFixed(1)+")";if(g._tf!==gtf){g._tf=gtf;g.setAttribute("transform",gtf)}
+  if(g._op!==a.alpha){g._op=a.alpha;g.style.opacity=a.alpha}
   if(a._k!==k||force){a._k=k;var img=g.querySelector(".lfi");
     var cdg=a.role==="dog"&&typeof chDog==="function"?chDog(a.dname,f.p):null;
     if(cdg){var DK=.19;img.setAttribute("href",cdg.u);img.setAttribute("width",(cdg.w*DK).toFixed(1));img.setAttribute("height",(cdg.h*DK).toFixed(1));img.setAttribute("x",(-cdg.ax*DK).toFixed(1));img.setAttribute("y",(-cdg.ay*DK).toFixed(1));a._chb=1}
@@ -1527,9 +1527,9 @@ function lfDraw(a,force){
   if(a.role==="me"&&window.lfCalShadow)lfCalShadow(a,g,C);
   var s=g.querySelector(".lfs"),fl=(a.face*LFDEF)<0?-1:1;if(a._chb){fl*=CHB.FLIP;if(cpi===2)fl=-fl}var stp=a.ph%1,bob=a._chb&&a.mode==="walk"?-Math.sin(stp*Math.PI)*3.6*LFBIG/1.2:0,sway=a._chb&&a.mode==="walk"?(Math.floor(a.ph)%2?1:-1)*Math.sin(stp*Math.PI)*3.4:0;
   var lie=a.mode==="do"&&a.act==="lie"&&a.role!=="dog",lz=a.st&&a.st.lz!=null?a.st.lz:14;
-  s.setAttribute("transform",lie?"translate("+(22*fl)+","+(-lz)+") rotate("+(-63.4*fl)+") scale("+fl+",1)":"translate(0,"+(lift+bob).toFixed(1)+") rotate("+sway.toFixed(1)+") scale("+fl+",1)");
-  var pr=g.querySelector(".lfp");pr.setAttribute("transform","translate(0,"+lift+") scale("+((a.face>0?1:-1)*LFK*(a.role==="dog"?1:LFBIG))+","+LFK*(a.role==="dog"?1:LFBIG)+")");
-  g.firstChild.setAttribute("transform","translate(0,"+(-plz)+")");
+  var stf=lie?"translate("+(22*fl)+","+(-lz)+") rotate("+(-63.4*fl)+") scale("+fl+",1)":"translate(0,"+(lift+bob).toFixed(1)+") rotate("+sway.toFixed(1)+") scale("+fl+",1)";if(s._tf!==stf){s._tf=stf;s.setAttribute("transform",stf)}
+  var pr=g.querySelector(".lfp"),ptf="translate(0,"+lift+") scale("+((a.face>0?1:-1)*LFK*(a.role==="dog"?1:LFBIG))+","+LFK*(a.role==="dog"?1:LFBIG)+")";if(pr._tf!==ptf){pr._tf=ptf;pr.setAttribute("transform",ptf)}
+  var ftf="translate(0,"+(-plz)+")";if(g.firstChild._tf!==ftf){g.firstChild._tf=ftf;g.firstChild.setAttribute("transform",ftf)}
   var ph=a.role==="dog"?"":lfProp(a);if(a._ph!==ph){a._ph=ph;pr.innerHTML=ph}
   var em=g.querySelector(".lfe"),eh=lfEmoG(a);if(a._em!==eh){a._em=eh;em.innerHTML=eh}
   var EK=LFK*(a.role==="dog"?1:LFBIG),etf=lie?"translate(0,"+(-lz+30*LFK)+") scale("+EK+")":"translate(0,"+(lift-plz*0)+") scale("+EK+")";if(a._etf!==etf){a._etf=etf;em.setAttribute("transform",etf)}
@@ -1547,21 +1547,36 @@ function lfLoop(ts){
   LFRAF=0;
   if(!document.getElementById("lfwrap")||document.hidden){return}
   var dt=Math.min(.1,(ts-LFLT)/1000||0);
-  if(ts-LFLT<38){LFRAF=requestAnimationFrame(lfLoop);return}
+  /* The whole building redraws at 15 frames a second, a single room at 26 (15 on a phone): every new frame of every person means an
+     image decode and a repaint of the room behind them, and that is what made the building view lag on a phone. */
+  if(ts-LFLT<(document.querySelector("#layer .modal")&&innerWidth>640?38:66)){LFRAF=requestAnimationFrame(lfLoop);return}
   LFLT=ts;
   if(ts-LFOBT>700){LFOBT=ts;try{lfObUpdate()}catch(e){}}
   try{lfAmbient(ts)}catch(e){}
   Object.keys(LFMETA).forEach(function(k){var m=LFMETA[k];if(m&&m.C&&m.r)try{lfPlotTick(m.C,m.r,dt)}catch(e){}});
-  var mdl=!!document.querySelector("#layer .modal");
-  Object.keys(LFA).forEach(function(k){var a=LFA[k];if(mdl&&!a.pv)return;if(LFA[k]===a){lfStep(a,dt);if(LFA[k]===a)lfDraw(a)}});
+  var mdl=!!document.querySelector("#layer .modal"),vis=lfVisRooms();
+  /* Everyone keeps living, but only people in a room on screen are drawn: a phone could not redraw 21 rooms of people. */
+  Object.keys(LFA).forEach(function(k){var a=LFA[k];if(mdl&&!a.pv)return;if(LFA[k]===a){lfStep(a,dt);if(LFA[k]!==a)return;
+    if(!a.pv&&vis&&!vis[a.room]){a._off=1;return}if(a._off){a._off=0;lfDraw(a,true)}else lfDraw(a)}});
   LFRAF=requestAnimationFrame(lfLoop);
 }
+/* Rooms of the building view that are on screen, by slot, with a margin. Off-screen rooms are hidden so the phone does
+   not paint them, and their people are not drawn. null when there is no building view. */
+var LFVIS=null,LFVISK="";
+function lfVisRooms(){var c=document.getElementById("lfwrap"),L=window.LFLAY;if(!c||!L||!window.LFMETA)return null;
+  var cw=c.clientWidth,ch=c.clientHeight,k=[LFV.x,LFV.y,LFV.s,cw,ch].map(function(v){return Math.round(v)}).join(",")+":"+LFV.s.toFixed(3);if(k===LFVISK&&LFVIS)return LFVIS;
+  var vis={},m=80;Object.keys(LFMETA).forEach(function(i){var M=LFMETA[i];if(!M||!M.r||!M.p||+i>=90)return;var x0=LFV.x+(M.p.x-LFCELLW/2)*LFV.s,y0=LFV.y+(M.p.y-LFFP/2)*LFV.s,x1=x0+LFCELLW*LFV.s,y1=y0+LFFP*LFV.s;
+    vis[i]=x1>-m&&x0<cw+m&&y1>-m&&y0<ch+m});
+  document.querySelectorAll("#lfw > g.lfroom[data-i]").forEach(function(g){var on=vis[g.getAttribute("data-i")]!==false;if(g._vis!==on){g._vis=on;g.style.display=on?"":"none"}});
+  LFVISK=k;LFVIS=vis;return vis}
 /* ---- drag / zoom ---- */
 function lfApply(){var w=document.getElementById("lfw");if(w)w.setAttribute("transform","translate("+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+") scale("+LFV.s.toFixed(3)+")");var c=document.getElementById("lfwrap");if(c){if(LFV.s0&&LFV.s>=LFV.s0*1.18)c.setAttribute("data-zin","1");else c.removeAttribute("data-zin")}}
 function lfClamp(){var c=document.getElementById("lfwrap");if(!c)return;var cw=c.clientWidth,ch=c.clientHeight,W=LFWW*LFV.s,H=LFDIM.h*LFV.s,m=90;
   LFV.x=Math.min(m,Math.max(cw-W-m,LFV.x));if(W+2*m<cw)LFV.x=(cw-W)/2;LFV.y=Math.min(m+640*LFV.s,Math.max(ch-H-m,LFV.y))}
-function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(.32,LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
+function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
 window.__qbLoft=function(){return {A:LFA,V:LFV,apply:lfApply,clamp:lfClamp,go:lfGo,C:lfC,P:lfP,arrive:lfArrive,draw:lfDraw,route:lfRoute,seatish:lfSeatish,blocked:lfBlockedAt,rerender:render,roomCtx:lfRoomCtx,roomSvg:lfRoomSvg,addons:ADDONS,roomT:ROOMT}};
+/* Zoomed all the way out, the whole street fits the width of the screen. */
+function lfMinS(){var c=document.getElementById("lfwrap"),cw=(c&&c.clientWidth)||360;return Math.min(.32,cw/((window.LFWW||2400)+120))}
 function lfZoom(d){var c=document.getElementById("lfwrap");if(!c)return;if(d===0){LFV.init=0;lfInitView(c);return}lfZoomAt(d>0?1.25:.8,c.clientWidth/2,c.clientHeight/2)}
 function lfInitView(c){
   var cw=c.clientWidth||360,ch=c.clientHeight||520;
@@ -1575,7 +1590,7 @@ function lfBind(c){
     if(Object.keys(P).length===1){var p=P[e.pointerId];drag={x:p[0],y:p[1],vx:LFV.x,vy:LFV.y}}
     else if(Object.keys(P).length===2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),s:LFV.s,cx:(a[0]+b[0])/2,cy:(a[1]+b[1])/2,vx:LFV.x,vy:LFV.y};drag=null;moved=99}});
   c.addEventListener("pointermove",function(e){if(!P[e.pointerId])return;P[e.pointerId]=pt(e);
-    if(pinch&&Object.keys(P).length>=2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);var n=Math.min(2.6,Math.max(.32,pinch.s*d/pinch.d)),f=n/pinch.s;LFV.s=n;LFV.x=pinch.cx-(pinch.cx-pinch.vx)*f;LFV.y=pinch.cy-(pinch.cy-pinch.vy)*f;lfClamp();lfApply();return}
+    if(pinch&&Object.keys(P).length>=2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);var n=Math.min(2.6,Math.max(lfMinS(),pinch.s*d/pinch.d)),f=n/pinch.s;LFV.s=n;LFV.x=pinch.cx-(pinch.cx-pinch.vx)*f;LFV.y=pinch.cy-(pinch.cy-pinch.vy)*f;lfClamp();lfApply();return}
     if(drag){var p=P[e.pointerId],dx=p[0]-drag.x,dy=p[1]-drag.y;if(moved||Math.hypot(dx,dy)>6){if(!moved){try{c.setPointerCapture(e.pointerId)}catch(x){}}moved=1;c.classList.add("grab");LFV.x=drag.vx+dx;LFV.y=drag.vy+dy;lfClamp();lfApply()}}});
   function up(e){if(!P[e.pointerId])return;delete P[e.pointerId];
     if(!Object.keys(P).length){c.classList.remove("grab");
@@ -3257,7 +3272,12 @@ function lfCalUrl(k,look){var r=lfCalGet(k,look);lfCalUrl.pad=r?r[1]:0;return r?
 function lfCalPfx(look){return look&&look.sex==="f"&&window.LFSP4&&LFSP4.f_idle?"f_":"m_"}
 /* The player's character comes from the rig. Seated and sleeping poses are drawn by
    the chair and bed, so the character sits between that furniture's layers. */
-function lfRigState(a){var ch=a.look&&a.look.rig;if(!ch)return null;
+/* Everyone but you uses every other animation frame, and every fourth in the building view when zoomed out and they
+   are a few pixels tall: each distinct frame has to be drawn and encoded once per outfit. */
+function lfRigState(a){var r=lfRigState0(a);if(!r||!r.clip)return r;var far=!a.pv&&LFV.s<.4;
+  /* zoomed out, nobody breathes or fidgets: at that size it cannot be seen, and every frame change costs a decode */
+  if(far&&a.mode!=="walk"&&r.clip!=="stretch")r.f=0;else if(a.role!=="me"){var q=far?4:2;r.f-=r.f%q}return r}
+function lfRigState0(a){var ch=a.look&&a.look.rig;if(!ch)return null;
   if(a.mode==="do"&&a.st&&a.st.tag==="pc"&&/^(sit|type|work|work2)$/.test(a.act||""))return {hide:1,ch:ch};
   if(a.mode==="do"&&a.st&&a.st.tag==="lairpc"){var nw=performance.now();return {ch:ch,clip:"type",f:QBLoft.clipFrame("type",nw),seat:"lair"}}
   if(a.mode==="do"&&a.act==="lie")return {hide:1,ch:ch};

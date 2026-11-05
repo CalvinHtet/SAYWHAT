@@ -21,30 +21,45 @@
   const queued = new Set();
   const queue = [];
   let pumping = false;
+  // Frames asked for while warming are rendered however long they wait: they are your own character's.
+  let warming = false;
 
   function remember(k, u) {
-    if (urls.size >= D.loft.urlCache) urls.delete(urls.keys().next().value);
+    if (urls.size >= D.loft.urlCache) {
+      const old = urls.keys().next().value, ou = urls.get(old);
+      urls.delete(old);
+      // An image already showing keeps its pixels; give anything mid-load time before freeing it.
+      if (ou && ou.startsWith("blob:")) setTimeout(() => URL.revokeObjectURL(ou), 30000);
+    }
     urls.set(k, u);
   }
+
+  /* Frames are encoded off the main thread. toDataURL encoded each one on it, and with a room full of
+     people that froze the page for seconds at a time on a phone. */
+  const encode = (canvas, quality) => (canvas.toBlob
+    ? new Promise((ok) => canvas.toBlob((b) => ok(b ? URL.createObjectURL(b) : canvas.toDataURL("image/webp", quality)), "image/webp", quality))
+    : Promise.resolve(canvas.toDataURL("image/webp", quality)));
 
   async function pump() {
     if (pumping) return;
     pumping = true;
     const rig = await rigP;
-    let sinceYield = 0;
     while (queue.length) {
       const job = queue.pop();
+      // Nobody has asked for this frame in a while (the room scrolled away, or the page moved on): skip it.
+      // Whoever still needs it asks again on their next draw.
+      if (!job.keep && performance.now() - job.t > 3000) {
+        queued.delete(job.k);
+        continue;
+      }
       try {
         remember(job.k, await job.make(rig));
       } catch (e) {
         console.error("rig frame failed", job.k, e);
       }
       queued.delete(job.k);
-      // Keep the page responsive while a whole outfit renders.
-      if (++sinceYield >= 2) {
-        sinceYield = 0;
-        await new Promise((ok) => setTimeout(ok, 0));
-      }
+      // Keep the page responsive while a whole outfit renders: one frame, then let the page breathe.
+      await new Promise((ok) => setTimeout(ok, 0));
     }
     pumping = false;
   }
@@ -54,11 +69,12 @@
     if (queued.has(k)) {
       // Needed now: move it to the front of the line (the queue pops from the end).
       const i = queue.findIndex((j) => j.k === k);
+      if (i >= 0) queue[i].t = performance.now();
       if (i >= 0 && i < queue.length - 1) queue.push(queue.splice(i, 1)[0]);
       return null;
     }
     queued.add(k);
-    queue.push({ k, make });
+    queue.push({ k, make, t: performance.now(), keep: warming });
     pump();
     return null;
   }
@@ -68,7 +84,7 @@
 
   function frame(choice, clip, f) {
     return ask(frameKey(choice, clip, f), async (rig) =>
-      (await rig.render(lookOf(choice), rig.clipPose(clip, f))).toDataURL("image/webp", 0.92));
+      encode(await rig.render(lookOf(choice), rig.clipPose(clip, f)), 0.92));
   }
 
   /* The newest frame available: the wanted one, else any already made for this clip. */
@@ -99,24 +115,33 @@
       const perUnit = D.loft.standPx / g.LFCALH_PX;
       const w = art.naturalWidth * seat.pp * perUnit, h = art.naturalHeight * seat.pp * perUnit;
       c.drawImage(art, FW / 2 - w / 2 + seat.x * perUnit, FH - PAD - h + seat.y * perUnit, w, h);
-      return out.toDataURL("image/webp", 0.92);
+      return encode(out, 0.92);
     });
   }
 
   const warmed = new Set();
-  function warm(choice) {
-    const id = JSON.stringify(choice);
+  /* Render a look's frames ahead of need. In a room your character needs standing and walking both ways, and a bed;
+     a portrait needs only the one clip it shows. Sitting, typing and stretching render when first used: until
+     then frameOrNear shows the standing frame. Each frame costs an encode, so a phone feels every one of them. */
+  function warm(choice, only) {
+    const id = JSON.stringify(choice) + "|" + (only || "room");
     if (warmed.has(id)) return;
     warmed.add(id);
+    warming = true;
     // Asked in reverse, so idle (last) renders first: the queue pops from the end.
-    for (const clip of ["back", "walkBack", "type", "sit", "stretch", "walk", "idle"]) {
-      for (let f = clips[clip].frames - 1; f >= 0; f--) frame(choice, clip, f);
+    for (const clip of only ? [only] : ["back", "walkBack", "walk", "idle"]) {
+      const n = step(clip);
+      for (let f = clips[clip].frames - n; f >= 0; f -= n) frame(choice, clip, f);
     }
     // Sleepers are ready before the character ever reaches a bed, so they never blink out.
-    Object.keys(D.loft.beds).forEach((b) => sleeper(choice, b));
+    if (!only) Object.keys(D.loft.beds).forEach((b) => sleeper(choice, b));
+    warming = false;
   }
 
-  const clipFrame = (clip, now) => Math.floor((now / 1000) * clips[clip].fps) % clips[clip].frames;
+  // Breathing and fidgeting clips use every other frame: nobody can see the difference, and it halves the work.
+  const step = (clip) => (/^(idle|back|sit|sitBack|type)$/.test(clip) ? 2 : 1);
+
+  const clipFrame = (clip, now) => { const f = Math.floor((now / 1000) * clips[clip].fps) % clips[clip].frames; return f - (f % step(clip)); };
   // `cycle` is how much walking phase one full gait takes, which sets the steps per second.
   const walkFrame = (phase, clip) => {
     const n = clips[clip].cycle || 2;
@@ -197,10 +222,10 @@
       c.globalCompositeOperation = "source-over";
       c.drawImage(art, 0, 0, bed.w, bed.h);
       c.restore();
-      return out.toDataURL("image/webp", 0.95);
+      return encode(out, 0.95);
     });
   }
 
   g.LFCALH_PX = 74;
-  g.QBLoft = { frame, frameOrNear, seated, warm, clipFrame, walkFrame, geometry, sleeper, clips, poses, data: D };
+  g.QBLoft = { frame, frameOrNear, seated, warm, clipFrame, step, walkFrame, geometry, sleeper, clips, poses, data: D };
 })(window);

@@ -86,7 +86,11 @@ lfWorld=function(){
   return '<defs><filter id="prtBlur" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="lfclip"><rect x="-240" y="-140" width="480" height="362"/></clipPath><radialGradient id="lftvg"><stop offset="0" stop-color="#6aa8ff" stop-opacity=".5"/><stop offset="1" stop-color="#6aa8ff" stop-opacity="0"/></radialGradient></defs><g id="lfw">'+s+'</g>'};
 /* the light on the city moves with the clock, without redrawing the rooms */
 setInterval(function(){var g=document.getElementById("lfback");if(!g||!window.LFLAY)return;var k=lfLS().key;if(k===window.LFSKYK)return;window.LFSKYK=k;g.innerHTML=worldBack(window.LFLAY);var w=document.getElementById("lfwrap"),c=lfSkyCols();if(w)w.style.background="linear-gradient(180deg,"+c[0]+" 0,"+c[1]+" 100%)"},20000);
-function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520;LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply()}
+/* The view opens on the whole Home building, every room of it in sight, wide screen or phone. Zoom in from there. */
+function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520,L=window.LFLAY,b=L&&L.b&&L.b[0];
+  if(!b){LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply();return}
+  var f=b.f||1,s=Math.max(lfMinS(),Math.min(1.4,(cw-24)/(b.w+60),(ch-110)/(f*LFFP+170)));
+  LFV.s=LFV.s0=s;LFV.x=cw/2-(b.x+b.w/2)*s;LFV.y=ch*.47-(LFROOF+(L.rows-f/2)*LFFP+30)*s;LFV.init=1;lfClamp();lfApply()}
 lfInitView=lfInitViewOf;
 /* ---- doors between rooms ----
    [from, to, wall, position, color, label]. "L" is the left wall at height y=position,
