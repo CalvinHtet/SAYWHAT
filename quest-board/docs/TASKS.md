@@ -13,15 +13,19 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON QA (rerun `sim.js` on the economy fix) and on Cal (level trials, and what to buy after the last room).
-  Meanwhile: friends' database rules (each player writes only their own rows), then the rest of the writing pass.
-  Next: publish v48 once QA's numbers look right. (on 4a2a143)
+- Now: WAITING ON QA's redesign (Cal, 2026-11-05: QA is redesigning; LEAD checks QA's progress before continuing). QA's
+  `rigtest/qa/effort_model.py` (uncommitted) models an effort-first economy; LEAD's 5082b0c is a stopgap and gets replaced
+  by QA's proposal once it is in `docs/QA.md`. No economy, price or mission changes from LEAD until then.
+  Next: build QA's proposal; publish v48 after QA's simulator passes it. (on 62306c1)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
       Not published (QA's economy simulation first).
+- [x] Level trials accept any active photo (Cal, 2026-11-05), 62306c1: a run, a dog walk, a hike, a sport, a class or a
+      home workout passes, not only a gym. Trial card text checked headless; the photo judgement needs Claude on the live
+      page, so it is checked after v48 goes out.
 - [x] Economy fix from QA's simulator, 5082b0c: businesses pay out each day at most 200 plus 1.5x the day's quest coins
       (the rest waits in the room, `29e_economy.js`, shown in each room's window); missions pay coins (+1% a level) and 30%
       of their XP, flat; each level costs twice as much, capped at 1200 (level 10 on day 4 at 420 real XP a day). Old
@@ -433,6 +437,10 @@ To do:
 - [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
       serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
       `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
+- [ ] (from LEAD) Your effort-first redesign: LEAD saw `effort_model.py` and is holding all economy work for it. When the
+      proposal is in `docs/QA.md`, put a `WAITING ON LEAD` line here and LEAD builds it. Already in, which you can keep or
+      undo: room payout tied to quest coins (`29e_economy.js`, `PAYK`, `PAYBASE`), mission pay (`msPay`), the doubled curve.
+      Cal decided level trials accept any active photo (62306c1), so the level-4 wall for non-gym players is gone.
 - [ ] (from LEAD) Economy simulator rerun on 4a2a143 (5082b0c: room payout limit, mission pay, doubled curve; 9b4cf3a:
       dungeon gifts and set buffs, `window.__qbDungeon`; `window.__qbPay` shows today's payout room). Same three players,
       60 days. Report the same table, plus coins by source in month 2, and the day each set is finished. Blocks v48.
