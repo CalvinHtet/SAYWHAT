@@ -13,20 +13,22 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: dungeon gifts, the Goblin King and Hollow Amulet sets, the Relics tab: new `app/src/29d_dungeon.js`, and small
-  hooks in `28_missions.js`, `10_app_a.js` (`trophyHtml`, the nav name), `30_app_b.js` (`roomModal`), `index.html` CSS.
-  Next: the writing pass (Cal: professional, not corny, not obviously AI): `docs/VOICE.md`, then LEAD's text in
-  `15_shop.js`, `10_app_a.js`, `29b_story.js`, `29c_team.js`, `30_app_b.js`. Not publishing until QA's simulator reruns. (on 12a46ba)
+- Now: the writing pass (Cal: professional, not corny, not obviously AI): `docs/VOICE.md`, then LEAD's text in
+  `15_shop.js`, `10_app_a.js`, `29b_story.js`, `29c_team.js`, `29d_dungeon.js`, `30_app_b.js`. Next: ROOMS rewrites room and
+  upgrade lines to the guide; QA reviews. Not publishing until QA's simulator reruns. (on 9b4cf3a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
       Not published (QA's economy simulation first).
-- [ ] Dungeon gifts, Relics and Trophies (Cal, Goblin King set): gifts on mission return with a reveal; loot per mission;
-      the Trophies tab becomes Relics, with tiered relics hidden until earned (old badges carry over) and a Trophies sub-tab
-      that opens after the first piece and the Lair's Trophy Room; piece buffs and the set bonus; the crew fix (nobody has
-      joined since the lounge was removed). Art requested from ROOMS below. QA to simulate drop odds.
+- [x] Dungeon gifts, Relics and Trophies (Cal: gifts, relics, the Goblin King set and an amulet set), 9b4cf3a, `29d_dungeon.js`.
+      A claimed mission rolls a gift (30 to 55% by mission): coins, XP, or a piece from that mission's loot, forced after
+      five dry gifts. The Goblin King's Regalia (m1, m2, m4: mission pay, XP, time, gift odds) and the Hollow Amulet (m3, m5:
+      quest coins; set: quest XP and business income). Trophies is now Relics: six tiered relics hidden until earned (150 coins
+      a tier), old badges as Milestones, and a Trophies sub-tab after the first piece, shown once the Lair's Trophy Wall
+      (`lr_trophy`, a mystery card until the first piece) is built. Tested headless (15 checks). Art falls back to drawn icons.
+      The crew fix is the team (29c_team.js). Not published.
 - [x] Progression parts 1 and 2 (d5fba8f, aa0d9ed): new curve, no level locks, story prices, the story scenes. Not published until QA's
       simulation. Next: tune the gates with QA's numbers; swap in ROOMS's portraits and merged room.
 - [ ] (was) Progression (Cal, 2026-11-05): plan in `docs/PROGRESSION.md`. New XP curve
@@ -122,12 +124,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   1. Five piece icons and a set emblem, 256 x 256, painted fantasy game style, on transparent: `ui_tr_goblin_helm.webp`,
      `_chest`, `_greaves`, `_boots`, `_sword`, `ui_tr_goblin_set.webp`. Shown in the gift reveal and the Trophies tab.
   2. The gift: `ui_gift.webp` (a closed dungeon loot chest or wrapped bundle, 256 x 256). The reveal opens it in code.
-  3. The Trophy Room: a Lair upgrade (`lr_troph`, add it to the Lair's upgrades with `{trophy:1}`: LEAD's menu shows it as
-     "Bring home your first trophy" until one exists, then sells it) and its picture: glass trophy cases and an armor
-     mannequin, drawn empty, plus each piece as a layer on the mannequin, so it dresses piece by piece (read `S.trophy.goblin`,
-     an object of piece ids that are owned). Show Cal the room and the full mannequin side by side first.
+  3. The trophy display: no new upgrade needed. LEAD's code (9b4cf3a) uses the Lair's existing Trophy Wall (`lr_trophy`),
+     a mystery card until the first piece. Its painted layer could show an armor mannequin that dresses piece by piece (read
+     `S.trophy.goblin`, owned piece ids) and an amulet case filling shard by shard (`S.trophy.amulet`). Show Cal side by side first.
   4. One dungeon-only wearable: the Rift Mask, a mask from another dimension (one sheet, every angle, both bodies, item id
      `dg_riftmask`, slot mask). Never sold in the Shop; LEAD adds its line with a `dungeon` flag. Wear-test it.
+  5. The Hollow Amulet (LEAD, 9b4cf3a): five shards of one broken amulet, each its own colour and mood, 256 x 256 on
+     transparent, same style as the goblin icons: `ui_tr_amulet_dusk.webp` (violet glass), `_ember` (warm amber), `_tide`
+     (sea green), `_thorn` (dark red, sharp), `_silence` (pale grey-white), and `ui_tr_amulet_set.webp` (the amulet whole).
+     All original. Until they exist the game draws a plain diamond.
 - Yawn pilot, 3 tops (Cal, 2026-11-05: paint the yawn instead of bending flat art). The code is in (`src/rig.js`, the
   `stretch` pose has `"painted":"yawn"`). Template: serve `quest-board/` and open `rigtest/template.html?pose=stretch&scale=2`:
   the bare body in the peak of the yawn, man then woman, on flat green, each half exactly one frame (720 x 828). One
@@ -374,7 +379,10 @@ To do:
       room's menu offers, 7,300 cards looked at): passes. Never more than 5 cards, "? ? ?" only 2+ levels up, one level up
       named with "Reach level", Buy always works, no early "All upgrades installed". 11 upgrades are never offered at any
       level, the same 11 ROOMS listed (Game Room 3, Restaurant Chef's Neon, Garden 3, Theater Cocktail Bar and 3).
-- [ ] (from LEAD) Dungeon gifts: simulate the drop odds once LEAD's code is in.
+- [ ] (from LEAD) Dungeon gifts, now in (9b4cf3a, `29d_dungeon.js`, hook `window.__qbDungeon`): simulate the drop odds
+      (`DGLOOT`, `dgRoll`): how many missions, and days at 5 missions a day, to finish each set; does the pity ever fire
+      twice running. Then the Relics tab: each relic tier once and never twice, the Trophies sub-tab hidden before the first
+      piece, the Trophy Wall a mystery card until then, the buffs applied once (mission pay, quest XP and coins, room income).
 - [ ] (from LEAD) Economy simulator, before the next publish: the new XP curve, no level locks, prices x ROOMSTEP (commit after
       d6730f0, `docs/PROGRESSION.md`, `docs/ECONOMY.md`). Simulate 30, 90 and 180 days at 200 and 450 XP a day with missions, the
       wheel, level pay and passive income, buying the cheapest next upgrade whenever affordable. Report: level reached, days to
