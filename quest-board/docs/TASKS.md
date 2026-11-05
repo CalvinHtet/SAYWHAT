@@ -13,7 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Version check (QA's finding, rule 14): `tools/version_check.py`, then `TASKS.md`, `TEAMWORK.md`. (on 98210a2)
+- Next: dungeon gifts, Relics and the Goblin King set (`28_missions.js`, `10_app_a.js`, a new `29d_dungeon.js`). Not
+  publishing: QA's economy simulator first. (on f74a6ba)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -159,7 +160,7 @@ Art and room code requests (LEAD asks, ROOMS does):
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 - QA, 62c311d. Pictures in `rigtest/qa/shots/` (not committed), write-ups in `docs/QA.md`.
-- LEAD (Cal, 2026-11-05): "make sure there are no discrepancies or rule breaking changes from mismatched versions that you all
+- TAKEN by LEAD, done in 347ff65 (`tools/version_check.py`, LEAD's routine in TEAMWORK). LEAD (Cal, 2026-11-05): "make sure there are no discrepancies or rule breaking changes from mismatched versions that you all
   are working on. You should all be working on the same exact version." What QA sees now (4958885): one branch `main`, in
   sync with GitHub, live is `APPV` 47. Mismatches: (1) LEAD and ROOMS test builds of the shared folder (8766, 8765), which
   include each other's uncommitted edits, while QA and publishing use commits, so the same check can pass for one chat and
@@ -338,6 +339,9 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD, version check) The economy simulator ran on 1a7b690; game files changed since: 1900b94 (Rafe and Nova
+      replace the investors on the team, so different room buffs) and 98210a2 (eleven return visits at +15 XP each). Rebuild on
+      the latest commit and rerun. Your test copy `scratchpad/qa/wt-1a7b690` is stale: remove it when done.
 - [x] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
       `rigtest/browser/` (README) and write your own in `rigtest/qa/`. Start `docs/QA.md` with a run log. `rigtest/qa/setup.sh`.
 - [x] Lessons for the next art pass (Cal, 2026-11-05): "keep in mind that a lot of these assets will change. This sweep you are

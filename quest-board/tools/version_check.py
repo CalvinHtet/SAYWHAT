@@ -73,6 +73,9 @@ for who, files in sorted(dirty.items()):
 
 # Doing lines
 tasks = open("quest-board/docs/TASKS.md", encoding="utf-8").read()
+# a garbled board (7ad5b1a: a text replace with an empty pattern put a line between every character, 40 KB became 20 MB)
+if len(tasks) > 300000 or tasks.count("(on ") > 40:
+    problems.append(f"docs/TASKS.md looks garbled ({len(tasks) // 1000} KB, {tasks.count('(on ')} Doing stamps): restore it from the last good commit")
 for sec in re.finditer(r"^## (LEAD|ROOMS|QA)\b.*?$(.*?)(?=^## |\Z)", tasks, re.M | re.S):
     who, body = sec.group(1), sec.group(2)
     lines = body.split("\n")
