@@ -97,6 +97,19 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
       another chat is publishing or timing, write the possible clash in `TASKS.md` and tell Cal in one line.
     - Tell Cal only when he must act: his decision or approval, a `WAITING ON` line older than 30 minutes that nobody has
       taken, or a clash. Say exactly what to tell which chat.
+14. **Everyone on the same version before starting (Cal, 2026-11-05: "never start unless the latest version is all matched
+    up"; "the final line of defense should always be LEAD").**
+    - Every Doing line ends with the commit it is built on: `(on <short commit>)`.
+    - Before starting any task: run `git log -1 --format=%h` and `git status --short`, and read every Doing line. Start only
+      when all three chats name the latest commit, and no other chat has uncommitted edits in the files your task touches
+      or depends on. If not, write `WAITING ON <chat>: commit <files> (since <time>)` in your Doing line and take a task
+      that touches nothing of theirs. Work another chat builds on is committed and pushed first.
+    - Rebuild your own test build from the latest commit before testing (ROOMS 8765, LEAD 8766, QA 8769), and say which
+      commit every result is from.
+    - **LEAD is the final line of defense.** Before every publish and at every wrap-up LEAD checks: all three Doing lines on
+      the latest commit, nothing uncommitted, `main` pushed and matching GitHub, `git worktree list` holding only today's
+      test copies, every test result naming its commit, and the live `APPV` matching `TASKS.md`. LEAD publishes nothing
+      until all of that matches, and fixes or reports any rule a mismatched version broke.
 
 ---
 

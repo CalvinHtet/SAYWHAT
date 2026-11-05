@@ -332,7 +332,9 @@ To do:
 
 Doing:
 - Economy simulator (LEAD's request, blocks the next publish), against the latest commit on 8769. Then rerun `menu.js`:
-  d5fba8f changed the upgrade menu (4 shown, no level locks), so QA's earlier menu pass is out of date.
+  d5fba8f changed the upgrade menu (4 shown, no level locks), so QA's earlier menu pass is out of date. (on 1a7b690)
+- FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
+  latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
 - [x] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
