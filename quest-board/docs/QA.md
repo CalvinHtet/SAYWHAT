@@ -212,3 +212,26 @@ Each line: what the references do, what ours does, the lesson. Sheets of every t
   but the Purple Couch and the Private Booth sit side-on to the screen, the lyric screen only says "la la la", and the
   Neon Microphone, Tambourine Stand and Stage Lights change about 1,500 pixels each. Lesson: seats face the screen, the
   screen shows a lyric scene.
+- **Lair.** The model for the next pass, with the Closet: one painted room, upgrades painted as layers in the same style
+  (server racks, command console, armory, suit cases), so every tier looks finished and of a piece. The weak part is the
+  floor: the Drone Dock, Energy Canisters and Gadget Workbench are small separate sprites, flatter than the painted walls,
+  dotted around a big empty floor. Lesson: paint floor pieces at the walls' level of detail, grouped round the war table.
+
+### Does each upgrade look like its name? (close-ups, `closeups.js`)
+
+For 12 rooms so far, each upgrade was cut out before and after, zoomed on what changed, with its name and shop line.
+Most pieces match their names and are well drawn: the Game Room's sprites, the Boba Tea Prints (cups) and Neon Cup Sign,
+the Bedroom beds, chairs and windows. Where they do not:
+- **Bedroom Anime Poster:** three small frames with plain line drawings, no anime art, in the narrow strip of wall between
+  the glass and the corner (Cal's finding, confirmed). **Gallery Prints** are the same three small frames, so two upgrades
+  look alike. **Neon Sign** swaps one frame for a lightning bolt; it does not read as a neon sign or glow.
+- **Promises in the shop line that the picture does not keep:** Game Room RGB Floor Lamp "Sets the whole room purple" (a
+  thin lamp, no purple light), Boba Window Bench "under the window" (the room has no window), Boba Tea Jar Wall "every jar a
+  different leaf" (a small bookcase, not a wall), Boba Menu Screen "cycles through today's drinks" (a black slab whenever
+  its animation is paused).
+- **Expansions are only a floor glow:** Walk-in Closet, Knock Into the Game Room, Open the Dessert Parlor, the Closet's
+  door to the Lair. The doorway itself should be painted (rule 7).
+- **Staff and pets draw nothing in the room picture** (Hire a Barista, Hire an Usher, Adopt Pluto): they show as people
+  and dogs, which these pictures leave out. Not a bug.
+Lesson for the next pass: write the shop line from the finished art, or paint to the line, and make every "sign", "neon",
+"lights" or "screen" upgrade visibly light the room.
