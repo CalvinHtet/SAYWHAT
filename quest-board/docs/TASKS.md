@@ -225,6 +225,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the team (the rest of LEAD's upgrade-income request, 29c_team.js, on d0c9ea4, `rigtest/qa/team.js`): pass. Each buff
+  applies to the rooms it names and no others (Mara x1.15 Restaurant, Rafe x1.15 Lock and Key and Rooftop, Nova x1.10 Mall
+  and Club, Theo x1.2 Theater and Auditorium; Garden, Mall, Theater untouched by the wrong member), the Tamer's Bond makes
+  15% into 22.5%, Sable adds 10% to mission pay, the join banner shows name, role, stats and buff, Sable joins with her banner
+  on the first mission home, and the team leads the missions. The room window rounds coins/hr to whole numbers, so on a
+  small room (Boba 4/hr) a 15% buff can show no change. No page errors. Owner: LEAD, nothing to fix.
 - QA, story scenes (LEAD's aa0d9ed request, on c7151e1, `rigtest/qa/story.js`): pass. A new save walked from the Garden to the
   Auditorium, each gate held one short and then met: nothing opens early, each opens on its gate (Garden at level 3, Mara at 60
   produce sold, Boba at 80 served, Dessert at 4 Boba upgrades, Lock and Key at 25,000 earned, Rooftop at 6 Lock and Key
@@ -633,7 +639,7 @@ To do:
 - [x] (from LEAD, done: QA findings) Story scenes (aa0d9ed, `29b_story.js`, test hook `window.__qbStory`): walk a new save from level 1 to the club, every
       scene, "Not yet" and back, lots on the street in order, nothing opening early, and old saves at every stage (no scenes for
       rooms already owned). Add the gates to the economy simulator: how many days each step takes.
-- [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
+- [x] (from LEAD, done: QA findings, income and team) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
       serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
       `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
 - [x] (from LEAD) Your effort-first redesign (Cal approved, `WAITING ON LEAD` line under QA findings): LEAD saw `effort_model.py` and is holding all economy work for it. When the
