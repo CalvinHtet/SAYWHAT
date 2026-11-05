@@ -1574,7 +1574,7 @@ function lfApply(){var w=document.getElementById("lfw");if(w)w.setAttribute("tra
 function lfClamp(){var c=document.getElementById("lfwrap");if(!c)return;var cw=c.clientWidth,ch=c.clientHeight,W=LFWW*LFV.s,H=LFDIM.h*LFV.s,m=90;
   LFV.x=Math.min(m,Math.max(cw-W-m,LFV.x));if(W+2*m<cw)LFV.x=(cw-W)/2;LFV.y=Math.min(m+640*LFV.s,Math.max(ch-H-m,LFV.y))}
 function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
-window.__qbLoft=function(){return {A:LFA,V:LFV,apply:lfApply,clamp:lfClamp,go:lfGo,C:lfC,P:lfP,arrive:lfArrive,draw:lfDraw,route:lfRoute,seatish:lfSeatish,blocked:lfBlockedAt,rerender:render,roomCtx:lfRoomCtx,roomSvg:lfRoomSvg,addons:ADDONS,roomT:ROOMT}};
+window.__qbLoft=function(){return {fx:typeof LFFX!=="undefined"?LFFX:null,defs:typeof ROOMDEF!=="undefined"?ROOMDEF:null,A:LFA,V:LFV,apply:lfApply,clamp:lfClamp,go:lfGo,C:lfC,P:lfP,arrive:lfArrive,draw:lfDraw,route:lfRoute,seatish:lfSeatish,blocked:lfBlockedAt,rerender:render,roomCtx:lfRoomCtx,roomSvg:lfRoomSvg,addons:ADDONS,roomT:ROOMT}};
 /* Zoomed all the way out, the whole street fits the width of the screen. */
 function lfMinS(){var c=document.getElementById("lfwrap"),cw=(c&&c.clientWidth)||360;return Math.min(.32,cw/((window.LFWW||2400)+120))}
 function lfZoom(d){var c=document.getElementById("lfwrap");if(!c)return;if(d===0){LFV.init=0;lfInitView(c);return}lfZoomAt(d>0?1.25:.8,c.clientWidth/2,c.clientHeight/2)}
