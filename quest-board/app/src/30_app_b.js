@@ -640,7 +640,7 @@ function socialAct(a,b,e){
     return true}
   if(a==="snpost"){var ta=document.getElementById("sntext"),tx=ta?String(ta.value||"").trim().slice(0,280):"";if(!tx||!socOn())return true;
     if(Date.now()-SOC.lastPost<15000){pop("Slow down a little");return true}SOC.lastPost=Date.now();
-    var id=MYUID+"_"+Date.now();db.doc("board/"+id).set({from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:Date.now()})
+    var id=MYUID+"_"+Date.now();db.doc("board/"+id).set({from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:Date.now(),look:lookOf()})
       .then(function(){SOC.posts.unshift({id:id,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:Date.now()});socPaint()})
       .catch(function(er){pop("Could not post: "+((er&&er.code)||"error"))});return true}
   if(a==="sndel"){var pid=b.dataset.p;db.doc("board/"+pid).delete().then(function(){SOC.posts=SOC.posts.filter(function(p){return p.id!==pid});socPaint()}).catch(function(){});return true}
