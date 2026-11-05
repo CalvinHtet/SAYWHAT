@@ -85,6 +85,44 @@ SHOP. Paste each one's starter prompt (Part 3) as its first message.
 
 ---
 
+## Working on your own
+
+These apply to every chat, in Cal's words.
+
+**Keep working**
+1. Work without stopping. Finish a task, commit it, take the next one from your list in `quest-board/docs/TASKS.md`
+   (top first), and carry on. Don't ask whether to continue.
+2. Stop and ask Cal only when something really needs him:
+   - Art to approve (see Approvals). Keep working on other tasks while you wait.
+   - A decision only he can make.
+   - Anything that costs money or credits, or needs a login.
+   - Something broken you can't fix after two honest tries.
+   - Anything that would delete work, or a clash with another chat's files.
+
+   When you stop, say in one or two lines exactly what you need.
+3. Commit only finished, tested work, never half-done work. Keep your "Doing" line in `TASKS.md` current: set it when you
+   start, clear it when you commit.
+4. Claim Chrome in `TASKS.md` before generating (`CHROME: ROOMS (since <time>)`) and set it back to `CHROME: free` when done.
+
+**Approvals**
+- Show every art set as one image with all tiers or versions side by side, in order, each labeled (Tier 1, Tier 2, and
+  so on), so Cal can point at the ones that look wrong. Redo only the ones he flags.
+- Nothing goes into the game before he approves it. Save up approvals so he sees several at once.
+
+**When your list runs out**
+
+Suggest your own tasks, quality first. Don't add new systems or redesign something big without asking Cal.
+- For each room, look up reference images of real isometric rooms of that kind (search "isometric nightclub", "isometric
+  arcade", "isometric movie theater", "isometric bedroom" and so on). Compare his room against them: layout, where things
+  stand and which way they face, spacing and walk paths, level of detail, lighting, and how full and alive it feels. Fix
+  what you can, and put art ideas on the board for his approval. References are for study only: never copy anyone's art,
+  original designs only.
+- Run the room audits in `quest-board/rigtest/browser` (gaps, depth, stations, guests), and look at every room at every
+  upgrade tier, not only fully upgraded.
+- Write what you find into `TASKS.md` as tasks and work through them.
+
+---
+
 ## Part 3: starter prompts (paste one into each new chat)
 
 **ROOMS**
