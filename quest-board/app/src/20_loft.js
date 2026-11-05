@@ -2935,7 +2935,7 @@ function lfInitView(c){
   LFV.s0=LFV.s;LFV.x=cw/2-(LFWW/2)*LFV.s;LFV.y=ch*.80-gy*LFV.s;LFV.init=1;lfClamp();lfApply()}
 
 /* ===== Bedroom v54: vector rug, picture window, floor-to-ceiling glass + patio, LED strips + grass panels ===== */
-var LFWBR=[.9,2.4,3.9,5.4,6.9,8.2,9.3];
+var LFWBR=[.9,2.4,3.9,5.4,6.9,8.2,9.3],LFWBR0=LFWBR,LFWDOOR=[8.0,9.3];
 function lfPatioQ(){var a=LFWBR[0],b=LFWBR[LFWBR.length-1];return [lfP(a,0,0),lfP(b,0,0),lfP(b,0,LF.H-10),lfP(a,0,LF.H-10)]}
 function lfHoles(C,uid){
   var id="lfah"+uid,p="M-1400 -1400H1400V1400H-1400Z",d="";
@@ -2983,7 +2983,7 @@ function lfWinPic(C,x0,x1,z0,z1,uid){
   s+=lfPoly(lfWallQ(x0-.1,x1+.1,z1+3,z1+5),"rgba(255,255,255,.25)","none");
   C.walls.push(s)}
 function lfWinFtc(C,uid){
-  var BR=LFWBR,x0=BR[0],x1=BR[BR.length-1],z1=LF.H-10,s="",fw=.05,fc="#1a1e27",door=!!(C.patio&&C.patio.deck),n=BR.length-1;
+  var BR=LFWBR,x0=BR[0],x1=BR[BR.length-1],z1=LF.H-10,s="",fw=.05,fc="#1a1e27",door=!!(C.patio&&(C.patio.deck||C.patio.room)),n=BR.length-1;
   /* jamb depth + sill */
   s+=lfPoly([lfP(x0,-.45,0),lfP(x0,0,0),lfP(x0,0,z1),lfP(x0,-.45,z1)],"#c9bfae","rgba(24,30,58,.35)",.8);
   s+=lfPoly([lfP(x0,-.45,0),lfP(x1,-.45,0),lfP(x1,0,0),lfP(x0,0,0)],"#e8dfcf","rgba(24,30,58,.3)",.8);
@@ -3025,7 +3025,20 @@ function lfPotPlant(x,y,sc,kind){
   for(var k=0;k<9;k++){var a=(-70+k*17.5)*Math.PI/180,len=(kind==="b"?26:34)*sc+(k%3)*5,ex=b[0]+Math.sin(a)*len*.85,ey=b[1]-14*sc-Math.cos(a)*len;
     s+='<path d="M'+b[0]+' '+(b[1]-14*sc)+' Q'+(b[0]+Math.sin(a)*len*.3)+' '+(b[1]-14*sc-len*.7)+' '+ex+' '+ey+' Q'+(b[0]+Math.sin(a)*len*.55+5*sc)+' '+(b[1]-14*sc-len*.4)+' '+b[0]+' '+(b[1]-14*sc)+'z" fill="'+gs[k%4]+'" stroke="rgba(10,40,16,.35)" stroke-width=".6"/>'}
   return s}
+/* The Patio room's slot, or -1. */
+function lfPatioSlot(){var k=-1;(S.base.slots||[]).forEach(function(r,i){if(k<0&&r&&r.t==="patio")k=i});return k}
+/* The Patio room drawn as it is furnished, placed behind the Bedroom's back wall: its front edge just outside the wall,
+   centred on the glass. Room drawing works on shared globals, so they are put back afterwards. */
+function lfPatioView(){
+  var i=lfPatioSlot();if(i<0)return null;
+  var r=S.base.slots[i],sv=[LF.W,LF.D,LF.N,LF.H,window.LFCR,LFDEC,LFWINS,LFREC,window.rmPortalsOn,LFWBR],s="",x0=LFWBR[0],x1=LFWBR[LFWBR.length-1];
+  try{window.rmPortalsOn=0;var C=lfRoomCtx(r,900+i),W=C.W||7.5,D=C.D||5,o=lfP((x0+x1)/2-W/2,-.45-D,0);
+    s='<g transform="translate('+o[0].toFixed(1)+','+o[1].toFixed(1)+')">'+lfRoomSvg(r,900+i,C,{uid:901+i})+'</g>'}
+  catch(e){s=null}
+  finally{LF.W=sv[0];LF.D=sv[1];LF.N=sv[2];LF.H=sv[3];window.LFCR=sv[4];LFDEC=sv[5];LFWINS=sv[6];LFREC=sv[7];window.rmPortalsOn=sv[8];LFWBR=sv[9]}
+  return s}
 function lfPatioPre(C,uid){
+  if(C.patio&&C.patio.room){var v=lfPatioView();if(v)return '<g clip-path="url(#lfph'+uid+')" pointer-events="none">'+v+'</g>'+(C.patio.deck?'<g clip-path="url(#lfph'+uid+')"><g id="lfpcg'+uid+'"></g></g>':'')}
   var p=C.patio,L=lfLS(),sk=lfSkyCols(L),dk=L.dark||0,q=lfPatioQ(),ys=q.map(function(a){return a[1]}),yT=Math.min.apply(0,ys),yB=Math.max.apply(0,ys),s="",P=lfP;
   s+='<linearGradient id="lfpsk'+uid+'" gradientUnits="userSpaceOnUse" x1="0" y1="'+yT+'" x2="0" y2="'+yB+'"><stop offset="0" stop-color="'+sk[0]+'"/><stop offset="1" stop-color="'+sk[1]+'"/></linearGradient>'
    +'<radialGradient id="lfegg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#e3c391"/><stop offset="1" stop-color="#a47a48"/></radialGradient>'
@@ -3148,11 +3161,14 @@ LFSZ.bedroom=[10,9];LFRS.bedroom=.86;
 LFROOM.bedroom=function(C){
   var H=function(k){return C.has(k)},uid=7;C.chu=(window.LFCU=(window.LFCU||0)+1);C.chd={ph:"empty",t0:0,k:"",sl:0,pp:78/266};
   lfDoorAt(C,7.4);
-  var w3=H("bd_win3"),w2=H("bd_win2");
-  if(w3)C.patio={deck:H("bd_patio"),swing:H("bd_swing"),deco:H("bd_pdeco")};
-  if(w3)lfWinFtc(C,uid);
-  else if(w2)lfWinPic(C,2.6,4.9,50,114,uid);
-  else{lfSprWin(C,"w_win1",3.5,.05,.1,.05,{flip:1,H:76,dy:-26});LFWINS.push(2.7)}
+  /* The Patio is its own room. Once it exists the Bedroom has a sliding glass door onto it (the last pane of the glass
+     wall, or a door of its own in the wall), and through the glass you see that room as it is furnished. */
+  var w3=H("bd_win3"),w2=H("bd_win2"),pr=lfPatioSlot()>=0;
+  LFWBR=w3?LFWBR0:LFWDOOR;
+  if(w3||pr)C.patio={deck:w3&&(H("bd_patio")||pr),swing:H("bd_swing"),deco:H("bd_pdeco"),room:pr};
+  if(w3||pr)lfWinFtc(C,uid);
+  if(!w3){if(w2)lfWinPic(C,2.6,4.9,50,114,uid);
+  else{lfSprWin(C,"w_win1",3.5,.05,.1,.05,{flip:1,H:76,dy:-26});LFWINS.push(2.7)}}
   var AN=H("bd_ward2")&&!window.LFNOANX;
   if(AN){C.annex={lair:0,lr:H("bd_lair"),shoe:H("bd_cl_shoe"),isle:H("bd_cl_isle"),rack:H("bd_lr_rack"),desk:H("bd_lr_desk"),trophy:H("bd_lr_trophy"),arm:H("bd_lr_arm"),suit:H("bd_lr_suit"),holo:H("bd_lr_holo")};
     if(C.annex.lr)lfSLairItem(C);lfSClosetItem(C)}
