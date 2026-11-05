@@ -412,8 +412,8 @@ var LFDS={
  bedroom:[
   {id:"mid",name:"Neutral Loft",cost:0,fl:"oak",wl:"plaster",wc:"#ddd8cf",wr:"plaster",wcr:"#cfcac1"},
   {id:"brick",name:"Brick Studio",cost:3000,fl:"concrete",wl:"plaster",wc:"#d9d2c6",wr:"plaster",wcr:"#c9c2b6",acc:{w:"L",a:4.3,b:9,tex:"brick"}},/* left wall (Cal): the patio glass covers the back-right wall */
-  {id:"warm",name:"Warm Oak",cost:2200,fl:"oak",wl:"plaster",wc:"#ead7cd",wr:"plaster",wcr:"#bfd0c2",acc:{w:"L",a:4.3,b:8.2,c:"#c98a8a"}},
-  {id:"noir",name:"Neon Noir",cost:5200,fl:"walnut",wl:"plaster",wc:"#5a6486",wr:"plaster",wcr:"#4a5374",acc:{w:"L",a:4.3,b:8.2,tex:"slat"}}],
+  {id:"warm",name:"Warm Oak",cost:2200,fl:"oak",wl:"plaster",wc:"#ead7cd",wr:"plaster",wcr:"#bfd0c2",acc:{w:"L",a:4.3,b:9,c:"#c98a8a"}},
+  {id:"noir",name:"Neon Noir",cost:5200,fl:"walnut",wl:"plaster",wc:"#5a6486",wr:"plaster",wcr:"#4a5374",acc:{w:"L",a:4.3,b:9.3,tex:"slat"}}],
  lounge:[
   {id:"cozy",name:"Neutral Lounge",cost:0,fl:"oak",wl:"plaster",wc:"#ddd8cf",wr:"plaster",wcr:"#cfcac1"},
   {id:"loft",name:"Industrial Lounge",cost:3200,fl:"concrete",wl:"plaster",wc:"#d4cfc8",wr:"plaster",wcr:"#c5c0b9",acc:{w:"L",a:1,b:8,tex:"brick"}},
@@ -1517,7 +1517,7 @@ function lfDraw(a,force){
         for(var qi=0;qi<2&&!hid;qi++){var q=qs[qi],ins=false;for(var u=0,w2=3;u<4;w2=u++){if((q[u][1]>by)!==(q[w2][1]>by)&&bx<(q[w2][0]-q[u][0])*(by-q[u][1])/(q[w2][1]-q[u][1])+q[u][0])ins=!ins}if(ins)hid=1}}
       ce.setAttribute("cx",pp[0].toFixed(1));ce.setAttribute("cy",(pp[1]-28).toFixed(1));ce.setAttribute("rx",hid?"34":"0");ce.setAttribute("ry",hid?"46":"0")}}
   var inPa=a.role==="me"&&C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
-  if(a.role==="me"&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var op=(a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-3)||a.y<-.02;dr.style.transform=op?"translate(-28.6px,-14.3px)":"translate(0px,0px)"}}
+  if(a.role==="me"&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var op=(a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-3)||a.y<-.02;dr.style.transform=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)"}}
   if(inPa){if(g.parentNode!==inPa)inPa.appendChild(g)}else if(inLr){if(g.parentNode!==inLr)inLr.appendChild(g)}else if(inCl){if(g.parentNode!==inCl)inCl.appendChild(g)}else if(g.parentNode!==items){items.appendChild(g);a._in=0}
   if(a.role==="me"&&inLr){var ho=sv.querySelector("[id^=lfllho]"),hu=sv.querySelector("[id^=lfllhu]");if(ho){var bh=(a.x+a.y)<-3.8&&a.x<-9.5&&a.x>-17.5;ho.style.display=bh?"":"none";if(hu)hu.style.display=bh?"none":""}}
   if(a.mode==="walk"){var sdy=(a.tx-a.x)+(a.ty-a.y);if(Math.abs(sdy)>.02)a.back=sdy<0}
@@ -2993,18 +2993,23 @@ function lfWinFtc(C,uid){
   /* mullions */
   for(var i=0;i<=n;i++){var xx=BR[i];s+=lfPoly(lfWallQ(xx-(i===0?.08:fw),xx+(i===n?.08:fw),0,z1+7),fc,"none")}
   /* glass sheen on every pane */
-  for(var k=0;k<n;k++){var xa=BR[k],pw=BR[k+1]-xa;
+  for(var k=0;k<(door?n-1:n);k++){var xa=BR[k],pw=BR[k+1]-xa;
     s+=lfPoly([lfP(xa+pw*.18,0,z1-8),lfP(xa+pw*.36,0,z1-8),lfP(xa+pw*.1,0,z1*.42),lfP(xa+pw*.03,0,z1*.42)],"rgba(255,255,255,.12)","none");
     s+=lfPoly([lfP(xa+pw*.5,0,z1-8),lfP(xa+pw*.56,0,z1-8),lfP(xa+pw*.42,0,z1*.55),lfP(xa+pw*.38,0,z1*.55)],"rgba(255,255,255,.07)","none")}
   /* transom line */
-  s+=lfPoly(lfWallQ(x0,x1,z1*.74,z1*.74+2),fc,"none");
+  s+=lfPoly(lfWallQ(x0,door?BR[n-1]:x1,z1*.74,z1*.74+2),fc,"none");
   /* patio door: last pane, heavier frame, handle bars, floor track */
   if(door){var da=BR[n-1],db=x1,fh=.09;
-    s+='<g id="lfpdr'+uid+'" style="transition:transform .9s ease-in-out">';
+    /* The door pane carries its own glass, so sliding it opens a clear gap onto the patio; it rests ajar (Cal: "the
+       patio door still looks like it doesn't open") and slides fully open when someone walks up. A threshold under it. */
+    s+=lfPoly([lfP(da,-.45,0),lfP(db,-.45,0),lfP(db,.12,0),lfP(da,.12,0)],"#6f6a63","rgba(24,30,58,.4)",.6);
+    s+='<g id="lfpdr'+uid+'" style="transition:transform .9s ease-in-out;transform:translate(-14.3px,-7.15px)">';
     s+=lfPoly(lfWallQ(da,db,0,10),fc,"none")+lfPoly(lfWallQ(da,db,z1-3,z1+4),fc,"none")+lfPoly(lfWallQ(da,da+fh,0,z1+7),"#232833","none")+lfPoly(lfWallQ(db-fh,db,0,z1+7),"#232833","none");
     s+=lfPoly(lfWallQ(da+.05,db-.05,0,3),"#8e95a3","none");
     s+=lfPoly(lfWallQ(da+.16,da+.21,z1*.28,z1*.56),"#d6dae3","rgba(20,24,34,.45)",.5);
-    s+=lfPoly(lfWallQ(da+fh,db-fh,10,z1-3),"rgba(160,205,235,.08)","none")+'</g>'}
+    var pw2=db-da;s+=lfPoly(lfWallQ(da+fh,db-fh,10,z1-3),"rgba(170,212,238,.30)","none");
+    s+=lfPoly([lfP(da+pw2*.18,0,z1-8),lfP(da+pw2*.36,0,z1-8),lfP(da+pw2*.1,0,z1*.42),lfP(da+pw2*.03,0,z1*.42)],"rgba(255,255,255,.22)","none");
+    s+=lfPoly([lfP(da+pw2*.5,0,z1-8),lfP(da+pw2*.56,0,z1-8),lfP(da+pw2*.42,0,z1*.55),lfP(da+pw2*.38,0,z1*.55)],"rgba(255,255,255,.12)","none")+'</g>'}
   C.walls.push(s)}
 /* ---- patio (behind the glass) ---- */
 function lfRattanEgg(x,y,zc,sc){
@@ -3474,11 +3479,14 @@ window.lfFloor4=lfFloor4;
 /* ---- wall art: flat pieces drawn straight onto the left-wall plane (flush, no baked perspective) ---- */
 function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function(){v=(v*1664525+1013904223)%4294967296;return v/4294967296}};
   var put=function(yb,wpx,zt,g){return lfFaceX(0.03,yb,zt,g)};
+  /* With the painted grass wall (Tier 3 on) the back 3 tiles of this wall are grass: the clock and the three prints move
+     onto the paint beside it, where the moss panel hung (Cal: art on the grass "looks weird"). */
+  var gw3=H("bd_wt3")&&window.LFSPR&&LFSPR.bdw_t3;
   var fr=function(x,y,w,h,pr,wood,mat){wood=wood||"#c9964f";mat=mat||"#f3e9d6";return '<rect x="'+(x+1.2)+'" y="'+(y+1.4)+'" width="'+w+'" height="'+h+'" fill="rgba(30,20,40,.22)"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+wood+'" stroke="#7a5524" stroke-width=".5"/><rect x="'+(x+1.4)+'" y="'+(y+1.4)+'" width="'+(w-2.8)+'" height="'+(h-2.8)+'" fill="'+mat+'"/><g transform="translate('+(x+3.2)+','+(y+3.2)+')">'+pr(w-6.4,h-6.4)+'</g>'};
   if(H("bd_clock")){var g='<circle cx="12" cy="12.8" r="11.2" fill="rgba(30,20,40,.22)"/><circle cx="11.4" cy="11.8" r="11" fill="#27272c"/><circle cx="11.4" cy="11.8" r="9.4" fill="#f5f0e6"/>';
     for(var k=0;k<12;k++){var an=k*Math.PI/6,l=k%3?1.3:2.2;g+='<line x1="'+(11.4+Math.sin(an)*(9-l)).toFixed(2)+'" y1="'+(11.8-Math.cos(an)*(9-l)).toFixed(2)+'" x2="'+(11.4+Math.sin(an)*8.6).toFixed(2)+'" y2="'+(11.8-Math.cos(an)*8.6).toFixed(2)+'" stroke="#2b2b30" stroke-width=".7"/>'}
     g+='<line x1="11.4" y1="11.8" x2="9" y2="9.6" stroke="#222" stroke-width="1.1" stroke-linecap="round"/><line x1="11.4" y1="11.8" x2="16" y2="7.4" stroke="#222" stroke-width=".8" stroke-linecap="round"/><circle cx="11.4" cy="11.8" r="1" fill="#222"/>';
-    s+=put(1.0,22,107,g)}
+    s+=put(gw3?3.3:1.0,22,gw3?110:107,g)}
   if(H("bd_art2")){var pm=function(c1,c2){return function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9ddc8"/><circle cx="'+w*.5+'" cy="'+h*.42+'" r="'+Math.min(w,h)*.26+'" fill="'+c1+'"/><path d="M0 '+h+' L'+w*.5+' '+h*.55+' L'+w+' '+h+'z" fill="'+c2+'" opacity=".85"/>'}};
     var gg='';gg+=fr(0,0,12,16,pm("#d98c5f","#2d2d33"),"#2a2a2f","#f5efe3");gg+=fr(13.5,2,12.5,10,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#ece3d3"/><path d="M.5 '+h*.6+' q'+w*.25+' -4 '+w*.5+' 0 t'+w*.5+' 0" stroke="#3b3b40" fill="none" stroke-width=".8"/>'},"#c9964f");
     gg+=fr(0,18,10,14,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e4dac6"/><path d="M'+w*.5+' '+h+' V2 M'+w*.5+' '+h*.7+' q-3 -2 -3.4 -5 M'+w*.5+' '+h*.5+' q3 -2 3.4 -5" stroke="#3f5a3a" fill="none" stroke-width=".8"/>'},"#2a2a2f","#f5efe3");
@@ -3487,7 +3495,7 @@ function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function
   if(H("bd_art3")){var tp=[function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#efe3cf"/><circle cx="'+w*.5+'" cy="'+h*.32+'" r="'+w*.26+'" fill="#d98c5f"/><path d="M0 '+h*.62+' q'+w*.5+' -'+h*.2+' '+w+' 0 V'+h+' H0z" fill="#2f2f35"/>'},
      function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9dfcb"/><path d="M'+w*.5+' '+h+' V'+h*.2+' M'+w*.5+' '+h*.75+' q-'+w*.4+' -3 -'+w*.4+' -'+h*.25+' M'+w*.5+' '+h*.6+' q'+w*.4+' -3 '+w*.4+' -'+h*.25+' M'+w*.5+' '+h*.42+' q-'+w*.3+' -2 -'+w*.3+' -'+h*.18+'" stroke="#3d5a38" fill="none" stroke-width="1"/>'},
      function(w,h){var o='<rect width="'+w+'" height="'+h+'" fill="#efe3cf"/><circle cx="'+w*.5+'" cy="'+h*.3+'" r="'+w*.24+'" fill="#e3a35d"/>';for(var i=0;i<4;i++)o+='<line x1="'+w*.1+'" y1="'+(h*.58+i*2.6)+'" x2="'+w*.9+'" y2="'+(h*.58+i*2.6)+'" stroke="#35353b" stroke-width=".8"/>';return o}],tg='';
-    for(var i=0;i<3;i++)tg+=fr(i*11,0,9.6,21,tp[i]);s+=put(1.12,31,80,tg)}
+    for(var i=0;i<3;i++)tg+=fr(i*11,0,9.6,21,tp[i]);s+=put(gw3?3.12:1.12,31,gw3?82:80,tg)}
   if(H("bd_neon")){var nb='<rect x="0" y="0" width="15" height="30" rx="3" fill="#15161c" stroke="#3a3b46" stroke-width=".8"/>',bp='M9 3 L3.5 16 H7.5 L5.6 27.5 L12 12 H8.2 Z';
     nb+='<path d="'+bp+'" fill="none" stroke="#7aa8ff" stroke-width="5" opacity=".28" stroke-linejoin="round"/><path d="'+bp+'" fill="none" stroke="#fff6d8" stroke-width="1.6" stroke-linejoin="round"/>';s+=put(4.2,15,96,nb)}
   /* the moss panel; from the Grass Wall tier the whole wall behind the bed is grass, so it is left out */

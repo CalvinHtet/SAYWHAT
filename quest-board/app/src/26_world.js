@@ -153,7 +153,8 @@ function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]
 function rmArrows(r){var at={tl:'',tr:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k={BL:"tl",BR:"tr",FL:"bl",FR:"br"}[q[2]]||"br";
     at[k]+='<button type="button" class="prtb-b" data-act="gotoroom" data-t="'+q[1]+'" style="--c:'+q[4]+'"><svg viewBox="-28 -20 56 40" width="20" height="16" aria-hidden="true"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+q[4]+'"/></g></svg>'+esc(q[5]||ROOMT[q[1]].name)+'</button>'});
   var clean=r.t==="bedroom"&&(S.base.poops||[]).length?'<div class="prtb bc"><button type="button" class="prtb-b" data-act="dogclean" style="--c:#ffc857">Clean up</button></div>':"";
-  return clean+Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'">'+at[k]+'</div>':''}).join("")}
+  /* top right: under the zoom buttons, not behind them (inline: index.html is shared) */
+  return clean+Object.keys(at).map(function(k){return at[k]?'<div class="prtb '+k+'"'+(k==="tr"?' style="top:44px;right:6px"':'')+'>'+at[k]+'</div>':''}).join("")}
 /* tapping an arrow or a glow: drag handlers can swallow the click, so read what is under the finger */
 (function(){var dn=null;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
   document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("[data-act=gotoroom]");if(!g)return;var t=g.getAttribute("data-t");
