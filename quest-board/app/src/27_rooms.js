@@ -25,6 +25,7 @@ ADDONS.bedroom=ADDONS.bedroom.filter(function(a){return !/^bd_(cl_|lr_|lair|swin
 ADDREQ.bd_neon="bd_art2";
 ADDONS.bedroom.forEach(function(a){var e=a[3];
   if(a[0]==="bd_ward2"){a[1]="Walk-in Closet";a[4]="Opens a whole new room through a glowing door. The Shop opens with it.";e.opens="closet"}
+  if(a[0]==="bd_lights"){a[1]="Moss Art Panel";a[4]="A framed panel of soft living moss over the bed, lit from above."}
   if(a[0]==="bd_patio"){a[1]="Patio Door";a[4]="Slide the glass open to your own patio, 30 floors up.";e.opens="patio"}});
 ADDONS.bedroom.push(["bd_game","Knock Into the Game Room",1500,{lv:18,opens:"gameroom",fp:1,g:"Expansion"},"A door to a room with one job: having fun."]);
 ADDONS.bedroom.push(["bd_dbed1","Dog Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);
@@ -38,6 +39,11 @@ ADDONS.bedroom.push(["bd_wt2","Fresh Paint & Oak Floors",120,{g:"Walls"},"Two so
 ADDONS.bedroom.push(["bd_wt3","Living Grass Wall",240,{g:"Walls"},"A floor-to-ceiling panel of soft living grass behind the bed, deep painted walls around it."]);
 ADDONS.bedroom.push(["bd_wt4","Cove Lighting",360,{g:"Walls"},"Warm light washes down the walls and the grass, and along a brass rail."]);
 Object.assign(ADDREQ,{bd_wt3:"bd_wt2",bd_wt4:"bd_wt3"});
+ADDONS.bedroom.push(["bd_clock2","Digital Clock",90,{},"Slim and dark, glowing digits, always the real time."]);ADDREQ.bd_clock2="bd_clock";
+ADDONS.bedroom.push(["bd_radio","Pocket Radio",40,{g:"Music"},"Cheap, crackly, yours."]);
+ADDONS.bedroom.push(["bd_spk","Bluetooth Speaker",120,{g:"Music"},"Small, loud, on its own little stand."]);
+ADDONS.bedroom.push(["bd_vinyl","Bluetooth Record Player",300,{g:"Music"},"Spinning vinyl, glowing base, streams from your phone."]);
+Object.assign(ADDREQ,{bd_spk:"bd_radio",bd_vinyl:"bd_spk"});
 /* A painted shell is drawn as the room's floor and walls, clipped to the same shapes the game draws them in. Its frame is
    tools/shell_guide.py's: floor corners 12 px in from the sides and 12 px above the bottom, 5:4. */
 var LFSHELLK=null;
@@ -56,6 +62,10 @@ function bdShellKey(C){var H=C.has,t=H("bd_wt4")?4:H("bd_wt3")?3:H("bd_wt2")?2:1
 /* the old Bedroom drew these rooms inside itself. They are their own rooms now. */
 var bedBase=LFROOM.bedroom;
 LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};rsArtReady();bedBase(C);C.has=h;C.shellK=bdShellKey(C);
+  /* music, one step at a time (Cal): a cheap radio, then a speaker on a stand, then a bluetooth record player; the best
+     one owned stands against the back wall between the bookshelf and the mirror (the PC tower hides the desk side) */
+  var mk=h("bd_vinyl")?"bdx_vinyl":h("bd_spk")?"bdx_spk":h("bd_radio")?"bdx_radio":null;
+  if(mk&&LFSPR[mk]){lfSpr(C,mk,2.35,.1,.8,.6,{h:30,H:{bdx_vinyl:46,bdx_spk:54,bdx_radio:42}[mk],flip:mk==="bdx_vinyl"?1:0});C.s("look",4.4,1.1,-1,"look",[6,12],{tag:"music"})}
   /* Both dog beds along the front edge on the closet side, well apart: the corner by the plant stays clear. */
   /* each bed is a low platform: a dog in it sits on the cushion, drawn over the bed (without it the bed hid the dog) */
   var dbed=function(x){lfSpr(C,"hmx_dogbed",x,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});C.plat.push({x0:x,y0:7.8,x1:x+1.2,y1:8.8,z:7,key:x+1.2+8.8+.01})};

@@ -1571,7 +1571,7 @@ function lfLoop(ts){
   if(ts-LFLT<(document.querySelector("#layer .modal")&&innerWidth>640?38:66)){LFRAF=requestAnimationFrame(lfLoop);return}
   LFLT=ts;
   if(ts-LFOBT>700){LFOBT=ts;try{lfObUpdate()}catch(e){}}
-  try{lfAmbient(ts)}catch(e){}
+  try{lfAmbient(ts)}catch(e){}try{lfClockTick(ts)}catch(e){}
   Object.keys(LFMETA).forEach(function(k){var m=LFMETA[k];if(m&&m.C&&m.r)try{lfPlotTick(m.C,m.r,dt)}catch(e){}});
   var mdl=!!document.querySelector("#layer .modal"),vis=lfVisRooms();
   /* Everyone keeps living, but only people in a room on screen are drawn: a phone could not redraw 21 rooms of people. */
@@ -3254,7 +3254,7 @@ LFROOM.bedroom=function(C){
      over the Closet door, no shelf poking out of the glass), so they are no longer sold and show only without the glass. */
   if(H("bd_art1")&&!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});
   if(H("bd_fshelf")&&!w3)lfSpr4(C,"bd4_fshelf",9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:-80,nosh:1});
-  if(H("bd_lights"))lfLedWall(C);
+  /* no RGB strip (Cal: "Don't need that"); bd_lights is the moss panel alone (lfWallArtL) */
   lfWallArtL(C,H);
   if(H("bd_neon"))lfLight(C,.3,4.0,70,"#7aa8ff",1.4,.4);
 };
@@ -3512,6 +3512,12 @@ function lfFloor4(uid){var N=LF.W,M=LF.D,S=LFSP4.shl_floor,u=lfSp4Url("shl_floor
 window.lfFloor4=lfFloor4;
 
 
+/* the real time, for the clocks: hand angles and "3:42" */
+function lfClockNow(){var d=new Date(),h=d.getHours(),m=d.getMinutes();return {ha:((h%12)*30+m*.5).toFixed(1),ma:(m*6).toFixed(1),t:((h%12)||12)+":"+(m<10?"0":"")+m}}
+var LFCKT=0;function lfClockTick(ts){if(ts-LFCKT<5000)return;LFCKT=ts;var c=lfClockNow();
+  document.querySelectorAll(".lfclk").forEach(function(e){if(e.textContent!==c.t)e.textContent=c.t});
+  document.querySelectorAll(".lfch").forEach(function(e){e.setAttribute("transform","rotate("+c.ha+" 11.4 11.8)")});
+  document.querySelectorAll(".lfcm").forEach(function(e){e.setAttribute("transform","rotate("+c.ma+" 11.4 11.8)")})}
 /* ---- wall art: flat pieces drawn straight onto the left-wall plane (flush, no baked perspective) ---- */
 function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function(){v=(v*1664525+1013904223)%4294967296;return v/4294967296}};
   var put=function(yb,wpx,zt,g){return lfFaceX(0.03,yb,zt,g)};
@@ -3521,9 +3527,11 @@ function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function
   var fr=function(x,y,w,h,pr,wood,mat){wood=wood||"#c9964f";mat=mat||"#f3e9d6";return '<rect x="'+(x+1.2)+'" y="'+(y+1.4)+'" width="'+w+'" height="'+h+'" fill="rgba(30,20,40,.22)"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+wood+'" stroke="#7a5524" stroke-width=".5"/><rect x="'+(x+1.4)+'" y="'+(y+1.4)+'" width="'+(w-2.8)+'" height="'+(h-2.8)+'" fill="'+mat+'"/><g transform="translate('+(x+3.2)+','+(y+3.2)+')">'+pr(w-6.4,h-6.4)+'</g>'};
   if(H("bd_clock")){var g='<circle cx="12" cy="12.8" r="11.2" fill="rgba(30,20,40,.22)"/><circle cx="11.4" cy="11.8" r="11" fill="#27272c"/><circle cx="11.4" cy="11.8" r="9.4" fill="#f5f0e6"/>';
     for(var k=0;k<12;k++){var an=k*Math.PI/6,l=k%3?1.3:2.2;g+='<line x1="'+(11.4+Math.sin(an)*(9-l)).toFixed(2)+'" y1="'+(11.8-Math.cos(an)*(9-l)).toFixed(2)+'" x2="'+(11.4+Math.sin(an)*8.6).toFixed(2)+'" y2="'+(11.8-Math.cos(an)*8.6).toFixed(2)+'" stroke="#2b2b30" stroke-width=".7"/>'}
-    g+='<line x1="11.4" y1="11.8" x2="9" y2="9.6" stroke="#222" stroke-width="1.1" stroke-linecap="round"/><line x1="11.4" y1="11.8" x2="16" y2="7.4" stroke="#222" stroke-width=".8" stroke-linecap="round"/><circle cx="11.4" cy="11.8" r="1" fill="#222"/>';
-    /* with the grass wall the clock hangs on the back wall's short stretch beside the corner, under the light strip */
-    s+=gw3?lfFaceY(.08,.03,92,g):put(1.0,22,96,g)}
+    var CK=lfClockNow();g+='<line class="lfch" x1="11.4" y1="11.8" x2="11.4" y2="7" stroke="#222" stroke-width="1.1" stroke-linecap="round" transform="rotate('+CK.ha+' 11.4 11.8)"/><line class="lfcm" x1="11.4" y1="11.8" x2="11.4" y2="4.2" stroke="#222" stroke-width=".8" stroke-linecap="round" transform="rotate('+CK.ma+' 11.4 11.8)"/><circle cx="11.4" cy="11.8" r="1" fill="#222"/>';
+    /* the Digital Clock (Cal: "reads the current real time accurately", rectangular and sleek) replaces the round one */
+    if(H("bd_clock2"))g='<rect x="1" y="1.2" width="24" height="9" rx="1.6" fill="rgba(20,16,30,.28)"/><rect x="0" y="0" width="24" height="9" rx="1.6" fill="#101217" stroke="#2c3140" stroke-width=".5"/><text class="lfclk" x="12" y="6.9" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="6.6" font-weight="700" fill="#8ff0ff" style="filter:drop-shadow(0 0 1.2px #39d0ff)">'+CK.t+'</text>';
+    /* with the grass wall the round clock hangs on the back wall's short stretch beside the corner */
+    s+=H("bd_clock2")?put(6.95,24,113,g):gw3?lfFaceY(.08,.03,92,g):put(1.0,22,96,g)}/* the digital one: over the Closet door, every tier */
   if(H("bd_art2")){var pm=function(c1,c2){return function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9ddc8"/><circle cx="'+w*.5+'" cy="'+h*.42+'" r="'+Math.min(w,h)*.26+'" fill="'+c1+'"/><path d="M0 '+h+' L'+w*.5+' '+h*.55+' L'+w+' '+h+'z" fill="'+c2+'" opacity=".85"/>'}};
     var gg='';gg+=fr(0,0,12,16,pm("#d98c5f","#2d2d33"),"#2a2a2f","#f5efe3");gg+=fr(13.5,2,12.5,10,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#ece3d3"/><path d="M.5 '+h*.6+' q'+w*.25+' -4 '+w*.5+' 0 t'+w*.5+' 0" stroke="#3b3b40" fill="none" stroke-width=".8"/>'},"#c9964f");
     gg+=fr(0,18,10,14,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e4dac6"/><path d="M'+w*.5+' '+h+' V2 M'+w*.5+' '+h*.7+' q-3 -2 -3.4 -5 M'+w*.5+' '+h*.5+' q3 -2 3.4 -5" stroke="#3f5a3a" fill="none" stroke-width=".8"/>'},"#2a2a2f","#f5efe3");
