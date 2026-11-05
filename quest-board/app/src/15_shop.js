@@ -123,7 +123,8 @@ shopHtml=function(){
   var tabs=live.map(function(b){return [b.id,b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"],["vault","Vault"],["upgrades","Upgrades"],["interface","Interface"]]);
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
-  var h='<div class="qshop"><header class="qs-top"><div><small>New pieces every Monday</small><h1>The Shop</h1></div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
+  var h='<div class="qshop"><header class="qs-top"><div><small>New pieces every Monday</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=d.live.filter(function(x){return x.id===shopTab})[0];
   if(b){
@@ -156,6 +157,4 @@ function qsBanner(b,d){var art=window.QBART&&QBART["ui_banner_"+b.id+".webp"],wm
   return '<section class="qs-hero qs-banner'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+';--wm:url(\''+wm+'\')">'
     +(art?'<img class="qs-bnart" src="'+art+'" alt=""><i class="qs-bnshade" aria-hidden="true"></i>':'')
     +'<div class="qs-bnin"><span class="qs-bnkick">The '+esc(b.name)+' drop</span>'+brandLogo(b,1)
-    +'<i class="qs-bnrule" aria-hidden="true"><b></b><em></em><b></b></i><p>'+esc(b.tag)+'</p></div></section>'
-    /* Cal: the next drop is its own little line in the tab, not part of the banner. */
-    +(d.next?'<p class="qs-next">Next drop: '+esc(d.next.name)+' in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</p>':'')}
+    +'<i class="qs-bnrule" aria-hidden="true"><b></b><em></em><b></b></i><p>'+esc(b.tag)+'</p></div></section>'}
