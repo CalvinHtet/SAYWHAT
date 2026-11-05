@@ -26,7 +26,8 @@ ROOMS = ("quest-board/app/src/20_loft.js", "quest-board/app/src/21_restaurant.js
          "quest-board/app/src/27b_skins.js", "quest-board/src/loft_bridge.js", "quest-board/data/items.json",
          "quest-board/data/loft.json", "quest-board/data/rsart.json", "quest-board/art/")
 ROOMS_TOOLS = ("rs_art.py", "rs_fix.py", "closet_stages.py", "items.py", "ingest_items.py", "pack.py", "strip_mannequin.py",
-               "shell_guide.py", "shell_sheet.py", "shell_styles.py", "yawn_cut.py", "ingest4.sh", "ingest.sh", "iris.py")
+               "shell_guide.py", "shell_sheet.py", "shell_styles.py", "yawn_cut.py", "ingest4.sh", "ingest.sh", "iris.py",
+               "shell_wallcopy.py", "key_bg.py", "yawn_body_mix.py")
 SHARED = ("quest-board/app/index.html", "quest-board/docs/TASKS.md", "quest-board/docs/HANDOFF.md")
 
 
@@ -37,7 +38,7 @@ def git(*a):
 def owner(path):
     if path.startswith(SHARED):
         return "shared"
-    if path.startswith(("quest-board/rigtest/qa", "quest-board/docs/QA.md")):
+    if path.startswith(("quest-board/rigtest/qa", "quest-board/docs/QA.md", "shots/", "quest-board/shots/")):
         return "QA"
     if path.startswith(ROOMS) or (path.startswith("quest-board/tools/") and os.path.basename(path) in ROOMS_TOOLS):
         return "ROOMS"
