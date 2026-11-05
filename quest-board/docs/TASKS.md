@@ -218,6 +218,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Patio (ROOMS's ef2ab15, on 331bd7f): pass. Turf, string lights strung overhead between posts, both dog beds, the
+  egg swing; its door back to the Bedroom is on the front-left edge (Cal's rule: Bedroom back-right to Patio front-left); a
+  Patio buy shows through the Bedroom glass at once (the telescope changes 2,148 pixels of the Bedroom). `shots/patio_full.png`.
+  Owner: ROOMS, nothing to fix.
+- QA, walking onto the Patio (ROOMS's 63ac9f3, `rigtest/qa/watchroom.js`, 10 shots over 3 minutes): you walk out through the
+  glass, stand among the Patio furniture (`look@deck`, nobody inside furniture), come back to the bed and mirror; both dogs go
+  out too. Not right: (1) inside The Loft building the Patio behind the glass is dark (no turf, no sky), while the same window
+  opened from the street shows turf and skyline (`shots/patio_walk.png`, left); (2) on the Patio the dogs lie on the deck by
+  the fire bowl, not on their Patio beds, and look tiny through the glass. Also, opened from the street view (without going
+  into the building) a room window has nobody in it: if any button opens a room window from the street, the room is empty.
+  Owner: ROOMS (1, 2), LEAD (the street).
 - QA, economy check DONE (LEAD's 29ae247, run on 3a6fdd5, `sim.js` adapted: Daily Quest goal 100/150/300, training logged on
   workout days; numbers in `docs/QA.md`, Effort-first run 1). It works: XP is 100% real life (no mission XP), real tasks are
   the biggest coin source for every player at every stage (35 to 59%; with the Daily Quest chest, training, the weekly bonus,
@@ -416,10 +427,10 @@ Doing:
   15-minute loop running (rule 16). (on bd895a7)
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
-- TAKEN by QA. WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
+- DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
   and the dogs should show in it, walk out through the sliding door (it opens), stand among the Patio furniture, the dogs
   lie on their Patio beds; nobody stands inside furniture.
-- TAKEN by QA. WAITING ON QA: check the Patio, ef2ab15: turf, string lights, both dog beds, the door on the front-left edge, and a
+- DONE by QA (QA findings). WAITING ON QA: check the Patio, ef2ab15: turf, string lights, both dog beds, the door on the front-left edge, and a
   Patio buy showing through the Bedroom glass straight away.
 
 To do:
@@ -507,8 +518,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: TAKEN, the economy check (LEAD, 29ae247): `sim.js` three players 60 days on a test copy. Next: ROOMS's three Loft
-  checks (Bedroom wall tiers, walking onto the Patio, the Patio). Touches only `rigtest/qa/` and this list. (on 3a6fdd5)
+- Now: nothing running. Next: the next WAITING ON QA, else LEAD's story-scene walk (`29b_story.js`). (on 6ea377d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
