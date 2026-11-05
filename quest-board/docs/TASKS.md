@@ -13,26 +13,25 @@ Live on the phone: `APPV` 44, 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Phone lag: room windows pause the building view's animations, and an owner-only speed log (`diag/perf`). Then publish.
+- Publishing v45 (Shop, saves, lag first steps, yawn, banners from ROOMS).
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] (from ROOMS) Saves: online saving fixed, an old online save never replaces newer progress (9c3bd78). Goes live in the
       next publish. Each device asks once, "Two saves found", when its save and the online one disagree.
-- [ ] (from ROOMS) Shop banners, Cal on approving the art: each brand's title stylized and unique (not plain white text or a
+- [x] (from ROOMS, ade6cd0) Shop banners, Cal on approving the art: each brand's title stylized and unique (not plain white text or a
       shadow), playful taglines instead of descriptive ones (keep ALTITUDE's "Trail gear that never sees a trail"), and the
       next drop as a small, unobtrusive countdown on the Shop's main tab, not in the banner. Publish with ROOMS's banners.
 - [ ] (from ROOMS) Phone lag (Cal, on v43: "very laggy on the phone"). The `diag/frame` log landed nothing because saves were
       broken (`db` was null), so it lands again after the next publish, and a new `diag/perf` log records frame rates on the
-      real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below).
-- [ ] Review the `dropbox-leftovers` branch: uncommitted edits found in the old Dropbox folder, 2 lines each in
-      `app/src/27_rooms.js` and `app/src/27b_skins.js`, made against a copy 22 commits behind `main`. Show Cal what
-      they did, bring over anything still wanted by hand (don't merge the branch), then delete the branch.
-- [ ] Stretch pose: Cal to choose (a) gentler "yawn" stretch (recommended, `data/poses.json`, LEAD's file),
-      (b) keep it, or (c) painted arms-up art for every top (that one would be an Art request).
-- [ ] `lfvar.json`: the published page needs it, it is not in git and `build.py` does not make it. The only other copy is in
-      the old Dropbox folder's `dist`. Keep a safe copy before anyone clears that folder.
+      real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below). Done so far (4b71234):
+      a room window pauses the building view's animations (532 running, 30 with a window open).
+- [ ] `dropbox-leftovers` reviewed: it moves seven guest spots (Bar Chesterfield, three Mall spots, two VR pods) and drops
+      the Pin Lamp spot. One move is already on `main` as is; `main` fixed the rest in code (spots stay inside spread rooms
+      and move with their piece) and its station audits pass. Nothing to bring over. Waiting on Cal's OK to delete the branch.
+- [x] Stretch pose: the gentler yawn (Cal's pick), 0959719. Dark long sleeves still look torn at the elbow, as before.
+- [x] `lfvar.json`: a copy is in git at `app/lfvar.json` (0959719). `build.py` does not use it.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
       sooner if the Loft height is sorted first.
@@ -42,6 +41,19 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
+  not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
+  sacrificing any performance or quality. I like the idea of being able to see the characters roaming around the rooms in
+  the building view, but perhaps we can separate them into 3 separate buildings with their own unique names: The Loft for
+  the apartment building, Kode Plaza for the restaurant building, Calibur Mall for the theater building. You would need to
+  click into each building to see that building's rooms so that it only loads those buildings without having to upload
+  every single asset of the other buildings. You could also use different background images when you go into each of
+  these buildings and see the full room view. Then the main building street view (the outermost view) can have a separate
+  building image that represents those sets of rooms." He sent three reference pictures (a pink and yellow mall front, an
+  isometric apartment tower with roof gardens, a strip mall with red awnings): study only, the art must be original. So: a
+  street view with one painted exterior per building and its name; tap a building to load only its rooms, people and
+  animations; a painted background per building inside. Show Cal the exteriors side by side first. LEAD wants the street
+  view to run nothing but the three exteriors, and nothing from a building to load until it is opened.
 - Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
