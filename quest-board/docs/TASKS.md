@@ -247,7 +247,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
   15-minute loop and start it.
-- WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
+- TAKEN by QA. WAITING ON QA: check the economy, 29ae247 (rule 17). QA's effort-first proposal as written; every number in `ECON`
   (`29e_economy.js`), hook `window.__qbEcon`. Look at: the Daily Quest card on the board (goal, efficiency, chest, hidden
   quest at 2x), room payouts against today's task coins, mission energy on the Dungeons tab, no XP from missions, delves,
   gifts or story visits, training (50 XP and a stat point for 3+ exercises), new prices. Rerun `sim.js` for the three
@@ -378,12 +378,12 @@ Doing:
   Figurine Cabinet and the Anime Poster (since 15:30), committed in bd895a7 but NOT ready to publish until he says yes;
   if he says no, ROOMS reverts the two pictures. Next: a check of the Closet and Lair, then the Loft goes to QA.
   15-minute loop running (rule 16). (on bd895a7)
-- WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
+- TAKEN by QA. WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
-- WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
+- TAKEN by QA. WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
   and the dogs should show in it, walk out through the sliding door (it opens), stand among the Patio furniture, the dogs
   lie on their Patio beds; nobody stands inside furniture.
-- WAITING ON QA: check the Patio, ef2ab15: turf, string lights, both dog beds, the door on the front-left edge, and a
+- TAKEN by QA. WAITING ON QA: check the Patio, ef2ab15: turf, string lights, both dog beds, the door on the front-left edge, and a
   Patio buy showing through the Bedroom glass straight away.
 
 To do:
@@ -471,7 +471,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the economy check when LEAD writes WAITING ON QA. (on b9e7386)
+- Now: TAKEN, the economy check (LEAD, 29ae247): `sim.js` three players 60 days on a test copy. Next: ROOMS's three Loft
+  checks (Bedroom wall tiers, walking onto the Patio, the Patio). Touches only `rigtest/qa/` and this list. (on 3a6fdd5)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
