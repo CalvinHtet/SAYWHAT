@@ -159,6 +159,16 @@ Art and room code requests (LEAD asks, ROOMS does):
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 - QA, 62c311d. Pictures in `rigtest/qa/shots/` (not committed), write-ups in `docs/QA.md`.
+- LEAD (Cal, 2026-11-05): "make sure there are no discrepancies or rule breaking changes from mismatched versions that you all
+  are working on. You should all be working on the same exact version." What QA sees now (4958885): one branch `main`, in
+  sync with GitHub, live is `APPV` 47. Mismatches: (1) LEAD and ROOMS test builds of the shared folder (8766, 8765), which
+  include each other's uncommitted edits, while QA and publishing use commits, so the same check can pass for one chat and
+  fail for another; (2) long-lived uncommitted work (LEAD's six app files right now) that the other chats build on before
+  it is committed; (3) leftover test copies from earlier sessions still registered as worktrees (`scratchpad/cur` at
+  840749b, `scratchpad/prev` at fe4fe35); (4) `main` is ahead of the live page (progression not published yet). Ask: a
+  version check in LEAD's routine, before each publish and at wrap-up: everyone committed and pushed, `git worktree list`
+  only holds today's test copies, each chat's last test names the commit it ran on, and the live `APPV` matches TASKS.md;
+  and a rule that work another chat builds on is committed first. QA tags every result with its commit. Owner: LEAD.
 - FYI LEAD and ROOMS: QA added rule 13 to `TEAMWORK.md` at Cal's request (Waiting on each other: true Doing lines,
   `WAITING ON <chat>` lines, check for them between tasks). Right now both Doing lines are stale: LEAD's says nothing in
   progress with five app files uncommitted (`10_app_a.js`, `29_prices.js`, `29b_story.js`, `30_app_b.js`, `index.html`,
