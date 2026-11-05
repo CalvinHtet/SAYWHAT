@@ -4,7 +4,8 @@
    buy with your own coins, "upgrade" lets a room's own "Open the ..." upgrade be bought, "free" opens the room at once.
    A room a save already owns counts as done, so nobody loses anything. The Loft keeps opening as before. */
 /* Each step has a "why": the reason it happens now, shown when it opens and on its locked card until then. Investors look at
-   what the businesses have actually earned (styState().biz: coins collected from rooms), not at upgrade counts. */
+   every coin ever earned (S.earnedC, ECON.gateLockKey and gateMall; Cal: "it should never feel like you are at a
+   standstill"), so upgrading other rooms while a gate fills still counts. */
 var STORY=[
   {id:"garden",room:"garden",how:"lot",why:"A plot of land in Kode Plaza is up for sale. Grow something you can sell.",gate:function(){return effLvl()>=3}},
   {id:"chef",room:"restaurant",how:"lot",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
@@ -12,12 +13,12 @@ var STORY=[
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
-  {id:"lockkey",room:"skybar",how:"free",why:"An investor is watching how much the plaza earns.",gate:function(){return styHas("dessert")&&styState().biz>=15000},
+  {id:"lockkey",room:"skybar",how:"free",why:"An investor is watching how much you earn.",gate:function(){return styHas("dessert")&&(S.earnedC||0)>=ECON.gateLockKey},
     scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
   {id:"rafe",room:null,how:"team",why:"Someone has become a regular at Lock and Key.",gate:function(){return styUps("skybar")>=3},
     scene:{who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred.","\"Best drink since a dockside bar off the Coral Reach. I'm in town between expeditions. Mind if I make this my spot?\""],yes:"Pour him another",team:"rafe"}},
   {id:"rooftop",room:"rooftop",how:"upgrade",why:"Lock and Key's regulars keep asking about the roof.",gate:function(){return styUps("skybar")>=6}},
-  {id:"mall",room:"mall",how:"lot",why:"Another investor is watching the plaza's earnings.",gate:function(){return styHas("rooftop")&&styState().biz>=60000},
+  {id:"mall",room:"mall",how:"lot",why:"Another investor is watching how much you earn.",gate:function(){return styHas("rooftop")&&(S.earnedC||0)>=ECON.gateMall},
     scene:{who:"Priya Okafor",role:"Investor",lines:["I've been watching your plaza. Restaurant, drinks, dessert, a speakeasy upstairs. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
   {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3},

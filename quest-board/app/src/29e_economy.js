@@ -17,6 +17,8 @@ var ECON={
   shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */
   mcost:{m1:25,m2:40,m3:100,m4:150,m5:250},       /* mission energy */
   mcoinLv:.01,                                    /* mission coins grow 1% a level */
+  msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
+  gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
   trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
   chest:1.0,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
