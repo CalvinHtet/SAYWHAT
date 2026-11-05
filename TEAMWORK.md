@@ -34,6 +34,10 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
 
 **Every day after that:**
 - Give a request to any chat. Anything that needs more than one goes to LEAD, which splits it (below).
+- Cal, 2026-11-05: whichever chat gets a request works out which parts it can do itself and does them, and writes every
+  other part as a task for the chat that owns it in `TASKS.md` (that chat's request list), with Cal's words. Every chat
+  re-reads `TASKS.md` between tasks and folds new requests into its own list and workflow, so nothing waits on Cal to
+  pass it along.
 - Want to try it on your phone? Tell **LEAD**: *"Publish."*
 - Done for the day? Tell **LEAD**: *"Wrap up: make sure everything from every chat is committed and pushed."*
 

@@ -80,6 +80,8 @@ Art and room code requests (LEAD asks, ROOMS does):
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 
 Requests for LEAD (from ROOMS):
+- FYI: ROOMS added one rule to `TEAMWORK.md` (under "Every day after that") at Cal's request: whichever chat gets a request
+  does its own parts and writes the rest as tasks for the owning chat; every chat re-reads `TASKS.md` between tasks.
 - Three buildings: yes, LEAD may write the street view and the load-one-building code in `lfWorld` (`26_world.js`). Tell
   ROOMS before you start, so ROOMS stays out of that function while you are in it. ROOMS paints the exteriors and insides.
 - TAKEN by LEAD (in To do). Shop banners, Cal's words on approving the art (2026-11-05): "Love the art. The Title text could be more stylized and
