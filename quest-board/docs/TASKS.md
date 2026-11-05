@@ -220,6 +220,23 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   income (70% of coins in month 2, about 21,000 a day), missions (more XP than real tasks by day 60, pay +2% per level), and
   XP bonuses doubling the curve's 200 a day. Level trials need a gym photo, so a friend who never works out stops at
   level 4. Owner: LEAD (Cal to decide the trials).
+- LEAD, Cal's six requests (2026-11-05), his words and QA's notes in `docs/QA.md` ("Cal's six requests" and "Proposal: an
+  effort-first economy"). Decided by Cal, ready to build: (1) "turn on the town hall and allow you to post a picture of your
+  character with your current outfit and a short message for everyone to read" (`socialHtml` exists, never shown; Contributor
+  access and database rules first); (4) a weekly town meter everyone fills, showing each player's coins and XP gained, "but it
+  should keep the amount of tasks and the descriptions of tasks private"; (5) "a rotating daily bounty or a 3 day bounty",
+  and AI-suggested tasks "such as 'throw away one thing you have not used for more than 6 months'"; (6) trials "for everyone...
+  a walk, or a gym session... it needs to be something active related. Sung jin woo didnt rank up by cleaning his room."
+  Waiting on Cal's go on QA's numbers: (2) rooms earn only after a task today, 100% at the daily limit, 200% grants a hidden
+  reward and more town buffs; (3) prices ramp by what a thing is; and the rule behind both, "doing chores and training will
+  always reward you more than having a virtual restaurant give you money or sending people out on missions": XP only from
+  real life, room pay capped at 20 to 50% of the day's task coins, missions run on energy from tasks and give no XP, training
+  the best XP per minute. Modelled: tasks stay 53 to 83% of all coins, a 12-task player fills the town in about 5 months.
+  Owner: LEAD (code), Cal (the go). QA reruns `sim.js` on the code once it is in.
+- ROOMS, art for the same (Cal 2026-11-05, after LEAD's code exists): a town hall board backdrop for the posts; the Daily Quest
+  complete card and its small chest; the hidden 200% reward's look (rare furniture pieces and cosmetic shards, original
+  designs); four stat icons (STR, AGI, VIT, INT); an active-trial badge. Sizes and names from LEAD when the code is in.
+  Owner: ROOMS.
 - FYI LEAD and ROOMS: QA added rule 13 to `TEAMWORK.md` at Cal's request (Waiting on each other: true Doing lines,
   `WAITING ON <chat>` lines, check for them between tasks). Right now both Doing lines are stale: LEAD's says nothing in
   progress with five app files uncommitted (`10_app_a.js`, `29_prices.js`, `29b_story.js`, `30_app_b.js`, `index.html`,
@@ -382,8 +399,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Economy simulator (LEAD's request, blocks the next publish), against the latest commit on 8769. Then rerun `menu.js`:
-  d5fba8f changed the upgrade menu (4 shown, no level locks), so QA's earlier menu pass is out of date. (on 1a7b690)
+- Nothing running. Next: rerun `menu.js` (d5fba8f changed the menu), then the 15-player shared-database test if Cal says go. (on 12a46ba)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

@@ -349,3 +349,66 @@ For LEAD (economy, owner): tie room income to the day's tasks (for example: room
 income scaled by the day's task XP), give missions coins but little or no XP and no per-level growth, tune the curve to
 what players really earn (about 2x the paper XP), and add things worth buying after the last room. For Cal: whether level
 trials should accept other proof than a gym photo.
+
+## Proposal: an effort-first economy (2026-11-05, for Cal's go, then LEAD)
+
+Cal: "the goal of this game is to promote doing chores and tasks. If completing missions and getting passive income is way
+faster and easier than training or completing tasks, we need to rethink this entire money system... so that doing chores and
+training will always reward you more than having a virtual restaurant give you money or sending people out on missions."
+
+**The rule everything follows: real life is the engine, the town is a multiplier on it.** Nothing in the game makes coins
+or XP on its own; every coin traces back to a task or a workout you did today.
+
+1. **XP comes only from real life.** Tasks, workouts, training sessions, trials, the Daily Quest and bounties give XP.
+   Missions, story scenes and room income give none. Levels then mean "how much you actually did".
+2. **The Daily Quest (Solo Leveling).** Each player sets a daily goal in XP (100, 150, 200 or 300; tasks of their own
+   choosing count toward it). Today's progress p sets the town's efficiency:
+   - no task done today: the town is closed, earns nothing, no missions can leave;
+   - first task: 25%, rising with progress to 100% when the Daily Quest is complete (a "Daily Quest complete" card and a
+     small chest);
+   - past 100%: Overtime, up to 150% at twice the goal;
+   - **200%: a hidden quest completes** (never shown until someone first reaches it): a secret reward (a rare furniture
+     piece, a cosmetic shard toward a set, a streak freeze or a stat point) and a buff for tomorrow (+10% XP, town at 110%).
+3. **Rooms earn from your effort, never past it.** Rooms keep their hourly takings and their upgrades, but each day they can
+   pay out at most a share of what your own tasks earned today: 20% with a bare town, rising to 50% fully upgraded, times
+   the Daily Quest efficiency. A finished town makes you about 1.5x richer for the same work; it never replaces the work.
+4. **Missions run on energy, and energy comes from tasks.** Every task gives energy equal to its XP; a mission costs energy
+   (a quick one 25, the Spire 250). Missions pay coins, loot and story, and no XP. Sending your team out is how you spend a
+   productive day, not how you skip one.
+5. **Training pays the most per minute.** A logged gym session is worth a 50 XP task (100 with its photo), plus a stat point
+   (STR, AGI, VIT, INT) that buffs the town: VIT raises the town's cap, AGI shortens missions, STR improves loot, INT raises
+   the Daily Quest's chest. The weekly four-workout bonus stays.
+6. **Prices ramp with what a thing is** (Cal: a poster is not the price of a popcorn machine or an IMAX screen), times the
+   room's story step as now: decor 200, furniture 500, equipment that does a job 1,200, a big piece 3,000, a moment
+   (expansion, IMAX, a new room) three times its current price. A poster stays 200 in every room; the IMAX becomes about
+   42,000 at the Auditorium's step. Total for everything: about 1.2 million coins (now 440,000).
+7. **Trials are active only** (Cal: "Sung Jin Woo didnt rank up by cleaning his room"): a gym session, an outdoor walk or
+   run, a sport, a hike. The photo check asks for an active setting outdoors or a workout space, and a walk can also be
+   proven by location (start and end points 1 km or more apart).
+
+Modelled with `rigtest/qa/effort_model.py` (prices from the live game, task pay from the `sim.js` runs):
+
+| | Casual | Regular (12 tasks) | Grinder (20 tasks) |
+|---|---|---|---|
+| Day 7 | | 42 of 381 upgrades | 71 |
+| Day 30 | 83 | 182 | 271 |
+| Day 90 | 212 | 337 | everything (day 74) |
+| Everything bought | more than a year | about day 155 | about day 74 |
+| Share of coins from tasks | 70 to 76% | 61 to 83% | 53 to 77% |
+
+Tasks stay the biggest source of coins for every player at every point, XP is 100% real life, the cheapest thing on offer
+stays within a day's pay, and the biggest moments take about a week. The grinder still finishes first, which is the point:
+more real work, faster town. After the last upgrade: renovation themes, cosmetic sets and seasonal items (the next art pass).
+Not modelled: the story gates' timing, clothes, classes. To check after it is built: rerun `sim.js` on the real code.
+
+## Cal's six requests (2026-11-05), written for LEAD and ROOMS
+
+1. Town hall on: post a picture of your character in your current outfit with a short message for everyone.
+2. Rooms earn only if you completed a task today; 100% at the daily task limit; 200% of it grants a hidden reward and more
+   town buffs and efficiency (Solo Leveling's daily quest). In the proposal above, rules 2 and 3.
+3. Prices ramp with what a thing is; later things easier to buy because passive income keeps coming. Rule 6.
+4. A weekly town meter: everyone's progress fills it; everyone sees each player's coins and XP gained, never their task
+   list or task descriptions.
+5. A rotating daily bounty and a 3-day bounty; AI-suggested tasks for the chores everyone puts off ("throw away one thing you
+   have not used for more than 6 months").
+6. Trials for everyone, but active: a walk, a gym session, something physical. Rule 7.
