@@ -98,6 +98,7 @@ Cal, 2026-11-05: LEAD manages the other chats. Cal can give a request to ROOMS d
 
 ## How QA works
 
+- **Quality checks are its main job** (Cal). The other chats leave sweeps to it.
 - **Never waits on anyone.** It tests whatever is committed and starts the next check without asking.
 - **Tests clean copies.** Each run builds from a clean temporary copy of the latest commit (`git worktree add --detach` into a
   temp folder outside this folder), never from the working folder, so half-finished edits don't show up as bugs. Port 8769.
@@ -144,23 +145,10 @@ These apply to every chat, in Cal's words.
 
 **When your list runs out**
 
-Suggest your own tasks, quality first. Don't add new systems or redesign something big without asking Cal. Write what you
-find into `TASKS.md` as tasks and work through them.
-
-ROOMS:
-- For each room, look up reference images of real isometric rooms of that kind (search "isometric nightclub", "isometric
-  arcade", "isometric movie theater", "isometric bedroom" and so on). Compare his room against them: layout, where things
-  stand and which way they face, spacing and walk paths, level of detail, lighting, and how full and alive it feels. Fix
-  what you can, and put art ideas on the board for his approval. References are for study only: never copy anyone's art,
-  original designs only.
-- Run the room audits in `quest-board/rigtest/browser` (gaps, depth, stations, guests), and look at every room at every
-  upgrade tier, not only fully upgraded.
-- Wear-test every item again on both bodies in every pose, and fix clipping, streaks and misaligned pieces. Compare items
-  against chibi outfit sheets and fashion lookbooks matching each brand's style: study only, no brand logos.
-
-LEAD:
-- Go through every tab at phone width looking for bugs, broken layouts, confusing text and slow screens.
-- Check the buy flows, Prove it, Training and saving. Fix what you find. Ask Cal before adding new systems.
+Ask Cal for suggestions (Cal, 2026-11-05: every chat). Don't invent new systems or redesigns on your own. Quality checks
+are QA's main job now, so LEAD and ROOMS leave sweeps to QA and work from the board; anything they notice in passing goes
+under *QA findings*. QA's own list never runs out: when its tasks are done it repeats the sweeps against the latest commit,
+and asks Cal only for new areas to cover.
 
 ---
 
