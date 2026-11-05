@@ -50,6 +50,7 @@ function roomModal(i){
   lfMigA(r);var TSUP={gm_lux1:[],r_tab1:['r_tab2'],r_stl1:['r_stl2'],r_ctr1:['r_ctr2'],r_booth:['r_booth2'],r_pend:['r_chan'],r_wine:['r_wine2'],bd_bed1:['bd_bed2'],bd_chair0:['bd_chair1','bd_chair2'],bd_chair1:['bd_chair2'],bd_ward1:['bd_ward2'],bd_pc1:['bd_pc2'],bd_win2:['bd_win3']},TCH={au_lux1:1,au_lux2:1,au_lux3:1,au_lux4:1,au_imax:1,au_recline:1,au_rows:1,t_bar:1,l_lux1:1,l_lux2:1,l_lux3:1,l_lux4:1,y_lux1:1,y_lux2:1,y_lux3:1,y_lux4:1,b_lux1:1,b_lux2:1,b_lux3:1,b_lux4:1,lb_lux1:1,lb_lux2:1,lb_lux3:1,lb_lux4:1,t_lux1:1,t_lux2:1,t_lux3:1,t_lux4:1,d_lux1:1,d_lux2:1,d_lux3:1,d_lux4:1,c_lux1:1,c_lux2:1,c_lux3:1,c_lux4:1,sp_lux1:1,sp_lux2:1,sp_lux3:1,sp_lux4:1,gm_lux1:1,gm_lux2:1,gm_lux3:1,gm_lux4:1,gm_lux5:1,r_tab2:1,r_stl2:1,r_ctr2:1,r_booth2:1,r_chan:1,r_wine2:1,bd_bed2:1,bd_chair1:1,bd_chair2:1,bd_ward2:1,bd_pc1:1,bd_pc2:1,bd_win3:1,bd_patio:1,bd_swing:1,bd_pdeco:1,bd_neon:1,bd_fshelf:1};
   Object.assign(TSUP,window.RSSUP||{});Object.assign(TCH,window.RSTCH||{});
   list.forEach(function(a){
+    if(a[3]&&a[3].retired)return;/* retired upgrades stay in saves but are never shown or sold */
     var got=r.a&&r.a[a[0]];if((TSUP[a[0]]||[]).some(function(k){return r.a&&r.a[k]}))return;if(TCH[a[0]]&&ADDREQ[a[0]]&&!(r.a&&r.a[ADDREQ[a[0]]]))return;
     if(got){inst.push('<div class="addon got"><b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small><span class="chip" style="color:var(--done);border-color:var(--done)">Installed</span></div>');return}
     var e=a[3],pre=ADDREQ[a[0]],price=a[2]?'<i class="coin"></i>&nbsp;'+a[2]:'Claim';if(e.lv&&e.lv>effLvl()+6)return;
@@ -59,6 +60,9 @@ function roomModal(i){
   });
   h=h.replace("@@AV@@",avail.length?"Available upgrades ("+avail.length+")":"All upgrades installed");
   h+=avail.join("")+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
+  /* owner-only testing link (hidden from guests like the Shop's Testing row; remove both before release): refunds this
+     room's upgrades so its stages can be bought again one at a time. Upgrades that open another room stay. */
+  if(inst.length)h+='<p class="qs-dev">Testing: <button class="qs-link" data-act="simundo" data-i="'+i+'">Undo this room\'s upgrades</button></p>';
   h+='</div><div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>';
   var dp=(DROP&&DROP.i===i)?DROP:null;DROP=null;
   var mm=modal(h);
@@ -786,7 +790,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only";if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=39, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=40, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1369,6 +1373,7 @@ document.addEventListener("click",function(e){
   if(a==="thdoorlock"){pop("Open the Auditorium to see what is behind these doors");return}
   if(a==="bsgo"){var bm=b.closest(".modal");if(bm)bm.remove();view="shop";shopTab=b.dataset.b;render();window.scrollTo(0,0);return}
   if(a==="simcoin"){S.coins+=10000;render();persist();pop("Test coins added");return}
+  if(a==="simundo"){var ui=+b.dataset.i,ur=bslot(ui),back=0,n=0;if(!ur)return;(ADDONS[ur.t]||[]).forEach(function(u){if(ur.a[u[0]]&&!(u[3]&&u[3].opens)){delete ur.a[u[0]];back+=u[2]||0;n++}});S.coins+=back;persist();render();roomModal(ui);pop("Undid "+n+" upgrades, refunded "+back+" coins");return}
   if(a==="simlvl"){var sl0=effLvl();var g0=gated();if(g0!==null)S.gates.push(g0);S.xp=Math.max(S.xp,cum(sl0+1));render();persist();levelUp(effLvl(),null,sl0);return}
   if(a==="buy")buy(b.dataset.id,e);
   if(/^cc/.test(a)){ccAct(a,b,e);return}
