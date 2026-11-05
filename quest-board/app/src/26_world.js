@@ -2,7 +2,28 @@
    Home, Business and Entertainment stand side by side on one street. A room's spot is one
    line in ROOMCELL. Most rooms open from an upgrade in the room next to them and connect by
    a glowing door with a floating arrow. New rooms are data: see roomDef and 27_rooms.js. */
-var BLD=[{id:"home",name:"HOME",ac:"#b9a7ff"},{id:"biz",name:"BUSINESS",ac:"#ffb066"},{id:"fun",name:"ENTERTAINMENT",ac:"#ff6a9a"}];
+var BLD=[{id:"loft",name:"The Loft",ac:"#b9a7ff"},{id:"plaza",name:"Kode Plaza",ac:"#ffb066"},{id:"mall",name:"Calibur Mall",ac:"#ff6a9a"}];
+/* Cal, 2026-11-05: the street shows each building from outside; tap one to go in. Only the building you are in draws its
+   rooms, people and animations, so the rest cost nothing. null = the street. Painted exteriors are art/app/bld_<id>.webp
+   (ROOMS); until they exist a plain lit facade stands in. */
+var LFBSEL=null;
+function bldArt(id){var n="bld_"+id+".webp",D=QBLoft.data;return (window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
+/* The street: one front per building, all the same size, side by side on the same pavement as the rooms' street.
+   Only buildings that have a room show. Its own width (STREETW), so a phone sees all three. */
+var BLDW=700,BLDGAP=150,BLDF=420;
+function bldList(){return BLD.map(function(d,bi){var f=0,any=S.base.slots.some(function(r){var q=r&&ROOMCELL[r.t];if(q&&q[0]===bi){f=Math.max(f,q[2]+1);return true}return false});return any?{bi:bi,f:Math.max(2,f)}:null}).filter(Boolean)}
+/* lots for a building with no rooms yet stand on the street after the buildings */
+function streetLots(){var have={};bldList().forEach(function(o){have[o.bi]=1});return lotsOpen().filter(function(k){var q=ROOMCELL[k];return q&&!have[q[0]]})}
+function streetW(){return 120+(bldList().length+streetLots().length)*(BLDW+BLDGAP)-BLDGAP}
+function bldStreet(L,wall,inner,edge,dk){var s='',bot=LFROOF+L.rows*LFFP,lit=lfMix("#ffe7a8","#ffd36b",dk),off=lfMix("#9fb0c8","#2a3050",dk),x0=60;
+  bldList().forEach(function(o,n){var bi=o.bi,x=x0+n*(BLDW+BLDGAP),h=o.f*BLDF+160,top=bot-h,art=bldArt(BLD[bi].id),cx=x+BLDW/2;
+    if(art)s+='<image href="'+art+'" x="'+(x-60)+'" y="'+(top-120)+'" width="'+(BLDW+120)+'" height="'+(h+120)+'" preserveAspectRatio="xMidYMax meet"/>';
+    else{s+='<rect x="'+x+'" y="'+top+'" width="'+BLDW+'" height="'+h+'" fill="'+wall+'" stroke="'+edge+'" stroke-width="5"/><rect x="'+(x-12)+'" y="'+(top-20)+'" width="'+(BLDW+24)+'" height="22" rx="5" fill="'+edge+'"/><rect x="'+x+'" y="'+top+'" width="'+BLDW+'" height="14" fill="'+BLD[bi].ac+'" opacity=".8"/>';
+      for(var y=top+60;y<bot-170;y+=110)for(var xx=x+50;xx<x+BLDW-90;xx+=100)s+='<rect x="'+xx+'" y="'+y+'" width="64" height="70" rx="5" fill="'+((xx*7+y*3)%5<3?lit:off)+'" opacity="'+(.6+dk*.35).toFixed(2)+'"/>';
+      s+='<rect x="'+(cx-80)+'" y="'+(bot-150)+'" width="160" height="150" rx="8" fill="'+inner+'" stroke="'+edge+'" stroke-width="4"/>'}
+    s+='<g class="lfbsign" pointer-events="none"><rect x="'+(x-20)+'" y="'+(top-190)+'" width="'+(BLDW+40)+'" height="120" rx="24" fill="rgba(14,12,24,.85)" stroke="'+BLD[bi].ac+'" stroke-width="5"/><text x="'+cx+'" y="'+(top-108)+'" text-anchor="middle" font-size="76" font-weight="700" fill="#fff" font-family="Chakra Petch,system-ui,sans-serif">'+esc(BLD[bi].name)+'</text></g>';
+    s+='<g data-act="bldgo" data-v="'+bi+'" style="cursor:pointer"><rect x="'+(x-20)+'" y="'+(top-200)+'" width="'+(BLDW+40)+'" height="'+(h+200)+'" fill="rgba(0,0,0,.001)"/></g>'});
+  return s}
 /* room: [building, column, floor] */
 var ROOMCELL={lair:[0,0,0],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
  restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],boba:[1,1,0],dessert:[1,1,1],speakeasy:[1,1,2],garden:[1,2,0],
@@ -27,8 +48,9 @@ lfRsc=function(t){var d=lfDimOf(t),n=d[0]+d[1];return Math.min(1.7,(LFCELLW-28)/
 function roomOpen(t){var D=ROOMDEF[t];return t==="garden"||(D&&(D.out||D.shell===2))}
 /* The block only exists where a room does. Nothing is built until the room is. */
 function worldFacade(L){var bot=LFROOF+L.rows*LFFP,LS=lfLS(),dk=LS.dark,s='',cells={},mark=function(b,c,f,t){cells[b+":"+c+":"+f]=t||cells[b+":"+c+":"+f]||"x"};
-  S.base.slots.forEach(function(r){if(!r||!ROOMCELL[r.t])return;var q=ROOMCELL[r.t];mark(q[0],q[1],q[2],r.t);for(var f=0;f<q[2];f++)mark(q[0],q[1],f)});
+  S.base.slots.forEach(function(r){if(!r||!ROOMCELL[r.t])return;var q=ROOMCELL[r.t];if(LFBSEL!=null&&q[0]!==LFBSEL)return;mark(q[0],q[1],q[2],r.t);for(var f=0;f<q[2];f++)mark(q[0],q[1],f)});
   var wall=lfMix(lfMix("#dbe1ea","#ffd9b0",LS.golden*.35),"#23283f",dk*.9),inner=lfMix(lfMix("#bcc6d6","#d9a988",LS.golden*.3),"#151930",dk*.92),edge=lfMix("#7f8ba3","#3b4263",dk);
+  if(LFBSEL==null){s+=bldStreet(L,wall,inner,edge,dk);cells={}}
   Object.keys(cells).forEach(function(k){var q=k.split(":").map(Number),t=cells[k],b=L.b[q[0]],x=b.x+LFCELLW*(q[1]-b.a),y=LFROOF+(L.rows-1-q[2])*LFFP,o=t!=="x"&&roomOpen(t);
     s+='<g'+(o?' opacity=".32"':'')+'><rect x="'+x+'" y="'+y+'" width="'+LFCELLW+'" height="'+LFFP+'" fill="'+wall+'"/><rect x="'+(x+7)+'" y="'+(y+7)+'" width="'+(LFCELLW-14)+'" height="'+(LFFP-14)+'" rx="4" fill="'+inner+'"/></g><rect x="'+x+'" y="'+y+'" width="'+LFCELLW+'" height="'+LFFP+'" fill="none" stroke="'+edge+'" stroke-width="3"/>';
     if(!cells[q[0]+":"+q[1]+":"+(q[2]+1)])s+='<rect x="'+(x-6)+'" y="'+(y-12)+'" width="'+(LFCELLW+12)+'" height="14" rx="3" fill="'+edge+'"/>'});
@@ -66,14 +88,18 @@ function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;
   return '<g data-lf="'+(lk?'lock:'+esc(T.name)+':'+T.lv:'build:'+S.base.slots.length)+'" style="cursor:pointer"><rect x="-70" y="-70" width="140" height="140" fill="rgba(0,0,0,.001)"/>'+(lk?'<g opacity=".6"><circle r="20" fill="rgba(20,18,28,.7)" stroke="rgba(255,200,87,.55)" stroke-width="2"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#ffc857"/><path d="M-5 -2V-7a5 5 0 0 1 10 0V-2" fill="none" stroke="#ffc857" stroke-width="2.5"/></g>':'<g class="lfplus"><circle r="24" fill="rgba(20,18,28,.75)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><path d="M-10 0H10M0 -10V10" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></g>')+'</g>'}
 function worldBack(L){return lfSkyline(L.rows)+worldFacade(L)}
 lfWorld=function(){
-  var B=S.base,L=worldLayout(),rows=L.rows;LFWW=L.w;window.LFLAY=L;
+  var B=S.base,L=worldLayout(),rows=L.rows;LFWW=LFBSEL==null?streetW():L.w;window.LFLAY=L;
   var bed=cellXY("bedroom",L);LFOX[0]=bed.x;LFOX[1]=bed.x+LFCELLW;
   var Hh=LFROOF+rows*LFFP+LFSTREET,s='';window.LFSKYK=lfLS().key;
   s+='<g id="lfback">'+worldBack(L)+'</g>';
   var order=[];B.slots.forEach(function(r,i){if(r)order.push(i)});
   order.sort(function(a,b){return ((ROOMCELL[B.slots[b].t]||[0,0,0])[2])-((ROOMCELL[B.slots[a].t]||[0,0,0])[2])||a-b});
   var meta={},bot=LFROOF+rows*LFFP;
-  lotsOpen().forEach(function(k){var p=cellXY(k,L);s+='<g class="lfroom" transform="translate('+p.x+','+(bot-34)+')">'+lotHtml(k)+'</g>'});
+  var inB=function(t){var q=ROOMCELL[t];return LFBSEL==null?false:!!q&&q[0]===LFBSEL};
+  order=order.filter(function(i){return inB(B.slots[i].t)});
+  /* a lot shows inside its building, or on the street while that building has no rooms yet */
+  if(LFBSEL==null){var nb=bldList().length;streetLots().forEach(function(k,j){s+='<g class="lfroom" transform="translate('+(60+(nb+j)*(BLDW+BLDGAP)+BLDW/2)+','+(bot-34)+') scale(2.2)">'+lotHtml(k)+'</g>'})}
+  lotsOpen().filter(inB).forEach(function(k){var p=cellXY(k,L);s+='<g class="lfroom" transform="translate('+p.x+','+(bot-34)+')">'+lotHtml(k)+'</g>'});
   order.forEach(function(i){var r=B.slots[i],p=cellXY(r.t,L),DM=lfDimOf(r.t),LOFF=(DM[0]-DM[1])*13,RS=lfRsc(r.t),MID=((DM[0]+DM[1])*13+14-roomTop(r.t))/2;
     s+='<g class="lfroom" data-i="'+i+'" transform="translate('+p.x+','+p.y+') scale('+RS.toFixed(4)+') translate('+(-LOFF)+','+(-MID).toFixed(1)+')">';
     var C=lfRoomCtx(r,i);meta[i]={C:C,p:p,r:r};
@@ -87,7 +113,7 @@ lfWorld=function(){
 /* the light on the city moves with the clock, without redrawing the rooms */
 setInterval(function(){var g=document.getElementById("lfback");if(!g||!window.LFLAY)return;var k=lfLS().key;if(k===window.LFSKYK)return;window.LFSKYK=k;g.innerHTML=worldBack(window.LFLAY);var w=document.getElementById("lfwrap"),c=lfSkyCols();if(w)w.style.background="linear-gradient(180deg,"+c[0]+" 0,"+c[1]+" 100%)"},20000);
 /* The view opens on the whole Home building, every room of it in sight, wide screen or phone. Zoom in from there. */
-function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520,L=window.LFLAY,b=L&&L.b&&L.b[0];
+function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520,L=window.LFLAY,b=L&&L.b&&(LFBSEL==null?{x:60,w:streetW()-120,f:Math.max(2,Math.ceil(Math.max.apply(0,bldList().map(function(o){return o.f}).concat([2]))*BLDF/LFFP)+1)}:L.b[LFBSEL]);
   if(!b){LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply();return}
   var f=b.f||1,s=Math.max(lfMinS(),Math.min(1.4,(cw-24)/(b.w+60),(ch-110)/(f*LFFP+170)));
   LFV.s=LFV.s0=s;LFV.x=cw/2-(b.x+b.w/2)*s;LFV.y=ch*.47-(LFROOF+(L.rows-f/2)*LFFP+30)*s;LFV.init=1;lfClamp();lfApply()}

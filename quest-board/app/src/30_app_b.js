@@ -15,6 +15,7 @@ function baseHtml(){
   simulate();
   var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r){return s+(r&&r.pend?Math.floor(r.pend):0)},0);
   var hud='<div class="lfhud mono"><span><i class="coin"></i>&nbsp;'+Math.floor(S.coins)+'</span>'+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(tot?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+tot+'</button>':'');
+  if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';
   return lfHtml().replace('<div class="lfctl">',hud+'<div class="lfctl">');
 }
 var DROP=null;
@@ -1378,6 +1379,9 @@ document.addEventListener("click",function(e){
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="del")remove(b.dataset.id);
   if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
+  if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
+  if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
   if(a==="gotoroom"){var gi=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===b.dataset.t)gi=k});if(gi>=0)roomModal(gi);return}
   if(a==="rhelp"){roomSplash(b.dataset.t,1);return}
   if(a==="thdoorlock"){pop("Open the Auditorium to see what is behind these doors");return}
@@ -1447,6 +1451,7 @@ function saveWhich(cloud,local){
       +'<div class="qbsv-r"><button class="qbsv-c" data-pick="local"><small>This device</small>'+line(local)+'</button><button class="qbsv-c" data-pick="cloud"><small>Online save</small>'+line(cloud)+'</button></div></div>';
     m.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-pick]");if(!b)return;var use=b.getAttribute("data-pick");m.remove();done({use:use,asked:true,keep:use==="local"?cloud:local})});
     document.body.appendChild(m)})}
+document.addEventListener("pointerdown",function(){try{window.__lfpd=[LFV.x,LFV.y]}catch(e){}},true);
 render();try{chLoad()}catch(e){}
 (async function(){
   var migrated=false;
