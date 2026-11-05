@@ -1,17 +1,19 @@
 """Dungeon gift odds, a copy of dgRoll in app/src/29d_dungeon.js (9b4cf3a): 5 missions a day (m1 to m5), 20,000 players.
-python3 dropodds.py   -> days and missions to finish each set, and whether the pity ever fires twice running.
+python3 dropodds.py [runs a day] [pity]   -> days and missions to finish each set, and whether the pity ever fires twice running.
 Set and piece buffs to the gift chance (dgBuff("gift")) are left at 0."""
-import random
+import random, sys
+RUNS = int(sys.argv[1]) if len(sys.argv) > 1 else 1   # times each mission can run a day
+PITY = int(sys.argv[2]) if len(sys.argv) > 2 else 5
 LOOT = {'m1': ('goblin', ['helm', 'boots'], .30), 'm2': ('goblin', ['greaves', 'chest'], .30), 'm3': ('amulet', ['dusk', 'ember'], .40),
         'm4': ('goblin', ['sword', 'chest'], .40), 'm5': ('amulet', ['tide', 'thorn', 'silence'], .55)}
 SETS = {'goblin': {'helm', 'boots', 'greaves', 'chest', 'sword'}, 'amulet': {'dusk', 'ember', 'tide', 'thorn', 'silence'}}
 def player():
     have = {'goblin': set(), 'amulet': set()}; dry = 0; done = {}; n = 0; pity_runs = 0; last_pity = False
     for day in range(1, 400):
-        for mid in ('m1', 'm2', 'm3', 'm4', 'm5'):
+        for mid in ('m1', 'm2', 'm3', 'm4', 'm5') * RUNS:
             n += 1; s, p, g = LOOT[mid]
             if random.random() >= g: continue
-            miss = [x for x in p if x not in have[s]]; pity = dry >= 5; r = random.random()
+            miss = [x for x in p if x not in have[s]]; pity = dry >= PITY; r = random.random()
             if miss and (pity or r < .32):
                 if pity and r >= .32 and last_pity: pity_runs += 1
                 last_pity = pity and r >= .32

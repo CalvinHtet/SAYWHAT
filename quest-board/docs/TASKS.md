@@ -214,6 +214,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
+  (a) Missions: "a piece after 5 is fine but allow them to do each mission twice a day with a 3 hr timer in between each
+  mission. if this still feels unfair, then bring it to 4." QA ran it (`dropodds.py 2 5`): twice a day halves the wait, Goblin
+  King 9 days median (90% by 14, unluckiest 27), Amulet 8 (90% by 12, unluckiest 22). A pity of 4 changes almost nothing
+  (unluckiest 27 and 20): the tail comes from the 30% gift chance, not the pity. So: twice a day, 3 hours apart, pity stays
+  at 5. Under the approved effort-first economy each run still costs energy from tasks, so twice a day stays earned.
+  (b) The Mall gate: "make it so that every coin earned overall counts towards the goal... it should never feel like you
+  are at a standstill." Count all coins earned (`S.earnedC`), not only business takings, keep a healthy number. His design
+  intent: "it makes sense to upgrade the other rooms at the same time so you progress in a more balanced way"; fully
+  upgrading the Loft should take a while, so there is always something to buy while a gate fills. QA's economy check will
+  count days with nothing to buy; the target is zero. Owner: LEAD.
 - QA, v48 economy (0426a46, `sim.js`, 3 players, 60 days; `docs/QA.md`, v48 run). Better than before: missions give little
   XP now (regular: 6,600 of 55,800), levels 39 on day 30 and 68 on day 60 (were 79 and 100), the casual player buys 3 to 4
   things every day for two months. Still wrong: (1) month 2 coins for the 12-task player: missions 34%, rooms 25%, tasks
