@@ -221,6 +221,8 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Goblin King set finished in 18 days median, 90% within 27, unluckiest 51 (87 missions median); Amulet set 16 days median,
   90% within 23, unluckiest 39. The pity never fired twice running. Fine for a set; the unluckiest month-plus may sting, a
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
+- FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
+  15-minute loop and start it.
 - TAKEN by LEAD (building now). WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
   what it would feel like for a long term play of this game. So we should take it step by step until it feels right. Your
   coin estimations and pricing feels good, but it could be tightened more."** Build it as written in `docs/QA.md` (Proposal:
