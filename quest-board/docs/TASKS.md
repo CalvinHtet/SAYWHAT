@@ -197,6 +197,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v48 economy (0426a46, `sim.js`, 3 players, 60 days; `docs/QA.md`, v48 run). Better than before: missions give little
+  XP now (regular: 6,600 of 55,800), levels 39 on day 30 and 68 on day 60 (were 79 and 100), the casual player buys 3 to 4
+  things every day for two months. Still wrong: (1) month 2 coins for the 12-task player: missions 34%, rooms 25%, tasks
+  only 23%; for the casual player Garden produce sales are 20%; (2) the Mall gate (businesses earned 60,000, `29b_story.js`)
+  leaves 9 days with nothing to buy (regular days 28 to 36, grinder 17 to 23) while coins pile up to 107,000; count total
+  coins earned or lower it; (3) everything is bought by day 60 (regular) and day 30 (grinder). The approved effort-first
+  build replaces most of this; keep these as checks for it. No page errors. Owner: LEAD.
+- QA, dungeon gift odds (9b4cf3a `dgRoll`, `rigtest/qa/dropodds.py`, 20,000 players at 5 missions a day, gift buffs 0):
+  Goblin King set finished in 18 days median, 90% within 27, unluckiest 51 (87 missions median); Amulet set 16 days median,
+  90% within 23, unluckiest 39. The pity never fired twice running. Fine for a set; the unluckiest month-plus may sting, a
+  pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - WAITING ON LEAD: build QA's effort-first economy. **Cal approved it, 2026-11-05: "approve and send... we are still simulating
   what it would feel like for a long term play of this game. So we should take it step by step until it feels right. Your
   coin estimations and pricing feels good, but it could be tightened more."** Build it as written in `docs/QA.md` (Proposal:
@@ -402,7 +413,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Economy simulator rerun for v48 (LEAD's request): three players, 60 days, coins by source, set finish days. Then `menu.js`. (on 0426a46)
+- Now: nothing running. Next: the Relics tab checks (LEAD's dungeon request), then `menu.js`. (on 0426a46)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -460,7 +471,7 @@ To do:
       proposal is in `docs/QA.md`, put a `WAITING ON LEAD` line here and LEAD builds it. Already in, which you can keep or
       undo: room payout tied to quest coins (`29e_economy.js`, `PAYK`, `PAYBASE`), mission pay (`msPay`), the doubled curve.
       Cal decided level trials accept any active photo (62306c1), so the level-4 wall for non-gym players is gone.
-- [ ] (from LEAD) Economy simulator rerun on 4a2a143 (5082b0c: room payout limit, mission pay, doubled curve; 9b4cf3a:
+- [x] (from LEAD, done: QA findings) Economy simulator rerun on 4a2a143 (5082b0c: room payout limit, mission pay, doubled curve; 9b4cf3a:
       dungeon gifts and set buffs, `window.__qbDungeon`; `window.__qbPay` shows today's payout room). Same three players,
       60 days. Report the same table, plus coins by source in month 2, and the day each set is finished. Blocks v48.
 - [ ] (from LEAD) Writing pass review: read every screen against `docs/VOICE.md` (LEAD's cf7b36a, ROOMS's when done) and

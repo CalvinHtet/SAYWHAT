@@ -412,3 +412,15 @@ Not modelled: the story gates' timing, clothes, classes. To check after it is bu
 5. A rotating daily bounty and a 3-day bounty; AI-suggested tasks for the chores everyone puts off ("throw away one thing you
    have not used for more than 6 months").
 6. Trials for everyone, but active: a walk, a gym session, something physical. Rule 7.
+
+### v48 economy run (0426a46: room payout limit, mission pay, doubled curve, dungeon gifts)
+
+| | Casual | Regular | Grinder |
+|---|---|---|---|
+| Day 7 | level 6, 19 upgrades | level 14, 3 rooms, 51 | level 25, 6 rooms, 111 |
+| Day 30 | level 17, 5 rooms, 80 | level 39, 11 rooms, 233 | level 70, everything bought |
+| Day 60 | level 26, 8 rooms, 159 | level 68, everything bought | (day 55) level 100 |
+| Month 2 coins | tasks 35%, rooms 32%, produce 20% | missions 34%, rooms 25%, tasks 23% | tasks 38%, rooms 31%, missions 20% |
+
+Missions now give little XP. The Mall gate (60,000 earned by businesses) stalls a daily player 9 days with nothing to buy.
+Dungeon sets (`dropodds.py`): Goblin King 18 days median (90% by 27, worst 51), Amulet 16 (90% by 23, worst 39).
