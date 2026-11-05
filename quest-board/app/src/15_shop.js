@@ -127,7 +127,7 @@ shopHtml=function(){
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=d.live.filter(function(x){return x.id===shopTab})[0];
   if(b){
-    h+='<section class="qs-hero" style="background:linear-gradient(120deg,'+b.c[0]+','+b.c[1]+' 62%,'+b.c[2]+')">'+brandLogo(b,1)+'<p>'+esc(b.tag)+'</p>'+(d.next?'<small>Next drop: '+esc(d.next.name)+' in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</section>';
+    h+=qsBanner(b,d);
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
   }else if(shopTab==="basics"){
     h+='<p class="qs-note qs-lead">The everyday pieces from character creation, sold one at a time.</p>';
@@ -148,3 +148,13 @@ shopHtml=function(){
 };
 /* The wardrobe button in the room opens the same screen. */
 wardrobeModal=function(){view="shop";shopTab="wardrobe";render();window.scrollTo(0,0)};
+/* The brand banner at the top of the Shop (Cal, 2026-11-05: "a full stylized and classy banner"). The brand's own colours
+   deepen to near black, with its logo as a faint watermark, fine pinstripes, a light sheen and a thin frame in its accent,
+   the name between hairline ornaments. When banner art exists (art/app/ui_banner_<id>.webp, bundled into art_ui.js) it
+   fills the banner behind the same text. */
+function qsBanner(b,d){var art=window.QBART&&QBART["ui_banner_"+b.id+".webp"],wm=QBLoft.data.loft.artBase+'logo_'+b.id+'.webp';
+  return '<section class="qs-hero qs-banner'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+';--wm:url(\''+wm+'\')">'
+    +(art?'<img class="qs-bnart" src="'+art+'" alt="">':'')
+    +'<div class="qs-bnin"><span class="qs-bnkick">The '+esc(b.name)+' drop</span>'+brandLogo(b,1)
+    +'<i class="qs-bnrule" aria-hidden="true"><b></b><em></em><b></b></i><p>'+esc(b.tag)+'</p>'
+    +(d.next?'<small>Next drop: '+esc(d.next.name)+' in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</div></section>'}

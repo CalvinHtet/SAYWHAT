@@ -22,7 +22,7 @@ At 200 XP a day, which is roughly a dozen ordinary tasks:
 | 100 | 352 | 760,000 |
 
 Quest XP stays on the 5 to 100 scale. Honor system on a 50+ XP task pays half, photo proof
-on 25+ XP pays 1.2x, a streak adds up to 30%, and combos, bounties and crits stack on top
+on 25+ XP pays 2x (a live camera photo; Cal doubled it 2026-11-05 so proof is always worth taking), a streak adds up to 30%, and combos, bounties and crits stack on top
 as you rank up. Undoing a task takes back its XP, coins, combo step and, if the day falls
 under 50 XP, that day's streak credit and any chest it opened.
 

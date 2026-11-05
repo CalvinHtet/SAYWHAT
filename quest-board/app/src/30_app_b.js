@@ -777,7 +777,8 @@ function bountyId(){var l=ordered().filter(function(q){return q.xp>=25});if(!l.l
 function mults(q,o){
   o=o||{};var m=1,tags=[],now=Date.now(),ri=rankIdx();
   if(q.xp>=50&&!o.verified){m*=.5;tags.push("Honor x0.5")}
-  if(q.xp>=25&&o.verified){var vb2=hasSpecial("verify")?1.25:1.2;m*=vb2;tags.push("Verified x"+vb2)}
+  /* Prove it pays double, coins included (coins follow XP), so a photo is always worth taking (Cal, 2026-11-05) */
+  if(q.xp>=25&&o.verified){var vb2=hasSpecial("verify")?2.1:2;m*=vb2;tags.push("Verified x"+vb2)}
   var sm=1+Math.min(streakCap(),.02*streakNow());if(sm>1){m*=sm;tags.push("Streak x"+sm.toFixed(2))}
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
@@ -943,7 +944,7 @@ function boardHtml(){
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
      +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; your saved gym is checked against the photo location':'; your first pass saves your gym location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
-     +'<input class="vh" type="file" id="ph1" accept="image/jpeg" capture="environment" aria-label="Take a workout photo"><input class="vh" type="file" id="ph2" accept="image/jpeg" aria-label="Choose a workout photo">'
+     +'<input class="vh" type="file" id="ph1" accept="image/jpeg" capture="environment" aria-label="Take a workout photo">'
      +(gateLines.length?'<div class="proof">'+gateLines.map(function(l){return '<div class="'+l.k+'"><span>'+(l.k==="ok"?"&#10003;":l.k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(l.t)+'</span></div>'}).join("")+'</div>':'')
      +'</section>';
   }
@@ -1160,10 +1161,10 @@ function askProof(id){
   proofId=id;
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
   proofModal=modal('<div class="card box2"><span class="label">Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
-   +'<p class="note">'+(isDigital(q)?"Send a screenshot or photo of the finished work.":"Take a live photo of the finished result. Library photos are turned off for this quest.")+' Photos can only be used once.</p>'
+   +'<p class="note">'+(isDigital(q)?"Take a live photo of your screen showing the finished work.":"Take a live photo of the finished result.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
    +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP</span><span class="chip">Honor +'+mh.xp+' XP</span></div>'
-   +'<div class="btns"><label class="btn" for="pf1">'+(isDigital(q)?"Take photo":"Open camera")+'</label>'+(isDigital(q)?'<label class="btn alt" for="pf2">Screenshot</label>':'')+'</div>'
-   +'<input class="vh" type="file" id="pf1" accept="image/jpeg,image/png,image/webp" capture="environment" aria-label="Take a proof photo"><input class="vh" type="file" id="pf2" accept="image/jpeg,image/png,image/webp" aria-label="Choose a proof image">'
+   +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
+   +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'
    +'<div class="proof" id="proofmsg"></div>'+(q.rep==="weekly4"?'<p class="note">Workouts only count with a live photo. No honor system.</p>':'<button class="btn ghost" data-act="honor">Use the honor system</button>')+'<button class="btn ghost" data-act="closeproof">Cancel</button></div>');
 }
 function pl(k,t){var el=document.getElementById("proofmsg");if(!el)return;var d=document.createElement("div");d.className=k;d.innerHTML='<span>'+(k==="ok"?"&#10003;":k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(t)+'</span>';el.appendChild(d)}
@@ -1172,6 +1173,8 @@ async function handleProof(file){
   if(!file||proofBusy||!proofId)return;
   var q=S.quests.filter(function(x){return x.id===proofId})[0]; if(!q)return;
   proofBusy=true; var box=document.getElementById("proofmsg"); if(box)box.innerHTML="";
+  /* the camera gives a JPEG; a screenshot or a saved PNG/WebP is refused before anything else */
+  if(file.type&&!/jpe?g/i.test(file.type)){pl("bad","That is a screenshot or a saved image. Use the camera.");proofBusy=false;return}
   pl("info","Reading the image...");
   var ok=true, ex={}, hh=null, buf=null, now=new Date(), nowM=now.getHours()*60+now.getMinutes();
   try{buf=await file.slice(0,262144).arrayBuffer()}catch(e){}
@@ -1401,8 +1404,8 @@ document.addEventListener("click",function(e){
 });
 document.addEventListener("change",function(e){
   var t=e.target; if(!t||!t.id)return;
-  if(t.id==="ph1"||t.id==="ph2"){var f=t.files&&t.files[0];t.value="";handlePhoto(f)}
-  if(t.id==="pf1"||t.id==="pf2"){var f2=t.files&&t.files[0];t.value="";handleProof(f2)}
+  if(t.id==="ph1"){var f=t.files&&t.files[0];t.value="";handlePhoto(f)}
+  if(t.id==="pf1"){var f2=t.files&&t.files[0];t.value="";handleProof(f2)}
 });
 document.addEventListener("input",function(e){if(e.target.classList&&e.target.classList.contains("kg")&&S.wk){var v=parseFloat(e.target.value);S.wk.w[e.target.dataset.ex]=isNaN(v)?"":v;persist()}if(e.target.id==="cap"){draft=e.target.value;fit(e.target)}if(e.target.id==="ccname"&&cc){cc.name=e.target.value;var hh=document.querySelector(".ccinfo h2");if(hh)hh.textContent=cc.name||"Hunter"}});
 document.addEventListener("keydown",function(e){
