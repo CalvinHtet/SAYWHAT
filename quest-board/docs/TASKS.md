@@ -13,10 +13,9 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: writing pass part 3 (class story and advancement text in `10_app_a.js`, Hall). Part 2 done in 8c8f303 (room
-  welcome screens; rooms now produce at the Daily Quest's efficiency, `openMult` in `29e_economy.js`). Waiting on QA: the
-  economy (29ae247, include 8c8f303), the Shop (e012535), missions and gates (f629518). Curve for level 100 in ~50 days done in dab48b8. Next: tune `ECON` with QA's numbers,
-  then publish v48. (on dab48b8)
+- Now: idle on my list until QA reports: the economy check against Cal's 50-day target (29ae247, dab48b8), the Shop
+  (e012535), missions and gates (f629518). Writing pass parts 1 to 3 done (cf7b36a, 8c8f303, d5912ad; the Tamer's perk now
+  works on the team). Next: tune `ECON` with QA's numbers, then publish v48. (on d5912ad)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
