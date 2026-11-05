@@ -13,16 +13,21 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the economy fix from QA's simulator (game runs out in 5 weeks): room income tied to the day's tasks, missions pay
-  coins with little XP and no per-level growth, the XP curve tuned to what players really earn. Files: `10_app_a.js`,
-  `28_missions.js`, `29_prices.js`, `29d_dungeon.js`, `30_app_b.js`. Next: QA reruns `sim.js` on it; Cal decides the
-  gym-photo trials; then publish v48. (on f4362b1)
+- Now: WAITING ON QA (rerun `sim.js` on the economy fix) and on Cal (level trials, and what to buy after the last room).
+  Meanwhile: friends' database rules (each player writes only their own rows), then the rest of the writing pass.
+  Next: publish v48 once QA's numbers look right. (on 4a2a143)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
       (47f3af4). Goes live in the next publish.
 - [x] Story reasons, investors on earnings, equipment earns and decor does not, a team of five, class art by body (d523cf1).
       Not published (QA's economy simulation first).
+- [x] Economy fix from QA's simulator, 5082b0c: businesses pay out each day at most 200 plus 1.5x the day's quest coins
+      (the rest waits in the room, `29e_economy.js`, shown in each room's window); missions pay coins (+1% a level) and 30%
+      of their XP, flat; each level costs twice as much, capped at 1200 (level 10 on day 4 at 420 real XP a day). Old
+      saves keep their level. Tested headless (payout limit, saves, story, dungeon). Neighbors text says Contributor.
+      Open for Cal: level trials need a gym photo (a friend who never works out stops at level 4), and nothing to buy
+      after the last room.
 - [x] Writing pass, part 1 (Cal: "professional and not corny or too obvious that it is AI"), cf7b36a. `docs/VOICE.md` is
       the guide every chat writes to. Rewritten: about 90 lines across upgrades, delve logs, visitor events, story
       dialogue and the coaches. Left as they were: Cal's own quest and reward lines, shop item lines (already plain), and
@@ -428,6 +433,9 @@ To do:
 - [ ] (from LEAD) Upgrade income (d523cf1): list every business upgrade marked "Looks only" and flag any that should earn (it sells,
       serves or seats something) or any decor still earning; `upIsDecor` in `29_prices.js`, override per upgrade with
       `{decor:1}` or `{earn:1}`. Team: each buff applies (room income, mission pay), the join banner, missions led by the team.
+- [ ] (from LEAD) Economy simulator rerun on 4a2a143 (5082b0c: room payout limit, mission pay, doubled curve; 9b4cf3a:
+      dungeon gifts and set buffs, `window.__qbDungeon`; `window.__qbPay` shows today's payout room). Same three players,
+      60 days. Report the same table, plus coins by source in month 2, and the day each set is finished. Blocks v48.
 - [ ] (from LEAD) Writing pass review: read every screen against `docs/VOICE.md` (LEAD's cf7b36a, ROOMS's when done) and
       list lines that still read as corny or written by AI, file and line, with a suggested rewrite. Do not edit them.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
