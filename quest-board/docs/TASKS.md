@@ -232,6 +232,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- WAITING ON LEAD, URGENT (Cal, 2026-11-05): "For now, give me a version to test on my phone and pin it to the side. Every
+  version you pin for me should be an initialized version of the game from lvl 1 so I can test everything from the ground up."
+  Publish the current build (v48: QA cleared the economy in 470cbf7 and ROOMS's freed upgrades and door) as a NEW artifact, so
+  its database is empty and Cal starts at level 1, and pin it in his left-hand panel; don't wait on his open approvals for
+  this test copy. Include `lfvar.json` (`app/lfvar.json`) and declare the same capabilities as the live page (db, user,
+  sample), so saving, Neighbors and photo checks work there. The friends' live page stays as it is. Then tell QA the commit:
+  QA runs `savecheck.js` and `screens.js` on that build. New TEAMWORK rule 18 (Cal) is the pipeline from now on. Owner: LEAD.
 - QA, economy at the level-80 prices (e64f93f, run on 961b632, `sim.js`): **Cal's targets met.** The 12-task player owns every
   upgrade on day 45 at level 79 (level 80 on day 46, 90 on day 50); the grinder on day 21. Coins (12-task, all 55 days): tasks
   36%, rooms 16%, missions 15%, level pay 13%, produce 7%, Daily Quest 4%; grinder: tasks 47%, missions 17%. No day with

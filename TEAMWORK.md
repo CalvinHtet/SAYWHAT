@@ -136,6 +136,18 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
     - Anything long and extensive (full sweeps of every room, upgrade, outfit or pose; 90-day simulations; speed sweeps)
       runs only when Cal asks for it.
 
+18. **How a version reaches Cal (Cal, 2026-11-05).** One version at a time, in this order:
+    1. ROOMS finishes the art and sends it to LEAD (`READY TO PUBLISH`).
+    2. LEAD checks it, commits, and hands the build to QA (`WAITING ON QA: check v<n>, <commit>`).
+    3. QA checks it and writes its findings back to LEAD and ROOMS under *QA findings*.
+    4. LEAD and ROOMS fix them and send it to QA a second time.
+    5. LEAD publishes it for Cal and pins it in his left-hand panel: version number up by one. **Every version pinned for
+       Cal starts a fresh game from level 1** (a new artifact with its own empty database, so nothing carries over and he
+       tests everything from the ground up); the friends' page and its saves are not touched by this.
+    6. Cal tests on his phone and confirms; then the next version starts.
+    - Only LEAD publishes and pins. If Cal does not answer, nobody waits: every chat keeps working on other rooms and
+      features (rule 16), and the next version builds up meanwhile.
+
 ---
 
 ## How LEAD runs the work
