@@ -254,11 +254,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   "? ? ?", no level lock shown anywhere, Buy always works, no early "All upgrades installed", 1,421 cards. Still never offered:
   the same 11 upgrades whose prerequisite left the room (Game Room 3, Chef's Neon, Garden 3, Theater 4), on ROOMS's list.
   The Trophy Wall waits for the first trophy, as designed. Owner: ROOMS (the 11).
-- WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
+- TAKEN by QA. WAITING ON QA, the target for the economy check (Cal, 2026-11-05): "a serious player can get to lvl 100 in 50 ish days ...
   that 50 could easily be 100 days if you play every other day." The whole game (level 100 and the town bought out) takes a
   serious daily player about 50 days. LEAD set the curve back to `min(600, 50+6L+0.2L²)` (46,738 XP, day 49 at 950 a day;
   `ECON.xpK`, `xpCap`). Tune prices so everything is bought around day 50 for the grinder, and say what `ECON` should change.
-- WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
+- TAKEN by QA. WAITING ON QA: check missions and the story gates, f629518 (rule 17): each mission twice a day, 3 hours apart (the card
   shows the wait and "Run n of 2"), pity stays 5; Lock and Key and the Mall now wait on every coin earned (`ECON.gateLockKey`
   25,000, `gateMall` 80,000, my guesses). In the economy run: days with nothing to buy (target zero), and tune those two.
 - DONE by LEAD in f629518. WAITING ON LEAD, Cal's decisions on QA's v48 findings (2026-11-05):
@@ -285,7 +285,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   pity at 4 dry gifts would cut the tail. Relics tab checks not done yet. Owner: LEAD.
 - FYI ROOMS and QA (Cal, 2026-11-05): loops every 12 minutes now, not 15. Rule 16 has the new `/loop 12m` line: delete your
   15-minute loop and start it.
-- WAITING ON QA: check the Shop, e012535 and 3a6fdd5 (rule 17). Look at: the character stays in view while scrolling (desktop and
+- TAKEN by QA. WAITING ON QA: check the Shop, e012535 and 3a6fdd5 (rule 17). Look at: the character stays in view while scrolling (desktop and
   phone); Try on for clothes, the basket and its confirm window; each tab's colour (brands, Basics and Vault cream, Wardrobe
   champagne, Upgrades and Interface navy) and that text stays readable; View then Checkout on upgrades and interface, then
   Equip or Equipped · Remove; the drop window with banner art. The body is now `overflow-x:clip`: check no screen scrolls
@@ -518,7 +518,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the next WAITING ON QA, else LEAD's story-scene walk (`29b_story.js`). (on 6ea377d)
+- Now: the economy target (level 100 and the town bought out near day 50), missions twice a day and the story gates, then
+  the Shop check; test copies only. Next: LEAD's story-scene walk. (on 9f3cb00)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
