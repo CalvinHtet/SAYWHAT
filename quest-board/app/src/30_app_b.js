@@ -962,9 +962,9 @@ function boardHtml(){
   if(g){
     var nr=RANKS[Math.min(ri+1,5)], stored=Math.max(0,S.xp-cum(g));
     h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
-     +'<p class="note">Your XP bar is full, so you cannot reach level '+g+' until you move your body. Send a fresh photo from the gym or any workout spot.</p>'
+     +'<p class="note">Your XP bar is full, so you cannot reach level '+g+' until you move your body. Send a fresh photo of you being active: a workout, a run, a walk with the dogs, a hike, a game, a class.</p>'
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
-     +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; your saved gym is checked against the photo location':'; your first pass saves your gym location')+'</li><li>The photo is not saved anywhere</li></ul>'
+     +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
      +'<input class="vh" type="file" id="ph1" accept="image/jpeg" capture="environment" aria-label="Take a workout photo">'
      +(gateLines.length?'<div class="proof">'+gateLines.map(function(l){return '<div class="'+l.k+'"><span>'+(l.k==="ok"?"&#10003;":l.k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(l.t)+'</span></div>'}).join("")+'</div>':'')
@@ -1098,7 +1098,7 @@ function levelUp(lv,extra,from){
 }
 function gateOpened(g){
   var nr=RANKS[Math.min(rankIdx()+1,5)];
-  var m=modal('<div class="card box2"><span class="label">Gate opened</span><h2>Job advancement trial</h2><p>Your bar is full at level '+(g-1)+'. Extra XP is stored. Send a fresh workout photo in the trial card to start your '+gateTitle().toLowerCase()+'.</p><button class="btn big" id="gok">Show me the trial</button></div>');
+  var m=modal('<div class="card box2"><span class="label">Gate opened</span><h2>Job advancement trial</h2><p>Your bar is full at level '+(g-1)+'. Extra XP is stored. Send a fresh photo of you being active in the trial card to start your '+gateTitle().toLowerCase()+'.</p><button class="btn big" id="gok">Show me the trial</button></div>');
   var b=m.querySelector("#gok");b.focus();b.onclick=function(){m.remove();window.scrollTo({top:0,behavior:"smooth"})};
 }
 
@@ -1263,7 +1263,7 @@ function feetBetween(a,b,c,d){
   var R=20902231,r=Math.PI/180,dl=(c-a)*r,dn=(d-b)*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(dn/2)*Math.sin(dn/2);
   return 2*R*Math.asin(Math.sqrt(x));
 }
-var VISION="This photo was just submitted as proof of a workout for a habit game. Decide: active_setting (true if it shows the inside of a gym or fitness space, or a clear exercise setting such as a trail, track, court, pool, or someone mid-workout), setting (2 to 4 words), screen (true if it is a screenshot or a photo of a screen), note (under 12 words). Return ONLY JSON: {\"active_setting\":true,\"setting\":\"\",\"screen\":false,\"note\":\"\"}";
+var VISION="This photo was just submitted as proof that the player is being physically active right now, for a habit game. Any activity counts, not only the gym. Decide: active_setting (true if it shows physical activity or a place where it is happening: a gym or studio, a run, walk or hike outdoors, walking a dog, cycling, swimming, a sport, a dance or yoga class, stretching or a home workout, or someone visibly sweaty or in workout clothes outside; false for sitting at a desk, on a couch, in a car, in bed, or a photo of food or a screen), setting (2 to 4 words), screen (true if it is a screenshot or a photo of a screen), note (under 12 words). Return ONLY JSON: {\"active_setting\":true,\"setting\":\"\",\"screen\":false,\"note\":\"\"}";
 function gl(k,t){gateLines.push({k:k,t:t});render()}
 async function handlePhoto(file){
   if(!file||gateBusy||gated()===null)return;
@@ -1303,7 +1303,7 @@ async function handlePhoto(file){
     }catch(e){visUnavail=true}
     if(vis){
       if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}
-      else if(!vis.active_setting){gl("bad","Doesn't look like a workout spot"+(vis.setting?" ("+vis.setting+")":"")+". "+(vis.note||""));ok=false}
+      else if(!vis.active_setting){gl("bad","Doesn't look like you're being active"+(vis.setting?" ("+vis.setting+")":"")+". "+(vis.note||""));ok=false}
       else gl("ok","Scene: "+(vis.setting||"workout space")+(vis.note?". "+vis.note:""));
     }else if(visUnavail){
       if(near===true)gl("info","Scene check unavailable, but your location matches your gym.");
