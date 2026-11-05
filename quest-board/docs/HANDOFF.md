@@ -66,7 +66,7 @@ behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects
 
 1. Clothes, both bodies, every pose: done in the rig, not in a room. All 48 `gx_o_*`, `gx_v_*` and `gx_al_*` items (tulle
    excluded) were rendered alone on each body they fit in all 22 key poses (`rigtest/matrix.html?sheet=wear`), plus six whole
-   outfits (two per brand, one on each body) in all 22 poses, every hat with all three hair styles on both bodies front and
+   outfits in all 22 poses (two per brand, so each brand was seen on both bodies; seven outfit and body pairs), every hat with all three hair styles on both bodies front and
    back, every hat with every glasses and mask, every new neck piece over seven collared and hooded tops front and back, and
    every top over every bottom and every bottom over every shoe (front and back, at thumbnail size). Found and fixed: the
    four baked-in mannequins and the headband above. Found and not fixed: with an arm raised (`stretchUp`, `stretch`) most
