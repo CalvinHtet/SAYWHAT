@@ -1135,6 +1135,8 @@ body.has-hud .lfctl:not(.lfpzc){top:34px}body.has-hud .lfwxb{top:34px!important}
 .mvD{animation:mvD 5s linear infinite}@keyframes mvD{to{transform:translate(-30px,90px)}}
 .mvK{animation:mvK 2s ease-in-out infinite}@keyframes mvK{0%,100%{transform:translate(-14px,4px)}50%{transform:translate(6px,-2px)}}
 .mvBeam{animation:mvBm 3s ease-in-out infinite}@keyframes mvBm{50%{opacity:.6}}
+/* ROOMS: the Loft is all fixed-position, so the page measured only its header (331px on an 844px phone), which is what a host sizing its frame to the content would use. A one-screen view takes the frame's full height. */
+html:has(#lfwrap),html:has(#lfwrap) body{height:100%}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

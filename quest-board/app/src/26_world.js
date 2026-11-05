@@ -91,7 +91,19 @@ function lfInitViewOf(c){var cw=c.clientWidth||360,ch=c.clientHeight||520,L=wind
   if(!b){LFV.s=Math.min(1.4,Math.max(.42,Math.min(cw/(LFCELLW+40),ch/(LFFP+280))));var gy=LFROOF+(LFDIM.rows-.5)*LFFP;LFV.s0=LFV.s;LFV.x=cw/2-LFOX[0]*LFV.s;LFV.y=ch*.46-gy*LFV.s;LFV.init=1;lfClamp();lfApply();return}
   var f=b.f||1,s=Math.max(lfMinS(),Math.min(1.4,(cw-24)/(b.w+60),(ch-110)/(f*LFFP+170)));
   LFV.s=LFV.s0=s;LFV.x=cw/2-(b.x+b.w/2)*s;LFV.y=ch*.47-(LFROOF+(L.rows-f/2)*LFFP+30)*s;LFV.init=1;lfClamp();lfApply()}
-lfInitView=lfInitViewOf;
+/* The frame a phone app gives the page can change size: refit the building when the height really changed, so it is never
+   left framed for the old size. A small change (a bar sliding away) only re-clamps. */
+var LFVH=0;
+lfInitView=function(c){lfInitViewOf(c);LFVH=c.clientHeight};
+addEventListener("resize",function(){var c=document.getElementById("lfwrap");if(!c||!LFV.init)return;if(Math.abs(c.clientHeight-LFVH)>=120){LFV.init=0;lfInitView(c)}else{lfClamp();lfApply()}});
+/* Temporary, the owner's device only: what the real phone's frame measures, written to diag/frame where Claude can read it
+   (data/users/ is private even from the owner). Remove it, and delete that doc, once the phone is sorted. */
+var QBFL=[],QBFT=0,QBFK="";
+function qbFrame(why){try{if(window.__qbGuest||!db)return;var D=document.documentElement,B=document.body,v=window.visualViewport,r=function(s){var e=document.querySelector(s);if(!e)return 0;var q=e.getBoundingClientRect();return [Math.round(q.top),Math.round(q.bottom)]};
+  var m={tab:view,inner:[innerWidth,innerHeight],screen:[screen.width,screen.height,screen.availHeight],vv:v?[Math.round(v.width),Math.round(v.height),Math.round(v.offsetTop),+v.scale.toFixed(2)]:0,html:[D.clientHeight,D.offsetHeight,D.scrollHeight],body:[B.offsetHeight,B.scrollHeight],wrap:r("#lfwrap"),nav:r(".nav")},k=JSON.stringify(m);if(k===QBFK)return;QBFK=k;m.why=why;m.t=Date.now();QBFL.push(m);if(QBFL.length>30)QBFL.splice(1,1);
+  clearTimeout(QBFT);QBFT=setTimeout(function(){db.doc("diag/frame").set({appv:APPV,ua:navigator.userAgent,framed:window!==window.top,dpr:devicePixelRatio,log:JSON.stringify(QBFL)}).catch(function(){})},2000)}catch(e){}}
+addEventListener("resize",function(){qbFrame("resize")});setTimeout(function(){qbFrame("boot")},6000);
+var lfMount0=lfMount;lfMount=function(){var c=document.getElementById("lfwrap");if(c&&LFV.init&&Math.abs(c.clientHeight-LFVH)>=120)LFV.init=0;lfMount0();qbFrame("loft");setTimeout(function(){qbFrame("loft+1s")},1000);setTimeout(function(){qbFrame("loft+4s")},4000)};
 /* ---- doors between rooms ----
    [from, to, wall, position, color, label]. "L" is the left wall at height y=position,
    "R" the back wall at x=position. The door shows once the target room exists. */
