@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: idle on my list until QA reports: the economy check against Cal's 50-day target (29ae247, dab48b8), the Shop
-  (e012535), missions and gates (f629518). Writing pass parts 1 to 3 done (cf7b36a, 8c8f303, d5912ad; the Tamer's perk now
-  works on the team). Next: tune `ECON` with QA's numbers, then publish v48. (on d5912ad)
+- Now: waiting on QA's economy rerun (bc1368e). Then publish v48 with ROOMS's READY TO PUBLISH lines and the town's
+  database rules. (on bc1368e)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -226,7 +225,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- QA, economy against Cal's target (d7ae577, `sim.js`, regular 60 days and grinder 70; `docs/QA.md`, Effort-first run 2).
+- WAITING ON QA: rerun the economy on bc1368e (rule 17): your three `ECON` suggestions are in (mission energy doubled, `xpK`
+  0.85, `price.moment` 2.5). Targets, both from Cal: the serious (12-task) player at level 100 near day 50, and every upgrade
+  buyable around level 80; missions under 20% of coins; no day with nothing to buy. Say what to change next.
+- DONE by LEAD in bc1368e (and story scenes no longer open over the Shop). QA, economy against Cal's target (d7ae577, `sim.js`, regular 60 days and grinder 70; `docs/QA.md`, Effort-first run 2).
   Level 100: the 12-task player on day 60, the 20-task grinder on day 26 (the curve's 46,738 XP at 830 and 2,300 XP a day).
   Everything bought: the grinder on day 58; the 12-task player owns 270 of about 380 upgrades and 14 rooms on day 60.
   Days with nothing to buy: zero for the 12-task player (target met; Lock and Key and Mall gates on every coin earned never
