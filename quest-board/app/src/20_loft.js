@@ -3218,7 +3218,7 @@ LFROOM.bedroom=function(C){
   if(H("bd_plant"))lfSpr4(C,"bd4_plant",9.0,7.9,.8,.8,{h:40,H:84,occ:.9});
   /* The Closet door is in the left wall where the wardrobe stood (Cal, 2026-11-05). The wardrobe upgrade became a
      figurine cabinet hung on the wall over the nightstand, clear of the door. Without its art nothing shows there. */
-  if(H("bd_ward1"))lfSpr(C,"bdx_figcab",.02,4.45,.3,1.2,{h:1,H:64,dy:-54,nosh:1,nob:1,dk:-3});
+  if(H("bd_ward1"))lfSpr(C,"bdx_figcab",.02,7.45,.3,1.2,{h:1,H:62,dy:-46,nosh:1,nob:1,dk:-3,flip:1,ctr:1});/* just past the door, over the dog beds */
   if(typeof hasRoom==="function"&&hasRoom("closet"))lfDoorL(C,5.85,7.15,100,"#ffd27a");
   if(false){var _cp=[[.1,5.6,0],[1.3,5.6,0],[1.3,7.8,0],[.1,7.8,0],[.1,5.6,74],[1.3,5.6,74],[1.3,7.8,74],[.1,7.8,74]].map(function(q){return lfP(q[0],q[1],q[2])}),_hx=_cp.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]}),_cr=function(o,a,b){return (a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0])},_lo=[],_up=[];
     _hx.forEach(function(p){while(_lo.length>1&&_cr(_lo[_lo.length-2],_lo[_lo.length-1],p)<=0)_lo.pop();_lo.push(p)});_hx.slice().reverse().forEach(function(p){while(_up.length>1&&_cr(_up[_up.length-2],_up[_up.length-1],p)<=0)_up.pop();_up.push(p)});
@@ -3241,7 +3241,7 @@ LFROOM.bedroom=function(C){
   if(H("bd_shelf"))lfSpr4(C,"bd4_shelf",w3?1.2:8.85,.05,1.1,.55,{h:60,flip:1,fit:1});
   /* above the desk: the mirror fills the wall at x=5. The glass wall leaves no room there, so then the canvas hangs on
      the left wall in front of the Closet door and the figurine shelf in the back corner (both used to vanish). */
-  if(H("bd_art1"))if(!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});else lfSpr4(C,"bd4_art1",.05,7.7,.05,.1,{h:1,H:40,dy:-84,nosh:1});
+  if(H("bd_art1"))if(!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});else lfSpr4(C,"bd4_art1",.05,6.35,.05,.1,{h:1,H:26,dy:-104,nosh:1});/* above the Closet door */
   if(H("bd_fshelf"))lfSpr4(C,"bd4_fshelf",w3?.45:9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:w3?-62:-80,nosh:1});
   if(H("bd_lights"))lfLedWall(C);
   lfWallArtL(C,H);
@@ -3504,14 +3504,14 @@ window.lfFloor4=lfFloor4;
 /* ---- wall art: flat pieces drawn straight onto the left-wall plane (flush, no baked perspective) ---- */
 function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function(){v=(v*1664525+1013904223)%4294967296;return v/4294967296}};
   var put=function(yb,wpx,zt,g){return lfFaceX(0.03,yb,zt,g)};
-  /* With the painted grass wall (Tier 3 on) the back 3 tiles of this wall are grass: the clock and the three prints move
-     onto the paint beside it, where the moss panel hung (Cal: art on the grass "looks weird"). */
+  /* put(yb,..) hangs a piece from yb back toward the corner. With the painted grass wall (Tier 3 on) the back 3 tiles of
+     this wall are grass, so the clock moves onto the paint, high up (Cal: art on the grass "looks weird"). */
   var gw3=H("bd_wt3")&&window.LFSPR&&LFSPR.bdw_t3;
   var fr=function(x,y,w,h,pr,wood,mat){wood=wood||"#c9964f";mat=mat||"#f3e9d6";return '<rect x="'+(x+1.2)+'" y="'+(y+1.4)+'" width="'+w+'" height="'+h+'" fill="rgba(30,20,40,.22)"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+wood+'" stroke="#7a5524" stroke-width=".5"/><rect x="'+(x+1.4)+'" y="'+(y+1.4)+'" width="'+(w-2.8)+'" height="'+(h-2.8)+'" fill="'+mat+'"/><g transform="translate('+(x+3.2)+','+(y+3.2)+')">'+pr(w-6.4,h-6.4)+'</g>'};
   if(H("bd_clock")){var g='<circle cx="12" cy="12.8" r="11.2" fill="rgba(30,20,40,.22)"/><circle cx="11.4" cy="11.8" r="11" fill="#27272c"/><circle cx="11.4" cy="11.8" r="9.4" fill="#f5f0e6"/>';
     for(var k=0;k<12;k++){var an=k*Math.PI/6,l=k%3?1.3:2.2;g+='<line x1="'+(11.4+Math.sin(an)*(9-l)).toFixed(2)+'" y1="'+(11.8-Math.cos(an)*(9-l)).toFixed(2)+'" x2="'+(11.4+Math.sin(an)*8.6).toFixed(2)+'" y2="'+(11.8-Math.cos(an)*8.6).toFixed(2)+'" stroke="#2b2b30" stroke-width=".7"/>'}
     g+='<line x1="11.4" y1="11.8" x2="9" y2="9.6" stroke="#222" stroke-width="1.1" stroke-linecap="round"/><line x1="11.4" y1="11.8" x2="16" y2="7.4" stroke="#222" stroke-width=".8" stroke-linecap="round"/><circle cx="11.4" cy="11.8" r="1" fill="#222"/>';
-    s+=put(gw3?3.3:1.0,22,gw3?110:107,g)}
+    s+=put(gw3?4.0:1.0,22,gw3?131:107,g)}
   if(H("bd_art2")){var pm=function(c1,c2){return function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9ddc8"/><circle cx="'+w*.5+'" cy="'+h*.42+'" r="'+Math.min(w,h)*.26+'" fill="'+c1+'"/><path d="M0 '+h+' L'+w*.5+' '+h*.55+' L'+w+' '+h+'z" fill="'+c2+'" opacity=".85"/>'}};
     var gg='';gg+=fr(0,0,12,16,pm("#d98c5f","#2d2d33"),"#2a2a2f","#f5efe3");gg+=fr(13.5,2,12.5,10,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#ece3d3"/><path d="M.5 '+h*.6+' q'+w*.25+' -4 '+w*.5+' 0 t'+w*.5+' 0" stroke="#3b3b40" fill="none" stroke-width=".8"/>'},"#c9964f");
     gg+=fr(0,18,10,14,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e4dac6"/><path d="M'+w*.5+' '+h+' V2 M'+w*.5+' '+h*.7+' q-3 -2 -3.4 -5 M'+w*.5+' '+h*.5+' q3 -2 3.4 -5" stroke="#3f5a3a" fill="none" stroke-width=".8"/>'},"#2a2a2f","#f5efe3");
@@ -3520,7 +3520,11 @@ function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function
   if(H("bd_art3")){var tp=[function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#efe3cf"/><circle cx="'+w*.5+'" cy="'+h*.32+'" r="'+w*.26+'" fill="#d98c5f"/><path d="M0 '+h*.62+' q'+w*.5+' -'+h*.2+' '+w+' 0 V'+h+' H0z" fill="#2f2f35"/>'},
      function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9dfcb"/><path d="M'+w*.5+' '+h+' V'+h*.2+' M'+w*.5+' '+h*.75+' q-'+w*.4+' -3 -'+w*.4+' -'+h*.25+' M'+w*.5+' '+h*.6+' q'+w*.4+' -3 '+w*.4+' -'+h*.25+' M'+w*.5+' '+h*.42+' q-'+w*.3+' -2 -'+w*.3+' -'+h*.18+'" stroke="#3d5a38" fill="none" stroke-width="1"/>'},
      function(w,h){var o='<rect width="'+w+'" height="'+h+'" fill="#efe3cf"/><circle cx="'+w*.5+'" cy="'+h*.3+'" r="'+w*.24+'" fill="#e3a35d"/>';for(var i=0;i<4;i++)o+='<line x1="'+w*.1+'" y1="'+(h*.58+i*2.6)+'" x2="'+w*.9+'" y2="'+(h*.58+i*2.6)+'" stroke="#35353b" stroke-width=".8"/>';return o}],tg='';
-    for(var i=0;i<3;i++)tg+=fr(i*11,0,9.6,21,tp[i]);s+=put(gw3?3.12:1.12,31,gw3?82:80,tg)}
+    /* one big original anime poster you can read on a phone (Cal, QA's lessons), over the bed; the three small prints
+       are kept for when its art is missing */
+    var AP=window.LFSPR&&LFSPR.bdx_animep;
+    if(AP){var pw=30,ph=Math.round(pw*AP.h/AP.w);s+=put(5.75,pw,108,'<rect x="1.4" y="1.8" width="'+pw+'" height="'+ph+'" fill="rgba(20,16,30,.3)"/><rect x="-1.2" y="-1.2" width="'+(pw+2.4)+'" height="'+(ph+2.4)+'" fill="#16161b"/><image href="'+AP.u+'" width="'+pw+'" height="'+ph+'" preserveAspectRatio="none"/>')}
+    else{for(var i=0;i<3;i++)tg+=fr(i*11,0,9.6,21,tp[i]);s+=put(gw3?3.12:1.12,31,gw3?82:80,tg)}}
   if(H("bd_neon")){var nb='<rect x="0" y="0" width="15" height="30" rx="3" fill="#15161c" stroke="#3a3b46" stroke-width=".8"/>',bp='M9 3 L3.5 16 H7.5 L5.6 27.5 L12 12 H8.2 Z';
     nb+='<path d="'+bp+'" fill="none" stroke="#7aa8ff" stroke-width="5" opacity=".28" stroke-linejoin="round"/><path d="'+bp+'" fill="none" stroke="#fff6d8" stroke-width="1.6" stroke-linejoin="round"/>';s+=put(4.2,15,96,nb)}
   /* the moss panel; from the Grass Wall tier the whole wall behind the bed is grass, so it is left out */

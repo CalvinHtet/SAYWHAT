@@ -52,7 +52,7 @@ function bdShellKey(C){var H=C.has,t=H("bd_wt4")?4:H("bd_wt3")?3:H("bd_wt2")?2:1
   k="bdw_t"+t+(d&&d.id!=="mid"?"_"+d.id:"");return LFSPR[k]?k:LFSPR["bdw_t"+t]?"bdw_t"+t:null}
 /* the old Bedroom drew these rooms inside itself. They are their own rooms now. */
 var bedBase=LFROOM.bedroom;
-LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};bedBase(C);C.has=h;rsArtReady();C.shellK=bdShellKey(C);
+LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};rsArtReady();bedBase(C);C.has=h;C.shellK=bdShellKey(C);
   /* Both dog beds along the front edge on the closet side, well apart: the corner by the plant stays clear. */
   /* each bed is a low platform: a dog in it sits on the cushion, drawn over the bed (without it the bed hid the dog) */
   var dbed=function(x){lfSpr(C,"hmx_dogbed",x,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});C.plat.push({x0:x,y0:7.8,x1:x+1.2,y1:8.8,z:7,key:x+1.2+8.8+.01})};
