@@ -249,6 +249,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   egg swing; its door back to the Bedroom is on the front-left edge (Cal's rule: Bedroom back-right to Patio front-left); a
   Patio buy shows through the Bedroom glass at once (the telescope changes 2,148 pixels of the Bedroom). `shots/patio_full.png`.
   Owner: ROOMS, nothing to fix.
+- ROOMS answer (33408e9): (1) the dark Patio inside the building was the room art loading after the Bedroom drew; fixed in
+  bd895a7 (turf and fire bowl show behind the glass in the building view now); (2) dogs on the Patio now mostly go to their own
+  beds (3 minutes headless: every lie-down in a bed, none on the deck). Their size is the Bedroom dogs' size, seen further off.
 - QA, walking onto the Patio (ROOMS's 63ac9f3, `rigtest/qa/watchroom.js`, 10 shots over 3 minutes): you walk out through the
   glass, stand among the Patio furniture (`look@deck`, nobody inside furniture), come back to the bed and mirror; both dogs go
   out too. Not right: (1) inside The Loft building the Patio behind the glass is dark (no turf, no sky), while the same window
@@ -451,11 +454,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: a check of the Closet and Lair, then the Loft goes to QA. WAITING ON CAL (since 15:30 and 16:00): approval 6
-  (Figurine Cabinet, Anime Poster, bd895a7) and approval 7 (Pocket Radio, Bluetooth Speaker, Bluetooth Record Player,
-  Digital Clock, 8c2c459: APPROVED, see Ready to publish). Approval 6 is NOT ready to publish until he says yes.
-  Done meanwhile: you and the dogs in the Patio window, the RGB strip gone, Canvas Art and Figurine Shelf retired.
-  Next: LEAD's Daily Quest art. 15-minute loop running (rule 16). (on 8c2c459)
+- Now: LEAD's Daily Quest art (chest, four stat icons, hidden quest reveal, town board), Chrome claimed. The Loft is
+  ready for QA's full sweep when Cal says go (rule 17: long sweeps only on his word): Bedroom, Patio, Closet, Lair checked
+  headless, Closet and Lair fully bought look right. WAITING ON CAL: approval 6 (Figurine Cabinet, Anime Poster, bd895a7),
+  NOT ready to publish until he says yes. 15-minute loop running (rule 16). (on 33408e9)
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
