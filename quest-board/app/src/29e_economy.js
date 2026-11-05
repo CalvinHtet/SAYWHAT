@@ -37,6 +37,8 @@ function payQuest(){return Object.keys(S.cdone||{}).reduce(function(a,k){return 
 function payDay(){var d=dqState();return {d:d.d,n:d.paid}}
 function payRoom(){return Math.max(0,Math.round(payQuest()*payShare()*dqEff())-dqState().paid)}
 function payTake(n){dqState().paid+=n}
+/* rooms produce at the Daily Quest's efficiency too (was: full speed after 3 quests), never below 20% */
+openMult=function(){return Math.max(.2,dqEff())};
 /* ---- missions: energy in, coins out, no XP ---- */
 function msCost(q){return ECON.mcost[q.id]||Math.round(q.mins*2)}
 function msEnergy(){return Math.max(0,dqXp()-dqState().spent)}
