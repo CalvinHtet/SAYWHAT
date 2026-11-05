@@ -60,6 +60,20 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: Bedroom painted walls (Cal approved 2026-11-05 with his changes), f4362b1, b92a6dd, 050c10e. Three new
+  Bedroom upgrades, Fresh Paint & Oak Floors, Living Grass Wall, Cove Lighting (`bd_wt2..4`, in order; tier 1 is the
+  bare start), each painted in all four Room styles (Neutral Loft, Brick Studio, Warm Oak, Neon Noir; brick, blush and
+  slats run along the left wall to its front end). The Closet door is a lit doorway in the left wall where the wardrobe
+  stood; Canvas Art and the Figurine Shelf show with the glass wall; the patio door rests half open and slides fully
+  open when you walk up; the top-right door arrow sits under the zoom buttons. Look at: the Bedroom on a phone, each
+  wall tier in each style, the Closet door, the patio door. Checked headless: all 16 tier and style pairs with Cal's
+  furniture, the door with and without glass, no errors. Not checked: on a phone, walking through the patio door. The
+  Sleek Wardrobe's figurine cabinet has no art yet (draws nothing). Existing saves start on tier 1 walls.
+- READY TO PUBLISH: Patio (Cal, 2026-11-05), ef2ab15. Plush painted turf for Artificial Grass, String Lights strung
+  overhead from three posts (no more light tower), a Second Patio Dog Bed for Chopstick (`pt_dbed2`), the Bedroom door
+  on the Patio's front-left edge with a sill and mat (Cal's door rule). Look at: the Patio on a phone with everything
+  bought, and the Bedroom's glass (buy something in the Patio, it shows there straight away). Checked headless: the
+  room fully furnished, a live buy showing through the Bedroom glass, no errors. Not checked: on a phone.
 - READY TO PUBLISH: yawn pilot (Cal approved 2026-11-05), b506b8c. Eight painted layers in `art/app`: the bare body
   (`m_base_yawn`, `f_base_yawn`) and the zip jacket, puffer and hoodie (`<m|f>_<id>_yawn`), drawn by the `stretch` pose
   through LEAD's `rig.js` change. The body is the rig's own render except around the shoulders and armpits, where the
@@ -269,10 +283,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Bedroom wall tiers, uncommitted until Cal approves: `art/app/bdw_*.webp`, their lines in `data/rsart.json`, the three
-  `bd_wt*` upgrades in `27_rooms.js`. WAITING ON CAL: approval 5c (`art/raw/walls/bedroom/bedroom_styles_v3.png`: bands to
-  the wall end, art off the grass, patio door ajar) (since 14:05). Patio door, arrow and bands committed in 050c10e.
-  Next: Patio, then the Lair, then hand the Loft to QA. (on 86debe7)
+- The Loft (Cal: "Bedroom, patio, closet, and lair should be in good working condition"). Done and ready: Bedroom walls
+  and doors, the Patio. Next, in `20_loft.js` and `27_rooms.js`: your character and the dogs walking between the Bedroom
+  and the Patio, dogs moving around the Patio, then the figurine cabinet and Anime Poster art (Chrome), then a check of
+  the Closet and Lair, then the Loft goes to QA. (on ef2ab15)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
