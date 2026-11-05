@@ -54,8 +54,10 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
  draw:function(C){var H=C.has,k="gmw_t"+(H("gm_wt4")?4:H("gm_wt3")?3:H("gm_wt2")?2:1);
   if(window.LFSPR&&LFSPR[k]){var sv=LFSHELLK;LFSHELLK=k;try{C.decals.push(lfShellPart(C.chu,"floor"));C.walls.push(lfShellPart(C.chu,"walls"))}finally{LFSHELLK=sv}}
   else roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall});
-  lfDoorL(C,7.65,8.95,100,"#ffd27a",1)},/* the door to the Bedroom, in the left wall */
- req:[["gm_wt3","gm_wt2"],["gm_wt4","gm_wt3"]],
+  lfDoorL(C,7.65,8.95,100,"#ffd27a",1);/* the door to the Bedroom, in the left wall */
+  /* with the gaming desks in, the ping pong table moves left along the front to make room for their chairs */
+  if(H("gm_rig")&&H("gm_ping"))lfSpr(C,"gmx_ping",7.6,7.7,3.0,1.9,{flip:1})},
+ req:[["gm_wt3","gm_wt2"],["gm_wt4","gm_wt3"],["gm_tv80","gm_tv"],["gm_tvstand","gm_games"],["gm_sect","gm_couch"],["gm_rig","gm_chair"]],
  items:[["gm_wt2","Carpet & Wall Panels",UP_M,"","",0,0,0,"Plush dark carpet and panelled walls. Goodbye, bare concrete."],
   ["gm_wt3","Hex Acoustic Panels",UP_M,"","",0,0,0,"A wall of hexagon felt panels behind the TV. Sounds better, looks better."],
   ["gm_wt4","LED Lighting Rig",UP_L,"","",0,0,0,"Cove lights, light bars and glowing hex panels. The room comes alive."],
@@ -75,7 +77,14 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.2,5.2,1.0,1.4,1,"The old console still works."),
   PL("gm_bean","Beanbags",UP_S,"gmx_bean",1.7,5.1,1.4,1.1,0,"Nobody ever gets up.",{sit:[[2.1,5.55,1,4,1],[2.75,5.9,1,4,1]]}),
   PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.05,3.9,.6,.6,0,"Never walk to the kitchen again.",{cust:[[10.35,5.1,-1,GMB]]}),
-  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.5,.3,.5,.5,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]})]};
+  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.5,.3,.5,.5,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]}),
+  /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
+     sectional replaces the couch, and back-to-back gaming desks with their racing chairs stand on the right */
+  PL("gm_tv80","80 inch Screen",UP_L,"gmx_tv80",4.4,.05,4.2,.2,1,"Wall to wall. You can see every pixel of the racing line.",{o:{dy:-58,h:1,nob:1,nosh:1,dk:30}}),
+  PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"Glossy, glass-fronted, glowing underneath. No legs.",{o:{dy:-6,H:46}}),
+  PL("gm_sect","Cream Sectional",UP_L,"gmx_sect",3.9,3.4,4.0,1.9,0,"Three plush pieces and a chaise you can sleep on.",{sit:[[4.9,4.05,1,10,1],[6.0,4.05,1,10,1],[7.1,4.3,1,10,1]]}),
+  PLn("gm_rig","Gaming Desks",UP_L,[["gmx_rig",9.8,4.9,3.0,1.5,1],["gmx_chairb",10.6,6.5,1.7,1.2,1]],"Two desks back to back, curved screens, racing chairs pulled up to them.",{sit:[[11.0,7.05,1,12,1],[11.9,6.9,1,12,1]]})],
+ sup:[["gm_tv","gm_tv80"],["gm_games","gm_tvstand"],["gm_couch","gm_sect"],["gm_chair","gm_rig"],["gm_ping","gm_rig"]]};
 /* Only Cal's friends visit the Game Room, as game versions of themselves. Add one line each:
    {id:"vega", name:"Vega", look:{body:"m", skin:"s3", hairStyle:"h1", hairColor:"black", top:"hoodie", topColor:"white",
     bottom:"jeans", bottomColor:"black", shoe:"sneakers", shoeColor:"white", eq:["al_bucket"]}}
