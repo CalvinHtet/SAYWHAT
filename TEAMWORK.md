@@ -127,6 +127,14 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
     - Work waiting on Cal's approval stays parked; take your next task meanwhile.
     - Not faster than 15 minutes: every wake-up re-reads the whole chat and costs usage. Loops pause while the Mac sleeps.
 
+17. **Send finished work to QA for a check (Cal, 2026-11-05).** When a piece reaches a good state that needs no approval
+    from Cal, or just needs a feature tested, its chat writes `WAITING ON QA: check <what>, <commit>, <what to look at>` in
+    `TASKS.md`. QA picks it up on its next loop and reports under *QA findings*.
+    - QA checks are cheap: small to medium, only what the piece touches (one feature, one room, one flow, a short
+      simulation, `savecheck.js` and `screens.js`). Not "every asset in every room for every character".
+    - Anything long and extensive (full sweeps of every room, upgrade, outfit or pose; 90-day simulations; speed sweeps)
+      runs only when Cal asks for it.
+
 ---
 
 ## How LEAD runs the work
