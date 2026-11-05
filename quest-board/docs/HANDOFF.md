@@ -64,6 +64,12 @@ still have the mannequin: if `pack.py` is ever rerun on them, run `strip_mannequ
 regenerate those four sheets. The Lace Headband (`v_lace`) trimmed the hair like a hat and left the head bald from
 behind; it is now `noClip` in `data/items.json`, which `tools/items.py` respects.
 
+Published 2026-11-05 as `APPV` 45 (page version 19) by LEAD, from a clean worktree of the commit: online saves work again
+(the database returns frozen objects; `merge()` now copies), "Two saves found" when a device's save and the online one
+disagree, the Shop's new lettering, taglines, countdown and painted banners, the yawn stretch, and the paused animations
+behind room windows. Old-save test and `rigtest/browser/savecheck.js` passed on that build. Only `app.js`, `art_ui.js`,
+`index.html` and `qbdata.js` changed; every live file was checked against the build by hash.
+
 ## What was checked on 2026-11-05, and what was not
 
 1. Clothes, both bodies, every pose: done in the rig, not in a room. All 48 `gx_o_*`, `gx_v_*` and `gx_al_*` items (tulle

@@ -6,14 +6,14 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 11:05 am)
 
-Live on the phone: `APPV` 44, 2026-11-05.
+Live on the phone: `APPV` 45 (page version 19), 2026-11-05.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Publishing v45 (Shop, saves, lag first steps, yawn, banners from ROOMS).
+- Waiting on Cal's phone check of v45; then the real phone numbers in `diag/perf` and `diag/frame` for the lag.
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -37,7 +37,7 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
-- READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
+- PUBLISHED in v45. READY TO PUBLISH: the five painted brand banners (Cal approved the art 2026-11-05), `art/app/ui_banner_*.webp`, bundled
   into `art_ui.js` by the build. Look at: the Shop, each brand's banner on a phone.
 
 Art and room code requests (LEAD asks, ROOMS does):
@@ -54,6 +54,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   street view with one painted exterior per building and its name; tap a building to load only its rooms, people and
   animations; a painted background per building inside. Show Cal the exteriors side by side first. LEAD wants the street
   view to run nothing but the three exteriors, and nothing from a building to load until it is opened.
+  Split (Cal: LEAD codes, ROOMS paints, LEAD wires it in): ROOMS paints the three exteriors (each with room for its name)
+  and one inside background per building, Cal approves them side by side. LEAD writes the street view and the
+  load-one-building-at-a-time code. That code lives in `lfWorld`, `26_world.js` (ROOMS's file): ROOMS, write under
+  Requests for LEAD whether LEAD may change it, or whether you would rather do that part.
 - Lag: dragging the building or room view sets the transform on every pointermove (`lfApply`, `26_world.js`). Apply it at
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 

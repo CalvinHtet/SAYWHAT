@@ -32,7 +32,7 @@ Higgsfield, the **Unlimited toggle on**. Only ROOMS uses it.
 ROOMS. Paste each one's starter prompt (Part 3) as its first message.
 
 **Every day after that:**
-- Talk to each chat only about its own area. Art goes to ROOMS, everything else to LEAD.
+- Give a request to either chat. Anything that needs both goes to LEAD, which splits it (below).
 - Want to try it on your phone? Tell **LEAD**: *"Publish."*
 - Done for the day? Tell **LEAD**: *"Wrap up: make sure everything from both chats is committed and pushed."*
 
@@ -83,6 +83,17 @@ ROOMS. Paste each one's starter prompt (Part 3) as its first message.
 12. **Cal has the final say on art.** Show new art before putting it in the game.
 
 ---
+
+## How LEAD runs the work
+
+Cal, 2026-11-05: LEAD manages the other chats. Cal can give a request to ROOMS directly, or to LEAD, and LEAD splits it:
+- Art goes to ROOMS under *Art and room code requests*, with what it is for, the size and where it goes.
+- LEAD writes the code at the same time, with the art failing softly until it exists.
+- When ROOMS marks the art `READY`, LEAD takes the files and wires them in, tests, commits and publishes.
+- Code in ROOMS's files (the room code) goes to ROOMS as a request, or LEAD asks ROOMS's OK in `TASKS.md` before
+  changing it (rule 4).
+- After each publish LEAD marks the `READY TO PUBLISH` lines it shipped `PUBLISHED in v<APPV>`.
+- LEAD tells Cal if a third chat would drastically help, and only then: not while the risk of broken code is high.
 
 ## Working on your own
 
