@@ -28,11 +28,13 @@ var UPEARN=/^(Kitchen|Menu|Seating|Staff|Money|Counter|Expansion|Snacks|Screen|P
     UPDECON=/\b(art|painting|poster|mural|vases?|sculpt\w*|sconces?|chandeliers?|neon|sign|plants?|planters?|flowers?|rug|curtains?|frames?|lamps?|lights|lanterns?|garland|mirror|wallpaper|statue|pictures|olive trees?|candles?|disco ball|trophy|trophies)\b/i;
 function upIsDecor(a){var e=a[3]||{};if(e.decor)return true;if(e.earn||e.opens)return false;if(UPEARN.test(e.g||"")||UPSELLN.test(a[1]))return false;return UPDECO.test(e.g||"")||UPDECON.test(a[1])}
 /* QA's upgrade income review (2026-11-05): settled by hand where the guess is wrong */
-var UPFLAG={t_arc:{earn:1},bo_art:{decor:1},de_sakura:{decor:1},rh_eq:{decor:1}};
+var UPFLAG={t_arc:{earn:1},bo_art:{decor:1},de_sakura:{decor:1},rh_eq:{decor:1},ml_foun:{earn:1},vr_wall:{earn:1}};/* Cal: the fountain and the projection wall draw a crowd, so they earn */
 Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(UPFLAG[a[0]])a[3]=Object.assign(a[3]||{},UPFLAG[a[0]])})});
 Object.keys(ADDONS).forEach(function(k){if(!ROOMT[k]||!(ROOMT[k].coin||ROOMT[k].food))return;var L=ADDONS[k]||[],p0=0,p1=0;
   L.forEach(function(a){var e=a[3]||{};p0+=e.p||0;if(!upIsDecor(a))p1+=e.p||0});if(!p0||!p1)return;
-  L.forEach(function(a){var e=a[3];if(!e||!e.p)return;e.p=upIsDecor(a)?0:Math.round(e.p*p0/p1*1000)/1000;if(upIsDecor(a)){e.decor=1;/* QA: looks-only upgrades must not say they earn */if(typeof a[4]==="string")a[4]=a[4].replace(/\s*Earns \+\d+% here\./,"")}})});
+  L.forEach(function(a){var e=a[3];if(!e||!e.p)return;e.p=upIsDecor(a)?0:Math.round(e.p*p0/p1*1000)/1000;if(upIsDecor(a)){e.decor=1;/* QA: looks-only upgrades must not say they earn */if(typeof a[4]==="string")a[4]=a[4].replace(/\s*Earns \+\d+% here\./,"")}
+    /* the line states what it really earns after decor's share moved onto equipment */
+    else if(typeof a[4]==="string")a[4]=a[4].replace(/Earns \+\d+% here\./,"Earns +"+Math.round(e.p*100)+"% here.")})});
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
 function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;persist();render();pop("Skipped one week");setTimeout(brandCheck,200)}
 function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
