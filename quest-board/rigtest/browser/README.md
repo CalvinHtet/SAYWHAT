@@ -17,5 +17,6 @@ with a save that owns every room and every upgrade.
 - `phone.js` (W=360 TAG=p) measures the bottom nav and the Collect button at phone width.
 - `screens.js` (W=360) opens every bottom-nav tab and a room, screenshots each and lists anything wider than the screen.
 - `zoom.js room out.png sprite [sprite]` crops the room view around named sprites at 2.5x.
+- `sortwatch.js room [seconds]` lets a room run and lists anyone drawn under a piece they stand in front of (`START`, `STEP` in ms).
 
 They run on software WebGL, so a room of guests takes about a minute per pass.

@@ -538,6 +538,19 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   C.add(x+w+y+d-(o.dk||0),'<g transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/></g>');
   return true}
+/* A flat piece (a dance floor panel) fitted to its footprint exactly. The art is drawn at 30 degrees and the room at
+   2:1, so a plain scale never lines up with the floor grid and panels laid side by side leave gaps. LFFIT gives the
+   art's top face (its top, right and left corners, as fractions of the picture) and the rim under it; the face is
+   mapped onto the footprint and the rim stands on the floor. Everything else in the room draws over it. */
+var LFFIT={cbx_floor:{t:[.4992,0],r:[.9984,.4648],l:[0,.4648],rim:.0574}};
+function lfSprFit(C,k,x,y,w,d,o){var S=window.LFSPR&&LFSPR[k],F=LFFIT[k];if(!S||!F)return lfSpr(C,k,x,y,w,d,o);
+  var T=[F.t[0]*S.w,F.t[1]*S.h],u1=F.r[0]*S.w-T[0],v1=F.r[1]*S.h-T[1],u2=F.l[0]*S.w-T[0],v2=F.l[1]*S.h-T[1],det=u1*v2-u2*v1,
+    p=lfP(x,y,0),q=lfP(x+w,y,0),r=lfP(x,y+d,0),X1=q[0]-p[0],Y1=q[1]-p[1],X2=r[0]-p[0],Y2=r[1]-p[1],
+    a=(X1*v2-X2*v1)/det,c=(X2*u1-X1*u2)/det,b=(Y1*v2-Y2*v1)/det,dd=(Y2*u1-Y1*u2)/det,z=dd*F.rim*S.h,
+    e=p[0]-a*T[0]-c*T[1],f=p[1]-z-b*T[0]-dd*T[1];
+  if(LFREC)lfRecBox(x,y,0,w,d,z);C._lb=null;
+  C.add(x+y-1,'<image href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+[a,b,c,dd,e,f].map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
+  return z}
 function lfSprFloor(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return false;
   var c=lfP(x+w/2,y+d/2,0),W=(w+d)*LF.sx*(o.sc||1),Hh=W*S.h/S.w;
   C.decals.push('<image href="'+lfSprUrl(k)+'" x="'+(c[0]-W/2).toFixed(1)+'" y="'+(c[1]-Hh/2+(o.dy||0)).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"/>');return true}
@@ -3481,7 +3494,7 @@ var LFFX={
   star:function(C,k){var p=lfP(1,-1,170);lfFxAdd(k,'<path class="lfstar" d="M'+p[0]+' '+p[1]+' l60 18" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',1800)},
   /* Club lights: mostly a soft pulse of colour over the dance floor, and now and then the whole room flashes. Both are
      radial glows, so the light has no hard edge. */
-  strobe:function(C,k){var F=(C.plat||[]).filter(function(p){return p.k==="cbx_floor"})[0],gid="lfsg"+(++LFEVN),full=!F||Math.random()<.18;
+  strobe:function(C,k){var Fs=(C.plat||[]).filter(function(p){return p.k==="cbx_floor"}),F=Fs.length?Fs.reduce(function(u,p){return {x0:Math.min(u.x0,p.x0),y0:Math.min(u.y0,p.y0),x1:Math.max(u.x1,p.x1),y1:Math.max(u.y1,p.y1),z:p.z}}):null,gid="lfsg"+(++LFEVN),full=!F||Math.random()<.18;
     var x0=full?0:F.x0,y0=full?0:F.y0,x1=full?C.W:F.x1,y1=full?C.D:F.y1,z=full?60:(F.z||0)+2,c=lfP((x0+x1)/2,(y0+y1)/2,z),a=lfP(x1,y0,z),b=lfP(x0,y1,z);
     var rx=Math.abs(a[0]-b[0])/2*(full?1.25:1),ry=full?rx*.75:Math.abs(lfP(x1,y1,z)[1]-lfP(x0,y0,z)[1])/2,col=full?"#ffffff":lfPick(["#ff3df0","#3dc8ff","#a66bff","#ff7ad8"]);
     lfFxAdd(k,'<defs><radialGradient id="'+gid+'"><stop offset="0" stop-color="'+col+'" stop-opacity="'+(full?.55:.6)+'"/><stop offset=".55" stop-color="'+col+'" stop-opacity="'+(full?.25:.3)+'"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></radialGradient></defs><ellipse class="'+(full?"lfstrobe":"lfsoftglow")+'" cx="'+c[0].toFixed(1)+'" cy="'+c[1].toFixed(1)+'" rx="'+rx.toFixed(1)+'" ry="'+ry.toFixed(1)+'" fill="url(#'+gid+')" style="mix-blend-mode:screen"/>',full?1600:1900)},

@@ -147,6 +147,26 @@ Visitors, per Cal: the Game Room is visited only by game versions of his friends
 `27b_skins.js` (empty for now, so nobody comes in; the comment there shows the line to add). The Closet has no visitors.
 Phone speed and The Loft on a phone: see "Phone" under What was checked.
 
+Club rebuilt (2026-11-05, Cal: the DJ faced away from the floor, one booth facing the wall, one table, a tiny floor, the
+bar sideways). Club art is drawn running along the back wall facing into the room; flipped, it runs along the left wall
+facing right. The old plan had the DJ booth, the bar and the coat check the wrong way round for where they stood. Now:
+- the DJ booth in the middle of the back wall facing the floor, a speaker stack each side (`cb_spk` draws two), the neon
+  sculpture above it, the smoke machine and laser rig beside it;
+- the dance floor right in front of it, 6 x 5 tiles in four panels (8 x 8 lights, about twice the old floor). The floor art is
+  drawn at 30 degrees and rooms at 2:1, so `lfSprFit` (`20_loft.js`, `LFFIT`) maps each panel's top face onto its tiles
+  exactly; a plain scale left gaps. The strobe covers all four panels;
+- the bar along the left wall with its bottle shelf against the wall, three spots facing it;
+- the VIP booth in the back right corner and a new upgrade, Wall Booths (`cb_booths`, 400, two more down the left wall),
+  all opening onto the floor, with seats people sit in (`sit` with `{over:1}` sorts them over their booth, not behind it);
+- three high tables (`cb_hi` draws three, now table height, not taller than a person) along the front of the floor;
+- the velvet rope by the door, the coat check below it facing the room, the dance podium in the front left corner.
+Dancers face the DJ with their backs to you (`cust` spots can take `{fxwall:1}`). Checked with guests on all 30 spots
+(three passes), six timed shots of the room running by itself, `gaps.js`, `depth.js` (0 bad), `stations.js` (all fine), and
+the old-save test with a Club owning every old upgrade, then buying Wall Booths. Seen once and not reproduced: a guest
+standing on the door mat with the cocktail cart drawn over their head. `rigtest/browser/sortwatch.js` watched the room for
+84 seconds over four runs and found nobody drawn under anything in front of them. Not done: there is no dance animation, so
+dancers stand and breathe.
+
 Asset quality pass (2026-11-05, every room fully upgraded, after the streak fix): every room sprite was looked at alone and
 in its room. Fixed:
 - Two sprites were whole generator sheets with a grid line through them: the Bowling towel warmer (`bwx_towel`) and the
@@ -158,7 +178,7 @@ in its room. Fixed:
 Looked at and left: the Patio telescope overlaps the fire bowl on screen but not on the floor (it is behind it). The
 Speakeasy front corner reads crowded (see above). The depth audit flags rugs under furniture, which is correct.
 
-Published 2026-11-05 as `APPV` 37 (version 8 of the page), pinned in Cal's sidebar for phone testing. The page holds 501
+Published 2026-11-05 as `APPV` 37 (version 8 of the page), then `APPV` 38 with the new Club (version 9), pinned in Cal's sidebar for phone testing. The page holds 501
 files: `dist` plus `lfvar.json`, which lives only on the page and must be kept. Character layers and icons are bundled into
 `art_rig.js` and `art_icon.js`, and redrawn UI pictures into `art_ui.js` (empty until Cal makes them, so the old ones show).
 The sprites went up in two batches with the old page, then the code; each batch was safe to run with the other side's

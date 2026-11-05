@@ -148,7 +148,7 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
   (d.jogs||[]).forEach(function(q){C._lb=[q[0],q[1],q[0]+q[2],q[1]+q[3]];C.box(q[0],q[1],0,q[2],q[3],LF.H-4,d.wall,{top:d.wain});if(LFREC)lfRecBox(q[0],q[1],0,q[2],q[3],40)});
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
-  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,sx(q[1],q[3]),sy(q[2],q[4]),q[3],q[4],o)};
+  var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(o.fit?lfSprFit:window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,sx(q[1],q[3]),sy(q[2],q[4]),q[3],q[4],o)};
   (ADDONS[t]||[]).concat(d.base?[["",0,0,d.base]]:[]).forEach(function(u){var e=u[3];if(u[0]&&!H(u[0]))return;
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     /* e.plat: the piece is a stage or a dance floor people stand on, this many units high. It is no obstacle, and
@@ -164,8 +164,13 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
       if(bd>1.5)return ax?sx(x):sy(y);/* a spot out on the floor (watching a band) spreads with the room, not with a piece */
       /* and never past the room's edge, where a spot in front of a piece near the front can end up once it spreads */
       return ax?Math.min(C.W-.3,sx(best[1],best[3])+(x-best[1])):Math.min(C.D-.3,sy(best[2],best[4])+(y-best[2]))};
-    (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=near(q[0],q[1],1),qy=near(q[0],q[1],0);C.s("sit",qx,qy,q[2],"look",[10,20],{lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1});lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
-    (e.cust||[]).forEach(function(s,i){lfCust(C,near(s[0],s[1],1),near(s[0],s[1],0),s[2],{wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]})});
+    /* q[5].over: the seat is inside its piece (a booth), so the sitter sorts just after that piece instead of behind it */
+    var own=function(x,y){var best=null,bd=1e9;arts.forEach(function(a){var dd=Math.hypot(Math.max(0,a[1]-x,x-a[1]-a[3]),Math.max(0,a[2]-y,y-a[2]-a[4]));if(dd<bd){bd=dd;best=a}});return best};
+    (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=near(q[0],q[1],1),qy=near(q[0],q[1],0),o={lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1},a=q[5]&&q[5].over&&own(q[0],q[1]);
+      if(a){o.dk=sx(a[1],a[3])+a[3]+sy(a[2],a[4])+a[4]-((a[6]&&a[6].dk)||0)+.05-(qx+qy);if(a[6]&&a[6].flip){o.wx=qx+1.1;o.wy=qy}}
+      C.s("sit",qx,qy,q[2],"look",[10,20],o);lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
+    /* s[3]: options for the spot, e.g. {fxwall:1} to stand with your back to the camera */
+    (e.cust||[]).forEach(function(s,i){lfCust(C,near(s[0],s[1],1),near(s[0],s[1],0),s[2],Object.assign({wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]},s[3]||{}))});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
     if(e.fx)e.fx(C)})}
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}
