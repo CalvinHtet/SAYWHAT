@@ -228,6 +228,17 @@ The sprites went up in two batches with the old page, then the code; each batch 
 version. Old save test before publishing: load, reload, buy, reload, all kept. Publishing rules are in `docs/RELEASING.md`. The save wipe (`QB_EPOCH`) has been used once and must not be bumped again.
 
 Open asks from Cal (2026-11-05, latest first):
+- Game Room, new art needed (Cal's Chrome), then wire it into `GMR` in `27b_skins.js`:
+  - `gmx_rig`: two gaming desks back to back, each with a monitor or triple screen, RGB glow, original design, drawn
+    with the long side lower left to upper right like the other room sprites. Place it near the front of the room (about
+    x 6 to 9, y 7 to 8.5, where the ping pong table is now; move ping pong to the right front), with the two red racing
+    chairs (`gmx_chair` front view, `gmx_chairb` rear view) one on each side facing their screens. That replaces the
+    chairs' current spot beside the couch.
+  - `gmx_sect`: a three-piece cream modular sectional with a deep chaise / futon piece, low and plush, seen from behind
+    (it faces the TV on the back wall like `gmx_couchb`), and a front view for later. No brand names in prompts.
+  - `gmx_tv80`: a giant 80 inch wall TV, the same angle as `gmx_tv`, and `gmx_tvstand`: a futuristic modern media
+    console (floating, glossy, LED underglow) under it. Both as a later upgrade: the current TV and shelf stay as the
+    first step, then "80 inch Screen" and "Floating Media Console" replace them (use `sup` so the old pieces hide).
 - Painted wall environments for every room, upgraded in stages like the Closet: Cal sent a theater example (four images,
   same angle, green background: bare lit wood panelling growing into a poster wall with gold trim and sconces). Each room
   gets a wall shell painted per stage (walls and floor only), with the existing furniture sprites placed on top. Needs:
