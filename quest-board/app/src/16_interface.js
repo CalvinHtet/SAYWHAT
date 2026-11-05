@@ -154,9 +154,23 @@ thumb=function(it){
 var _itemHtml=itemHtml;
 itemHtml=function(it){
   var h=_itemHtml(it);
-  if(!/^(sound|scene|burst)$/.test(it[1]))return h;
-  return h.replace('<div class="act">','<button class="qs-link if-try" data-act="iftry" data-id="'+it[0]+'">Preview</button><div class="act">');
+  return h;
 };
+/* View, then Checkout (Cal, 2026-11-05): the card says View; the window shows the piece on your setup, or plays it, and
+   holds the Checkout button. After buying, the card says Equip or Equipped · Remove. */
+function ifWith(it,fn){var o=S.eq[it[1]],ow=S.owned[it[0]];S.eq[it[1]]=it[0];S.owned[it[0]]=true;try{return fn()}finally{if(o===undefined)delete S.eq[it[1]];else S.eq[it[1]]=o;if(!ow)delete S.owned[it[0]]}}
+function qsViewHtml(it){var sl=it[1],pv,play=/^(sound|scene|burst)$/.test(sl);
+  if(/^(bg|title|hud|pet)$/.test(sl))pv=ifWith(it,ifPreview).replace('<aside class="qs-mirror if-prev">','<div class="qs-mirror if-prev qv-prev">').replace(/<div class="qs-worn">[\s\S]*<\/aside>$/,'</div>');
+  else pv='<div class="qv-thumb">'+thumb(it)+'</div>';
+  var rq=it[6]&&it[6].req&&!S.owned[it[6].req]?shopItem(it[6].req):null,can=S.coins>=it[3];
+  return '<div class="card box2 qs-view"><span class="label">'+(sl==="buff"?"Upgrade":"Interface")+'</span><h3>'+esc(it[2])+'</h3>'+pv
+    +(play?'<button class="btn ghost" data-act="iftry" data-id="'+it[0]+'">Play it</button>':'')
+    +'<p class="note">'+esc(it[5])+'</p><div class="row">'
+    +(rq?'<button class="btn ghost" disabled>Needs '+esc(rq[2])+'</button>':can?'<button class="btn" data-act="qsvbuy" data-id="'+it[0]+'">Checkout · <i class="coin"></i>&nbsp;'+it[3]+'</button>':'<button class="btn ghost" disabled><i class="coin"></i>&nbsp;'+it[3]+' · need '+(it[3]-S.coins)+' more</button>')
+    +'<button class="btn ghost" data-act="mclose">Close</button></div></div>'}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=qsview],[data-act=qsvbuy]");if(!b)return;var it=shopItem(b.dataset.id);if(!it)return;
+  if(b.dataset.act==="qsview"){modal(qsViewHtml(it));return}
+  var m=b.closest(".modal");if(m)m.remove();buy(it[0],e)});
 /* What your setup looks like, right beside the items you are buying. */
 function ifPreview(){
   var bg=eqItem("bg"),t=eqItem("title"),h=eqItem("hud"),lv=effLvl();

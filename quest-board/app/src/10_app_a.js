@@ -752,11 +752,11 @@ function thumb(it){
 function itemHtml(it){
   var own=!!S.owned[it[0]], on=own&&S.eq[it[1]]===it[0], can=S.coins>=it[3];
   if(it[1]==="buff"){var rq=it[6].req&&!S.owned[it[6].req]?shopItem(it[6].req):null;
-    var bb=own?'<span class="chip" style="color:var(--done);border-color:var(--done);display:block;text-align:center">Active</span>':rq?'<button class="btn ghost" disabled>Needs '+esc(rq[2])+'</button>':'<button class="btn" data-act="buy" data-id="'+it[0]+'"><i class="coin"></i>&nbsp;'+it[3]+'</button>';
+    var bb=own?'<span class="chip" style="color:var(--done);border-color:var(--done);display:block;text-align:center">Active</span>':rq?'<button class="btn ghost" disabled>Needs '+esc(rq[2])+'</button>':'<button class="btn" data-act="qsview" data-id="'+it[0]+'">View · <i class="coin"></i>&nbsp;'+it[3]+'</button>';
     return '<div class="item'+(own?" eq":"")+(!own&&(!can||rq)?" cant":"")+'">'+thumb(it)+'<b>'+esc(it[2])+'</b><small>'+esc(it[5])+'</small><div class="act">'+bb+'</div></div>';}
-  var btn=on?'<button class="btn ghost" data-act="unequip" data-id="'+it[1]+'">Equipped. Remove</button>'
+  var btn=on?'<button class="btn ghost" data-act="unequip" data-id="'+it[1]+'">Equipped · Remove</button>'
     :own?'<button class="btn alt" data-act="equip" data-id="'+it[0]+'">Equip</button>'
-    :'<button class="btn" data-act="buy" data-id="'+it[0]+'"><i class="coin"></i>&nbsp;'+it[3]+'</button>';
+    :'<button class="btn" data-act="qsview" data-id="'+it[0]+'">View · <i class="coin"></i>&nbsp;'+it[3]+'</button>';
   return '<div class="item'+(on?" eq":"")+(!own&&!can?" cant":"")+'">'+thumb(it)+'<b>'+esc(it[2])+'</b><small>'+esc(it[5])+'</small><div class="act">'+btn+'</div></div>';
 }
 function shopHtml(){

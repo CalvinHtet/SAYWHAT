@@ -21,7 +21,10 @@ function helpBtn(key){return ROOMHELP[key]?'<button class="btn ghost rsp-help" d
 function brandPicks(b){var pool=SHOP.filter(function(x){return x[6]&&x[6].b===b.id&&isRigItem(x)&&itemFits(x)}),out=[],seen={};
   ["a_top","a_shoes","a_pants","a_hat","a_acc"].forEach(function(sl){var it=pool.filter(function(x){return x[1]===sl&&!seen[x[0]]})[0];if(it&&out.length<4){out.push(it);seen[it[0]]=1}});return out}
 function brandSplash(b){var picks=brandPicks(b);
-  var m=modal('<div class="card box2 bsplash" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'"><div class="bs-burst">NOW ON SALE</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
+  /* Cal, 2026-11-05: the drop window carries the brand's banner art, in portrait (ui_banner_<id>_p.webp from ROOMS; until
+     then the landscape banner, cropped to the window) */
+  var art=window.QBART&&(QBART["ui_banner_"+b.id+"_p.webp"]||QBART["ui_banner_"+b.id+".webp"]);
+  var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">NOW ON SALE</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
   return m}
 /* the newest live brand this player has not been shown yet */
 function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;

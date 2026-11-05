@@ -1271,6 +1271,16 @@ body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::b
 .qs-confirm ul{list-style:none;margin:8px 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .qs-confirm li{display:flex;justify-content:space-between;gap:12px}
 @media (max-width:640px){.qs-bask{flex-direction:row;flex-wrap:wrap;align-items:center}.qs-bask small{width:100%}}
+/* LEAD: Shop tab colours, View window, portrait drop art. */
+body.shopmode{background:var(--shopbg,#f6f2ea)!important;background-attachment:fixed!important}
+body.shopmode .nav{background:linear-gradient(180deg,transparent,var(--shopsolid,#f6f2ea) 42%)!important}
+body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.shopmode .qs-sec>h3,body.shopmode .qs-note,body.shopmode .qs-lead,body.shopmode .qs-dev,body.shopmode .qs-empty{color:var(--shopfg,#1f1b16)}
+.qs-view{text-align:center;align-items:center;gap:10px}.qs-view .qv-thumb .thumb{width:160px;height:120px;margin:0 auto}
+.qs-view .qv-prev{position:static;display:block;width:min(320px,100%);margin:0 auto;padding:0;background:transparent;border:0;box-shadow:none}
+.qs-view .qv-prev .if-screen{min-height:200px}.qs-view .row{flex-wrap:wrap;justify-content:center}
+.bsplash.has-art .bs-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.bsplash.has-art .bs-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.35) 45%,rgba(0,0,0,.8));pointer-events:none}
+.bsplash.has-art:before{display:none}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

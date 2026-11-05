@@ -113,6 +113,12 @@ function qsLegacy(tab){
     if(!vis.length&&!nxt)return "";
     return '<section class="qs-sec"><h3>'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")+(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>'}).join("");
 }
+/* Each tab has its own page colour (Cal, 2026-11-05): a brand in its banner's palette, Basics and Vault the shop's cream,
+   the Wardrobe the walk-in closet's champagne, Upgrades and Interface the Hero's Lair. Cards stay white; page text flips. */
+var QS_THEME={basics:["#f6f2ea","#1f1b16"],vault:["#f6f2ea","#1f1b16"],wardrobe:["linear-gradient(180deg,#efe4d4,#dcc7aa)","#2b2116"],
+  upgrades:["linear-gradient(180deg,#1a2036,#0f1424)","#e6ecff"],interface:["linear-gradient(180deg,#1a2036,#0f1424)","#e6ecff"]};
+function qsTheme(b){var t=b?["linear-gradient(180deg,"+b.c[1]+","+b.c[0]+")","#f4f1ea"]:(QS_THEME[shopTab]||QS_THEME.basics),st=document.body.style;
+  st.setProperty("--shopbg",t[0]);st.setProperty("--shopfg",t[1]);st.setProperty("--shopsolid",b?b.c[0]:/^#/.test(t[0])?t[0]:shopTab==="wardrobe"?"#dcc7aa":"#0f1424")}
 /* Try before you buy (Cal, 2026-11-05: "a preview option that allows me to try on the clothes before committing ... and
    then a final button to confirm purchase"). Clothes go on the mirror one per slot without being bought; the basket under
    the mirror buys them all at once, after a confirm. Nothing tried on is saved. */
@@ -138,13 +144,13 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 shopHtml=function(){
   var d=dropState(),live=d.live.slice().reverse();
   qsGrantOriginals();
-  var tabs=live.map(function(b){return [b.id,b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"],["vault","Vault"],["upgrades","Upgrades"],["interface","Interface"]]);
+  var tabs=live.map(function(b){return [b.id,b.name]}).concat([["basics","Basics"],["vault","Vault"],["wardrobe","Wardrobe"],["upgrades","Upgrades"],["interface","Interface"]]);
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
   var h='<div class="qshop"><header class="qs-top"><div><small>New pieces every Monday</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
-  var b=d.live.filter(function(x){return x.id===shopTab})[0];
+  var b=d.live.filter(function(x){return x.id===shopTab})[0];qsTheme(b);
   if(b){
     h+=qsBanner(b,d);
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
