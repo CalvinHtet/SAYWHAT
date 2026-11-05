@@ -32,17 +32,17 @@ Why not Dropbox: Dropbox copies files while two chats and git are writing them. 
 can break git. The code lives in a normal folder; GitHub is its backup.
 
 - Install **GitHub Desktop** (desktop.github.com) and sign in with your GitHub account.
-- File > Clone repository > `CalvinHtet/SAYWHAT`, with Local path `Documents/Code`. Click Clone.
-  You now have `Documents/Code/SAYWHAT`.
+- File > Clone repository > `CalvinHtet/SAYWHAT`, with Local path `Documents/github`. Click Clone.
+  You now have `Documents/github/saywhat`.
 
 **Step 3. Copy the big art folders from Dropbox (SHOP needs them).**
-Copy these from `Dropbox/SAYWHAT/quest-board/art/` into `Documents/Code/SAYWHAT/quest-board/art/`:
+Copy these from `Dropbox/SAYWHAT/quest-board/art/` into `Documents/github/saywhat/quest-board/art/`:
 `raw`, `layers` and `parts` (if it exists). They are not on GitHub on purpose (838 MB). Git ignores them.
 
 **Step 4. Check Chrome is ready.** Chrome open with the Claude in Chrome extension connected, signed into
 Higgsfield, the **Unlimited toggle on**. Both chats use it, one at a time.
 
-**Step 5. Open the two chats.** Start two Claude Code sessions, both on `Documents/Code/SAYWHAT`. Name them ROOMS and
+**Step 5. Open the two chats.** Start two Claude Code sessions, both on `Documents/github/saywhat`. Name them ROOMS and
 SHOP. Paste each one's starter prompt (Part 3) as its first message.
 
 **Every day after that:**
