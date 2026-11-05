@@ -19,7 +19,10 @@ function autoRoom(t,o){var jogW=(o.jogs&&o.jogs[0])?o.jogs[0][2]:0,W0=o.size[0][
     return [q[0],q[1],q[2],e,line]});
   roomDef(t,Object.assign({},o,{ups:ups}))}
 /* ---- home ---- */
-ADDONS.bedroom=ADDONS.bedroom.filter(function(a){return !/^bd_(cl_|lr_|lair|swing|pdeco)/.test(a[0])});
+ADDONS.bedroom=ADDONS.bedroom.filter(function(a){return !/^bd_(cl_|lr_|lair|swing|pdeco|art1$|fshelf$)/.test(a[0])});
+/* Canvas Art and the Figurine Shelf are retired (no proper place once the glass wall is in; ids kept, owners keep them
+   without the glass). The Neon Sign used to wait for Canvas Art; it waits for the Gallery Prints now. */
+ADDREQ.bd_neon="bd_art2";
 ADDONS.bedroom.forEach(function(a){var e=a[3];
   if(a[0]==="bd_ward2"){a[1]="Walk-in Closet";a[4]="Opens a whole new room through a glowing door. The Shop opens with it.";e.opens="closet"}
   if(a[0]==="bd_patio"){a[1]="Patio Door";a[4]="Slide the glass open to your own patio, 30 floors up.";e.opens="patio"}});
@@ -146,7 +149,9 @@ function ptStrings(C){var W=C.W,D=C.D,L=lfLS(),dk=Math.max(0,Math.min(1,L.dark||
       bulbs+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="2.1" fill="#fff4cf" stroke="#c99a3a" stroke-width=".5"/>'}});
   C.front.push('<g pointer-events="none"><defs><radialGradient id="'+id+'"><stop offset="0" stop-color="#fff1c2" stop-opacity="'+ho+'"/><stop offset=".4" stop-color="#ffd27a" stop-opacity="'+(ho*.45).toFixed(2)+'"/><stop offset="1" stop-color="#ffb25a" stop-opacity="0"/></radialGradient></defs><path d="'+wire+'" fill="none" stroke="#2a2420" stroke-width="1"/>'+halo+bulbs+'</g>')}
 autoRoom("patio",{name:"Sky Patio",lv:1,startLv:6,step:1,shell:2,door:false,wall:"#c9b6a2",wain:"#a58e78",acc:"#ffb36b",fl:"w",size:[[7.5,5]],guests:0,group:"Patio",xpBase:1,desc:"Your own balcony, 30 floors above Los Angeles, at golden hour.",
- draw:function(C,H){patioSky(C);if(!(H("pt_grass")&&ptTurf(C)))roomFloor(C,H("pt_grass")?["#6fa84f","rgba(50,90,30,.16)",.5]:["#9a7a5c","rgba(60,40,25,.3)",.5]);ptRail(C);if(H("pt_lights"))ptStrings(C)},
+ draw:function(C,H){patioSky(C);if(!(H("pt_grass")&&ptTurf(C)))roomFloor(C,H("pt_grass")?["#6fa84f","rgba(50,90,30,.16)",.5]:["#9a7a5c","rgba(60,40,25,.3)",.5]);ptRail(C);if(H("pt_lights"))ptStrings(C);
+   /* the dog beds are low platforms, so a dog lying in one is drawn on the cushion, not hidden by the bed */
+   if(H("pt_dbed"))C.plat.push({x0:1.4,y0:3.6,x1:2.5,y1:4.5,z:7,key:2.5+4.5+.01});if(H("pt_dbed2"))C.plat.push({x0:.2,y0:3.6,x1:1.3,y1:4.5,z:7,key:1.3+4.5+.01})},
  help:{k:"New room",t:"Your patio is open!",sub:"Thirty floors up, with the whole LA skyline at sunset.",pts:[["Make it yours","Artificial grass, a chair that works up to an egg swing, string lights and more."],["Good dogs welcome","There is room for a dog bed out here too."]]},
  items:[["pt_grass","Artificial Grass",UP_M,"","",0,0,0,"Soft green underfoot, no mowing."],["pt_chair0","Simple Chair",UP_S,"","",0,0,0,"Somewhere to sit and watch.",{art:["hmx_chair0",1.0,1.0,1.0,1.0,52,{}]}],["pt_plant","Planter",UP_S,"","",0,0,0,"Green against the sunset.",{art:["hmx_pplant",3.0,.3,1.8,.6,58,{flip:1}]}],["pt_table","Bistro Table",UP_S,"","",0,0,0,"Coffee with a view.",{art:["hmx_table",6.45,.3,.8,.8,40,{}]}],["pt_lights","String Lights",UP_M,"","",0,0,0,"Warm bulbs strung across the patio for when the sun goes.",{light:[3.75,2.5,110,"#ffd890",3.2,.4]}],["pt_dbed","Patio Dog Bed",UP_S,"","",0,0,0,"For sunbathing.",{art:["hmx_dogbed",1.4,3.6,1.1,.9,30,{}]}],["pt_dbed2","Second Patio Dog Bed",UP_S,"","",0,0,0,"Chopstick's own. Nobody has to share the sun.",{art:["hmx_dogbed",.2,3.6,1.1,.9,30,{}]}],["pt_chair1","Wicker Lounge Chair",UP_M,"","",0,0,0,"A real upgrade.",{art:["hmx_chair1",1.0,1.0,1.2,1.2,58,{}]}],["pt_bowl","Fire Bowl",UP_M,"","",0,0,0,"A low fire in the middle of the patio.",{art:["hmx_bowl",3.15,1.9,1.2,1.2,34,{}],light:[3.75,2.5,30,"#ff9a3a",2.2,.55]}],PL("pt_rug","Outdoor Rug",UP_S,"hmx_rug",2.5,1.05,2.7,2.5,0,"Soft ground around the fire.",{cust:[[3.7,4.6,1]],o:{dk:9}}),PL("pt_scope","Brass Telescope",UP_S,"hmx_scope",5.7,3.3,0.8,0.8,0,"Look straight into someone else's patio.",{cust:[[6.1,4.8,-1]]}),PL("pt_cart","Rattan Bar Cart",UP_S,"hmx_cart",5.2,0.3,0.9,0.7,1,"Sunset drinks, no walking required.",{cust:[[5.65,1.7,-1]]}),["pt_egg","Egg Swing",UP_L,"","",0,0,0,"The premium seat. Swings a little.",{art:["bd4_swing",1.0,.9,1.4,1.4,100,{}]}]],sup:[["pt_chair0","pt_chair1"],["pt_chair1","pt_egg"]],req:[["pt_dbed2","pt_dbed"]]});
 /* ---- business ---- */

@@ -1659,6 +1659,15 @@ function lfPvStart(i,mm){
     lfPlace(a);if(a.role!=="guest"&&a.alpha<1){a.alpha=1;a.fade=0}
     if(a.role==="me"){var sn=null;if(LFPVSNAP&&LFPVSNAP.slot===i&&Date.now()-LFPVSNAP.t<6000)sn=LFPVSNAP.sn;else{var wa=LFA[w.id];if(wa&&wa.room===i&&!wa.pv)sn=lfSnap(wa)}
       if(sn){try{lfRestore(a,sn,C)}catch(e){}}}});
+  /* The Patio window shows you and the dogs out there too (Cal): copies of the Bedroom's people for this window, each
+     dog with its own Patio bed (Pluto the first, Chopstick the second). */
+  if(r.t==="patio"){var bi=-1;S.base.slots.forEach(function(q,j){if(bi<0&&q&&q.t==="bedroom")bi=j});
+    if(bi>=0){var pa=r.a||{},beds=[];if(pa.pt_dbed)beds.push([1.95,4.05]);if(pa.pt_dbed2)beds.push([.75,4.05]);
+      lfDesired().filter(function(w){return w.room===bi&&(w.role==="me"||w.role==="dog")}).forEach(function(w){
+        var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:0});
+        if(w.role==="dog")n.bed=beds[w.dname==="chopstick"?1:0]||beds[0]||null;
+        var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
+        try{lfPlace(a)}catch(e){}a.alpha=1;a.fade=0})}}
 }
 window.lfPvStart=lfPvStart;window.lfPvStop=lfPvStop;
 
@@ -3241,8 +3250,10 @@ LFROOM.bedroom=function(C){
   if(H("bd_shelf"))lfSpr4(C,"bd4_shelf",w3?1.2:8.85,.05,1.1,.55,{h:60,flip:1,fit:1});
   /* above the desk: the mirror fills the wall at x=5. The glass wall leaves no room there, so then the canvas hangs on
      the left wall in front of the Closet door and the figurine shelf in the back corner (both used to vanish). */
-  if(H("bd_art1"))if(!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});else lfSpr4(C,"bd4_art1",.05,6.35,.05,.1,{h:1,H:26,dy:-104,nosh:1});/* above the Closet door */
-  if(H("bd_fshelf"))lfSpr4(C,"bd4_fshelf",w3?.45:9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:w3?-62:-80,nosh:1});
+  /* Canvas Art and the Figurine Shelf hang on the back wall; the glass wall leaves them no proper place (Cal: no poster
+     over the Closet door, no shelf poking out of the glass), so they are no longer sold and show only without the glass. */
+  if(H("bd_art1")&&!w3)lfSpr4(C,"bd4_art1",6.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-82,nosh:1});
+  if(H("bd_fshelf")&&!w3)lfSpr4(C,"bd4_fshelf",9.0,.05,.1,.05,{h:1,flip:1,H:34,dy:-80,nosh:1});
   if(H("bd_lights"))lfLedWall(C);
   lfWallArtL(C,H);
   if(H("bd_neon"))lfLight(C,.3,4.0,70,"#7aa8ff",1.4,.4);
@@ -3511,7 +3522,8 @@ function lfWallArtL(C,H){var U=LF.U,s="",R=function(sd){var v=sd;return function
   if(H("bd_clock")){var g='<circle cx="12" cy="12.8" r="11.2" fill="rgba(30,20,40,.22)"/><circle cx="11.4" cy="11.8" r="11" fill="#27272c"/><circle cx="11.4" cy="11.8" r="9.4" fill="#f5f0e6"/>';
     for(var k=0;k<12;k++){var an=k*Math.PI/6,l=k%3?1.3:2.2;g+='<line x1="'+(11.4+Math.sin(an)*(9-l)).toFixed(2)+'" y1="'+(11.8-Math.cos(an)*(9-l)).toFixed(2)+'" x2="'+(11.4+Math.sin(an)*8.6).toFixed(2)+'" y2="'+(11.8-Math.cos(an)*8.6).toFixed(2)+'" stroke="#2b2b30" stroke-width=".7"/>'}
     g+='<line x1="11.4" y1="11.8" x2="9" y2="9.6" stroke="#222" stroke-width="1.1" stroke-linecap="round"/><line x1="11.4" y1="11.8" x2="16" y2="7.4" stroke="#222" stroke-width=".8" stroke-linecap="round"/><circle cx="11.4" cy="11.8" r="1" fill="#222"/>';
-    s+=put(gw3?4.0:1.0,22,gw3?131:107,g)}
+    /* with the grass wall the clock hangs on the back wall's short stretch beside the corner, under the light strip */
+    s+=gw3?lfFaceY(.08,.03,92,g):put(1.0,22,96,g)}
   if(H("bd_art2")){var pm=function(c1,c2){return function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e9ddc8"/><circle cx="'+w*.5+'" cy="'+h*.42+'" r="'+Math.min(w,h)*.26+'" fill="'+c1+'"/><path d="M0 '+h+' L'+w*.5+' '+h*.55+' L'+w+' '+h+'z" fill="'+c2+'" opacity=".85"/>'}};
     var gg='';gg+=fr(0,0,12,16,pm("#d98c5f","#2d2d33"),"#2a2a2f","#f5efe3");gg+=fr(13.5,2,12.5,10,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#ece3d3"/><path d="M.5 '+h*.6+' q'+w*.25+' -4 '+w*.5+' 0 t'+w*.5+' 0" stroke="#3b3b40" fill="none" stroke-width=".8"/>'},"#c9964f");
     gg+=fr(0,18,10,14,function(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#e4dac6"/><path d="M'+w*.5+' '+h+' V2 M'+w*.5+' '+h*.7+' q-3 -2 -3.4 -5 M'+w*.5+' '+h*.5+' q3 -2 3.4 -5" stroke="#3f5a3a" fill="none" stroke-width=".8"/>'},"#2a2a2f","#f5efe3");
