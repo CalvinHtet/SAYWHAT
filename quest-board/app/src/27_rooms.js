@@ -31,6 +31,10 @@ ADDONS.bedroom.push(["bd_chop","Adopt Chopstick",400,{fp:1,g:"Dogs"},"A chihuahu
 Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"});
 /* Painted walls (Cal approved the four tiers 2026-11-05). Tier 1 is the bare start; each tier is a painting of the walls
    and floor, in each Room style's colours (tools/shell_styles.py): art/app/bdw_t<tier>[_<style>].webp. */
+ADDONS.bedroom.push(["bd_wt2","Fresh Paint & Oak Floors",120,{g:"Walls"},"Two soft paint colours, crown moulding and warm oak planks."]);
+ADDONS.bedroom.push(["bd_wt3","Living Grass Wall",240,{g:"Walls"},"A floor-to-ceiling panel of soft living grass behind the bed, deep painted walls around it."]);
+ADDONS.bedroom.push(["bd_wt4","Cove Lighting",360,{g:"Walls"},"Warm light washes down the walls and the grass, and along a brass rail."]);
+Object.assign(ADDREQ,{bd_wt3:"bd_wt2",bd_wt4:"bd_wt3"});
 /* A painted shell is drawn as the room's floor and walls, clipped to the same shapes the game draws them in. Its frame is
    tools/shell_guide.py's: floor corners 12 px in from the sides and 12 px above the bottom, 5:4. */
 var LFSHELLK=null;
