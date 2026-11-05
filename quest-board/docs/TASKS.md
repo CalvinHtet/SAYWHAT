@@ -241,18 +241,18 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Lessons for the next art pass (Cal, below): upgrade sweep's last rooms and close-ups, then the room-by-room write-up.
+- Speed sweep at phone size next.
 
 To do:
 - [x] Set up: a clean worktree of the latest commit in a temp folder, build it, serve it on 8769. Learn the scripts in
       `rigtest/browser/` (README) and write your own in `rigtest/qa/`. Start `docs/QA.md` with a run log. `rigtest/qa/setup.sh`.
-- [ ] Lessons for the next art pass (Cal, 2026-11-05): "keep in mind that a lot of these assets will change. This sweep you are
+- [x] Lessons for the next art pass (Cal, 2026-11-05): "keep in mind that a lot of these assets will change. This sweep you are
       doing is more of a lessons learned so that the next pass on art generation can be better." Compare every room with
       isometric game-art references of its kind and write down what is awkwardly placed, so ROOMS generates it better. "We
       will be swapping out all the walls on the rooms so it looks cohesive. And all the furniture going forward should be
       highly detailed, carefully placed, and have cohesiveness between the entire room." In `docs/QA.md`, Lessons for the
-      next art pass: 12 rules and 16 rooms written, Arcade, Rhythm, VR, Club and Lair still to add.
-- [ ] Upgrade sweep, every room: buy each upgrade one at a time in unlock order (the method in `docs/RELEASING.md`, Testing
+      next art pass: 12 rules, all 21 rooms, and which upgrades do not look like their names. Owner of the lessons: ROOMS.
+- [x] Upgrade sweep, every room: buy each upgrade one at a time in unlock order (the method in `docs/RELEASING.md`, Testing
       upgrade tiers), screenshot each step, and flag anything stacking, overlapping, floating, facing the wrong way or not
       visibly changing the room (Cal: "every upgrade clearly visible, even a poster or a clock"). Run `gaps.js`, `depth.js` and
       `stations.js` at every tier, not only fully upgraded.
@@ -265,7 +265,7 @@ To do:
       numbers in `diag/perf` after Cal plays v45; compare against them when LEAD posts them.
 - [ ] After every commit by anyone: `savecheck.js`, `screens.js` and a quick look at what that commit touched. After every
       publish: the same against the published build. Post only what fails.
-- [ ] References: for each room, look up isometric game art of that kind of room (built-in browser, never Chrome) and
+- [x] References: for each room, look up isometric game art of that kind of room (built-in browser, never Chrome) and
       compare layout, detail, lighting and how alive it feels. Write art ideas for ROOMS with the link and what to learn.
       Study only, never copy.
 - [x] (from LEAD) Room upgrade menu, new in the commit after v45: only the next 5 unbought upgrades show, and anything two or

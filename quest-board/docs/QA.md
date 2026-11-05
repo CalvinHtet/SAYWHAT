@@ -36,7 +36,12 @@ motion, and a real phone.
 - `savecheck.js`, `screens.js` at 360 and 390: run on fd14fad (the latest commit when QA started): all passed, nothing wider
   than the screen, no page errors.
 - `doors.js` and `doorcrops.js`: see Doors below.
-- `upgrades.js`, every room: see Lessons below. 397 upgrades bought one at a time through the room windows.
+- `upgrades.js`, every room: 397 upgrades bought one at a time through the room windows (the 11 unbuyable ones and the
+  Auditorium's and Club's level 61 to 65 ones left over). Problems that show only at a middle tier, not when fully upgraded,
+  are almost none: the Patio's lounge chair sorts under the outdoor rug for one tier, and one restaurant prep table overlaps
+  the kitchen counter by 0.1 tile until the next upgrade. 19 page errors arrived between purchases and were not tied to
+  any one of them; loading the page again shows none (likely image loads cut off as a window closed). The script now lists
+  them. See Lessons below for everything visual.
 - `menu.js` on 59eeaf7, levels 1 to 80: the upgrade menu passes (never more than 5 cards, "? ? ?" only 2+ levels up, one
   level up named with "Reach level", Buy always works, no early "All upgrades installed", 7,300 cards). 11 upgrades are
   never offered at any level (Game Room Couch & Console, Pool Table, Snack Bar; Restaurant Chef's Neon; Garden Scarecrow,
@@ -212,6 +217,21 @@ Each line: what the references do, what ours does, the lesson. Sheets of every t
   but the Purple Couch and the Private Booth sit side-on to the screen, the lyric screen only says "la la la", and the
   Neon Microphone, Tambourine Stand and Stage Lights change about 1,500 pixels each. Lesson: seats face the screen, the
   screen shows a lyric scene.
+- **Arcade.** References: cabinets shoulder to shoulder along every wall facing into the room, neon signs and posters
+  covering the walls, one feature in the middle (air hockey, a dance machine), a dark carpet that stays calm. Ours: the
+  walls are bare except three neon stripes, the cabinets bunch in the back corner, the middle is open, and the loud
+  confetti carpet (the Bowling carpet too) is busier than the furniture, so pieces are hard to pick out. Neon Trim shows
+  nothing in the picture. Lesson: line the walls with machines, keep the floor pattern quieter than the furniture.
+- **Rhythm.** One of the best: the walls have their own treatment (foam panels, neon mirror strips), the machines stand
+  against the walls facing into the room, one palette. Weak spots: the bench faces away from the dance machine, the
+  trophy case stands alone in the open floor, and the speaker tower stands on the door back to the Arcade.
+- **VR.** Dense and of one style (white and blue sci-fi), which is the right level of detail. But the rigs fill the
+  middle with no walkway and face every which way (two racing seats face lower left, the pods lower right), and the
+  walls hold only one screen and a hologram board. Lesson: rigs in rows facing the same way, a clear aisle to the door.
+- **Club.** The dance floor, DJ booth and speakers in front of it are right (the references agree). But the DJ booth and
+  the neon bar are both squeezed onto the right half of the back wall, the left half of the room and every wall are
+  near black with thin lines, and the Velvet Rope, Smoke Machine, Glow Cocktail Cart and Laser Rig each change under
+  1,100 pixels. Lesson: a bar wall of its own with backlit bottles (Cal's idea), LED or truss lighting on the walls.
 - **Lair.** The model for the next pass, with the Closet: one painted room, upgrades painted as layers in the same style
   (server racks, command console, armory, suit cases), so every tier looks finished and of a piece. The weak part is the
   floor: the Drone Dock, Energy Canisters and Gadget Workbench are small separate sprites, flatter than the painted walls,

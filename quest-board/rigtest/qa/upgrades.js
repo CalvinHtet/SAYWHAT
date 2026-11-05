@@ -94,5 +94,7 @@ const FAINT = 2500; // changed pixels (of 630,000) below which an upgrade counts
     lines.forEach((l) => console.log('  ' + l));
   }
   console.log('\npage errors in all:', errs.length);
+  // errors that arrived between purchases (late image loads cut off when a window closes, and so on)
+  [...new Set(errs)].slice(0, 20).forEach((e) => console.log('  ' + e));
   await b.close();
 })();
