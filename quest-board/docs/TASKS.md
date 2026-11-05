@@ -6,14 +6,14 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 11:05 am)
 
-Live on the phone: `APPV` 45 (page version 19), 2026-11-05.
+Live on the phone: `APPV` 46 (page version 20), 2026-11-05.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Waiting on Cal's phone check of v45; then the real phone numbers in `diag/perf` and `diag/frame` for the lag.
+- Yawn pilot code in `src/rig.js` (swap in painted arms where they exist).
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
