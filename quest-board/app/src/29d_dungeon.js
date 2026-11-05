@@ -33,7 +33,10 @@ function dgState(){if(!S.trophy||typeof S.trophy!=="object")S.trophy={};if(!S.re
 function dgHas(set,id){var t=dgState();return !!(t[set]&&t[set][id])}
 function dgPieces(){var t=dgState(),n=0;Object.keys(TSETS).forEach(function(k){n+=Object.keys(t[k]||{}).length});return n}
 function dgDone(set){return TSETS[set].pieces.every(function(p){return dgHas(set,p.id)})}
-function dgRoomBuilt(){return S.base&&S.base.slots.some(function(r){return r&&r.t==="lair"&&r.a&&r.a.lr_trophy})}
+/* where the trophies stand: ROOMS's Trophy Room above the Lair (room id "trophy"), or the old Lair Trophy Wall in saves that have it */
+function dgRoomBuilt(){return S.base&&S.base.slots.some(function(r){return r&&(r.t==="trophy"||(r.t==="lair"&&r.a&&r.a.lr_trophy))})}
+/* for ROOMS (Cal: the Trophy Room opens "only after a team member brings back the first trophy"): pieces brought home so far */
+window.qbRaidTrophies=function(){try{return dgPieces()}catch(e){return 0}};
 /* the Lair's Trophy Wall stays a mystery until the first piece comes home */
 (ADDONS.lair||[]).forEach(function(a){if(a[0]==="lr_trophy"){a[3]=Object.assign({},a[3]||{},{trophy:1})}});
 /* every buff from pieces owned and sets finished, summed by kind */
@@ -65,7 +68,7 @@ function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=P.g,h;
     dgState()[g.set]=dgState()[g.set]||{};dgState()[g.set][g.id]=Date.now();
     h='<span class="label">'+esc(T.name)+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
       +(dgDone(g.set)?'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
-      +(first?'<p class="note">A trophy needs somewhere to stand. The Trophy Wall in the Hero\'s Lair is now ready to build.</p>':'')}
+      +(first?'<p class="note">The first trophy is home. A Trophy Room can now be built above the Hero\'s Lair.</p>':'')}
   else if(g.kind==="coins"){S.coins+=g.n;S.earnedC+=g.n;h='<h3>'+g.n.toLocaleString()+' coins</h3><p class="note">From a strongbox nobody had opened in years.</p>'}
   else{S.xp+=g.n;h='<h3>+'+g.n+' XP</h3><p class="note">Nothing else came back this time.</p>'}
   persist();render();modal('<div class="card box2 dgg">'+h+'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>');try{burst(innerWidth/2,innerHeight/3,24)}catch(e){}}
@@ -94,7 +97,7 @@ setInterval(dgRelicCheck,20000);setTimeout(dgRelicCheck,6000);
 var DGTAB="relics";
 trophyHtml=function(){dgState();var h='',tabs='<nav class="dg-tabs" aria-label="Relics sections"><button class="dg-tab'+(DGTAB==="relics"?" on":"")+'" data-act="dgtab" data-v="relics">Relics</button>'+(dgPieces()?'<button class="dg-tab'+(DGTAB==="trophies"?" on":"")+'" data-act="dgtab" data-v="trophies">Trophies</button>':'')+'</nav>';
   if(DGTAB==="trophies"&&dgPieces()){
-    if(!dgRoomBuilt())return tabs+'<section class="card panel"><h3 class="label">Trophies</h3><p class="note">You have '+dgPieces()+' piece'+(dgPieces()>1?'s':'')+' in storage. Build the Trophy Wall in the Hero\'s Lair to put them on display.</p></section>';
+    if(!dgRoomBuilt())return tabs+'<section class="card panel"><h3 class="label">Trophies</h3><p class="note">You have '+dgPieces()+' piece'+(dgPieces()>1?'s':'')+' in storage. Build the Trophy Room above the Hero\'s Lair to put them on display.</p></section>';
     Object.keys(TSETS).forEach(function(s){var T=TSETS[s],n=T.pieces.filter(function(p){return dgHas(s,p.id)}).length;if(!n)return;
       h+='<section class="card panel dg-set"><h3 class="label">'+esc(T.name)+' &middot; '+n+'/'+T.pieces.length+'</h3><p class="note">'+esc(T.lore)+'</p><div class="dg-grid">'
         +T.pieces.map(function(p){var g=dgHas(s,p.id);return '<div class="dg-pc'+(g?'':' lock')+'">'+(g?dgIcon(s,p.id):'<span class="dg-ic dg-ic0">?</span>')+'<b>'+(g?esc(p.name):'Not found yet')+'</b><small>'+(g?esc(p.buff.text):'')+'</small></div>'}).join("")
