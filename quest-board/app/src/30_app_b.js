@@ -608,7 +608,7 @@ function socInner(){
   var o=socState(),h='<div class="row" style="justify-content:space-between"><h3 class="label">Neighbors</h3><button class="btn ghost sm" data-act="snref">Refresh</button></div>';
   if(o.vis.length)h+='<p class="note">Visited you today: '+o.vis.map(function(v){return '<b>'+esc(v.name)+'</b>'+(v.msg?' “'+esc(v.msg)+'”':'')}).join(", ")+'</p>';
   if(SOC.err)h+='<p class="note">Could not reach the neighborhood ('+esc(SOC.err)+'). Your access may be view-only.</p>';
-  h+=SOC.worlds.length?SOC.worlds.map(socWorldCard).join(""):'<p class="note">'+(SOC.loaded?'No neighbors yet. Share this page with a friend as an Editor and they will show up here once they open it.':'Looking for neighbors…')+'</p>';
+  h+=SOC.worlds.length?SOC.worlds.map(socWorldCard).join(""):'<p class="note">'+(SOC.loaded?'No neighbors yet. Share this page with a friend as a Contributor and they will show up here once they open it.':'Looking for neighbors…')+'</p>';
   h+='<h3 class="label" style="margin-top:16px">Town board</h3><div class="snpost"><textarea id="sntext" maxlength="280" rows="2" placeholder="Post something for everyone in the neighborhood"></textarea><button class="btn" data-act="snpost">Post</button></div>';
   h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p></div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
   return h;
