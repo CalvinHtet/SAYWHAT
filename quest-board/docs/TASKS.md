@@ -250,9 +250,9 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Bedroom wall tiers, uncommitted until Cal approves: `art/app/bdw_*.webp`, their lines in `data/rsart.json`, the three
-  `bd_wt*` upgrades in `27_rooms.js`. WAITING ON CAL: approval 5b (`art/raw/walls/bedroom/bedroom_styles_v2.png`: Tier 3
-  is now a living grass wall, brick on the left wall) (since 13:40). Door, hidden art fix and loader are in b92a6dd.
-  Next: Patio, then the Lair, then hand the Loft to QA. (on 4b726f1)
+  `bd_wt*` upgrades in `27_rooms.js`. WAITING ON CAL: approval 5c (`art/raw/walls/bedroom/bedroom_styles_v3.png`: bands to
+  the wall end, art off the grass, patio door ajar) (since 14:05). Patio door, arrow and bands committed in 050c10e.
+  Next: Patio, then the Lair, then hand the Loft to QA. (on 86debe7)
 
 To do:
 - [x] Closet stages and the Lair stage are in (see Ready to publish). Closet stages: Cal APPROVED the second version 2026-11-05 ("This looks good"), Start to Super Sleek Modern, files
