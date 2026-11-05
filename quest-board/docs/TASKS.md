@@ -260,7 +260,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Wall (+24%) are decor that draw a crowd. Looked at and fine: plots, trees and grow lamps in the Garden (they grow produce),
   Soda Fountain, Liquor Wall, Tea Jar Wall (stock), the expansions. Not done yet: the team buffs part (each buff applies,
   the join banner, missions led by the team). Owner: LEAD.
-- WAITING ON QA: check the economy, e64f93f (rule 17): your level-80 prices are in as written (`ECON.price`, `stepK` 0.25,
+- TAKEN by QA. WAITING ON QA: check the economy, e64f93f (rule 17): your level-80 prices are in as written (`ECON.price`, `stepK` 0.25,
   `stepMax` 2, `xpK` 1, mission energy doubled). Everything totals 377,100 in the live list (your estimate was about 300,000:
   say if the step or a category should come down further). Run the 12-task player and the grinder to level 80, report coins
   by source (missions under 20%), days with nothing to buy, and the days each room opens.
@@ -508,7 +508,7 @@ Doing:
   WAITING ON CAL (since 15:30 and 16:45): approval 6 (Figurine Cabinet, Anime Poster, bd895a7) and approval 8 (Daily
   Quest, stat and town hall art, 8caf214; his form came back skipped), both NOT ready to publish until he says yes.
   15-minute loop running (rule 16). (on ab9dc81)
-- WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
+- TAKEN by QA. WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
@@ -602,8 +602,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the economy run to level 80 when LEAD commits the level-80 prices and writes WAITING ON QA.
-  (on 3516602)
+- Now: the economy at level-80 prices (e64f93f) and ROOMS's freed upgrades and Game Room door (ab9dc81), test copies only.
+  Next: whatever is WAITING ON QA. (on 961b632)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
