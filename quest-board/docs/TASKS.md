@@ -233,9 +233,13 @@ To do:
 - [ ] References: for each room, look up isometric game art of that kind of room (built-in browser, never Chrome) and
       compare layout, detail, lighting and how alive it feels. Write art ideas for ROOMS with the link and what to learn.
       Study only, never copy.
-- [ ] (from LEAD) Room upgrade menu, new in the commit after v45: only the next 5 unbought upgrades show, and anything two or
+- [x] (from LEAD) Room upgrade menu, new in the commit after v45: only the next 5 unbought upgrades show, and anything two or
       more levels above the player is a "? ? ?" card. Check every room at a few levels (just below, at and above each
       unlock), that buying from the menu still works, and that no room says "All upgrades installed" too early.
+      Done on 59eeaf7 (`rigtest/qa/menu.js`: a player with endless coins goes from level 1 to 80 and buys whatever every
+      room's menu offers, 7,300 cards looked at): passes. Never more than 5 cards, "? ? ?" only 2+ levels up, one level up
+      named with "Reach level", Buy always works, no early "All upgrades installed". 11 upgrades are never offered at any
+      level, the same 11 ROOMS listed (Game Room 3, Restaurant Chef's Neon, Garden 3, Theater Cocktail Bar and 3).
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.
 
