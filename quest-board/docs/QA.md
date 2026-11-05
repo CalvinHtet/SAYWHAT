@@ -255,3 +255,59 @@ the Bedroom beds, chairs and windows. Where they do not:
   and dogs, which these pictures leave out. Not a bug.
 Lesson for the next pass: write the shop line from the finished art, or paint to the line, and make every "sign", "neon",
 "lights" or "screen" upgrade visibly light the room.
+
+## Town hall, weekly competition, AI photo proof, 15 players (2026-11-05, 12a46ba)
+
+Cal asked: a town hall board or chat room where everyone sees each other's characters, outfits, levels and achievements,
+a weekly prize cosmetic for the most coins or XP, picture proof checked by AI so it stays fair, and whether 15 people
+playing at once could break the game.
+
+**Most of the town hall is already written and switched off.** `30_app_b.js` (the `/*SOCIAL*/` block) has Neighbors and a
+Town board: each player publishes `worlds/<id>` (name, look, level, streak, rooms, crew, dishes served) at most every 90
+seconds; you can visit anyone's Loft room by room, say hi with a note (they get +5% XP for the day, you +2%, and your
+character walks around their Loft for half an hour), read their guest book, and post on a town board (280 characters, the
+latest 30 shown). `socialHtml()` is never called, so none of it shows; only the visitors walking in still work. Wiring it
+into a tab is small. Missing for Cal's idea: outfits are in `look` already; achievements, coins and XP this week are not
+published; there is no chat (the board loads when opened, it is not live) and no leaderboard.
+
+**15 players will not overload it.** Each player's game runs on their own phone; nobody's lag affects anyone else. What is
+shared is small: each save is one private document (`data/users/<id>/state`, written at most every 350 ms while playing),
+`worlds/<id>` every 90 s at most, a check for visits every 2 minutes, and the board when opened. For 15 people that is a
+few writes a minute in all.
+
+What can actually go wrong with 15 people, worst first:
+1. **Access level.** The game tells players to share the page "as an Editor". Editors are admins on the platform: an
+   Editor can publish a different page or change the database rules. Friends only need to write data, which the
+   Contributor level allows. Share as Contributor, and keep Editor for LEAD's account. (Owner: LEAD, to confirm the levels
+   in the share dialog.)
+2. **No database rules are declared,** so any player can overwrite or delete anyone's `worlds/` doc, visit notes and
+   board posts (the page only offers delete on your own, but the database would accept it). The platform supports "all
+   read, each writes own" rules (`{path:"worlds",read:"view",write:"owner"},{path:"worlds/{self}",write:"interact"}`), the
+   same for `pings` and `board`. Must be in place before a prize depends on it. (Owner: LEAD.)
+3. **Publishing mid-day.** A tab left open on an older version stops saving once a newer one has saved, and says "A newer
+   version saved your progress. Reload to continue." With 15 people, every publish will catch someone mid-session. Their
+   progress is protected, but anything they did after that message is lost until they reload. Publish at night, or reload
+   by itself when a newer version is seen.
+4. **AI checks run on each player's own Claude account.** Photo checks (`sample`, already used for the gym trials and
+   Prove it) go through the viewer's own Claude allowance, so 15 players do not share one limit; but a friend on a plan
+   without image support gets no check (`limits().images` false), and anyone can hit a rate limit. Whether a free account
+   can use it is still not verified (HANDOFF, Not yet verified).
+
+**A fair weekly prize is possible, but not cheat-proof.** There is no server of our own: every number (coins, XP, the
+AI's verdict) is computed in the player's own browser and saved by the player. Someone who opens the browser's developer
+tools can give themselves coins or skip the photo check, and nothing in the page can stop that. For 15 friends that is
+usually fine; to make it fair enough:
+- Rank by **verified XP this week** (tasks proven with a live photo, plus the weekly workout), not coins: coins come mostly
+  from passive income and missions, which need no real-world effort (see the simulation below).
+- Keep a **proof receipt** for each verified task: the AI's verdict and a small copy of the photo in a shared `proofs`
+  collection, readable by everyone or only by Cal (`read:"admin"`). Friends checking each other's photos is the real
+  anti-cheat; Cal can void a bad one.
+- Pick the winner at the week's end from everyone's published numbers and let **Cal confirm it** before the cosmetic is
+  granted (an owner-only button), so a faked number never wins on its own.
+- Some tasks cannot be photographed honestly (brush teeth, meditate). Count them at honor value or leave them off the
+  ranking.
+- Photo privacy: proof photos show people's homes. Ask before sharing them with everyone; owner-only is the safe default.
+
+**Chat:** the platform has a `room` capability for whoever has the page open right now (live presence), and the database
+can push changes as they happen (`onSnapshot`). A live town chat and an "online now" list are possible; moderation
+(delete, mute) should stay with Cal.

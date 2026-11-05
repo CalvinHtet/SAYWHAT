@@ -177,6 +177,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   version check in LEAD's routine, before each publish and at wrap-up: everyone committed and pushed, `git worktree list`
   only holds today's test copies, each chat's last test names the commit it ran on, and the live `APPV` matches TASKS.md;
   and a rule that work another chat builds on is committed first. QA tags every result with its commit. Owner: LEAD.
+- LEAD (Cal asked whether friends must be Editors): no. On the platform an Editor is an admin who can republish the page and
+  change database rules; a Contributor can write data, which is all a player needs. The Neighbors text in `30_app_b.js` says
+  "Share this page with a friend as an Editor": make it Contributor, add database rules so each player writes only their own
+  `worlds/`, `pings/` and `board/` rows, and test one friend as Contributor (online save, Neighbors, a photo check) and one as
+  Viewer (expected: plays, saves on that device only) before inviting 15. `docs/QA.md`, Town hall. Owner: LEAD.
 - FYI LEAD and ROOMS: QA added rule 13 to `TEAMWORK.md` at Cal's request (Waiting on each other: true Doing lines,
   `WAITING ON <chat>` lines, check for them between tasks). Right now both Doing lines are stale: LEAD's says nothing in
   progress with five app files uncommitted (`10_app_a.js`, `29_prices.js`, `29b_story.js`, `30_app_b.js`, `index.html`,
