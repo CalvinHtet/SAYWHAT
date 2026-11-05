@@ -115,7 +115,9 @@ var RSHIP=16;
 function rsTable(C,kind,x,y,lbl){var T=RSTBL[kind],S0=T&&window.LFSPR&&LFSPR[T[0]];if(!S0)return;var w=T[1],d=T[2],cx=x+w/2,cy=y+d/2,W=(w+d)*LF.sx,Hh=W*S0.h/S0.w,base=(w+d)/2*LF.sy;
   rsS(C,T[0],x,y,w,d,T[3]);
   [T[4],T[5]].forEach(function(f,i){var dx=(f[0]-.5)*W,dy=base-(1-f[1])*Hh+RSHIP,a=(dx/LF.sx+dy/LF.sy)/2,b=(dy/LF.sy-dx/LF.sx)/2;
-    rsSeat(C,cx+a,cy+b,i?-1:1,cx+(i?1.4:.3),cy+(i?.3:1.5),[cx,cy],lbl,0)})}
+    /* drawn just after its own table (its chairs are part of the table art), not after everything: with dk 99 a
+       guest at the umbrella table was drawn over the pergola standing in front of them */
+    var n0=C.st.length;rsSeat(C,cx+a,cy+b,i?-1:1,cx+(i?1.4:.3),cy+(i?.3:1.5),[cx,cy],lbl,0);var st=C.st[n0];if(st)st.dk=Math.max(.05,x+w+y+d+.1-st.x-st.y)})}
 function rsTierTable(C,big){return C.has("r_t3")?(big?"fine4":"fine"):C.has("r_t2")?(big?"marble4":"marble"):C.has("r_t1")?(big?"pine4":"pine"):null}
 LFROOM.restaurant=function(C){
   rsArtReady();

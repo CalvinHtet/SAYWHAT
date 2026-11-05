@@ -98,22 +98,24 @@ LFROOM.garden=function(C){
   if(H("g_spr"))beds.forEach(function(k,i){if(i%2===0){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)}});
   if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.72,0),lfP(p[0]-.1,p[1]+1.72,0)],"#27303a"))});
   /* tools down the far side */
-  var Rx=W-2.0,tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
-  tool("g_can","gdx_can",.7,1.2,1.0,14);tool("g_bench","gdx_bench",2.3,1.4,1.0,26);tool("g_comp","gdx_comp",3.9,1.2,1.1,24);tool("g_barrel","gdx_barrel",5.5,.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",7.0,1.4,1.0,16);
-  if(H("g_scare"))gdS(C,"gd_scare",st===0?10:Rx,st===0?8.6:8.6,.7,.7,50,{H:100});
+  /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
+     on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
+  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
+  tool("g_can","gdx_can",TY[0],1.2,1.0,14);tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
+  if(H("g_scare"))gdS(C,"gd_scare",st===0?10:Rx,E?9.3:8.6,.7,.7,50,{H:100});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
   if(st>0){var zx=st===2?16.4:11.2;
     if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
     else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
-    if(H("g_orch")){gdS(C,"gdx_tree",zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",zx+2.6,4.8,1.1,1.1,70,{H:120})}
-    if(H("g_grape"))gdS(C,"gdx_grape",zx,6.6,3.6,1.0,50,{H:96});
-    var hx=st===2?Rx:zx,hy=st===2?9.9:8.6;
+    if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+2.6,4.8,1.1,1.1,70,{H:120})}
+    if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx,E?6.8:6.6,3.6,1.0,50,{H:96});
+    var hx=st===2?Rx:zx,hy=st===2?10.6:8.6;
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
-    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:zx+2.1,st===2?11.6:8.4,1.7,1.3,36,{H:78});
-    if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+3.9:zx+2.4,st===2?4.5:8.5,1.6,1.3,50,{H:92});
-    if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+3.9:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
-    if(H("g_pump"))gdS(C,"gdx_pump",Rx+.2,D-3.6,.9,.8,40,{H:70});
-    if(H("g_stand"))gdS(C,"gdx_stand",st===2?1.2:zx+2.2,st===2?12.8:6.0-1.2+.0,1.8,1.0,34,{H:86});
+    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:zx+2.1,st===2?12.2:8.4,1.7,1.3,36,{H:78});
+    if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+3.7:zx+2.4,st===2?4.8:8.5,1.6,1.3,50,{H:92});
+    if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
+    if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:Rx+.2,E?7.8:D-3.6,.9,.8,40,{H:70});
+    if(H("g_stand"))gdS(C,"gdx_stand",st===2?.4:zx+2.2,st===2?12.9:6.0-1.2+.0,1.8,1.0,34,{H:86});
     if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[i];if(i%2){gdS(C,"gd_lamp",p[0]+3.6,p[1]-.5,.5,.5,40,{H:80});lfLight(C,p[0]+2,p[1]+.8,60,"#d68aff",2.6,.5)}});
     if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
       C.decals.push(stones(.4,W-.2,py,py+1.25));
@@ -130,7 +132,7 @@ LFROOM.garden=function(C){
       if(H("g_gate"))open("gdx_gate",W-1.2,py-.2,.5,1.6,92);
       if(H("g_sun"))gdS(C,"gdx_sundial",W*.34,py-.95,.6,.6,30,{H:52});
       if(H("g_topi"))[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
-      if(H("g_birdb"))gdS(C,"gdx_birdbath",W*.46,py-.95,.6,.6,30,{H:52});
+      if(H("g_birdb"))gdS(C,"gdx_birdbath",E?10.3:W*.46,py-.95,.6,.6,30,{H:52});
       if(H("g_koi")&&st===2)gdS(C,"gd_koi",11.3,11,3.4,2.0,16,{dk:1});
     }
   }

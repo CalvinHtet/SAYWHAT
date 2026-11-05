@@ -68,6 +68,35 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
         if (!fits(art, body)) { cells.push(null); continue; }
         cells.push({ label: `${art} ${body} ${clip}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts: [art], clip, f, crop: FULL });
       }
+    } else if (sheet === "wear") {
+      // One item (or a whole outfit, comma separated) on both bodies in every key pose.
+      // ?sheet=wear&arts=o_tee  or  &arts=o_beanie,o_tee,o_para,o_hoop
+      const arts = (q.get("arts") || "").split(",").filter(Boolean);
+      const P = Object.keys(poses).filter((k) => k !== "rest");
+      const slot = arts.length === 1 && I[arts[0]] ? I[arts[0]].slot : "";
+      const crop = { hat: HEAD, glasses: HEAD, mask: HEAD, neck: [0.14, 0.12, 0.72, 0.5], shoes: [0.1, 0.55, 0.8, 0.45], pants: [0.1, 0.38, 0.8, 0.62] }[slot] || FULL;
+      cols = +(q.get("cols") || 11); cw = +(q.get("cw") || 130); ch = +(q.get("ch") || 150);
+      for (const body of ["m", "f"]) {
+        if (!arts.every((a) => fits(a, body))) continue;
+        for (const pose of P) cells.push({ label: `${body} ${pose}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts, pose, crop: /^sleep/.test(pose) ? FULL : crop });
+      }
+    } else if (sheet === "onepose") {
+      // Many items side by side in one pose: ?sheet=onepose&pose=stretchUp&arts=o_tee,o_puffer
+      const arts = (q.get("arts") || "").split(",").filter(Boolean), pose = q.get("pose") || "idle";
+      cols = +(q.get("cols") || 10); cw = +(q.get("cw") || 130); ch = +(q.get("ch") || 150);
+      for (const art of arts) for (const body of ["m", "f"]) {
+        if (!fits(art, body)) continue;
+        cells.push({ label: `${art} ${body}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts: art.split("+"), pose, crop: FULL });
+      }
+    } else if (sheet === "grid") {
+      // One row per item and body, one column per key pose: ?sheet=grid&arts=o_hoop,o_slides&crop=...
+      const arts = (q.get("arts") || "").split(",").filter(Boolean);
+      const P = Object.keys(poses).filter((k) => k !== "rest" && (!q.get("poses") || q.get("poses").split(",").includes(k)));
+      cols = P.length; cw = +(q.get("cw") || 64); ch = +(q.get("ch") || 74);
+      for (const art of arts) for (const body of ["m", "f"]) {
+        if (!fits(art, body)) continue;
+        for (const pose of P) cells.push({ label: `${art} ${body} ${pose}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown" }, arts: art.split("+"), pose, crop: FULL });
+      }
     } else if (sheet === "base") {
       cols = 12; cw = 100; ch = 118;
       for (const [slot, list, key, colorKey] of [["top", BASE.tops, "top", "topColor"], ["bottom", BASE.bottoms, "bottom", "bottomColor"], ["shoe", BASE.shoes, "shoe", "shoeColor"]])
@@ -101,7 +130,7 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
       if (Math.floor(i / cols) % 2 === 0 && false) continue;
       try {
         const opts = Object.fromEntries(Object.entries(c.opts).filter(([, v]) => v !== undefined));
-        const fr = await rig.render(look(c.body, opts, c.arts), rig.clipPose(c.clip, c.f || 0));
+        const fr = await rig.render(look(c.body, opts, c.arts), c.pose || rig.clipPose(c.clip, c.f || 0));
         const [a, b, w, h] = c.crop;
         const sw = W * w, sh = H * h, s = Math.min(cw / sw, ch / sh);
         g.drawImage(fr, W * a, H * b, sw, sh, x + (cw - sw * s) / 2, y + LBL, sw * s, sh * s);
