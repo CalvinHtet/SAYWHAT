@@ -1394,8 +1394,11 @@ function lfDogNext(a,C){
   var r=Math.random(),bed=a.bed;
   if(a.visitor&&a.leaveAt&&Date.now()>a.leaveAt){a.leaving=1;var d=lfDoorOf(C);a.speed=1.6;lfGo(a,d.x,d.y+.3,"leave");return}
   var PR=C.patio&&C.patio.real;
-  if(PR&&!a.visitor&&Math.random()<.3){var pb=PR.beds[a.dname==="chopstick"?1:0]||PR.beds[0];
-    if(pb&&Math.random()<.45){a.speed=1.3;lfGo(a,pb[0],pb[1],{kind:"dogbed"});a.last="bed";return}
+  /* out on the Patio a dog mostly goes to its own Patio bed (QA: they lay on the deck instead), else sniffs around or
+     comes back in */
+  var onP=PR&&a.y<-.3;
+  if(PR&&!a.visitor&&(onP?Math.random()<.8:Math.random()<.3)){var pb=PR.beds[a.dname==="chopstick"?1:0]||PR.beds[0];
+    if(pb&&Math.random()<(onP?.7:.45)){a.speed=1.3;lfGo(a,pb[0],pb[1],{kind:"dogbed"});a.last="bed";return}
     var ps=lfPick(PR.spots.filter(function(q){return lfPaIn({pa:[],paR:PR},q[0],q[1])}));if(ps){a.last="run";a.speed=a.dname==="chopstick"?2.3:1.2;lfGo(a,ps[0]+lfRand(-.3,.3),ps[1]+lfRand(-.3,.3),{kind:"dogrun"});return}}
   if(!a.visitor&&bed&&(a.last==="run"||r<.28)){a.speed=1.3;lfGo(a,bed[0],bed[1],{kind:"dogbed"});a.last="bed";return}
   if(r<.45){a.last="sit";a.mode="do";a.act="sit";a.t=lfRand(3,8);return}
