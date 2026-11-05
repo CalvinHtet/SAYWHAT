@@ -250,7 +250,15 @@ Open asks from Cal (2026-11-05, latest first):
   the jewelry stage) instead of the `clx_jewel` sprite.
 - Brand banners need real art, intricate and colourful scenes, not the procedural treatment (prompts under Art).
 - The Loft on Cal's phone (inside the Claude app) filled only half the screen with no bottom nav. `.lfwrap` was fixed at
-  `100dvh`; it now stretches with top and bottom 0. Not yet seen on his phone.
+  `100dvh`; v41 stretched it with top and bottom 0, and Cal still saw it cut off on v42. Likely cause: on the Loft tab
+  everything is fixed-position, so the page measured only its header (`body` 331px on an 844px phone, 4900px on the
+  Board). A test frame sized to its content, capped at the screen (my own model, not the real Claude app), showed the
+  same thing: 844px on the Board, 331px on the Loft. v43 gives `html` and `body` `height:100%` while `#lfwrap` exists (the
+  platform's own advice for a one-screen app) and refits the view when the frame's height changes by 120px or more. In that
+  test frame the Loft now stays 844px with the nav at the bottom. Also passed: refit up and down, a room window, every tab
+  at 360 and 430 wide, the old save test. Not yet seen on his phone. v43 also writes what the owner's phone measures to the
+  shared doc `diag/frame` (`qbFrame` in `26_world.js`, read it with `db_get`; `data/users/` is private even from the owner).
+  Remove the log and that doc once this is sorted.
 - Scripts and images are now asked for with a content fingerprint (`?h=`, `tools/build.py`), because Cal's phone kept an
   old `app.js` (it still said v0.06 after v40 was live). If the page still shows an old version, close and reopen it.
 

@@ -6,26 +6,27 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: SHOP (since 10:00 am)
 
-Live on the phone: `APPV` 42 (page version 14), 2026-11-05.
+Live on the phone: `APPV` 43 (page version 16), 2026-11-05.
 
 ---
 
 ## ROOMS as lead: board, quality of life, publishing
 
 Doing:
-- Waiting on Cal's phone-test feedback list (v42 is up for it); sort it onto this board by owner.
+- Waiting on Cal's phone-test feedback list; sort it onto this board by owner.
+- The Loft cut off halfway on Cal's phone: fix is live in v43, waiting on his check and the numbers his phone writes to
+  `diag/frame` (see HANDOFF, open asks).
 
 To do:
 - [ ] Review the `dropbox-leftovers` branch: uncommitted edits found in the old Dropbox folder, 2 lines each in
       `app/src/27_rooms.js` and `app/src/27b_skins.js`, made against a copy 22 commits behind `main`. Show Cal what
       they did, bring over anything still wanted by hand (don't merge the branch), then delete the branch.
-- [ ] Confirm on Cal's phone that the Loft fills the screen inside the Claude app, with the bottom nav showing.
-- [ ] Confirm the phone shows the newest version after a publish: the header should now read v42.
 - [ ] Stretch pose: Cal to choose (a) gentler "yawn" stretch (recommended, `data/poses.json`; SHOP owns that file),
       (b) keep it, or (c) painted arms-up art for every top.
 - [ ] UI pictures redrawn in the game's style (`ui_*`: classes, coaches, crew, ranks, rewards), with a Chrome turn.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
-      `window.__qb` / `window.__qbLoft` hooks.
+      `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
+      sooner if the Loft height is sorted first.
 
 Ready to publish (SHOP adds lines here):
 
@@ -70,6 +71,7 @@ Requests for ROOMS:
 
 ## Done (latest first, keep about ten)
 
+- 2026-11-05 Phone picks up new versions: Cal saw v42 in the header on his phone.
 - 2026-11-05 Club: every booth on the left wall, bar on the back wall, neon sign the right way (v41).
 - 2026-11-05 File fingerprints so phones fetch new versions; Loft height fix; header shows `APPV` (v40, v41).
 - 2026-11-05 Prove it: camera only, pays double. Shop brand banners, procedural stand-in (v40).
