@@ -790,8 +790,8 @@ function mults(q,o){
   return {m:m,tags:tags,xp:Math.max(1,Math.round(q.xp*m))};
 }
 
-var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only";if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=43, saveMode="local", newerSeen=false, saveWarned=false;
+var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
+var DOC="player/state", ownerView=false, APPV=44, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1438,8 +1438,8 @@ render();try{chLoad()}catch(e){}
       if(snap.exists){var sd0=snap.data();if((+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup").set(sd0).catch(function(){});merge(sd0)}
       else if(own){var old=await db.doc("player/state").get();if(old.exists){merge(old.data());migrated=true;db.doc("player/state").delete().catch(function(){})}}
     }else if(db&&own){var s2=await db.doc("player/state").get();if(s2.exists)merge(s2.data());else{var rw=localStorage.getItem("quest-board");if(rw)merge(JSON.parse(rw))}}
-    else{db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
-  }catch(e){db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}
+    else{window.__qbBootErr=!window.claude?"no runtime":!db?"no database":"no id";db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
+  }catch(e){window.__qbBootErr=String((e&&(e.code||e.message))||e);db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}
   loaded=true;
   setTimeout(brandCheck,1500);
   saveMode=db?"cloud":"local";
