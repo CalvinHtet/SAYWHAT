@@ -82,6 +82,11 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: seven upgrades buyable again and the Game Room door, ab9dc81. Game Room Pool Table, Couch & Console,
+  Snack Bar, Restaurant Chef's Neon, Garden Scarecrow and Berry Patch, the Theater bar (and the three after it) waited on
+  upgrades no room sells any more; those prerequisites are dropped. The Game Room's door to the Bedroom is a lit doorway at
+  the front of its left wall (Cal's rule). Look at: those upgrades in their rooms' menus; the Game Room door. Checked
+  headless: the seven are freed, the Game Room renders with its door, no errors.
 - READY TO PUBLISH: Bedroom music, clocks and wall tidy (Cal approved approval 7, 2026-11-05), 8c2c459 and 65cf7fd.
   Pocket Radio, then Bluetooth Speaker, then Bluetooth Record Player (`bd_radio`, `bd_spk`, `bd_vinyl`, in order), between
   the bookshelf and the mirror; Digital Clock (`bd_clock2`, after the Wall Clock) over the Closet door; both clocks show
@@ -498,11 +503,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: nothing running; next from my list: Game Room art (Cal's gaming desks back to back, cream sectional, 80 inch
-  TV, floating console), one room at a time, Chrome claimed. The Loft is ready for QA's full sweep when Cal says go.
+- Now: Game Room painted walls (four tiers, Chrome claimed), then its furniture (gaming desks back to back, cream
+  sectional, 80 inch TV, floating console) in `27b_skins.js`. The Loft is ready for QA's full sweep when Cal says go.
   WAITING ON CAL (since 15:30 and 16:45): approval 6 (Figurine Cabinet, Anime Poster, bd895a7) and approval 8 (Daily
-  Quest, stat and town hall art, 8caf214), both committed but NOT ready to publish until he says yes. 15-minute loop
-  running (rule 16). (on 8caf214)
+  Quest, stat and town hall art, 8caf214; his form came back skipped), both NOT ready to publish until he says yes.
+  15-minute loop running (rule 16). (on ab9dc81)
+- WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
