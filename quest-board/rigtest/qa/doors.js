@@ -41,7 +41,9 @@ for (const d of doors) {
   const A = cell[d.from], B = cell[d.to];
   if (A && B && A[0] === B[0] && Math.abs(A[1] - B[1]) + Math.abs(A[2] - B[2]) > 1) bad.push('not next to each other in the building (' + d.from + ' ' + A.slice(1) + ', ' + d.to + ' ' + B.slice(1) + ')');
   // the arrow: rmArrows puts up in the top-left corner, left in the bottom-left, right and down in the bottom-right
-  const corner = dir === 'up' ? 'top-left' : dir === 'left' ? 'bottom-left' : 'bottom-right';
+  // since 69dde8a rmArrows puts each arrow in its own door's corner ({BL:"tl",BR:"tr",FL:"bl",FR:"br"}); before, by direction
+  const byWall = /k=\{BL:"tl",BR:"tr",FL:"bl",FR:"br"\}/.test(src);
+  const corner = byWall ? (TOP[d.wall] ? 'top-' : 'bottom-') + SIDE[d.wall] : dir === 'up' ? 'top-left' : dir === 'left' ? 'bottom-left' : 'bottom-right';
   const doorCorner = (TOP[d.wall] ? 'top-' : 'bottom-') + SIDE[d.wall];
   if (corner !== doorCorner) bad.push('arrow in the ' + corner + ' corner, door on the ' + NAME[d.wall] + ' (' + doorCorner + ')');
   d.dir = dir; d.bad = bad;

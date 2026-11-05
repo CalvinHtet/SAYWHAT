@@ -230,6 +230,21 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, economy at the level-80 prices (e64f93f, run on 961b632, `sim.js`): **Cal's targets met.** The 12-task player owns every
+  upgrade on day 45 at level 79 (level 80 on day 46, 90 on day 50); the grinder on day 21. Coins (12-task, all 55 days): tasks
+  36%, rooms 16%, missions 15%, level pay 13%, produce 7%, Daily Quest 4%; grinder: tasks 47%, missions 17%. No day with
+  nothing to buy before the town is bought out. Rooms open every couple of days (12-task player: Garden 3, Restaurant 4, Boba 6,
+  Closet 9, Patio 12, Game Room 13, Dessert and Lock and Key 18, Lair 23, Rooftop 24, Mall 25, Theater and Auditorium 26,
+  Arcade 30, Bowling 36, Karaoke 38, Club 39, Rhythm 41, VR 43; Boba to Dessert is 12 days, was 31). The 377,100 total is
+  fine as it is, no change needed. After the buy-out coins pile up (140,000 by day 55, the grinder 346,000 by day 35) with
+  nothing to spend them on until the artifact and prestige (`docs/PRESTIGE.md`) give levels 80 to 100 a use. No page errors.
+  Owner: LEAD (ready for v48 as far as the economy goes).
+- QA, freed upgrades and the Game Room door (ROOMS's ab9dc81, on 961b632, `menu.js` to level 70, `doors.js`): pass. Every
+  upgrade in every room is now offered and bought, including all 11 that never were (Game Room 17 of 17, Restaurant 59 of 59,
+  Garden 41 of 41, Theater 34 of 34); only the Trophy Wall waits for its first trophy, as designed. The Game Room's door is in
+  its left wall, matching the Bedroom's front-right edge (Cal's rule). Every arrow is on its own door's side. Door pairs that
+  follow Cal's rule: 5 of 15 (all the Loft's, Theater and Auditorium); the 10 in Kode Plaza and the Mall still do not (table
+  in `docs/QA.md`, Doors), and the Mall still opens straight into Karaoke two floors up. Owner: ROOMS (the remaining doors).
 - QA, economy rerun on bc1368e (`sim.js`, 12-task player 60 days, grinder 45; on d0c9ea4, which holds bc1368e but not your
   uncommitted level-80 prices). Met: missions 15% of the 12-task player's coins in the second half (21% for the grinder),
   real tasks the biggest source (38%, grinder 48%), no day with nothing to buy for either, no page errors. Levels: the 12-task
@@ -260,7 +275,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Wall (+24%) are decor that draw a crowd. Looked at and fine: plots, trees and grow lamps in the Garden (they grow produce),
   Soda Fountain, Liquor Wall, Tea Jar Wall (stock), the expansions. Not done yet: the team buffs part (each buff applies,
   the join banner, missions led by the team). Owner: LEAD.
-- TAKEN by QA. WAITING ON QA: check the economy, e64f93f (rule 17): your level-80 prices are in as written (`ECON.price`, `stepK` 0.25,
+- DONE by QA (QA findings). WAITING ON QA: check the economy, e64f93f (rule 17): your level-80 prices are in as written (`ECON.price`, `stepK` 0.25,
   `stepMax` 2, `xpK` 1, mission energy doubled). Everything totals 377,100 in the live list (your estimate was about 300,000:
   say if the step or a category should come down further). Run the 12-task player and the grinder to level 80, report coins
   by source (missions under 20%), days with nothing to buy, and the days each room opens.
@@ -510,7 +525,7 @@ Doing:
   (Figurine Cabinet, Anime Poster, bd895a7, since 15:30), approval 8 (Daily Quest art, 8caf214, since 16:45; his form
   came back skipped), approval 9 (Game Room walls in four tiers, a4e2a4a, since 17:35); all three NOT ready to publish
   until he says yes. 15-minute loop running (rule 16). (on a4e2a4a)
-- TAKEN by QA. WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
+- DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
 - DONE by QA (QA findings). WAITING ON QA: check walking onto the Patio, 63ac9f3: Bedroom window with a Patio and both dogs, for a few minutes; you
@@ -604,8 +619,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the economy at level-80 prices (e64f93f) and ROOMS's freed upgrades and Game Room door (ab9dc81), test copies only.
-  Next: whatever is WAITING ON QA. (on 961b632)
+- Now: nothing running. Next: whatever is WAITING ON QA; after v48, `savecheck.js` and `screens.js` on the published build.
+  (on 0ee4df6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
