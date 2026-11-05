@@ -13,8 +13,10 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: waiting on QA's economy check at level-80 prices (3a6ff08's parent) and Cal's approval 8 (ROOMS's Daily Quest art,
-  wired in a60b175). Then publish v48 with ROOMS's READY TO PUBLISH lines and the town's database rules. (on a60b175)
+- Now: WAITING ON Cal for v48. QA cleared the economy (470cbf7: every upgrade on day 45 at level 79, tasks the biggest
+  source). Three art approvals are in the game files and not approved yet: 6 (Figurine Cabinet, Anime Poster, bd895a7),
+  8 (Daily Quest art, 8caf214), 9 (Game Room walls, a4e2a4a). Publishing now would ship them. Next: publish v48 once Cal
+  approves or says to ship, with the town's database rules. (on 470cbf7)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
