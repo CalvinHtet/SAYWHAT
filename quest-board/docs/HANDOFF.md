@@ -167,6 +167,22 @@ standing on the door mat with the cocktail cart drawn over their head. `rigtest/
 84 seconds over four runs and found nobody drawn under anything in front of them. Not done: there is no dance animation, so
 dancers stand and breathe.
 
+Game Room rebuilt (2026-11-05, Cal: light panels wrong on the wall, sofa floating mid-room, TV hanging off the side,
+gaming chairs facing the side of a table, soda machine facing the right wall). Same cause as the Club: the TV, dartboard,
+game shelf and soda machine were flipped against the wall they hung on, the light panels were back-wall art on the left
+wall, and the couch and chairs faced walls with nothing on them. Now:
+- a TV wall on the back wall: the TV mounted over the console shelf, the round rug in front, the couch and gaming chairs in
+  a row facing it (seats for two each, seen from behind), the mini fridge at the end of the row;
+- an arcade corner at the back left: cabinet, dartboard on the wall, foosball, the light panels flat on the left wall;
+- a retro corner on the left wall: the old TV facing into the room, beanbags in front of it (two seats);
+- the snack wall at the back right: lamp, snack bar, soda machine, all facing into the room;
+- the pool and ping pong tables across the front, both turned to match their art (their footprints ran crosswise
+  before), with players at the sides and ends; the band in front of the couch row is the walkway to the door.
+Checked with 17 stand-in guests on all 17 spots (`VIS=1 node guests.js gameroom`: it swaps the visitors-only rule for
+ordinary guests), `gaps.js`, `depth.js` (one flag: the rug under the shelf, correct), `stations.js` (all fine) and the old-save
+test. `guests.js` had been setting guest counts on `window.ROOMDEF`, which does not exist, so earlier runs used each room's
+real guest count; it now uses `__qbLoft().defs`. Published as `APPV` 39.
+
 Asset quality pass (2026-11-05, every room fully upgraded, after the streak fix): every room sprite was looked at alone and
 in its room. Fixed:
 - Two sprites were whole generator sheets with a grid line through them: the Bowling towel warmer (`bwx_towel`) and the
@@ -178,7 +194,7 @@ in its room. Fixed:
 Looked at and left: the Patio telescope overlaps the fire bowl on screen but not on the floor (it is behind it). The
 Speakeasy front corner reads crowded (see above). The depth audit flags rugs under furniture, which is correct.
 
-Published 2026-11-05 as `APPV` 37 (version 8 of the page), then `APPV` 38 with the new Club (version 9), pinned in Cal's sidebar for phone testing. The page holds 501
+Published 2026-11-05 as `APPV` 37 (version 8 of the page), then `APPV` 38 with the new Club (version 9) and `APPV` 39 with the new Game Room (version 10), pinned in Cal's sidebar for phone testing. The page holds 501
 files: `dist` plus `lfvar.json`, which lives only on the page and must be kept. Character layers and icons are bundled into
 `art_rig.js` and `art_icon.js`, and redrawn UI pictures into `art_ui.js` (empty until Cal makes them, so the old ones show).
 The sprites went up in two batches with the old page, then the code; each batch was safe to run with the other side's

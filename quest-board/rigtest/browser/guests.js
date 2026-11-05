@@ -1,10 +1,11 @@
 // node guests.js room[,room] -> $OUT/g_<room>_<pass>.png : a guest frozen on every station, pass by pass
+// VIS=1 fills a visitors-only room (the Game Room) with ordinary guests, to test its spots before any visitor exists
 const OUT = process.env.OUT || 'shots'; require('fs').mkdirSync(OUT, { recursive: true });
 const { open } = require('./drv.js');
 (async () => {
   const rooms = process.argv[2].split(',');
   const { b, p, errs } = await open({ width: 1400, height: 1400 });
-  await p.evaluate(() => { Object.values(window.ROOMDEF || {}).forEach((d) => { if (d.guests !== 0) d.guests = 99; }); });
+  await p.evaluate((vis) => { Object.values((window.__qbLoft && window.__qbLoft().defs) || window.ROOMDEF || {}).forEach((d) => { if (vis && d.visitors) { d.visitors = null; d.guests = 99; } if (d.guests !== 0) d.guests = 99; }); }, !!process.env.VIS);
   await p.evaluate(() => { document.querySelectorAll('.dropsplash,.modal,.overlay').forEach((e) => e.remove()); const t = [...document.querySelectorAll('button')].find((e) => /the loft/i.test(e.textContent)); if (t) t.click(); });
   await p.waitForTimeout(1500);
   for (const room of rooms) {

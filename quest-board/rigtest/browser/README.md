@@ -7,7 +7,7 @@ with a save that owns every room and every upgrade.
 
 - `sheet.js out.png "<matrix.html query>" ...` renders rig contact sheets (see `../matrix.html`).
 - `rooms.js [room,room]` screenshots each room fully upgraded.
-- `guests.js room,room` puts guests on every guest spot and staff on every staff spot, pass by pass.
+- `guests.js room,room` puts guests on every guest spot and staff on every staff spot, pass by pass. `VIS=1` fills a visitors-only room (the Game Room) with ordinary guests.
 - `me.js bedroom` puts your character on every spot of a home room.
 - `watch.js room [shots] [gap]` leaves a room to run on its own and screenshots it.
 - `gaps.js` lists the closest pairs of furniture in every room and anything outside its room.

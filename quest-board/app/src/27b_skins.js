@@ -41,10 +41,33 @@ function gmWall(w,h){return '<rect width="'+w+'" height="'+h+'" fill="#27304c"/>
 /* a hand-placed thing: [id, name, price, sprite, x, y, w, d, flip, line, extra] */
 function PL(id,nm,pr,k,x,y,w,d,flip,line,ex){var e=Object.assign({},ex||{});e.art=[k,x,y,w,d,0,Object.assign({flip:flip?1:0},e.o||{})];return [id,nm,pr,k,"",0,0,0,line,e]}
 function PLn(id,nm,pr,list,line,ex){var e=Object.assign({},ex||{});e.art=list.map(function(q){return [q[0],q[1],q[2],q[3],q[4],0,{flip:q[5]?1:0}]});return [id,nm,pr,list[0][0],"",0,0,0,line,e]}
-/* ---- game room ---- */
-var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",acc:"#7df9ff",fl:"d",size:[[13,10]],layout:[11,9],coin:0,guests:0,group:"Games",xpBase:2,desc:"A room with one job: having fun. Rested people level faster.",
+/* ---- game room ----
+   Like the Club, this art is drawn running along the back wall facing into the room; flipped, along the left wall facing
+   right. The rear-view couch and gaming chairs face the back wall. So: a TV wall on the back wall (TV over the console
+   shelf) with the couch and gaming chairs in a row facing it, an arcade corner (cabinet, dartboard, foosball, light
+   panels) at the back left, a retro corner (old TV and beanbags) on the left wall, the snack wall (snack bar, soda machine)
+   at the back right, and the pool and ping pong tables across the front with room to play. The door is on the right edge
+   (y 4.7 to 6.1); the band in front of the couch is the walkway. Drawn to its real size, so nothing spreads. */
+var GMB={fxwall:1};
+var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",acc:"#7df9ff",fl:"d",size:[[13,10]],coin:0,guests:0,group:"Games",xpBase:2,desc:"A room with one job: having fun. Rested people level faster.",
  draw:function(C){roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall})},
- items:[PL("gm_tv","Big TV",UP_S,"gmx_tv",3.3,.1,3.0,.6,1,"The screen is always on."),PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",3.2,3.0,3.2,1.3,1,"You sit facing the TV, the way a couch should."),PL("gm_rug","Round Rug",UP_S,"gmx_rug",3.0,1.1,3.6,2.3,0,"Pulls the room together.",{o:{dk:9}}),PL("gm_games","Game Shelf",UP_S,"gmx_games",6.9,.15,2.2,.8,1,"Every console you ever owned."),PL("gm_pool","Pool Table",UP_M,"gmx_pool",.4,5.9,3.2,2.1,0,"Felt and chalk."),PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",6.0,5.8,3.0,1.9,0,"The noise is part of it."),PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.2,.3,1.1,1.1,0,"Your initials, forever."),PL("gm_foos","Foosball",UP_M,"gmx_foos",.25,2.0,1.3,2.0,0,"Spinning is cheating."),PL("gm_vend","Soda Machine",UP_S,"gmx_vend",9.5,.2,1.0,.9,1,"Free, because it is your house."),PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.1,6.3,.1,1.8,0,"It glows.",{o:{dy:-60,nosh:1,nob:1}}),PL("gm_dart","Dartboard",UP_S,"gmx_dart",1.7,.1,.9,.2,1,"Mind the wall."),PL("gm_chair","Gaming Chairs",UP_S,"gmx_chairb",7.4,1.8,1.7,1.4,1,"For when the couch is taken."),PL("gm_snack","Snack Bar",UP_S,"gmx_snack",.25,4.2,1.1,1.3,0,"Chips and soda, always stocked."),PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",4,7.3,1.4,1,0,"The old console still works.",{cust:[[4.7,9,1]]}),PL("gm_bean","Beanbags",UP_S,"gmx_bean",9.2,3.4,1.4,1.1,0,"Nobody ever gets up.",{cust:[[11.0,4.0,-1]]}),PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",9.8,4.9,0.8,0.8,0,"Never walk to the kitchen again.",{cust:[[10.2,6.4,-1]]}),PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",10.0,1.6,.6,.6,0,"Sets the whole room purple.",{light:[10.3,1.9,70,"#b070ff",2.6,.5]})]};
+ items:[PL("gm_tv","Big TV",UP_S,"gmx_tv",5.4,.05,2.6,.2,0,"The screen is always on.",{o:{dy:-44,h:1,nob:1,nosh:1,dk:30}}),
+  PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",4.3,3.5,3.2,1.3,0,"You sit facing the TV, the way a couch should.",{sit:[[5.2,4.05,1,10,1],[6.6,4.05,-1,10,1]]}),
+  PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"Pulls the room together.",{o:{dk:9}}),
+  PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
+  PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.2,6.9,3.2,2.1,1,"Felt and chalk.",{cust:[[5.8,6.4,-1],[3.65,7.95,1]]}),
+  PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",8.8,7.0,3.0,1.9,1,"The noise is part of it.",{cust:[[8.25,7.95,1],[12.35,7.95,1,GMB]]}),
+  PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.4,.3,1.1,1.1,0,"Your initials, forever.",{cust:[[.95,2.1,1,GMB]]}),
+  PL("gm_foos","Foosball",UP_M,"gmx_foos",.9,2.4,1.3,2.0,0,"Spinning is cheating.",{cust:[[.45,3.4,1],[2.7,3.4,-1,GMB]]}),
+  PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"Free, because it is your house.",{cust:[[12.1,1.8,1,GMB]]}),
+  PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.05,2.4,.1,2.0,1,"It glows.",{o:{dy:-62,h:1,nosh:1,nob:1,dk:30}}),
+  PL("gm_dart","Dartboard",UP_S,"gmx_dart",2.3,.05,1.1,.2,0,"Mind the wall.",{o:{dy:-40,h:1,nob:1,nosh:1,dk:30},cust:[[2.85,2.5,1,GMB]]}),
+  PL("gm_chair","Gaming Chairs",UP_S,"gmx_chairb",7.9,3.4,1.7,1.4,1,"For when the couch is taken.",{sit:[[8.4,4.1,1,12,1],[9.2,3.9,1,12,1]]}),
+  PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
+  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.2,5.2,1.0,1.4,1,"The old console still works."),
+  PL("gm_bean","Beanbags",UP_S,"gmx_bean",1.7,5.1,1.4,1.1,0,"Nobody ever gets up.",{sit:[[2.1,5.55,1,4,1],[2.75,5.9,1,4,1]]}),
+  PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.05,3.9,.6,.6,0,"Never walk to the kitchen again.",{cust:[[10.35,5.1,-1,GMB]]}),
+  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.5,.3,.5,.5,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]})]};
 /* Only Cal's friends visit the Game Room, as game versions of themselves. Add one line each:
    {id:"vega", name:"Vega", look:{body:"m", skin:"s3", hairStyle:"h1", hairColor:"black", top:"hoodie", topColor:"white",
     bottom:"jeans", bottomColor:"black", shoe:"sneakers", shoeColor:"white", eq:["al_bucket"]}}
