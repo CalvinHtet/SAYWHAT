@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: friends' database rules for the town (each player writes only their own `worlds/`, `pings/`, `board/` rows),
-  ready to apply with the v48 publish. Parked on Cal: QA's effort-first economy (a98abb6). Next: the rest of the writing
-  pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. (on 62c0c47)
+- Now: the rest of the writing pass (help screens, class story text) in `10_app_a.js` and `30_app_b.js`. Parked on Cal:
+  QA's effort-first economy (a98abb6). Next: with v48, the town's database rules below. (on 52c6dda)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -69,6 +68,12 @@ To do:
       2 to 5% on the woman (her long hair over the sleeves: a flat picture sits over or under all of it). Waiting on ROOMS.
 - [x] Stretch pose: the gentler yawn (Cal's pick), 0959719. Dark long sleeves still look torn at the elbow, as before.
 - [x] `lfvar.json`: a copy is in git at `app/lfvar.json` (0959719). `build.py` does not use it.
+- [ ] Town database rules, apply with the v48 publish (live page has none: any Contributor can overwrite any shared row).
+      Saves are already private (`data/users/<id>/state`). Declare with the page's db capability:
+      `{path:"worlds",read:"view",write:"owner"},{path:"worlds/{self}",read:"view",write:"interact"}` (ids are the player's
+      `user.id()`). Board posts and visit pings use `<uid>_<time>` ids, which `{self}` cannot match: move them to
+      `board/<uid>/posts/<time>` and `pings/<uid>/sent/<id>` first, then the same two rules for each. Test with two accounts
+      (one Contributor, one Viewer) before inviting anyone: QA's 15-player test.
 - [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
       sooner if the Loft height is sorted first.
