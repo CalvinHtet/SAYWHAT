@@ -1182,6 +1182,9 @@ html:has(#lfwrap),html:has(#lfwrap) body{height:100%}
 .qbsv-c small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .qbsv-c b{font-size:20px}
 .qbsv-c span{color:var(--muted);font-size:13px}
+/* LEAD: phone lag. A room window covers the building view and its SVG is already hidden, but its 500 or so CSS animations kept
+   running underneath. Pause them until the window closes. */
+body:has(#layer .modal) #app .lfwrap *,body:has(#layer .modal) #app .lfwrap *::before,body:has(#layer .modal) #app .lfwrap *::after{animation-play-state:paused!important}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

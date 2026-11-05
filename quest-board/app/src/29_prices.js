@@ -24,3 +24,16 @@ function qbWatchSave(){if(!db||!DOC||!db.doc(DOC).onSnapshot)return;db.doc(DOC).
 function qbRestore(){if(!db||!MYUID){pop("No backup on this device");return}db.doc("data/users/"+MYUID+"/backup").get().then(function(s){if(!s.exists){pop("No backup yet");return}loaded=false;db.doc(DOC).set(s.data()).then(function(){try{localStorage.removeItem("quest-board")}catch(e){}location.reload()},function(){location.reload()})})}
 setTimeout(function(){try{qbWatchSave()}catch(e){}if(window.__qbGuest||document.getElementById("qbt"))return;var d=document.createElement("div");d.id="qbt";d.innerHTML='<div class="qbt-m" hidden><button data-q="w">Skip a week</button><button data-act="simlvl">Level up</button><button data-act="simcoin">Get 10,000 coins</button><button data-q="b">Restore backup</button><button data-q="r">Reset everything</button></div><button class="qbt-t" data-q="t">Test</button>';document.body.appendChild(d);var m=d.querySelector(".qbt-m"),armed=0;
   d.addEventListener("click",function(e){var b=e.target.closest("[data-q]");if(!b)return;var q=b.dataset.q;if(q==="t")m.hidden=!m.hidden;if(q==="w")qbWeek();if(q==="b")qbRestore();if(q==="r"){if(armed)qbReset();else{armed=1;b.textContent="Tap again to wipe it all";setTimeout(function(){armed=0;b.textContent="Reset everything"},4000)}}})},600);
+/* Temporary, the owner's device only: how smoothly the game runs on the real phone. Each time the tab changes or a window opens
+   or closes, it counts frames for 5 s, then writes the last 16 samples to diag/perf, where Claude can read them. Remove it with
+   the phone log (qbFrame) at release. */
+var QBPL=[],QBPT=0,QBPK="",QBPB=0;
+function qbPerf(why){try{if(QBPB||window.__qbGuest||!db||!ownerView||document.hidden)return;QBPB=1;
+  var t0=performance.now(),last=t0,n=0,worst=0,slow=0,long=0,po=null;
+  try{po=new PerformanceObserver(function(l){long+=l.getEntries().length});po.observe({entryTypes:["longtask"]})}catch(e){}
+  var done=function(){QBPB=0;if(po)po.disconnect();var an=0;try{an=document.getAnimations().filter(function(a){return a.playState==="running"}).length}catch(e){}
+    QBPL.push({why:why,tab:view,win:!!document.querySelector("#layer .modal"),fps:+(n/5).toFixed(1),worst:Math.round(worst),slow:slow,long:long,anim:an,nodes:document.getElementsByTagName("*").length,img:document.images.length,t:Date.now()});QBPL=QBPL.slice(-16);
+    clearTimeout(QBPT);QBPT=setTimeout(function(){db.doc("diag/perf").set({appv:APPV,ua:navigator.userAgent,dpr:devicePixelRatio,w:innerWidth,h:innerHeight,cores:navigator.hardwareConcurrency||0,mem:navigator.deviceMemory||0,log:JSON.stringify(QBPL)}).catch(function(){})},1500)};
+  var f=function(t){n++;var d=t-last;last=t;if(d>worst)worst=d;if(d>50)slow++;if(t-t0<5000)requestAnimationFrame(f);else done()};
+  requestAnimationFrame(f)}catch(e){QBPB=0}}
+setInterval(function(){if(!loaded)return;var k=view+"|"+!!document.querySelector("#layer .modal");if(k!==QBPK){QBPK=k;qbPerf("change")}},2500);

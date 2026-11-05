@@ -161,6 +161,16 @@ const CASES = {
     check("another person's save on this browser is ignored", s.name === 'Online' && !s.dialog, s);
     await ctx.close();
   },
+  async speed_log(b) {
+    const { ctx, p, errs } = await start(b, { online: ONLINE });
+    await open(p);
+    await p.waitForTimeout(9000);
+    const d = await dbDoc(p, 'diag/perf');
+    const log = d ? JSON.parse(d.log) : [];
+    check('owner speed log reaches diag/perf', log.length > 0 && log[0].fps > 0, d && d.log);
+    check('no page errors', !errs.length, errs);
+    await ctx.close();
+  },
   async new_player(b) {
     const { ctx, p, errs } = await start(b, { online: null, device: null });
     await open(p);
