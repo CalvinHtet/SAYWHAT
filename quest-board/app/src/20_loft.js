@@ -922,7 +922,7 @@ function lfNavBuild(C,obs){
       var cx=(i+.5)*LFNC,cy=(j+.5)*LFNC;if(cx>=x0&&cx<=x1&&cy>=y0&&cy<=y1){cells.push(j*nx+i);cnt[j*nx+i]++}}
     list.push({x0:x0,y0:y0,x1:x1,y1:y1,cells:cells});});
   C.nav={nx:nx,ny:ny,cnt:cnt,obs:list,W:W,D:D};
-  if(C.patio&&C.patio.deck)C.nav.pa=lfPaObs(C.patio);
+  if(C.patio&&C.patio.deck){C.nav.pa=lfPaObs(C.patio);if(C.patio.real)C.nav.paR=C.patio.real}
   if(C.annex&&!C.annex.lair&&window.LFCL)C.nav.cl={x0:.9,x1:LFCL.CW-.3,y0:D-.3,yd:D+.25,y1:D+1.45,dx0:3.5,dx1:4.0,lr:!!C.annex.lr,lro:lfLrObs(C.annex)};
 }
 function lfCell(N,x,y){var i=Math.floor(x/LFNC),j=Math.floor(y/LFNC);i=Math.max(0,Math.min(N.nx-1,i));j=Math.max(0,Math.min(N.ny-1,j));return j*N.nx+i}
@@ -967,13 +967,15 @@ function lfLrPath(N,sx,sy,gx,gy){return lfGPath(N,lfLrIn,-18.6,5.4,19,13,sx,sy,g
 function lfPaObs(P){var o=[];if(P.swing){o.push([3.0,-1.0,1.1]);o.push([2.0,-1.0,.5])}if(P.deco)o.push([6.7,-1.7,.4]);return o}
 function lfPaIn(N,x,y){if(!N||!N.pa)return false;
   if(x>8.05&&x<9.15&&y>-.75&&y<.4)return true;
+  var R=N.paR;if(R){var px=x-R.ox,py=y-R.oy;if(px<.3||px>R.W-.12||py<.3||py>R.D+.05)return false;
+    for(var b=0;b<R.box.length;b++){var o=R.box[b];if(px>o[0]&&px<o[2]&&py>o[1]&&py<o[3])return false}return true}
   var ok=false;
   if(y<=-.3&&y>=-1.25&&x>7.5&&x<9.15)ok=true;
   else if(y<=-.3&&y>=-2.4&&x>1.8&&x<8.45-Math.abs(y))ok=true;
   if(!ok)return false;
   for(var i=0;i<N.pa.length;i++){var o=N.pa[i];if((x-o[0])*(x-o[0])+(y-o[1])*(y-o[1])<(o[2]+.35)*(o[2]+.35))return false}
   return true}
-function lfPaPath(N,sx,sy,gx,gy){return lfGPath(N,lfPaIn,1.2,-2.8,8.2,3.4,sx,sy,gx,gy)}
+function lfPaPath(N,sx,sy,gx,gy){var R=N.paR;if(R)return lfGPath(N,lfPaIn,R.ox,R.oy,Math.max(R.W,9.4-R.ox)+.2,R.D+1.0,sx,sy,gx,gy);return lfGPath(N,lfPaIn,1.2,-2.8,8.2,3.4,sx,sy,gx,gy)}
 window.lfPaIn=lfPaIn;
 function lfZoneIn(N,x,y){return lfClIn(N,x,y)||lfLrIn(N,x,y)||lfPaIn(N,x,y)}
 window.lfZoneIn=lfZoneIn;
@@ -1391,6 +1393,10 @@ function lfNext(a){
 function lfDogNext(a,C){
   var r=Math.random(),bed=a.bed;
   if(a.visitor&&a.leaveAt&&Date.now()>a.leaveAt){a.leaving=1;var d=lfDoorOf(C);a.speed=1.6;lfGo(a,d.x,d.y+.3,"leave");return}
+  var PR=C.patio&&C.patio.real;
+  if(PR&&!a.visitor&&Math.random()<.3){var pb=PR.beds[a.dname==="chopstick"?1:0]||PR.beds[0];
+    if(pb&&Math.random()<.45){a.speed=1.3;lfGo(a,pb[0],pb[1],{kind:"dogbed"});a.last="bed";return}
+    var ps=lfPick(PR.spots.filter(function(q){return lfPaIn({pa:[],paR:PR},q[0],q[1])}));if(ps){a.last="run";a.speed=a.dname==="chopstick"?2.3:1.2;lfGo(a,ps[0]+lfRand(-.3,.3),ps[1]+lfRand(-.3,.3),{kind:"dogrun"});return}}
   if(!a.visitor&&bed&&(a.last==="run"||r<.28)){a.speed=1.3;lfGo(a,bed[0],bed[1],{kind:"dogbed"});a.last="bed";return}
   if(r<.45){a.last="sit";a.mode="do";a.act="sit";a.t=lfRand(3,8);return}
   if(r<.72){var pts=C.st.filter(function(s){return s.kind==="wander"});var s=lfPick(pts)||{x:3,y:3};a.last="run";a.speed=a.dname==="chopstick"?2.3:1.2;lfGo(a,s.x+lfRand(-.5,.5),s.y+lfRand(-.5,.5),{kind:"dogrun"});return}
@@ -1516,8 +1522,8 @@ function lfDraw(a,force){
       if(!inCl){var K=LFCL,D2=C.D,bx=pp[0],by=pp[1]-28,qs=[[lfP(0,D2,0),lfP(0,D2+K.CD,0),lfP(0,D2+K.CD,K.H),lfP(0,D2,K.H)],[lfP(0,D2,0),lfP(K.CW,D2,0),lfP(K.CW,D2,K.H),lfP(0,D2,K.H)]];
         for(var qi=0;qi<2&&!hid;qi++){var q=qs[qi],ins=false;for(var u=0,w2=3;u<4;w2=u++){if((q[u][1]>by)!==(q[w2][1]>by)&&bx<(q[w2][0]-q[u][0])*(by-q[u][1])/(q[w2][1]-q[u][1])+q[u][0])ins=!ins}if(ins)hid=1}}
       ce.setAttribute("cx",pp[0].toFixed(1));ce.setAttribute("cy",(pp[1]-28).toFixed(1));ce.setAttribute("rx",hid?"34":"0");ce.setAttribute("ry",hid?"46":"0")}}
-  var inPa=a.role==="me"&&C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
-  if(a.role==="me"&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var op=(a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-3)||a.y<-.02;dr.style.transform=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)"}}
+  var inPa=(a.role==="me"||a.role==="dog")&&C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
+  if((a.role==="me"||a.role==="dog")&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var nw=Date.now();if((a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-1.6))dr._ou=nw+700;var op=nw<(dr._ou||0),tf=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)";if(dr._tf!==tf){dr._tf=tf;dr.style.transform=tf}}}
   if(inPa){if(g.parentNode!==inPa)inPa.appendChild(g)}else if(inLr){if(g.parentNode!==inLr)inLr.appendChild(g)}else if(inCl){if(g.parentNode!==inCl)inCl.appendChild(g)}else if(g.parentNode!==items){items.appendChild(g);a._in=0}
   if(a.role==="me"&&inLr){var ho=sv.querySelector("[id^=lfllho]"),hu=sv.querySelector("[id^=lfllhu]");if(ho){var bh=(a.x+a.y)<-3.8&&a.x<-9.5&&a.x>-17.5;ho.style.display=bh?"":"none";if(hu)hu.style.display=bh?"none":""}}
   if(a.mode==="walk"){var sdy=(a.tx-a.x)+(a.ty-a.y);if(Math.abs(sdy)>.02)a.back=sdy<0}
@@ -3038,10 +3044,27 @@ function lfPatioView(){
   var i=lfPatioSlot();if(i<0)return null;
   var r=S.base.slots[i],sv=[LF.W,LF.D,LF.N,LF.H,window.LFCR,LFDEC,LFWINS,LFREC,window.rmPortalsOn,LFWBR],s="",x0=LFWBR[0],x1=LFWBR[LFWBR.length-1];
   try{window.rmPortalsOn=0;var C=lfRoomCtx(r,900+i),W=C.W||7.5,D=C.D||5,o=lfP((x0+x1)/2-W/2,-.45-D,0);
-    s='<g transform="translate('+o[0].toFixed(1)+','+o[1].toFixed(1)+')">'+lfRoomSvg(r,900+i,C,{uid:901+i})+'</g>'}
+    /* its item layer is renamed: the Bedroom window looks up the first ".lfitems" to start its people, and found this one */
+    s='<g transform="translate('+o[0].toFixed(1)+','+o[1].toFixed(1)+')">'+lfRoomSvg(r,900+i,C,{uid:901+i}).replace(/class="lfitems"/g,'class="lfitems-pt"')+'</g>'}
   catch(e){s=null}
   finally{LF.W=sv[0];LF.D=sv[1];LF.N=sv[2];LF.H=sv[3];window.LFCR=sv[4];LFDEC=sv[5];LFWINS=sv[6];LFREC=sv[7];window.rmPortalsOn=sv[8];LFWBR=sv[9]}
   return s}
+/* The Patio room's real layout seen from the Bedroom (Cal: "the character and the dogs ... go in and out of the bedroom
+   and the patio"): its furniture footprints, spots to stand at and dog beds, moved into Bedroom coordinates (the Patio
+   sits behind the back wall, centred on the glass, as lfPatioView draws it). Shared globals are put back. */
+function lfPatioReal(){
+  var i=lfPatioSlot();if(i<0)return null;
+  var r=S.base.slots[i],sv=[LF.W,LF.D,LF.N,LF.H,window.LFCR,LFDEC,LFWINS,LFREC,window.rmPortalsOn,LFWBR],x0=LFWBR[0],x1=LFWBR[LFWBR.length-1],R=null;
+  try{window.rmPortalsOn=0;var C=lfRoomCtx(r,900+i),W=C.W||7.5,D=C.D||5,ox=(x0+x1)/2-W/2,oy=-.45-D,a=r.a||{};
+    R={ox:ox,oy:oy,W:W,D:D,box:((C.nav&&C.nav.obs)||[]).map(function(o){return [o.x0,o.y0,o.x1,o.y1]}),spots:[],beds:[]};
+    (C.st||[]).forEach(function(q){if(!q.lift&&!q.seat&&/^(look|wander|art|admire|smell|browse)$/.test(q.kind))R.spots.push([q.x+ox,q.y+oy,q.fx||1])});
+    [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0]].forEach(function(q){R.spots.push([q[0]+ox,q[1]+oy,1])});
+    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy]);
+    /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
+    R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})})}
+  catch(e){R=null}
+  finally{LF.W=sv[0];LF.D=sv[1];LF.N=sv[2];LF.H=sv[3];window.LFCR=sv[4];LFDEC=sv[5];LFWINS=sv[6];LFREC=sv[7];window.rmPortalsOn=sv[8];LFWBR=sv[9]}
+  return R}
 function lfPatioPre(C,uid){
   if(C.patio&&C.patio.room){var v=lfPatioView();if(v)return '<g clip-path="url(#lfph'+uid+')" pointer-events="none">'+v+'</g>'+(C.patio.deck?'<g clip-path="url(#lfph'+uid+')"><g id="lfpcg'+uid+'"></g></g>':'')}
   var p=C.patio,L=lfLS(),sk=lfSkyCols(L),dk=L.dark||0,q=lfPatioQ(),ys=q.map(function(a){return a[1]}),yT=Math.min.apply(0,ys),yB=Math.max.apply(0,ys),s="",P=lfP;
@@ -3170,7 +3193,8 @@ LFROOM.bedroom=function(C){
      wall, or a door of its own in the wall), and through the glass you see that room as it is furnished. */
   var w3=H("bd_win3"),w2=H("bd_win2"),pr=lfPatioSlot()>=0;
   LFWBR=w3?LFWBR0:LFWDOOR;
-  if(w3||pr)C.patio={deck:w3&&(H("bd_patio")||pr),swing:H("bd_swing"),deco:H("bd_pdeco"),room:pr};
+  if(w3||pr)C.patio={deck:pr||w3&&H("bd_patio"),swing:H("bd_swing"),deco:H("bd_pdeco"),room:pr};
+  if(pr&&C.patio)C.patio.real=lfPatioReal();
   if(w3||pr)lfWinFtc(C,uid);
   if(!w3){if(w2)lfWinPic(C,2.6,4.9,50,114,uid);
   else{lfSprWin(C,"w_win1",3.5,.05,.1,.05,{flip:1,H:76,dy:-26});LFWINS.push(2.7)}}
@@ -3188,7 +3212,8 @@ LFROOM.bedroom=function(C){
   if(AN&&!C.annex.lair){var K=LFCL,Y=C.D;C.s("browse",1.05,Y+.7,-1,"look",[6,11],{tag:"browse"});C.s("browse",2.2,Y+.85,1,"look",[6,11],{tag:"browse"});C.s("browse",3.0,Y+.85,1,"look",[6,11],{tag:"browse"});
     if(C.annex.lr&&C.annex.desk)C.s("sit",-17.2,10.7,-1,"type",[14,30],{tag:"lairpc",lift:1,sz:0,exit:[-14.9,11.0]});
     if(C.annex.lr){C.s("look",-11,12,1,"look",[8,14],{tag:"lair"});C.s("look",-13,14.5,-1,"look",[8,14],{tag:"lair"});C.s("look",-9,14.5,1,"look",[8,14],{tag:"lair"});C.s("look",-14.4,12.8,-1,"look",[6,10],{tag:"lair"});C.s("look",-11.4,9.9,-1,"look",[6,10],{tag:"lair"})}}
-  if(C.patio&&C.patio.deck){C.s("look",7.7,-.95,1,"look",[8,14],{tag:"deck"});if(C.patio.swing)C.s("sit",3.0,-1.0,1,"sit",[14,30],{tag:"egg",lift:1,exit:[4.6,-.45],sz:QBLoft.data.loft.eggLift});if(!C.patio.swing){C.s("look",4.0,-1.9,-1,"look",[8,14],{tag:"deck"});C.s("look",2.6,-1.6,1,"look",[6,10],{tag:"deck"})}}
+  if(C.patio&&C.patio.real){var PR=C.patio.real,dk0=0;PR.spots.forEach(function(q){if(dk0<6&&lfPaIn({pa:[],paR:PR},q[0],q[1])){dk0++;C.s("look",q[0],q[1],q[2],"look",[8,16],{tag:"deck"})}})}
+  else if(C.patio&&C.patio.deck){C.s("look",7.7,-.95,1,"look",[8,14],{tag:"deck"});if(C.patio.swing)C.s("sit",3.0,-1.0,1,"sit",[14,30],{tag:"egg",lift:1,exit:[4.6,-.45],sz:QBLoft.data.loft.eggLift});if(!C.patio.swing){C.s("look",4.0,-1.9,-1,"look",[8,14],{tag:"deck"});C.s("look",2.6,-1.6,1,"look",[6,10],{tag:"deck"})}}
   if(H("bd_nstand")){lfSpr4(C,"bd4_nstand",.15,4.3,.9,.8,{h:12,fit:1,flip:1,dk:-1.8});lfLight(C,.6,4.7,34,"#ffc27a",1.7,.5)}
   if(H("bd_plant"))lfSpr4(C,"bd4_plant",9.0,7.9,.8,.8,{h:40,H:84,occ:.9});
   /* The Closet door is in the left wall where the wardrobe stood (Cal, 2026-11-05). The wardrobe upgrade became a
