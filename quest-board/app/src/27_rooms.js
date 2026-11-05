@@ -32,10 +32,17 @@ Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"
 /* the old Bedroom drew these rooms inside itself. They are their own rooms now. */
 var bedBase=LFROOM.bedroom;
 LFROOM.bedroom=function(C){var h=C.has;C.has=function(k){return /^bd_(patio|swing|pdeco)$/.test(k)?false:h(k)};bedBase(C);C.has=h;rsArtReady();
-  if(h("bd_dbed1")){lfSpr(C,"hmx_dogbed",4.4,7.1,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});lfSpr(C,h("bd_dbed2")?"hmx_dogbed":"",6.2,7.5,1.2,1.0,{h:6,ctr:1,H:40,dk:.5})}
-  C.dogs=[];if(h("bd_pluto"))C.dogs.push({id:"pluto",bed:[5.0,7.6]});if(h("bd_chop"))C.dogs.push({id:"chopstick",bed:[6.8,8.0]})};
-function displayWall(C){var own=SHOP.filter(function(x){return S.owned&&S.owned[x[0]]&&x[6]&&x[6].gar&&!x[6].basic}).slice(-6);var U=LF.U,s='<rect x="-3" y="-3" width="'+(U*5+6)+'" height="66" fill="#1b1720" stroke="'+LFOL+'"/>';
-  own.forEach(function(it,i){s+='<rect x="'+(4+i*24)+'" y="4" width="21" height="52" fill="#fff7e8"/><image href="'+itemArt(it)+'" x="'+(5+i*24)+'" y="14" width="19" height="32"/>'});C.walls.push(lfFaceY(4,0,126,s))}
+  /* Both dog beds along the front edge on the closet side, well apart: the corner by the plant stays clear. */
+  if(h("bd_dbed1")){lfSpr(C,"hmx_dogbed",2.0,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5});lfSpr(C,h("bd_dbed2")?"hmx_dogbed":"",4.7,7.8,1.2,1.0,{h:6,ctr:1,H:40,dk:.5})}
+  C.dogs=[];if(h("bd_pluto"))C.dogs.push({id:"pluto",bed:[2.6,8.3]});if(h("bd_chop"))C.dogs.push({id:"chopstick",bed:[5.3,8.3]})};
+/* A lit shelf along the cornice of the back wall, above the wardrobes, so it covers none of them. It fits the
+   wall whatever the room's width, and with nothing bought yet it shows empty glass cubbies, not a dark slab. */
+function displayWall(C){var own=SHOP.filter(function(x){return S.owned&&S.owned[x[0]]&&x[6]&&x[6].gar&&!x[6].basic}).slice(-6),U=LF.U,x0=.9,w=Math.max(2,C.W-x0-.9)*U,n=6,cw=w/n,hh=28,
+  s='<rect x="-2" y="-2" width="'+(w+4)+'" height="'+(hh+4)+'" rx="2" fill="#2a1d14" stroke="'+LFOL+'" stroke-width=".8"/>';
+  for(var i=0;i<n;i++){var it=own[i],cx=i*cw;s+='<rect x="'+(cx+2)+'" y="2" width="'+(cw-4)+'" height="'+(hh-4)+'" rx="1.5" fill="'+(it?'#fff3dc':'rgba(255,236,200,.16)')+'" stroke="rgba(255,214,150,.55)" stroke-width=".6"/>';
+    if(it)s+='<image href="'+itemArt(it)+'" x="'+(cx+4)+'" y="4" width="'+(cw-8)+'" height="'+(hh-8)+'" preserveAspectRatio="xMidYMid meet"/>'}
+  s+='<rect x="0" y="'+(hh-2)+'" width="'+w+'" height="2" fill="#ffd9a0" opacity=".85"/>';
+  C.walls.push(lfFaceY(x0,0,(LFWH.closet||200)-32,s))}
 /* the Closet and the Lair are single painted rooms: the art is the room */
 function artRoom(C,k,T,a,b,c,d){var Sp=LFSP4[k];if(!Sp)return;var t=lfP(0,0,0),e=t[0]-(a*T[0]+c*T[1]),f=t[1]-(b*T[0]+d*T[1]);return '<image href="'+lfSp4Url(k,"d")+'" preserveAspectRatio="none" width="'+Sp.w+'" height="'+Sp.h+'" transform="matrix('+[a,b,c,d,e,f].map(function(v){return v.toFixed(5)}).join(",")+')"/>'}
 autoRoom("closet",{name:"Walk-in Closet",lv:1,startLv:3,step:1,wall:"#3a2a20",wain:"#2a1e16",acc:"#ffd27a",fl:"w",size:[[7,7]],H:200,shell:1,door:false,guests:0,group:"Closet",desc:"Your clothes finally have a room of their own. Everything you buy in the Shop lives here.",
