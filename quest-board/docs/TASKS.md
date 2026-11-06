@@ -300,7 +300,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
-- WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
+- TAKEN by QA. WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
   of the pool steps, the shower by the right rail, no ice cream cart, towel station or second loungers drawn (owners keep
   the ids, no card for new players); a stairwell with a gap in the glass at the Bar door (front-left edge) and the Bar
   arrow walks down; glass rail on the front-right edge; nothing outside the deck. ROOMS's headless pass: no page errors.
@@ -1118,7 +1118,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it; the Rooftop's way down and rail when ROOMS fixes them. (on 17e5851)
+- Now: ROOMS's Rooftop fixes (fb8149a), test copy only (`openair.js`, `retired.js`, `skybarshell.js`). Next: v0.50 when LEAD
+  builds it. (on 10a936b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
