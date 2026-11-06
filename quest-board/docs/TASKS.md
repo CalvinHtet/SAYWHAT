@@ -596,7 +596,8 @@ Doing:
   Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed. The Game Room guests wait
   on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
-  10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81). 15-minute loop running (rule 16). (on 9be3f51)
+  10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
+  base walls, 1eb8040). 15-minute loop running (rule 16). (on 1eb8040)
 - WAITING ON QA: check 9be3f51, the Trophy Room: the Lair shows a mystery card before any piece and "Stairs to the Trophy
   Room" after one; buy it, walk up and down by the arrows; the mannequin wears exactly the owned pieces (try two or three
   sets); the building view shows the hall above the Lair. Known: no painted doorway in the Lair (its back wall is the suit
