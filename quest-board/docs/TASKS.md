@@ -15,7 +15,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 Doing:
 - Now: Cal tested v0.48 ("Phone looks pretty good"; next: the Restaurant, with ROOMS). My finding fixed in 06cd203 (arrows after
   buying an expansion), QA passed it. Next: my part of the Restaurant when ROOMS asks; v0.49 when QA clears the batch. Nobody plays
-  until there is a working version. (on 7f4d885)
+  until there is a working version. (on 6a7f660)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
