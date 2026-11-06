@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 1:37 am)
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copies: v0.51 (ac8d2f0), 2026-11-06, the newest; v0.50 (f3c970c) stays pinned beside it.
 
@@ -1231,12 +1231,18 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: the yawn for the other 28 tops (Cal, 2026-11-06: "Yes, paint all 28"): one Higgsfield sheet per top, both bodies,
-  cut into `art/app/<m|f>_<id>_yawn.webp` (new files only; `tools/yawn_cut.py`), then every top checked in the stretch pose
-  and sent to QA. Chrome claimed. The team's tops and the Rift Mask are in v0.51 (ac8d2f0).
+- Now: WAITING ON QA (since 2:35 am, rule 17): check 503cd3f, the yawn painted for the other 28 tops (Cal, 2026-11-06: "Yes,
+  paint all 28"). 56 new files `art/app/<m|f>_<id>_yawn.webp`, nothing else changed; only the `stretch` pose uses them.
+  Every top in `items.json` now has its own painted yawn (31 with the pilot's three). ROOMS's check, on the real rig
+  (`rigtest/matrix.html?sheet=onepose&pose=stretch`, 46 cells, every top on every body it fits): no tears at the shoulder,
+  armpit or elbow, no stray marks, no page errors. Fixed before committing: `h_knit` repainted as the cropped button
+  cardigan it is; `v_mesh` colour-matched to its rest art (it came out orange); the baby tee's stray mouth mark removed.
+  Not checked: other trousers, hair, hats and accessories over them (QA's combination sweep), in a room, on a phone.
+  Still torn: `stretchUp` (arms straight up) is a different pose with no painted layers, so dark sleeves still tear there.
+  Chrome free. The team's tops and the Rift Mask are in v0.51 (ac8d2f0).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`.
-  Next: the Game Room guests wait on Cal (his friends' looks). (on b57476c)
+  Next: fix what QA finds; the Game Room guests wait on Cal (his friends' looks). (on 503cd3f)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
