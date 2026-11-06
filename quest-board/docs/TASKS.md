@@ -1790,15 +1790,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 5d0986c): Kode PinK (kp_*). Uncommitted: data/items.json (the 15 kp_* entries); 3 of 15 ingested (bucket, phones,
-  clips), bag, pendant, varsity painting on Higgsfield. Next: the other 9 pieces, banner and logo, then SAYMØRE (browse Cal's
-  Higgsfield history first), the yawn layers for NICE COCK's 4 tops, plaza s2..s6. Open from QA's Restaurant pass: guests never
-  use the patio seats (seats are cust and picked at random; likely the route past the deck rail; probe next).
-  WITH QA: 765e6fc + 5d0986c the Restaurant pass (#2, 3, 5, 6, 7, 8, 10; LEAD did #9), e884ffd Garden door and coin bubbles,
-  1ca5f89 NICE COCK banner and logo (wired by LEAD as "nc"), f2c495b the Sweatband, the seven friend portraits.
-  WAITING ON CAL: Game Room ping-pong (drop it?). Chrome: ROOMS.
+- Now (on 1dde4e1): nothing open in files. Next: SAYMØRE (sm_*): first browse Cal's Higgsfield history for the SAYMØRE
+  sources (no credits) and save them to docs/ref/saymore/, then 15 pieces, badge and banner. After that: the yawn layers for
+  NICE COCK's and Kode PinK's tops, plaza s2..s6. WITH QA: 1dde4e1 Kode PinK (15 pieces + badge + banner, id "kp"; shop lines
+  sent to LEAD), 4b7ef27 + 5d0986c the Restaurant round 2 (boards, pot racks, coffee, till box; boards already lie on the
+  wall plane, picture sent), the seven friend portraits. WAITING ON CAL: Game Room ping-pong (drop it?). Chrome: ROOMS.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 5d0986c)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 1dde4e1)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
