@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.49 published and pinned for Cal (8fabe1a, fresh start); WAITING ON Cal's phone test (QA: the page matches the build, 97e9810). Next: Cal's
-  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. Ready for v0.50 once Cal confirms v0.49 (rule 18): steps 3 to 11 on ROOMS's side (Boba, Lock and Key, Rooftop, Mall,
-  Theater, Auditorium, Arcade, VR, Bowling, Karaoke; Rhythm, the Nightclub and the team in their rooms with QA), LEAD's Auditorium gate. (on 8f1498d)
+- Now: WAITING ON Cal: test v0.49, or skip to v0.50 (asked 2026-11-05). v0.50 is ready to build: every storyboard room has
+  QA-passed art (Boba to the Nightclub), the team stands in their rooms, the Auditorium's gate, the writing pass (0 voice hits).
+  QA is ready for its pre-release check. Nobody else plays until there is a working version. (on 52bf664)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
