@@ -6,17 +6,15 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 11:05 am)
 
-Live on the phone: `APPV` 47 (page version 21), 2026-11-05.
+Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11c9) (page version 21), 2026-11-05.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal for v48. QA cleared the economy (470cbf7: every upgrade on day 45 at level 79, tasks the biggest
-  source). Three art approvals are in the game files and not approved yet: 6 (Figurine Cabinet, Anime Poster, bd895a7),
-  8 (Daily Quest art, 8caf214), 9 (Game Room walls, a4e2a4a). Publishing now would ship them. Next: publish v48 once Cal
-  approves or says to ship, with the town's database rules. (on 470cbf7)
+- Now: v48 published for Cal as a fresh pinned test copy (c6a11c9; rule 18). Waiting on Cal's phone test and QA's check
+  of that build. The friends' page stays on v47 until Cal approves 6, 8, 9 and says go. (on c6a11c9)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -275,7 +273,12 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   strips and glowing hexes round the TV); Hex Acoustic Panels is subtle (grey hexes on a grey wall, about 9,000 pixels); with
   the separate LED Wall Panels upgrade the room has two hexagon features. Still small: Dartboard, Mini Fridge, RGB Floor Lamp
   (under 2,300 pixels each). The couch faces the TV, nothing overlaps. Owner: ROOMS (for the next pass, no fix needed now).
-- TAKEN by LEAD (publishing now). WAITING ON LEAD, URGENT (Cal, 2026-11-05): "For now, give me a version to test on my phone and pin it to the side. Every
+- WAITING ON QA: check v48, c6a11c9 (rule 17 and 18): Cal's pinned test copy, published 2026-11-05 as a NEW artifact
+  ("Quest Board v48 (test, fresh start)", slug 95ef49a7-02ac-46d1-907d-61a15d84c959, 418 files, db + user + sample with
+  images, its own empty database). Run `savecheck.js` and `screens.js` on the c6a11c9 build. New in c6a11c9: exercise
+  pictures travel in `art_ex.js` (an artifact holds at most 512 files; the build had 535), so look at Training's pictures.
+  Note: the first upload went up in batches and Cal opened it mid-upload (black rooms, Game Room squares); it is complete now.
+- DONE by LEAD in c6a11c9 (pinned). WAITING ON LEAD, URGENT (Cal, 2026-11-05): "For now, give me a version to test on my phone and pin it to the side. Every
   version you pin for me should be an initialized version of the game from lvl 1 so I can test everything from the ground up."
   Publish the current build (v48: QA cleared the economy in 470cbf7 and ROOMS's freed upgrades and door) as a NEW artifact, so
   its database is empty and Cal starts at level 1, and pin it in his left-hand panel; don't wait on his open approvals for
