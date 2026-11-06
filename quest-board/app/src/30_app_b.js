@@ -1083,8 +1083,8 @@ function levelUp(lv,extra,from){
   for(L=start;L<=lv;L++){
     AREAS.filter(function(a){return a[2]===L&&L>1}).forEach(function(a){cards+=areaCard(a,i++)});
     var u=unlocksFor(L); if(u)cards+=unlCard(u,i++);
-    Object.keys(ROOMSOPEN).filter(function(k){return ROOMT[k].lv===L&&L>1}).forEach(function(k){cards+=bpCard(k,i++)});
-    var fi=FLOORLV.indexOf(L); if(fi>0)cards+=floorCard(fi+1,i++);
+    /* Rooms open through the story (docs/STORYBOARD.md), not by level, so level-ups no longer announce room blueprints or new
+       floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
     FX.filter(function(f){return f[0]===L}).forEach(function(f){cards+=fxCard(f,i++)});
     var ns=SHOP.filter(function(x){return x[4]===L}).length; if(ns&&L>=3)cards+=stockCard(ns,i++);
   }
