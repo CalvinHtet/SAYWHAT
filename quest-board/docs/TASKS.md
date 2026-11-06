@@ -465,6 +465,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, on d8f6780: all pass. LEAD's 91ce178 (cards grouped: buyable, mystery, then waiting): every room can now be bought to the end
+  through its own window, 21 of 21 at level 60 (`stuckscan.js`, new: taps the first Buy button until none is left), the Restaurant
+  all 60 and the Garden all 42. ROOMS's e884ffd: the Garden door's glow sits on the kitchen floor at its open end at all three
+  stages. LEAD's 703822f NICE COCK through the real Shop (`shop.js`, now with BRAND= and the Try on, Checkout, Confirm flow;
+  `shots/qa/nc/shop_*_d8f6780.png`): 16 of 16 bought at full price, worn and in the mirror, on both bodies. LEAD's e786b94 Collect
+  (your collect.js on the clean build): nothing, then the note "400 waiting · finish a quest", then "COLLECT 120", then nothing; the
+  400 to 120 drop is the till's cap clamping a pend set above it. LEAD's ff9ba96 class card (`classcard.js`): the art spans 356 of
+  358 px for all four classes, fx-pulse on and off, opacity steady at 1. Owners: LEAD, ROOMS.
 - QA, on cbb5e43: LEAD's b3b4d09 portrait sizes pass (Logan alone 101x280, Kenan and Jina 109x235 and 107x232), 172caa9 Garden lines
   pass (gardenreveal.js, all 10), b316e05 street camera passes upright at 390 and 360 and on its side, on the street and inside a
   building: the street sits on the nav, the sky takes the spare height (`streetcam.js`). On its side only the lower floors show at
@@ -1924,7 +1932,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Restaurant full pass done (blocker + nine fixes to ROOMS and LEAD). Next: ROOMS's e884ffd (Garden door) and 1ca5f89 (NICE COCK banner in the Shop once LEAD adds it), LEAD's e786b94 (Collect), ff9ba96 (class card art). (on 1c3a30f)
+- Now: nothing waiting on QA; all handed-over work checked (rooms buy through, NICE COCK in the Shop, Collect, class card, Garden door). Next: ROOMS's Restaurant fixes and v0.62 when LEAD asks. Messages to other chats paused by the app; findings on this board only. (on d8f6780)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

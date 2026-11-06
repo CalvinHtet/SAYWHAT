@@ -1,7 +1,7 @@
 // Shop sweep: on each body, buy every piece that fits through the real Shop buttons (brand by brand, skipping weeks ahead
 // with the Shop's own week offset so every brand is live once), check the coins, that it is owned and worn, that the
 // mirror lists it, then take it off again. Then every brand's whole outfit at once, and the Wardrobe tab.
-//   OUT=<folder> node shop.js [m|f]
+//   OUT=<folder> [BRAND=nc] node shop.js [m|f]
 // Writes <OUT>/shop_<body>.png (every piece alone in the mirror, labelled), <OUT>/outfits_<body>.png, <OUT>/shop.json,
 // and prints what failed.
 const fs = require('fs');
@@ -43,7 +43,7 @@ const mirrorShot = async (p, file) => {
       }
       S.simWeeks = 0; return map;
     });
-    const brands = await p.evaluate(() => [...new Set(window.__qb.x().SHOP.filter((x) => x[6] && (x[6].gar || x[6].basic)).map((x) => x[6].b))]);
+    const brands = (await p.evaluate(() => [...new Set(window.__qb.x().SHOP.filter((x) => x[6] && (x[6].gar || x[6].basic)).map((x) => x[6].b))])).filter((x) => !process.env.BRAND || process.env.BRAND.split(',').includes(x)); /* BRAND=nc,hanga: only these */
     const never = brands.filter((x) => !(x in weeks));
     if (never.length) fails.push('brands never live in 60 weeks: ' + never.join(', '));
     // the test page does not check the creator look: the Shop calls a basic piece "Wearing" when it matches it
@@ -66,17 +66,20 @@ const mirrorShot = async (p, file) => {
           continue;
         }
         const r = await p.evaluate((it) => {
-          const x = window.__qb.x(), S = x.S, c0 = S.coins;
+          const x = window.__qb.x(), S = x.S, c0 = S.spent || 0; /* spent, not coins: a badge reward on a first buy adds coins back */
           const card = () => document.querySelector('[data-card="' + it.id + '"]');
           const bt = card() && card().querySelector('button');
           const state = bt ? (bt.dataset.act || (bt.disabled ? 'disabled:' + bt.textContent.trim() : '')) : 'none';
           if (state === 'buy') bt.click();
+          else if (state === 'qstry') { bt.click(); /* the Shop since v0.6x: Try on, then Checkout, then Confirm */
+            const ck = document.querySelector('[data-act="qscheck"]'); if (ck) ck.click();
+            const cf = document.querySelector('[data-act="qsconfirm"]'); if (cf) cf.click(); }
           else if (state === 'equip') bt.click();
           const worn = (document.querySelector('.qs-worn small') || {}).textContent || '';
-          return { state, paid: c0 - S.coins, owned: !!S.owned[it.id], eq: S.eq[it.slot] === it.id, worn, after: card() ? card().querySelector('button').textContent.trim() : 'no card' };
+          return { state, paid: (S.spent || 0) - c0, owned: !!S.owned[it.id], eq: S.eq[it.slot] === it.id, worn, after: card() ? card().querySelector('button').textContent.trim() : 'no card' };
         }, it);
         const label = it.name + ' (' + it.id + ')';
-        if (r.state === 'buy' && r.paid !== it.cost) fails.push(label + ': paid ' + r.paid + ', price ' + it.cost);
+        if ((r.state === 'buy' || r.state === 'qstry') && r.paid !== it.cost) fails.push(label + ': paid ' + r.paid + ', price ' + it.cost);
         if (!r.owned) fails.push(label + ': not owned after buying (' + r.state + ')');
         const original = /^disabled:Wearing/.test(r.state);
         if (!r.eq && !original) fails.push(label + ': not worn after buying (' + r.state + ', button now "' + r.after + '")');
