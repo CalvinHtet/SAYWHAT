@@ -65,7 +65,24 @@ var EXTRA_ITEMS=[
  ["gx_al_tight","a_pants","Trail Tights & Shorts",1100,1,"Black tights, teal shorts.",{gar:"al_tight",b:"alt",fo:1}],
  ["gx_al_short","a_pants","Hiking Shorts",900,1,"Olive, belt included.",{gar:"al_short",b:"alt",mo:1}],
  ["gx_al_hiker","a_shoes","Hiking Boots",1500,1,"Brown leather, red laces.",{gar:"al_hiker",b:"alt"}],
- ["gx_al_sandal","a_shoes","Trail Sandals & Socks",850,1,"Thick straps, wool socks.",{gar:"al_sandal",b:"alt"}]];
+ ["gx_al_sandal","a_shoes","Trail Sandals & Socks",850,1,"Thick straps, wool socks.",{gar:"al_sandal",b:"alt"}],
+ ["gx_nc_jog_black","a_pants","Signature Jogger, Black",1500,1,"Heavyweight fleece, white wordmark.",{gar:"nc_jog_black",b:"nc"}],
+ ["gx_nc_jog_ash","a_pants","Signature Jogger, Ash",1500,1,"Heather grey, navy wordmark.",{gar:"nc_jog_ash",b:"nc"}],
+ ["gx_nc_jog_slate","a_pants","Signature Jogger, Slate",1500,1,"Mid grey, cuffs that stack.",{gar:"nc_jog_slate",b:"nc"}],
+ ["gx_nc_short","a_pants","Training Short",950,1,"Seven inches, wordmark on the leg.",{gar:"nc_short",b:"nc"}],
+ ["gx_nc_cap","a_hat","Wordmark Cap",800,1,"Black six-panel. nicecock.",{gar:"nc_cap",b:"nc"}],
+ ["gx_nc_beanie","a_hat","Rooster Beanie",750,1,"Ash rib knit, woven rooster.",{gar:"nc_beanie",b:"nc"}],
+ ["gx_nc_band","a_hat","Sweatband",600,1,"White terry, says it on the front.",{gar:"nc_band",b:"nc"}],
+ ["gx_nc_pendant","a_acc","Rooster Pendant",1100,1,"Silver rooster, fine box chain.",{gar:"nc_pendant",b:"nc"}],
+ ["gx_nc_shades","a_acc","Sport Shades",900,1,"Smoked wraparound lens.",{gar:"nc_shades",b:"nc"}],
+ ["gx_nc_hoodie","a_top","Heavyweight Hoodie",1700,1,"Navy, white tee hem underneath.",{gar:"nc_hoodie",b:"nc"}],
+ ["gx_nc_tee","a_top","Boxy Tee",1000,1,"Bone white, rooster on the back.",{gar:"nc_tee",b:"nc"}],
+ ["gx_nc_tank","a_top","Seamless Gym Tank",900,1,"Slate rib knit.",{gar:"nc_tank",b:"nc"}],
+ ["gx_nc_qzip","a_top","Performance Quarter-Zip",1400,1,"Black, rooster on the sleeve.",{gar:"nc_qzip",b:"nc"}],
+ ["gx_nc_court","a_shoes","Court High-Top",1600,1,"White leather, ash suede.",{gar:"nc_court",b:"nc"}],
+ ["gx_nc_knit","a_shoes","Knit Trainer",1300,1,"Black sock-knit runner.",{gar:"nc_knit",b:"nc"}],
+ ["gx_nc_slide","a_shoes","Pool Slide",700,1,"Debossed rooster.",{gar:"nc_slide",b:"nc"}]];
+/* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options

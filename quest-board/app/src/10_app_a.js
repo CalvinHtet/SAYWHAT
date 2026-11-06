@@ -1383,7 +1383,9 @@ var BRANDS=[
  {id:"y2k",name:"DIAL-UP",tag:"Low-rise, high drama",c:["#ff4fa3","#b46bff","#6cf0ff"],ac:"#fff",start:"2026-11-09",sub:"y2k thrift"},
  {id:"over",name:"OVERPASS",tag:"Built for kickflips you will never land",c:["#141416","#3a3a40","#ff6a1a"],ac:"#ff6a1a",start:"2026-11-16",sub:"street supply"},
  {id:"rose",name:"VENOM ROSE",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
- {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-11-30",sub:"mountain supply"}];
+ /* Cal: NICE COCK, his own brand, is drop 5; ALTITUDE moves back a week */
+ {id:"nc",name:"NICE COCK",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
+ {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-12-07",sub:"mountain supply"}];
 var GITEMS=[
  ["gx_h_snap","a_hat","Flat-brim Snapback",90,1,"Black cap, cream HANGANG patch.",{gar:"h_snap",b:"hanga"}],
  ["gx_h_beret","a_hat","Wool Beret",80,1,"Charcoal wool, tilted.",{gar:"h_beret",b:"hanga"}],
