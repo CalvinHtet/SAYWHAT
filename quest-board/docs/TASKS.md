@@ -154,7 +154,12 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
-- NEXT after the Restaurant (Cal, 2026-11-05, via QA): "Once the restaurant is done, I want to start work on the garden since
+- WORK ORDER (Cal, 2026-11-05): "From here on out, I want to reference LEAD's story board and work on things sequentially. The
+  garden comes before the restaurant so we should have done that first." The storyboard is `docs/STORYBOARD.md`: build from
+  the top down. **Step 1, the Garden, is next for everyone.** LEAD's call on ROOMS's Restaurant polish: finish and commit the
+  corner booth and the fire pit you already have in hand today (Cal's own notes), then stop the Restaurant there; the
+  fine-dining furniture waits until its step comes round again. Then the Garden.
+- (was: NEXT after the Restaurant) (Cal, 2026-11-05, via QA): "Once the restaurant is done, I want to start work on the garden since
   that is still part of the apartment loft." ROOMS: the Garden's painted shell and furniture to the same standard as the
   Restaurant (QA's lessons for the next art pass), its stages as it is upgraded, and the produce stand (the story sells
   produce there: `stySellHtml`, 4 coins a vegetable). LEAD: the Garden's text and story hooks, and whatever code its new
