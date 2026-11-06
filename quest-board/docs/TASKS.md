@@ -82,7 +82,7 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
-- READY TO PUBLISH once QA's wear test passes (Cal, 2026-11-06: "approve all"): the team's signature tops (097dccd), each
+- READY TO PUBLISH (Cal, 2026-11-06: "approve all"; QA passed it in 2d51cc2): the team's signature tops (097dccd), each
   member wearing theirs in their home room. Look at: Rafe in Lock and Key, Theo in the Theater, Nova in the Mall, Sable in the Lair.
 - READY TO PUBLISH (Cal, 2026-11-05: "approve all"): every ROOMS approval from 6 to 37 (16 and 7 were already approved).
   6 Bedroom cabinet and anime poster (bd895a7); 8 Daily Quest art (8caf214, wired a60b175); 9 Game Room walls (a4e2a4a);
@@ -1187,13 +1187,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA (taken in 07888ce): wear test of the team's signature tops (097dccd: `tm_rafe_jacket`, `tm_theo_tee`,
-  `tm_nova_knit`, `tm_sable_jacket`, slot top, both bodies). Cal approved them (2026-11-06, "approve all"); they are READY TO
-  PUBLISH once QA's wear test passes. The Rift Mask passed QA (b9000d2); LEAD's gift line is in (e389afa).
+- Now: nothing. The team's signature tops (097dccd) passed QA (2d51cc2) and are READY TO PUBLISH (Cal approved). The Rift
+  Mask passed QA (b9000d2); LEAD's gift line is in (e389afa).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free.
-  Next: fix whatever QA's wear test finds; the Game Room guests wait on Cal (his friends' looks). Nothing waits on Cal from
-  ROOMS. (on 2f48b12)
+  Next: WAITING ON CAL: paint the yawn for the other 28 tops (3 of 31 done)? It would also fix the torn dark sleeves in
+  `stretch` that QA saw again on the team's jackets and `v_blazer` (`stretchUp` is a separate pose). The Game Room guests
+  wait on Cal (his friends' looks). (on 2d51cc2)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
