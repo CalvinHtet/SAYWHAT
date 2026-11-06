@@ -43,8 +43,8 @@ source. No real person's face in any of them (no collaborators from the covers, 
 |---|---|---|---|---|
 | HANGANG (live) | 한강 | Two sizes too big, on purpose | | 1, fixed |
 | **NICE COCK** | luxury leisurewear | Something to crow about | jet black, heather ash, slate, bone white | 5, fixed |
-| **KODE PINK** (new) | anime city-pop | Made for the chorus | bubblegum pink, periwinkle, lilac, sunshine yellow, night navy | shuffled |
-| **SAYMØRE** (new) | bass culture | Built for the drop | night black, flare orange, pulse cyan, bone | shuffled |
+| **KODE PINK** (new) | anime city-pop | One in the pink, two in the… other one | bubblegum pink, periwinkle, lilac, sunshine yellow, night navy | shuffled |
+| **SAYMØRE** (new) | bass culture | Trust the motion | night black, flare orange, pulse cyan, bone | shuffled |
 | DIAL-UP | y2k thrift | Low-rise, high drama | | shuffled |
 | OVERPASS | street supply | Built for kickflips you will never land | | shuffled |
 | VENOM ROSE | dark glam | Soft velvet, sharper tongue | | shuffled |
@@ -105,7 +105,7 @@ powder-blue sailor collar and cream pleated skirt). The red brush-script **Kode 
 **Keep out:** the collaborators' names and faces, and the press logos in Cal's screenshots. The covers' characters inspire the
 style; the pieces are their own, not those exact outfits.
 
-**Sub:** anime city-pop. **Tagline:** Made for the chorus. **Feel:** 80s anime record sleeves: flat pastel colour, clean ink
+**Sub:** anime city-pop. **Tagline:** One in the pink, two in the… other one (Cal's). **Feel:** 80s anime record sleeves: flat pastel colour, clean ink
 lines, halftone dots, lightning-yellow streaks.
 
 **Logo:** the red brush-script Kode PinK signature (Cal's), over a small pastel crescent moon.
@@ -137,7 +137,7 @@ so ROOMS pulls the source images from Cal's Higgsfield library in Chrome as refe
 
 **Keep out:** *NO COPY*'s two unmasked faces and the collaborator names. The figure is always masked.
 
-**Sub:** bass culture. **Tagline:** Built for the drop (or "Say less", Cal picks). **Feel:** neon-sign outlines on black, as
+**Sub:** bass culture. **Tagline:** Trust the motion (Cal's). **Feel:** neon-sign outlines on black, as
 if the clothes were wired for a light show; orange carries, cyan traces.
 
 **Logo:** the Ø mark in neon orange inside a thin halo ring, the SAYMØRE wordmark under it in wide uppercase (Archivo, as in
