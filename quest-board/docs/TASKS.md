@@ -262,7 +262,27 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message): check ca1068d (rule 17), Cal's text and story audit: level-ups without the old crew or
+- QA, LEAD's text and story audit (ca1068d, on c1f1aa5, `rigtest/qa/audit49.js`; every level-up screen 1 to 100 in
+  `shots/levelups_c1f1aa5.txt`): mostly pass, 1 fix for LEAD. Pass: `unlocksFor` returns null, so no level-up shows the old crew,
+  the vault or a relic, and none of the 108 screens has "[object Object]", "undefined" or NaN; the New area cards read the new
+  Shop, Hall, Relics and Wheel lines; Sable's visit (Trophy Room) and Rafe's (Lock and Key) are not due on a new save or with a
+  set half done, and are due once the goblin set and the amulet are finished (Sable uses her team banner, Rafe his own picture);
+  the Dungeons and Relics screens have no bad text, the relics show the star stand-in and set emblems draw nothing until the art
+  exists; `tools/art_slots.py` rerun gives the same 55 of 67 as `docs/ART_SLOTS.md`. FIX (LEAD), the level-up screens still
+  announce the old blueprints and floors, against the storyboard: level 8 "NEW BLUEPRINT Restaurant ... Build it in your
+  Hideout", level 14 "NEW BLUEPRINT Garden: A small plot behind the building", 16 Boba Shop, 24 Movie Theater, 30 Mall, 50
+  Nightclub, and "THE LOFT EXPANDED Floor N is open. Two new slots to build on" at 8, 12, 16, 22, 26, 32 and 38. A save at
+  level 15 with no story progress has no lots and `__qbStory.allows` is false for all of them, so the cards promise rooms the game
+  does not open, the Restaurant before the Garden (Cal's order is Garden at level 3, then Mara), and "Hideout" is the old name.
+  Where: `levelUp` in 30_app_b.js (`bpCard` from `ROOMSOPEN`/`ROOMT[k].lv`, `floorCard` from `FLOORLV`). Drop both cards, or
+  word them as story hints. Owner: LEAD.
+- QA, ROOMS's d30bb93 and 642b791 (on c1f1aa5, `rigtest/qa/gameroom.js` and `restmenu.js`; `shots/gameroom_fixed.png`,
+  `gameroom_crt.png`, `rest_board_all.png`, `rest_board_cornerdiner2.png`): pass. The Retro TV's screen faces into the room on
+  the beanbags' side; Gaming Desks draws one long desk (`gmx_rig2`, the old `gmx_rig` not drawn) with two screens and a chair at
+  each, clear of the ping pong table; the board lists 26 of 26 in the Bistro and Noir, no name runs into its price, and in the
+  Corner Diner it hangs clear of the painting and the wine wall. The text is small at room size, which Cal says is fine. No page
+  errors. Owner: none.
+- DONE by QA (QA findings: pass, 1 fix for LEAD, the level-up blueprint cards). WAITING ON QA (LEAD's message): check ca1068d (rule 17), Cal's text and story audit: level-ups without the old crew or
   vault relics, the new Shop, Hall and Dungeons lines, two return visits after a finished dungeon set, the set emblems, `docs/ART_SLOTS.md`.
   Also ROOMS's d30bb93 (Game Room: the Retro TV faces the beanbags, `gmx_rig2`), a cheap look.
 - QA, Cal's Restaurant notes (04bb241, 0edb26c, on 54a4074, `rigtest/qa/restmenu.js` and `restshell.js`; `shots/rest_notes_bistro.png`,
@@ -663,10 +683,10 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241).
   12-minute loop running (rule 16). (on eb85e90)
-- WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
+- TAKEN by QA. WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
   corner now opens straight toward the room (new `rdx_curve2`), its table and two seats inside it; the patio's Fire Pit
   Lounge is a real fire pit (new `rsx_firepit2`: stone bowl, three Adirondack chairs, logs). Bistro and Noir.
-- WAITING ON QA: check d30bb93 and 642b791 (rule 17). Game Room (Cal's phone notes): the Retro TV now faces the beanbags; Gaming
+- DONE by QA (QA findings: pass). WAITING ON QA: check d30bb93 and 642b791 (rule 17). Game Room (Cal's phone notes): the Retro TV now faces the beanbags; Gaming
   Desks is one long desk with one curved screen and keyboard per seat, a chair facing each, the ping pong table clear of
   the chairs. Restaurant, your two menu-board fixes: every dish fits (22 Corner Diner, 26 Noir, the rows grow and long
   names shrink, none runs into its price) and the Corner Diner board clears the painting and the wine wall.
@@ -779,8 +799,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's text and story audit (ca1068d) and ROOMS's Game Room fixes (d30bb93), test copy only. Next: the Restaurant fixes, then
-  the Garden. (on 50d4c9c)
+- Now: ROOMS's booth and fire pit (f457680, eb85e90), test copy only. Next: the Garden as ROOMS and LEAD finish it
+  (storyboard step 1). (on fb23fa7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
