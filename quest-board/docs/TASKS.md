@@ -327,6 +327,20 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the yawn for the other 28 tops (ROOMS's 503cd3f, rule 17, on 2aecc59; `shots/yawn/`): the tops pass, 3 fixes needed.
+  Pass: every shop top (31) in the yawn, both bodies, short and long hair, 46 cells, 0 fails: no tears at the shoulder,
+  armpit or elbow; before and after (v0.51 against now) the blazer, Sable's and the coach jacket tore at the shoulder and
+  now do not. Every top with other trousers (all 19, skirts too), a hat (all 14) and long hair: 62 cells each, 0 fails, all
+  sit right. Fixes:
+  (1) Necklaces vanish in the yawn on every top: a painted top is drawn in its mesh's last group, after the neck layer
+  (`src/rig.js`, f57b1a0). It was already so for the pilot's three in the published v0.51 and is now every top. See
+  `neck_old.png` (v0.51: chain, star, lock show), `neck_new.png` (gone). Owner: LEAD (draw neck items after a painted top).
+  (2) The 3 starter tops every new player wears (`tee`, `hoodie`, `bomber`, from creator.json, not items.json) have no
+  yawn, so they still stretch, with skin at the shoulders (`zb_hoodie.png`). Owner: ROOMS (3 more sheets, Chrome).
+  (3) Male body only: a thin skin sliver at both sides of the waist, past every top, in the yawn. It comes from the pilot's
+  `m_base_yawn.webp` (leftover marks at both hips, `m_base_yawn.png`), so it is on the pilot's tops in v0.51 too; the female
+  body is clean. Owner: ROOMS (clean the hips of m_base_yawn).
+  Not checked: in a room, on a phone. Known: `stretchUp` still tears dark sleeves (no painted layers).
 - DONE by LEAD in 742a39e (the inbox rule added to `app/dbcaps.json`). QA, the town database rules (ab6a66e, `app/dbcaps.json`; new `rigtest/qa/townrules.js`, LEAD's two-player test on a stand-in
   database that applies the dbcaps.json rules themselves, with friends as Contributors): one gap. Not covered by any rule:
   `inbox/owner`, the list the owner's page turns into quests on Cal's Board (checkInbox). A path with no rule keeps the db
@@ -1414,8 +1428,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's yawn for the other 28 tops (503cd3f), test copies only. Next: the 15-player town test after the next publish.
-  (on 2aecc59)
+- Now: nothing waiting; the yawn tops are checked (3 fixes out). Next: recheck those fixes; the 15-player town test after the
+  next publish. (on 92c3854)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
