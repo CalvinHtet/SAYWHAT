@@ -305,6 +305,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.50 (f3c970c, APPV 50), with 9b28444 folded in.
 - QA, wear-test of the Rift Mask (dg_riftmask, d4eefc3, on 0507161; new `rigtest/qa/matrixshot.js` draws `matrix.html` headless with
   WebGL2 SwiftShader; `shots/riftmask_wear.png`, `riftmask_hatface.png`, `hmask_wear.png`): pass. sheet=wear: 44 cells, both bodies, every
   key pose, 0 failures: the mask sits on the lower face in every front pose (standing, walking, stretching, sitting, lying), nothing
@@ -1326,8 +1327,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: a quick check of LEAD's 9b28444 (building backdrops; the areas-seen record in the save): savecheck, day-one areas, building
-  views, test copy only. Next: v0.50's pre-release check (Cal: "Skip to v0.50"; LEAD reminded). (on 9b28444)
+- Now: v0.50's pre-release check (f3c970c): savecheck, screens, old-save areas, backdrops, new saves, doors, voice, test copy only.
+  Next: v0.50's published copy. (on 3c88bb7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
