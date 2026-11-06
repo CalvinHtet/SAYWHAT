@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 67d0e85 NICE COCK wear test (on da87000, matrix grid/wear/onepose with SwiftShader WebGL; sheets in `shots/qa/nc/`,
+  untracked): one fix, 15 of 16 pass. All 16 on both bodies in all 22 key poses (idle, walk 1-4, stretchUp, stretch, sits, type, sleep,
+  rear, back-walk 1-4, sleepHead), 0 draw failures, plus four outfits (cap+pendant+hoodie+black joggers+high-tops; beanie+shades+tee+
+  shorts+slides; pendant+quarter-zip+slate joggers+knit sneakers+shades; cap+shades+pendant+tank+ash joggers+high-tops): nothing tears,
+  floats or clips; the pendant sits over the hoodie and tee; joggers meet the high-tops cleanly. Fix: nc_band (sweatband, hat slot) cuts
+  the hair away above the band like a hat does, so the head is bald above it, front and back, both bodies (`band_zoom.png`; o_bandana
+  and both beanies keep their hair, `hats_cmp.png`). It needs the hair kept, or drawn over the hair as a band. Icons (`icons_big.png`,
+  `icons64.png`): "nicecock." is clean and legible on the band, cap, tee, hoodie and shorts; on the joggers it is a small mark at 64 px,
+  not garbled. Not checked: the yawn painted layer (none yet; the 404 for f_nc_hoodie_yawn falls back as designed), real Safari/WebGL,
+  and in-room size. Owner: ROOMS.
 - QA, on da87000: LEAD's 21aae0a (friends only in their own room's building, no dog copies; friendsroom.js) and 1e2f433 (room
   tester: no retired pieces, openers open their rooms, Next story step walks a new player through all 17 rooms in story order with
   their scenes, then stops; roomtester.js) pass, 0 errors. a652991 drop schedule (`drops.js`): on, every date a Mon or Thu, HANGANG
@@ -1882,7 +1892,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's 67d0e85 NICE COCK wear test. Then LEAD's 5688ce3 (Wednesday returns) and ff9ba96 (class card art), ROOMS's 4bcda62 (dry beds, watering), b9bcbbf, 07812e4, d233c9e. (on da87000)
+- Now: NICE COCK done (sweatband fix, ROOMS). Next: LEAD's 5688ce3 (Wednesday returns) and ff9ba96 (class card art), ROOMS's 4bcda62 (dry beds, watering), b9bcbbf, 07812e4, d233c9e. (on da87000)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
