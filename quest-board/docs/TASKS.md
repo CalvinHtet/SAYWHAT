@@ -6,15 +6,15 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 11:05 am)
 
-Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11c9) (page version 21), 2026-11-05.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.49 (8fabe1a) (page version 21), 2026-11-05.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.49 built (8fabe1a), WAITING ON QA for its pre-release check (rule 18). Then LEAD publishes it as a fresh pinned copy
-  for Cal. Nobody else plays until there is a working version. v0.49 is published from the commit QA checks; later commits (the Boba shell, c223d89) wait for v0.50. (on 13d7cca)
+- Now: v0.49 published and pinned for Cal (8fabe1a, fresh start); WAITING ON Cal's phone test and QA's file check. Next: Cal's
+  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. (on 4b1c78b)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
