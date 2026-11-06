@@ -291,6 +291,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): recheck QA's old door findings (doors.js in full) and walk the moved doors live.
 - QA, every door pair after ROOMS's fd80c50 (on f21855d, `doors.js` LOGIC; `shots/doors_f21855d.txt`): pass. All 36 pairs follow Cal's
   left/right rule; the only flag is the Mall–Karaoke pair, the shortcut that shows only in saves without Bowling (not next to each
   other in the building, by design). The Nightclub has no doors (bought from the street). Owner: none.
@@ -1296,7 +1297,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50's pre-release check when Cal decides (LEAD asked: test v0.49, or skip to v0.50). (on f21855d)
+- Now: the door recheck (`doors.js` in full, `doorwalk.js`), test copy only. Next: v0.50's pre-release check when Cal decides. (on fc356dd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
