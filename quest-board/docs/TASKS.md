@@ -401,6 +401,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the upgrade visibility audit (ROOMS's tools/upgrade_audit, run on the v0.53 build 743c30c, so before the shadows and
+  60ab997; `shots/upaudit/`: report.md, sheets/, qa_list.txt ranked worst first): 503 upgrades in 30 rooms, OK 363, WEAK 98,
+  NONE 42, GROWS 7, retired 16. Of the 140 WEAK or NONE, 54 show nothing by design (people, menus, money caps, room openers, pets).
+  Left: 12 NONE. Pieces that draw nothing: Walnut Dividers (r_d3), Drinks Cooler (r_cool), Dish Station (r_k9), Irrigation
+  (f_pump), Lobby Chandeliers (t_chand), Neon Trim (ar_neon), Film Reel Wall Art (t_reel). Services with no picture: Mixology
+  Course (b_mixo), Bottle Service (k_bottle), Concession Staff (t_st2), Head Gardener (g_gard2), More Plots (g_p2). And 74
+  WEAK, mostly small wall pieces and neons under 0.4% of the room (Laser Rig, Aisle Lights, RGB Floor Lamp, Smoke Machine, Wall
+  Clock, Neon Sign, Ball Return, Ball Rack). Owner: ROOMS.
 - QA, v0.54 (a384feb, APPV 54, built clean; rule 18: pass, publish it; `shots/v54/`). (1) The stretch: every frame of the clip
   (`sheet=clip`) for the 3 starter tops in white, grey and black and all 31 shop tops, both bodies, 70 rows, each frame sorted
   by which picture it is (new `clipframes.js`): every row is idle on frames 0-1 and 22-23 and the painted yawn on 2-21, no
