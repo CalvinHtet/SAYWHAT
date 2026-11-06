@@ -78,19 +78,19 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",4.3,3.5,3.2,1.3,0,"You sit facing the TV, the way a couch should.",{sit:[[5.2,4.05,1,10,1],[6.6,4.05,-1,10,1]]}),
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"A round rug with a teal pattern under the couch.",{o:{dk:9}}),
   PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
-  PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.85,7.65,3.2,2.1,1,"Felt and chalk.",{cust:[[6.45,7.15,-1],[4.3,8.7,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
+  PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.35,7.65,3.2,2.1,1,"Felt and chalk.",{cust:[[5.95,7.15,-1],[3.8,8.7,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
   PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",9.0,2.0,3.0,1.9,1,"A blue table, two paddles and a net clamp.",{cust:[[8.45,2.95,1],[12.4,2.95,-1,GMB]]}),/* QA: its own open floor (the room is 13 x 10): past the sectional, a tile off the snack corner, clear of the doorway at 12.1,5.4 */
   PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.4,.3,1.1,1.1,0,"A green upright with a joystick and two buttons.",{cust:[[.95,2.1,1,GMB]]}),
-  PL("gm_foos","Foosball",UP_M,"gmx_foos",10.0,6.9,1.3,2.0,0,"Wooden table, eleven rods, a cork ball.",{cust:[[9.5,7.9,1],[11.8,7.9,-1,GMB]]}),/* Cal: down toward the front so the arcade has its corner; clear of the pool table and the doorway */
+  PL("gm_foos","Foosball",UP_M,"gmx_foos",9.8,6.5,1.65,2.5,1,"Wooden table, eleven rods, a cork ball.",{cust:[[9.25,7.75,1],[12.0,7.75,-1,GMB]]}),/* Cal: down toward the front so the arcade has its corner; clear of the pool table and the doorway */
   PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"A red vending machine, lit from inside.",{cust:[[12.1,1.8,1,GMB]]}),
   PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.05,2.4,.1,2.0,1,"A cluster of hexagon lights in blue and violet.",{o:{dy:-62,h:1,nosh:1,nob:1,dk:30}}),
-  PL("gm_dart","Dartboard",UP_S,"gmx_dart",.05,4.5,.2,1.1,1,"A cork board in a wooden cabinet, three darts.",{o:{dy:-52,h:1,nob:1,nosh:1,dk:30},cust:[[2.6,4.6,-1,GMB]]}),/* QA: on the back wall it covered the lit hexes; on the left wall between the light panels and the old TV, thrown at from the open floor */
+  PL("gm_dart","Dartboard",UP_S,"gmx_dart",.05,6.25,.2,1.1,1,"A cork board in a wooden cabinet, three darts.",{o:{dy:-52,h:1,nob:1,nosh:1,dk:30},cust:[[2.6,6.85,-1,GMB]]}),/* QA: on the back wall it covered the lit hexes; on the left wall between the light panels and the old TV, thrown at from the open floor */
   ["gm_chair","Gaming Chairs",UP_S,"","",0,0,0,"For when the couch is taken.",{retired:1}],/* Cal on v0.58: the racing chairs looked random; retired, id kept */
   PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
   /* Cal: "The beanbags are not facing the retro tv". The TV stands on the left wall with its screen to the room (unflipped:
      the flipped sprite faces the wall, Cal on v0.58) and the beanbags are drawn from behind (gmx_beanb, flipped), facing it */
-  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,5.35,1.0,1.4,0,"The old console still works."),
-  PL("gm_bean","Beanbags",UP_S,"gmx_beanb",1.5,5.2,1.25,1.2,1,"Two beanbags, blue and orange, facing the old TV.",{sit:[[1.9,5.6,-1,4,1],[2.45,6.05,-1,4,1]]}),
+  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,4.4,1.0,1.4,0,"The old console still works."),
+  PL("gm_bean","Beanbags",UP_S,"gmx_beanb",1.5,4.25,1.25,1.2,1,"Two beanbags, blue and orange, facing the old TV.",{sit:[[1.9,4.65,-1,4,1],[2.45,5.1,-1,4,1]]}),
   PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.9,.25,.65,.65,0,"A glass-front fridge stacked with cans.",{cust:[[11.2,1.7,-1,GMB]]}),/* with the gaming desks gone it stands with the snack bar and the soda machine, not alone mid-room */
   PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.4,.2,.75,.75,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]}),
   /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
