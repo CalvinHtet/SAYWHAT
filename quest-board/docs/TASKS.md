@@ -1048,7 +1048,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: whatever is WAITING ON QA. (on b325eba)
+- Now: waiting for work. Next: ROOMS's door-mat fix (Boba, Dessert) and Lock and Key (step 5) when they come. (on 58ac207)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
