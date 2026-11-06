@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 (NEXT, APPV 61) WAITING ON QA; it contains v0.59 and v0.60, so QA checks v0.61 instead. Cal: "Once ready,
+- Now: v0.61 (d9d92d7, APPV 61) WAITING ON QA; it contains v0.59 and v0.60, so QA checks v0.61 instead. Cal: "Once ready,
   publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". Published as soon
-  as QA passes it. v0.58 pinned (859d941). (on NEXT)
+  as QA passes it. v0.58 pinned (859d941). (on d9d92d7)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -314,7 +314,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   unlocks, one at a time as before, each spending one (29h_unlocks.js, 29b_story.js, 29_prices.js qbWeek). Testing only:
   nothing sets testFree but Skip a week. `shots/gardentest.js`: a fresh save, Level up x4 -> level 5 with gate 5 passed; the
   first Skip opens the Hall and offers the Garden lot (testFree 5 left); no page errors. Not checked: savecheck/screens.
-- WAITING ON QA: check v0.61, NEXT, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
+- WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
   ready, publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". QB_TEST_START = 5
   (29_prices.js): a brand-new character (ccdone, first time only; old saves untouched) starts at level 5 XP with gate 5 passed
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
