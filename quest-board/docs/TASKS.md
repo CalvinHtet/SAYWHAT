@@ -15,7 +15,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 Doing:
 - Now: WAITING ON Cal's phone test of v0.48 (pinned, c6a11c9; QA passed it). Cal, 2026-11-05: "nobody plays until we
   have a working version. this is still technically v0.48": no friends' release, the old live page is not touched, the town's
-  database rules and the 15-player test wait for a working version. Versions read v0.<APPV> in the game (next build). (on c6a11c9)
+  database rules and the 15-player test wait for a working version. Versions read v0.<APPV> in the game (6b50e0a). (on 6b50e0a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
