@@ -223,7 +223,8 @@ portal("lair","trophy","BR",10.4,"#ffd27a","Trophy Room");portal("trophy","lair"
 portal("restaurant","garden","FR",1.6,"#9cff8a","Garden");portal("garden","restaurant","BL",1.9,"#ffd27a","Restaurant");/* the knock-through: kitchen end to the Garden's back-left wall */
 portal("restaurant","skybar","BR",4.2,"#ffb46a","Upstairs");portal("skybar","restaurant","FR",3,"#ffb46a","Downstairs");
 portal("skybar","rooftop","BR",12.5,"#ffb36b","Roof");portal("rooftop","skybar","FR",3,"#ffb36b","Bar");
-portal("boba","dessert","BR",8.8,"#c79aff","Upstairs");portal("dessert","boba","FR",3,"#ff9ec4","Downstairs");
+portal("boba","dessert","BR",10.5,"#c79aff","Upstairs");/* the painted stairs at the back wall's far end, off the shaker station */
+portal("boba","garden","BL",7.2,"#9cff8a","Garden");portal("garden","boba","FR",9,"#ff9ec4","Boba Shop");/* the Boba shop's side door opens onto the Garden lot next door */portal("dessert","boba","FR",3,"#ff9ec4","Downstairs");
 portal("dessert","speakeasy","BR",10,"#ffb46a","Hidden Door");portal("speakeasy","dessert","FR",3,"#c79aff","Dessert");
 portal("theater","auditorium","BL",4.2,"#ffd27a","Auditorium");portal("auditorium","theater","FR",2,"#ffd27a","Lobby");
 portal("theater","mall","FR",7.4,"#6cd0ff","Mall");portal("mall","theater","FL",3,"#ffd27a","Theater");
