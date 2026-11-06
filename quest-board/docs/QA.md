@@ -589,3 +589,10 @@ clearly a floor with a glass rail; a visible floor edge and a rail would sell it
 Karaoke but not Bowling (only old saves; new ones need Bowling first) has no arrow into Karaoke, and Karaoke's own window shows no
 arrows at all; QA could not confirm the building-view tap (a story scene covered it in the test). Safest: while Bowling is not
 owned, keep a "Karaoke" arrow in the Mall (and "Mall" in Karaoke), or let the save quietly own Bowling's room.
+
+### The Mall, round 3 (ROOMS's c829e7e, on 0da598f; `shots/review_mall3.png`, `review_mall3_escalator.png`)
+
+Both open items closed. The escalator's landing has a stone edge and a glass rail with brass posts, and the escalator reaches it.
+The Karaoke edge case: without Bowling, the Mall shows "Karaoke" (top right) and Karaoke shows "Mall" (bottom left), and the
+walk Mall -> Karaoke -> Mall works; with Bowling, the shortcut is gone (Mall: Bowling; Karaoke: Bowling) and Bowling carries
+both ways. All Mall notes are closed: the Mall is ready for Cal.
