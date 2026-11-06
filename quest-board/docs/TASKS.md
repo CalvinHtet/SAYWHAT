@@ -655,14 +655,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: Cal's Restaurant notes (`26_world.js`, new art `rdx_curve2`, `rsx_firepit2`): the red corner booth turned to face the
-  room, the patio fire pit made a real fire pit. Next: the fine-dining furniture, then the Garden (Cal: "once the
-  restaurant is done"), then the Rift Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed.
+- Now: the last Restaurant piece in hand (LEAD's call): the patio fire pit as a real fire pit (`26_world.js`, new art
+  `rsx_firepit2`); the corner booth is done (f457680). Next, by the storyboard (Cal's work order, `docs/STORYBOARD.md`):
+  step 1, the Garden: painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). The Restaurant's
+  fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
+  rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241).
-  12-minute loop running (rule 16). (on 642b791)
+  12-minute loop running (rule 16). (on f457680)
 - WAITING ON QA: check d30bb93 and 642b791 (rule 17). Game Room (Cal's phone notes): the Retro TV now faces the beanbags; Gaming
   Desks is one long desk with one curved screen and keyboard per seat, a chair facing each, the ping pong table clear of
   the chairs. Restaurant, your two menu-board fixes: every dish fits (22 Corner Diner, 26 Noir, the rows grow and long
