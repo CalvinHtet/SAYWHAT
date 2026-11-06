@@ -91,11 +91,11 @@ LFROOM.theater=function(C){
   /* the double doors on the left wall: glow in the gap when somebody goes through */
   var audOn=H("t_aud"),dg='<rect class="thdoorgap" width="'+U*1.9+'" height="96" fill="#fff2c0" opacity="0"/>';
   C.walls.push(lfFaceX(0,5.1,104,lfGoDoor(C,0,5.1,104,1.9,audOn?"gotoaud":"thdoorlock",audOn?"SCREEN 1":"NOW SHOWING",audOn?"#ffd27a":"#ff9a6a")+dg));
-  C.thq={x:4.7,y:2.5,dx:.95,door:[.75,4.2]};
+  C.thq={x:4.7,y:2.5,dx:.95,door:[.75,4.2],xmax:wing?11.4:W-1.3};
   /* the ticket booth, the rope and the line */
   lfSpr(C,lux4?"loL_sign":H("t_booth1")?"lo_booth":"thx_booth0",3.5,.2,1.9,1.5,{h:34,flip:1,ctr:1,H:96});
   C.s("work",2.9,1.5,1,"look",[6,14],{tag:"clerk"});
-  var ropeEnd=wing?13.6:10.2;for(var rx=4.5;rx<ropeEnd;rx+=1.8)lfSpr(C,"thx_rope",rx,3.25,1.8,.15,{h:6,flip:1,ctr:1,nosh:1,dk:-.2});
+  var ropeEnd=10.2;for(var rx=4.5;rx<ropeEnd;rx+=1.8)lfSpr(C,"thx_rope",rx,3.25,1.8,.15,{h:6,flip:1,ctr:1,nosh:1,dk:-.2});
   /* the screens */
   thBoard(C,6.2,72,H);
   if(H("t_tv"))C.walls.push(lfFaceX(0,2.9,110,scrTrailer(C,U*2.2,56)));
@@ -104,27 +104,30 @@ LFROOM.theater=function(C){
   if(H("t_reel"))lfW1(C,"w_threel",.05,8.2,40,-92,0);
   if(H("t_clap"))lfW1(C,"w_thclap",2.2,.05,36,-100,1);
   if(H("t_wl2"))[1.6,7.1].forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)});
-  /* the snack island */
-  var ix=4.4,iy=5.3,lx=lux2;
-  if(H("t_ctr")){lfSpr(C,lux4?"loL_ctr":"lo_ctr",ix,iy,3.0,1.2,{h:30,flip:1,ctr:1,H:lux4?70:78});C.thsnack=[ix+1.5,iy-.6];C.s("work",ix+1.5,iy+1.6,-1,"work",[6,12],{tag:"concession"})}
-  if(H("t_pop")){lfSpr(C,lx?"loL_pop":"lo_pop",ix+3.3,iy,1.0,1.0,{h:30,flip:1,ctr:1,H:92});C.front.push(lfSteam(ix+3.7,iy+.4,60,2));if(!C.thsnack)C.thsnack=[ix+3.8,iy-.5]}
-  if(H("t_soda"))lfSpr(C,"lo_soda",ix+4.5,iy,1.1,1.1,{h:30,flip:1,ctr:1,H:80});
-  /* the candy case, hot dog roller and nachos stand on a back counter behind the stand, not as a second row on the floor */
-  if(H("t_candy"))lfSpr(C,lx?"loL_candy":"lo_candy",ix+.1,iy-1.25,1.5,.9,{h:28,ctr:1,flip:1,H:56});
-  if(H("t_dog"))lfSpr(C,lx?"loL_dog":"lo_dog",ix+1.8,iy-1.25,1.2,.9,{h:28,ctr:1,flip:1,H:58});
-  if(H("t_nacho"))lfSpr(C,lx?"loL_nacho":"lo_nacho",ix+3.2,iy-1.25,1.2,.9,{h:28,ctr:1,flip:1,H:58});
+  /* the concession against the left wall, facing the carpet (QA design review): the stand, a staff aisle, and the candy,
+     hot dog and nachos on a back counter on the wall behind it; popcorn at the stand's near end, soda at its far end */
+  var lx=lux2,cx=1.8;
+  if(H("t_candy"))lfSpr(C,lx?"loL_candy":"lo_candy",.15,5.7,.9,1.0,{h:28,ctr:1,H:56});
+  if(H("t_dog"))lfSpr(C,lx?"loL_dog":"lo_dog",.15,6.75,.9,1.0,{h:28,ctr:1,H:58});
+  if(H("t_nacho"))lfSpr(C,lx?"loL_nacho":"lo_nacho",.15,7.8,.9,1.0,{h:28,ctr:1,H:58});
+  if(H("t_ctr")){lfSpr(C,lux4?"loL_ctr":"lo_ctr",cx,6.0,1.2,2.0,{h:30,ctr:1,H:lux4?70:78});C.thsnack=[cx+1.9,7.0];C.s("work",cx-.5,7.0,1,"work",[6,12],{tag:"concession"})}
+  if(H("t_pop")){lfSpr(C,lx?"loL_pop":"lo_pop",cx+.1,5.0,1.0,.95,{h:30,ctr:1,H:92});C.front.push(lfSteam(cx+.5,5.4,60,2));if(!C.thsnack)C.thsnack=[cx+1.8,5.5]}
+  if(H("t_soda")){lfSpr(C,"lo_soda",cx+.05,8.05,1.05,.85,{h:30,ctr:1,H:80});if(!C.thsnack)C.thsnack=[cx+1.8,8.4]}
   /* along the back and the sides */
   /* games at the back right, behind the end of the line; the standee by the box office */
   if(H("t_arc"))lfSpr(C,"thx_arcade",8.4,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:92});
   if(H("t_claw"))lfSpr(C,"thx_claw",9.7,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:90});
-  if(H("t_sofa"))lfSpr(C,H("t_sofa2")?"thL_sofa":"th_sofa",.15,5.6,1.2,2.6,{h:30,H:58});
+  /* two sofas in an L round a shared corner (QA: one lone sofa read as leftover; the art only faces the viewer) */
+  if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,5.0,6.4,1.2,2.4,{h:30,H:58});lfSpr(C,sk,6.4,5.0,2.4,1.2,{h:30,H:58,flip:1})}
   if(H("t_standee"))lfSpr(C,"thx_standee",2.2,.4,.8,.5,{h:30,ctr:1,H:84});
-  if(H("t_bins")){lfSpr(C,lux4?"loL_stand":"lo_stand",W-1.3,1.6,.9,.5,{h:36,ctr:1,H:96});lfSpr(C,lux4?"loL_bins":"lo_bins",W-1.2,D-1.2,.9,.9,{h:26,ctr:1,H:56})}
+  /* the bins by the concession; the poster stand stays out of the picture (it hid the liquor wall and had no poster) */
+  if(H("t_bins"))lfSpr(C,lux4?"loL_bins":"lo_bins",3.4,5.2,.8,.8,{h:26,ctr:1,H:52});
   /* the wing: the bar */
-  if(wing&&H("t_bar")){var bx=12.2;lfSpr(C,H("t_taps")?"loL_taps":"br_bar",bx,5.6,2.8,1.2,{h:24,flip:1,ctr:1,H:62});
+  /* one bar at the back right of the wing: the taps bar right in front of the liquor wall, stools facing it */
+  if(wing&&H("t_bar")){var bx=12.2;lfSpr(C,H("t_taps")?"loL_taps":"br_bar",bx,1.5,2.8,1.2,{h:24,flip:1,ctr:1,H:62});
     if(H("t_bar2"))lfSpr(C,"thx_liquor",bx+.3,.2,2.6,.7,{h:50,flip:1,ctr:1,H:112});
-    var stl=H("t_taps")?"brL_stool":"br_stool";[bx+.5,bx+1.6].forEach(function(x){lfSpr(C,stl,x,7.1,.7,.7,{h:20,ctr:1,H:42})});
-    C.thbar=[bx+1.2,7.9];C.s("work",bx+1.4,4.9,-1,"work",[6,12],{tag:"bartender"})}
+    var stl=H("t_taps")?"brL_stool":"br_stool";[bx+.5,bx+1.6].forEach(function(x){lfSpr(C,stl,x,3.0,.7,.7,{h:20,ctr:1,H:42})});
+    C.thbar=[bx+1.2,3.9];C.s("work",bx+1.4,1.0,-1,"work",[6,12],{tag:"bartender"})}
   /* the chandeliers hang out of view: only their warm light shows (the sprites stood at floor height mid-room) */
   if(wing&&H("t_chand"))[[7,6.0],[12,5.0]].forEach(function(p){lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
   if(H("t_wl2")||lux4)lfLight(C,W*.45,D*.4,70,"#ffcf8a",3,.3);
@@ -133,7 +136,7 @@ LFROOM.theater=function(C){
 };
 var THQ={};
 function thQ(a){var k=(a.pv?"p":"")+a.room;var q=(THQ[k]||[]).filter(function(id){var g=LFA[id];return g&&g.ths==="line"});return THQ[k]=q}
-function thSlot(C,k){var T=C.thq;return [Math.min(T.x+T.dx*k,C.W-1.3),T.y+(T.x+T.dx*k>C.W-1.3?.25:0)]}
+function thSlot(C,k){var T=C.thq,m=T.xmax||C.W-1.3;return [Math.min(T.x+T.dx*k,m),T.y+(T.x+T.dx*k>m?.25:0)]}
 function thSnackFor(r){var a=r.a||{},o=[];TH_UPS.forEach(function(u){if(a[u[0]]&&u[3].menu)o.push(u[3].menu)});return o}
 function thDoorFlash(a,C){var d=Math.hypot(a.x-C.thq.door[0],a.y-C.thq.door[1]),ms=d/1.15*1000;setTimeout(function(){var g=document.querySelectorAll(".thdoorgap");for(var i=0;i<g.length;i++){g[i].classList.remove("on");void g[i].getBoundingClientRect();g[i].classList.add("on")}},Math.max(0,ms-500))}
 /* what each ticket buyer does next. Called every time one finishes a step. */
