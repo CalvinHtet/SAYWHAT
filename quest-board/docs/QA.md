@@ -578,3 +578,14 @@ Reads as one planned space: an atrium with stores around a central fountain, sea
 
 The bar is one bar now: a straight counter with four rattan stools and its back bar the same length set one tile behind it,
 parallel, with an aisle for the bartender. All six review notes are closed; the Rooftop and Lock and Key are ready for Cal.
+
+### The Mall, round 2 (ROOMS's 0eb00c2, on af14361; `shots/review_mall2.png`, `review_mall2_escalator.png`, `review_mall2_doors.txt`)
+
+Three of four fixed, one half. (1) The Directory Screen is retired (5 retired pieces now, clean). (2) Karaoke is upstairs from
+Bowling; the Theater's storefront on the left wall rolls up and is the Theater's way through. (4) Every Mall pair now follows
+Cal's rule, and so does Bowling–Karaoke (`doors.js` LOGIC: Theater, Arcade, Bowling, Karaoke all "ok"); every arrow walks there
+and back. (3) Half: the escalator now meets the landing's front edge, but the landing is flat bands of colour in the opening, not
+clearly a floor with a glass rail; a visible floor edge and a rail would sell it. Edge case ROOMS asked about: a save that owns
+Karaoke but not Bowling (only old saves; new ones need Bowling first) has no arrow into Karaoke, and Karaoke's own window shows no
+arrows at all; QA could not confirm the building-view tap (a story scene covered it in the test). Safest: while Bowling is not
+owned, keep a "Karaoke" arrow in the Mall (and "Mall" in Karaoke), or let the save quietly own Bowling's room.

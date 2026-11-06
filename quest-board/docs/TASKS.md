@@ -289,6 +289,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Mall round 2 (ROOMS's 0eb00c2, on af14361; `mallreview.js`, `doors.js`, `retired.js`, `karaokeorphan.js`; `docs/QA.md`;
+  `shots/review_mall2*.png`, `review_mall2_doors.txt`): 3 of 4 fixed, 1 half, 1 edge case. The directory is retired (5 retired pieces,
+  clean); Karaoke is upstairs from Bowling and the Theater's storefront rolls up; every Mall pair and Bowling–Karaoke now follow
+  Cal's rule, and every arrow walks. Half: the escalator meets the landing, but the landing reads as flat colour bands, not a
+  floor with a rail. Edge case: a save owning Karaoke but not Bowling has no arrow into Karaoke, and Karaoke shows no arrows;
+  keep a Mall–Karaoke arrow while Bowling is not owned. No page errors. Owner: ROOMS.
 - QA, ROOMS's c8eb716, the Rooftop bar (on d916e6b, `openair.js`; `shots/review_rooftop3.png`, `review_rooftop_bar3.png`): pass.
   One straight counter, four stools, the back bar the same length one tile behind it with an aisle. All six design-review notes
   are closed: the Rooftop and Lock and Key are ready for Cal. No page errors. Owner: ROOMS (to Cal).
@@ -337,7 +343,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: Mall design review round 2 at 0eb00c2: your four notes (directory retired; Karaoke now upstairs from
+- DONE by QA (QA findings: 3 of 4, the landing half, a Karaoke edge case). WAITING ON QA: Mall design review round 2 at 0eb00c2: your four notes (directory retired; Karaoke now upstairs from
   Bowling, so the left wall's back storefront is the Theater's way through and rolls up once the Theater is open; the
   escalator reaches a painted upper landing; every Mall door pair on Cal's rule). Check the doors both ways with the
   Theater, Arcade, Bowling and Karaoke open, and a save that already owns Karaoke without Bowling.
@@ -1168,8 +1174,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Mall round 2 (0eb00c2), test copy only (`mallreview.js`, `doors.js`, `retired.js`). Next: v0.50 when LEAD builds it.
-  (on 4abcf36)
+- Now: waiting for work. Next: the Mall landing and the Karaoke edge case when ROOMS fixes them; v0.50. (on af14361)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
