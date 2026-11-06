@@ -247,6 +247,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Cal's Restaurant notes (04bb241, 0edb26c, on 54a4074, `rigtest/qa/restmenu.js` and `restshell.js`; `shots/rest_notes_bistro.png`,
+  `rest_notes_noir.png`, `rest_board_bistro.png`, `rest_board_cornerdiner.png`): 3 of 5 pass, 2 need a fix. Pass: (1) Bistro and Noir back wall:
+  the tables near it stand on the floor in front of it; (3) all seven gear upgrades add their dishes to the Menu line (Espresso Bar:
+  Espresso, Cappuccino; Flat-Top Grill: Smash Burger, Grilled Cheese; Fryer: Fish & Chips; Bakery Rack: Croissant, Sourdough; Wood-Fired
+  Oven: Roast Chicken; Grand French Range: Steak Frites, Duck Confit; Charcoal Grill: BBQ Ribs); (4) the crescent booth sits in the
+  back-left corner, open to the room, and the window booths and dividers no longer overlap it (the only overlap the audit finds is its
+  own round table, which is meant); (5) the half-wall is forest green in the Bistro and black in Noir. FIX 1, the Grand Menu Board does
+  not list every dish: `rsBigMenu` fits 7 rows a column (`rows=floor((H-24)/7.8)` with H 84) and keeps only the LAST 14
+  (`items.slice(-rows*2)`), so with everything bought it shows 14 of 26 and drops Coffee, Noodles, Toast, Eggs, Pancakes, Burger, Fries,
+  Smash Burger, Grilled Cheese, Espresso, Cappuccino and Fish & Chips. Also "Roast Chicken" runs into its price. Fix: three columns, a
+  taller board or a smaller font so all 26 fit (and the pantry dishes `gdDishes()` too), or group by section. FIX 2, in the Corner Diner
+  the abstract painting hangs over the left end of the board and hides the first letters of every left-column dish ("& Chips"); in
+  the Bistro and Noir they are apart. Move the painting or the board in the Corner Diner. Owner: ROOMS.
 - QA, the Restaurant's painted shells (ROOMS's 1eb8040, 156683a, 64e4735, on 7f4d885, `rigtest/qa/restshell.js`, 16 cases:
   each size bare and fully bought, with and without the patio; `shots/restaurant_shells.png`): pass. Each size draws its own
   painting (Hole in the Wall `rsw_s0`, Corner Diner `rsw_s1`, Bistro `rsw_s2`, Noir `rsw_s2n`), the walls and floors read
@@ -633,7 +646,7 @@ Doing:
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
   repainted in 04bb241 after Cal saw tables sitting on the wall). 12-minute loop running (rule 16). (on 6a7f660)
-- TAKEN by QA. WAITING ON QA: check 04bb241 and 0edb26c (rule 17), Cal's Restaurant notes: (1) Bistro and Noir repainted so the back wall
+- DONE by QA (QA findings: 3 pass, 2 fixes for ROOMS). WAITING ON QA: check 04bb241 and 0edb26c (rule 17), Cal's Restaurant notes: (1) Bistro and Noir repainted so the back wall
   line is where the room's wall is: tables near the back wall stand in front of it, not on it; (2) Grand Menu Board
   (`r_bigmenu`, Corner Diner and up, after the Digital Menu Screen) lists every dish, two columns, readable; (3) seven gear
   upgrades add dishes to the menu (Espresso Bar, Flat-Top Grill, Fryer, Bakery Rack, Wood-Fired Oven, Grand French Range,
@@ -742,7 +755,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Cal's Restaurant notes (04bb241, 0edb26c), test copy only. Next: the fixes for Cal's phone notes. (on c33824c)
+- Now: waiting for work; Restaurant notes checked (3 pass, 2 fixes for ROOMS in QA findings). Next: ROOMS's Game Room fixes and the
+  menu board fixes when they come back. (on 54a4074)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
