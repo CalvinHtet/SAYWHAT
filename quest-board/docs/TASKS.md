@@ -356,7 +356,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: a design review of the Auditorium (step 11) as it stands at 3057c61, bare and fully bought (Bigger Screen,
+- TAKEN by QA. WAITING ON QA: a design review of the Auditorium (step 11) as it stands at 3057c61, bare and fully bought (Bigger Screen,
   then IMAX). ROOMS's read: one plan already (screen on the left wall, towers either side, rows stepping up toward the
   back, the projector on the raised back landing beaming over the seats; the camera draws the back landing bottom right,
   so it can read as "front"). Say what you would change; ROOMS fixes it before Cal sees it.
@@ -1193,7 +1193,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Theater lobby notes when ROOMS fixes them; v0.50. (on 36706e5)
+- Now: design review of the Auditorium (step 11), test copy only (`audreview.js`). Next: the Theater lobby notes; v0.50.
+  (on bf14498)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
