@@ -138,7 +138,7 @@ LFROOM.garden=function(C){
   var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,st===0?8.7:7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
   tool("g_can","gdx_can",TY[0],1.2,1.0,14);tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
   /* the Back Plot's gate corner is the produce stand's */
-  if(H("g_scare"))gdS(C,"gd_scare",st<2?.3:Rx,st===0?8.3:st===1?6.0:9.3,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
+  if(H("g_scare"))gdS(C,"gd_scare",.3,st===0?8.3:6.0,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
@@ -172,13 +172,16 @@ LFROOM.garden=function(C){
         gdFountain(C,fc[0],fc[1]);
         [[-2.3,.6,1],[.5,-2.3,1],[2.0,-.9,-1],[-1.1,2.1,1],[1.3,2.0,-1]].forEach(function(o){C.s("look",fc[0]+o[0],fc[1]+o[1],o[2],"look",[6,12],{tag:"admire"})})}
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,nob:1})});
-      if(H("g_lant"))[.12,.38,.62,.86].forEach(function(f){var lx=W*f;gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
+      if(H("g_lant"))[.12,.38,.62,.86].forEach(function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
       if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
-      if(H("g_sun"))gdS(C,"gdx_sundial",W*.3-.3,py-.95,.6,.6,30,{H:52});/* clear of the lantern post (QA) */
-      if(H("g_topi"))[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
-      if(H("g_birdb"))gdS(C,"gdx_birdbath",E?10.3:W*.46,py-.95,.6,.6,30,{H:52});
+      /* Cal: no room may look crowded. In the Estate the fountain is the centrepiece and takes the place of the sundial,
+         the birdbath and the topiaries (still owned; they show again only without it) */
+      var calm=E&&H("g_fount");
+      if(H("g_sun")&&!calm)gdS(C,"gdx_sundial",W*.3-.3,py-.95,.6,.6,30,{H:52});/* clear of the lantern post (QA) */
+      if(H("g_topi")&&!calm)[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
+      if(H("g_birdb")&&!calm)gdS(C,"gdx_birdbath",E?10.3:W*.46,py-.95,.6,.6,30,{H:52});
       if(H("g_koi")&&st===2)gdS(C,"gd_koi",11.3,11,3.4,2.0,16,{dk:1});
     }
   }
