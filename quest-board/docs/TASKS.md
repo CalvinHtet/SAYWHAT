@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 
 Doing:
 - Now: waiting on QA's unlock timeline for the new early game (16e72c3), then tune the gates with it. Next: the Garden with
-  ROOMS (storyboard step 1). Nobody plays until there is a working version. (on 16e72c3)
+  ROOMS (storyboard step 1). Nobody plays until there is a working version. (on 4f15346)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -268,7 +268,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- QA, LEAD's text and story audit (ca1068d, on c1f1aa5, `rigtest/qa/audit49.js`; every level-up screen 1 to 100 in
+- WAITING ON QA: check 4f15346 (rule 17): level-ups no longer show room blueprints or new Loft floors (bpCard and floorCard
+  calls removed from levelUp). LEAD checked levels 2 to 31 headless.
+- DONE by LEAD in 4f15346. QA, LEAD's text and story audit (ca1068d, on c1f1aa5, `rigtest/qa/audit49.js`; every level-up screen 1 to 100 in
   `shots/levelups_c1f1aa5.txt`): mostly pass, 1 fix for LEAD. Pass: `unlocksFor` returns null, so no level-up shows the old crew,
   the vault or a relic, and none of the 108 screens has "[object Object]", "undefined" or NaN; the New area cards read the new
   Shop, Hall, Relics and Wheel lines; Sable's visit (Trophy Room) and Rafe's (Lock and Key) are not due on a new save or with a
