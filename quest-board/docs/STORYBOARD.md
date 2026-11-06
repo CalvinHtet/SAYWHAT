@@ -23,7 +23,7 @@ Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from t
 | 8 | The Mall | level 20, Rooftop open, 80,000 coins earned (day 25) | Priya Okafor, investor | she offers the empty strip mall; you buy in | scene written; room built |
 | 9 | Nova joins the team | level 21, 3 Mall upgrades | Nova Lin | filming a haul outside your clothing store | scene and banner done |
 | 10 | Movie Theater | level 23, 4 Mall upgrades (day 26) | none | the lot next door | room built |
-| 11 | Auditorium, Theo joins | level 25, 2 Theater upgrades | Theo, theater crew | the lobby has its basics and someone to run it; free | scene written; theater basics ids from ROOMS |
+| 11 | Auditorium, Theo joins | level 25, the Ticket Booth, Popcorn Cart and Soda Fountain in the lobby | Theo, theater crew | the lobby has its basics and someone to run it; free | scene written; gate on the lobby basics and free opening done (7ebf618) |
 | 12 | Arcade | level 28, 3 Auditorium upgrades (day 30) | none | an upgrade in the mall | room built |
 | 13 | Rhythm floor, VR arena | level 31, 4 Arcade upgrades | none | the arcade's back rooms | rooms built |
 | 14 | Bowling | level 34, 6 Arcade upgrades (day 36) | none | league nights | room built |
