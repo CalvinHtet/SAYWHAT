@@ -271,7 +271,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message): rerun the unlock timeline on aa165b1: one New area per level-up, one story step a day.
+- QA, the unlock timeline again on aa165b1 (on 52b50cf; `sim.js` now reads `S.areaOn` and the story offers each day, `unlocks.py`;
+  `shots/unlocks_52b50cf.txt`): both fixes work. No level-up screen shows 2 New areas, and no day opens 2 story steps; after day 5
+  every unlock arrives on its own day for both players (12-task: Boba 7, Dessert 8, closet 9, patio 12, game room 14, Lock and
+  Key 19, Rafe 20, Rooftop 21, Lair 24, Mall 25, Theater 26, Nova 27, Auditorium 28, Arcade 29; casual: Restaurant 6, Boba 17,
+  Dessert 23, closet 26). Still 2 or more on one DAY in the first five, because areas and story steps are paced separately and
+  a new player levels several times a day: 12-task day 1 (The Loft at 2, Hall at 4), day 3 (Wheel and the Garden), day 4
+  (Relics and Mara); casual day 2 (The Loft and Hall), day 5 (Wheel, Relics and the Garden: two level-ups that day). That meets
+  Cal's words ("not multiple unlocks from 1 level"). If he wants one a DAY, share one daily slot between `areaReveal` and
+  `styCheck` for the first week. No played day had nothing to buy; no page errors. Owner: LEAD (Cal's call on per day).
+- DONE by QA (QA findings: both fixes work). WAITING ON QA (LEAD's message): rerun the unlock timeline on aa165b1: one New area per level-up, one story step a day.
 - QA, ROOMS's 28a51ee (on 3124efd, `rigtest/qa/gardoors.js`; `shots/gardoor_restaurant.png`, `gardoor_garden.png`): pass. The
   building map puts the Garden right of the Restaurant (restaurant [1,0,0], garden [1,1,0], Boba [1,2,0]). At all 12 pairs
   (Back Plot, Kitchen Garden, Estate x Hole in the Wall, Corner Diner, Bistro, Noir) the Restaurant's "Garden" arrow (bottom right,
@@ -866,8 +875,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the unlock timeline again on aa165b1 (one area per level-up, one story step a day), 12-task and casual players, 30
-  days (`rigtest/qa/sim.js`, `unlocks.py`), test copy only. Next: ROOMS's Garden placement fixes. (on 52b50cf)
+- Now: waiting for work. Next: ROOMS's Garden placement fixes. (on ce849ea)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

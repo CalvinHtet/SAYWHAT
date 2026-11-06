@@ -33,6 +33,7 @@ for t in types:
     D = json.load(open(f))['days'][:days_max]
     print(f'\n=== {t}: the first {len(D)} days ===')
     prev_rooms, prev_lv, flagged_days, flagged_lv, prev_st, idle = None, 1, [], [], [], []
+    prev_areas, prev_off = ['board', 'train', 'shop', 'away'], []  # the level-1 areas every new save has
     for d in D:
         real, extra = [], []
         for u in d.get('unl', []):
@@ -40,19 +41,30 @@ for t in types:
             e = [c for c in u['cards'] if EXTRA.match(c)]
             real += [f'L{u["lv"]} {c}' for c in r]; extra += [f'L{u["lv"]} {c}' for c in e]
             if len(r) >= 2: flagged_lv.append((d['d'], u['lv'], r))
+        # since aa165b1: the areas the player has (S.areaOn) and the story steps offered, read each day; when present they are
+        # what counts, and the New area cards and storyDone only show when
+        if 'areas' in d:
+            if prev_areas is not None: real += [f'area: {a}' for a in d['areas'] if a not in prev_areas]
+            prev_areas = d['areas']
+            real = [x for x in real if 'New area' not in x] + [f'(card) {x}' for x in real if 'New area' in x]
         rooms = d.get('rooms', [])
         new = [r for r in rooms if prev_rooms is not None and r not in prev_rooms]
-        steps = [s for s in d.get('storyDone', []) if s not in prev_st]
-        prev_st = d.get('storyDone', prev_st)
+        if 'offers' in d:
+            steps = [s for s in d['offers'] if s not in prev_off]; prev_off = d['offers']
+        else:
+            steps = [s for s in d.get('storyDone', []) if s not in prev_st]
+            prev_st = d.get('storyDone', prev_st)
         for s in steps:
             room = STEPROOM.get(s, '')
             got = room in new
             if got: new.remove(room)
             lv = f' (least level {STEPLV[s]})' if s in STEPLV else ''
             real.append(f'story: {s}' + (f' -> {room} opened' if got else (f' -> {room} offered' if room else '')) + lv)
-        real += [f'room by upgrade: {r}' for r in new]
+        stepped = set(STEPROOM.get(x, '') for x in prev_off)
+        real += [f'room by upgrade: {r}' for r in new if r not in stepped]
+        extra += [f'room built from an earlier step: {r}' for r in new if r in stepped]
         prev_rooms = rooms
-        n = len(real)
+        n = len([x for x in real if not x.startswith('(card)')])
         if n >= 2: flagged_days.append(d['d'])
         if d.get('played') and not d.get('bought') and not d.get('built'): idle.append(d['d'])
         mark = '  <-- 2+' if n >= 2 else ''
