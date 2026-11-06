@@ -325,7 +325,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   usual set: savecheck passes; screens at 360 and 390 px fit; older saves keep their areas (level 30: all 8; level 3: the Hall
   waits); a brand-new player lands on the Board in v0.51, desktop and phone; doors 36 of 36 on Cal's rule; voice.js 0 of 1,354;
   Shop 44 checks; Trophy Room passes; building backdrops at 13:00 and 22:00. New saves: 12-task to day 12 (level 33; Garden day 4,
-  Restaurant offered day 6, Boba day 9-10, Dessert offered), casual to day 14 (level 18, Garden and Restaurant); watered, never
+  Restaurant offered day 6, Boba day 9, Dessert offered day 10), casual to day 14 (level 18, Garden and Restaurant); watered, never
   dry; no played day without something to buy. Day 5 of the 12-task run counts 2 unlocks, but the second is the closet, a Loft
   upgrade the player buys (v0.50's run had it on day 4 beside the Garden), so it is not new. No page errors. Owner: LEAD (publish).
 - QA, the Rift Mask's drop odds (e389afa, new `rigtest/qa/riftodds.py`, a copy of dgRoll, 20,000 players, days counted from the
@@ -1379,7 +1379,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.51 (ac8d2f0) passed. Next: v0.51's published copy once LEAD publishes it. (on 0985caf)
+- Now: nothing waiting; v0.51 (ac8d2f0) passed. Next: v0.51's published copy once LEAD publishes it. (on a25876d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
