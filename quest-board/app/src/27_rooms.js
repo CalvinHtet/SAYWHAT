@@ -255,7 +255,7 @@ portal("theater","auditorium","BL",4.2,"#ffd27a","Auditorium");portal("auditoriu
 portal("theater","mall","FR",7.4,"#6cd0ff","Mall");portal("mall","theater","BL",3.1,"#ffd27a","Theater");
 portal("mall","arcade","FR",8,"#ff4fa3","Arcade");portal("arcade","mall","BL",3,"#6cd0ff","Mall");
 portal("mall","bowling","BR",11.4,"#ffc857","Bowling");portal("bowling","mall","FL",3,"#6cd0ff","Mall");
-/* Cal's door rule on the building map (QA design review): the Theater is left of the Mall, the Arcade right of it, Bowling above it and Karaoke above Bowling */portal("bowling","karaoke","BR",2.4,"#ff7ad8","Karaoke");portal("karaoke","bowling","FL",3,"#ffc857","Bowling");
+/* Cal's door rule on the building map (QA design review): the Theater is left of the Mall, the Arcade right of it, Bowling above it and Karaoke above Bowling */portal("bowling","karaoke","BR",9.6,"#ff7ad8","Karaoke");/* off the lanes, on the free back wall between the lanes and the ball rack */portal("karaoke","bowling","FL",3,"#ffc857","Bowling");
 /* a save that owns Karaoke but not Bowling (QA): the escalator goes straight up to it until Bowling is in between */var noBowl=function(){return !hasRoom("bowling")};portal("mall","karaoke","BR",11.4,"#ff7ad8","Karaoke",noBowl);portal("karaoke","mall","FL",3,"#6cd0ff","Mall",noBowl);
 portal("arcade","rhythm","BR",11,"#7df9ff","Rhythm");portal("rhythm","arcade","FL",3,"#ff4fa3","Arcade");
 portal("arcade","vr","FR",6,"#58d6ff","VR");portal("vr","arcade","BL",3,"#ff4fa3","Arcade");/* Cal's rule (QA): Rhythm sits above the Arcade, VR to its right */
