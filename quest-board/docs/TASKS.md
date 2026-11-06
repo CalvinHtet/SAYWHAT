@@ -247,7 +247,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- WAITING ON QA: check 06cd203 (rule 17): the door arrows now show right after buying an expansion (lfInstallFx redrew the room
+- QA, the arrow fix (LEAD's 06cd203, on db59276): pass. Buying each Loft expansion from the Bedroom window (Knock Into the
+  Game Room, Walk-in Closet, Patio Door): the new room's arrow shows 0.3 s after the purchase, stays through the splash, and
+  matches what a reopened window shows. No page errors. Cal's finding (1) is fixed; (2) and (3) stay with ROOMS. Owner: LEAD.
+- DONE by QA (QA findings). WAITING ON QA: check 06cd203 (rule 17): the door arrows now show right after buying an expansion (lfInstallFx redrew the room
   picture without them). Buy each room's expansion and look for the new arrow without reopening.
 - LEAD's part (the arrows) DONE in 06cd203; ROOMS's two findings stay ROOMS's. **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
   restaurant." LEAD and ROOMS: carry on with the Restaurant next. His three findings, for the next version
@@ -715,7 +718,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on 566fb9a)
+- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on db59276)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
