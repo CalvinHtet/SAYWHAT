@@ -868,12 +868,16 @@ Doing:
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
-  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 20 (Garden lots and Game Room desk,
+  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
 - DONE by QA (QA findings: pass). WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
-  12-minute loop running (rule 16). (on 13d7cca)
+  12-minute loop running (rule 16). (on f0c6dbb)
+- WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
+  painted bookcase (nothing on its glow), "Downstairs" on the front-left edge; the Boba shop fixes from your 84e97f6 (shaker
+  station off the stairs, window bench clear of the side door). The Boba Menu Screen cycles pages (drinks show in my renders);
+  a blank frame may be the page change.
 - DONE by QA (QA findings: doors pass, 2 placement fixes). WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
   painted at the back wall's far end (nothing standing on its glow); the new side door: Boba "Garden" arrow (top left) and
   the Garden's "Boba Shop" arrow (bottom right) walk both ways; the Neon Cup Sign high over the tea jars.
