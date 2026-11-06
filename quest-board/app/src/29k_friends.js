@@ -23,17 +23,17 @@ Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
   Object.defineProperty(f,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(f.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})});
 /* place: the room they hang out in when you have it (the Lounge otherwise). buff: today only, on matching quests. */
 var FVISITS=[
- {id:"justin_dance",who:["justin"],w:10,place:"gym",text:"Justin is on his way to rehearsal and needs a partner for one run-through of the choreo. You kept up. Mostly.",buff:{stat:"fitness",pct:15,text:"Rehearsal with Justin: Fitness quests +15% XP today"}},
- {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin came by humming a hook he can't shake. Two hours later it's a song.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
- {id:"vega_manager",who:["vega"],w:9,place:"lounge",text:"Vega is in manager mode. He read your week, crossed out the fluff and told you what actually matters.",buff:{cl:"admin",pct:20,text:"Vega's plan: Admin and day-job quests +20% XP today"}},
+ {id:"justin_dance",who:["justin"],w:10,place:"gym",text:"Justin is on the way to rehearsal and needs a partner for one run-through of the choreo. You kept up. Mostly.",buff:{stat:"fitness",pct:15,text:"Rehearsal with Justin: Fitness quests +15% XP today"}},
+ {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin came by humming a hook that won't go away. Two hours later it's a song.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
+ {id:"vega_manager",who:["vega"],w:9,place:"lounge",text:"Vega is in manager mode: read your week, crossed out the fluff and told you what actually matters.",buff:{cl:"admin",pct:20,text:"Vega's plan: Admin and day-job quests +20% XP today"}},
  {id:"vega_merch",who:["vega"],w:6,place:"lounge",text:"Vega had a box of leftover merch from the last drop and wouldn't take no for an answer. You sold it before lunch.",coin:250},
- {id:"logan_spot",who:["logan"],w:10,place:"gym",text:"Logan came up from the 3rd floor because he needs a spotter. Leg day, no excuses.",buff:{cl:"body",pct:20,text:"Spotting Logan: Body quests +20% XP today"}},
- {id:"logan_stream",who:["logan"],w:7,place:"gameroom",text:"Logan is streaming from your couch tonight. His chat says hi, and some of them sent tips your way.",coin:150},
- {id:"kenan_checkup",who:["kenan"],w:7,place:"lounge",text:"Dr. Kenan gave you a quick once-over on his way home from the clinic. You're fine. He left a streak freeze anyway, just in case.",freeze:1},
+ {id:"logan_spot",who:["logan"],w:10,place:"gym",text:"Logan came up from the 3rd floor needing a spotter. Leg day, no excuses.",buff:{cl:"body",pct:20,text:"Spotting Logan: Body quests +20% XP today"}},
+ {id:"logan_stream",who:["logan"],w:7,place:"gameroom",text:"Logan is streaming from your couch tonight. The chat says hi, and some of them sent tips your way.",coin:150},
+ {id:"kenan_checkup",who:["kenan"],w:7,place:"lounge",text:"Dr. Kenan gave you a quick once-over on the way home from the clinic. You're fine. Something extra, just in case.",freeze:1},
  {id:"kodepink",who:["kenan"],w:9,place:"studio",text:"Kenan showed up with the decks. Kode PinK session: two producers, one loop, no sleep.",buff:{cl:"create",pct:25,text:"Kode PinK session: Creative quests +25% XP today"}},
  {id:"jina_food",who:["jina"],w:8,place:"lounge",text:"Jina is back from a food trip and dragged you on a crawl around the neighborhood to compare.",buff:{cl:"out",pct:15,text:"Food crawl with Jina: Outside quests +15% XP today"}},
  {id:"habibimbaps",who:["kenan","jina"],w:6,place:"restaurant",text:"Kenan and Jina took over your kitchen for a cooking night. Everyone went home full; you kept the leftovers.",buff:{cl:"home",pct:15,text:"Cooking night: Home quests +15% XP today"},coin:100},
- {id:"cynthia_garden",who:["cynthia"],w:8,place:"garden",need:"garden",text:"Cynthia brought seedlings and watered every bed before you were even up. Blooming at her own pace, and now so is your garden.",water:1,buff:{cl:"home",pct:10,text:"Cynthia's visit: Home quests +10% XP today"}},
+ {id:"cynthia_garden",who:["cynthia"],w:8,place:"garden",need:"garden",text:"Cynthia brought seedlings and watered every bed before you were even up. Your garden is blooming at its own pace now.",water:1,buff:{cl:"home",pct:10,text:"Cynthia's visit: Home quests +10% XP today"}},
  {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by just to check on you. Somehow the whole day is brighter.",buff:{cl:"social",pct:15,text:"Cynthia's sunshine: People quests +15% XP today"}},
  {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the wobbly shelf you've been ignoring for a month, then stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
  {id:"memo_cynthia",who:["memo","cynthia"],w:7,place:"lounge",text:"Memo and Cynthia came over for dinner and brought dessert.",coin:150,buff:{cl:"social",pct:15,text:"Dinner with Memo and Cynthia: People quests +15% XP today"}},
@@ -52,19 +52,22 @@ function fvPick(force){var have=function(t){return typeof hasRoom==="function"&&
   var tot=pool.reduce(function(a,v){return a+v.w},0),r=Math.random()*tot;for(var i=0;i<pool.length;i++){r-=pool[i].w;if(r<=0)return pool[i]}return pool[0]}
 function fvApply(v){var t=today();S.visit={d:t,t:Date.now(),who:v.who.slice(),id:v.id,place:v.place};S.base.visits=(S.base.visits||0)+1;
   if(v.coin){S.coins+=v.coin;S.earnedC+=v.coin}
-  if(v.freeze)S.freezes=(S.freezes||0)+v.freeze;
+  /* QA: freezes stop at maxFreeze(); at the cap the gift is 300 coins, as on the wheel */
+  v._cap=0;if(v.freeze){if((S.freezes||0)+v.freeze<=maxFreeze())S.freezes=(S.freezes||0)+v.freeze;else{v._cap=1;S.coins+=300;S.earnedC+=300}}
   if(v.water&&typeof gdWater==="function"&&typeof hasRoom==="function"&&hasRoom("garden")){try{S.base.gwater=Date.now()+ECON.waterH*36e5}catch(e){}}
   persist()}
-function fvShow(v){var names=fvNames(v.who),here="the "+((typeof hasRoom==="function"&&hasRoom(v.place)&&ROOMT[v.place])?ROOMT[v.place].name:"Lounge");
+function fvShow(v){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
   var m=modal('<div class="card box2 adv visit"><span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w){return visitorImg(w,true)}).join("")+'</div><p>'+esc(v.text)+'</p>'
-    +(v.coin?'<div class="reward">+'+v.coin+' coins</div>':'')+(v.freeze?'<div class="reward">+'+v.freeze+' streak freeze</div>':'')+(v.water&&typeof hasRoom==="function"&&hasRoom("garden")?'<div class="reward">Garden watered</div>':'')+(v.buff?'<div class="reward">'+esc(v.buff.text)+'</div>':'')
+    +(v.coin?'<div class="reward">+'+v.coin+' coins</div>':'')+(v.freeze?(v._cap?'<div class="reward">+300 coins (your streak freezes are full)</div>':'<div class="reward">+'+v.freeze+' streak freeze</div>'):'')+(v.water&&typeof hasRoom==="function"&&hasRoom("garden")?'<div class="reward">Garden watered</div>':'')+(v.buff?'<div class="reward">'+esc(v.buff.text)+'</div>':'')
     +'<p class="note">'+'They\'re hanging out in '+esc(here)+' today.</p><button class="btn big" id="vok">Nice</button></div>');
   var b=m&&m.querySelector("#vok");if(b)b.onclick=function(){m.remove();render()}}
-function fvCheck(){if(!loaded||!S||!S.created||document.querySelector("#layer .modal"))return;
+function fvCheck(){if(!loaded||!S||!S.created)return;if(S.visit&&S.visit.card)fvCard();if(document.querySelector("#layer .modal"))return;
   var t=today();if(S.fvDay===t)return;S.fvDay=t;
   if(S.visit&&S.visit.d===t){persist();return}
   if(Math.random()>.57){persist();return}
-  var v=fvPick();if(!v){persist();return}fvApply(v);setTimeout(function(){if(!document.querySelector("#layer .modal"))fvShow(v)},1200)}
+  var v=fvPick();if(!v){persist();return}fvApply(v);S.visit.card=1;persist();setTimeout(fvCard,1200)}
+/* QA: the card waits until no other window is open, so a reward never lands unseen */
+function fvCard(){var v=fvToday();if(!v||!S.visit.card)return;if(document.querySelector("#layer .modal")){setTimeout(fvCard,4000);return}S.visit.card=0;persist();fvShow(v)}
 maybeVisit=function(){};
 setInterval(fvCheck,20000);setTimeout(fvCheck,7000);
 /* today's buff joins the others (Board buff list and the XP math, activeBuffs -> socialBuffs) */
