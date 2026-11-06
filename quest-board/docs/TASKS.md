@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.49 published and pinned for Cal (8fabe1a, fresh start); WAITING ON Cal's phone test (QA: the page matches the build, 97e9810). Next: Cal's
-  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. (on af14361)
+  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. (on 332fca4)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -1010,7 +1010,7 @@ Doing:
   the theater basics ids are `t_booth1`, `t_pop`, `t_soda` (in the request above). WAITING ON QA: Mall round 2 (0eb00c2).
   WAITING ON CAL: Lock and Key and the Rooftop, both through QA's design reviews. Retired ids so far: `sb_chester`,
   `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new
-  `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on af14361)
+  `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 332fca4)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
@@ -1174,7 +1174,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Mall landing and the Karaoke edge case when ROOMS fixes them; v0.50. (on af14361)
+- Now: waiting for work. Next: the Mall landing and the Karaoke edge case when ROOMS fixes them; v0.50. (on 332fca4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
