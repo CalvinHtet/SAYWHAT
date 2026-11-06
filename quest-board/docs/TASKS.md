@@ -236,7 +236,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   tabmemory.js 291 MB; `shots/revisit.js` (cache on, 9 Mbps, x4): first 35.7 s, reload 0.8 s, a new tab 0.4 s, 0 MB
   fetched again; strict hash-only script policy: starts. No page errors. Not checked: savecheck/screens on this build, and
   the real host's cache headers.
-- WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
+- TAKEN by QA. WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
   fdd651f3-324f-46ad-a2b3-9632ac8e8fb0, 454 files from db67326, db with the 9 rules of `app/dbcaps.json` + user + sample
   with images, version 1793965410-ff73). Check the page matches the build and the rules are live (`db_rules_get` shows 9).
 Art and room code requests (LEAD asks, ROOMS does):
@@ -1511,8 +1511,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; the rebuilt loader passed. Next: the published copy and the 15-player town test once LEAD publishes.
-  (on b4e9294)
+- Now: the published v0.52 (slug fdd651f3) against the db67326 build, and its declared rules. Next: the live rules test with
+  real accounts (needs Cal and a friend). (on 4b7fe50)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
