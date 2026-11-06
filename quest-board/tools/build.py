@@ -36,7 +36,7 @@ for art in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")):
 # character layers and icons travel as two packs, so a published page stays under its file limit
 import base64
 # ui_<name>.webp replaces the built-in picture <name> (a class, coach, rank or reward picture), see docs/HANDOFF.md
-for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_",))):
+for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_",)), ("art_ex.js", ("ex_",))):
     parts = []
     for art in sorted(glob.glob(os.path.join(DIST, "art", "*.webp"))):
         name = os.path.basename(art)
@@ -62,7 +62,7 @@ data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.
 with open(os.path.join(DIST, "qbdata.js"), "w", encoding="utf-8") as f:
     f.write("window.QBDATA=" + json.dumps(data, separators=(",", ":")) + ";\n")
 
-tags = "".join('<script src="%s?h=%s"></script>\n' % (s, fp(os.path.join(DIST, s))) for s in ("art_rig.js", "art_icon.js", "art_ui.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
+tags = "".join('<script src="%s?h=%s"></script>\n' % (s, fp(os.path.join(DIST, s))) for s in ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)

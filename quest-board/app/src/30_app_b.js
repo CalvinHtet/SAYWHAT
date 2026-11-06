@@ -285,8 +285,10 @@ function exBody(){return (S.char&&S.char.sex)==="f"?"f":"m"}
 function exDemo(id,cls){var bd=exBody(),t=-(Date.now()%2800);
   /* Walking swaps legs on each step; a fade would show four legs at once. */
   if(id==="farmer")cls=(cls?cls+" ":"")+"steps";
-  return '<div class="xd'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+' demonstration" style="--xt:'+t+'ms"><img class="xa" src="art/ex_'+id+'_'+bd+'_a.webp" alt=""><img class="xb" src="art/ex_'+id+'_'+bd+'_b.webp" alt=""></div>'}
-function exStill(id){return '<div class="xd still"><img src="art/ex_'+id+'_'+exBody()+'_b.webp" alt=""></div>'}
+  return '<div class="xd'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+' demonstration" style="--xt:'+t+'ms"><img class="xa" src="'+exArt('ex_'+id+'_'+bd+'_a.webp')+'" alt=""><img class="xb" src="'+exArt('ex_'+id+'_'+bd+'_b.webp')+'" alt=""></div>'}
+/* exercise pictures travel in art_ex.js (a page holds at most 512 files); the plain file is the fallback */
+function exArt(n){return (window.QBART&&QBART[n])||"art/"+n}
+function exStill(id){return '<div class="xd still"><img src="'+exArt('ex_'+id+'_'+exBody()+'_b.webp')+'" alt=""></div>'}
 function exCard(id){
   var E=EX[id],wk=S.wk,NS=(wk.setsN&&wk.setsN[id])||EX[id][2],sg=exSuggest(id),sets=(wk.sets[id]||[]),role=(wk.roles&&wk.roles[id])||"",nt=wk.notes&&wk.notes[id];
   var val=wk.w[id]!=null&&wk.w[id]!==""?wk.w[id]:sg.w,done=sets.filter(Boolean).length>=NS;
