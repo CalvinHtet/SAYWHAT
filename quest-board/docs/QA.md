@@ -798,3 +798,10 @@ the rest say "colour".
 
 Nightclub DJ (same commit): with the spot in front of the decks, live at 22:00 the DJ works the decks in 9 of 12 looks in one run and
 5 of 12 in another (was 3 of 12). Good enough; the booth reads as staffed.
+
+### Writing pass, round 3 (LEAD's a0f2c8b and ROOMS's a646e51, on b0534bc)
+
+Done. `voice.js`: 1,353 lines, 0 break a rule. The six lines that ended on a joke now read as plain detail (Prize Counter "Glass
+shelves of plush toys and prizes, priced in tickets.", Score Screens, Lyric Screen, Song Kiosk, VIP Booth, Speaker Stacks), the
+dance floor says "colour", the Squat Rack and the drake pet are plain. `voice.js`'s "meets" rule now matches VOICE.md's "X meets Y"
+slogan only ("Comfort meets style." is caught; "Everyone meets here." no longer is, as LEAD pointed out).

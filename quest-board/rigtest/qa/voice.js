@@ -8,7 +8,7 @@ const QB = process.env.QB || path.join(__dirname, '..', '..');
 const SRC = fs.readdirSync(path.join(QB, 'app', 'src')).filter((f) => f.endsWith('.js')).map((f) => [f, fs.readFileSync(path.join(QB, 'app', 'src', f), 'utf8').split('\n')]);
 const where = (txt) => { const k = txt.slice(0, 40).replace(/[“”"]/g, ''); for (const [f, L] of SRC) { const i = L.findIndex((l) => l.includes(k)); if (i >= 0) return f + ':' + (i + 1); } return '?'; };
 const BANNED = /\b(perfect|ultimate|stylish|elevate[sd]?|next level|game-?changer|must-have|epic|boss|vibes?|level up your|delve|embark|journey|realm|unleash|seamless|curated|vibrant|testament|tapestry|bustling|cozy nook|oasis|haven|whimsical|slay|omg)\b/i;
-const QUIP = /(not guaranteed|says thanks|obviously\.|now decorative|big feelings|probably works|don'?t tell anyone|print money|someone has to|you know you want|meets\b|not just .{1,30}, it'?s|whether you'?re)/i;
+const QUIP = /(not guaranteed|says thanks|obviously\.|now decorative|big feelings|probably works|don'?t tell anyone|print money|someone has to|you know you want|meets (?!here|there|up|at|in|on|the|every|you)\w+|not just .{1,30}, it'?s|whether you'?re)/i;
 (async () => {
   const { b, p } = await open({ width: 900, height: 800, owned: 'none' });
   const lines = await p.evaluate(() => {
