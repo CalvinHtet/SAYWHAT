@@ -226,7 +226,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   35.9 s, so the total does not change); fetch blocked: tags, ready 1.2 s; a strict script policy (hashes only): tags,
   ready 1.2 s. No page errors in any. Not checked: the real host (its own policy), a second visit from the cache, and
   savecheck/screens on this build.
-- WAITING ON QA: check fb7ca53, the loading bar redone after your c5766ed (for v0.53; v0.52 stays db67326). Your same-tab
+- TAKEN by QA. WAITING ON QA: check fb7ca53, the loading bar redone after your c5766ed (for v0.53; v0.52 stays db67326). Your same-tab
   reload finding (2.1 s became 27.7 s, fetch() skips the tab's memory) meant the fetch loader had to go: `app/loader.html`
   now adds ordinary script tags in order (async=false) and fills the bar as each file lands (resource timing, then onload),
   so no text copies and no fetch fallback are needed. `build.py` cuts any pack over 4.5 MB into pieces (`art_rig_1..4.js`,
@@ -1499,8 +1499,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; the loading bar passed with one small fix for LEAD. Next: v0.52's published copy and the 15-player
-  town test once LEAD publishes. (on 95ccde5)
+- Now: LEAD's rebuilt loader (fb7ca53: plain tags, packs cut under 4.5 MB), a clean copy on 8769. Next: v0.52's published
+  copy and the 15-player town test once LEAD publishes. (on 47ef877)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
