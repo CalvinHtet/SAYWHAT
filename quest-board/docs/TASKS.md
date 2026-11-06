@@ -465,6 +465,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's art batch (on beaf1a2 and 4830bf7; pictures in `shots/qa/`, untracked): all pass. 4bcda62 dry beds and watering
+  (`gardenwater.js`, 390x844): 5 bed types show their dry twin; Water shows 6 cans from about 0.8 to 2.3 s while the dry layer fades
+  1 to 0; no bed moves (raised, tomato, herb identical boxes; bed2 and berry by eye); with Sprinklers and the last watering 5 days old
+  it stays watered at +0, +30 and +90 h and shows no dry bed. The cans are about 12 px in a 332 px window: readable, small. b9bcbbf: the
+  herb planter's legs are straight, other beds in place. 07812e4 shadows: softer and warm, still ground the beds; the vanishing could not
+  be made to happen in Chromium before or after (`shadowbuy.js`: 8 buys with the window open, every frame, 0 frames with a missing
+  filter), so Safari is unconfirmed. d233c9e backdrop: fitted and repeated. f2c495b: the sweatband keeps the hair in every pose, both
+  bodies. Seven friend portraits (811576a, 132de76): one style, not photoreal, outfits match FRIENDS, feet on one line, all three poses
+  cycle. Notes for ROOMS: Vega's high-tops are white, black and orange in the panel layout of a famous sneaker (no logo, but they read as
+  it); Kenan's shades change every pose (on, pushed up, gone). Owner: ROOMS.
+- QA, LEAD's fe10549 solo size (on 4830bf7, `friendart.js`): a friend alone is still smaller than each friend in a pair. Logan draws
+  91x175; Memo and Cynthia 127x221 and 125x239 (`shots/qa/friends/cards_solo_pair_4830bf7.png`). Also, ROOMS's note stands: at phone
+  sizes the building view below the street is empty grey (pale blue at 360), the camera's zoom-out range, not the backdrop. Owner: LEAD.
 - QA, ROOMS's 67d0e85 NICE COCK wear test (on da87000, matrix grid/wear/onepose with SwiftShader WebGL; sheets in `shots/qa/nc/`,
   untracked): one fix, 15 of 16 pass. All 16 on both bodies in all 22 key poses (idle, walk 1-4, stretchUp, stretch, sits, type, sleep,
   rear, back-walk 1-4, sleepHead), 0 draw failures, plus four outfits (cap+pendant+hoodie+black joggers+high-tops; beanie+shades+tee+
@@ -1891,7 +1904,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: NICE COCK done (sweatband fix, ROOMS). Next: LEAD's 5688ce3 (Wednesday returns) and ff9ba96 (class card art), ROOMS's 4bcda62 (dry beds, watering), b9bcbbf, 07812e4, d233c9e. (on da87000)
+- Now: ROOMS's art batch passes (garden water, beds, shadows, backdrop, sweatband, seven portraits). Next: LEAD's 5688ce3 (Wednesday returns), ff9ba96 (class card art). (on 4830bf7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
