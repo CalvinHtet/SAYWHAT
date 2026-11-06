@@ -282,6 +282,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.49's published copy (rule 18, LEAD's 1d4d878; artifact 7336ed4a, version 1793937460-7d59), read-only: pass. 439 files
+  against the 438 of a clean build of 8fabe1a: 437 match by sha256; `index.html` differs only by its title ("Quest Board v0.49
+  (test, fresh start)", exactly the 26 extra bytes); `lfvar.json` is the page-only file HANDOFF.md says to keep, the same size
+  and sha256 as in v0.48. Nothing from the build is missing. Its database holds 2 documents (1.4 KB), so nothing near a played
+  save; QA did not read them (probably the first open's save and its backup). Owner: none.
 - QA, ROOMS's f0c6dbb, the Dessert Parlor and the Boba fixes (on 4b1c78b, port 8770, `dessertshell.js`, `bobashell.js`;
   `shots/dessert_bare.png`, `dessert_full.png`, `dessert_downstairs.png`, `boba_full2.png`): the shells and doors pass, 2 pieces
   now stand off the floor. Pass: the Dessert Parlor's painted shell (`dsw_t1`) bare and fully bought, the tall painted bookcase
@@ -1027,8 +1032,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.49's published copy against the build (LEAD's 1d4d878, rule 18), read-only. Next: ROOMS's Boba and Dessert fixes.
-  (on 4b1c78b)
+- Now: waiting for work. Next: ROOMS's Boba and Dessert fixes. (on d4f4577)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
