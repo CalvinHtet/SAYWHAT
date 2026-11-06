@@ -188,7 +188,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
   start)" (slug 7336ed4a-741d-4af2-b0fe-7492666e5a32, 439 files from 8fabe1a). QA: 437 of 438 build files match by sha256,
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
-- TAKEN by QA. WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
   cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
@@ -313,6 +313,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.50 (rule 18, slug cda54e71, version 1793953238-4af6): pass, the page matches the f3c970c build. By
+  sha256 (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs
+  only by its title, "Quest Board v0.50 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the
+  page-only file and matches `app/lfvar.json` in git byte for byte. It declares db, user and sample (images), contract 0.2.96,
+  owner only. The database holds just 2 diagnostics docs (diag/frame, diag/perf) from the first open at 08:22: APPV 50, Board
+  tab, 120 fps. There is no save and no world doc, so it is still a fresh start. Owner: LEAD (Cal's phone test is next).
 - QA, the team's signature tops (097dccd, checked on b7369bc; `rigtest/qa/shots/tops/`): pass, ready to publish. matrixshot.js
   sheet=wear for tm_rafe_jacket, tm_theo_tee, tm_nova_knit and tm_sable_jacket: 44 of 44 poses each, both bodies, 0 fails; no
   mannequin lines left, Nova's lavender trim intact, Theo's lanyard on every front pose. sheet=neck: 952 cells, 0 fails, every
@@ -1352,8 +1358,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.50's published copy (the page against the f3c970c build). Next: LEAD's Rift Mask drop odds (v0.51), test copies
-  only. (on b7369bc)
+- Now: LEAD's Rift Mask drop odds (v0.51), test copies only. Next: whatever v0.51 brings for its pre-release check.
+  (on 2d51cc2)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
