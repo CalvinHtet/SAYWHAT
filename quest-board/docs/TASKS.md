@@ -18,7 +18,7 @@ Doing:
   everything/empty, view, +6 h, +20 produce, +12 sold, next story step; Cal: "Give me a way to test each room and its
   assets"). Next: v0.62 once those and ROOMS's shadows (07812e4), backdrop (d233c9e) and bed legs (b9bcbbf) pass. NICE COCK
   (67d0e85): when the wear test passes, LEAD adds the 16 Shop rows and moves BRANDS. Waiting on Cal: Kode PinK and SAYMØRE
-  lists (taglines set, 25762c4), the town hall pick, a launch date. 3939130 plain visit lines; ff9ba96 class card art across the whole card (fx-pulse clash) and animated friend portraits (friend_<id>.webp from ROOMS, rig until then). 21aae0a friends only in their own building, no dog copies; 76a99a4 2-3 poses per friend (ROOMS paints). 1e2f433 room tester fixes (QA). 5688ce3 Shop without a Vault: a retired brand back every Wednesday, same for everyone (Cal). 9a8ebd8 portrait card fixes (QA). (on 9a8ebd8)
+  lists (taglines set, 25762c4), the town hall pick, a launch date. 3939130 plain visit lines; ff9ba96 class card art across the whole card (fx-pulse clash) and animated friend portraits (friend_<id>.webp from ROOMS, rig until then). 21aae0a friends only in their own building, no dog copies; 76a99a4 2-3 poses per friend (ROOMS paints). 1e2f433 room tester fixes (QA). 5688ce3 Shop without a Vault: a retired brand back every Wednesday, same for everyone (Cal). 9a8ebd8 portrait card fixes (QA). fe10549 a lone friend drawn larger. (on fe10549)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
