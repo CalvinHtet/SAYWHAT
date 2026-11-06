@@ -150,7 +150,8 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
-- Team, class art and team looks (Cal, 2026-11-05; code in d523cf1, `29c_team.js`). Show Cal each set side by side:
+- PART DONE by ROOMS in 4fc1542, waiting on Cal's look (approval 13): the five join banners `ui_team_sable`, `_mara`, `_rafe`,
+  `_nova`, `_theo` (720 x 400) are in `art/app`; class banners (1) and the team in their rooms (3) are still to do. Team, class art and team looks (Cal, 2026-11-05; code in d523cf1, `29c_team.js`). Show Cal each set side by side:
   1. Class banners in the game's own chibi style, a man's and a woman's version of each: `ui_class_<id>_m.webp` and
      `_f.webp` for tamer, swiftblade, runeweaver, vanguard (360 x 480 portrait, the player's chibi in the class gear). The class
      screen and the job banner pick the one matching the player's body; the old picture shows until then.
@@ -554,11 +555,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: LEAD's open art requests, next the team banners (Chrome claimed), then the class banners, the Goblin King and
-  amulet icons and the gift, then Lock and Key and the theater basics. The Game Room guests wait on Cal (his friends'
-  looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT ready to publish
-  until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788), 11 (45930bc),
-  12 (story portraits, 625d9e3). 15-minute loop running (rule 16). (on 625d9e3)
+- Now: LEAD's open art requests, next the class banners (Chrome claimed), then the Goblin King and amulet icons and the
+  gift, then Lock and Key and the theater basics. The Game Room guests wait on Cal (his friends' looks). The Loft is ready
+  for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT ready to publish until he says yes:
+  approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (team
+  banners, 4fc1542). 15-minute loop running (rule 16). (on 4fc1542)
 - DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
