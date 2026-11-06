@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: WAITING ON Cal: his phone test of v0.52, published and pinned (454 files from db67326, the town rules declared).
-  WAITING ON QA for the page check. v0.53 is ready behind it: the loading bar (fb7ca53, QA passed 88164ce). Nobody else
+  QA: the page matches the build, the 9 rules live (reads checked; friend writes need real accounts). v0.53 is ready behind it: the loading bar (fb7ca53, QA passed 88164ce). Nobody else
   plays until there is a working version. (on fb7ca53)
 
 To do:
