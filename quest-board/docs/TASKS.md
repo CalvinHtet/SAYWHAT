@@ -290,6 +290,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): the Nightclub notes (one floor, a DJ and a bartender) and abb6513, the team in their home rooms.
 - QA, design review of the Nightclub (step 16, fd0da20, on 867bc30, at 22:00; `roomreview.js` and `livebuilding.js` now take HOUR,
   `docs/QA.md`; `shots/review_club_*.png`): reads as one club (VIP left, bar and DJ at the back, the dance floor in the middle,
   the entrance front-right), nothing outside or overlapping, and live guests fill it in about 16 s and use the floor, tables, bar,
@@ -1274,7 +1275,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Nightclub notes when ROOMS fixes them; v0.50. (on 821776f)
+- Now: the Nightclub fixes and the team in their rooms (abb6513), test copy only (`roomreview.js`, `livebuilding.js`,
+  `teamrooms.js`). Next: v0.50. (on 119aa7e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
