@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.62 published and pinned (756def5, 495 files; QA passed). With QA: the published file check, and the launch rerun
-  fix (dropPlan: no back-to-back or still-live reruns). Next: Kode PinK rows once its bag passes (ROOMS), SAYMØRE after.
-  436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on the rerun fix after 279593c)
+- Now: v0.62 published and pinned (756def5, 495 files; QA passed, files match). With QA: 3a1e3c1 (Kode PinK in the Shop on
+  Dec 14; launch reruns keep every brand more than 4 slots from its last drop). Next: SAYMØRE rows when its wear test passes,
+  then v0.63. 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 3a1e3c1)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
