@@ -91,7 +91,8 @@ function lfInstallFx(w,r,dp,i,mm){
   var tmp=document.createElement("div");tmp.style.cssText="position:absolute;left:-9999px;top:0;width:10px;height:10px;overflow:hidden;visibility:hidden";
   tmp.innerHTML=lfSeeded(function(){return lfPreview(r2,uid)});document.body.appendChild(tmp);
   var base={},bs=tmp.querySelector("svg");if(bs)lfKids(bs).forEach(function(e){var s=lfSig(e);base[s]=(base[s]||0)+1});tmp.remove();
-  w.innerHTML=lfSeeded(function(){return lfPreview(r,uid)});try{lfPvStart(i,mm)}catch(e){}
+  /* Cal (v0.48): the door arrows live in the same box, so redraw them with the picture (a new room's arrow showed only after reopening) */
+  w.innerHTML=lfSeeded(function(){return lfPreview(r,uid)})+(typeof rmArrows==="function"?rmArrows(r):"");try{lfPvStart(i,mm)}catch(e){}
   var svg=w.querySelector("svg");if(!svg)return;
   var all=lfKids(svg),fresh=all.filter(function(e){var s=lfSig(e);if(base[s]>0){base[s]--;return false}return true});
   if(fresh.length>all.length*.5)fresh=[];
