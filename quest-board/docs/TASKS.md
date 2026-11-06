@@ -462,6 +462,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 3a1e3c1 (on fa50109): both pass. Kode PinK through the real Shop (`shop.js` BRAND=kp; `shots/qa/kp/shop_*_3a1e3c1.png`):
+  14 pieces on him and 15 on her (the skirt hers only) bought at full price through Try on, Checkout, Confirm, worn and in the
+  mirror. Launch reruns (`drops.js`, 12 rounds, now 84 slots with 7 brands): 0 back-to-back repeats, 0 drops of a brand still live;
+  every date a Monday or Thursday, HANGANG first, NICE COCK fifth, two pages identical. Owner: LEAD.
 - QA, LEAD's 046b0c3 launch reruns (on 49814eb, `drops.js` now checks 12 rounds, 72 slots, of the current 6 brands): better, not
   done. Back-to-back repeats 2 to 0; drops of a brand still among the live four 14 to 6. The six are all later than the three rounds
   your rerun.js covered: Y2K on 2027-02-15, Rose on 03-08 and 04-19, NC on 03-11 and 06-21, Alt on 08-05. Cause: the brands moved to
@@ -1988,7 +1992,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: rerun fix checked (6 still-live drops left, LEAD). Next: the kp Shop rows, SAYMØRE's wear test when ROOMS sends it. (on a4abb6d)
+- Now: nothing waiting on QA (Kode PinK in the Shop and the launch reruns pass). Next: SAYMØRE's wear test when ROOMS sends it. (on fa50109)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
