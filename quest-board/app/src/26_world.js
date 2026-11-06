@@ -356,17 +356,23 @@ LFROOM.restaurant=function(C){
   if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4,10.75]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
-  if(H("r_cool")&&st>0)lfSpr(C,"rsx_cooler",Wi-1.0,kd+.3,.8,.7,{h:50,ctr:1});
+  /* the white drinks cooler has no place in Noir's fine dining once the backlit wine wall does its job (QA) */
+  if(H("r_cool")&&st>0&&!(noir&&H("r_d5")))lfSpr(C,"rsx_cooler",Wi-1.0,kd+.3,.8,.7,{h:50,ctr:1});
   if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.5,D*.5+2.2,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5+2.2,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5+2.2,.8,.8,30,{});
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
   /* the patio fills the corner below the kitchen wing */
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<kw;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,kd,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
     pl+=lfPoly([lfP(px,kd,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,kd,0)],"#6d4c2e","none");C.decals.push(pl);
-    if(H("r_sign"))rsS(C,"rsx_aframe",px+3.4,D-.75,.7,.5,24,{dk:-.5});/* in front of the umbrella table, so drawn after it */
+    if(H("r_sign"))rsS(C,"rsx_aframe",px+3.6,D-.75,.7,.5,24,{dk:-.5});/* in the gap between the fire pit and the table */
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,kd+.4,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",Wt-1.1,kd+.3,.9,.9,50)}
     if(H("r_p1"))[[px+2.2,kd+2.4],[px+5.6,kd+2.4]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
-    if(H("r_p2"))[[px+4.3,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
+    /* Cal: no room crowded. The front of the deck holds two pieces with air between them: the fire pit on the left and, on
+       the right, the umbrella table, which moves under the pergola as a plain table once the pergola is up */
+    if(H("r_p2")&&!H("r_p5"))[[px+6.0,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
+    if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+5.65,D-2.75,"P");
+    /* a low rail between the deck and the dining room, open at the front door */
+    var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
     if(H("r_p4")){rsS(C,"rsx_heater",px+3.7,kd+.5,.6,.6,60,{H:96});lfLight(C,px+4,kd+.8,70,"#ff9a3a",2.4,.5)}
     if(H("r_p6"))rsS(C,"rsx_bbq",px+4.7,kd+.3,1.7,1.0,28,{flip:1});
     if(H("r_p5")){rsS(C,"rsx_pergola",px+5.4,D-3.0,2.5,2.5,90,{dk:-4});lfLight(C,px+6.6,D-1.8,90,"#ffd890",3,.5)}
