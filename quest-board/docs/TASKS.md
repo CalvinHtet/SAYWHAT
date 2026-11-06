@@ -1643,8 +1643,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's audit fixes (1dc4211, re-audit running) and v0.55 notes (a96c4f7: dark-floor shadows, Auditorium, Boba shelf,
-  Game Room). Next: v0.55's page; the next version. (on a96c4f7)
+- Now: the re-audit of ROOMS's 1dc4211 (8 of 9 rooms done), then club and Game Room again on add039a (fog; the pool table already
+  passes). Next: v0.56 when LEAD builds it. (on b99ca1d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
