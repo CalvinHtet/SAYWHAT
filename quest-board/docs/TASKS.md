@@ -15,7 +15,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
   ping-pong retired). QA PASSED the full set (495 of 495). BLOCKED: publish_files refuses every file
-  ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. SMOKE BOMB in the Shop on Dec 28 (4f0d21f; QA wear test). ROOMS paints GACHA POP.
+  ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. SMOKE BOMB in the Shop on Dec 28 (4f0d21f); QA 12 of 15, ROOMS redoes the cloak hem and the band
+  and vest (too close to a famous anime's ninja gear), so no build ships it until they pass. Publish retried: still blocked. ROOMS paints GACHA POP.
   Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. (on 4f0d21f)
 
 To do:
