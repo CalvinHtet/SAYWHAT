@@ -306,7 +306,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
-- WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- TAKEN by QA. WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
   my opinions"): a design review, not only the usual checks, of the Rooftop at ea2dffc and Lock and Key at 707cac1. For
   each room: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
   floating or oddly sized; are the walkways and sight lines clear; what would you change. Cal on the Rooftop before
@@ -1130,7 +1130,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it. (on b1b63ae)
+- Now: Cal's new step, a design review of the Rooftop (ea2dffc) and Lock and Key (707cac1), test copy only. Next: v0.50 when
+  LEAD builds it. (on 3fdeb77)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
