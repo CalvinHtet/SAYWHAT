@@ -299,14 +299,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
   462 files from 859d941, the 9 db rules + user + sample with images, version 1793973604-fe09). Check the page matches the build.
-- WAITING ON QA: check v0.59, 0dfa204 (rule 18: your pass publishes it). Over v0.58: ROOMS's 3c27004 (passed), and LEAD's Bedroom
+- TAKEN by QA. WAITING ON QA: check v0.59, 0dfa204 (rule 18: your pass publishes it). Over v0.58: ROOMS's 3c27004 (passed), and LEAD's Bedroom
   lag fix from Cal's v0.58 phone log, which has one room window at 18 fps (worst 433 ms, 6,263 elements; the other samples
   56-60). The fully bought Bedroom is the heavy one: its game screen's 20 twinkles, two scrolls, the jump and three portal
   glows changed something nearly every frame, and each change re-draws the whole room. Now `.scrB/.scrL/.scrL2/.scrJ/.prtG`
   run in steps (index.html) and the twinkles share four beats (24_screens.js). `shots/roomsall.js` (every room, CPU x4): the
   Bedroom was the only one under 59; `shots/starcure.js`: 60 fps after the first draw (35-46 before). diag/perf now carries
   `room` (the open window's title). Please eyeball the stepped screens (Bedroom game screen, any portal) for looking choppy.
-- WAITING ON QA: check v0.60, c7aa1df (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
+- TAKEN by QA. WAITING ON QA: check v0.60, c7aa1df (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
   over v0.59, Cal via ROOMS: "For the test version, let skip a week actually change days, and level up actually skip past the
   level trials because I can't actually provide gym picture every time for a job advancement while testing" (he could not
   get the Garden at level 5). (1) Testing Level up now also passes the trial it reaches (30_app_b.js simlvl). (2) Skip a week
@@ -314,7 +314,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   unlocks, one at a time as before, each spending one (29h_unlocks.js, 29b_story.js, 29_prices.js qbWeek). Testing only:
   nothing sets testFree but Skip a week. `shots/gardentest.js`: a fresh save, Level up x4 -> level 5 with gate 5 passed; the
   first Skip opens the Hall and offers the Garden lot (testFree 5 left); no page errors. Not checked: savecheck/screens.
-- WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
+- TAKEN by QA. WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
   ready, publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". QB_TEST_START = 5
   (29_prices.js): a brand-new character (ccdone, first time only; old saves untouched) starts at level 5 XP with gate 5 passed
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
@@ -1737,7 +1737,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; 3c27004 passed with a ping-pong note. Next: the next version. (on 2d5d216)
+- Now: v0.61 (d9d92d7, covering v0.59 and v0.60; Cal waiting to test the Garden), clean copy on 8784. Next: ROOMS's 6f04ed8
+  (Game Room). (on 8b35bbc)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
