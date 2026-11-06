@@ -263,9 +263,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   bytes) or were only checked (a few hundred bytes), and when the bar showed and the game was ready; last 6 visits, owner's
   device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
-- TAKEN by QA. WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
   461 files from a384feb, the 9 db rules + user + sample with images, version 1793967962-0e38). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.55, 17d4b44 (rule 18: your pass publishes it). (1) Skirts: 1bbe47f (rig option) and be8e92c (the flag
+- DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.55, 17d4b44 (rule 18: your pass publishes it). (1) Skirts: 1bbe47f (rig option) and be8e92c (the flag
   on v_tulle and h_pleat): one piece mid-stride (`shots/v55/skirt_before.png`, `skirt_after.png`). (2) Room-window lag from
   Cal's phone (b46bc16): the fx-pulse glow is an ::after layer that only fades; .hero and .now keep the old glow (their ::after
   belongs to fx-sweep and fx-holo). Please eyeball the glow at every rank skin. (3) Your v0.54 notes: the creator on a phone
@@ -401,6 +401,32 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.55 (17d4b44, APPV 55, built clean, with ROOMS's shadows 9593432 and phone-note fixes 60ab997 in it; `shots/v55/`): pass,
+  publish it; the fixes below go in the next version. Skirts: v_tulle and h_pleat hang as one piece in every walk and backwalk
+  frame (v0.54 split both, the pleat badly; `skirts.png`). Glow: at its peak the new faded layer looks the same as the old
+  box-shadow at every rank (default, D, C, B, A, S; new `glowranks.js`, `glow_cmp.png`). Begin (`ccbegin.js`, now 10 sizes, the
+  pill checked before the tap): on screen and tappable at every size including sideways 740x360, 844x390 and 932x430; the
+  Testing pill clears every creator button except at 375x548 (Safari with bars), where it covers the Black colour button (small,
+  it goes at release). The usual set all pass ("NEW v0.55", savecheck, screens, old saves, doors 36 of 36, voice 0, Shop 44,
+  town rules 32 of 32, the Rift Mask, the team, diag/load), no page errors. Shadows (new `allrooms.js`, `shadowmap.js` red =
+  darker, blue = lighter, `pairsheet.js`; every room fully bought, v0.54 against v0.55, 13:00 and 22:00): good in the light and
+  mid rooms (Boba, Dessert, Theater lobby, Bedroom, Lounge, Studio, Gym, Library, Dojo...), soft and even, not too dark at
+  night on light floors, nothing on walls or doors. Fixes, ROOMS: (1) the Speakeasy gets no shadow at all (chairs, barrels,
+  jukebox, sofa, cart); (2) on dark floors they are invisible: Lock and Key (0.7% of the room changed by day, 0.0 at night) and
+  the Lair (0.5%), Club, Karaoke, Arcade; raise the strength on dark floors or use a light-edged contact shadow; (3) the
+  Auditorium's three tall floor speakers and the projector stand have none, and the hard box under the seats went, so the seat
+  rows have none either; (4) Boba: a floor shadow under the small pink plant shelf by the window bench; if it hangs on the
+  wall, drop it. 60ab997, against references (isometric game rooms: "colored 3D isometric game club", "low poly cutaway",
+  "immersive 3D game room"): Bedroom good: the poster now a poster-width clear of the Closet door, prints and moss panel over
+  the bed as rooms usually hang art. Game Room: the beanbags face the retro TV now, but that corner is crowded: the orange
+  beanbag sits on the pool table's end and the ping-pong table touches the pool table's front corner; in every reference the
+  pool table stands alone with room for the cue; move the ping-pong table off it (or drop it) and keep a clear ring round the
+  pool table. Names: all read right; "Premium LED Bed" shows no LED in the picture; "Big TV"/"80 inch Screen" and "Couch &
+  Console"/"Cream Sectional"/"Floating Media Console" are fine only if each replaces the one before. Owner: LEAD (publish),
+  ROOMS (shadows, the Game Room corner, the bed name).
+- QA, the published v0.54 (slug 278e76fb, version 1793967962-0e38): pass, 459 of the a384feb build's 460 files identical, none
+  missing, index.html only by its title, lfvar.json matches, the 9 rules declared. Its diag/load gives the real host's numbers:
+  it compresses (34.5 MB sent for 39.4 MB of scripts; app.js 0.41 of 1.13 MB) and the Mac was ready in 3.3 s. Owner: LEAD.
 - QA, the upgrade visibility audit (ROOMS's tools/upgrade_audit, run on the v0.53 build 743c30c, so before the shadows and
   60ab997; `shots/upaudit/`: report.md, sheets/, qa_list.txt ranked worst first): 503 upgrades in 30 rooms, OK 363, WEAK 98,
   NONE 42, GROWS 7, retired 16. Of the 140 WEAK or NONE, 54 show nothing by design (people, menus, money caps, room openers, pets).
@@ -1605,8 +1631,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.55 (17d4b44, clean copy on 8774) with ROOMS's shadows and 60ab997 in it: the usual set, skirts, the glow at every rank
-  skin, Begin, the shadows in every room, the Bedroom and Game Room against references, the names. Next: v0.55's page. (on 564ee18)
+- Now: ROOMS's c6ba889 and 1dc4211 (the audit fixes; re-audit those rooms). Next: v0.55's page; the next version. (on a5b1546)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
