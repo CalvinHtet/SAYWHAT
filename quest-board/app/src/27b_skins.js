@@ -79,7 +79,7 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"A round rug with a teal pattern under the couch.",{o:{dk:9}}),
   PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
   PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.35,7.65,3.2,2.1,1,"Felt and chalk.",{cust:[[5.95,7.15,-1],[3.8,8.7,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
-  PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",9.0,2.0,3.0,1.9,1,"A blue table, two paddles and a net clamp.",{cust:[[8.45,2.95,1],[12.4,2.95,-1,GMB]]}),/* QA: its own open floor (the room is 13 x 10): past the sectional, a tile off the snack corner, clear of the doorway at 12.1,5.4 */
+  ["gm_ping","Ping Pong Table",UP_M,"","",0,0,0,"A blue table, two paddles and a net clamp.",{retired:1}],/* Cal: drop it (QA: one table too many, both ends boxed in). Retired, not deleted: saves that own it keep loading */
   PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.4,.3,1.1,1.1,0,"A green upright with a joystick and two buttons.",{cust:[[.95,2.1,1,GMB]]}),
   PL("gm_foos","Foosball",UP_M,"gmx_foos",9.8,6.5,1.65,2.5,1,"Wooden table, eleven rods, a cork ball.",{cust:[[9.25,7.75,1],[12.0,7.75,-1,GMB]]}),/* Cal: down toward the front so the arcade has its corner; clear of the pool table and the doorway */
   PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"A red vending machine, lit from inside.",{cust:[[12.1,1.8,1,GMB]]}),
