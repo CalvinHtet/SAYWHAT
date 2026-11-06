@@ -1435,7 +1435,7 @@ function brandHtml(b,d){
   var h='<section class="card panel brandhead" style="background:linear-gradient(135deg,'+b.c[0]+','+b.c[1]+' 60%,'+b.c[2]+')">'+brandLogo(b,1)+'<p class="note" style="color:#fff;opacity:.9">'+b.tag+'. Weekly drop, 15 pieces.</p></section>';
   GORDER.forEach(function(g){var items=SHOP.filter(function(x){return x[6].b===b.id&&x[1]===g[0]&&itemFits(x)});if(!items.length)return;
     h+='<section class="card panel"><h3 class="label">'+g[1]+'</h3><div class="shopgrid">'+items.map(itemHtml).join("")+'</div></section>'});
-  var nx=d.next;h+='<section class="card panel"><p class="note">'+(nx?'Next drop: <b>'+nx.name+'</b> in '+cdTxt(ptMidnight(nx.start)-d.n)+' (Mondays, midnight Pacific).':'More brands drop every Monday.')+'</p></section>';
+  var nx=d.next;h+='<section class="card panel"><p class="note">'+(nx?'Next drop: <b>'+nx.name+'</b> in '+cdTxt(ptMidnight(nx.start)-d.n)+' ('+dropCadence()+', midnight Pacific).':'More brands drop every '+dropCadence().replace(/s and /,' and ').replace(/s$/,'')+'.')+'</p></section>';
   return h;
 }
 function vaultHtml(d){
