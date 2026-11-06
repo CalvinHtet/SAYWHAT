@@ -121,7 +121,9 @@ function lfHull(P){P=P.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]});
 function lfPolyS(pts,fill,extra){return '<polygon points="'+pts.map(lfPt).join(" ")+'" fill="'+fill+'"'+(extra||"")+'/>'}
 /* per-room light model. returns {pre,mid,post} svg strings */
 function lfRoomLight(C,uid,t,out){
-  var L=out?lfLS():lfInLS(C),N=LF.W,M=LF.D,H=LF.H,U=29.07,res={pre:"",mid:"",post:""},defs="",id=function(n){return "lf"+n+uid};
+  /* an open-air room (C.noshell 2: the Rooftop, the Sky Patio) has no walls, so its light stops just above the rail
+     instead of tinting a wall-high box of sky */
+  var L=out?lfLS():lfInLS(C),N=LF.W,M=LF.D,H=C.noshell===2?40:LF.H,U=29.07,res={pre:"",mid:"",post:""},defs="",id=function(n){return "lf"+n+uid};
   var floor=[lfP(0,0,0),lfP(N,0,0),lfP(N,M,0),lfP(0,M,0)];
   var hexIn=out?[lfP(-.2,-.2,-8),lfP(N+.2,-.2,-8),lfP(N+.2,-.2,H+16),lfP(-.2,-.2,H+16),lfP(-.2,M+.2,H+16),lfP(-.2,M+.2,-8)]:C.rsW?[lfP(0,M,H),lfP(0,0,H),lfP(C.rsW,0,H),lfP(C.rsW,0,36),lfP(N,0,36),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)]:[lfP(0,M,H),lfP(0,0,H),lfP(N,0,H),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)];
   var hs=lfHull(floor.concat([lfP(0,0,64),lfP(N,0,64),lfP(N,M,64),lfP(0,M,64)]));
