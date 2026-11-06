@@ -1437,14 +1437,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: QA's upgrade audit (shots/upaudit, on v0.53). WAITING ON QA (rule 17): c6ba889, the NONE fixes (Restaurant dividers,
+- Now: QA's upgrade audit (shots/upaudit, on v0.53). WAITING ON QA (rule 17): 1dc4211, the WEAK fixes (club laser and fog,
+  chandeliers at every Restaurant size, plaque, heater, sprinklers, drip hose, aisle lights, signs and small pieces a
+  size up; clocks, radio and prints left small by nature), and c6ba889, the NONE fixes (Restaurant dividers,
   cooler and dish station sold with the expansion they need; Theater reel out from behind the poster, lobby chandeliers
   drawn, the sconce off the trailer screen; Arcade Neon Trim drawn as tubes; Garden More Plots adds a bed). Staff
   (t_st2, g_gard2) place people, so they are blank by design. The NONEs in rooms not on the storyboard (b_mixo, f_pump,
   k_bottle) are left. Also WAITING ON QA: 60ab997 (Cal's phone-test notes) and 9593432 (shadows), in v0.55.
-  Next: the WEAK list worst first (cb_laser, r_star, g_spr, au_aisle, gm_lamp, ...), storyboard rooms only.
+  Next: apply QA's notes on all of it.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. (on c6ba889)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. (on 1dc4211)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
