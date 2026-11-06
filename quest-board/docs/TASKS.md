@@ -929,17 +929,18 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 7, the Rooftop (`rooftop`): a painted deck and rail (shell) to the same standard as the rooms
-  below, and a calm fully bought picture (today it is the busiest room in the game: pool, hot tub, four loungers, cabana,
-  DJ, bar, fire pit, umbrella, cart, shower, towels). First fix in 73a426a: the dark wall-high triangle over the sky in
-  open-air rooms is gone. Step 5, Lock and Key, is done on ROOMS's side: shell 4599993 (approval 25), the Friday Band
-  `sb_band` fe48618 (approval 26), the piano spacing for QA b19a578 and 1f2cfa9. Step 6 (Rafe) has its scene and banner.
-  LEAD: the room id stays `skybar`; new upgrade id `sb_band`. Next: the Mall (step 8), then the theater basics, the team
-  in their rooms. Chrome claimed. (on 73a426a)
+- Now: storyboard step 7, the Rooftop (`rooftop`). Painted deck in 707cac1 (`rfw_t1`, approval 27): travertine tiles, a
+  sandstone parapet on the back edges, glass rail only on the open front. Still to do: the open-air sky follows the time
+  (QA's note), then a calm fully bought picture laid out in zones (today: pool, hot tub, four loungers, cabana, DJ, bar,
+  fire pit, umbrella, cart, shower, towels), dropping repeats from the picture with ids kept. Step 5, Lock and Key, is done
+  on ROOMS's side: shell 4599993 (approval 25), the Friday Band `sb_band` fe48618 (approval 26), and Cal's lounge fix in
+  707cac1 (the Chesterfield and the Champagne Trolley leave the picture, the lounge is the sofa and its table, the piano
+  stands by the band). LEAD: the room id stays `skybar`; new upgrade id `sb_band`; `sb_chester` and `sb_trolley` are
+  retired. Next: the Mall (step 8), the theater basics, the team in their rooms. Chrome claimed. (on 707cac1)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
-  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 26 (Friday Band stage, fe48618), 20 (Garden lots and Game Room desk,
+  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 26 (Friday Band stage, fe48618), 27 (Rooftop deck, 707cac1), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
