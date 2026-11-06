@@ -149,6 +149,8 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
       working and use QA chat as the approval chat. If QA gives you update and feedback fixes, apply that and keep
       working". So step 6 no longer holds a version: once QA passes a build, LEAD publishes and pins it as the next
       version, Cal tests whenever he can, and QA's findings are fixed and shipped in the version after.
+    - **Tightened by Cal, 2026-11-06 (to QA):** "Going forward, only publish for me to test when you can't find any more
+      errors." A QA pass now means no known error left: nothing visible is waved through as "fix in the next version".
     - Only LEAD publishes and pins. If Cal does not answer, nobody waits: every chat keeps working on other rooms and
       features (rule 16), and the next version builds up meanwhile.
 
