@@ -106,10 +106,33 @@ function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F
   var M=[-a,-b,c,dd,e+a*S.w,f+b*S.w];
   if(LFREC)lfRecBox(x,y,0,w,d,z);
   C.add(x+w+y+d-.01,'<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.18)"/>');
-  /* dry beds look parched, watered beds damp (LEAD's gdWatered, 29i_garden.js) */
-  var wet=typeof gdWatered!=="function"||gdWatered(),fl=wet?'saturate(1.12) brightness(.96)':'saturate(.45) sepia(.35) brightness(1.1)';
-  C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),'<image style="filter:'+fl+'" href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
+  /* dry beds look parched, watered beds damp (LEAD's gdWatered, 29i_garden.js). Cal: "separate art for when it looks like
+     the garden needs watering": a painted dry twin (<bed>_dry: cracked soil, wilted plants) while dry, the colour shift
+     only if that painting is missing. Right after Water (gdWaterAnim), the dry twin fades off the damp bed. */
+  var wet=typeof gdWatered!=="function"||gdWatered(),DK=window.LFSPR&&LFSPR[k+"_dry"],el=Date.now()-(window.GDWAT||0),anim=wet&&el<2600,
+    fl=wet?'saturate(1.12) brightness(.96)':DK?'saturate(.95)':'saturate(.45) sepia(.35) brightness(1.1)',
+    mt=' width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"',
+    img='<image style="filter:'+fl+'" href="'+lfSprUrl(!wet&&DK?k+"_dry":k)+'"'+mt+'/>';
+  if(anim)img+='<image class="gddryfade" style="animation-delay:'+(500-el)+'ms;'+(DK?'':'filter:saturate(.45) sepia(.35) brightness(1.1)')+'" href="'+lfSprUrl(DK?k+"_dry":k)+'"'+mt+'/>'+gdCan(x,y,w,d,z,el);
+  C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),img);
   return z}
+/* the watering animation over one bed: a can tips in, pours a few seconds of drops onto the soil, and lifts away */
+function gdCan(x,y,w,d,z,el){var c=lfP(x+w*.5,y+d*.5,0),X=c[0],Y=c[1]-z,D=function(n){return 'animation-delay:'+(n-el)+'ms'},
+    can='<g class="gdcan" style="'+D(0)+'"><g transform="translate('+(X+8).toFixed(1)+','+(Y-52).toFixed(1)+') scale(1.5)">'
+      +'<path d="M-9 -2 L9 -2 L7 14 L-7 14 Z" fill="#7fa7b8" stroke="#2f3d44" stroke-width="1.2"/><path d="M-9 -2 Q0 -6 9 -2" fill="#9cc3d2" stroke="#2f3d44" stroke-width="1"/>'
+      +'<path d="M-6 -3 Q0 -14 6 -3" fill="none" stroke="#2f3d44" stroke-width="1.8"/><path d="M-8 6 L-22 -4" stroke="#2f3d44" stroke-width="3.2" stroke-linecap="round"/><path d="M-8 6 L-22 -4" stroke="#7fa7b8" stroke-width="1.6" stroke-linecap="round"/>'
+      +'<ellipse cx="-23" cy="-5" rx="3" ry="2" fill="#5f7d89" stroke="#2f3d44" stroke-width=".8"/></g></g>',
+    drops='';
+  for(var i=0;i<12;i++){var dx=X-34+(i%4)*5+(i*7%5),dy=Y-36+(i%3)*3;drops+='<ellipse class="gddrop" style="'+D(900+i*55)+'" cx="'+dx.toFixed(1)+'" cy="'+dy.toFixed(1)+'" rx="1.6" ry="3" fill="#bfe6ff" stroke="#6aa6c8" stroke-width=".4"/>'}
+  return '<g pointer-events="none">'+can+'<g class="gdpour" style="'+D(0)+'">'+drops+'<ellipse cx="'+(X-22).toFixed(1)+'" cy="'+(Y+4).toFixed(1)+'" rx="20" ry="6" fill="rgba(60,40,20,.3)"/></g></g>'}
+/* water from anywhere (the lot's can, the Garden window's button): remember when, before LEAD's handler re-renders */
+if(!window.__gdWatAnim){window.__gdWatAnim=1;document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("[data-act=gdwater]"))window.GDWAT=Date.now()},true);
+  var gst=document.createElement("style");gst.textContent='.gddryfade{animation:gdfade 1.6s ease-in forwards}@keyframes gdfade{to{opacity:0}}'
+    +'.gdcan{opacity:0;transform-box:fill-box;transform-origin:70% 80%;animation:gdcan 2.5s ease-in-out forwards}'
+    +'@keyframes gdcan{0%{opacity:0;transform:translateY(-12px) rotate(0)}12%{opacity:1;transform:translateY(0) rotate(0)}28%{opacity:1;transform:rotate(-34deg)}82%{opacity:1;transform:rotate(-34deg)}100%{opacity:0;transform:translateY(-10px) rotate(-6deg)}}'
+    +'.gdpour{opacity:0;animation:gdpour 2.5s linear forwards}@keyframes gdpour{0%,26%{opacity:0}34%,80%{opacity:1}100%{opacity:0}}'
+    +'.gddrop{opacity:0;transform-box:fill-box;animation:gddrop .5s linear infinite}@keyframes gddrop{0%{opacity:0;transform:translateY(0)}20%{opacity:.95}100%{opacity:0;transform:translateY(36px)}}';
+  (document.head||document.documentElement).appendChild(gst)}
 /* QA audit: the sprinkler was a 3 px post. A brass head on a dark riser, with a wide fan of spray and drops, so it reads on a phone */
 function gdMist(C,x,y){var q=lfP(x,y,0),X=q[0],Y=q[1],t=Y-14,sp='',dr='';
   [-1,1].forEach(function(s){sp+='<path d="M'+X+' '+t+' q'+(s*16)+' -20 '+(s*30)+' -2" stroke="rgba(190,230,255,.85)" stroke-width="1.6" fill="none"/><path d="M'+X+' '+t+' q'+(s*10)+' -26 '+(s*20)+' -10" stroke="rgba(190,230,255,.6)" stroke-width="1.2" fill="none"/>';
