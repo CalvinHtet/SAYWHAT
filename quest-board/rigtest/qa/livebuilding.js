@@ -5,6 +5,7 @@
 const { open } = require('./lib.js');
 (async () => {
   const { b, p, errs } = await open({ width: 1100, height: 1000, owned: 'all' });
+  if (process.env.HOUR) await p.evaluate((h) => { const now = new Date(Date.now()), t = new Date(now); t.setHours(h, 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (t - now); }, +process.env.HOUR); // HOUR=<0-23>: the clock for the picture
   await p.evaluate((v) => { window.BLDI = v[0]; window.ROOMN = v[1]; }, [+(process.env.BLD || 2), process.env.ROOM || 'theater']);
   const i = await p.evaluate(() => window.__qb.x().S.base.slots.findIndex((s) => s && s.t === window.ROOMN));
   await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.areaOn = null; S.gates = [5, 10, 20, 30, 40]; S.xp = Math.max(S.xp, x.cum(45)); x.render(); document.querySelectorAll('.dropsplash,.overlay,#layer .modal').forEach((e) => e.remove()); document.querySelector('.nav button[data-v="hideout"]').click(); });

@@ -7,6 +7,7 @@ const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const ROOM = process.env.ROOM || 'theater';
 (async () => {
   const { b, p, errs } = await open({ width: 1000, height: 900, owned: 'none' });
+  if (process.env.HOUR) await p.evaluate((h) => { const now = new Date(Date.now()), t = new Date(now); t.setHours(h, 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (t - now); }, +process.env.HOUR); // HOUR=<0-23>: the clock for the picture
   await p.evaluate((r) => { window.ROOM = r; }, ROOM); // the page code below reads window.ROOM
   const i = await p.evaluate(() => { const S = window.__qb.x().S; if (!S.base.slots.some((s) => s.t === ROOM)) S.base.slots.push({ t: ROOM, a: {}, st: 0, pend: 0 }); return S.base.slots.findIndex((s) => s.t === ROOM); });
   const ids = await p.evaluate(() => window.__qb.x().ADDONS[ROOM].map((u) => u[0] + ':' + u[1] + (u[3] && u[3].retired ? '(retired)' : '') + (u[3] && u[3].opens ? '(opens ' + u[3].opens + ')' : '')));

@@ -290,6 +290,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design review of the Nightclub (step 16, fd0da20, on 867bc30, at 22:00; `roomreview.js` and `livebuilding.js` now take HOUR,
+  `docs/QA.md`; `shots/review_club_*.png`): reads as one club (VIP left, bar and DJ at the back, the dance floor in the middle,
+  the entrance front-right), nothing outside or overlapping, and live guests fill it in about 16 s and use the floor, tables, bar,
+  VIP and podium. 2 notes: (1) no staff at all (no bartender, no DJ though the room says "Calibur on the decks", no bouncer, no
+  coat-check clerk); (2) the dance floor's four tiles do not line up (a step in the middle seam). No page errors. Owner: ROOMS.
 - QA, ROOMS's 6962a6e, the Karaoke booth (on 372346f; `roomreview.js`, `livebuilding.js`; `shots/review4_karaoke_full.png`): pass, ready
   for Cal. The Private Booth is a nook in the front corner behind a low pink partition. No page errors. Owner: ROOMS (to Cal).
 - DONE by QA (QA findings: pass, ready for Cal). WAITING ON QA (ROOMS's message): the Karaoke Private Booth behind a partition in the front-right corner.
@@ -407,7 +412,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: a design review of the Nightclub at fd0da20 (step 16): a new painted shell; the layout as it was (VIP booths
+- DONE by QA (QA findings: 2 notes). WAITING ON QA: a design review of the Nightclub at fd0da20 (step 16): a new painted shell; the layout as it was (VIP booths
   behind ropes on the left wall, the bar and DJ booth at the back, the dance floor in the middle with cocktail tables, the
   entrance with rope, photographer and coat check at the front right; its own lot, so the street mat stays).
 - DONE by QA (QA findings: Bowling and VR ready, Karaoke 1 note). WAITING ON QA: Bowling's notes and the VR rig spacing at 934bb37 (clerks at the shoe counter and snack bar, the STRIKE
@@ -1265,8 +1270,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Nightclub's design review (step 16), at night and live, test copy only (`roomreview.js`, `livebuilding.js`). Next:
-  v0.50. (on 647be08)
+- Now: waiting for work. Next: the Nightclub notes when ROOMS fixes them; v0.50. (on 867bc30)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

@@ -754,3 +754,20 @@ rule (the Mall–Karaoke pair is the shortcut that shows only without Bowling); 
 
 Closed; ready for Cal. The Private Booth sits in the front corner behind a low pink partition along its back and side, a nook apart
 from the lounge; nothing outside or overlapping; live guests walk and stand; no page errors.
+
+### Nightclub (step 16, fd0da20, on 867bc30, at 22:00; `shots/review_club_full.png`, `review_club_bare.png`, `review_club_live.png`)
+
+Reads as one club: VIP booths behind ropes on the left wall, the bar back-left, the DJ booth back-right between two speaker
+stacks under the neon sculpture, the LED dance floor in the middle with the podium at its front and three glowing high tables on
+its left edge, and the entrance front-right (mat, rope, photographer, host stand, coat check). Black panels with magenta and blue
+strips read well at night. Nothing outside or overlapping. Live (from inside the Mall building, where the club is cell 2,4,0, at
+22:00): guests fill it in about 16 seconds and dance, stand at the high tables, use the bar, sit in the VIP area and one dances on
+the podium; no page errors. Notes:
+
+1. **No staff at all.** The bar has no bartender, the DJ booth no DJ (the room's own line says "Calibur on the decks"), the rope no
+   bouncer and the coat check no clerk; guests use an empty club. Add staff at least for the DJ booth and the bar (as the Arcade's
+   prize counter got its clerk).
+2. **The dance floor's four tiles do not line up.** The right pair sits a little off the left pair, so the middle seam has a step.
+   One floor, or the four tiles on one grid.
+3. **Fine as is:** the high tables on the floor's edge are used live; the photographer at the rope faces the arrivals; the coat check
+   by the door is where coats come off.
