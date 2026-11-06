@@ -1628,7 +1628,14 @@ function lfVisRooms(){var c=document.getElementById("lfwrap"),L=window.LFLAY;if(
 var LFAPR=0;function lfApply(){if(LFAPR)return;LFAPR=requestAnimationFrame(function(){LFAPR=0;lfApplyNow()})}
 function lfApplyNow(){var w=document.getElementById("lfw");if(w)w.setAttribute("transform","translate("+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+") scale("+LFV.s.toFixed(3)+")");var c=document.getElementById("lfwrap");if(c){if(LFV.s0&&LFV.s>=LFV.s0*1.18)c.setAttribute("data-zin","1");else c.removeAttribute("data-zin")}}
 function lfClamp(){var c=document.getElementById("lfwrap");if(!c)return;var cw=c.clientWidth,ch=c.clientHeight,W=LFWW*LFV.s,H=LFDIM.h*LFV.s,m=90;
-  LFV.x=Math.min(m,Math.max(cw-W-m,LFV.x));if(W+2*m<cw)LFV.x=(cw-W)/2;LFV.y=Math.min(m+640*LFV.s,Math.max(ch-H-m,LFV.y))}
+  LFV.x=Math.min(m,Math.max(cw-W-m,LFV.x));if(W+2*m<cw)LFV.x=(cw-W)/2;
+  /* LEAD (QA and ROOMS: "the building view below the street is empty grey" on phones; ROOMS OK'd): zoomed out on a tall screen the
+     limit on sky above the world won over the limit below it, lifting the street to mid-screen over the grey ground. Now the street's
+     bottom never rises above the visible bottom (the top of the nav bar, which covers the view), and spare height goes to the sky. */
+  var nb=lfNavCover(c),lo=ch-nb-H,hi=m+640*LFV.s;LFV.y=lo>=hi?lo:Math.min(hi,Math.max(lo,LFV.y))}
+var LFNAVC={t:0,v:0};
+function lfNavCover(c){var t=Date.now();if(t-LFNAVC.t<1500)return LFNAVC.v;LFNAVC.t=t;var n=document.querySelector(".nav");
+  LFNAVC.v=n?Math.max(0,Math.round(c.getBoundingClientRect().bottom-n.getBoundingClientRect().top)):0;return LFNAVC.v}
 function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
 window.__qbLoft=function(){return {fx:typeof LFFX!=="undefined"?LFFX:null,defs:typeof ROOMDEF!=="undefined"?ROOMDEF:null,A:LFA,V:LFV,apply:lfApply,clamp:lfClamp,go:lfGo,C:lfC,P:lfP,arrive:lfArrive,draw:lfDraw,route:lfRoute,seatish:lfSeatish,blocked:lfBlockedAt,rerender:render,roomCtx:lfRoomCtx,roomSvg:lfRoomSvg,addons:ADDONS,roomT:ROOMT}};
 /* Zoomed all the way out, the whole street fits the width of the screen. */
