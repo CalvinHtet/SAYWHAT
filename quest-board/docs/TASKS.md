@@ -285,6 +285,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check 1f2cfa9 (the piano's own space, Downstairs at FL 2.2) and 73a426a (no dark
+  triangle over the sky in the open-air rooms; the Patio).
 - QA, ROOMS's b19a578, the piano turned (on e97c431, `band.js`; `shots/lockkey_band2.png`, `lockkey_piano2.png`): half fixed. The
   lid now opens away from the bar and is clear of the stools and the foot rail, and its bench clears the band stage; the band
   checks still pass. But the piano now presses into the lounge on its other side: its curved body runs into the glass lounge
@@ -1082,7 +1084,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it; the piano again when ROOMS moves it. (on e97c431)
+- Now: ROOMS's piano spacing and open-air rooms (1f2cfa9, 73a426a), test copy only (`band.js`, `skybarshell.js`, `openair.js`).
+  Next: v0.50 when LEAD builds it. (on 3740775)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
