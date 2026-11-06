@@ -201,7 +201,7 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
   if(!d.out&&d.shell==null){var wc=d.walls?d.walls(H):[d.wall,d.wain];thWalls(C,wc[0],wc[1],wc[2])}
   var fc=d.floor?d.floor(H):d.dark?["#1d1a22","rgba(255,255,255,.04)",1]:null;if(fc)roomFloor(C,fc);
   if(d.shell!=null)C.noshell=d.shell;
-  if(d.door===false){C.s("door",C.W-.6,C.D-.6,1,"look",[1,1]);C.door={x:C.W-.6,y:C.D-.6}}else if(!d.out)lfDoorAt(C,C.W);else{C.s("door",C.W-.5,C.D-.5,1,"look",[1,1]);C.door={x:C.W-.5,y:C.D-.5}}
+  if(d.door===false){/* d.doorAt: where guests arrive in a room with no street door (its stairs) */var dq=d.doorAt||[C.W-.6,C.D-.6];C.s("door",dq[0],dq[1],1,"look",[1,1]);C.door={x:dq[0],y:dq[1]}}else if(!d.out)lfDoorAt(C,C.W);else{C.s("door",C.W-.5,C.D-.5,1,"look",[1,1]);C.door={x:C.W-.5,y:C.D-.5}}
   (d.jogs||[]).forEach(function(q){C._lb=[q[0],q[1],q[0]+q[2],q[1]+q[3]];C.box(q[0],q[1],0,q[2],q[3],LF.H-4,d.wall,{top:d.wain});if(LFREC)lfRecBox(q[0],q[1],0,q[2],q[3],40)});
   var base=[[C.W*.5,C.D*.5,1],[C.W*.3,C.D*.7,-1],[C.W*.7,C.D*.3,1]];lfWander(C,base);
   (d.draw||function(){})(C,H);
