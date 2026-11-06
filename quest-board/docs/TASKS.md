@@ -176,7 +176,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
-- WAITING ON QA: wear-test the team's signature tops at 097dccd: `matrixshot.js "sheet=wear&arts=tm_rafe_jacket"` and the same for
+- TAKEN by QA. WAITING ON QA: wear-test the team's signature tops at 097dccd: `matrixshot.js "sheet=wear&arts=tm_rafe_jacket"` and the same for
   `tm_theo_tee`, `tm_nova_knit`, `tm_sable_jacket` (both bodies, every pose), plus `sheet=neck` and `sheet=waist` with them;
   and live: with the team joined, each wears theirs in their home room (`livebuilding.js TEAM=`). The mannequin lines were
   stripped (Rafe and Theo with strip_mannequin.py --garment, Nova and Sable with an alpha-only opening to keep the lavender).
