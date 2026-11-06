@@ -268,6 +268,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message, Cal: "not multiple unlocks from 1 level ... not this early"): on 16e72c3, map every
+  unlock by day and level over the first 30 days for the 12-task and casual players, flag any day or level with 2 or more, and
+  rerun the economy to level 80 with the Garden later.
 - WAITING ON QA: check 4f15346 (rule 17): level-ups no longer show room blueprints or new Loft floors (bpCard and floorCard
   calls removed from levelUp). LEAD checked levels 2 to 31 headless.
 - DONE by LEAD in 4f15346. QA, LEAD's text and story audit (ca1068d, on c1f1aa5, `rigtest/qa/audit49.js`; every level-up screen 1 to 100 in
@@ -807,8 +810,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's booth and fire pit (f457680, eb85e90), test copy only. Next: the Garden as ROOMS and LEAD finish it
-  (storyboard step 1). (on fb23fa7)
+- Now: ROOMS's booth and fire pit (f457680, eb85e90) on 9ae8634, and the 30-day unlock map on 26bcd76 (`rigtest/qa/sim.js`,
+  `unlocks.py`), test copies only. Next: the economy to level 80 with the Garden later. (on 26bcd76)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

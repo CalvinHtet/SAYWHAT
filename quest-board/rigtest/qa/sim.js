@@ -43,8 +43,10 @@ const P = {
     const R0 = Date.now() - (window.__qbShift || 0), mid = new Date(R0); mid.setHours(0, 0, 0, 0);
     window.__sim = {
       day0: mid.getTime() - (window.__qbShift || 0) + (R0 - (Date.now() - (window.__qbShift || 0))),
-      at(day, hour) { const target = mid.getTime() + day * 864e5 + hour * 36e5; window.__qbShift = target - (Date.now() - (window.__qbShift || 0)); },
-      clear() { try { window.lfPvStop(); } catch (e) {} document.querySelectorAll('#layer .modal,.modal,.overlay,.dropsplash').forEach((e) => { if (!e.querySelector('#wwok')) e.remove(); }); },
+      at(day, hour) { this.curDay = day; const target = mid.getTime() + day * 864e5 + hour * 36e5; window.__qbShift = target - (Date.now() - (window.__qbShift || 0)); },
+      // every unlock the player is shown: the cards of each level-up screen (and any other screen with .unl cards), kept with the day
+      unl: [], curDay: 0,
+      clear() { try { window.lfPvStop(); } catch (e) {} document.querySelectorAll('#layer .modal,.modal,.overlay,.dropsplash').forEach((e) => { if (e.__seen) return; const cs = [...e.querySelectorAll('.unl')]; if (cs.length) { e.__seen = 1; const h = (e.querySelector('h1,h2,.lvl,.big') || {}).textContent || ''; this.unl.push({ d: this.curDay + 1, lv: window.__qb.x().effLvl(), head: h.trim().slice(0, 40), cards: cs.map((c) => (((c.querySelector('.label') || {}).textContent || '') + ': ' + ((c.querySelector('b') || {}).textContent || '')).trim()) }); } }); document.querySelectorAll('#layer .modal,.modal,.overlay,.dropsplash').forEach((e) => { if (!e.querySelector('#wwok')) e.remove(); }); },
       act(a, d) { const el = document.createElement('button'); el.dataset.act = a; Object.assign(el.dataset, d || {}); el.style.display = 'none'; document.body.appendChild(el); el.click(); el.remove(); },
       led: { quests: 0, level: 0, missions: 0, rooms: 0, produce: 0, wheel: 0, weekly: 0, dq: 0, training: 0, other: 0 },
       spend: { upgrades: 0, lots: 0 },
@@ -135,7 +137,7 @@ const P = {
       const offer = []; S.base.slots.forEach((r, i) => { if (!r) return; window.__qb.roomModal(i); document.querySelectorAll('.rmodal button[data-act="raddon"]').forEach((bt) => { if (!bt.disabled) { const ad = (x.ADDONS[r.t] || []).find((u) => u[0] === bt.dataset.id); if (ad) offer.push(ad[2]); } }); sim.clear(); });
       return { lv: x.effLvl(), raw: window.__qb.x().lvlOf(S.xp), xp: S.xp, coins: S.coins, earned: S.earnedC, spent: S.spent, streak: S.streak, gates: S.gates.length,
         rooms: S.base.slots.filter(Boolean).map((r) => r.t), ups, cheapest: offer.length ? Math.min(...offer) : null, led: Object.assign({}, sim.led), xpled: Object.assign({}, sim.xpled), spend: Object.assign({}, sim.spend),
-        story: Object.keys(window.__qbStory.state().done).length, sold: window.__qbStory.state().sold, biz: Math.round(window.__qbStory.state().biz), served: Math.round(S.base.served || 0) }; });
+        unl: sim.unl.splice(0), story: Object.keys(window.__qbStory.state().done).length, sold: window.__qbStory.state().sold, biz: Math.round(window.__qbStory.state().biz), served: Math.round(S.base.served || 0) }; });
     Object.assign(day, s);
     days.push(day);
     console.log(`day ${String(d + 1).padStart(3)} ${playing ? 'play' : 'rest'} lv ${s.lv}${s.raw > s.lv ? '(' + s.raw + ' trial)' : ''} xp ${s.xp} coins ${s.coins} earned ${s.earned} rooms ${s.rooms.length} ups ${s.ups} bought ${day.bought.length}${day.built.length ? ' built ' + day.built.join(',') : ''}${day.story.length ? ' story ' + day.story.join(',') : ''} cheapest ${s.cheapest} streak ${s.streak}`);
