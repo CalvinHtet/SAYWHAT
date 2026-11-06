@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.54 (a384feb, APPV 54) WAITING ON QA, published as soon as QA passes it. Then v0.55: QA's skirt split (b58bf48),
-  a rig option tying a skirt's hem to the hips, ROOMS adds the item flag. (on a384feb)
+- Now: v0.54 (a384feb, APPV 54) WAITING ON QA, published as soon as QA passes it. v0.55 is building: the skirt rig option
+  is in (1bbe47f), WAITING ON ROOMS for the `skirt` flag on v_tulle and h_pleat. (on 1bbe47f)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -384,7 +384,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- QA, the published v0.53 (slug 6561fd34, version 1793965993-4ce3): pass, the page matches the 743c30c build. By sha256, 459 of the
+- DONE by LEAD in a384feb (diag/load logs each script's transfer size and the load times). QA, the published v0.53 (slug 6561fd34, version 1793965993-4ce3): pass, the page matches the 743c30c build. By sha256, 459 of the
   build's 460 files are identical and none are missing (all 18 scripts, the cut pieces included); index.html differs only by its
   title (26 bytes longer); lfvar.json matches. The 9 db rules are declared, and as a Contributor diag reads as missing. Cal's
   iPhone has opened it (diag/frame: iOS 18.7 in the Claude app, APPV 53, the Board, 11:54); diag/perf is from the Mac. No save
