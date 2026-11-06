@@ -18,3 +18,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* the growth figure in the Garden window says 0 while the beds are dry (gdRate is ROOMS's, wrapped, not edited) */
 var gdRateBase=gdRate;gdRate=function(){return gdWatered()?gdRateBase():0};
 window.gdWatered=gdWatered;window.gdWater=gdWater;
+/* the Garden's words (LEAD's part of the Garden split; ROOMS's 22_garden.js is not edited): the story calls it the empty lot
+   next to your building, and the Restaurant opens from it by Knock Through (QA) */
+ROOMT.garden.desc="The empty lot next to your building. It grows ingredients while the beds are watered; the Restaurant cooks with them and earns more, and spare produce sells at the stand.";
+var gdNoteBase=gdNote;gdNote=function(r){return gdNoteBase(r).replace("Build the Restaurant to put these to use.","Knock through to a restaurant to put these to use.")};
