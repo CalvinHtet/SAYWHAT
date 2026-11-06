@@ -822,9 +822,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 2, the Restaurant's polish (`26_world.js`, `21_restaurant.js`): the patio's crowded front corner,
-  booths clear of the Bistro's windows, the drinks cooler out of the aisle (QA's lessons), then sleek fine-dining furniture
-  for Noir (new art). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
+- Now: storyboard step 3, the Boba shop (`27b_skins.js`, new art `bbw_t1`): a painted shell like the Restaurant's (Cal: every
+  room cohesive, never cluttered), the door upstairs moved off the Shaker Station. Step 2's Restaurant polish is done
+  (a9a572c, d1d7c73; approval 22). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
   approval 20 with Cal). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
