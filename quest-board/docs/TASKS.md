@@ -1696,7 +1696,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.58 published and its page passed. Next: whatever LEAD or ROOMS sends. (on a7459fd)
+- Now: ROOMS's 3c27004 (Cal on v0.58: the Game Room TV, the double gaming rig, the racing chairs), with references and an old save
+  that owned the desks. Next: the next version. (on 3c27004)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
