@@ -206,7 +206,7 @@ Art and room code requests (LEAD asks, ROOMS does):
      `ui_team_theo.webp` (theater crew). Original designs. The investors (Desmond Hale, Priya Okafor) are not team members:
      they only need their scene portraits (`ui_story_lockkey.webp`, `ui_story_mall.webp`); Rafe's and Nova's scenes use
      `ui_story_rafe.webp` and `ui_story_nova.webp` if painted, else their team banner.
-  3. In the building view: draw each team member who has joined (`window.__qbTeam.list()`, ids above) in their own room
+  3. DONE by ROOMS in abb6513 (signature cosmetics still to do): In the building view: draw each team member who has joined (`window.__qbTeam.list()`, ids above) in their own room
      (Mara the restaurant, Rafe at the end of Lock and Key's bar with a crowd round him, Nova filming in the mall, Theo the
      theater, Sable the Lair) with their signature look
      from `TEAM[id].look` and something that makes them stand out from the guests (a name tag, a glow ring, a signature prop).
@@ -412,6 +412,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: the Nightclub's two notes at 1eb0bbc (one dance floor on one grid; a DJ at the decks and a bartender behind
+  the bar, staff on cb_dj and cb_bar), and the team in their rooms at abb6513: with a member joined (S.story.team), they
+  stand in their home room (Mara Restaurant, Rafe Lock and Key, Nova Mall, Theo Theater, Sable Lair) in their own look
+  with a ring in their colour and a name tag. ROOMS saw Mara, Rafe and Nova live in the building view.
 - DONE by QA (QA findings: 2 notes). WAITING ON QA: a design review of the Nightclub at fd0da20 (step 16): a new painted shell; the layout as it was (VIP booths
   behind ropes on the left wall, the bar and DJ booth at the back, the dance floor in the middle with cocktail tables, the
   entrance with rope, photographer and coat check at the front right; its own lot, so the street mat stays).
@@ -1101,12 +1105,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: a design review of the Nightclub (step 16, the last storyboard step, fd0da20). WAITING ON CAL: ten rooms
-  through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the
-  Rhythm Room, the VR Arena, Bowling, Karaoke). After the Nightclub: the team in their rooms (LEAD's request 3), then
-  Cal's notes. LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`,
-  `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`.
-  Chrome claimed. (on fd0da20)
+- Now: WAITING ON QA: the Nightclub's two notes (1eb0bbc: one dance floor grid, a DJ and a bartender) and the team in their
+  rooms (abb6513, LEAD's request 3). WAITING ON CAL: ten rooms through QA's design reviews (Lock and Key, the Rooftop,
+  the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke). The storyboard
+  rooms are all reworked. Next: signature cosmetics for the team (request 3's "better still"), then Cal's notes. LEAD: ids
+  unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`,
+  `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 1eb0bbc)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
