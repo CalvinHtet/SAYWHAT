@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 BLOCKED by QA (d9d92d7 not published; Cal: publish only with no known error). Rebuilt as v0.61 once these pass
-  QA: ROOMS's Garden as its own street lot right of the Loft (Cal: "The garden should be the next lot to the right"), the ping
-  pong fix 6f04ed8, the Bedroom blink fix ce07425; LEAD's level-5 start coins 3d7f57a. v0.58 pinned. (on 3d7f57a)
+- Now: v0.61 blocked (d9d92d7 not published). Rebuilt once these pass QA: Kode Plaza's street picture by stage (LEAD's NEXT,
+  Cal: "I want Kode plaza to start off like a plaza..."; ROOMS paints bld_plaza_s0 and later stages), the Game Room fixes,
+  the Bedroom blink fix ce07425; the level-5 coins (3d7f57a) passed. Brands: BRANDS_15.md waits on Cal. (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -324,6 +324,11 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   level-5 player has earned: quest pay on the XP so far (2.5 per XP) plus the pay for levels 2-5, 1,205 coins, with lvPaid = 5
   so the next level-up pays only its own level (`shots/lvnext.js`: 1,205, then 1,365 at level 6). Not the Garden's 1,500 yet,
   as for a real player; Add 10,000 coins still covers testing. Goes into the rebuilt v0.61 with ROOMS's Garden lot.
+- WAITING ON QA: LEAD's NEXT, Kode Plaza's street picture by stage (`app/src/29j_plaza.js`, overrides bldArt for "plaza"; 26_world.js
+  untouched). Stage = plaza rooms owned (garden, restaurant, boba, dessert, skybar, rooftop, speakeasy, counted by name) - 1:
+  0 -> bld_plaza_s0.webp (open plaza; until ROOMS paints it, the plain drawn front, never the café), 1 -> bld_plaza.webp,
+  k >= 2 -> the highest bld_plaza_s<j>.webp painted with j <= k, else bld_plaza.webp. `shots/plazastage.js`: every stage
+  right with and without s0/s2 present, the street draws, no page errors. Tapping still opens the rooms (unchanged).
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
