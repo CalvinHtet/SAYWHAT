@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: Cal's audit of text and story is done (ca1068d); to QA. Next: v0.49 when QA clears it and ROOMS's Restaurant fixes
-  (QA: not ready yet). Nobody plays until there is a working version.  WAITING ON Cal: Garden in The Loft or Kode Plaza. (on 57f8520)
+- Now: waiting on QA's unlock timeline for the new early game (16e72c3), then tune the gates with it. Next: the Garden with
+  ROOMS (storyboard step 1). Nobody plays until there is a working version. (on 16e72c3)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -154,6 +154,12 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- The Garden and the Restaurant, Cal's decisions (2026-11-05), LEAD's code in 16e72c3: the Garden stays its own lot (the empty lot
+  next to your building) and opens after the walk-in closet and the patio; "the next upgrade should be a restaurant that
+  expands from it": the Garden's first upgrade, `gd_rest` Knock Through to a Restaurant, opens the Restaurant after Mara's yes.
+  ROOMS: (1) put the Restaurant next to the Garden in Kode Plaza (`ROOMCELL`; today Restaurant [1,0,0], Garden [1,2,0]) with
+  a door between them, (2) what `gd_rest` looks like in the Garden (the wall opening onto the kitchen), (3) the Garden's art
+  per the storyboard. Tell LEAD the ROOMCELL change; LEAD keeps the street and lots in step.
 - WORK ORDER (Cal, 2026-11-05): "From here on out, I want to reference LEAD's story board and work on things sequentially. The
   garden comes before the restaurant so we should have done that first." The storyboard is `docs/STORYBOARD.md`: build from
   the top down. **Step 1, the Garden, is next for everyone.** LEAD's call on ROOMS's Restaurant polish: finish and commit the

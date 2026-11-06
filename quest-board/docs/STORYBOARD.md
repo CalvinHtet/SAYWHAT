@@ -7,13 +7,14 @@ our restaurant which is how the restaurant lot opens."
 LEAD owns this page. Work follows it from top to bottom: ROOMS finishes a step's art, LEAD its text and code, QA checks it,
 then the next step starts. The code that runs it is `29b_story.js` (`STORY`, `BEATS`); the numbers are in `ECON`
 (`29e_economy.js`). Art for each step is listed in `docs/ART_SLOTS.md` (portraits, banners) and `data/rsart.json` (rooms).
-Days are QA's 12-task player at the level-80 prices (470cbf7).
+Days are QA's 12-task player at the level-80 prices (470cbf7), from before the Garden moved after the patio (16e72c3); QA is rerunning them.
+Cal, 2026-11-05: unlocks arrive one at a time along the way; several on the same day is fine now and then, not often and not early.
 
 | # | Step | Opens when | Who | How it opens | Build status |
 |---|---|---|---|---|---|
 | 0 | The Loft: Bedroom, Closet, Patio, Game Room | from the start, by Bedroom upgrades | you | upgrades | built; Game Room fixes with QA |
-| 1 | **The Garden** | level 3 (day 3) | none | the lot next door goes up for sale; you buy it | **next**: painted shell, stages, produce stand (ROOMS); its text and sell flow (LEAD) |
-| 2 | **Mara, and the Restaurant** | 60 produce sold (day 4) | Mara, chef | she has been buying your vegetables and offers to cook; you buy the lot together | scene written; Restaurant shells done, polish parked until the Garden is through |
+| 1 | **The Garden** | the walk-in closet built and the patio with 2 upgrades | none | the empty lot next to your building goes up for sale; you buy it (its own lot) | **next**: painted shell, stages, produce stand (ROOMS); its text and sell flow (LEAD) |
+| 2 | **Mara, and the Restaurant** | 60 produce sold | Mara, chef | she has been buying your vegetables and offers to cook; her yes unlocks the Garden's expansion, Knock Through to a Restaurant (the Restaurant's own price) | scene written; Restaurant shells done, polish parked until the Garden is through |
 | 3 | Boba shop | 80 dishes served (day 6) | Mara | the corner unit next door | room built; return visit "Your boba kid" |
 | 4 | Dessert parlour | 4 Boba upgrades | none | upstairs from the Boba shop | room built |
 | 5 | Lock and Key (speakeasy) | Dessert open, 25,000 coins earned in all (day 18) | Desmond Hale, investor | he funds the second floor; free, starts bare | scene written; room merge with ROOMS |
