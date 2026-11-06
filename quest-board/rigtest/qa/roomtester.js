@@ -31,11 +31,11 @@ const BASE = process.env.BASE || 'http://127.0.0.1:8769';
   await p2.goto(BASE + '/dist/index.html'); await p2.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 90000 });
   await p2.fill('#ccname', 'Cal'); await p2.click('[data-act="ccnext"]'); await p2.waitForFunction(() => document.querySelector('[data-act="ccdone"]'), null, { timeout: 60000 }); await p2.waitForTimeout(600);
   await p2.click('[data-act="ccdone"]'); await p2.waitForTimeout(6000);
-  for (let k = 0; k < 14; k++) {
+  for (let k = 0; k < 26; k++) {
     const s = await p2.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const S = window.__qb.x().S; const before = S.base.slots.map((s) => s && s.t).join(',');
       window.__qbRooms.next(); await w(1200);
       // play the scene through: tap its next/done buttons
-      for (let j = 0; j < 30; j++) { const bt = document.querySelector('#layer [data-act="stynext"],#layer [data-act="stydone"],#layer [data-act="styok"],#layer .sty button'); if (!bt) break; bt.click(); await w(250); }
+      for (let j = 0; j < 30; j++) { const bt = document.querySelector('#layer [data-act="stynext"],#layer [data-act="styyes"]'); if (!bt) break; bt.click(); await w(250); }
       const modals = [...document.querySelectorAll('#layer .modal')].map((m) => m.innerText.replace(/\s+/g, ' ').slice(0, 70));
       const acc = document.querySelector('#layer [data-act="styopen"],#layer [data-act="stybuild"]');
       document.querySelectorAll('#layer .modal').forEach((e) => e.remove()); await w(300);

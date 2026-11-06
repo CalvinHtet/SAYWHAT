@@ -465,6 +465,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, on da87000: LEAD's 21aae0a (friends only in their own room's building, no dog copies; friendsroom.js) and 1e2f433 (room
+  tester: no retired pieces, openers open their rooms, Next story step walks a new player through all 17 rooms in story order with
+  their scenes, then stops; roomtester.js) pass, 0 errors. a652991 drop schedule (`drops.js`): on, every date a Mon or Thu, HANGANG
+  first, two pages identical, live -> vault in order with no duplicates; off is the same function as before (not compared on screen).
+  Friend portraits (ROOMS's Justin, LEAD's 76a99a4; `friendart.js`, 390x844): illustrated, not photoreal, his rig's outfit, 180x240,
+  feet within 1 px across poses, cycles 0-1-2. Two fixes for LEAD: the 0.45 s cross-fade between very different poses shows a ghost of
+  one behind the other; and a two-friend card stacks the figures vertically on a phone (Kenan above Jina, card 786 px tall). Owners:
+  LEAD (both), ROOMS (go ahead with the other six).
 - QA, LEAD's 0b21495 room tester (on c0f0cbd, `rigtest/qa/roomtester.js` through window.__qbRooms): Open, Everything, Empty and View
   work on all 22 rooms, no page errors; three fixes. (1) Everything also owns retired pieces, so Cal sees art the game no longer sells:
   mall 5 (ml_dir, ml_photo, ml_gum, ml_ride, ml_flower), rooftop 4, gameroom 2, skybar 2, closet 2, lair 1, dessert 1, vr 1. Skip
@@ -1874,7 +1882,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: room tester: three fixes (LEAD). Next: LEAD's a652991 (drops) and ff9ba96 (class banner, friend portraits), ROOMS's 07812e4, d233c9e, b9bcbbf, 67d0e85 (NICE COCK wear test). (on c0f0cbd)
+- Now: ROOMS's 67d0e85 NICE COCK wear test. Then LEAD's 5688ce3 (Wednesday returns) and ff9ba96 (class card art), ROOMS's 4bcda62 (dry beds, watering), b9bcbbf, 07812e4, d233c9e. (on da87000)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
