@@ -499,6 +499,15 @@ How QA reviews a room before Cal sees it: fully bought, at noon (open-air rooms 
 sees it. Five questions: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
 floating or oddly sized; are the walkways and sight lines clear; what to change. Blunt, with the fix.
 
+Against references (Cal, 2026-11-06: "cross reference from reference pics of isometric game style rooms of the respective rooms
+and if something looks off, feed that back to ROOMS and LEAD"): for every room build LEAD or ROOMS forwards, QA also finds 2 to 4
+pictures of isometric game rooms of the same kind (an arcade for the Arcade, a karaoke box for Karaoke) and compares: the layout
+and how people move through it; what every such room has that ours lacks, or has that ours should not; the size of pieces against
+the characters and the doors; where the staff stand; walls, floor, lighting and mood; and clutter (Cal: never cluttered). The
+references are named in the review, used only to judge, never copied (Cal: original designs only). The repo holds
+`art/ref/rs_style.png` (the restaurant furniture style) and `art/ref/style_ref.png` (the characters); room references are found
+per review in the built-in browser (QA never uses Chrome). Findings go to both ROOMS and LEAD.
+
 ### Rooftop Bar (ea2dffc, on 3cdf263; `shots/review_rooftop.png`, `review_rooftop_tub.png`, `review_rooftop_bar.png`)
 
 Much better than before: there is a plan now (bar and DJ on the back walls, pool as the middle, lounge left, sun front). Not done:

@@ -1518,8 +1518,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the published v0.52 (slug fdd651f3) against the db67326 build, and its declared rules. Next: the live rules test with
-  real accounts (needs Cal and a friend). (on 4b7fe50)
+- Now: nothing waiting. Next: room builds as LEAD and ROOMS forward them, each checked against reference pictures of isometric
+  rooms of the same kind (Cal, 2026-11-06); the live rules test with real accounts (needs Cal and a friend). (on 892ce0b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
