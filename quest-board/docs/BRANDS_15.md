@@ -1,55 +1,74 @@
-# Sixteen new brands (LEAD's draft for Cal, second pass, 2026-11-06)
+# The brand pool (LEAD's draft for Cal, third pass, 2026-11-06)
 
 Cal, first ask: "Let's build a Naruto inspired clothing brand, and a maplestory inspired clothing brand from their most popular
 cash shop items, then let's do a video game inspired brand, then a fantasy one, then a cyberpunk one. And also make 10 more
 brands that come after these. Draft up a list for my approval and then once approved, send to ROOMs to begin generation".
 
 Cal, on the first draft: "I love the names for the first five. I don't like shore leave, mirrorball, Picnic club, etc. they're
-too ai generated. I want better brand names. Also add a new brand called NICE COCK, which is a luxury leisurewear that offers
-premium joggers and gym wear that aims to make a statement. I only have the joggers designed but I want you to make a whole
-brand for this. This should also be the 2nd drop in the game".
+too ai generated. I want better brand names. Also add a new brand called NICE COCK ...". On the second: "Love the names!" and
+"I want every person who plays this to have the same shop. So if I play in 5 weeks and my gf plays this week, I'll have the
+same shop as her but miss the first 3".
+
+Cal, third: "Actually put it as drop 5. And also add a brand for Kode PinK with these assets And also a brand for SAYMØRE with
+my brand palette." Then: "When this launches, I want 2 brands a week. Something that drops on Monday and something that drops
+on Thursday. And I want it to be random so that I'm surprised. But I want everybody's shop to remain synced."
 
 Same formula as the five in the Shop now: a name, a tagline, a sub-line, a palette, a painted banner with a stylized logo, and
-about 15 pieces (3 hats, 2 accessories, 4 tops, 3 bottoms, 3 shoes), one weekly drop each. One Higgsfield sheet per piece,
-every angle, both bodies (ROOMS, from Cal's Chrome, Unlimited on).
+about 15 pieces (3 hats, 2 accessories, 4 tops, 3 bottoms, 3 shoes). One Higgsfield sheet per piece, every angle, both bodies
+(ROOMS, from Cal's Chrome, Unlimited on).
 
 **All original.** "Inspired by" means the genre and the feel: no real logos, no characters or their exact outfits, no village
-or clan symbols, no copied items. NICE COCK is Cal's own brand: his wordmark, his rooster and his joggers are the source.
+or clan symbols, no copied items. NICE COCK, Kode PinK and SAYMØRE are Cal's own: his marks, his covers and his palette are the
+source. No real person's face in any of them (no collaborators from the covers, and SAYMØRE's figure stays masked).
 
-## The drop order
+## The schedule at launch: two drops a week, random, synced
 
-NICE COCK becomes the game's 2nd drop, so the four brands after HANGANG move back a week.
+- **Two drops a week:** Monday and Thursday, at midnight Pacific (the Shop's clock now, `ptMidnight`).
+- **Random but the same for everyone:** the order is a shuffle made from one fixed seed that ships in the code. Every phone runs
+  the same shuffle on the same date, so everyone sees the same Shop on the same day, and a player who joins in week 5 has
+  missed weeks 1 to 4 like everyone else. Nobody gets told the order (this doc doesn't list it), so Cal is surprised too.
+  Cal can still read it in the code, so don't.
+- **Two fixed slots, the rest shuffled:** HANGANG stays drop 1 (it's live). NICE COCK is drop 5, as Cal asked. Every other
+  brand is shuffled into the remaining slots.
+- **What's for sale:** the 4 newest drops (the last two weeks). Older drops go to the vault.
+- **When the pool runs out** (23 brands at 2 a week is about 11 weeks): LEAD recommends a rerun, a fresh shuffle of the vault
+  from a second seed, still synced. The alternative is that a vaulted brand is gone for good. Cal decides.
+- **No empty drops:** a brand enters the shuffle only once its art is in the build. Everyone runs the same published version,
+  so everyone still gets the same Shop. The real fix is to have every brand's art finished before launch.
+- **When:** LEAD writes this when the art is in. Until then the Shop keeps today's one-a-week list.
 
-| Drop | Brand | Sub | Tagline | Palette | Date |
-|---|---|---|---|---|---|
-| 1 | HANGANG (live) | 한강 | Two sizes too big, on purpose | | 2026-11-03 |
-| 2 | **NICE COCK** | luxury leisurewear | Something to crow about | jet black, heather ash, slate, bone white | 2026-11-09 |
-| 3 | DIAL-UP (moved) | y2k thrift | Low-rise, high drama | | 2026-11-16 |
-| 4 | OVERPASS (moved) | street supply | Built for kickflips you will never land | | 2026-11-23 |
-| 5 | VENOM ROSE (moved) | dark glam | Soft velvet, sharper tongue | | 2026-11-30 |
-| 6 | ALTITUDE (moved) | mountain supply | Trail gear that never sees a trail | | 2026-12-07 |
-| 7 | SMOKE BOMB (approved) | ninja anime | Vanish in style | ink black, ember orange, steel grey, scroll cream | 2026-12-14 |
-| 8 | GACHA POP (approved) | MMO cash shop | Every outfit a rare drop | candy pink, sky blue, lilac, sparkle gold | 2026-12-21 |
-| 9 | SAVE POINT (approved) | retro video games | Respawn looking good | arcade purple, pixel green, cartridge grey | 2026-12-28 |
-| 10 | BARD & BLADE (approved) | high fantasy | Dressed for the side quest | forest green, leather brown, brass, moonsilver | 2027-01-04 |
-| 11 | CHROME RAIN (approved) | cyberpunk | Upgrades sold separately | black, neon cyan, hot magenta, chrome | 2027-01-11 |
-| 12 | KAIMANA | surf club | Back when the waves were bigger | sand, sea teal, coral | 2027-01-18 |
-| 13 | OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, forest green, burgundy | 2027-01-25 |
-| 14 | SØLVBERG | après-ski | Never actually skied | snow white, cherry red, alpine navy | 2027-02-01 |
-| 15 | RATTLER | western | Bites back | tan suede, rust, turquoise | 2027-02-08 |
-| 16 | AUREL | quiet luxury | If you have to ask | navy, cream, brushed gold | 2027-02-15 |
-| 17 | FERAL | 90s grunge | Unwashed since '94 | black, oxblood, safety-pin silver | 2027-02-22 |
-| 18 | WILDING | cottagecore | Grown, not made | butter yellow, sage, gingham red | 2027-03-01 |
-| 19 | LUMIÈRE | 70s disco | Lights on, collars up | gold, burnt orange, plum | 2027-03-08 |
-| 20 | HALYARD | fisherman workwear | Built for weather you'll never see | navy, mustard, oiled tan | 2027-03-15 |
-| 21 | ASHGROVE | dark academia | Est. long before you | chestnut, forest green, cream | 2027-03-22 |
+## The pool (23 brands)
 
-New names for the ten: invented or real words that read like labels, not slogans (SHORE LEAVE -> KAIMANA, COURTSIDE ->
-OAKMONT, WHITEOUT -> SØLVBERG, DUST & SPUR -> RATTLER, ESTATE -> AUREL, STAGE DIVE -> FERAL, PICNIC CLUB -> WILDING,
-MIRRORBALL -> LUMIÈRE, DEEPWATER -> HALYARD, BACK ROW -> ASHGROVE). Their pieces are unchanged (ROOMS's
-`BRANDS_PROPOSAL.md`, and WHITEOUT's list below under its new name). Not checked against trademarks: they are names for a game.
+| Brand | Sub | Tagline | Palette | Slot |
+|---|---|---|---|---|
+| HANGANG (live) | 한강 | Two sizes too big, on purpose | | 1, fixed |
+| **NICE COCK** | luxury leisurewear | Something to crow about | jet black, heather ash, slate, bone white | 5, fixed |
+| **KODE PINK** (new) | anime city-pop | Made for the chorus | bubblegum pink, periwinkle, lilac, sunshine yellow, night navy | shuffled |
+| **SAYMØRE** (new) | bass culture | Built for the drop | night black, flare orange, pulse cyan, bone | shuffled |
+| DIAL-UP | y2k thrift | Low-rise, high drama | | shuffled |
+| OVERPASS | street supply | Built for kickflips you will never land | | shuffled |
+| VENOM ROSE | dark glam | Soft velvet, sharper tongue | | shuffled |
+| ALTITUDE | mountain supply | Trail gear that never sees a trail | | shuffled |
+| SMOKE BOMB (approved) | ninja anime | Vanish in style | ink black, ember orange, steel grey, scroll cream | shuffled |
+| GACHA POP (approved) | MMO cash shop | Every outfit a rare drop | candy pink, sky blue, lilac, sparkle gold | shuffled |
+| SAVE POINT (approved) | retro video games | Respawn looking good | arcade purple, pixel green, cartridge grey | shuffled |
+| BARD & BLADE (approved) | high fantasy | Dressed for the side quest | forest green, leather brown, brass, moonsilver | shuffled |
+| CHROME RAIN (approved) | cyberpunk | Upgrades sold separately | black, neon cyan, hot magenta, chrome | shuffled |
+| KAIMANA | surf club | Back when the waves were bigger | sand, sea teal, coral | shuffled |
+| OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, forest green, burgundy | shuffled |
+| SØLVBERG | après-ski | Never actually skied | snow white, cherry red, alpine navy | shuffled |
+| RATTLER | western | Bites back | tan suede, rust, turquoise | shuffled |
+| AUREL | quiet luxury | If you have to ask | navy, cream, brushed gold | shuffled |
+| FERAL | 90s grunge | Unwashed since '94 | black, oxblood, safety-pin silver | shuffled |
+| WILDING | cottagecore | Grown, not made | butter yellow, sage, gingham red | shuffled |
+| LUMIÈRE | 70s disco | Lights on, collars up | gold, burnt orange, plum | shuffled |
+| HALYARD | fisherman workwear | Built for weather you'll never see | navy, mustard, oiled tan | shuffled |
+| ASHGROVE | dark academia | Est. long before you | chestnut, forest green, cream | shuffled |
 
-## NICE COCK (drop 2): Cal's brand, built out
+DIAL-UP, OVERPASS, VENOM ROSE and ALTITUDE already have their art. The ten's pieces are in ROOMS's `BRANDS_PROPOSAL.md`
+(WHITEOUT's list is below under its new name). The names have not been checked against trademarks: they are names for a game.
+
+## NICE COCK (drop 5): Cal's brand, built out
 
 **Sub:** luxury leisurewear. **Tagline:** Something to crow about. **Feel:** heavyweight brushed fleece, quiet colours, one
 loud word. Premium joggers and gym wear that make a statement.
@@ -75,6 +94,78 @@ small at the hip or chest; the rooster mark (white and grey, mid-crow) from `log
 
 **Banner:** a dim marble hallway like Cal's photos, someone in the black Signature Jogger and navy hoodie, the rooster mark
 large and soft in the background, `nicecock.` across it.
+
+## KODE PINK (new): Cal's music project, built out
+
+**Source (`docs/ref/kodepink/`, screenshots of the posts):** three covers Cal sent: *What If We* (night-sky navy, a figure falling through clouds, thin
+white type), *Sing* (pastel anime girl in a red dress on lilac clouds under a yellow crescent, diagonal yellow light streaks,
+a halftone frame), *Run With You* (two anime runners back to back on flat bubblegum pink, a boy in a peach tee and a girl in a
+powder-blue sailor collar and cream pleated skirt). The red brush-script **Kode PinK** signature sits on all three.
+
+**Keep out:** the collaborators' names and faces, and the press logos in Cal's screenshots. The covers' characters inspire the
+style; the pieces are their own, not those exact outfits.
+
+**Sub:** anime city-pop. **Tagline:** Made for the chorus. **Feel:** 80s anime record sleeves: flat pastel colour, clean ink
+lines, halftone dots, lightning-yellow streaks.
+
+**Logo:** the red brush-script Kode PinK signature (Cal's), over a small pastel crescent moon.
+
+**Palette:** bubblegum pink, periwinkle, lilac, sunshine yellow, night navy; signature red only for the script.
+
+**Pieces (15):**
+- **Hats:** **Cassette Bucket Hat** (pink, a tiny tape-reel patch); **Pastel Headphones** (lilac cups, periwinkle band, hat
+  slot); **Star Clips** (a pair of yellow star hair clips).
+- **Accessories:** **Mixtape Crossbody** (a small bag shaped like a pink cassette); **Crescent Pendant** (gold moon on a cord).
+- **Tops:** **Script Varsity Jacket** (pink body, cream sleeves, the red Kode PinK script across the back); **Sailor Blouse**
+  (powder blue, white collar with a navy stripe, red ribbon); **Cloud Hoodie** (lilac, cloud print, yellow lightning stripes
+  on the sleeves); **Starfall Bomber** (night navy, tiny stars scattered, a falling-figure patch on the back).
+- **Bottoms:** **Runner Track Pants** (periwinkle with a pink side stripe); **Chorus Pleated Skirt** (cream, knee length, women's,
+  uses the skirt binding); **Wide-Leg Cargo** (bubblegum pink, lilac pockets).
+- **Shoes:** **Pastel Runners** (purple and teal); **Plum Loafers**; **Cloud Slip-Ons** (white, cloud print).
+
+**Banner:** a pastel anime sky with lilac clouds and diagonal yellow light streaks, two runners mid-stride as silhouettes, the
+red Kode PinK script large across it.
+
+## SAYMØRE (new): Cal's artist brand, built out
+
+**Source (`docs/ref/saymore/` and the SAYMØRE Studio artifact):** five Spotify covers (*KICKBACK*, *NO COPY*, *CRUSH*,
+*GO OFF*, *HIM*), the neon mascot and the EPK palette. They share one look: a masked figure whose head is the **Ø mark** (a
+circle cut by a slash) inside a glowing orange halo, a black hoodie traced in cyan neon, orange cargo pants, a rain-slick neon
+city with kanji signs, and huge orange outline type. Instagram (bass house and trap, KPop x EDM nights) has the same orange and
+cyan. **Higgsfield:** LEAD cannot open it (no connector, and the Chrome belongs to ROOMS). The covers look like Higgsfield work,
+so ROOMS pulls the source images from Cal's Higgsfield library in Chrome as references. Browsing the library costs no credits.
+
+**Keep out:** *NO COPY*'s two unmasked faces and the collaborator names. The figure is always masked.
+
+**Sub:** bass culture. **Tagline:** Built for the drop (or "Say less", Cal picks). **Feel:** neon-sign outlines on black, as
+if the clothes were wired for a light show; orange carries, cyan traces.
+
+**Logo:** the Ø mark in neon orange inside a thin halo ring, the SAYMØRE wordmark under it in wide uppercase (Archivo, as in
+the EPK).
+
+**Palette and logo come from the covers** (Cal: "SAYMØRE should be using the cover arts for my songs as the brand palette and
+logo"). Night black, flare orange (the halo and the outline type), pulse cyan (the hoodie's neon), bone, ash grey; the
+EPK's hex values match: #08090c, #ff7a18, #17d4e6, #f2f0ec, #868c97. Cal: "Higgsfield history from months ago has a lot of my
+SAYMØRE assets", so ROOMS scrolls back through it first and uses those as the references.
+
+**Pieces (15):**
+- **Hats:** **Halo Mask** (the Ø mask helmet with its glowing orange halo, the mascot's head; hat slot, covers the face);
+  **Neon Halo** (just the orange ring, floating above the head); **Ø Beanie** (black, cyan piping, an orange Ø patch).
+- **Accessories:** **DJ Headphones** (black with cyan-lit cups, worn around the neck); **Ø Pendant** (orange enamel Ø on a
+  black chain).
+- **Tops:** **Signature Neon Hoodie** (black, cyan neon along every seam, orange Ø on the chest, a short line of katakana down
+  one sleeve: the covers' outfit); **Glow Track Jacket** (black zip-up with a cyan stripe); **GO OFF Tee** (bone white, orange
+  outline type); **Rig Vest** (black tech vest with orange straps and buckles).
+- **Bottoms:** **Flare Cargo** (orange cargo joggers, as on the covers); **Night Cargo** (black, cyan piping down the side);
+  **Bass Shorts** (black mesh, an orange side stripe).
+- **Shoes:** **Glow-Sole High-Tops** (black, cyan light-up soles); **Flare Runners** (chunky, orange laces); **Neon-Lace
+  Boots** (black combat boots, cyan laces).
+
+**Banner:** a rain-slick neon alley at night with kanji signs, the masked figure crouched as on *KICKBACK* in the Signature
+Neon Hoodie and Flare Cargo, the halo glowing, SAYMØRE in orange neon outline above.
+
+**Overlap check:** CHROME RAIN is also neon cyberpunk. They stay apart by palette (orange and cyan against magenta and
+chrome) and by subject (a DJ's tour merch against cyborg armour).
 
 ## Cal's five: pieces (approved names)
 
@@ -118,6 +209,7 @@ lodge trousers. Shoes: moon boots; lace-up après boots; shearling slippers.
 
 ## The job
 
-NICE COCK first (it drops 2026-11-09, three days out): 16 pieces, a banner, the logo from Cal's file. Then the approved five
-in drop order, then the ten. LEAD moves the four live dates in `BRANDS` (10_app_a.js) only once NICE COCK's art is in, so the
-Shop never shows an empty drop.
+That's about 290 new sheets (18 new brands, roughly 16 pieces each with banners), plus banners. At two a week the pool lasts
+about 11 weeks, so the art is the long pole, not the code. Order of work for ROOMS: NICE COCK (fixed at drop 5) first, then
+Kode PinK and SAYMØRE (Cal's own, once he approves these two), then the approved five, then the ten. LEAD switches the Shop
+to the two-a-week shuffle when the art is in.
