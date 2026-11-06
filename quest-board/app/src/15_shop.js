@@ -96,9 +96,25 @@ var EXTRA_ITEMS=[
  ["gx_kp_cargo","a_pants","Wide-Leg Cargo",1200,1,"Bubblegum pink, lilac pockets.",{gar:"kp_cargo",b:"kp"}],
  ["gx_kp_runner","a_shoes","Pastel Runners",1200,1,"Purple suede, teal mesh.",{gar:"kp_runner",b:"kp"}],
  ["gx_kp_loafer","a_shoes","Plum Loafers",1100,1,"Glossy plum, white socks.",{gar:"kp_loafer",b:"kp"}],
- ["gx_kp_slipon","a_shoes","Cloud Slip-Ons",800,1,"White canvas, soft cloud print.",{gar:"kp_slipon",b:"kp"}]];
+ ["gx_kp_slipon","a_shoes","Cloud Slip-Ons",800,1,"White canvas, soft cloud print.",{gar:"kp_slipon",b:"kp"}],
+ ["gx_sm_halomask","a_hat","Halo Mask",2200,1,"The \u00d8 helmet, halo and all.",{gar:"sm_halomask",b:"sm"}],
+ ["gx_sm_halo","a_hat","Neon Halo",1200,1,"An orange ring that follows you.",{gar:"sm_halo",b:"sm"}],
+ ["gx_sm_beanie","a_hat","\u00d8 Beanie",750,1,"Black knit, cyan piping.",{gar:"sm_beanie",b:"sm"}],
+ ["gx_sm_phones","a_acc","DJ Headphones",1300,1,"Round the neck, cups lit cyan.",{gar:"sm_phones",b:"sm"}],
+ ["gx_sm_pendant","a_acc","\u00d8 Pendant",900,1,"Orange enamel on a black chain.",{gar:"sm_pendant",b:"sm"}],
+ ["gx_sm_hoodie","a_top","Signature Neon Hoodie",2000,1,"Every seam traced in cyan.",{gar:"sm_hoodie",b:"sm"}],
+ ["gx_sm_track","a_top","Glow Track Jacket",1400,1,"Black zip-up, cyan stripes.",{gar:"sm_track",b:"sm"}],
+ ["gx_sm_tee","a_top","GO OFF Tee",950,1,"Bone white, orange outline type.",{gar:"sm_tee",b:"sm"}],
+ ["gx_sm_vest","a_top","Rig Vest",1500,1,"Orange straps and buckles.",{gar:"sm_vest",b:"sm"}],
+ ["gx_sm_cargo","a_pants","Flare Cargo",1500,1,"The orange ones from the covers.",{gar:"sm_cargo",b:"sm"}],
+ ["gx_sm_nightcargo","a_pants","Night Cargo",1300,1,"Black, cyan piping.",{gar:"sm_nightcargo",b:"sm"}],
+ ["gx_sm_shorts","a_pants","Bass Shorts",900,1,"Black mesh, orange stripe.",{gar:"sm_shorts",b:"sm"}],
+ ["gx_sm_hightop","a_shoes","Glow-Sole High-Tops",1700,1,"Soles lit cyan from inside.",{gar:"sm_hightop",b:"sm"}],
+ ["gx_sm_runner","a_shoes","Flare Runners",1300,1,"Chunky, orange laces.",{gar:"sm_runner",b:"sm"}],
+ ["gx_sm_boots","a_shoes","Neon-Lace Boots",1400,1,"Combat boots, cyan laces.",{gar:"sm_boots",b:"sm"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
+/* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
