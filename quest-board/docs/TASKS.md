@@ -420,6 +420,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 3c27004 (Cal on v0.58: the Game Room TV, the racing chairs, the double gaming rig; `shots/gm3/`): pass with one note.
+  The retro TV now faces the beanbags (`tvcmp.png`: v0.58 left, its screen pointed at the door wall; now right, at the
+  beanbags, which face it). Gaming Chairs and Gaming Desks retired (`retired.js`): a new player gets no card; a save that owns
+  them keeps both ids and draws nothing more. The mini fridge stands on the back wall between the snack bar and the soda
+  machine. No page errors, day and night. Note, against the references (each big table has its own open floor): with the desks
+  gone the ping-pong table is back at the front and tight at both playing ends: its left end is a hand from the pool table's
+  front corner, its right end runs up to the doormat (`front.png`). Fix: give it its own clear patch, or drop it and let the
+  pool table be the room's one big table (Cal's call if it goes). Owner: ROOMS.
+- QA, Cal's iPhone on v0.58 (diag on the published page, iOS 18.7, the Claude app, 440x840, dpr 3): first visit bar 0.38 s,
+  ready 1.43 s (34.5 MB sent); second visit ready 0.25 s, 15 files from the cache and 3 checked, 900 bytes; the Loft 56-60 fps
+  with a room window open (worst frame 51-84 ms; v0.53 was 41-55 fps with 300+ ms stalls), Training and the Shop about 60 fps.
+  So the loader, the cut packs, the cache and the glow fix all hold on his phone; nothing to fix. Owner: LEAD (for the record).
 - QA, the published v0.58 (slug 974301b9, version 1793973604-fe09): pass, 460 of the 859d941 build's 461 files identical, none missing,
   index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, v0.58 (859d941, APPV 58, built clean; rule 18: pass, publish it). Over v0.57 only the pill rule and APPV. `ccbegin.js` (now also
@@ -1696,8 +1708,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's 3c27004 (Cal on v0.58: the Game Room TV, the double gaming rig, the racing chairs), with references and an old save
-  that owned the desks. Next: the next version. (on 3c27004)
+- Now: nothing waiting; 3c27004 passed with a ping-pong note. Next: the next version. (on 2d5d216)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
