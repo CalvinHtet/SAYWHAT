@@ -1,7 +1,7 @@
 // The team in their own rooms (ROOMS's abb6513, LEAD's request 3): with all five joined, each building's view is opened and the
 // team agents (a.tm) are listed with the room they stand in; each should be in their home (Mara the Restaurant, Rafe Lock and Key,
 // Nova the Mall, Theo the Theater, Sable the Lair), drawn with a ring and a name tag. A picture of each building; then a save with
-// only Mara joined shows nobody else.
+// only Mara joined shows nobody else. Each member's top is checked too (ROOMS's 097dccd).
 //   OUT=<folder> BASE=<server> node teamrooms.js
 const fs = require('fs'), path = require('path');
 const { open } = require('./lib.js');
@@ -20,9 +20,9 @@ const HOME = { mara: 'restaurant', rafe: 'skybar', nova: 'mall', theo: 'theater'
       await p.waitForTimeout(2500);
       await p.evaluate((bi) => { document.querySelectorAll('.dropsplash,.overlay,#layer .modal').forEach((e) => e.remove()); const g = document.querySelectorAll('[data-act="bldgo"]')[bi]; if (g) g.dispatchEvent(new MouseEvent('click', { bubbles: true })); }, bi);
       await p.waitForTimeout(9000);
-      const r = await p.evaluate(() => { const S = window.__qb.x().S; return Object.values(window.__qbLoft().A || {}).filter((a) => a.tm).map((a) => [a.tm, (S.base.slots[a.room] || {}).t, a.alpha != null ? +(+a.alpha).toFixed(1) : null]); });
+      const r = await p.evaluate(() => { const S = window.__qb.x().S; return Object.values(window.__qbLoft().A || {}).filter((a) => a.tm).map((a) => [a.tm, (S.base.slots[a.room] || {}).t, a.alpha != null ? +(+a.alpha).toFixed(1) : null, (((((a.look || {}).rig || {}).equipped || {}).top) || {}).art || (((a.look || {}).rig || {}).top) || '-']); });
       const tags = await p.evaluate(() => [...document.querySelectorAll('.lftm text')].map((e) => e.textContent));
-      r.forEach((x) => (found[x[0]] = { room: x[1], alpha: x[2] }));
+      r.forEach((x) => (found[x[0]] = { room: x[1], alpha: x[2], top: x[3] }));
       console.log(`${tag}, building ${bi}: team ${JSON.stringify(r)}, name tags drawn ${JSON.stringify(tags)}`);
       await p.screenshot({ path: path.join(OUT, `team_${tag}_b${bi}.png`) });
       await p.evaluate(() => { const st = [...document.querySelectorAll('button')].find((e) => /Street/.test(e.textContent)); if (st) st.click(); });
@@ -32,6 +32,9 @@ const HOME = { mara: 'restaurant', rafe: 'skybar', nova: 'mall', theo: 'theater'
   };
   const all = await visit(Object.keys(HOME), 'all');
   for (const [k, home] of Object.entries(HOME)) t(all[k] && all[k].room === home, `${k}: in ${all[k] ? all[k].room : 'nowhere'} (home ${home})`);
+  // ROOMS's 097dccd: each member wears their own top; Mara keeps her chef whites (npc_chef)
+  const TOP = { mara: 'npc_chef', rafe: 'tm_rafe_jacket', nova: 'tm_nova_knit', theo: 'tm_theo_tee', sable: 'tm_sable_jacket' };
+  for (const [k, top] of Object.entries(TOP)) t(all[k] && all[k].top === top, `${k} wears ${all[k] ? all[k].top : '-'} (expected ${top})`);
   const one = await visit(['mara'], 'mara-only');
   t(Object.keys(one).join() === 'mara', `only Mara joined: team drawn ${JSON.stringify(Object.keys(one))}`);
   oks.forEach((m) => console.log('  ok   ' + m)); fails.forEach((m) => console.log('  FAIL ' + m));

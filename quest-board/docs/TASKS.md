@@ -178,7 +178,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
-- TAKEN by QA. WAITING ON QA: wear-test the team's signature tops at 097dccd: `matrixshot.js "sheet=wear&arts=tm_rafe_jacket"` and the same for
+- DONE by QA (QA findings: pass). WAITING ON QA: wear-test the team's signature tops at 097dccd: `matrixshot.js "sheet=wear&arts=tm_rafe_jacket"` and the same for
   `tm_theo_tee`, `tm_nova_knit`, `tm_sable_jacket` (both bodies, every pose), plus `sheet=neck` and `sheet=waist` with them;
   and live: with the team joined, each wears theirs in their home room (`livebuilding.js TEAM=`). The mannequin lines were
   stripped (Rafe and Theo with strip_mannequin.py --garment, Nova and Sable with an alpha-only opening to keep the lavender).
@@ -188,7 +188,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
   start)" (slug 7336ed4a-741d-4af2-b0fe-7492666e5a32, 439 files from 8fabe1a). QA: 437 of 438 build files match by sha256,
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
-- WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
+- TAKEN by QA. WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
   cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
@@ -313,6 +313,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the team's signature tops (097dccd, checked on b7369bc; `rigtest/qa/shots/tops/`): pass, ready to publish. matrixshot.js
+  sheet=wear for tm_rafe_jacket, tm_theo_tee, tm_nova_knit and tm_sable_jacket: 44 of 44 poses each, both bodies, 0 fails; no
+  mannequin lines left, Nova's lavender trim intact, Theo's lanyard on every front pose. sheet=neck: 952 cells, 0 fails, every
+  necklace sits over each top. sheet=waist: 986 cells, 0 fails, each top over all 19 trousers front and back, no gap. Live
+  (teamrooms.js, which now checks the top too): Rafe in Lock and Key in the brown jacket, Theo in the Theater in the black tee,
+  Nova in the Mall in the cream knit, Sable in the Lair in the olive jacket, Mara in the Restaurant in chef whites (npc_chef); with only Mara joined, only
+  Mara shows; no page errors. Old, not caused by these tops: in stretchUp and stretch the dark jackets' sleeves look torn at the
+  shoulder (Rafe, Sable; the Shop's v_blazer does the same, the known torn-sleeve note in Done); the long hairstyle h1 leaves a
+  few dark specks on light tops (Nova's knit; the Shop's h_hoodie too). Owner: LEAD (publish in v0.51); the sleeves are ROOMS's
+  if Cal wants them fixed.
 - QA, v0.50's pre-release check (rule 18 step 2, f3c970c, APPV 50; `shots/v50/`): pass, ready to publish. savecheck.js: every case passes.
   screens.js at 360 and 390 px: every tab and a room window fit, no errors. Older saves without the areas-seen record (new
   `areasload.js`, written with the flags that keep an old save's numbers): a level-30 save loads at 30 with all 8 areas, none Soon;
@@ -1342,8 +1352,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's four team tops (097dccd: wear tests and live) and LEAD's Rift Mask drop odds (v0.51), test copies only. Next:
-  v0.50's published copy. (on e0e5ab5)
+- Now: v0.50's published copy (the page against the f3c970c build). Next: LEAD's Rift Mask drop odds (v0.51), test copies
+  only. (on b7369bc)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
