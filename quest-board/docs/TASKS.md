@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.52 (NEXT, APPV 52) built and WAITING ON QA for its pre-release check (rule 18 step 2). It is published only
+- Now: v0.52 (db67326, APPV 52) built and WAITING ON QA for its pre-release check (rule 18 step 2). It is published only
   when Cal reports on v0.51 or says go. Phone lag waits on a phone log. Nobody else plays until there is a working
-  version. (on NEXT)
+  version. (on db67326)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -213,7 +213,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
   42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
   and the sit and sleep poses (no painted art there, so unchanged by construction).
-- WAITING ON QA: check v0.52, NEXT (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
+- WAITING ON QA: check v0.52, db67326 (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
   for every top, the 3 starter tops included (503cd3f, 6541dd3), necklaces drawn over painted tops (414a730), the town
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
