@@ -286,7 +286,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.57: "Quest Board v0.57 (test, fresh start)" (slug 34b73668-15d2-4030-bdcd-8bbee04ad845,
   462 files from b279091, the 9 db rules + user + sample with images, version 1793972414-d808). Check the page matches the build.
-- WAITING ON QA: check v0.58, 859d941 (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
+- TAKEN by QA. WAITING ON QA: check v0.58, 859d941 (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
   creator is open (`app/index.html`), since it covered a creator button wherever it sat (your note, last at 375x548). It is
   back on the Board after Begin. `shots/ccbegin.js` at 375x548, 390x664, 844x390, 1280x800: Begin on screen and tappable, no
   page errors.
@@ -1684,7 +1684,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.57 published and its page passed. Next: whatever LEAD or ROOMS sends. (on c6ac5fa)
+- Now: v0.58 (859d941, clean copy on 8781). Next: v0.58's page. (on 80e049e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
