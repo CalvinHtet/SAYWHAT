@@ -393,7 +393,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
+- TAKEN by QA. WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
   922bcb7 (step 14): painted shell, the snack bar and table off the lanes' approach in the front-right corner, the Karaoke
   door off the lanes on the free back wall, no street mat (guests arrive at the Mall door). Lanes, ball return, console
   and seats unchanged. ROOMS's worry: the lane seats face sideways (the art only faces the viewer).
@@ -1244,7 +1244,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Rhythm and VR notes when ROOMS fixes them; v0.50. (on 1bb627d)
+- Now: round 2 of the Rhythm Room and VR Arena, and the Bowling Alley's design review, test copy only (`roomreview.js`,
+  `livebuilding.js`, `doors.js`). Next: v0.50. (on a720f10)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
