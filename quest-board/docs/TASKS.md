@@ -238,6 +238,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, dungeon art (ROOMS's d48ed81, on 56ec295): pass. All 13 names the code asks for (`ui_tr_<set>_<piece>`, the two
+  `_set` emblems, `ui_gift`) ship in `art_ui.js`; on the Trophies tab every owned piece (all five Goblin King, two shards) shows
+  its painting, unowned shards show the placeholder. No page errors. Owner: ROOMS, nothing to fix.
 - QA, class banners (ROOMS's 6b7b9c8, on a78cb01, 390 x 844): pass. All eight ship in `art_ui.js`; with each of the four
   classes the Board's class banner draws its painting behind the emblem (`--clsart`), the man's or woman's version by body
   (`clsArt`). The Hall tab shows the emblem only, as built. No page errors. Owner: ROOMS, nothing to fix.
@@ -670,7 +673,7 @@ To do:
 
 Doing:
 - Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
-  (on a78cb01)
+  (on 56ec295)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
