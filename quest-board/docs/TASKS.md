@@ -13,8 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: ROOMS's 6f04ed8 (Game Room: hex panels, foosball, ping-pong); v0.61 blocked (the Garden lot, 685cbd0). Next: the rebuilt
-  version. (on e74693c)
+- Now: v0.61 BLOCKED by QA (d9d92d7 not published; Cal: publish only with no known error). Rebuilt as v0.61 once these pass
+  QA: ROOMS's Garden as its own street lot right of the Loft (Cal: "The garden should be the next lot to the right"), the ping
+  pong fix 6f04ed8, the Bedroom blink fix ce07425; LEAD's level-5 start coins 3d7f57a. v0.58 pinned. (on 3d7f57a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -319,6 +320,10 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
   the player (the Board's Class Awakening card). `shots/teststart.js`: name, Begin -> level 5, gates 5, the Garden lot offered
   about 6 s later, no page errors. On the Before release list now: QB_TEST_START back to 0.
+- WAITING ON QA: LEAD's 3d7f57a, the level-5 test start's coins (your note on d9d92d7). A new test character gets what a real
+  level-5 player has earned: quest pay on the XP so far (2.5 per XP) plus the pay for levels 2-5, 1,205 coins, with lvPaid = 5
+  so the next level-up pays only its own level (`shots/lvnext.js`: 1,205, then 1,365 at level 6). Not the Garden's 1,500 yet,
+  as for a real player; Add 10,000 coins still covers testing. Goes into the rebuilt v0.61 with ROOMS's Garden lot.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
