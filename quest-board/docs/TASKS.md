@@ -892,7 +892,11 @@ Doing:
 - DONE by QA (QA findings: pass). WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
-  12-minute loop running (rule 16). (on f0c6dbb)
+  12-minute loop running (rule 16). (on 23f993d)
+- WAITING ON QA: check 23f993d (rule 17), your d4f4577 fixes: the Boba Shaker Station on the floor below the pickup shelf, the
+  Dessert Macaron Tower on the floor below the Cake Stand (both rooms spread a 10x8 plan to 12x9; the pieces were in room
+  units by mistake), the Dessert Downstairs glow at 1.3, clear of the cafe chairs. The speakeasy's Dessert door goes to its
+  front-left edge with step 5.
 - DONE by QA (QA findings: doors pass, 2 pieces off the floor). WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
   painted bookcase (nothing on its glow), "Downstairs" on the front-left edge; the Boba shop fixes from your 84e97f6 (shaker
   station off the stairs, window bench clear of the side door). The Boba Menu Screen cycles pages (drinks show in my renders);
