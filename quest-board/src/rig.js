@@ -218,14 +218,16 @@
     }
 
     /* One layer ready to draw: its binding plus this rig's textures. */
-    mesh(path, bodyId, view, slot, armsUp) {
+    mesh(path, bodyId, view, slot, armsUp, skirt) {
       // Poses with the arms overhead use their own binding of the clothes (see rig.armpit); every other pose the usual one.
       armsUp = !!(armsUp && this.cfg.rig.armpit && this.cfg.rig.armpit.slots[slot.id]);
-      const key = [path, bodyId, view, armsUp ? "up" : ""].join("|");
+      // A skirt (item flag `skirt`) is one piece of cloth, not two trouser legs: see bindLayer.
+      skirt = !!(skirt && slot.bones !== "*" && slot.bones.includes("thN") && slot.bones.includes("thF"));
+      const key = [path, bodyId, view, armsUp ? "up" : "", skirt ? "skirt" : ""].join("|");
       if (this.meshes.has(key)) return this.meshes.get(key);
       const made = (async () => {
         const im = await this.image(path);
-        const bound = await this.bind(im, path, bodyId, view, slot, armsUp);
+        const bound = await this.bind(im, path, bodyId, view, slot, armsUp, skirt);
         const gl = this.gl, tex = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
@@ -280,15 +282,15 @@
 
     /* Bind one layer to the skeleton once. Weights come from geometry, so a new
        item needs no authoring: it just has to be painted on the rest pose. */
-    bind(im, path, bodyId, view, slot, armsUp) {
-      const key = [path, bodyId, view, slot.id, armsUp ? "up" : ""].join("|");
+    bind(im, path, bodyId, view, slot, armsUp, skirt) {
+      const key = [path, bodyId, view, slot.id, armsUp ? "up" : "", skirt ? "skirt" : ""].join("|");
       if (sharedBindings.has(key)) return sharedBindings.get(key);
-      const made = this.bindLayer(im, bodyId, view, slot, armsUp);
+      const made = this.bindLayer(im, bodyId, view, slot, armsUp, skirt);
       sharedBindings.set(key, made);
       return made;
     }
 
-    async bindLayer(im, bodyId, view, slot, armsUp) {
+    async bindLayer(im, bodyId, view, slot, armsUp, skirt) {
       const { rig } = this.cfg, bv = this.cfg.bodies[bodyId][view];
       const W = rig.canvas[0], H = rig.canvas[1], step = rig.meshStep;
       const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
@@ -302,11 +304,13 @@
       const allowed = slot.bones === "*" ? this.boneIds : slot.bones;
       const shapes = allowed.map((id) => ({ id, ...this.boneShape(bv, id) }));
       const one = shapes.length === 1 ? shapes[0].id : null;
-      const parts = new Set(shapes.map((sh) => this.limbOf[sh.id])).size > 1 ? await this.partMap(im, shapes, slot.id === "body" ? null : await this.bodyParts(bodyId, view)) : null;
+      // A skirt is one piece: every point follows both thighs evenly, so mid-stride the hem swings between the legs instead
+      // of splitting down the middle like culottes (QA on v_tulle, b58bf48). It is drawn with the hips, over both legs.
+      const parts = !skirt && new Set(shapes.map((sh) => this.limbOf[sh.id])).size > 1 ? await this.partMap(im, shapes, slot.id === "body" ? null : await this.bodyParts(bodyId, view)) : null;
       // Distance through the art itself, so a shirt corner beside the forearm
       // only follows that arm if the shirt really reaches it. Loose pieces that
       // touch no bone fall back to straight-line distance.
-      if (!one) {
+      if (!one && !skirt) {
         for (const s of shapes) {
           s.near = nearField(geodesicField(alpha, cols, rows, step, s), cols, rows);
           await pause();
@@ -327,6 +331,7 @@
         if (verts[k]) return verts[k];
         const x = cx * step, y = cy * step;
         if (one) return (verts[k] = { x, y, u: x / W, v: y / H, b0: one, b1: one, w: 0 });
+        if (skirt) return (verts[k] = { x, y, u: x / W, v: y / H, b0: "thN", b1: "thF", w: 0.5 });
         let own = shapes;
         if (parts) {
           const limb = parts.at(x, y);
@@ -420,7 +425,7 @@
             // Outline edges of a joint must not smear when pulled apart.
             t.loose = loose;
             const owner = t[0].b0 === t[1].b0 ? t[0].b0 : t[2].b0;
-            groups[slot.group != null ? slot.group : groupOf[owner]].push(t);
+            groups[slot.group != null ? slot.group : skirt ? groupOf.pelvis : groupOf[owner]].push(t);
           }
         }
       }
@@ -628,7 +633,7 @@
       for (const s of this.cfg.rig.slots) {
         const l = look.layers[s.id];
         if (!l) continue;
-        for (const view of ["front", "back"]) if (l[view]) this.mesh(l[view], look.body, view, s);
+        for (const view of ["front", "back"]) if (l[view]) this.mesh(l[view], look.body, view, s, false, l.skirt);
       }
     }
 
@@ -643,7 +648,7 @@
       const art = (s) => (pose.swap && s.id in pose.swap ? pose.swap[s.id] : s.id);
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
-      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp)));
+      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp, l.skirt)));
       const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat(l.front.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
       // A painted layer is drawn once, in the last group its mesh would use, so everything it should cover is already down.
       // The bare body goes in its first group instead, under the face, hair and clothes (ROOMS, yawn pilot).

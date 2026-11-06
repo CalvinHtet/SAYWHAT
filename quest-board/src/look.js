@@ -38,6 +38,10 @@
       }
       if (slot === "hat" && item.clip && item.clip[b]) layers.hair.clip = item.clip[b];
       if (item.lift && item.lift[b]) layers[slot].lift = item.lift[b];
+      // A long skirt moves as one piece (rig.js bindLayer). The flag lives in data/items.json; read it there too, so every
+      // place that equips an item gets it without copying one more field.
+      const meta = (typeof window !== "undefined" && window.QBDATA && window.QBDATA.items && window.QBDATA.items[item.art]) || {};
+      if ((item.skirt || meta.skirt) && layers[slot]) layers[slot].skirt = true;
     }
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {

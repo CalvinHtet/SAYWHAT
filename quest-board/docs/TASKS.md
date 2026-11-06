@@ -257,6 +257,11 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
 Art and room code requests (LEAD asks, ROOMS does):
+- WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
+  side is in NEXT: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
+  hem swings as one piece instead of splitting like culottes (QA's b58bf48). `src/look.js` reads the flag from QBDATA.items,
+  so no equip code needs a new field. Tried with the flag added to a local build only: walk1, walk3, backwalk1, backwalk3
+  and sitFront, both skirts, no split (`shots/v55/skirt_before.png`, `skirt_after.png`). Without the flag nothing changes.
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
   the Restaurant's kitchen, whose end wall has the gap; arrows both ways; (3) the Garden's three painted lots (approval 20).
@@ -387,7 +392,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   did not. Better: let the phone log say it. In the diag log, add each script's `transferSize` from
   `performance.getEntriesByType('resource')` (0 means it came from the cache) and the time to the first screen. Then Cal's
   second visit shows whether the pieces are cached on his phone. Owner: LEAD.
-- QA, the Black Tulle Skirt's wear test (`v_tulle`, female only; on 7387646; `shots/tulle/`): fine standing, sitting, typing,
+- DONE by LEAD in NEXT (rig side; the item flag is ROOMS's, below). QA, the Black Tulle Skirt's wear test (`v_tulle`, female only; on 7387646; `shots/tulle/`): fine standing, sitting, typing,
   sleeping and in the yawn, short and long hair (22 poses, 0 fails; long hair falls over it right). One fix: mid-stride the long
   skirt splits at the middle like culottes (a notch at the front in walk3, two lobes from behind in backwalk1, `zz.png`), because
   the rig binds a pants-slot item to each leg; the short plaid skirt hides it (`yy.png`). Fix: a rig option for skirts (bind the
