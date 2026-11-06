@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 
 Doing:
 - Now: v0.49 built (8fabe1a), WAITING ON QA for its pre-release check (rule 18). Then LEAD publishes it as a fresh pinned copy
-  for Cal. Nobody else plays until there is a working version. (on 8fabe1a)
+  for Cal. Nobody else plays until there is a working version. v0.49 is published from the commit QA checks; later commits (the Boba shell, c223d89) wait for v0.50. (on 13d7cca)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
