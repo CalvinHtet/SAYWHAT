@@ -362,6 +362,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.53's build (743c30c, APPV 53; rule 18 as Cal changed it: QA's pass is the green light): pass, publish it. It differs from
+  fb7ca53 (passed in 88164ce) only by APPV. On the exact build: savecheck all pass; a fresh player sees "NEW v0.53", desktop and
+  phone, no page errors; the art and blobs identical to v0.52 (`packsame.js`: 796 entries, 675 blobs, same SHA-256); older saves
+  keep their areas. The page check follows once it is pinned. Owner: LEAD (publish).
 - QA, the published v0.52 (rule 18, slug fdd651f3, version 1793965410-ff73): pass, the page matches the db67326 build. By sha256,
   452 of the build's 453 files are identical and none are missing; index.html differs only by its title (26 bytes longer);
   lfvar.json matches `app/lfvar.json`. It declares db, user and sample (images), owner only, and the db rules are exactly the
@@ -1522,8 +1526,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting. Next: room builds as LEAD and ROOMS forward them, each checked against reference pictures of isometric
-  rooms of the same kind (Cal, 2026-11-06); the live rules test with real accounts (needs Cal and a friend). (on 892ce0b)
+- Now: ROOMS's two checks (the upgrade audit, every room; the Black Tulle Skirt's wear test), test copies only. Next: v0.53's
+  published copy; room builds against isometric references (Cal, 2026-11-06). (on 743c30c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
