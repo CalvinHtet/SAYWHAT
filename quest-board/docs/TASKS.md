@@ -249,7 +249,7 @@ Art and room code requests (LEAD asks, ROOMS does):
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 - WAITING ON QA: check 06cd203 (rule 17): the door arrows now show right after buying an expansion (lfInstallFx redrew the room
   picture without them). Buy each room's expansion and look for the new arrow without reopening.
-- DONE by LEAD in 06cd203. **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
+- LEAD's part (the arrows) DONE in 06cd203; ROOMS's two findings stay ROOMS's. **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
   restaurant." LEAD and ROOMS: carry on with the Restaurant next. His three findings, for the next version
   (`shots/cal_phone_v048_gameroom.png`, his screenshot):
   (1) "I can't see the arrows to go to the other rooms when I purchase the expansions. I have to close and re enter in order
