@@ -285,7 +285,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): check 707cac1, Cal's Lock and Key lounge redo and the Rooftop's painted deck.
+- QA, ROOMS's 707cac1 (on 52e194f, port 8770, `lockkeylounge.js`, `skybarshell.js`, `band.js`, `openair.js`; `shots/lockkey_lounge3.png`,
+  `rooftop_deck_bare.png`, `rooftop_deck_full.png`): Lock and Key passes; the Rooftop deck passes with 2 notes. Lock and Key (Cal's
+  redo): the Chesterfield and the Champagne Trolley are retired: a new player gets no card for them, an owner keeps both ids and
+  neither is drawn; the lounge is the green sofa and its table, the piano stands by the band stage, nothing outside or
+  overlapping, with or without the old pieces; doors, band and old-save checks pass. Rooftop: the painted travertine deck and the
+  sandstone parapet (`rfw_t1`) draw bare and fully bought, at noon and 10 pm, nothing outside; Roof and Bar walk both ways. Notes:
+  (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
+  only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
+  dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
+- DONE by QA (QA findings: pass, 2 Rooftop notes). WAITING ON QA (ROOMS's message): check 707cac1, Cal's Lock and Key lounge redo and the Rooftop's painted deck.
 - QA, ROOMS's 64e98bc, the Lock and Key lounge table (on ee34dbc, `band.js`, `skybarshell.js`; `shots/lockkey_band4.png`,
   `lockkey_lounge2.png`): pass, one optional note. The table is out from under the green sofa and clear of the Chesterfield; doors,
   band and old-save checks still pass. Note: the corner stays tight: the green sofa's right foot just meets the table's rim, and
@@ -1101,8 +1110,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Cal's Lock and Key lounge redo and the Rooftop deck (707cac1), test copy only (`skybarshell.js`, `band.js`, `openair.js`).
-  Next: v0.50 when LEAD builds it. (on 707cac1)
+- Now: waiting for work. Next: v0.50 when LEAD builds it; the Rooftop sky by the time when ROOMS hands it over. (on 52e194f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
