@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 
 Doing:
 - Now: unlock order by level and Sprinklers much later (912f32c), to QA. Next: the Garden with ROOMS until it passes QA, then v0.49
-  for Cal. Nobody plays until there is a working version. (on 912f32c)
+  for Cal. Nobody plays until there is a working version. (on d1d7c73)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
