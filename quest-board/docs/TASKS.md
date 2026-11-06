@@ -1133,12 +1133,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: the doors (3962ee2: every pair on Cal's rule, no furniture on a door glow but the Mall escalator).
-  WAITING ON CAL: eleven rooms through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby, the
-  Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke, the Nightclub). Held for Cal: signature team
-  cosmetics (wait on approvals 12, 13). LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`,
-  `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar`
-  needs `ml_bow`. Chrome claimed. (on 3962ee2)
+- Now: WAITING ON CAL. Eleven rooms through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby,
+  the Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke, the Nightclub). Doors done (3962ee2, QA
+  passed: all 36 pairs on Cal's rule, walked both ways). Held for Cal: signature team cosmetics (wait on approvals 12, 13).
+  LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`,
+  `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on fc356dd)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
