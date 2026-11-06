@@ -1054,7 +1054,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: Lock and Key (step 5) when ROOMS hands it over. (on 3421dca)
+- Now: waiting for work. Next: Lock and Key (step 5) when ROOMS hands it over. (on f7c1a46)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
