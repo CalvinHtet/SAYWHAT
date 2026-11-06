@@ -1259,22 +1259,30 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
   /* widest zoom: the room reaches both sides of the frame. If the frame is too short for all of it, drag up and down. */
   var ar=Math.min(base[3]/base[2],(wrap.clientHeight/wrap.clientWidth)||base[3]/base[2]),v0=[base[0],base[1]+(base[3]-base[2]*ar)*.42,base[2],base[2]*ar],v=(LFPZ[key]||v0).slice();
   var clamp=function(){v[0]=Math.min(base[0]+base[2]-v[2],Math.max(base[0],v[0]));v[1]=Math.min(base[1]+base[3]-v[3],Math.max(base[1],v[1]))};
-  var show=function(){clamp();svg.setAttribute("viewBox",v.map(function(n){return n.toFixed(2)}).join(" "));LFPZ[key]=v.slice()};
-  var zoom=function(f,fx,fy){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show()};
+  /* LEAD (Cal, 2026-11-06: "zooming in on any room drastically reduces frame rate"; ROOMS OK'd). Setting the viewBox redraws the
+     whole room at the zoomed size, 80 to 150 ms a step at CPU x4. While a finger moves, the drawn picture is moved and scaled as
+     one layer (CSS transform from the last committed viewBox c to v), and the viewBox is committed once, 140 ms after the last
+     move or when the fingers lift, so the picture ends sharp. Buttons and the wheel commit straight away. */
+  var c=null,T=0;wrap.style.overflow="hidden";
+  var commit=function(){clearTimeout(T);T=0;svg.style.transform="";svg.style.willChange="";svg.setAttribute("viewBox",v.map(function(n){return n.toFixed(2)}).join(" "));c=v.slice()};
+  var show=function(live){clamp();LFPZ[key]=v.slice();if(!live||!c){commit();return}
+    var k=(svg.clientWidth||wrap.clientWidth)/v[2];svg.style.transformOrigin="0 0";svg.style.willChange="transform";
+    svg.style.transform="translate("+((c[0]-v[0])*k).toFixed(2)+"px,"+((c[1]-v[1])*k).toFixed(2)+"px) scale("+(c[2]/v[2]).toFixed(4)+")";clearTimeout(T);T=setTimeout(commit,140)};
+  var zoom=function(f,fx,fy,live){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show(live)};
   var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML='<button type="button" aria-label="Zoom in">+</button><button type="button" aria-label="Zoom out">−</button><button type="button" aria-label="Reset zoom">◎</button>';wrap.appendChild(ctl);
   show();ctl.children[0].onclick=function(){zoom(1.4,.5,.5)};ctl.children[1].onclick=function(){zoom(1/1.4,.5,.5)};ctl.children[2].onclick=function(){v=v0.slice();show()};
   if(wrap.dataset.room!=null&&lfLightUseful()){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
   var at=function(e){var r=svg.getBoundingClientRect();return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
   svg.addEventListener("wheel",function(e){e.preventDefault();var q=at(e);zoom(Math.exp(-e.deltaY*.0022),q[0],q[1])},{passive:false});
-  var P={},pinch=0;
-  svg.addEventListener("pointerdown",function(e){P[e.pointerId]=[e.clientX,e.clientY];try{svg.setPointerCapture(e.pointerId)}catch(_){}pinch=0});
-  svg.addEventListener("pointermove",function(e){var o=P[e.pointerId];if(!o)return;var ids=Object.keys(P),r=svg.getBoundingClientRect();
-    if(ids.length===2){P[e.pointerId]=[e.clientX,e.clientY];var A=P[ids[0]],B=P[ids[1]],d=Math.hypot(A[0]-B[0],A[1]-B[1]);if(pinch)zoom(d/pinch,((A[0]+B[0])/2-r.left)/r.width,((A[1]+B[1])/2-r.top)/r.height);pinch=d;return}
+  var P={},pinch=0,R=null;
+  svg.addEventListener("pointerdown",function(e){if(T)commit();P[e.pointerId]=[e.clientX,e.clientY];try{svg.setPointerCapture(e.pointerId)}catch(_){}pinch=0;R=svg.getBoundingClientRect()});
+  svg.addEventListener("pointermove",function(e){var o=P[e.pointerId];if(!o)return;var ids=Object.keys(P),r=R||svg.getBoundingClientRect();
+    if(ids.length===2){P[e.pointerId]=[e.clientX,e.clientY];var A=P[ids[0]],B=P[ids[1]],d=Math.hypot(A[0]-B[0],A[1]-B[1]);if(pinch)zoom(d/pinch,((A[0]+B[0])/2-r.left)/r.width,((A[1]+B[1])/2-r.top)/r.height,true);pinch=d;return}
     var dx=e.clientX-o[0],dy=e.clientY-o[1];P[e.pointerId]=[e.clientX,e.clientY];
     // Not zoomed in, a drag should scroll the screen as usual.
     if(v[2]>=base[2]-.01&&v[3]>=base[3]-.01){var sc=wrap.closest(".modal")||wrap.parentElement;if(sc)sc.scrollTop-=dy;return}
-    v[0]-=dx*v[2]/r.width;v[1]-=dy*v[3]/r.height;show()});
-  var up=function(e){delete P[e.pointerId];pinch=0};svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
+    v[0]-=dx*v[2]/r.width;v[1]-=dy*v[3]/r.height;show(true)});
+  var up=function(e){delete P[e.pointerId];pinch=0;if(!Object.keys(P).length&&T)commit()};svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
   show()}
 (function(){var go=function(){var scan=function(){var w=document.querySelectorAll(".rbig");for(var i=0;i<w.length;i++)lfPrevAttach(w[i])};new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});scan()};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
 
@@ -1312,7 +1320,7 @@ function lfCoachSplit(){
   rk.forEach(function(c){if(hasGym&&o.gym.length<2)o.gym.push(c);else if(o.lounge.length<3)o.lounge.push(c)});
   return o;
 }
-function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;if(r.t==="bedroom"&&!me){me=1;o.push({id:"me",room:i,role:"me",look:lookOf()})}if(ROOMDEF[r.t])genPeople(r,i,LFMETA[i].C,o);if(LFMETA[i].C.dogs)LFMETA[i].C.dogs.forEach(function(d){o.push({id:"dog:"+d.id,room:i,role:"dog",dname:d.id,bed:d.bed})});if(r.t==="restaurant")rsPeople(r,i,LFMETA[i].C,o);if(r.t==="garden")gdPeople(r,i,LFMETA[i].C,o);if(r.t==="theater")thPeople(r,i,LFMETA[i].C,o);if(r.t==="auditorium")auPeople(r,i,LFMETA[i].C,o)});return o}
+function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;if(r.t==="bedroom"&&!me){me=1;o.push({id:"me",room:i,role:"me",look:lookOf()})}if(ROOMDEF[r.t])genPeople(r,i,LFMETA[i].C,o);if(LFMETA[i].C.dogs)LFMETA[i].C.dogs.forEach(function(d){o.push({id:"dog:"+d.id,room:i,role:"dog",dname:d.id,bed:d.bed})});if(r.t==="restaurant")rsPeople(r,i,LFMETA[i].C,o);if(r.t==="garden")gdPeople(r,i,LFMETA[i].C,o);if(r.t==="theater")thPeople(r,i,LFMETA[i].C,o);if(r.t==="auditorium")auPeople(r,i,LFMETA[i].C,o)});try{lfVisitors().forEach(function(v){if(v.room>=0)o.push(v)})}catch(e){}return o}
   var out=[],B=S.base,vw0=lfVisitors(),cs0=lfCoachSplit(),hasLg=lfLoungeIdx()>=0;
   B.slots.forEach(function(r,i){if(!r||!LFMETA[i])return;var C=LFMETA[i].C;
     if(r.t==="bedroom"){
@@ -1337,13 +1345,17 @@ function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(func
   });
   return out;
 }
+/* LEAD (Cal, 2026-11-06, friends "hang out in our loft or other buildings for a day"; ROOMS OK'd): a friend stays the whole day
+   in the room their visit names (S.visit.place) when you have it, else the Lounge, else the Bedroom; the day ending clears them */
+function lfVisitRoom(place){var sl=S.base.slots,f=function(t){for(var i=0;i<sl.length;i++)if(sl[i]&&sl[i].t===t&&LFMETA[i])return i;return -1};
+  var i=place?f(place):-1;if(i<0)i=f("lounge");if(i<0)i=f("bedroom");return i}
 function lfVisitors(){
   var v=S.visit;if(!v||v.d!==today()||!v.t)return [];
-  var el=Date.now()-v.t;if(el>LFVISWIN+60000)return [];
+  var el=Date.now()-v.t,rm=lfVisitRoom(v.place);
   return v.who.map(function(w,k){
-    if(w.indexOf("dog:")===0)return {id:"v:"+w,room:0,role:"dog",dname:w.slice(4),visitor:1,fresh:el<90000,leaveAt:v.t+LFVISWIN,k:k};
-    return {id:"v:"+w,room:0,role:"visitor",look:FRIENDS[w].look,visitor:1,fresh:el<90000,leaveAt:v.t+LFVISWIN,k:k};
-  });
+    if(w.indexOf("dog:")===0)return {id:"v:"+w,room:rm,role:"dog",dname:w.slice(4),visitor:1,fresh:el<90000,leaveAt:0,k:k};
+    return FRIENDS[w]?{id:"v:"+w,room:rm,role:"visitor",look:FRIENDS[w].look,visitor:1,fresh:el<90000,leaveAt:0,k:k,idle:1,wand:1}:null;
+  }).filter(Boolean);
 }
 var LFSYNCED=0;
 function lfSync(){
