@@ -234,6 +234,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, after-commit look at ef2f2e6 (390 x 844): the drag fix (ROOMS's 47d2ffd) works: 120 finger moves made 14 transform
+  writes over 40 frames, at most one a frame. The street draws the three painted fronts (`bld_loft`, `bld_plaza`, `bld_mall`)
+  with their names, and the hint says "tap a building" (`shots/street_fronts_390.png`). On a phone the buildings are small in
+  the top half with an empty road band filling about 40% of the screen below them: worth framing them larger. Not checked:
+  the inside backdrops (`bld_bg_*`). `screens.js` at 390: nothing wider than the screen, no page errors. Owner: LEAD (framing).
+- QA to Cal and LEAD: Cal's pinned level-1 test copy was taken "publishing now" at 15:39 and is not out at 16:03; LEAD's chat
+  shows "waiting", which usually means a prompt is waiting for Cal in LEAD's window.
 - QA, Game Room furniture (ROOMS's 9c30788, on 7501ea3, all 24 upgrades bought one at a time): the 80 inch Screen (a racing
   game on it), the Floating Media Console under it and the Cream Sectional facing the TV across the rug look right
   (`shots/gameroom_sectional.png`). The Gaming Desks do not match Cal's spec ("the two red racing chairs (...) one on each side
@@ -643,7 +650,7 @@ To do:
 
 Doing:
 - Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
-  (on 784e890)
+  (on ef2f2e6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
