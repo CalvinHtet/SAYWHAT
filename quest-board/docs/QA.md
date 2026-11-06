@@ -684,3 +684,27 @@ All closed; ready for Cal. The sticker booth stands at the front between the ske
 hoop shot's throwing spot are clear; live, the prize clerk appears and works behind the counter (`crew:work@clerk` in 7 of 12
 looks) while guests play; all four Arcade door pairs (Mall, Rhythm, VR) now follow Cal's rule. The lobby's right sofa is clear of
 the box office.
+
+### Rhythm Room (e2d53e1, on cbc2535; `shots/review_rhythm_full.png`, `review_rhythm_bare.png`, `review_rhythm_live_11.png`)
+
+Reads as one music room: quilted violet walls, the dance pads and their screen in the middle with the floor lit only under them,
+taiko on the left, DJ, guitar and keys along the back and right, the equalizer high on the wall. Nothing outside, no overlaps; live
+(from inside the Mall building) guests play; no page errors. Notes:
+
+1. **The spectator bench faces away from the dancers.** It stands in front of the dance pads with its back to them, facing the
+   viewer (Cal's facing complaint). Turn it, or move it to the left wall so spectators look at the pads.
+2. **The Speaker Tower hides the drum kit and the keyboard.** It stands at the front right in front of both. Put it in the back
+   corner beside the DJ, where a speaker belongs.
+3. **The trophy case floats** alone in the front middle of the floor. Against a wall (by the taiko, or the right wall).
+
+### VR Arena (e2d53e1, on cbc2535; `shots/review_vr_full.png`, `review_vr_bare.png`, `review_vr_live_11.png`)
+
+The zones are right (check-in desk at the back, the headset rack and projection wall on the right wall, the waiting lounge and water
+cooler in the right corner); the Second Pod is retired cleanly (no card, id kept, not drawn). Notes:
+
+1. **The rigs bunch, as ROOMS feared.** The racing pod, the omni treadmill, the flight pod and the gyro seat stand touching in
+   about three tiles in the middle-front-right, plus the motion rig on the left: five rigs, four of them in a heap. Give each its
+   own pad: the motion rig and the racing pod along the left wall, the flight pod and the gyro seat along the front-right, the
+   treadmill alone in the middle with clear floor round it.
+2. **The check-in desk has nobody behind it,** and live a guest fades in behind it at the back wall, walking through the desk to
+   get in. Put a clerk behind it, and let guests arrive at the Arcade door (top left) and walk to the front of the desk.

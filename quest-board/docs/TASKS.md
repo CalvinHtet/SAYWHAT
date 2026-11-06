@@ -290,6 +290,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design reviews of step 13 (e2d53e1, on cbc2535; `roomreview.js` and `livebuilding.js` now take ROOM=<type>, `retired.js`;
+  `docs/QA.md`; `shots/review_rhythm_*.png`, `review_vr_*.png`). Rhythm Room reads as one music room, live play works; 3 notes: the
+  spectator bench has its back to the dancers; the Speaker Tower hides the drum kit and the keyboard; the trophy case floats
+  mid-floor. VR Arena zones are right and the Second Pod is retired cleanly; 2 notes: the rigs bunch as feared (four touching in
+  about three tiles: give each its own pad, the treadmill alone in the middle); the check-in desk has no clerk and live a guest
+  fades in behind it at the back wall. No page errors. Owner: ROOMS.
 - QA, ROOMS's b3832fb, the Arcade round 2 (on 25b5cb8; `arcadereview.js`, `livebuilding.js`, `doors.js`; `shots/review_arcade2*.png`,
   `review_arcade2_doors.txt`): pass, ready for Cal. Entrance and hoop spot clear, the prize clerk works live behind the counter, all
   four Arcade door pairs follow Cal's rule, the lobby sofa is clear of the box office. No page errors. Owner: ROOMS (to Cal).
@@ -387,7 +393,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: design reviews of the Rhythm Room and the VR Arena at e2d53e1 (step 13), bare and fully bought, live from
+- DONE by QA (QA findings and docs/QA.md: Rhythm 3 notes, VR 2). WAITING ON QA: design reviews of the Rhythm Room and the VR Arena at e2d53e1 (step 13), bare and fully bought, live from
   inside the Mall building: painted shells, the Pulsing Floor now only under the dance pads, the Second Pod retired, no
   street mats (guests arrive at the Arcade doors). ROOMS's worry: the VR rigs still bunch in the middle-right.
 - DONE by QA (QA findings: lobby and Auditorium ready for Cal; Arcade 3 notes). WAITING ON QA: round 3 of the Theater lobby and Auditorium at 5e3a780 (the sofas, the landing edge), and a design review of
@@ -1234,8 +1240,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: design reviews of the Rhythm Room and the VR Arena (step 13), test copy only (`roomreview.js`, `livebuilding.js`,
-  `retired.js`). Next: v0.50. (on afa7452)
+- Now: waiting for work. Next: the Rhythm and VR notes when ROOMS fixes them; v0.50. (on cbc2535)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
