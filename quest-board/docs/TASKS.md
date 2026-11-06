@@ -14,11 +14,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.61 published and pinned. With QA: 3bcbb44 (room-window zoom as a moving layer, friends all day in their room),
-  172caa9 (QA's two Garden lines) and befd663 (QA's friend fixes: freeze cap, real room on the card, no unstated pronouns, a
-  card waits behind another window). Next: v0.62 once those and ROOMS's shadows (07812e4) and backdrop (d233c9e) pass.
-  NICE COCK (ROOMS 67d0e85, 16 pieces): when QA's wear test passes, LEAD adds the 16 Shop rows and moves BRANDS (NICE COCK
-  2026-11-30, ALTITUDE 2026-12-07). Waiting on Cal: Kode PinK and SAYMØRE lists, the town hall pick, the vault rerun.
-  (on befd663)
+  172caa9 (QA's two Garden lines), befd663 (QA's friend fixes) and a652991 (launch drop schedule, OFF until launch: Mon/Thu,
+  one fixed seed so every Shop matches, HANGANG and NICE COCK fixed; rerun is a switch). Next: v0.62 once those and ROOMS's
+  shadows (07812e4), backdrop (d233c9e) and bed legs (b9bcbbf) pass. NICE COCK (ROOMS 67d0e85): when QA's wear test passes,
+  LEAD adds the 16 Shop rows and moves BRANDS (NICE COCK 2026-11-30, ALTITUDE 2026-12-07). Waiting on Cal: Kode PinK and
+  SAYMØRE lists, the town hall pick, the vault rerun, a launch date. (on a652991)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
