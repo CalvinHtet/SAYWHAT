@@ -50,11 +50,16 @@ var dgPayBase=msPay;
 msPay=function(q){var p=dgPayBase(q);return {c:Math.round(p.c*(1+dgBuff("mc")+dgBuff("mission"))),x:Math.round(p.x*(1+dgBuff("mxp")+dgBuff("mission")))}};
 msMins=function(q){return Math.max(5,Math.round(q.mins*(1-dgBuff("mt"))))};
 
+/* the Rift Mask (ROOMS's art, Cal approved): a wearable found only in the dungeon, never sold. It comes home as a rare gift
+   from the deepest mission until it is owned; then it waits in the Wardrobe like any other piece. */
+var DGWEAR={id:"gx_dg_riftmask",from:["m5"],chance:.125};
+SHOP.push([DGWEAR.id,"a_acc","Rift Mask",0,1,"Black, with a violet crack of light across it. Found at the bottom of the Obsidian Spire.",{gar:"dg_riftmask",b:"dungeon",dungeon:1}]);
 /* the gift: decided when a mission is collected, opened by the player */
 function dgRoll(mid){var L=DGLOOT[mid];if(!L)return null;var chance=L.gift+dgBuff("gift");if(Math.random()>=chance)return null;
   var t=dgState(),miss=L.p.filter(function(id){return !dgHas(L.set,id)}),pity=(S.trophy._dry||0)>=5;
   var r=Math.random();
   if(miss.length&&(pity||r<.32)){S.trophy._dry=0;return {kind:"piece",set:L.set,id:miss[Math.floor(Math.random()*miss.length)]}}
+  if(DGWEAR.from.indexOf(mid)>=0&&!S.owned[DGWEAR.id]&&Math.random()<DGWEAR.chance)return {kind:"wear",id:DGWEAR.id};
   S.trophy._dry=(S.trophy._dry||0)+1;var q=MS_LIST.filter(function(x){return x.id===mid})[0]||{c:150,x:30};
   return {kind:"coins",n:Math.round(q.c*(.6+Math.random()*.6)/10)*10}}
 function dgIcon(set,id,big){var u=window.QBART&&QBART["ui_tr_"+TSETS[set].art+"_"+id+".webp"];
@@ -72,6 +77,7 @@ function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=P.g,h;
     h='<span class="label">'+esc(T.name)+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
       +(dgDone(g.set)?dgSetIcon(g.set)+'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
       +(first?'<p class="note">The first trophy is home. A Trophy Room can now be built above the Hero\'s Lair.</p>':'')}
+  else if(g.kind==="wear"){var it=shopItem(g.id);S.owned[g.id]=true;h='<span class="label">Found in the dungeon</span><img class="dg-ic big" src="'+itemArt(it)+'" alt=""><h3>'+esc(it[2])+'</h3><p class="note">'+esc(it[5])+'</p><p class="dg-buff">It is in your Wardrobe. Nobody can buy one.</p>'}
   else if(g.kind==="coins"){S.coins+=g.n;S.earnedC+=g.n;h='<h3>'+g.n.toLocaleString()+' coins</h3><p class="note">From a strongbox nobody had opened in years.</p>'}
   else{S.xp+=g.n;h='<h3>+'+g.n+' XP</h3><p class="note">Nothing else came back this time.</p>'}
   persist();render();modal('<div class="card box2 dgg">'+h+'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>');try{burst(innerWidth/2,innerHeight/3,24)}catch(e){}}
