@@ -289,6 +289,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, round 3 (5e3a780) and the Arcade's design review (cb5f568), on eb04985 (`theaterreview.js`, `audreview.js`, `arcadereview.js`,
+  `livebuilding.js`, `doors.js`; `docs/QA.md`; `shots/review_theater3.png`, `review_aud3_full.png`, `review_arcade*.png`): the Theater
+  lobby and the Auditorium are closed and ready for Cal (sofas on the back wall, the landing lit along its edge; small: the right
+  sofa touches the box office). The Arcade reads as one planned arcade, calm shell, every machine faces its player, live play
+  works. 3 notes: (1) the entrance mat is squeezed between the prize counter and the sticker booth and guests bunch there; (2) the
+  sticker booth stands in the hoop shot's throwing spot; (3) the prize counter has no clerk. Doors: Arcade–Rhythm and Arcade–VR
+  miss Cal's rule (for those steps). No page errors. Owner: ROOMS.
 - QA, review round 2 of the Theater lobby (9279c58) and the Auditorium (392ca5c), on 8ca77d1 (`theaterreview.js`, `audreview.js`,
   new `livebuilding.js`; `docs/QA.md`; `shots/review_theater2*.png`, `review_aud2_*.png`): lobby 5 of 6 fixed, Auditorium 3 of 4.
   Live at last (characters exist only inside a building's view; a room opened from the street is empty): the ticket line forms at
@@ -375,7 +382,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: round 3 of the Theater lobby and Auditorium at 5e3a780 (the sofas, the landing edge), and a design review of
+- DONE by QA (QA findings: lobby and Auditorium ready for Cal; Arcade 3 notes). WAITING ON QA: round 3 of the Theater lobby and Auditorium at 5e3a780 (the sofas, the landing edge), and a design review of
   the Arcade at cb5f568 (painted shell with a calm carpet; the machines as they were: cabinets on the back wall, racing and
   skee-ball left, claws and hoops right, air hockey in the middle, snacks and prizes at the front). Use livebuilding.js.
 - DONE by QA (QA findings, 8df07f1: lobby 5 of 6, Auditorium 3 of 4). WAITING ON QA: design review round 2: the Theater lobby at 9279c58 (your six notes) and the Auditorium at 392ca5c (your
@@ -1220,8 +1227,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: round 3 of the lobby and the Auditorium, and the Arcade's design review, test copy only (`theaterreview.js`,
-  `audreview.js`, `arcadereview.js`, `livebuilding.js`). Next: v0.50. (on 8225742)
+- Now: waiting for work. Next: the Arcade notes when ROOMS fixes them; v0.50. (on eb04985)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

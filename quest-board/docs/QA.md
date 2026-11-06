@@ -655,3 +655,25 @@ the trailer screen) or drop them.
 Auditorium: the EXIT sign is where the aisle steps arrive, and bare shows a small projector on a stand. Still weak: **the back
 landing** is only a shade lighter than the floor and its low wall barely shows; at room size it still reads as open floor. A lit
 edge (step lights or a brass rail along the landing) would make it read.
+
+### Theater lobby and Auditorium, round 3 (ROOMS's 5e3a780, on eb04985; `shots/review_theater3.png`, `review_aud3_full.png`)
+
+Both closed; ready for Cal. Lobby: the two sofas sit against the back wall (one by the doors, one beside the box office) facing the
+room instead of mid-floor, the carpet is clear, the standee stands by the entrance mat. Small: the right sofa touches the box
+office's side; a half-tile gap would read cleaner. Auditorium: a row of warm step lights now runs along the landing's edge in
+front of the seats, so the back landing reads as raised.
+
+### The Arcade (cb5f568, on eb04985; `shots/review_arcade.png`, `review_arcade_bare.png`, `review_arcade_live.png`, `review_arcade_doors.txt`)
+
+Reads as one planned arcade: cabinets and pinball on the back wall, racing seats and skee-ball left, claws and hoop shot right, air
+hockey in the open middle, snacks and the prize counter at the front, the token machine in the back corner; the new shell is calm
+(midnight panels, one neon stripe, a star carpet). Nothing outside, no overlaps; every machine faces its player. Live (from inside
+the Mall building): guests play the cabinets, the racing seats and the hoop shot; no page errors. Notes:
+
+1. **The entrance is the busiest spot.** The mat sits between the prize counter and the sticker booth with about one tile between
+   them, and guests bunch there. Move the sticker booth to the right wall by the claws, or the prize counter a tile left, so the
+   way in is clear.
+2. **The sticker booth stands in the hoop shot's throwing spot** (front of the hoop). Moving it (1) fixes both.
+3. **The prize counter has no clerk.** Fine if intended; a counter with a register reads as staffed.
+4. **Doors (for the Rhythm and VR steps):** the Mall pair passes Cal's rule; Arcade–Rhythm and Arcade–VR miss it (Rhythm's way
+   back should be front-left, VR's should come out of the Arcade's back wall). See `review_arcade_doors.txt`.
