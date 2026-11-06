@@ -1727,13 +1727,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on da87000): the friend portraits (LEAD's 76a99a4: friend_<id>.webp, _2, _3; art/app only, Higgsfield Unlimited).
-  Justin done (da87000, with QA for size and style); Vega, Logan and Kenan painting; Jina, Cynthia, Memo next. Then: NICE COCK
-  banner and logo, the yawn layers for its 4 tops, plaza s2..s6, the SAYMØRE references (browse only; no painting for SAYMØRE
-  or Kode PinK until Cal OKs their lists). WITH QA: 07812e4 shadows, d233c9e backdrop, b9bcbbf upright beds, 67d0e85 NICE
-  COCK wear test, 4bcda62 Garden dry look and watering. WAITING ON CAL: Game Room ping-pong (drop it?). Chrome: ROOMS.
+- Now (on 132de76): nothing open in files. Next: NICE COCK banner (ui_banner_nicecock.webp) and logo, then the yawn layers
+  for its 4 tops, plaza s2..s6, the SAYMØRE references (browse only; no painting for SAYMØRE or Kode PinK until Cal OKs their
+  lists). WITH QA: 07812e4 shadows, d233c9e backdrop, b9bcbbf upright beds, 67d0e85 NICE COCK wear test, 4bcda62 Garden dry
+  look and watering, da87000/811576a/132de76 the seven friend portraits. WAITING ON CAL: Game Room ping-pong (drop it?).
+  Chrome: ROOMS (Higgsfield).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on da87000)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 132de76)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
