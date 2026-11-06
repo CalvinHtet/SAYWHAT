@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 (d9d92d7, APPV 61) WAITING ON QA; it contains v0.59 and v0.60, so QA checks v0.61 instead. Cal: "Once ready,
-  publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". Published as soon
-  as QA passes it. v0.58 pinned (859d941). (on d9d92d7)
+- Now: ROOMS's 6f04ed8 (Game Room: hex panels, foosball, ping-pong); v0.61 blocked (the Garden lot, 685cbd0). Next: the rebuilt
+  version. (on e74693c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -299,14 +298,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
   462 files from 859d941, the 9 db rules + user + sample with images, version 1793973604-fe09). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.59, 0dfa204 (rule 18: your pass publishes it). Over v0.58: ROOMS's 3c27004 (passed), and LEAD's Bedroom
+- SUPERSEDED by v0.61 (QA). WAITING ON QA: check v0.59, 0dfa204 (rule 18: your pass publishes it). Over v0.58: ROOMS's 3c27004 (passed), and LEAD's Bedroom
   lag fix from Cal's v0.58 phone log, which has one room window at 18 fps (worst 433 ms, 6,263 elements; the other samples
   56-60). The fully bought Bedroom is the heavy one: its game screen's 20 twinkles, two scrolls, the jump and three portal
   glows changed something nearly every frame, and each change re-draws the whole room. Now `.scrB/.scrL/.scrL2/.scrJ/.prtG`
   run in steps (index.html) and the twinkles share four beats (24_screens.js). `shots/roomsall.js` (every room, CPU x4): the
   Bedroom was the only one under 59; `shots/starcure.js`: 60 fps after the first draw (35-46 before). diag/perf now carries
   `room` (the open window's title). Please eyeball the stepped screens (Bedroom game screen, any portal) for looking choppy.
-- TAKEN by QA. WAITING ON QA: check v0.60, c7aa1df (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
+- SUPERSEDED by v0.61 (QA). WAITING ON QA: check v0.60, c7aa1df (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
   over v0.59, Cal via ROOMS: "For the test version, let skip a week actually change days, and level up actually skip past the
   level trials because I can't actually provide gym picture every time for a job advancement while testing" (he could not
   get the Garden at level 5). (1) Testing Level up now also passes the trial it reaches (30_app_b.js simlvl). (2) Skip a week
@@ -314,7 +313,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   unlocks, one at a time as before, each spending one (29h_unlocks.js, 29b_story.js, 29_prices.js qbWeek). Testing only:
   nothing sets testFree but Skip a week. `shots/gardentest.js`: a fresh save, Level up x4 -> level 5 with gate 5 passed; the
   first Skip opens the Hall and offers the Garden lot (testFree 5 left); no page errors. Not checked: savecheck/screens.
-- TAKEN by QA. WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
+- BLOCKED by QA (QA findings). WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
   ready, publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". QB_TEST_START = 5
   (29_prices.js): a brand-new character (ccdone, first time only; old saves untouched) starts at level 5 XP with gate 5 passed
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
@@ -448,6 +447,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Cal 2026-11-06 (to QA): "Going forward, only publish for me to test when you can't find any more errors." From now on a QA pass
+  means no known error left in the exact build; no "pass, fix in the next version" for anything visible. Owner: everyone.
+- QA, v0.61 (d9d92d7, covering v0.59 and v0.60): BLOCKED, do not publish. Works: the level-5 start (new `teststart.js`, 440x840): level 5,
+  gate 5 passed, Board, Training, Shop, Dungeons, Loft and Hall open, the class still to pick, no page errors; the Garden is offered
+  (story offer.garden, lots ["garden"]); Testing > Add 10,000 coins, then the lot builds a Garden (1,500); old saves untouched.
+  v0.59's stepped screens: not choppy by the numbers (scrolls 7 a second, the jump 27 a second while it moves, the portal glow 0.1 a
+  step, twinkles 3 levels); the full Bedroom window (new `fpsroom.js`) 22-35 to 33-39 fps at CPU x4, 41-52 to 51-56 at full speed in
+  QA's software-drawn browser. Correction to QA's v0.58 phone read: the log keeps 16 samples and the 18 fps room sample LEAD saw had
+  rolled off before QA read it; LEAD was right; suggest diag/perf also keeps its slowest sample. Blockers: (1) Cal: "The garden should
+  be the next lot to the right." Built, the lot right of the Loft is Kode Plaza, a cafe with diners in its window, the Garden inside
+  it before any restaurant exists (`shots/v61/street_garden.png`); Cal wants the Garden itself there. (2) 685cbd0 is in the build:
+  the ping-pong table off the Game Room's right edge and over its doorway (ROOMS's own finding; 6f04ed8 fixes it, in review). Small:
+  the test start gives 0 coins. Owner: LEAD and ROOMS (the Garden lot), LEAD (rebuild).
 - QA, ROOMS's 3c27004 (Cal on v0.58: the Game Room TV, the racing chairs, the double gaming rig; `shots/gm3/`): pass with one note.
   The retro TV now faces the beanbags (`tvcmp.png`: v0.58 left, its screen pointed at the door wall; now right, at the
   beanbags, which face it). Gaming Chairs and Gaming Desks retired (`retired.js`): a new player gets no card; a save that owns
