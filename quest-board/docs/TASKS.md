@@ -236,6 +236,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, team join banners (ROOMS's 4fc1542, on e272f80, 390 x 844): pass. All five ship in `art_ui.js` and each join window
+  shows its painting (720 x 400) above the name, role, stats and buff; text fits the phone (`shots/team_banner_rafe.png`).
+  No page errors. Owner: ROOMS, nothing to fix.
 - QA, story portraits (ROOMS's 625d9e3, on 860d2c8): pass. Each of the seven scenes (Mara twice, Desmond Hale, Rafe, Priya,
   Nova, Theo) shows its painted portrait (300 px wide) instead of initials. The building backdrops `bld_bg_loft`, `_plaza`,
   `_mall` ship in `dist/art` but no code reads them yet: LEAD wires them after approval 11. Owner: LEAD (backdrops).
@@ -655,7 +658,7 @@ To do:
 
 Doing:
 - Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
-  (on 860d2c8)
+  (on e272f80)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
