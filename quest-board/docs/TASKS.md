@@ -1503,11 +1503,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: a96c4f7, c6ba889, 1dc4211 and add039a passed QA (shots/a96, shots/reaudit). WAITING ON QA (rule 17, small):
-  f7efaf6 (the audit forces needed expansions first; sprinklers on every bed; a bigger Star Plaque). The Drinks Cooler is
-  replaced by the Backlit Wine Wall in Noir by design. Next: nothing on ROOMS's list until QA or Cal answers.
+- Now: nothing waiting. All of ROOMS's audit and v0.55 fixes passed QA (a96c4f7, c6ba889, 1dc4211, add039a, f7efaf6), ready
+  for the next version. Next: the open items need Cal (Patio dogs, Closet jewelry wall, new outfits, Game Room guests).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on f7efaf6)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 429bc5b)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
