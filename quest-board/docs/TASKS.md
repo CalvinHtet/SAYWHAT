@@ -865,7 +865,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on 13d7cca)
-- WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
+- TAKEN by QA. WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
   painted at the back wall's far end (nothing standing on its glow); the new side door: Boba "Garden" arrow (top left) and
   the Garden's "Boba Shop" arrow (bottom right) walk both ways; the Neon Cup Sign high over the tea jars.
 - DONE by QA (QA findings: pass, 1 note). WAITING ON QA: check a9a572c and e415c00 (rule 17): the Restaurant patio (Corner Diner and Bistro with everything): the fire
@@ -1003,7 +1003,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.49's published copy (rule 18: the files match the build) once LEAD publishes. (on 8fabe1a)
+- Now: ROOMS's Boba shop (c223d89), test copy only (`bobashell.js`). Next: v0.49's published copy once LEAD publishes. (on 65b6593)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
