@@ -1784,7 +1784,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; next ROOMS's bld_plaza_s0 and the dartboard, then the rebuilt v0.61. (on ad8d046)
+- Now: ROOMS's 9189946 (Kode Plaza stage 0 art; Game Room dartboard, TV corner, foosball, pool). Next: the rebuilt v0.61. (on 9189946)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
