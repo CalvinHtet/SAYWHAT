@@ -24,6 +24,8 @@ var DROP=null;
 function dropCrate(){return '<svg viewBox="0 0 16 16" width="64" height="64" shape-rendering="crispEdges"><rect x="1" y="3" width="14" height="12" fill="#8a5a30"/><rect x="1" y="3" width="14" height="2" fill="#c08a4c"/><rect x="7" y="3" width="2" height="12" fill="#ffc857"/><rect x="1" y="8" width="14" height="2" fill="#6b4524"/><rect x="5" y="0" width="6" height="3" fill="#ffc857"/><rect x="2" y="14" width="12" height="1" fill="#4a2f17"/></svg>'}
 function decorHtml(i,r){
   var th=LFTH[r.t];if(!window.LFTEX||!th||th.out||r.t==="theater"||r.t==="auditorium"||ROOMDEF[r.t])return "";
+  /* QA (Restaurant pass #9): Noir's painted shell sets the whole look, so every Room style looked the same: hide the list then */
+  if(r.t==="restaurant"&&r.a&&r.a.r_noir&&r.a.r_x2)return "";
   var sets=lfDecSets(r.t),cur=lfDecFor(r,th),s='<details class="acol" data-k="st"'+(LFACOL.st?' open':'')+'><summary>Room style</summary><div class="dstyles">';
   sets.forEach(function(q){var un=lfDecUnlocked(r,q),on=cur&&cur.id===q.id,acc=q.acc?'<i style="'+(q.acc.tex?'background-image:url('+lfTexUrl("w_"+q.acc.tex)+')':'background:'+q.acc.c)+'"></i>':'';
     s+='<div class="dst'+(on?' on':'')+'"><div class="dsprev"><i style="background-image:url('+lfTexUrl("f_"+q.fl)+')"></i><i style="background:'+(q.wc||'#ccc')+'"></i>'+acc+'</div><b>'+esc(q.name)+'</b>'+(on?'<span class="chip">Active</span>':un?'<button class="btn ghost" data-act="decuse" data-i="'+i+'" data-v="'+q.id+'">Use</button>':'<button class="btn" data-act="decbuy" data-i="'+i+'" data-v="'+q.id+'"><i class="coin"></i>&nbsp;'+q.cost+'</button>')+'</div>'});
