@@ -874,7 +874,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on f0c6dbb)
-- WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
+- TAKEN by QA. WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
   painted bookcase (nothing on its glow), "Downstairs" on the front-left edge; the Boba shop fixes from your 84e97f6 (shaker
   station off the stairs, window bench clear of the side door). The Boba Menu Screen cycles pages (drinks show in my renders);
   a blank frame may be the page change.
@@ -1016,7 +1016,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.49's published copy once LEAD publishes; ROOMS's Boba fixes. (on 6896d2a)
+- Now: ROOMS's Dessert Parlor and Boba fixes (f0c6dbb), test copy only (`bobashell.js`, `dessertshell.js`). Next: v0.49's
+  published copy once LEAD publishes. (on 6af4666)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
