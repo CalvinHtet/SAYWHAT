@@ -912,12 +912,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 5, Lock and Key, done on ROOMS's side (QA passed the shell, 2e1c3ae): painted shell 4599993
-  (approval 25); the Friday Band `sb_band` fe48618 (approval 26): drums, double bass and the mic on a bigger stage, offered
-  once the Jazz Corner is owned and replacing it in the picture; More High-Tops is now one table (id kept) and the piano a
-  step off the bar, so the fully bought room stays calm. LEAD: the room id stays `skybar`; new upgrade id `sb_band`.
-  Next: storyboard step 6 onward in order (Rafe, Rooftop, Mall, the theater basics, the team in their rooms). Chrome
-  claimed. (on fe48618)
+- Now: storyboard step 7, the Rooftop (`rooftop`): a painted deck and rail (shell) to the same standard as the rooms
+  below, and a calm fully bought picture (today it is the busiest room in the game: pool, hot tub, four loungers, cabana,
+  DJ, bar, fire pit, umbrella, cart, shower, towels). First fix in 73a426a: the dark wall-high triangle over the sky in
+  open-air rooms is gone. Step 5, Lock and Key, is done on ROOMS's side: shell 4599993 (approval 25), the Friday Band
+  `sb_band` fe48618 (approval 26), the piano spacing for QA b19a578 and 1f2cfa9. Step 6 (Rafe) has its scene and banner.
+  LEAD: the room id stays `skybar`; new upgrade id `sb_band`. Next: the Mall (step 8), then the theater basics, the team
+  in their rooms. Chrome claimed. (on 73a426a)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
