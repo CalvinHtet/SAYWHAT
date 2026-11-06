@@ -289,6 +289,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check c829e7e, the Mall landing and the Karaoke-without-Bowling doors.
 - QA, Mall round 2 (ROOMS's 0eb00c2, on af14361; `mallreview.js`, `doors.js`, `retired.js`, `karaokeorphan.js`; `docs/QA.md`;
   `shots/review_mall2*.png`, `review_mall2_doors.txt`): 3 of 4 fixed, 1 half, 1 edge case. The directory is retired (5 retired pieces,
   clean); Karaoke is upstairs from Bowling and the Theater's storefront rolls up; every Mall pair and Bowling–Karaoke now follow
@@ -1174,7 +1175,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Mall landing and the Karaoke edge case when ROOMS fixes them; v0.50. (on 332fca4)
+- Now: the Mall landing and the Karaoke edge case (c829e7e), test copy only (`mallreview.js`, `karaokeorphan.js`). Next: v0.50.
+  (on c829e7e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
