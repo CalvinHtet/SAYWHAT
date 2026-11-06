@@ -6,16 +6,16 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (Higgsfield: NICE COCK, Garden art)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.61 (c48c7af, slug b9f23da6), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.62 (756def5, slug 3ab7eada), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.62 rebuilt from 756def5 (ROOMS's Diner nudge, plus 01deb94 reactions and reruns; 22 dist files, art_rig_1..5).
-  WAITING ON QA's Diner recheck, the file match and 01deb94, then LEAD publishes and pins. Kode PinK rows after QA's wear test
-  (ROOMS 1dde4e1, id kp). 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 756def5)
+- Now: v0.62 published and pinned (756def5, 495 files; QA passed). With QA: the published file check, and the launch rerun
+  fix (dropPlan: no back-to-back or still-live reruns). Next: Kode PinK rows once its bag passes (ROOMS), SAYMØRE after.
+  436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on the rerun fix after 279593c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
