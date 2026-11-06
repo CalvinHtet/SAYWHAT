@@ -181,7 +181,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   as `ui_story_chef.webp` (Mara, chef), `ui_story_lockkey.webp` (Desmond Hale, investor), `ui_story_mall.webp` (Priya
   Okafor, investor), `ui_story_auditorium.webp` (Theo, theater crew), 300 x 400; the scene picks them up by name. When the
   merged room exists, tell LEAD its id; when the theater basics exist, tell LEAD their ids (Theo waits for any 3 upgrades now).
-- Dungeon gifts and the Goblin King set (Cal, 2026-11-05: "Goblin King set"). Missions sometimes bring home a gift: coins, XP,
+- PART DONE by ROOMS in d48ed81, waiting on Cal's look (approval 15): (1) the six Goblin King icons, (2) `ui_gift`, (5) the six
+  Hollow Amulet icons are in `art/app` at the names below; (3) the trophy display and (4) the Rift Mask are still to do. Dungeon gifts and the Goblin King set (Cal, 2026-11-05: "Goblin King set"). Missions sometimes bring home a gift: coins, XP,
   a dungeon-only wearable, or one piece of The Goblin King's Regalia (helm, chestplate, greaves, boots, sword). The first piece
   opens a Trophy Room upgrade in the Hero's Lair; pieces fill an armor mannequin there; the full set gives the team a big
   boost. LEAD writes the gifts, loot, Relics and Trophies tabs and the bonuses; ROOMS paints and builds the room. Art, in this
@@ -568,11 +569,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: LEAD's open art requests, next the Goblin King and amulet icons and the gift (Chrome claimed), then Lock and Key,
-  the theater basics and the team in their rooms. The Game Room guests wait on Cal (his friends' looks). The Loft is
-  ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT ready to publish until he says yes:
-  approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3),
-  13 (4fc1542), 14 (class banners, 6b7b9c8). 15-minute loop running (rule 16). (on 6b7b9c8)
+- Now: LEAD's open art requests, next the Lair's trophy display (armor mannequin and amulet case, piece by piece), then
+  the Rift Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed. The Game Room guests wait
+  on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and
+  NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
+  10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81). 15-minute loop
+  running (rule 16). (on d48ed81)
 - DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
