@@ -162,6 +162,13 @@ function rmArrows(r){var at={tl:'',tr:'',bl:'',br:''};PORTALS.forEach(function(q
 (function(){var dn=null;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
   document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("[data-act=gotoroom]");if(!g)return;var t=g.getAttribute("data-t");
     setTimeout(function(){var ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===t)ix=k});if(ix>=0)roomModal(ix)},30)},true)})();
+/* sprite buttons inside a room picture (lfSpr's o.act, e.g. the Garden's stands sell produce): the same swallowed click,
+   so a tap sends the sprite one click; a real click arriving just after it is dropped, so nothing happens twice */
+(function(){var dn=null,sent=0;document.addEventListener("pointerdown",function(e){dn=[e.clientX,e.clientY]},true);
+  document.addEventListener("pointerup",function(e){if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>8)return;var els=document.elementsFromPoint(e.clientX,e.clientY),g=null;
+    for(var i=0;i<els.length&&!g;i++)g=els[i].closest&&els[i].closest("svg g[data-act]");if(!g||g.getAttribute("data-act")==="gotoroom")return;
+    setTimeout(function(){sent=Date.now();g.dispatchEvent(new MouseEvent("click",{bubbles:true}))},20)},true);
+  document.addEventListener("click",function(e){if(e.isTrusted&&Date.now()-sent<600&&e.target.closest&&e.target.closest("svg g[data-act]")){e.stopPropagation();e.preventDefault()}},true)})();
 var lfRoomCtxBase=lfRoomCtx;
 var RMPORTAL_OK=1;
 /* ---- rooms from data ----

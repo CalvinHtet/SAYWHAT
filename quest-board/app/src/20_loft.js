@@ -536,7 +536,8 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
   var sh='<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.22)"/>';
   if(!o.nosh)C.add(x+w+y+d-(o.dk||0)-.01,sh);
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
-  C.add(x+w+y+d-(o.dk||0),'<g transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/></g>');
+  /* o.act: the sprite is a button (data-act, a pointer cursor, and it takes clicks even where the room picture does not) */
+  C.add(x+w+y+d-(o.dk||0),'<g'+(o.act?' data-act="'+o.act+'" style="cursor:pointer;pointer-events:auto"':'')+' transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/></g>');
   return true}
 /* A flat piece (a dance floor panel) fitted to its footprint exactly. The art is drawn at 30 degrees and the room at
    2:1, so a plain scale never lines up with the floor grid and panels laid side by side leave gaps. LFFIT gives the

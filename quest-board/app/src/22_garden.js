@@ -112,13 +112,14 @@ LFROOM.garden=function(C){
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
   var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
   tool("g_can","gdx_can",TY[0],1.2,1.0,14);tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
-  /* the Back Plot's gate corner is the produce stand's, so its scarecrow keeps watch from the lane between the beds */
-  if(H("g_scare"))gdS(C,"gd_scare",st<2?5.05:Rx,st<2?3.3:9.3,.7,.7,50,{H:100});
+  /* the Back Plot's gate corner is the produce stand's */
+  if(H("g_scare"))gdS(C,"gd_scare",st<2?.3:Rx,st<2?6.0:9.3,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
   var sp=st===0?[10.0,8.7]:st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
-  if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk});
+  /* tap either stand to sell (LEAD's stysell, 29b_story.js) */
+  if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk,act:"stysell"});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk,act:"stysell"});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
   if(st>0){var zx=st===2?16.4:11.2;
     if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184,dk:1});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
@@ -150,7 +151,7 @@ LFROOM.garden=function(C){
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
       if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
-      if(H("g_sun"))gdS(C,"gdx_sundial",W*.34,py-.95,.6,.6,30,{H:52});
+      if(H("g_sun"))gdS(C,"gdx_sundial",W*.3-.3,py-.95,.6,.6,30,{H:52});/* clear of the lantern post (QA) */
       if(H("g_topi"))[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
       if(H("g_birdb"))gdS(C,"gdx_birdbath",E?10.3:W*.46,py-.95,.6,.6,30,{H:52});
       if(H("g_koi")&&st===2)gdS(C,"gd_koi",11.3,11,3.4,2.0,16,{dk:1});
