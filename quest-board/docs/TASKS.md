@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal's phone test of v48 (pinned, c6a11c9). QA passed it (saves, screens at 360 and 390, all exercise and
-  Game Room pictures, every file on the page matches the build). Not checked by anyone yet: a real phone, the page's own
-  database. The friends' page stays on v47 until Cal says go. (on c6a11c9)
+- Now: WAITING ON Cal's phone test of v0.48 (pinned, c6a11c9; QA passed it). Cal, 2026-11-05: "nobody plays until we
+  have a working version. this is still technically v0.48": no friends' release, the old live page is not touched, the town's
+  database rules and the 15-player test wait for a working version. Versions read v0.<APPV> in the game (next build). (on c6a11c9)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
