@@ -289,7 +289,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's 871e0d8, "to QA"): check 7ebf618, the Auditorium opens free once the lobby has its basics.
+- QA, LEAD's 7ebf618, the Auditorium's gate (on 6320575, `rigtest/qa/audgate.js`): pass. At level 39 with the story up to the
+  Theater: booth and popcorn only, no scene and no Auditorium; three other lobby upgrades, none; booth, popcorn and soda, the
+  Auditorium scene comes and its yes opens the room; afterwards "Open the Auditorium" (`t_aud`) is owned and not for sale. No page
+  errors. Owner: none.
+- DONE by QA (QA findings: pass). WAITING ON QA (LEAD's 871e0d8, "to QA"): check 7ebf618, the Auditorium opens free once the lobby has its basics.
 - QA, design review of the Auditorium as it stands (on 1bb17be; `audreview.js`; written out in `docs/QA.md`; `shots/review_aud_*.png`):
   one plan (screen on the back-left wall, rows facing it, projector opposite), nothing outside or overlapping bare, with the
   Bigger Screen and with IMAX; live the screen plays a film. 4 notes: (1) the projector's back landing does not read, it stands on
@@ -1200,8 +1204,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's Auditorium gate (7ebf618), test copy only (`audgate.js`). Next: the lobby and Auditorium notes; v0.50.
-  (on a9e1cd1)
+- Now: waiting for work. Next: the lobby and Auditorium notes when ROOMS fixes them; v0.50. (on 6320575)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
