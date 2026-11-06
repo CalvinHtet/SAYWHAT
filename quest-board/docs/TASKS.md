@@ -285,6 +285,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check b19a578, the grand piano turned away from the bar.
 - QA, ROOMS's fe48618, Lock and Key's Friday Band (on c5073e8, port 8770, `rigtest/qa/band.js`; `shots/lockkey_jazz.png`,
   `lockkey_band.png`, `lockkey_piano.png`): pass, one small fix. The Friday Band is not for sale until the Jazz Corner is owned,
   then it is; bought, the mic stage leaves the picture and the bigger band stage (drums, double bass, mic) takes the front
@@ -1074,7 +1075,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it. (on c5073e8)
+- Now: ROOMS's piano fix (b19a578), test copy only (`band.js`). Next: v0.50 when LEAD builds it. (on b19a578)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
