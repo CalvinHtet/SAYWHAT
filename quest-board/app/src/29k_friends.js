@@ -62,7 +62,8 @@ function fvApply(v){var t=today();S.visit={d:t,t:Date.now(),who:v.who.slice(),id
    figure shows, so missing art fails softly. */
 /* Cal: "Yeah 2-3 poses per friend": friend_<id>.webp, friend_<id>_2.webp, friend_<id>_3.webp take turns on the card */
 function fvPoses(w){var o=[fvArt(w)];[2,3].forEach(function(k){var u=fvArt(w+"_"+k);if(u)o.push(u)});return o[0]?o:[]}
-setInterval(function(){var q=document.querySelectorAll(".fvposes");for(var i=0;i<q.length;i++){var e=q[i],im=e.querySelectorAll("img");if(im.length<2)continue;var k=(+e.dataset.k||0)+1;e.dataset.k=k;for(var j=0;j<im.length;j++)im[j].classList.toggle("on",j===k%im.length)}},1700);
+setInterval(function(){var q=document.querySelectorAll(".fvposes");for(var i=0;i<q.length;i++){var e=q[i],im=e.querySelectorAll("img");if(im.length<2)continue;var k=(+e.dataset.k||0)+1;e.dataset.k=k;for(var j=0;j<im.length;j++){var on=j===k%im.length;im[j].classList.toggle("on",on);if(on){im[j].classList.remove("hop");void im[j].offsetWidth;im[j].classList.add("hop")}}}},1700);
+/* QA: a 0.45 s cross-fade between different poses read as a double image; now a 0.1 s cut with a small hop */
 function fvArt(w){var n="friend_"+w+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
 function fvShow(v){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
   var m=modal('<div class="card box2 adv visit"><span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="animation-delay:'+(k*.35)+'s">'+visitorImg(w,true)+'</span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
