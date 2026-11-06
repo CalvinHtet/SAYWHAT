@@ -4,7 +4,11 @@
    showed the Wheel and Relics together). A new area (Hall, Wheel, Relics, ...) is now revealed one per level-up: the lowest
    one waiting. Any others wait for the next level-up, or for the next day if no level-up comes. Saves keep every area they
    already reached. The Shop and the Dungeons still open with their rooms (areaGate in 27_rooms.js). */
-function areaOn(){if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=effLvl();AREAS.forEach(function(a){if(a[2]<=lv)S.areaOn[a[0]]=1})}return S.areaOn}
+/* Never made before the save has loaded: a record made at level 1 during boot would lock a high-level save's areas (LEAD
+   found it on v0.50's check). Until then every area counts as seen. */
+var AREAALL={};
+function areaOn(){if(!loaded){AREAS.forEach(function(a){AREAALL[a[0]]=1});return AREAALL}
+  if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=effLvl();AREAS.forEach(function(a){if(a[2]<=lv)S.areaOn[a[0]]=1})}return S.areaOn}
 function areaWaiting(id){var on=areaOn(),a=AREAS.filter(function(x){return x[0]===id})[0];return !!(a&&a[2]>1&&effLvl()>=a[2]&&!on[id])}
 /* Cal: several unlocks together is fine "but not all the time and not this early": below level 10 areas and story steps
    share one slot a day (QA's rerun: days 1, 3 and 4 still brought an area and a story step together) */

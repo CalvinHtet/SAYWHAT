@@ -837,6 +837,8 @@ function persist(){
 /* The database hands back deep frozen objects, and merge writes into what it is given (S.stats below threw on `creativity`,
    which sent every device to "this device only" from about v37 on). So it works on its own copy. */
 function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d));window.__qbShift=d.tshift||0;
+  /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
+  if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
   var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2);
   S=Object.assign(f,d||{});

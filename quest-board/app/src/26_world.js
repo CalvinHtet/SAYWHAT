@@ -90,7 +90,17 @@ lfSkyline=function(rows){var Ls=lfLS(),sk=lfSkyCols(Ls),gy=LFROOF+rows*LFFP,X0=-
 /* nothing on an empty lot but a small marker on the ground. Tapping it says what goes there. */
 function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;
   return '<g data-lf="'+(lk?'lock:'+esc(T.name)+':'+T.lv:'build:'+S.base.slots.length)+'" style="cursor:pointer"><rect x="-70" y="-70" width="140" height="140" fill="rgba(0,0,0,.001)"/>'+(lk?'<g opacity=".6"><circle r="20" fill="rgba(20,18,28,.7)" stroke="rgba(255,200,87,.55)" stroke-width="2"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#ffc857"/><path d="M-5 -2V-7a5 5 0 0 1 10 0V-2" fill="none" stroke="#ffc857" stroke-width="2.5"/></g>':'<g class="lfplus"><circle r="24" fill="rgba(20,18,28,.75)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><path d="M-10 0H10M0 -10V10" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></g>')+'</g>'}
-function worldBack(L){return lfSkyline(L.rows)+worldFacade(L)}
+/* Inside a building, its painted backdrop (bld_bg_<id>.webp, Cal approval 11) stands behind the rooms, in front of the city;
+   it dims with the night like the rest of the scene. The street view is unchanged. (LEAD, with ROOMS's OK on lfWorld) */
+function bldBgArt(id){var n="bld_bg_"+id+".webp",D=QBLoft.data;return (window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
+function bldBackdrop(L){if(LFBSEL==null||!BLD[LFBSEL])return '';var u=bldBgArt(BLD[LFBSEL].id),b=L.b&&L.b[LFBSEL];if(!u||!b)return '';
+  var bot=LFROOF+L.rows*LFFP,x=b.x-b.w*.65-300,w=b.w*2.3+600,y=-400,h=bot+LFSTREET+400,dk=lfLS().dark||0;
+  return '<g class="lfbgart" pointer-events="none"><image href="'+u+'" x="'+x.toFixed(0)+'" y="'+y+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" preserveAspectRatio="xMidYMax slice"/>'
+    +'<rect x="'+x.toFixed(0)+'" y="'+y+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" fill="#0b0d18" opacity="'+(dk*.6).toFixed(2)+'"/>'
+    /* its top fades into the sky, so no hard edge shows above the building */
+    +'<linearGradient id="lfbgfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+lfSkyCols()[0]+'"/><stop offset="1" stop-color="'+lfSkyCols()[0]+'" stop-opacity="0"/></linearGradient>'
+    +'<rect x="'+x.toFixed(0)+'" y="'+(y-2)+'" width="'+w.toFixed(0)+'" height="'+(h*.38).toFixed(0)+'" fill="url(#lfbgfade)"/></g>'}
+function worldBack(L){return lfSkyline(L.rows)+bldBackdrop(L)+worldFacade(L)}
 lfWorld=function(){
   var B=S.base,L=worldLayout(),rows=L.rows;LFWW=LFBSEL==null?streetW():L.w;window.LFLAY=L;
   var bed=cellXY("bedroom",L);LFOX[0]=bed.x;LFOX[1]=bed.x+LFCELLW;
