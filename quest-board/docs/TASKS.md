@@ -14,11 +14,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.61 published and pinned (QA passed c48c7af). With QA: ab7fcae (Garden reveals selling from the first growing bed,
-  no Restaurant talk until it exists, Mara after 12 sold; board focus through render) and 8d97e24 (friends who drop by: 7
-  friends, 16 visits, each a reason and a real effect). WAITING ON ROOMS's "20_loft.js free": then LEAD does the room-window
-  zoom speed (CSS layer while moving, commit the viewBox after; ROOMS OK'd) and asks to keep friends all day in their room.
-  Brands (cac5f45) and the town hall pick wait on Cal. Routed to ROOMS: shadows, dry-garden art and the water animation,
-  the warped bench legs, the plaza backdrop on phones. (on 8d97e24)
+  no Restaurant talk until it exists, Mara after 12 sold; board focus through render), 8d97e24 (friends who drop by: 7
+  friends, 16 visits, each a reason and a real effect) and 3bcbb44 (room-window zoom moves a drawn layer, pan 100 to 33 ms;
+  friends stay all day in their room). Next: v0.62 once those pass. Brands (cac5f45) and the town hall pick wait on Cal.
+  Routed to ROOMS: dry-garden art and the water animation, the warped bench legs, the plaza backdrop on phones (shadows
+  done by ROOMS, 07812e4). (on 3bcbb44)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
