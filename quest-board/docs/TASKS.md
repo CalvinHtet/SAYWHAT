@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Meanwhile: town database rules,
-  WAITING ON QA. Nobody else plays until there is a working version. (on ab6a66e)
+  WAITING ON QA. Phone lag waits on a phone log. Nobody else plays until there is a working version. (on e8b6c88)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -62,6 +62,8 @@ To do:
       broken (`db` was null), so it lands again after the next publish, and a new `diag/perf` log records frame rates on the
       real phone. Fix what the real numbers show. Room code changes go through ROOMS (requested below). Done so far (4b71234):
       a room window pauses the building view's animations (532 running, 30 with a window open).
+      2026-11-06: the v0.50 and v0.51 logs hold only the Mac app's preview from publishing (120 fps, Electron); no phone
+      has opened either yet. Nothing to fix until Cal opens v0.51 on his phone.
 - [x] `dropbox-leftovers` reviewed (nothing worth bringing over) and deleted with Cal's OK.
 - [x] Yawn pilot, code (rig.js flat painted layers, `rigtest/template.html`). Without painted art the stretch renders
       byte for byte as before. Self-check feeding a top's own render back in: about 0.7% of pixels differ on the man (edges),
