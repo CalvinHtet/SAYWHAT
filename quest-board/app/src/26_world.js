@@ -340,7 +340,8 @@ LFROOM.restaurant=function(C){
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
   if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,132,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),100,noir)));
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
-  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+2.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-108,nosh:1});
+  /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
+  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
   if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:64,dy:-86,nosh:1});/* QA audit: bigger and lower, readable on a phone */
