@@ -7,9 +7,11 @@
    every coin ever earned (S.earnedC, ECON.gateLockKey and gateMall; Cal: "it should never feel like you are at a
    standstill"), so upgrading other rooms while a gate fills still counts. */
 var STORY=[
-  {id:"garden",room:"garden",how:"lot",why:"A plot of land in Kode Plaza is up for sale. Grow something you can sell.",gate:function(){return effLvl()>=3}},
-  {id:"chef",room:"restaurant",how:"lot",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
-    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Put up the money for a little restaurant and I'll run the stove. Partners?"],yes:"Partners. Let's open it",team:"mara"}},
+  /* Cal, 2026-11-05: the Garden is its own lot, and comes after the Loft's walk-in closet and patio, so unlocks arrive one at a time */
+  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Grow something you can sell.",gate:function(){return styHas("closet")&&styHas("patio")&&styUps("patio")>=ECON.gardenPatioUps}},
+  /* Cal: "the next upgrade should be a restaurant that expands from it": Mara's yes unlocks the Garden's expansion upgrade */
+  {id:"chef",room:"restaurant",how:"upgrade",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
+    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Knock through into the space next to your garden and I'll run the stove. Partners?"],yes:"Partners. Let's build it",team:"mara"}},
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
@@ -34,6 +36,10 @@ var STORY=[
   /* the Speakeasy is now part of Lock and Key, the second floor (Cal): its old door never opens */
   {id:"speakeasy",room:"speakeasy",how:"never",why:"Part of Lock and Key now.",gate:function(){return false}}
 ];
+/* the Garden's expansion that opens the Restaurant, at the Restaurant's own price; a mystery card until Mara says yes */
+(function(){if(!ADDONS.garden||ADDONS.garden.some(function(a){return a[0]==="gd_rest"}))return;
+  /* first in the Garden's menu, so it shows as the teaser from day one and as the next buy once Mara says yes */
+  ADDONS.garden.unshift(["gd_rest","Knock Through to a Restaurant",(ROOMT.restaurant&&ROOMT.restaurant.cost)||2500,{opens:"restaurant",g:"Expansion",fixed:1},"Open the wall next to the beds into a small kitchen and a dining room. Mara runs the stove."])})();
 function styState(){if(!S.story||typeof S.story!=="object")S.story={};var o=S.story;o.done=o.done||{};o.offer=o.offer||{};o.team=o.team||{};o.sold=o.sold||0;o.later=o.later||{};o.biz=o.biz||0;return o}
 function styHas(t){return !!t&&S.base&&S.base.slots.some(function(r){return r&&r.t===t})}
 function styUps(t){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t===t})[0];return r?addonsOf(r).length:0}

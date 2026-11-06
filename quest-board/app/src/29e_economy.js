@@ -19,6 +19,7 @@ var ECON={
   mcoinLv:.01,                                    /* mission coins grow 1% a level */
   xpK:1,xpCap:600,                                /* the level curve (Cal: level 100 in about 50 days for a serious player) */
   msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
+  gardenPatioUps:2,                               /* Cal: unlocks one at a time; the Garden lot waits for two Patio upgrades */
   gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
   trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
@@ -81,7 +82,7 @@ var econBoardBase=boardHtml;
 boardHtml=function(){var h=econBoardBase(),i=h.indexOf('<section class="card panel bty"');if(i<0)i=h.indexOf('<section class="cluster"');var c=dqHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 /* ---- prices by what a thing is (QA's effort_model.py, new_price) ---- */
 var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowers?|rug|curtains?|frames?|prints|clock|sign|garland|neon|lamp|lights?|palm|fern|leaf|trim|plaque)\b/i;
-(function(){Object.keys(ADDONS).forEach(function(k){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;(ADDONS[k]||[]).forEach(function(a){if(!a[2])return;var base=a[2]/st,P=ECON.price,b;
+(function(){Object.keys(ADDONS).forEach(function(k){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;(ADDONS[k]||[]).forEach(function(a){if(!a[2]||(a[3]&&a[3].fixed))return;var base=a[2]/st,P=ECON.price,b;
   if((a[3]&&a[3].decor)||DECORW.test(a[1]))b=P.decor;else if(base<=250)b=P.furniture;else if(base<=500)b=P.equipment;else if(base<=1000)b=P.big;else b=base*P.moment;
   var st2=Math.min(ECON.stepMax,1+(st-1)*ECON.stepK);a[2]=Math.round(b*st2/50)*50})})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,energy:msEnergy,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
