@@ -212,6 +212,10 @@ Art and room code requests (LEAD asks, ROOMS does):
      Better still, a signature cosmetic each, painted as items (Mara's chef whites exist already as `npc_chef`).
   4. The theater's basics as their own upgrades: a ticket stand and a popcorn and soda machine. Tell LEAD their ids, and Theo's
      scene will wait for exactly those (he is the employee).
+     DONE by ROOMS (ids for LEAD): the basics already exist as their own upgrades in `TH_UPS` (`23_theater.js`): the ticket
+     stand is `t_booth1` (Classic Ticket Booth), the popcorn is `t_pop` (Popcorn Cart) and the soda `t_soda` (Soda Fountain).
+     Gate Theo's scene on those three. Today they unlock at levels 26, 24 and 25 against the Theater opening at 23 (step 10);
+     LEAD's call whether to pull them to 23. The Theater lobby is ROOMS's next redesign (shell, zones, QA review).
 - PART DONE by ROOMS in 625d9e3, waiting on Cal's look (approval 12): the story portraits `ui_story_chef`, `_lockkey`, `_mall`,
   `_auditorium`, `_rafe`, `_nova` (300 x 400) are in `art/app`; the rest of this request is still to do. Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
   Speakeasy into one second-floor room above the restaurant, an upscale speakeasy with a live band and singers, starting
@@ -995,12 +999,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA, Mall design review round 2 (0eb00c2: doors on Cal's rule and the building map, Karaoke upstairs from
-  Bowling and only after it, the Theater's storefront rolls up once the Theater is open, the escalator reaches an upper
-  landing, the Directory Screen retired). WAITING ON CAL: Lock and Key and the Rooftop passed QA's design reviews (4718a41,
-  c8eb716 closed the last note) and go to Cal now. LEAD: retired ids `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`,
-  `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new `sb_band`; `ml_kar` now needs `ml_bow`.
-  Next: the theater basics (step 10) after Cal's word on these rooms. Chrome claimed. (on 0eb00c2)
+- Now: storyboard step 10, the Movie Theater lobby: a painted shell and a layout in zones (fully bought it is the most
+  cluttered room left: chandeliers at floor level, a cluster of snack counters, standees), then QA's design review. LEAD:
+  the theater basics ids are `t_booth1`, `t_pop`, `t_soda` (in the request above). WAITING ON QA: Mall round 2 (0eb00c2).
+  WAITING ON CAL: Lock and Key and the Rooftop, both through QA's design reviews. Retired ids so far: `sb_chester`,
+  `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new
+  `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on af14361)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
