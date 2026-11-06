@@ -283,6 +283,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message): (1) the slot keyed on each unlock's own level, a waiting story step first (33e9721),
+  rerun the early timeline; (2) watering (a2e234e): add a waterer and a forgetter to the economy run; (3) the Garden window
+  words (6a1f7ab). Also ROOMS's 8a5ac99 (beds on the grid, grow lights, the Back Plot stand a tile in), a quick look.
 - QA, a quick look at ROOMS's 73e48c3 (no QA line was posted; it answers QA's two notes; on 0c3e73c, `gardenlots.js`,
   `standtap.js` with a real mouse; `shots/garden_kitchen_full3.png`, `garden_stand_desktop.png`, `garden_stand_phone.png`): pass,
   one small fix each. The lamp post stands clear of the sundial, and the scarecrow is off the stone bed (in the back-left corner
@@ -927,7 +930,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: whatever is WAITING ON QA. (on 0c3e73c)
+- Now: LEAD's three (33e9721 slot, a2e234e watering, 6a1f7ab words) and ROOMS's 8a5ac99, test copies only (`sim.js` gets a
+  watering habit, `unlocks.py`, `gardenlots.js`, `standtap.js`). Next: whatever is WAITING ON QA. (on ae52275)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
