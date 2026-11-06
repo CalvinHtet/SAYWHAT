@@ -239,7 +239,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
   fdd651f3-324f-46ad-a2b3-9632ac8e8fb0, 454 files from db67326, db with the 9 rules of `app/dbcaps.json` + user + sample
   with images, version 1793965410-ff73). Check the page matches the build and the rules are live (`db_rules_get` shows 9).
-- WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
+- TAKEN by QA. WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
   6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
   images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
 Art and room code requests (LEAD asks, ROOMS does):
@@ -1536,8 +1536,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's upgrade audit, every room (running, about an hour). Next: v0.53's published copy; room builds against isometric
-  references (Cal, 2026-11-06). (on 7387646)
+- Now: the published v0.53 (slug 6561fd34) against the 743c30c build, with the host's cache headers; ROOMS's upgrade audit
+  running. Next: v0.54 (the stretch clip, the skirt fix); room builds against references. (on 698fd80)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
