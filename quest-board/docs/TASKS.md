@@ -263,9 +263,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   bytes) or were only checked (a few hundred bytes), and when the bar showed and the game was ready; last 6 visits, owner's
   device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
-- WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
+- TAKEN by QA. WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
   461 files from a384feb, the 9 db rules + user + sample with images, version 1793967962-0e38). Check the page matches the build.
-- WAITING ON QA: check v0.55, 17d4b44 (rule 18: your pass publishes it). (1) Skirts: 1bbe47f (rig option) and be8e92c (the flag
+- TAKEN by QA. WAITING ON QA: check v0.55, 17d4b44 (rule 18: your pass publishes it). (1) Skirts: 1bbe47f (rig option) and be8e92c (the flag
   on v_tulle and h_pleat): one piece mid-stride (`shots/v55/skirt_before.png`, `skirt_after.png`). (2) Room-window lag from
   Cal's phone (b46bc16): the fx-pulse glow is an ::after layer that only fades; .hero and .now keep the old glow (their ::after
   belongs to fx-sweep and fx-holo). Please eyeball the glow at every rank skin. (3) Your v0.54 notes: the creator on a phone
@@ -1604,8 +1604,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's shadows (9593432) and the upgrade audit (running). Next: v0.54's published copy; v0.55 (skirts, the card glow
-  at every rank skin). (on a40c0c1)
+- Now: v0.55 (17d4b44, clean copy on 8774) with ROOMS's shadows and 60ab997 in it: the usual set, skirts, the glow at every rank
+  skin, Begin, the shadows in every room, the Bedroom and Game Room against references, the names. Next: v0.55's page. (on 564ee18)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
