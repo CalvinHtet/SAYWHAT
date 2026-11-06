@@ -1261,7 +1261,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Nightclub's review (step 16); v0.50. (on 372346f)
+- Now: waiting for work. Next: the Nightclub's review (step 16); v0.50. (on fd20d41)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
