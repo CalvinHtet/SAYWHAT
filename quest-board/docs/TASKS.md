@@ -1974,7 +1974,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.62 (756def5) passes: LEAD publishes. Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 279593c)
+- Now: v0.62 (756def5) passes: LEAD publishes. Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 8a8cda8)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
