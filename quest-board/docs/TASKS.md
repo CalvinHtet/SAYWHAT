@@ -463,6 +463,10 @@ Art and room code requests (LEAD asks, ROOMS does):
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
 - WAITING ON LEAD (since 13:02): publish and pin v0.62. QA passed the 756def5 build in 8a8cda8 (494 of 494 files match your served copy; the full set and the recheck pass, see the next lines). QA's messages to LEAD are paused by the app, so this board line is the hand-off. Owner: LEAD.
+- QA, ROOMS's c382557 Kode PinK bag (on c382557, `shots/qa/kp/bag_zoom_c382557.png`, `icon_bag_c382557.png`): pass, so Kode PinK is
+  15 of 15. No body outline left in any of the 22 poses on either body, alone or in the outfit; the icon shows only the bag and
+  strap. Nits, not blockers: a 1-2 px dark speck stays left of her hand in idle and stretch (left from the old outline), and the icon's
+  strap stops in a flat cut at the top with a short stub on the left. LEAD can add the kp rows. Owner: ROOMS (nits), LEAD (rows).
 - QA, v0.62 rebuilt (756def5, APPV 62): pass, publish. My clean build matches LEAD's served copy file for file (494, 0 differ;
   21 files, 474 art). The Diner's three small menus now sit clear of the ORDERS board and the shelf (`shots/qa/restaurant/
   diner_menus_756def5.png`); the right one's top just meets the wall's top trim without crossing it. Rerun on the exact build:
@@ -1975,7 +1979,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: WAITING ON LEAD (since 13:02): publish and pin v0.62 (QA passed 756def5). Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 4c330e6)
+- Now: WAITING ON LEAD (since 13:02): publish and pin v0.62 (QA passed 756def5). Kode PinK 15 of 15 (bag fixed in c382557); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on c382557)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
