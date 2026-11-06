@@ -328,7 +328,7 @@ LFROOM.restaurant=function(C){
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+3.6,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
-  if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:34,dy:-108,nosh:1});
+  if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:50,dy:-92,nosh:1});/* QA audit: bigger and lower, readable on a phone */
   if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
   var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.12;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
@@ -360,7 +360,8 @@ LFROOM.restaurant=function(C){
     lfSpr(C,"rdx_tround",cvx+1.15,cvy+1.15,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx+3.8,cvy+.3,.6,.6,{h:30,ctr:1})}
   lfWander(C,[[Wi-3,1.6,-1],[Wi*.6,D*.72,1],[Wi-1.6,D*.62,-1]]);
   /* light */
-  if(H("r_l2")&&st>1)[[5.7,6.2],[9.8,6.2],[9.8,10.2]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
+  /* QA audit: Brass Chandeliers drew only in the biggest room (in the smaller ones buying them just took the bulb away) */
+  if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
   if(H("r_l1"))(st===0?[1.6]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
@@ -387,7 +388,7 @@ LFROOM.restaurant=function(C){
     if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+5.65,D-2.75,"P");
     /* a low rail between the deck and the dining room, open at the front door */
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
-    if(H("r_p4")){rsS(C,"rsx_heater",px+3.7,kd+.5,.6,.6,60,{H:96});lfLight(C,px+4,kd+.8,70,"#ff9a3a",2.4,.5)}
+    if(H("r_p4")){rsS(C,"rsx_heater",px+3.7,kd+.5,.7,.7,60,{H:116});lfLight(C,px+4,kd+.8,80,"#ff9a3a",3.0,.62)}
     if(H("r_p6"))rsS(C,"rsx_bbq",px+4.7,kd+.3,1.7,1.0,28,{flip:1});
     if(H("r_p5")){rsS(C,"rsx_pergola",px+5.4,D-3.0,2.5,2.5,90,{dk:-4});lfLight(C,px+6.6,D-1.8,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */

@@ -107,7 +107,11 @@ function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F
   var wet=typeof gdWatered!=="function"||gdWatered(),fl=wet?'saturate(1.12) brightness(.96)':'saturate(.45) sepia(.35) brightness(1.1)';
   C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),'<image style="filter:'+fl+'" href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
   return z}
-function gdMist(C,x,y){var q=lfP(x,y,6);C.add(x+y+.2,'<rect x="'+(q[0]-1.5)+'" y="'+(q[1]-6)+'" width="3" height="6" fill="#aab"/><path d="M'+q[0]+' '+(q[1]-8)+' q-12 -14 -18 -4 M'+q[0]+' '+(q[1]-8)+' q12 -14 18 -4" stroke="rgba(180,225,255,.8)" stroke-width="1.4" fill="none" class="lfmist"/>')}
+/* QA audit: the sprinkler was a 3 px post. A brass head on a dark riser, with a wide fan of spray and drops, so it reads on a phone */
+function gdMist(C,x,y){var q=lfP(x,y,0),X=q[0],Y=q[1],t=Y-14,sp='',dr='';
+  [-1,1].forEach(function(s){sp+='<path d="M'+X+' '+t+' q'+(s*16)+' -20 '+(s*30)+' -2" stroke="rgba(190,230,255,.85)" stroke-width="1.6" fill="none"/><path d="M'+X+' '+t+' q'+(s*10)+' -26 '+(s*20)+' -10" stroke="rgba(190,230,255,.6)" stroke-width="1.2" fill="none"/>';
+    for(var k=0;k<4;k++)dr+='<circle cx="'+(X+s*(8+k*6))+'" cy="'+(t-8+k*2.5)+'" r="1.2" fill="#cfeaff" opacity=".85"/>'});
+  C.add(x+y+.2,'<g class="lfmist"><path d="M'+(X-28)+' '+(t+2)+' Q'+X+' '+(t-30)+' '+(X+28)+' '+(t+2)+' Z" fill="rgba(180,225,255,.16)"/>'+sp+dr+'</g><rect x="'+(X-1.8)+'" y="'+(t)+'" width="3.6" height="14" fill="#3a3f48"/><rect x="'+(X-3)+'" y="'+(t-3)+'" width="6" height="4" rx="1.2" fill="#c9a24a" stroke="#6d5420" stroke-width=".5"/>')}
 LFROOM.garden=function(C){
   rsArtReady();
   var H=function(k){return C.has(k)},st=H("g_x2")?2:H("g_x1")?1:0,W=C.W,D=C.D,BX=[1.2,6.2,11.2],BY=[1.4,4.6,7.8,11];
@@ -136,7 +140,9 @@ LFROOM.garden=function(C){
   beds=beds.slice(0,spots.length);
   beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
   if(H("g_spr"))beds.forEach(function(k,i){if(i%2===0){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)}});
-  if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.72,0),lfP(p[0]-.1,p[1]+1.72,0)],"#27303a"))});
+  /* QA audit: a hairline before. A black drip hose along each bed's front with water beads, so it can be seen */
+  if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.82,0),lfP(p[0]-.1,p[1]+1.82,0)],"#16191f"));
+    for(var b=0;b<6;b++){var d=lfP(p[0]+.25+b*.6,p[1]+1.9,0);C.decals.push('<ellipse cx="'+d[0].toFixed(1)+'" cy="'+d[1].toFixed(1)+'" rx="2.4" ry="1.2" fill="#7fc3ff" opacity=".75"/>')}});
   /* tools down the far side */
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
