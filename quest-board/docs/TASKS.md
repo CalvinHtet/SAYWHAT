@@ -268,14 +268,36 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the unlock timeline and the economy for Cal's new early game (b1088f8 `ECON.stepLv`, on 2d26053; `rigtest/qa/sim.js` now
+  keeps every level-up card and the story steps by name, `unlocks.py`; full map in `shots/unlocks_2d26053.txt`). One unlock = a New
+  area, a story step with the lot or room it opens counted once, or a room opened by an upgrade; UI upgrades and Shop restocks are
+  listed, not counted. No single level-up screen in the runs had 2 unlocks, and no played day had nothing to buy. Days with 2:
+  12-task player: day 7 (Boba, level 23, and the walk-in closet bought the same day), day 19 (Dessert and Lock and Key, levels
+  42 to 44), day 25 (Rooftop and Mall, 49 to 53), day 26 (Nova and Theater, 53 to 54). Casual player: day 5 (Relics and the Garden,
+  levels 4 to 9); then one at a time (Restaurant day 13, Boba 19, closet 25; level 26 on day 30). FIX 1 (LEAD), the first trial:
+  stored XP releases 4 to 9 at once, and `levelUp(afterLv,...,beforeLv)` shows the cards of levels 6 to 9 on one screen, so
+  clearing it gives the class pick, then Wheel (6) and Relics (8) together, and the Garden scene (least level 5) right after:
+  4 new things in one moment, the "multiple unlocks from 1 level" Cal saw. (The sim clears trials without that screen, so this
+  is from the code: `clearGate` -> `advModal` -> `levelUp`.) Same for gate 10 (9 to 15): levels 10 and 11 are never shown. Fix:
+  put the three New areas a trial apart (Hall 4, Wheel after gate 5, Relics after gate 10), or let a trial-clear screen show one
+  unlock and hold the rest for the next level-ups. FIX 2 (LEAD, for the 2-unlock days): `stepLv` almost never decides anything.
+  The 12-task player is far past each least level when the step's own gate opens (Dessert, least 11, opened at 44; Mall, least
+  20, at 53), and the casual player too (Restaurant, least 7, at 17). Only the Garden's 5 binds, and it is held by the trial at
+  level 5 anyway. To space them: let `styCheck` open at most one story step a day (simplest, matches "one at a time"), or raise
+  `stepLv` toward the levels players really reach. Gd_rest (`gdrest.js`) works: a mystery card at 0 and at 60 sold, for sale
+  right after Mara's yes. Economy to level 80 (the Garden later changes almost nothing): 12-task player owns every upgrade on day
+  44 at level 82, level 100 on day 55 (sim9: day 45, level 79); grinder every upgrade on day 21 at level 93, level 100 on day 25.
+  No page errors. Owner: LEAD.
+- QA, LEAD's 4f15346 (on 2d26053, `audit49.js`, the static check now reads `dist/app.js`): pass. 108 level-up screens 1 to 100,
+  no NEW BLUEPRINT and no LOFT EXPANDED card, no crew, vault or bad text; the New areas are Hall 4, Wheel 6, Relics 8. Owner: none.
 - QA, ROOMS's f457680 and eb85e90 (on 9ae8634, `restmenu.js` and `restshell.js`; `shots/rest_booth_firepit.png`,
   `rest_booth_firepit_noir.png`): pass. The crescent booth (`rdx_curve2`) sits in the back-left corner and opens straight at the
   room, with its round table inside it (the only overlap the audit finds, which is meant); the Fire Pit Lounge is a stone bowl with a
   fire, Adirondack chairs and a stone pad, in the Bistro and Noir. Board still 26 of 26. No page errors. Owner: none.
-- TAKEN by QA. WAITING ON QA (LEAD's message, Cal: "not multiple unlocks from 1 level ... not this early"): on 16e72c3, map every
+- DONE by QA (QA findings: 2 fixes for LEAD). WAITING ON QA (LEAD's message, Cal: "not multiple unlocks from 1 level ... not this early"): on 16e72c3, map every
   unlock by day and level over the first 30 days for the 12-task and casual players, flag any day or level with 2 or more, and
   rerun the economy to level 80 with the Garden later.
-- WAITING ON QA: check 4f15346 (rule 17): level-ups no longer show room blueprints or new Loft floors (bpCard and floorCard
+- DONE by QA (QA findings: pass). WAITING ON QA: check 4f15346 (rule 17): level-ups no longer show room blueprints or new Loft floors (bpCard and floorCard
   calls removed from levelUp). LEAD checked levels 2 to 31 headless.
 - DONE by LEAD in 4f15346. QA, LEAD's text and story audit (ca1068d, on c1f1aa5, `rigtest/qa/audit49.js`; every level-up screen 1 to 100 in
   `shots/levelups_c1f1aa5.txt`): mostly pass, 1 fix for LEAD. Pass: `unlocksFor` returns null, so no level-up shows the old crew,
@@ -700,7 +722,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90). WAITING ON CAL: Garden in The Loft or Kode Plaza.
   12-minute loop running (rule 16). (on 5fa3fec)
-- WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
+- TAKEN by QA. WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
   Estate, each bare and fully bought. Look for: brick walls showing (no hedge or glass fence over them), beds and tools
   standing on the lawn, nothing poking through a wall, the Estate's walls cut at the stone coping with no black band.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
@@ -819,8 +841,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the unlock timeline and the economy on 2d26053 (b1088f8's `ECON.stepLv`): 12-task player 90 days, casual 30, grinder 45
-  (`rigtest/qa/sim.js`, `unlocks.py`), test copy on 8770. Next: LEAD's level-up fix 4f15346 (`audit49.js`). (on 2d26053)
+- Now: ROOMS's Garden lots (4725457, cd73831, 5fa3fec), test copy only. Next: LEAD's answer on the unlock timeline. (on 21eee8d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

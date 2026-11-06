@@ -12,7 +12,7 @@ const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
   const bad = /\[object Object\]|undefined|NaN/;
   // level-ups: the code (unlocksFor returns null first thing; AREALINE read from the built page), then every level-up screen
   // from 1 to 100 through the game's own "simlvl" action
-  const src = await p.evaluate(async () => { const h = await (await fetch('/dist/index.html', { cache: 'no-store' })).text();
+  const src = await p.evaluate(async () => { const h = (await (await fetch('/dist/index.html', { cache: 'no-store' })).text()) + (await (await fetch('/dist/app.js', { cache: 'no-store' })).text());
     const u = h.match(/function unlocksFor\(L\)\{\s*(?:\/\*[\s\S]*?\*\/\s*)?([^;]*);/); const al = h.match(/var AREALINE=(\{[^}]*\})/); const ar = h.match(/var AREAS=(\[\[[^;]*\]\]);/);
     return { first: u ? u[1].trim() : null, AREALINE: al ? al[1] : null, AREAS: ar ? ar[1] : null }; });
   t(src.first === 'return null', `unlocksFor's first statement: "${src.first}"`);
