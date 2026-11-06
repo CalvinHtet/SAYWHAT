@@ -15,7 +15,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.61 blocked (d9d92d7 not published). Rebuilt once these pass QA: Kode Plaza's street picture by stage (LEAD's 2882690,
   Cal: "I want Kode plaza to start off like a plaza..."; ROOMS paints bld_plaza_s0 and later stages), the Game Room fixes,
-  the Bedroom blink fix ce07425; the level-5 coins (3d7f57a) passed. Brands: BRANDS_15.md waits on Cal. (on 2882690)
+  the Bedroom blink fix ce07425; plaza code, coins and blink passed QA. Brands: Cal approved BRANDS_15.md ("Love the names!"),
+  ROOMS generating NICE COCK first (drop 2, 2026-11-09); LEAD moves the BRANDS dates once its art passes QA. Asked Cal: vaulted
+  brands return as a rerun, or gone for good (the Vault promises a return the code never makes). (on 52f4714)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
