@@ -285,6 +285,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, a quick look at ROOMS's 5ddeb1a (no QA line was posted; it answers QA's sky note; on 17e5851, port 8770,
+  `openair.js` with HOURS; `shots/openair_sky_by_hour.png`): pass. The Sky Patio and the Rooftop Bar, fully bought, at 7:00, 13:00,
+  18:00 and 22:00: dawn colours at 7, a blue sky with the sun at noon, deep blue with a moon and lit windows at 18 and 22 (the
+  game follows the real Los Angeles sun, which sets before 17:00 in November); the furniture dims with it; nothing outside the
+  rooms. The Rooftop notes from 98599c3 (no visible way down, no rail on the front-right edge) still stand. No page errors.
+  Owner: none.
 - QA, ROOMS's 707cac1 (on 52e194f, port 8770, `lockkeylounge.js`, `skybarshell.js`, `band.js`, `openair.js`; `shots/lockkey_lounge3.png`,
   `rooftop_deck_bare.png`, `rooftop_deck_full.png`): Lock and Key passes; the Rooftop deck passes with 2 notes. Lock and Key (Cal's
   redo): the Chesterfield and the Champagne Trolley are retired: a new player gets no card for them, an owner keeps both ids and
@@ -1110,8 +1116,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: a quick look at ROOMS's 5ddeb1a (the open-air sky follows the time; my note), test copy only (`openair.js`). Next: v0.50
-  when LEAD builds it. (on 98599c3)
+- Now: waiting for work. Next: v0.50 when LEAD builds it; the Rooftop's way down and rail when ROOMS fixes them. (on 17e5851)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

@@ -6,7 +6,7 @@ const { open, openRoom, audit } = require('./lib.js');
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 (async () => {
   const { b, p, errs } = await open({ width: 1000, height: 900, owned: 'none' });
-  for (const k of ['patio', 'rooftop']) for (const full of [false, true]) for (const hour of [13, 22]) {
+  for (const k of ['patio', 'rooftop']) for (const full of [false, true]) for (const hour of (process.env.HOURS || "13,22").split(",").map(Number)) {
     const i = await p.evaluate(({ k, full, hour }) => { const x = window.__qb.x(), S = x.S; const now = new Date(Date.now()), tt = new Date(now); tt.setHours(hour, 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (tt - now);
       if (!S.base.slots.some((s) => s.t === k)) S.base.slots.push({ t: k, a: {}, st: 0, pend: 0 }); const i = S.base.slots.findIndex((s) => s.t === k), r = S.base.slots[i];
       r.a = {}; if (full) x.ADDONS[k].forEach((u) => { if (!(u[3] && (u[3].retired || u[3].opens))) r.a[u[0]] = 1; }); return i; }, { k, full, hour });
