@@ -13,7 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.58 published and pinned (859d941), WAITING ON QA for the page check. Nothing open from QA. Next version when new
+- Now: v0.58 published and pinned (859d941); QA: the page matches. Nothing open from QA. Next version when new
   work passes QA. (on 859d941)
 
 To do:
