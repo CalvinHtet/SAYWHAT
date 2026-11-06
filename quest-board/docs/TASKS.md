@@ -465,6 +465,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 8d97e24 (on 07812e4, `rigtest/qa/friendsqa.js`; cards `shots/qa/friends_cards_07812e4.png`): works, three small fixes.
+  All 16 visits forced on a new player and on one with every room: each card draws its figures (rig 173x197, dogs their art), coins
+  land (250/150/100/150/80), Kenan's freeze lands, Cynthia waters the Garden only when there is one, and every buff raises the real
+  x.mults() of a matching quest by exactly its stated amount (fitness, discipline, create, admin, body, out, home, social). No page
+  errors; looks read clean at card size. Fixes: (1) Kenan's freeze ignores the cap: at 2 of 2 it makes 3 (the wheel and streaks stop
+  at maxFreeze(), the wheel pays 300 coins instead). (2) A new player owns only the Bedroom, but the card says "They're hanging out in
+  the Lounge today" (fvShow falls back to the Lounge even when it isn't owned; 3bcbb44's live fallback goes on to the Bedroom, the card
+  should match). (3) The text gives friends pronouns ("his", "He", "her") that Cal never stated (CLAUDE.md: they/them when unstated);
+  either Cal confirms them or rewrite around them, e.g. "Justin is on the way to rehearsal". Not checked: the daily roll's rate and the
+  no-repeat over many days (fvCheck isn't reachable from the test hook; the code reads right: 57% a day, the last visit left out of the
+  pool), and a visit card due while another window is open (fvShow is skipped if a window opens in the 1.2 s after the roll, so the
+  reward lands with no card). voice.js does not read the visit lines yet; read by hand, no rule broken. Owner: LEAD.
 - QA, LEAD's ab7fcae (clean build; `rigtest/qa/gardenreveal.js`, `townlive.js`, sim.js + unlocks.py + water.py): two wording fixes, the
   rest passes. Town board: all 5 townlive checks pass, focus survives a full render(). Garden (fresh level-5 player, built via rdo): no
   Restaurant, chef or sell before the first produce; it starts watered; the stand says "Nothing to sell yet"; after 3 h "1 produce
@@ -1837,7 +1849,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ab7fcae done (two wording fixes for LEAD). Next: LEAD's 8d97e24 (friends who drop by), then ROOMS's 07812e4 (shadows). (on 07812e4)
+- Now: 8d97e24 friends done (three small fixes). Next on 3bcbb44: LEAD's room zoom (fpsroom.js before and after) and friends in their room, ROOMS's shadows (07812e4) and backdrop (d233c9e). (on 652df12)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
