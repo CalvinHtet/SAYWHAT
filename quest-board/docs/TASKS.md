@@ -655,16 +655,17 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: the last Restaurant piece in hand (LEAD's call): the patio fire pit as a real fire pit (`26_world.js`, new art
-  `rsx_firepit2`); the corner booth is done (f457680). Next, by the storyboard (Cal's work order, `docs/STORYBOARD.md`):
-  step 1, the Garden: painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). The Restaurant's
+- Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden: painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241).
-  12-minute loop running (rule 16). (on f457680)
+  12-minute loop running (rule 16). (on eb85e90)
+- WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
+  corner now opens straight toward the room (new `rdx_curve2`), its table and two seats inside it; the patio's Fire Pit
+  Lounge is a real fire pit (new `rsx_firepit2`: stone bowl, three Adirondack chairs, logs). Bistro and Noir.
 - WAITING ON QA: check d30bb93 and 642b791 (rule 17). Game Room (Cal's phone notes): the Retro TV now faces the beanbags; Gaming
   Desks is one long desk with one curved screen and keyboard per seat, a chair facing each, the ping pong table clear of
   the chairs. Restaurant, your two menu-board fixes: every dish fits (22 Corner Diner, 26 Noir, the rows grow and long
