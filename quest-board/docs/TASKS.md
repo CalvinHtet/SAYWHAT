@@ -226,7 +226,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   35.9 s, so the total does not change); fetch blocked: tags, ready 1.2 s; a strict script policy (hashes only): tags,
   ready 1.2 s. No page errors in any. Not checked: the real host (its own policy), a second visit from the cache, and
   savecheck/screens on this build.
-- TAKEN by QA. WAITING ON QA: check fb7ca53, the loading bar redone after your c5766ed (for v0.53; v0.52 stays db67326). Your same-tab
+- DONE by QA (QA findings: pass). WAITING ON QA: check fb7ca53, the loading bar redone after your c5766ed (for v0.53; v0.52 stays db67326). Your same-tab
   reload finding (2.1 s became 27.7 s, fetch() skips the tab's memory) meant the fetch loader had to go: `app/loader.html`
   now adds ordinary script tags in order (async=false) and fills the bar as each file lands (resource timing, then onload),
   so no text copies and no fetch fallback are needed. `build.py` cuts any pack over 4.5 MB into pieces (`art_rig_1..4.js`,
@@ -359,6 +359,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the rebuilt loader (LEAD's fb7ca53, on 47ef877; `shots/v53/loadtime.txt`): pass, and a real gain. The pieces add up: the
+  game ends with the same 796 art entries (70 yawn layers) and 675 blobs as v0.52, identical by SHA-256 (new `packsame.js`);
+  no piece is over 4.5 MB; 460 files in dist. On a 9 Mbps, 85 ms phone with a 4x slower CPU: the bar at 0.4 s, the game at
+  35.7 s (v0.52 35.9 s, blank); reopened in a new tab 0.3 s with nothing downloaded again (v0.52 27.3 s, art_rig.js and
+  blobs.js again, 29.6 MB); a same-tab reload 0.7 s (v0.52 0.8 s). No inline text left; peak JS memory while loading 42 MB
+  (v0.52 40); the whole tab 288 MB (v0.52 292 to 295). savecheck, screens (360, 390), old saves, a fresh player, doors 36 of
+  36, voice 0, Shop 44, town rules 32 of 32, the Rift Mask roll, the yawn with necklaces, the team in their rooms: all pass.
+  One run of the team check had the old intermittent `blob: ERR_ABORTED` (seen on earlier builds too; the rerun was clean).
+  Not checked: the real host's cache headers (after publishing). Owner: LEAD (ready for v0.53).
 - DONE by LEAD in fb7ca53 (the loader rebuilt on plain script tags, the big packs cut under 5 MB; see WAITING ON QA). QA, the loading bar (LEAD's 4b72f95, on 5728d83): pass, one small fix. Works: on a 9 Mbps, 85 ms phone with a 4x slower CPU the
   bar shows at 0.4 s and the game starts at 36.0 s (v0.52: a blank page until 35.9 s); all 11 files, same hashes as v0.52; no
   script reads document.currentScript; savecheck, screens (360, 390), old saves, a fresh player, doors 36 of 36, the team in
@@ -1499,8 +1508,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's rebuilt loader (fb7ca53: plain tags, packs cut under 4.5 MB), a clean copy on 8769. Next: v0.52's published
-  copy and the 15-player town test once LEAD publishes. (on 47ef877)
+- Now: nothing waiting; the rebuilt loader passed. Next: the published copy and the 15-player town test once LEAD publishes.
+  (on b4e9294)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
