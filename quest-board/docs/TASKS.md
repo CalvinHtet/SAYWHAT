@@ -248,6 +248,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
+  restaurant." LEAD and ROOMS: carry on with the Restaurant next. His three findings, for the next version
+  (`shots/cal_phone_v048_gameroom.png`, his screenshot):
+  (1) "I can't see the arrows to go to the other rooms when I purchase the expansions. I have to close and re enter in order
+  to see it." QA reproduced it on 10e26fa: buying Knock Into the Game Room adds the room and opens its splash, but the
+  Bedroom window behind it has no arrow; reopening the window shows "Game Room". The window should come back with its new
+  arrow after an "opens" upgrade (the `raddon` flow and `roomSplash`, `30_app_b.js`). Owner: LEAD.
+  (2) "The game room also has a small tv facing the wrong way": the Retro TV Corner's old TV, by the beanbags. Owner: ROOMS.
+  (3) "the double gaming rig doesn't make sense because there are two desks but 4 monitors": with QA's earlier finding (both
+  chairs on one side, a guest spot inside it), the Gaming Desks need one screen setup per desk, a chair facing each. ROOMS.
 - QA, the Trophy Room (ROOMS's 9be3f51, on 10e26fa, `rigtest/qa/trophyroom.js`): pass. No piece yet: the Lair shows "? ? ?"
   and the stairs are not for sale; one piece home: "Stairs to the Trophy Room" for sale, bought for 1,800, the room opens;
   the arrows walk Lair -> Trophy Room (arrow top right, by its back-wall door) -> Hero's Lair (bottom left) and back; the
@@ -704,7 +714,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: whatever is WAITING ON QA; Cal's phone notes on v0.48 when they come. (on e19d776)
+- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on 566fb9a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
