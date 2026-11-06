@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.52 (db67326) passed QA's pre-release check (6fa7489), held until Cal reports on v0.51 or says go. Meanwhile
-  for v0.53: first load time (QA's loadtime.js: 39.6 MB before the game starts, about 35 s on a 9 Mbps phone), starting
-  the game before the big art arrives. Nobody else plays until there is a working version. (on 6fa7489)
+- Now: v0.52 (db67326) passed QA's pre-release check (6fa7489), held until Cal reports on v0.51 or says go. For v0.53:
+  a loading bar instead of a blank page (NEXT), WAITING ON QA. Next, if Cal's phone log shows the wait matters: start the
+  game before the big art arrives. Nobody else plays until there is a working version. (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -218,6 +218,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
   Also look at load time: `art_rig.js` is now 14.1 MB (all the yawn layers), 455 files in all.
+- WAITING ON QA: check NEXT, the loading bar (for v0.53; v0.52 stays db67326). `app/loader.html`, written into the page by
+  `build.py` in place of the script tags: it fetches the same 11 files with a progress bar ("12 of 38 MB"), runs them in the
+  same order, then removes itself. If fetch is missing or fails it adds plain script tags; if the host blocks scripts added
+  as text (no `window.QBART` after art_rig.js) it loads every file as a tag. LEAD's `shots/loadbar_lead.js` (port 8766):
+  unthrottled, ready at 1.2 s; 9 Mbps and 4x CPU, the bar shows at 0.4 s and climbs to the game at 36.0 s (QA had v0.52 at
+  35.9 s, so the total does not change); fetch blocked: tags, ready 1.2 s; a strict script policy (hashes only): tags,
+  ready 1.2 s. No page errors in any. Not checked: the real host (its own policy), a second visit from the cache, and
+  savecheck/screens on this build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into

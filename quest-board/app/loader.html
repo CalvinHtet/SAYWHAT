@@ -1,0 +1,25 @@
+<div id="qbload" role="status" aria-live="polite" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg)"><div style="width:min(300px,78vw);text-align:center"><div class="label">Quest Board</div><div style="margin:14px 0 8px;height:6px;border-radius:3px;background:var(--surface2);overflow:hidden"><i id="qbloadbar" style="display:block;height:100%;width:2%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s"></i></div><small id="qbloadtx" class="mono" style="color:var(--muted)">Loading</small></div></div>
+<script>/* LEAD: the game's scripts, fetched with a progress bar, then run in order. Built by tools/build.py from app/loader.html. */
+(function(){
+  var F=/*FILES*/[],box=document.getElementById("qbload"),bar=document.getElementById("qbloadbar"),tx=document.getElementById("qbloadtx");
+  var tot=F.reduce(function(a,f){return a+f[1]},0),got=F.map(function(){return 0}),body=[],next=0,plain=false;
+  var mb=function(n){return (n/1048576).toFixed(n<10485760?1:0)};
+  var paint=function(){var g=0;for(var i=0;i<got.length;i++)g+=got[i];bar.style.width=Math.max(2,Math.min(100,Math.round(g/tot*100)))+"%";
+    tx.textContent=g>=tot?"Starting":mb(g)+" of "+mb(tot)+" MB"+(g<tot*.5&&tot>8388608?" (faster next time)":"")};
+  var done=function(){bar.style.width="100%";setTimeout(function(){if(box&&box.parentNode)box.parentNode.removeChild(box)},60)};
+  var tag=function(i,last){var s=document.createElement("script");s.src=F[i][0];s.async=false;if(last)s.onload=s.onerror=done;document.body.appendChild(s)};
+  var fallback=function(){if(plain)return;plain=true;tx.textContent="Loading";for(var i=next;i<F.length;i++)tag(i,i===F.length-1);if(next>=F.length)done()};
+  var run=function(){if(plain)return;while(next<F.length&&typeof body[next]==="string"){var s=document.createElement("script");s.textContent=body[next];body[next]=1;next++;
+      try{document.body.appendChild(s)}catch(e){}
+      /* art_rig.js sets window.QBART: if it is missing, the host blocked scripts added as text, so load every file as a tag */
+      if(next===1&&!window.QBART){next=0;fallback();return}}
+    if(next>=F.length)done()};
+  if(!window.fetch||!window.ReadableStream||!window.TextDecoder){fallback();return}
+  F.forEach(function(f,i){
+    fetch(f[0]).then(function(r){if(!r.ok||!r.body)throw new Error(r.status);
+      var rd=r.body.getReader(),dec=new TextDecoder(),parts=[];
+      var pump=function(){return rd.read().then(function(x){if(x.done){parts.push(dec.decode());return parts.join("")}
+        got[i]+=x.value.length;parts.push(dec.decode(x.value,{stream:true}));paint();return pump()})};
+      return pump()}).then(function(t){got[i]=Math.max(got[i],f[1]);body[i]=t;paint();run()}).catch(fallback)});
+  paint();
+})();</script>

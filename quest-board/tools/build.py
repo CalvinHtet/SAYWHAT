@@ -62,7 +62,11 @@ data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.
 with open(os.path.join(DIST, "qbdata.js"), "w", encoding="utf-8") as f:
     f.write("window.QBDATA=" + json.dumps(data, separators=(",", ":")) + ";\n")
 
-tags = "".join('<script src="%s?h=%s"></script>\n' % (s, fp(os.path.join(DIST, s))) for s in ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"))
+# The scripts come in through a small loader that shows how much has arrived (the art is about 40 MB, so a phone on mobile
+# data would otherwise stare at a blank page). Same files, same order; if fetch is missing or fails, plain script tags.
+SCRIPTS = ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "blobs.js", "qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js")
+files = [["%s?h=%s" % (s, fp(os.path.join(DIST, s))), os.path.getsize(os.path.join(DIST, s))] for s in SCRIPTS]
+tags = read(APP, "loader.html").replace("/*FILES*/[]", json.dumps(files))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)
