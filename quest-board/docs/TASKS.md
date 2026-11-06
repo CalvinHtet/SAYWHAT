@@ -633,7 +633,14 @@ Doing:
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
-  64e4735). 15-minute loop running (rule 16). (on 64e4735)
+  repainted in 04bb241 after Cal saw tables sitting on the wall). 12-minute loop running (rule 16). (on 0edb26c)
+- WAITING ON QA: check 04bb241 and 0edb26c (rule 17), Cal's Restaurant notes: (1) Bistro and Noir repainted so the back wall
+  line is where the room's wall is: tables near the back wall stand in front of it, not on it; (2) Grand Menu Board
+  (`r_bigmenu`, Corner Diner and up, after the Digital Menu Screen) lists every dish, two columns, readable; (3) seven gear
+  upgrades add dishes to the menu (Espresso Bar, Flat-Top Grill, Fryer, Bakery Rack, Wood-Fired Oven, Grand French Range,
+  Charcoal Grill); (4) the red crescent booth (Full Dining Floor) in the back-left corner, open to the room, the window
+  booths and their dividers moved down, nothing overlapping; (5) the kitchen half-wall in each look's colours. Your lessons
+  2 to 4 (booths over the windows, the patio corner, the cooler) go into the fine-dining furniture pass.
 - DONE by QA (QA findings). WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
   (Hole in the Wall, Corner Diner, Bistro, Noir), with and without the Sidewalk Patio. Look for furniture against the
   painted walls that floats or overlaps a window, the kitchen divider lining up with the kitchen tile, the front door mat.
