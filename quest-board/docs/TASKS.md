@@ -271,6 +271,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message): rerun the unlock timeline on aa165b1: one New area per level-up, one story step a day.
 - QA, ROOMS's 28a51ee (on 3124efd, `rigtest/qa/gardoors.js`; `shots/gardoor_restaurant.png`, `gardoor_garden.png`): pass. The
   building map puts the Garden right of the Restaurant (restaurant [1,0,0], garden [1,1,0], Boba [1,2,0]). At all 12 pairs
   (Back Plot, Kitchen Garden, Estate x Hole in the Wall, Corner Diner, Bistro, Noir) the Restaurant's "Garden" arrow (bottom right,
@@ -865,7 +866,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: LEAD's unlock-timeline fixes and ROOMS's Garden placement fixes. (on 3124efd)
+- Now: the unlock timeline again on aa165b1 (one area per level-up, one story step a day), 12-task and casual players, 30
+  days (`rigtest/qa/sim.js`, `unlocks.py`), test copy only. Next: ROOMS's Garden placement fixes. (on 52b50cf)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
