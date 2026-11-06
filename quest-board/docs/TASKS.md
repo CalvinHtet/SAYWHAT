@@ -290,7 +290,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   creator is open (`app/index.html`), since it covered a creator button wherever it sat (your note, last at 375x548). It is
   back on the Board after Begin. `shots/ccbegin.js` at 375x548, 390x664, 844x390, 1280x800: Begin on screen and tappable, no
   page errors.
-- WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
   462 files from 859d941, the 9 db rules + user + sample with images, version 1793973604-fe09). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
@@ -420,6 +420,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.58 (slug 974301b9, version 1793973604-fe09): pass, 460 of the 859d941 build's 461 files identical, none missing,
+  index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, v0.58 (859d941, APPV 58, built clean; rule 18: pass, publish it). Over v0.57 only the pill rule and APPV. `ccbegin.js` (now also
   checks the pill after Begin): at all 10 sizes the Testing pill is hidden in the creator, comes back on the Board after Begin,
   and Begin is on screen and tappable; the old 375x548 overlap is gone. It uses CSS `:has()` (Safari 15.4 and up; Cal's iOS 18 is
@@ -1692,7 +1694,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.58 passed. Next: v0.58's page once pinned. (on f30398b)
+- Now: nothing waiting; v0.58 published and its page passed. Next: whatever LEAD or ROOMS sends. (on a7459fd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
