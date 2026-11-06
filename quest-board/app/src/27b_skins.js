@@ -49,9 +49,9 @@ function arNeonTrim(C){var W=LF.W,D=LF.D,z=LF.H-10,pts=function(zz){return [lfP(
 function cbLaser(C){var o=lfP(11.25,2.0,40),t=[[5.4,7.2],[6.8,6.6],[8.2,7.4],[6.2,4.2],[9.4,5.6],[5.2,3.0]],g='';
   t.forEach(function(q){var e=lfP(q[0],q[1],0);g+='<line x1="'+o[0].toFixed(1)+'" y1="'+o[1].toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#5dff7a" stroke-width="4" stroke-opacity=".12"/><line x1="'+o[0].toFixed(1)+'" y1="'+o[1].toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#b6ffc2" stroke-width=".9" stroke-opacity=".7"/><circle cx="'+e[0].toFixed(1)+'" cy="'+e[1].toFixed(1)+'" r="2.2" fill="#9dff9f" opacity=".7"/>'});
   C.front.push('<g pointer-events="none" style="mix-blend-mode:screen">'+g+'</g>')}
-function cbFog(C){var id="cbfog"+C.chu,g='<defs><radialGradient id="'+id+'"><stop offset="0" stop-color="#e9e4ff" stop-opacity=".5"/><stop offset="1" stop-color="#e9e4ff" stop-opacity="0"/></radialGradient></defs>';
+function cbFog(C){var id="cbfog"+C.chu,g='<defs><radialGradient id="'+id+'"><stop offset="0" stop-color="#e9e4ff" stop-opacity=".62"/><stop offset="1" stop-color="#e9e4ff" stop-opacity="0"/></radialGradient></defs>';
   [[5.2,7.3],[6.9,7.6],[8.6,7.4],[10.3,7.0],[10.6,5.0],[4.9,5.2],[7.6,5.6]].forEach(function(q,i){var p=lfP(q[0],q[1],4);g+='<ellipse cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" rx="'+(46+(i%3)*8)+'" ry="'+(13+(i%2)*3)+'" fill="url(#'+id+')"/>'});
-  C.front.push('<g pointer-events="none" opacity=".75">'+g+'</g>')}
+  C.front.push('<g pointer-events="none" opacity=".95">'+g+'</g>')}
 function PL(id,nm,pr,k,x,y,w,d,flip,line,ex){var e=Object.assign({},ex||{});e.art=[k,x,y,w,d,0,Object.assign({flip:flip?1:0},e.o||{})];return [id,nm,pr,k,"",0,0,0,line,e]}
 function PLn(id,nm,pr,list,line,ex){var e=Object.assign({},ex||{});e.art=list.map(function(q){return [q[0],q[1],q[2],q[3],q[4],0,{flip:q[5]?1:0}]});return [id,nm,pr,list[0][0],"",0,0,0,line,e]}
 /* ---- game room ----
@@ -78,7 +78,7 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_couch","Couch & Console",UP_S,"gmx_couchb",4.3,3.5,3.2,1.3,0,"You sit facing the TV, the way a couch should.",{sit:[[5.2,4.05,1,10,1],[6.6,4.05,-1,10,1]]}),
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"A round rug with a teal pattern under the couch.",{o:{dk:9}}),
   PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
-  PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.6,7.4,3.2,2.1,1,"Felt and chalk.",{cust:[[6.2,6.9,-1],[4.05,8.45,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
+  PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.85,7.65,3.2,2.1,1,"Felt and chalk.",{cust:[[6.45,7.15,-1],[4.3,8.7,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
   PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",8.8,7.0,3.0,1.9,1,"A blue table, two paddles and a net clamp.",{cust:[[8.25,7.95,1],[12.35,7.95,1,GMB]]}),
   PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.4,.3,1.1,1.1,0,"A green upright with a joystick and two buttons.",{cust:[[.95,2.1,1,GMB]]}),
   PL("gm_foos","Foosball",UP_M,"gmx_foos",1.0,2.95,1.3,2.0,0,"Wooden table, eleven rods, a cork ball.",{cust:[[.5,3.95,1],[2.8,3.95,-1,GMB]]}),/* Cal: it stood right in front of the arcade; now a clear tile and a half, room for the arcade player */
