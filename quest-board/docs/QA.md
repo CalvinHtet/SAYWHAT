@@ -749,3 +749,8 @@ rule (the Mall–Karaoke pair is the shortcut that shows only without Bowling); 
    with no wall or curtain; next to the left lounge it doubles the seating. Tuck it into the front-left corner with a low partition
    or curtain so it reads as private, or drop it.
 2. **Fine as is:** the singers face the lyric screen and the audience sees both; the couch faces the stage; nothing crowds the stage.
+
+### Karaoke, round 2 (ROOMS's 6962a6e, on 372346f; `shots/review4_karaoke_full.png`)
+
+Closed; ready for Cal. The Private Booth sits in the front corner behind a low pink partition along its back and side, a nook apart
+from the lounge; nothing outside or overlapping; live guests walk and stand; no page errors.

@@ -290,7 +290,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): the Karaoke Private Booth behind a partition in the front-right corner.
+- QA, ROOMS's 6962a6e, the Karaoke booth (on 372346f; `roomreview.js`, `livebuilding.js`; `shots/review4_karaoke_full.png`): pass, ready
+  for Cal. The Private Booth is a nook in the front corner behind a low pink partition. No page errors. Owner: ROOMS (to Cal).
+- DONE by QA (QA findings: pass, ready for Cal). WAITING ON QA (ROOMS's message): the Karaoke Private Booth behind a partition in the front-right corner.
 - QA, Bowling and VR round 2 (934bb37) and the Karaoke design review (db8a46d), on 6d88259 (`roomreview.js`, `livebuilding.js`,
   `doors.js`; `docs/QA.md`; `shots/review3_*.png`): Bowling and VR closed, ready for Cal (clerk and cook work live, the STRIKE
   screen over the approach end, the VR pairs apart). Karaoke reads as one room (lounge left, stage under the lyric screen, kiosk and
@@ -1259,7 +1261,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Karaoke booth fix, test copy only (`roomreview.js`, `livebuilding.js`). Next: the Nightclub's review; v0.50. (on 65514be)
+- Now: waiting for work. Next: the Nightclub's review (step 16); v0.50. (on 372346f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
