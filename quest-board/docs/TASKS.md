@@ -177,7 +177,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
-- WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
+- TAKEN by QA. WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
   bodies, every pose) and `sheet=hatface` (with every hat and glasses). It is front only like `h_mask`; the back views have no
   layer on purpose. ROOMS could not get the matrix to draw characters headless, so this is unchecked on bodies.
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
@@ -1319,7 +1319,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for LEAD's v0.50 build (Cal: "Skip to v0.50"). Next: its pre-release check. (on ca68144)
+- Now: wear-testing the Rift Mask (dg_riftmask, d4eefc3) on both bodies, test copy only (`matrix.html` sheets). Next: v0.50's
+  pre-release check. (on 5ce9727)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
