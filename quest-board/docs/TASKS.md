@@ -271,6 +271,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's Garden lots (4725457, cd73831, 5fa3fec, on df5d7c3, `rigtest/qa/gardenlots.js`, 6 cases; `shots/garden_lots.png`,
+  `garden_kitchen_full.png`): the lots pass, 3 placement fixes. Pass: each stage draws its own painting (`gdw_s0`, `gdw_s1`, `gdw_s2`),
+  brick walls show with no hedge or glass fence over them, nothing stands outside the lot or pokes through a wall, and the
+  Estate's walls end at the stone coping with a thin edge, no black band. Bare lots are clean. FIX 1, two kinds of beds: each
+  painting has stone-edged beds, and the wooden raised beds stand half on top of them (Back Plot: the tomato and lettuce beds
+  over the back stone bed; the same in the Kitchen Garden and the Estate). Put the raised beds exactly on the painted beds, or
+  paint the lots without beds. FIX 2, the Kitchen Garden's front middle: the rose arch, chicken coop, beehive, iron gate, lamp
+  post, scarecrow, solar panel and water pump all stand within about two tiles and overlap (audit: lantern on the logs, the
+  topiary on the logs and the coop, a tomato bed drawn over a lantern); the gate stands alone on the lawn, not in any fence
+  line. Spread them out and put the gate on the edge with the path. FIX 3, Grow Lamps (`g_lamp`, "Purple light, fast growth")
+  are flat purple panels on poles standing on open lawn away from every bed, so they read as TV screens: hang them over the
+  raised beds, or give them art. No page errors. Owner: ROOMS.
 - QA, the unlock timeline and the economy for Cal's new early game (b1088f8 `ECON.stepLv`, on 2d26053; `rigtest/qa/sim.js` now
   keeps every level-up card and the story steps by name, `unlocks.py`; full map in `shots/unlocks_2d26053.txt`). One unlock = a New
   area, a story step with the lot or room it opens counted once, or a room opened by an upgrade; UI upgrades and Shop restocks are
@@ -729,7 +741,7 @@ Doing:
 - WAITING ON QA: check 28a51ee (rule 17): the Garden is right of the Restaurant in Kode Plaza (building view, Boba's stack one
   along); with both built, the Restaurant's "Garden" arrow (front right, the kitchen end wall has a gap) and the Garden's
   "Restaurant" arrow (top left, a lit doorway in the back-left wall) walk both ways, at every Garden and Restaurant size.
-- TAKEN by QA. WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
+- DONE by QA (QA findings: lots pass, 3 placement fixes for ROOMS). WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
   Estate, each bare and fully bought. Look for: brick walls showing (no hedge or glass fence over them), beds and tools
   standing on the lawn, nothing poking through a wall, the Estate's walls cut at the stone coping with no black band.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
@@ -848,7 +860,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's Garden lots (4725457, cd73831, 5fa3fec), test copy only. Next: LEAD's answer on the unlock timeline. (on 21eee8d)
+- Now: waiting for work. Next: LEAD's fixes for the unlock timeline and ROOMS's Garden placement fixes. (on df5d7c3)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
