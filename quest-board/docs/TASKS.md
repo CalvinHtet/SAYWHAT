@@ -309,7 +309,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.50 (f3c970c, APPV 50), with 9b28444 folded in.
+- QA, v0.50's pre-release check (rule 18 step 2, f3c970c, APPV 50; `shots/v50/`): pass, ready to publish. savecheck.js: every case passes.
+  screens.js at 360 and 390 px: every tab and a room window fit, no errors. Older saves without the areas-seen record (new
+  `areasload.js`, written with the flags that keep an old save's numbers): a level-30 save loads at 30 with all 8 areas, none Soon;
+  a level-3 save keeps the Hall waiting. A brand-new player: character screen, then the Board, v0.50, desktop and phone. New saves
+  to day 12 and 14 (`sim.js`, `unlocks.py`): 12-task Garden day 4, Restaurant, Boba, Dessert offered by day 10, level 33 on day 12;
+  casual Garden and Restaurant by day 14, level 18; watered, never dry; no played day without something to buy. Building backdrops
+  (`backdrops.js`): the Loft, Kode Plaza and Calibur Mall each draw their own (bld_bg_loft, _plaza, _mall), dimmed at 22:00. Doors:
+  36 of 36 on Cal's rule. voice.js: 0 of 1,353. Shop: 44 checks. Trophy Room passes. No page errors anywhere. Owner: LEAD (publish).
+- DONE by QA (QA findings: pass, ready to publish). WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.50 (f3c970c, APPV 50), with 9b28444 folded in.
 - DONE by ROOMS (by design, nothing to change): the sleepHead note below. `data/poses.json`'s `sleepHead` swaps `hat`,
   `glasses` and `mask` to none on purpose: the head lies on the arm and those layers would clip into it. `sleep` and
   `sleepIn` keep masks. Owner: none.
@@ -1333,8 +1341,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.50's pre-release check (f3c970c): savecheck, screens, old-save areas, backdrops, new saves, doors, voice, test copy only.
-  Next: v0.50's published copy. (on 3c88bb7)
+- Now: ROOMS's four team tops (097dccd: wear tests and live) and LEAD's Rift Mask drop odds (v0.51), test copies only. Next:
+  v0.50's published copy. (on e0e5ab5)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
