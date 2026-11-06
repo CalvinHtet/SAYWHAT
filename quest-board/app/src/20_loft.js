@@ -1236,7 +1236,7 @@ function lfWorld(){
       if(LFW.wx==="rain"&&C.T.out)s+='<g class="lfrain" clip-path="url(#lfclip)" transform="translate('+LOFF+',150)">'+lfRainG(300,260,i+4)+'</g>';
       s+=lfRoomLabel(r,i);
       var pend=Math.floor(r.pend||0);
-      if(pend>=1)s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+',-70) scale('+(1/RS)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle cy="-4" r="7" fill="#ffc857"/><text y="14" text-anchor="middle" class="lflbl" fill="#fff">'+pend+'</text></g></g>';
+      if(pend>=1&&(typeof payRoom!=="function"||payRoom()>=1))s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+',-70) scale('+(1/RS)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle cy="-4" r="7" fill="#ffc857"/><text y="14" text-anchor="middle" class="lflbl" fill="#fff">'+pend+'</text></g></g>';
     }
     s+='</g>';
   });

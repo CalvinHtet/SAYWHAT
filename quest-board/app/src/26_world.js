@@ -125,7 +125,7 @@ lfWorld=function(){
     var C=lfRoomCtx(r,i);meta[i]={C:C,p:p,r:r};
     s+='<g data-lf="room:'+i+'">'+lfRoomSvg(r,i,C)+'<g class="lfag" id="lfag'+i+'"></g>'+(C.LT?C.LT.post:'')+'</g>';
     if(LFW.wx==="rain"&&C.T.out)s+='<g class="lfrain" clip-path="url(#lfclip)" transform="translate('+LOFF+',150)">'+lfRainG(300,260,i+4)+'</g>';
-    if(Math.floor(r.pend||0)>=1)s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+','+(MID-(LFFP/2-34)/RS).toFixed(1)+') scale('+(1/RS).toFixed(4)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle r="9" fill="#ffc857"/></g></g>';
+    if(Math.floor(r.pend||0)>=1&&(typeof payRoom!=="function"||payRoom()>=1))s+='<g class="lfbub" data-lf="collect:'+i+'" transform="translate('+LOFF+','+(MID-(LFFP/2-34)/RS).toFixed(1)+') scale('+(1/RS).toFixed(4)+')"><g class="lfbob"><circle r="19" fill="#14121c" stroke="#ffc857" stroke-width="2"/><circle r="9" fill="#ffc857"/></g></g>';
     s+='</g>'});
   s+='<g id="lfagS"></g><g id="lfwxo" pointer-events="none"></g>';
   window.LFMETA=meta;window.LFDIM={w:LFWW,h:Hh,rows:rows,F:rows,lockF:0};
@@ -162,7 +162,7 @@ var PORTALS=[];
 /* when: an optional test; the door only shows while it is true (a stand-in way in while the room's usual neighbour is missing) */
 function portal(from,to,wall,pos,col,label,when){PORTALS.push([from,to,wall,pos,col||"#ffd27a",label||"",when||null])}
 /* a door is only a soft glow on the floor. The arrow floats outside the room and points at where that room really is. */
-function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1])||(q[6]&&!q[6]()))return;var col=q[4],side=q[2],W=C.W,D=C.D,len=.75,dp=.55,lim=side==="BR"||side==="FL"?W:D,p=Math.min(q[3],lim-1);
+function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1])||(q[6]&&!q[6]()))return;var col=q[4],side=q[2],W=C.W,D=C.D,len=.75,dp=.55,lim=side==="BR"||side==="FL"?W:D,p=Math.min(typeof q[3]==="function"?q[3](C):q[3],lim-1);
     var quad=side==="BR"?[[p-len,.02],[p+len,.02],[p+len,dp],[p-len,dp]]:side==="BL"?[[.02,p-len],[.02,p+len],[dp,p+len],[dp,p-len]]:side==="FL"?[[p-len,D-dp],[p+len,D-dp],[p+len,D-.02],[p-len,D-.02]]:[[W-dp,p-len],[W-.02,p-len],[W-.02,p+len],[W-dp,p+len]];
     var hit=' data-act="gotoroom" data-t="'+q[1]+'" style="cursor:pointer"',pts=quad.map(function(k){return lfP(k[0],k[1],0)}).map(lfPt).join(" ");
     C.decals.push('<polygon class="prtG" pointer-events="none" points="'+pts+'" fill="'+col+'" filter="url(#prtBlur)"/>');

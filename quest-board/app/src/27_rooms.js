@@ -254,7 +254,7 @@ portal("bedroom","gameroom","FR",5.6,"#7df9ff","Game Room");portal("gameroom","b
 /* Cal: the Closet's upper (back-right) wall leads up, so the Lair sits above the Closet, its door the painted secret one. */
 portal("closet","lair","BR",1.1,"#2a6bff","Hidden Door");portal("lair","closet","FL",6,"#2a6bff","Closet");
 portal("lair","trophy","BR",10.4,"#ffd27a","Trophy Room");portal("trophy","lair","FL",4,"#58a6ff","Hero's Lair");/* the Lair's upper wall leads up */
-portal("restaurant","garden","FR",7.6,"#9cff8a","Garden");portal("garden","restaurant","BL",1.9,"#ffd27a","Restaurant");/* the knock-through: kitchen end to the Garden's back-left wall */
+portal("restaurant","garden","FR",function(C){return 1.6},"#9cff8a","Garden");/* Cal: the glow sat in the unbuilt front-right corner; on the kitchen's own floor at its open end, at every size */portal("garden","restaurant","BL",1.9,"#ffd27a","Restaurant");/* the knock-through: kitchen end to the Garden's back-left wall */
 portal("restaurant","skybar","BR",5.55,"#ffb46a","Upstairs");portal("skybar","restaurant","FL",2.2,"#ffb46a","Downstairs");
 portal("skybar","rooftop","BR",12.1,"#ffb36b","Roof");portal("rooftop","skybar","FL",3,"#ffb36b","Bar");
 portal("boba","dessert","BR",10.5,"#c79aff","Upstairs");/* the painted stairs at the back wall's far end, off the shaker station */
