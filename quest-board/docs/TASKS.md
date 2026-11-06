@@ -13,8 +13,9 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v48 published for Cal as a fresh pinned test copy (c6a11c9; rule 18). Waiting on Cal's phone test and QA's check
-  of that build. The friends' page stays on v47 until Cal approves 6, 8, 9 and says go. (on c6a11c9)
+- Now: WAITING ON Cal's phone test of v48 (pinned, c6a11c9). QA passed it (saves, screens at 360 and 390, all exercise and
+  Game Room pictures, every file on the page matches the build). Not checked by anyone yet: a real phone, the page's own
+  database. The friends' page stays on v47 until Cal says go. (on c6a11c9)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
