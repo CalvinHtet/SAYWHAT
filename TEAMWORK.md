@@ -145,6 +145,10 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
        Cal starts a fresh game from level 1** (a new artifact with its own empty database, so nothing carries over and he
        tests everything from the ground up); the friends' page and its saves are not touched by this.
     6. Cal tests on his phone and confirms; then the next version starts.
+    - **Changed by Cal, 2026-11-06:** "keep working and publishing more versions. dont wait for my approval. Just keep
+      working and use QA chat as the approval chat. If QA gives you update and feedback fixes, apply that and keep
+      working". So step 6 no longer holds a version: once QA passes a build, LEAD publishes and pins it as the next
+      version, Cal tests whenever he can, and QA's findings are fixed and shipped in the version after.
     - Only LEAD publishes and pins. If Cal does not answer, nobody waits: every chat keeps working on other rooms and
       features (rule 16), and the next version builds up meanwhile.
 
