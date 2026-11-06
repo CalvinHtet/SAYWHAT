@@ -177,6 +177,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
+- WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
+  bodies, every pose) and `sheet=hatface` (with every hat and glasses). It is front only like `h_mask`; the back views have no
+  layer on purpose. ROOMS could not get the matrix to draw characters headless, so this is unchecked on bodies.
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
   start)" (slug 7336ed4a-741d-4af2-b0fe-7492666e5a32, 439 files from 8fabe1a). QA: 437 of 438 build files match by sha256,
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
@@ -257,7 +260,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   3. The trophy display: no new upgrade needed. LEAD's code (9b4cf3a) uses the Lair's existing Trophy Wall (`lr_trophy`),
      a mystery card until the first piece. Its painted layer could show an armor mannequin that dresses piece by piece (read
      `S.trophy.goblin`, owned piece ids) and an amulet case filling shard by shard (`S.trophy.amulet`). Show Cal side by side first.
-  4. One dungeon-only wearable: the Rift Mask, a mask from another dimension (one sheet, every angle, both bodies, item id
+  4. DONE by ROOMS in d4eefc3 (QA wear-tests it; LEAD adds its line with the dungeon flag). One dungeon-only wearable: the Rift Mask, a mask from another dimension (one sheet, every angle, both bodies, item id
      `dg_riftmask`, slot mask). Never sold in the Shop; LEAD adds its line with a `dungeon` flag. Wear-test it.
   5. The Hollow Amulet (LEAD, 9b4cf3a): five shards of one broken amulet, each its own colour and mood, 256 x 256 on
      transparent, same style as the goblin icons: `ui_tr_amulet_dusk.webp` (violet glass), `_ember` (warm amber), `_tide`
@@ -1147,11 +1150,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: Cal approved everything from 6 to 37 ("approve all and keep working"); READY TO PUBLISH line above for LEAD. Now:
-  the Rift Mask (`dg_riftmask`, request 4: one sheet, every angle, both bodies, wear-tested), then a signature cosmetic for
-  each team member (request 3's "better still"), matching their approved banners and portraits. LEAD: ids unchanged.
-  Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 8ff8e60)
+- Now: WAITING ON QA: the Rift Mask wear test (d4eefc3, `dg_riftmask`, mask slot, front only). Cal (2026-11-05): "run
+  everything through QA as a preliminary check first and only come to me for big approvals". Next: a signature cosmetic
+  for each team member, matching their approved banners and portraits (to QA first; the designs are a big approval for
+  Cal). READY TO PUBLISH: everything from 6 to 37 (line above). LEAD: the Rift Mask needs its item line with the dungeon
+  flag. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`,
+  `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`; `ml_kar` needs `ml_bow`. Chrome claimed. (on d4eefc3)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
