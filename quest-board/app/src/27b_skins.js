@@ -84,7 +84,7 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_foos","Foosball",UP_M,"gmx_foos",10.0,6.9,1.3,2.0,0,"Wooden table, eleven rods, a cork ball.",{cust:[[9.5,7.9,1],[11.8,7.9,-1,GMB]]}),/* Cal: down toward the front so the arcade has its corner; clear of the pool table and the doorway */
   PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"A red vending machine, lit from inside.",{cust:[[12.1,1.8,1,GMB]]}),
   PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.05,2.4,.1,2.0,1,"A cluster of hexagon lights in blue and violet.",{o:{dy:-62,h:1,nosh:1,nob:1,dk:30}}),
-  PL("gm_dart","Dartboard",UP_S,"gmx_dart",2.3,.05,1.1,.2,0,"A cork board in a wooden cabinet, three darts.",{o:{dy:-40,h:1,nob:1,nosh:1,dk:30},cust:[[2.85,2.5,1,GMB]]}),
+  PL("gm_dart","Dartboard",UP_S,"gmx_dart",.05,4.5,.2,1.1,1,"A cork board in a wooden cabinet, three darts.",{o:{dy:-52,h:1,nob:1,nosh:1,dk:30},cust:[[2.6,4.6,-1,GMB]]}),/* QA: on the back wall it covered the lit hexes; on the left wall between the light panels and the old TV, thrown at from the open floor */
   ["gm_chair","Gaming Chairs",UP_S,"","",0,0,0,"For when the couch is taken.",{retired:1}],/* Cal on v0.58: the racing chairs looked random; retired, id kept */
   PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
   /* Cal: "The beanbags are not facing the retro tv". The TV stands on the left wall with its screen to the room (unflipped:
