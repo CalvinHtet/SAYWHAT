@@ -575,21 +575,32 @@ async function socLoad(){
     var ws=await db.collection("worlds").limit(60).get();
     SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name});
     SOC.worlds.sort(function(a,b){return (b.t||0)-(a.t||0)});
-    var ps=await db.collection("board").orderBy("t","desc").limit(30).get();
-    SOC.posts=(ps.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})});
+    /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
+    var ps=await db.collection("board").limit(60).get(),all=[];
+    (ps.docs||[]).forEach(function(d){var x=d.data();if(!x||!Array.isArray(x.posts))return;
+      x.posts.forEach(function(p){if(p&&p.text)all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null})})});
+    all.sort(function(a,b){return b.t-a.t});SOC.posts=all.slice(0,30);
     await socCheckPings();
     SOC.loaded=Date.now();SOC.err="";
   }catch(e){SOC.err=(e&&e.code)||"error"}
   SOC.busy=0;socPaint();
 }
+/* visit notes: one doc per sender, pings/<their id>, {sent:{<to id>:{d,t,msg,look,toName}}}, the newest note to each Loft */
+async function socPingsTo(uid){var q=await db.collection("pings").limit(200).get(),out=[];
+  (q.docs||[]).forEach(function(d){var x=d.data(),e=x&&x.sent&&x.sent[uid];if(e&&typeof e==="object")out.push({from:d.id,fromName:x.fromName||"Neighbor",to:uid,toName:e.toName||"",d:e.d||"",t:e.t||0,msg:e.msg||"",look:e.look||null})});
+  return out}
+/* this player's own board and pings docs: read fresh, change, write back, one write at a time */
+function socMine(kind,mut){var run=async function(){var ref=db.doc(kind+"/"+MYUID),s=await ref.get(),d=s.exists?(s.data()||{}):{};
+    mut(d);d.name=(S.char&&S.char.name)||"Neighbor";d.fromName=d.name;d.t=Date.now();await ref.set(d);return d};
+  var p=(SOC.q||Promise.resolve()).then(run);SOC.q=p.catch(function(){});return p}
 async function socCheckPings(){
   if(!socOn())return;var o=socState(),got=[];
-  try{var q=await db.collection("pings").where("to","==",MYUID).limit(100).get();
-    (q.docs||[]).forEach(function(d){var x=d.data();if(!x||x.d!==socToday())return;var key=d.id+"|"+(x.t||0);
+  try{var docs=await socPingsTo(MYUID);
+    docs.forEach(function(x){if(x.d!==socToday())return;var key=x.from+"|"+(x.t||0);
       if(!o.vis.some(function(v){return v.from===x.from}))o.vis.push({from:x.from,name:x.fromName||"Neighbor",look:x.look||null,t:x.t||Date.now(),msg:x.msg||""});
       else{o.vis.forEach(function(v){if(v.from===x.from){v.msg=x.msg||v.msg;v.t=x.t||v.t}})}
       if(!o.seen[key]){o.seen[key]=1;got.push(x)}});
-    var hist=[];(q.docs||[]).forEach(function(d){var x=d.data();if(x)hist.push(x)});hist.sort(function(a,b){return (b.t||0)-(a.t||0)});SOC.notes[MYUID]=hist.slice(0,8);
+    var hist=docs.slice();hist.sort(function(a,b){return (b.t||0)-(a.t||0)});SOC.notes[MYUID]=hist.slice(0,8);
   }catch(e){}
   if(got.length){persist();got.forEach(function(x,k){setTimeout(function(){pop((x.fromName||"A neighbor")+" visited your Loft"+(x.msg?": “"+x.msg+"”":" and said hi")+"  +5% XP today")},k*2400)});if(view==="hideout"&&typeof lfSync==="function")try{lfSync()}catch(e){}}
 }
@@ -630,7 +641,7 @@ function socVisitModal(uid){
   modal(h);socLoadNotes(uid);
 }
 async function socLoadNotes(uid){
-  try{var q=await db.collection("pings").where("to","==",uid).limit(50).get();var a=(q.docs||[]).map(function(d){return d.data()}).filter(Boolean);a.sort(function(x,y){return (y.t||0)-(x.t||0)});
+  try{var a=await socPingsTo(uid);a.sort(function(x,y){return (y.t||0)-(x.t||0)});
     var el=document.getElementById("snnotes");if(el)el.innerHTML=a.length?'<h3 class="label">Guest book</h3>'+a.slice(0,6).map(function(x){return '<div class="snp"><div><b>'+esc(x.fromName||"Neighbor")+'</b><small>'+socAgo(x.t||0)+'</small></div><p>'+esc(x.msg||"Said hi")+'</p></div>'}).join(""):''}catch(e){}
 }
 function socialAct(a,b,e){
@@ -639,16 +650,18 @@ function socialAct(a,b,e){
   if(a==="snhi"){var uid=b.dataset.u,w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w||!socOn())return true;
     var inp=document.getElementById("snmsg"),msg=inp?String(inp.value||"").trim().slice(0,80):"",o=socState(),first=!o.gave[uid];
     b.disabled=true;
-    db.doc("pings/"+MYUID+"_"+uid+"_"+socToday()).set({from:MYUID,fromName:(S.char&&S.char.name)||"Neighbor",to:uid,toName:w.name,d:socToday(),t:Date.now(),msg:msg,look:lookOf()})
+    socMine("pings",function(d){var sent=d.sent&&typeof d.sent==="object"?d.sent:{},cut=Date.now()-14*864e5;
+        Object.keys(sent).forEach(function(k){if(!sent[k]||(sent[k].t||0)<cut)delete sent[k]});
+        sent[uid]={toName:w.name,d:socToday(),t:Date.now(),msg:msg,look:lookOf()};d.sent=sent})
       .then(function(){if(first){o.gave[uid]=1;persist()}pop(first?"Said hi to "+w.name+". +2% XP today":"Note updated");socLoadNotes(uid);b.disabled=false;b.textContent="Update note"})
       .catch(function(er){b.disabled=false;pop("Could not send: "+((er&&er.code)||"error"))});
     return true}
   if(a==="snpost"){var ta=document.getElementById("sntext"),tx=ta?String(ta.value||"").trim().slice(0,280):"";if(!tx||!socOn())return true;
     if(Date.now()-SOC.lastPost<15000){pop("Slow down a little");return true}SOC.lastPost=Date.now();
-    var id=MYUID+"_"+Date.now();db.doc("board/"+id).set({from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:Date.now(),look:lookOf()})
-      .then(function(){SOC.posts.unshift({id:id,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:Date.now()});socPaint()})
+    var pt=Date.now(),lk=lookOf();socMine("board",function(d){var a=Array.isArray(d.posts)?d.posts:[];a.unshift({t:pt,text:tx,look:lk});d.posts=a.slice(0,10)})
+      .then(function(){SOC.posts.unshift({id:MYUID+"|"+pt,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:tx,t:pt,look:lk});socPaint()})
       .catch(function(er){pop("Could not post: "+((er&&er.code)||"error"))});return true}
-  if(a==="sndel"){var pid=b.dataset.p;db.doc("board/"+pid).delete().then(function(){SOC.posts=SOC.posts.filter(function(p){return p.id!==pid});socPaint()}).catch(function(){});return true}
+  if(a==="sndel"){var pid=b.dataset.p,pt2=+pid.split("|").pop();socMine("board",function(d){d.posts=(Array.isArray(d.posts)?d.posts:[]).filter(function(p){return p&&p.t!==pt2})}).then(function(){SOC.posts=SOC.posts.filter(function(p){return p.id!==pid});socPaint()}).catch(function(){});return true}
   return false;
 }
 setInterval(function(){if(socOn()&&!document.hidden){socCheckPings();socPublish()}},120000);

@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal: his phone test of v0.51, published and pinned on his go ("Pin v0.51 when ready"), 454 files from
-  ac8d2f0. WAITING ON QA for the page check. Nobody else plays until there is a working version. (on 3abcab6)
+- Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Meanwhile: town database rules,
+  WAITING ON QA. Nobody else plays until there is a working version. (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -68,7 +68,7 @@ To do:
       2 to 5% on the woman (her long hair over the sleeves: a flat picture sits over or under all of it). Waiting on ROOMS.
 - [x] Stretch pose: the gentler yawn (Cal's pick), 0959719. Dark long sleeves still look torn at the elbow, as before.
 - [x] `lfvar.json`: a copy is in git at `app/lfvar.json` (0959719). `build.py` does not use it.
-- [ ] Town database rules, apply with the v48 publish (live page has none: any Contributor can overwrite any shared row).
+- [x] Town database rules (code in NEXT, rules declared at the next publish from `app/dbcaps.json`). Was: apply with the v48 publish (live page has none: any Contributor can overwrite any shared row).
       Saves are already private (`data/users/<id>/state`). Declare with the page's db capability:
       `{path:"worlds",read:"view",write:"owner"},{path:"worlds/{self}",read:"view",write:"interact"}` (ids are the player's
       `user.id()`). Board posts and visit pings use `<uid>_<time>` ids, which `{self}` cannot match: move them to
@@ -195,6 +195,13 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.51 (rule 18): the pinned artifact "Quest Board v0.51 (test, fresh start)" (slug
   936a4ed4-352b-4086-bf94-70d28d1b22a3, 454 files from ac8d2f0, db + user + sample with images). Check the page matches the build.
+- WAITING ON QA: check NEXT, the town database rules. The town board and visit notes move to one doc per player
+  (`board/<id>` holds their last 10 posts, `pings/<id>` their newest note to each Loft, 14 days), so the rules in
+  `app/dbcaps.json` can let each player write only their own doc (`worlds`, `board`, `pings`: everyone reads, `{self}`
+  writes, the owner tidies; `diag` owner only). LEAD's two-player test on a stand-in database that refuses other players'
+  docs: 16 of 16 pass (posts, delete, visit note, one note per visitor, the visit buff, no refused writes, no page errors),
+  script in `shots/townrules_lead.js` (port 8766). Not checkable headless: the real rules on a real page with two accounts,
+  which is QA's 15-player test after the next publish. LEAD declares `app/dbcaps.json` at that publish.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into

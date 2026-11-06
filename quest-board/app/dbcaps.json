@@ -1,0 +1,19 @@
+{
+  "_": "LEAD: the page's whole capability declaration, passed to declare_capabilities after each publish. Saves live in data/users/<id>/ (private by default). worlds, board and pings hold one doc per player, named by their user.id(): everyone signed in reads them, each player writes only their own, the owner can tidy. diag is the owner's phone log.",
+  "capabilities": {
+    "db": {
+      "rules": [
+        {"path": "worlds", "read": "view", "write": "owner"},
+        {"path": "worlds/{self}", "read": "view", "write": "interact"},
+        {"path": "board", "read": "view", "write": "owner"},
+        {"path": "board/{self}", "read": "view", "write": "interact"},
+        {"path": "pings", "read": "view", "write": "owner"},
+        {"path": "pings/{self}", "read": "view", "write": "interact"},
+        {"path": "diag", "read": "admin", "write": "owner"},
+        {"path": "player", "read": "owner", "write": "owner"}
+      ]
+    },
+    "sample": {"images": true},
+    "user": {}
+  }
+}
