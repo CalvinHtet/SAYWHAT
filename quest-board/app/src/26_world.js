@@ -404,3 +404,17 @@ LFROOM.restaurant=function(C){
   ADDREQ.r_bigmenu="r_scr";
   RS_UPS.push(["r_noir","Noir",2500,{p:.8,lv:28,g:"Expansion",also:"r_x2",splash:"The walls go charcoal, the floor goes dark walnut and the lights drop low. This is the look of a Michelin star."},"Charcoal walls, dark walnut floor, low light. Everything changes."]);
   RS_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});ADDONS.restaurant=RS_UPS})();
+/* The team in their own rooms (LEAD's request 3): each member who has joined stands in their home room in their own look,
+   with a ring in their colour and a name tag so they stand out from the guests. */
+var TMHOME={mara:"restaurant",rafe:"skybar",nova:"mall",theo:"theater",sable:"lair"};
+var lfDesiredTmBase=lfDesired;
+lfDesired=function(){var out=lfDesiredTmBase(),Q=window.__qbTeam;if(!Q||!Q.list)return out;
+  try{Q.list().forEach(function(id){var home=TMHOME[id],T=Q.TEAM[id];if(!home||!T)return;var i=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===home&&i<0)i=k});
+    if(i<0||!LFMETA[i])return;var L=T.look||{},eq=[];Object.keys(L.equipped||{}).forEach(function(s){var e=L.equipped[s];if(e&&e.art)eq.push(e.art)});
+    out.push({id:"tm:"+id,room:i,role:"crew",look:rsNpc(Object.assign({},RSK,{body:L.body||"m",hairStyle:L.hairStyle||"h1",hairColor:L.hairColor||"brown",eq:eq})),idle:1,wand:1,tm:id,tmc:T.ac||"#ffd27a",tmn:T.name.split(" ")[0]})})}catch(e){}
+  return out};
+var lfAgentGTmBase=lfAgentG;
+lfAgentG=function(a){var g=lfAgentGTmBase(a);if(!a.tm)return g;
+  var ring='<ellipse rx="'+(15*LFBIG*LFK).toFixed(1)+'" ry="'+(6.5*LFBIG*LFK).toFixed(1)+'" fill="none" stroke="'+a.tmc+'" stroke-width="2" opacity=".9"/>',
+    y=(-170*LFSC-6).toFixed(1),tag='<g class="lftm" transform="translate(0,'+y+')"><rect x="-22" y="-9" width="44" height="12" rx="6" fill="rgba(10,10,20,.78)" stroke="'+a.tmc+'" stroke-width="1"/><text x="0" y=".6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+esc(a.tmn)+'</text></g>';
+  return g.replace('<g class="lfs">',ring+'<g class="lfs">').replace(/<\/g>$/,tag+'</g>')};
