@@ -1827,13 +1827,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on c382557): SAYMØRE (sm_*). Uncommitted: data/items.json (15 sm_* entries) and the sm_* art. 9 of 15 ingested; Rig Vest,
-  Night Cargo, Bass Shorts painting; then the 3 shoes, badge and banner, one commit for the brand. After that: the yawn layers
-  for NICE COCK's and Kode PinK's tops, plaza s2..s6. Brand runway (rule 19): OK, 31 days. WITH QA: c382557 the Kode PinK bag
-  (outline cut away; QA's only Kode PinK fail), the seven friend portraits. WAITING ON CAL: Game Room ping-pong (drop it?).
-  Chrome: ROOMS.
+- Now (on 9e19cdf): nothing open in files. Next: the yawn layers for the new brands' tops (NICE COCK 4, Kode PinK 4, SAYMØRE 4),
+  plaza s2..s6; brands from BRANDS_15 (SMOKE BOMB first) when rule 19 fires. Brand runway: OK, 31 days.
+  WITH QA: 9e19cdf SAYMØRE (15 pieces + badge + banner, id "sm"; shop lines sent to LEAD), c382557 the Kode PinK bag, the seven
+  friend portraits. WAITING ON CAL: Game Room ping-pong (drop it?). Chrome: ROOMS.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on c382557)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 9e19cdf)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
