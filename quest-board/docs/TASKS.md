@@ -838,8 +838,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 3, the Boba shop (`27b_skins.js`, new art `bbw_t1`): a painted shell like the Restaurant's (Cal: every
-  room cohesive, never cluttered), the door upstairs moved off the Shaker Station. Step 2's Restaurant polish is done
+- Now: storyboard step 4, the Dessert Parlor (`27b_skins.js`, `27_rooms.js`, new art `dsw_t1`): a painted shell with the
+  hidden bookcase door to the speakeasy, the stairs down on its front-left edge (Cal's door rule). Step 3's Boba shop is done
+  (c223d89, approval 23). Step 2's Restaurant polish is done
   (a9a572c, d1d7c73; approval 22). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
   approval 20 with Cal). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
@@ -852,7 +853,7 @@ Doing:
 - DONE by QA (QA findings: pass). WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
-  12-minute loop running (rule 16). (on c223d89)
+  12-minute loop running (rule 16). (on 13d7cca)
 - WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
   painted at the back wall's far end (nothing standing on its glow); the new side door: Boba "Garden" arrow (top left) and
   the Garden's "Boba Shop" arrow (bottom right) walk both ways; the Neon Cup Sign high over the tea jars.
