@@ -6,15 +6,15 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: free
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.57 (b279091), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.58 (859d941), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.57 published and pinned (b279091; QA: the page matches). v0.58 (859d941, APPV 58) WAITING ON QA, published as
-  soon as QA passes it. (on 859d941)
+- Now: v0.58 published and pinned (859d941), WAITING ON QA for the page check. Nothing open from QA. Next version when new
+  work passes QA. (on 859d941)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -290,6 +290,8 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   creator is open (`app/index.html`), since it covered a creator button wherever it sat (your note, last at 375x548). It is
   back on the Board after Begin. `shots/ccbegin.js` at 375x548, 390x664, 844x390, 1280x800: Begin on screen and tappable, no
   page errors.
+- WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
+  462 files from 859d941, the 9 db rules + user + sample with images, version 1793973604-fe09). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
