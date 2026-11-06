@@ -14,8 +14,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.62 built from 081ac04 (APPV 62, clean worktree; ROOMS's Restaurant round 2 through 4b7ef27 and 5d0986c). WAITING
-  ON QA's full set on that exact hash, then LEAD publishes and pins. Waiting on Cal: the town hall pick, a launch date, reruns
-  on Mon/Thu once the new brands run out. (on 081ac04)
+  ON QA's full set on that exact hash, then LEAD publishes and pins. Since then (next version): 01deb94 reactions (no coin cap)
+  and the Hall badge, reruns on; 436a82b rule 19, new brands made without Cal's approval (brand_runway.py, BRAND_AUTOGEN.md).
+  Kode PinK rows after QA's wear test (ROOMS 1dde4e1, id kp). Waiting on Cal: a launch date. (on 436a82b)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
