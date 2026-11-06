@@ -462,6 +462,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.63 (f5234d3, APPV 63): pass, publish. My clean build matches LEAD's served copy file for file (495 of 495; 21 files, 475
+  art). On the exact build: savecheck; screens at 360 and 390; v0.62's own build makes a save that v0.63 loads, reloads, buys on and
+  reloads; the level-5 start; Kode Plaza stages 0-2 and tapping in; town rules, townlive 5/5, townrx 12/12; doors 34 ok plus Garden
+  and Restaurant walked both ways live; Begin at 10 sizes; diag/load (19 scripts); the team; voice.js 1,422 lines, 0 hits; the Shop,
+  157 pieces on him and 161 on her bought and worn, Kode PinK and SAYMØRE included; Wednesday returns and launch reruns (96 slots,
+  0 repeats, 0 still-live drops, two pages agree); all 30 rooms drawn, 21 of 21 buy through; the room tester walks all 17 story rooms;
+  friends (16 visits, every figure drawn, rooms, dogs); Collect; the street camera upright and on its side. No page errors.
+  SMOKE BOMB's ids are in items.json only and show nowhere. Still as accepted before: the mall's escalator in front of the Bowling and
+  Karaoke doors. Owner: LEAD (publish and pin).
 - QA, LEAD's b85b038 halo-mask rules (on 2282af8; `shots/qa/sm/*_2282af8.png`, new `sleeper.js`, `maskbed.js`): pass, so SAYMØRE is
   15 of 15. The mask stays on in all 22 poses on both bodies, sleepHead included; every glasses and face piece (shades, butterfly,
   wrap, V-shade, goggles, the Rift Mask, NC shades, SMOKE BOMB's cowl) is hidden under it, gaiter and buff too; in the real Bedroom
@@ -2016,7 +2025,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. SAYMØRE 15 of 15 (mask rules pass). Next: SMOKE BOMB's wear test when ROOMS sends it. (on 2282af8)
+- Now: v0.63 (f5234d3) passes: LEAD publishes; then QA checks the published files. Next: SMOKE BOMB's wear test when ROOMS sends it. (on fce08e7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
