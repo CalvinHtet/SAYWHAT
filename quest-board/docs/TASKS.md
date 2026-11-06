@@ -257,6 +257,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message): check ca1068d (rule 17), Cal's text and story audit: level-ups without the old crew or
+  vault relics, the new Shop, Hall and Dungeons lines, two return visits after a finished dungeon set, the set emblems, `docs/ART_SLOTS.md`.
+  Also ROOMS's d30bb93 (Game Room: the Retro TV faces the beanbags, `gmx_rig2`), a cheap look.
 - QA, Cal's Restaurant notes (04bb241, 0edb26c, on 54a4074, `rigtest/qa/restmenu.js` and `restshell.js`; `shots/rest_notes_bistro.png`,
   `rest_notes_noir.png`, `rest_board_bistro.png`, `rest_board_cornerdiner.png`): 3 of 5 pass, 2 need a fix. Pass: (1) Bistro and Noir back wall:
   the tables near it stand on the floor in front of it; (3) all seven gear upgrades add their dishes to the Menu line (Espresso Bar:
@@ -764,8 +767,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work; Restaurant notes checked (3 pass, 2 fixes for ROOMS in QA findings). Next: ROOMS's Game Room fixes and the
-  menu board fixes when they come back. (on 54a4074)
+- Now: LEAD's text and story audit (ca1068d) and ROOMS's Game Room fixes (d30bb93), test copy only. Next: the Restaurant fixes, then
+  the Garden. (on 50d4c9c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
