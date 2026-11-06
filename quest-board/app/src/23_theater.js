@@ -117,9 +117,10 @@ LFROOM.theater=function(C){
   /* games at the back right, behind the end of the line; the standee by the box office */
   if(H("t_arc"))lfSpr(C,"thx_arcade",8.4,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:92});
   if(H("t_claw"))lfSpr(C,"thx_claw",9.7,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:90});
-  /* two sofas in an L round a shared corner (QA: one lone sofa read as leftover; the art only faces the viewer) */
-  if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,5.0,6.4,1.2,2.4,{h:30,H:58});lfSpr(C,sk,6.4,5.0,2.4,1.2,{h:30,H:58,flip:1})}
-  if(H("t_standee"))lfSpr(C,"thx_standee",2.2,.4,.8,.5,{h:30,ctr:1,H:84});
+  /* two sofas in an L in the back-left corner under the trailer screen (QA design review) */
+  if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,.2,.5,1.2,2.4,{h:30,H:58});lfSpr(C,sk,1.6,.2,1.8,1.1,{h:30,H:58,flip:1})}
+  /* the standee by the entrance mat, where people walk in and take the picture */
+  if(H("t_standee"))lfSpr(C,"thx_standee",W-1.9,6.7,.8,.5,{h:30,ctr:1,H:84});
   /* the bins by the concession; the poster stand stays out of the picture (it hid the liquor wall and had no poster) */
   if(H("t_bins"))lfSpr(C,lux4?"loL_bins":"lo_bins",3.4,5.2,.8,.8,{h:26,ctr:1,H:52});
   /* the wing: the bar */
@@ -196,7 +197,8 @@ LFROOM.auditorium=function(C){rsArtReady();
   /* the raised back landing reads as one (QA design review): a lighter deck, a low wall along its edge with the aisle left
      open, and a lit EXIT where the aisle steps arrive (the Lobby door is at that end) */
   lfTbox(C,DX,0,W-DX,D,0,DZ,H("au_lux2")?"#2e2e3a":"#2a2430",H("au_lux2")?"#4a4a5e":"#43394c");
-  lfTbox(C,DX,1.75,.2,D-1.85,DZ,15,"#1a1520",H("au_lux2")?"#c9a24a":"#5e5068");
+  lfTbox(C,DX,1.75,.2,D-1.85,DZ,15,"#1a1520","#d8b45a");
+  for(var ly=2.1;ly<D-.2;ly+=.75)C.add(DX+ly+.25,'<circle cx="'+lfP(DX-.02,ly,DZ+5)[0].toFixed(1)+'" cy="'+lfP(DX-.02,ly,DZ+5)[1].toFixed(1)+'" r="1.8" fill="#ffd27a"/><circle cx="'+lfP(DX-.02,ly,DZ+5)[0].toFixed(1)+'" cy="'+lfP(DX-.02,ly,DZ+5)[1].toFixed(1)+'" r="5" fill="#ffd27a" opacity=".22"/>');
   C.walls.push(lfFaceY(W-1.5,0,DZ+66,'<rect width="30" height="13" rx="2" fill="#0c3a1c" stroke="#3dff7a" stroke-width="1"/><text x="15" y="9.6" font-size="8" font-weight="700" fill="#8dffae" text-anchor="middle" font-family="sans-serif">EXIT</text>'));C.plat.push({x0:DX,y0:0,x1:W,y1:D,z:DZ,key:DX+.01});
   var steps=Math.ceil((DX-3.6)/.6);for(var j=0;j<steps;j++){var sz=DZ*(j+1)/steps;lfTbox(C,3.6+.6*j,.2,.6,1.4,0,sz,carpS,carpT);if(H("au_aisle"))lfTbox(C,3.6+.6*j,1.55,.6,.05,sz-1,1,"#6cc0ff","#a8dcff");C.plat.push({x0:3.6+.6*j,y0:.2,x1:3.6+.6*(j+1),y1:1.6,z:sz,key:3.6+.6*(j+1)+.01})}
   /* screen */
