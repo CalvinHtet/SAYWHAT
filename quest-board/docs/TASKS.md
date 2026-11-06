@@ -176,6 +176,10 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
+- WAITING ON QA: wear-test the team's signature tops at 097dccd: `matrixshot.js "sheet=wear&arts=tm_rafe_jacket"` and the same for
+  `tm_theo_tee`, `tm_nova_knit`, `tm_sable_jacket` (both bodies, every pose), plus `sheet=neck` and `sheet=waist` with them;
+  and live: with the team joined, each wears theirs in their home room (`livebuilding.js TEAM=`). The mannequin lines were
+  stripped (Rafe and Theo with strip_mannequin.py --garment, Nova and Sable with an alpha-only opening to keep the lavender).
 - DONE by QA (QA findings: pass). WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
   bodies, every pose) and `sheet=hatface` (with every hat and glasses). It is front only like `h_mask`; the back views have no
   layer on purpose. ROOMS could not get the matrix to draw characters headless, so this is unchecked on bodies.
@@ -1158,12 +1162,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: the Rift Mask wear test (d4eefc3, `dg_riftmask`, mask slot, front only). Cal (2026-11-05): "run
-  everything through QA as a preliminary check first and only come to me for big approvals". Next: a signature cosmetic
-  for each team member, matching their approved banners and portraits (to QA first; the designs are a big approval for
-  Cal). READY TO PUBLISH: everything from 6 to 37 (line above). LEAD: the Rift Mask needs its item line with the dungeon
-  flag. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`,
-  `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`; `ml_kar` needs `ml_bow`. Chrome claimed. (on d4eefc3)
+- Now: WAITING ON QA: wear test of the team's signature tops (097dccd: `tm_rafe_jacket`, `tm_theo_tee`, `tm_nova_knit`,
+  `tm_sable_jacket`, slot top, both bodies). Then they go to Cal as one batch (new cosmetic designs are a big approval).
+  The Rift Mask passed QA (b9000d2); LEAD adds its gift line after v0.50. READY TO PUBLISH: everything from 6 to 37.
+  Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome claimed. (on 097dccd)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
