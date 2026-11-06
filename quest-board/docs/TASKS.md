@@ -1240,7 +1240,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Rhythm and VR notes when ROOMS fixes them; v0.50. (on cbc2535)
+- Now: waiting for work. Next: the Rhythm and VR notes when ROOMS fixes them; v0.50. (on 1bb627d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
