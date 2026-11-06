@@ -1322,7 +1322,10 @@ function ccAct(a,b,e){
        a new character begins at that level with its trials passed and the areas below it already open; the class is still theirs to pick */
     if(first&&typeof QB_TEST_START==="number"&&QB_TEST_START>1){S.xp=Math.max(S.xp||0,cum(QB_TEST_START));
       GATES.forEach(function(g){if(g<=QB_TEST_START&&S.gates.indexOf(g)<0)S.gates.push(g)});
-      AREAS.forEach(function(x){if(x[2]<QB_TEST_START)S.areaOn[x[0]]=1});S.unlockDay=""}
+      AREAS.forEach(function(x){if(x[2]<QB_TEST_START)S.areaOn[x[0]]=1});S.unlockDay="";
+      /* and the coins that player would have earned on the way (QA): quest pay on the XP so far plus each level's pay, marked paid */
+      var tc=Math.round(cum(QB_TEST_START)*2.5),pl;for(pl=(S.lvPaid||1)+1;pl<=QB_TEST_START;pl++)tc+=levelPay(pl);
+      S.coins=(S.coins||0)+tc;S.earnedC=(S.earnedC||0)+tc;S.lvPaid=Math.max(S.lvPaid||0,QB_TEST_START)}
     render();persist();
     if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your first quest awaits.")}
     else pop("Look saved");
