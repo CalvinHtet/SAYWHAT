@@ -123,7 +123,7 @@ function lfPolyS(pts,fill,extra){return '<polygon points="'+pts.map(lfPt).join("
 function lfRoomLight(C,uid,t,out){
   /* an open-air room (C.noshell 2: the Rooftop, the Sky Patio) has no walls, so its light stops just above the rail
      instead of tinting a wall-high box of sky */
-  var L=out?lfLS():lfInLS(C),N=LF.W,M=LF.D,H=C.noshell===2?(t==="rooftop"&&window.LFSPR&&LFSPR.rfw_t1?60:40):LF.H,U=29.07,res={pre:"",mid:"",post:""},defs="",id=function(n){return "lf"+n+uid};
+  var L=out?lfLS():lfInLS(C),N=LF.W,M=LF.D,H=C.noshell===2?(t==="rooftop"&&window.LFSPR&&LFSPR.rfw_t1?60:40):LF.H,U=29.07,res={pre:"",mid:"",post:""},defs="",R=(window.LFRID=(window.LFRID||0)+1),id=function(n){return "lf"+n+uid+"_"+R}/* Cal: shadows vanished for a moment after a buy; ids unique per render, so a repaint never points at filters being swapped out */;
   var floor=[lfP(0,0,0),lfP(N,0,0),lfP(N,M,0),lfP(0,M,0)];
   var hexIn=out?[lfP(-.2,-.2,-8),lfP(N+.2,-.2,-8),lfP(N+.2,-.2,H+16),lfP(-.2,-.2,H+16),lfP(-.2,M+.2,H+16),lfP(-.2,M+.2,-8)]:C.rsW?[lfP(0,M,H),lfP(0,0,H),lfP(C.rsW,0,H),lfP(C.rsW,0,36),lfP(N,0,36),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)]:[lfP(0,M,H),lfP(0,0,H),lfP(N,0,H),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)];
   var hs=lfHull(floor.concat([lfP(0,0,64),lfP(N,0,64),lfP(N,M,64),lfP(0,M,64)]));
@@ -164,19 +164,19 @@ function lfRoomLight(C,uid,t,out){
   }else if(out&&L.direct>.04&&L.el>0){
     /* outdoors: long sun shadows only */
     var uxo=-Math.cos(L.S.az*Math.PI/180),uyo=-Math.sin(L.S.az*Math.PI/180),ho=Math.hypot(uxo,uyo)||1,tn=Math.max(Math.tan(L.el*Math.PI/180),.18),sh="";uxo/=ho;uyo/=ho;
-    (C.obsRaw||[]).forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;var h=b.h||26,Ls=Math.min(3,(h/U)/tn),pts=[[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]]];
-      sh+=lfPolyS(lfHull(pts.concat(pts.map(function(p){return [p[0]+uxo*Ls,p[1]+uyo*Ls]})).map(U2)),"#101830")});
-    defs+='<filter id="'+id("bf")+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4"/></filter>';
-    res.pre+='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("bf")+')" opacity="'+(L.direct*.26).toFixed(2)+'">'+sh+'</g>';
+    (C.obsRaw||[]).forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;var h=b.h||26,Ls=Math.min(2.2,(h/U)/tn),pts=[[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]]];
+      sh+=lfPolyS(lfHull(pts.concat(pts.map(function(p){return [p[0]+uxo*Ls,p[1]+uyo*Ls]})).map(U2)),"#2b2116")});
+    defs+='<filter id="'+id("bf")+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.4"/></filter>';
+    res.pre+='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("bf")+')" opacity="'+(L.direct*.17).toFixed(2)+'">'+sh+'</g>';/* Cal: "too harsh and look unnatural": warm brown, feathered, lighter (was hard navy) */
   }
   /* always: contact shadows */
   /* one soft shadow per floor piece (lfSpr records them in C.shd; drawn pieces with no sprite still come from the
      walk boxes), the same blur and strength everywhere, a little wider at the front so it shows past solid bases */
   var cs="",cb=(C.shd||[]).concat((C.obsRaw||[]).filter(function(b){return !b.spr}));cb.forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;/* QA: on the near-black floors (Lock and Key, Speakeasy, Arcade, Rhythm, Karaoke, Club, Lair, Trophy Room) the shadow
      vanished; there it is pure black, stronger and a little wider */
-  var dkF={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t],p=.12,q=dkF?.44:.34;
-  cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],dkF?"#000":"#0b0f24")});
-  if(cs){var dkO={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t];defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="'+(dkO?3.8:3.4)+'"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(dkO?.92:.5+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
+  var dkF={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t],p=dkF?.12:.16,q=dkF?.44:.4;
+  cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],dkF?"#000":"#1c1410")});
+  if(cs){var dkO={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t];defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="'+(dkO?3.8:4.6)+'"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(dkO?.92:.42+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
   /* emitters */
   var lights=(C.lights||[]).slice();
   if(!out&&lfLit(C))lights.push([N*.5,M*.5,100,"#ffe6bd",4.6,.55]);
@@ -545,8 +545,8 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
      under the furniture, a little wider than the base so solid pieces (sofas, beds) show one as clearly as leggy ones. */
   if(o.shz!=null){/* a piece standing on a raised deck or tier (o.shz = its height): the same soft shadow, drawn right
      under it at that height, since a floor shadow would be hidden under the deck */
-    if(!C._sfd){C._sfd=1;C.add(-999,'<defs><filter id="lfsoft'+C.uid+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter></defs>')}
-    var zz=o.shz,p2=.1,q2=.3;C.add(x+w+y+d-(o.dk||0)-.02,'<g filter="url(#lfsoft'+C.uid+')" opacity=".6" pointer-events="none">'+lfPolyS([lfP(x-p2,y-p2,zz),lfP(x+w+q2,y-p2,zz),lfP(x+w+q2,y+d+q2,zz),lfP(x-p2,y+d+q2,zz)],"#000")+'</g>')}
+    if(!C._sfd){C._sfd="lfsoft"+C.uid+"_"+(window.LFRID=(window.LFRID||0)+1);C.add(-999,'<defs><filter id="'+C._sfd+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter></defs>')}
+    var zz=o.shz,p2=.14,q2=.36;C.add(x+w+y+d-(o.dk||0)-.02,'<g filter="url(#'+C._sfd+')" opacity=".5" pointer-events="none">'+lfPolyS([lfP(x-p2,y-p2,zz),lfP(x+w+q2,y-p2,zz),lfP(x+w+q2,y+d+q2,zz),lfP(x-p2,y+d+q2,zz)],"#1c1410")+'</g>')}
   else if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){(C.shd=C.shd||[]).push([x,y,x+w,y+d])}
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   /* o.act: the sprite is a button (data-act, a pointer cursor, and it takes clicks even where the room picture does not) */
