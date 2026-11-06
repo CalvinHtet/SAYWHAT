@@ -13,8 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.51 built (ac8d2f0: the Rift Mask after the Spire's pieces, the team's tops), WAITING ON QA for its pre-release check.
-  v0.50 is pinned for Cal (QA: the page matches). Nobody else plays until there is a working version. (on ac8d2f0)
+- Now: WAITING ON Cal: his phone test of v0.50 (pinned). v0.51 (ac8d2f0) passed QA's pre-release check (a25876d) and is held,
+  per rule 18 step 6: it is published as a fresh pinned copy when Cal reports on v0.50 or says go. Nobody else plays until
+  there is a working version. (on 3ef2780)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
