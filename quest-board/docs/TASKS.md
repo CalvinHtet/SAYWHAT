@@ -320,7 +320,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
   the player (the Board's Class Awakening card). `shots/teststart.js`: name, Begin -> level 5, gates 5, the Garden lot offered
   about 6 s later, no page errors. On the Before release list now: QB_TEST_START back to 0.
-- WAITING ON QA: LEAD's 3d7f57a, the level-5 test start's coins (your note on d9d92d7). A new test character gets what a real
+- TAKEN by QA. WAITING ON QA: LEAD's 3d7f57a, the level-5 test start's coins (your note on d9d92d7). A new test character gets what a real
   level-5 player has earned: quest pay on the XP so far (2.5 per XP) plus the pay for levels 2-5, 1,205 coins, with lvPaid = 5
   so the next level-up pays only its own level (`shots/lvnext.js`: 1,205, then 1,365 at level 6). Not the Garden's 1,500 yet,
   as for a real player; Add 10,000 coins still covers testing. Goes into the rebuilt v0.61 with ROOMS's Garden lot.
@@ -1763,8 +1763,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.61 (d9d92d7, covering v0.59 and v0.60; Cal waiting to test the Garden), clean copy on 8784. Next: ROOMS's 6f04ed8
-  (Game Room). (on 8b35bbc)
+- Now: LEAD's 3d7f57a (test-start coins) and ce07425 (the walking blink), on 1e921e4's clean copy. Next: ROOMS's Garden lot and
+  Game Room fixes, then the rebuilt v0.61. (on 7b2380c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
