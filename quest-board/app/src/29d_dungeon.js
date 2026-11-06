@@ -59,7 +59,8 @@ function dgRoll(mid){var L=DGLOOT[mid];if(!L)return null;var chance=L.gift+dgBuf
   var t=dgState(),miss=L.p.filter(function(id){return !dgHas(L.set,id)}),pity=(S.trophy._dry||0)>=5;
   var r=Math.random();
   if(miss.length&&(pity||r<.32)){S.trophy._dry=0;return {kind:"piece",set:L.set,id:miss[Math.floor(Math.random()*miss.length)]}}
-  if(DGWEAR.from.indexOf(mid)>=0&&!S.owned[DGWEAR.id]&&Math.random()<DGWEAR.chance)return {kind:"wear",id:DGWEAR.id};
+  /* the mask is the Spire's last prize: it can come home only once its set pieces are all found (QA: it was dropping before them) */
+  if(DGWEAR.from.indexOf(mid)>=0&&!miss.length&&!S.owned[DGWEAR.id]&&Math.random()<DGWEAR.chance)return {kind:"wear",id:DGWEAR.id};
   S.trophy._dry=(S.trophy._dry||0)+1;var q=MS_LIST.filter(function(x){return x.id===mid})[0]||{c:150,x:30};
   return {kind:"coins",n:Math.round(q.c*(.6+Math.random()*.6)/10)*10}}
 function dgIcon(set,id,big){var u=window.QBART&&QBART["ui_tr_"+TSETS[set].art+"_"+id+".webp"];
