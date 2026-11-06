@@ -290,6 +290,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): the Arcade fixes (sticker booth, prize clerk live, Rhythm and VR doors) and the lobby sofa.
 - QA, round 3 (5e3a780) and the Arcade's design review (cb5f568), on eb04985 (`theaterreview.js`, `audreview.js`, `arcadereview.js`,
   `livebuilding.js`, `doors.js`; `docs/QA.md`; `shots/review_theater3.png`, `review_aud3_full.png`, `review_arcade*.png`): the Theater
   lobby and the Auditorium are closed and ready for Cal (sofas on the back wall, the landing lit along its edge; small: the right
@@ -1227,7 +1228,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Arcade notes when ROOMS fixes them; v0.50. (on eb04985)
+- Now: ROOMS's Arcade fixes and the lobby sofa, test copy only (`arcadereview.js`, `livebuilding.js`, `doors.js`). Next: v0.50.
+  (on 618b5eb)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
