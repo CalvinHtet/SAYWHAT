@@ -1957,7 +1957,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.62 (081ac04) checked: all pass but the Diner's small menus overlapping the ORDERS board; hold for that nudge, then a quick recheck and publish. (on c9681cd)
+- Now: v0.62 (081ac04) checked: all pass but the Diner's small menus overlapping the ORDERS board; hold for that nudge, then a quick recheck and publish. Waiting on ROOMS's nudge or Cal's call to publish as is. (on b37c0e5)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
