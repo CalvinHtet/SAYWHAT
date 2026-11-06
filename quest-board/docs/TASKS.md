@@ -333,7 +333,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: Mall design review round 2 at 0eb00c2: your four notes (directory retired; Karaoke now upstairs from
+- TAKEN by QA. WAITING ON QA: Mall design review round 2 at 0eb00c2: your four notes (directory retired; Karaoke now upstairs from
   Bowling, so the left wall's back storefront is the Theater's way through and rolls up once the Theater is open; the
   escalator reaches a painted upper landing; every Mall door pair on Cal's rule). Check the doors both ways with the
   Theater, Arcade, Bowling and Karaoke open, and a save that already owns Karaoke without Bowling.
@@ -1164,7 +1164,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Mall notes when ROOMS sends them; v0.50 when LEAD builds it. (on d916e6b)
+- Now: Mall round 2 (0eb00c2), test copy only (`mallreview.js`, `doors.js`, `retired.js`). Next: v0.50 when LEAD builds it.
+  (on 4abcf36)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
