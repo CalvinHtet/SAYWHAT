@@ -1827,8 +1827,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting. Next: LEAD's render() focus fix; ROOMS's console line and Cal's v0.58 notes (shadows, the Garden look, the
-  bench, the plaza backdrop on a phone); LEAD's Garden wording and room zoom speed. (on fa8efd9)
+- Now: LEAD's ab7fcae (render() focus; the Garden reveals nothing early; Mara at 12 sold), with the unlock order rerun. (on ab7fcae)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
