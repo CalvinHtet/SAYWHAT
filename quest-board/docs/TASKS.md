@@ -282,6 +282,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.49 (8fabe1a): savecheck.js, screens.js,
+  a new save from level 1 to the Restaurant, and what changed since v0.48.
 - QA, LEAD's 912f32c (on b8742cd; `sim.js`, `unlocks.py`, `water.py`; `shots/unlocks_water_b8742cd.txt`): pass. (1) Early unlocks in
   their own level's order, one a day: 12-task The Loft day 1, Hall 3, Garden 4, Wheel 5, Mara 6, Relics 7, Boba 9, Dessert 10 (day
   4 also has the closet the player buys); casual The Loft 2, Hall 5, Garden 6, Wheel 9, Mara 10, Relics 11. No played day without
@@ -986,8 +988,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work (old QA test copies removed; `git worktree list` holds one QA copy). Next: whatever is WAITING ON QA;
-  ROOMS's Boba shell (storyboard step 3) when it comes. (on eb8532c)
+- Now: v0.49's pre-release check (8fabe1a): savecheck, screens, a new save to the Restaurant, test copy only. Next: whatever
+  is WAITING ON QA. (on 4172d0e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
