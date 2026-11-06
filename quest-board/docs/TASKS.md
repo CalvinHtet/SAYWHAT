@@ -284,7 +284,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   462 files from a3335e1, the 9 db rules + user + sample with images, version 1793971454-cd01). Check the page matches the build.
 - DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.57, b279091 (rule 18: your pass publishes it). Over v0.56 it adds only ROOMS's f7efaf6, which you passed
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
-- WAITING ON QA: check the published v0.57: "Quest Board v0.57 (test, fresh start)" (slug 34b73668-15d2-4030-bdcd-8bbee04ad845,
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.57: "Quest Board v0.57 (test, fresh start)" (slug 34b73668-15d2-4030-bdcd-8bbee04ad845,
   462 files from b279091, the 9 db rules + user + sample with images, version 1793972414-d808). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
@@ -414,6 +414,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.57 (slug 34b73668, version 1793972414-d808): pass, 460 of the b279091 build's 461 files identical, none missing,
+  index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, v0.57 (b279091, APPV 57, built clean; rule 18: pass, publish it). Over f7efaf6 (passed) it changes only APPV. On the exact
   build: savecheck, screens (360, 390), old saves, "NEW v0.57" desktop and phone, doors 36 of 36, voice 0, Shop 44, Trophy Room,
   town rules 32 of 32, the Rift Mask, the team, diag/load, all 30 rooms fully bought, Begin at all 10 sizes: all pass, no page
@@ -1678,7 +1680,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.57 passed. Next: v0.57's page once pinned. (on bdb48ea)
+- Now: nothing waiting; v0.57 published and its page passed. Next: whatever LEAD or ROOMS sends. (on c6ac5fa)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
