@@ -1354,12 +1354,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: nothing. The yawn is done (QA: a8c2a1f, 9b31ed0) and in v0.52 (db67326) with LEAD's necklace fix, with QA for
-  its pre-release check. `rigtest/matrix.html` takes `&tc=white|grey|black` for the starter top's colour. `stretchUp`
-  (arms straight up) has no painted layers; dark sleeves still tear there (not asked for). Chrome free.
+- Now: WAITING ON QA (since 4:05 am; Cal, 2026-11-06: "forward any quality checks to QA and wait for feedback and then
+  apply those changes"): (1) re-measure "every upgrade in every room clearly visible". The 2026-11-05 numbers predate every
+  room redesign. Run `tools/upgrade_audit` (56a0939): `BASE=http://127.0.0.1:<port> OUT=<folder> node audit.js`, then
+  `OUT=<folder> python3 compare.py` -> `<folder>/report.md` and `sheets/`. Rooms are read from the game; tested on the
+  Patio (13 of 13 OK). List what is NONE or WEAK, worst first, and ROOMS fixes it. (2) Wear-test the Black Tulle Skirt
+  (`v_tulle`): nobody has looked at it, every pose on the body it fits. Already checked by ROOMS: no upgrade can be
+  stuck unbuyable any more (all 259 prerequisites point at a live upgrade in the same room; 27b_skins frees dead ones).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`.
-  Next: the Game Room guests wait on Cal (his friends' looks). (on 87fc824)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free.
+  Next: fix what QA finds; the Game Room guests wait on Cal (his friends' looks). (on 743c30c)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
