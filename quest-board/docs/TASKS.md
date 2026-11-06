@@ -405,6 +405,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's audit fixes c6ba889 + 1dc4211 and add039a (tools/upgrade_audit re-run on the nine rooms they touch, 1dc4211 on
+  8775, then club and Game Room on add039a; `shots/reaudit/`): pass. In those rooms OK 140 -> 147, WEAK 57 -> 53, NONE 26 -> 23.
+  Now clear: Neon Trim 0 -> 2.9%, More Plots 0.03 -> 1.9% (a bed is added), Smoke Machine 0.14 -> 2.65% (add039a's stronger
+  fog), Laser Rig 0.05 -> 0.95%, Pool Table 2.4%. Bigger but still under 0.6%: Film Reel 0 -> 0.40, Lobby Chandeliers 0 -> 0.25,
+  Neon Marquee, Clapboard, Ball Return, Ball Rack, Blossom Garland, RGB Floor Lamp, Cocktail Cart, Patio Heaters, Drip (0.26 to
+  0.47); still faint: Sprinklers 0.10, Star Plaque 0.13, Aisle Lights 0.15. The restaurant's Walnut Dividers, Drinks Cooler and
+  Dish Station still score 0 only because the audit tool buys them before the expansions they now need (it ignores the new
+  gate); in the fully bought restaurant the dividers (between the booths) and the dish station show, about 1.2% of the room
+  (`restaurant_three.png`); the Drinks Cooler shows nowhere there: fine if a later upgrade replaces it, else it still draws
+  nothing. The pool table now has clear floor from the beanbag and the sofa arm (`pooltable.png`). The laser reads well, not
+  busy. Tool: the audit should respect `needs` like the shop does. Owner: ROOMS (the cooler question; the tool), LEAD (v0.56).
 - QA, ROOMS's v0.55 fixes (a96c4f7, on 18df296; `shots/a96/`): pass. Dark floors (Lock and Key, Speakeasy, Arcade, Rhythm,
   Karaoke, Club, Lair, Auditorium): the shadows now show, 4 to 6% of each room by day and 2 to 5% at night (v0.55: under 1%);
   Lock and Key and the Speakeasy read grounded under every piece (`four.png`). Taste: the black at 0.92 is strong; under the
@@ -1643,8 +1654,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the re-audit of ROOMS's 1dc4211 (8 of 9 rooms done), then club and Game Room again on add039a (fog; the pool table already
-  passes). Next: v0.56 when LEAD builds it. (on b99ca1d)
+- Now: nothing waiting; ROOMS's c6ba889, 1dc4211, a96c4f7, add039a all passed. Next: v0.56 when LEAD builds it. (on 2c2ce86)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
