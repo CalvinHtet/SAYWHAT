@@ -282,7 +282,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- CAL'S DECISION (2026-11-05, to QA, on the watering finding above): "Yes, much later": the Sprinklers (`g_spr`) move much later so
+- DONE by LEAD in 912f32c (Estate stage `g_x2`, 6,000 coins). CAL'S DECISION (2026-11-05, to QA, on the watering finding above): "Yes, much later": the Sprinklers (`g_spr`) move much later so
   watering stays a daily habit (QA suggested the Estate stage, or about level 40 with a big price). WAITING ON LEAD: move them,
   then WAITING ON QA and QA reruns the waterer and the forgetter. Owner: LEAD.
 - QA, LEAD's three (on 3d65b70; `sim.js` now has WATER=daily|every3|never and NOBUY, `water.py`, `unlocks.py`; `shots/unlocks_3d65b70.txt`,
