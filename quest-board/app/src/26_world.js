@@ -263,17 +263,20 @@ LFROOM.restaurant=function(C){
   var H=function(k){return C.has(k)},st=H("r_x2")?2:H("r_x1")?1:0,Wi=RSSIZE[st][0],D=RSSIZE[st][1],kw=RSKIT[st][0],kd=RSKIT[st][1],Wt=Wi+kw,patio=H("r_patio"),px=Wi,noir=H("r_noir")&&st===2;
   LFTH.restaurant.wall=noir?"#2c262a":"#7db3ae";LFTH.restaurant.wain=noir?"#1a1619":"#4c8a86";
   C.rsW=0;
+  /* the painted shell for this size (rsw_s0..2: walls, windows, dining and kitchen floors in one picture; the L is cut by
+     the notch clip). Without it, or with the Noir look, the walls and floors are drawn as before. */
+  var shk=!noir&&window.LFSPR&&LFSPR["rsw_s"+st]?"rsw_s"+st:null;if(shk)C.shellK=shk;
   if(noir){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");var fw=C.W;C.W=Wi;roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8]);C.W=fw}
   if(!patio){C.notch=[Wi,kd];if(LFREC)lfRecBox(Wi,kd,kw,D-kd,40)}
   var dw=C.W;C.W=Wi;lfDoorAt(C,Wi);C.W=dw;
-  [[4.2],[5.0,8.6],[5.0,8.6,12.0]][st].forEach(function(y){lfSprWin(C,"w_winrs2",.05,y,.1,.05,{H:92,dy:-34})});
+  if(!shk)[[4.2],[5.0,8.6],[5.0,8.6,12.0]][st].forEach(function(y){lfSprWin(C,"w_winrs2",.05,y,.1,.05,{H:92,dy:-34})});
   C.obsc=.7;
   /* the kitchen wing: its own tile floor and tiled back wall, past the end of the dining room */
   var kf=lfPoly([lfP(Wi,0,0),lfP(Wt,0,0),lfP(Wt,kd,0),lfP(Wi,kd,0)],noir?"#34383c":"#c9d2d0","none");
   for(var kq=1;kq<kw;kq++)kf+='<path d="M'+lfPt(lfP(Wi+kq,0,0))+' L'+lfPt(lfP(Wi+kq,kd,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
   for(var kr=1;kr<kd;kr++)kf+='<path d="M'+lfPt(lfP(Wi,kr,0))+' L'+lfPt(lfP(Wt,kr,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
-  C.decals.push(kf);
-  C.walls.push(lfFaceY(Wi,0,LF.H,tileBand(LF.U*kw,LF.H*.34,LF.H,9,noir?"#3a3f45":"#e8edec",noir?"rgba(255,255,255,.08)":"rgba(90,110,110,.28)")+'<rect y="'+(LF.H*.34-3)+'" width="'+LF.U*kw+'" height="4" fill="'+(noir?"#b8935a":"#7f9a98")+'"/>'));
+  if(!shk)C.decals.push(kf);
+  if(!shk)C.walls.push(lfFaceY(Wi,0,LF.H,tileBand(LF.U*kw,LF.H*.34,LF.H,9,noir?"#3a3f45":"#e8edec",noir?"rgba(255,255,255,.08)":"rgba(90,110,110,.28)")+'<rect y="'+(LF.H*.34-3)+'" width="'+LF.U*kw+'" height="4" fill="'+(noir?"#b8935a":"#7f9a98")+'"/>'));
   var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1";
   /* the wall between dining room and kitchen, with a gap by the front for staff */
   rsWallRun(C,Wi-.14,0,.14,kd-1.2,60,pc,pt);
