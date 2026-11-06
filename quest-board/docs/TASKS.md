@@ -280,9 +280,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.56, a3335e1 (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
   c6ba889 and 1dc4211 (the upgrade audit fixes), a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, bed name)
   and add039a (pool table, club fog). LEAD's part is the version number. Local boot: no page errors.
-- TAKEN by QA. WAITING ON QA: check the published v0.56: "Quest Board v0.56 (test, fresh start)" (slug ed76b8e9-85d7-4a95-90cb-7951e0764e9b,
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.56: "Quest Board v0.56 (test, fresh start)" (slug ed76b8e9-85d7-4a95-90cb-7951e0764e9b,
   462 files from a3335e1, the 9 db rules + user + sample with images, version 1793971454-cd01). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.57, b279091 (rule 18: your pass publishes it). Over v0.56 it adds only ROOMS's f7efaf6, which you passed
+- DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.57, b279091 (rule 18: your pass publishes it). Over v0.56 it adds only ROOMS's f7efaf6, which you passed
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
@@ -412,6 +412,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.57 (b279091, APPV 57, built clean; rule 18: pass, publish it). Over f7efaf6 (passed) it changes only APPV. On the exact
+  build: savecheck, screens (360, 390), old saves, "NEW v0.57" desktop and phone, doors 36 of 36, voice 0, Shop 44, Trophy Room,
+  town rules 32 of 32, the Rift Mask, the team, diag/load, all 30 rooms fully bought, Begin at all 10 sizes: all pass, no page
+  errors; still the Testing pill over the Black colour button at 375x548 (goes at release). Owner: LEAD (publish).
+- QA, the published v0.56 (slug ed76b8e9, version 1793971454-cd01): pass, 460 of the a3335e1 build's 461 files identical, none
+  missing, index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, ROOMS's f7efaf6 (the audit tool forces an upgrade's needed expansion first; sprinklers on every bed; the Star Plaque bigger):
   pass. Re-audit of the restaurant and garden: the tool now buys r_x1 and r_x2 before the pieces that need them, so they are
   measured in their own room: Walnut Dividers 1.46% (OK), Drinks Cooler 0.34% (seen; the Backlit Wine Wall replaces it later at
@@ -1670,7 +1676,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.56's page and v0.57 (b279091, clean copy on 8780). Next: v0.57's page. (on 1446f99)
+- Now: nothing waiting; v0.57 passed. Next: v0.57's page once pinned. (on bdb48ea)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
