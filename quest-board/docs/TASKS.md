@@ -83,6 +83,12 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH: the Trophy Room (Cal approved approval 16, 2026-11-05), 9be3f51. A painted hall above the Hero's Lair
+  (room id `trophy`); the Lair sells "Stairs to the Trophy Room" once the first piece is home (a mystery card before);
+  the Trophy Wall is retired (owners keep it). The Goblin King's Regalia stands on a mannequin on the rug and dresses
+  piece by piece, in any order. Look at: the Lair menu before and after a first piece, the stairs arrows both ways, the
+  mannequin with a few different pieces. Checked headless: all 32 piece combinations, both doors, the building view, no
+  errors. Not checked: on a phone. Known: no painted doorway in the Lair yet (its back wall is the suit cases).
 - READY TO PUBLISH: seven upgrades buyable again and the Game Room door, ab9dc81. Game Room Pool Table, Couch & Console,
   Snack Bar, Restaurant Chef's Neon, Garden Scarecrow and Berry Patch, the Theater bar (and the three after it) waited on
   upgrades no room sells any more; those prerequisites are dropped. The Game Room's door to the Bedroom is a lit doorway at
@@ -181,7 +187,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   Okafor, investor), `ui_story_auditorium.webp` (Theo, theater crew), 300 x 400; the scene picks them up by name. When the
   merged room exists, tell LEAD its id; when the theater basics exist, tell LEAD their ids (Theo waits for any 3 upgrades now).
 - PART DONE by ROOMS in d48ed81, waiting on Cal's look (approval 15): (1) the six Goblin King icons, (2) `ui_gift`, (5) the six
-  Hollow Amulet icons are in `art/app` at the names below. (3) DONE by ROOMS in 9be3f51, waiting on Cal's look (approval 16):
+  Hollow Amulet icons are in `art/app` at the names below. (3) DONE by ROOMS in 9be3f51, Cal approved (approval 16), READY TO PUBLISH:
   the Trophy Room, room id `trophy` above the Lair (ROOMCELL 0,1,2). The Lair sells "Stairs to the Trophy Room" (`lr_troom`,
   1800, your `trophy:1` keeps it a mystery until the first piece); `lr_trophy` is retired (owners keep it, `dgRoomBuilt`
   still counts it). The mannequin wears exactly the pieces in `S.trophy.goblin`, any order. The amulet case is parked (Cal:
@@ -590,8 +596,7 @@ Doing:
   Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed. The Game Room guests wait
   on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
-  10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 16 (Trophy
-  Room and mannequin, 9be3f51). 15-minute loop running (rule 16). (on 9be3f51)
+  10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81). 15-minute loop running (rule 16). (on 9be3f51)
 - WAITING ON QA: check 9be3f51, the Trophy Room: the Lair shows a mystery card before any piece and "Stairs to the Trophy
   Room" after one; buy it, walk up and down by the arrows; the mannequin wears exactly the owned pieces (try two or three
   sets); the building view shows the hall above the Lair. Known: no painted doorway in the Lair (its back wall is the suit
