@@ -276,7 +276,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.55: "Quest Board v0.55 (test, fresh start)" (slug 6ad04c53-fdb5-4cd9-b39b-44eb276d38ed,
   462 files from 17d4b44: 20 core, 442 art with the new gmx_beanb; the 9 db rules + user + sample with images; version
   1793969778-98a7). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.56, a3335e1 (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
+- DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.56, a3335e1 (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
   c6ba889 and 1dc4211 (the upgrade audit fixes), a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, bed name)
   and add039a (pool table, club fog). LEAD's part is the version number. Local boot: no page errors.
 Art and room code requests (LEAD asks, ROOMS does):
@@ -407,6 +407,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.56 (a3335e1, APPV 56, built clean; rule 18: pass, publish it). Over add039a it changes only APPV, so it holds exactly the
+  work QA passed (c6ba889, 1dc4211, a96c4f7, add039a). On the exact build: savecheck, screens (360, 390), old saves, "NEW v0.56"
+  desktop and phone, doors 36 of 36, voice 0 of 1,354, Shop 44, Trophy Room, town rules 32 of 32, the Rift Mask, the team, diag/load
+  (owner only), all 30 rooms fully bought render, Begin at all 10 sizes: all pass, no page errors. Still open, small: the Testing
+  pill covers the Black colour button at 375x548 (it goes at release). Owner: LEAD (publish).
 - QA, ROOMS's audit fixes c6ba889 + 1dc4211 and add039a (tools/upgrade_audit re-run on the nine rooms they touch, 1dc4211 on
   8775, then club and Game Room on add039a; `shots/reaudit/`): pass. In those rooms OK 140 -> 147, WEAK 57 -> 53, NONE 26 -> 23.
   Now clear: Neon Trim 0 -> 2.9%, More Plots 0.03 -> 1.9% (a bed is added), Smoke Machine 0.14 -> 2.65% (add039a's stronger
@@ -1656,7 +1661,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.56 (a3335e1, clean copy on 8778), the full set. Next: v0.56's page. (on b9665fb)
+- Now: ROOMS's f7efaf6 (audit tool needs, sprinklers, Star Plaque; re-audit restaurant and garden). Next: v0.56's page. (on 5bb2256)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
