@@ -81,8 +81,24 @@ var EXTRA_ITEMS=[
  ["gx_nc_qzip","a_top","Performance Quarter-Zip",1400,1,"Black, rooster on the sleeve.",{gar:"nc_qzip",b:"nc"}],
  ["gx_nc_court","a_shoes","Court High-Top",1600,1,"White leather, ash suede.",{gar:"nc_court",b:"nc"}],
  ["gx_nc_knit","a_shoes","Knit Trainer",1300,1,"Black sock-knit runner.",{gar:"nc_knit",b:"nc"}],
- ["gx_nc_slide","a_shoes","Pool Slide",700,1,"Debossed rooster.",{gar:"nc_slide",b:"nc"}]];
+ ["gx_nc_slide","a_shoes","Pool Slide",700,1,"Debossed rooster.",{gar:"nc_slide",b:"nc"}],
+ ["gx_kp_bucket","a_hat","Cassette Bucket Hat",800,1,"Bubblegum pink, a tiny tape-reel patch.",{gar:"kp_bucket",b:"kp"}],
+ ["gx_kp_phones","a_hat","Pastel Headphones",1100,1,"Lilac cups, periwinkle band.",{gar:"kp_phones",b:"kp"}],
+ ["gx_kp_clips","a_hat","Star Clips",450,1,"Two yellow stars above the temple.",{gar:"kp_clips",b:"kp"}],
+ ["gx_kp_bag","a_acc","Mixtape Crossbody",1000,1,"A little pink cassette on a lilac strap.",{gar:"kp_bag",b:"kp"}],
+ ["gx_kp_pendant","a_acc","Crescent Pendant",800,1,"Gold moon on a black cord.",{gar:"kp_pendant",b:"kp"}],
+ ["gx_kp_varsity","a_top","Script Varsity Jacket",1800,1,"Pink body, cream sleeves, the red script on the back.",{gar:"kp_varsity",b:"kp"}],
+ ["gx_kp_sailor","a_top","Sailor Blouse",1100,1,"Powder blue, navy-striped collar, red bow.",{gar:"kp_sailor",b:"kp"}],
+ ["gx_kp_hoodie","a_top","Cloud Hoodie",1300,1,"Lilac clouds, lightning down the sleeves.",{gar:"kp_hoodie",b:"kp"}],
+ ["gx_kp_bomber","a_top","Starfall Bomber",1600,1,"Night navy, scattered stars, a patch on the back.",{gar:"kp_bomber",b:"kp"}],
+ ["gx_kp_track","a_pants","Runner Track Pants",1000,1,"Periwinkle with a pink stripe.",{gar:"kp_track",b:"kp"}],
+ ["gx_kp_skirt","a_pants","Chorus Pleated Skirt",1000,1,"Cream knife pleats to the knee.",{gar:"kp_skirt",b:"kp",fo:1}],
+ ["gx_kp_cargo","a_pants","Wide-Leg Cargo",1200,1,"Bubblegum pink, lilac pockets.",{gar:"kp_cargo",b:"kp"}],
+ ["gx_kp_runner","a_shoes","Pastel Runners",1200,1,"Purple suede, teal mesh.",{gar:"kp_runner",b:"kp"}],
+ ["gx_kp_loafer","a_shoes","Plum Loafers",1100,1,"Glossy plum, white socks.",{gar:"kp_loafer",b:"kp"}],
+ ["gx_kp_slipon","a_shoes","Cloud Slip-Ons",800,1,"White canvas, soft cloud print.",{gar:"kp_slipon",b:"kp"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
+/* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options

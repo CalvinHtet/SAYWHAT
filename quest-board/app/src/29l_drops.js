@@ -21,7 +21,12 @@ function dropPlan(rounds){var ids=BRANDS.map(function(b){return b.id}),fx=DROPS.
     var rest=dropShuffle(ids.filter(function(id){return r>0||fx[id]==null}),DROPS.seed+"|"+r),row=new Array(n);
     /* QA: a rerun round must not repeat the slot before it or "drop" a brand still among the live ones: the brands from the
        previous round's last DROPS.live slots go to the end of this round, everything else keeps its shuffled order */
-    if(r>0){var tail=out.slice(-DROPS.live).map(function(e){return e.id});rest=rest.filter(function(id){return tail.indexOf(id)<0}).concat(rest.filter(function(id){return tail.indexOf(id)>=0}))}
+    /* QA (12 rounds): pushing only the last round's tail back still let still-live reruns through. Each slot now takes the first
+       brand in this round's shuffle whose last drop is more than DROPS.live slots back (else the one dropped longest ago) */
+    if(r>0){var last={};out.forEach(function(e){last[e.id]=e.slot});var pick=[],pool=rest.slice();
+      for(var q=0;q<n;q++){var at=r*n+q,ok=pool.filter(function(id){return at-last[id]>DROPS.live})[0];
+        if(!ok)ok=pool.slice().sort(function(x,y){return last[x]-last[y]})[0];pool.splice(pool.indexOf(ok),1);pick.push(ok);last[ok]=at}
+      rest=pick}
     if(r===0)Object.keys(fx).forEach(function(id){if(ids.indexOf(id)>=0&&fx[id]<n)row[fx[id]]=id});
     for(var k=0;k<n;k++)if(!row[k])row[k]=rest.shift();
     row.forEach(function(id,k){out.push({id:id,slot:r*n+k,start:dropSlotDate(r*n+k)})})}
