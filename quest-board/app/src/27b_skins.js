@@ -92,11 +92,11 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,4.4,1.0,1.4,0,"The old console still works."),
   PL("gm_bean","Beanbags",UP_S,"gmx_beanb",1.5,4.25,1.25,1.2,1,"Two beanbags, blue and orange, facing the old TV.",{sit:[[1.9,4.65,-1,4,1],[2.45,5.1,-1,4,1]]}),
   PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.9,.25,.65,.65,0,"A glass-front fridge stacked with cans.",{cust:[[11.2,1.7,-1,GMB]]}),/* with the gaming desks gone it stands with the snack bar and the soda machine, not alone mid-room */
-  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.4,.2,.75,.75,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]}),
+  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.9,.15,.5,.5,0,"Sets the whole room purple.",{light:[9.15,.4,70,"#b070ff",2.6,.5]}),
   /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
      sectional replaces the couch, and back-to-back gaming desks with their racing chairs stand on the right */
   PL("gm_tv80","80 inch Screen",UP_L,"gmx_tv80",4.4,.05,4.2,.2,1,"Wall to wall. You can see every pixel of the racing line.",{o:{dy:-58,h:1,nob:1,nosh:1,dk:30}}),
-  PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"One slim glossy shelf, glowing underneath. Sits low, so the screen stays clear.",{o:{dy:-6,H:36}}),
+  PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.75,.05,2.2,.45,1,"One slim glossy shelf, glowing underneath. Sits low, so the screen stays clear.",{o:{dy:-28},artIf:[["gm_tv80",["gmx_tvstand",5.15,.05,3.3,.45,0,{flip:1,dy:-10}]]]})/* centred under the screen above it: the Big TV spans x 5.4-8.0, the 80 inch 4.4-8.6 (QA, Cal: "not lined up") */,
   PL("gm_sect","Cream Sectional",UP_L,"gmx_sect",3.9,3.4,4.0,1.9,0,"Three plush pieces and a chaise you can sleep on.",{sit:[[4.9,4.05,1,10,1],[6.0,4.05,1,10,1],[7.1,4.3,1,10,1]]}),
   /* Cal: "two desks but 4 monitors" made no sense. One long desk for two, one curved screen per seat, a chair at each */
   ["gm_rig","Gaming Desks",UP_L,"","",0,0,0,"One long desk for two, a curved screen each.",{retired:1}]/* Cal on v0.58: "Get rid of the double gaming rig"; retired, id kept */],

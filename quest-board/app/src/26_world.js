@@ -218,6 +218,8 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
   (d.draw||function(){})(C,H);
   var one=function(q){var k=q[0],o=Object.assign({h:q[7]||30,ctr:1},q[6]||{});if(q[5])o.H=q[5];(o.fit?lfSprFit:window.LFSP4&&LFSP4[k]&&!LFSPR[k]?lfSpr4:lfSpr)(C,k,sx(q[1],q[3]),sy(q[2],q[4]),q[3],q[4],o)};
   (ADDONS[t]||[]).concat(d.base?[["",0,0,d.base]]:[]).forEach(function(u){var e=u[3];if(u[0]&&!H(u[0]))return;
+    /* e.artIf=[[item,art],...]: a piece placed differently when another is owned (a console sized to the screen above it) */
+    if(e.artIf){e=Object.assign({},e);u[3].artIf.forEach(function(q){if(H(q[0]))e.art=q[1]})}
     if(u[0]&&(window.RSSUP[u[0]]||[]).some(H))return;
     /* e.plat: the piece is a stage or a dance floor people stand on, this many units high. It is no obstacle, and
        anyone inside it is lifted onto it and drawn over it, instead of standing inside it with only a head showing. */
