@@ -48,4 +48,31 @@ render=function(){var a=document.activeElement,typing=a&&a.id==="sntext",s0=typi
   if(typing){var t=document.getElementById("sntext");if(t&&document.activeElement!==t){t.focus({preventScroll:true});try{t.setSelectionRange(s0,s1)}catch(e){}}}
   return r};
 setInterval(function(){if(socOn()&&!document.hidden&&!SOC.busy&&document.getElementById("socnb"))socLoad()},20000);
-window.__qbTown={meter:townMeter,mine:townMine,week:townWeek};
+/* ---------- reactions and the Hall badge (Cal, 2026-11-06: "Yeah let's do live board and reactions") ----------
+   Four one-tap reactions per post, one per player per post (tap it again to take it back). Each player keeps theirs in their own
+   board doc (board/<id>.rx = {postId: emoji}), so the database rules still let everyone write only their own doc and nobody can
+   overwrite anyone. Reactions your posts receive pay 5 coins each, no daily cap (Cal: "No cap on coins earned from reactions"). While the Hall is closed the board is checked
+   every minute and the Hall tab shows how many new posts are waiting. */
+var TOWNRX=["\u{1F525}","\u{1F44F}","\u{1F602}","\u2764\uFE0F"],TOWNRXPAY=5;
+function townRxCount(){var c={},mine={};(SOC.rxDocs||[]).forEach(function(d){Object.keys(d.rx||{}).forEach(function(k){var e=d.rx[k];if(TOWNRX.indexOf(e)<0)return;c[k]=c[k]||{};c[k][e]=(c[k][e]||0)+1;if(d.id===MYUID)mine[k]=e})});
+  if(SOC.rxLocal)Object.keys(SOC.rxLocal).forEach(function(k){var was=mine[k],now=SOC.rxLocal[k];if(was===now)return;c[k]=c[k]||{};if(was)c[k][was]=Math.max(0,(c[k][was]||1)-1);if(now)c[k][now]=(c[k][now]||0)+1;mine[k]=now});
+  return {c:c,mine:mine}}
+function townRxBar(p){var R=townRxCount(),c=R.c[p.id]||{},m=R.mine[p.id],own=p.from===MYUID;
+  return '<div class="snrx">'+TOWNRX.map(function(e){var n=c[e]||0;if(own&&!n)return '';return '<button class="snrxb'+(m===e?' on':'')+'"'+(own?' disabled':' data-act="snrx" data-p="'+esc(p.id)+'" data-e="'+e+'"')+' aria-label="React '+e+(n?', '+n:'')+'">'+e+(n?'<small>'+n+'</small>':'')+'</button>'}).join("")+'</div>'}
+document.addEventListener("click",function(ev){var b=ev.target.closest&&ev.target.closest("[data-act=snrx]");if(!b||!socOn())return;ev.stopPropagation();
+  var pid=b.dataset.p,e=b.dataset.e,cur=townRxCount().mine[pid],nx=cur===e?"":e;SOC.rxLocal=SOC.rxLocal||{};SOC.rxLocal[pid]=nx;socPaint();
+  socMine("board",function(d){var rx=d.rx&&typeof d.rx==="object"?d.rx:{};if(nx)rx[pid]=nx;else delete rx[pid];var ks=Object.keys(rx);if(ks.length>80)ks.sort(function(a,b){return (+a.split("|").pop())-(+b.split("|").pop())}).slice(0,ks.length-80).forEach(function(k){delete rx[k]});d.rx=rx;d.posts=Array.isArray(d.posts)?d.posts:[]})
+    .catch(function(er){delete SOC.rxLocal[pid];socPaint();pop("Could not react: "+((er&&er.code)||"error"))})},true);
+/* coins for reactions your posts received, once each */
+function townRxPay(){if(!MYUID)return;var R=townRxCount(),o=socState(),got=o.rxGot||(o.rxGot={}),t=today();if(o.rxDay!==t){o.rxDay=t;o.rxPaid=0}
+  var fresh=0;(SOC.posts||[]).forEach(function(p){if(p.from!==MYUID)return;var c=R.c[p.id]||{},n=Object.keys(c).reduce(function(a,e){return a+c[e]},0),had=got[p.id]||0;if(n>had){fresh+=n-had;got[p.id]=n}});
+  if(!fresh)return;var pay=fresh*TOWNRXPAY;o.rxPaid=(o.rxPaid||0)+pay;S.coins+=pay;S.earnedC+=pay;persist();
+  pop(fresh===1?"Someone reacted to your post"+(pay?": +"+pay+" coins":""):fresh+" new reactions on your posts"+(pay?": +"+pay+" coins":""))}
+var townLoadBase=socLoad;
+socLoad=async function(){await townLoadBase.apply(this,arguments);try{townRxPay()}catch(e){}townBadge()};
+/* the Hall tab's badge: posts by others newer than the last one you saw */
+function townBadge(){var b=document.querySelector('.nav button[data-v="hall"]');if(!b)return;var o=socState(),seen=o.boardT||0,n=(SOC.posts||[]).filter(function(p){return p.from!==MYUID&&p.t>seen}).length;
+  if(document.getElementById("socnb"))n=0;var el=b.querySelector(".twbadge");if(!n){if(el)el.remove();return}if(!el){el=document.createElement("i");el.className="twbadge";b.appendChild(el)}el.textContent=n>9?"9+":n}
+setInterval(function(){if(socOn()&&!document.hidden&&!SOC.busy&&!document.getElementById("socnb")&&S&&S.created)socLoad()},60000);
+var townRenderB=render;render=function(){var r=townRenderB.apply(this,arguments);try{townBadge()}catch(e){}return r};
+window.__qbTown={meter:townMeter,mine:townMine,week:townWeek,rx:townRxCount,badge:townBadge};

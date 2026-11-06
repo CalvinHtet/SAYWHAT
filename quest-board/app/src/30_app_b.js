@@ -583,8 +583,8 @@ async function socLoad(){
     SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name});
     SOC.worlds.sort(function(a,b){return (b.t||0)-(a.t||0)});
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
-    var ps=await db.collection("board").limit(60).get(),all=[];
-    (ps.docs||[]).forEach(function(d){var x=d.data();if(!x||!Array.isArray(x.posts))return;
+    var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
+    (ps.docs||[]).forEach(function(d){var x=d.data();if(x&&x.rx&&typeof x.rx==="object")SOC.rxDocs.push({id:d.id,rx:x.rx});if(!x||!Array.isArray(x.posts))return;
       x.posts.forEach(function(p){if(p&&p.text)all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null})})});
     all.sort(function(a,b){return b.t-a.t});SOC.posts=all.slice(0,30);
     await socCheckPings();
@@ -633,7 +633,7 @@ function socInner(){
   if(SOC.err)h+='<p class="note">Could not reach the neighborhood ('+esc(SOC.err)+'). Your access may be view-only.</p>';
   h+=SOC.worlds.length?SOC.worlds.map(socWorldCard).join(""):'<p class="note">'+(SOC.loaded?'No neighbors yet. Share this page with a friend as a Contributor and they will show up here once they open it.':'Looking for neighbors…')+'</p>';
   h+='<h3 class="label" style="margin-top:16px">Town board</h3><div class="snpost"><textarea id="sntext" maxlength="280" rows="2" placeholder="Post something for everyone in the neighborhood">'+esc(SOC.draft||"")+'</textarea><button class="btn" data-act="snpost">Post</button></div>';
-  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p></div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
+  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p>'+(typeof townRxBar==="function"?townRxBar(p):'')+'</div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
   return h;
 }
 function socPaint(){var el=document.getElementById("socnb");if(el)el.innerHTML=socInner()}
