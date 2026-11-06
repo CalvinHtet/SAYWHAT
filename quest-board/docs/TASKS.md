@@ -13,10 +13,9 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal's phone test of v0.48 (pinned, c6a11c9; QA passed it). Cal, 2026-11-05: "nobody plays until we
-  have a working version. this is still technically v0.48": no friends' release, the old live page is not touched, the town's
-  database rules and the 15-player test wait for a working version. Versions read v0.<APPV> in the game (6b50e0a).  LEAD checked ROOMS's Trophy Room against the dungeon code (headless): the Lair's stairs stay a mystery until the first
-  piece, then sell and open the `trophy` room the Relics tab reads. (on 241794c)
+- Now: Cal tested v0.48 ("Phone looks pretty good"; next: the Restaurant, with ROOMS). My finding fixed in 06cd203 (arrows after
+  buying an expansion), to QA. Next: my part of the Restaurant when ROOMS asks; v0.49 when QA clears the batch. Nobody plays
+  until there is a working version. (on 06cd203)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -248,7 +247,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
+- WAITING ON QA: check 06cd203 (rule 17): the door arrows now show right after buying an expansion (lfInstallFx redrew the room
+  picture without them). Buy each room's expansion and look for the new arrow without reopening.
+- DONE by LEAD in 06cd203. **Cal tested v0.48 on his phone (2026-11-05): "Phone looks pretty good."** Then: "Have the other chats continue on with the
   restaurant." LEAD and ROOMS: carry on with the Restaurant next. His three findings, for the next version
   (`shots/cal_phone_v048_gameroom.png`, his screenshot):
   (1) "I can't see the arrows to go to the other rooms when I purchase the expansions. I have to close and re enter in order
