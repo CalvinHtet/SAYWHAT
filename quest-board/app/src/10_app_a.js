@@ -428,7 +428,10 @@ function classBanner(){
   var t=S.gates.length;
   if(!S.cls||!CLASSES[S.cls])return '<section class="card panel"><span class="label">Class awakening</span><p class="note">At level 5 you pass your first gate and choose a class. It changes your UI, your story and your perks, and you can read exactly what each one does before you commit.</p></section>';
   var c=CLASSES[S.cls], sp=S.spec&&SPECS[S.spec], oa=oathOf(), ng=openGate();
-  return '<section class="card banner'+(clsArt(S.cls)?' hasart" style="--clsart:url('+clsArt(S.cls)+')':'')+'"><div>'+emblem(S.cls,76,t)+'</div><div><h3>'+esc(tierName(t))+'</h3><div class="sub">'+esc(c.name)+(sp?' &middot; '+esc(sp.name):'')+' &middot; Tier '+t+' of 9</div>'
+  /* Cal, 2026-11-06: "This banner does not cover the whole width". The art was a ::after layer, which the fx-pulse glow also
+     uses, so it shrank to the left half and pulsed. Now its own element across the whole card, darkened behind the text. */
+  var ca=clsArt(S.cls);
+  return '<section class="card banner'+(ca?' hasart':'')+'">'+(ca?'<i class="clsbg" aria-hidden="true" style="background-image:url('+ca+')"></i>':'')+'<div>'+emblem(S.cls,76,t)+'</div><div><h3>'+esc(tierName(t))+'</h3><div class="sub">'+esc(c.name)+(sp?' &middot; '+esc(sp.name):'')+' &middot; Tier '+t+' of 9</div>'
    +'<div class="row2"><span class="chip mult">'+esc(c.sig.name)+'</span>'+(sp?'<span class="chip mult">'+esc(sp.skill)+'</span>':'')+(oa?'<span class="chip mult">'+esc(oa.skill)+'</span>':'')+'</div>'
    +'<div class="row2"><span class="note">'+(ng?'Next advancement at level '+ng:'Fully ascended')+'</span><button class="btn ghost" data-act="story">Story</button></div></div></section>';
 }

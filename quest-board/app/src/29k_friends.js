@@ -45,7 +45,7 @@ function fvToday(){var v=S.visit;return v&&v.d===today()&&v.id?FVISITS.filter(fu
 function fvNames(who){return who.map(function(w){return w.indexOf("dog:")===0?(w==="dog:pluto"?"Pluto":"Chopstick"):FRIENDS[w].name}).join(" and ")}
 /* a friend's picture: the rig, like the player; dogs keep their art */
 var fvImgBase=visitorImg;
-visitorImg=function(w,big){if(w.indexOf("dog:")===0||!FRIENDS[w])return fvImgBase(w,big);return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
+visitorImg=function(w,big){if(w.indexOf("dog:")===0||!FRIENDS[w])return fvImgBase(w,big);var A=big&&fvArt(w);if(A)return '<img class="vart fvart" src="'+A+'" alt="'+esc(FRIENDS[w].name)+'">';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
 /* the day's roll, once a day, the same moment the app first settles */
 function fvPick(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
   var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
@@ -56,11 +56,13 @@ function fvApply(v){var t=today();S.visit={d:t,t:Date.now(),who:v.who.slice(),id
   v._cap=0;if(v.freeze){if((S.freezes||0)+v.freeze<=maxFreeze())S.freezes=(S.freezes||0)+v.freeze;else{v._cap=1;S.coins+=300;S.earnedC+=300}}
   if(v.water&&typeof gdWater==="function"&&typeof hasRoom==="function"&&hasRoom("garden")){try{S.base.gwater=Date.now()+ECON.waterH*36e5}catch(e){}}
   persist()}
-/* Cal (via QA, 2026-11-06): "a separate visitor banner for them that shows them as a more detailed cutscene picture of the visit".
-   ROOMS paints vis_<visit id>.webp (one wide picture per visit); until it exists the rig figures show, so missing art fails softly */
-function fvBanner(v){var n="vis_"+v.id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
-function fvShow(v){var ban=fvBanner(v),names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
-  var m=modal('<div class="card box2 adv visit'+(ban?' has-ban':'')+'">'+(ban?'<div class="vban"><img src="'+ban+'" alt=""></div>':'')+'<span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2>'+(ban?'':'<div class="vfig">'+v.who.map(function(w){return visitorImg(w,true)}).join("")+'</div>')+'<p>'+esc(v.text)+'</p>'
+/* Cal, 2026-11-06: "I meant I wanted my friends to have better animations rather than just the rig. Not a random environment
+   banner." Each friend gets a detailed illustrated portrait, friend_<id>.webp (ROOMS paints it, transparent background), shown
+   on the visit card with an idle animation (breathing, a slight sway, a pop as they arrive). Until the portrait exists the rig
+   figure shows, so missing art fails softly. */
+function fvArt(w){var n="friend_"+w+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
+function fvShow(v){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
+  var m=modal('<div class="card box2 adv visit"><span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="animation-delay:'+(k*.35)+'s">'+visitorImg(w,true)+'</span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
     +(v.coin?'<div class="reward">+'+v.coin+' coins</div>':'')+(v.freeze?(v._cap?'<div class="reward">+300 coins (your streak freezes are full)</div>':'<div class="reward">+'+v.freeze+' streak freeze</div>'):'')+(v.water&&typeof hasRoom==="function"&&hasRoom("garden")?'<div class="reward">Garden watered</div>':'')+(v.buff?'<div class="reward">'+esc(v.buff.text)+'</div>':'')
     +'<p class="note">'+'They\'re hanging out in '+esc(here)+' today.</p><button class="btn big" id="vok">Nice</button></div>');
   var b=m&&m.querySelector("#vok");if(b)b.onclick=function(){m.remove();render()}}
@@ -78,4 +80,4 @@ var fvBuffBase=socialBuffs;
 socialBuffs=function(){var o=fvBuffBase(),v=fvToday();if(v&&v.buff)o=o.concat([{who:fvNames(v.who),b:v.buff}]);return o};
 visitorsToday=function(){return (S.visit&&S.visit.d===today())?S.visit.who:[]};
 /* test hook, removed at release with window.__qb */
-window.__qbFriends={banner:fvBanner,visits:FVISITS,friends:FRIENDS,force:function(id){var v=fvPick(id);if(!v)return null;fvApply(v);fvShow(v);return v},today:fvToday,look:fvLook};
+window.__qbFriends={art:fvArt,visits:FVISITS,friends:FRIENDS,force:function(id){var v=fvPick(id);if(!v)return null;fvApply(v);fvShow(v);return v},today:fvToday,look:fvLook};
