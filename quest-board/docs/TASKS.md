@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Town database rules passed
-  QA with the inbox rule added; they go on at the next publish. Phone lag waits on a phone log. Nobody else plays until there is a working version. (on 742a39e)
+  QA with the inbox rule added; they go on at the next publish. Phone lag waits on a phone log. Yawn necklaces fixed, WAITING ON QA. Nobody else plays until there is a working version. (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -204,6 +204,11 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   docs: 16 of 16 pass (posts, delete, visit note, one note per visitor, the visit buff, no refused writes, no page errors),
   script in `shots/townrules_lead.js` (port 8766). Not checkable headless: the real rules on a real page with two accounts,
   which is QA's 15-player test after the next publish. LEAD declares `app/dbcaps.json` at that publish.
+- WAITING ON QA: check NEXT, necklaces in the yawn (your finding (1)). `src/rig.js`: when a top is painted for the pose, the
+  neck layer's parts up to the top's last group move to right after the painted top; nothing else changes order, and poses
+  without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
+  42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
+  and the sit and sleep poses (no painted art there, so unchanged by construction).
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
@@ -332,7 +337,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   armpit or elbow; before and after (v0.51 against now) the blazer, Sable's and the coach jacket tore at the shoulder and
   now do not. Every top with other trousers (all 19, skirts too), a hat (all 14) and long hair: 62 cells each, 0 fails, all
   sit right. Fixes:
-  (1) Necklaces vanish in the yawn on every top: a painted top is drawn in its mesh's last group, after the neck layer
+  (1) DONE by LEAD in NEXT (neck items drawn right after a painted top). Necklaces vanish in the yawn on every top: a painted top is drawn in its mesh's last group, after the neck layer
   (`src/rig.js`, f57b1a0). It was already so for the pilot's three in the published v0.51 and is now every top. See
   `neck_old.png` (v0.51: chain, star, lock show), `neck_new.png` (gone). Owner: LEAD (draw neck items after a painted top).
   (2) The 3 starter tops every new player wears (`tee`, `hoodie`, `bomber`, from creator.json, not items.json) have no

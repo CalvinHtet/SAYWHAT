@@ -677,8 +677,20 @@
 
       gl.uniform1i(this.u.uTex, 0);
       gl.uniform1i(this.u.uPart, 1);
-      for (const g of rig.drawSequence[view]) {
-        slots.forEach(({ s, l }, i) => {
+      // Draw order: each group in turn, each slot in rig order. A painted top lands in its last group, after the neck layer
+      // was drawn in an earlier one, so a necklace's parts up to that group move to just after the painted top (QA, a8c2a1f).
+      const seq = rig.drawSequence[view], order = [];
+      for (const g of seq) slots.forEach((x, i) => order.push([i, g]));
+      const ti = slots.findIndex((x, i) => x.s.id === "top" && flats[i] && lastGroup[i] >= 0);
+      if (ti >= 0) {
+        const upTo = seq.indexOf(lastGroup[ti]), isNeck = ([i, g]) => slots[i].s.id === "neck" && !flats[i] && seq.indexOf(g) <= upTo;
+        const moved = order.filter(isNeck), rest = order.filter((e) => !isNeck(e));
+        const at = rest.findIndex(([i, g]) => i === ti && g === lastGroup[ti]);
+        rest.splice(at + 1, 0, ...moved);
+        order.splice(0, order.length, ...rest);
+      }
+      for (const [i, g] of order) {
+        (({ s, l }) => {
           if (flats[i]) {
             if (g !== lastGroup[i]) return;
             const tint = l.tint || (s.id === "body" && look.skin) || null;
@@ -730,7 +742,7 @@
             gl.uniform1f(this.u.uOnly, limb);
             gl.drawArrays(gl.TRIANGLES, 0, n / 4);
           }
-        });
+        })(slots[i]);
       }
 
       const frame = document.createElement("canvas");
