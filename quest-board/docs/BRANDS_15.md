@@ -30,9 +30,13 @@ source. No real person's face in any of them (no collaborators from the covers, 
   Cal can still read it in the code, so don't.
 - **Two fixed slots, the rest shuffled:** HANGANG stays drop 1 (it's live). NICE COCK is drop 5, as Cal asked. Every other
   brand is shuffled into the remaining slots.
-- **What's for sale:** the 4 newest drops (the last two weeks). Older drops go to the vault.
-- **When the pool runs out** (23 brands at 2 a week is about 11 weeks): LEAD recommends a rerun, a fresh shuffle of the vault
-  from a second seed, still synced. The alternative is that a vaulted brand is gone for good. Cal decides.
+- **What's for sale:** the 4 newest drops, plus one brand back for the week. There is no Vault list (Cal: "Remove the vault ...
+  Maybe Wednesday can be a vault").
+- **Wednesday returns:** every Wednesday at midnight Pacific one retired brand comes back until the next Wednesday, picked from
+  that Wednesday's date and the same fixed seed, so it's the same brand for everyone, and never the same one two weeks running.
+  Its Shop tab is marked ↺ and says when it leaves. This runs now too, alongside today's one-a-week drops.
+- **When the new brands run out** (about 11 weeks at two a week): Wednesdays keep bringing old ones back. Whether Mondays and
+  Thursdays also start rerunning old brands (`DROPS.rerun`) is still Cal's call.
 - **No empty drops:** a brand enters the shuffle only once its art is in the build. Everyone runs the same published version,
   so everyone still gets the same Shop. The real fix is to have every brand's art finished before launch.
 - **When:** LEAD writes this when the art is in. Until then the Shop keeps today's one-a-week list.
