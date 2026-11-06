@@ -99,6 +99,9 @@ function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F
     p=lfP(x,y,0),q=lfP(x+w,y,0),r=lfP(x,y+d,0),X1=q[0]-p[0],Y1=q[1]-p[1],X2=r[0]-p[0],Y2=r[1]-p[1],
     a=(X1*v2-X2*v1)/det,c=(X2*u1-X1*u2)/det,b=(Y1*v2-Y2*v1)/det,dd=(Y2*u1-Y1*u2)/det,z=dd*F.rim*S.h,
     e=p[0]-a*T[0]-c*T[1],f=p[1]-z-b*T[0]-dd*T[1];
+  /* Cal: "this one's legs look weirdly warped". An exact fit of the top face shears the picture, so posts and legs lean.
+     Upright: no shear (c=0), the width from the left-to-right span, the heights fitted exactly, centred on the corners. */
+  a=(X1-X2)/(u1-u2);c=0;e=(p[0]+(q[0]-a*u1)+(r[0]-a*u2))/3-a*T[0];
   /* the fractions are for the mirrored art: fold the mirror (x -> width - x) into the matrix */
   var M=[-a,-b,c,dd,e+a*S.w,f+b*S.w];
   if(LFREC)lfRecBox(x,y,0,w,d,z);
