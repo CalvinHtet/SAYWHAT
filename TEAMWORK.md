@@ -154,6 +154,12 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
     - Only LEAD publishes and pins. If Cal does not answer, nobody waits: every chat keeps working on other rooms and
       features (rule 16), and the next version builds up meanwhile.
 
+19. **New brands without asking (Cal, 2026-11-06: "automatic generation of new brand assets when it gets close to running out.
+    And it can run through without my approval as long as it works").** ROOMS runs `python3 quest-board/tools/brand_runway.py`
+    on every loop; when it says NEED A NEW BRAND, ROOMS starts the next brand by `quest-board/docs/BRAND_AUTOGEN.md`, QA checks
+    it, LEAD wires and publishes it, with no approval from Cal. Never spend credits: if Unlimited is off or a login is needed,
+    stop and tell Cal.
+
 ---
 
 ## How LEAD runs the work
