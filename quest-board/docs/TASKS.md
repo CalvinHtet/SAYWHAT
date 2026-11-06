@@ -877,8 +877,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 4, the Dessert Parlor (`27b_skins.js`, `27_rooms.js`, new art `dsw_t1`): a painted shell with the
-  hidden bookcase door to the speakeasy, the stairs down on its front-left edge (Cal's door rule). Step 3's Boba shop is done
+- Now: storyboard step 5, Lock and Key (`27_rooms.js`, room id `skybar` survives, new art `skw_t1`): the Upstairs Bar becomes
+  the upscale speakeasy (painted shell, the name and words, a live band stage after the Jazz Corner), its doors on Cal's
+  rule (down to the Restaurant and the Rooftop's down to it, front-left); the old Speakeasy's opener in the Dessert Parlor
+  retired (owners keep it). Step 4's Dessert Parlor is done (f0c6dbb, 23f993d; approval 24). Step 3's Boba shop is done
   (c223d89, approval 23). Step 2's Restaurant polish is done
   (a9a572c, d1d7c73; approval 22). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
   approval 20 with Cal). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
