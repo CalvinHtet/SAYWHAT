@@ -282,7 +282,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.49 (8fabe1a): savecheck.js, screens.js,
+- QA, v0.49's pre-release check (rule 18 step 2, 8fabe1a, APPV 49; `shots/v49/`): pass, ready to publish. savecheck.js: every case
+  passes (newest wins, no needless question, device only, someone else's save ignored, levels 8, 30 and 60 kept, a new player
+  starts clean). screens.js at 360 and 390 px: every tab and a room window fit, no page errors. A brand-new player: the
+  character screen, then the Board, v0.49 on desktop and phone. A new save to the Restaurant (`sim.js`, `unlocks.py`): 12-task
+  The Loft day 1, Hall 3, Garden 4, Wheel 5, Mara 6, Knock Through bought and the Restaurant open on day 7, Relics 7; casual The
+  Loft 2, Hall 5, Garden offered 6 and built 9 (1,500 coins), Wheel 9, Mara 10, Relics 11, the Restaurant day 12; the beds
+  watered every day and never dry, produce sold at the stand; one unlock a day (day 5 of the 12-task run also has the closet
+  they buy). Real taps: both stands sell once; the watering can waters on and beside it at every stage, desktop and phone;
+  Knock Through is a mystery card until Mara's yes, then for sale. Shop check (`shopcheck.js`): 44 checks pass. Trophy Room
+  passes. Doors: the Garden and Restaurant pair passes; the 10 Plaza and Mall pairs that miss Cal's left/right rule are the
+  same as in v0.48 (ROOMS's list, not new). No page errors anywhere. Owner: LEAD (publish).
+- DONE by QA (QA findings: pass, ready to publish). WAITING ON QA (LEAD's message, rule 18 step 2): the pre-release check of v0.49 (8fabe1a): savecheck.js, screens.js,
   a new save from level 1 to the Restaurant, and what changed since v0.48.
 - QA, LEAD's 912f32c (on b8742cd; `sim.js`, `unlocks.py`, `water.py`; `shots/unlocks_water_b8742cd.txt`): pass. (1) Early unlocks in
   their own level's order, one a day: 12-task The Loft day 1, Hall 3, Garden 4, Wheel 5, Mara 6, Relics 7, Boba 9, Dessert 10 (day
@@ -992,8 +1003,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.49's pre-release check (8fabe1a): savecheck, screens, a new save to the Restaurant, test copy only. Next: whatever
-  is WAITING ON QA. (on 4172d0e)
+- Now: waiting for work. Next: v0.49's published copy (rule 18: the files match the build) once LEAD publishes. (on 8fabe1a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
