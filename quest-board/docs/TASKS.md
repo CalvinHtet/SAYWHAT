@@ -14,8 +14,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.62 published and pinned (756def5, 495 files; QA passed, files match). With QA: 3a1e3c1 (Kode PinK in the Shop on
-  Dec 14; launch reruns keep every brand more than 4 slots from its last drop). Next: SAYMØRE rows when its wear test passes,
-  then v0.63. 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 3a1e3c1)
+  Dec 14; launch reruns keep every brand more than 4 slots from its last drop). SAYMØRE in the Shop on Dec 21 (262d835). Next: v0.63
+  once QA passes Kode PinK, SAYMØRE and the reruns; ROOMS starts SMOKE BOMB. 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 262d835)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
