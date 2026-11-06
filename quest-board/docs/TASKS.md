@@ -16,8 +16,9 @@ Doing:
 - Now: v0.61 built from c48c7af (Cal via QA: "Publish 0.61 now"; ping-pong and the TV console ship as known items). WAITING ON
   QA's full set, then LEAD publishes and pins. Brands (cac5f45): NICE COCK at drop 5; Kode PinK and SAYMØRE drafted from Cal's
   covers, waiting on Cal's OK; at launch, two drops a week (Mon/Thu) in a seeded random order synced for everyone, which LEAD
-  codes once the art is in. Asked Cal: when the pool runs out, rerun the vault or gone for good. Next: town hall for many
-  players (Cal's ask). (on cac5f45)
+  codes once the art is in. Asked Cal: when the pool runs out, rerun the vault or gone for good. Town board for many players
+  (60e3e50: drafts survive refreshes, live 20 s reload, "new" tags) sent to QA. Next: the town hall upgrade Cal picks (live
+  board + reactions, or Fit of the Week; asked). (on 60e3e50)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
