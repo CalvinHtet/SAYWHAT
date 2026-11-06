@@ -2026,7 +2026,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passes: LEAD publishes; then QA checks the published files. Next: SMOKE BOMB's wear test when ROOMS sends it. (on fce08e7)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. Next: SMOKE BOMB's wear test when ROOMS sends it. (on 3ebe841)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
