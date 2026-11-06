@@ -359,13 +359,13 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (`board/<id>_<time>`, `pings/<a>_<b>_<day>`) are hidden, not removed; a fresh page has none. Old notes are pruned only when
   that sender writes again. Still to do: the real rules on a real page with real accounts (QA's 15-player test after the
   next publish). Owner: LEAD (add the inbox rule before declaring).
-- QA, the published v0.51 (rule 18, slug 936a4ed4, version 1793960417-4a96): pass, the page matches the ac8d2f0 build. By sha256
+- DONE (v0.51 pinned for Cal's phone test). QA, the published v0.51 (rule 18, slug 936a4ed4, version 1793960417-4a96): pass, the page matches the ac8d2f0 build. By sha256
   (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs only
   by its title, "Quest Board v0.51 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the page-only
   file and matches `app/lfvar.json` byte for byte. It declares db, user and sample (images), contract 0.2.96, owner only. The
   database holds only the 2 diagnostics docs from the first open at 10:20 (APPV 51, Board tab, 120 fps). There is no save, so it
   is a fresh start. Owner: LEAD (Cal's phone test is next).
-- QA, v0.51's pre-release check (rule 18 step 2, ac8d2f0, APPV 51; `shots/v51/`): pass, ready to publish. The Rift Mask as the
+- DONE by LEAD (published as v0.51, 936a4ed4). QA, v0.51's pre-release check (rule 18 step 2, ac8d2f0, APPV 51; `shots/v51/`): pass, ready to publish. The Rift Mask as the
   Spire's last prize (6682998): the real roll (new `riftlive.js`, 6,000 `__qbDungeon.roll('m5')` each) never gives it while a Spire
   piece is missing (0 with none, 0 with silence missing); with tide, thorn and silence found it comes on 6.4% of rolls (about 6.9%
   expected); never once owned; not for sale in the Shop. New days (`riftodds.py`, 20,000 players): at 2 Spire runs a day the pieces
@@ -377,19 +377,19 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Restaurant offered day 6, Boba day 9, Dessert offered day 10), casual to day 14 (level 18, Garden and Restaurant); watered, never
   dry; no played day without something to buy. Day 5 of the 12-task run counts 2 unlocks, but the second is the closet, a Loft
   upgrade the player buys (v0.50's run had it on day 4 beside the Garden), so it is not new. No page errors. Owner: LEAD (publish).
-- QA, the Rift Mask's drop odds (e389afa, new `rigtest/qa/riftodds.py`, a copy of dgRoll, 20,000 players, days counted from the
+- DONE by LEAD in ac8d2f0 (the Rift Mask rolls only once the Spire's pieces are all owned). QA, the Rift Mask's drop odds (e389afa, new `rigtest/qa/riftodds.py`, a copy of dgRoll, 20,000 players, days counted from the
   first Spire run): the mask is Obsidian Spire only, 1 in 8 on a gift that is not a set piece, until owned. At 2 Spire runs a day
   the median is day 7 (half by day 7, 85% by 14, 90% by 17, 99% by 30, unluckiest 71). At 1 run a day the median is day 14 (87% by
   30, unluckiest 141); about 14 Spire runs either way. Gift buffs (Hushstep Boots, goblin set) move it about a day. Note: it is
   not "after the set pieces"; the mask can win whenever a Spire gift misses its piece roll, so 41% find it before their three
   Spire amulet pieces. Fine as a rare surprise; if LEAD wants it after the pieces, roll it only when `miss` is empty. Owner: LEAD.
-- QA, the published v0.50 (rule 18, slug cda54e71, version 1793953238-4af6): pass, the page matches the f3c970c build. By
+- DONE (v0.50 pinned; v0.51 followed). QA, the published v0.50 (rule 18, slug cda54e71, version 1793953238-4af6): pass, the page matches the f3c970c build. By
   sha256 (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs
   only by its title, "Quest Board v0.50 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the
   page-only file and matches `app/lfvar.json` in git byte for byte. It declares db, user and sample (images), contract 0.2.96,
   owner only. The database holds just 2 diagnostics docs (diag/frame, diag/perf) from the first open at 08:22: APPV 50, Board
   tab, 120 fps. There is no save and no world doc, so it is still a fresh start. Owner: LEAD (Cal's phone test is next).
-- QA, the team's signature tops (097dccd, checked on b7369bc; `rigtest/qa/shots/tops/`): pass, ready to publish. matrixshot.js
+- DONE by LEAD (published in v0.51). QA, the team's signature tops (097dccd, checked on b7369bc; `rigtest/qa/shots/tops/`): pass, ready to publish. matrixshot.js
   sheet=wear for tm_rafe_jacket, tm_theo_tee, tm_nova_knit and tm_sable_jacket: 44 of 44 poses each, both bodies, 0 fails; no
   mannequin lines left, Nova's lavender trim intact, Theo's lanyard on every front pose. sheet=neck: 952 cells, 0 fails, every
   necklace sits over each top. sheet=waist: 986 cells, 0 fails, each top over all 19 trousers front and back, no gap. Live
@@ -399,7 +399,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   shoulder (Rafe, Sable; the Shop's v_blazer does the same, the known torn-sleeve note in Done); the long hairstyle h1 leaves a
   few dark specks on light tops (Nova's knit; the Shop's h_hoodie too). Owner: LEAD (publish in v0.51); the sleeves are ROOMS's
   if Cal wants them fixed.
-- QA, v0.50's pre-release check (rule 18 step 2, f3c970c, APPV 50; `shots/v50/`): pass, ready to publish. savecheck.js: every case passes.
+- DONE by LEAD (published as v0.50, cda54e71). QA, v0.50's pre-release check (rule 18 step 2, f3c970c, APPV 50; `shots/v50/`): pass, ready to publish. savecheck.js: every case passes.
   screens.js at 360 and 390 px: every tab and a room window fit, no errors. Older saves without the areas-seen record (new
   `areasload.js`, written with the flags that keep an old save's numbers): a level-30 save loads at 30 with all 8 areas, none Soon;
   a level-3 save keeps the Hall waiting. A brand-new player: character screen, then the Board, v0.50, desktop and phone. New saves
@@ -696,7 +696,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   clear of the doorway. FIX 2: the window seat's left end runs across the side door to the Garden (the green glow shows under
   the bench); shorten it or move it right. Note: the Menu Screen on the back wall is a blank black panel; give it the menu
   (like the Restaurant's screen) or art. No page errors. Owner: ROOMS.
-- QA, v0.49's pre-release check (rule 18 step 2, 8fabe1a, APPV 49; `shots/v49/`): pass, ready to publish. savecheck.js: every case
+- DONE by LEAD (published as v0.49, 7336ed4a). QA, v0.49's pre-release check (rule 18 step 2, 8fabe1a, APPV 49; `shots/v49/`): pass, ready to publish. savecheck.js: every case
   passes (newest wins, no needless question, device only, someone else's save ignored, levels 8, 30 and 60 kept, a new player
   starts clean). screens.js at 360 and 390 px: every tab and a room window fit, no page errors. A brand-new player: the
   character screen, then the Board, v0.49 on desktop and phone. A new save to the Restaurant (`sim.js`, `unlocks.py`): 12-task
