@@ -213,7 +213,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
   42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
   and the sit and sleep poses (no painted art there, so unchanged by construction).
-- WAITING ON QA: check v0.52, db67326 (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
+- TAKEN by QA. WAITING ON QA: check v0.52, db67326 (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
   for every top, the 3 starter tops included (503cd3f, 6541dd3), necklaces drawn over painted tops (414a730), the town
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
@@ -1452,8 +1452,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; the yawn is done (31 shop tops, 3 starter tops, necklaces, the man's hips). Next: the 15-player town
-  test after the next publish. (on 2a2e44f)
+- Now: v0.52's pre-release check (db67326, a clean copy on 8769), with load time. Next: the 15-player town test after the next
+  publish. (on 21a2713)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
