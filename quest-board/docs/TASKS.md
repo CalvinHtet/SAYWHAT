@@ -452,6 +452,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 6f04ed8 (Game Room: the lit hex panels, the foosball to the front, the ping-pong clear of the doorway; `shots/gm4/`):
+  NOT passed under Cal's new rule. Good: the outer hexes glow and frame the TV on both sides and the top, so the TV no longer hides
+  the lit ones (Cal's note); the foosball stands at the front, clear of the pool table and the doormat, giving the arcade room;
+  the ping-pong table is inside the room now, off the doorway; retired pieces still draw nothing; no page errors, day and night.
+  Errors: (1) the dartboard now hangs on top of the lit left hex cluster and covers several glowing panels (`full_13.png`), the
+  same thing Cal disliked about the TV; move it to plain wall (left of the hexes, by the arcade). (2) The ping-pong table is
+  blocked at both playing ends: the snack bar and fridge at its right end, the sectional's arm a step from its left end
+  (`live.png`). Against the references the room now holds one table too many (pool, foosball and ping-pong in 13 x 10, plus the
+  sectional): drop the ping-pong table (Cal's call) or turn the snack corner so the table's ends face open floor. Owner: ROOMS.
 - QA, Cal 2026-11-06 (to QA): "Going forward, only publish for me to test when you can't find any more errors." From now on a QA pass
   means no known error left in the exact build; no "pass, fix in the next version" for anything visible. Owner: everyone.
 - QA, v0.61 (d9d92d7, covering v0.59 and v0.60): BLOCKED, do not publish. Works: the level-5 start (new `teststart.js`, 440x840): level 5,
