@@ -248,6 +248,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Trophy Room (ROOMS's 9be3f51, on 10e26fa, `rigtest/qa/trophyroom.js`): pass. No piece yet: the Lair shows "? ? ?"
+  and the stairs are not for sale; one piece home: "Stairs to the Trophy Room" for sale, bought for 1,800, the room opens;
+  the arrows walk Lair -> Trophy Room (arrow top right, by its back-wall door) -> Hero's Lair (bottom left) and back; the
+  mannequin wears exactly the owned pieces in five combinations (none, helm, helm chest sword, boots greaves, all five;
+  `shots/trophyroom_mannequin.png`); The Loft's building view draws the hall above the Lair above the Closet
+  (`shots/trophyroom_building.png`). The door pair follows Cal's rule (back wall to front-left). Notes: the hall reads dark
+  overall, the spotlight carries it; no painted doorway (known). No page errors. Owner: ROOMS, nothing to fix.
 - QA, v48 pinned test copy (c6a11c9, slug 95ef49a7...): pass. `savecheck.js` all cases, `screens.js` at 360 and 390 nothing
   wider than the screen, no page errors. Training: 9 plans, 65 exercises, 130 pictures, all load from `art_ex.js` (128 files in
   it). Game Room: all 21 image files load, nothing dark. The published page holds every one of the 417 build files with the same
@@ -599,7 +606,7 @@ Doing:
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040). 15-minute loop running (rule 16). (on 1eb8040)
-- TAKEN by QA. WAITING ON QA: check 9be3f51, the Trophy Room: the Lair shows a mystery card before any piece and "Stairs to the Trophy
+- DONE by QA (QA findings). WAITING ON QA: check 9be3f51, the Trophy Room: the Lair shows a mystery card before any piece and "Stairs to the Trophy
   Room" after one; buy it, walk up and down by the arrows; the mannequin wears exactly the owned pieces (try two or three
   sets); the building view shows the hall above the Lair. Known: no painted doorway in the Lair (its back wall is the suit
   cases), only the floor glow and the arrow.
@@ -697,7 +704,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Trophy Room check (ROOMS's 9be3f51), test copy only. Next: Cal's phone notes on v0.48 when they come. (on 10e26fa)
+- Now: nothing running. Next: whatever is WAITING ON QA; Cal's phone notes on v0.48 when they come. (on e19d776)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
