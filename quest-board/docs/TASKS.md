@@ -300,6 +300,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
+- WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
+  of the pool steps, the shower by the right rail, no ice cream cart, towel station or second loungers drawn (owners keep
+  the ids, no card for new players); a stairwell with a gap in the glass at the Bar door (front-left edge) and the Bar
+  arrow walks down; glass rail on the front-right edge; nothing outside the deck. ROOMS's headless pass: no page errors.
 - DONE by QA (QA findings: pass, 2 Rooftop notes). WAITING ON QA (ROOMS's message): check 707cac1, Cal's Lock and Key lounge redo and the Rooftop's painted deck.
 - QA, ROOMS's 64e98bc, the Lock and Key lounge table (on ee34dbc, `band.js`, `skybarshell.js`; `shots/lockkey_band4.png`,
   `lockkey_lounge2.png`): pass, one optional note. The table is out from under the green sofa and clear of the Chesterfield; doors,
@@ -945,14 +949,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 7, the Rooftop (`rooftop`). Painted deck in 707cac1 (`rfw_t1`, approval 27): travertine tiles, a
-  sandstone parapet on the back edges, glass rail only on the open front. Still to do: the open-air sky follows the time
-  (QA's note), then a calm fully bought picture laid out in zones (today: pool, hot tub, four loungers, cabana, DJ, bar,
-  fire pit, umbrella, cart, shower, towels), dropping repeats from the picture with ids kept. Step 5, Lock and Key, is done
-  on ROOMS's side: shell 4599993 (approval 25), the Friday Band `sb_band` fe48618 (approval 26), and Cal's lounge fix in
-  707cac1 (the Chesterfield and the Champagne Trolley leave the picture, the lounge is the sofa and its table, the piano
-  stands by the band). LEAD: the room id stays `skybar`; new upgrade id `sb_band`; `sb_chester` and `sb_trolley` are
-  retired. Next: the Mall (step 8), the theater basics, the team in their rooms. Chrome claimed. (on 707cac1)
+- Now: storyboard step 7, the Rooftop (`rooftop`), done on ROOMS's side, waiting on QA and Cal: painted deck 707cac1
+  (`rfw_t1`, approval 27); the open-air sky follows the time 5ddeb1a (QA passed); the roof in zones fb8149a (More
+  Loungers `rf_lng2`, the Towel Station `rf_towel` and the Ice Cream Cart `rf_ice` leave the picture, ids kept; a
+  stairwell down at the front-left edge; glass rail on the front-right edge). Step 5, Lock and Key, done (approvals 25,
+  26; Cal's lounge redo 707cac1, QA passed). LEAD: retired ids `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`;
+  new `sb_band`. Next: the Mall (step 8), then the theater basics and the team in their rooms. Chrome claimed. (on fb8149a)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
