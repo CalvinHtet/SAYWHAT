@@ -26,4 +26,20 @@ socInner=function(){var h=townInnerBase();if(!db||!MYUID)return h;
   return townMeter(SOC.worlds)+h};
 var townHallBase=hallHtml;
 hallHtml=function(){var bd=window.QBART&&QBART["ui_town_board.webp"];return '<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3><p class="note">Post your look and a short message for everyone in town.</p></section>'+socialHtml()+townHallBase()};
+/* many players at once (Cal, 2026-11-06: "make sure the town hall works with multiple people using the app and typing on the
+   board"): a half-typed post survives every repaint (SOC.draft, focus and caret kept); while the Hall is open the board reloads
+   every 20 seconds so others' posts appear on their own; posts newer than the last one this player saw carry a "new" tag. */
+document.addEventListener("input",function(e){if(e.target&&e.target.id==="sntext")SOC.draft=e.target.value});
+socPaint=function(){var el=document.getElementById("socnb");if(!el)return;var a=document.activeElement,typing=a&&a.id==="sntext",s0=typing?a.selectionStart:0,s1=typing?a.selectionEnd:0;
+  el.innerHTML=socInner();if(typing){var t=document.getElementById("sntext");if(t){t.focus();try{t.setSelectionRange(s0,s1)}catch(e){}}}
+  var o=socState(),top=(SOC.posts[0]&&SOC.posts[0].t)||0;if(top>(o.boardT||0)){o.boardT=top;persist()}};
+var townNewBase=socInner;
+socInner=function(){var o=socState(),seen=o.boardT;if(seen===undefined&&SOC.loaded){o.boardT=(SOC.posts[0]&&SOC.posts[0].t)||1;seen=o.boardT}
+  var h=townNewBase();if(!seen)return h;
+  var now=Date.now(),fr=SOC.fresh||(SOC.fresh={});
+  SOC.posts.forEach(function(p){if(p.from!==MYUID&&p.t>seen&&!fr[p.id])fr[p.id]=now});
+  SOC.posts.forEach(function(p){if(!fr[p.id]||now-fr[p.id]>120000)return;var at=h.indexOf('<b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>');
+    if(at>=0){var cut=at+('<b>'+esc(p.name||"Neighbor")+'</b>').length;h=h.slice(0,cut)+'<em class="tw-new">new</em>'+h.slice(cut)}});
+  return h};
+setInterval(function(){if(socOn()&&!document.hidden&&!SOC.busy&&document.getElementById("socnb"))socLoad()},20000);
 window.__qbTown={meter:townMeter,mine:townMine,week:townWeek};
