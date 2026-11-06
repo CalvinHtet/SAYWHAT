@@ -36,6 +36,8 @@ Object.keys(ADDONS).forEach(function(k){if(!ROOMT[k]||!(ROOMT[k].coin||ROOMT[k].
     /* the line states what it really earns after decor's share moved onto equipment */
     else if(typeof a[4]==="string")a[4]=a[4].replace(/Earns \+\d+% here\./,"Earns +"+Math.round(e.p*100)+"% here.")})});
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
+/* Testing (Cal, 2026-11-06): new characters on the test copy start at this level, trials passed. Set to 0 (or remove) at release. */
+var QB_TEST_START=5;
 function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;S.testFree=7;persist();render();pop("Skipped one week");setTimeout(brandCheck,200);setTimeout(function(){try{styCheck()}catch(e){}},600)}
 function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
 /* a page still open from an older version stops saving as soon as a newer version has saved, so it cannot overwrite that progress */

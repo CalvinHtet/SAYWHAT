@@ -1318,6 +1318,11 @@ function ccAct(a,b,e){
     S.char=cc;S.created=true;cc=null;ccEdit=false;ccStage="name";qsGrantOriginals();
     /* a new character starts with no areas seen, so The Loft takes day 1's unlock and the Hall waits (29h_unlocks.js; QA) */
     if(first&&(!S.areaOn||typeof S.areaOn!=="object"))S.areaOn={};
+    /* test copy only (QB_TEST_START in 29_prices.js; Cal: "Start me at level 5 as if I've just completed the job advancement"):
+       a new character begins at that level with its trials passed and the areas below it already open; the class is still theirs to pick */
+    if(first&&typeof QB_TEST_START==="number"&&QB_TEST_START>1){S.xp=Math.max(S.xp||0,cum(QB_TEST_START));
+      GATES.forEach(function(g){if(g<=QB_TEST_START&&S.gates.indexOf(g)<0)S.gates.push(g)});
+      AREAS.forEach(function(x){if(x[2]<QB_TEST_START)S.areaOn[x[0]]=1});S.unlockDay=""}
     render();persist();
     if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your first quest awaits.")}
     else pop("Look saved");

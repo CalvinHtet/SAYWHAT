@@ -13,8 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.60 (c7aa1df, APPV 60) WAITING ON QA; it contains v0.59, so QA may check v0.60 instead. Published as soon as QA
-  passes it. v0.58 pinned (859d941). (on c7aa1df)
+- Now: v0.61 (NEXT, APPV 61) WAITING ON QA; it contains v0.59 and v0.60, so QA checks v0.61 instead. Cal: "Once ready,
+  publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". Published as soon
+  as QA passes it. v0.58 pinned (859d941). (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -93,7 +94,7 @@ To do:
 - [ ] Later (Cal, 2026-11-05, "for a much later build"): the level 90 to 100 artifact (ten stone pieces, one a level) and the
       portal to a prestige world (level 1 with a star, a new Loft, currency, characters and story). Full plan in
       `docs/PRESTIGE.md`. Not before the first world feels right.
-- [ ] Before release: remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
+- [ ] Before release: set `QB_TEST_START` to 0 (29_prices.js; new players start at level 1 again) and drop `S.testFree`; remove the Test panel, the Shop's Testing row, each room window's Testing undo link, and the
       `window.__qb` / `window.__qbLoft` hooks. Also the phone log (`qbFrame` in `26_world.js`) and the `diag/frame` doc,
       sooner if the Loft height is sorted first.
 
@@ -313,6 +314,12 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   unlocks, one at a time as before, each spending one (29h_unlocks.js, 29b_story.js, 29_prices.js qbWeek). Testing only:
   nothing sets testFree but Skip a week. `shots/gardentest.js`: a fresh save, Level up x4 -> level 5 with gate 5 passed; the
   first Skip opens the Hall and offers the Garden lot (testFree 5 left); no page errors. Not checked: savecheck/screens.
+- WAITING ON QA: check v0.61, NEXT, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
+  ready, publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". QB_TEST_START = 5
+  (29_prices.js): a brand-new character (ccdone, first time only; old saves untouched) starts at level 5 XP with gate 5 passed
+  and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
+  the player (the Board's Class Awakening card). `shots/teststart.js`: name, Begin -> level 5, gates 5, the Garden lot offered
+  about 6 s later, no page errors. On the Before release list now: QB_TEST_START back to 0.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
