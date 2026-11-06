@@ -25,7 +25,7 @@ function bldStreet(L,wall,inner,edge,dk){var s='',bot=LFROOF+L.rows*LFFP,lit=lfM
     s+='<g data-act="bldgo" data-v="'+bi+'" style="cursor:pointer"><rect x="'+(x-20)+'" y="'+(top-200)+'" width="'+(BLDW+40)+'" height="'+(h+200)+'" fill="rgba(0,0,0,.001)"/></g>'});
   return s}
 /* room: [building, column, floor] */
-var ROOMCELL={lair:[0,1,1],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
+var ROOMCELL={lair:[0,1,1],trophy:[0,1,2],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
  restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],boba:[1,1,0],dessert:[1,1,1],speakeasy:[1,1,2],garden:[1,2,0],
  theater:[2,0,0],auditorium:[2,0,1],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0],club:[2,4,0]};
 /* rooms you buy from an empty lot on the street. Everything else opens from an upgrade inside a room. */
