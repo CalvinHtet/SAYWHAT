@@ -313,7 +313,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   cleanly, no gaps. Note (old, not the Rift Mask): in the sleepHead pose the face shows but no mask is drawn, the same for h_mask; a
   sleepHead layer, or treating sleepHead as front for masks, would fix every mask. The 404s in the run are the yawn pose's art,
   not drawn yet for any outfit. Owner: ROOMS (the sleepHead note).
-- CAL'S DECISION (2026-11-05, to QA, on LEAD's question "test v0.49, or skip to v0.50"): "Skip to v0.50". WAITING ON LEAD: build
+- DONE by LEAD in f3c970c (v0.50 built, with QA). CAL'S DECISION (2026-11-05, to QA, on LEAD's question "test v0.49, or skip to v0.50"): "Skip to v0.50". WAITING ON LEAD: build
   v0.50, then WAITING ON QA for its pre-release check (rule 18), then publish it as Cal's fresh pinned copy. Owner: LEAD.
 - QA, the door recheck after ROOMS's 3962ee2 (on fcdd160, port 8769; `doors.js` in full, new `doorwalk.js`; `shots/doors_full_fcdd160.txt`):
   pass. All 36 pairs follow Cal's rule (the Mall–Karaoke shortcut by design); with everything bought the only piece in front of a
