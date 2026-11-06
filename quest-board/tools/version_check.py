@@ -40,7 +40,8 @@ def owner(path):
         return "shared"
     if path.startswith(("quest-board/rigtest/qa", "quest-board/docs/QA.md", "shots/", "quest-board/shots/")):
         return "QA"
-    if path.startswith(ROOMS) or (path.startswith("quest-board/tools/") and os.path.basename(path) in ROOMS_TOOLS):
+    # LEAD writes only build.py and version_check.py among the tools; every other tool is ROOMS's art tooling
+    if path.startswith(ROOMS) or (path.startswith("quest-board/tools/") and os.path.basename(path) not in ("build.py", "version_check.py")):
         return "ROOMS"
     return "LEAD"
 
