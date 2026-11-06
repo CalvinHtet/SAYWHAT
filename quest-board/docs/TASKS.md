@@ -331,7 +331,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   0 -> bld_plaza_s0.webp (open plaza; until ROOMS paints it, the plain drawn front, never the café), 1 -> bld_plaza.webp,
   k >= 2 -> the highest bld_plaza_s<j>.webp painted with j <= k, else bld_plaza.webp. `shots/plazastage.js`: every stage
   right with and without s0/s2 present, the street draws, no page errors. Tapping still opens the rooms (unchanged).
-- WAITING ON QA: LEAD's 38e1ab7, the Kode Plaza sign over the open plaza (ROOMS: bld_plaza_s0 is painted lower in its 894x1100 frame,
+- DONE by QA (QA findings: pass). WAITING ON QA: LEAD's 38e1ab7, the Kode Plaza sign over the open plaza (ROOMS: bld_plaza_s0 is painted lower in its 894x1100 frame,
   so the sign floated). 29j_plaza.js moves the sign down to 30 px above where the painting starts (top 37.3% of the frame is
   empty) for pictures listed in PLAZATOP; the café stage and every other building are untouched; 26_world.js untouched.
   `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
@@ -464,6 +464,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 9189946 + 9d5aed7 and LEAD's 38e1ab7 (Kode Plaza stage 0, its sign, the Game Room; `shots/plaza/`): pass. bld_plaza_s0
+  reads as an open garden plaza (beds, wall, pergola with lights, lemon trees, birdbath, bench, no building front), sits right
+  between the Loft and Calibur Mall, dims at night (`sign_stages.png`); with the Restaurant the cafe returns. The pink "flecks" are
+  a faint fringe on the outer edges of the trees and pergola (`s0_edges.png`), invisible at street size. The sign now sits just
+  over the trees at stage 0 and back in the row at stage 1; out of line with the other two at stage 0 but clearly the plaza's:
+  taste, fine. Game Room: the dartboard on the left wall between the door and the TV corner with open floor in front; the TV corner
+  a tile back; the foosball bigger and flipped; the Floating Media Console one slim low shelf, the screen clear (Cal's note); no
+  page errors. Left: the ping-pong table still blocked at both ends (snack bar, sectional), waiting on Cal (drop it or not).
+  Owner: LEAD (v0.61 once Cal answers on ping-pong, or Cal lets it ship as a known item).
 - QA, LEAD's 3d7f57a (the level-5 test start's coins): pass. A new test character starts with 1,205 coins and lvPaid 5; Testing
   Level up to 6 gives 1,365 (+160, levelPay(6)); no page errors. Owner: LEAD.
 - QA, LEAD's ce07425 (each rig frame decoded before it is shown, Cal's walking blink): checked as far as Chromium allows: the code
@@ -1789,7 +1798,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's 9189946 (Kode Plaza stage 0 art; Game Room dartboard, TV corner, foosball, pool). Next: the rebuilt v0.61. (on 9189946)
+- Now: nothing waiting; the plaza and Game Room pieces passed, ping-pong waits on Cal. Next: the rebuilt v0.61. (on 9d5aed7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

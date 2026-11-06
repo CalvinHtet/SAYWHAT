@@ -7,6 +7,7 @@ const { open } = require('./lib.js');
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 (async () => {
   const { b, p, errs } = await open({ width: 440, height: 840, owned: 'none' });
+  if (process.env.HOUR) await p.evaluate((h) => { const now = new Date(Date.now()), t = new Date(now); t.setHours(h, 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (t - now); }, +process.env.HOUR); // HOUR=<0-23>
   for (const rooms of [['garden'], ['garden', 'restaurant'], ['garden', 'restaurant', 'boba']]) {
     const r = await p.evaluate(async (rooms) => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const x = window.__qb.x(), S = x.S;
       S.areaOn = null; S.gates = [5, 10, 20, 30, 40]; S.xp = Math.max(S.xp, x.cum(30));
