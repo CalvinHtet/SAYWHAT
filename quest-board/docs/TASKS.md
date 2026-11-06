@@ -1380,7 +1380,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.51 (ac8d2f0) passed. Next: v0.51's published copy once LEAD publishes it. (on a25876d)
+- Now: nothing waiting; v0.51 (ac8d2f0) passed and is held for Cal. Next: v0.51's published copy once LEAD publishes it. (on ba4d859)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
