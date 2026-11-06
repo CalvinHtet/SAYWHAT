@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.52 (db67326, APPV 52) built and WAITING ON QA for its pre-release check (rule 18 step 2). It is published only
-  when Cal reports on v0.51 or says go. Phone lag waits on a phone log. Nobody else plays until there is a working
-  version. (on db67326)
+- Now: v0.52 (db67326) passed QA's pre-release check (6fa7489), held until Cal reports on v0.51 or says go. Meanwhile
+  for v0.53: first load time (QA's loadtime.js: 39.6 MB before the game starts, about 35 s on a 9 Mbps phone), starting
+  the game before the big art arrives. Nobody else plays until there is a working version. (on 6fa7489)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
