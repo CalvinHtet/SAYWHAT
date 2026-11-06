@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: ROOMS (since 2:55 am)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copies: v0.51 (ac8d2f0), 2026-11-06, the newest; v0.50 (f3c970c) stays pinned beside it.
 
@@ -1258,18 +1258,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA (since 2:35 am, rule 17): check 503cd3f, the yawn painted for the other 28 tops (Cal, 2026-11-06: "Yes,
-  paint all 28"). 56 new files `art/app/<m|f>_<id>_yawn.webp`, nothing else changed; only the `stretch` pose uses them.
-  Every top in `items.json` now has its own painted yawn (31 with the pilot's three). ROOMS's check, on the real rig
-  (`rigtest/matrix.html?sheet=onepose&pose=stretch`, 46 cells, every top on every body it fits): no tears at the shoulder,
-  armpit or elbow, no stray marks, no page errors. Fixed before committing: `h_knit` repainted as the cropped button
-  cardigan it is; `v_mesh` colour-matched to its rest art (it came out orange); the baby tee's stray mouth mark removed.
-  Not checked: other trousers, hair, hats and accessories over them (QA's combination sweep), in a room, on a phone.
-  Still torn: `stretchUp` (arms straight up) is a different pose with no painted layers, so dark sleeves still tear there.
-  Chrome free. The team's tops and the Rift Mask are in v0.51 (ac8d2f0).
+- Now: QA's two yawn fixes for ROOMS (a8c2a1f, the 28 tops passed): (2) the man's base yawn (`m_base_yawn.webp`) clipped
+  at the waist to the clean painted body, no more skin slivers past the tops (done, checked on the rig, not committed yet);
+  (1) the three starter tops (`tee`, `hoodie`, `bomber`, creator.json) get painted yawns: one Higgsfield sheet each, painted
+  grey and set to the raw art's brightness so the white, grey and black ramps still work. Chrome claimed. Necklaces in
+  the yawn are LEAD's (rig.js).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`.
-  Next: fix what QA finds; the Game Room guests wait on Cal (his friends' looks). (on 503cd3f)
+  Next: to QA; the Game Room guests wait on Cal (his friends' looks). (on a8c2a1f)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
