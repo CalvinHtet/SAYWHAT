@@ -62,7 +62,8 @@ var GDSIZE=[[12,10],[18,13],[24,16]],GDNAME=["Back Plot","Kitchen Garden","Garde
 function gdRoom(){var B=S&&S.base;return B&&B.slots?B.slots.filter(function(r){return r&&r.t==="garden"})[0]:null}
 function gdStage(a){return a&&a.g_x2?2:a&&a.g_x1?1:0}
 var gdDimBase=lfDimOf;
-lfDimOf=function(t){if(t!=="garden")return gdDimBase(t);var r=gdRoom();return GDSIZE[gdStage(r&&r.a)]};
+/* the Estate's painted lot (gdw_s2) has lower walls than the rest, so its walls are cut at its stone coping */
+lfDimOf=function(t){if(t!=="garden")return gdDimBase(t);var r=gdRoom(),g=gdStage(r&&r.a);LFWH.garden=g===2&&window.LFSPR&&LFSPR.gdw_s2?119:136;return GDSIZE[g]};
 LFRS.garden=.86;
 delete SVC.garden;
 function gdUps(){var r=gdRoom();return r?addonsOf(r):[]}
