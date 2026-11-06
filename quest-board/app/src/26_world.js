@@ -257,6 +257,15 @@ function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2
   lfSpr(C,"rdx_tlong",x0+.3,Y+1.0,2.6,1.35,{h:26,H:46,flip:1,dk:1.7,ctr:1});
   [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+2.72,1,x0+1.6,Y+1.65,1,"B")});
   lfSpr(C,"rdx_benchb",x0,Y+2.45,3.2,.9,{h:28,H:74,flip:1,dk:0,nosh:1,ctr:1})}
+/* the Grand Menu Board: every dish at once in two columns with prices, a chalkboard in a wood frame (black slate and
+   brass in Noir). Dishes past what fits are left off; the newest show. */
+function rsBigMenu(items,W,H,noir){var h=function(s){var n=0;for(var i=0;i<s.length;i++)n=(n*31+s.charCodeAt(i))>>>0;return n},
+  rows=Math.floor((H-24)/7.8),list=items.slice(-rows*2),fr=noir?"#b8935a":"#6b4528",ink=noir?"#efe6d4":"#f4f1e6",acc=noir?"#d9b46a":"#ffd27a",
+  o='<rect x="-4" y="-4" width="'+(W+8)+'" height="'+(H+8)+'" rx="2" fill="'+fr+'" stroke="'+LFOL+'" stroke-width=".8"/><rect width="'+W+'" height="'+H+'" fill="'+(noir?"#121014":"#2a332e")+'"/>'
+  +scrTxt(W/2,13,noir?"CARTE DU JOUR":"OUR MENU",9,acc,"middle",800)+'<rect x="10" y="17" width="'+(W-20)+'" height=".8" fill="'+acc+'" opacity=".7"/>';
+  list.forEach(function(m,i){var c=i<rows?0:1,r=i%rows,x0=c?W/2+6:8,x1=c?W-8:W/2-6,y=27+r*7.8;
+    o+=scrTxt(x0,y,m,5.3,ink,"start",600)+scrTxt(x1,y,"$"+(8+h(m)%22),5.3,acc,"end",700)});
+  return o+'<rect x="'+(W/2-.4)+'" y="22" width=".8" height="'+(H-28)+'" fill="'+acc+'" opacity=".35"/>'}
 function rsWalls(C){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8])}
 LFROOM.restaurant=function(C){
   rsArtReady();
@@ -284,7 +293,8 @@ LFROOM.restaurant=function(C){
   rsWallRun(C,Wt-.14,0,.14,kd-.14,26,pc,pt);
   if(H("r_s1"))lfOrderBoard(C,Wi+.5,96,"ORDERS");
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
-  if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
+  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(Wi-9.4,0,128,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*4.6,84,noir)));
+  else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+3.6,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
@@ -307,11 +317,14 @@ LFROOM.restaurant=function(C){
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
-  if(H("r_b1")&&st>0)(st===2?[.7,4.3,7.9]:[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
+  /* Cal, 2026-11-05: the red crescent booth sits in the back-left corner, open toward the room; the window booths move down
+     the wall to make space for it */
+  var crescent=H("r_more2")&&st>1&&LFSPR.rdx_curve;
+  if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2,10.55]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
   ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[5.7,6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  if(H("r_more2")&&st>1&&LFSPR.rdx_curve){var cvx=12.2,cvy=10.4;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});/* the crescent opens toward you: its guests sort after its tall back and before the round table in front of them */
-    [[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+3.6+cvy+3.3-2.4+.5)-(C.st[k].x+C.st[k].y)});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx-.8,cvy+2.1,.6,.6,{h:30,ctr:1})}
+  if(crescent){var cvx=.3,cvy=.25;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});/* the crescent opens toward you: its guests sort after its tall back and before the round table in front of them */
+    [[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+3.6+cvy+3.3-2.4+.5)-(C.st[k].x+C.st[k].y)});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx+3.7,cvy+.3,.6,.6,{h:30,ctr:1})}
   lfWander(C,[[Wi-3,1.6,-1],[Wi*.6,D*.72,1],[Wi-1.6,D*.62,-1]]);
   /* light */
   if(H("r_l2")&&st>1)[[5.7,6.2],[9.8,6.2],[9.8,10.2]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
@@ -319,9 +332,9 @@ LFROOM.restaurant=function(C){
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
   if(!H("r_d1"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
-  if(H("r_d1"))lfSpr(C,"rdx_olive",.3,D-1.3,1,1,{h:40,ctr:1});
+  if(H("r_d1"))lfSpr(C,"rdx_olive",crescent&&H("r_b1")?14.4:.3,D-1.3,1,1,{h:40,ctr:1});/* the booths fill the left wall then */
   if(H("r_d8")&&st>1)lfSpr(C,"rdx_olive",4.4,D-1.2,1,1,{h:40,ctr:1});
-  if(H("r_d3")&&st>0)(st===2?[.9,4.5,8.1]:[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
+  if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4,10.75]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
   if(H("r_cool")&&st>0)lfSpr(C,"rsx_cooler",Wi-1.0,kd+.3,.8,.7,{h:50,ctr:1});
@@ -352,5 +365,12 @@ LFROOM.restaurant=function(C){
     if(u[0]==="r_x2"){u[4]="A huge room with space between every table.";e.splash="The whole floor is yours now, and it has room to breathe. Next: go dark with Noir, and open the bar upstairs."}
     if(u[0]==="r_bar"){u[1]="Open the Upstairs Bar";u[4]="Stairs up to a moody cocktail bar in its own room above.";e.opens="skybar";e.also="r_x2";e.lv=30;e.splash="A staircase now leads up to a brand new room above the Restaurant: a dark cocktail bar with high-top tables. Tap the glowing door to go up."}});
   RS_UPS=RS_UPS.filter(function(u){return !u[3].cut});
+  /* Cal, 2026-11-05: "a bigger menu on the wall as an upgrade to add more dishes". It follows the screen and takes its place */
+  RS_UPS.push(["r_bigmenu","Grand Menu Board",6000,{p:.2,lv:22,g:"Menu",also:"r_x1"},"A wall-wide board with every dish on it at once, so the long menu finally fits."]);
+  /* Cal, 2026-11-05: new dishes come with the gear that makes them ("the addition of an espresso bar would expand the menu") */
+  var RSDISH={r_cf2:["Espresso","Cappuccino"],r_k4:["Smash Burger","Grilled Cheese"],r_k5:["Fish & Chips"],r_k6:["Croissant","Sourdough"],
+    r_k7:["Roast Chicken"],r_k8:["Steak Frites","Duck Confit"],r_p6:["BBQ Ribs"]};
+  RS_UPS.forEach(function(u){var d=RSDISH[u[0]];if(d){u[3].menu=(u[3].menu||[]).concat(d);u[4]+=" Adds "+d.join(" and ")+" to the menu."}});
+  ADDREQ.r_bigmenu="r_scr";
   RS_UPS.push(["r_noir","Noir",2500,{p:.8,lv:28,g:"Expansion",also:"r_x2",splash:"The walls go charcoal, the floor goes dark walnut and the lights drop low. This is the look of a Michelin star."},"Charcoal walls, dark walnut floor, low light. Everything changes."]);
   RS_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});ADDONS.restaurant=RS_UPS})();
