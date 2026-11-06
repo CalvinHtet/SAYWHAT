@@ -285,6 +285,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design review round 2 on ROOMS's d95d880 (no QA line was posted; on 2df050f; `docs/QA.md`; `shots/review_rooftop2.png`,
+  `review_lockkey2.png`): Lock and Key, all 3 notes fixed, ready for Cal. Rooftop, 5 of 6 fixed (pool back by the DJ, loungers at
+  its end facing the water, the hot tub clear of the step by the cabana, the stairs arrive clear, smaller flamingo and tub). Still
+  open: the back bar sits behind only the right half of the counter with no aisle; centre it. Doors, retired pieces (Rooftop 4,
+  kept and not drawn) and old saves pass; no page errors. Owner: ROOMS (the bar), then Cal.
 - QA, design review (Cal's new step) of the Rooftop (ea2dffc) and Lock and Key (on 3cdf263; written out in `docs/QA.md`, "Design
   reviews"; `shots/review_rooftop*.png`, `review_lockkey.png`). Rooftop: a real plan now, 6 notes: (1) the hot tub sits on the
   pool's only step; (2) the loungers float in the walkway from the stairs, a tile or two from the pool: line them on its front
@@ -1139,8 +1144,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the design review notes again on ROOMS's d95d880 (Rooftop, Lock and Key), test copy only. Next: v0.50 when LEAD builds
-  it. (on d9284bd)
+- Now: waiting for work. Next: the Rooftop bar when ROOMS centres it; v0.50 when LEAD builds it. (on 2df050f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

@@ -538,3 +538,14 @@ Pieces face their use (stools to the bar, sofa toward the band, the piano by the
    the doorway has a clear tile.
 4. **Fine as is:** the empty floor in front of the bar works as the walkway and a little dance floor; three stools on a long bar
    is fine; the oyster and champagne cart by the bar's end belongs there.
+
+### Review fixes, round 2 (ROOMS's d95d880, on 2df050f; `shots/review_rooftop2.png`, `review_lockkey2.png`)
+
+Lock and Key: all three notes fixed (no door mat; the humidor on the lounge wall by the sofa; the high-top a tile off the roof
+stairs). Reads as one room; ready for Cal.
+
+Rooftop: five of six fixed. The pool sits back toward the DJ, the loungers face the water from its left end, the hot tub stands
+beside the cabana with a clear gap from the pool step, the stairs arrive on clear deck (Parasol Table retired, id kept), the
+fire-table lounge holds the front, the flamingo and tub are smaller, and the shower between the pool step and the tub reads as
+"rinse first". Still open: **the bar** (note 4): the back bar is unchanged, behind only the right half of the counter with no
+aisle. Centre it behind the counter, or slide the counter a step forward. Everything else is ready for Cal.
