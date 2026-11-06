@@ -77,7 +77,7 @@ function gdCook(r,om,h){if(!gdRoom())return 0;var need=gdUse(r)*om*h,F=S.base.fo
 function gdRate(){var i=S.base.slots.indexOf(gdRoom());return i<0?0:ROOMT.garden.rate*roomMult(i)*openMult()}
 function gdPantry(){return Math.floor(S.base.food.veg||0)}
 function gdNote(r){var a=r.a||{},st=gdStage(a),nx=st===0?"g_x1":st===1?"g_x2":a.g_green2?null:"g_green2",N=nx&&GD_UPS.filter(function(u){return u[0]===nx})[0],rs=rsRoom(),d=gdDishes();
-  return '<p class="note"><b>'+GDNAME[st]+'.</b> Growing '+gdRate().toFixed(1)+' ingredients an hour. Pantry '+gdPantry()+'/'+foodCap()+'. '+(rs?'The Restaurant uses '+gdUse(rs)+' an hour and earns +'+Math.round(gdFresh()*100)+'% while it has stock.':'Build the Restaurant to put these to use.')+(N?' Next big step: '+esc(N[1])+' at level '+N[3].lv+'.':'')+'</p>'+(d.length?'<p class="note">On the Restaurant menu because of you: '+esc(d.join(", "))+'.</p>':'')}
+  return '<p class="note"><b>'+GDNAME[st]+'.</b> Growing '+gdRate().toFixed(1)+' ingredients an hour. Pantry '+gdPantry()+'/'+foodCap()+'. '+(rs?'The Restaurant uses '+gdUse(rs)+' an hour and earns +'+Math.round(gdFresh()*100)+'% while it has stock.':'Build the Restaurant to put these to use.')+(N?' Next big step: '+esc(N[1])+'.':'')+'</p>'+(d.length?'<p class="note">On the Restaurant menu because of you: '+esc(d.join(", "))+'.</p>':'')}
 /* the garden draws plain ground: fence, beds and things in rows */
 function gdS(C,k,x,y,w,d,h,o){return lfSpr(C,k,x,y,w,d,Object.assign({h:h,ctr:1},o||{}))}
 /* Cal: the beds sat at a steeper angle than the room. Each bed's top face (t back, r right, l left corner, as fractions of
@@ -103,7 +103,9 @@ function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F
   var M=[-a,-b,c,dd,e+a*S.w,f+b*S.w];
   if(LFREC)lfRecBox(x,y,0,w,d,z);
   C.add(x+w+y+d-.01,'<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.18)"/>');
-  C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),'<image href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
+  /* dry beds look parched, watered beds damp (LEAD's gdWatered, 29i_garden.js) */
+  var wet=typeof gdWatered!=="function"||gdWatered(),fl=wet?'saturate(1.12) brightness(.96)':'saturate(.45) sepia(.35) brightness(1.1)';
+  C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),'<image style="filter:'+fl+'" href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
   return z}
 function gdMist(C,x,y){var q=lfP(x,y,6);C.add(x+y+.2,'<rect x="'+(q[0]-1.5)+'" y="'+(q[1]-6)+'" width="3" height="6" fill="#aab"/><path d="M'+q[0]+' '+(q[1]-8)+' q-12 -14 -18 -4 M'+q[0]+' '+(q[1]-8)+' q12 -14 18 -4" stroke="rgba(180,225,255,.8)" stroke-width="1.4" fill="none" class="lfmist"/>')}
 LFROOM.garden=function(C){
@@ -136,7 +138,9 @@ LFROOM.garden=function(C){
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
   var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,st===0?8.7:7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
-  tool("g_can","gdx_can",TY[0],1.2,1.0,14);tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
+  tool("g_can","gdx_can",TY[0],1.2,1.0,14,{act:"gdwater"});
+  /* the watering can in the back corner waters the beds when tapped (LEAD's gdwater); the Hose & Watering Can takes over */
+  if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater"});tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
   /* the Back Plot's gate corner is the produce stand's */
   if(H("g_scare"))gdS(C,"gd_scare",.3,st===0?8.3:6.0,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
