@@ -961,12 +961,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 7, the Rooftop (`rooftop`), done on ROOMS's side, waiting on QA and Cal: painted deck 707cac1
-  (`rfw_t1`, approval 27); the open-air sky follows the time 5ddeb1a (QA passed); the roof in zones fb8149a (More
-  Loungers `rf_lng2`, the Towel Station `rf_towel` and the Ice Cream Cart `rf_ice` leave the picture, ids kept; a
-  stairwell down at the front-left edge; glass rail on the front-right edge). Step 5, Lock and Key, done (approvals 25,
-  26; Cal's lounge redo 707cac1, QA passed). LEAD: retired ids `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`;
-  new `sb_band`. Next: the Mall (step 8), then the theater basics and the team in their rooms. Chrome claimed. (on fb8149a)
+- Now: WAITING ON QA's design review (Cal: every room goes to QA for notes before it comes back to him) of the Rooftop
+  ea2dffc (laid out as one plan after Cal's notes: the pool turned and centred, the DJ facing it, one bar) and Lock and Key
+  707cac1; ROOMS fixes the notes, then shows Cal. Meanwhile storyboard step 8, the Mall: looking at it and planning its
+  layout as a whole. Done: step 5 Lock and Key (approvals 25, 26), step 7 Rooftop deck and sky (approval 27, 5ddeb1a).
+  LEAD: retired ids `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`; new `sb_band`. Chrome claimed. (on 3fdeb77)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
