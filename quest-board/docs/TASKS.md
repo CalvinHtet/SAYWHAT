@@ -1709,15 +1709,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on b9bcbbf): Cal's v0.58 notes. Next is the Garden needs-water look (dry beds while gdWateredAt() is false) and the
-  watering animation (LEAD's gdWater). WITH QA: 07812e4 shadows (warm, feathered, ids unique per render so a buy no
-  longer drops them), d233c9e the building backdrop on phones (fitted and tiled), b9bcbbf the Garden beds upright (herb
-  planter legs), 67d0e85 NICE COCK's 16 pieces (wear test; ids nc_*, shop lines sent to LEAD). PASSED: bld_plaza_s0 and
-  the Game Room (9189946, 9d5aed7, d34d2ce; console line 8218e1e). Ping-pong waits on Cal. Then: NICE COCK banner and
-  logo, the yawn layers for its 4 tops, plaza s2..s6, the SAYMØRE references from Cal's Higgsfield history (browse only).
-  Chrome: ROOMS (Higgsfield, Unlimited only).
+- Now (on 4bcda62): nothing open in files. Next: the 7 friend portraits (LEAD's ff9ba96: friend_<id>.webp, art/app only,
+  Higgsfield Unlimited), then NICE COCK banner and logo, the yawn layers for its 4 tops, plaza s2..s6, the SAYMØRE references.
+  WITH QA: 07812e4 shadows, d233c9e backdrop on phones, b9bcbbf upright beds, 67d0e85 NICE COCK wear test, 4bcda62 Garden
+  dry look and watering animation. WAITING ON CAL: ping-pong in the Game Room (drop it?). Chrome: ROOMS (Higgsfield).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on b9bcbbf)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 4bcda62)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
