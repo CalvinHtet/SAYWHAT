@@ -1068,6 +1068,14 @@ body.has-hud .lfctl:not(.lfpzc){top:34px}body.has-hud .lfwxb{top:34px!important}
   .qbcc .cc-menu{overscroll-behavior-y:auto}
   .creator.qbcc .ccbtns{position:sticky;bottom:0;z-index:5;display:flex;gap:8px;padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface)}
   .creator.qbcc .ccbtns .btn{flex:1}}
+/* a phone held sideways (QA on v0.54: Begin only after scrolling at 844x390): two columns fitted to the height, same pinned bar */
+@media (max-height:500px) and (min-width:721px){.creator.qbcc{max-height:none;min-height:0}
+  .qbcc #qbcc{height:max(220px,calc(100dvh - 150px));margin:6px 0 0}
+  .qbcc .cc-menu{overscroll-behavior-y:auto}
+  .creator.qbcc .ccbtns{position:sticky;bottom:0;z-index:5;display:flex;gap:8px;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));background:var(--surface)}
+  .creator.qbcc .ccbtns .btn{flex:1}}
+/* the Testing pill sits top right while the creator is open, off the menu (QA: it covered the first hair button) */
+body:has(.creator.qbcc) #qbt{bottom:auto;top:calc(8px + env(safe-area-inset-top,0px));left:auto;right:10px;align-items:flex-end}
 
 /* switched-on screens */
 .scrS{opacity:0;animation:scrS 12s linear infinite}

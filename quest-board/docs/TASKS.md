@@ -13,9 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.54 published and pinned (a384feb, QA passed e601f74), WAITING ON QA for the page check. v0.55 is building:
-  skirts (1bbe47f, be8e92c), the room-window lag fix (b46bc16), then QA's notes on v0.54: Begin on a sideways phone, the
-  Testing pill over the first hair button. (on b46bc16)
+- Now: v0.55 (NEXT, APPV 55) WAITING ON QA, published as soon as QA passes it. v0.54 pinned (a384feb). (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -267,6 +265,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
 - WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
   461 files from a384feb, the 9 db rules + user + sample with images, version 1793967962-0e38). Check the page matches the build.
+- WAITING ON QA: check v0.55, NEXT (rule 18: your pass publishes it). (1) Skirts: 1bbe47f (rig option) and be8e92c (the flag
+  on v_tulle and h_pleat): one piece mid-stride (`shots/v55/skirt_before.png`, `skirt_after.png`). (2) Room-window lag from
+  Cal's phone (b46bc16): the fx-pulse glow is an ::after layer that only fades; .hero and .now keep the old glow (their ::after
+  belongs to fx-sweep and fx-holo). Please eyeball the glow at every rank skin. (3) Your v0.54 notes: the creator on a phone
+  held sideways (max-height 500 and wider than 720: two columns fitted to the height, Back/Begin pinned) and the Testing pill
+  top right while the creator is open. `shots/ccbegin.js`: 390x664, 844x390, 740x360, 1280x800, Begin on screen and tappable
+  in all four scroll states, the pill over no creator button; no page errors. Not checked by LEAD: savecheck/screens on this
+  build. ROOMS's shadows (9593432) are in it too.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
