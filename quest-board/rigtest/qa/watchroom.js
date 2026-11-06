@@ -9,7 +9,7 @@ const [room, n, gap] = [process.argv[2] || 'bedroom', +(process.argv[3] || 8), +
   const { b, p, errs } = await open({ width: 1200, height: 1100, owned: 'all' });
   await p.evaluate(() => { const bt = document.querySelector('.nav button[data-v="hideout"]'); if (bt) bt.click(); });
   await p.waitForTimeout(2500);
-  const bld = { bedroom: 0, closet: 0, lair: 0, patio: 0, gameroom: 0 }[room];
+  const bld = { bedroom: 0, closet: 0, lair: 0, patio: 0, gameroom: 0, mall: 2, theater: 2, auditorium: 2, arcade: 2, bowling: 2, karaoke: 2 }[room];
   await p.evaluate((k) => { document.querySelectorAll('.dropsplash,.overlay,#layer .modal').forEach((e) => e.remove()); const g = document.querySelectorAll('[data-act="bldgo"]')[k || 0]; if (g) g.dispatchEvent(new MouseEvent('click', { bubbles: true })); }, bld);
   await p.waitForTimeout(4000);
   const i = await p.evaluate((room) => window.__qb.x().S.base.slots.findIndex((s) => s && s.t === room), room);

@@ -596,3 +596,26 @@ Both open items closed. The escalator's landing has a stone edge and a glass rai
 The Karaoke edge case: without Bowling, the Mall shows "Karaoke" (top right) and Karaoke shows "Mall" (bottom left), and the
 walk Mall -> Karaoke -> Mall works; with Bowling, the shortcut is gone (Mall: Bowling; Karaoke: Bowling) and Bowling carries
 both ways. All Mall notes are closed: the Mall is ready for Cal.
+
+### Theater lobby (4a7c0ff, on 36706e5; `shots/review_theater.png`, `review_theater_bare.png`, `review_theater_live.png`)
+
+The idea reads: in at the mat (front right), a red carpet to the NOW SHOWING doors (back left), the rope line to the box office,
+snacks on the way. Nothing stands outside the room, no guest spot sits inside furniture (audit), and live the Trailer Screen shows
+the showtimes and the back-left panel a film poster. Not done:
+
+1. **The concession blocks the walk.** Counter, popcorn cart and soda fountain stand in a row in the middle of the floor, the soda
+   fountain on the carpet's edge a step from the rope posts: the carpet from the box office to the doors squeezes between them.
+   Put the concession against the left wall (between the sofa corner and the doors), facing the carpet, with the cart and the
+   soda behind or beside the counter, not in front of it.
+2. **The bar is split in two.** The Brass Tap Bar with two stools stands at the entrance by the mat, and the Liquor Wall is on the
+   far right wall: two halves of one bar, as on the Rooftop. One bar: the taps counter in front of the liquor wall, stools facing it.
+3. **A blank gold frame stands on the floor in front of the liquor wall.** It hides the bottles and shows nothing (a blank red
+   panel). If it is a poster stand, give it a poster and put it by the doors; otherwise drop it.
+4. **The lone sofa.** One black sofa sits in the back-left corner facing the front, away from everything (Cal's Lock and Key couch,
+   again). Two sofas facing each other by the trailer screen, or none.
+5. **Hot dog and nachos hidden (ROOMS asked):** yes, behind the counter they barely show; if they are bought upgrades they should
+   be seen. Put the back counter against the wall behind the concession (1), so all three show above the counter.
+6. **The bins** sit at the front edge by the taps bar, the first thing in the picture; put them by the concession or the doors.
+
+Not verified: the ticket line and the snack trips live. In QA's test copy no guests or staff appeared in the lobby (opened directly
+and from the street), so the walks were not watched; the audit only shows that no queue, ticket or snack spot sits inside furniture.

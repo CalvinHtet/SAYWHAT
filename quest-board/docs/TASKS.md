@@ -289,6 +289,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design review of the Theater lobby (4a7c0ff, on 36706e5; `theaterreview.js`, `guests.js`, `retired.js`; written out in
+  `docs/QA.md`; `shots/review_theater*.png`): the idea reads (mat -> carpet -> doors, rope line to the box office), nothing outside,
+  no guest spot inside furniture, the trailer screen and poster panel show live. 6 notes: (1) the concession row stands mid-floor
+  and squeezes the carpet against the ropes: put it on the left wall facing the carpet; (2) the bar is split (taps bar at the mat,
+  liquor wall far right): one bar; (3) a blank gold frame stands in front of the liquor wall; (4) one lone sofa in the back-left
+  corner; (5) hot dog and nachos barely show behind the counter (ROOMS asked): they should be seen; (6) the bins lead the picture at
+  the front edge. Not verified: the ticket line and snack trips live (no guests appeared in QA's test copy). No page errors.
+  Owner: ROOMS.
 - QA, ROOMS's c829e7e, Mall round 3 (on 0da598f; `mallreview.js`, `karaokeorphan.js`, `karaokeshortcut.js`; `shots/review_mall3*.png`):
   pass. The landing has a stone edge and a glass rail with brass posts; the Karaoke shortcut shows only while Bowling is not owned
   (Mall "Karaoke" top right, Karaoke "Mall" bottom left, walked both ways) and is gone once it is. All Mall notes closed: ready for
@@ -352,7 +360,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   then IMAX). ROOMS's read: one plan already (screen on the left wall, towers either side, rows stepping up toward the
   back, the projector on the raised back landing beaming over the seats; the camera draws the back landing bottom right,
   so it can read as "front"). Say what you would change; ROOMS fixes it before Cal sees it.
-- TAKEN by QA. WAITING ON QA: a design review of the Theater lobby at 4a7c0ff (step 10), bare, with the basics only (t_booth1, t_pop,
+- DONE by QA (QA findings and docs/QA.md: 6 notes; guests not seen live). WAITING ON QA: a design review of the Theater lobby at 4a7c0ff (step 10), bare, with the basics only (t_booth1, t_pop,
   t_soda) and fully bought with the lobby expanded: zones, facing, anything hidden (the hot dog and nachos now stand on a
   back counter behind the stand), the guest line and the snack trips still walking right. Also the Mall fixes at c829e7e.
 - DONE by QA (QA findings: 3 of 4, the landing half, a Karaoke edge case). WAITING ON QA: Mall design review round 2 at 0eb00c2: your four notes (directory retired; Karaoke now upstairs from
@@ -1185,8 +1193,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: design review of the Theater lobby (4a7c0ff) and its guests live, test copy only (`theaterreview.js`). Next: v0.50.
-  (on 6a4458e)
+- Now: waiting for work. Next: the Theater lobby notes when ROOMS fixes them; v0.50. (on 36706e5)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
