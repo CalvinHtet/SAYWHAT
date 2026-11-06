@@ -1090,6 +1090,10 @@ body:has(.creator.qbcc) #qbt{display:none}
 @keyframes scrJ{0%,55%,100%{transform:translateY(0)}78%{transform:translateY(-22px)}}
 .scrB{animation:scrB 2s ease-in-out infinite alternate}
 @keyframes scrB{from{opacity:.2}to{opacity:1}}
+/* Screens tick like retro screens: a few changes a second instead of one every frame. Each change re-draws the whole room picture,
+   and the fully bought Bedroom ran at 18 fps on Cal's iPhone (v0.58 phone log). Twinkles step, scrolls and the jump move in small steps. */
+.scrB{animation-timing-function:steps(3,jump-none)}.scrL{animation-timing-function:steps(84)}.scrL2{animation-timing-function:steps(42)}
+.scrJ{animation-timing-function:steps(10)}.prtG{animation-timing-function:steps(6,jump-none)}
 .scrE{animation:scrE .9s ease-in-out infinite alternate}
 @keyframes scrE{from{transform:scaleY(.18)}to{transform:scaleY(1)}}
 .thdoorgap.on{animation:thdoor 2.4s ease-out}

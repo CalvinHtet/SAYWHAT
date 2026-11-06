@@ -51,7 +51,7 @@ function qbPerf(why){try{if(QBPB||window.__qbGuest||!db||!ownerView||document.hi
   var t0=performance.now(),last=t0,n=0,worst=0,slow=0,long=0,po=null;
   try{po=new PerformanceObserver(function(l){long+=l.getEntries().length});po.observe({entryTypes:["longtask"]})}catch(e){}
   var done=function(){QBPB=0;if(po)po.disconnect();var an=0;try{an=document.getAnimations().filter(function(a){return a.playState==="running"}).length}catch(e){}
-    QBPL.push({why:why,tab:view,win:!!document.querySelector("#layer .modal"),fps:+(n/5).toFixed(1),worst:Math.round(worst),slow:slow,long:long,anim:an,nodes:document.getElementsByTagName("*").length,img:document.images.length,t:Date.now()});QBPL=QBPL.slice(-16);
+    QBPL.push({why:why,tab:view,win:!!document.querySelector("#layer .modal"),room:((document.querySelector("#layer .rmodal .rm-title")||{}).textContent||""),fps:+(n/5).toFixed(1),worst:Math.round(worst),slow:slow,long:long,anim:an,nodes:document.getElementsByTagName("*").length,img:document.images.length,t:Date.now()});QBPL=QBPL.slice(-16);
     clearTimeout(QBPT);QBPT=setTimeout(function(){db.doc("diag/perf").set({appv:APPV,ua:navigator.userAgent,dpr:devicePixelRatio,w:innerWidth,h:innerHeight,cores:navigator.hardwareConcurrency||0,mem:navigator.deviceMemory||0,log:JSON.stringify(QBPL)}).catch(function(){})},1500)};
   var f=function(t){n++;var d=t-last;last=t;if(d>worst)worst=d;if(d>50)slow++;if(t-t0<5000)requestAnimationFrame(f);else done()};
   requestAnimationFrame(f)}catch(e){QBPB=0}}

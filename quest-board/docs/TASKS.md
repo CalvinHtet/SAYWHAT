@@ -13,8 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.58 published and pinned (859d941); QA: the page matches. Nothing open from QA. Next version when new
-  work passes QA. (on 859d941)
+- Now: v0.59 (NEXT, APPV 59) WAITING ON QA, published as soon as QA passes it. v0.58 pinned (859d941). (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -72,6 +71,12 @@ To do:
       `shots/roomcure2.js` (440x840, dpr 3, CPU x4, every room and upgrade, the Bedroom window): 4-6 fps before, 35-46 after;
       the Loft alone 60. What is left is the room's own SVG animations (screens, ticker, portal): stepping them gave 59 fps
       but changes how they look, so it waits for Cal's phone numbers on v0.55.
+      Cal's iPhone on v0.58 (2026-11-06 17:35): first load ready 1.4 s, second 0.25 s (15 files from cache); Board, Shop,
+      Training, Dungeons 59-60 fps; most room windows 47-59; one window 18 fps, worst 433 ms, 6,263 elements, 35 animations.
+      LEAD: the fully bought Bedroom is the heavy one (2,928 elements, the game screen's 20 twinkles, scrolls, jump, portal
+      glows); every other room 59-60 at CPU x4. Fixed in NEXT: the screens tick in steps (index.html) and the twinkles share
+      four beats (24_screens.js): the Bedroom 35-46 fps at CPU x4 before, 60 after its first draw (`shots/starcure.js`,
+      `shots/roomsall.js`). diag/perf now names the open room.
 - [x] `dropbox-leftovers` reviewed (nothing worth bringing over) and deleted with Cal's OK.
 - [x] Yawn pilot, code (rig.js flat painted layers, `rigtest/template.html`). Without painted art the stretch renders
       byte for byte as before. Self-check feeding a top's own render back in: about 0.7% of pixels differ on the man (edges),
@@ -292,6 +297,13 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.58: "Quest Board v0.58 (test, fresh start)" (slug 974301b9-f250-4650-90af-04fa3d61600e,
   462 files from 859d941, the 9 db rules + user + sample with images, version 1793973604-fe09). Check the page matches the build.
+- WAITING ON QA: check v0.59, NEXT (rule 18: your pass publishes it). Over v0.58: ROOMS's 3c27004 (passed), and LEAD's Bedroom
+  lag fix from Cal's v0.58 phone log, which has one room window at 18 fps (worst 433 ms, 6,263 elements; the other samples
+  56-60). The fully bought Bedroom is the heavy one: its game screen's 20 twinkles, two scrolls, the jump and three portal
+  glows changed something nearly every frame, and each change re-draws the whole room. Now `.scrB/.scrL/.scrL2/.scrJ/.prtG`
+  run in steps (index.html) and the twinkles share four beats (24_screens.js). `shots/roomsall.js` (every room, CPU x4): the
+  Bedroom was the only one under 59; `shots/starcure.js`: 60 fps after the first draw (35-46 before). diag/perf now carries
+  `room` (the open window's title). Please eyeball the stepped screens (Bedroom game screen, any portal) for looking choppy.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
