@@ -1301,7 +1301,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50's pre-release check when Cal decides. (on fcdd160)
+- Now: waiting for work. Next: v0.50's pre-release check when Cal decides. (on c3de982)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
