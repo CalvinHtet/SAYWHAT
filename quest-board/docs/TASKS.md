@@ -14,8 +14,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: WAITING ON Cal: test v0.49, or skip to v0.50 (asked 2026-11-05). v0.50 is ready to build: every storyboard room has
-  QA-passed art (Boba to the Nightclub), the team stands in their rooms, the Auditorium's gate, the writing pass (0 voice hits).
-  QA is ready for its pre-release check. Nobody else plays until there is a working version. (on 52bf664)
+  QA-passed art (Boba to the Nightclub), the team stands in their rooms, the Auditorium's gate, the writing pass (0 voice hits), every door on Cal's rule (QA 44aee5c).
+  QA is ready for its pre-release check. Nobody else plays until there is a working version. (on 44aee5c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
