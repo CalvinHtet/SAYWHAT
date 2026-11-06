@@ -595,7 +595,7 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",5],["wheel","Wheel",6],["away","Dungeons",1]];
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeons",1]];
 var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your team out from the Hero\'s Lair. Missions bring home coins, gifts and trophies."};
 var view="board";
 function coinsFor(xp){return Math.max(10,Math.round(xp*2.5*(1+.01*(effLvl()-1))))}

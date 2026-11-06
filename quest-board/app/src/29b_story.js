@@ -7,8 +7,8 @@
    every coin ever earned (S.earnedC, ECON.gateLockKey and gateMall; Cal: "it should never feel like you are at a
    standstill"), so upgrading other rooms while a gate fills still counts. */
 var STORY=[
-  /* Cal, 2026-11-05: the Garden is its own lot, and comes after the Loft's walk-in closet and patio, so unlocks arrive one at a time */
-  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Grow something you can sell.",gate:function(){return styHas("closet")&&styHas("patio")&&styUps("patio")>=ECON.gardenPatioUps}},
+  /* Cal, 2026-11-05: the Garden is its own lot, at level 5 (ECON.stepLv); each later step has a least level too */
+  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Grow something you can sell.",gate:function(){return true}},
   /* Cal: "the next upgrade should be a restaurant that expands from it": Mara's yes unlocks the Garden's expansion upgrade */
   {id:"chef",room:"restaurant",how:"upgrade",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
     scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Knock through into the space next to your garden and I'll run the stove. Partners?"],yes:"Partners. Let's build it",team:"mara"}},
@@ -58,7 +58,7 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
   persist();render();
   pop((s.why&&!s.scene?s.why+" ":"")+(s.how==="lot"?"A new lot is open on the street: "+ROOMT[s.room].name+".":ROOMT[s.room].name+" can now be opened from its room's upgrades."))}
 /* the reason a room is still closed, for its locked card */
-function styWhy(room){var s=styStep(room);return s&&s.why||"Keep growing your business."}
+function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(s.scene.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
 /* one line per screen, tap to continue (Cal: a lot of reading for one screen); the choices come with the last line */
@@ -105,7 +105,7 @@ function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA:
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
-    var ok=false;try{ok=s.gate()}catch(e){}if(!ok)continue;
+    var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
     if(s.scene){if((o.later[s.id]||0)>now)continue;styScene(s);return}
     styOpen(s);return}
   styBeat()}
