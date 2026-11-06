@@ -6,15 +6,16 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: free
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.53 (743c30c), 2026-11-06, the only one pinned (Cal: "remove all the pinned artifacts and pin the latest"). From now on LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.54 (a384feb), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.54 (a384feb, APPV 54) WAITING ON QA, published as soon as QA passes it. v0.55 is building: skirts (1bbe47f, be8e92c)
-  and the room-window lag fix (b46bc16). (on b46bc16)
+- Now: v0.54 published and pinned (a384feb, QA passed e601f74), WAITING ON QA for the page check. v0.55 is building:
+  skirts (1bbe47f, be8e92c), the room-window lag fix (b46bc16), then QA's notes on v0.54: Begin on a sideways phone, the
+  Testing pill over the first hair button. (on b46bc16)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -264,6 +265,8 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   bytes) or were only checked (a few hundred bytes), and when the bar showed and the game was ready; last 6 visits, owner's
   device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
+- WAITING ON QA: check the published v0.54: "Quest Board v0.54 (test, fresh start)" (slug 278e76fb-a812-42a8-90b0-b456091a8b1e,
+  461 files from a384feb, the 9 db rules + user + sample with images, version 1793967962-0e38). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
