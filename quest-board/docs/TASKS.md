@@ -285,6 +285,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's fb8149a, the Rooftop in zones (on 2418999, port 8770, `retired.js` ROOM=rooftop, `openair.js`, `skybarshell.js`;
+  `shots/rooftop_zones_noon.png`, `rooftop_stairwell_night.png`): pass. The way down is a painted stairwell at the front-left edge
+  with a gap in the glass rail; the front-right edge has its glass rail; Roof and Bar walk both ways. More Loungers, the Towel
+  Station and the Ice Cream Cart are retired: a new player gets no card for them, a save that owns them keeps all 3 ids and
+  nothing more is drawn; the one pair of loungers faces the pool clear of its step, the shower stands by the right rail; nothing
+  outside the room, at noon and 10 pm. `retired.js` now checks retired pieces in any room. No page errors. Owner: none.
 - QA, a quick look at ROOMS's 5ddeb1a (no QA line was posted; it answers QA's sky note; on 17e5851, port 8770,
   `openair.js` with HOURS; `shots/openair_sky_by_hour.png`): pass. The Sky Patio and the Rooftop Bar, fully bought, at 7:00, 13:00,
   18:00 and 22:00: dawn colours at 7, a blue sky with the sun at noon, deep blue with a moon and lit windows at 18 and 22 (the
@@ -300,7 +306,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
-- TAKEN by QA. WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
+- DONE by QA (QA findings: pass). WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
   of the pool steps, the shower by the right rail, no ice cream cart, towel station or second loungers drawn (owners keep
   the ids, no card for new players); a stairwell with a gap in the glass at the Bar door (front-left edge) and the Bar
   arrow walks down; glass rail on the front-right edge; nothing outside the deck. ROOMS's headless pass: no page errors.
@@ -1118,8 +1124,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's Rooftop fixes (fb8149a), test copy only (`openair.js`, `retired.js`, `skybarshell.js`). Next: v0.50 when LEAD
-  builds it. (on 10a936b)
+- Now: waiting for work. Next: v0.50 when LEAD builds it. (on 2418999)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
