@@ -393,6 +393,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
+  922bcb7 (step 14): painted shell, the snack bar and table off the lanes' approach in the front-right corner, the Karaoke
+  door off the lanes on the free back wall, no street mat (guests arrive at the Mall door). Lanes, ball return, console
+  and seats unchanged. ROOMS's worry: the lane seats face sideways (the art only faces the viewer).
 - DONE by QA (QA findings and docs/QA.md: Rhythm 3 notes, VR 2). WAITING ON QA: design reviews of the Rhythm Room and the VR Arena at e2d53e1 (step 13), bare and fully bought, live from
   inside the Mall building: painted shells, the Pulsing Floor now only under the dance pads, the Second Pod retired, no
   street mats (guests arrive at the Arcade doors). ROOMS's worry: the VR rigs still bunch in the middle-right.
@@ -1072,11 +1076,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: design reviews of the Rhythm Room and the VR Arena (step 13, e2d53e1). WAITING ON CAL: Lock and Key,
-  the Rooftop, the Mall, the Theater lobby, the Auditorium and the Arcade, all through QA's design reviews. Next: step 14,
-  Bowling. LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`,
-  `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome
-  claimed. (on e2d53e1)
+- Now: WAITING ON QA: round 2 of the Rhythm Room and VR Arena (5a33727) and a design review of Bowling (step 14, 5a33727
+  and 922bcb7). WAITING ON CAL: Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium and the Arcade, all
+  through QA's design reviews. Next: step 15, Karaoke. LEAD: ids unchanged. Retired ids so far: `sb_chester`,
+  `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`;
+  new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 922bcb7)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
