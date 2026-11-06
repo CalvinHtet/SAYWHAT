@@ -419,7 +419,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: the writing pass at e74cf92 (re-run voice.js; every room and upgrade line in ROOMS's files should now be one
+- TAKEN by QA. WAITING ON QA: the writing pass at e74cf92 (re-run voice.js; every room and upgrade line in ROOMS's files should now be one
   concrete detail with no tag line, and no "!" in room help titles; the bowling STRIKE! sign stays), and the Nightclub DJ
   (the spot now in front of the decks, longer shifts).
 - DONE by QA (QA findings, 5ed2375: floor and bartender pass, the DJ wanders). WAITING ON QA: the Nightclub's two notes at 1eb0bbc (one dance floor on one grid; a DJ at the decks and a bartender behind
@@ -1284,7 +1284,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it; the Nightclub DJ if ROOMS changes it. (on 5ed2375)
+- Now: the writing pass (voice.js) and the Nightclub DJ live (e74cf92), test copy only. Next: v0.50. (on 782ae63)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
