@@ -197,7 +197,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.51 (rule 18): the pinned artifact "Quest Board v0.51 (test, fresh start)" (slug
   936a4ed4-352b-4086-bf94-70d28d1b22a3, 454 files from ac8d2f0, db + user + sample with images). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check ab6a66e, the town database rules. The town board and visit notes move to one doc per player
+- DONE by QA (QA findings: one gap, `inbox`). WAITING ON QA: check ab6a66e, the town database rules. The town board and visit notes move to one doc per player
   (`board/<id>` holds their last 10 posts, `pings/<id>` their newest note to each Loft, 14 days), so the rules in
   `app/dbcaps.json` can let each player write only their own doc (`worlds`, `board`, `pings`: everyone reads, `{self}`
   writes, the owner tidies; `diag` owner only). LEAD's two-player test on a stand-in database that refuses other players'
@@ -327,6 +327,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the town database rules (ab6a66e, `app/dbcaps.json`; new `rigtest/qa/townrules.js`, LEAD's two-player test on a stand-in
+  database that applies the dbcaps.json rules themselves, with friends as Contributors): one gap. Not covered by any rule:
+  `inbox/owner`, the list the owner's page turns into quests on Cal's Board (checkInbox). A path with no rule keeps the db
+  default (every signed-in person reads, every Contributor writes), so any friend can read it and write quests into Cal's
+  game; the test wrote "Planted quest" there. Fix: add `{"path":"inbox","read":"owner","write":"owner"}`; with it all 32
+  checks pass, and Claude's db_write (as owner) still works. The rest pass: LEAD's 16 checks; a third player sees everyone;
+  each board doc keeps the newest 10 posts; a note older than 14 days is dropped when the sender writes a new one (13 days
+  stays); a friend is refused on another player's worlds, board and pings, on `player/state`, `diag` and another player's
+  `data/users/` save; diag refusals are silent (`.catch`); no page errors. Notes: visit notes are readable by any signed-in
+  player through the database (the page shows them only to the Loft's owner), so they are not private. Old-layout docs
+  (`board/<id>_<time>`, `pings/<a>_<b>_<day>`) are hidden, not removed; a fresh page has none. Old notes are pruned only when
+  that sender writes again. Still to do: the real rules on a real page with real accounts (QA's 15-player test after the
+  next publish). Owner: LEAD (add the inbox rule before declaring).
 - QA, the published v0.51 (rule 18, slug 936a4ed4, version 1793960417-4a96): pass, the page matches the ac8d2f0 build. By sha256
   (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs only
   by its title, "Quest Board v0.51 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the page-only
@@ -1401,7 +1414,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's town database rules (ab6a66e), a clean copy on 8769. Next: ROOMS's yawn tops when sent. (on b82bbdc)
+- Now: ROOMS's yawn for the other 28 tops (503cd3f), test copies only. Next: the 15-player town test after the next publish.
+  (on 2aecc59)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
