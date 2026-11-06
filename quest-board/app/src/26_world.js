@@ -332,14 +332,15 @@ LFROOM.restaurant=function(C){
      above the painted steel shelf; the small menus beside it, the same height */
   if(H("r_s1"))lfOrderBoard(C,Wi+1.0,124,"ORDERS");
   /* QA: Breakfast Menu and Burger Menu changed nothing you could see. Each hangs its own little chalk card by the board */
-  [["r_m1","BREAKFAST",["Eggs","Pancakes"]],["r_m2","BURGERS",["Burger","Fries"]]].forEach(function(m,i){if(!H(m[0]))return;
+  /* (QA round 2: five boards in a row crowded the Diner, so once Menu Boards hang, they carry these dishes instead) */
+  if(!(H("r_d3")&&!noir&&st>0))[["r_m1","BREAKFAST",["Eggs","Pancakes"]],["r_m2","BURGERS",["Burger","Fries"]]].forEach(function(m,i){if(!H(m[0]))return;
     var c='<rect x="-2" y="-2" width="34" height="30" rx="1.5" fill="#6a4426" stroke="'+LFOL+'" stroke-width=".7"/><rect width="30" height="26" fill="#1d2a26"/><text x="15" y="7.5" text-anchor="middle" font-size="5" font-weight="700" fill="#ffd27a" font-family="Arial">'+m[1]+'</text>'+m[2].map(function(t,k){return '<text x="3" y="'+(15+k*7)+'" font-size="4.6" fill="#d8efe6" font-family="Arial">'+t+'</text>'}).join("");
     C.walls.push(lfFaceY(Wi+2.65+i*1.05,0,118,'<g transform="scale(.8)">'+c+'</g>'))});
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
   if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,132,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),100,noir)));
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
-  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.9,.05,.1,.05,{h:1,flip:1,H:50,dy:-108,nosh:1});
+  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+2.75,.05,.1,.05,{h:1,flip:1,H:50,dy:-108,nosh:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
   if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:64,dy:-86,nosh:1});/* QA audit: bigger and lower, readable on a phone */
@@ -358,9 +359,10 @@ LFROOM.restaurant=function(C){
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
   /* QA: the till faces the diners across the counter, not the kitchen */
   for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",Wi-1.1,.2+ti*(td+.05),.95,td,{h:34,ctr:1,flip:fine?0:1});
-  /* QA: Bigger Till changed nothing you could see. A small green safe with a brass dial at the counter's end */
-  if(H("r_till")){var sx0=Wi-1.0,sy0=.2+tiles*(td+.05)+.1,sf=lfBox(sx0,sy0,0,.55,.55,20,noir?"#26302c":"#2f5a48"),dc=lfP(sx0+.28,sy0+.55,11);
-    C._lb=[sx0,sy0,sx0+.55,sy0+.55];C.add(sx0+sy0+1.1,sf+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="3" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".6"/>');if(LFREC)lfRecBox(sx0,sy0,0,.55,.55,20)}
+  /* QA: Bigger Till changed nothing you could see. A green cash box with a brass lock beside the till on the counter
+     (round 2: as a floor safe it stood in the diners' path) */
+  if(H("r_till")&&!fine){var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48"),dc=lfP(bx0+.21,by0+.36,39);
+    C.add(bx0+by0+.8+.05,cb+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="2.2" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".5"/>')}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.9,1.25,.5,.45,1,{flip:1,dy:-34,nosh:1,dk:-.5});
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
