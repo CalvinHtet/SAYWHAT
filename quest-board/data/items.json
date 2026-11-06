@@ -489,5 +489,17 @@
  "dg_riftmask": {
   "slot": "mask",
   "frontOnly": true
+ },
+ "tm_rafe_jacket": {
+  "slot": "top"
+ },
+ "tm_theo_tee": {
+  "slot": "top"
+ },
+ "tm_nova_knit": {
+  "slot": "top"
+ },
+ "tm_sable_jacket": {
+  "slot": "top"
  }
 }

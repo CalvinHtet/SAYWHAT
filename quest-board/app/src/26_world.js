@@ -417,10 +417,12 @@ LFROOM.restaurant=function(C){
 /* The team in their own rooms (LEAD's request 3): each member who has joined stands in their home room in their own look,
    with a ring in their colour and a name tag so they stand out from the guests. */
 var TMHOME={mara:"restaurant",rafe:"skybar",nova:"mall",theo:"theater",sable:"lair"};
+/* each member's signature top (painted for them; Mara keeps her chef whites) replaces the top in their look */
+var TMTOP={rafe:"tm_rafe_jacket",theo:"tm_theo_tee",nova:"tm_nova_knit",sable:"tm_sable_jacket"};
 var lfDesiredTmBase=lfDesired;
 lfDesired=function(){var out=lfDesiredTmBase(),Q=window.__qbTeam;if(!Q||!Q.list)return out;
   try{Q.list().forEach(function(id){var home=TMHOME[id],T=Q.TEAM[id];if(!home||!T)return;var i=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===home&&i<0)i=k});
-    if(i<0||!LFMETA[i])return;var L=T.look||{},eq=[];Object.keys(L.equipped||{}).forEach(function(s){var e=L.equipped[s];if(e&&e.art)eq.push(e.art)});
+    if(i<0||!LFMETA[i])return;var L=T.look||{},eq=[],D=QBLoft.data,sig=TMTOP[id]&&D.items[TMTOP[id]]?TMTOP[id]:null;Object.keys(L.equipped||{}).forEach(function(s){var e=L.equipped[s];if(e&&e.art&&!(sig&&s==="top"))eq.push(e.art)});if(sig)eq.push(sig);
     out.push({id:"tm:"+id,room:i,role:"crew",look:rsNpc(Object.assign({},RSK,{body:L.body||"m",hairStyle:L.hairStyle||"h1",hairColor:L.hairColor||"brown",eq:eq})),idle:1,wand:1,tm:id,tmc:T.ac||"#ffd27a",tmn:T.name.split(" ")[0]})})}catch(e){}
   return out};
 var lfAgentGTmBase=lfAgentG;
