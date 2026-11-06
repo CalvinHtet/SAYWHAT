@@ -74,7 +74,7 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_dart","Dartboard",UP_S,"gmx_dart",2.3,.05,1.1,.2,0,"Mind the wall.",{o:{dy:-40,h:1,nob:1,nosh:1,dk:30},cust:[[2.85,2.5,1,GMB]]}),
   PL("gm_chair","Gaming Chairs",UP_S,"gmx_chairb",7.9,3.4,1.7,1.4,1,"For when the couch is taken.",{sit:[[8.4,4.1,1,12,1],[9.2,3.9,1,12,1]]}),
   PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
-  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.2,5.2,1.0,1.4,1,"The old console still works."),
+  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.2,5.2,1.0,1.4,0,"The old console still works."),/* screen toward the beanbags (Cal: it faced the wrong way) */
   PL("gm_bean","Beanbags",UP_S,"gmx_bean",1.7,5.1,1.4,1.1,0,"Nobody ever gets up.",{sit:[[2.1,5.55,1,4,1],[2.75,5.9,1,4,1]]}),
   PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.05,3.9,.6,.6,0,"Never walk to the kitchen again.",{cust:[[10.35,5.1,-1,GMB]]}),
   PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.5,.3,.5,.5,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]}),
@@ -83,7 +83,8 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_tv80","80 inch Screen",UP_L,"gmx_tv80",4.4,.05,4.2,.2,1,"Wall to wall. You can see every pixel of the racing line.",{o:{dy:-58,h:1,nob:1,nosh:1,dk:30}}),
   PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"Glossy, glass-fronted, glowing underneath. No legs.",{o:{dy:-6,H:46}}),
   PL("gm_sect","Cream Sectional",UP_L,"gmx_sect",3.9,3.4,4.0,1.9,0,"Three plush pieces and a chaise you can sleep on.",{sit:[[4.9,4.05,1,10,1],[6.0,4.05,1,10,1],[7.1,4.3,1,10,1]]}),
-  PLn("gm_rig","Gaming Desks",UP_L,[["gmx_rig",9.8,4.9,3.0,1.5,1],["gmx_chairb",10.6,6.5,1.7,1.2,1]],"Two desks back to back, curved screens, racing chairs pulled up to them.",{sit:[[11.0,7.05,1,12,1],[11.9,6.9,1,12,1]]})],
+  /* Cal: "two desks but 4 monitors" made no sense. One long desk for two, one curved screen per seat, a chair at each */
+  PLn("gm_rig","Gaming Desks",UP_L,[["gmx_rig2",9.8,4.9,3.0,1.5,1],["gmx_chairb",11.1,6.5,1.7,1.2,1]],"One long desk for two, a curved screen each, racing chairs pulled up to them.",{sit:[[11.5,7.05,1,12,1],[12.4,6.9,1,12,1]]})],
  sup:[["gm_tv","gm_tv80"],["gm_games","gm_tvstand"],["gm_couch","gm_sect"],["gm_chair","gm_rig"],["gm_ping","gm_rig"]]};
 /* Only Cal's friends visit the Game Room, as game versions of themselves. Add one line each:
    {id:"vega", name:"Vega", look:{body:"m", skin:"s3", hairStyle:"h1", hairColor:"black", top:"hoodie", topColor:"white",
