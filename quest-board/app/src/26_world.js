@@ -258,13 +258,16 @@ function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2
   [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+2.72,1,x0+1.6,Y+1.65,1,"B")});
   lfSpr(C,"rdx_benchb",x0,Y+2.45,3.2,.9,{h:28,H:74,flip:1,dk:0,nosh:1,ctr:1})}
 /* the Grand Menu Board: every dish at once in two columns with prices, a chalkboard in a wood frame (black slate and
-   brass in Noir). Dishes past what fits are left off; the newest show. */
+   brass in Noir). The rows grow with the menu and the type shrinks only as much as it must, so no dish is left off (QA). */
 function rsBigMenu(items,W,H,noir){var h=function(s){var n=0;for(var i=0;i<s.length;i++)n=(n*31+s.charCodeAt(i))>>>0;return n},
-  rows=Math.floor((H-24)/7.8),list=items.slice(-rows*2),fr=noir?"#b8935a":"#6b4528",ink=noir?"#efe6d4":"#f4f1e6",acc=noir?"#d9b46a":"#ffd27a",
+  rows=Math.max(1,Math.ceil(items.length/2)),lh=Math.min(7.8,(H-26)/rows),fs=Math.min(5.3,lh*.78),
+  fr=noir?"#b8935a":"#6b4528",ink=noir?"#efe6d4":"#f4f1e6",acc=noir?"#d9b46a":"#ffd27a",
   o='<rect x="-4" y="-4" width="'+(W+8)+'" height="'+(H+8)+'" rx="2" fill="'+fr+'" stroke="'+LFOL+'" stroke-width=".8"/><rect width="'+W+'" height="'+H+'" fill="'+(noir?"#121014":"#2a332e")+'"/>'
   +scrTxt(W/2,13,noir?"CARTE DU JOUR":"OUR MENU",9,acc,"middle",800)+'<rect x="10" y="17" width="'+(W-20)+'" height=".8" fill="'+acc+'" opacity=".7"/>';
-  list.forEach(function(m,i){var c=i<rows?0:1,r=i%rows,x0=c?W/2+6:8,x1=c?W-8:W/2-6,y=27+r*7.8;
-    o+=scrTxt(x0,y,m,5.3,ink,"start",600)+scrTxt(x1,y,"$"+(8+h(m)%22),5.3,acc,"end",700)});
+  items.forEach(function(m,i){var c=i<rows?0:1,r=i%rows,x0=c?W/2+5:7,x1=c?W-7:W/2-5,y=22+lh*(r+.8);
+    /* a long name gets smaller type so it never runs into its price (QA: "Roast Chicken") */
+    var room=W/2-12-fs*2.2,f=Math.min(fs,room/(m.length*.56));
+    o+=scrTxt(x0,y.toFixed(1),m,f.toFixed(1),ink,"start",600)+scrTxt(x1,y.toFixed(1),"$"+(8+h(m)%22),fs.toFixed(1),acc,"end",700)});
   return o+'<rect x="'+(W/2-.4)+'" y="22" width=".8" height="'+(H-28)+'" fill="'+acc+'" opacity=".35"/>'}
 function rsWalls(C){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8])}
 LFROOM.restaurant=function(C){
@@ -293,7 +296,8 @@ LFROOM.restaurant=function(C){
   rsWallRun(C,Wt-.14,0,.14,kd-.14,26,pc,pt);
   if(H("r_s1"))lfOrderBoard(C,Wi+.5,96,"ORDERS");
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
-  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(Wi-9.4,0,128,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*4.6,84,noir)));
+  /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
+  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,132,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),100,noir)));
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+3.6,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
