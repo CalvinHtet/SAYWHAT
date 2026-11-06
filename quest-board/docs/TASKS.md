@@ -285,6 +285,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's fe48618, Lock and Key's Friday Band (on c5073e8, port 8770, `rigtest/qa/band.js`; `shots/lockkey_jazz.png`,
+  `lockkey_band.png`, `lockkey_piano.png`): pass, one small fix. The Friday Band is not for sale until the Jazz Corner is owned,
+  then it is; bought, the mic stage leaves the picture and the bigger band stage (drums, double bass, mic) takes the front
+  corner, nothing outside the room and nothing overlapping it, clear of the door mat and the high-tops; One More High-Top adds
+  one table (3 in all with High-Top Tables). FIX (small): the grand piano still touches the bar: its raised lid lies over the
+  last stool's legs and the brass foot rail; move it another step toward the front, or turn the lid away from the bar. No page
+  errors. Owner: ROOMS.
 - QA, ROOMS's Lock and Key, the Upstairs Bar (4599993, on 3348c7b, port 8770, `rigtest/qa/skybarshell.js`; `shots/lockkey_bare.png`,
   `lockkey_full.png`): pass, one small note. The painted brick-and-walnut shell (`skw_t1`) draws bare and fully bought (17 pieces),
   nothing outside the room; the painted stairway sits at the back wall's far right end with the Roof glow at its foot, clear;
@@ -909,7 +916,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 26 (Friday Band stage, fe48618), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-- TAKEN by QA. WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
+- DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
   pass: no page errors, card gating right in all three saves (bare, all but the band, all).
@@ -1067,8 +1074,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Lock and Key's Friday Band (fe48618), test copy only (`skybarshell.js`, `band.js`). Next: v0.50 when LEAD builds it.
-  (on 63e84b4)
+- Now: waiting for work. Next: v0.50 when LEAD builds it. (on c5073e8)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
