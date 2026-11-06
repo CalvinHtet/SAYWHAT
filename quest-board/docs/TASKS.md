@@ -332,6 +332,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's two yawn fixes (6541dd3, on 9bb0f16; `shots/yawn/fixes/`): pass, the yawn is done. (2) The starter tops (tee,
+  hoodie, bomber) in white, grey and black, both bodies, each with all 7 necklaces: 126 cells, 0 fails, no tears, every
+  necklace shows (`starters.png`); the yawn's white, grey and black match the same top standing. Their all-pose sheets differ
+  from before only in the two yawn cells (`celldiff.js`). (3) The man's hips: every shop top in the yawn before and after, 52
+  cells: only male cells changed (25 of 26; the puffer already covered the hips), no female cell changed, and the skin
+  slivers at the waist are gone (`hips_cmp.png`, before above, after below). For the colour sheets QA added a `tc=` (top
+  colour) option to a scratch copy of `rigtest/matrix.html` only; worth adding for real if ROOMS wants it. New `stack.js`
+  joins sheets into one picture. Owner: LEAD (ready for the next version).
 - QA, necklaces in the yawn (LEAD's 414a730, on 198c87b; `shots/yawn/neckfix/`): pass. Every shop top (31) with every
   necklace (7) in the yawn, both bodies: 434 cells, 0 fails, every necklace shows (the two chokers small at the tilted neck,
   as in other poses). Each top with other trousers, a hat and a necklace, short and long hair: 62 cells each, necklaces show,
@@ -1439,8 +1447,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's two yawn fixes (6541dd3: the starter tops' yawn, m_base_yawn's hips), test copies only. Next: the 15-player
-  town test after the next publish. (on 9bb0f16)
+- Now: nothing waiting; the yawn is done (31 shop tops, 3 starter tops, necklaces, the man's hips). Next: the 15-player town
+  test after the next publish. (on 2a2e44f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
