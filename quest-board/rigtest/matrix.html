@@ -11,6 +11,7 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
 <script>
 // Contact sheets of item combinations, for review by eye.
 // ?sheet=hats|hatface|neck|waist&body=m|legs&body=m|poses&from=0&to=10|base|hair  &save=name posts the PNG to the local receiver.
+// &tc=black sets the starter top's colour (e.g. sheet=wear&top=hoodie&tc=black).
 (async () => {
   try {
     const q = new URLSearchParams(location.search), D = window.QBDATA, I = D.items;
@@ -26,8 +27,10 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
     const fits = (art, b) => !art || !I[art] || !((I[art].femaleOnly && b === "m") || (I[art].maleOnly && b === "f"));
     const eq = (...arts) => Object.fromEntries(arts.filter(Boolean).map((a) => [I[a].slot, { art: a, frontOnly: I[a].frontOnly, over: I[a].over, wide: I[a].wide, lift: I[a].lift, clip: I[a].clip }]));
     const solo = q.get("solo");
+    // &tc=white|grey|black: the starter top's colour (creator.json clothColors) in every sheet that does not set its own.
+    const tc = q.get("tc");
     const look = (body, o, arts) => {
-      const L = QBLook.build(D.creator, { body, ...o, equipped: eq(...arts) });
+      const L = QBLook.build(D.creator, { body, ...(tc ? { topColor: tc } : {}), ...o, equipped: eq(...arts) });
       if (solo) for (const k of Object.keys(L.layers)) if (!solo.split(",").includes(k)) delete L.layers[k];
       return L;
     };

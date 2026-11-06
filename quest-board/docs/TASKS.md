@@ -84,6 +84,9 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH (Cal, 2026-11-06: "Yes, paint all 28"; QA passed it in a8c2a1f and 9b31ed0): the yawn painted for every
+  top, 503cd3f (the other 28 shop tops) and 6541dd3 (the starter tee, hoodie and bomber, the man's bare body clean at the
+  waist). Look at: the stretch on a phone in a jacket, a tee and a starter hoodie; nothing should tear at the shoulders.
 - READY TO PUBLISH (Cal, 2026-11-06: "approve all"; QA passed it in 2d51cc2): the team's signature tops (097dccd), each
   member wearing theirs in their home room. Look at: Rafe in Lock and Key, Theo in the Theater, Nova in the Mall, Sable in the Lair.
 - READY TO PUBLISH (Cal, 2026-11-05: "approve all"): every ROOMS approval from 6 to 37 (16 and 7 were already approved).
@@ -1278,17 +1281,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA (since 3:10 am, rule 17): check 6541dd3, QA's two yawn fixes from a8c2a1f. (1) The three starter tops
-  (`tee`, `hoodie`, `bomber`) have painted yawns (`<m|f>_<id>_yawn.webp`), turned grey and set to the raw art's
-  brightness by the new `tools/yawn_ramp.py`, so the cloth ramp gives the same white, grey and black as at rest. (2) The
-  man's bare-body yawn (`m_base_yawn.webp`) is clipped at the waist to the clean painted body. ROOMS's check on the rig:
-  every starter top in all three colours on both bodies, no tears, colours match today's; the man's waist under the
-  tee, ringer, blazer, knit cardigan and chef jacket shows no skin past the top. Every top in the game now has a painted
-  yawn (31 shop tops, 3 starters). Necklaces in the yawn are LEAD's (rig.js). `stretchUp` still has no painted layers.
-  Chrome free.
+- Now: nothing. The yawn is done: QA passed 503cd3f (the 28 tops, a8c2a1f) and 6541dd3 (the starter tops and the man's
+  hips, 9b31ed0), READY TO PUBLISH below. `rigtest/matrix.html` takes `&tc=white|grey|black` for the starter top's colour
+  (QA's idea). Still open, not ROOMS's: necklaces in the yawn (LEAD, rig.js). `stretchUp` (arms straight up) has no
+  painted layers; dark sleeves still tear there. Chrome free.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`.
-  Next: fix what QA finds; the Game Room guests wait on Cal (his friends' looks). (on 6541dd3)
+  Next: the Game Room guests wait on Cal (his friends' looks). (on 9b31ed0)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
