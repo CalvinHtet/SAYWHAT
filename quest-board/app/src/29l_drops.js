@@ -19,6 +19,9 @@ function dropSlotDate(k){var p=DROPS.launch.split("-").map(Number),d=new Date(Da
 function dropPlan(rounds){var ids=BRANDS.map(function(b){return b.id}),fx=DROPS.fixed,n=ids.length,out=[];
   for(var r=0;r<(rounds||1);r++){
     var rest=dropShuffle(ids.filter(function(id){return r>0||fx[id]==null}),DROPS.seed+"|"+r),row=new Array(n);
+    /* QA: a rerun round must not repeat the slot before it or "drop" a brand still among the live ones: the brands from the
+       previous round's last DROPS.live slots go to the end of this round, everything else keeps its shuffled order */
+    if(r>0){var tail=out.slice(-DROPS.live).map(function(e){return e.id});rest=rest.filter(function(id){return tail.indexOf(id)<0}).concat(rest.filter(function(id){return tail.indexOf(id)>=0}))}
     if(r===0)Object.keys(fx).forEach(function(id){if(ids.indexOf(id)>=0&&fx[id]<n)row[fx[id]]=id});
     for(var k=0;k<n;k++)if(!row[k])row[k]=rest.shift();
     row.forEach(function(id,k){out.push({id:id,slot:r*n+k,start:dropSlotDate(r*n+k)})})}
