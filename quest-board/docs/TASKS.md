@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.56 published and pinned (a3335e1); v0.57 (NEXT, APPV 57) WAITING ON QA, published as soon as QA passes it.
-  (on NEXT)
+- Now: v0.56 published and pinned (a3335e1); v0.57 (b279091, APPV 57) WAITING ON QA, published as soon as QA passes it.
+  (on b279091)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -282,7 +282,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   and add039a (pool table, club fog). LEAD's part is the version number. Local boot: no page errors.
 - WAITING ON QA: check the published v0.56: "Quest Board v0.56 (test, fresh start)" (slug ed76b8e9-85d7-4a95-90cb-7951e0764e9b,
   462 files from a3335e1, the 9 db rules + user + sample with images, version 1793971454-cd01). Check the page matches the build.
-- WAITING ON QA: check v0.57, NEXT (rule 18: your pass publishes it). Over v0.56 it adds only ROOMS's f7efaf6, which you passed
+- WAITING ON QA: check v0.57, b279091 (rule 18: your pass publishes it). Over v0.56 it adds only ROOMS's f7efaf6, which you passed
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
