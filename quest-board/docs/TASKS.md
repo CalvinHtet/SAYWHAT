@@ -614,8 +614,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: the Restaurant's art (Cal, 2026-11-05: "start with the base wall piece and keep going from there"), then the Rift
-  Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed. The Game Room guests wait
+- Now: the Restaurant's art (Cal, 2026-11-05: "start with the base wall piece and keep going from there"; the checker floor
+  gives way to a luxury fine-dining floor with moody light and sleek furniture at the top), then QA's two Game Room
+  findings (TAKEN: the Retro TV faces the wrong way; the gaming rig needs one screen setup per desk, a chair facing each),
+  then the Rift Mask, Lock and Key, the theater basics and the team in their rooms. Chrome claimed. The Game Room guests wait
   on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
