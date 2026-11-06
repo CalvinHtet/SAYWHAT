@@ -15,8 +15,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
   ping-pong retired). QA PASSED the full set (495 of 495). BLOCKED: publish_files refuses every file
-  ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. ROOMS paints SMOKE BOMB (smk).
-  Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. (on f5234d3)
+  ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. SMOKE BOMB in the Shop on Dec 28 (4f0d21f; QA wear test). ROOMS paints GACHA POP.
+  Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. (on 4f0d21f)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
