@@ -95,7 +95,13 @@ function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;
 function bldBgArt(id){var n="bld_bg_"+id+".webp",D=QBLoft.data;return (window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
 function bldBackdrop(L){if(LFBSEL==null||!BLD[LFBSEL])return '';var u=bldBgArt(BLD[LFBSEL].id),b=L.b&&L.b[LFBSEL];if(!u||!b)return '';
   var bot=LFROOF+L.rows*LFFP,x=b.x-b.w*.65-300,w=b.w*2.3+600,y=-400,h=bot+LFSTREET+400,dk=lfLS().dark||0;
-  return '<g class="lfbgart" pointer-events="none"><image href="'+u+'" x="'+x.toFixed(0)+'" y="'+y+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" preserveAspectRatio="xMidYMax slice"/>'
+  /* Cal on a phone: "the room view background cuts off here". A tall narrow screen shows more than the one picture's
+     width, so it repeats to both sides, every other copy mirrored so the seams meet edge to edge, at the same scale. */
+  /* fitted to its width and standing on the street (a box taller than 16:9 used to blow the painting up into a blur) */
+  var hi=w*9/16,yi=y+h-hi,img='<image href="'+u+'" x="'+x.toFixed(0)+'" y="'+yi.toFixed(0)+'" width="'+w.toFixed(0)+'" height="'+hi.toFixed(0)+'" preserveAspectRatio="none"/>',tiles="";
+  for(var k=-2;k<=2;k++)tiles+=k%2?'<g transform="matrix(-1,0,0,1,'+(2*x+(k+1)*w).toFixed(0)+',0)">'+img+'</g>':(k?'<g transform="translate('+(k*w).toFixed(0)+',0)">'+img+'</g>':img);
+  x-=2*w;w*=5;y=yi;h=hi;
+  return '<g class="lfbgart" pointer-events="none">'+tiles
     +'<rect x="'+x.toFixed(0)+'" y="'+y+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" fill="#0b0d18" opacity="'+(dk*.6).toFixed(2)+'"/>'
     /* its top fades into the sky, so no hard edge shows above the building */
     +'<linearGradient id="lfbgfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+lfSkyCols()[0]+'"/><stop offset="1" stop-color="'+lfSkyCols()[0]+'" stop-opacity="0"/></linearGradient>'
