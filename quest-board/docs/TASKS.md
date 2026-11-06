@@ -1090,11 +1090,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: Bowling's two notes and the VR rig spacing (934bb37), and a design review of Karaoke (step 15,
-  db8a46d). WAITING ON CAL: Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm
-  Room and the VR Arena, all through QA's design reviews. Next: step 16, the Nightclub. LEAD: ids unchanged. Retired ids
-  so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on db8a46d)
+- Now: WAITING ON QA: Karaoke's booth note (6962a6e: the Private Booth in the front corner behind a low partition). WAITING
+  ON CAL: Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm Room, the VR Arena
+  and Bowling, all through QA's design reviews. Next: step 16, the Nightclub. LEAD: ids unchanged. Retired ids so far:
+  `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`,
+  `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 6962a6e)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
