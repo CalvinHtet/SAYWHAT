@@ -271,6 +271,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message): rerun the first 10 days on ddc2171, one shared unlock slot a day below level 10.
 - QA, the unlock timeline again on aa165b1 (on 52b50cf; `sim.js` now reads `S.areaOn` and the story offers each day, `unlocks.py`;
   `shots/unlocks_52b50cf.txt`): both fixes work. No level-up screen shows 2 New areas, and no day opens 2 story steps; after day 5
   every unlock arrives on its own day for both players (12-task: Boba 7, Dessert 8, closet 9, patio 12, game room 14, Lock and
@@ -875,7 +876,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: ROOMS's Garden placement fixes. (on ce849ea)
+- Now: the first 10 days again on ddc2171 (one shared unlock slot below level 10), both players (`sim.js`, `unlocks.py`), test
+  copy only. Next: ROOMS's Garden placement fixes. (on 334c735)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
