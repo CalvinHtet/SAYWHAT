@@ -1202,13 +1202,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: nothing. The team's signature tops (097dccd) passed QA (2d51cc2) and are READY TO PUBLISH (Cal approved). The Rift
-  Mask passed QA (b9000d2); LEAD's gift line is in (e389afa).
+- Now: nothing. The team's signature tops (097dccd, QA 2d51cc2) and the Rift Mask (QA b9000d2) are in v0.51 (ac8d2f0),
+  with QA for its pre-release check.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free.
   Next: WAITING ON CAL: paint the yawn for the other 28 tops (3 of 31 done)? It would also fix the torn dark sleeves in
   `stretch` that QA saw again on the team's jackets and `v_blazer` (`stretchUp` is a separate pose). The Game Room guests
-  wait on Cal (his friends' looks). (on 2d51cc2)
+  wait on Cal (his friends' looks). (on 07e76a5)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
