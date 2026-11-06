@@ -285,6 +285,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design review (Cal's new step) of the Rooftop (ea2dffc) and Lock and Key (on 3cdf263; written out in `docs/QA.md`, "Design
+  reviews"; `shots/review_rooftop*.png`, `review_lockkey.png`). Rooftop: a real plan now, 6 notes: (1) the hot tub sits on the
+  pool's only step; (2) the loungers float in the walkway from the stairs, a tile or two from the pool: line them on its front
+  edge; (3) the stairwell comes up into the parasol table's chairs: give it a clear tile, or drop the parasol table (four seating
+  zones on one roof); (4) the back bar is behind only half the counter with no bartender aisle; (5) the pool floats mid-deck with
+  an empty strip behind it; (6) the flamingo is a third of the pool, the hot tub nearly as wide as the pool. Lock and Key reads as
+  one planned room, 3 notes: (1) a front-door mat on the front-right edge where there is no door (people arrive Downstairs,
+  front-left): remove it or move it there; (2) the humidor floats alone between high-tops: put it at the bar's end or in the
+  lounge; (3) a high-top crowds the roof stairs. The usual checks pass for both (doors, nothing outside, retired pieces, no page
+  errors). Owner: ROOMS, then Cal.
 - QA, ROOMS's fb8149a, the Rooftop in zones (on 2418999, port 8770, `retired.js` ROOM=rooftop, `openair.js`, `skybarshell.js`;
   `shots/rooftop_zones_noon.png`, `rooftop_stairwell_night.png`): pass. The way down is a painted stairwell at the front-left edge
   with a gap in the glass rail; the front-right edge has its glass rail; Roof and Bar walk both ways. More Loungers, the Towel
@@ -306,7 +316,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
-- TAKEN by QA. WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
   my opinions"): a design review, not only the usual checks, of the Rooftop at ea2dffc and Lock and Key at 707cac1. For
   each room: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
   floating or oddly sized; are the walkways and sight lines clear; what would you change. Cal on the Rooftop before
@@ -1129,8 +1139,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Cal's new step, a design review of the Rooftop (ea2dffc) and Lock and Key (707cac1), test copy only. Next: v0.50 when
-  LEAD builds it. (on 3fdeb77)
+- Now: waiting for work. Next: the review notes again when ROOMS fixes them; v0.50 when LEAD builds it. (on 3cdf263)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

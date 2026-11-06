@@ -492,3 +492,49 @@ worked on the hard rules. Read by hand, these still end on a punchline or wink a
 
 Fine as they are (dry and specific): "A chihuahua dachshund mix. Very fast, very long.", "Spare cells for the reactor. Blue,
 humming, do not shake.", "Chopstick's own.", "Petals never stop." (one light line a screen is allowed).
+
+## Design reviews (Cal, 2026-11-05: "send any rooms to QA for further notes and analysis before coming back to me")
+
+How QA reviews a room before Cal sees it: fully bought, at noon (open-air rooms also at night), from the room picture as a player
+sees it. Five questions: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
+floating or oddly sized; are the walkways and sight lines clear; what to change. Blunt, with the fix.
+
+### Rooftop Bar (ea2dffc, on 3cdf263; `shots/review_rooftop.png`, `review_rooftop_tub.png`, `review_rooftop_bar.png`)
+
+Much better than before: there is a plan now (bar and DJ on the back walls, pool as the middle, lounge left, sun front). Not done:
+
+1. **The hot tub blocks the pool's step.** The pool's stone step faces front-right, and the hot tub sits right on it, so the one
+   way into the pool leads into the tub. Move the tub to the front-left corner (near the loungers) or beside the cabana; the step
+   should open onto clear deck.
+2. **The loungers float in the walkway.** The pair stands in open floor between the stairwell and the hot tub, aimed at the
+   pool's corner, a tile or two away from it. That is the path from the stairs to everything. Line them along the pool's long
+   front edge, facing the water, side by side with the little table between.
+3. **The stairwell has no landing.** The parasol table's chairs are about one tile from the top of the stairs: you come up into
+   a dining set. Give the stairwell a clear tile: move the parasol table up beside the fire lounge, or drop it (the fire lounge,
+   the bar stools, the cabana and the loungers already seat everyone; four seating zones is a lot for one roof).
+4. **The bar still reads as two pieces.** The back bar sits behind only the right half of the counter, against the wall, with
+   almost no aisle for a bartender. Centre the back bar behind the counter and leave a one-tile aisle, or slide the counter a
+   step forward.
+5. **The pool floats.** It is not along the back wall; it sits mid-deck with an empty strip behind it and in front of the DJ.
+   Either push it back so the DJ looks over it from a step away, or keep it central and put the loungers on its front edge (2)
+   so the strip in front reads as the pool deck.
+6. **Scale.** The flamingo float covers about a third of the pool; half the size reads as a float in a pool. The hot tub is almost
+   as wide as the pool; a little smaller.
+
+Faces where used: the DJ faces the pool (good), the stools face the bar (good), the cabana opens to the pool (good), the shower is
+by the cabana and the rail (fine). Sight lines from the stairs: the parasol table and the loungers are in the way (3, 2).
+
+### Lock and Key (707cac1 and after, on 3cdf263; `shots/review_lockkey.png`)
+
+Reads as one planned room: bar along the back with its back bar right behind it, lounge left, music front, standing tables right.
+Pieces face their use (stools to the bar, sofa toward the band, the piano by the stage). Notes:
+
+1. **A door mat with no door.** The mat on the front-right edge is a front-door mat, but nobody enters there: this room is
+   reached by Downstairs (front-left) and left by the stairs to the roof (back-right). It is the one random piece left. Remove it,
+   or put it at the Downstairs edge where people actually arrive.
+2. **The humidor floats.** The glass humidor stands alone against the right wall between two high-tops. Put it with the bar (at
+   the back bar's end) or in the lounge corner by the sofa, where people sit and smoke.
+3. **The roof stairs are crowded.** The nearest high-top stands right beside the stair door; move it a tile toward the room so
+   the doorway has a clear tile.
+4. **Fine as is:** the empty floor in front of the bar works as the walkway and a little dance floor; three stools on a long bar
+   is fine; the oyster and champagne cart by the bar's end belongs there.
