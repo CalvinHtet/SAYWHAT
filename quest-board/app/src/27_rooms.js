@@ -220,6 +220,7 @@ portal("bedroom","gameroom","FR",7.2,"#7df9ff","Game Room");portal("gameroom","b
 /* Cal: the Closet's upper (back-right) wall leads up, so the Lair sits above the Closet, its door the painted secret one. */
 portal("closet","lair","BR",1.1,"#2a6bff","Hidden Door");portal("lair","closet","FL",6,"#2a6bff","Closet");
 portal("lair","trophy","BR",10.4,"#ffd27a","Trophy Room");portal("trophy","lair","FL",4,"#58a6ff","Hero's Lair");/* the Lair's upper wall leads up */
+portal("restaurant","garden","FR",1.6,"#9cff8a","Garden");portal("garden","restaurant","BL",1.9,"#ffd27a","Restaurant");/* the knock-through: kitchen end to the Garden's back-left wall */
 portal("restaurant","skybar","BR",4.2,"#ffb46a","Upstairs");portal("skybar","restaurant","FR",3,"#ffb46a","Downstairs");
 portal("skybar","rooftop","BR",12.5,"#ffb36b","Roof");portal("rooftop","skybar","FR",3,"#ffb36b","Bar");
 portal("boba","dessert","BR",8.8,"#c79aff","Upstairs");portal("dessert","boba","FR",3,"#ff9ec4","Downstairs");

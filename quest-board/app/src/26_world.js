@@ -26,7 +26,9 @@ function bldStreet(L,wall,inner,edge,dk){var s='',bot=LFROOF+L.rows*LFFP,lit=lfM
   return s}
 /* room: [building, column, floor] */
 var ROOMCELL={lair:[0,1,1],trophy:[0,1,2],closet:[0,1,0],bedroom:[0,2,0],patio:[0,2,1],gameroom:[0,3,0],
- restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],boba:[1,1,0],dessert:[1,1,1],speakeasy:[1,1,2],garden:[1,2,0],
+ /* Cal, 2026-11-05: the Restaurant expands from the Garden, so the Garden lot sits right next to it (the knock-through
+    joins the Restaurant's kitchen to the Garden's back-left wall); Boba and the rooms above it move one along */
+ restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],garden:[1,1,0],boba:[1,2,0],dessert:[1,2,1],speakeasy:[1,2,2],
  theater:[2,0,0],auditorium:[2,0,1],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0],club:[2,4,0]};
 /* rooms you buy from an empty lot on the street. Everything else opens from an upgrade inside a room. */
 var ROOMBUY=[["restaurant",null],["garden","restaurant"],["boba","restaurant"],["theater","restaurant"],["mall","auditorium"],["club","mall"]];
@@ -293,7 +295,9 @@ LFROOM.restaurant=function(C){
   /* the wall between dining room and kitchen, with a gap by the front for staff */
   rsWallRun(C,Wi-.14,0,.14,kd-1.2,60,pc,pt);
   rsWallRun(C,Wi,kd-.14,kw,.14,26,pc,pt);
-  rsWallRun(C,Wt-.14,0,.14,kd-.14,26,pc,pt);
+  /* the kitchen's end wall has the knock-through to the Garden in it once the Garden exists */
+  if(hasRoom("garden")){rsWallRun(C,Wt-.14,0,.14,.85,26,pc,pt);if(kd-.14>2.35)rsWallRun(C,Wt-.14,2.35,.14,kd-2.49,26,pc,pt)}
+  else rsWallRun(C,Wt-.14,0,.14,kd-.14,26,pc,pt);
   if(H("r_s1"))lfOrderBoard(C,Wi+.5,96,"ORDERS");
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
