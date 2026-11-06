@@ -276,11 +276,11 @@ function rsDinner(C,cx,cy,lbl){var tr=rsTier(C),T=RSCH[tr];
   lfSpr(C,K[0],cx-w/2,cy-d/2,w,d,{h:28,ctr:1,flip:1,dk:1.7});
   [cx-.62,cx+.62].forEach(function(x){var y=cy+d/2+.28;rsSitAt(C,x,y,1,cx,cy,1,lbl);lfSpr(C,chB,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:0,nob:1,nosh:1,ctr:1})})}
 /* a booth is two high-backed benches and a table, so a guest can really sit inside one */
-function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2,.9,{h:28,H:74,flip:1,dk:.5,nosh:1,ctr:1});
+function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2,.9,{h:28,H:74,flip:1,dk:.5,nosh:1,sh:1,ctr:1});
   [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+.62,-1,x0+1.6,Y+1.65,0,"B")});
   lfSpr(C,"rdx_tlong",x0+.3,Y+1.0,2.6,1.35,{h:26,H:46,flip:1,dk:1.7,ctr:1});
   [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+2.72,1,x0+1.6,Y+1.65,1,"B")});
-  lfSpr(C,"rdx_benchb",x0,Y+2.45,3.2,.9,{h:28,H:74,flip:1,dk:0,nosh:1,ctr:1})}
+  lfSpr(C,"rdx_benchb",x0,Y+2.45,3.2,.9,{h:28,H:74,flip:1,dk:0,nosh:1,sh:1,ctr:1})}
 /* the Grand Menu Board: every dish at once in two columns with prices, a chalkboard in a wood frame (black slate and
    brass in Noir). The rows grow with the menu and the type shrinks only as much as it must, so no dish is left off (QA). */
 function rsBigMenu(items,W,H,noir){var h=function(s){var n=0;for(var i=0;i<s.length;i++)n=(n*31+s.charCodeAt(i))>>>0;return n},
@@ -344,7 +344,7 @@ LFROOM.restaurant=function(C){
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
   for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",Wi-1.1,.2+ti*(td+.05),.95,td,{h:34,ctr:1});
   lfPrep(C,"pass",Wi-1.0,kd-.5);
-  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1});
+  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
   /* Cal, 2026-11-05: the red crescent booth sits in the back-left corner, open toward the room; the window booths move down

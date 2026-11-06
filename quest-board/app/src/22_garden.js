@@ -175,7 +175,7 @@ LFROOM.garden=function(C){
         C.decals.push(lfPoly(ring,"#cfc7b8","rgba(60,50,40,.5)",1.2)+stones(18.7,20.1,fc[1]+2.3,py+.05));
         gdFountain(C,fc[0],fc[1]);
         [[-2.3,.6,1],[.5,-2.3,1],[2.0,-.9,-1],[-1.1,2.1,1],[1.3,2.0,-1]].forEach(function(o){C.s("look",fc[0]+o[0],fc[1]+o[1],o[2],"look",[6,12],{tag:"admire"})})}
-      if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,nob:1})});
+      if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
       if(H("g_lant"))[.12,.38,.62,.86].forEach(function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
       if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);

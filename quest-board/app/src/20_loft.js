@@ -170,8 +170,10 @@ function lfRoomLight(C,uid,t,out){
     res.pre+='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("bf")+')" opacity="'+(L.direct*.26).toFixed(2)+'">'+sh+'</g>';
   }
   /* always: contact shadows */
-  var cs="";(C.obsRaw||[]).forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;var p=.07;cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+p+.12,b[1]-p,0),lfP(b[2]+p+.12,b[3]+p+.12,0),lfP(b[0]-p,b[3]+p+.12,0)],"#0b0f24")});
-  if(cs){defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.2"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(.2+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
+  /* one soft shadow per floor piece (lfSpr records them in C.shd; drawn pieces with no sprite still come from the
+     walk boxes), the same blur and strength everywhere, a little wider at the front so it shows past solid bases */
+  var cs="",cb=(C.shd||[]).concat((C.obsRaw||[]).filter(function(b){return !b.spr}));cb.forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;var p=.12,q=.34;cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],"#0b0f24")});
+  if(cs){defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.4"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(.5+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
   /* emitters */
   var lights=(C.lights||[]).slice();
   if(!out&&lfLit(C))lights.push([N*.5,M*.5,100,"#ffe6bd",4.6,.55]);
@@ -533,10 +535,12 @@ function lfSprUrl(k){var S=window.LFSPR&&LFSPR[k];if(!S)return null;if(S.b)retur
 function lfClampO(S,x,y,w,d,o){if(o.noclamp)return o;var a=lfP(x+w,y+d,0),ax=a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0),lim=-LF.H+Math.abs(ax)/2+1,Hh=o.H||((w+d)*LF.sx*(o.sc||1)*S.h/S.w),top=a[1]+(o.dy||0)-Hh;
   if(top>=lim)return o;var v=lim-top,n=Object.assign({},o);if((o.dy||0)<0)n.dy=(o.dy||0)+v;else n.H=Math.max(24,Hh-v);return n}
 function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return false;o=lfClampO(S,x,y,w,d,o);
-  if(LFREC)lfRecBox(x,y,0,w,d,o.h||24);
+  if(LFREC){var nr=LFREC.length;lfRecBox(x,y,0,w,d,o.h||24);if(LFREC.length>nr)LFREC[nr].spr=1}
   var a=lfP(x+w,y+d,0),W=(w+d)*LF.sx*(o.sc||1),Hh=W*S.h/S.w,fx=o.flip?-1:1;if(o.H){Hh=o.H;W=Hh*S.w/S.h}
-  var sh='<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.22)"/>';
-  if(!o.nosh)C.add(x+w+y+d-(o.dk||0)-.01,sh);
+  /* Cal: every piece of furniture casts the same soft shadow. A floor piece (not nosh: wall art, rugs, painted shells;
+     not lifted with dy; at least 4 high; or o.sh to force one) adds its footprint to C.shd, and lfRoomLight draws them all in one blurred pass
+     under the furniture, a little wider than the base so solid pieces (sofas, beds) show one as clearly as leggy ones. */
+  if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){(C.shd=C.shd||[]).push([x,y,x+w,y+d])}
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   /* o.act: the sprite is a button (data-act, a pointer cursor, and it takes clicks even where the room picture does not) */
   C.add(x+w+y+d-(o.dk||0),'<g'+(o.act?' data-act="'+o.act+'" style="cursor:pointer;pointer-events:auto"':'')+' transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/>'
