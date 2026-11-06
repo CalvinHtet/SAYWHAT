@@ -6,15 +6,15 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: free
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.49 (8fabe1a) (page version 21), 2026-11-05.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.50 (f3c970c) (page version 21), 2026-11-05.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.50 built (f3c970c, Cal: "Skip to v0.50"), WAITING ON QA for its pre-release check; then LEAD publishes and pins it.
-  The Rift Mask is in (e389afa, to QA, for v0.51). Nobody else plays until there is a working version. (on e389afa)
+- Now: v0.50 published and pinned for Cal (f3c970c, fresh start); WAITING ON Cal's phone test and QA's page check. In for v0.51:
+  the Rift Mask (e389afa), ROOMS's team tops. Nobody else plays until there is a working version. (on 07888ce)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -186,6 +186,8 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
   start)" (slug 7336ed4a-741d-4af2-b0fe-7492666e5a32, 439 files from 8fabe1a). QA: 437 of 438 build files match by sha256,
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
+- WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
+  cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
