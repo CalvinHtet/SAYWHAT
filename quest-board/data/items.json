@@ -485,5 +485,9 @@
  },
  "al_sandal": {
   "slot": "shoes"
+ },
+ "dg_riftmask": {
+  "slot": "mask",
+  "frontOnly": true
  }
 }
