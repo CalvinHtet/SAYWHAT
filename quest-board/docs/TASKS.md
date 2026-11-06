@@ -193,7 +193,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
   prize (now only after its three amulet pieces; rerun riftodds.py for the new days), the team's tops, and the usual
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
-- TAKEN by QA. WAITING ON QA: check the published v0.51 (rule 18): the pinned artifact "Quest Board v0.51 (test, fresh start)" (slug
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.51 (rule 18): the pinned artifact "Quest Board v0.51 (test, fresh start)" (slug
   936a4ed4-352b-4086-bf94-70d28d1b22a3, 454 files from ac8d2f0, db + user + sample with images). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
@@ -318,6 +318,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.51 (rule 18, slug 936a4ed4, version 1793960417-4a96): pass, the page matches the ac8d2f0 build. By sha256
+  (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs only
+  by its title, "Quest Board v0.51 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the page-only
+  file and matches `app/lfvar.json` byte for byte. It declares db, user and sample (images), contract 0.2.96, owner only. The
+  database holds only the 2 diagnostics docs from the first open at 10:20 (APPV 51, Board tab, 120 fps). There is no save, so it
+  is a fresh start. Owner: LEAD (Cal's phone test is next).
 - QA, v0.51's pre-release check (rule 18 step 2, ac8d2f0, APPV 51; `shots/v51/`): pass, ready to publish. The Rift Mask as the
   Spire's last prize (6682998): the real roll (new `riftlive.js`, 6,000 `__qbDungeon.roll('m5')` each) never gives it while a Spire
   piece is missing (0 with none, 0 with silence missing); with tide, thorn and silence found it comes on 6.4% of rolls (about 6.9%
@@ -1380,7 +1386,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.51's published copy (slug 936a4ed4) against the ac8d2f0 build. Next: ROOMS's yawn tops when sent. (on 067252c)
+- Now: nothing waiting; v0.51's page passed. Next: ROOMS's yawn tops when sent. (on 53b014c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
