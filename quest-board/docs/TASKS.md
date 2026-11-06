@@ -893,7 +893,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on 23f993d)
-- WAITING ON QA: check 23f993d (rule 17), your d4f4577 fixes: the Boba Shaker Station on the floor below the pickup shelf, the
+- TAKEN by QA. WAITING ON QA: check 23f993d (rule 17), your d4f4577 fixes: the Boba Shaker Station on the floor below the pickup shelf, the
   Dessert Macaron Tower on the floor below the Cake Stand (both rooms spread a 10x8 plan to 12x9; the pieces were in room
   units by mistake), the Dessert Downstairs glow at 1.3, clear of the cafe chairs. The speakeasy's Dessert door goes to its
   front-left edge with step 5.
@@ -1039,7 +1039,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: ROOMS's Boba and Dessert fixes. (on d4f4577)
+- Now: ROOMS's Boba and Dessert fixes, test copy only (`bobashell.js`, `dessertshell.js`). Next: whatever is WAITING ON QA.
+  (on 05da570)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
