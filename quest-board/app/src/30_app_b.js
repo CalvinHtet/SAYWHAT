@@ -1081,7 +1081,8 @@ function levelUp(lv,extra,from){
   if(pay>0){S.coins+=pay;S.earnedC+=pay;S.lvPaid=lv;persist()}
   var start=Math.max(from+1,lv-3), cards="", i=0, L;
   for(L=start;L<=lv;L++){
-    AREAS.filter(function(a){return a[2]===L&&L>1}).forEach(function(a){cards+=areaCard(a,i++)});
+    /* new areas are revealed one per level-up (29h_unlocks.js), so a trial that releases several levels at once shows one */
+    if(L===lv){var na=areaReveal();if(na)cards+=areaCard(na,i++)}
     var u=unlocksFor(L); if(u)cards+=unlCard(u,i++);
     /* Rooms open through the story (docs/STORYBOARD.md), not by level, so level-ups no longer announce room blueprints or new
        floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
@@ -1395,7 +1396,7 @@ document.addEventListener("click",function(e){
   if(/^wk/.test(a)&&trainAct(a,b))return;
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+" opens at your next level-up");return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}

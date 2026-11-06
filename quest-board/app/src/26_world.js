@@ -31,7 +31,8 @@ var ROOMCELL={lair:[0,1,1],trophy:[0,1,2],closet:[0,1,0],bedroom:[0,2,0],patio:[
  restaurant:[1,0,0],skybar:[1,0,1],rooftop:[1,0,2],garden:[1,1,0],boba:[1,2,0],dessert:[1,2,1],speakeasy:[1,2,2],
  theater:[2,0,0],auditorium:[2,0,1],mall:[2,1,0],bowling:[2,1,1],karaoke:[2,1,2],arcade:[2,2,0],rhythm:[2,2,1],vr:[2,3,0],club:[2,4,0]};
 /* rooms you buy from an empty lot on the street. Everything else opens from an upgrade inside a room. */
-var ROOMBUY=[["restaurant",null],["garden","restaurant"],["boba","restaurant"],["theater","restaurant"],["mall","auditorium"],["club","mall"]];
+/* storyboard order (LEAD, with ROOMS's OK): the Garden is the first lot; the Restaurant opens from it (gd_rest, 29b_story.js) */
+var ROOMBUY=[["garden",null],["restaurant","garden"],["boba","restaurant"],["theater","restaurant"],["mall","auditorium"],["club","mall"]];
 ROOMSOPEN={restaurant:1,garden:1,boba:1,theater:1,mall:1,club:1};
 function lotsOpen(){return ROOMBUY.filter(function(q){return !hasRoom(q[0])&&(!q[1]||hasRoom(q[1]))}).map(function(q){return q[0]})}
 nextRoom=function(){return lotsOpen()[0]||null};

@@ -734,8 +734,8 @@ function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
-    var lk=lv<a[2]||areaGate(a[0]);
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:"")+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>Lv '+a[2]+'</small>':'')+'</button>';
+    var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+", opens at your next level-up":(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':'Lv '+a[2])+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
