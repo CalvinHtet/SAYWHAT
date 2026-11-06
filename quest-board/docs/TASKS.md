@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.49 published and pinned for Cal (8fabe1a, fresh start); WAITING ON Cal's phone test and QA's file check. Next: Cal's
-  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. (on 4b1c78b)
+- Now: v0.49 published and pinned for Cal (8fabe1a, fresh start); WAITING ON Cal's phone test (QA: the page matches the build, 97e9810). Next: Cal's
+  findings, then storyboard step 3 (Boba) with ROOMS toward v0.50. Nobody else plays until there is a working version. (on b325eba)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
