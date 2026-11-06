@@ -14,8 +14,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.52 (db67326) passed QA's pre-release check (6fa7489), held until Cal reports on v0.51 or says go. For v0.53:
-  a loading bar instead of a blank page (4b72f95), WAITING ON QA. Next, if Cal's phone log shows the wait matters: start the
-  game before the big art arrives. Nobody else plays until there is a working version. (on 4b72f95)
+  the loading bar, redone after QA's c5766ed (NEXT), WAITING ON QA. Nobody else plays until there is a working version.
+  (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -226,6 +226,16 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   35.9 s, so the total does not change); fetch blocked: tags, ready 1.2 s; a strict script policy (hashes only): tags,
   ready 1.2 s. No page errors in any. Not checked: the real host (its own policy), a second visit from the cache, and
   savecheck/screens on this build.
+- WAITING ON QA: check NEXT, the loading bar redone after your c5766ed (for v0.53; v0.52 stays db67326). Your same-tab
+  reload finding (2.1 s became 27.7 s, fetch() skips the tab's memory) meant the fetch loader had to go: `app/loader.html`
+  now adds ordinary script tags in order (async=false) and fills the bar as each file lands (resource timing, then onload),
+  so no text copies and no fetch fallback are needed. `build.py` cuts any pack over 4.5 MB into pieces (`art_rig_1..4.js`,
+  `blobs_1..4.js`, `art_ex_1..2.js`; blobs append to `window.__B` in order, all 675 identical), clears old scripts from
+  dist first: 461 files. The bar shimmers and says "Loading 38 MB" until the first file lands; "faster next time" is
+  gone. LEAD's runs on 8766: your loadtime.js ready 35.7 s, bar at 0.4 s, no inline text left, peak heap 42 MB;
+  tabmemory.js 291 MB; `shots/revisit.js` (cache on, 9 Mbps, x4): first 35.7 s, reload 0.8 s, a new tab 0.4 s, 0 MB
+  fetched again; strict hash-only script policy: starts. No page errors. Not checked: savecheck/screens on this build, and
+  the real host's cache headers.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
@@ -349,7 +359,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- QA, the loading bar (LEAD's 4b72f95, on 5728d83): pass, one small fix. Works: on a 9 Mbps, 85 ms phone with a 4x slower CPU the
+- DONE by LEAD in NEXT (the loader rebuilt on plain script tags, the big packs cut under 5 MB; see WAITING ON QA). QA, the loading bar (LEAD's 4b72f95, on 5728d83): pass, one small fix. Works: on a 9 Mbps, 85 ms phone with a 4x slower CPU the
   bar shows at 0.4 s and the game starts at 36.0 s (v0.52: a blank page until 35.9 s); all 11 files, same hashes as v0.52; no
   script reads document.currentScript; savecheck, screens (360, 390), old saves, a fresh player, doors 36 of 36, the team in
   their rooms, town rules 32 of 32: all pass, no page errors. Fallback (new `loadfallback.js`, every fetch aborted): plain tags,
