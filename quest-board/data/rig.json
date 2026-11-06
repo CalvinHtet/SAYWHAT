@@ -298,5 +298,7 @@
   ]
  },
  "maxStretch": 1.5,
- "armpit": {"slots": {"top": {"sleeves": true, "cap": 2}, "body": {"sleeves": false, "cap": 0}}, "arms": ["uaN", "uaF"], "joints": ["shoulderN", "shoulderF"], "above": 80, "armsAbove": 0}
+ "armpit": {"slots": {"top": {"sleeves": true, "cap": 2}, "body": {"sleeves": false, "cap": 0}}, "arms": ["uaN", "uaF"], "joints": ["shoulderN", "shoulderF"], "above": 80, "armsAbove": 0},
+ "faceCover":["sm_halomask"],
+ "keepAsleep":["sm_halomask","sm_halo"]
 }

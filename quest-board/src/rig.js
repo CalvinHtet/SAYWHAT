@@ -645,7 +645,9 @@
       if (!pose) throw new Error("unknown pose: " + poseRef);
       const view = pose.view;
       // A pose can swap a slot's art for an expression, or hide it with null.
-      const art = (s) => (pose.swap && s.id in pose.swap ? pose.swap[s.id] : s.id);
+      // ...except a piece that stays on asleep (data/rig.json keepAsleep, flagged by look.js), which keeps its own art.
+      const keep = (s) => pose.swap && pose.swap[s.id] === null && look.layers[s.id] && look.layers[s.id].keepAsleep;
+      const art = (s) => (keep(s) ? s.id : pose.swap && s.id in pose.swap ? pose.swap[s.id] : s.id);
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
       const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp, l.skirt)));
@@ -725,7 +727,7 @@
           const tint = l.tint || (s.id === "body" && look.skin) || null;
           gl.uniform1i(this.u.uMode, tint ? tint.mode : 0);
           // Hair is only trimmed while the hat that hides it is actually on.
-          const hatOff = pose.swap && "hat" in pose.swap && !pose.swap.hat;
+          const hatOff = pose.swap && "hat" in pose.swap && !pose.swap.hat && !(look.layers.hat && look.layers.hat.keepAsleep);
           gl.uniform1fv(this.u.uClip, (!hatOff && l.clip && l.clip[view]) || NO_CLIP);
           if (tint) {
             gl.uniform3fv(this.u.uA, tint.a);

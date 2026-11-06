@@ -43,6 +43,11 @@
       const meta = (typeof window !== "undefined" && window.QBDATA && window.QBDATA.items && window.QBDATA.items[item.art]) || {};
       if ((item.skirt || meta.skirt) && layers[slot]) layers[slot].skirt = true;
     }
+    // A helmet that covers the whole face (SAYMØRE's Halo Mask, data/rig.json faceCover) hides glasses and face pieces, which
+    // would otherwise draw on top of it; pieces in keepAsleep stay on in the sleeping pose (Cal: the SAYMØRE figure stays masked).
+    const R = (global.QBDATA && global.QBDATA.rig) || {}, hatArt = c.equipped && c.equipped.hat && c.equipped.hat.art;
+    if (hatArt && (R.faceCover || []).indexOf(hatArt) >= 0) { delete layers.glasses; delete layers.mask; }
+    if (hatArt && layers.hat && (R.keepAsleep || []).indexOf(hatArt) >= 0) layers.hat.keepAsleep = true;
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {
       layers.shoes = layers.shoesOver;
