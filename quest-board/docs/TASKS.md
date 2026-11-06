@@ -83,6 +83,18 @@ To do:
       sooner if the Loft height is sorted first.
 
 Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <what to check on the phone>`):
+- READY TO PUBLISH (Cal, 2026-11-05: "approve all"): every ROOMS approval from 6 to 37 (16 and 7 were already approved).
+  6 Bedroom cabinet and anime poster (bd895a7); 8 Daily Quest art (8caf214, wired a60b175); 9 Game Room walls (a4e2a4a);
+  10 Game Room furniture (9c30788); 11 building fronts and backdrops (45930bc; LEAD wires the backdrops); 12 story portraits
+  (625d9e3); 13 team banners (4fc1542); 14 class banners (6b7b9c8); 15 dungeon icons (d48ed81); 17 to 19 Restaurant walls
+  (1eb8040, 156683a, 04bb241); 20 Garden lots and Game Room desk (5fa3fec, d30bb93); 21 corner booth and fire pit (f457680,
+  eb85e90); 22 Noir furniture and the calmer city (d1d7c73, 0b23996); 23 Boba (c223d89); 24 Dessert Parlor (f0c6dbb);
+  25 Lock and Key (4599993, 707cac1 and fixes); 26 Friday Band (fe48618); 27 Rooftop (707cac1, 5ddeb1a, ea2dffc, d95d880,
+  c8eb716); 28 Mall (322760a, 0eb00c2, c829e7e); 29 Theater lobby and 30 Auditorium (4a7c0ff, 9279c58, 392ca5c, 5e3a780);
+  31 Arcade (cb5f568, b3832fb); 32 Rhythm Room and 33 VR Arena (e2d53e1, 5a33727, 934bb37); 34 Bowling (922bcb7, 934bb37);
+  35 Karaoke (db8a46d, 6962a6e); 36 Nightclub (fd0da20, 1eb0bbc, e74cf92); 37 the team in their rooms (abb6513); plus the
+  doors (3962ee2) and the writing pass (e74cf92, a646e51). Look at, on the phone: each building's rooms fully bought, the doors
+  walk both ways, the open-air sky at noon and night, the team members' name tags. QA has passed every one of these.
 - READY TO PUBLISH: the Trophy Room (Cal approved approval 16, 2026-11-05), 9be3f51. A painted hall above the Hero's Lair
   (room id `trophy`); the Lair sells "Stairs to the Trophy Room" once the first piece is home (a mystery card before);
   the Trophy Wall is retired (owners keep it). The Goblin King's Regalia stands on a mannequin on the rug and dresses
@@ -194,7 +206,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   12: the five portrait brand banners (already asked, 720 x 1080), six relic icons `ui_relic_<streak|team|build|exped|quests|
   collect>.webp` (128 x 128, one per relic, painted game style: a streak flame, a handshake, a hammer, a ledger, a tally,
   a curator's lens), and Sable's portrait `ui_story_sable.webp` (300 x 400). Each shows a stand-in until it exists.
-- PART DONE by ROOMS in 4fc1542, waiting on Cal's look (approval 13): the five join banners `ui_team_sable`, `_mara`, `_rafe`,
+- PART DONE by ROOMS in 4fc1542, Cal approved (approval 13, 2026-11-05): the five join banners `ui_team_sable`, `_mara`, `_rafe`,
   `_nova`, `_theo` (720 x 400) are in `art/app`; class banners (1) DONE in 6b7b9c8 (approval 14, `ui_class_<id>_m/_f`); the
   team in their rooms (3) is still to do. Team, class art and team looks (Cal, 2026-11-05; code in d523cf1, `29c_team.js`). Show Cal each set side by side:
   1. Class banners in the game's own chibi style, a man's and a woman's version of each: `ui_class_<id>_m.webp` and
@@ -217,7 +229,7 @@ Art and room code requests (LEAD asks, ROOMS does):
      stand is `t_booth1` (Classic Ticket Booth), the popcorn is `t_pop` (Popcorn Cart) and the soda `t_soda` (Soda Fountain).
      Gate Theo's scene on those three. Today they unlock at levels 26, 24 and 25 against the Theater opening at 23 (step 10);
      LEAD's call whether to pull them to 23. The Theater lobby is ROOMS's next redesign (shell, zones, QA review).
-- PART DONE by ROOMS in 625d9e3, waiting on Cal's look (approval 12): the story portraits `ui_story_chef`, `_lockkey`, `_mall`,
+- PART DONE by ROOMS in 625d9e3, Cal approved (approval 12, 2026-11-05): the story portraits `ui_story_chef`, `_lockkey`, `_mall`,
   `_auditorium`, `_rafe`, `_nova` (300 x 400) are in `art/app`; the rest of this request is still to do. Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
   Speakeasy into one second-floor room above the restaurant, an upscale speakeasy with a live band and singers, starting
   really bare; keep every id saves already own (retire, never delete) and tell LEAD which room id survives; (2) chibi looks
@@ -229,7 +241,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   as `ui_story_chef.webp` (Mara, chef), `ui_story_lockkey.webp` (Desmond Hale, investor), `ui_story_mall.webp` (Priya
   Okafor, investor), `ui_story_auditorium.webp` (Theo, theater crew), 300 x 400; the scene picks them up by name. When the
   merged room exists, tell LEAD its id; when the theater basics exist, tell LEAD their ids (Theo waits for any 3 upgrades now).
-- PART DONE by ROOMS in d48ed81, waiting on Cal's look (approval 15): (1) the six Goblin King icons, (2) `ui_gift`, (5) the six
+- PART DONE by ROOMS in d48ed81, Cal approved (approval 15, 2026-11-05): (1) the six Goblin King icons, (2) `ui_gift`, (5) the six
   Hollow Amulet icons are in `art/app` at the names below. (3) DONE by ROOMS in 9be3f51, Cal approved (approval 16), READY TO PUBLISH:
   the Trophy Room, room id `trophy` above the Lair (ROOMCELL 0,1,2). The Lair sells "Stairs to the Trophy Room" (`lr_troom`,
   1800, your `trophy:1` keeps it a mystery until the first piece); `lr_trophy` is retired (owners keep it, `dgRoomBuilt`
@@ -264,7 +276,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   rewrite the room and upgrade lines in your files (`27_rooms.js`, `27b_skins.js`, `data/loft.json`, `data/items.json`,
   room `help` text) to it. Worst offenders to look for: quips at the end ("It probably works.", "Do not touch."), "Obviously",
   exclamation marks, "sleek" more than once a screen. LEAD did `10_app_a.js`'s upgrade lines in cf7b36a as examples.
-- DONE by ROOMS in 45930bc, waiting on Cal's look (approval 11): `art/app/bld_loft.webp`, `bld_plaza.webp`, `bld_mall.webp`
+- DONE by ROOMS in 45930bc, Cal approved (approval 11, 2026-11-05); LEAD: wire the backdrops now: `art/app/bld_loft.webp`, `bld_plaza.webp`, `bld_mall.webp`
   (the street draws them already) and inside backdrops `bld_bg_loft.webp`, `bld_bg_plaza.webp`, `bld_bg_mall.webp` (1600 x 900,
   soft, nothing important in the middle): LEAD, wire the backdrops when Cal approves. Three buildings (Cal, 2026-11-05, for phone lag and looks): "it was running every single animation all at once. This is
   not efficient or practical. We need to conserve resources where possible so that it runs efficiently and smoothly without
@@ -1051,7 +1063,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   banner cropped until then. Show Cal side by side first.
 - LEAD wired all seven in (a60b175): the Daily Quest chest, stat chips, hidden quest picture, town hall backdrop. v48 waits for
   Cal's approval 8; if he turns one down, delete its file and the stand-in comes back.
-- DONE by ROOMS in 8caf214, waiting on Cal's look (approval 8): all seven files at these names and sizes are in `art/app`;
+- DONE by ROOMS in 8caf214, Cal approved (approval 8, 2026-11-05): all seven files at these names and sizes are in `art/app`;
   LEAD, the game does not read them yet (no `ui_dq_chest` etc. in the code), so wire them when Cal approves. TAKEN by ROOMS, right after the Loft goes to QA (today). LEAD's code is in (29ae247). Names and sizes, all optional (the game draws its own until they exist): `ui_dq_chest.webp`
   (the Daily Quest chest, closed, 256 x 256), `ui_stat_str.webp`, `_agi`, `_vit`, `_int` (64 x 64 icons), `ui_hidden_quest.webp`
   (the hidden quest's reveal, 512 x 300), `ui_town_board.webp` (town hall backdrop, 720 x 300). Tell LEAD when READY.
@@ -1133,13 +1145,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON CAL's picks on the approval form: every pending approval, 6 and 8 to 37, sent as two picture sheets
-  (24 to 37 re-rendered on the current build). New numbers: 25 Lock and Key, 26 Friday Band, 27 Rooftop, 28 Mall, 29 Theater
-  lobby, 30 Auditorium, 31 Arcade, 32 Rhythm Room, 33 VR Arena, 34 Bowling, 35 Karaoke, 36 Nightclub, 37 the team in their
-  rooms (25 to 37 all through QA's design reviews). Approved ones go to READY TO PUBLISH; notes become ROOMS's next work.
-  Held for Cal: signature team cosmetics (wait on 12, 13). LEAD: ids unchanged. Retired ids so far: `sb_chester`,
-  `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`;
-  new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on d94094e)
+- Now: Cal approved everything from 6 to 37 ("approve all and keep working"); READY TO PUBLISH line above for LEAD. Now:
+  the Rift Mask (`dg_riftmask`, request 4: one sheet, every angle, both bodies, wear-tested), then a signature cosmetic for
+  each team member (request 3's "better still"), matching their approved banners and portraits. LEAD: ids unchanged.
+  Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 8ff8e60)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
