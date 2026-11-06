@@ -250,7 +250,7 @@ portal("restaurant","skybar","BR",4.2,"#ffb46a","Upstairs");portal("skybar","res
 portal("skybar","rooftop","BR",12.1,"#ffb36b","Roof");portal("rooftop","skybar","FL",3,"#ffb36b","Bar");
 portal("boba","dessert","BR",10.5,"#c79aff","Upstairs");/* the painted stairs at the back wall's far end, off the shaker station */
 portal("boba","garden","BL",7.4,"#9cff8a","Garden");portal("garden","boba","FR",9,"#ff9ec4","Boba Shop");/* the Boba shop's side door opens onto the Garden lot next door */portal("dessert","boba","FL",1.3,"#ff9ec4","Downstairs");/* Cal's rule: the room above is entered from its front-left edge */
-portal("dessert","speakeasy","BR",10.5,"#ffb46a","Hidden Door");/* in front of the painted bookcase */portal("speakeasy","dessert","FR",3,"#c79aff","Dessert");
+portal("dessert","speakeasy","BR",10.5,"#ffb46a","Hidden Door");/* in front of the painted bookcase */portal("speakeasy","dessert","FL",3,"#c79aff","Dessert");
 portal("theater","auditorium","BL",4.2,"#ffd27a","Auditorium");portal("auditorium","theater","FR",2,"#ffd27a","Lobby");
 portal("theater","mall","FR",7.4,"#6cd0ff","Mall");portal("mall","theater","BL",3.1,"#ffd27a","Theater");
 portal("mall","arcade","FR",8,"#ff4fa3","Arcade");portal("arcade","mall","BL",3,"#6cd0ff","Mall");
