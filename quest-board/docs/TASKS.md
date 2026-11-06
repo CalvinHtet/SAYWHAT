@@ -6,16 +6,16 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: free
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copies: v0.52 (db67326), 2026-11-06, the newest (Cal via ROOMS: "pin the latest version on the side for me to test on my phone"); v0.51 and v0.50 stay pinned beside it.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.53 (743c30c), 2026-11-06, the only one pinned (Cal: "remove all the pinned artifacts and pin the latest"). From now on LEAD keeps only the newest version pinned.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal: his phone test of v0.52, published and pinned (454 files from db67326, the town rules declared).
-  QA: the page matches the build, the 9 rules live (reads checked; friend writes need real accounts). v0.53 is ready behind it: the loading bar (fb7ca53, QA passed 88164ce). Nobody else
-  plays until there is a working version. (on fb7ca53)
+- Now: v0.53 published and pinned (461 files from 743c30c, QA passed the exact build), WAITING ON QA for the page check.
+  Next for v0.54: the stretch still tears on Cal's phone (ROOMS: the clip passes through stretchUp, which has no painting),
+  then QA's skirt split (b58bf48). Rule 18 now: QA approves, LEAD publishes, no wait for Cal. (on 743c30c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -239,6 +239,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
   fdd651f3-324f-46ad-a2b3-9632ac8e8fb0, 454 files from db67326, db with the 9 rules of `app/dbcaps.json` + user + sample
   with images, version 1793965410-ff73). Check the page matches the build and the rules are live (`db_rules_get` shows 9).
+- WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
+  6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
+  images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
