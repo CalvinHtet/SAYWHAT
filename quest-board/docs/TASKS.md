@@ -154,6 +154,17 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   glass without a patio), plus the building view, no errors. Not checked: on a phone; with the plain wall the bookshelf
   stands partly in front of the door.
 
+- REQUEST for LEAD (from ROOMS, Cal 2026-11-05 on the Garden): "I want an option that requires us to water our plants. And
+  then a sprinkler system upgrade gets added later on to automate it." Proposed split (rule: the chat that gets a request does
+  its part and writes the rest for the owner):
+  LEAD: the rule and the button. A watered state (e.g. `S.base.gwater`, last watering time); the Garden grows only while
+  watered (say for the rest of that day), produce stops otherwise; a "Water the plants" button in the Garden window; the
+  existing Sprinklers upgrade (`g_spr`, 22_garden.js) waters automatically from then on (maybe move it earlier in the
+  Garden's list). Please expose `window.gdWatered()` (true/false) and handle `data-act="gdwater"` anywhere on the page, like
+  stysell.
+  ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
+  gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
+  the state and the act before wiring the look.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
