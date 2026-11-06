@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Town database rules passed
-  QA with the inbox rule added; they go on at the next publish. Phone lag waits on a phone log. Yawn necklaces fixed, WAITING ON QA. Nobody else plays until there is a working version. (on 414a730)
+  QA with the inbox rule added; they go on at the next publish. Phone lag waits on a phone log. Yawn necklaces fixed and passed QA (ab67715: 434 cells, nothing else moved); out with the next publish, after ROOMS's two yawn art fixes. Nobody else plays until there is a working version. (on 414a730)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
