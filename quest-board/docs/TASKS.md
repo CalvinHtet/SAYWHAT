@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 9:40 am)
+CHROME: ROOMS (since 1:37 am)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.50 (f3c970c) (page version 21), 2026-11-05.
 
