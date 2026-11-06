@@ -362,6 +362,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Black Tulle Skirt's wear test (`v_tulle`, female only; on 7387646; `shots/tulle/`): fine standing, sitting, typing,
+  sleeping and in the yawn, short and long hair (22 poses, 0 fails; long hair falls over it right). One fix: mid-stride the long
+  skirt splits at the middle like culottes (a notch at the front in walk3, two lobes from behind in backwalk1, `zz.png`), because
+  the rig binds a pants-slot item to each leg; the short plaid skirt hides it (`yy.png`). Fix: a rig option for skirts (bind the
+  hem to the hips, or to both thighs evenly) with a flag on `v_tulle` (and `h_pleat`, also long). Old, not the tulle: small
+  shoe fragments below the hem in walk3 and walk4 show on every skirt. Owner: LEAD (rig option), ROOMS (the item flag). Not a
+  blocker: ship as is, fix in the next version.
 - QA, v0.53's build (743c30c, APPV 53; rule 18 as Cal changed it: QA's pass is the green light): pass, publish it. It differs from
   fb7ca53 (passed in 88164ce) only by APPV. On the exact build: savecheck all pass; a fresh player sees "NEW v0.53", desktop and
   phone, no page errors; the art and blobs identical to v0.52 (`packsame.js`: 796 entries, 675 blobs, same SHA-256); older saves
@@ -1526,8 +1533,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's two checks (the upgrade audit, every room; the Black Tulle Skirt's wear test), test copies only. Next: v0.53's
-  published copy; room builds against isometric references (Cal, 2026-11-06). (on 743c30c)
+- Now: ROOMS's upgrade audit, every room (running, about an hour). Next: v0.53's published copy; room builds against isometric
+  references (Cal, 2026-11-06). (on 7387646)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
