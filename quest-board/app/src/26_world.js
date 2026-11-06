@@ -286,7 +286,7 @@ LFROOM.restaurant=function(C){
   for(var kr=1;kr<kd;kr++)kf+='<path d="M'+lfPt(lfP(Wi,kr,0))+' L'+lfPt(lfP(Wt,kr,0))+'" stroke="rgba(0,0,0,.14)" stroke-width="1"/>';
   if(!shk)C.decals.push(kf);
   if(!shk)C.walls.push(lfFaceY(Wi,0,LF.H,tileBand(LF.U*kw,LF.H*.34,LF.H,9,noir?"#3a3f45":"#e8edec",noir?"rgba(255,255,255,.08)":"rgba(90,110,110,.28)")+'<rect y="'+(LF.H*.34-3)+'" width="'+LF.U*kw+'" height="4" fill="'+(noir?"#b8935a":"#7f9a98")+'"/>'));
-  var pc=noir?"#46301f":"#3f6f6b",pt=noir?"#b8935a":"#d9e4e1";
+  var pc=noir?"#1c1a1d":st===2?"#2f4a37":"#3f6f6b",pt=noir?"#b8935a":st===2?"#efe2c4":"#d9e4e1";/* the kitchen half-wall in each look's own colours (QA) */
   /* the wall between dining room and kitchen, with a gap by the front for staff */
   rsWallRun(C,Wi-.14,0,.14,kd-1.2,60,pc,pt);
   rsWallRun(C,Wi,kd-.14,kw,.14,26,pc,pt);
