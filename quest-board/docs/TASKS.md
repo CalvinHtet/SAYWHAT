@@ -465,6 +465,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.61 (slug b9f23da6, version 1793991295-0706): pass, 461 of the c48c7af build's 462 files identical, none missing,
+  index.html only by its title ("Quest Board v0.61", 6 bytes), lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
+- QA, ROOMS's fa8efd9 (the console line trimmed): not yet. QA had the limit wrong: voice.js allows 95 characters (aim about 90), not
+  100; the line is 98 with its buff. "A slim glossy shelf, lit underneath. It sits low under the screen." (88) or "Slim glossy shelf, lit
+  underneath. Sits low, so the screen stays clear." (93) both pass. Owner: ROOMS.
 - QA, ROOMS's d34d2ce (the TV console centred, artIf; `shots/plaza/tvwall_d34d2ce.png`): pass. Under the 80 inch screen and under
   the Big TV (`allrooms.js` with the new DROP option) the console sits centred under the screen, parallel to its bottom edge, both ends
   tucked in, nothing crossing; the floor lamp clear beside the snack bar. artIf disturbs no other room: every room fully bought
@@ -1822,7 +1827,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; d34d2ce passed, 60e3e50 has one fix. Next: v0.61's page once pinned; the next version. (on c7136e3)
+- Now: nothing waiting. Next: LEAD's render() focus fix; ROOMS's console line and Cal's v0.58 notes (shadows, the Garden look, the
+  bench, the plaza backdrop on a phone); LEAD's Garden wording and room zoom speed. (on fa8efd9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
