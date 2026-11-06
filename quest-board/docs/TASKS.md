@@ -348,6 +348,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: a design review of the Auditorium (step 11) as it stands at 3057c61, bare and fully bought (Bigger Screen,
+  then IMAX). ROOMS's read: one plan already (screen on the left wall, towers either side, rows stepping up toward the
+  back, the projector on the raised back landing beaming over the seats; the camera draws the back landing bottom right,
+  so it can read as "front"). Say what you would change; ROOMS fixes it before Cal sees it.
 - TAKEN by QA. WAITING ON QA: a design review of the Theater lobby at 4a7c0ff (step 10), bare, with the basics only (t_booth1, t_pop,
   t_soda) and fully bought with the lobby expanded: zones, facing, anything hidden (the hot dog and nachos now stand on a
   back counter behind the stand), the guest line and the snack trips still walking right. Also the Mall fixes at c829e7e.
@@ -1013,11 +1017,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 11, the Auditorium: looking at it bare and fully bought, then zones and QA's design review.
-  WAITING ON QA: the Theater lobby's design review (4a7c0ff). WAITING ON CAL: Lock and Key, the Rooftop and the Mall, all
-  through QA's design reviews (Mall: c884785). LEAD: theater basics ids `t_booth1`, `t_pop`, `t_soda`. Retired ids so far:
-  `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`,
-  `ml_dir`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 36706e5)
+- Now: WAITING ON QA: design reviews of the Theater lobby (4a7c0ff) and the Auditorium (as is, 3057c61; ROOMS sees one
+  plan already). WAITING ON CAL: Lock and Key, the Rooftop and the Mall, all through QA's design reviews. Then step 12, the
+  Arcade. LEAD: theater basics ids `t_booth1`, `t_pop`, `t_soda`. Retired ids so far: `sb_chester`, `sb_trolley`,
+  `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new `sb_band`;
+  `ml_kar` needs `ml_bow`. Chrome claimed. (on 3057c61)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
