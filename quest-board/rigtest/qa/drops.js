@@ -19,6 +19,12 @@ const shopText = (p) => p.evaluate(() => (document.querySelector('#app').innerTe
   console.log((pa.every((e) => e[2] === 1 || e[2] === 4) ? 'ok   ' : 'FAIL ') + 'every date a Monday or Thursday');
   console.log((pa[0] && pa[0][0] === 'hanga' ? 'ok   ' : 'FAIL ') + 'HANGANG first;  NICE COCK ' + (pa.findIndex((e) => e[0] === 'nc' || e[0] === 'nicecock') === 4 ? 'fifth' : pa.some((e) => e[0] === 'nc' || e[0] === 'nicecock') ? 'NOT fifth' : 'not in the build yet'));
   console.log((JSON.stringify(pa) === JSON.stringify(pc) ? 'ok   ' : 'FAIL ') + 'two pages give the same plan');
+  // with reruns: over 12 rounds, a drop never repeats the slot before it and never brings back a brand still among the live ones
+  const rr = await B.p.evaluate(() => { const D = window.__qbDrops; D.cfg.on = true; const L = D.cfg.live || 4; const plan = D.plan(12); let back = 0, live = 0; const where = [];
+    for (let k = 1; k < plan.length; k++) { if (plan[k].id === plan[k - 1].id) { back++; where.push('repeat ' + plan[k].start + ' ' + plan[k].id); }
+      if (plan.slice(Math.max(0, k - L), k).some((e) => e.id === plan[k].id)) { live++; if (where.length < 6) where.push('still live ' + plan[k].start + ' ' + plan[k].id); } }
+    return { slots: plan.length, rerun: D.cfg.rerun, back, live, where }; });
+  console.log(((rr.back || rr.live) ? 'FAIL ' : 'ok   ') + `reruns (rerun ${rr.rerun}, ${rr.slots} slots): ${rr.back} back-to-back repeats, ${rr.live} drops of a brand still live` + (rr.where.length ? '  ' + rr.where.join(', ') : ''));
   // step through the weeks with the clock
   const weeks = await B.p.evaluate(() => { const D = window.__qbDrops; const out = []; const keep = window.__qbShift || 0; const real = Date.now() - keep; const start = new Date(D.cfg.launch + 'T20:00:00Z').getTime();
     for (let k = -1; k < 30; k++) { window.__qbShift = (start + k * 3.5 * 864e5) - real; /* Date.now() already includes the shift */ const s = D.state(); const live = s.live.map((x) => x.id); out.push({ k, live, vault: s.vault.map((x) => x.id), next: s.next && s.next.id + ' ' + s.next.start, dup: live.length !== new Set(live).size }); }

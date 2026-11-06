@@ -462,6 +462,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 046b0c3 launch reruns (on 49814eb, `drops.js` now checks 12 rounds, 72 slots, of the current 6 brands): better, not
+  done. Back-to-back repeats 2 to 0; drops of a brand still among the live four 14 to 6. The six are all later than the three rounds
+  your rerun.js covered: Y2K on 2027-02-15, Rose on 03-08 and 04-19, NC on 03-11 and 06-21, Alt on 08-05. Cause: the brands moved to
+  a round's end keep a shuffled order, so the third slot of a round can be one of the previous round's last two. Fix: move them in the
+  order they dropped in the round before; then every brand is at least 5 slots from its last drop. Only with DROPS.on. Owner: LEAD.
 - QA, the published v0.62 (slug 3ab7eada, version 1794000054-1e81): pass. 493 of the 756def5 build's 494 files identical by sha256,
   none missing; index.html differs only by its title (my build with "Quest Board v0.62" in the title hashes the same, +6 bytes);
   lfvar.json matches app/lfvar.json; the 9 db rules declared (worlds, board, pings with {self}, diag, player, inbox owner-only), user
@@ -1983,7 +1988,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.62 published and its files check out; Kode PinK 15 of 15. Next: LEAD's DROPS.rerun fix, the kp Shop rows, SAYMØRE's wear test when ROOMS sends it. (on c382557)
+- Now: rerun fix checked (6 still-live drops left, LEAD). Next: the kp Shop rows, SAYMØRE's wear test when ROOMS sends it. (on 49814eb)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
