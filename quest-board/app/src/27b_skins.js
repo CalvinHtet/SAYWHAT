@@ -161,12 +161,14 @@ autoRoom("karaoke",{door:false,doorAt:[3.0,8.4],name:"Karaoke",lv:1,startLv:42,s
 function cbP(k,list,o){return list.map(function(q){return [k,q[0],q[1],q[2],q[3],0,Object.assign({flip:q[4]?1:0},o||{})]})}
 function cbU(id,nm,pr,k,art,line,ex){return [id,nm,pr,k,"",0,0,0,line,Object.assign({art:art},ex||{})]}
 var CBB={fxwall:1},CBS={over:1};
-autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"#0a0812",wain:"#0a0812",acc:"#ff3df0",fl:"k",size:[[14,10]],shell:0,coin:60,guests:5,group:"Club",dark:1,desc:"Top floor. Loud. Your name on the list.",
+autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"#0a0812",wain:"#0a0812",acc:"#ff3df0",fl:"k",size:[[14,10]],shell:0,staff:[["cb_dj",RSK],["cb_bar",RSK]],coin:60,guests:5,group:"Club",dark:1,desc:"Top floor. Loud. Your name on the list.",
  floor:function(){return window.LFSPR&&LFSPR.cbw_t1?null:undefined},
- draw:function(C,H){if(window.LFSPR&&LFSPR.cbw_t1)C.shellK="cbw_t1";else roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C)},
+ draw:function(C,H){if(window.LFSPR&&LFSPR.cbw_t1)C.shellK="cbw_t1";else roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C);
+  /* a DJ on the decks and a bartender behind the bar (QA design review) */
+  if(H("cb_dj"))C.s("work",7.8,.65,1,"work",[6,12],{tag:"dj"});if(H("cb_bar"))C.s("work",2.3,.6,1,"work",[6,12],{tag:"bartender"})},
  items:[
   /* 6 x 5 tiles of floor (four panels, 8 x 8 lights) straight in front of the DJ */
-  cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.8,2.5,3,2.5],[7.8,2.5,3,2.5],[4.8,5.0,3,2.5],[7.8,5.0,3,2.5]],{fit:1}),"The whole floor changes color, and lasers come on.",
+  cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.8,2.5,6,5]],{fit:1}),"The whole floor changes color, and lasers come on.",
    {plat:5,cust:[[5.8,3.4,1,CBB],[7.8,3.3,-1,CBB],[9.8,3.5,1,CBB],[6.4,5.2,-1,CBB],[9.0,5.0,1,CBB],[5.7,6.8,1],[7.8,6.6,-1],[9.9,6.9,-1]],light:[7.8,5,46,"#ff3df0",4.2,.6],splash:"The floor lights up and the lasers come on. Now it is a club."}),
   PL("cb_dj","DJ Booth",UP_M,"cbx_dj",6.2,.2,3.2,1.6,0,"Your name on the screen."),
   cbU("cb_spk","Speaker Stacks",UP_M,"cbx_spk",cbP("cbx_spk",[[4.6,.2,1.3,1.2],[9.7,.2,1.3,1.2]]),"You feel it before you hear it."),
