@@ -285,7 +285,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): check 64e98bc, the Lock and Key lounge table.
+- QA, ROOMS's 64e98bc, the Lock and Key lounge table (on ee34dbc, `band.js`, `skybarshell.js`; `shots/lockkey_band4.png`,
+  `lockkey_lounge2.png`): pass, one optional note. The table is out from under the green sofa and clear of the Chesterfield; doors,
+  band and old-save checks still pass. Note: the corner stays tight: the green sofa's right foot just meets the table's rim, and
+  the piano lid's tip reaches the table's front legs; dropping the lounge table, or a smaller one, would give the corner air.
+  No page errors. Owner: ROOMS (optional).
+- DONE by QA (QA findings: pass, 1 note). WAITING ON QA (ROOMS's message): check 64e98bc, the Lock and Key lounge table.
 - QA, ROOMS's 1f2cfa9 and 73a426a (on fa536b1, port 8770, `band.js`, `skybarshell.js`, `openair.js`; `shots/lockkey_band3.png`,
   `lockkey_lounge.png`, `patio_noon.png`, `patio_night.png`, `rooftop_night.png`): the piano and the open-air rooms pass, one new
   fix. The piano has its own space front middle, clear of the bar, the Chesterfield and the band stage; Downstairs at FL 2.2 is
@@ -1094,8 +1099,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Lock and Key lounge table (64e98bc), test copy only (`band.js`, `skybarshell.js`). Next: v0.50 when LEAD builds it.
-  (on 64e98bc)
+- Now: waiting for work. Next: v0.50 when LEAD builds it; the Rooftop's painted deck when ROOMS hands it over. (on ee34dbc)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
