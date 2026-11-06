@@ -313,6 +313,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Rift Mask's drop odds (e389afa, new `rigtest/qa/riftodds.py`, a copy of dgRoll, 20,000 players, days counted from the
+  first Spire run): the mask is Obsidian Spire only, 1 in 8 on a gift that is not a set piece, until owned. At 2 Spire runs a day
+  the median is day 7 (half by day 7, 85% by 14, 90% by 17, 99% by 30, unluckiest 71). At 1 run a day the median is day 14 (87% by
+  30, unluckiest 141); about 14 Spire runs either way. Gift buffs (Hushstep Boots, goblin set) move it about a day. Note: it is
+  not "after the set pieces"; the mask can win whenever a Spire gift misses its piece roll, so 41% find it before their three
+  Spire amulet pieces. Fine as a rare surprise; if LEAD wants it after the pieces, roll it only when `miss` is empty. Owner: LEAD.
 - QA, the published v0.50 (rule 18, slug cda54e71, version 1793953238-4af6): pass, the page matches the f3c970c build. By
   sha256 (`list_files` against a clean build), 452 of the build's 453 files are identical and none are missing. index.html differs
   only by its title, "Quest Board v0.50 (test, fresh start)" (the same 1,326 lines, exactly 26 bytes longer). lfvar.json is the
@@ -1358,8 +1364,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's Rift Mask drop odds (v0.51), test copies only. Next: whatever v0.51 brings for its pre-release check.
-  (on 2d51cc2)
+- Now: nothing waiting; next is v0.51's pre-release check when LEAD asks (team tops and Rift Mask both passed). (on f21030f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
