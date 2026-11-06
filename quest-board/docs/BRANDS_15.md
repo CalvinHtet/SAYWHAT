@@ -1,38 +1,82 @@
-# Fifteen new brands (LEAD's draft for Cal, 2026-11-06)
+# Sixteen new brands (LEAD's draft for Cal, second pass, 2026-11-06)
 
-Cal: "Let's build a Naruto inspired clothing brand, and a maplestory inspired clothing brand from their most popular cash shop
-items, then let's do a video game inspired brand, then a fantasy one, then a cyberpunk one. And also make 10 more brands that
-come after these. Draft up a list for my approval and then once approved, send to ROOMs to begin generation".
+Cal, first ask: "Let's build a Naruto inspired clothing brand, and a maplestory inspired clothing brand from their most popular
+cash shop items, then let's do a video game inspired brand, then a fantasy one, then a cyberpunk one. And also make 10 more
+brands that come after these. Draft up a list for my approval and then once approved, send to ROOMs to begin generation".
 
-Same formula as the five in the Shop now (HANGANG, DIAL-UP, OVERPASS, VENOM ROSE, ALTITUDE): a name, a playful tagline, a
-sub-line, a palette, a painted banner with a stylized logo, and 15 pieces (3 hats, 2 accessories, 4 tops, 3 bottoms, 3 shoes),
-one weekly drop each. One Higgsfield sheet per piece, every angle, both bodies (ROOMS, from Cal's Chrome, Unlimited on).
+Cal, on the first draft: "I love the names for the first five. I don't like shore leave, mirrorball, Picnic club, etc. they're
+too ai generated. I want better brand names. Also add a new brand called NICE COCK, which is a luxury leisurewear that offers
+premium joggers and gym wear that aims to make a statement. I only have the joggers designed but I want you to make a whole
+brand for this. This should also be the 2nd drop in the game".
 
-**All original.** "Inspired by" means the genre and the feel. No real logos, no characters or their exact outfits, no village
-or clan symbols, no copied items. A fan should read the vibe at a glance; nothing should be a copy.
+Same formula as the five in the Shop now: a name, a tagline, a sub-line, a palette, a painted banner with a stylized logo, and
+about 15 pieces (3 hats, 2 accessories, 4 tops, 3 bottoms, 3 shoes), one weekly drop each. One Higgsfield sheet per piece,
+every angle, both bodies (ROOMS, from Cal's Chrome, Unlimited on).
 
-Brands 6 to 10 are Cal's five themes. Brands 11 to 20 are ROOMS's ten from `BRANDS_PROPOSAL.md` (still waiting for Cal), with
-GRIDLOCK (techwear) swapped for WHITEOUT, because CHROME RAIN now covers that look.
+**All original.** "Inspired by" means the genre and the feel: no real logos, no characters or their exact outfits, no village
+or clan symbols, no copied items. NICE COCK is Cal's own brand: his wordmark, his rooster and his joggers are the source.
 
-| # | Brand | Inspired by | Tagline | Palette | Drop |
+## The drop order
+
+NICE COCK becomes the game's 2nd drop, so the four brands after HANGANG move back a week.
+
+| Drop | Brand | Sub | Tagline | Palette | Date |
 |---|---|---|---|---|---|
-| 6 | SMOKE BOMB | ninja anime | Vanish in style | ink black, ember orange, steel grey, scroll cream | 2026-12-07 |
-| 7 | GACHA POP | MMO cash shop | Every outfit a rare drop | candy pink, sky blue, lilac, sparkle gold | 2026-12-14 |
-| 8 | SAVE POINT | retro video games | Respawn looking good | arcade purple, pixel green, cartridge grey | 2026-12-21 |
-| 9 | BARD & BLADE | high fantasy | Dressed for the side quest | forest green, leather brown, brass, moonsilver | 2026-12-28 |
-| 10 | CHROME RAIN | cyberpunk | Upgrades sold separately | black, neon cyan, hot magenta, chrome | 2027-01-04 |
-| 11 | SHORE LEAVE | surf club | Salt in every seam | sand, sea teal, coral | 2027-01-11 |
-| 12 | COURTSIDE | 80s athletic | Matching sets, zero sets played | cream, forest green, burgundy | 2027-01-18 |
-| 13 | WHITEOUT | après-ski | Never actually skied | snow white, cherry red, alpine navy | 2027-01-25 |
-| 14 | DUST & SPUR | western | Boots made for brunch | tan suede, rust, turquoise | 2027-02-01 |
-| 15 | ESTATE | quiet luxury | Inherited taste, rented yacht | navy, cream, brushed gold | 2027-02-08 |
-| 16 | STAGE DIVE | 90s grunge | Loud on purpose | black, oxblood, safety-pin silver | 2027-02-15 |
-| 17 | PICNIC CLUB | cottagecore | Bring a blanket, leave the phone | butter yellow, sage, gingham red | 2027-02-22 |
-| 18 | MIRRORBALL | 70s disco | Bell-bottoms, no apologies | gold, burnt orange, plum | 2027-03-01 |
-| 19 | DEEPWATER | fisherman workwear | Smells faintly of rope | navy, mustard, oiled tan | 2027-03-08 |
-| 20 | BACK ROW | dark academia | Late library returns since forever | chestnut, forest green, cream | 2027-03-15 |
+| 1 | HANGANG (live) | 한강 | Two sizes too big, on purpose | | 2026-11-03 |
+| 2 | **NICE COCK** | luxury leisurewear | Something to crow about | jet black, heather ash, slate, bone white | 2026-11-09 |
+| 3 | DIAL-UP (moved) | y2k thrift | Low-rise, high drama | | 2026-11-16 |
+| 4 | OVERPASS (moved) | street supply | Built for kickflips you will never land | | 2026-11-23 |
+| 5 | VENOM ROSE (moved) | dark glam | Soft velvet, sharper tongue | | 2026-11-30 |
+| 6 | ALTITUDE (moved) | mountain supply | Trail gear that never sees a trail | | 2026-12-07 |
+| 7 | SMOKE BOMB (approved) | ninja anime | Vanish in style | ink black, ember orange, steel grey, scroll cream | 2026-12-14 |
+| 8 | GACHA POP (approved) | MMO cash shop | Every outfit a rare drop | candy pink, sky blue, lilac, sparkle gold | 2026-12-21 |
+| 9 | SAVE POINT (approved) | retro video games | Respawn looking good | arcade purple, pixel green, cartridge grey | 2026-12-28 |
+| 10 | BARD & BLADE (approved) | high fantasy | Dressed for the side quest | forest green, leather brown, brass, moonsilver | 2027-01-04 |
+| 11 | CHROME RAIN (approved) | cyberpunk | Upgrades sold separately | black, neon cyan, hot magenta, chrome | 2027-01-11 |
+| 12 | KAIMANA | surf club | Back when the waves were bigger | sand, sea teal, coral | 2027-01-18 |
+| 13 | OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, forest green, burgundy | 2027-01-25 |
+| 14 | SØLVBERG | après-ski | Never actually skied | snow white, cherry red, alpine navy | 2027-02-01 |
+| 15 | RATTLER | western | Bites back | tan suede, rust, turquoise | 2027-02-08 |
+| 16 | AUREL | quiet luxury | If you have to ask | navy, cream, brushed gold | 2027-02-15 |
+| 17 | FERAL | 90s grunge | Unwashed since '94 | black, oxblood, safety-pin silver | 2027-02-22 |
+| 18 | WILDING | cottagecore | Grown, not made | butter yellow, sage, gingham red | 2027-03-01 |
+| 19 | LUMIÈRE | 70s disco | Lights on, collars up | gold, burnt orange, plum | 2027-03-08 |
+| 20 | HALYARD | fisherman workwear | Built for weather you'll never see | navy, mustard, oiled tan | 2027-03-15 |
+| 21 | ASHGROVE | dark academia | Est. long before you | chestnut, forest green, cream | 2027-03-22 |
 
-## Cal's five: pieces
+New names for the ten: invented or real words that read like labels, not slogans (SHORE LEAVE -> KAIMANA, COURTSIDE ->
+OAKMONT, WHITEOUT -> SØLVBERG, DUST & SPUR -> RATTLER, ESTATE -> AUREL, STAGE DIVE -> FERAL, PICNIC CLUB -> WILDING,
+MIRRORBALL -> LUMIÈRE, DEEPWATER -> HALYARD, BACK ROW -> ASHGROVE). Their pieces are unchanged (ROOMS's
+`BRANDS_PROPOSAL.md`, and WHITEOUT's list below under its new name). Not checked against trademarks: they are names for a game.
+
+## NICE COCK (drop 2): Cal's brand, built out
+
+**Sub:** luxury leisurewear. **Tagline:** Something to crow about. **Feel:** heavyweight brushed fleece, quiet colours, one
+loud word. Premium joggers and gym wear that make a statement.
+
+**Marks (Cal's, `docs/ref/nicecock/`):** the wordmark `nicecock.` in a lowercase typewriter serif with its full stop, embroidered
+small at the hip or chest; the rooster mark (white and grey, mid-crow) from `logo_rooster.png` for patches, pendants and the banner.
+
+**Palette:** jet black, heather ash (light grey), slate (mid grey), bone white; navy as the one accent (the hoodie in Cal's photos).
+
+**Pieces (16):**
+- **Bottoms, Cal's design** (`jogger_black.png`, `jogger_ash.png`, `jogger_slate.png`): **Signature Jogger** in Black, Ash and
+  Slate. Heavyweight fleece, curved front seam panels, relaxed through the thigh, elastic cuffs that stack over the shoe,
+  `nicecock.` embroidered at the left hip (white thread on black and slate, navy on ash). Three bottoms, one per colourway.
+- **Plus one bottom:** **Training Short**, black, 7-inch, the wordmark on the leg.
+- **Hats:** **Wordmark Cap** (black six-panel, `nicecock.` in white); **Rooster Beanie** (ash rib knit, small woven rooster
+  patch); **Sweatband** (white terry headband with the wordmark).
+- **Accessories:** **Rooster Pendant** (silver rooster on a fine box chain); **Sport Shades** (smoked wraparound lenses).
+- **Tops:** **Heavyweight Hoodie** (navy, the wordmark small on the chest, as in Cal's photos, layered over a white tee hem);
+  **Boxy Tee** (bone white, rooster mark on the back, wordmark at the chest); **Seamless Gym Tank** (slate, ribbed);
+  **Performance Quarter-Zip** (black, rooster on the sleeve).
+- **Shoes:** **Court High-Top** (white leather with ash suede panels, its own design, not a copy of any real sneaker);
+  **Knit Trainer** (black sock-knit runner); **Pool Slide** (black, debossed rooster).
+
+**Banner:** a dim marble hallway like Cal's photos, someone in the black Signature Jogger and navy hoodie, the rooster mark
+large and soft in the background, `nicecock.` across it.
+
+## Cal's five: pieces (approved names)
 
 **SMOKE BOMB (ninja anime).** Logo: a stylized smoke puff with a thrown star cut through it (its own crest, no village mark).
 Hats: cloth forehead band with a plain engraved metal plate (SMOKE BOMB's own crest); half-face cowl mask (mask slot); spiky
@@ -65,18 +109,15 @@ high-collar trench; glowing-seam bomber jacket; cropped mesh top with a harness;
 cargo pants with neon piping; split-panel techno skirt (women's); armoured knee joggers. Shoes: light-up sole sneakers;
 platform buckle boots; chrome-toe combat boots.
 
-## The ten after (from ROOMS's draft, unchanged except WHITEOUT)
+## SØLVBERG (was WHITEOUT): pieces
 
-Pieces as in `BRANDS_PROPOSAL.md` for SHORE LEAVE, COURTSIDE, DUST & SPUR, ESTATE, STAGE DIVE, PICNIC CLUB, MIRRORBALL,
-DEEPWATER and BACK ROW.
+Logo: a little snowcapped peak inside a ski-patrol cross. Hats: pom-pom knit beanie; earflap trapper hat; ski goggles on the
+forehead. Accessories: chunky knit scarf; mitten clip set. Tops: retro color-block ski jacket; cream Nordic-pattern sweater;
+quilted vest over a turtleneck; fuzzy fleece half-zip. Bottoms: puffy snow pants; stretch ski leggings (women's); corduroy
+lodge trousers. Shoes: moon boots; lace-up après boots; shearling slippers.
 
-**WHITEOUT (après-ski)** replaces GRIDLOCK. Logo: a little snowcapped peak inside a ski-patrol cross. Hats: pom-pom knit
-beanie; earflap trapper hat; ski goggles on the forehead. Accessories: chunky knit scarf; mitten clip set. Tops: retro
-color-block ski jacket; cream Nordic-pattern sweater; quilted vest over a turtleneck; fuzzy fleece half-zip. Bottoms:
-puffy snow pants; stretch ski leggings (women's); corduroy lodge trousers. Shoes: moon boots; lace-up après boots; shearling
-slippers.
+## The job
 
-## Size of the job
-
-15 brands x 15 pieces = 225 cosmetics, plus 15 banners and 15 logos. At ROOMS's pace, one weekly drop each gives months of
-runway; generation can go brand by brand in drop order, starting with SMOKE BOMB.
+NICE COCK first (it drops 2026-11-09, three days out): 16 pieces, a banner, the logo from Cal's file. Then the approved five
+in drop order, then the ten. LEAD moves the four live dates in `BRANDS` (10_app_a.js) only once NICE COCK's art is in, so the
+Shop never shows an empty drop.
