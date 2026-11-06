@@ -18,7 +18,7 @@ Doing:
   everything/empty, view, +6 h, +20 produce, +12 sold, next story step; Cal: "Give me a way to test each room and its
   assets"). Next: v0.62 once those and ROOMS's shadows (07812e4), backdrop (d233c9e) and bed legs (b9bcbbf) pass. NICE COCK
   (67d0e85): when the wear test passes, LEAD adds the 16 Shop rows and moves BRANDS. Waiting on Cal: Kode PinK and SAYMØRE
-  lists, the town hall pick, the vault rerun, a launch date. (on 0b21495)
+  lists, the town hall pick, the vault rerun, a launch date. (on 3939130: plain visit lines, a vis_<id>.webp banner slot; ROOMS paints the banners)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
