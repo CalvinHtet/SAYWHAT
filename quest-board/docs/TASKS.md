@@ -283,6 +283,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- CAL'S DECISION (2026-11-05, to QA, on the watering finding above): "Yes, much later": the Sprinklers (`g_spr`) move much later so
+  watering stays a daily habit (QA suggested the Estate stage, or about level 40 with a big price). WAITING ON LEAD: move them,
+  then WAITING ON QA and QA reruns the waterer and the forgetter. Owner: LEAD.
 - QA, LEAD's three (on 3d65b70; `sim.js` now has WATER=daily|every3|never and NOBUY, `water.py`, `unlocks.py`; `shots/unlocks_3d65b70.txt`,
   `watering_3d65b70.txt`). (1) The slot by the unlock's own level, story first: pass. 12-task: Garden day 3, Mara 4, Hall 5,
   Wheel 6, Boba 7, Dessert 8, Relics 9 (plus the closet they buy); casual: Garden 5, Mara 6, Hall 9, Wheel 11, Relics 12; no other
