@@ -249,7 +249,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
   6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
   images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
-- TAKEN by QA. WAITING ON QA: check v0.54, a384feb (rule 18: your pass publishes it). Three changes:
+- DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.54, a384feb (rule 18: your pass publishes it). Three changes:
   (1) The stretch no longer tears (Cal on v0.52, "Still tearing"; ROOMS found the clip went through `stretchUp`, which has no
   painting). `data/poses.json` clip `stretch` is now idle, stretch x5, idle (24 frames), and `src/rig.js` never blends a span
   with a painted pose on one end: it shows one key or the other. LEAD's sheet, every frame, starter hoodie/tee/bomber, both
@@ -392,6 +392,23 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.54 (a384feb, APPV 54, built clean; rule 18: pass, publish it; `shots/v54/`). (1) The stretch: every frame of the clip
+  (`sheet=clip`) for the 3 starter tops in white, grey and black and all 31 shop tops, both bodies, 70 rows, each frame sorted
+  by which picture it is (new `clipframes.js`): every row is idle on frames 0-1 and 22-23 and the painted yawn on 2-21, no
+  frame in between, so nothing can tear. In the creator (440x840, new `ccstretch.js`): the Stretch preview shows only the
+  standing picture and the yawn (hoodie, bomber, tee). In a room (the Bedroom, new `roomstretch.js`): the clip is 24 frames at
+  12 fps and a room stretch lasts 1.6 to 2.6 s, so it ends on a key and cuts, never blends; a live picture shows the clean
+  yawn and the others clean standing; the exact moment of the switch was not caught live (the headless renderer is too slow
+  to film it). (2) Begin (new `ccbegin.js`, 8 sizes, a real tap at the end): fixed on every phone held upright, 320x568,
+  360x600, 375x548 (Safari with bars), 390x664, 430x800 and Cal's 440x840: on screen and tappable at the start, with the menu
+  and the page scrolled, and the tap starts the game; v0.53 failed all of these. Still off: a phone on its side (844x390),
+  where Begin shows only after scrolling the page to its end, because the new layout keys on width up to 720 px; key it on
+  height (or the shorter side) too. Small: the Testing pill covers the first hair style button on a phone (it goes at
+  release anyway). (3) diag/load (new `diagload.js`, stand-in db): the owner's visits write 18 scripts each, bar and ready
+  times; the first visit 39.4 MB downloaded, the reload all 18 from the cache; a friend writes nothing. When reading Cal's
+  numbers: a transfer of 0 can also mean the browser does not report it, so check each file's ms too. The usual set: all
+  pass (savecheck, screens, old saves, "NEW v0.54", doors 36 of 36, voice 0, Shop 44, town rules 32 of 32, art identical,
+  the Rift Mask, the team), no page errors. Owner: LEAD (publish; the sideways Begin and the pill for later).
 - DONE by LEAD in a384feb (diag/load logs each script's transfer size and the load times). QA, the published v0.53 (slug 6561fd34, version 1793965993-4ce3): pass, the page matches the 743c30c build. By sha256, 459 of the
   build's 460 files are identical and none are missing (all 18 scripts, the cut pieces included); index.html differs only by its
   title (26 bytes longer); lfvar.json matches. The 9 db rules are declared, and as a Contributor diag reads as missing. Cal's
@@ -1569,8 +1586,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.54's check (a384feb, clean copy on 8772): every frame of the stretch clip, the creator's Begin, diag/load, the usual
-  set; ROOMS's upgrade audit running. Next: v0.55 (the skirt fix). (on 21e6429)
+- Now: ROOMS's shadows (9593432) and the upgrade audit (running). Next: v0.54's published copy; v0.55 (skirts, the card glow
+  at every rank skin). (on a40c0c1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
