@@ -236,7 +236,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   tabmemory.js 291 MB; `shots/revisit.js` (cache on, 9 Mbps, x4): first 35.7 s, reload 0.8 s, a new tab 0.4 s, 0 MB
   fetched again; strict hash-only script policy: starts. No page errors. Not checked: savecheck/screens on this build, and
   the real host's cache headers.
-- TAKEN by QA. WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
   fdd651f3-324f-46ad-a2b3-9632ac8e8fb0, 454 files from db67326, db with the 9 rules of `app/dbcaps.json` + user + sample
   with images, version 1793965410-ff73). Check the page matches the build and the rules are live (`db_rules_get` shows 9).
 Art and room code requests (LEAD asks, ROOMS does):
@@ -362,6 +362,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.52 (rule 18, slug fdd651f3, version 1793965410-ff73): pass, the page matches the db67326 build. By sha256,
+  452 of the build's 453 files are identical and none are missing; index.html differs only by its title (26 bytes longer);
+  lfvar.json matches `app/lfvar.json`. It declares db, user and sample (images), owner only, and the db rules are exactly the
+  9 in `app/dbcaps.json` (inbox owner-only included). The live rules hold for reads: as a Contributor (`asLevel interact`)
+  diag/frame reads as missing; as an Editor it shows. The database holds only diag/frame from the first open at 11:43 (APPV
+  52), no save: a fresh start. Not done: write checks with real friend accounts (needs Cal and a friend signed in; QA does not
+  create accounts). Owner: LEAD (Cal's phone test is next).
 - DONE (passed; goes out as v0.53 after Cal's report on v0.52). QA, the rebuilt loader (LEAD's fb7ca53, on 47ef877; `shots/v53/loadtime.txt`): pass, and a real gain. The pieces add up: the
   game ends with the same 796 art entries (70 yawn layers) and 675 blobs as v0.52, identical by SHA-256 (new `packsame.js`);
   no piece is over 4.5 MB; 460 files in dist. On a 9 Mbps, 85 ms phone with a 4x slower CPU: the bar at 0.4 s, the game at
