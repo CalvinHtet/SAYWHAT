@@ -463,6 +463,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 8cab74a SAYMØRE pendant (on 8cab74a, `shots/qa/sm/pendant_8cab74a.png`, `icon_pendant_8cab74a.png`): pass. No body
+  outline left in any pose on either body, alone or in an outfit; the chain and the Ø stay bold in front; from behind nothing draws
+  (frontOnly, like the shades); the icon shows only the chain and the Ø. SAYMØRE is 14 of 15 now; still open: LEAD's two halo-mask
+  rules (keep it in sleepHead; hide the face slot under it). Owner: ROOMS (done), LEAD (the mask).
 - QA, ROOMS's 1712242 ping-pong retired (on 4550d03, new `retiredsave.js`; `shots/qa/gameroom_no_pingpong_4550d03.png`): pass. A save
   that owns gm_ping and everything else loads, keeps the id through a reload, and draws the Game Room with no ping-pong picture; the
   window never offers it; the room buys through, all 21; the doors to the Bedroom both ways are fine. The foosball and the snack
@@ -2007,7 +2011,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: SAYMØRE checked: 13 of 15, the pendant outline (ROOMS), the mask in sleepHead and glasses over it (LEAD). Ping-pong retirement passes. (on 4550d03)
+- Now: SAYMØRE 14 of 15 (pendant fixed); waiting on LEAD's halo-mask rules (sleepHead, glasses over it). Ping-pong retirement passes. (on 8cab74a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
