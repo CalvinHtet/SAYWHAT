@@ -327,8 +327,11 @@ LFROOM.restaurant=function(C){
   if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2,10.55]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
   ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[5.7,6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
-  if(crescent){var cvx=.3,cvy=.25;lfSpr(C,"rdx_curve",cvx,cvy,3.6,3.3,{h:30,dk:2.4,ctr:1});/* the crescent opens toward you: its guests sort after its tall back and before the round table in front of them */
-    [[cvx+1.0,cvy+1.0,1],[cvx+2.4,cvy+.9,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+1.8,cvy+2.1,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+3.6+cvy+3.3-2.4+.5)-(C.st[k].x+C.st[k].y)});lfSpr(C,"rdx_tround",cvx+1.0,cvy+1.4,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx+3.7,cvy+.3,.6,.6,{h:30,ctr:1})}
+  /* Cal: the crescent opens toward the room, straight down the picture (rdx_curve2 is drawn symmetric for the corner) */
+  if(crescent){var cvx=.3,cvy=.25,cw=3.5,cv2=!!LFSPR.rdx_curve2;lfSpr(C,cv2?"rdx_curve2":"rdx_curve",cvx,cvy,cw,cv2?cw:3.3,{h:30,dk:2.4,ctr:1});
+    /* its guests sort after its tall back and before the round table in front of them */
+    [[cvx+.75,cvy+2.2,1],[cvx+2.2,cvy+.75,-1]].forEach(function(q){var n0=C.st.length;rsSitAt(C,q[0],q[1],q[2],cvx+2.0,cvy+2.0,0,"V");for(var k=n0;k<C.st.length;k++)C.st[k].dk=(cvx+cw+cvy+cw-2.4+.5)-(C.st[k].x+C.st[k].y)});
+    lfSpr(C,"rdx_tround",cvx+1.15,cvy+1.15,1.7,1.7,{h:26,ctr:1,dk:.6});lfSpr(C,"rdx_bucket",cvx+3.8,cvy+.3,.6,.6,{h:30,ctr:1})}
   lfWander(C,[[Wi-3,1.6,-1],[Wi*.6,D*.72,1],[Wi-1.6,D*.62,-1]]);
   /* light */
   if(H("r_l2")&&st>1)[[5.7,6.2],[9.8,6.2],[9.8,10.2]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
