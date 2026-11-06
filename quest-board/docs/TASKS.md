@@ -177,7 +177,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   ROOMS: the look. Dry beds look dry and watered beds look damp; tapping the watering can in the lot waters (data-act
   gdwater); someone waters the beds now and then; sprinklers mist once bought (that part exists). ROOMS waits on the name of
   the state and the act before wiring the look.
-- TAKEN by QA. WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
+- DONE by QA (QA findings: pass). WAITING ON QA: wear-test the Rift Mask (`dg_riftmask`, d4eefc3): `rigtest/matrix.html?sheet=wear&arts=dg_riftmask` (both
   bodies, every pose) and `sheet=hatface` (with every hat and glasses). It is front only like `h_mask`; the back views have no
   layer on purpose. ROOMS could not get the matrix to draw characters headless, so this is unchecked on bodies.
 - DONE by QA in 97e9810. WAITING ON QA: check the published v0.49 (LEAD, rule 18): the pinned artifact "Quest Board v0.49 (test, fresh
@@ -306,6 +306,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, wear-test of the Rift Mask (dg_riftmask, d4eefc3, on 0507161; new `rigtest/qa/matrixshot.js` draws `matrix.html` headless with
+  WebGL2 SwiftShader; `shots/riftmask_wear.png`, `riftmask_hatface.png`, `hmask_wear.png`): pass. sheet=wear: 44 cells, both bodies, every
+  key pose, 0 failures: the mask sits on the lower face in every front pose (standing, walking, stretching, sitting, lying), nothing
+  on the back views (front only, as meant); it sits exactly where the black mask (h_mask) does. sheet=hatface: 540 cells, 0
+  failures; its 60 Rift Mask cells (15 hats x both bodies x two hairstyles) show every hat over it, ear flaps and straps crossing it
+  cleanly, no gaps. Note (old, not the Rift Mask): in the sleepHead pose the face shows but no mask is drawn, the same for h_mask; a
+  sleepHead layer, or treating sleepHead as front for masks, would fix every mask. The 404s in the run are the yawn pose's art,
+  not drawn yet for any outfit. Owner: ROOMS (the sleepHead note).
 - CAL'S DECISION (2026-11-05, to QA, on LEAD's question "test v0.49, or skip to v0.50"): "Skip to v0.50". WAITING ON LEAD: build
   v0.50, then WAITING ON QA for its pre-release check (rule 18), then publish it as Cal's fresh pinned copy. Owner: LEAD.
 - QA, the door recheck after ROOMS's 3962ee2 (on fcdd160, port 8769; `doors.js` in full, new `doorwalk.js`; `shots/doors_full_fcdd160.txt`):
@@ -1319,8 +1327,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: wear-testing the Rift Mask (dg_riftmask, d4eefc3) on both bodies, test copy only (`matrix.html` sheets). Next: v0.50's
-  pre-release check. (on 5ce9727)
+- Now: waiting for work. Next: v0.50's pre-release check when LEAD builds it. (on 0507161)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
