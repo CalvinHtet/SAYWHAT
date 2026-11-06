@@ -285,6 +285,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check 707cac1, Cal's Lock and Key lounge redo and the Rooftop's painted deck.
 - QA, ROOMS's 64e98bc, the Lock and Key lounge table (on ee34dbc, `band.js`, `skybarshell.js`; `shots/lockkey_band4.png`,
   `lockkey_lounge2.png`): pass, one optional note. The table is out from under the green sofa and clear of the Chesterfield; doors,
   band and old-save checks still pass. Note: the corner stays tight: the green sofa's right foot just meets the table's rim, and
@@ -1100,7 +1101,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it; the Rooftop's painted deck when ROOMS hands it over. (on ee34dbc)
+- Now: Cal's Lock and Key lounge redo and the Rooftop deck (707cac1), test copy only (`skybarshell.js`, `band.js`, `openair.js`).
+  Next: v0.50 when LEAD builds it. (on 707cac1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
