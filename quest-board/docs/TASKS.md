@@ -675,8 +675,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
-  (on 56ec295)
+- Now: TAKEN, the v48 checks LEAD asked for on c6a11c9 (savecheck, screens, Training pictures in art_ex.js, the Game Room's
+  dark squares), test copy only. Next: whatever is WAITING ON QA. (on c97fac4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
