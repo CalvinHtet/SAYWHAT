@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: ROOMS (bld_plaza_s0, Kode Plaza stages)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.58 (859d941), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -1603,13 +1603,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA (rule 17 + design review): 6f04ed8, the Game Room (Cal): outer hex panels lit so the TV no longer
-  hides them (gmw_t4 repainted), foosball to the front, ping pong clear of the doorway (685cbd0's spot ran off the 13x10
-  room). WAITING ON CAL (since 10:35 am): five new clothing brands (TIDEPOOL, COURTSIDE, NIGHT SHIFT, DUST & SPUR, ESTATE),
-  about 75 pieces; proposal sent to him (docs/BRANDS_PROPOSAL.md, not committed). On his yes, one brand at a time through
-  QA; LEAD adds BRANDS and GITEMS rows. Chrome free.
+- Now: painting `bld_plaza_s0.webp` (LEAD's 2882690, Cal: "I want Kode plaza to start off like a plaza"), then
+  s2..s6 (more shopfronts), each to QA. Chrome taken. WAITING ON QA: 925480a, the Game Room fix for 6f04ed8's fail
+  (dartboard on the plain left wall, off the lit hexes); ping-pong waits on Cal (drop it, as QA suggests?). ce07425 (Bedroom
+  blink, Safari decode) with QA, then Cal's phone. WAITING ON CAL: BRANDS_15 / BRANDS_PROPOSAL (names, alternatives sent).
+  The Garden-lot street change is dropped (LEAD: the Garden stays in Kode Plaza).
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 7698efc)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 925480a)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
