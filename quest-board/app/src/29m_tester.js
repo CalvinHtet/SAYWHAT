@@ -45,4 +45,4 @@ function qbRooms(){document.querySelectorAll("#layer .modal").forEach(function(m
     if(q==="sold"){var o=styState();o.sold=(o.sold||0)+12;persist();try{styCheck()}catch(x){}pop(o.sold+" produce sold so far")}
     if(q==="next"){m.remove();qbtNextStep();return}
     var c=m.querySelector(".qbtr");if(c){var y=m.scrollTop;c.outerHTML=qbtHtml();m.scrollTop=y}})}
-window.__qbRooms={open:qbtOpen,all:qbtAll,next:qbtNextStep,show:qbRooms,list:qbtRooms};
+window.__qbRooms={pay:function(){return {room:payRoom(),quest:payQuest(),share:payShare(),eff:dqEff(),paid:dqState().paid}},open:qbtOpen,all:qbtAll,next:qbtNextStep,show:qbRooms,list:qbtRooms};
