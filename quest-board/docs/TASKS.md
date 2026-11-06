@@ -306,6 +306,12 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   (1) the way down has nothing to see: the "Bar" door on the front-left edge shows no glow, stair or hatch under the glass rail,
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
+- WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+  my opinions"): a design review, not only the usual checks, of the Rooftop at ea2dffc and Lock and Key at 707cac1. For
+  each room: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
+  floating or oddly sized; are the walkways and sight lines clear; what would you change. Cal on the Rooftop before
+  ea2dffc: the pool should turn 90 degrees, the DJ faced the side, "the two bars on the top are weird", "it just feels like
+  they are placed randomly". ROOMS fixes the notes, then shows Cal. Screens at noon and at night, fully bought and bare.
 - DONE by QA (QA findings: pass). WAITING ON QA: check fb8149a (rule 17, small check): the Rooftop fully bought, at noon and at night. The loungers clear
   of the pool steps, the shower by the right rail, no ice cream cart, towel station or second loungers drawn (owners keep
   the ids, no card for new players); a stairwell with a gap in the glass at the Bar door (front-left edge) and the Bar
