@@ -13,11 +13,11 @@ Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from t
 | # | Step | Opens when | Who | How it opens | Build status |
 |---|---|---|---|---|---|
 | 0 | The Loft: Bedroom, Closet, Patio, Game Room | from the start, by Bedroom upgrades | you | upgrades | built; Game Room fixes with QA |
-| 1 | **The Garden** | level 5 | none | the empty lot next to your building goes up for sale; you buy it (its own lot) | **next**: painted shell, stages, produce stand (ROOMS); its text and sell flow (LEAD) |
-| 2 | **Mara, and the Restaurant** | level 7 and 60 produce sold | Mara, chef | she has been buying your vegetables and offers to cook; her yes unlocks the Garden's expansion, Knock Through to a Restaurant (the Restaurant's own price) | scene written; Restaurant shells done, polish parked until the Garden is through |
-| 3 | Boba shop | level 9, 80 dishes served (day 6) | Mara | the corner unit next door | room built; return visit "Your boba kid" |
+| 1 | **The Garden** | level 5 | none | the empty lot next to your building goes up for sale; you buy it (its own lot) | done: three painted lots, the stand (tap to sell), watering, Sprinklers late; in v0.49 |
+| 2 | **Mara, and the Restaurant** | level 7 and 60 produce sold | Mara, chef | she has been buying your vegetables and offers to cook; her yes unlocks the Garden's expansion, Knock Through to a Restaurant (the Restaurant's own price) | done: Mara's scene, Knock Through from the Garden, painted shells, Noir furniture; in v0.49 |
+| 3 | Boba shop | level 9, 80 dishes served (day 6) | Mara | the corner unit next door | painted shell, side door to the Garden (ROOMS, approval 23); for v0.50 |
 | 4 | Dessert parlour | level 11, 4 Boba upgrades | none | upstairs from the Boba shop | room built |
-| 5 | Lock and Key (speakeasy) | level 14, Dessert open, 25,000 coins earned in all (day 18) | Desmond Hale, investor | he funds the second floor; free, starts bare | scene written; room merge with ROOMS |
+| 5 | Lock and Key (speakeasy) | level 14, Dessert open, 25,000 coins earned in all (day 18) | Desmond Hale, investor | he funds the second floor; free, starts bare | Lock and Key's painted shell (ROOMS 4599993, approval 25); id stays `skybar`; for v0.50 |
 | 6 | Rafe joins the team | level 15, 3 Lock and Key upgrades | Rafe Calloway | a regular at the end of the bar | scene and banner done |
 | 7 | Rooftop | level 17, 6 Lock and Key upgrades (day 24) | none | the regulars ask about the roof | room built |
 | 8 | The Mall | level 20, Rooftop open, 80,000 coins earned (day 25) | Priya Okafor, investor | she offers the empty strip mall; you buy in | scene written; room built |
