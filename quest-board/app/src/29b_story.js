@@ -25,7 +25,8 @@ var STORY=[
   {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3},
     scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers keep asking where I shop. Could I film here every week?\""],yes:"Deal. Roll the camera",team:"nova"}},
-  {id:"auditorium",room:"auditorium",how:"free",why:"A theater needs its basics in the lobby, and someone to run it.",gate:function(){return styHas("theater")&&styUps("theater")>=2},
+  /* Cal: the Auditorium opens free once the lobby has its basics (ticket booth, popcorn, soda) and someone to run it: Theo */
+  {id:"auditorium",room:"auditorium",how:"free",why:"A theater needs its basics in the lobby (a ticket booth, popcorn and a soda fountain) and someone to run it.",gate:function(){var r=S.base.slots.filter(function(x){return x&&x.t==="theater"})[0];return !!r&&["t_booth1","t_pop","t_soda"].every(function(k){return r.a&&r.a[k]})},
     scene:{who:"Theo",role:"Theater crew",lines:["Saw the ticket stand go up. You're going to need someone behind it.","Hire me and we can open the screen room tonight."],yes:"Hire Theo, open the Auditorium",team:"theo"}},
   {id:"arcade",room:"arcade",how:"upgrade",why:"Movie crowds want something to do before the show: the mall can open an arcade.",gate:function(){return styUps("auditorium")>=3}},
   {id:"rhythm",room:"rhythm",how:"upgrade",why:"When the arcade is packed, its back room can become a rhythm floor.",gate:function(){return styUps("arcade")>=4}},
@@ -54,7 +55,9 @@ nextRoom=function(){return lotsOpen()[0]||null};
 buildableList=function(){return lotsOpen()};
 
 function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s.id]=1;persist();render();return}
-  if(s.how==="free"&&!styHas(s.room)){S.base.slots.push({t:s.room,a:{},st:0,pend:0});o.done[s.id]=1;try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}render();persist();try{roomSplash(s.room)}catch(e){};return}
+  if(s.how==="free"&&!styHas(s.room)){S.base.slots.push({t:s.room,a:{},st:0,pend:0});o.done[s.id]=1;
+    /* a free opening also counts as the room's paid opener, so it never sits on a menu for coins (the Theater's Open the Auditorium) */
+    S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){if(a[3]&&a[3].opens===s.room){r.a=r.a||{};r.a[a[0]]=1}})});try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}render();persist();try{roomSplash(s.room)}catch(e){};return}
   persist();render();
   pop((s.why&&!s.scene?s.why+" ":"")+(s.how==="lot"?"A new lot is open on the street: "+ROOMT[s.room].name+".":ROOMT[s.room].name+" can now be opened from its room's upgrades."))}
 /* the reason a room is still closed, for its locked card */
