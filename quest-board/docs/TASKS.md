@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.50 published and pinned for Cal (f3c970c, fresh start); WAITING ON Cal's phone test and QA's page check. In for v0.51:
-  the Rift Mask (e389afa), ROOMS's team tops. Nobody else plays until there is a working version. (on 07888ce)
+- Now: v0.51 built (ac8d2f0: the Rift Mask after the Spire's pieces, the team's tops), WAITING ON QA for its pre-release check.
+  v0.50 is pinned for Cal (QA: the page matches). Nobody else plays until there is a working version. (on ac8d2f0)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -190,6 +190,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
   cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
+- WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
+  prize (now only after its three amulet pieces; rerun riftodds.py for the new days), the team's tops, and the usual
+  pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
