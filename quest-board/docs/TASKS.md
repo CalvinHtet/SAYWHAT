@@ -283,7 +283,27 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message): (1) the slot keyed on each unlock's own level, a waiting story step first (33e9721),
+- QA, LEAD's three (on 3d65b70; `sim.js` now has WATER=daily|every3|never and NOBUY, `water.py`, `unlocks.py`; `shots/unlocks_3d65b70.txt`,
+  `watering_3d65b70.txt`). (1) The slot by the unlock's own level, story first: pass. 12-task: Garden day 3, Mara 4, Hall 5,
+  Wheel 6, Boba 7, Dessert 8, Relics 9 (plus the closet they buy); casual: Garden 5, Mara 6, Hall 9, Wheel 11, Relics 12; no other
+  day with 2. Note for Cal: the Hall (town hall, class story) now waits behind the story: day 5 for the 12-task player, day 9
+  for the casual one, shown as Soon for up to a week. (2) Watering: the rule works, but it barely matters. The 12-task player
+  buys the Sprinklers (`g_spr`, 600 coins, least level 16) on day 4, the day after the Garden opens, and the casual player on day
+  11 (Garden day 5); after that the beds water themselves. Over 50 days a daily waterer and a forgetter (1 day in 3) end the same
+  (level 94, every upgrade day 44 to 45, earnings 403,585 and 403,497). With the Sprinklers held back for 20 days: daily 1,890
+  produce sold (7,560 coins), forgetter 708 (2,832; dry on 11 of 18 days), never 67 (268); all earnings 92,908, 88,094 and
+  84,869, so the Garden is about 8% of a 12-task player's coins and Mara still comes on day 4 for all three (the first day is
+  pre-watered). If Cal wants watering to be a real daily habit, the Sprinklers need to come much later (the Estate, or level
+  40 and a big price). (3) The Garden window words: pass on desktop and phone (empty lot next to your building, Knock through
+  to a restaurant, 1 coin an hour, the payout on its own line). No page errors. Owner: LEAD (Cal's call on the Sprinklers).
+- QA, ROOMS's 8a5ac99, 059bd45 and 82cc1f9 (on 8bb0422, `gardenlots.js`, `gardenwater.js` with a real mouse; `shots/garden_lots3.png`,
+  `garden_dry.png`, `garden_wet.png`): pass, one note. Beds sit on the grid and the grow lights run along them; the Estate with
+  the fountain has no sundial, birdbath or topiary; the scarecrow is by the left wall at every stage. At every stage dry beds
+  look parched, one tap on the watering can waters for 24 hours, the beds turn damp and the window says so; Sprinklers keep them
+  damp unwatered. The Back Plot stand is in (only 9% of it below the picture on desktop). Note: the can is a small target,
+  61x55 px on desktop at the Back Plot down to 34x31 at the Estate, and 22x20 down to 12x11 px on a phone (a finger needs about
+  44): give it a bigger invisible tap area. The window's Water button works either way. No page errors. Owner: ROOMS.
+- DONE by QA (QA findings: pass; Sprinklers make watering moot, Cal's call). WAITING ON QA (LEAD's message): (1) the slot keyed on each unlock's own level, a waiting story step first (33e9721),
   rerun the early timeline; (2) watering (a2e234e): add a waterer and a forgetter to the economy run; (3) the Garden window
   words (6a1f7ab). Also ROOMS's 8a5ac99 (beds on the grid, grow lights, the Back Plot stand a tile in), a quick look.
 - QA, a quick look at ROOMS's 73e48c3 (no QA line was posted; it answers QA's two notes; on 0c3e73c, `gardenlots.js`,
@@ -805,7 +825,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
   12-minute loop running (rule 16). (on 82cc1f9)
-- TAKEN by QA. WAITING ON QA: check 8a5ac99, 059bd45 and 82cc1f9 (rule 17), Cal's Garden notes: (1) every bed lines up with the room's grid
+- DONE by QA (QA findings: pass, 1 note). WAITING ON QA: check 8a5ac99, 059bd45 and 82cc1f9 (rule 17), Cal's Garden notes: (1) every bed lines up with the room's grid
   (fitted top faces), grow lights drawn along the beds; (2) the Estate with the fountain has no sundial, birdbath or
   topiaries, no lantern in the fountain plaza, the scarecrow by the left wall at every stage; (3) watering: with the beds dry
   they look parched, tapping the watering can in the back corner waters them (24 h) and they look damp; Sprinklers keep
@@ -936,8 +956,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the watering runs (3d65b70, `sim.js` WATER and NOBUY, `water.py`) and ROOMS's Garden notes check (8a5ac99, 059bd45,
-  82cc1f9: `gardenlots.js`, `gardenwater.js`), test copies only. Next: whatever is WAITING ON QA. (on 6cd6a9b)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on 8bb0422)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

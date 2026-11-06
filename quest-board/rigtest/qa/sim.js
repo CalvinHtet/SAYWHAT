@@ -18,6 +18,11 @@ const { BASE } = require('./lib.js');
 // 2026-11-05: the effort-first economy (29e_economy.js): each player has a Daily Quest goal, logs training on workout days
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const TYPE = process.argv[2] || 'regular', DAYS = +(process.argv[3] || 30);
+// watering the Garden (a2e234e): WATER=daily waters at the first visit of every played day, every3 on one played day in three
+// (the forgetter), never not at all; the game itself starts a new Garden watered and counts rain and the Sprinklers
+const WATER = process.env.WATER || 'daily';
+// NOBUY=id,id: upgrades this player never buys (e.g. g_spr, to see what watering is worth before the Sprinklers)
+const NOBUY = (process.env.NOBUY || '').split(',').filter(Boolean);
 const P = {
   casual: { goal: 100, tasks: [10, 10, 10, 10, 25, 30], proof: 0, workouts: [1, 4], play: [1, 2, 3, 4, 5], visits: [9, 20] },
   regular: { goal: 150, tasks: [10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 15, 25], proof: 2, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
@@ -25,6 +30,7 @@ const P = {
 }[TYPE];
 
 (async () => {
+  P.water = WATER; P.nobuy = NOBUY;
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const p = await b.newPage({ viewport: { width: 1000, height: 900 } });
   const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
@@ -73,6 +79,8 @@ const P = {
         // a level trial waiting since an earlier day: the player goes to the gym and proves it
         if (first && x.gated() !== null && S.__gateDay !== undefined && S.__gateDay < d) { S.gates.push(x.gated()); delete S.__gateDay; }
         if (x.gated() !== null && S.__gateDay === undefined) S.__gateDay = d;
+        if (first && S.base.slots.some((r) => r && r.t === 'garden') && (P.water === 'daily' || (P.water === 'every3' && d % 3 === 0))) { sim.act('gdwater'); sim.clear(); window.__sim.watered = (window.__sim.watered || 0) + 1; }
+        out.dry = typeof window.gdWatered === 'function' && S.base.slots.some((r) => r && r.t === 'garden') ? !window.gdWatered() : null;
         sim.track('rooms', () => sim.act('rall'));
         if (S.base.food && S.base.food.veg >= 1) sim.track('produce', () => sim.act('stysell'));
         if (first) sim.track('wheel', () => sim.act('spin'));
@@ -111,7 +119,7 @@ const P = {
           S.base.slots.forEach((r, i) => {
             if (!r) return; sim.clear(); window.__qb.roomModal(i);
             document.querySelectorAll('.rmodal button[data-act="raddon"]').forEach((bt) => {
-              if (bt.disabled) return; const ad = (x.ADDONS[r.t] || []).find((u) => u[0] === bt.dataset.id); if (!ad) return;
+              if (bt.disabled || (P.nobuy || []).includes(bt.dataset.id)) return; const ad = (x.ADDONS[r.t] || []).find((u) => u[0] === bt.dataset.id); if (!ad) return;
               if (ad[2] <= S.coins && (!best || ad[2] < best.c)) best = { i, id: ad[0], c: ad[2], n: ad[1], t: r.t };
             });
           });
@@ -126,6 +134,7 @@ const P = {
         return out;
       }, { d, hour: P.visits[v], first: v === 0, last: v === P.visits.length - 1, P, dow });
       day.bought.push(...res.bought); day.built.push(...res.built); day.story.push(...res.story);
+      if (res.dry !== null && res.dry !== undefined) day.dry = (day.dry || 0) + (res.dry ? 1 : 0);
       // the weekly workout bonus is paid when its window is closed
       const ww = await p.$('#wwok');
       if (!ww && v === 0 && P.workouts.includes(dow)) await p.waitForTimeout(2400);
@@ -137,11 +146,11 @@ const P = {
       const offer = []; S.base.slots.forEach((r, i) => { if (!r) return; window.__qb.roomModal(i); document.querySelectorAll('.rmodal button[data-act="raddon"]').forEach((bt) => { if (!bt.disabled) { const ad = (x.ADDONS[r.t] || []).find((u) => u[0] === bt.dataset.id); if (ad) offer.push(ad[2]); } }); sim.clear(); });
       return { lv: x.effLvl(), raw: window.__qb.x().lvlOf(S.xp), xp: S.xp, coins: S.coins, earned: S.earnedC, spent: S.spent, streak: S.streak, gates: S.gates.length,
         rooms: S.base.slots.filter(Boolean).map((r) => r.t), ups, cheapest: offer.length ? Math.min(...offer) : null, led: Object.assign({}, sim.led), xpled: Object.assign({}, sim.xpled), spend: Object.assign({}, sim.spend),
-        areas: Object.keys(S.areaOn || {}), offers: Object.keys(window.__qbStory.state().offer || {}), unl: sim.unl.splice(0), storyN: Object.keys(window.__qbStory.state().done).length, storyDone: Object.keys(window.__qbStory.state().done), sold: window.__qbStory.state().sold, biz: Math.round(window.__qbStory.state().biz), served: Math.round(S.base.served || 0) }; });
+        areas: Object.keys(S.areaOn || {}), offers: Object.keys(window.__qbStory.state().offer || {}), watered: sim.watered || 0, gwater: S.base.gwater || null, food: S.base.food ? Math.round(S.base.food.veg || 0) : null, unl: sim.unl.splice(0), storyN: Object.keys(window.__qbStory.state().done).length, storyDone: Object.keys(window.__qbStory.state().done), sold: window.__qbStory.state().sold, biz: Math.round(window.__qbStory.state().biz), served: Math.round(S.base.served || 0) }; });
     Object.assign(day, s);
     days.push(day);
     console.log(`day ${String(d + 1).padStart(3)} ${playing ? 'play' : 'rest'} lv ${s.lv}${s.raw > s.lv ? '(' + s.raw + ' trial)' : ''} xp ${s.xp} coins ${s.coins} earned ${s.earned} rooms ${s.rooms.length} ups ${s.ups} bought ${day.bought.length}${day.built.length ? ' built ' + day.built.join(',') : ''}${day.story.length ? ' story ' + day.story.join(',') : ''} cheapest ${s.cheapest} streak ${s.streak}`);
-    fs.writeFileSync(path.join(OUT, `sim_${TYPE}.json`), JSON.stringify({ type: TYPE, P, days, errs }, null, 0));
+    fs.writeFileSync(path.join(OUT, `sim_${TYPE}${WATER === 'daily' ? '' : '_' + WATER}${NOBUY.length ? '_no' + NOBUY.join('_') : ''}.json`), JSON.stringify({ type: TYPE, P, days, errs }, null, 0));
   }
   console.log('page errors', errs.length, [...new Set(errs)].slice(0, 5));
   await b.close();
