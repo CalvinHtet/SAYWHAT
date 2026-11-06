@@ -677,3 +677,10 @@ the Mall building): guests play the cabinets, the racing seats and the hoop shot
 3. **The prize counter has no clerk.** Fine if intended; a counter with a register reads as staffed.
 4. **Doors (for the Rhythm and VR steps):** the Mall pair passes Cal's rule; Arcade–Rhythm and Arcade–VR miss it (Rhythm's way
    back should be front-left, VR's should come out of the Arcade's back wall). See `review_arcade_doors.txt`.
+
+### The Arcade, round 2 (ROOMS's b3832fb, on 25b5cb8; `shots/review_arcade2.png`, `review_arcade2_live.png`, `review_arcade2_doors.txt`)
+
+All closed; ready for Cal. The sticker booth stands at the front between the skee-ball and the snacks, so the entrance mat and the
+hoop shot's throwing spot are clear; live, the prize clerk appears and works behind the counter (`crew:work@clerk` in 7 of 12
+looks) while guests play; all four Arcade door pairs (Mall, Rhythm, VR) now follow Cal's rule. The lobby's right sofa is clear of
+the box office.
