@@ -814,3 +814,43 @@ Done. `voice.js`: 1,353 lines, 0 break a rule. The six lines that ended on a jok
 shelves of plush toys and prizes, priced in tickets.", Score Screens, Lyric Screen, Song Kiosk, VIP Booth, Speaker Stacks), the
 dance floor says "colour", the Squat Rack and the drake pet are plain. `voice.js`'s "meets" rule now matches VOICE.md's "X meets Y"
 slogan only ("Comfort meets style." is caught; "Everyone meets here." no longer is, as LEAD pointed out).
+
+### The Restaurant, full pass (Cal, 2026-11-06: "The menu and the wall rack is placed weirdly. Have QA do a full quality check of the restaurant."; on cbb5e43)
+
+Checked: the upgrade sweep in the window's own order (`upgrades.js restaurant`), the four building stages in the real window
+(`reststages.js`: Hole in the Wall, Corner Diner, Neighborhood Bistro without Noir, Noir), all six Room styles (`stylewin.js`),
+the doors (`doors.js`), and 60 s live with guests and staff (`livebuilding.js`). Pictures: `shots/qa/restaurant/` (untracked).
+References: cosy isometric restaurant and cafe rooms. Menu boards hang flat on the wall's own plane, usually over the pass. Pot
+racks hang from a ceiling bar over an island or sit on a rail touching the wall. The till faces the diners on the front counter.
+Patio pieces sit outside a wall, door or rail.
+
+1. **Blocker: the upgrades dead-end after 13.** After Sidewalk Sign ... Commercial Fridge, the window's four cards are three
+   "Needs Knock Through the Wall" and one "? ? ?". Knock Through the Wall (r_x1, level 12) is sixth in line and never shows, and
+   no card can be bought, at level 14 or 60 (`reststuck.js`). The note says "Next big step: Knock Through the Wall at level 12" with
+   no button. Cal's own screenshot is one buy from this point. Owner: LEAD (the card list), ROOMS (the order in 21_restaurant.js).
+2. **The ORDERS chalkboard** (Cal's note) is drawn face-on instead of skewed onto the tiled back-right wall. Its left edge
+   sits on the seam with the teal wall, and the steel shelf runs into its bottom edge (`z_hole_kitchen.png`). In the Diner the
+   same board and the three small menu boards also face front and sit on the shelf line (`z_diner_kitchen.png`). Fix: skew them
+   to the wall plane, centre them over the range or pass, and keep them clear of the shelf.
+3. **The pot rack** (Cal's note) floats. In the Hole in the Wall its frame stands off the tile with nothing touching the wall,
+   and its bars run across the wall instead of along it. In the Diner it is a free-standing frame over the prep table at the
+   kitchen door, hanging from nothing. Fix: a wall rail with brackets that meet the tile, or a ceiling bar with visible chains over
+   the prep table.
+4. **The Garden door's glow** sat in the black below the room (Cal's second note; in the Hole in the Wall it floats under the
+   room). ROOMS's e884ffd moves it onto the kitchen floor; I have not seen that yet.
+5. **Hole in the Wall kitchen:** the coffee maker stands on a wooden stool at the kitchen's front edge, which looks like a
+   stopgap. The till sits on a stand behind the teal partition, backed onto the dining room. Diners can't reach it.
+6. **Three upgrades change nothing you can see** (0 px): Breakfast Menu, Bigger Till, Burger Menu (Cal: every upgrade clearly
+   visible). A new line on the menu board or a bigger till would do it.
+7. **Diner floor:** the drinks cooler stands free in the walkway beside the door mat, and the black host stand sits in front of
+   the mat, so the entrance is crowded. Put the cooler against the wall by the bar stools and move the host stand to one side of the mat.
+8. **Bistro and Noir patio:** the patio heater stands across the kitchen's half wall, base on the deck and head over the
+   counter. The pergola covers one chair, and its post cuts through that chair. The patio seats (three bistro sets, three Adirondacks) were
+   never used in 60 s live, while every indoor table was. Move the heater out onto the deck between the bistro sets and put a
+   table and two chairs under the pergola. Guests should use the patio too.
+9. **Room style does nothing once Noir is bought.** With r_noir all six styles look the same (`styles_with_noir.png`). Without it
+   they differ as they should. Either hide the Room style list after Noir or tell the player Noir replaces it.
+10. **Names:** Take Over Next Door says "Becomes a Neighborhood Bistro", but 26_world.js renames stage 3 "Noir", so with r_x2 and no
+    r_noir the window already says "Noir." (21_restaurant.js has "Neighborhood Bistro").
+11. **What works:** the doors (Garden right, Sky Bar up) match both ways. Guests sit at booths, tables and the round table. Staff
+    work the oven, prep and cook stations and a server takes orders. Tables sit in a clear grid. No page errors.

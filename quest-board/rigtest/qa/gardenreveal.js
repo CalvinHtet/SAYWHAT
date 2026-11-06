@@ -37,7 +37,7 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
   const dry = await win('dry');
   console.log('  (debug) dry sell element:', dry.sellhtml); console.log('  (debug) dry window:', JSON.stringify(dry.text.replace(/\s+/g, ' ').slice(0, 500)), 'acts:', dry.acts);
   const dryLine = (dry.text.match(/[^\n]*dry[^\n]*/i) || [''])[0];
-  ok('dry: no sell row, no "produce ready", no Restaurant', !dry.sell && !/produce ready|sell for|restaurant|chef/i.test(dry.text), early(dry.text));
+  ok('dry: no "produce ready" or sell price, no Restaurant (the stand is drawn and says "Nothing to sell yet")', !/produce ready|sell for|restaurant|chef/i.test(dry.text), early(dry.text));
   ok('dry: it says how selling starts', /water/i.test(dryLine) && /sell/i.test(dry.text), dryLine);
   // the stand before any produce: what a tap says
   const standTap = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const g = document.querySelector('.rmodal [data-act="stysell"]'); const before = document.body.innerText; if (g) g.dispatchEvent(new MouseEvent('click', { bubbles: true })); await w(600); const after = document.body.innerText; return after.split('\n').filter((l) => !before.includes(l)).slice(0, 3); });
@@ -45,7 +45,7 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
   // water
   const watered = await p.evaluate(async (i) => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const c = document.querySelector('.rmodal [data-act="gdwater"]'); if (c) c.dispatchEvent(new MouseEvent('click', { bubbles: true })); await w(800); return window.gdWatered ? window.gdWatered() : null; }, built.i);
   const wet = await win('watered');
-  ok('watered: the beds are wet, still no sell row or Restaurant', watered && !wet.sell && !/produce ready|sell for|restaurant|chef/i.test(wet.text), { watered, line: (wet.text.match(/[^\n]*grow[^\n]*/i) || [''])[0] });
+  ok('watered: the beds are wet, still no produce ready or Restaurant', watered && !/produce ready|sell for|restaurant|chef/i.test(wet.text), { watered, line: (wet.text.match(/[^\n]*grow[^\n]*/i) || [''])[0] });
   // time passes: the first produce
   await p.evaluate(() => { window.__qbShift = (window.__qbShift || 0) + 3 * 36e5; const x = window.__qb.x(); try { x.rollover && x.rollover(); } catch (e) {} x.render(); });
   await p.waitForTimeout(1500);

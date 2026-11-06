@@ -465,6 +465,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, on cbb5e43: LEAD's b3b4d09 portrait sizes pass (Logan alone 101x280, Kenan and Jina 109x235 and 107x232), 172caa9 Garden lines
+  pass (gardenreveal.js, all 10), b316e05 street camera passes upright at 390 and 360 and on its side, on the street and inside a
+  building: the street sits on the nav, the sky takes the spare height (`streetcam.js`). On its side only the lower floors show at
+  the widest zoom (the building is taller than the screen); fine for now. Owner: LEAD.
+- QA, the Restaurant full pass for Cal (on cbb5e43; `docs/QA.md` "The Restaurant, full pass"; pictures `shots/qa/restaurant/`):
+  one blocker and nine fixes. Blocker: after 13 upgrades the window shows only three "Needs Knock Through the Wall" cards and a
+  "? ? ?", and Knock Through itself (r_x1) never appears, so nothing can be bought (level 14 and 60; `reststuck.js`). Fixes: the
+  ORDERS board and menu boards face front instead of lying on the tiled wall, sit on its seam and on the shelf line; the pot rack
+  floats (Hole: off the wall, bars across it; Diner: a free frame hanging from nothing); the coffee maker on a stool, the till
+  behind the partition; Breakfast Menu, Bigger Till and Burger Menu change nothing visible; the cooler and host stand crowd the
+  door mat; the patio heater stands across the kitchen half wall, the pergola post cuts its chair, the patio is never used live;
+  Room style does nothing after Noir; stage 3 is "Noir" in 26_world.js but "Neighborhood Bistro" in r_x2's line. The doors, seating
+  and staff work. Owners: ROOMS (art and room code), LEAD (the card list, the stage name).
 - QA, LEAD's 5688ce3 Wednesday returns (on 4830bf7, `wedback.js`, two pages, every 6 h for 120 days): pass on the schedule. Weekly mode:
   both pages agree, the brand changes 15 times, every one at Wednesday 00-05h Pacific, never the same twice running (hanga and y2k
   alternate from Nov 25). Launch mode: pages agree; one return (hanga from Dec 23) that then stays every week, because the 5-brand test
@@ -1911,7 +1924,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Wednesday returns pass. Next: LEAD's portrait sizing (after 4830bf7), ff9ba96 (class card art), the street camera when LEAD sends it. Messages to other chats paused until Cal types here. (on 4830bf7)
+- Now: Restaurant full pass done (blocker + nine fixes to ROOMS and LEAD). Next: ROOMS's e884ffd (Garden door) and 1ca5f89 (NICE COCK banner in the Shop once LEAD adds it), LEAD's e786b94 (Collect), ff9ba96 (class card art). (on 1c3a30f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
