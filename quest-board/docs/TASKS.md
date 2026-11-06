@@ -285,6 +285,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, design review of the Mall (322760a, on cb6fdb3; `mallreview.js`, `retired.js`, `screenlive.js`, `doors.js`; written out in
+  `docs/QA.md`; `shots/review_mall*.png`, `review_mall_doors.txt`): checks pass, 4 notes. It reads as one atrium (stores round the
+  fountain, seating left, food front-right). (1) The Directory Screen is garbled: it is the restaurant menu with prices by each
+  store, too narrow (names run into prices), its top lines above the picture's edge, and blank about 7 s in 8; list stores and
+  where they are, no prices, wider and inside the wall, or drop it. (2) The Karaoke door is a closed shutter even fully bought.
+  (3) The escalator climbs toward a ground-floor opening and ends in mid-air. (4) All four Mall door pairs still miss Cal's
+  left/right rule, and Karaoke is not next to the Mall in the building. No page errors. Owner: ROOMS, then Cal.
 - QA, design review round 2 on ROOMS's d95d880 (no QA line was posted; on 2df050f; `docs/QA.md`; `shots/review_rooftop2.png`,
   `review_lockkey2.png`): Lock and Key, all 3 notes fixed, ready for Cal. Rooftop, 5 of 6 fixed (pool back by the DJ, loungers at
   its end facing the water, the hot tub clear of the step by the cabana, the stairs arrive clear, smaller flamingo and tub). Still
@@ -322,7 +329,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: a design review of the Mall at 322760a (Cal: rooms go to QA for notes before him), bare and fully bought,
+- DONE by QA (QA findings and docs/QA.md: checks pass, 4 notes). WAITING ON QA: a design review of the Mall at 322760a (Cal: rooms go to QA for notes before him), bare and fully bought,
   noon and night: one planned space? every piece facing its use? the shop fronts sitting right in their storefronts? the
   Directory Screen's text (it cycles; it looked garbled in a still)? walkways from the Theater door (front-left) and the
   Arcade door (front-right)? anything doubled or random? Plus the usual checks (4 retired ids, old saves, doors).
@@ -1150,8 +1157,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: design review of the Mall (322760a) and its Directory Screen live, test copy only (`mallreview.js`, `retired.js`). Next:
-  the Rooftop bar. (on 9c44a12)
+- Now: waiting for work. Next: the Rooftop bar and the Mall notes when ROOMS sends them. (on cb6fdb3)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

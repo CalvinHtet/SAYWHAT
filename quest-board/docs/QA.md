@@ -549,3 +549,27 @@ beside the cabana with a clear gap from the pool step, the stairs arrive on clea
 fire-table lounge holds the front, the flamingo and tub are smaller, and the shower between the pool step and the tub reads as
 "rinse first". Still open: **the bar** (note 4): the back bar is unchanged, behind only the right half of the counter with no
 aisle. Centre it behind the counter, or slide the counter a step forward. Everything else is ready for Cal.
+
+### The Mall (322760a, on cb6fdb3; `shots/review_mall.png`, `review_mall_bare.png`, `review_mall_directory.png`, `review_mall_doors.txt`)
+
+Usual checks pass: the painted shell (`mlw_t1`) bare and fully bought, nothing outside or overlapping, the four retired pieces
+(Photo Booth, Gumballs, Rocket Ride, Flower Kiosk) clean (no card, ids kept, not drawn), every arrow walks to its room and back.
+
+Reads as one planned space: an atrium with stores around a central fountain, seating left, food front-right. Good. Notes:
+
+1. **The Directory Screen is garbled, as ROOMS saw.** It uses the restaurant menu: headings TODAY / FRESH / HOUSE and a price by
+   each store ("Clothing $16", "Karaoke $14"); the screen is about 44 px wide, so every name runs into its price; its top lines
+   sit above the room picture's top edge (cut off); and it is blank about 7 seconds in 8 (the page fades in late). A directory
+   should list stores and where they are (left, right, up the escalator), no prices, in a screen wide enough, fully inside the
+   wall. Or drop the screen: the shop fronts already say what each store is.
+2. **The Karaoke door is a closed shutter.** The second storefront stays shuttered when everything is bought, and the Karaoke
+   glow is on its threshold: the way in looks closed. Give it a karaoke front (a sign, a lit window) or roll the shutter up.
+3. **The escalator rises to a ground-floor opening.** It stands in front of the right storefront (the Bowling door) and climbs
+   toward it, ending in mid-air at shop level; it reads as an escalator to nowhere. Either the landing is upstairs (paint the
+   opening higher, with the escalator reaching it) or turn the escalator to rise along the right wall to a painted upper level.
+4. **Doors and Cal's left/right rule (from v48, still open).** All four Mall pairs miss it: Theater (Mall front-left, Theater's
+   way back front-right), Arcade (Mall front-right, Arcade's way back front-left), Bowling (Mall back wall, Bowling's way back
+   front-right instead of front-left), and Karaoke (the Mall's left wall), which is not next to the Mall in the building (Mall
+   1,0, Karaoke 1,2). See `review_mall_doors.txt`.
+5. **Fine as is:** the bench faces the fountain between two plants; the phone kiosk and the food corner (pretzel cart, round
+   table) are apart and face the walkway; the door mat at the street edge fits a mall.
