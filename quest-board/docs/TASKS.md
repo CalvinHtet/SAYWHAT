@@ -464,6 +464,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, correction (Cal, 2026-11-06, phone screenshot: "The tv and stand are not lined up properly"): QA's pass of 9d5aed7 is withdrawn;
+  QA missed it. The slim console sits shifted left and forward of the TV: its left end past the screen's left side, its right end
+  well short of the right, so it cuts across the screen's lower left instead of sitting under it; the floor lamp's pole stands in
+  front of the TV's lower-right corner (`shots/plaza/gameroom_9d5aed7.png`). Fix: centre the console under the screen, back edge
+  along the wall beneath the TV's bottom edge, both ends tucked in; the lamp clear of the screen; check with both TVs. v0.61 waits
+  for it as well as the ping-pong answer. Owner: ROOMS.
 - QA, ROOMS's 9189946 + 9d5aed7 and LEAD's 38e1ab7 (Kode Plaza stage 0, its sign, the Game Room; `shots/plaza/`): pass. bld_plaza_s0
   reads as an open garden plaza (beds, wall, pergola with lights, lemon trees, birdbath, bench, no building front), sits right
   between the Loft and Calibur Mall, dims at night (`sign_stages.png`); with the Restaurant the cafe returns. The pink "flecks" are
