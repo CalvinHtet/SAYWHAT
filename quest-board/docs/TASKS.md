@@ -621,7 +621,12 @@ Doing:
   on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and
   NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a),
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
-  base walls, 1eb8040), 18 (Corner Diner walls, 156683a). 15-minute loop running (rule 16). (on 156683a)
+  base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
+  64e4735). 15-minute loop running (rule 16). (on 64e4735)
+- WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
+  (Hole in the Wall, Corner Diner, Bistro, Noir), with and without the Sidewalk Patio. Look for furniture against the
+  painted walls that floats or overlaps a window, the kitchen divider lining up with the kitchen tile, the front door mat.
+  Furniture is the old set; Cal wants sleek fine-dining pieces next, so note placement lessons, not sprite tickets.
 - DONE by QA (QA findings). WAITING ON QA: check 9be3f51, the Trophy Room: the Lair shows a mystery card before any piece and "Stairs to the Trophy
   Room" after one; buy it, walk up and down by the arrows; the mannequin wears exactly the owned pieces (try two or three
   sets); the building view shows the hall above the Lair. Known: no painted doorway in the Lair (its back wall is the suit
