@@ -283,6 +283,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, a quick look at ROOMS's 73e48c3 (no QA line was posted; it answers QA's two notes; on 0c3e73c, `gardenlots.js`,
+  `standtap.js` with a real mouse; `shots/garden_kitchen_full3.png`, `garden_stand_desktop.png`, `garden_stand_phone.png`): pass,
+  one small fix each. The lamp post stands clear of the sundial, and the scarecrow is off the stone bed (in the back-left corner
+  behind the tomatoes). Tapping either stand sells once (crate stand on the Back Plot, Farm Stand in the Kitchen Garden): coins up,
+  produce to 0, a second tap sells nothing. FIX (ROOMS): on desktop the Back Plot's crate stand stands so far forward that 41%
+  of it is below the bottom of the room picture, cut in half (on a phone it shows whole); move it back a tile. FIX (LEAD, text):
+  the Garden window still says "A small plot behind the building" (the story calls it the empty lot next to your building) and
+  "Build the Restaurant to put these to use" (it is Knock Through now); "1 coins/hr" should be "1 coin an hour"; on a phone that
+  yellow line runs off the right edge. No page errors. Owner: ROOMS and LEAD.
 - QA, LEAD's 4093cb9 (on 886b385; `day1areas.js`, `sim.js` 6 and 7 days, an in-page old-save test; `shots/unlocks_886b385.txt`):
   the fix works, one knock-on effect. A fresh save has board, train, shop and away; level 2 takes The Loft and the day's slot;
   the Hall at level 4 waits (Soon) for the next day. A level-20 save with no `S.areaOn` gets all 8 areas, none waiting. Knock-on:
@@ -918,8 +927,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: a quick look at ROOMS's 73e48c3 (my two Garden notes, both produce stands sell), test copy only (`gardenlots.js`).
-  Next: whatever is WAITING ON QA. (on 0c3e73c)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on 0c3e73c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
