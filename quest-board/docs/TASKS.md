@@ -690,15 +690,19 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden (Back Plot lot done, 4725457; the
-  Kitchen Garden and Estate lots generating): painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
+- Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden: all three painted lots done (4725457, cd73831, 5fa3fec,
+  approval 20); next for the Garden: painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
-  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241).
-  12-minute loop running (rule 16). (on 4725457)
+  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
+  5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90). WAITING ON CAL: Garden in The Loft or Kode Plaza.
+  12-minute loop running (rule 16). (on 5fa3fec)
+- WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
+  Estate, each bare and fully bought. Look for: brick walls showing (no hedge or glass fence over them), beds and tools
+  standing on the lawn, nothing poking through a wall, the Estate's walls cut at the stone coping with no black band.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
   corner now opens straight toward the room (new `rdx_curve2`), its table and two seats inside it; the patio's Fire Pit
   Lounge is a real fire pit (new `rsx_firepit2`: stone bowl, three Adirondack chairs, logs). Bistro and Noir.
