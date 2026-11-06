@@ -322,6 +322,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: a design review of the Mall at 322760a (Cal: rooms go to QA for notes before him), bare and fully bought,
+  noon and night: one planned space? every piece facing its use? the shop fronts sitting right in their storefronts? the
+  Directory Screen's text (it cycles; it looked garbled in a still)? walkways from the Theater door (front-left) and the
+  Arcade door (front-right)? anything doubled or random? Plus the usual checks (4 retired ids, old saves, doors).
   my opinions"): a design review, not only the usual checks, of the Rooftop at ea2dffc and Lock and Key at 707cac1. For
   each room: does it read as one planned space; does every piece face where it is used; is anything doubled, random,
   floating or oddly sized; are the walkways and sight lines clear; what would you change. Cal on the Rooftop before
@@ -976,11 +980,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA's design review (Cal: every room goes to QA for notes before it comes back to him) of the Rooftop
-  ea2dffc (laid out as one plan after Cal's notes: the pool turned and centred, the DJ facing it, one bar) and Lock and Key
-  707cac1; ROOMS fixes the notes, then shows Cal. Meanwhile storyboard step 8, the Mall: looking at it and planning its
-  layout as a whole. Done: step 5 Lock and Key (approvals 25, 26), step 7 Rooftop deck and sky (approval 27, 5ddeb1a).
-  LEAD: retired ids `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`; new `sb_band`. Chrome claimed. (on 3fdeb77)
+- Now: the Rooftop bar repaint (QA design review: the back bar sits behind half the counter; Cal: "the two bars on the top
+  are weird"); then the Mall's design review with QA. Lock and Key passed QA's design review (4718a41), ready for Cal.
+  Rooftop: 5 of 6 design notes fixed in d95d880. Mall (step 8) built in 322760a: painted shell `mlw_t1` with five
+  storefronts, the Clothing, Sneaker and Toy stores as flat shop fronts in them (`mlx_front1-3`), the floor in zones;
+  `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower` retired. LEAD: retired ids also `sb_chester`, `sb_trolley`, `rf_lng2`,
+  `rf_towel`, `rf_ice`, `rf_umb`; new `sb_band`. Question for LEAD and Cal: the Mall's doors break the door rule on the
+  building map (Theater is left of the Mall but its door is the front-left edge; Karaoke sits above Bowling but opens from
+  the Mall's left wall); ROOMS can move them when the Theater and Karaoke steps come. Chrome claimed. (on 322760a)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
