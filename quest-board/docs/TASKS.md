@@ -463,6 +463,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 1712242 ping-pong retired (on 4550d03, new `retiredsave.js`; `shots/qa/gameroom_no_pingpong_4550d03.png`): pass. A save
+  that owns gm_ping and everything else loads, keeps the id through a reload, and draws the Game Room with no ping-pong picture; the
+  window never offers it; the room buys through, all 21; the doors to the Bedroom both ways are fine. The foosball and the snack
+  corner have open floor round them now, nothing crowding the walkway. Owner: ROOMS.
 - QA, SAYMØRE wear test (ROOMS's 9e19cdf, LEAD's Shop rows; on 831fc61; `shots/qa/sm/`): 13 of 15 pass, three fixes. All 15 on both
   bodies in all 22 key poses, 0 draw failures; three outfits; the Shop (`shop.js` BRAND=sm): 15 on him and 15 on her bought at full
   price, worn, in the mirror. No sneaker left at the feet of the hoodie or the mask in any walk (`feet.png`). The mask covers the
@@ -2003,7 +2007,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: SAYMØRE checked: 13 of 15, the pendant outline (ROOMS), the mask in sleepHead and glasses over it (LEAD). (on 831fc61)
+- Now: SAYMØRE checked: 13 of 15, the pendant outline (ROOMS), the mask in sleepHead and glasses over it (LEAD). Ping-pong retirement passes. (on 4550d03)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
