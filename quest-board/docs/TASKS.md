@@ -901,7 +901,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-- WAITING ON QA: check 4599993 (rule 17, small check): Lock and Key (the Upstairs Bar, id `skybar`) shows the painted
+- TAKEN by QA. WAITING ON QA: check 4599993 (rule 17, small check): Lock and Key (the Upstairs Bar, id `skybar`) shows the painted
   brick shell bare and fully bought; the Downstairs door (front-left edge) and the Roof door (the painted stairway, back wall
   far right) both walk and nothing stands on them; nothing outside the room; the back bar stays under the wall top; an old
   save that owns the Upstairs Bar keeps every piece. ROOMS's headless pass: no page errors, both arrows, shell drawn.
@@ -1055,7 +1055,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: Lock and Key (step 5) when ROOMS hands it over. (on f7c1a46)
+- Now: Lock and Key's Upstairs Bar (4599993), test copy only (`skybarshell.js`). Next: whatever is WAITING ON QA. (on c35a0d4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
