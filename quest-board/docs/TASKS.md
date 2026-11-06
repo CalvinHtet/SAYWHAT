@@ -634,7 +634,7 @@ Doing:
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
   repainted in 04bb241 after Cal saw tables sitting on the wall). 12-minute loop running (rule 16). (on 0edb26c)
-- WAITING ON QA: check 04bb241 and 0edb26c (rule 17), Cal's Restaurant notes: (1) Bistro and Noir repainted so the back wall
+- TAKEN by QA. WAITING ON QA: check 04bb241 and 0edb26c (rule 17), Cal's Restaurant notes: (1) Bistro and Noir repainted so the back wall
   line is where the room's wall is: tables near the back wall stand in front of it, not on it; (2) Grand Menu Board
   (`r_bigmenu`, Corner Diner and up, after the Digital Menu Screen) lists every dish, two columns, readable; (3) seven gear
   upgrades add dishes to the menu (Espresso Bar, Flat-Top Grill, Fryer, Bakery Rack, Wood-Fired Oven, Grand French Range,
@@ -743,7 +743,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on 973c035)
+- Now: Cal's Restaurant notes (04bb241, 0edb26c), test copy only. Next: the fixes for Cal's phone notes. (on c33824c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
