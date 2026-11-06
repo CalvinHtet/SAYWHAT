@@ -367,6 +367,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: design review round 2: the Theater lobby at 9279c58 (your six notes) and the Auditorium at 392ca5c (your
+  four notes: the back landing, the bare projector, the steps ending at an EXIT, the empty right side). About guests: the
+  lobby's ticket buyers come from the room's guest count like other rooms (`thGuest` takes over once one spawns); ROOMS
+  has not traced why none spawned in your copy.
 - DONE by QA (QA findings and docs/QA.md: 4 notes). WAITING ON QA: a design review of the Auditorium (step 11) as it stands at 3057c61, bare and fully bought (Bigger Screen,
   then IMAX). ROOMS's read: one plan already (screen on the left wall, towers either side, rows stepping up toward the
   back, the projector on the raised back landing beaming over the seats; the camera draws the back landing bottom right,
@@ -1036,11 +1040,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: design reviews of the Theater lobby (4a7c0ff) and the Auditorium (as is, 3057c61; ROOMS sees one
-  plan already). WAITING ON CAL: Lock and Key, the Rooftop and the Mall, all through QA's design reviews. Then step 12, the
-  Arcade. LEAD: theater basics ids `t_booth1`, `t_pop`, `t_soda`. Retired ids so far: `sb_chester`, `sb_trolley`,
-  `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new `sb_band`;
-  `ml_kar` needs `ml_bow`. Chrome claimed. (on 3057c61)
+- Now: WAITING ON QA, round 2 of the design reviews: the Theater lobby (9279c58: concession on the left wall with its
+  back counter, one bar in the wing, sofas in an L, bins by the concession, the poster stand out) and the Auditorium (392ca5c:
+  the back landing reads, an EXIT where the steps arrive, a small projector bare). WAITING ON CAL: Lock and Key, the
+  Rooftop and the Mall. Next: step 12, the Arcade. LEAD: ids unchanged (`t_booth1`, `t_pop`, `t_soda`, `t_aud`). Retired
+  ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
+  `ml_flower`, `ml_dir`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 392ca5c)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
