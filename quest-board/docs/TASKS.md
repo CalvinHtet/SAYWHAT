@@ -282,7 +282,21 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message): check 912f32c: early unlocks strictly by their own level; Sprinklers at the Estate, 6,000.
+- QA, LEAD's 912f32c (on b8742cd; `sim.js`, `unlocks.py`, `water.py`; `shots/unlocks_water_b8742cd.txt`): pass. (1) Early unlocks in
+  their own level's order, one a day: 12-task The Loft day 1, Hall 3, Garden 4, Wheel 5, Mara 6, Relics 7, Boba 9, Dessert 10 (day
+  4 also has the closet the player buys); casual The Loft 2, Hall 5, Garden 6, Wheel 9, Mara 10, Relics 11. No played day without
+  something to buy. (2) Sprinklers at the Estate for 6,000: the 12-task player can buy them on day 44 (waterer) or 45 (forgetter),
+  the casual player not by day 45 (level 32). Over 50 days the forgetter (waters 1 day in 3) finds the beds dry on 28 days and
+  sells 2,691 produce for 10,764 coins against the waterer's 6,400 for 25,600, and earns 384,471 against 405,103 (5% less);
+  level (86 on day 45) and every upgrade (day 45 or 46) are the same, and Mara still comes on day 6 for both. So watering now
+  costs real produce without slowing anything else. No page errors. Owner: none (Cal: the numbers for the watering habit).
+- QA, ROOMS's 0b23996 and d1d7c73 (on ba6cf1c, port 8771; `citylights.js`, `restmenu.js`, `freshstart.js`; `shots/city_night_before.png`,
+  `city_night_after.png`, `rest_noir_furniture.png`, `fresh_start_phone.png`): pass. The city's window patterns light 1, 4 and 2
+  of 16 windows (were 10, 10 and 7), dimmer (mean opacity 0.45 to 0.65, was about 0.71), and the night picture is much calmer.
+  Noir with White Linen sets black marble and brass tables with charcoal chairs; the Bistro keeps white linen and red chairs;
+  the fire pit's chairs are clear of the deck rail. ROOMS's testing note ("new saves land on a locked Loft tab") is only their
+  test setup: a real new player sees the character screen, then the Board, on desktop and phone. No page errors. Owner: none.
+- DONE by QA (QA findings: pass). WAITING ON QA (LEAD's message): check 912f32c: early unlocks strictly by their own level; Sprinklers at the Estate, 6,000.
 - QA, ROOMS's a9a572c and e415c00 (on 85f696a, `restshell.js`, `restmenu.js`, `cantap.js` with a real mouse; `shots/rest_patio_noir.png`,
   `rest_patio_diner.png`, `rest_patio_rail.png`): pass, one small note. The patio front reads fire pit left, the table under the
   pergola right, the sign in the gap (Corner Diner, Bistro, Noir); a low rail runs between deck and dining room with the gap at
@@ -833,7 +847,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-- TAKEN by QA. WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
+- DONE by QA (QA findings: pass). WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on d1d7c73)
@@ -972,8 +986,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's 912f32c runs (on b8742cd: `sim.js`, `unlocks.py`, `water.py`) and ROOMS's city lights and Noir furniture
-  (0b23996, d1d7c73, on 72a427a, port 8771), test copies only. Next: whatever is WAITING ON QA. (on 72a427a)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on ba6cf1c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
