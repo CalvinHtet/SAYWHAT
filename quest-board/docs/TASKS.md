@@ -1167,9 +1167,9 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now: WAITING ON QA: wear test of the team's signature tops (097dccd: `tm_rafe_jacket`, `tm_theo_tee`, `tm_nova_knit`,
   `tm_sable_jacket`, slot top, both bodies). Then they go to Cal as one batch (new cosmetic designs are a big approval).
-  The Rift Mask passed QA (b9000d2); LEAD adds its gift line after v0.50. READY TO PUBLISH: everything from 6 to 37.
+  The Rift Mask passed QA (b9000d2); LEAD's gift line is in (e389afa). READY TO PUBLISH: everything from 6 to 37.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. (on 5038575)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Next: nothing on ROOMS's list until QA or Cal answers. (on e0e5ab5)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
