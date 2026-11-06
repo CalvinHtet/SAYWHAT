@@ -890,20 +890,21 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: storyboard step 5, Lock and Key (`27_rooms.js`, room id `skybar` survives, new art `skw_t1`): the Upstairs Bar becomes
-  the upscale speakeasy (painted shell, the name and words, a live band stage after the Jazz Corner), its doors on Cal's
-  rule (down to the Restaurant and the Rooftop's down to it, front-left); the old Speakeasy's opener in the Dessert Parlor
-  retired (owners keep it). Step 4's Dessert Parlor is done (f0c6dbb, 23f993d; approval 24). Step 3's Boba shop is done
-  (c223d89, approval 23). Step 2's Restaurant polish is done
-  (a9a572c, d1d7c73; approval 22). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
-  approval 20 with Cal). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
-  fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
-  rooms, as the storyboard orders them. Chrome claimed.
+- Now: storyboard step 5, Lock and Key. Done in 4599993 (approval 25 with Cal): the Upstairs Bar is Lock and Key (id stays
+  `skybar`, saves keep everything), painted brick-and-walnut shell `skw_t1`, stairs to the Rooftop at the back wall's far
+  right end (BR 12.1), the way down to the Restaurant at the front-left edge (FL 2.6), back bar kept under the wall top.
+  Next: the band stage upgrade after the Jazz Corner (new art, one stage with instruments that replaces the mic stage in
+  the picture so the room stays calm). Then the storyboard order: Rafe, Rooftop, Mall, the theater basics, the team in
+  their rooms. Steps 1 to 4 (Garden, Restaurant polish, Boba, Dessert) are done on ROOMS's side. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
-  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 20 (Garden lots and Game Room desk,
+  17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
+- WAITING ON QA: check 4599993 (rule 17, small check): Lock and Key (the Upstairs Bar, id `skybar`) shows the painted
+  brick shell bare and fully bought; the Downstairs door (front-left edge) and the Roof door (the painted stairway, back wall
+  far right) both walk and nothing stands on them; nothing outside the room; the back bar stays under the wall top; an old
+  save that owns the Upstairs Bar keeps every piece. ROOMS's headless pass: no page errors, both arrows, shell drawn.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
