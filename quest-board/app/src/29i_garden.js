@@ -20,8 +20,9 @@ var gdRateBase=gdRate;gdRate=function(){return gdWatered()?gdRateBase():0};
 window.gdWatered=gdWatered;window.gdWater=gdWater;
 /* the Garden's words (LEAD's part of the Garden split; ROOMS's 22_garden.js is not edited): the story calls it the empty lot
    next to your building, and the Restaurant opens from it by Knock Through (QA) */
-ROOMT.garden.desc="The empty lot next to your building. It grows ingredients while the beds are watered; the Restaurant cooks with them and earns more, and spare produce sells at the stand.";
-var gdNoteBase=gdNote;gdNote=function(r){return gdNoteBase(r).replace("Build the Restaurant to put these to use.","Knock through to a restaurant to put these to use.")};
+ROOMT.garden.desc="The empty lot next to your building. Water the beds and things start to grow.";
+/* Cal, 2026-11-06: "never revealed outright": no word of a restaurant until it exists */
+var gdNoteBase=gdNote;gdNote=function(r){return gdNoteBase(r).replace(" Build the Restaurant to put these to use.","").replace("Build the Restaurant to put these to use.","")};
 /* Cal, on QA's finding that the Sprinklers made watering moot by day 4: "Yes, much later." They wait for the Garden's Estate
    stage (ECON.sprAlso) and cost ECON.sprPrice, so watering stays a daily habit for most of the Garden's life. */
 (ADDONS.garden||[]).forEach(function(a){if(a[0]==="g_spr"){a[2]=ECON.sprPrice;a[3]=Object.assign({},a[3]||{},{also:ECON.sprAlso,fixed:1})}});

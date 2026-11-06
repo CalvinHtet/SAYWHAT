@@ -41,5 +41,11 @@ socInner=function(){var o=socState(),seen=o.boardT;if(seen===undefined&&SOC.load
   SOC.posts.forEach(function(p){if(!fr[p.id]||now-fr[p.id]>120000)return;var at=h.indexOf('<b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>');
     if(at>=0){var cut=at+('<b>'+esc(p.name||"Neighbor")+'</b>').length;h=h.slice(0,cut)+'<em class="tw-new">new</em>'+h.slice(cut)}});
   return h};
+/* QA on 60e3e50: a full render() kept the draft but dropped focus and caret, closing the phone keyboard mid-word */
+var townRenderBase=render;
+render=function(){var a=document.activeElement,typing=a&&a.id==="sntext",s0=typing?a.selectionStart:0,s1=typing?a.selectionEnd:0;
+  var r=townRenderBase.apply(this,arguments);
+  if(typing){var t=document.getElementById("sntext");if(t&&document.activeElement!==t){t.focus({preventScroll:true});try{t.setSelectionRange(s0,s1)}catch(e){}}}
+  return r};
 setInterval(function(){if(socOn()&&!document.hidden&&!SOC.busy&&document.getElementById("socnb"))socLoad()},20000);
 window.__qbTown={meter:townMeter,mine:townMine,week:townWeek};

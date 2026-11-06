@@ -8,10 +8,12 @@
    standstill"), so upgrading other rooms while a gate fills still counts. */
 var STORY=[
   /* Cal, 2026-11-05: the Garden is its own lot, at level 5 (ECON.stepLv); each later step has a least level too */
-  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Grow something you can sell.",gate:function(){return true}},
+  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Put it to work.",gate:function(){return true}},
   /* Cal: "the next upgrade should be a restaurant that expands from it": Mara's yes unlocks the Garden's expansion upgrade */
-  {id:"chef",room:"restaurant",how:"upgrade",why:"Sell enough produce from the Garden and someone will notice.",gate:function(){return styHas("garden")&&styState().sold>=60},
-    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables all week.","Knock through into the space next to your garden and I'll run the stove. Partners?"],yes:"Partners. Let's build it",team:"mara"}},
+  /* Cal, 2026-11-06: "The restaurant upgrade should come sooner so we have incentive to keep upgrading the garden past the main
+     lot": 12 produce sold (about a day of a watered first bed), not 60 */
+  {id:"chef",room:"restaurant",how:"upgrade",why:"Keep the Garden growing. Someone in the neighborhood is paying attention.",gate:function(){return styHas("garden")&&styState().sold>=12},
+    scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables from that window.","Knock through into the space next to your garden and I'll run the stove. Partners?"],yes:"Partners. Let's build it",team:"mara"}},
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
@@ -128,7 +130,14 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   if(a==="styno"){o.later[s.id]=Date.now()+30*60000;persist();return}
   if(s.scene&&s.scene.team){o.team[s.scene.team]=1;try{teamJoin(s.scene.team)}catch(e){}}styOpen(s)});
 /* the Garden window sells what it grew; that is how the restaurant's partner finds you */
+/* Cal, 2026-11-06: "don't mention you can sell produce until we get to that point in the garden ... Everything should unlock
+   sequentially and never revealed outright": the sell row stays hidden until the first produce is ready, which says so once */
 function stySellHtml(){var n=Math.floor((S.base.food&&S.base.food.veg)||0),o=styState();
+  /* then (same day): "Selling should happen once we have our first plot that is growing produce ... There's no clear indication of
+     how to sell produce or when the selling starts": from the first growing bed this row says plainly what happens and when */
+  if(n<1&&!o.sold){var wet=typeof gdWateredAt!=="function"||gdWateredAt(Date.now()),rt=typeof gdRate==="function"?gdRate():0,mins=rt>0?Math.max(1,Math.round(60/rt)):0;
+    return '<div class="sty-sell sty-first"><span>'+(wet?'Your first bed is growing. Each vegetable it grows lands here, and you sell it from this window'+(mins?' (about one every '+(mins>=60?Math.round(mins/60)+' h':mins+' min')+')':'')+'.':'The beds are dry. Water them and your first harvest starts growing; you sell it from this window.')+'</span></div>'}
+  if(!o.sellSeen){o.sellSeen=1;persist();setTimeout(function(){pop("Your first produce is ready. Tap Sell in the Garden window.")},400)}
   return '<div class="sty-sell"><span>'+n+' produce ready'+(o.sold?' &middot; '+o.sold+' sold so far':'')+'</span><button class="btn'+(n?'':' ghost')+'" data-act="stysell"'+(n?'':' disabled')+'>Sell for '+(n*4)+' coins</button></div>'}
 /* test hook, removed at release with window.__qb */
 window.__qbStory={check:styCheck,state:styState,steps:STORY,beats:BEATS,lots:function(){return lotsOpen()},allows:styAllows};
