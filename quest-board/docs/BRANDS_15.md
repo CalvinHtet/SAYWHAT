@@ -47,8 +47,8 @@ source. No real person's face in any of them (no collaborators from the covers, 
 |---|---|---|---|---|
 | HANGANG (live) | 한강 | Two sizes too big, on purpose | | 1, fixed |
 | **NICE COCK** | luxury leisurewear | Something to crow about | jet black, heather ash, slate, bone white | 5, fixed |
-| **KODE PINK** (new) | anime city-pop | One in the pink, two in the… other one | bubblegum pink, periwinkle, lilac, sunshine yellow, night navy | shuffled |
-| **SAYMØRE** (new) | bass culture | Trust the motion | night black, flare orange, pulse cyan, bone | shuffled |
+| **KODE PINK** (approved) | anime city-pop | One in the pink, two in the… other one | bubblegum pink, periwinkle, lilac, sunshine yellow, night navy | shuffled |
+| **SAYMØRE** (approved) | bass culture | Trust the motion | night black, flare orange, pulse cyan, bone | shuffled |
 | DIAL-UP | y2k thrift | Low-rise, high drama | | shuffled |
 | OVERPASS | street supply | Built for kickflips you will never land | | shuffled |
 | VENOM ROSE | dark glam | Soft velvet, sharper tongue | | shuffled |
@@ -99,7 +99,7 @@ small at the hip or chest; the rooster mark (white and grey, mid-crow) from `log
 **Banner:** a dim marble hallway like Cal's photos, someone in the black Signature Jogger and navy hoodie, the rooster mark
 large and soft in the background, `nicecock.` across it.
 
-## KODE PINK (new): Cal's music project, built out
+## KODE PINK (approved, Cal 2026-11-06: "Confirmed"): Cal's music project, built out
 
 **Source (`docs/ref/kodepink/`, screenshots of the posts):** three covers Cal sent: *What If We* (night-sky navy, a figure falling through clouds, thin
 white type), *Sing* (pastel anime girl in a red dress on lilac clouds under a yellow crescent, diagonal yellow light streaks,
@@ -130,7 +130,7 @@ lines, halftone dots, lightning-yellow streaks.
 **Banner:** a pastel anime sky with lilac clouds and diagonal yellow light streaks, two runners mid-stride as silhouettes, the
 red Kode PinK script large across it.
 
-## SAYMØRE (new): Cal's artist brand, built out
+## SAYMØRE (approved, Cal 2026-11-06: "Confirmed"): Cal's artist brand, built out
 
 **Source (`docs/ref/saymore/` and the SAYMØRE Studio artifact):** five Spotify covers (*KICKBACK*, *NO COPY*, *CRUSH*,
 *GO OFF*, *HIM*), the neon mascot and the EPK palette. They share one look: a masked figure whose head is the **Ø mark** (a
