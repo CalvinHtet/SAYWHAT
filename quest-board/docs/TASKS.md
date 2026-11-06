@@ -190,7 +190,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
   cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
+- DONE by QA (QA findings: pass). WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
   prize (now only after its three amulet pieces; rerun riftodds.py for the new days), the team's tops, and the usual
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
 Art and room code requests (LEAD asks, ROOMS does):
@@ -316,6 +316,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.51's pre-release check (rule 18 step 2, ac8d2f0, APPV 51; `shots/v51/`): pass, ready to publish. The Rift Mask as the
+  Spire's last prize (6682998): the real roll (new `riftlive.js`, 6,000 `__qbDungeon.roll('m5')` each) never gives it while a Spire
+  piece is missing (0 with none, 0 with silence missing); with tide, thorn and silence found it comes on 6.4% of rolls (about 6.9%
+  expected); never once owned; not for sale in the Shop. New days (`riftodds.py`, 20,000 players): at 2 Spire runs a day the pieces
+  are all in by day 6 (median) and the mask follows about 4 days later, median day 11, 71% by day 14, 90% by 20, 98% by 30; at 1 run
+  a day, median day 23, 90% by 40. The team's tops: each member in their home room in their own top, Mara in chef whites. The
+  usual set: savecheck passes; screens at 360 and 390 px fit; older saves keep their areas (level 30: all 8; level 3: the Hall
+  waits); a brand-new player lands on the Board in v0.51, desktop and phone; doors 36 of 36 on Cal's rule; voice.js 0 of 1,354;
+  Shop 44 checks; Trophy Room passes; building backdrops at 13:00 and 22:00. New saves: 12-task to day 12 (level 33; Garden day 4,
+  Restaurant offered day 6, Boba day 9-10, Dessert offered), casual to day 14 (level 18, Garden and Restaurant); watered, never
+  dry; no played day without something to buy. Day 5 of the 12-task run counts 2 unlocks, but the second is the closet, a Loft
+  upgrade the player buys (v0.50's run had it on day 4 beside the Garden), so it is not new. No page errors. Owner: LEAD (publish).
 - QA, the Rift Mask's drop odds (e389afa, new `rigtest/qa/riftodds.py`, a copy of dgRoll, 20,000 players, days counted from the
   first Spire run): the mask is Obsidian Spire only, 1 in 8 on a gift that is not a set piece, until owned. At 2 Spire runs a day
   the median is day 7 (half by day 7, 85% by 14, 90% by 17, 99% by 30, unluckiest 71). At 1 run a day the median is day 14 (87% by
@@ -1367,8 +1379,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.51's pre-release check (ac8d2f0, a clean copy on 8769): the Rift Mask's new days, the tops, the usual set. Next:
-  v0.51's published copy once Cal has reported on v0.50. (on deb1b20)
+- Now: nothing waiting; v0.51 (ac8d2f0) passed. Next: v0.51's published copy once LEAD publishes it. (on 0985caf)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
