@@ -6,16 +6,15 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (since 1:37 am)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.50 (f3c970c) (page version 21), 2026-11-05.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copies: v0.51 (ac8d2f0), 2026-11-06, the newest; v0.50 (f3c970c) stays pinned beside it.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal: his phone test of v0.50 (pinned). v0.51 (ac8d2f0) passed QA's pre-release check (a25876d) and is held,
-  per rule 18 step 6: it is published as a fresh pinned copy when Cal reports on v0.50 or says go. Nobody else plays until
-  there is a working version. (on 3ef2780)
+- Now: WAITING ON Cal: his phone test of v0.51, published and pinned on his go ("Pin v0.51 when ready"), 454 files from
+  ac8d2f0. WAITING ON QA for the page check. Nobody else plays until there is a working version. (on 3abcab6)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -194,6 +193,8 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
   prize (now only after its three amulet pieces; rerun riftodds.py for the new days), the team's tops, and the usual
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
+- WAITING ON QA: check the published v0.51 (rule 18): the pinned artifact "Quest Board v0.51 (test, fresh start)" (slug
+  936a4ed4-352b-4086-bf94-70d28d1b22a3, 454 files from ac8d2f0, db + user + sample with images). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
