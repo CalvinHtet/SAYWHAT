@@ -463,6 +463,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's b85b038 halo-mask rules (on 2282af8; `shots/qa/sm/*_2282af8.png`, new `sleeper.js`, `maskbed.js`): pass, so SAYMØRE is
+  15 of 15. The mask stays on in all 22 poses on both bodies, sleepHead included; every glasses and face piece (shades, butterfly,
+  wrap, V-shade, goggles, the Rift Mask, NC shades, SMOKE BOMB's cowl) is hidden under it, gaiter and buff too; in the real Bedroom
+  awake with the mask and shades on, no shades show. The bed's own sleeping figure (QBLoft.sleeper, the picture the bed draws) keeps
+  the mask and the halo; a cap still comes off and shades alone still drop in bed, as before. Not seen: the player actually lying
+  down in a live Bedroom (at 2 am in the test the player stayed up); the sleeper picture is the one the bed uses. Owner: LEAD.
 - QA, ROOMS's 8cab74a SAYMØRE pendant (on 8cab74a, `shots/qa/sm/pendant_8cab74a.png`, `icon_pendant_8cab74a.png`): pass. No body
   outline left in any pose on either body, alone or in an outfit; the chain and the Ø stay bold in front; from behind nothing draws
   (frontOnly, like the shades); the icon shows only the chain and the Ø. SAYMØRE is 14 of 15 now; still open: LEAD's two halo-mask
@@ -2011,7 +2017,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: SAYMØRE 14 of 15 (pendant fixed); waiting on LEAD's halo-mask rules (sleepHead, glasses over it). Ping-pong retirement passes. (on 8cab74a)
+- Now: nothing waiting on QA. SAYMØRE 15 of 15 (mask rules pass). Next: SMOKE BOMB's wear test when ROOMS sends it. (on 2282af8)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
