@@ -13,10 +13,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.62 built from 081ac04 (APPV 62, clean worktree; ROOMS's Restaurant round 2 through 4b7ef27 and 5d0986c). WAITING
-  ON QA's full set on that exact hash, then LEAD publishes and pins. Since then (next version): 01deb94 reactions (no coin cap)
-  and the Hall badge, reruns on; 436a82b rule 19, new brands made without Cal's approval (brand_runway.py, BRAND_AUTOGEN.md).
-  Kode PinK rows after QA's wear test (ROOMS 1dde4e1, id kp). Waiting on Cal: a launch date. (on 436a82b)
+- Now: v0.62 (081ac04) passed QA's full set except the Diner's small menus overlapping the ORDERS board. WAITING ON ROOMS's
+  nudge (asked to do it before SAYMØRE); then LEAD rebuilds v0.62 from main (with 01deb94 reactions and reruns), QA rechecks
+  the Diner and the file match, LEAD publishes and pins. Kode PinK rows after QA's wear test (ROOMS 1dde4e1, id kp). 436a82b
+  rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 436a82b)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
