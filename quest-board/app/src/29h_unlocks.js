@@ -14,7 +14,8 @@ function unlockSlotFree(L){return (L||0)>=ECON.oneSlotBelow||S.unlockDay!==today
 function unlockTake(){S.unlockDay=today()}
 function areaReveal(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).sort(function(x,y){return x[2]-y[2]})[0];
   if(!w||!unlockSlotFree(w[2]))return null;
-  if(w[2]<ECON.oneSlotBelow&&typeof styReadyLow==="function"&&styReadyLow())return null;areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
+  var sl=w[2]<ECON.oneSlotBelow&&typeof styReadyLow==="function"?styReadyLow():0;if(sl&&sl<=w[2])return null;/* a story step from the same or a lower level goes first */areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
+function areaLowestWaiting(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).map(function(a){return a[2]});return w.length?Math.min.apply(null,w):0}
 var unlAreaGateBase=areaGate;
 areaGate=function(id){return unlAreaGateBase(id)||areaWaiting(id)};
 /* a day with no level-up still brings the next waiting area */
