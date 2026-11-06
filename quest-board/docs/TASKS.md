@@ -623,7 +623,7 @@ Doing:
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
   64e4735). 15-minute loop running (rule 16). (on 64e4735)
-- WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
+- TAKEN by QA. WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
   (Hole in the Wall, Corner Diner, Bistro, Noir), with and without the Sidewalk Patio. Look for furniture against the
   painted walls that floats or overlaps a window, the kitchen divider lining up with the kitchen tile, the front door mat.
   Furniture is the old set; Cal wants sleek fine-dining pieces next, so note placement lessons, not sprite tickets.
@@ -725,7 +725,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on db59276)
+- Now: the Restaurant's painted shells (ROOMS's 64e4735), test copy only. Next: the fixes for Cal's phone notes. (on ad98b24)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
