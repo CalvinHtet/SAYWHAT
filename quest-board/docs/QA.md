@@ -771,3 +771,16 @@ the podium; no page errors. Notes:
    One floor, or the four tiles on one grid.
 3. **Fine as is:** the high tables on the floor's edge are used live; the photographer at the rope faces the arrivals; the coat check
    by the door is where coats come off.
+
+### Nightclub, round 2 (ROOMS's 1eb0bbc, on 8f1498d, at 22:00; `shots/review2_club_full.png`, `review2_club_live.png`)
+
+The dance floor is one LED floor on one grid; live, the bartender works (behind the bar or mixing in 8 of 12 looks), guests sit in
+the VIP booths, dance and order. Small: the DJ is at the decks in only 3 of 12 looks and wanders the rest of the time, so the booth
+is mostly empty; a DJ who stays at the decks (as the clerk stays at a counter) would read right. Otherwise ready for Cal.
+
+### The team in their own rooms (ROOMS's abb6513, LEAD's request 3, on 8f1498d; `rigtest/qa/teamrooms.js`; `shots/team_plaza.png`, `team_sable_lair.png`, `team_theo_theater.png`)
+
+Pass. With all five joined, each building's view holds each member in their home: Sable in the Lair, Mara in the Restaurant, Rafe in
+Lock and Key, Nova in the Mall, Theo in the Theater lobby, each drawn with a ring in their colour and a name tag (also inside the
+room windows); with only Mara joined, only Mara is drawn. At building-view zoom the tags are too small to read (fine; they read in
+the room windows). No page errors.
