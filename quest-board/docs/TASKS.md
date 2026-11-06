@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 4:20 am)
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.53 (743c30c), 2026-11-06, the only one pinned (Cal: "remove all the pinned artifacts and pin the latest"). From now on LEAD keeps only the newest version pinned.
 
@@ -1420,14 +1420,15 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: Cal's notes from his v0.52/v0.53 phone test (2026-11-06). WAITING ON QA: shadows (9593432), the upgrade audit and
-  the Tulle Skirt (passed; LEAD adds the skirt flag). Editing, not committed: `20_loft.js` (Bedroom art off the Closet door,
-  neon sign to the back wall), `27_rooms.js` (Sleek Wardrobe renamed Figurine Cabinet), `27b_skins.js` (Game Room foosball
-  away from the arcade). Chrome claimed for: Bedroom wall tiers 3 and 4 repainted without the grass panel (it hid the Moss
-  Art Panel; 8 images, `bdw_t3*`, `bdw_t4*`), and a back view of the Game Room beanbags so they can face the retro TV.
-  Then: every upgrade name checked against what is drawn (Cal), all to QA.
+- Now: WAITING ON QA (rule 17 + design review, since 4:45 am): 60ab997, Cal's phone-test notes (2026-11-06):
+  Bedroom art off the Closet door, tiers 3 and 4 repainted without the grass panel (Moss Art Panel shows on every tier;
+  Living Grass Wall is now Feature Walls), Sleek Wardrobe is now Figurine Cabinet; Game Room foosball clear of the arcade,
+  retro TV turned to the room and back-view beanbags facing it (`gmx_beanb`); names fixed (Bowling Score Console and
+  Strike Screen, Theater Lobby Bins and Gold Ticket Booth, five Bedroom lines). Also WAITING ON QA: shadows (9593432), the
+  upgrade audit. Every room's names read against what it draws: the storyboard rooms are checked; the nine rooms not on
+  the storyboard (lounge, bar, farm, studio, gym, library, sky, dojo, spa) were not. Chrome free.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. (on 641c197)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. (on 60ab997)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
