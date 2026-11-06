@@ -204,7 +204,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   docs: 16 of 16 pass (posts, delete, visit note, one note per visitor, the visit buff, no refused writes, no page errors),
   script in `shots/townrules_lead.js` (port 8766). Not checkable headless: the real rules on a real page with two accounts,
   which is QA's 15-player test after the next publish. LEAD declares `app/dbcaps.json` at that publish.
-- TAKEN by QA. WAITING ON QA: check 414a730, necklaces in the yawn (your finding (1)). `src/rig.js`: when a top is painted for the pose, the
+- DONE by QA (QA findings: pass). WAITING ON QA: check 414a730, necklaces in the yawn (your finding (1)). `src/rig.js`: when a top is painted for the pose, the
   neck layer's parts up to the top's last group move to right after the painted top; nothing else changes order, and poses
   without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
   42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
@@ -332,6 +332,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, necklaces in the yawn (LEAD's 414a730, on 198c87b; `shots/yawn/neckfix/`): pass. Every shop top (31) with every
+  necklace (7) in the yawn, both bodies: 434 cells, 0 fails, every necklace shows (the two chokers small at the tilted neck,
+  as in other poses). Each top with other trousers, a hat and a necklace, short and long hair: 62 cells each, necklaces show,
+  long hair falls beside them. Nothing else moved: the whole neck sheet (952 cells, standing) is byte-identical before and
+  after, and two all-pose sheets (varsity with the chain, the fox tee with the star) differ only in their two yawn cells (new
+  `rigtest/qa/celldiff.js`, a cell-by-cell pixel diff). ROOMS's two fixes (the starter tops' yawn, m_base_yawn's hips) are
+  still to come. Owner: LEAD (ready for the next version).
 - QA, the yawn for the other 28 tops (ROOMS's 503cd3f, rule 17, on 2aecc59; `shots/yawn/`): the tops pass, 3 fixes needed.
   Pass: every shop top (31) in the yawn, both bodies, short and long hair, 46 cells, 0 fails: no tears at the shoulder,
   armpit or elbow; before and after (v0.51 against now) the blazer, Sable's and the coach jacket tore at the shoulder and
@@ -1429,8 +1436,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's necklace fix in the yawn (414a730), every top with every necklace, test copies only. Next: ROOMS's two yawn
-  fixes when sent; the 15-player town test after the next publish. (on 198c87b)
+- Now: nothing waiting; the yawn necklace fix passed. Next: ROOMS's two yawn fixes when sent; the 15-player town test after
+  the next publish. (on 198c87b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
