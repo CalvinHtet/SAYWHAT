@@ -15,10 +15,15 @@ function qbtOpen(t,quiet){if(qbtSlot(t)>=0)return;var o=styState(),s=styStep(t);
   try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}
   if(!quiet){persist();render();pop("Opened "+((ROOMT[t]||{}).name||t))}}
 function qbtAll(t,on){var i=qbtSlot(t);if(i<0){qbtOpen(t,1);i=qbtSlot(t)}var r=S.base.slots[i];r.a={};
-  if(on)(ADDONS[t]||[]).forEach(function(a){r.a[a[0]]=1});persist();render();pop(((ROOMT[t]||{}).name||t)+(on?": every upgrade":": no upgrades"))}
+  /* QA: retired pieces stay out (the game no longer sells them); an upgrade that opens a room opens that room too */
+  if(on)(ADDONS[t]||[]).forEach(function(a){var m=a[3]||{};if(m.retired)return;r.a[a[0]]=1;if(m.opens&&qbtSlot(m.opens)<0)qbtOpen(m.opens,1)});persist();render();pop(((ROOMT[t]||{}).name||t)+(on?": every upgrade":": no upgrades"))}
+/* QA: a lot or upgrade step only offered the room, so every tap re-offered the Garden. A step plays its scene first (if it has
+   one and hasn't been accepted), and otherwise is built right away, the way Open does it. */
 function qbtNextStep(){var o=styState();for(var k=0;k<STORY.length;k++){var s=STORY[k];if(o.done[s.id]||(s.room&&styHas(s.room)))continue;
     document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});
-    if(s.scene){try{styScene(s);return}catch(e){}}styOpen(s);pop("Story: "+s.id);return}
+    if(s.scene&&!o.offer[s.id]&&!(o.seen&&o.seen[s.id])){try{styScene(s);return}catch(e){}}
+    if(s.room&&ROOMCELL[s.room]){qbtOpen(s.room);return}
+    styOpen(s);o.done[s.id]=1;persist();pop("Story: "+s.id);return}
   pop("The story has no steps left")}
 function qbtHtml(){var B=qbtRooms(),h='<div class="card box2 qbtr"><span class="label">Testing</span><h2 style="font-size:28px;margin:0 0 6px">Rooms</h2>'
   +'<p class="note">Skip the waiting. Open any room, own all of its upgrades to see every piece of art, or move the clock.</p>'
