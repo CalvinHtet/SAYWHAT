@@ -5,7 +5,7 @@
 const { chromium } = require('playwright');
 const load = async (b, base) => { const p = await (await b.newContext({ viewport: { width: 440, height: 900 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 90000 }); await p.waitForTimeout(1500);
-  await p.evaluate(() => { const x = window.__qb.x(); x.S.created = true; x.S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); x.render(); document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); document.querySelector('.nav button[data-v="shop"]').click(); });
+  await p.evaluate(() => { const x = window.__qb.x(); x.S.created = true; x.S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); x.S.xp = x.cum(12); x.S.gates = [5, 10]; x.render(); /* the Shop opens with levels */ document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); (document.querySelector('.nav button[data-v="shop"]') || [...document.querySelectorAll('.nav button, nav button')].find((e) => /shop/i.test(e.textContent + (e.dataset.v || ''))) || { click() {} }).click(); });
   await p.waitForTimeout(1500); return { p, errs }; };
 const shopText = (p) => p.evaluate(() => (document.querySelector('#app').innerText.match(/[^\n]*(drop|Monday|Thursday|vault|HANGANG|Y2K)[^\n]*/g) || []).slice(0, 8).join(' | '));
 (async () => {

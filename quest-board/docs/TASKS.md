@@ -465,6 +465,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 5688ce3 Wednesday returns (on 4830bf7, `wedback.js`, two pages, every 6 h for 120 days): pass on the schedule. Weekly mode:
+  both pages agree, the brand changes 15 times, every one at Wednesday 00-05h Pacific, never the same twice running (hanga and y2k
+  alternate from Nov 25). Launch mode: pages agree; one return (hanga from Dec 23) that then stays every week, because the 5-brand test
+  set retires only one. Not checked by QA: the Shop's own tab and header text (my script did not get the Shop screen open; LEAD's
+  wedback.js read "↺ HANGANG"). Not started: ff9ba96 class card art. Owner: LEAD.
 - QA, ROOMS's art batch (on beaf1a2 and 4830bf7; pictures in `shots/qa/`, untracked): all pass. 4bcda62 dry beds and watering
   (`gardenwater.js`, 390x844): 5 bed types show their dry twin; Water shows 6 cans from about 0.8 to 2.3 s while the dry layer fades
   1 to 0; no bed moves (raised, tomato, herb identical boxes; bed2 and berry by eye); with Sprinklers and the last watering 5 days old
@@ -1904,7 +1909,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's art batch passes (garden water, beds, shadows, backdrop, sweatband, seven portraits). Next: LEAD's 5688ce3 (Wednesday returns), ff9ba96 (class card art). (on 4830bf7)
+- Now: Wednesday returns pass. Next: LEAD's portrait sizing (after 4830bf7), ff9ba96 (class card art), the street camera when LEAD sends it. Messages to other chats paused until Cal types here. (on 4830bf7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
