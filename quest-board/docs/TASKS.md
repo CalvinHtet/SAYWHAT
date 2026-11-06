@@ -204,7 +204,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   docs: 16 of 16 pass (posts, delete, visit note, one note per visitor, the visit buff, no refused writes, no page errors),
   script in `shots/townrules_lead.js` (port 8766). Not checkable headless: the real rules on a real page with two accounts,
   which is QA's 15-player test after the next publish. LEAD declares `app/dbcaps.json` at that publish.
-- WAITING ON QA: check 414a730, necklaces in the yawn (your finding (1)). `src/rig.js`: when a top is painted for the pose, the
+- TAKEN by QA. WAITING ON QA: check 414a730, necklaces in the yawn (your finding (1)). `src/rig.js`: when a top is painted for the pose, the
   neck layer's parts up to the top's last group move to right after the painted top; nothing else changes order, and poses
   without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
   42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
@@ -1429,8 +1429,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; the yawn tops are checked (3 fixes out). Next: recheck those fixes; the 15-player town test after the
-  next publish. (on 92c3854)
+- Now: LEAD's necklace fix in the yawn (414a730), every top with every necklace, test copies only. Next: ROOMS's two yawn
+  fixes when sent; the 15-player town test after the next publish. (on 198c87b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
