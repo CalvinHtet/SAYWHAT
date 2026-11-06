@@ -784,3 +784,17 @@ Pass. With all five joined, each building's view holds each member in their home
 Lock and Key, Nova in the Mall, Theo in the Theater lobby, each drawn with a ring in their colour and a name tag (also inside the
 room windows); with only Mara joined, only Mara is drawn. At building-view zoom the tags are too small to read (fine; they read in
 the room windows). No page errors.
+
+### Writing pass, round 2 (ROOMS's e74cf92, on 5048cae; `rigtest/qa/voice.js`, `shots/voice_5048cae.txt`)
+
+`voice.js`: 1,353 lines, 4 break a mechanical rule (was 5): Game Room Gaming Desks is 99 characters with its "+2% XP" tail
+(ROOMS: shorten the line); the gym Squat Rack's "The real boss fight." (LEAD's, as ROOMS said); the Mall fountain's "Everyone meets
+here." (ROOMS); the drake pet's "next level" and 97 characters (`16_interface.js`, LEAD). Read by ear, most rewritten lines in the
+Arcade, Rhythm, VR, Bowling, Karaoke and Nightclub now lead with one concrete detail, as VOICE.md asks. Six still end on a joke and
+the script cannot see them: Prize Counter "Ten thousand tickets for a keychain."; Score Screens "Your name in lights, usually
+losing."; Lyric Screen "The words, slightly too fast."; Song Kiosk "Twenty thousand songs, four of them good."; VIP Booth "a bill you
+will regret."; Speaker Stacks "You feel it before you hear it." One spelling slip: the LED Dance Floor says "color" where VOICE.md and
+the rest say "colour".
+
+Nightclub DJ (same commit): with the spot in front of the decks, live at 22:00 the DJ works the decks in 9 of 12 looks in one run and
+5 of 12 in another (was 3 of 12). Good enough; the booth reads as staffed.

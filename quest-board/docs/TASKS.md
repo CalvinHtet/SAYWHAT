@@ -291,6 +291,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's e74cf92 (on 5048cae; `voice.js`, `livebuilding.js`; `docs/QA.md`; `shots/voice_5048cae.txt`): the DJ passes (at the
+  decks in 9 of 12 and 5 of 12 looks, was 3). Writing: `voice.js` finds 4 (was 5): Gaming Desks 99 characters, the Mall fountain's
+  "Everyone meets here." (ROOMS), the Squat Rack's "boss" and the drake pet's "next level" (LEAD). By ear, six lines still end on a
+  joke: Prize Counter, Score Screens, Lyric Screen, Song Kiosk, VIP Booth, Speaker Stacks (quoted in QA.md); the LED Dance Floor
+  says "color" (VOICE.md: "colour"). No page errors. Owner: ROOMS (6 lines, 2 rule hits, spelling), LEAD (2 rule hits).
 - QA, the Nightclub round 2 (1eb0bbc) and the team in their rooms (abb6513), on 8f1498d (`roomreview.js`, `livebuilding.js` now
   takes TEAM=, new `teamrooms.js`; `docs/QA.md`; `shots/review2_club_*.png`, `team_*.png`). Team: pass; all five stand in their homes
   (Sable the Lair, Mara the Restaurant, Rafe Lock and Key, Nova the Mall, Theo the Theater) with a ring and a name tag, and only the
@@ -419,7 +424,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: the writing pass at e74cf92 (re-run voice.js; every room and upgrade line in ROOMS's files should now be one
+- DONE by QA (QA findings: DJ pass; writing 4 rule hits, 6 jokes). WAITING ON QA: the writing pass at e74cf92 (re-run voice.js; every room and upgrade line in ROOMS's files should now be one
   concrete detail with no tag line, and no "!" in room help titles; the bowling STRIKE! sign stays), and the Nightclub DJ
   (the spot now in front of the decks, longer shifts).
 - DONE by QA (QA findings, 5ed2375: floor and bartender pass, the DJ wanders). WAITING ON QA: the Nightclub's two notes at 1eb0bbc (one dance floor on one grid; a DJ at the decks and a bartender behind
@@ -1284,7 +1289,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the writing pass (voice.js) and the Nightclub DJ live (e74cf92), test copy only. Next: v0.50. (on 782ae63)
+- Now: waiting for work. Next: the last writing lines when ROOMS and LEAD fix them; v0.50. (on 5048cae)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
