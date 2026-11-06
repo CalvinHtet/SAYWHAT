@@ -274,7 +274,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   top right while the creator is open. `shots/ccbegin.js`: 390x664, 844x390, 740x360, 1280x800, Begin on screen and tappable
   in all four scroll states, the pill over no creator button; no page errors. Not checked by LEAD: savecheck/screens on this
   build. ROOMS's shadows (9593432) are in it too.
-- WAITING ON QA: check the published v0.55: "Quest Board v0.55 (test, fresh start)" (slug 6ad04c53-fdb5-4cd9-b39b-44eb276d38ed,
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.55: "Quest Board v0.55 (test, fresh start)" (slug 6ad04c53-fdb5-4cd9-b39b-44eb276d38ed,
   462 files from 17d4b44: 20 core, 442 art with the new gmx_beanb; the 9 db rules + user + sample with images; version
   1793969778-98a7). Check the page matches the build.
 Art and room code requests (LEAD asks, ROOMS does):
@@ -405,6 +405,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's v0.55 fixes (a96c4f7, on 18df296; `shots/a96/`): pass. Dark floors (Lock and Key, Speakeasy, Arcade, Rhythm,
+  Karaoke, Club, Lair, Auditorium): the shadows now show, 4 to 6% of each room by day and 2 to 5% at night (v0.55: under 1%);
+  Lock and Key and the Speakeasy read grounded under every piece (`four.png`). Taste: the black at 0.92 is strong; under the
+  Speakeasy's upright piano it spills a near-black patch onto the floor in front (`sp_cmp.png`); fine, but if Cal finds the dark
+  rooms heavy, 0.8 is the knob. Auditorium: seat rows, speakers and projector all cast one now. Boba: the Plant Shelf hangs on
+  the wall above the bench, no floor shadow. Game Room against the references: much closer, one table, the ping-pong gone,
+  clear floor in front of the pool table; still tight at its back edge, where the orange beanbag meets its back-left corner and
+  the sofa's left arm nearly meets its back-right rail, so a cue at either end would hit them; a quarter tile more each way would
+  do it. Names: Velvet Tufted Bed reads right; the Game Room pairs replace each other, fine. No page errors. Owner: ROOMS (the
+  Game Room nudge, optional).
+- QA, the published v0.55 (slug 6ad04c53, version 1793969778-98a7): pass, 460 of the 17d4b44 build's 461 files identical (the new
+  gmx_beanb included), none missing, index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet (the
+  database is empty). Owner: LEAD.
 - QA, v0.55 (17d4b44, APPV 55, built clean, with ROOMS's shadows 9593432 and phone-note fixes 60ab997 in it; `shots/v55/`): pass,
   publish it; the fixes below go in the next version. Skirts: v_tulle and h_pleat hang as one piece in every walk and backwalk
   frame (v0.54 split both, the pleat badly; `skirts.png`). Glow: at its peak the new faded layer looks the same as the old
