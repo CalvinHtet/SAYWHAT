@@ -317,7 +317,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   unlocks, one at a time as before, each spending one (29h_unlocks.js, 29b_story.js, 29_prices.js qbWeek). Testing only:
   nothing sets testFree but Skip a week. `shots/gardentest.js`: a fresh save, Level up x4 -> level 5 with gate 5 passed; the
   first Skip opens the Hall and offers the Garden lot (testFree 5 left); no page errors. Not checked: savecheck/screens.
-- BLOCKED by QA (QA findings). WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
+- DONE by QA (QA findings: pass, publish; Cal accepted two known items). WAITING ON QA: check v0.61, d9d92d7, in place of v0.60 and v0.59 (rule 18: your pass publishes it). New over v0.60, Cal: "Once
   ready, publish so I can test the garden. Start me at level 5 as if I've just completed the job advancement". QB_TEST_START = 5
   (29_prices.js): a brand-new character (ccdone, first time only; old saves untouched) starts at level 5 XP with gate 5 passed
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
@@ -465,6 +465,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.61 rebuilt (c48c7af, APPV 61; Cal: "Publish 0.61 now and continue with other tasks"): pass, publish. On the exact build:
+  savecheck, screens (360, 390), old saves, the level-5 start (1,205 coins, gate 5, the right areas; Add 10,000 then the Garden builds),
+  Kode Plaza stages 0, 1, 2 and tapping in, town rules 32 of 32, doors 36 of 36, Shop 44, Trophy Room, the Rift Mask, the team,
+  diag/load, Begin at 10 sizes with the pill hidden in the creator, all 30 rooms: all pass, no page errors. Ships with two known
+  Game Room items Cal accepted: the ping-pong table blocked at both ends; the TV console not lined up (also its description is 101
+  characters, one over the limit, `voice.js`; d34d2ce lines it up but keeps the text). Owner: LEAD (publish), ROOMS (the two items).
 - QA, correction (Cal, 2026-11-06, phone screenshot: "The tv and stand are not lined up properly"): QA's pass of 9d5aed7 is withdrawn;
   QA missed it. The slim console sits shifted left and forward of the TV: its left end past the screen's left side, its right end
   well short of the right, so it cuts across the screen's lower left instead of sitting under it; the floor lamp's pole stands in
@@ -1805,7 +1811,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; the plaza and Game Room pieces passed, ping-pong waits on Cal. Next: the rebuilt v0.61. (on 9d5aed7)
+- Now: ROOMS's d34d2ce (the TV console centred, artIf) and LEAD's 60e3e50 (the town board for many players). Next: v0.61's page. (on f2822e6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
