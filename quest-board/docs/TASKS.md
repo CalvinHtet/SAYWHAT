@@ -1061,20 +1061,20 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   walls swapped for cohesion, furniture "highly detailed, carefully placed, and have cohesiveness between the entire room"):
   `docs/QA.md`, Lessons for the next art pass: 12 rules, every room against isometric references, and the upgrades whose
   picture does not match their name. Owner: ROOMS, before generating any wall shell or furniture.
-- Doors, Cal's rule (a back-left door comes out of the next room's front-right edge, back-right to front-left): 12 of 15 pairs
+- DONE by ROOMS in fd80c50 and 3962ee2 (doors.js: every pair passes). Doors, Cal's rule (a back-left door comes out of the next room's front-right edge, back-right to front-left): 12 of 15 pairs
   break it; only Closet/Lair, Theater/Auditorium and Mall/Karaoke follow it. Table in `docs/QA.md`, Doors; recheck with
   `LOGIC=1 node rigtest/qa/doors.js`. Owner: ROOMS (`portal()` in `27_rooms.js`, already on ROOMS's list as Doors that make sense).
-- Doors: every "up" arrow sits in the frame's top-left corner, but 7 of 9 doors up are on the back wall, top right (Bedroom to
+- DONE (rmArrows puts each arrow at its own door's corner; doors.js passes on 3962ee2). Doors: every "up" arrow sits in the frame's top-left corner, but 7 of 9 doors up are on the back wall, top right (Bedroom to
   Patio, Restaurant to Upstairs, Bar to Roof, Boba to Dessert, Dessert to Speakeasy, Mall to Bowling, Arcade to Rhythm). Put
   each arrow on its own door's side. `rmArrows`, `26_world.js`; `shots/doors_windows.png`. Owner: ROOMS.
-- Doors: furniture stands on 8 door glows, everything bought: Bedroom to Closet (wardrobe, dog bed), Restaurant to Upstairs
+- DONE by ROOMS in 3962ee2 (doors.js: none, but the Mall escalator, which is the way up). Doors: furniture stands on 8 door glows, everything bought: Bedroom to Closet (wardrobe, dog bed), Restaurant to Upstairs
   (plant divider, table), Boba to Dessert (tea urns, fryer), Dessert to Boba (cupcake stand), Dessert to Speakeasy (macaron
   tower), Arcade to Rhythm (claw machines), Rhythm to Arcade (speaker tower), VR to Arcade (racing pod). `shots/doors_closeups.png`.
   Owner: ROOMS.
-- Doors: the Mall opens straight into Karaoke two floors up, over Bowling (`ROOMCELL`). Small. Owner: ROOMS, Cal to say.
+- DONE by ROOMS in 0eb00c2 and c829e7e (Karaoke is upstairs from Bowling; a stand-in Mall door only for a save with Karaoke and no Bowling). Doors: the Mall opens straight into Karaoke two floors up, over Bowling (`ROOMCELL`). Small. Owner: ROOMS, Cal to say.
 - DONE in b92a6dd (doorway in the left wall, wardrobe gone; figurine cabinet art next). Bedroom (Cal, 2026-11-05): the wardrobe stands where the Closet entrance belongs; Cal asked ROOMS to make it the figurine
   shelf (on ROOMS's list). Owner: ROOMS.
-- Bedroom (Cal): Anime Poster is not obvious: three small random pictures, too close to the right end of the wall. He wants
+- DONE by ROOMS in bd895a7 (one big original anime poster, approval 6). Bedroom (Cal): Anime Poster is not obvious: three small random pictures, too close to the right end of the wall. He wants
   something apparent, and anime art on an anime poster, not scribbles. `shots/up_bedroom.png`, tier 19. Owner: ROOMS.
 - DONE in b92a6dd (canvas on the left wall, shelf in the back corner). Bedroom: Canvas Art (200) and Figurine Shelf (200) are never drawn once Floor-to-Ceiling Glass is owned (`&&!w3`,
   `20_loft.js` ~3210), and the menu sells the glass first, so both are paid for and invisible: 0 px change. Tiers 17 and 21
@@ -1127,12 +1127,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON CAL. Eleven rooms through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby,
-  the Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke, the Nightclub); the team in their rooms and
-  the writing pass passed QA (abb6513, e74cf92, a646e51). Held for Cal: signature team cosmetics wait on his look at the
-  team banners and portraits (approvals 12, 13). LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`,
-  `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new
-  `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on a646e51)
+- Now: WAITING ON QA: the doors (3962ee2: every pair on Cal's rule, no furniture on a door glow but the Mall escalator).
+  WAITING ON CAL: eleven rooms through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby, the
+  Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke, the Nightclub). Held for Cal: signature team
+  cosmetics (wait on approvals 12, 13). LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`,
+  `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar`
+  needs `ml_bow`. Chrome claimed. (on 3962ee2)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
