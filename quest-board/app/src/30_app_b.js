@@ -1492,6 +1492,8 @@ render();try{chLoad()}catch(e){}
     else{window.__qbBootErr=!window.claude?"no runtime":!db?"no database":"no id";db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
   }catch(e){window.__qbBootErr=String((e&&(e.code||e.message))||e);db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}
   loaded=true;
+  /* areas seen so far, from the level this save loads at (29h_unlocks.js): a new save starts with none past level 1 */
+  try{areaOn()}catch(e){}
   setTimeout(brandCheck,1500);
   saveMode=db?"cloud":"local";
   ownerView=own&&!!db;
