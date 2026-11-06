@@ -464,6 +464,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 4f0d21f SMOKE BOMB in the Shop (on 140a83d, `shop.js` BRAND=smk; `shots/qa/smk/shop_*_4f0d21f.png`): pass. 15 on him
+  and 15 on her bought at full price through Try on, Checkout, Confirm, worn and in the mirror. The three art fixes from the wear test
+  (the cloak hem, the band and vest designs) still stand with ROOMS. QA's old local servers are stopped (66 of them); none of QA's
+  scripts point at LEAD's ports. Owner: LEAD.
 - QA, ROOMS's a07439f SMOKE BOMB wear test (on 5660c2e; `shots/qa/smk/`): 12 of 15 pass, three fixes. All 15 on both bodies in all
   22 key poses, 0 draw failures; three outfits. ROOMS's five points: (1) no stray specks on the cloak or hakama, but the cloak's torn
   hem is on the arm layer: in stretch and stretchUp it flies out from the hand like a black wing, and in walks a scrap hangs from the
@@ -2039,7 +2043,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 12 of 15: the cloak hem, the band and vest look like a famous anime's (ROOMS). (on 5660c2e)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 12 of 15: the cloak hem, the band and vest look like a famous anime's (ROOMS); in the Shop it passes. (on 140a83d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
