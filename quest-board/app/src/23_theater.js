@@ -101,9 +101,9 @@ LFROOM.theater=function(C){
   if(H("t_tv"))C.walls.push(lfFaceX(0,2.9,110,scrTrailer(C,U*2.2,56)));
   lfW1(C,"w_thposter",.05,D-.7,64,-70,0);
   if(H("t_marq"))lfW1(C,"w_thmarq",.05,6.7,26,-112,0);
-  if(H("t_reel"))lfW1(C,"w_threel",.05,8.2,40,-92,0);
+  if(H("t_reel"))lfW1(C,"w_threel",.05,5.9,38,-70,0);/* QA audit: at 8.2 it hung behind the film poster (8.3); now between the Screen 1 doors and the sconce */
   if(H("t_clap"))lfW1(C,"w_thclap",2.2,.05,36,-100,1);
-  if(H("t_wl2"))[1.6,7.1].forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)});
+  if(H("t_wl2"))(H("t_tv")?[7.1]:[1.6,7.1]).forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)});/* the 1.6 sconce would sit on the trailer screen */
   /* the concession against the left wall, facing the carpet (QA design review): the stand, a staff aisle, and the candy,
      hot dog and nachos on a back counter on the wall behind it; popcorn at the stand's near end, soda at its far end */
   var lx=lux2,cx=1.8;
@@ -130,7 +130,8 @@ LFROOM.theater=function(C){
     var stl=H("t_taps")?"brL_stool":"br_stool";[bx+.5,bx+1.6].forEach(function(x){lfSpr(C,stl,x,3.0,.7,.7,{h:20,ctr:1,H:42})});
     C.thbar=[bx+1.2,3.9];C.s("work",bx+1.4,1.0,-1,"work",[6,12],{tag:"bartender"})}
   /* the chandeliers hang out of view: only their warm light shows (the sprites stood at floor height mid-room) */
-  if(wing&&H("t_chand"))[[7,6.0],[12,5.0]].forEach(function(p){lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
+  /* QA audit: the chandeliers were light only, so nothing showed by day. Now the brass fixture hangs over each pool of light */
+  if(wing&&H("t_chand"))[[7,6.0],[12,5.0]].forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-118,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
   if(H("t_wl2")||lux4)lfLight(C,W*.45,D*.4,70,"#ffcf8a",3,.3);
   lfDoorAt(C,W);
   lfWander(C,[[W-2.2,D*.5+.4,-1],[3,4.2,1],[6,4.2,-1]]);

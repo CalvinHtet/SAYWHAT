@@ -412,6 +412,10 @@ LFROOM.restaurant=function(C){
     r_k7:["Roast Chicken"],r_k8:["Steak Frites","Duck Confit"],r_p6:["BBQ Ribs"]};
   RS_UPS.forEach(function(u){var d=RSDISH[u[0]];if(d){u[3].menu=(u[3].menu||[]).concat(d);u[4]+=" Adds "+d.join(" and ")+" to the menu."}});
   ADDREQ.r_bigmenu="r_scr";
+  /* QA's upgrade audit: these only fit in a bigger room (the dividers split the booths, the cooler stands in the new
+     kitchen, the dish station needs the second expansion's kitchen), so they are sold once that room exists, never as
+     an upgrade that draws nothing */
+  RS_UPS.forEach(function(u){var n={r_d3:"r_x1",r_cool:"r_x1",r_k9:"r_x2"}[u[0]];if(n)u[3].also=n});
   RS_UPS.push(["r_noir","Noir",2500,{p:.8,lv:28,g:"Expansion",also:"r_x2",splash:"The walls go charcoal, the floor goes dark walnut and the lights drop low. This is the look of a Michelin star."},"Charcoal walls, dark walnut floor, low light."]);
   RS_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});ADDONS.restaurant=RS_UPS})();
 /* The team in their own rooms (LEAD's request 3): each member who has joined stands in their home room in their own look,

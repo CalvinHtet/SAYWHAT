@@ -127,9 +127,12 @@ LFROOM.garden=function(C){
   /* beds, with a walkable lane all round each one */
   var cols=[2,2,3][st],rows=[3,3,4][st],spots=[];
   for(var ry=0;ry<rows;ry++)for(var cx=0;cx<cols;cx++){if(!(st===2&&H("g_koi")&&cx===2&&ry===3))spots.push([BX[cx],BY[ry]])}
+  /* QA audit: More Plots added nothing because crops each took a new bed and the Kitchen Garden's six spots were full.
+     Plot upgrades add beds; crop upgrades plant into a seed or plain bed, and only add a bed when none is free. */
   var beds=["gdx_seed","gdx_seed"];
-  if(H("g_p1"))beds.push("gdx_raised");if(H("g_let"))beds.push("gd_bed2");if(H("g_tom"))beds.push("gdx_tomato");if(H("g_herb"))beds.push("gdx_herb");
-  if(H("g_p2")){beds.push("gd_bed1");beds.push("gdx_raised")}if(H("g_berry"))beds.push("gd_berry");if(H("g_p3")){beds.push("gd_bed2");beds.push("gdx_tomato");beds.push("gd_bed1")}
+  if(H("g_p1"))beds.push("gdx_raised");if(H("g_p2"))beds.push("gd_bed1","gdx_raised");if(H("g_p3"))beds.push("gd_bed1","gdx_raised","gd_bed1");
+  [["g_let","gd_bed2"],["g_tom","gdx_tomato"],["g_herb","gdx_herb"],["g_berry","gd_berry"]].forEach(function(c){if(!H(c[0]))return;
+    var j=beds.indexOf("gdx_seed");if(j<0)j=beds.indexOf("gd_bed1");if(j>=0)beds[j]=c[1];else beds.push(c[1])});
   beds=beds.slice(0,spots.length);
   beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
   if(H("g_spr"))beds.forEach(function(k,i){if(i%2===0){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)}});
