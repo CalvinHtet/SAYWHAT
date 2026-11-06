@@ -45,7 +45,7 @@ function fvToday(){var v=S.visit;return v&&v.d===today()&&v.id?FVISITS.filter(fu
 function fvNames(who){return who.map(function(w){return w.indexOf("dog:")===0?(w==="dog:pluto"?"Pluto":"Chopstick"):FRIENDS[w].name}).join(" and ")}
 /* a friend's picture: the rig, like the player; dogs keep their art */
 var fvImgBase=visitorImg;
-visitorImg=function(w,big){if(w.indexOf("dog:")===0||!FRIENDS[w])return fvImgBase(w,big);var A=big&&fvArt(w);if(A)return '<img class="vart fvart" src="'+A+'" alt="'+esc(FRIENDS[w].name)+'">';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
+visitorImg=function(w,big){if(w.indexOf("dog:")===0||!FRIENDS[w])return fvImgBase(w,big);var A=big?fvPoses(w):[];if(A.length)return '<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(FRIENDS[w].name))+'">'}).join("")+'</span>';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
 /* the day's roll, once a day, the same moment the app first settles */
 function fvPick(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
   var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
@@ -60,6 +60,9 @@ function fvApply(v){var t=today();S.visit={d:t,t:Date.now(),who:v.who.slice(),id
    banner." Each friend gets a detailed illustrated portrait, friend_<id>.webp (ROOMS paints it, transparent background), shown
    on the visit card with an idle animation (breathing, a slight sway, a pop as they arrive). Until the portrait exists the rig
    figure shows, so missing art fails softly. */
+/* Cal: "Yeah 2-3 poses per friend": friend_<id>.webp, friend_<id>_2.webp, friend_<id>_3.webp take turns on the card */
+function fvPoses(w){var o=[fvArt(w)];[2,3].forEach(function(k){var u=fvArt(w+"_"+k);if(u)o.push(u)});return o[0]?o:[]}
+setInterval(function(){var q=document.querySelectorAll(".fvposes");for(var i=0;i<q.length;i++){var e=q[i],im=e.querySelectorAll("img");if(im.length<2)continue;var k=(+e.dataset.k||0)+1;e.dataset.k=k;for(var j=0;j<im.length;j++)im[j].classList.toggle("on",j===k%im.length)}},1700);
 function fvArt(w){var n="friend_"+w+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
 function fvShow(v){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
   var m=modal('<div class="card box2 adv visit"><span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="animation-delay:'+(k*.35)+'s">'+visitorImg(w,true)+'</span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
