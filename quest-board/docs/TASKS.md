@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.54 (a384feb, APPV 54) WAITING ON QA, published as soon as QA passes it. v0.55 is building: skirts (1bbe47f, be8e92c)
-  and the room-window lag fix (NEXT). (on NEXT)
+  and the room-window lag fix (b46bc16). (on b46bc16)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -66,7 +66,7 @@ To do:
       has opened either yet. Nothing to fix until Cal opens v0.51 on his phone.
       REAL NUMBERS, 2026-11-06 11:58, Cal's iPhone (iOS 18.7, Claude app, 440x956, dpr 3, 4 cores) on v0.53, the Loft with a
       room window open: 54.6 fps then 40.8 fps over 5 s, worst frames 324 and 345 ms, 6 and 23 frames over 50 ms, 61 then 33
-      animations running, about 6,600 elements. Real lag in room windows. Found and fixed in NEXT: the level effect fx-pulse animated every card's
+      animations running, about 6,600 elements. Real lag in room windows. Found and fixed in b46bc16: the level effect fx-pulse animated every card's
       box-shadow, so the browser re-drew everything inside a card every frame, a whole room window included (trace: 2.65 s of
       every 3 s in raster, 35 ms in everything else). The glow is now a separate layer that only fades (`app/index.html`).
       `shots/roomcure2.js` (440x840, dpr 3, CPU x4, every room and upgrade, the Bedroom window): 4-6 fps before, 35-46 after;
