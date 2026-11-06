@@ -24,10 +24,23 @@
   // Frames asked for while warming are rendered however long they wait: they are your own character's.
   let warming = false;
 
+  /* Cal (on a phone): "The character in the bedroom is blinking in and out sometimes when he walks around." Safari
+     fetches and decodes a blob URL the first time an SVG image points at it, so a new walk frame could show nothing for a
+     frame. Each frame is decoded into memory before it is offered, and kept decoded while it is cached. */
+  const decoded = new Map();
+  const predecode = (u) => {
+    if (!u || typeof Image === "undefined") return Promise.resolve();
+    const im = new Image();
+    im.src = u;
+    decoded.set(u, im);
+    return im.decode ? im.decode().catch(() => {}) : new Promise((ok) => { im.onload = im.onerror = ok; });
+  };
+
   function remember(k, u) {
     if (urls.size >= D.loft.urlCache) {
       const old = urls.keys().next().value, ou = urls.get(old);
       urls.delete(old);
+      decoded.delete(ou);
       // An image already showing keeps its pixels; give anything mid-load time before freeing it.
       if (ou && ou.startsWith("blob:")) setTimeout(() => URL.revokeObjectURL(ou), 30000);
     }
@@ -53,7 +66,9 @@
         continue;
       }
       try {
-        remember(job.k, await job.make(rig));
+        const u = await job.make(rig);
+        await predecode(u);
+        remember(job.k, u);
       } catch (e) {
         console.error("rig frame failed", job.k, e);
       }
