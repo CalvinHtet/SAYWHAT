@@ -803,7 +803,12 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-  12-minute loop running (rule 16). (on 29c09a7)
+  12-minute loop running (rule 16). (on 82cc1f9)
+- WAITING ON QA: check 8a5ac99, 059bd45 and 82cc1f9 (rule 17), Cal's Garden notes: (1) every bed lines up with the room's grid
+  (fitted top faces), grow lights drawn along the beds; (2) the Estate with the fountain has no sundial, birdbath or
+  topiaries, no lantern in the fountain plaza, the scarecrow by the left wall at every stage; (3) watering: with the beds dry
+  they look parched, tapping the watering can in the back corner waters them (24 h) and they look damp; Sprinklers keep
+  them damp. The Back Plot's stand is a tile further in.
 - DONE by QA (QA findings: pass, 2 small notes). WAITING ON QA: check 29c09a7 (rule 17), your Garden placement fixes and the stand: beds no longer on top of each other (all
   stages); the Kitchen Garden's front spread out (hive and coop front left, shed by the tools, pump by the trellis, gate at
   the walk's end); Grow Lamps are frames over the beds; a crate stand at the Back Plot's gate, the Farm Stand replacing it
