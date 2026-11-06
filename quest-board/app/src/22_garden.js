@@ -80,6 +80,31 @@ function gdNote(r){var a=r.a||{},st=gdStage(a),nx=st===0?"g_x1":st===1?"g_x2":a.
   return '<p class="note"><b>'+GDNAME[st]+'.</b> Growing '+gdRate().toFixed(1)+' ingredients an hour. Pantry '+gdPantry()+'/'+foodCap()+'. '+(rs?'The Restaurant uses '+gdUse(rs)+' an hour and earns +'+Math.round(gdFresh()*100)+'% while it has stock.':'Build the Restaurant to put these to use.')+(N?' Next big step: '+esc(N[1])+' at level '+N[3].lv+'.':'')+'</p>'+(d.length?'<p class="note">On the Restaurant menu because of you: '+esc(d.join(", "))+'.</p>':'')}
 /* the garden draws plain ground: fence, beds and things in rows */
 function gdS(C,k,x,y,w,d,h,o){return lfSpr(C,k,x,y,w,d,Object.assign({h:h,ctr:1},o||{}))}
+/* Cal: the beds sat at a steeper angle than the room. Each bed's top face (t back, r right, l left corner, as fractions of
+   the MIRRORED art, and rim, its side height) is mapped exactly onto its footprint, so every bed lines up with the walls. */
+var GDFIT={gdx_seed:{t:[.33,.03],r:[.99,.66],l:[.01,.37],rim:.03},gdx_raised:{t:[.31,.12],r:[.995,.585],l:[.005,.305],rim:.21},
+  gdx_tomato:{t:[.31,.27],r:[.995,.65],l:[.005,.44],rim:.17},gdx_herb:{t:[.25,.13],r:[.995,.57],l:[.005,.25],rim:.31},
+  gd_bed1:{t:[.33,.12],r:[.995,.55],l:[.005,.35],rim:.22},gd_bed2:{t:[.33,.03],r:[.995,.48],l:[.005,.26],rim:.26},
+  gd_berry:{t:[.53,.08],r:[.995,.47],l:[.005,.33],rim:.26,w:2.2}};
+/* a grow light along a bed, drawn on the room's own grid: two thin posts, an LED bar down the middle, a violet wash */
+function gdGrowLight(C,x,y,w,d){var m=y+d/2,z=62,P=function(a,b,c){return lfPt(lfP(a,b,c))},x0=x+.25,x1=x+w-.25,
+    s='<polygon points="'+[lfP(x0,y+.2,18),lfP(x1,y+.2,18),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.16)"/>'
+    +'<polygon points="'+[lfP(x0,m,z-2),lfP(x1,m,z-2),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.12)"/>';
+  [x0,x1].forEach(function(px){s+='<path d="M'+P(px,m,0)+' L'+P(px,m,z)+'" stroke="#26232e" stroke-width="2.2"/>'});
+  s+='<path d="M'+P(x0-.1,m,z)+' L'+P(x1+.1,m,z)+'" stroke="#26232e" stroke-width="4.2" stroke-linecap="round"/><path d="M'+P(x0,m,z-2.4)+' L'+P(x1,m,z-2.4)+'" stroke="#f4b8ff" stroke-width="1.8" stroke-linecap="round"/>';
+  C.add(x+w+y+d-.05,'<g pointer-events="none">'+s+'</g>')}
+function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F)return gdS(C,k,x,y,w,d,16,{flip:1});
+  if(F.w){x+=(w-F.w)/2;w=F.w}
+  var T=[F.t[0]*S.w,F.t[1]*S.h],u1=F.r[0]*S.w-T[0],v1=F.r[1]*S.h-T[1],u2=F.l[0]*S.w-T[0],v2=F.l[1]*S.h-T[1],det=u1*v2-u2*v1,
+    p=lfP(x,y,0),q=lfP(x+w,y,0),r=lfP(x,y+d,0),X1=q[0]-p[0],Y1=q[1]-p[1],X2=r[0]-p[0],Y2=r[1]-p[1],
+    a=(X1*v2-X2*v1)/det,c=(X2*u1-X1*u2)/det,b=(Y1*v2-Y2*v1)/det,dd=(Y2*u1-Y1*u2)/det,z=dd*F.rim*S.h,
+    e=p[0]-a*T[0]-c*T[1],f=p[1]-z-b*T[0]-dd*T[1];
+  /* the fractions are for the mirrored art: fold the mirror (x -> width - x) into the matrix */
+  var M=[-a,-b,c,dd,e+a*S.w,f+b*S.w];
+  if(LFREC)lfRecBox(x,y,0,w,d,z);
+  C.add(x+w+y+d-.01,'<polygon points="'+[lfP(x,y,0),lfP(x+w,y,0),lfP(x+w,y+d,0),lfP(x,y+d,0)].map(lfPt).join(" ")+'" fill="rgba(10,8,24,.18)"/>');
+  C._lb=[x,y,x+w,y+d];C.add(x+w+y+d-(dk||0),'<image href="'+lfSprUrl(k)+'" width="'+S.w+'" height="'+S.h+'" preserveAspectRatio="none" transform="matrix('+M.map(function(n){return n.toFixed(4)}).join(" ")+')"/>');
+  return z}
 function gdMist(C,x,y){var q=lfP(x,y,6);C.add(x+y+.2,'<rect x="'+(q[0]-1.5)+'" y="'+(q[1]-6)+'" width="3" height="6" fill="#aab"/><path d="M'+q[0]+' '+(q[1]-8)+' q-12 -14 -18 -4 M'+q[0]+' '+(q[1]-8)+' q12 -14 18 -4" stroke="rgba(180,225,255,.8)" stroke-width="1.4" fill="none" class="lfmist"/>')}
 LFROOM.garden=function(C){
   rsArtReady();
@@ -104,20 +129,21 @@ LFROOM.garden=function(C){
   if(H("g_p1"))beds.push("gdx_raised");if(H("g_let"))beds.push("gd_bed2");if(H("g_tom"))beds.push("gdx_tomato");if(H("g_herb"))beds.push("gdx_herb");
   if(H("g_p2")){beds.push("gd_bed1");beds.push("gdx_raised")}if(H("g_berry"))beds.push("gd_berry");if(H("g_p3")){beds.push("gd_bed2");beds.push("gdx_tomato");beds.push("gd_bed1")}
   beds=beds.slice(0,spots.length);
-  beds.forEach(function(k,i){var p=spots[i];gdS(C,k,p[0],p[1],3.4,1.6,16,{flip:1});/* the bed art runs the other way from its footprint (QA: beds on top of each other) */C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
+  beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
   if(H("g_spr"))beds.forEach(function(k,i){if(i%2===0){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)}});
   if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.65,0),lfP(p[0]+3.5,p[1]+1.72,0),lfP(p[0]-.1,p[1]+1.72,0)],"#27303a"))});
   /* tools down the far side */
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
-  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
+  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,st===0?8.7:7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
   tool("g_can","gdx_can",TY[0],1.2,1.0,14);tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
   /* the Back Plot's gate corner is the produce stand's */
-  if(H("g_scare"))gdS(C,"gd_scare",st<2?.3:Rx,st<2?6.0:9.3,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
+  if(H("g_scare"))gdS(C,"gd_scare",st<2?.3:Rx,st===0?8.3:st===1?6.0:9.3,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
-  var sp=st===0?[10.0,8.7]:st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
+  /* on the Back Plot the stand takes the wheelbarrow's place, a tile further in, so a wide screen shows it whole (QA) */
+  var sp=st===0?[10.0,7.0]:st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
   /* tap either stand to sell (LEAD's stysell, 29b_story.js) */
   if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk,act:"stysell"});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk,act:"stysell"});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
@@ -135,8 +161,7 @@ LFROOM.garden=function(C){
     if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:14.3,E?7.8:8.6,.9,.8,40,{H:70});
     /* grow lamps stand at the back of the first beds, over the soil (QA: alone on the lawn they read as screens) */
     if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[i];
-      if(window.LFSPR&&LFSPR.gdx_growlamp)gdS(C,"gdx_growlamp",p[0],p[1],3.4,1.6,1,{flip:1,dk:-.05,nosh:1,nob:1});/* a light frame over the whole bed */
-      else gdS(C,"gd_lamp",p[0]+1.45,p[1]+.05,.5,.5,40,{H:80});
+      gdGrowLight(C,p[0],p[1],3.4,1.6);
       lfLight(C,p[0]+1.7,p[1]+.8,60,"#d68aff",2.6,.5)});
     if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
       C.decals.push(stones(.4,W-.2,py,py+1.25));
