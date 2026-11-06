@@ -34,6 +34,7 @@ ADDONS.bedroom.forEach(function(a){var e=a[3];
   if(a[0]==="bd_nstand")a[4]="White, one drawer, a small glowing lamp.";
   if(a[0]==="bd_desk1")a[4]="A black top on a motorised frame.";
   if(a[0]==="bd_bed1")a[4]="A thick memory foam mattress on a low frame.";
+  if(a[0]==="bd_bed2"){a[1]="Velvet Tufted Bed";a[4]="A tall tufted headboard in navy velvet."}/* QA: it showed no LEDs */
   if(a[0]==="bd_patio"){a[1]="Patio Door";a[4]="Slide the glass open to your own patio, 30 floors up.";e.opens="patio"}});
 ADDONS.bedroom.push(["bd_game","Knock Into the Game Room",1500,{lv:18,opens:"gameroom",fp:1,g:"Expansion"},"A door to a room with one job: having fun."]);
 ADDONS.bedroom.push(["bd_dbed1","Dog Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);

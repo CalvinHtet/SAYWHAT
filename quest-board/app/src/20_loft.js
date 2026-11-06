@@ -172,8 +172,11 @@ function lfRoomLight(C,uid,t,out){
   /* always: contact shadows */
   /* one soft shadow per floor piece (lfSpr records them in C.shd; drawn pieces with no sprite still come from the
      walk boxes), the same blur and strength everywhere, a little wider at the front so it shows past solid bases */
-  var cs="",cb=(C.shd||[]).concat((C.obsRaw||[]).filter(function(b){return !b.spr}));cb.forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;var p=.12,q=.34;cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],"#0b0f24")});
-  if(cs){defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.4"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(.5+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
+  var cs="",cb=(C.shd||[]).concat((C.obsRaw||[]).filter(function(b){return !b.spr}));cb.forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;/* QA: on the near-black floors (Lock and Key, Speakeasy, Arcade, Rhythm, Karaoke, Club, Lair, Trophy Room) the shadow
+     vanished; there it is pure black, stronger and a little wider */
+  var dkF={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t],p=.12,q=dkF?.44:.34;
+  cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],dkF?"#000":"#0b0f24")});
+  if(cs){var dkO={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t];defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="'+(dkO?3.8:3.4)+'"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(dkO?.92:.5+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
   /* emitters */
   var lights=(C.lights||[]).slice();
   if(!out&&lfLit(C))lights.push([N*.5,M*.5,100,"#ffe6bd",4.6,.55]);
@@ -540,7 +543,11 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
   /* Cal: every piece of furniture casts the same soft shadow. A floor piece (not nosh: wall art, rugs, painted shells;
      not lifted with dy; at least 4 high; or o.sh to force one) adds its footprint to C.shd, and lfRoomLight draws them all in one blurred pass
      under the furniture, a little wider than the base so solid pieces (sofas, beds) show one as clearly as leggy ones. */
-  if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){(C.shd=C.shd||[]).push([x,y,x+w,y+d])}
+  if(o.shz!=null){/* a piece standing on a raised deck or tier (o.shz = its height): the same soft shadow, drawn right
+     under it at that height, since a floor shadow would be hidden under the deck */
+    if(!C._sfd){C._sfd=1;C.add(-999,'<defs><filter id="lfsoft'+C.uid+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter></defs>')}
+    var zz=o.shz,p2=.1,q2=.3;C.add(x+w+y+d-(o.dk||0)-.02,'<g filter="url(#lfsoft'+C.uid+')" opacity=".6" pointer-events="none">'+lfPolyS([lfP(x-p2,y-p2,zz),lfP(x+w+q2,y-p2,zz),lfP(x+w+q2,y+d+q2,zz),lfP(x-p2,y+d+q2,zz)],"#000")+'</g>')}
+  else if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){(C.shd=C.shd||[]).push([x,y,x+w,y+d])}
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   /* o.act: the sprite is a button (data-act, a pointer cursor, and it takes clicks even where the room picture does not) */
   C.add(x+w+y+d-(o.dk||0),'<g'+(o.act?' data-act="'+o.act+'" style="cursor:pointer;pointer-events:auto"':'')+' transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/>'
