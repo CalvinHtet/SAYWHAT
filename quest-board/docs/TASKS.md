@@ -13,12 +13,12 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 published and pinned (QA passed c48c7af). With QA: ab7fcae (Garden reveals selling from the first growing bed,
-  no Restaurant talk until it exists, Mara after 12 sold; board focus through render), 8d97e24 (friends who drop by: 7
-  friends, 16 visits, each a reason and a real effect) and 3bcbb44 (room-window zoom moves a drawn layer, pan 100 to 33 ms;
-  friends stay all day in their room). Next: v0.62 once those pass. Brands (cac5f45) and the town hall pick wait on Cal.
-  Routed to ROOMS: dry-garden art and the water animation, the warped bench legs, the plaza backdrop on phones (shadows
-  done by ROOMS, 07812e4). (on 3bcbb44)
+- Now: v0.61 published and pinned. With QA: 3bcbb44 (room-window zoom as a moving layer, friends all day in their room),
+  172caa9 (QA's two Garden lines) and befd663 (QA's friend fixes: freeze cap, real room on the card, no unstated pronouns, a
+  card waits behind another window). Next: v0.62 once those and ROOMS's shadows (07812e4) and backdrop (d233c9e) pass.
+  NICE COCK (ROOMS 67d0e85, 16 pieces): when QA's wear test passes, LEAD adds the 16 Shop rows and moves BRANDS (NICE COCK
+  2026-11-30, ALTITUDE 2026-12-07). Waiting on Cal: Kode PinK and SAYMØRE lists, the town hall pick, the vault rerun.
+  (on befd663)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
