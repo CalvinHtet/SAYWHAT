@@ -64,6 +64,9 @@ To do:
       a room window pauses the building view's animations (532 running, 30 with a window open).
       2026-11-06: the v0.50 and v0.51 logs hold only the Mac app's preview from publishing (120 fps, Electron); no phone
       has opened either yet. Nothing to fix until Cal opens v0.51 on his phone.
+      REAL NUMBERS, 2026-11-06 11:58, Cal's iPhone (iOS 18.7, Claude app, 440x956, dpr 3, 4 cores) on v0.53, the Loft with a
+      room window open: 54.6 fps then 40.8 fps over 5 s, worst frames 324 and 345 ms, 6 and 23 frames over 50 ms, 61 then 33
+      animations running, about 6,600 elements. Real lag in room windows. LEAD profiling it now at phone CPU speed.
 - [x] `dropbox-leftovers` reviewed (nothing worth bringing over) and deleted with Cal's OK.
 - [x] Yawn pilot, code (rig.js flat painted layers, `rigtest/template.html`). Without painted art the stretch renders
       byte for byte as before. Self-check feeding a top's own render back in: about 0.7% of pixels differ on the man (edges),
