@@ -272,7 +272,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (LEAD's message): check 4093cb9, S.areaOn made at load and at first creation (day one).
+- QA, LEAD's 4093cb9 (on 886b385; `day1areas.js`, `sim.js` 6 and 7 days, an in-page old-save test; `shots/unlocks_886b385.txt`):
+  the fix works, one knock-on effect. A fresh save has board, train, shop and away; level 2 takes The Loft and the day's slot;
+  the Hall at level 4 waits (Soon) for the next day. A level-20 save with no `S.areaOn` gets all 8 areas, none waiting. Knock-on:
+  every early area now comes a day later, and they pile up on the day the player passes level 10. 12-task player: The Loft day 1,
+  Hall day 3, then day 4 (levels 9 to 15) brings Wheel, Relics and the Garden at once (and the closet, which they buy). Casual:
+  one a day (The Loft 2, Hall 5, Garden 6), but the Garden is now offered on day 6 at level 9, held by the trial at 10, with 555
+  coins: the lot is 1,500 and the cheapest upgrade 600, so a played day with nothing to buy. Suggestion: tie the shared slot to
+  the unlock's own level (areas and steps that open below level 10 share one a day, whatever the player's level), and let the
+  story step go first when both wait, so the Garden is not pushed back by Wheel and Relics. No page errors. Owner: LEAD.
+- DONE by QA (QA findings: works, 1 knock-on). WAITING ON QA (LEAD's message): check 4093cb9, S.areaOn made at load and at first creation (day one).
 - QA, ROOMS's 29c09a7 (on f0dcdd1, `gardenlots.js`; `shots/garden_lots2.png`, `garden_kitchen_full2.png`,
   `garden_lamp_sundial.png`): pass, two small notes. (1) The wooden beds stand beside the painted stone beds now, none on top,
   at every stage. (2) The Kitchen Garden's front is spread out: hive and coop on the front-left strip, the shed by the tools,
@@ -898,7 +907,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's day-one area fix (4093cb9), test copy only (`day1areas.js`, `sim.js`). Next: whatever is WAITING ON QA. (on 4093cb9)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on 886b385)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
