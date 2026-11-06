@@ -72,7 +72,7 @@ let ORDER = [];
     const meta = await p.evaluate((i) => {
       const x = window.__qb.x(), r = x.S.base.slots[i];
       r.a = {}; r.st = 0;
-      return (x.ADDONS[r.t] || []).map((u) => ({ id: u[0], name: u[1], price: u[2], retired: !!(u[3] && u[3].retired), opens: (u[3] && u[3].opens) || null }));
+      return (x.ADDONS[r.t] || []).map((u) => ({ id: u[0], name: u[1], price: u[2], retired: !!(u[3] && u[3].retired), opens: (u[3] && u[3].opens) || null, also: (u[3] && u[3].also) || null }));
     }, i);
     const steps = [];
     let info = await show(i);
@@ -91,7 +91,9 @@ let ORDER = [];
       console.log(room, n, nx, info.vb, info.nItems);
     }
     // upgrades the shop never offered (dead prerequisite, level): forced on one at a time, marked forced
-    const left = meta.filter((m) => !m.retired && !steps.some((s) => s.id === m.id));
+    // an upgrade another one needs (its `also`, e.g. an expansion) is forced first, so the one that needs it is measured in the room it belongs to
+    const needed = new Set(meta.map((m) => m.also).filter(Boolean));
+    const left = meta.filter((m) => !m.retired && !steps.some((s) => s.id === m.id)).sort((a, b) => (needed.has(b.id) ? 1 : 0) - (needed.has(a.id) ? 1 : 0));
     for (const m of left) {
       await p.evaluate(({ i, id }) => { window.__qb.x().S.base.slots[i].a[id] = 1; }, { i, id: m.id });
       info = await show(i);
