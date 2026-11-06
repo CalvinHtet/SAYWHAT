@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 
 Doing:
 - Now: waiting on QA's unlock timeline for the new early game (16e72c3), then tune the gates with it. Next: the Garden with
-  ROOMS (storyboard step 1). Nobody plays until there is a working version. (on 4f15346)
+  ROOMS (storyboard step 1). Nobody plays until there is a working version. (on b1088f8)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -155,7 +155,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 
 Art and room code requests (LEAD asks, ROOMS does):
 - The Garden and the Restaurant, Cal's decisions (2026-11-05), LEAD's code in 16e72c3: the Garden stays its own lot (the empty lot
-  next to your building) and opens after the walk-in closet and the patio; "the next upgrade should be a restaurant that
+  next to your building) and opens at level 5 (b1088f8, was: after the closet and patio); "the next upgrade should be a restaurant that
   expands from it": the Garden's first upgrade, `gd_rest` Knock Through to a Restaurant, opens the Restaurant after Mara's yes.
   ROOMS: (1) put the Restaurant next to the Garden in Kode Plaza (`ROOMCELL`; today Restaurant [1,0,0], Garden [1,2,0]) with
   a door between them, (2) what `gd_rest` looks like in the Garden (the wall opening onto the kitchen), (3) the Garden's art
