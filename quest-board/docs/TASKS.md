@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.60 (NEXT, APPV 60) WAITING ON QA; it contains v0.59, so QA may check v0.60 instead. Published as soon as QA
-  passes it. v0.58 pinned (859d941). (on NEXT)
+- Now: v0.60 (c7aa1df, APPV 60) WAITING ON QA; it contains v0.59, so QA may check v0.60 instead. Published as soon as QA
+  passes it. v0.58 pinned (859d941). (on c7aa1df)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -305,7 +305,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   run in steps (index.html) and the twinkles share four beats (24_screens.js). `shots/roomsall.js` (every room, CPU x4): the
   Bedroom was the only one under 59; `shots/starcure.js`: 60 fps after the first draw (35-46 before). diag/perf now carries
   `room` (the open window's title). Please eyeball the stepped screens (Bedroom game screen, any portal) for looking choppy.
-- WAITING ON QA: check v0.60, NEXT (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
+- WAITING ON QA: check v0.60, c7aa1df (rule 18: your pass publishes it; it contains v0.59, 0dfa204, so check this one instead). New
   over v0.59, Cal via ROOMS: "For the test version, let skip a week actually change days, and level up actually skip past the
   level trials because I can't actually provide gym picture every time for a job advancement while testing" (he could not
   get the Garden at level 5). (1) Testing Level up now also passes the trial it reaches (30_app_b.js simlvl). (2) Skip a week
