@@ -167,7 +167,8 @@ Art and room code requests (LEAD asks, ROOMS does):
      Better still, a signature cosmetic each, painted as items (Mara's chef whites exist already as `npc_chef`).
   4. The theater's basics as their own upgrades: a ticket stand and a popcorn and soda machine. Tell LEAD their ids, and Theo's
      scene will wait for exactly those (he is the employee).
-- Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
+- PART DONE by ROOMS in 625d9e3, waiting on Cal's look (approval 12): the story portraits `ui_story_chef`, `_lockkey`, `_mall`,
+  `_auditorium`, `_rafe`, `_nova` (300 x 400) are in `art/app`; the rest of this request is still to do. Progression (Cal, 2026-11-05, plan in `docs/PROGRESSION.md`). ROOMS's parts: (1) merge the Upstairs Bar (`skybar`) and the
   Speakeasy into one second-floor room above the restaurant, an upscale speakeasy with a live band and singers, starting
   really bare; keep every id saves already own (retire, never delete) and tell LEAD which room id survives; (2) chibi looks
   and portraits for the story characters: the partner chef, the speakeasy investor, the mall investor, the theater employee
@@ -550,11 +551,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: LEAD's open art requests, next the story portraits (Chrome claimed), then the team banners, the class banners,
-  the Goblin King and amulet icons and the gift, then Lock and Key and the theater basics. The Game Room guests wait on
-  Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT
-  ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788),
-  11 (building fronts and backdrops, 45930bc). 15-minute loop running (rule 16). (on 45930bc)
+- Now: LEAD's open art requests, next the team banners (Chrome claimed), then the class banners, the Goblin King and
+  amulet icons and the gift, then Lock and Key and the theater basics. The Game Room guests wait on Cal (his friends'
+  looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON CAL, all committed and NOT ready to publish
+  until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it), 9 (a4e2a4a), 10 (9c30788), 11 (45930bc),
+  12 (story portraits, 625d9e3). 15-minute loop running (rule 16). (on 625d9e3)
 - DONE by QA (QA findings). WAITING ON QA: check ab9dc81: the seven freed upgrades show in their menus and can be bought; the Game Room door.
 - DONE by QA (QA findings). WAITING ON QA: check the Bedroom wall tiers, f4362b1: buy Fresh Paint, Living Grass Wall and Cove Lighting in turn in
   each of the four Room styles; each changes the walls, brick and slats run the whole left wall, nothing hangs on the grass.
