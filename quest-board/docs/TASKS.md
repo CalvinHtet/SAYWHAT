@@ -282,6 +282,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's Boba shop c223d89 (on 6896d2a, port 8770, `rigtest/qa/bobashell.js`; `shots/boba_bare.png`, `boba_full.png`,
+  `boba_stairs.png`, `boba_sidedoor.png`): the shell and the doors pass, 2 placement fixes and 1 note. Pass: the painted shop
+  (`bbw_t1`) draws bare and fully bought, nothing outside the room; the side door walks both ways (Boba's "Garden" arrow top
+  left, the Garden's "Boba Shop" arrow bottom right: out on the right, in on the left), and "Upstairs" reaches the Dessert
+  Parlor; the Neon Cup Sign hangs high over the tea jar shelf. FIX 1: fully bought, the shaker station (the pink cabinet with the
+  cup stack and the blender) stands right in front of the painted stairs and hides their glow; move it left along the wall,
+  clear of the doorway. FIX 2: the window seat's left end runs across the side door to the Garden (the green glow shows under
+  the bench); shorten it or move it right. Note: the Menu Screen on the back wall is a blank black panel; give it the menu
+  (like the Restaurant's screen) or art. No page errors. Owner: ROOMS.
 - QA, v0.49's pre-release check (rule 18 step 2, 8fabe1a, APPV 49; `shots/v49/`): pass, ready to publish. savecheck.js: every case
   passes (newest wins, no needless question, device only, someone else's save ignored, levels 8, 30 and 60 kept, a new player
   starts clean). screens.js at 360 and 390 px: every tab and a room window fit, no page errors. A brand-new player: the
@@ -865,7 +874,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on 13d7cca)
-- TAKEN by QA. WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
+- DONE by QA (QA findings: doors pass, 2 placement fixes). WAITING ON QA: check c223d89 (rule 17), the Boba shop: its painted shell bare and fully bought; "Upstairs" at the stairs
   painted at the back wall's far end (nothing standing on its glow); the new side door: Boba "Garden" arrow (top left) and
   the Garden's "Boba Shop" arrow (bottom right) walk both ways; the Neon Cup Sign high over the tea jars.
 - DONE by QA (QA findings: pass, 1 note). WAITING ON QA: check a9a572c and e415c00 (rule 17): the Restaurant patio (Corner Diner and Bistro with everything): the fire
@@ -1003,7 +1012,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's Boba shop (c223d89), test copy only (`bobashell.js`). Next: v0.49's published copy once LEAD publishes. (on 65b6593)
+- Now: waiting for work. Next: v0.49's published copy once LEAD publishes; ROOMS's Boba fixes. (on 6896d2a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
