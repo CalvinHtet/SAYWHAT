@@ -39,7 +39,7 @@ function roomModal(i){
   var stat=T.coin?Math.round(coinRate(i))+' coins/hr, holds '+roomStore(r)+' hrs. Your businesses can pay out '+payRoom().toLocaleString()+' more today':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+'/hr':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Crew without a job relax here.');
   var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start">'+esc(stat)+'</div>';
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% today. Complete the Daily Quest for full speed.':'Full speed today.')+'</p>';
-  if(r.t==="garden")h+=gdNote(r)+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
+  if(r.t==="garden")h+=gdNote(r)+gdWaterHtml()+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
   if(false){
     var rc=roomCrew(i), free=crewUnlocked().filter(function(k){return S.base.crew[k]==null});
     h+='<span class="label">Crew '+rc.length+'/'+crewCap(r)+'</span><div class="crewpick">'+rc.map(function(k){return '<button class="cpk on" data-act="runassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>'+esc(CREW[k].name)+'</small></button>'}).join("")

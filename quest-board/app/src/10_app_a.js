@@ -1591,10 +1591,12 @@ function simulate(now){
   var B=S.base; now=now||Date.now();
   var dt=Math.min(24,(now-B.t)/3600000); if(!(dt>0.0005)){return}
   B.t=now;
-  var step=Math.min(.25,dt), left=dt, om=openMult();
+  var step=Math.min(.25,dt), left=dt, om=openMult(), tc=now-dt*36e5;
   while(left>1e-6){
-    var h=Math.min(step,left); left-=h;
+    var h=Math.min(step,left); left-=h; tc+=h*36e5;
     B.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t];
+      /* Cal: the Garden grows only while its beds are watered (29i_garden.js) */
+      if(T.food&&r.t==="garden"&&typeof gdWateredAt==="function"&&!gdWateredAt(tc))return;
       if(T.food){B.food[T.food]=Math.min(foodCap(),(B.food[T.food]||0)+T.rate*roomMult(i)*om*h*(LFW.wx==="rain"&&T.food==="veg"?1.3:1))}
       if(r.t==="sky"&&r.a&&r.a.k_pond){B.food.fish=Math.min(foodCap(),(B.food.fish||0)+(r.a.k_lux1?3:2)*om*h)}
     });
