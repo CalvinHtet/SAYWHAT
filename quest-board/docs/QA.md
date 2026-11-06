@@ -619,3 +619,22 @@ the showtimes and the back-left panel a film poster. Not done:
 
 Not verified: the ticket line and the snack trips live. In QA's test copy no guests or staff appeared in the lobby (opened directly
 and from the street), so the walks were not watched; the audit only shows that no queue, ticket or snack spot sits inside furniture.
+
+### Auditorium (as it stands, on 1bb17be; `shots/review_aud_bare.png`, `review_aud_bigger.png`, `review_aud_full.png`, `review_aud_live.png`)
+
+Reads as one plan: the screen on the back-left wall with towers either side, every row facing it, the subwoofer under it, the
+projector opposite beaming over the seats; nothing outside the room, no overlaps, no guest spot inside furniture (bare, Bigger
+Screen, IMAX fully bought). Live, the screen plays a film (the black in still pictures is only the still). Notes:
+
+1. **The projector's landing does not read.** The projector (camera on a tripod bare, the IMAX unit on a small table full) stands
+   on open floor at the bottom right, which reads as the front of the room, not a raised back landing. Give it a visible booth: a
+   raised platform with a low wall or rail and two steps, so it is plainly the back of the room above the seats.
+2. **Bare, the "projector" is a film camera on a tripod** pointed at the screen: it reads as filming, not projecting. A small reel
+   projector on a stand fits.
+3. **The aisle steps end in the back-right corner at nothing.** The risers at the right end of the rows climb to an empty, dark
+   corner; end them at the projector's landing (1), or put the Lobby door there so the aisle leads somewhere.
+4. **Empty floor.** Between the last row and the projector, and along the whole right side, the floor is empty and dark (most of
+   the right half bare and with the Bigger Screen). Once the booth exists (1) it fills the front-right; otherwise the rows could
+   move a tile toward the middle so the room does not look half used.
+5. **Fine as is:** the screen grows with the upgrades and stays centred on the rows; the towers flank it; the wall sconces and the
+   one surround speaker on the right wall read as a cinema; the recliners face the screen.
