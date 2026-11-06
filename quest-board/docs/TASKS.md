@@ -1988,7 +1988,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: rerun fix checked (6 still-live drops left, LEAD). Next: the kp Shop rows, SAYMØRE's wear test when ROOMS sends it. (on 49814eb)
+- Now: rerun fix checked (6 still-live drops left, LEAD). Next: the kp Shop rows, SAYMØRE's wear test when ROOMS sends it. (on a4abb6d)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
