@@ -793,9 +793,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden: all three painted lots done (4725457, cd73831, 5fa3fec,
-  approval 20) and next to the Restaurant with the knock-through door (28a51ee); produce stand and QA's three placement fixes done (29c09a7). Next: the
-  storyboard's step 2 pieces that are ROOMS's, then on down the storyboard. Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
+- Now: storyboard step 2, the Restaurant's polish (`26_world.js`, `21_restaurant.js`): the patio's crowded front corner,
+  booths clear of the Bistro's windows, the drinks cooler out of the aisle (QA's lessons), then sleek fine-dining furniture
+  for Noir (new art). Step 1, the Garden, is done on ROOMS's side (lots, stand, fitted beds, watering look; QA checking,
+  approval 20 with Cal). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
