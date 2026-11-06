@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 0b21495 room tester (on c0f0cbd, `rigtest/qa/roomtester.js` through window.__qbRooms): Open, Everything, Empty and View
+  work on all 22 rooms, no page errors; three fixes. (1) Everything also owns retired pieces, so Cal sees art the game no longer sells:
+  mall 5 (ml_dir, ml_photo, ml_gum, ml_ride, ml_flower), rooftop 4, gameroom 2, skybar 2, closet 2, lair 1, dessert 1, vr 1. Skip
+  `u[3].retired` as allrooms.js does. (2) Everything owns the upgrades that open a room without opening it: bd_patio, bd_game (Bedroom),
+  lr_troom, r_bar, sb_roof, de_secret; the save then holds the opener with no Patio, Game Room, Trophy Room, Sky Bar, Rooftop or
+  Speakeasy. Either open the room too or leave the opener out. (3) Next story step on a new player never moves: each tap re-offers
+  the Garden lot ("The empty lot next to your building is up for sale...") and the story stays at offer garden, done none, Bedroom
+  only, 14 taps in a row. A buy step needs building (like Open) for the button to step through the story. LEAD's two questions: the
+  Bedroom showed 35/35 here, so the 36th key wasn't reproduced; the 4 empty <image> tags are the gaming chair's swap layers (lfbrg0/1,
+  lfbch1d/1n, opacity 0, filled when someone sits), already in v0.61, harmless. Owner: LEAD.
 - QA, LEAD's 3bcbb44 room zoom (`rigtest/qa/zoomfps.js`, 390x844 touch, CPU x4, every upgrade, before 8d97e24 / after 172caa9): pass.
   Pan frame times, median / p90: Bedroom 50 / 150 ms to 17 / 17, Garden 17 / 67 to 17 / 17. Pinch: Bedroom 17 / 117 to 17 / 17,
   Garden 17 / 83 to 17 / 17. The worst single frame is still 150 to 350 ms; that is the one viewBox commit at the end, as designed.
@@ -1866,7 +1876,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: zoom passed, friends: two new bugs (LEAD). Next: LEAD's 0b21495 (room tester) and a652991 (drops), ROOMS's 07812e4, d233c9e, b9bcbbf, 67d0e85 (NICE COCK wear test). (on c0f0cbd)
+- Now: room tester: three fixes (LEAD). Next: LEAD's a652991 (drops) and ff9ba96 (class banner, friend portraits), ROOMS's 07812e4, d233c9e, b9bcbbf, 67d0e85 (NICE COCK wear test). (on c0f0cbd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
