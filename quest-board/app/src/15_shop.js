@@ -111,10 +111,26 @@ var EXTRA_ITEMS=[
  ["gx_sm_shorts","a_pants","Bass Shorts",900,1,"Black mesh, orange stripe.",{gar:"sm_shorts",b:"sm"}],
  ["gx_sm_hightop","a_shoes","Glow-Sole High-Tops",1700,1,"Soles lit cyan from inside.",{gar:"sm_hightop",b:"sm"}],
  ["gx_sm_runner","a_shoes","Flare Runners",1300,1,"Chunky, orange laces.",{gar:"sm_runner",b:"sm"}],
- ["gx_sm_boots","a_shoes","Neon-Lace Boots",1400,1,"Combat boots, cyan laces.",{gar:"sm_boots",b:"sm"}]];
+ ["gx_sm_boots","a_shoes","Neon-Lace Boots",1400,1,"Combat boots, cyan laces.",{gar:"sm_boots",b:"sm"}],
+ ["gx_smk_band","a_hat","Plated Forehead Band",700,1,"Black cloth, the crest on a steel plate.",{gar:"smk_band",b:"smk"}],
+ ["gx_smk_wrap","a_hat","Spiky Headwrap",650,1,"Ink black, an ember-orange tie.",{gar:"smk_wrap",b:"smk"}],
+ ["gx_smk_cowl","a_acc","Half-Face Cowl",800,1,"Up over the nose, eyes only.",{gar:"smk_cowl",b:"smk"}],
+ ["gx_smk_tape","a_acc","Wrap Tape Set",500,1,"Cream tape on the arms and shins.",{gar:"smk_tape",b:"smk"}],
+ ["gx_smk_pouch","a_acc","Scroll Pouch",600,1,"A scroll on a hip strap.",{gar:"smk_pouch",b:"smk"}],
+ ["gx_smk_jacket","a_top","High-Collar Zip Jacket",1500,1,"Ink black, ember-orange panels.",{gar:"smk_jacket",b:"smk"}],
+ ["gx_smk_mesh","a_top","Mesh Wrap Top",1100,1,"Sleeveless wrap over a mesh undershirt.",{gar:"smk_mesh",b:"smk"}],
+ ["gx_smk_vest","a_top","Scroll Vest",1200,1,"Charcoal, pockets for scrolls.",{gar:"smk_vest",b:"smk"}],
+ ["gx_smk_cloak","a_top","Torn Hood Cloak",1400,1,"Short, hooded, the hem torn ragged.",{gar:"smk_cloak",b:"smk"}],
+ ["gx_smk_cargo","a_pants","Wrapped Cargo",1100,1,"Shins bound tight.",{gar:"smk_cargo",b:"smk"}],
+ ["gx_smk_hakama","a_pants","Wide Hakama",1200,1,"Steel-grey pleats, wide legs.",{gar:"smk_hakama",b:"smk"}],
+ ["gx_smk_shorts","a_pants","Shorts over Fishnet",900,1,"Ember stripe, mesh to the ankle.",{gar:"smk_shorts",b:"smk"}],
+ ["gx_smk_sandal","a_shoes","Shinobi Sandals",700,1,"Open toe, black straps.",{gar:"smk_sandal",b:"smk"}],
+ ["gx_smk_tabi","a_shoes","Split-Toe Tabi Boots",1100,1,"Worn over the trouser hem.",{gar:"smk_tabi",b:"smk"}],
+ ["gx_smk_runner","a_shoes","Wrapped Runners",1000,1,"Running shoes bound in cloth tape.",{gar:"smk_runner",b:"smk"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
+/* SMOKE BOMB (ninja anime, approved): ROOMS's a07439f pieces and shop lines */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options

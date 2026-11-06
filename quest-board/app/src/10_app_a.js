@@ -1389,7 +1389,9 @@ var BRANDS=[
  /* Cal's music project (approved 2026-11-06); the next free Monday after ALTITUDE until the launch schedule places it */
  {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#f6a5c8","#8f9bea","#c7a6f0"],ac:"#ffd84d",start:"2026-12-14",sub:"anime city-pop"},
  /* Cal's artist brand (approved 2026-11-06), palette and mark from his song covers */
- {id:"sm",name:"SAYM\u00d8RE",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"}];
+ {id:"sm",name:"SAYM\u00d8RE",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
+ /* Cal's first approved five, in BRANDS_15.md order: the next free Monday each until the launch schedule places them */
+ {id:"smk",name:"SMOKE BOMB",tag:"Vanish in style",c:["#111114","#3a3d44","#ff6a1f"],ac:"#f2e6c8",start:"2026-12-28",sub:"ninja anime"}];
 var GITEMS=[
  ["gx_h_snap","a_hat","Flat-brim Snapback",90,1,"Black cap, cream HANGANG patch.",{gar:"h_snap",b:"hanga"}],
  ["gx_h_beret","a_hat","Wool Beret",80,1,"Charcoal wool, tilted.",{gar:"h_beret",b:"hanga"}],
