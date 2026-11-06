@@ -107,9 +107,9 @@ function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA:
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
-    if(o.stepDay===today())break;
-    if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();styScene(s);return}
-    o.stepDay=today();styOpen(s);return}
+    if(o.stepDay===today()||!unlockSlotFree())break;
+    if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();unlockTake();styScene(s);return}
+    o.stepDay=today();unlockTake();styOpen(s);return}
   styBeat()}
 setInterval(styCheck,15000);setTimeout(styCheck,4000);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=styyes],[data-act=styno],[data-act=stysell]");if(!b)return;

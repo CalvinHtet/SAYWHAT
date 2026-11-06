@@ -21,6 +21,7 @@ var ECON={
   msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
   /* Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from there. Otherwise we are unlocking too
      many things before lvl 10." The least level for each story step, on top of its own gate; one step every few levels. */
+  oneSlotBelow:10,                                /* below this level, one unlock (area or story step) a day in all */
   stepLv:{garden:5,chef:7,boba:9,dessert:11,lockkey:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
   gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
   trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */

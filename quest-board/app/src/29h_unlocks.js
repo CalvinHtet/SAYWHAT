@@ -6,8 +6,12 @@
    already reached. The Shop and the Dungeons still open with their rooms (areaGate in 27_rooms.js). */
 function areaOn(){if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=effLvl();AREAS.forEach(function(a){if(a[2]<=lv)S.areaOn[a[0]]=1})}return S.areaOn}
 function areaWaiting(id){var a=AREAS.filter(function(x){return x[0]===id})[0];return !!(a&&a[2]>1&&effLvl()>=a[2]&&!areaOn()[id])}
+/* Cal: several unlocks together is fine "but not all the time and not this early": below level 10 areas and story steps
+   share one slot a day (QA's rerun: days 1, 3 and 4 still brought an area and a story step together) */
+function unlockSlotFree(){return effLvl()>=ECON.oneSlotBelow||S.unlockDay!==today()}
+function unlockTake(){S.unlockDay=today()}
 function areaReveal(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).sort(function(x,y){return x[2]-y[2]})[0];
-  if(!w)return null;areaOn()[w[0]]=1;S.areaDay=today();persist();return w}
+  if(!w||!unlockSlotFree())return null;areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
 var unlAreaGateBase=areaGate;
 areaGate=function(id){return unlAreaGateBase(id)||areaWaiting(id)};
 /* a day with no level-up still brings the next waiting area */
