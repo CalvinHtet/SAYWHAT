@@ -285,6 +285,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check ef0ecc8, the mat fix and the retired Speakeasy upgrade.
 - QA, ROOMS's 23f993d (on b325eba, port 8770, `bobashell.js`, `dessertshell.js`, `menuscreen.js`; `shots/boba_full3.png`,
   `dessert_full2.png`, `boba_menuscreen.png`): on the floor now, one fix. Nothing stands outside either room any more, the doors
   all walk, and the Dessert Downstairs glow sits clear at the left end of the front-left edge. The Boba Menu Screen is fine live:
@@ -1048,7 +1049,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: ROOMS's door-mat fix (Boba, Dessert) and Lock and Key (step 5) when they come. (on 58ac207)
+- Now: ROOMS's mat fix and the retired Speakeasy upgrade (ef0ecc8), test copy only (`bobashell.js`, `dessertshell.js`). Next:
+  Lock and Key (step 5) when it comes. (on ef0ecc8)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
