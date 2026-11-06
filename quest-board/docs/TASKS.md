@@ -464,6 +464,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 5d0986c pot racks and coffee (on c59b953, `shots/qa/restaurant/r3_kitchens_c59b953.png`): pass. In the Hole in the
+  Wall the pans hang from a wall rail whose brackets meet the tile over the prep table; in the Diner they hang from a ceiling rack
+  on chains over the island; the drip coffee sits on the counter, no stool. Still open from round 2: the boards face front and the
+  Diner's five overlap; the safe stands in the diners' path. Owner: ROOMS.
 - QA, the Restaurant round 2 (on 745fc70: ROOMS's 765e6fc, LEAD's 91ce178 and dd679ab; `shots/qa/restaurant/r2_*_745fc70.png`):
   most pass, three left. Pass: all 60 buy through the window; Breakfast Menu, Burger Menu and Bigger Till now show (cards, safe);
   only Hire a Head Chef draws nothing, which is fine (staff show live); the till faces the diners; the cooler is by the stools; the
@@ -1942,7 +1946,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Restaurant round 2 checked: most pass, three left for ROOMS (boards face front and crowd, pot rack and coffee not pushed, safe in the path). Next: ROOMS's pot rack push, v0.62 when LEAD asks. (on 745fc70)
+- Now: pot racks and coffee pass. Waiting for ROOMS's last two Restaurant fixes (boards on the wall's slope and fewer, the safe), then v0.62's full set when LEAD asks. (on c59b953)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
