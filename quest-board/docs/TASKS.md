@@ -285,7 +285,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): check c8eb716, the Rooftop bar repainted (the last design-review note).
+- QA, ROOMS's c8eb716, the Rooftop bar (on d916e6b, `openair.js`; `shots/review_rooftop3.png`, `review_rooftop_bar3.png`): pass.
+  One straight counter, four stools, the back bar the same length one tile behind it with an aisle. All six design-review notes
+  are closed: the Rooftop and Lock and Key are ready for Cal. No page errors. Owner: ROOMS (to Cal).
+- DONE by QA (QA findings: pass, ready for Cal). WAITING ON QA (ROOMS's message): check c8eb716, the Rooftop bar repainted (the last design-review note).
 - QA, design review of the Mall (322760a, on cb6fdb3; `mallreview.js`, `retired.js`, `screenlive.js`, `doors.js`; written out in
   `docs/QA.md`; `shots/review_mall*.png`, `review_mall_doors.txt`): checks pass, 4 notes. It reads as one atrium (stores round the
   fountain, seating left, food front-right). (1) The Directory Screen is garbled: it is the restaurant menu with prices by each
@@ -1158,7 +1161,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Rooftop bar (c8eb716), test copy only (`openair.js`). Next: the Mall notes when ROOMS sends them. (on 0ccc255)
+- Now: waiting for work. Next: the Mall notes when ROOMS sends them; v0.50 when LEAD builds it. (on d916e6b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

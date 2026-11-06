@@ -573,3 +573,8 @@ Reads as one planned space: an atrium with stores around a central fountain, sea
    1,0, Karaoke 1,2). See `review_mall_doors.txt`.
 5. **Fine as is:** the bench faces the fountain between two plants; the phone kiosk and the food corner (pretzel cart, round
    table) are apart and face the walkway; the door mat at the street edge fits a mall.
+
+### Rooftop, round 3 (ROOMS's c8eb716, on d916e6b; `shots/review_rooftop3.png`, `review_rooftop_bar3.png`)
+
+The bar is one bar now: a straight counter with four rattan stools and its back bar the same length set one tile behind it,
+parallel, with an aisle for the bartender. All six review notes are closed; the Rooftop and Lock and Key are ready for Cal.
