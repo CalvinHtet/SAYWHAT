@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.54 (NEXT, APPV 54) WAITING ON QA, published as soon as QA passes it. Then v0.55: QA's skirt split (b58bf48),
-  a rig option tying a skirt's hem to the hips, ROOMS adds the item flag. (on NEXT)
+- Now: v0.54 (a384feb, APPV 54) WAITING ON QA, published as soon as QA passes it. Then v0.55: QA's skirt split (b58bf48),
+  a rig option tying a skirt's hem to the hips, ROOMS adds the item flag. (on a384feb)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -241,7 +241,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
   6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
   images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
-- WAITING ON QA: check v0.54, NEXT (rule 18: your pass publishes it). Three changes:
+- WAITING ON QA: check v0.54, a384feb (rule 18: your pass publishes it). Three changes:
   (1) The stretch no longer tears (Cal on v0.52, "Still tearing"; ROOMS found the clip went through `stretchUp`, which has no
   painting). `data/poses.json` clip `stretch` is now idle, stretch x5, idle (24 frames), and `src/rig.js` never blends a span
   with a painted pose on one end: it shows one key or the other. LEAD's sheet, every frame, starter hoodie/tee/bomber, both
