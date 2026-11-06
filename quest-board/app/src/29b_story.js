@@ -101,13 +101,16 @@ function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o
   return false}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(b){var o=styState();o.missions=(o.missions||0)+1}},true);
 /* look for the next step now and then, never over another window, one scene at a time */
+/* a story step below the shared-slot level that is ready to open (gate and level met), for 29h_unlocks.js */
+function styReadyLow(){var o=styState();if(o.stepDay===today())return false;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
+  if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow)continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return true}return false}
 function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
-    if(o.stepDay===today()||!unlockSlotFree())break;
+    if(o.stepDay===today()||!unlockSlotFree(ECON.stepLv[s.id]||0))break;
     if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();unlockTake();styScene(s);return}
     o.stepDay=today();unlockTake();styOpen(s);return}
   styBeat()}

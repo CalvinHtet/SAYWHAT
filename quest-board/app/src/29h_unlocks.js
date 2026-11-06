@@ -8,10 +8,13 @@ function areaOn(){if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=e
 function areaWaiting(id){var on=areaOn(),a=AREAS.filter(function(x){return x[0]===id})[0];return !!(a&&a[2]>1&&effLvl()>=a[2]&&!on[id])}
 /* Cal: several unlocks together is fine "but not all the time and not this early": below level 10 areas and story steps
    share one slot a day (QA's rerun: days 1, 3 and 4 still brought an area and a story step together) */
-function unlockSlotFree(){return effLvl()>=ECON.oneSlotBelow||S.unlockDay!==today()}
+/* QA (886b385): keyed on each unlock's own level, not the player's, so a player who leaps past 10 still gets the early
+   unlocks one a day; and a waiting story step goes first, so the Garden is not pushed back by the Wheel and Relics */
+function unlockSlotFree(L){return (L||0)>=ECON.oneSlotBelow||S.unlockDay!==today()}
 function unlockTake(){S.unlockDay=today()}
 function areaReveal(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).sort(function(x,y){return x[2]-y[2]})[0];
-  if(!w||!unlockSlotFree())return null;areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
+  if(!w||!unlockSlotFree(w[2]))return null;
+  if(w[2]<ECON.oneSlotBelow&&typeof styReadyLow==="function"&&styReadyLow())return null;areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
 var unlAreaGateBase=areaGate;
 areaGate=function(id){return unlAreaGateBase(id)||areaWaiting(id)};
 /* a day with no level-up still brings the next waiting area */
