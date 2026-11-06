@@ -291,6 +291,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's and ROOMS's messages): re-run voice.js on a0f2c8b and a646e51, the last writing lines.
 - QA, ROOMS's e74cf92 (on 5048cae; `voice.js`, `livebuilding.js`; `docs/QA.md`; `shots/voice_5048cae.txt`): the DJ passes (at the
   decks in 9 of 12 and 5 of 12 looks, was 3). Writing: `voice.js` finds 4 (was 5): Gaming Desks 99 characters, the Mall fountain's
   "Everyone meets here." (ROOMS), the Squat Rack's "boss" and the drake pet's "next level" (LEAD). By ear, six lines still end on a
@@ -1289,7 +1290,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the last writing lines when ROOMS and LEAD fix them; v0.50. (on 5048cae)
+- Now: voice.js on a646e51 (the last writing lines; the "meets" rule tightened to VOICE.md's "X meets Y"), test copy only. Next:
+  v0.50. (on a646e51)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
