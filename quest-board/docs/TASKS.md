@@ -190,7 +190,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   index.html differs only by its title, lfvar.json as in v0.48, nothing missing. (LEAD's original line was lost in an edit.)
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.50 (rule 18): the pinned artifact "Quest Board v0.50 (test, fresh start)" (slug
   cda54e71-0271-4a8d-a7a6-7fe0699d43ba, 454 files from f3c970c, db + user + sample with images). Check the page matches the build.
-- WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
+- TAKEN by QA. WAITING ON QA: check v0.51, ac8d2f0 (rule 18), before LEAD publishes it as Cal's fresh pinned copy: the Rift Mask as the Spire's last
   prize (now only after its three amulet pieces; rerun riftodds.py for the new days), the team's tops, and the usual
   pre-release set (savecheck, screens, a new save through the early story, doors, voice.js).
 Art and room code requests (LEAD asks, ROOMS does):
@@ -1367,7 +1367,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; next is v0.51's pre-release check when LEAD asks (team tops and Rift Mask both passed). (on ad5fed6)
+- Now: v0.51's pre-release check (ac8d2f0, a clean copy on 8769): the Rift Mask's new days, the tops, the usual set. Next:
+  v0.51's published copy once Cal has reported on v0.50. (on deb1b20)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
