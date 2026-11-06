@@ -285,6 +285,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 23f993d (on b325eba, port 8770, `bobashell.js`, `dessertshell.js`, `menuscreen.js`; `shots/boba_full3.png`,
+  `dessert_full2.png`, `boba_menuscreen.png`): on the floor now, one fix. Nothing stands outside either room any more, the doors
+  all walk, and the Dessert Downstairs glow sits clear at the left end of the front-left edge. The Boba Menu Screen is fine live:
+  sampled every half second for 8 seconds it showed the drinks list (Milk Tea, Mango, Brown Sugar, Taro, Lychee, Oolong with
+  prices) every time; the black was only the still render. FIX (both rooms): the Shaker Station (Boba) and the Macaron Tower
+  (Dessert) now stand on the front-door mat, half covering the entrance; move each a tile back from the mat (Boba: toward the
+  pickup shelf; Dessert: toward the Cake Stand). No page errors. Owner: ROOMS.
 - QA, v0.49's published copy (rule 18, LEAD's 1d4d878; artifact 7336ed4a, version 1793937460-7d59), read-only: pass. 439 files
   against the 438 of a clean build of 8fabe1a: 437 match by sha256; `index.html` differs only by its title ("Quest Board v0.49
   (test, fresh start)", exactly the 26 extra bytes); `lfvar.json` is the page-only file HANDOFF.md says to keep, the same size
@@ -895,7 +902,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on 23f993d)
-- TAKEN by QA. WAITING ON QA: check 23f993d (rule 17), your d4f4577 fixes: the Boba Shaker Station on the floor below the pickup shelf, the
+- DONE by QA (QA findings: on the floor, both on the door mat). WAITING ON QA: check 23f993d (rule 17), your d4f4577 fixes: the Boba Shaker Station on the floor below the pickup shelf, the
   Dessert Macaron Tower on the floor below the Cake Stand (both rooms spread a 10x8 plan to 12x9; the pieces were in room
   units by mistake), the Dessert Downstairs glow at 1.3, clear of the cafe chairs. The speakeasy's Dessert door goes to its
   front-left edge with step 5.
@@ -1041,8 +1048,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's Boba and Dessert fixes, test copy only (`bobashell.js`, `dessertshell.js`). Next: whatever is WAITING ON QA.
-  (on 05da570)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on b325eba)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
