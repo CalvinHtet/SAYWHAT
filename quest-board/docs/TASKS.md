@@ -320,11 +320,11 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   and the areas below level 5 open (Board, Training, Shop, Dungeons, Loft, Hall), unlockDay free. The class is still chosen by
   the player (the Board's Class Awakening card). `shots/teststart.js`: name, Begin -> level 5, gates 5, the Garden lot offered
   about 6 s later, no page errors. On the Before release list now: QB_TEST_START back to 0.
-- TAKEN by QA. WAITING ON QA: LEAD's 3d7f57a, the level-5 test start's coins (your note on d9d92d7). A new test character gets what a real
+- DONE by QA (QA findings: pass). WAITING ON QA: LEAD's 3d7f57a, the level-5 test start's coins (your note on d9d92d7). A new test character gets what a real
   level-5 player has earned: quest pay on the XP so far (2.5 per XP) plus the pay for levels 2-5, 1,205 coins, with lvPaid = 5
   so the next level-up pays only its own level (`shots/lvnext.js`: 1,205, then 1,365 at level 6). Not the Garden's 1,500 yet,
   as for a real player; Add 10,000 coins still covers testing. Goes into the rebuilt v0.61 with ROOMS's Garden lot.
-- WAITING ON QA: LEAD's 2882690, Kode Plaza's street picture by stage (`app/src/29j_plaza.js`, overrides bldArt for "plaza"; 26_world.js
+- DONE by QA (QA findings: the code passes; stage 0 waits on bld_plaza_s0). WAITING ON QA: LEAD's 2882690, Kode Plaza's street picture by stage (`app/src/29j_plaza.js`, overrides bldArt for "plaza"; 26_world.js
   untouched). Stage = plaza rooms owned (garden, restaurant, boba, dessert, skybar, rooftop, speakeasy, counted by name) - 1:
   0 -> bld_plaza_s0.webp (open plaza; until ROOMS paints it, the plain drawn front, never the café), 1 -> bld_plaza.webp,
   k >= 2 -> the highest bld_plaza_s<j>.webp painted with j <= k, else bld_plaza.webp. `shots/plazastage.js`: every stage
@@ -457,6 +457,20 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 3d7f57a (the level-5 test start's coins): pass. A new test character starts with 1,205 coins and lvPaid 5; Testing
+  Level up to 6 gives 1,365 (+160, levelPay(6)); no page errors. Owner: LEAD.
+- QA, LEAD's ce07425 (each rig frame decoded before it is shown, Cal's walking blink): checked as far as Chromium allows: the code
+  decodes each new frame before offering it and drops it when its cache slot goes, characters draw in the rooms, no page errors.
+  Chromium does not show Safari's blink, so whether it is gone is for Cal's iPhone. Owner: LEAD.
+- QA, LEAD's 2882690 (Kode Plaza's street picture by stage; `shots/plaza/`, new `plazastreet.js`): the code passes: Garden alone =
+  stage 0 and never the cafe; Garden + Restaurant = stage 1, today's cafe picture; a third room = stage 2, still the cafe until a
+  bld_plaza_s2 exists; tapping the building still opens its rooms; no page errors. Not shippable alone: until bld_plaza_s0.webp
+  exists, stage 0 shows the plain drawn front, a grey office tower (`plaza_1.png`), which is no plaza either. v0.61 waits for
+  ROOMS's s0 art. Owner: ROOMS (s0), LEAD (v0.61).
+- QA, ROOMS's 925480a (the dartboard off the lit hexes): not passed. It is off the panels now, on the plain left wall, but right
+  above the retro TV corner (`gameroom_925480a.png`): a throw would cross the TV and the beanbag sitters. Every reference dartboard
+  has a clear lane of open floor in front. Put it where the floor in front is open (the back wall between the hex cluster and the
+  arcade, or the left wall by the door if the landing stays clear). The ping-pong table waits on Cal. Owner: ROOMS.
 - QA, ROOMS's 6f04ed8 (Game Room: the lit hex panels, the foosball to the front, the ping-pong clear of the doorway; `shots/gm4/`):
   NOT passed under Cal's new rule. Good: the outer hexes glow and frame the TV on both sides and the top, so the TV no longer hides
   the lit ones (Cal's note); the foosball stands at the front, clear of the pool table and the doormat, giving the arcade room;
@@ -1768,8 +1782,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's 3d7f57a (test-start coins) and ce07425 (the walking blink), on 1e921e4's clean copy. Next: ROOMS's Garden lot and
-  Game Room fixes, then the rebuilt v0.61. (on 7b2380c)
+- Now: nothing waiting; next ROOMS's bld_plaza_s0 and the dartboard, then the rebuilt v0.61. (on ad8d046)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
