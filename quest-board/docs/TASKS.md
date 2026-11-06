@@ -1847,12 +1847,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1712242): SMOKE BOMB (smk_*, brand id smk). Uncommitted: data/items.json (the 15 smk_* entries). Painting: high-collar
-  jacket, forehead band, cowl mask; then the other 12, crest badge and banner; then GACHA POP, SAVE POINT, BARD & BLADE,
-  CHROME RAIN, then the ten. Brand runway: OK, 45 days. WITH QA: 1712242 Game Room ping-pong retired (Cal: "Yes, drop it"),
-  9e19cdf SAYMØRE wear test, c382557 the Kode PinK bag, the seven friend portraits. Chrome: ROOMS.
+- Now (on 8cab74a): SMOKE BOMB (smk_*, brand id smk): 3 of 15 ingested (jacket, forehead band, cowl); headwrap, wrap tape,
+  scroll pouch painting; then the other 9, crest badge and banner. Then GACHA POP, SAVE POINT, BARD & BLADE, CHROME RAIN, then
+  the ten. Brand runway: OK, 45 days. WITH QA: 8cab74a the SAYMØRE pendant (outline cut, front only; QA's (2) and (3), the mask
+  in sleepHead and glasses over it, are LEAD's), c382557 the Kode PinK bag, the seven friend portraits. Chrome: ROOMS.
   Retired ids so far: `gm_ping`, `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 1712242)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 8cab74a)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
