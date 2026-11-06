@@ -266,7 +266,7 @@ function rsNotchShell(C,uid,sh){var n=C.notch,W=C.W,D=C.D,t=15,P=lfP,A=P(0,0,0),
 /* a low wall sorts in one-tile pieces, so nothing in front of it gets cut off */
 function rsWallRun(C,x,y,w,d,h,pc,pt){if(LFREC)lfRecBox(x,y,0,w,d,40);var alX=w>=d,n=alX?w:d;for(var a=0;a<n-.01;a+=1){var q=Math.min(1,n-a),x0=alX?x+a:x,y0=alX?y:y+a,w0=alX?q:w,d0=alX?d:q,o=lfPolyS([lfP(x0,y0+d0,0),lfP(x0+w0,y0+d0,0),lfP(x0+w0,y0+d0,h),lfP(x0,y0+d0,h)],pc)+lfPolyS([lfP(x0+w0,y0,0),lfP(x0+w0,y0+d0,0),lfP(x0+w0,y0+d0,h),lfP(x0+w0,y0,h)],lfSh(pc,-.24))+lfPolyS([lfP(x0,y0,h),lfP(x0+w0,y0,h),lfP(x0+w0,y0+d0,h),lfP(x0,y0+d0,h)],pt),ln=function(a1,b1){return '<path d="M'+lfPt(a1)+' L'+lfPt(b1)+'" stroke="'+LFOL+'" stroke-width=".8" fill="none"/>'};
     o+=alX?ln(lfP(x0,y0,h),lfP(x0+w0,y0,h))+ln(lfP(x0,y0+d0,h),lfP(x0+w0,y0+d0,h))+ln(lfP(x0,y0+d0,0),lfP(x0+w0,y0+d0,0)):ln(lfP(x0,y0,h),lfP(x0,y0+d0,h))+ln(lfP(x0+w0,y0,h),lfP(x0+w0,y0+d0,h))+ln(lfP(x0+w0,y0,0),lfP(x0+w0,y0+d0,0));
-    C._lb=[x0,y0,x0+w0,y0+d0];C.add(x0+w0+y0+d0,o)}}RSNAME=["Hole in the Wall","Corner Diner","Noir"];
+    C._lb=[x0,y0,x0+w0,y0+d0];C.add(x0+w0+y0+d0,o)}}RSNAME=["Hole in the Wall","Corner Diner","Neighborhood Bistro"];/* QA: Noir is the style, the stage keeps the name its upgrade promises */
 var RSCH=[["rtx_tb0","rtx_ch0",34,46],["rtx_tb1","rtx_ch1",38,50],["rtx_tb2","rtx_ch2",42,52],["rtx_tb3","rtx_ch3",44,54]];
 function rsTier(C){return C.has("r_t3")?3:C.has("r_t2")?2:C.has("r_t1")?1:0}
 /* guests sit behind the table, facing out, so a table never cuts through anyone */
@@ -328,12 +328,18 @@ LFROOM.restaurant=function(C){
   /* the kitchen's end wall has the knock-through to the Garden in it once the Garden exists */
   if(hasRoom("garden")){rsWallRun(C,Wt-.14,0,.14,.85,26,pc,pt);if(kd-.14>2.35)rsWallRun(C,Wt-.14,2.35,.14,kd-2.49,26,pc,pt)}
   else rsWallRun(C,Wt-.14,0,.14,kd-.14,26,pc,pt);
-  if(H("r_s1"))lfOrderBoard(C,Wi+.5,96,"ORDERS");
+  /* Cal: "the menu and the wall rack is placed weirdly". The order board centred over the stove, clear of the tile seam and
+     above the painted steel shelf; the small menus beside it, the same height */
+  if(H("r_s1"))lfOrderBoard(C,Wi+1.0,124,"ORDERS");
+  /* QA: Breakfast Menu and Burger Menu changed nothing you could see. Each hangs its own little chalk card by the board */
+  [["r_m1","BREAKFAST",["Eggs","Pancakes"]],["r_m2","BURGERS",["Burger","Fries"]]].forEach(function(m,i){if(!H(m[0]))return;
+    var c='<rect x="-2" y="-2" width="34" height="30" rx="1.5" fill="#6a4426" stroke="'+LFOL+'" stroke-width=".7"/><rect width="30" height="26" fill="#1d2a26"/><text x="15" y="7.5" text-anchor="middle" font-size="5" font-weight="700" fill="#ffd27a" font-family="Arial">'+m[1]+'</text>'+m[2].map(function(t,k){return '<text x="3" y="'+(15+k*7)+'" font-size="4.6" fill="#d8efe6" font-family="Arial">'+t+'</text>'}).join("");
+    C.walls.push(lfFaceY(Wi+2.65+i*1.05,0,118,'<g transform="scale(.8)">'+c+'</g>'))});
   if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
   if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,132,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),100,noir)));
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
-  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+3.6,.05,.1,.05,{h:1,flip:1,H:56,dy:-96,nosh:1});
+  if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.9,.05,.1,.05,{h:1,flip:1,H:50,dy:-108,nosh:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
   if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:64,dy:-86,nosh:1});/* QA audit: bigger and lower, readable on a phone */
@@ -350,7 +356,11 @@ LFROOM.restaurant=function(C){
   if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",Wt-1.7,isl,1.3,.9,26,{flip:1});else if(H("r_cf1"))rsS(C,"rsx_drip",st>0?Wt-1.3:Wt-1.0,st>0?isl:1.4,.7,.6,26,{flip:1});
   /* the pass is on the dining room side of that wall: food comes over it, and the good seats face it */
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
-  for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",Wi-1.1,.2+ti*(td+.05),.95,td,{h:34,ctr:1});
+  /* QA: the till faces the diners across the counter, not the kitchen */
+  for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",Wi-1.1,.2+ti*(td+.05),.95,td,{h:34,ctr:1,flip:fine?0:1});
+  /* QA: Bigger Till changed nothing you could see. A small green safe with a brass dial at the counter's end */
+  if(H("r_till")){var sx0=Wi-1.0,sy0=.2+tiles*(td+.05)+.1,sf=lfBox(sx0,sy0,0,.55,.55,20,noir?"#26302c":"#2f5a48"),dc=lfP(sx0+.28,sy0+.55,11);
+    C._lb=[sx0,sy0,sx0+.55,sy0+.55];C.add(sx0+sy0+1.1,sf+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="3" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".6"/>');if(LFREC)lfRecBox(sx0,sy0,0,.55,.55,20)}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
@@ -380,8 +390,10 @@ LFROOM.restaurant=function(C){
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
   /* the white drinks cooler has no place in Noir's fine dining once the backlit wine wall does its job (QA) */
-  if(H("r_cool")&&st>0&&!(noir&&H("r_d5")))lfSpr(C,"rsx_cooler",Wi-1.0,kd+.3,.8,.7,{h:50,ctr:1});
-  if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.5,D*.5+2.2,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.5,D*.5+2.2,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.5,D*.5+2.2,.8,.8,30,{});
+  /* QA: against the back wall by the bar stools, not free in the walkway beside the door mat */
+  if(H("r_cool")&&st>0&&!(noir&&H("r_d5")))lfSpr(C,"rsx_cooler",Wi-2.95,.2,.75,.7,{h:50,ctr:1});
+  /* QA: beside the door mat, not in front of it */
+  var hy=Math.max(2.2,D*.5-.2)+1.7;if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.0,hy,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.0,hy,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.0,hy,.8,.8,30,{});
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
   /* the patio fills the corner below the kitchen wing */
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
@@ -396,9 +408,11 @@ LFROOM.restaurant=function(C){
     if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+5.65,D-2.75,"P");
     /* a low rail between the deck and the dining room, open at the front door */
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
-    if(H("r_p4")){rsS(C,"rsx_heater",px+3.7,kd+.5,.7,.7,60,{H:116});lfLight(C,px+4,kd+.8,80,"#ff9a3a",3.0,.62)}
+    /* QA: out on the deck between the two bistro sets, not across the kitchen half wall */
+    if(H("r_p4")){rsS(C,"rsx_heater",px+3.55,kd+1.6,.7,.7,60,{H:116});lfLight(C,px+3.9,kd+1.95,80,"#ff9a3a",3.0,.62)}
     if(H("r_p6"))rsS(C,"rsx_bbq",px+4.7,kd+.3,1.7,1.0,28,{flip:1});
-    if(H("r_p5")){rsS(C,"rsx_pergola",px+5.4,D-3.0,2.5,2.5,90,{dk:-4});lfLight(C,px+6.6,D-1.8,90,"#ffd890",3,.5)}
+    /* QA: a little wider and centred on its table, so the posts stand clear of the chairs */
+    if(H("r_p5")){rsS(C,"rsx_pergola",px+5.22,D-3.18,2.85,2.85,90,{dk:-4});lfLight(C,px+6.65,D-1.75,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */
     if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+.6,D-3.1,2.8,2.8,24,{});lfLight(C,px+2.0,D-1.7,50,"#ff9a3a",2.4,.55)/* clear of the deck rail (QA) */}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
   }
