@@ -161,8 +161,9 @@ autoRoom("karaoke",{door:false,doorAt:[3.0,8.4],name:"Karaoke",lv:1,startLv:42,s
 function cbP(k,list,o){return list.map(function(q){return [k,q[0],q[1],q[2],q[3],0,Object.assign({flip:q[4]?1:0},o||{})]})}
 function cbU(id,nm,pr,k,art,line,ex){return [id,nm,pr,k,"",0,0,0,line,Object.assign({art:art},ex||{})]}
 var CBB={fxwall:1},CBS={over:1};
-autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"#0a0812",wain:"#0a0812",acc:"#ff3df0",fl:"k",size:[[14,10]],coin:60,guests:5,group:"Club",dark:1,desc:"Top floor. Loud. Your name on the list.",
- draw:function(C,H){roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C)},
+autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"#0a0812",wain:"#0a0812",acc:"#ff3df0",fl:"k",size:[[14,10]],shell:0,coin:60,guests:5,group:"Club",dark:1,desc:"Top floor. Loud. Your name on the list.",
+ floor:function(){return window.LFSPR&&LFSPR.cbw_t1?null:undefined},
+ draw:function(C,H){if(window.LFSPR&&LFSPR.cbw_t1)C.shellK="cbw_t1";else roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C)},
  items:[
   /* 6 x 5 tiles of floor (four panels, 8 x 8 lights) straight in front of the DJ */
   cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.8,2.5,3,2.5],[7.8,2.5,3,2.5],[4.8,5.0,3,2.5],[7.8,5.0,3,2.5]],{fit:1}),"The whole floor changes color, and lasers come on.",
