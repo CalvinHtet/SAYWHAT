@@ -285,7 +285,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): check 1f2cfa9 (the piano's own space, Downstairs at FL 2.2) and 73a426a (no dark
+- QA, ROOMS's 1f2cfa9 and 73a426a (on fa536b1, port 8770, `band.js`, `skybarshell.js`, `openair.js`; `shots/lockkey_band3.png`,
+  `lockkey_lounge.png`, `patio_noon.png`, `patio_night.png`, `rooftop_night.png`): the piano and the open-air rooms pass, one new
+  fix. The piano has its own space front middle, clear of the bar, the Chesterfield and the band stage; Downstairs at FL 2.2 is
+  clear; every door walks; the band checks pass; a save owning all 16 upgrades keeps 16. The Sky Patio and the Rooftop Bar, bare
+  and fully bought, at noon and 10 pm: no dark triangle over the sky, the tint stops at the rail. FIX (Lock and Key): with the
+  lounge moved left, the glass lounge table now sits half under the green sofa (the sofa is drawn over it) and the Chesterfield's
+  back runs into its legs; move the table a step forward, between the sofa and the Chesterfield. Note: the open-air rooms' sky
+  is the same dusk picture at noon and at 10 pm (only the furniture dims); if they should follow the time like the street
+  does, that is a separate change. No page errors. Owner: ROOMS.
+- DONE by QA (QA findings: pass, the lounge table now under the sofa). WAITING ON QA (ROOMS's message): check 1f2cfa9 (the piano's own space, Downstairs at FL 2.2) and 73a426a (no dark
   triangle over the sky in the open-air rooms; the Patio).
 - QA, ROOMS's b19a578, the piano turned (on e97c431, `band.js`; `shots/lockkey_band2.png`, `lockkey_piano2.png`): half fixed. The
   lid now opens away from the bar and is clear of the stools and the foot rail, and its bench clears the band stage; the band
@@ -1084,8 +1093,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's piano spacing and open-air rooms (1f2cfa9, 73a426a), test copy only (`band.js`, `skybarshell.js`, `openair.js`).
-  Next: v0.50 when LEAD builds it. (on 3740775)
+- Now: waiting for work. Next: v0.50 when LEAD builds it. (on fa536b1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
