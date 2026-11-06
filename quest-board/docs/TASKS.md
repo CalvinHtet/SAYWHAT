@@ -1862,12 +1862,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 3ca5974): SMOKE BOMB (smk_*, brand id smk): 6 of 15 ingested into art/layers (jacket, forehead band, cowl, headwrap,
-  wrap tape, scroll pouch), not packed or committed yet. Next: the other 9 (mesh top, vest, cloak, cargo, hakama, shorts,
-  sandals, tabi, runners), crest badge and banner, then pack, icons, matrix check, one commit, QA. Then GACHA POP, SAVE POINT,
-  BARD & BLADE, CHROME RAIN, then the ten. Brand runway: OK, 45 days. SAYMØRE 15/15 passed. Chrome: ROOMS (paused: usage limit).
+- Now (on a07439f): SMOKE BOMB (smk_*, brand id smk) is done and committed in a07439f: all 15 pieces for both bodies with icons, badge
+  `logo_smk.webp`, banner `ui_banner_smk.webp`. Idle matrix 30 of 30 loaded, 0 failures. WAITING ON QA: the wear test. WAITING ON
+  LEAD: the shop lines (sent by message). Next: GACHA POP, then SAVE POINT, BARD & BLADE, CHROME RAIN, then the ten.
+  Brand runway: OK, 45 days. Chrome: ROOMS.
   Retired ids so far: `gm_ping`, `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Chrome free. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on 3ca5974)
+  `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on a07439f)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
