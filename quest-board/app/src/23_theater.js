@@ -21,7 +21,7 @@ var TH_UPS=[
  ["t_wl2","Velvet Walls & Sconces",8000,{p:.2,lv:36,g:"Walls"},"Dark velvet panels and warm wall lights."],
  ["t_wl3","Gold Trim",16000,{p:.25,lv:47,g:"Walls"},"Gold panel lines around the whole room."],
  /* decorations */
- ["t_bins","Poster Stands & Bins",400,{p:.05,lv:24,g:"Decor"},"Now showing, and somewhere to put the wrappers."],
+ ["t_bins","Lobby Bins",400,{p:.05,lv:24,g:"Decor"},"Brass bins by the line, for wrappers and cups."],
  ["t_marq","Neon Marquee",2500,{p:.15,lv:26,g:"Decor"},"Bulbs on the wall, lines at the door."],
  ["t_tv","Trailer Screen",3000,{p:.15,lv:27,g:"Decor"},"Trailers on a loop while people wait."],
  ["t_standee","Movie Standee",1500,{p:.08,lv:27,g:"Decor"},"Everyone takes a picture with it."],
@@ -33,7 +33,7 @@ var TH_UPS=[
  ["t_sofa2","Leather Sofas",10000,{p:.15,lv:44,g:"Decor"},"Black leather with gold piping."],
  ["t_chand","Lobby Chandeliers",18000,{p:.25,lv:46,g:"Decor",also:"t_wing"},"A real entrance."],
  ["t_booth1","Classic Ticket Booth",2200,{p:.15,lv:26,g:"Decor"},"Red, gold and a little glass window."],
- ["t_lux4","Gold Ticket Booth",28000,{p:.3,lv:55,g:"Decor"},"Marble and gold, and a matching poster stand."],
+ ["t_lux4","Gold Ticket Booth",28000,{p:.3,lv:55,g:"Decor"},"Marble and gold, with gold bins to match."],
  /* the bar */
  ["t_bar","Cocktail Bar",14000,{p:.4,lv:38,g:"Bar",also:"t_wing",menu:"Cocktail",splash:"Grown-ups now stop for a drink on the way in, and every drink is pure profit."},"A dark bar and stools. Pull up and order a drink."],
  ["t_bar2","Liquor Wall",8000,{p:.2,lv:40,g:"Bar"},"Backlit bottles floor to ceiling."],

@@ -26,6 +26,14 @@ ADDREQ.bd_neon="bd_art2";
 ADDONS.bedroom.forEach(function(a){var e=a[3];
   if(a[0]==="bd_ward2"){a[1]="Walk-in Closet";a[4]="Opens a whole new room through a glowing door. The Shop opens with it.";e.opens="closet"}
   if(a[0]==="bd_lights"){a[1]="Moss Art Panel";a[4]="A framed panel of soft living moss over the bed, lit from above."}
+  /* Cal: "Sleek wardrobe is the figure cabinet. Rename this." The wardrobe became the wall cabinet by the Closet door. */
+  if(a[0]==="bd_ward1"){a[1]="Figurine Cabinet";a[4]="A lit glass cabinet on the wall for your figures."}
+  /* Cal: "Double check that all the upgrade names make sense": each line says what the room actually draws */
+  if(a[0]==="bd_neon")a[4]="A lightning bolt in white neon, beside the window.";
+  if(a[0]==="bd_art2")a[4]="Four small framed prints in a cluster.";
+  if(a[0]==="bd_nstand")a[4]="White, one drawer, a small glowing lamp.";
+  if(a[0]==="bd_desk1")a[4]="A black top on a motorised frame.";
+  if(a[0]==="bd_bed1")a[4]="A thick memory foam mattress on a low frame.";
   if(a[0]==="bd_patio"){a[1]="Patio Door";a[4]="Slide the glass open to your own patio, 30 floors up.";e.opens="patio"}});
 ADDONS.bedroom.push(["bd_game","Knock Into the Game Room",1500,{lv:18,opens:"gameroom",fp:1,g:"Expansion"},"A door to a room with one job: having fun."]);
 ADDONS.bedroom.push(["bd_dbed1","Dog Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);
@@ -36,8 +44,8 @@ Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"
 /* Painted walls (Cal approved the four tiers 2026-11-05). Tier 1 is the bare start; each tier is a painting of the walls
    and floor, in each Room style's colours (tools/shell_styles.py): art/app/bdw_t<tier>[_<style>].webp. */
 ADDONS.bedroom.push(["bd_wt2","Fresh Paint & Oak Floors",120,{g:"Walls"},"Two soft paint colours, crown moulding and warm oak planks."]);
-ADDONS.bedroom.push(["bd_wt3","Living Grass Wall",240,{g:"Walls"},"A floor-to-ceiling panel of soft living grass behind the bed, deep painted walls around it."]);
-ADDONS.bedroom.push(["bd_wt4","Cove Lighting",360,{g:"Walls"},"Warm light washes down the walls and the grass, and along a brass rail."]);
+ADDONS.bedroom.push(["bd_wt3","Feature Walls",240,{g:"Walls"},"Deeper colours and dark trim on every wall, in your room style."]);/* was Living Grass Wall: its painted grass hid the Moss Art Panel (Cal), so the grass is gone from tiers 3 and 4 */
+ADDONS.bedroom.push(["bd_wt4","Cove Lighting",360,{g:"Walls"},"Warm light washes down the walls and along a brass rail."]);
 Object.assign(ADDREQ,{bd_wt3:"bd_wt2",bd_wt4:"bd_wt3"});
 ADDONS.bedroom.push(["bd_clock2","Digital Clock",90,{},"Slim and dark, glowing digits, always the real time."]);ADDREQ.bd_clock2="bd_clock";
 ADDONS.bedroom.push(["bd_radio","Pocket Radio",40,{g:"Music"},"Cheap, crackly, yours."]);
