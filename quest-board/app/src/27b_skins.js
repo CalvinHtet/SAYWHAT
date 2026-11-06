@@ -69,8 +69,8 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   else roomSkin(C,{floor:gmFloor,back:gmWall,left:gmWall});
   lfDoorL(C,7.65,8.95,100,"#ffd27a",1);/* the door to the Bedroom, in the left wall */
   /* QA, against reference game rooms: the pool table stands alone with room for the cue, so once the gaming desks are in
-     the ping pong table is not squeezed in beside it any more (sup: gm_rig replaces it; the id stays in saves) */},
- req:[["gm_wt3","gm_wt2"],["gm_wt4","gm_wt3"],["gm_tv80","gm_tv"],["gm_tvstand","gm_games"],["gm_sect","gm_couch"],["gm_rig","gm_chair"]],
+     nothing stands squeezed in beside it (the gaming desks and chairs are retired, Cal on v0.58) */},
+ req:[["gm_wt3","gm_wt2"],["gm_wt4","gm_wt3"],["gm_tv80","gm_tv"],["gm_tvstand","gm_games"],["gm_sect","gm_couch"]],
  items:[["gm_wt2","Carpet & Wall Panels",UP_M,"","",0,0,0,"Plush dark carpet and panelled walls."],
   ["gm_wt3","Hex Acoustic Panels",UP_M,"","",0,0,0,"A wall of hexagon felt panels behind the TV."],
   ["gm_wt4","LED Lighting Rig",UP_L,"","",0,0,0,"Cove lights, light bars and glowing hex panels."],
@@ -79,19 +79,19 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_rug","Round Rug",UP_S,"gmx_rug",4.75,.95,2.9,2.9,0,"A round rug with a teal pattern under the couch.",{o:{dk:9}}),
   PL("gm_games","Game Shelf",UP_S,"gmx_games",5.6,.15,2.2,.8,0,"Every console you ever owned."),
   PL("gm_pool","Pool Table",UP_M,"gmx_pool",4.85,7.65,3.2,2.1,1,"Felt and chalk.",{cust:[[6.45,7.15,-1],[4.3,8.7,1]]}),/* a clear ring round it: off the beanbags, a tile from the ping pong table */
-  PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",8.8,7.0,3.0,1.9,1,"A blue table, two paddles and a net clamp.",{cust:[[8.25,7.95,1],[12.35,7.95,1,GMB]]}),
+  PL("gm_ping","Ping Pong Table",UP_M,"gmx_ping",9.35,7.0,3.0,1.9,1,"A blue table, two paddles and a net clamp.",{cust:[[8.8,7.95,1],[12.9,7.95,1,GMB]]}),
   PL("gm_arc","Green Arcade Cabinet",UP_M,"gmx_arc2",.4,.3,1.1,1.1,0,"A green upright with a joystick and two buttons.",{cust:[[.95,2.1,1,GMB]]}),
   PL("gm_foos","Foosball",UP_M,"gmx_foos",1.0,2.95,1.3,2.0,0,"Wooden table, eleven rods, a cork ball.",{cust:[[.5,3.95,1],[2.8,3.95,-1,GMB]]}),/* Cal: it stood right in front of the arcade; now a clear tile and a half, room for the arcade player */
   PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"A red vending machine, lit from inside.",{cust:[[12.1,1.8,1,GMB]]}),
   PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.05,2.4,.1,2.0,1,"A cluster of hexagon lights in blue and violet.",{o:{dy:-62,h:1,nosh:1,nob:1,dk:30}}),
   PL("gm_dart","Dartboard",UP_S,"gmx_dart",2.3,.05,1.1,.2,0,"A cork board in a wooden cabinet, three darts.",{o:{dy:-40,h:1,nob:1,nosh:1,dk:30},cust:[[2.85,2.5,1,GMB]]}),
-  PL("gm_chair","Gaming Chairs",UP_S,"gmx_chairb",7.9,3.4,1.7,1.4,1,"For when the couch is taken.",{sit:[[8.4,4.1,1,12,1],[9.2,3.9,1,12,1]]}),
+  ["gm_chair","Gaming Chairs",UP_S,"","",0,0,0,"For when the couch is taken.",{retired:1}],/* Cal on v0.58: the racing chairs looked random; retired, id kept */
   PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
-  /* Cal: "The beanbags are not facing the retro tv". Front-view sprites can only face the camera, so the TV stands on the
-     left wall with its screen to the room (flipped) and the beanbags are drawn from behind (gmx_beanb, flipped), facing it */
-  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,5.35,1.0,1.4,1,"The old console still works."),
+  /* Cal: "The beanbags are not facing the retro tv". The TV stands on the left wall with its screen to the room (unflipped:
+     the flipped sprite faces the wall, Cal on v0.58) and the beanbags are drawn from behind (gmx_beanb, flipped), facing it */
+  PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,5.35,1.0,1.4,0,"The old console still works."),
   PL("gm_bean","Beanbags",UP_S,"gmx_beanb",1.5,5.2,1.25,1.2,1,"Two beanbags, blue and orange, facing the old TV.",{sit:[[1.9,5.6,-1,4,1],[2.45,6.05,-1,4,1]]}),
-  PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.05,3.9,.6,.6,0,"A glass-front fridge stacked with cans.",{cust:[[10.35,5.1,-1,GMB]]}),
+  PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.9,.25,.65,.65,0,"A glass-front fridge stacked with cans.",{cust:[[11.2,1.7,-1,GMB]]}),/* with the gaming desks gone it stands with the snack bar and the soda machine, not alone mid-room */
   PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.4,.2,.75,.75,0,"Sets the whole room purple.",{light:[8.75,.55,70,"#b070ff",2.6,.5]}),
   /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
      sectional replaces the couch, and back-to-back gaming desks with their racing chairs stand on the right */
@@ -99,8 +99,8 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"Glossy, glass-fronted, glowing underneath. No legs.",{o:{dy:-6,H:46}}),
   PL("gm_sect","Cream Sectional",UP_L,"gmx_sect",3.9,3.4,4.0,1.9,0,"Three plush pieces and a chaise you can sleep on.",{sit:[[4.9,4.05,1,10,1],[6.0,4.05,1,10,1],[7.1,4.3,1,10,1]]}),
   /* Cal: "two desks but 4 monitors" made no sense. One long desk for two, one curved screen per seat, a chair at each */
-  PLn("gm_rig","Gaming Desks",UP_L,[["gmx_rig2",9.8,4.9,3.0,1.5,1],["gmx_chairb",11.1,6.5,1.7,1.2,1]],"One long desk for two, a curved screen each.",{sit:[[11.5,7.05,1,12,1],[12.4,6.9,1,12,1]]})],
- sup:[["gm_tv","gm_tv80"],["gm_games","gm_tvstand"],["gm_couch","gm_sect"],["gm_chair","gm_rig"],["gm_ping","gm_rig"]]};
+  ["gm_rig","Gaming Desks",UP_L,"","",0,0,0,"One long desk for two, a curved screen each.",{retired:1}]/* Cal on v0.58: "Get rid of the double gaming rig"; retired, id kept */],
+ sup:[["gm_tv","gm_tv80"],["gm_games","gm_tvstand"],["gm_couch","gm_sect"]]/* the gaming chairs and desks are retired, so nothing replaces the ping pong table */};
 /* Only Cal's friends visit the Game Room, as game versions of themselves. Add one line each:
    {id:"vega", name:"Vega", look:{body:"m", skin:"s3", hairStyle:"h1", hairColor:"black", top:"hoodie", topColor:"white",
     bottom:"jeans", bottomColor:"black", shoe:"sneakers", shoeColor:"white", eq:["al_bucket"]}}
