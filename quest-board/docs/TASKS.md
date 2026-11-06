@@ -213,7 +213,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   without a painted top draw exactly as before. LEAD's sheet: all 7 neck items on the first three painted tops, both bodies,
   42 of 42 drawn, every necklace shows (`shots/yawn/neck_fix_lead.png`, `onepose&pose=stretch`). Not checked: all 31 tops,
   and the sit and sleep poses (no painted art there, so unchanged by construction).
-- TAKEN by QA. WAITING ON QA: check v0.52, db67326 (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
+- DONE by QA (QA findings: pass; load time noted). WAITING ON QA: check v0.52, db67326 (rule 18 step 2), the next copy for Cal after v0.51. New since ac8d2f0: the yawn painted
   for every top, the 3 starter tops included (503cd3f, 6541dd3), necklaces drawn over painted tops (414a730), the town
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
@@ -341,6 +341,21 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.52's pre-release check (rule 18 step 2, db67326, APPV 52; `shots/v52/`): pass, ready to publish. savecheck passes;
+  screens at 360 and 390 px fit; older saves keep their areas (level 30: all 8; level 3: the Hall waits); a brand-new player
+  sees "NEW v0.52" and the character screen, desktop and phone; doors 36 of 36 on Cal's rule; voice.js 0 of 1,354; Shop 44
+  checks; Trophy Room passes; the team in their rooms in their tops. New saves: 12-task to day 12 (level 33; Garden day 4,
+  Restaurant offered day 6, Boba day 9, Dessert offered day 10), casual to day 14 (level 18); no played day without something
+  to buy; day 5's second unlock is the closet the player buys, as in v0.50 and v0.51. Town rules with v0.52's own dbcaps.json
+  (`townrules.js`): 32 of 32. The Rift Mask roll (`riftlive.js`): never while a Spire piece is missing, 6.7% with all three.
+  The yawn with necklaces on this build: right. No page errors. Load time (new `loadtime.js`: a fresh browser, no cache,
+  network and CPU throttled through DevTools; the local server sends files uncompressed): the page loads 39.6 MB before the
+  game starts (every script blocks, art_rig.js first). On a 9 Mbps, 85 ms phone with a 4x slower CPU: v0.51 34.5 s, v0.52
+  35.9 s, so the yawn adds about 1.4 s (art_rig.js 13.4 to 14.8 MB). With no network limit the CPU cost is small (0.3 to 0.6 s).
+  If the host compresses, the big scripts are 28.1 MB gzipped (v0.51 27.1 MB). Not a blocker for v0.52, but the first load
+  is long on a phone: Cal's phone log will say what he really sees. Ideas for later: start the game before the big art
+  arrives (load art_rig.js, blobs.js and art_ex.js after the first screen), or load the yawn layers only when someone yawns.
+  Not checked: what the host compresses, and a second visit (cache). Owner: LEAD (publish when Cal says; load time later).
 - QA, ROOMS's two yawn fixes (6541dd3, on 9bb0f16; `shots/yawn/fixes/`): pass, the yawn is done. (2) The starter tops (tee,
   hoodie, bomber) in white, grey and black, both bodies, each with all 7 necklaces: 126 cells, 0 fails, no tears, every
   necklace shows (`starters.png`); the yawn's white, grey and black match the same top standing. Their all-pose sheets differ
@@ -1451,8 +1466,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.52's pre-release check (db67326, a clean copy on 8769), with load time. Next: the 15-player town test after the next
-  publish. (on 21a2713)
+- Now: nothing waiting; v0.52 (db67326) passed. Next: v0.52's published copy and the 15-player town test once LEAD
+  publishes. (on 2421dbd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
