@@ -263,10 +263,10 @@ LFROOM.restaurant=function(C){
   var H=function(k){return C.has(k)},st=H("r_x2")?2:H("r_x1")?1:0,Wi=RSSIZE[st][0],D=RSSIZE[st][1],kw=RSKIT[st][0],kd=RSKIT[st][1],Wt=Wi+kw,patio=H("r_patio"),px=Wi,noir=H("r_noir")&&st===2;
   LFTH.restaurant.wall=noir?"#2c262a":"#7db3ae";LFTH.restaurant.wain=noir?"#1a1619":"#4c8a86";
   C.rsW=0;
-  /* the painted shell for this size (rsw_s0..2: walls, windows, dining and kitchen floors in one picture; the L is cut by
-     the notch clip). Without it, or with the Noir look, the walls and floors are drawn as before. */
-  var shk=!noir&&window.LFSPR&&LFSPR["rsw_s"+st]?"rsw_s"+st:null;if(shk)C.shellK=shk;
-  if(noir){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");var fw=C.W;C.W=Wi;roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8]);C.W=fw}
+  /* the painted shell for this size (rsw_s0..2, rsw_s2n for Noir: walls, windows, dining and kitchen floors in one
+     picture; the L is cut by the notch clip). Without it the walls and floors are drawn as before. */
+  var shk0=noir?"rsw_s2n":"rsw_s"+st,shk=window.LFSPR&&LFSPR[shk0]?shk0:null;if(shk)C.shellK=shk;
+  if(noir&&!shk){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");var fw=C.W;C.W=Wi;roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8]);C.W=fw}
   if(!patio){C.notch=[Wi,kd];if(LFREC)lfRecBox(Wi,kd,kw,D-kd,40)}
   var dw=C.W;C.W=Wi;lfDoorAt(C,Wi);C.W=dw;
   if(!shk)[[4.2],[5.0,8.6],[5.0,8.6,12.0]][st].forEach(function(y){lfSprWin(C,"w_winrs2",.05,y,.1,.05,{H:92,dy:-34})});
