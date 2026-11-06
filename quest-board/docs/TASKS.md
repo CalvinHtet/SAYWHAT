@@ -13,12 +13,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 published and pinned. With QA: 3bcbb44 (zoom as a moving layer, friends all day in their room), 172caa9
-  (Garden lines), befd663 (friend fixes), a652991 (launch drop schedule, OFF) and 0b21495 (Test > Rooms: open any room now,
-  everything/empty, view, +6 h, +20 produce, +12 sold, next story step; Cal: "Give me a way to test each room and its
-  assets"). Next: v0.62 once those and ROOMS's shadows (07812e4), backdrop (d233c9e) and bed legs (b9bcbbf) pass. NICE COCK
-  (67d0e85): when the wear test passes, LEAD adds the 16 Shop rows and moves BRANDS. Kode PinK and SAYMØRE approved by Cal
-  ("Confirmed"), sent to ROOMS to paint. Waiting on Cal: the town hall pick, a launch date. 3939130 plain visit lines; ff9ba96 class card art across the whole card (fx-pulse clash) and animated friend portraits (friend_<id>.webp from ROOMS, rig until then). 21aae0a friends only in their own building, no dog copies; 76a99a4 2-3 poses per friend (ROOMS paints). 1e2f433 room tester fixes (QA). 5688ce3 Shop without a Vault: a retired brand back every Wednesday, same for everyone (Cal). 9a8ebd8 portrait card fixes (QA). fe10549 a lone friend drawn larger. b3b4d09 portraits sized by height (solo 280, pair 230); b316e05 street pinned above the nav when zoomed out (QA). e786b94 Collect only what today's share pays (Cal). Cal asked QA for a full Restaurant check (menu board, pot rack, door glow; ROOMS fixes). 91ce178 upgrade list: buyable first (QA Restaurant blocker). dd679ab Room style hidden under Noir (QA #9). (on dd679ab)
+- Now: QA passed everything LEAD handed over (zoom, friends and portraits, Garden lines, room tester, drops and Wednesday
+  returns, class card, street camera, Collect, upgrade list, NICE COCK in the Shop, Room style under Noir). Next: v0.62, built
+  from main as soon as ROOMS's last three Restaurant fixes land (boards on the wall's slope and fewer of them, pot rack and
+  coffee pushed, the safe out of the path), then QA's full set on that exact hash, then publish and pin. Waiting on Cal: the
+  town hall pick, a launch date, reruns on Mon/Thu once the new brands run out. (on dd679ab)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
