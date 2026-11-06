@@ -109,21 +109,24 @@ LFROOM.theater=function(C){
   if(H("t_ctr")){lfSpr(C,lux4?"loL_ctr":"lo_ctr",ix,iy,3.0,1.2,{h:30,flip:1,ctr:1,H:lux4?70:78});C.thsnack=[ix+1.5,iy-.6];C.s("work",ix+1.5,iy+1.6,-1,"work",[6,12],{tag:"concession"})}
   if(H("t_pop")){lfSpr(C,lx?"loL_pop":"lo_pop",ix+3.3,iy,1.0,1.0,{h:30,flip:1,ctr:1,H:92});C.front.push(lfSteam(ix+3.7,iy+.4,60,2));if(!C.thsnack)C.thsnack=[ix+3.8,iy-.5]}
   if(H("t_soda"))lfSpr(C,"lo_soda",ix+4.5,iy,1.1,1.1,{h:30,flip:1,ctr:1,H:80});
-  if(H("t_candy"))lfSpr(C,lx?"loL_candy":"lo_candy",ix,iy+1.9,1.7,1.2,{h:28,ctr:1,H:64});
-  if(H("t_dog"))lfSpr(C,lx?"loL_dog":"lo_dog",ix+1.9,iy+1.9,1.4,1.2,{h:28,ctr:1,H:66});
-  if(H("t_nacho"))lfSpr(C,lx?"loL_nacho":"lo_nacho",ix+3.5,iy+1.9,1.3,1.2,{h:28,ctr:1,H:66});
+  /* the candy case, hot dog roller and nachos stand on a back counter behind the stand, not as a second row on the floor */
+  if(H("t_candy"))lfSpr(C,lx?"loL_candy":"lo_candy",ix+.1,iy-1.25,1.5,.9,{h:28,ctr:1,flip:1,H:56});
+  if(H("t_dog"))lfSpr(C,lx?"loL_dog":"lo_dog",ix+1.8,iy-1.25,1.2,.9,{h:28,ctr:1,flip:1,H:58});
+  if(H("t_nacho"))lfSpr(C,lx?"loL_nacho":"lo_nacho",ix+3.2,iy-1.25,1.2,.9,{h:28,ctr:1,flip:1,H:58});
   /* along the back and the sides */
-  if(H("t_arc"))lfSpr(C,"thx_arcade",.5,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:92});
-  if(H("t_claw"))lfSpr(C,"thx_claw",1.8,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:90});
+  /* games at the back right, behind the end of the line; the standee by the box office */
+  if(H("t_arc"))lfSpr(C,"thx_arcade",8.4,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:92});
+  if(H("t_claw"))lfSpr(C,"thx_claw",9.7,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:90});
   if(H("t_sofa"))lfSpr(C,H("t_sofa2")?"thL_sofa":"th_sofa",.15,5.6,1.2,2.6,{h:30,H:58});
-  if(H("t_standee"))lfSpr(C,"thx_standee",1.9,6.6,.8,.5,{h:30,ctr:1,H:84});
+  if(H("t_standee"))lfSpr(C,"thx_standee",2.2,.4,.8,.5,{h:30,ctr:1,H:84});
   if(H("t_bins")){lfSpr(C,lux4?"loL_stand":"lo_stand",W-1.3,1.6,.9,.5,{h:36,ctr:1,H:96});lfSpr(C,lux4?"loL_bins":"lo_bins",W-1.2,D-1.2,.9,.9,{h:26,ctr:1,H:56})}
   /* the wing: the bar */
   if(wing&&H("t_bar")){var bx=12.2;lfSpr(C,H("t_taps")?"loL_taps":"br_bar",bx,5.6,2.8,1.2,{h:24,flip:1,ctr:1,H:62});
     if(H("t_bar2"))lfSpr(C,"thx_liquor",bx+.3,.2,2.6,.7,{h:50,flip:1,ctr:1,H:112});
     var stl=H("t_taps")?"brL_stool":"br_stool";[bx+.5,bx+1.6].forEach(function(x){lfSpr(C,stl,x,7.1,.7,.7,{h:20,ctr:1,H:42})});
     C.thbar=[bx+1.2,7.9];C.s("work",bx+1.4,4.9,-1,"work",[6,12],{tag:"bartender"})}
-  if(wing&&H("t_chand"))[[7,6.0],[12,5.0]].forEach(function(p){lfSpr(C,"rs3_chand",p[0],p[1],.2,.2,{h:1,H:100,dy:-90,nosh:1,dk:-6});lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
+  /* the chandeliers hang out of view: only their warm light shows (the sprites stood at floor height mid-room) */
+  if(wing&&H("t_chand"))[[7,6.0],[12,5.0]].forEach(function(p){lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
   if(H("t_wl2")||lux4)lfLight(C,W*.45,D*.4,70,"#ffcf8a",3,.3);
   lfDoorAt(C,W);
   lfWander(C,[[W-2.2,D*.5+.4,-1],[3,4.2,1],[6,4.2,-1]]);
