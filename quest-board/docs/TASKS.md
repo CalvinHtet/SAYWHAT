@@ -271,6 +271,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 28a51ee (on 3124efd, `rigtest/qa/gardoors.js`; `shots/gardoor_restaurant.png`, `gardoor_garden.png`): pass. The
+  building map puts the Garden right of the Restaurant (restaurant [1,0,0], garden [1,1,0], Boba [1,2,0]). At all 12 pairs
+  (Back Plot, Kitchen Garden, Estate x Hole in the Wall, Corner Diner, Bistro, Noir) the Restaurant's "Garden" arrow (bottom right,
+  the gap in the kitchen's end wall) and the Garden's "Restaurant" arrow (top left, the lit doorway in the back-left brick wall)
+  walk both ways and come back to the same room. Out on the right, in on the left, as Cal asked. No page errors. Owner: none.
 - QA, ROOMS's Garden lots (4725457, cd73831, 5fa3fec, on df5d7c3, `rigtest/qa/gardenlots.js`, 6 cases; `shots/garden_lots.png`,
   `garden_kitchen_full.png`): the lots pass, 3 placement fixes. Pass: each stage draws its own painting (`gdw_s0`, `gdw_s1`, `gdw_s2`),
   brick walls show with no hedge or glass fence over them, nothing stands outside the lot or pokes through a wall, and the
@@ -738,7 +743,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
   12-minute loop running (rule 16). (on 28a51ee)
-- TAKEN by QA. WAITING ON QA: check 28a51ee (rule 17): the Garden is right of the Restaurant in Kode Plaza (building view, Boba's stack one
+- DONE by QA (QA findings: pass). WAITING ON QA: check 28a51ee (rule 17): the Garden is right of the Restaurant in Kode Plaza (building view, Boba's stack one
   along); with both built, the Restaurant's "Garden" arrow (front right, the kitchen end wall has a gap) and the Garden's
   "Restaurant" arrow (top left, a lit doorway in the back-left wall) walk both ways, at every Garden and Restaurant size.
 - DONE by QA (QA findings: lots pass, 3 placement fixes for ROOMS). WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
@@ -860,8 +865,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Garden and Restaurant doors (28a51ee), test copy only (`rigtest/qa/gardoors.js`). Next: LEAD's unlock fixes and ROOMS's
-  Garden placement fixes. (on 84df6e4)
+- Now: waiting for work. Next: LEAD's unlock-timeline fixes and ROOMS's Garden placement fixes. (on 3124efd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
