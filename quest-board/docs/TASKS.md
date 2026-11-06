@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Restaurant round 2 (on 745fc70: ROOMS's 765e6fc, LEAD's 91ce178 and dd679ab; `shots/qa/restaurant/r2_*_745fc70.png`):
+  most pass, three left. Pass: all 60 buy through the window; Breakfast Menu, Burger Menu and Bigger Till now show (cards, safe);
+  only Hire a Head Chef draws nothing, which is fine (staff show live); the till faces the diners; the cooler is by the stools; the
+  host stand is beside the mat; the patio heater is on the deck between the sets; the pergola clears its chairs; stage 3 reads
+  "Neighborhood Bistro"; Room style is hidden under Noir; guests now use the patio (7 patio sits of 56 in 60 s live, none before).
+  Left: (1) the ORDERS board and the small menu cards still face front as flat rectangles instead of lying on the tiled wall's
+  slope (the shelf under them does slope), and in the Diner five boards in a row now overlap each other (BURGERS over the three
+  small menus): one board plus two cards is enough. (2) The pot rack and the coffee stool are unchanged on main: ROOMS's rsx_prep,
+  rsx_prepi and rsx_drip are not pushed yet. (3) The new safe stands on the dining floor in front of the partition, in the
+  diners' path; put it behind the counter. Owner: ROOMS.
 - QA, on d8f6780: all pass. LEAD's 91ce178 (cards grouped: buyable, mystery, then waiting): every room can now be bought to the end
   through its own window, 21 of 21 at level 60 (`stuckscan.js`, new: taps the first Buy button until none is left), the Restaurant
   all 60 and the Garden all 42. ROOMS's e884ffd: the Garden door's glow sits on the kitchen floor at its open end at all three
@@ -1932,7 +1942,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA; all handed-over work checked (rooms buy through, NICE COCK in the Shop, Collect, class card, Garden door). Next: ROOMS's Restaurant fixes and v0.62 when LEAD asks. Messages to other chats paused by the app; findings on this board only. (on d8f6780)
+- Now: Restaurant round 2 checked: most pass, three left for ROOMS (boards face front and crowd, pot rack and coffee not pushed, safe in the path). Next: ROOMS's pot rack push, v0.62 when LEAD asks. (on 745fc70)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
