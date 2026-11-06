@@ -833,7 +833,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-- WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
+- TAKEN by QA. WAITING ON QA: check 0b23996 and d1d7c73 (rule 17): the city behind every building has far fewer, softer lit windows (day
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on d1d7c73)
@@ -972,8 +972,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's 912f32c (unlocks by their own level; Sprinklers at the Estate): timeline and watering runs, test copy only
-  (`sim.js`, `unlocks.py`, `water.py`). Next: whatever is WAITING ON QA. (on 912f32c)
+- Now: LEAD's 912f32c runs (on b8742cd: `sim.js`, `unlocks.py`, `water.py`) and ROOMS's city lights and Noir furniture
+  (0b23996, d1d7c73, on 72a427a, port 8771), test copies only. Next: whatever is WAITING ON QA. (on 72a427a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
