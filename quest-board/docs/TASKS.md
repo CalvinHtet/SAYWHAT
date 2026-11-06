@@ -465,6 +465,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's d34d2ce (the TV console centred, artIf; `shots/plaza/tvwall_d34d2ce.png`): pass. Under the 80 inch screen and under
+  the Big TV (`allrooms.js` with the new DROP option) the console sits centred under the screen, parallel to its bottom edge, both ends
+  tucked in, nothing crossing; the floor lamp clear beside the snack bar. artIf disturbs no other room: every room fully bought
+  against v0.61, only the Game Room changes (1.2%; the others differ only by render noise, as v0.61 against itself). Still: the
+  console's description is 101 characters, one over (`voice.js`). Owner: ROOMS (trim it).
+- QA, LEAD's 60e3e50 (the town board for many players; new `townlive.js`, two players on one stand-in db with the real rules,
+  stored per document): one fix. Passes: a half-typed post keeps its text, caret and focus through the board's own 20 s reload; Ben's
+  post reaches Ana on its own in 13 s, tagged "new"; posting in the same moment keeps both; no page errors. Fix: a full game repaint
+  (render(): rare in the Hall, e.g. a new area opening or a raid ending) keeps the text but drops the focus and caret, which on a
+  phone closes the keyboard mid-word; restore them after render() as socPaint does. Not checkable here: the real db with two real
+  accounts. Owner: LEAD.
 - QA, v0.61 rebuilt (c48c7af, APPV 61; Cal: "Publish 0.61 now and continue with other tasks"): pass, publish. On the exact build:
   savecheck, screens (360, 390), old saves, the level-5 start (1,205 coins, gate 5, the right areas; Add 10,000 then the Garden builds),
   Kode Plaza stages 0, 1, 2 and tapping in, town rules 32 of 32, doors 36 of 36, Shop 44, Trophy Room, the Rift Mask, the team,
@@ -1811,7 +1822,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's d34d2ce (the TV console centred, artIf) and LEAD's 60e3e50 (the town board for many players). Next: v0.61's page. (on f2822e6)
+- Now: nothing waiting; d34d2ce passed, 60e3e50 has one fix. Next: v0.61's page once pinned; the next version. (on c7136e3)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
