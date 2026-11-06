@@ -464,6 +464,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 36afaa1 SMOKE BOMB fixes and LEAD's 9d1092e names (on 9d1092e; `shots/qa/smk/*_36afaa1.png`): two pass, one small fix
+  left. The band (ash-grey cloth, stitched smoke puff, side knot, no plate) and the vest (quilted puffer, funnel neck, ember zip,
+  cream sleeves, no pockets or scrolls) read as original now, in all 22 poses on both bodies, alone and in outfits; their new Shop
+  lines pass voice.js (1,437 lines, 0 hits). The cloak no longer throws a wing, and it hangs right in walk, sitBack and sleep, but in
+  stretch and stretchUp a thin black sliver still trails off her and his left hand (`cloak_36afaa1.png`, cells 3, 4, 7, 8): trim it
+  from the arm layer. Nit, as ROOMS said: the band's knot shows from behind on her and not on him. Owner: ROOMS.
 - QA, LEAD's 4f0d21f SMOKE BOMB in the Shop (on 140a83d, `shop.js` BRAND=smk; `shots/qa/smk/shop_*_4f0d21f.png`): pass. 15 on him
   and 15 on her bought at full price through Try on, Checkout, Confirm, worn and in the mirror. The three art fixes from the wear test
   (the cloak hem, the band and vest designs) still stand with ROOMS. QA's old local servers are stopped (66 of them); none of QA's
@@ -2047,7 +2053,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 12 of 15: the cloak hem, the band and vest look like a famous anime's (ROOMS); in the Shop it passes. (on 140a83d)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 14 of 15: band and vest redrawn and pass; a sliver at the hand in the cloak's stretch (ROOMS). (on 9d1092e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
