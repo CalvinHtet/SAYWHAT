@@ -154,7 +154,10 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
-- The Garden and the Restaurant, Cal's decisions (2026-11-05), LEAD's code in 16e72c3: the Garden stays its own lot (the empty lot
+- DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
+  [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into
+  the Restaurant's kitchen, whose end wall has the gap; arrows both ways; (3) the Garden's three painted lots (approval 20).
+  The Garden and the Restaurant, Cal's decisions (2026-11-05), LEAD's code in 16e72c3: the Garden stays its own lot (the empty lot
   next to your building) and opens at level 5 (b1088f8, was: after the closet and patio); "the next upgrade should be a restaurant that
   expands from it": the Garden's first upgrade, `gd_rest` Knock Through to a Restaurant, opens the Restaurant after Mara's yes.
   ROOMS: (1) put the Restaurant next to the Garden in Kode Plaza (`ROOMCELL`; today Restaurant [1,0,0], Garden [1,2,0]) with
@@ -713,15 +716,19 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden: all three painted lots done (4725457, cd73831, 5fa3fec,
-  approval 20); next for the Garden: painted shell, its stages, the produce stand (`22_garden.js`, new `gdw_*` art). Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
+  approval 20) and next to the Restaurant with the knock-through door (28a51ee); next for the Garden: the produce stand
+  (`22_garden.js`, new art) so the story's selling has a place from the first day. Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
-  5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90). WAITING ON CAL: Garden in The Loft or Kode Plaza.
-  12-minute loop running (rule 16). (on 5fa3fec)
+  5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
+  12-minute loop running (rule 16). (on 28a51ee)
+- WAITING ON QA: check 28a51ee (rule 17): the Garden is right of the Restaurant in Kode Plaza (building view, Boba's stack one
+  along); with both built, the Restaurant's "Garden" arrow (front right, the kitchen end wall has a gap) and the Garden's
+  "Restaurant" arrow (top left, a lit doorway in the back-left wall) walk both ways, at every Garden and Restaurant size.
 - TAKEN by QA. WAITING ON QA: check 4725457, cd73831 and 5fa3fec (rule 17), the Garden's painted lots: Back Plot, Kitchen Garden and
   Estate, each bare and fully bought. Look for: brick walls showing (no hedge or glass fence over them), beds and tools
   standing on the lawn, nothing poking through a wall, the Estate's walls cut at the stone coping with no black band.
