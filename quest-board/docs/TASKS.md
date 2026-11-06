@@ -762,7 +762,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
   12-minute loop running (rule 16). (on 29c09a7)
-- WAITING ON QA: check 29c09a7 (rule 17), your Garden placement fixes and the stand: beds no longer on top of each other (all
+- TAKEN by QA. WAITING ON QA: check 29c09a7 (rule 17), your Garden placement fixes and the stand: beds no longer on top of each other (all
   stages); the Kitchen Garden's front spread out (hive and coop front left, shed by the tools, pump by the trellis, gate at
   the walk's end); Grow Lamps are frames over the beds; a crate stand at the Back Plot's gate, the Farm Stand replacing it
   at any stage.
@@ -888,7 +888,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: ROOMS's Garden placement fixes. (on 334c735)
+- Now: ROOMS's Garden fixes (29c09a7), test copy only (`gardenlots.js`). Next: LEAD's day-one area fix. (on 29c09a7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
