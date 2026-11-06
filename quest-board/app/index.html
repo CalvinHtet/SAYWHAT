@@ -379,7 +379,12 @@ body.fr-royal .hero,body.fr-royal .now{outline:2px solid var(--gold);outline-off
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0}
 body::after{content:"";position:fixed;width:46vmax;height:46vmax;border-radius:50%;left:-10vmax;top:30vh;background:radial-gradient(var(--glow2),transparent 65%);pointer-events:none;z-index:0;opacity:0}
 body.fx-grid::before{opacity:1;background-image:linear-gradient(var(--gridc) 1px,transparent 1px),linear-gradient(90deg,var(--gridc) 1px,transparent 1px);background-size:36px 36px;-webkit-mask-image:radial-gradient(80% 55% at 50% 0,#000,transparent);mask-image:radial-gradient(80% 55% at 50% 0,#000,transparent)}
-body.fx-pulse .card{animation:edge 4s ease-in-out infinite}
+/* The card glow fades a separate layer in and out. Animating the card's own box-shadow made the browser re-draw everything
+   inside it every frame: a room window ran at 4 fps on a full save (LEAD, after Cal's phone log on v0.53). */
+body.fx-pulse .card.hero,body.fx-pulse .card.now{animation:edge 4s ease-in-out infinite}
+body.fx-pulse .card:not(.hero):not(.now)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 0 0 1px var(--shadow),0 0 22px -6px var(--shadow);opacity:0;will-change:opacity;animation:edgeO 4s ease-in-out infinite}
+@keyframes edgeO{50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){body.fx-pulse .card::after,body.fx-pulse .card.hero,body.fx-pulse .card.now{animation:none}}
 @keyframes edge{50%{box-shadow:0 0 0 1px var(--shadow),0 0 22px -6px var(--shadow)}}
 body.fx-brackets .card::before{content:"";position:absolute;inset:6px;pointer-events:none;
   background:linear-gradient(var(--accent),var(--accent)) 0 0/14px 2px no-repeat,linear-gradient(var(--accent),var(--accent)) 0 0/2px 14px no-repeat,
