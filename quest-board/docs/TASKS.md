@@ -13,10 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.62 published and pinned (756def5, 495 files; QA passed, files match). With QA: 3a1e3c1 (Kode PinK in the Shop on
-  Dec 14; launch reruns keep every brand more than 4 slots from its last drop). SAYMØRE in the Shop on Dec 21 (262d835). Next: v0.63
-  once QA passes Kode PinK, SAYMØRE and the reruns; ROOMS starts SMOKE BOMB (id smk). Cal dropped the Game Room ping-pong ("Yes,
-  drop it"; ROOMS 1712242 retires gm_ping), so it is no longer an accepted issue; it goes into v0.63. 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. b85b038 SAYMØRE mask stays on asleep, glasses hidden under it (QA fixes 2, 3). (on b85b038)
+- Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
+  ping-pong retired). WAITING ON QA's full set on that exact hash, then LEAD publishes and pins. ROOMS paints SMOKE BOMB (smk).
+  Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. (on f5234d3)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
