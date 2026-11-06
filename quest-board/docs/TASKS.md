@@ -282,6 +282,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's f0c6dbb, the Dessert Parlor and the Boba fixes (on 4b1c78b, port 8770, `dessertshell.js`, `bobashell.js`;
+  `shots/dessert_bare.png`, `dessert_full.png`, `dessert_downstairs.png`, `boba_full2.png`): the shells and doors pass, 2 pieces
+  now stand off the floor. Pass: the Dessert Parlor's painted shell (`dsw_t1`) bare and fully bought, the tall painted bookcase
+  on the right wall with the Hidden Door's glow at its foot, clear; the walk Dessert -> Downstairs (bottom left) -> Boba ->
+  Upstairs -> Dessert -> Hidden Door (top right) -> Speakeasy -> back all lands right. Boba: the stairs are clear, the window
+  bench sits under the window, clear of the side door. FIX 1 (Boba): the Shaker Station moved to the front-right corner and now
+  hangs off the floor's edge (audit: `bbx_shake` outside the room); put it on the floor by the pickup shelf. FIX 2 (Dessert): the
+  Macaron Tower (`dsx_tower`) stands on the front-right edge, half off the floor; move it in a tile. Notes: the blue cafe chair
+  stands right beside the Downstairs glow on the front-left edge; the speakeasy's way back ("Dessert") is on its front-right
+  edge, where Cal's rule wants the front-left (for the speakeasy step); the Boba Menu Screen is black in a still picture (ROOMS:
+  it cycles pages), not checked live. No page errors. Owner: ROOMS.
 - QA, ROOMS's Boba shop c223d89 (on 6896d2a, port 8770, `rigtest/qa/bobashell.js`; `shots/boba_bare.png`, `boba_full.png`,
   `boba_stairs.png`, `boba_sidedoor.png`): the shell and the doors pass, 2 placement fixes and 1 note. Pass: the painted shop
   (`bbw_t1`) draws bare and fully bought, nothing outside the room; the side door walks both ways (Boba's "Garden" arrow top
@@ -874,7 +885,7 @@ Doing:
   and night); Noir with White Linen Service sets black marble and brass tables with charcoal velvet chairs (other looks
   unchanged); the patio fire pit clear of the deck rail.
   12-minute loop running (rule 16). (on f0c6dbb)
-- TAKEN by QA. WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
+- DONE by QA (QA findings: doors pass, 2 pieces off the floor). WAITING ON QA: check f0c6dbb (rule 17): the Dessert Parlor's painted shell bare and fully bought; "Hidden Door" at the
   painted bookcase (nothing on its glow), "Downstairs" on the front-left edge; the Boba shop fixes from your 84e97f6 (shaker
   station off the stairs, window bench clear of the side door). The Boba Menu Screen cycles pages (drinks show in my renders);
   a blank frame may be the page change.
@@ -1016,8 +1027,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's Dessert Parlor and Boba fixes (f0c6dbb), test copy only (`bobashell.js`, `dessertshell.js`). Next: v0.49's
-  published copy once LEAD publishes. (on 6af4666)
+- Now: v0.49's published copy against the build (LEAD's 1d4d878, rule 18), read-only. Next: ROOMS's Boba and Dessert fixes.
+  (on 4b1c78b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
