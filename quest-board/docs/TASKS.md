@@ -17,7 +17,7 @@ Doing:
   Cal: "I want Kode plaza to start off like a plaza..."; ROOMS paints bld_plaza_s0 and later stages), the Game Room fixes,
   the Bedroom blink fix ce07425; plaza code, coins and blink passed QA. Brands: Cal approved BRANDS_15.md ("Love the names!"),
   ROOMS generating NICE COCK first (drop 2, 2026-11-09); LEAD moves the BRANDS dates once its art passes QA. Asked Cal: vaulted
-  brands return as a rerun, or gone for good (the Vault promises a return the code never makes). (on 52f4714)
+  brands return as a rerun, or gone for good (the Vault promises a return the code never makes). (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -331,6 +331,11 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   0 -> bld_plaza_s0.webp (open plaza; until ROOMS paints it, the plain drawn front, never the café), 1 -> bld_plaza.webp,
   k >= 2 -> the highest bld_plaza_s<j>.webp painted with j <= k, else bld_plaza.webp. `shots/plazastage.js`: every stage
   right with and without s0/s2 present, the street draws, no page errors. Tapping still opens the rooms (unchanged).
+- WAITING ON QA: LEAD's NEXT, the Kode Plaza sign over the open plaza (ROOMS: bld_plaza_s0 is painted lower in its 894x1100 frame,
+  so the sign floated). 29j_plaza.js moves the sign down to 30 px above where the painting starts (top 37.3% of the frame is
+  empty) for pictures listed in PLAZATOP; the café stage and every other building are untouched; 26_world.js untouched.
+  `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
+  errors (`shots/v61/plazasign_gardenonly.png`). Check with ROOMS's 9189946.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
