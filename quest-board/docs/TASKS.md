@@ -828,7 +828,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
   12-minute loop running (rule 16). (on e415c00)
-- WAITING ON QA: check a9a572c and e415c00 (rule 17): the Restaurant patio (Corner Diner and Bistro with everything): the fire
+- TAKEN by QA. WAITING ON QA: check a9a572c and e415c00 (rule 17): the Restaurant patio (Corner Diner and Bistro with everything): the fire
   pit left and the table (under the pergola once bought) right, with the sign in the gap; a low rail between deck and
   dining room, open at the front door; no white drinks cooler in Noir with the wine wall. The watering can's tap area on
   a phone (about 44 px).
@@ -963,7 +963,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: whatever is WAITING ON QA. (on 8bb0422)
+- Now: ROOMS's patio polish and the can's tap area (a9a572c, e415c00), test copy only (`restshell.js`, `gardenwater.js`). Next:
+  the Sprinklers rerun when LEAD moves them. (on 46a8825)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
