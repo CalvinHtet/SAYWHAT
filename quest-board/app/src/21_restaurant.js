@@ -10,12 +10,12 @@ var RS_UPS=[
  ["r_k1","Gas Range",300,{p:.12,lv:8,g:"Kitchen"},"Swaps the hot plate for four real burners."],
  ["r_k2","Steel Prep Table",700,{p:.1,lv:9,g:"Kitchen"},"Room to chop, plate and hang the pans."],
  ["r_k3","Commercial Fridge",1400,{p:.12,lv:11,g:"Kitchen"},"Retires the dented mini fridge."],
- ["r_k4","Flat-Top Grill",2400,{p:.2,lv:13,g:"Kitchen",also:"r_x1"},"A long griddle and a proper hood. Burgers for days."],
+ ["r_k4","Flat-Top Grill",2400,{p:.2,lv:13,g:"Kitchen",also:"r_x1"},"A long griddle and a proper hood."],
  ["r_k5","Fryer & Sinks",3200,{p:.2,lv:16,g:"Kitchen",also:"r_x1"},"Fries come out faster. Dishes come back cleaner."],
  ["r_k6","Bakery Rack",2200,{p:.12,lv:19,g:"Kitchen",also:"r_x1"},"Fresh bread on wheels, every morning."],
  ["r_k9","Dish Station",2800,{p:.12,lv:20,g:"Kitchen",also:"r_x1"},"Plates stacked, spray faucet, no more waiting on forks."],
  ["r_k7","Wood-Fired Oven",9000,{p:.5,lv:28,g:"Kitchen",also:"r_x2"},"A brick dome with a real fire. Guests can smell it."],
- ["r_k8","Grand French Range",22000,{p:.9,lv:44,g:"Kitchen",also:"r_x2"},"Navy enamel, brass rails, copper pots. The dream."],
+ ["r_k8","Grand French Range",22000,{p:.9,lv:44,g:"Kitchen",also:"r_x2"},"Navy enamel, brass rails, copper pots."],
  /* coffee */
  ["r_cf1","Drip Coffee",150,{p:.06,lv:8,g:"Kitchen"},"Bottomless, burnt and beloved."],
  ["r_cf2","Espresso Bar",3000,{p:.2,lv:15,g:"Kitchen",also:"r_x1"},"A gold machine on a lit counter."],
@@ -61,7 +61,7 @@ var RS_UPS=[
  ["r_d8","Orchid Arrangements",5000,{p:.12,lv:33,g:"Decor",also:"r_x2"},"White flowers in gold urns."],
  ["r_d7","Gilded Mirror",6000,{p:.12,lv:34,g:"Decor",also:"r_x2"},"The room looks twice as big and three times as rich."],
  ["r_d6","Wine Cellar",14000,{p:.5,lv:42,g:"Decor",also:"r_x2"},"A floor-to-ceiling gold cellar."],
- ["r_star","Star Plaque",30000,{p:1.5,lv:60,g:"Decor",also:"r_x2"},"The critics came. You won."],
+ ["r_star","Star Plaque",30000,{p:1.5,lv:60,g:"Decor",also:"r_x2"},"A framed review and a star by the door."],
  /* staff */
  ["r_s1","Hire a Cook",1000,{p:.2,lv:9,g:"Staff"},"Takes the orders off your hands. Guests now order and wait to be served."],
  ["r_s2","Hire a Waiter",2000,{p:.25,tip:1,lv:12,g:"Staff"},"Faster plates, better tips."],

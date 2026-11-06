@@ -29,7 +29,7 @@ var TH_UPS=[
  ["t_clap","Neon Clapboard",2500,{p:.1,lv:30,g:"Decor"},"Glows blue and pink."],
  ["t_sofa","Lobby Sofas",3000,{p:.1,lv:31,g:"Decor"},"Early arrivals sit here."],
  ["t_arc","Arcade Cabinet",4000,{p:.15,lv:32,g:"Decor"},"Something to do before the show."],
- ["t_claw","Claw Machine",4000,{p:.15,lv:33,g:"Decor"},"Nobody has ever won. Everyone keeps trying."],
+ ["t_claw","Claw Machine",4000,{p:.15,lv:33,g:"Decor"},"A glass box of plush toys and a three-prong claw."],
  ["t_sofa2","Leather Sofas",10000,{p:.15,lv:44,g:"Decor"},"Black leather with gold piping."],
  ["t_chand","Lobby Chandeliers",18000,{p:.25,lv:46,g:"Decor",also:"t_wing"},"A real entrance."],
  ["t_booth1","Classic Ticket Booth",2200,{p:.15,lv:26,g:"Decor"},"Red, gold and a little glass window."],
