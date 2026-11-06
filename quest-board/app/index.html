@@ -1056,7 +1056,13 @@ body.has-hud .lfctl:not(.lfpzc){top:34px}body.has-hud .lfwxb{top:34px!important}
 .cc-opts{display:flex;flex-wrap:wrap;gap:6px}
 .cc-opt{display:inline-flex;align-items:center;gap:7px}
 .cc-dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(255,255,255,.35);flex:none}
-@media (max-width:720px){.qbcc #qbcc{grid-template-columns:1fr;grid-template-rows:38vh 44vh;height:auto}}
+/* phone: the preview and the menu share the screen that is left, and Back/Begin stay pinned to the bottom (Cal, v0.53: "I can't
+   see the begin button" once the menu was scrolled; the menu kept the scroll and the card was capped at the screen height) */
+@media (max-width:720px){.creator.qbcc{max-height:none;min-height:0}
+  .qbcc #qbcc{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) minmax(0,1fr);height:max(400px,calc(100dvh - 176px));margin:8px 0 0}
+  .qbcc .cc-menu{overscroll-behavior-y:auto}
+  .creator.qbcc .ccbtns{position:sticky;bottom:0;z-index:5;display:flex;gap:8px;padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface)}
+  .creator.qbcc .ccbtns .btn{flex:1}}
 
 /* switched-on screens */
 .scrS{opacity:0;animation:scrS 12s linear infinite}

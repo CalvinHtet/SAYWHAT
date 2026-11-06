@@ -571,6 +571,9 @@
 
     /* A pose between two keys. Rotations and scales blend; anything unset is rest. */
     blend(a, b, t) {
+      // A painted pose is a picture of exactly that pose: bending toward or away from it tears the flat art (Cal on v0.52,
+      // "Still tearing"). So a span with a painted key on one end shows one key or the other, never a mix.
+      if ((a.painted || b.painted) && a.painted !== b.painted) t = t < 0.5 ? 0 : 1;
       const num = (x, y, rest) => (x ?? rest) + ((y ?? rest) - (x ?? rest)) * t;
       const bones = {};
       for (const id of new Set([...Object.keys(a.bones || {}), ...Object.keys(b.bones || {})])) {
@@ -590,6 +593,7 @@
         const [p0, p1, p2, p3] = [a ?? rest, b ?? rest, c ?? rest, d ?? rest];
         return 0.5 * (2 * p1 + (p2 - p0) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (3 * p1 - p0 - 3 * p2 + p3) * t * t * t);
       };
+      if ((k1.painted || k2.painted) && k1.painted !== k2.painted) return this.blend(k1, k2, t);
       const keys = [k0, k1, k2, k3], field = (get, rest) => num(...keys.map(get), rest);
       const ids = new Set(keys.flatMap((k) => Object.keys(k.bones || {})));
       const bones = {};

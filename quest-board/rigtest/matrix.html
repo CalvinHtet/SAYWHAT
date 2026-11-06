@@ -115,6 +115,15 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
       cols = 16; cw = 92; ch = 108;
       for (const [body, hair] of [["m", "h1"], ["f", "h1"]]) for (const clip of ["walk", "walkBack"]) for (let f = 0; f < 16; f++)
         cells.push({ label: `${body} ${clip} ${f}`, body, opts: { hairStyle: hair, hairColor: "brown" }, arts: [], clip, f, crop: FULL });
+    } else if (sheet === "clip") {
+      // Every frame of one clip, a row per item and body: ?sheet=clip&clip=stretch&arts=h_hoodie,tee,hoodie  (a starter top
+      // id like tee/hoodie/bomber is worn through the creator; &tc= sets its colour)
+      const name = q.get("clip") || "stretch", n = clips[name].frames, arts = (q.get("arts") || "hoodie").split(",").filter(Boolean);
+      cols = n; cw = +(q.get("cw") || 70); ch = +(q.get("ch") || 84);
+      for (const art of arts) for (const body of ["m", "f"]) for (let f = 0; f < n; f++) {
+        if (I[art] && !fits(art, body)) { cells.push(null); continue; }
+        cells.push({ label: `${art} ${body} ${f}`, body, opts: { hairStyle: q.get("h") || "h2", hairColor: "brown", top: I[art] ? undefined : art }, arts: I[art] ? [art] : [], clip: name, f, crop: FULL });
+      }
     } else if (sheet === "hair") {
       cols = 12; cw = 100; ch = 118;
       for (const c of D.creator.hairColors) for (const body of ["m", "f"]) for (const hair of ["h1", "h2", "h3"]) for (const clip of ["idle", "back"])

@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.53 published and pinned (461 files from 743c30c, QA passed the exact build), WAITING ON QA for the page check.
-  Next for v0.54: the stretch still tears on Cal's phone (ROOMS: the clip passes through stretchUp, which has no painting),
-  then QA's skirt split (b58bf48). Rule 18 now: QA approves, LEAD publishes, no wait for Cal. (on 743c30c)
+- Now: v0.54 (NEXT, APPV 54) WAITING ON QA, published as soon as QA passes it. Then v0.55: QA's skirt split (b58bf48),
+  a rig option tying a skirt's hem to the hips, ROOMS adds the item flag. (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -242,6 +241,21 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
   6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
   images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
+- WAITING ON QA: check v0.54, NEXT (rule 18: your pass publishes it). Three changes:
+  (1) The stretch no longer tears (Cal on v0.52, "Still tearing"; ROOMS found the clip went through `stretchUp`, which has no
+  painting). `data/poses.json` clip `stretch` is now idle, stretch x5, idle (24 frames), and `src/rig.js` never blends a span
+  with a painted pose on one end: it shows one key or the other. LEAD's sheet, every frame, starter hoodie/tee/bomber, both
+  bodies: frames 0-1 and 22-23 idle, 2-21 the painted yawn, no in-between frame (`shots/v54/stretch_clip_starters.png`;
+  new `rigtest/matrix.html?sheet=clip&clip=stretch&arts=...` draws any clip frame by frame). Please check every frame of the
+  clip in the creator and in a room, shop tops too. The yawn now snaps up and down (no stretchUp beat).
+  (2) The creator's Begin button (Cal, phone screenshot: "I can't see the begin button" after scrolling the menu). On screens
+  up to 720 px the preview and menu split the space left (`app/index.html`), Back/Begin stick to the bottom, the menu's scroll
+  hands on to the page. `shots/ccbegin.js`: 390x664, 360x600, 430x800, 1280x800, Begin on screen and tappable at the start,
+  with the menu at its end, the page at its end and back at the top; no page errors (`shots/v54/creator_390.png`).
+  (3) diag/load (your idea): each visit's scripts with transfer size, body size and time, how many came from the cache (0
+  bytes) or were only checked (a few hundred bytes), and when the bar showed and the game was ready; last 6 visits, owner's
+  device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
+  Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by ROOMS in 28a51ee: (1) ROOMCELL garden [1,1,0], right of the Restaurant; boba [1,2,0], dessert [1,2,1], speakeasy
   [1,2,2] (LEAD: please keep the street and lots in step); (2) gd_rest is a lit doorway in the Garden's back-left wall into

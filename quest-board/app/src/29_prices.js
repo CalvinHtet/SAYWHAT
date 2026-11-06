@@ -56,3 +56,13 @@ function qbPerf(why){try{if(QBPB||window.__qbGuest||!db||!ownerView||document.hi
   var f=function(t){n++;var d=t-last;last=t;if(d>worst)worst=d;if(d>50)slow++;if(t-t0<5000)requestAnimationFrame(f);else done()};
   requestAnimationFrame(f)}catch(e){QBPB=0}}
 setInterval(function(){if(!loaded)return;var k=view+"|"+!!document.querySelector("#layer .modal");if(k!==QBPK){QBPK=k;qbPerf("change")}},2500);
+/* Temporary, the owner's device only (QA, after v0.53): how this visit loaded, written to diag/load. Each script's transfer size
+   (0 = from the phone's cache; a few hundred bytes = the server said not modified, counted as checked), its body size and time, and when the
+   loading bar showed and went (window.__qbLoad, set by app/loader.html). The last 6 visits are kept. Remove it at release. */
+setTimeout(function(){try{if(window.__qbGuest||!db||!ownerView)return;
+  var rs=performance.getEntriesByType("resource").filter(function(e){return /\.js(\?|$)/.test(e.name)&&/\?h=/.test(e.name)}).map(function(e){
+    return {n:e.name.split("/").pop().split("?")[0],tx:e.transferSize||0,body:e.decodedBodySize||0,ms:Math.round(e.duration)}});
+  var L=window.__qbLoad||{},nav=(performance.getEntriesByType("navigation")[0])||{},one={appv:APPV,t:Date.now(),bar:Math.round(L.shown||0),ready:Math.round(L.ready||0),
+    dcl:Math.round(nav.domContentLoadedEventEnd||0),tx:rs.reduce(function(a,r){return a+r.tx},0),body:rs.reduce(function(a,r){return a+r.body},0),cached:rs.filter(function(r){return !r.tx}).length,checked:rs.filter(function(r){return r.tx&&r.tx<4096&&(!r.body||r.tx<r.body/50)}).length,files:rs.length,js:rs};
+  var ref=db.doc("diag/load");ref.get().then(function(sn){var old=[];try{old=JSON.parse((sn.exists&&sn.data().log)||"[]")}catch(e){}
+    old.push(one);return ref.set({ua:navigator.userAgent,w:innerWidth,h:innerHeight,log:JSON.stringify(old.slice(-6))})}).catch(function(){})}catch(e){}},9000);

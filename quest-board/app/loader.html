@@ -11,7 +11,8 @@
   var land=function(i){if(got[i])return;got[i]=F[i][1];paint()};
   var abs=F.map(function(f){var a=document.createElement("a");a.href=f[0];return a.href});
   try{new PerformanceObserver(function(l){l.getEntries().forEach(function(e){var i=abs.indexOf(e.name);if(i>=0)land(i)})}).observe({type:"resource",buffered:true})}catch(e){}
-  var done=function(){bar.style.width="100%";setTimeout(function(){if(box&&box.parentNode)box.parentNode.removeChild(box)},60)};
+  window.__qbLoad={shown:performance.now()};
+  var done=function(){window.__qbLoad.ready=performance.now();bar.style.width="100%";setTimeout(function(){if(box&&box.parentNode)box.parentNode.removeChild(box)},60)};
   F.forEach(function(f,i){var s=document.createElement("script");s.src=f[0];s.async=false;
     s.onload=s.onerror=function(){land(i);if(++ran>=F.length)done()};document.body.appendChild(s)});
   paint();
