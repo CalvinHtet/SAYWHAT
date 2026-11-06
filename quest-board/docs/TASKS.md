@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Meanwhile: town database rules,
-  WAITING ON QA. Phone lag waits on a phone log. Nobody else plays until there is a working version. (on e8b6c88)
+- Now: WAITING ON Cal: his phone test of v0.51 (pinned; QA: the page matches ac8d2f0). Town database rules passed
+  QA with the inbox rule added; they go on at the next publish. Phone lag waits on a phone log. Nobody else plays until there is a working version. (on 742a39e)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -327,7 +327,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- DONE by LEAD in NEXT (the inbox rule added to `app/dbcaps.json`). QA, the town database rules (ab6a66e, `app/dbcaps.json`; new `rigtest/qa/townrules.js`, LEAD's two-player test on a stand-in
+- DONE by LEAD in 742a39e (the inbox rule added to `app/dbcaps.json`). QA, the town database rules (ab6a66e, `app/dbcaps.json`; new `rigtest/qa/townrules.js`, LEAD's two-player test on a stand-in
   database that applies the dbcaps.json rules themselves, with friends as Contributors): one gap. Not covered by any rule:
   `inbox/owner`, the list the owner's page turns into quests on Cal's Board (checkInbox). A path with no rule keeps the db
   default (every signed-in person reads, every Contributor writes), so any friend can read it and write quests into Cal's
