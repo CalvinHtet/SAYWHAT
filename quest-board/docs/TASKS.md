@@ -285,6 +285,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): check c8eb716, the Rooftop bar repainted (the last design-review note).
 - QA, design review of the Mall (322760a, on cb6fdb3; `mallreview.js`, `retired.js`, `screenlive.js`, `doors.js`; written out in
   `docs/QA.md`; `shots/review_mall*.png`, `review_mall_doors.txt`): checks pass, 4 notes. It reads as one atrium (stores round the
   fountain, seating left, food front-right). (1) The Directory Screen is garbled: it is the restaurant menu with prices by each
@@ -1157,7 +1158,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Rooftop bar and the Mall notes when ROOMS sends them. (on cb6fdb3)
+- Now: the Rooftop bar (c8eb716), test copy only (`openair.js`). Next: the Mall notes when ROOMS sends them. (on 0ccc255)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
