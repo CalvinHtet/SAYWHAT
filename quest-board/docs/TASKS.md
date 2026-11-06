@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 10:05 am)
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.58 (859d941), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
