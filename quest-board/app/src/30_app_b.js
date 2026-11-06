@@ -760,12 +760,7 @@ function chPose(a,f){
   if(act==="work2"||act==="reach"||act==="carry"||act==="water"||act==="lean")return 5;
   return 0;
 }
-/* friends styled after their real looks */
-try{Object.assign(FRIENDS.logan.look,{hair_s:"slick",hair:"#1d1a22",eyeT:"sharp",mouth:"neutral",top:{s:"jacket",c:"#1b1a22"},bottom:{s:"pants",c:"#16161c"},shoes:{s:"sneakers",c:"#f2f2f6"},acc:[]});
-  Object.assign(FRIENDS.vega.look,{hair_s:"curly",hair:"#1d1a22",beard:true,eyeT:"happy",mouth:"grin",top:{s:"button",c:"#d98a3a"},bottom:{s:"jeans",c:"#8fb0d8"},shoes:{s:"sneakers",c:"#f2f2f6"}});
-  Object.assign(FRIENDS.justin.look,{hair_s:"slick",hair:"#17131a",eyeT:"round",mouth:"smile",top:{s:"coat",c:"#1e1d24"},bottom:{s:"pants",c:"#1e1d24"},acc:["chain"]});
-  Object.assign(FRIENDS.memo.look,{hair_s:"buzz",eyeT:"bright",mouth:"grin",top:{s:"tee",c:"#1f8a4c"},bottom:{s:"pants",c:"#1e2029"}});
-  Object.assign(FRIENDS.cynthia.look,{hair_s:"waves",eyeT:"happy",mouth:"smile",top:{s:"crop",c:"#1f5a3c"},bottom:{s:"skirt",c:"#f4f1ea"}});}catch(e){}
+/* friends' looks now live in 29k_friends.js, drawn by the rig like the player */
 /*CHIBI-END*/
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
