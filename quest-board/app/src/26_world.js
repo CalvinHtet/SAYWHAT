@@ -259,6 +259,8 @@ function rsDinner(C,cx,cy,lbl){var tr=rsTier(C),T=RSCH[tr];
   if(tr===0||!LFSPR.rdx_chairf){[[cx-1.15,cy-.1,1],[cx-.1,cy-1.15,-1]].forEach(function(p){lfSpr(C,T[1],p[0]-.3,p[1]-.3,.6,.6,{h:1,H:T[3],flip:p[2]>0?1:0,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,p[0],p[1],p[2],cx,cy,0,lbl)});lfSpr(C,T[0],cx-.9,cy-.9,1.8,1.8,{h:28,H:T[2],ctr:1});return}
   var K=RDT[tr],w=K[1],d=K[2];
   var chF=tr===1?"rdx_wchf":"rdx_chairf",chB=tr===1?"rdx_wchb":"rdx_chairb";
+  /* Cal: fine dining in Noir gets sleek furniture: black marble and brass tables, charcoal velvet chairs */
+  if(tr===3&&C.has("r_noir")&&C.has("r_x2")&&LFSPR.rdx_ntsq){K=["rdx_ntsq",K[1],K[2],K[3]];chF="rdx_nchairf";chB="rdx_nchairb"}
   [cx-.62,cx+.62].forEach(function(x){var y=cy-d/2-.28;lfSpr(C,chF,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,x,y,-1,cx,cy,0,lbl)});
   lfSpr(C,K[0],cx-w/2,cy-d/2,w,d,{h:28,ctr:1,flip:1,dk:1.7});
   [cx-.62,cx+.62].forEach(function(x){var y=cy+d/2+.28;rsSitAt(C,x,y,1,cx,cy,1,lbl);lfSpr(C,chB,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:0,nob:1,nosh:1,ctr:1})})}
@@ -378,7 +380,7 @@ LFROOM.restaurant=function(C){
     if(H("r_p6"))rsS(C,"rsx_bbq",px+4.7,kd+.3,1.7,1.0,28,{flip:1});
     if(H("r_p5")){rsS(C,"rsx_pergola",px+5.4,D-3.0,2.5,2.5,90,{dk:-4});lfLight(C,px+6.6,D-1.8,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */
-    if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+.3,D-3.1,2.8,2.8,24,{});lfLight(C,px+1.7,D-1.7,50,"#ff9a3a",2.4,.55)}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
+    if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+.6,D-3.1,2.8,2.8,24,{});lfLight(C,px+2.0,D-1.7,50,"#ff9a3a",2.4,.55)/* clear of the deck rail (QA) */}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
   }
 };
 (function(){RS_UPS.forEach(function(u){var n={r_t1:["Walnut Dining Tables","Long walnut tables for four, plates set, velvet chairs."],r_t2:["Marble Round Tables","Round marble tops, brass pedestals, flowers on every table."],r_t3:["White Linen Service","Square linen tables, crystal and candles. Tips go up."],r_b1:["Leather Booths","Real high-backed booths down the window wall. Guests sit inside them."],r_more2:["Curved Corner Booth","A big crescent banquette around a marble table. The best seat in the house."],r_more1:["Second Row of Tables","Two more tables means two more parties at once."],r_l2:["Brass Chandeliers","Sculptural brass over the room. Everything looks more expensive."],r_d7:["Oil Painting","One big piece on the wall, deep red and gold."],r_d8:["Olive Tree","A real tree in the corner of the dining room."],r_d3:["Walnut Dividers","Slatted screens give the booths some privacy."],r_d6:["Dessert Trolley","Cakes under glass come right to the table."],r_l1:["Brass Sconces","Warm light along the window wall."],r_d5:["Glass Wine Wall","Bottles lit from inside, right where guests can see them."],r_k7:["Wood-Fired Oven","A brick dome in the kitchen with a real fire."]}[u[0]];if(n){u[1]=n[0];u[4]=n[1]}});var drop={r_b2:1,r_bar:0,r_more2:0};RS_UPS=RS_UPS.filter(function(u){return !drop[u[0]]});
