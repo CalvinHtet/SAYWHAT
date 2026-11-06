@@ -462,6 +462,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, SAYMØRE wear test (ROOMS's 9e19cdf, LEAD's Shop rows; on 831fc61; `shots/qa/sm/`): 13 of 15 pass, three fixes. All 15 on both
+  bodies in all 22 key poses, 0 draw failures; three outfits; the Shop (`shop.js` BRAND=sm): 15 on him and 15 on her bought at full
+  price, worn, in the mirror. No sneaker left at the feet of the hoodie or the mask in any walk (`feet.png`). The mask covers the
+  face in every awake pose and every frame of the stretch, with hair h1, h2 and h3. Fixes: (1) sm_pendant carries the faint body
+  outline the Kode PinK bag had, in every pose and on its icon (`pendant_zoom.png`, `icons.png`); cut it the same way. Owner: ROOMS.
+  (2) Cal's rule that the figure stays masked breaks in the sleepHead pose: like every hat, the halo mask is dropped there and the
+  sleeping face shows (`smfit1.png`, last cell of each body). Keep sm_halomask drawn in sleepHead (and the halo too, if it fits).
+  (3) Glasses and face pieces draw on top of the helmet: Shades, Butterfly Glasses, Wrap Shades, V-Shade, Goggles, the Rift Mask,
+  NC Sport Shades (`mask_faces.png`; the gaiter and buff sit below it and look fine). While the halo mask is worn, hide the glasses
+  and mask slot, or let the Shop swap them off. Owner: LEAD (2 and 3, the rig and Shop rules). The banner shows only the masked
+  figure; the icons read clean apart from the pendant.
 - QA, LEAD's 3a1e3c1 (on fa50109): both pass. Kode PinK through the real Shop (`shop.js` BRAND=kp; `shots/qa/kp/shop_*_3a1e3c1.png`):
   14 pieces on him and 15 on her (the skirt hers only) bought at full price through Try on, Checkout, Confirm, worn and in the
   mirror. Launch reruns (`drops.js`, 12 rounds, now 84 slots with 7 brands): 0 back-to-back repeats, 0 drops of a brand still live;
@@ -1991,7 +2002,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA (Kode PinK in the Shop and the launch reruns pass). Next: SAYMØRE's wear test when ROOMS sends it. (on fa50109)
+- Now: SAYMØRE checked: 13 of 15, the pendant outline (ROOMS), the mask in sleepHead and glasses over it (LEAD). (on 831fc61)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
