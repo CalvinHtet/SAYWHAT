@@ -118,7 +118,7 @@ LFROOM.theater=function(C){
   if(H("t_arc"))lfSpr(C,"thx_arcade",8.4,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:92});
   if(H("t_claw"))lfSpr(C,"thx_claw",9.7,.2,1.1,1.0,{h:40,flip:1,ctr:1,H:90});
   /* two sofas in an L in the back-left corner under the trailer screen (QA design review) */
-  if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,.2,.5,1.2,2.4,{h:30,H:58});lfSpr(C,sk,1.6,.2,1.8,1.1,{h:30,H:58,flip:1})}
+  if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,.2,.5,1.2,2.4,{h:30,H:58});lfSpr(C,sk,1.6,.2,1.6,1.1,{h:30,H:58,flip:1})}
   /* the standee by the entrance mat, where people walk in and take the picture */
   if(H("t_standee"))lfSpr(C,"thx_standee",W-1.9,6.7,.8,.5,{h:30,ctr:1,H:84});
   /* the bins by the concession; the poster stand stays out of the picture (it hid the liquor wall and had no poster) */

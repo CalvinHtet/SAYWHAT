@@ -257,8 +257,8 @@ portal("mall","arcade","FR",8,"#ff4fa3","Arcade");portal("arcade","mall","BL",3,
 portal("mall","bowling","BR",11.4,"#ffc857","Bowling");portal("bowling","mall","FL",3,"#6cd0ff","Mall");
 /* Cal's door rule on the building map (QA design review): the Theater is left of the Mall, the Arcade right of it, Bowling above it and Karaoke above Bowling */portal("bowling","karaoke","BR",2.4,"#ff7ad8","Karaoke");portal("karaoke","bowling","FL",3,"#ffc857","Bowling");
 /* a save that owns Karaoke but not Bowling (QA): the escalator goes straight up to it until Bowling is in between */var noBowl=function(){return !hasRoom("bowling")};portal("mall","karaoke","BR",11.4,"#ff7ad8","Karaoke",noBowl);portal("karaoke","mall","FL",3,"#6cd0ff","Mall",noBowl);
-portal("arcade","rhythm","BR",11,"#7df9ff","Rhythm");portal("rhythm","arcade","FR",3,"#ff4fa3","Arcade");
-portal("arcade","vr","FR",6,"#58d6ff","VR");portal("vr","arcade","FL",3,"#ff4fa3","Arcade");
+portal("arcade","rhythm","BR",11,"#7df9ff","Rhythm");portal("rhythm","arcade","FL",3,"#ff4fa3","Arcade");
+portal("arcade","vr","FR",6,"#58d6ff","VR");portal("vr","arcade","BL",3,"#ff4fa3","Arcade");/* Cal's rule (QA): Rhythm sits above the Arcade, VR to its right */
 /* ---- what unlocks what ---- */
 function areaGate(id){if(id==="shop")return !hasRoom("closet");if(id==="away")return !hasRoom("lair");return false}
 function worldMigrate(){var B=S.base;if(!B)return;var bd=B.slots[0],a=bd&&bd.a||{},add=function(t){if(!hasRoom(t))B.slots.push({t:t,a:{},st:0,pend:0})};
