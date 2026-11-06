@@ -13,8 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.55 published and pinned (17d4b44); QA: the page matches. v0.56 is built when QA's re-audit of ROOMS's audit fixes
-  (c6ba889, 1dc4211) is done, with a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, passed). (on 17d4b44)
+- Now: v0.56 (NEXT, APPV 56) WAITING ON QA, published as soon as QA passes it. v0.55 pinned (17d4b44). (on NEXT)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -277,6 +276,9 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.55: "Quest Board v0.55 (test, fresh start)" (slug 6ad04c53-fdb5-4cd9-b39b-44eb276d38ed,
   462 files from 17d4b44: 20 core, 442 art with the new gmx_beanb; the 9 db rules + user + sample with images; version
   1793969778-98a7). Check the page matches the build.
+- WAITING ON QA: check v0.56, NEXT (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
+  c6ba889 and 1dc4211 (the upgrade audit fixes), a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, bed name)
+  and add039a (pool table, club fog). LEAD's part is the version number. Local boot: no page errors.
 Art and room code requests (LEAD asks, ROOMS does):
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
