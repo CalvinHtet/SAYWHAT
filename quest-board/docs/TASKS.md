@@ -407,6 +407,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: a design review of the Nightclub at fd0da20 (step 16): a new painted shell; the layout as it was (VIP booths
+  behind ropes on the left wall, the bar and DJ booth at the back, the dance floor in the middle with cocktail tables, the
+  entrance with rope, photographer and coat check at the front right; its own lot, so the street mat stays).
 - DONE by QA (QA findings: Bowling and VR ready, Karaoke 1 note). WAITING ON QA: Bowling's notes and the VR rig spacing at 934bb37 (clerks at the shoe counter and snack bar, the STRIKE
   screen over the lanes' approach, the rig pairs half a tile apart), and a design review of Karaoke at db8a46d (step 15):
   painted shell, the tambourines at the stage, no street mat (guests arrive at the Bowling stairs).
@@ -1093,11 +1096,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: Karaoke's booth note (6962a6e: the Private Booth in the front corner behind a low partition). WAITING
-  ON CAL: Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm Room, the VR Arena
-  and Bowling, all through QA's design reviews. Next: step 16, the Nightclub. LEAD: ids unchanged. Retired ids so far:
-  `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`,
-  `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 6962a6e)
+- Now: WAITING ON QA: a design review of the Nightclub (step 16, the last storyboard step, fd0da20). WAITING ON CAL: ten rooms
+  through QA's design reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the
+  Rhythm Room, the VR Arena, Bowling, Karaoke). After the Nightclub: the team in their rooms (LEAD's request 3), then
+  Cal's notes. LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`,
+  `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`.
+  Chrome claimed. (on fd0da20)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
