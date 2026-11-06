@@ -1879,10 +1879,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on a07439f): SMOKE BOMB (smk_*, brand id smk) is done and committed in a07439f: all 15 pieces for both bodies with icons, badge
-  `logo_smk.webp`, banner `ui_banner_smk.webp`. Idle matrix 30 of 30 loaded, 0 failures. WAITING ON QA: the wear test. WAITING ON
-  LEAD: the shop lines (sent by message). Next: GACHA POP, then SAVE POINT, BARD & BLADE, CHROME RAIN, then the ten.
-  Brand runway: OK, 45 days. Chrome: ROOMS.
+- Now (on f2269a8): TAKEN QA's three SMOKE BOMB fixes from the a07439f wear test: smk_cloak repainted as a closed hooded cloak whose
+  torn hem stops at the hip (nothing hangs by the arms), smk_band redesigned as a plain stitched cloth band (no plate), smk_vest
+  redesigned as a quilted funnel-neck puffer vest (no scroll pockets). Generating on Unlimited; files: art/raw, art/layers,
+  art/app smk_cloak/band/vest. LEAD gets two new names after. Also GACHA POP (gp_*, brand id gp): 15 ids in data/items.json,
+  7 of 15 ingested (blazer, bear onesie, star hoodie, sailor blouse, star skirt, suspender shorts, overalls).
+  Next: the other 8 pieces (cat hood, bunny beanie, bow, wings, heart shades, Mary Janes, slipper boots, glitter sneakers), then the badge,
+  banner, pack and matrix check, one commit, then QA. Then SAVE POINT. Brand runway: OK, 45 days. Chrome: ROOMS.
   Retired ids so far: `gm_ping`, `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`. Dark-floor shadows stay at 0.92 (QA: 0.8 is the knob if Cal finds them heavy). (on a07439f)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
