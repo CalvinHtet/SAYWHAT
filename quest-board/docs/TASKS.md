@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: Garden watering done (a2e234e, Cal's request via ROOMS); slot keyed on unlock level (33e9721); Garden words (6a1f7ab);
-  all to QA. Next: the Garden with ROOMS until it passes, then v0.49 for Cal. Nobody plays until there is a working version.
-  (on 3d65b70)
+- Now: unlock order by level and Sprinklers much later (912f32c), to QA. Next: the Garden with ROOMS until it passes QA, then v0.49
+  for Cal. Nobody plays until there is a working version. (on 912f32c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
