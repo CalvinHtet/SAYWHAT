@@ -13,11 +13,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 blocked (d9d92d7 not published). Rebuilt once these pass QA: Kode Plaza's street picture by stage (LEAD's 2882690,
-  Cal: "I want Kode plaza to start off like a plaza..."; ROOMS paints bld_plaza_s0 and later stages), the Game Room fixes,
-  the Bedroom blink fix ce07425; plaza code, coins and blink passed QA. Brands: Cal approved BRANDS_15.md ("Love the names!"),
-  ROOMS generating NICE COCK first (drop 2, 2026-11-09); LEAD moves the BRANDS dates once its art passes QA. Asked Cal: vaulted
-  brands return as a rerun, or gone for good (the Vault promises a return the code never makes). (on 38e1ab7)
+- Now: v0.61 built from c48c7af (Cal via QA: "Publish 0.61 now"; ping-pong and the TV console ship as known items). WAITING ON
+  QA's full set, then LEAD publishes and pins. Brands (cac5f45): NICE COCK at drop 5; Kode PinK and SAYMØRE drafted from Cal's
+  covers, waiting on Cal's OK; at launch, two drops a week (Mon/Thu) in a seeded random order synced for everyone, which LEAD
+  codes once the art is in. Asked Cal: when the pool runs out, rerun the vault or gone for good. Next: town hall for many
+  players (Cal's ask). (on cac5f45)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
