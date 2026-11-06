@@ -1097,7 +1097,8 @@ function lfRoomCtx(r,i){
 function lfRoomSvg(r,i,C,opt){
   lfSetDim(r.t);opt=opt||{};var uid=opt.uid||(i+1),t=r.t,out=C.T.out,s='',st=r.st||0;
   LFDEC=lfDecFor(r,C.T);var hole=(C.annex||C.patio)?lfHoles(C,uid):null;if(hole)s+=hole.defs+(C.annex?lfAnnexPre(C,uid):'')+(C.patio?lfPatioPre(C,uid):'');if(C.bg&&opt.uid)s=C.bg+s;var s0=s.length;if(C.noshell!==1)s+=lfSlab();
-  if(out&&!C.bg)s+=lfOutBack(t,LFW.wx,uid);
+  /* C.noOut: a painted outdoor room (the Garden lot) brings its own walls, so no hedge behind and no fence in front */
+  if(out&&!C.bg&&!C.noOut)s+=lfOutBack(t,LFW.wx,uid);
   if(!C.noshell)s+=lfFloor(C.T,C.T.fl,st,uid);
   if(C.notch)s=s.slice(0,s0)+rsNotchShell(C,uid,s.slice(s0));
   if(!out&&!C.noshell){var wlW=LF.W,wlN=LF.N;if(C.rsW){LF.W=C.rsW;LF.N=C.rsW}var wls=lfWalls(t,st,uid,LFW.wx);LF.W=wlW;LF.N=wlN;s+=hole?'<g clip-path="url(#'+hole.id+')">'+wls+'</g>':wls}
@@ -1106,7 +1107,7 @@ function lfRoomSvg(r,i,C,opt){
   s+='<g class="lfitems" data-i="'+i+'">';
   C.items.forEach(function(it){s+='<g data-k="'+it.k.toFixed(2)+'"'+(it.b?' data-b="'+it.b.join(",")+'"':'')+'>'+it.s+'</g>'});
   s+='</g>';
-  if(out)s+=lfOutFront(t,uid);
+  if(out&&!C.noOut)s+=lfOutFront(t,uid);
   s+=C.front.join("");
   if(C.LT)s+=C.LT.mid;
   if(opt.uid&&C.pfront)s+=C.pfront.join("");

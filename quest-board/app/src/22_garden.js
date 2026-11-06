@@ -85,8 +85,12 @@ LFROOM.garden=function(C){
   var H=function(k){return C.has(k)},st=H("g_x2")?2:H("g_x1")?1:0,W=C.W,D=C.D,BX=[1.2,6.2,11.2],BY=[1.4,4.6,7.8,11];
   C.out=1;
   C.s("door",W-.5,D-.5,1,"look",[1,1]);C.door={x:W-.5,y:D-.5};
-  for(var fx=.2;fx<W-.4;fx+=1.7)lfSpr(C,"w_gfence",fx,.08,1.6,.1,{flip:1,h:1,H:50,ctr:1,nosh:1,dk:99});
-  for(var fy=.2;fy<D-.4;fy+=1.7)lfSpr(C,"w_gfence",.05,fy,.1,1.6,{h:1,H:50,ctr:1,nosh:1,dk:99});
+  /* the painted lot for this stage (gdw_s0..2): ground through the shell key; an outdoor room draws no walls, so the
+     painted brick walls are put in here. Without the painting, the fence sprites as before. */
+  var gk="gdw_s"+st;
+  if(window.LFSPR&&LFSPR[gk]){C.shellK=gk;C.noOut=1;var sv=LFSHELLK;LFSHELLK=gk;try{C.walls.push(lfShellPart(C.chu||("gd"+(window.LFGDU=(window.LFGDU||0)+1)),"walls"))}/* its own clip id: a copy in a hidden view would clip it away */finally{LFSHELLK=sv}}
+  else{for(var fx=.2;fx<W-.4;fx+=1.7)lfSpr(C,"w_gfence",fx,.08,1.6,.1,{flip:1,h:1,H:50,ctr:1,nosh:1,dk:99});
+    for(var fy=.2;fy<D-.4;fy+=1.7)lfSpr(C,"w_gfence",.05,fy,.1,1.6,{h:1,H:50,ctr:1,nosh:1,dk:99})}
   /* beds, with a walkable lane all round each one */
   var cols=[2,2,3][st],rows=[3,3,4][st],spots=[];
   for(var ry=0;ry<rows;ry++)for(var cx=0;cx<cols;cx++){if(!(st===2&&H("g_koi")&&cx===2&&ry===3))spots.push([BX[cx],BY[ry]])}
