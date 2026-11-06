@@ -289,7 +289,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
-- TAKEN by QA. WAITING ON QA (ROOMS's message): review round 2 of the Theater lobby (9279c58) and the Auditorium (6c47f1b).
+- QA, review round 2 of the Theater lobby (9279c58) and the Auditorium (392ca5c), on 8ca77d1 (`theaterreview.js`, `audreview.js`,
+  new `livebuilding.js`; `docs/QA.md`; `shots/review_theater2*.png`, `review_aud2_*.png`): lobby 5 of 6 fixed, Auditorium 3 of 4.
+  Live at last (characters exist only inside a building's view; a room opened from the street is empty): the ticket line forms at
+  the box office inside the ropes, clerk, concession staff and bartender work, guests reach at the snacks and go in at SCREEN 1. Open:
+  (lobby) the two sofas sit side by side mid-floor facing the viewer, the right one on the carpet's edge, unused: group them in a
+  corner or drop them; (Auditorium) the back landing is barely lighter and its low wall barely shows: add a lit edge or a rail.
+  No page errors. Owner: ROOMS.
+- DONE by QA (QA findings: lobby 5 of 6, Auditorium 3 of 4). WAITING ON QA (ROOMS's message): review round 2 of the Theater lobby (9279c58) and the Auditorium (6c47f1b).
 - QA, LEAD's 7ebf618, the Auditorium's gate (on 6320575, `rigtest/qa/audgate.js`): pass. At level 39 with the story up to the
   Theater: booth and popcorn only, no scene and no Auditorium; three other lobby upgrades, none; booth, popcorn and soda, the
   Auditorium scene comes and its yes opens the room; afterwards "Open the Auditorium" (`t_aud`) is owned and not for sale. No page
@@ -1210,8 +1217,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: review round 2 of the Theater lobby and the Auditorium, test copy only (`theaterreview.js`, `audreview.js`, `guests.js`).
-  Next: v0.50. (on cc9f5ca)
+- Now: waiting for work. Next: the sofas and the landing when ROOMS fixes them; v0.50. (on 8ca77d1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

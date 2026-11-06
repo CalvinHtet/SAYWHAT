@@ -638,3 +638,20 @@ Screen, IMAX fully bought). Live, the screen plays a film (the black in still pi
    move a tile toward the middle so the room does not look half used.
 5. **Fine as is:** the screen grows with the upgrades and stays centred on the rows; the towers flank it; the wall sconces and the
    one surround speaker on the right wall read as a cinema; the recliners face the screen.
+
+### Theater lobby and Auditorium, round 2 (ROOMS's 9279c58 and 392ca5c, on 8ca77d1; `shots/review_theater2.png`, `review_theater2_live.png`, `review_aud2_full.png`, `review_aud2_bare.png`)
+
+**Watching guests live, how:** characters exist only while a building's view is open; going back to the street clears them, so a
+room window opened from the street is empty. Open the room from inside its building (`rigtest/qa/livebuilding.js`).
+
+Lobby: five of six fixed. The concession lines the left wall facing the carpet (popcorn by the doors, the stand, soda), with the
+candy, hot dog and nachos visible on the back counter; one bar at the back right (taps in front of the liquor wall, stools facing
+it, the bartender behind); the bins by the concession; the blank frame gone. Live (12 looks, 5 s apart): the ticket line forms at
+the box office inside the ropes, the clerk, concession staff and bartender work their spots, guests reach at the snacks and walk
+in through the SCREEN 1 doors; no page errors. Still open: **the sofas** are not an L: both face the viewer, side by side two tiles
+apart in mid-floor, the right one on the carpet's edge, and no guest sat on them in a minute. Put them together in a corner (by
+the trailer screen) or drop them.
+
+Auditorium: the EXIT sign is where the aisle steps arrive, and bare shows a small projector on a stand. Still weak: **the back
+landing** is only a shade lighter than the floor and its low wall barely shows; at room size it still reads as open floor. A lit
+edge (step lights or a brass rail along the landing) would make it read.
