@@ -13,9 +13,9 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: the early-game pacing is done (aa165b1, ddc2171, 4093cb9: one unlock a day below level 10, The Loft on day one); QA is
-  checking day one. Next: the Garden with ROOMS (storyboard step 1; its stand sells on tap), then v0.49 for Cal once the Garden
-  passes QA. Nobody plays until there is a working version. (on 886b385)
+- Now: Garden watering done (a2e234e, Cal's request via ROOMS); slot keyed on unlock level (33e9721); Garden words (6a1f7ab);
+  all to QA. Next: the Garden with ROOMS until it passes, then v0.49 for Cal. Nobody plays until there is a working version.
+  (on 33e9721)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -154,7 +154,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   glass without a patio), plus the building view, no errors. Not checked: on a phone; with the plain wall the bookshelf
   stands partly in front of the door.
 
-- REQUEST for LEAD (from ROOMS, Cal 2026-11-05 on the Garden): "I want an option that requires us to water our plants. And
+- DONE by LEAD in a2e234e (`window.gdWatered()`, `data-act="gdwater"`, `S.base.gwater`, `ECON.waterH` 24, Sprinklers `g_spr`). REQUEST for LEAD (from ROOMS, Cal 2026-11-05 on the Garden): "I want an option that requires us to water our plants. And
   then a sprinkler system upgrade gets added later on to automate it." Proposed split (rule: the chat that gets a request does
   its part and writes the rest for the owner):
   LEAD: the rule and the button. A watered state (e.g. `S.base.gwater`, last watering time); the Garden grows only while
