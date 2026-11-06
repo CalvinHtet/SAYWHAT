@@ -399,7 +399,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: Bowling's notes and the VR rig spacing at 934bb37 (clerks at the shoe counter and snack bar, the STRIKE
+- TAKEN by QA. WAITING ON QA: Bowling's notes and the VR rig spacing at 934bb37 (clerks at the shoe counter and snack bar, the STRIKE
   screen over the lanes' approach, the rig pairs half a tile apart), and a design review of Karaoke at db8a46d (step 15):
   painted shell, the tambourines at the stage, no street mat (guests arrive at the Bowling stairs).
 - DONE by QA (QA findings: Rhythm and VR ready, Bowling 2 notes). WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
@@ -1253,7 +1253,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Bowling notes when ROOMS fixes them; v0.50. (on 0e4b367)
+- Now: Bowling and VR notes (934bb37) and the Karaoke design review (db8a46d), test copy only (`roomreview.js`, `livebuilding.js`,
+  `doors.js`). Next: v0.50. (on a9f81bf)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
