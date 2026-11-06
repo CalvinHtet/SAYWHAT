@@ -1059,12 +1059,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: round 3 for the Theater lobby and Auditorium (5e3a780: the sofas an L in the back-left corner, the
-  standee by the entrance mat; the landing edge a brass top and step lights) and a design review of the Arcade (cb5f568:
-  painted shell `arw_t1` with a calm carpet; the machines unchanged). WAITING ON CAL: Lock and Key, the Rooftop and the
-  Mall. Next: step 13, the Rhythm floor and VR arena. LEAD: ids unchanged. Retired ids so far: `sb_chester`, `sb_trolley`,
-  `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new `sb_band`; `ml_kar`
-  needs `ml_bow`. Chrome claimed. (on cb5f568)
+- Now: WAITING ON QA: the Arcade fixes (b3832fb: the sticker booth off the mat and the hoop spot, a prize clerk, the Rhythm
+  and VR doors on Cal's rule). WAITING ON CAL: Lock and Key, the Rooftop, the Mall, the Theater lobby and the Auditorium,
+  all through QA's design reviews. Next: step 13, the Rhythm floor and VR arena. LEAD: ids unchanged. Retired ids so far:
+  `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`,
+  `ml_dir`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on b3832fb)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
