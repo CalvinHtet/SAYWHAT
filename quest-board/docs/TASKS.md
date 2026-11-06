@@ -463,6 +463,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's a07439f SMOKE BOMB wear test (on 5660c2e; `shots/qa/smk/`): 12 of 15 pass, three fixes. All 15 on both bodies in all
+  22 key poses, 0 draw failures; three outfits. ROOMS's five points: (1) no stray specks on the cloak or hakama, but the cloak's torn
+  hem is on the arm layer: in stretch and stretchUp it flies out from the hand like a black wing, and in walks a scrap hangs from the
+  left arm (`cloak_zoom.png`, `fit1.png`); move the hem to the body or a back layer. (2) The cowl covers the lower face and sits under
+  the band, the wrap, the NC cap and a beanie; from behind it draws nothing (frontOnly), fine. (3) The tabi under the hakama and over
+  the cargo look right in walks, sitting and sleep (`tabi.png`). (4) The wrap with long hair (h1) and the ponytail (h3): the hair
+  hangs below it, nothing cut wrong (`wrap_h1.png`, `wrap_h3.png`). Fixes 2 and 3, Cal's rule "original designs only, no
+  copyrighted costumes": smk_band (black cloth, long tails, a metal forehead plate with an engraved emblem) reads as the forehead
+  protector from a famous ninja anime, and smk_vest (a dark flak vest with scrolls in chest pockets over long sleeves) reads as that
+  show's ranked-ninja vest (`icons.png`). Redesign both: a plain cloth band with stitched SMOKE BOMB smoke, no plate; a vest without
+  the scroll pockets and that cut. The jacket's orange-on-black is close too but generic enough. Badge, banner and the other icons
+  read clean. Owner: ROOMS.
 - QA, v0.63 (f5234d3, APPV 63): pass, publish. My clean build matches LEAD's served copy file for file (495 of 495; 21 files, 475
   art). On the exact build: savecheck; screens at 360 and 390; v0.62's own build makes a save that v0.63 loads, reloads, buys on and
   reloads; the level-5 start; Kode Plaza stages 0-2 and tapping in; town rules, townlive 5/5, townrx 12/12; doors 34 ok plus Garden
@@ -2026,7 +2038,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. Next: SMOKE BOMB's wear test when ROOMS sends it. (on 3ebe841)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 12 of 15: the cloak hem, the band and vest look like a famous anime's (ROOMS). (on 5660c2e)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
