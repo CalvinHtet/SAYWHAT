@@ -350,10 +350,10 @@ LFROOM.restaurant=function(C){
   back(H("r_k3")?"rsx_fridge":"rsx_minifridge",1.1,.9,50);
   if(st>0){if(H("r_k4"))back("rsx_grill",1.6,1.0,40);if(H("r_k5"))back("rsx_fryer",1.9,1.0,30);
     if(st>1&&H("r_k7")){var ov=back("rsx_oven",1.7,1.2,44);C.s("work",ov,1.8,-1,"work",[6,12],{tag:"oven"});lfLight(C,ov,1.0,40,"#ff9a3a",1.4,.5)}
-    var prepAt=H("r_k2")?front("rsx_prep",2.0,.95,30):ix+1;C.s("work",prepAt,isl-.45,-1,"work",[6,10],{tag:"prep"});
+    var prepAt=H("r_k2")?front(LFSPR.rsx_prepi?"rsx_prepi":"rsx_prep",2.0,.95,30):ix+1;C.s("work",prepAt,isl-.45,-1,"work",[6,10],{tag:"prep"});
     if(H("r_k6"))front("rsx_bake",.9,.8,50);if(H("r_k9")&&st>1)front("rsx_dish",1.6,.9,30)}
   else{var pz=H("r_k2")?back("rsx_prep",1.8,.95,30):bx+.8;C.s("work",pz,1.5,-1,"work",[6,10],{tag:"prep"})}
-  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",Wt-1.7,isl,1.3,.9,26,{flip:1});else if(H("r_cf1"))rsS(C,"rsx_drip",st>0?Wt-1.3:Wt-1.0,st>0?isl:1.4,.7,.6,26,{flip:1});
+  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",Wt-1.7,isl,1.3,.9,26,{flip:1});/* QA: the drip machine stood on a stool; it sits on the counter now, where the diners pour */
   /* the pass is on the dining room side of that wall: food comes over it, and the good seats face it */
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
   /* QA: the till faces the diners across the counter, not the kitchen */
@@ -362,6 +362,7 @@ LFROOM.restaurant=function(C){
   if(H("r_till")){var sx0=Wi-1.0,sy0=.2+tiles*(td+.05)+.1,sf=lfBox(sx0,sy0,0,.55,.55,20,noir?"#26302c":"#2f5a48"),dc=lfP(sx0+.28,sy0+.55,11);
     C._lb=[sx0,sy0,sx0+.55,sy0+.55];C.add(sx0+sy0+1.1,sf+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="3" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".6"/>');if(LFREC)lfRecBox(sx0,sy0,0,.55,.55,20)}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
+  if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.9,1.25,.5,.45,1,{flip:1,dy:-34,nosh:1,dk:-.5});
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
