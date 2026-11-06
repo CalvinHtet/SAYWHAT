@@ -13,10 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.62 (081ac04) passed QA's full set except the Diner's small menus overlapping the ORDERS board. WAITING ON ROOMS's
-  nudge (asked to do it before SAYMØRE); then LEAD rebuilds v0.62 from main (with 01deb94 reactions and reruns), QA rechecks
-  the Diner and the file match, LEAD publishes and pins. Kode PinK rows after QA's wear test (ROOMS 1dde4e1, id kp). 436a82b
-  rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 436a82b)
+- Now: v0.62 rebuilt from 756def5 (ROOMS's Diner nudge, plus 01deb94 reactions and reruns; 22 dist files, art_rig_1..5).
+  WAITING ON QA's Diner recheck, the file match and 01deb94, then LEAD publishes and pins. Kode PinK rows after QA's wear test
+  (ROOMS 1dde4e1, id kp). 436a82b rule 19, new brands without Cal's approval. Waiting on Cal: a launch date. (on 756def5)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
