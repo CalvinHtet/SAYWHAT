@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.57 published and pinned (b279091; QA: the page matches). v0.58 (NEXT, APPV 58) WAITING ON QA, published as
-  soon as QA passes it. (on NEXT)
+- Now: v0.57 published and pinned (b279091; QA: the page matches). v0.58 (859d941, APPV 58) WAITING ON QA, published as
+  soon as QA passes it. (on 859d941)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -286,7 +286,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.57: "Quest Board v0.57 (test, fresh start)" (slug 34b73668-15d2-4030-bdcd-8bbee04ad845,
   462 files from b279091, the 9 db rules + user + sample with images, version 1793972414-d808). Check the page matches the build.
-- WAITING ON QA: check v0.58, NEXT (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
+- WAITING ON QA: check v0.58, 859d941 (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
   creator is open (`app/index.html`), since it covered a creator button wherever it sat (your note, last at 375x548). It is
   back on the Board after Begin. `shots/ccbegin.js` at 375x548, 390x664, 844x390, 1280x800: Begin on screen and tappable, no
   page errors.
