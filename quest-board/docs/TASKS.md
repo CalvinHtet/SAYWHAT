@@ -253,11 +253,10 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   Espresso, Cappuccino; Flat-Top Grill: Smash Burger, Grilled Cheese; Fryer: Fish & Chips; Bakery Rack: Croissant, Sourdough; Wood-Fired
   Oven: Roast Chicken; Grand French Range: Steak Frites, Duck Confit; Charcoal Grill: BBQ Ribs); (4) the crescent booth sits in the
   back-left corner, open to the room, and the window booths and dividers no longer overlap it (the only overlap the audit finds is its
-  own round table, which is meant); (5) the half-wall is forest green in the Bistro and black in Noir. FIX 1, the Grand Menu Board does
-  not list every dish: `rsBigMenu` fits 7 rows a column (`rows=floor((H-24)/7.8)` with H 84) and keeps only the LAST 14
-  (`items.slice(-rows*2)`), so with everything bought it shows 14 of 26 and drops Coffee, Noodles, Toast, Eggs, Pancakes, Burger, Fries,
-  Smash Burger, Grilled Cheese, Espresso, Cappuccino and Fish & Chips. Also "Roast Chicken" runs into its price. Fix: three columns, a
-  taller board or a smaller font so all 26 fit (and the pantry dishes `gdDishes()` too), or group by section. FIX 2, in the Corner Diner
+  own round table, which is meant); (5) the half-wall is forest green in the Bistro and black in Noir. NOTE 1 (Cal, 2026-11-05: "The menu doesn't need to physically list every
+  item. It just needs to list some so the restaurant feels alive. But if you can fit them all, then sure why not?"): the board shows
+  14 of 26 (`items.slice(-rows*2)`), which is fine; fitting all of them is optional. Still fix: "Roast Chicken" runs into its price
+  (shorten long names or move the price over). FIX 2, in the Corner Diner
   the abstract painting hangs over the left end of the board and hides the first letters of every left-column dish ("& Chips"); in
   the Bistro and Noir they are apart. Move the painting or the board in the Corner Diner. Owner: ROOMS.
 - QA, the Restaurant's painted shells (ROOMS's 1eb8040, 156683a, 64e4735, on 7f4d885, `rigtest/qa/restshell.js`, 16 cases:
