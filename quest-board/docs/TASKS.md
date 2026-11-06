@@ -247,6 +247,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the Restaurant's painted shells (ROOMS's 1eb8040, 156683a, 64e4735, on 7f4d885, `rigtest/qa/restshell.js`, 16 cases:
+  each size bare and fully bought, with and without the patio; `shots/restaurant_shells.png`): pass. Each size draws its own
+  painting (Hole in the Wall `rsw_s0`, Corner Diner `rsw_s1`, Bistro `rsw_s2`, Noir `rsw_s2n`), the walls and floors read
+  as one room, the front mat shows, nothing stands outside the room in any case a player can reach (the patio needs Knock
+  Through the Wall, so no patio at Hole in the Wall size), no page errors. Placement lessons for the fine-dining pass
+  (`shots/restaurant_bistro_zoom.png`): (1) the kitchen half-wall keeps the diner's teal in the Bistro, against its cream, green
+  and wood; give it each shell's colours; (2) the booths' tall backs and planter screens cover the bottom third of the
+  Bistro's arched windows: lower booths, or seat them clear of the windows; (3) the patio's fire pit, curved sofa, umbrella
+  table and pergola bunch in the front corner, the pergola over the umbrella, with no rail or step between deck and dining
+  room; (4) the white drinks cooler still stands in a dining aisle. Old notes still true: one diner seat has nothing under it
+  (`seat-on-air cust:diner`), the counter sorts over the kitchen box. Owner: ROOMS.
 - QA, the arrow fix (LEAD's 06cd203, on db59276): pass. Buying each Loft expansion from the Bedroom window (Knock Into the
   Game Room, Walk-in Closet, Patio Door): the new room's arrow shows 0.3 s after the purchase, stays through the splash, and
   matches what a reopened window shows. No page errors. Cal's finding (1) is fixed; (2) and (3) stay with ROOMS. Owner: LEAD.
@@ -623,7 +634,7 @@ Doing:
   10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81), 17 (Restaurant
   base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls,
   64e4735). 15-minute loop running (rule 16). (on 64e4735)
-- TAKEN by QA. WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
+- DONE by QA (QA findings). WAITING ON QA: check 64e4735 (and 1eb8040, 156683a), the Restaurant's painted shells: each size bare and fully bought
   (Hole in the Wall, Corner Diner, Bistro, Noir), with and without the Sidewalk Patio. Look for furniture against the
   painted walls that floats or overlaps a window, the kitchen divider lining up with the kitchen tile, the front door mat.
   Furniture is the old set; Cal wants sleek fine-dining pieces next, so note placement lessons, not sprite tickets.
@@ -725,7 +736,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the Restaurant's painted shells (ROOMS's 64e4735), test copy only. Next: the fixes for Cal's phone notes. (on ad98b24)
+- Now: nothing running. Next: whatever is WAITING ON QA; the fixes for Cal's phone notes when they come back. (on 973c035)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
