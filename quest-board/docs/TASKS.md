@@ -268,6 +268,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's f457680 and eb85e90 (on 9ae8634, `restmenu.js` and `restshell.js`; `shots/rest_booth_firepit.png`,
+  `rest_booth_firepit_noir.png`): pass. The crescent booth (`rdx_curve2`) sits in the back-left corner and opens straight at the
+  room, with its round table inside it (the only overlap the audit finds, which is meant); the Fire Pit Lounge is a stone bowl with a
+  fire, Adirondack chairs and a stone pad, in the Bistro and Noir. Board still 26 of 26. No page errors. Owner: none.
 - TAKEN by QA. WAITING ON QA (LEAD's message, Cal: "not multiple unlocks from 1 level ... not this early"): on 16e72c3, map every
   unlock by day and level over the first 30 days for the 12-task and casual players, flag any day or level with 2 or more, and
   rerun the economy to level 80 with the Garden later.
@@ -695,7 +699,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241).
   12-minute loop running (rule 16). (on 4725457)
-- TAKEN by QA. WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
+- DONE by QA (QA findings: pass). WAITING ON QA: check f457680 and eb85e90 (rule 17), Cal's last two Restaurant notes: the red crescent booth in the back-left
   corner now opens straight toward the room (new `rdx_curve2`), its table and two seats inside it; the patio's Fire Pit
   Lounge is a real fire pit (new `rsx_firepit2`: stone bowl, three Adirondack chairs, logs). Bistro and Noir.
 - DONE by QA (QA findings: pass). WAITING ON QA: check d30bb93 and 642b791 (rule 17). Game Room (Cal's phone notes): the Retro TV now faces the beanbags; Gaming
@@ -811,8 +815,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's booth and fire pit (f457680, eb85e90) on 9ae8634, and the 30-day unlock map on 26bcd76 (`rigtest/qa/sim.js`,
-  `unlocks.py`), test copies only. Next: the economy to level 80 with the Garden later. (on 26bcd76)
+- Now: the unlock timeline and the economy on 2d26053 (b1088f8's `ECON.stepLv`): 12-task player 90 days, casual 30, grinder 45
+  (`rigtest/qa/sim.js`, `unlocks.py`), test copy on 8770. Next: LEAD's level-up fix 4f15346 (`audit49.js`). (on 2d26053)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
