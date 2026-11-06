@@ -804,7 +804,7 @@ Doing:
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
   12-minute loop running (rule 16). (on 82cc1f9)
-- WAITING ON QA: check 8a5ac99, 059bd45 and 82cc1f9 (rule 17), Cal's Garden notes: (1) every bed lines up with the room's grid
+- TAKEN by QA. WAITING ON QA: check 8a5ac99, 059bd45 and 82cc1f9 (rule 17), Cal's Garden notes: (1) every bed lines up with the room's grid
   (fitted top faces), grow lights drawn along the beds; (2) the Estate with the fountain has no sundial, birdbath or
   topiaries, no lantern in the fountain plaza, the scarecrow by the left wall at every stage; (3) watering: with the beds dry
   they look parched, tapping the watering can in the back corner waters them (24 h) and they look damp; Sprinklers keep
@@ -935,8 +935,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's three (33e9721 slot, a2e234e watering, 6a1f7ab words) and ROOMS's 8a5ac99, test copies only (`sim.js` gets a
-  watering habit, `unlocks.py`, `gardenlots.js`, `standtap.js`). Next: whatever is WAITING ON QA. (on ae52275)
+- Now: the watering runs (3d65b70, `sim.js` WATER and NOBUY, `water.py`) and ROOMS's Garden notes check (8a5ac99, 059bd45,
+  82cc1f9: `gardenlots.js`, `gardenwater.js`), test copies only. Next: whatever is WAITING ON QA. (on 6cd6a9b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
