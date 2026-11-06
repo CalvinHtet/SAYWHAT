@@ -23,8 +23,8 @@ Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
   Object.defineProperty(f,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(f.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})});
 /* place: the room they hang out in when you have it (the Lounge otherwise). buff: today only, on matching quests. */
 var FVISITS=[
- {id:"justin_dance",who:["justin"],w:10,place:"gym",text:"Justin came by before rehearsal to run the new choreo with you in the gym.",buff:{stat:"fitness",pct:15,text:"Rehearsal with Justin: Fitness quests +15% XP today"}},
- {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin had a hook idea and wanted a second opinion. You spent the afternoon on it in the studio.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
+ {id:"justin_dance",who:["justin"],w:10,place:"gym",text:"Justin came by before rehearsal to run the new choreo with you.",buff:{stat:"fitness",pct:15,text:"Rehearsal with Justin: Fitness quests +15% XP today"}},
+ {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin had a hook idea and wanted a second opinion. You spent the afternoon on it.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
  {id:"vega_manager",who:["vega"],w:9,place:"lounge",text:"Vega came over to go through your week with you.",buff:{cl:"admin",pct:20,text:"Vega's plan: Admin and day-job quests +20% XP today"}},
  {id:"vega_merch",who:["vega"],w:6,place:"lounge",text:"Vega dropped off a box of extra merch for you to sell.",coin:250},
  {id:"logan_spot",who:["logan"],w:10,place:"gym",text:"Logan came up from the 3rd floor to train. You took turns spotting.",buff:{cl:"body",pct:20,text:"Spotting Logan: Body quests +20% XP today"}},
@@ -35,7 +35,7 @@ var FVISITS=[
  {id:"habibimbaps",who:["kenan","jina"],w:6,place:"restaurant",text:"Kenan and Jina cooked dinner at your place and left the leftovers.",buff:{cl:"home",pct:15,text:"Cooking night: Home quests +15% XP today"},coin:100},
  {id:"cynthia_garden",who:["cynthia"],w:8,place:"garden",need:"garden",text:"Cynthia came by with seedlings and watered the beds.",water:1,buff:{cl:"home",pct:10,text:"Cynthia's visit: Home quests +10% XP today"}},
  {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by to check in and stayed for coffee.",buff:{cl:"social",pct:15,text:"Cynthia's sunshine: People quests +15% XP today"}},
- {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the loose shelf in the lounge and stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
+ {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the loose shelf and stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
  {id:"memo_cynthia",who:["memo","cynthia"],w:7,place:"lounge",text:"Memo and Cynthia came over for dinner and brought dessert.",coin:150,buff:{cl:"social",pct:15,text:"Dinner with Memo and Cynthia: People quests +15% XP today"}},
  {id:"chopstick",who:["dog:chopstick"],w:5,place:"lounge",text:"Chopstick ran off with a sock. It turned up under the couch, next to some coins.",coin:80},
  {id:"pluto",who:["dog:pluto"],w:5,place:"lounge",text:"Pluto fell asleep on your lap in his sweater, so you stayed put and worked.",buff:{stat:"discipline",pct:15,text:"Pluto nap: Discipline quests +15% XP today"}}

@@ -1348,12 +1348,14 @@ function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(func
 /* LEAD (Cal, 2026-11-06, friends "hang out in our loft or other buildings for a day"; ROOMS OK'd): a friend stays the whole day
    in the room their visit names (S.visit.place) when you have it, else the Lounge, else the Bedroom; the day ending clears them */
 function lfVisitRoom(place){var sl=S.base.slots,f=function(t){for(var i=0;i<sl.length;i++)if(sl[i]&&sl[i].t===t&&LFMETA[i])return i;return -1};
-  var i=place?f(place):-1;if(i<0)i=f("lounge");if(i<0)i=f("bedroom");return i}
+  /* QA: a room you own in another building is drawn there, not here too; the Lounge/Bedroom fallback is only for a place you don't own */
+  var own=place&&sl.some(function(r){return r&&r.t===place});if(own)return f(place);
+  var i=f("lounge");if(i<0)i=f("bedroom");return i}
 function lfVisitors(){
   var v=S.visit;if(!v||v.d!==today()||!v.t)return [];
-  var el=Date.now()-v.t,rm=lfVisitRoom(v.place);
+  var el=Date.now()-v.t,rm=lfVisitRoom(v.place);if(rm<0)return [];
   return v.who.map(function(w,k){
-    if(w.indexOf("dog:")===0)return {id:"v:"+w,room:rm,role:"dog",dname:w.slice(4),visitor:1,fresh:el<90000,leaveAt:0,k:k};
+    if(w.indexOf("dog:")===0)return null; /* the dogs live here already (QA: a dog visit drew a second copy) */
     return FRIENDS[w]?{id:"v:"+w,room:rm,role:"visitor",look:FRIENDS[w].look,visitor:1,fresh:el<90000,leaveAt:0,k:k,idle:1,wand:1}:null;
   }).filter(Boolean);
 }
