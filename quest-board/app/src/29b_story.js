@@ -106,7 +106,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* look for the next step now and then, never over another window, one scene at a time */
 /* a story step below the shared-slot level that is ready to open (gate and level met), for 29h_unlocks.js */
 /* returns that step's own level, or 0 when none is ready */
-function styReadyLow(){var o=styState();if(o.stepDay===today())return 0;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
+function styReadyLow(){var o=styState();if(o.stepDay===today()&&!(S.testFree>0))return 0;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
   if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow)continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return L||1}return 0}
 function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
@@ -114,7 +114,7 @@ function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA:
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
-    if(o.stepDay===today()||!unlockSlotFree(ECON.stepLv[s.id]||0))break;
+    if((o.stepDay===today()&&!(S.testFree>0))||!unlockSlotFree(ECON.stepLv[s.id]||0))break;
     /* QA (3d65b70): early unlocks go in order of their own level, so an area waiting from a lower level (the Hall at 4) goes before this step */
     var wa=typeof areaLowestWaiting==="function"?areaLowestWaiting():0;if(wa&&wa<(ECON.stepLv[s.id]||0)&&wa<ECON.oneSlotBelow)break;
     if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();unlockTake();styScene(s);return}

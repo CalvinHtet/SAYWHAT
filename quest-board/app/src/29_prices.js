@@ -36,7 +36,7 @@ Object.keys(ADDONS).forEach(function(k){if(!ROOMT[k]||!(ROOMT[k].coin||ROOMT[k].
     /* the line states what it really earns after decor's share moved onto equipment */
     else if(typeof a[4]==="string")a[4]=a[4].replace(/Earns \+\d+% here\./,"Earns +"+Math.round(e.p*100)+"% here.")})});
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
-function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;persist();render();pop("Skipped one week");setTimeout(brandCheck,200)}
+function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;S.testFree=7;persist();render();pop("Skipped one week");setTimeout(brandCheck,200);setTimeout(function(){try{styCheck()}catch(e){}},600)}
 function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
 /* a page still open from an older version stops saving as soon as a newer version has saved, so it cannot overwrite that progress */
 function qbWatchSave(){if(!db||!DOC||!db.doc(DOC).onSnapshot)return;db.doc(DOC).onSnapshot(function(s){var d=s&&s.exists?s.data():null;if(d&&(+d.appv||0)>APPV&&!newerSeen){newerSeen=true;pop("A new version is out. Reload to keep playing.")}})}

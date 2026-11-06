@@ -825,7 +825,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=59, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=60, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1423,7 +1423,7 @@ document.addEventListener("click",function(e){
   if(a==="bsgo"){var bm=b.closest(".modal");if(bm)bm.remove();view="shop";shopTab=b.dataset.b;render();window.scrollTo(0,0);return}
   if(a==="simcoin"){S.coins+=10000;render();persist();pop("Test coins added");return}
   if(a==="simundo"){var ui=+b.dataset.i,ur=bslot(ui),back=0,n=0;if(!ur)return;(ADDONS[ur.t]||[]).forEach(function(u){if(ur.a[u[0]]&&!(u[3]&&u[3].opens)){delete ur.a[u[0]];back+=u[2]||0;n++}});S.coins+=back;persist();render();roomModal(ui);pop("Undid "+n+" upgrades, refunded "+back+" coins");return}
-  if(a==="simlvl"){var sl0=effLvl();var g0=gated();if(g0!==null)S.gates.push(g0);S.xp=Math.max(S.xp,cum(sl0+1));render();persist();levelUp(effLvl(),null,sl0);return}
+  if(a==="simlvl"){var sl0=effLvl();var g0=gated();if(g0!==null)S.gates.push(g0);S.xp=Math.max(S.xp,cum(sl0+1));/* testing (Cal): also pass the trial this level-up reaches, no gym photo */var g1,gn=0;while((g1=gated())!==null&&gn++<9)S.gates.push(g1);render();persist();levelUp(effLvl(),null,sl0);return}
   if(a==="buy")buy(b.dataset.id,e);
   if(/^cc/.test(a)){ccAct(a,b,e);return}
   if(a==="iftry"){ifTry(b.dataset.id,b);return}
