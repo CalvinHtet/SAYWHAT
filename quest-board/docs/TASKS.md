@@ -322,7 +322,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: a design review of the Mall at 322760a (Cal: rooms go to QA for notes before him), bare and fully bought,
+- TAKEN by QA. WAITING ON QA: a design review of the Mall at 322760a (Cal: rooms go to QA for notes before him), bare and fully bought,
   noon and night: one planned space? every piece facing its use? the shop fronts sitting right in their storefronts? the
   Directory Screen's text (it cycles; it looked garbled in a still)? walkways from the Theater door (front-left) and the
   Arcade door (front-right)? anything doubled or random? Plus the usual checks (4 retired ids, old saves, doors).
@@ -1151,7 +1151,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the Rooftop bar when ROOMS centres it; v0.50 when LEAD builds it. (on 2df050f)
+- Now: design review of the Mall (322760a) and its Directory Screen live, test copy only (`mallreview.js`, `retired.js`). Next:
+  the Rooftop bar. (on 9c44a12)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
