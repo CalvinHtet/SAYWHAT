@@ -154,6 +154,13 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- NEXT after the Restaurant (Cal, 2026-11-05, via QA): "Once the restaurant is done, I want to start work on the garden since
+  that is still part of the apartment loft." ROOMS: the Garden's painted shell and furniture to the same standard as the
+  Restaurant (QA's lessons for the next art pass), its stages as it is upgraded, and the produce stand (the story sells
+  produce there: `stySellHtml`, 4 coins a vegetable). LEAD: the Garden's text and story hooks, and whatever code its new
+  art needs. Open question for Cal: the game puts the Garden in Kode Plaza next to the Restaurant (`ROOMCELL`, building 1),
+  and the story calls it "a plot of land in Kode Plaza"; he calls it part of the apartment Loft. Move it into The Loft
+  building, or keep it in Kode Plaza? QA checks the Restaurant fixes, then the Garden.
 - Art slots still empty (LEAD, ca1068d, Cal: "plug and play"): see `docs/ART_SLOTS.md` (rerun `tools/art_slots.py`). Missing
   12: the five portrait brand banners (already asked, 720 x 1080), six relic icons `ui_relic_<streak|team|build|exped|quests|
   collect>.webp` (128 x 128, one per relic, painted game style: a streak flame, a handshake, a hammer, a ledger, a tally,
