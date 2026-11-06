@@ -236,6 +236,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v48 pinned test copy (c6a11c9, slug 95ef49a7...): pass. `savecheck.js` all cases, `screens.js` at 360 and 390 nothing
+  wider than the screen, no page errors. Training: 9 plans, 65 exercises, 130 pictures, all load from `art_ex.js` (128 files in
+  it). Game Room: all 21 image files load, nothing dark. The published page holds every one of the 417 build files with the same
+  checksum (`list_files`); only `index.html` differs (the page's wrapper) and `lfvar.json` is extra (it lives only there): so the
+  black rooms and dark squares Cal saw were the upload still running, nothing missing now. Not checked: a real phone, the
+  page's own database (QA cannot sign in). Owner: LEAD, nothing to fix.
 - QA, dungeon art (ROOMS's d48ed81, on 56ec295): pass. All 13 names the code asks for (`ui_tr_<set>_<piece>`, the two
   `_set` emblems, `ui_gift`) ship in `art_ui.js`; on the Trophies tab every owned piece (all five Goblin King, two shards) shows
   its painting, unowned shards show the placeholder. No page errors. Owner: ROOMS, nothing to fix.
@@ -675,8 +681,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: TAKEN, the v48 checks LEAD asked for on c6a11c9 (savecheck, screens, Training pictures in art_ex.js, the Game Room's
-  dark squares), test copy only. Next: whatever is WAITING ON QA. (on c97fac4)
+- Now: nothing running. Next: whatever is WAITING ON QA. (on 8809baa)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
