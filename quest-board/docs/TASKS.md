@@ -465,6 +465,21 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 3bcbb44 room zoom (`rigtest/qa/zoomfps.js`, 390x844 touch, CPU x4, every upgrade, before 8d97e24 / after 172caa9): pass.
+  Pan frame times, median / p90: Bedroom 50 / 150 ms to 17 / 17, Garden 17 / 67 to 17 / 17. Pinch: Bedroom 17 / 117 to 17 / 17,
+  Garden 17 / 83 to 17 / 17. The worst single frame is still 150 to 350 ms; that is the one viewBox commit at the end, as designed.
+  After a pan or pinch lifts no transform is left and the view moved; the wheel, +, - and reset all work. Not new: a drag on an unzoomed
+  picture scrolls `.modal`, but the room window (.rmodal, overflow hidden, 92vh) never makes it scroll, so that drag does nothing, before
+  and after. The whole-building pan (lfApplyNow) was not measured. Owner: LEAD.
+- QA, friends on 1194d92 and c0f0cbd (befd663 fixes, 3939130 lines, 3bcbb44 rooms; `friendsqa.js`, `friendsroom.js`, voice.js now
+  reads the visits): the fixes pass, plus two new bugs in where friends stand. Pass: at 2 of 2 freezes Kenan gives +300 coins and
+  the card says so; a Bedroom-only player is told "the Bedroom"; no pronouns for the friends; a card due while another window is open
+  waits and shows 2.5 s after it closes (and keeps waiting behind a story scene). All 16 still draw and pay; the new lines pass voice.js
+  (1,378 lines, 0 hits) and read plain. Bugs: (1) a friend whose room is in another building is also drawn in the Loft's Bedroom:
+  Kenan and Jina stand in the Restaurant and in the Bedroom at once, Cynthia in the Garden and the Bedroom (lfVisitRoom only finds
+  rooms with LFMETA, the open building's, so elsewhere it falls back). (2) A Chopstick or Pluto visit adds a second copy of the dog
+  who already lives in the Bedroom (v:dog:chopstick next to dog:chopstick). Small: three lines name a room the player may not have
+  ("in the gym", "in the studio", "the shelf in the lounge") while the card then says "the Bedroom". Owner: LEAD.
 - QA, LEAD's 8d97e24 (on 07812e4, `rigtest/qa/friendsqa.js`; cards `shots/qa/friends_cards_07812e4.png`): works, three small fixes.
   All 16 visits forced on a new player and on one with every room: each card draws its figures (rig 173x197, dogs their art), coins
   land (250/150/100/150/80), Kenan's freeze lands, Cynthia waters the Garden only when there is one, and every buff raises the real
@@ -1851,7 +1866,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: 8d97e24 friends done (three small fixes). Next on 3bcbb44: LEAD's room zoom (fpsroom.js before and after) and friends in their room, ROOMS's shadows (07812e4) and backdrop (d233c9e). (on 652df12)
+- Now: zoom passed, friends: two new bugs (LEAD). Next: LEAD's 0b21495 (room tester) and a652991 (drops), ROOMS's 07812e4, d233c9e, b9bcbbf, 67d0e85 (NICE COCK wear test). (on c0f0cbd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

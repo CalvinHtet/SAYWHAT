@@ -1,5 +1,5 @@
 // Every player-facing line the live game holds (upgrade names and lines, Shop items, story scenes and return visits, team
-// and relic text), checked against docs/VOICE.md's mechanical rules: no exclamation marks, no em dashes, the banned words,
+// and relic text, friends' visits), checked against docs/VOICE.md's mechanical rules: no exclamation marks, no em dashes, the banned words,
 // the quip endings it names, upgrade and item lines under about 90 characters. Prints each hit with the source file and line.
 //   QB=<built quest-board> node voice.js
 const fs = require('fs'), path = require('path');
@@ -19,6 +19,7 @@ const QUIP = /(not guaranteed|says thanks|obviously\.|now decorative|big feeling
     (ST.beats || []).forEach((bt) => bt.lines.forEach((l) => out.push(['visit ' + bt.id + ' ' + bt.who, l, 'line'])));
     const T = window.__qbTeam && window.__qbTeam.TEAM; if (T) Object.entries(T).forEach(([id, t]) => { out.push(['team ' + id, t.how, 'desc']); out.push(['team ' + id + ' buff', t.buff.text, 'buff']); });
     const D = window.__qbDungeon && window.__qbDungeon.SETS; if (D) Object.entries(D).forEach(([id, st]) => { out.push(['set ' + id, st.lore, 'desc']); st.pieces.forEach((pc) => out.push(['piece ' + pc.id, pc.d, 'desc'])); });
+    const F = window.__qbFriends; if (F) F.visits.forEach((v) => { out.push(['friend ' + v.id, v.text, 'line']); if (v.buff) out.push(['friend ' + v.id + ' buff', v.buff.text, 'buff']); });
     return out;
   });
   await b.close();

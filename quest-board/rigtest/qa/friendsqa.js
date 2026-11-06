@@ -25,6 +25,19 @@ const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
   // the freeze cap: Kenan with both slots full (2 with no freeze buffs; the wheel and streaks stop at the cap)
   const cap = await p.evaluate(() => { const S = window.__qb.x().S; document.querySelectorAll('#layer .modal').forEach((e) => e.remove()); S.visit = null; S.freezes = 2; const c0 = S.coins; window.__qbFriends.force('kenan_checkup'); const t = document.querySelector('#layer .modal').innerText.replace(/\s+/g, ' '); return { freezes: S.freezes, coins: S.coins - c0, card: (t.match(/\+[^+]*freeze[^.]*/) || [''])[0].slice(0, 60) }; });
   console.log('Kenan with 2 freezes already:', JSON.stringify(cap));
+  // no pronouns for people Cal never gave any (the dogs are Cal's own)
+  const pro = await p.evaluate(() => window.__qbFriends.visits.filter((v) => !v.who.every((w) => w.startsWith('dog:'))).map((v) => [v.id, ((v.text || '') + ' ' + ((v.buff || {}).text || '')).match(/\b(he|him|his|she|her|hers|himself|herself)\b/gi)]).filter((x) => x[1]));
+  console.log('pronouns in friends\' lines:', pro.length ? JSON.stringify(pro) : 'none');
+  // a card due while another window is open: the real daily roll (fvCheck on its 20 s timer) with no window open, then a window
+  // opening right after the roll, before the card's 1.2 s delay is up; the card must wait and show once the window closes
+  const due = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const x = window.__qb.x(), S = x.S; const R = Math.random;
+    document.querySelectorAll('#layer .modal').forEach((e) => e.remove()); window.__qbShift = (window.__qbShift || 0) + 864e5; S.fvDay = null; S.visit = null;
+    Math.random = () => 0.01; let t = 0; while (!(S.visit && S.visit.id) && t < 26000) { await w(100); t += 100; } Math.random = R;
+    const other = document.createElement('div'); other.className = 'modal'; other.innerHTML = '<div class="card">another window</div>'; document.querySelector('#layer').appendChild(other);
+    const rolled = !!(S.visit && S.visit.id); await w(3000); const whileOpen = [...document.querySelectorAll('#layer .modal')].some((m) => /stopped by/i.test(m.innerText));
+    other.remove(); let t2 = 0, after = false; while (t2 < 25000 && !after) { await w(500); t2 += 500; after = [...document.querySelectorAll('#layer .modal')].some((m) => /stopped by/i.test(m.innerText)); }
+    return { open: [...document.querySelectorAll('#layer .modal')].map((m) => m.className + ': ' + m.innerText.replace(/\s+/g, ' ').slice(0, 60)), pending: S.visit && S.visit.card, rolled, id: S.visit && S.visit.id, cardWhileOtherOpen: whileOpen, cardAfterClose: after, secondsAfterClose: t2 / 1000 }; });
+  console.log('card due while another window is open:', JSON.stringify(due));
   console.log('page errors', errs.length, errs.slice(0, 3));
   await b.close();
 })();
