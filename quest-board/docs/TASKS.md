@@ -271,6 +271,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (LEAD's message): check 4093cb9, S.areaOn made at load and at first creation (day one).
 - QA, ROOMS's 29c09a7 (on f0dcdd1, `gardenlots.js`; `shots/garden_lots2.png`, `garden_kitchen_full2.png`,
   `garden_lamp_sundial.png`): pass, two small notes. (1) The wooden beds stand beside the painted stone beds now, none on top,
   at every stage. (2) The Kitchen Garden's front is spread out: hive and coop on the front-left strip, the shed by the tools,
@@ -896,7 +897,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: LEAD's day-one area fix. (on f0dcdd1)
+- Now: LEAD's day-one area fix (4093cb9), test copy only (`day1areas.js`, `sim.js`). Next: whatever is WAITING ON QA. (on 4093cb9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
