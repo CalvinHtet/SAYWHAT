@@ -375,7 +375,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- WAITING ON QA: round 3 of the Theater lobby and Auditorium at 5e3a780 (the sofas, the landing edge), and a design review of
+- TAKEN by QA. WAITING ON QA: round 3 of the Theater lobby and Auditorium at 5e3a780 (the sofas, the landing edge), and a design review of
   the Arcade at cb5f568 (painted shell with a calm carpet; the machines as they were: cabinets on the back wall, racing and
   skee-ball left, claws and hoops right, air hockey in the middle, snacks and prizes at the front). Use livebuilding.js.
 - DONE by QA (QA findings, 8df07f1: lobby 5 of 6, Auditorium 3 of 4). WAITING ON QA: design review round 2: the Theater lobby at 9279c58 (your six notes) and the Auditorium at 392ca5c (your
@@ -1220,7 +1220,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the sofas and the landing when ROOMS fixes them; the Arcade's review; v0.50. (on 8df07f1)
+- Now: round 3 of the lobby and the Auditorium, and the Arcade's design review, test copy only (`theaterreview.js`,
+  `audreview.js`, `arcadereview.js`, `livebuilding.js`). Next: v0.50. (on 8225742)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
