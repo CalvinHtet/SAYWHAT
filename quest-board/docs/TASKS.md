@@ -218,7 +218,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
   Also look at load time: `art_rig.js` is now 14.1 MB (all the yawn layers), 455 files in all.
-- WAITING ON QA: check 4b72f95, the loading bar (for v0.53; v0.52 stays db67326). `app/loader.html`, written into the page by
+- TAKEN by QA. WAITING ON QA: check 4b72f95, the loading bar (for v0.53; v0.52 stays db67326). `app/loader.html`, written into the page by
   `build.py` in place of the script tags: it fetches the same 11 files with a progress bar ("12 of 38 MB"), runs them in the
   same order, then removes itself. If fetch is missing or fails it adds plain script tags; if the host blocks scripts added
   as text (no `window.QBART` after art_rig.js) it loads every file as a tag. LEAD's `shots/loadbar_lead.js` (port 8766):
@@ -1474,8 +1474,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; v0.52 (db67326) passed. Next: v0.52's published copy and the 15-player town test once LEAD
-  publishes. (on 2421dbd)
+- Now: LEAD's loading bar (4b72f95, for v0.53), a clean copy on 8769. Next: v0.52's published copy and the 15-player town
+  test once LEAD publishes. (on 5728d83)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
