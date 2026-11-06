@@ -239,7 +239,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.52 (rule 18): the pinned artifact "Quest Board v0.52 (test, fresh start)" (slug
   fdd651f3-324f-46ad-a2b3-9632ac8e8fb0, 454 files from db67326, db with the 9 rules of `app/dbcaps.json` + user + sample
   with images, version 1793965410-ff73). Check the page matches the build and the rules are live (`db_rules_get` shows 9).
-- TAKEN by QA. WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
+- DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.53: the pinned artifact "Quest Board v0.53 (test, fresh start)" (slug
   6561fd34-3689-4451-b03c-2740c2fc7061, 461 files from 743c30c: 20 core, 441 art; the 9 db rules + user + sample with
   images; version 1793965993-4ce3). Check the page matches the build, and if you can, the host's cache headers on the pieces.
 Art and room code requests (LEAD asks, ROOMS does):
@@ -365,6 +365,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.53 (slug 6561fd34, version 1793965993-4ce3): pass, the page matches the 743c30c build. By sha256, 459 of the
+  build's 460 files are identical and none are missing (all 18 scripts, the cut pieces included); index.html differs only by its
+  title (26 bytes longer); lfvar.json matches. The 9 db rules are declared, and as a Contributor diag reads as missing. Cal's
+  iPhone has opened it (diag/frame: iOS 18.7 in the Claude app, APPV 53, the Board, 11:54); diag/perf is from the Mac. No save
+  yet. Not checked: the host's cache headers. Opening the page from QA's browser would overwrite Cal's phone diag/frame, so QA
+  did not. Better: let the phone log say it. In the diag log, add each script's `transferSize` from
+  `performance.getEntriesByType('resource')` (0 means it came from the cache) and the time to the first screen. Then Cal's
+  second visit shows whether the pieces are cached on his phone. Owner: LEAD.
 - QA, the Black Tulle Skirt's wear test (`v_tulle`, female only; on 7387646; `shots/tulle/`): fine standing, sitting, typing,
   sleeping and in the yawn, short and long hair (22 poses, 0 fails; long hair falls over it right). One fix: mid-stride the long
   skirt splits at the middle like culottes (a notch at the front in walk3, two lobes from behind in backwalk1, `zz.png`), because
@@ -1536,8 +1544,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the published v0.53 (slug 6561fd34) against the 743c30c build, with the host's cache headers; ROOMS's upgrade audit
-  running. Next: v0.54 (the stretch clip, the skirt fix); room builds against references. (on 698fd80)
+- Now: ROOMS's upgrade audit, every room (running). Next: v0.54 (the stretch clip, the skirt fix); room builds against isometric
+  references. (on 235ecf0)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
