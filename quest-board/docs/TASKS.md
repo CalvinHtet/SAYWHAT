@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's ab7fcae (clean build; `rigtest/qa/gardenreveal.js`, `townlive.js`, sim.js + unlocks.py + water.py): two wording fixes, the
+  rest passes. Town board: all 5 townlive checks pass, focus survives a full render(). Garden (fresh level-5 player, built via rdo): no
+  Restaurant, chef or sell before the first produce; it starts watered; the stand says "Nothing to sell yet"; after 3 h "1 produce
+  ready / SELL FOR 4 COINS" and the one-time pop; no page errors. Errors: (1) the build splash contradicts itself: "It grows fresh
+  produce on its own. Nothing to water, nothing to harvest." then "Water it: The beds only grow while they are watered..."; drop the
+  first. (2) The dry window says it twice: "The beds are dry. Nothing grows until you water them." and "The beds are dry. Water them
+  and your first harvest starts growing; you sell it from this window."; keep the second. Unlock order: 12-task Garden day 4, Mara day
+  6 (level 7 binds, not the 12 sold), boba 9, dessert 10; casual Garden 6, Mara 10 (was 14); a 1-in-3-day waterer still Mara day 6.
+  No day stacks two story steps (12-task day 4 is the Garden plus a closet the player bought). Casual day 6 buys nothing: saving 1,026
+  of the Garden's 1,200, fine. Owner: LEAD.
 - QA, the published v0.61 (slug b9f23da6, version 1793991295-0706): pass, 461 of the c48c7af build's 462 files identical, none missing,
   index.html only by its title ("Quest Board v0.61", 6 bytes), lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, ROOMS's fa8efd9 (the console line trimmed): not yet. QA had the limit wrong: voice.js allows 95 characters (aim about 90), not
@@ -1827,7 +1837,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's ab7fcae (render() focus; the Garden reveals nothing early; Mara at 12 sold), with the unlock order rerun. (on ab7fcae)
+- Now: ab7fcae done (two wording fixes for LEAD). Next: LEAD's 8d97e24 (friends who drop by), then ROOMS's 07812e4 (shadows). (on 07812e4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
