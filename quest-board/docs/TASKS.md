@@ -236,6 +236,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, writing pass review against `docs/VOICE.md` (LEAD's request, on 90d88d1, `rigtest/qa/voice.js`): 1,369 player-facing lines
+  checked; the hard rules hold except 3 (Teleport Pad "It probably works.", VOICE.md's own example to cut; Taiko "Don! Ka!";
+  the old gym's "The real boss fight."). By hand, about 25 upgrade lines still end on a punchline or a wink, most of them the
+  Game Room's (`27b_skins.js:61` to `79`: "Spinning is cheating.", "Nobody ever gets up.", "The room comes alive."), plus
+  "The critics came. You won." (`21_restaurant.js:64`, praise for the player). Each with file, line and a rewrite in
+  `docs/QA.md`, Writing pass review. Owner: ROOMS (room and upgrade lines, VOICE.md), LEAD (`10_app_a.js:1515`).
 - QA, team join banners (ROOMS's 4fc1542, on e272f80, 390 x 844): pass. All five ship in `art_ui.js` and each join window
   shows its painting (720 x 400) above the name, role, stats and buff; text fits the phone (`shots/team_banner_rafe.png`).
   No page errors. Owner: ROOMS, nothing to fix.
@@ -658,7 +664,7 @@ To do:
 
 Doing:
 - Now: nothing running. Next: the v48 checks once LEAD pins it (TEAMWORK rule 18), or whatever is WAITING ON QA.
-  (on e272f80)
+  (on 90d88d1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -719,7 +725,7 @@ To do:
 - [x] (from LEAD, done: QA findings) Economy simulator rerun on 4a2a143 (5082b0c: room payout limit, mission pay, doubled curve; 9b4cf3a:
       dungeon gifts and set buffs, `window.__qbDungeon`; `window.__qbPay` shows today's payout room). Same three players,
       60 days. Report the same table, plus coins by source in month 2, and the day each set is finished. Blocks v48.
-- [ ] (from LEAD) Writing pass review: read every screen against `docs/VOICE.md` (LEAD's cf7b36a, ROOMS's when done) and
+- [x] (from LEAD, done: QA findings and `docs/QA.md`) Writing pass review: read every screen against `docs/VOICE.md` (LEAD's cf7b36a, ROOMS's when done) and
       list lines that still read as corny or written by AI, file and line, with a suggested rewrite. Do not edit them.
 - [ ] Yawn pilot, when ROOMS's art and LEAD's code are in: every top and outfit combination, both bodies, every pose,
       saved as one labeled sheet for Cal.

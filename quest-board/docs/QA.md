@@ -454,3 +454,41 @@ Cal: a serious player reaches level 100 and owns the whole town in about 50 days
 | Coins from day 31 | missions 32%, tasks 30%, rooms 13% | tasks 46%, missions 25%, rooms 18% |
 
 Missions twice a day doubled mission coins. Suggested: mission energy doubled, `xpK` 0.85, `price.moment` 2.5.
+
+## Writing pass review against `docs/VOICE.md` (2026-11-05, on 90d88d1, `rigtest/qa/voice.js`)
+
+1,369 player-facing lines (upgrade names and lines, Shop items, story scenes, return visits, team, trophy sets) checked for
+the hard rules: only 3 real breaks (an exclamation mark, a banned word, a line VOICE.md itself lists to cut). LEAD's pass
+worked on the hard rules. Read by hand, these still end on a punchline or wink at the player ("No punchline on the end",
+"Talking to the item or the player in a wink"). Suggested rewrites, all physical detail, no tag:
+
+| Where | Now | Suggested |
+|---|---|---|
+| `27_rooms.js:127` Teleport Pad | It probably works. | A ring of floor lights wired into the reactor. (VOICE.md's own example) |
+| `27b_skins.js:118` Taiko | Don! Ka! | Two barrel drums and a pair of sticks on a cord. |
+| `10_app_a.js:1515` Squat Rack (old gym) | The real boss fight. | A steel rack with safety bars and plates on the pegs. |
+| `27b_skins.js:61` Carpet & Wall Panels | ... Goodbye, bare concrete. | Plush dark carpet and panelled walls. |
+| `27b_skins.js:62` Hex Acoustic Panels | ... Sounds better, looks better. | A wall of hexagon felt panels behind the TV. |
+| `27b_skins.js:63` LED Lighting Rig | ... The room comes alive. | Cove lights, light bars and glowing hex panels. |
+| `27b_skins.js:66` Round Rug | Pulls the room together. | A round rug with a teal pattern under the couch. |
+| `27b_skins.js:69` Ping Pong Table | The noise is part of it. | A blue table, two paddles and a net clamp. |
+| `27b_skins.js:70` Green Arcade Cabinet | Your initials, forever. | A green upright with a joystick and two buttons. |
+| `27b_skins.js:71` Foosball | Spinning is cheating. | Wooden table, eleven rods, a cork ball. |
+| `27b_skins.js:72` Soda Machine | Free, because it is your house. | A red vending machine, lit from inside. |
+| `27b_skins.js:73` LED Wall Panels | It glows. | A cluster of hexagon lights in blue and violet. |
+| `27b_skins.js:74` Dartboard | Mind the wall. | A cork board in a wooden cabinet, three darts. |
+| `27b_skins.js:78` Beanbags | Nobody ever gets up. | Two beanbags, blue and orange, by the old TV. |
+| `27b_skins.js:79` Mini Fridge | Never walk to the kitchen again. | A glass-front fridge stacked with cans. |
+| `27b_skins.js:128` Shoe Counter, Score Console | Size? Fine. / Type your name. Regret it. | Rental shoes in cubbies by size. / A screen over the lanes with each bowler's frames. |
+| `27b_skins.js:167` Wall Booths | ... Everyone wants one. | Two more booths along the wall, velvet and brass. |
+| `27_rooms.js:166` Patio lines | A real upgrade. / Look straight into someone else's patio. / no walking required | Wicker, deep cushions. / A brass telescope on a tripod by the rail. / A rattan cart with two shelves of bottles. |
+| `27_rooms.js:174` Jazz Corner | One microphone. Nobody leaves. | A round stage, one microphone on a stand. |
+| `21_restaurant.js:13` Flat-Top Grill | ... Burgers for days. | A long griddle and a proper hood. |
+| `21_restaurant.js:18` Grand French Range | ... The dream. | Navy enamel, brass rails, copper pots. |
+| `21_restaurant.js:64` Star Plaque | The critics came. You won. | A framed review and a star by the door. (VOICE: nobody tells the player they are amazing) |
+| `26_world.js:341` Brass Chandeliers | ... Everything looks more expensive. | Sculptural brass over the room. |
+| `26_world.js:352` Noir | ... Everything changes. | Charcoal walls, dark walnut floor, low light. |
+| `23_theater.js:32` Claw Machine | Nobody has ever won. Everyone keeps trying. | A glass box of plush toys and a three-prong claw. |
+
+Fine as they are (dry and specific): "A chihuahua dachshund mix. Very fast, very long.", "Spare cells for the reactor. Blue,
+humming, do not shake.", "Chopstick's own.", "Petals never stop." (one light line a screen is allowed).
