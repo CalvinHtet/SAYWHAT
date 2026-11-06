@@ -13,8 +13,9 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: QA's timeline fixes done (aa165b1, ddc2171: one unlock a day below level 10), to QA. Next: the Garden with ROOMS (storyboard step 1: produce stand, the
-  knock-through is in); LEAD keeps the street and lots in step. Nobody plays until there is a working version. (on ddc2171)
+- Now: the early-game pacing is done (aa165b1, ddc2171, 4093cb9: one unlock a day below level 10, The Loft on day one); QA is
+  checking day one. Next: the Garden with ROOMS (storyboard step 1; its stand sells on tap), then v0.49 for Cal once the Garden
+  passes QA. Nobody plays until there is a working version. (on 886b385)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
