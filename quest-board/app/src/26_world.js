@@ -143,9 +143,10 @@ var lfMount0=lfMount;lfMount=function(){var c=document.getElementById("lfwrap");
    [from, to, wall, position, color, label]. "L" is the left wall at height y=position,
    "R" the back wall at x=position. The door shows once the target room exists. */
 var PORTALS=[];
-function portal(from,to,wall,pos,col,label){PORTALS.push([from,to,wall,pos,col||"#ffd27a",label||""])}
+/* when: an optional test; the door only shows while it is true (a stand-in way in while the room's usual neighbour is missing) */
+function portal(from,to,wall,pos,col,label,when){PORTALS.push([from,to,wall,pos,col||"#ffd27a",label||"",when||null])}
 /* a door is only a soft glow on the floor. The arrow floats outside the room and points at where that room really is. */
-function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var col=q[4],side=q[2],W=C.W,D=C.D,len=.75,dp=.55,lim=side==="BR"||side==="FL"?W:D,p=Math.min(q[3],lim-1);
+function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1])||(q[6]&&!q[6]()))return;var col=q[4],side=q[2],W=C.W,D=C.D,len=.75,dp=.55,lim=side==="BR"||side==="FL"?W:D,p=Math.min(q[3],lim-1);
     var quad=side==="BR"?[[p-len,.02],[p+len,.02],[p+len,dp],[p-len,dp]]:side==="BL"?[[.02,p-len],[.02,p+len],[dp,p+len],[dp,p-len]]:side==="FL"?[[p-len,D-dp],[p+len,D-dp],[p+len,D-.02],[p-len,D-.02]]:[[W-dp,p-len],[W-.02,p-len],[W-.02,p+len],[W-dp,p+len]];
     var hit=' data-act="gotoroom" data-t="'+q[1]+'" style="cursor:pointer"',pts=quad.map(function(k){return lfP(k[0],k[1],0)}).map(lfPt).join(" ");
     C.decals.push('<polygon class="prtG" pointer-events="none" points="'+pts+'" fill="'+col+'" filter="url(#prtBlur)"/>');
@@ -154,7 +155,7 @@ function rmPortals(C,r){PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]
    They point where the next room really is on the building. */
 /* Each arrow sits in the frame corner on its own door's side (QA): left wall top-left, upper wall top-right (left of the
    zoom buttons), front-left edge bottom-left, front-right edge bottom-right. */
-function rmArrows(r){var at={tl:'',tr:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1]))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k={BL:"tl",BR:"tr",FL:"bl",FR:"br"}[q[2]]||"br";
+function rmArrows(r){var at={tl:'',tr:'',bl:'',br:''};PORTALS.forEach(function(q){if(q[0]!==r.t||!hasRoom(q[1])||(q[6]&&!q[6]()))return;var a=ROOMCELL[r.t],b=ROOMCELL[q[1]],up=b[2]>a[2],dn=b[2]<a[2],left=!up&&!dn&&b[1]<a[1],rot=up?-90:dn?90:left?180:0,k={BL:"tl",BR:"tr",FL:"bl",FR:"br"}[q[2]]||"br";
     at[k]+='<button type="button" class="prtb-b" data-act="gotoroom" data-t="'+q[1]+'" style="--c:'+q[4]+'"><svg viewBox="-28 -20 56 40" width="20" height="16" aria-hidden="true"><g transform="rotate('+rot+')"><path d="M-20 -8H4V-18L26 0L4 18V8H-20Z" fill="'+q[4]+'"/></g></svg>'+esc(q[5]||ROOMT[q[1]].name)+'</button>'});
   var clean=r.t==="bedroom"&&(S.base.poops||[]).length?'<div class="prtb bc"><button type="button" class="prtb-b" data-act="dogclean" style="--c:#ffc857">Clean up</button></div>':"";
   /* top right: under the zoom buttons, not behind them (inline: index.html is shared) */
