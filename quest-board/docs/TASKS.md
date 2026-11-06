@@ -462,6 +462,25 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.62 rebuilt (756def5, APPV 62): pass, publish. My clean build matches LEAD's served copy file for file (494, 0 differ;
+  21 files, 474 art). The Diner's three small menus now sit clear of the ORDERS board and the shelf (`shots/qa/restaurant/
+  diner_menus_756def5.png`); the right one's top just meets the wall's top trim without crossing it. Rerun on the exact build:
+  savecheck, screens at 390, a v0.61 save loads, reloads, buys and reloads, diag/load (19 scripts after the rig art split, second
+  visit 0.01 MB), Begin at 10 sizes, the team's tops, town rules, townlive (5 of 5), the new `townrx.js` (12 of 12: no reacting to
+  your own post, a reaction kept in the reactor's own doc, +5 coins once, taking it back or switching pays nothing more, six more taps
+  pay nothing, the Hall badge for a new post and cleared on opening the Hall), friends (16 visits, every figure drawn), all 30 rooms,
+  the Restaurant's four stages. No page errors. Unchanged since 081ac04's full pass otherwise. Owner: LEAD (publish and pin).
+- QA, LEAD's 01deb94 DROPS.rerun (on 57b68f7, `drops.js` with the launch schedule switched on, 15 weeks): two errors, both only
+  once DROPS.on is true (not in v0.62's weekly mode, so not a v0.62 blocker). (1) A brand can drop on two slots in a row where a
+  rerun round starts: Y2K on Thu Feb 4 and again on Mon Feb 8. (2) A rerun can "drop" a brand still among the live four, so that
+  drop day brings nothing new: Y2K on Dec 28 while live since Dec 14, NICE COCK on Dec 31 while live since Dec 21. Fix in
+  dropPlan: when a round starts, never repeat the slot before it, and push brands still live to later in the round. Owner: LEAD.
+- QA, ROOMS's Kode PinK wear test (1dde4e1, on 279593c; `shots/qa/kp/`): 14 of 15 pass, one fix. All 15 on both bodies (the skirt
+  on hers only) in all 22 key poses, 0 draw failures, three outfits, the headphones and star clips with hair h1, h2 and h3: nothing
+  tears or clips; the skirt binds; the wide cargo sits over every shoe; the bag strap crosses over the varsity jacket. Fix: kp_bag
+  carries a faint outline of a whole body: thin dark lines float around the arms, head and legs in every pose and both bodies
+  (`bag_zoom.png`, `kpfit1.png`), and its icon shows the same mannequin (`icons.png`). Cut the bag and strap out of that outline.
+  The other icons read clean. Owner: ROOMS.
 - QA, v0.62 (081ac04, APPV 62, clean build; my 19 files and 473 art identical by sha256 to LEAD's served copy): everything passes but
   one small new error, so hold the publish for it (Cal: publish only when QA finds no more errors). Passed on the exact build:
   savecheck; screens at 360 and 390 (all tabs fit); v0.61's own build makes a save that v0.62 loads, reloads, buys on and reloads
@@ -1955,7 +1974,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.62 (081ac04) checked: all pass but the Diner's small menus overlapping the ORDERS board; hold for that nudge, then a quick recheck and publish. Waiting on ROOMS's nudge or Cal's call to publish as is. (on b37c0e5)
+- Now: v0.62 (756def5) passes: LEAD publishes. Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 279593c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
