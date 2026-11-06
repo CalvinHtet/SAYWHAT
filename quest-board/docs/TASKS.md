@@ -6,19 +6,19 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (bld_plaza_s0, Kode Plaza stages)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.58 (859d941), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.61 (c48c7af, slug b9f23da6), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.61 built from c48c7af (Cal via QA: "Publish 0.61 now"; ping-pong and the TV console ship as known items). WAITING ON
-  QA's full set, then LEAD publishes and pins. Brands (cac5f45): NICE COCK at drop 5; Kode PinK and SAYMØRE drafted from Cal's
-  covers, waiting on Cal's OK; at launch, two drops a week (Mon/Thu) in a seeded random order synced for everyone, which LEAD
-  codes once the art is in. Asked Cal: when the pool runs out, rerun the vault or gone for good. Town board for many players
-  (60e3e50: drafts survive refreshes, live 20 s reload, "new" tags) sent to QA. Next: the town hall upgrade Cal picks (live
-  board + reactions, or Fit of the Week; asked). (on 60e3e50)
+- Now: v0.61 published and pinned (QA passed c48c7af). With QA: ab7fcae (Garden reveals selling from the first growing bed,
+  no Restaurant talk until it exists, Mara after 12 sold; board focus through render) and 8d97e24 (friends who drop by: 7
+  friends, 16 visits, each a reason and a real effect). WAITING ON ROOMS's "20_loft.js free": then LEAD does the room-window
+  zoom speed (CSS layer while moving, commit the viewBox after; ROOMS OK'd) and asks to keep friends all day in their room.
+  Brands (cac5f45) and the town hall pick wait on Cal. Routed to ROOMS: shadows, dry-garden art and the water animation,
+  the warped bench legs, the plaza backdrop on phones. (on 8d97e24)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
