@@ -980,14 +980,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: the Rooftop bar repaint (QA design review: the back bar sits behind half the counter; Cal: "the two bars on the top
-  are weird"); then the Mall's design review with QA. Lock and Key passed QA's design review (4718a41), ready for Cal.
-  Rooftop: 5 of 6 design notes fixed in d95d880. Mall (step 8) built in 322760a: painted shell `mlw_t1` with five
-  storefronts, the Clothing, Sneaker and Toy stores as flat shop fronts in them (`mlx_front1-3`), the floor in zones;
+- Now: WAITING ON QA for the Rooftop bar repaint (c8eb716: one counter, its back bar centred behind, an aisle; the last
+  open design note) and the Mall's design review (322760a). Then Lock and Key (QA design review passed, 4718a41) and the
+  Rooftop go to Cal together. Mall (step 8) built: painted shell `mlw_t1`, shop fronts `mlx_front1-3`, floor in zones;
   `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower` retired. LEAD: retired ids also `sb_chester`, `sb_trolley`, `rf_lng2`,
   `rf_towel`, `rf_ice`, `rf_umb`; new `sb_band`. Question for LEAD and Cal: the Mall's doors break the door rule on the
   building map (Theater is left of the Mall but its door is the front-left edge; Karaoke sits above Bowling but opens from
-  the Mall's left wall); ROOMS can move them when the Theater and Karaoke steps come. Chrome claimed. (on 322760a)
+  the Mall's left wall); ROOMS can move them when the Theater and Karaoke steps come. Chrome claimed. (on c8eb716)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
