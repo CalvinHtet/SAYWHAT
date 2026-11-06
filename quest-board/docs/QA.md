@@ -731,3 +731,21 @@ guests walk the room, stand at the console and the table; no page errors. Notes:
    counter); add a clerk at one or both.
 3. **The STRIKE! sign is far from the lanes.** It hangs on the right wall over nothing; score screens belong above the lane ends at
    the approach. Move it above the lanes' near end, or let the Score Screens upgrade hang there.
+
+### Bowling and VR, round 2 (ROOMS's 934bb37, on 6d88259; `shots/review3_bowling_full.png`, `review3_bowling_live_11.png`, `review3_vr_full.png`)
+
+Closed; both ready for Cal. Live, the shoe counter's clerk and the snack bar's cook work their spots; the STRIKE screen hangs above
+the lanes' approach end; the VR flight and gyro pods stand apart (the left pair still almost touches, fine).
+
+### Karaoke (step 15, db8a46d, on 6d88259; `shots/review3_karaoke_full.png`, `review3_karaoke_bare.png`, `review3_karaoke_live_11.png`)
+
+Reads as one karaoke room: plum foam walls with one pink neon line and a calm galaxy carpet; the lounge on the left (couch facing
+the stage, drinks table, fridge, the song binders shelf in the back corner), the round stage with its mics, speaker and lights in
+the middle-right under the lyric screen, the song kiosk and the tambourine stand at the stage's edge, the disco ball between the
+lounge and the stage. Nothing outside or overlapping; Bowling's stairs arrive at the front-left, clear, and both doors follow Cal's
+rule (the Mall–Karaoke pair is the shortcut that shows only without Bowling); live, guests walk and stand; no page errors. Notes:
+
+1. **The "Private Booth" is a second lounge, not a booth.** It is an open pink L-sofa with a table and a mic in the front middle,
+   with no wall or curtain; next to the left lounge it doubles the seating. Tuck it into the front-left corner with a low partition
+   or curtain so it reads as private, or drop it.
+2. **Fine as is:** the singers face the lyric screen and the audience sees both; the couch faces the stage; nothing crowds the stage.
