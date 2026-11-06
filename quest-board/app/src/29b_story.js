@@ -136,7 +136,7 @@ function stySellHtml(){var n=Math.floor((S.base.food&&S.base.food.veg)||0),o=sty
   /* then (same day): "Selling should happen once we have our first plot that is growing produce ... There's no clear indication of
      how to sell produce or when the selling starts": from the first growing bed this row says plainly what happens and when */
   if(n<1&&!o.sold){var wet=typeof gdWateredAt!=="function"||gdWateredAt(Date.now()),rt=typeof gdRate==="function"?gdRate():0,mins=rt>0?Math.max(1,Math.round(60/rt)):0;
-    return '<div class="sty-sell sty-first"><span>'+(wet?'Your first bed is growing. Each vegetable it grows lands here, and you sell it from this window'+(mins?' (about one every '+(mins>=60?Math.round(mins/60)+' h':mins+' min')+')':'')+'.':'The beds are dry. Water them and your first harvest starts growing; you sell it from this window.')+'</span></div>'}
+    return '<div class="sty-sell sty-first"><span>'+(wet?'Your first bed is growing. Each vegetable it grows lands here, and you sell it from this window'+(mins?' (about one every '+(mins>=60?Math.round(mins/60)+' h':mins+' min')+')':'')+'.':'Once the beds are watered, your first harvest starts growing. Each vegetable lands here and you sell it from this window.')+'</span></div>'}
   if(!o.sellSeen){o.sellSeen=1;persist();setTimeout(function(){pop("Your first produce is ready. Tap Sell in the Garden window.")},400)}
   return '<div class="sty-sell"><span>'+n+' produce ready'+(o.sold?' &middot; '+o.sold+' sold so far':'')+'</span><button class="btn'+(n?'':' ghost')+'" data-act="stysell"'+(n?'':' disabled')+'>Sell for '+(n*4)+' coins</button></div>'}
 /* test hook, removed at release with window.__qb */
