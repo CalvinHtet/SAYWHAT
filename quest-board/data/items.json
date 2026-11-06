@@ -760,5 +760,54 @@
  },
  "smk_runner": {
   "slot": "shoes"
+ },
+ "gp_cathood": {
+  "slot": "hat"
+ },
+ "gp_bunny": {
+  "slot": "hat"
+ },
+ "gp_bow": {
+  "slot": "hat",
+  "noClip": true
+ },
+ "gp_wings": {
+  "slot": "neck"
+ },
+ "gp_hearts": {
+  "slot": "glasses",
+  "frontOnly": true
+ },
+ "gp_blazer": {
+  "slot": "top"
+ },
+ "gp_bear": {
+  "slot": "top"
+ },
+ "gp_star": {
+  "slot": "top"
+ },
+ "gp_sailor": {
+  "slot": "top"
+ },
+ "gp_skirt": {
+  "slot": "pants",
+  "skirt": true,
+  "femaleOnly": true
+ },
+ "gp_shorts": {
+  "slot": "pants"
+ },
+ "gp_overall": {
+  "slot": "pants"
+ },
+ "gp_mary": {
+  "slot": "shoes"
+ },
+ "gp_slipper": {
+  "slot": "shoes"
+ },
+ "gp_glitter": {
+  "slot": "shoes"
  }
 }
