@@ -286,7 +286,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   (the audit tool, sprinklers on every bed, the Star Plaque a step bigger). LEAD's part is the version number. Local boot: no page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.57: "Quest Board v0.57 (test, fresh start)" (slug 34b73668-15d2-4030-bdcd-8bbee04ad845,
   462 files from b279091, the 9 db rules + user + sample with images, version 1793972414-d808). Check the page matches the build.
-- TAKEN by QA. WAITING ON QA: check v0.58, 859d941 (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
+- DONE by QA (QA findings: pass, publish). WAITING ON QA: check v0.58, 859d941 (rule 18: your pass publishes it). One change over v0.57: the Testing pill is hidden while the
   creator is open (`app/index.html`), since it covered a creator button wherever it sat (your note, last at 375x548). It is
   back on the Board after Begin. `shots/ccbegin.js` at 375x548, 390x664, 844x390, 1280x800: Begin on screen and tappable, no
   page errors.
@@ -418,6 +418,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.58 (859d941, APPV 58, built clean; rule 18: pass, publish it). Over v0.57 only the pill rule and APPV. `ccbegin.js` (now also
+  checks the pill after Begin): at all 10 sizes the Testing pill is hidden in the creator, comes back on the Board after Begin,
+  and Begin is on screen and tappable; the old 375x548 overlap is gone. It uses CSS `:has()` (Safari 15.4 and up; Cal's iOS 18 is
+  fine). The full set: savecheck, screens, old saves, "NEW v0.58", doors 36 of 36, voice 0, Shop 44, Trophy Room, town rules 32 of
+  32, the Rift Mask, the team, diag/load, all 30 rooms: all pass; one team run had the old intermittent blob ERR_ABORTED, two reruns
+  clean. Nothing open from QA. Owner: LEAD (publish).
 - QA, the published v0.57 (slug 34b73668, version 1793972414-d808): pass, 460 of the b279091 build's 461 files identical, none missing,
   index.html only by its title, lfvar.json matches, the 9 rules declared; not opened yet. Owner: LEAD.
 - QA, v0.57 (b279091, APPV 57, built clean; rule 18: pass, publish it). Over f7efaf6 (passed) it changes only APPV. On the exact
@@ -1684,7 +1690,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.58 (859d941, clean copy on 8781). Next: v0.58's page. (on 80e049e)
+- Now: nothing waiting; v0.58 passed. Next: v0.58's page once pinned. (on f30398b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

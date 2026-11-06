@@ -35,9 +35,11 @@ const SIZES = [[320, 568], [360, 600], [375, 548], [390, 664], [430, 800], [440,
     // a real tap (or click) on Begin starts the game
     const btn = await p.$('[data-act="ccdone"]'); if (phone) await btn.tap(); else await btn.click();
     let board = false; try { await p.waitForFunction(() => !document.querySelector('.cc-menu') && document.querySelector('.nav button[data-v="board"]'), null, { timeout: 15000 }); board = true; } catch (e) {}
+    // after Begin, the Testing pill is back on the Board (hidden only while the creator is open, LEAD's 859d941)
+    st.pillAfter = await p.evaluate(() => { const t = document.querySelector('#qbt'); if (!t) return 'none'; const r = t.getBoundingClientRect(); return r.width && getComputedStyle(t).display !== 'none' ? 'shown' : 'hidden'; });
     const ok = st.start && st.menuEnd && st.pageEnd && st.pageTop && board && !errs.length && !/^covers/.test(pill);
     if (!ok) fails++;
-    console.log(`${ok ? 'ok  ' : 'FAIL'} ${w}x${h}: Begin on screen and tappable at start ${st.start}, menu at end ${st.menuEnd}, page at end ${st.pageEnd}, page top ${st.pageTop}; preview ${stage} px tall; tap starts the game ${board}; Testing pill ${st.pill}; page errors ${errs.length}`);
+    console.log(`${ok ? 'ok  ' : 'FAIL'} ${w}x${h}: Begin on screen and tappable at start ${st.start}, menu at end ${st.menuEnd}, page at end ${st.pageEnd}, page top ${st.pageTop}; preview ${stage} px tall; tap starts the game ${board}; Testing pill ${st.pill}, on the Board after ${st.pillAfter}; page errors ${errs.length}`);
     await ctx.close();
   }
   console.log(fails ? `${fails} sizes failed` : 'all sizes pass');
