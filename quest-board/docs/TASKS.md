@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.55 published and pinned (17d4b44, QA passed 7bf8570), WAITING ON QA for the page check. v0.56 collects what QA
-  has passed since: ROOMS's audit fixes (c6ba889, 1dc4211) and QA's v0.55 room notes once fixed. (on 17d4b44)
+- Now: v0.55 published and pinned (17d4b44); QA: the page matches. v0.56 is built when QA's re-audit of ROOMS's audit fixes
+  (c6ba889, 1dc4211) is done, with a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, passed). (on 17d4b44)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
