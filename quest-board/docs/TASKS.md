@@ -462,6 +462,19 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.62 (081ac04, APPV 62, clean build; my 19 files and 473 art identical by sha256 to LEAD's served copy): everything passes but
+  one small new error, so hold the publish for it (Cal: publish only when QA finds no more errors). Passed on the exact build:
+  savecheck; screens at 360 and 390 (all tabs fit); v0.61's own build makes a save that v0.62 loads, reloads, buys on and reloads
+  (`dist_old` from c48c7af); the level-5 start (1,205 coins, the Garden offered, Add 10,000 then it builds); Kode Plaza stages 0, 1,
+  2 and tapping in; town rules (29 checks, all pass); doors 34 ok plus Garden and Restaurant walked both ways live (`doorlive.js`;
+  doors.js cannot read e884ffd's function position); Begin at 10 sizes; diag/load; the team's tops; voice.js 1,394 lines, 0 hits;
+  the Shop, 128 pieces on him and 131 on her bought and worn, NICE COCK included; Wednesday returns on both pages, every change at
+  Wednesday midnight Pacific; all 30 rooms drawn, 21 of 21 buy through; the room tester walks all 17 story rooms; friends (16 visits,
+  rewards, buffs, freeze cap, rooms, dogs); Collect; the street camera at 390, 360 and on its side. No page errors anywhere.
+  The error: in the Corner Diner the three small menu boards overlap the ORDERS board's lower-right corner and sit on the shelf line
+  (`shots/qa/restaurant/diner_menus_4b7ef27.png`); move them right by about their own width. Still as accepted for v0.61: the mall's
+  escalator in front of the Bowling and Karaoke doors, the Game Room ping-pong (Cal's call). QA's earlier "boards face front" was
+  wrong: zoomed in they slope with the wall. Owner: ROOMS (the menus), LEAD (rebuild; QA then rechecks the Diner and the file match).
 - QA, ROOMS's 5d0986c pot racks and coffee (on c59b953, `shots/qa/restaurant/r3_kitchens_c59b953.png`): pass. In the Hole in the
   Wall the pans hang from a wall rail whose brackets meet the tile over the prep table; in the Diner they hang from a ceiling rack
   on chains over the island; the drip coffee sits on the counter, no stool. Still open from round 2: the boards face front and the
@@ -1944,7 +1957,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: pot racks and coffee pass. Waiting for ROOMS's last two Restaurant fixes (boards on the wall's slope and fewer, the safe), then v0.62's full set when LEAD asks. (on c59b953)
+- Now: v0.62 (081ac04) checked: all pass but the Diner's small menus overlapping the ORDERS board; hold for that nudge, then a quick recheck and publish. (on c9681cd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
