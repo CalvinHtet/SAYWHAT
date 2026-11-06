@@ -14,7 +14,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.50 built (f3c970c, Cal: "Skip to v0.50"), WAITING ON QA for its pre-release check; then LEAD publishes and pins it.
-  Next: the Rift Mask's item line (dungeon only, from gifts). Nobody else plays until there is a working version. (on f3c970c)
+  The Rift Mask is in (e389afa, to QA, for v0.51). Nobody else plays until there is a working version. (on e389afa)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
