@@ -708,3 +708,26 @@ cooler in the right corner); the Second Pod is retired cleanly (no card, id kept
    treadmill alone in the middle with clear floor round it.
 2. **The check-in desk has nobody behind it,** and live a guest fades in behind it at the back wall, walking through the desk to
    get in. Put a clerk behind it, and let guests arrive at the Arcade door (top left) and walk to the front of the desk.
+
+### Rhythm Room and VR Arena, round 2 (ROOMS's 5a33727, on 551ac4a; `shots/review2_rhythm_full.png`, `review2_vr_full.png`, `review2_vr_live_11.png`)
+
+Rhythm: all three closed; ready for Cal. The bench stands by the left wall looking toward the pads, the speaker tower is by the
+DJ game, the trophy case is on the wall, and the drum kit and keyboard show. VR: much better; the treadmill stands alone in the
+middle, the motion and racing rigs are on the left, the flight and gyro pods on the right, and live the clerk works the check-in
+desk (8 of 12 looks). Small: each side pair still touches in the picture (the racing pod's seat over the motion rig's base; the
+gyro ring against the flight pod); half a tile apart would read as separate stations. Otherwise ready for Cal.
+
+### Bowling Alley (step 14, 922bcb7 and 5a33727, on 551ac4a; `shots/review2_bowling_full.png`, `review2_bowling_bare.png`, `review2_bowling_live_11.png`, `review_bowling_doors.txt`)
+
+Reads as one alley: in at the Mall door (front-left) by the shoe counter and shoe rack, two lanes running to the back with the
+ball return and score console at the approach, the snack bar and table in the front-right corner off the approach, trophies and
+the big pin on the right wall; calm shell; nothing outside or overlapping; doors (Mall, Karaoke at BR 9.6) follow Cal's rule; live,
+guests walk the room, stand at the console and the table; no page errors. Notes:
+
+1. **The lane seats (ROOMS's worry).** They face the viewer, which here means across the approach toward the snack corner, side-on
+   to the lanes. Since the art cannot face the pins, keep them where they are, beside the approach, so they look across at the
+   bowlers; that reads as a side bench. Fine.
+2. **Nobody staffs the shoe counter or the snack bar.** A counter with a register reads as staffed (as with the Arcade's prize
+   counter); add a clerk at one or both.
+3. **The STRIKE! sign is far from the lanes.** It hangs on the right wall over nothing; score screens belong above the lane ends at
+   the approach. Move it above the lanes' near end, or let the Score Screens upgrade hang there.

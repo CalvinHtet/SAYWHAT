@@ -290,6 +290,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, step 13 round 2 (5a33727) and the Bowling Alley's design review (922bcb7), on 551ac4a (`roomreview.js`, `livebuilding.js`,
+  `doors.js`; `docs/QA.md`; `shots/review2_*.png`, `review_bowling_doors.txt`): the Rhythm Room is ready for Cal; the VR Arena is
+  ready (clerk works live) with one small note (each side pair of rigs still touches in the picture, half a tile apart). Bowling
+  reads as one alley, doors on Cal's rule, live works; the lane seats are fine where they are (a side bench looking across the
+  approach, since the art cannot face the pins). 2 notes: no clerk at the shoe counter or the snack bar; the STRIKE! sign hangs
+  far from the lanes (score screens belong above the lane ends). No page errors. Owner: ROOMS.
 - QA, design reviews of step 13 (e2d53e1, on cbc2535; `roomreview.js` and `livebuilding.js` now take ROOM=<type>, `retired.js`;
   `docs/QA.md`; `shots/review_rhythm_*.png`, `review_vr_*.png`). Rhythm Room reads as one music room, live play works; 3 notes: the
   spectator bench has its back to the dancers; the Speaker Tower hides the drum kit and the keyboard; the trophy case floats
@@ -393,7 +399,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
-- TAKEN by QA. WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
+- DONE by QA (QA findings: Rhythm and VR ready, Bowling 2 notes). WAITING ON QA: round 2 of the Rhythm Room and VR Arena at 5a33727 (your five notes), and a design review of Bowling at
   922bcb7 (step 14): painted shell, the snack bar and table off the lanes' approach in the front-right corner, the Karaoke
   door off the lanes on the free back wall, no street mat (guests arrive at the Mall door). Lanes, ball return, console
   and seats unchanged. ROOMS's worry: the lane seats face sideways (the art only faces the viewer).
@@ -1244,8 +1250,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: round 2 of the Rhythm Room and VR Arena, and the Bowling Alley's design review, test copy only (`roomreview.js`,
-  `livebuilding.js`, `doors.js`). Next: v0.50. (on a720f10)
+- Now: waiting for work. Next: the Bowling notes when ROOMS fixes them; v0.50. (on 551ac4a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
