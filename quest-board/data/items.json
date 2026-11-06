@@ -186,7 +186,7 @@
   "slot": "top",
   "femaleOnly": true
  },
- "h_pleat": {
+ "h_pleat": {"skirt": true, 
   "slot": "pants",
   "femaleOnly": true,
   "wide": true
@@ -393,7 +393,7 @@
   "slot": "pants",
   "neutral": true
  },
- "v_tulle": {
+ "v_tulle": {"skirt": true, 
   "slot": "pants",
   "femaleOnly": true,
   "neutral": true

@@ -260,7 +260,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   device only. `shots/diagload.js` on a stand-in db: first visit 18 files 39.4 MB, reload 18 checked, 5.4 KB.
   Not checked by LEAD: savecheck/screens on this build, rooms playing the stretch.
 Art and room code requests (LEAD asks, ROOMS does):
-- WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
+- DONE by LEAD in NEXT (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
   hem swings as one piece instead of splitting like culottes (QA's b58bf48). `src/look.js` reads the flag from QBDATA.items,
   so no equip code needs a new field. Tried with the flag added to a local build only: walk1, walk3, backwalk1, backwalk3
