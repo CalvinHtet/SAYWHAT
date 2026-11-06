@@ -1287,13 +1287,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: nothing. The yawn is done: QA passed 503cd3f (the 28 tops, a8c2a1f) and 6541dd3 (the starter tops and the man's
-  hips, 9b31ed0), READY TO PUBLISH below. `rigtest/matrix.html` takes `&tc=white|grey|black` for the starter top's colour
-  (QA's idea). Still open, not ROOMS's: necklaces in the yawn (LEAD, rig.js). `stretchUp` (arms straight up) has no
-  painted layers; dark sleeves still tear there. Chrome free.
+- Now: nothing. The yawn is done (QA: a8c2a1f, 9b31ed0) and in v0.52 (db67326) with LEAD's necklace fix, with QA for
+  its pre-release check. `rigtest/matrix.html` takes `&tc=white|grey|black` for the starter top's colour. `stretchUp`
+  (arms straight up) has no painted layers; dark sleeves still tear there (not asked for). Chrome free.
   Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
   `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`, `dg_riftmask`, `tm_*` tops; `ml_kar` needs `ml_bow`.
-  Next: the Game Room guests wait on Cal (his friends' looks). (on 9b31ed0)
+  Next: the Game Room guests wait on Cal (his friends' looks). (on 87fc824)
 - DONE by QA (QA findings: pass, the piano still touches the bar). WAITING ON QA: check fe48618 (rule 17, small check): Lock and Key's Friday Band (`sb_band`). No card until the Jazz Corner
   is owned; once bought the mic stage leaves the picture and the band stage stands in its corner, clear of the door mat
   and the high-tops; More High-Tops shows one table; the piano no longer touches the bar (QA's note). ROOMS's headless
