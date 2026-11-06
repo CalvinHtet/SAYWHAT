@@ -1041,12 +1041,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA, round 2 of the design reviews: the Theater lobby (9279c58: concession on the left wall with its
-  back counter, one bar in the wing, sofas in an L, bins by the concession, the poster stand out) and the Auditorium (392ca5c:
-  the back landing reads, an EXIT where the steps arrive, a small projector bare). WAITING ON CAL: Lock and Key, the
-  Rooftop and the Mall. Next: step 12, the Arcade. LEAD: ids unchanged (`t_booth1`, `t_pop`, `t_soda`, `t_aud`). Retired
-  ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`,
-  `ml_flower`, `ml_dir`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 392ca5c)
+- Now: storyboard step 12, the Arcade: a painted shell with a calmer carpet (today the neon floor pattern is the busiest
+  thing in it; the machines are already in sensible zones), then QA's design review. WAITING ON QA: round 2 of the Theater
+  lobby (9279c58) and the Auditorium (392ca5c). WAITING ON CAL: Lock and Key, the Rooftop and the Mall. LEAD: ids
+  unchanged (`t_booth1`, `t_pop`, `t_soda`, `t_aud`). Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`,
+  `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`, `ml_photo`, `ml_flower`, `ml_dir`; new `sb_band`; `ml_kar` needs `ml_bow`.
+  Chrome claimed. (on 8ca77d1)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
