@@ -1139,7 +1139,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the review notes again when ROOMS fixes them; v0.50 when LEAD builds it. (on 3cdf263)
+- Now: the design review notes again on ROOMS's d95d880 (Rooftop, Lock and Key), test copy only. Next: v0.50 when LEAD builds
+  it. (on d9284bd)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
