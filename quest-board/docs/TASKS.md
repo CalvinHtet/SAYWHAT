@@ -744,8 +744,8 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now: step 1 of the storyboard (Cal's work order, `docs/STORYBOARD.md`), the Garden: all three painted lots done (4725457, cd73831, 5fa3fec,
-  approval 20) and next to the Restaurant with the knock-through door (28a51ee); next for the Garden: the produce stand
-  (`22_garden.js`, new art) so the story's selling has a place from the first day. Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
+  approval 20) and next to the Restaurant with the knock-through door (28a51ee); produce stand and QA's three placement fixes done (29c09a7). Next: the
+  storyboard's step 2 pieces that are ROOMS's, then on down the storyboard. Restaurant pieces in hand are done (booth f457680, fire pit eb85e90). The Restaurant's
   fine-dining furniture is parked until its step. Then the Rift Mask, Lock and Key, the theater basics, the team in their
   rooms, as the storyboard orders them. Chrome claimed.
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
@@ -753,7 +753,11 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-  12-minute loop running (rule 16). (on 28a51ee)
+  12-minute loop running (rule 16). (on 29c09a7)
+- WAITING ON QA: check 29c09a7 (rule 17), your Garden placement fixes and the stand: beds no longer on top of each other (all
+  stages); the Kitchen Garden's front spread out (hive and coop front left, shed by the tools, pump by the trellis, gate at
+  the walk's end); Grow Lamps are frames over the beds; a crate stand at the Back Plot's gate, the Farm Stand replacing it
+  at any stage.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 28a51ee (rule 17): the Garden is right of the Restaurant in Kode Plaza (building view, Boba's stack one
   along); with both built, the Restaurant's "Garden" arrow (front right, the kitchen end wall has a gap) and the Garden's
   "Restaurant" arrow (top left, a lit doorway in the back-left wall) walk both ways, at every Garden and Restaurant size.
