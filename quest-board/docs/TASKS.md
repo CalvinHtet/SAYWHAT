@@ -407,6 +407,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's f7efaf6 (the audit tool forces an upgrade's needed expansion first; sprinklers on every bed; the Star Plaque bigger):
+  pass. Re-audit of the restaurant and garden: the tool now buys r_x1 and r_x2 before the pieces that need them, so they are
+  measured in their own room: Walnut Dividers 1.46% (OK), Drinks Cooler 0.34% (seen; the Backlit Wine Wall replaces it later at
+  1.06%, by design), Dish Station 0.37%; Star Plaque 0.13 -> 0.21%, Sprinklers 0.10 -> 0.31%, all visible. Aisle Lights can stay
+  thin. Owner: LEAD (v0.57 with it).
 - QA, v0.56 (a3335e1, APPV 56, built clean; rule 18: pass, publish it). Over add039a it changes only APPV, so it holds exactly the
   work QA passed (c6ba889, 1dc4211, a96c4f7, add039a). On the exact build: savecheck, screens (360, 390), old saves, "NEW v0.56"
   desktop and phone, doors 36 of 36, voice 0 of 1,354, Shop 44, Trophy Room, town rules 32 of 32, the Rift Mask, the team, diag/load
@@ -1661,7 +1666,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's f7efaf6 (audit tool needs, sprinklers, Star Plaque; re-audit restaurant and garden). Next: v0.56's page. (on 5bb2256)
+- Now: nothing waiting; f7efaf6 passed. Next: v0.56's page once pinned; v0.57. (on 187b4df)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
