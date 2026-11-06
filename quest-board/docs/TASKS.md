@@ -1293,7 +1293,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: v0.50 when LEAD builds it. (on b0534bc)
+- Now: every door pair against Cal's rule after fd80c50 (`doors.js` LOGIC), test copy only. Next: v0.50 when Cal decides. (on fd80c50)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
