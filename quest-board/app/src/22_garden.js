@@ -138,9 +138,9 @@ LFROOM.garden=function(C){
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
   var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,st===0?8.7:7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
-  tool("g_can","gdx_can",TY[0],1.2,1.0,14,{act:"gdwater"});
+  tool("g_can","gdx_can",TY[0],1.2,1.0,14,{act:"gdwater",hit:110});
   /* the watering can in the back corner waters the beds when tapped (LEAD's gdwater); the Hose & Watering Can takes over */
-  if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater"});tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
+  if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater",hit:110});tool("g_bench","gdx_bench",TY[1],1.4,1.0,26);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_wheel","gdx_wheel",TY[4],1.4,1.0,16);
   /* the Back Plot's gate corner is the produce stand's */
   if(H("g_scare"))gdS(C,"gd_scare",.3,st===0?8.3:6.0,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
