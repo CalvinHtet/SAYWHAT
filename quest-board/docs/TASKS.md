@@ -13,8 +13,8 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: unlock order by level and Sprinklers much later (912f32c), to QA. Next: the Garden with ROOMS until it passes QA, then v0.49
-  for Cal. Nobody plays until there is a working version. (on d1d7c73)
+- Now: v0.49 built (8fabe1a), WAITING ON QA for its pre-release check (rule 18). Then LEAD publishes it as a fresh pinned copy
+  for Cal. Nobody else plays until there is a working version. (on 8fabe1a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
