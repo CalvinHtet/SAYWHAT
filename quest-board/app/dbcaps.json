@@ -1,5 +1,5 @@
 {
-  "_": "LEAD: the page's whole capability declaration, passed to declare_capabilities after each publish. Saves live in data/users/<id>/ (private by default). worlds, board and pings hold one doc per player, named by their user.id(): everyone signed in reads them, each player writes only their own, the owner can tidy. diag is the owner's phone log.",
+  "_": "LEAD: the page's whole capability declaration, passed to declare_capabilities after each publish. Saves live in data/users/<id>/ (private by default). worlds, board and pings hold one doc per player, named by their user.id(): everyone signed in reads them, each player writes only their own, the owner can tidy. diag is the owner's phone log; inbox (quests Claude adds for Cal) and player are the owner's only.",
   "capabilities": {
     "db": {
       "rules": [
@@ -10,7 +10,8 @@
         {"path": "pings", "read": "view", "write": "owner"},
         {"path": "pings/{self}", "read": "view", "write": "interact"},
         {"path": "diag", "read": "admin", "write": "owner"},
-        {"path": "player", "read": "owner", "write": "owner"}
+        {"path": "player", "read": "owner", "write": "owner"},
+        {"path": "inbox", "read": "owner", "write": "owner"}
       ]
     },
     "sample": {"images": true},
