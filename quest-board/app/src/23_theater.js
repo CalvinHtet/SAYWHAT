@@ -193,7 +193,11 @@ LFROOM.auditorium=function(C){rsArtReady();
   C.decals.push(lfFloorG(.05,.05,'<rect width="'+U*(W-.1)+'" height="'+U*(D-.1)+'" fill="'+(car?"#3a1830":"#26202a")+'"/>'));
   var nrow=H("au_rows")?4:3,TX=[3.6,5.3,7.0,8.7],TZ=[6,14,22,30],ty0=1.7,carpT=car?"#5a2238":"#3a3040",carpS=car?"#2e1020":"#1c1720",DX=TX[nrow-1]+1.7,DZ=TZ[nrow-1]+8;
   TX.slice(0,nrow).forEach(function(x,i){lfTbox(C,x,ty0,1.7,D-ty0-.2,0,TZ[i],carpS,carpT);C.plat.push({x0:x,y0:ty0,x1:x+1.7,y1:D,z:TZ[i],key:x+1.7+.01})});
-  lfTbox(C,DX,0,W-DX,D,0,DZ,H("au_lux2")?"#2a2a34":"#201b24",H("au_lux2")?"#3a3a48":"#2a2430");C.plat.push({x0:DX,y0:0,x1:W,y1:D,z:DZ,key:DX+.01});
+  /* the raised back landing reads as one (QA design review): a lighter deck, a low wall along its edge with the aisle left
+     open, and a lit EXIT where the aisle steps arrive (the Lobby door is at that end) */
+  lfTbox(C,DX,0,W-DX,D,0,DZ,H("au_lux2")?"#2e2e3a":"#2a2430",H("au_lux2")?"#4a4a5e":"#43394c");
+  lfTbox(C,DX,1.75,.2,D-1.85,DZ,15,"#1a1520",H("au_lux2")?"#c9a24a":"#5e5068");
+  C.walls.push(lfFaceY(W-1.5,0,DZ+66,'<rect width="30" height="13" rx="2" fill="#0c3a1c" stroke="#3dff7a" stroke-width="1"/><text x="15" y="9.6" font-size="8" font-weight="700" fill="#8dffae" text-anchor="middle" font-family="sans-serif">EXIT</text>'));C.plat.push({x0:DX,y0:0,x1:W,y1:D,z:DZ,key:DX+.01});
   var steps=Math.ceil((DX-3.6)/.6);for(var j=0;j<steps;j++){var sz=DZ*(j+1)/steps;lfTbox(C,3.6+.6*j,.2,.6,1.4,0,sz,carpS,carpT);if(H("au_aisle"))lfTbox(C,3.6+.6*j,1.55,.6,.05,sz-1,1,"#6cc0ff","#a8dcff");C.plat.push({x0:3.6+.6*j,y0:.2,x1:3.6+.6*(j+1),y1:1.6,z:sz,key:3.6+.6*(j+1)+.01})}
   /* screen */
   var sw=big?D-2.4:scr2?D-3.4:6.0,sh=big?HH-56:scr2?150:92,y0=(D+sw)/2,z0=big?20:30;
@@ -212,7 +216,8 @@ LFROOM.auditorium=function(C){rsArtReady();
        the shoulders, and after the row in front of them. (dk:99 drew them over every seat, perched on top.) */
     for(var s=0;s<3;s++)lfCust(C,x+.55,yb+.5+s*.85,-1,{sit:1,sz:4,facewall:1,dk:3.1-.85*s,uact:"eat",wact:"sit",lbl:String.fromCharCode(65+r),grp:"r"+r,num:b*3+s+1,wx:x+1.6,wy:yb+.5+s*.85,udur:[40,70]})}});
   /* projector, and its beam across the room */
-  lfSpr(C,H("au_proj2")?"thx_proj2":H("au_proj1")?"thx_proj1":"th_proj",W-1.4,D*.5-.5,1.0,1.0,{h:30,ctr:1,H:H("au_proj2")?96:80,dy:-DZ});
+  /* bare: a small projector (the tripod camera read as filming); the upgrades bring the bigger ones */
+  lfSpr(C,H("au_proj2")?"thx_proj2":"thx_proj1",W-1.4,D*.5-.5,1.0,1.0,{h:30,ctr:1,H:H("au_proj2")?96:H("au_proj1")?80:58,dy:-DZ});
   var pj=lfP(W-1.2,D*.5,DZ+50),s1=lfP(0,y0-sw,z0+sh/2),s2=lfP(0,y0,z0+sh/2);C.front.push('<polygon class="mvBeam" points="'+pj.join(",")+' '+s1.join(",")+' '+s2.join(",")+'" fill="rgba(200,220,255,.09)" pointer-events="none"/>');
   C.s("door",W-.8,.9,1,"look",[1,1]);C.door={x:W-.8,y:.9};
   lfPrep(C,"counter",W-1.5,2);
