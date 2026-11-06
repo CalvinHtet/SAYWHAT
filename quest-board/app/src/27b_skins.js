@@ -96,7 +96,7 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
      sectional replaces the couch, and back-to-back gaming desks with their racing chairs stand on the right */
   PL("gm_tv80","80 inch Screen",UP_L,"gmx_tv80",4.4,.05,4.2,.2,1,"Wall to wall. You can see every pixel of the racing line.",{o:{dy:-58,h:1,nob:1,nosh:1,dk:30}}),
-  PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"Glossy, glass-fronted, glowing underneath. No legs.",{o:{dy:-6,H:46}}),
+  PL("gm_tvstand","Floating Media Console",UP_M,"gmx_tvstand",5.2,.12,2.8,.6,1,"One slim glossy shelf, glowing underneath. Sits low, so the screen stays clear.",{o:{dy:-6,H:36}}),
   PL("gm_sect","Cream Sectional",UP_L,"gmx_sect",3.9,3.4,4.0,1.9,0,"Three plush pieces and a chaise you can sleep on.",{sit:[[4.9,4.05,1,10,1],[6.0,4.05,1,10,1],[7.1,4.3,1,10,1]]}),
   /* Cal: "two desks but 4 monitors" made no sense. One long desk for two, one curved screen per seat, a chair at each */
   ["gm_rig","Gaming Desks",UP_L,"","",0,0,0,"One long desk for two, a curved screen each.",{retired:1}]/* Cal on v0.58: "Get rid of the double gaming rig"; retired, id kept */],
