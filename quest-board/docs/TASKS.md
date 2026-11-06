@@ -285,6 +285,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's Lock and Key, the Upstairs Bar (4599993, on 3348c7b, port 8770, `rigtest/qa/skybarshell.js`; `shots/lockkey_bare.png`,
+  `lockkey_full.png`): pass, one small note. The painted brick-and-walnut shell (`skw_t1`) draws bare and fully bought (17 pieces),
+  nothing outside the room; the painted stairway sits at the back wall's far right end with the Roof glow at its foot, clear;
+  Downstairs glows at the front-left edge, clear of the sofas; the walk Lock and Key -> Downstairs (bottom left) -> Restaurant ->
+  Upstairs -> Lock and Key -> Roof (top right) -> Rooftop Bar -> Bar (bottom left) -> back all lands right, as Cal's rule wants;
+  the back bar stays under the wall top; a save owning all 15 upgrades (retired ones too) keeps all 15. Note: the grand piano
+  stands tight against the bar's front end, its lid up against the last stool; a tile further from the bar would read better.
+  No page errors. Owner: ROOMS (optional).
 - QA, ROOMS's ef0ecc8 (on 3421dca, port 8770, `bobashell.js`, `dessertshell.js`, `speakretired.js`; `shots/boba_full4.png`,
   `dessert_full3.png`): pass. Both front-door mats are clear: the Shaker Station stands beside the pickup shelf and the Macaron
   Tower beside the Cake Stand; nothing outside either room; every door walks. The old Speakeasy opener (`de_secret`) is retired:
@@ -901,7 +909,7 @@ Doing:
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
   17 (Restaurant base walls, 1eb8040), 18 (Corner Diner walls, 156683a), 19 (Bistro and Noir walls, repainted in 04bb241), 22 (Noir fine-dining furniture and the calmer city, d1d7c73, 0b23996), 23 (Boba shop shell, c223d89), 24 (Dessert Parlor shell, f0c6dbb), 25 (Lock and Key shell, 4599993), 20 (Garden lots and Game Room desk,
   5fa3fec, d30bb93), 21 (red corner booth and fire pit, f457680, eb85e90).
-- TAKEN by QA. WAITING ON QA: check 4599993 (rule 17, small check): Lock and Key (the Upstairs Bar, id `skybar`) shows the painted
+- DONE by QA (QA findings: pass, 1 note). WAITING ON QA: check 4599993 (rule 17, small check): Lock and Key (the Upstairs Bar, id `skybar`) shows the painted
   brick shell bare and fully bought; the Downstairs door (front-left edge) and the Roof door (the painted stairway, back wall
   far right) both walk and nothing stands on them; nothing outside the room; the back bar stays under the wall top; an old
   save that owns the Upstairs Bar keeps every piece. ROOMS's headless pass: no page errors, both arrows, shell drawn.
@@ -1055,7 +1063,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: Lock and Key's Upstairs Bar (4599993), test copy only (`skybarshell.js`). Next: whatever is WAITING ON QA. (on c35a0d4)
+- Now: waiting for work. Next: whatever is WAITING ON QA. (on 3348c7b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
