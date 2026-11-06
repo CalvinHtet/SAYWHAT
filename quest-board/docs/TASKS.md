@@ -218,7 +218,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   posts and visit notes one doc per player (ab6a66e), and `app/dbcaps.json` with the inbox rule (742a39e), which LEAD
   declares at publish. The usual set please: savecheck, screens, a new save through the early story, doors, voice.js.
   Also look at load time: `art_rig.js` is now 14.1 MB (all the yawn layers), 455 files in all.
-- TAKEN by QA. WAITING ON QA: check 4b72f95, the loading bar (for v0.53; v0.52 stays db67326). `app/loader.html`, written into the page by
+- DONE by QA (QA findings: pass, one small fix). WAITING ON QA: check 4b72f95, the loading bar (for v0.53; v0.52 stays db67326). `app/loader.html`, written into the page by
   `build.py` in place of the script tags: it fetches the same 11 files with a progress bar ("12 of 38 MB"), runs them in the
   same order, then removes itself. If fetch is missing or fails it adds plain script tags; if the host blocks scripts added
   as text (no `window.QBART` after art_rig.js) it loads every file as a tag. LEAD's `shots/loadbar_lead.js` (port 8766):
@@ -349,6 +349,21 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the loading bar (LEAD's 4b72f95, on 5728d83): pass, one small fix. Works: on a 9 Mbps, 85 ms phone with a 4x slower CPU the
+  bar shows at 0.4 s and the game starts at 36.0 s (v0.52: a blank page until 35.9 s); all 11 files, same hashes as v0.52; no
+  script reads document.currentScript; savecheck, screens (360, 390), old saves, a fresh player, doors 36 of 36, the team in
+  their rooms, town rules 32 of 32: all pass, no page errors. Fallback (new `loadfallback.js`, every fetch aborted): plain tags,
+  the game starts, the bar goes within a second. Fix: the 11 inline scripts keep their text in the page after they run (39
+  million characters), so the whole tab holds up to about 40 MB more (299 to 329 MB against v0.52's 290 to 293 MB, new
+  `tabmemory.js`). One line fixes it, tried in a scratch copy: `try{document.body.appendChild(s);s.textContent=""}catch(e){}`
+  leaves 0 characters, the tab at 271 to 292 MB, and a fresh player still starts. Notes: (1) peak JS memory while loading is
+  84 MB against 40 MB, since every file is held as text until the ones before it have run; fine on a Mac, worth knowing for a
+  phone. (2) A second visit: reopening the game in a new tab, v0.52 and the loader both download `art_rig.js` and `blobs.js`
+  (14.8 MB each) again, because this browser's cache does not keep files that big, so "(faster next time)" holds for about
+  10 of the 40 MB. Only a reload of the same tab differs (v0.52 2.1 s from the tab's memory, the loader 27.7 s at 9 Mbps);
+  `cache:"force-cache"` does not change it. If the wait matters: keep the two big files in Cache Storage from the loader, or
+  split them under 5 MB. Real phones' caches differ: Cal's phone log will tell. `loadtime.js` now also reports the bar time,
+  peak and after-GC memory, inline text left, and a second visit (SECOND=1, NEWTAB=1). Owner: LEAD.
 - QA, v0.52's pre-release check (rule 18 step 2, db67326, APPV 52; `shots/v52/`): pass, ready to publish. savecheck passes;
   screens at 360 and 390 px fit; older saves keep their areas (level 30: all 8; level 3: the Hall waits); a brand-new player
   sees "NEW v0.52" and the character screen, desktop and phone; doors 36 of 36 on Cal's rule; voice.js 0 of 1,354; Shop 44
@@ -1474,8 +1489,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: LEAD's loading bar (4b72f95, for v0.53), a clean copy on 8769. Next: v0.52's published copy and the 15-player town
-  test once LEAD publishes. (on 5728d83)
+- Now: nothing waiting; the loading bar passed with one small fix for LEAD. Next: v0.52's published copy and the 15-player
+  town test once LEAD publishes. (on 95ccde5)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
