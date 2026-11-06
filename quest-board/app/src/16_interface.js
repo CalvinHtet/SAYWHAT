@@ -23,7 +23,7 @@ SLOTS.splice(SLOTS.map(function(x){return x[0]}).indexOf("buff"),0,["hud","Statu
  ["bu_coin","burst","Coin Shower",4500,32,"Finished quests spray spinning gold coins."],
  ["bg_skyline","bg","Your Skyline",6000,34,"The LA skyline behind every screen, matching the real time of day."],
  ["sc_storm","scene","Storm Break",5000,36,"Reaching a new level brings lightning down across the whole screen."],
- ["pet_drake","pet","Pocket Drake",9000,40,"Starts as an egg, hatches at level 45, grows up at level 60. Tells you the XP to your next level."],
+ ["pet_drake","pet","Pocket Drake",9000,40,"An egg that hatches at level 45 and grows up at 60. Shows the XP you still need."],
  ["tt_legend","title","Living Legend",6000,50,"A shimmering gold title that counts every quest you have ever finished."]
 ].forEach(function(x){if(!x[6])x[6]={};SHOP.push(x)});
 
