@@ -13,9 +13,8 @@ Live on the phone: `APPV` 47 (friends' page); Cal's pinned test copy: v48 (c6a11
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: Cal tested v0.48 ("Phone looks pretty good"; next: the Restaurant, with ROOMS). My finding fixed in 06cd203 (arrows after
-  buying an expansion), QA passed it. Next: my part of the Restaurant when ROOMS asks; v0.49 when QA clears the batch. Nobody plays
-  until there is a working version. (on 6a7f660)
+- Now: Cal's audit of text and story is done (ca1068d); to QA. Next: v0.49 when QA clears it and ROOMS's Restaurant fixes
+  (QA: not ready yet). Nobody plays until there is a working version. (on ca1068d)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -155,6 +154,10 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   stands partly in front of the door.
 
 Art and room code requests (LEAD asks, ROOMS does):
+- Art slots still empty (LEAD, ca1068d, Cal: "plug and play"): see `docs/ART_SLOTS.md` (rerun `tools/art_slots.py`). Missing
+  12: the five portrait brand banners (already asked, 720 x 1080), six relic icons `ui_relic_<streak|team|build|exped|quests|
+  collect>.webp` (128 x 128, one per relic, painted game style: a streak flame, a handshake, a hammer, a ledger, a tally,
+  a curator's lens), and Sable's portrait `ui_story_sable.webp` (300 x 400). Each shows a stand-in until it exists.
 - PART DONE by ROOMS in 4fc1542, waiting on Cal's look (approval 13): the five join banners `ui_team_sable`, `_mara`, `_rafe`,
   `_nova`, `_theo` (720 x 400) are in `art/app`; class banners (1) DONE in 6b7b9c8 (approval 14, `ui_class_<id>_m/_f`); the
   team in their rooms (3) is still to do. Team, class art and team looks (Cal, 2026-11-05; code in d523cf1, `29c_team.js`). Show Cal each set side by side:
