@@ -59,6 +59,9 @@ function dgRoll(mid){var L=DGLOOT[mid];if(!L)return null;var chance=L.gift+dgBuf
   return {kind:"coins",n:Math.round(q.c*(.6+Math.random()*.6)/10)*10}}
 function dgIcon(set,id,big){var u=window.QBART&&QBART["ui_tr_"+TSETS[set].art+"_"+id+".webp"];
   return u?'<img class="dg-ic'+(big?' big':'')+'" src="'+u+'" alt="">':'<span class="dg-ic dg-ic0'+(big?' big':'')+'" aria-hidden="true">'+(set==="goblin"?"&#9813;":"&#9670;")+'</span>'}
+/* plug and play: ui_tr_<set>_set.webp is the set's emblem, ui_relic_<id>.webp a relic's icon; a drawn stand-in until they exist */
+function dgSetIcon(set){var u=window.QBART&&QBART["ui_tr_"+TSETS[set].art+"_set.webp"];return u?'<img class="dg-ic dg-set-ic" src="'+u+'" alt="">':''}
+function dgRelicIcon(id){var u=window.QBART&&QBART["ui_relic_"+id+".webp"];return u?'<img class="dg-ic" src="'+u+'" alt="">':'<span class="dg-ic dg-ic0">&#10022;</span>'}
 function dgGiftArt(){var u=window.QBART&&QBART["ui_gift.webp"];return u?'<img class="dg-gift" src="'+u+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>'}
 var DGPEND=null;
 function dgShow(hero,mission,g){DGPEND={hero:hero,g:g};
@@ -67,7 +70,7 @@ function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=P.g,h;
   if(g.kind==="piece"){var T=TSETS[g.set],p=T.pieces.filter(function(x){return x.id===g.id})[0],first=!dgPieces();
     dgState()[g.set]=dgState()[g.set]||{};dgState()[g.set][g.id]=Date.now();
     h='<span class="label">'+esc(T.name)+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
-      +(dgDone(g.set)?'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
+      +(dgDone(g.set)?dgSetIcon(g.set)+'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
       +(first?'<p class="note">The first trophy is home. A Trophy Room can now be built above the Hero\'s Lair.</p>':'')}
   else if(g.kind==="coins"){S.coins+=g.n;S.earnedC+=g.n;h='<h3>'+g.n.toLocaleString()+' coins</h3><p class="note">From a strongbox nobody had opened in years.</p>'}
   else{S.xp+=g.n;h='<h3>+'+g.n+' XP</h3><p class="note">Nothing else came back this time.</p>'}
@@ -81,7 +84,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 
 /* ---------- relics: tiered milestones, hidden until earned ---------- */
 function dgFullRooms(){return (S.base?S.base.slots:[]).filter(function(r){if(!r||!ADDONS[r.t])return false;var L=ADDONS[r.t].filter(function(a){return !(a[3]&&(a[3].retired||a[3].opens))});return L.length&&L.every(function(a){return r.a&&r.a[a[0]]})}).length}
-var RELICS=[
+var DGRELICS=[
   {id:"streak",name:"Unbroken",tiers:[7,14,30],d:function(n){return "Kept a streak going for "+n+" days."},v:function(){return S.best||0}},
   {id:"team",name:"Good Company",tiers:[1,3,5],d:function(n){return n===1?"Your first teammate.":n+" people on your team."},v:function(){return typeof teamList==="function"?teamList().length:0}},
   {id:"build",name:"Finishing Touch",tiers:[1,3,6],d:function(n){return n===1?"A room upgraded all the way.":n+" rooms upgraded all the way."},v:dgFullRooms},
@@ -90,7 +93,7 @@ var RELICS=[
   {id:"collect",name:"Curator",tiers:[1,5,10],d:function(n){return n===1?"Your first trophy.":n+" trophy pieces."},v:dgPieces}
 ];
 function dgRelicCheck(){if(!loaded||!S.created)return;dgState();var got=[];
-  RELICS.forEach(function(R){var v=0;try{v=R.v()}catch(e){}R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(v>=n&&!S.relics[k]){S.relics[k]=Date.now();var c=150*(i+1);S.coins+=c;S.earnedC+=c;got.push(R.name+" "+["I","II","III"][i]+": +"+c+" coins")}})});
+  DGRELICS.forEach(function(R){var v=0;try{v=R.v()}catch(e){}R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(v>=n&&!S.relics[k]){S.relics[k]=Date.now();var c=150*(i+1);S.coins+=c;S.earnedC+=c;got.push(R.name+" "+["I","II","III"][i]+": +"+c+" coins")}})});
   if(got.length){persist();got.forEach(function(t,k){setTimeout(function(){pop("Relic found. "+t)},k*2200)})}}
 setInterval(dgRelicCheck,20000);setTimeout(dgRelicCheck,6000);
 
@@ -99,13 +102,13 @@ trophyHtml=function(){dgState();var h='',tabs='<nav class="dg-tabs" aria-label="
   if(DGTAB==="trophies"&&dgPieces()){
     if(!dgRoomBuilt())return tabs+'<section class="card panel"><h3 class="label">Trophies</h3><p class="note">You have '+dgPieces()+' piece'+(dgPieces()>1?'s':'')+' in storage. Build the Trophy Room above the Hero\'s Lair to put them on display.</p></section>';
     Object.keys(TSETS).forEach(function(s){var T=TSETS[s],n=T.pieces.filter(function(p){return dgHas(s,p.id)}).length;if(!n)return;
-      h+='<section class="card panel dg-set"><h3 class="label">'+esc(T.name)+' &middot; '+n+'/'+T.pieces.length+'</h3><p class="note">'+esc(T.lore)+'</p><div class="dg-grid">'
+      h+='<section class="card panel dg-set">'+(dgSetIcon(s)?'<div class="dg-sethead">'+dgSetIcon(s)+'</div>':'')+'<h3 class="label">'+esc(T.name)+' &middot; '+n+'/'+T.pieces.length+'</h3><p class="note">'+esc(T.lore)+'</p><div class="dg-grid">'
         +T.pieces.map(function(p){var g=dgHas(s,p.id);return '<div class="dg-pc'+(g?'':' lock')+'">'+(g?dgIcon(s,p.id):'<span class="dg-ic dg-ic0">?</span>')+'<b>'+(g?esc(p.name):'Not found yet')+'</b><small>'+(g?esc(p.buff.text):'')+'</small></div>'}).join("")
         +'</div><p class="dg-buff'+(dgDone(s)?'':' lock')+'">Full set: '+esc(T.bonus.text)+'</p></section>'});
     return tabs+h}
-  var earned=[];RELICS.forEach(function(R){R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(S.relics[k])earned.push({name:R.name+" "+["I","II","III"][i],d:R.d(n),t:S.relics[k]})})});
-  var total=RELICS.reduce(function(a,R){return a+R.tiers.length},0),bad=BADGES.filter(function(b){return S.badges&&S.badges[b[0]]});
-  h+='<section class="card panel"><h3 class="label">Relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc"><span class="dg-ic dg-ic0">&#10022;</span><b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
+  var earned=[];DGRELICS.forEach(function(R){R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(S.relics[k])earned.push({id:R.id,name:R.name+" "+["I","II","III"][i],d:R.d(n),t:S.relics[k]})})});
+  var total=DGRELICS.reduce(function(a,R){return a+R.tiers.length},0),bad=BADGES.filter(function(b){return S.badges&&S.badges[b[0]]});
+  h+='<section class="card panel"><h3 class="label">Relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc">'+dgRelicIcon(r.id)+'<b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
     +(total>earned.length?'<p class="note">'+(total-earned.length)+' more to discover.</p>':'')+'</section>';
   if(bad.length)h+='<section class="card panel"><h3 class="label">Milestones</h3><div class="titles">'+bad.map(function(b){return '<span class="chip" title="'+esc(b[2])+'">'+esc(b[1])+'</span>'}).join("")+'</div></section>';
   return tabs+h};

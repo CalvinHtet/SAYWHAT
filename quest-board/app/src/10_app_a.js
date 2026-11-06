@@ -103,6 +103,9 @@ UNLOCKS.forEach(function(u){if(u.lv>=2&&u.lv<22)u.lv=u.lv*2+1});
 var RELICS=["Bass Crystal","Neon Shard","Vinyl Fragment","Ember Core","Moon Coin","Echo Prism","Rift Key","Glitch Gem","Star Token","Pulse Orb","Drop Relic","Halo Charm"];
 var FXD={grid:"A faint tech grid fades in behind everything.",burst:"Tap a quest and sparks fly.",pulse:"Your cards breathe with a neon edge.",brackets:"HUD corner brackets lock onto every panel.",sweep:"A scan line sweeps across your status panel.",orbs:"Glowing orbs drift across the background.",ringglow:"Your level ring gets a bright afterglow.",embers:"Embers float up the screen.",chipglow:"XP chips glow gold.",aurora:"An aurora ribbon lights the sky.",holo:"Your Now card gets a holographic shimmer.",shimmer:"Stat bars shimmer.",halo:"A halo orbits your level ring.",glowtext:"Headlines glow.",flares:"Panel corners flare with light.",scan:"Fine scanlines sweep the whole screen.",vignette:"The edges of your screen fall into shadow.",edgeglow:"Your screen edge glows in your accent color.",gilded:"Headlines turn to moving gold."};
 function unlocksFor(L){
+  /* The old hideout's crew and vault relics went with the lounge (v34); the team, the story and the Relics tab replaced them,
+     so a level-up no longer announces them. */
+  return null;
   if(L<2)return null;
   var u=UNLOCKS.filter(function(x){return x.lv===L})[0];
   if(u){if(u.room&&!u.crew)return {lv:L,relic:RELICS[L%12],line:"Something old and strange turned up in the vault."};if(u.room)return {lv:L,crew:u.crew,line:u.line};return u}
@@ -593,7 +596,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",5],["wheel","Wheel",6],["away","Dungeons",1]];
-var AREALINE={shop:"A real shop. Every quest pays coins now. Spend them on themes, frames, pets and more.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"Your Class Hall. Your story, perks and the full advancement ladder live here.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your crew on real-time expeditions. They come back with coins."};
+var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your team out from the Hero\'s Lair. Missions bring home coins, gifts and trophies."};
 var view="board";
 function coinsFor(xp){return Math.max(10,Math.round(xp*2.5*(1+.01*(effLvl()-1))))}
 var SHOP=[

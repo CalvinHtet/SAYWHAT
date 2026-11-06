@@ -80,9 +80,14 @@ var BEATS=[
   {id:"priya2",pic:"mall",who:"Priya Okafor",role:"Investor",at:"the strip mall",gate:function(){return styHas("theater")},lines:["A movie theater. In our strip mall.","Do you know what this does to foot traffic? Weekends are going to be full."]},
   {id:"nova2",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",gate:function(){return teamHas("nova")&&styUps("mall")>=6},lines:["The haul video just passed a million views.","Brace yourself for Saturday."]},
   {id:"nova3",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the arcade",gate:function(){return teamHas("nova")&&styHas("arcade")},lines:["I'm streaming from the arcade tonight.","Twelve thousand people watching me lose at the claw machine."]},
-  {id:"theo2",pic:"theo",who:"Theo",role:"Theater crew",at:"the auditorium",gate:function(){return teamHas("theo")&&styUps("auditorium")>=3},lines:["First sold-out screening.","I watched the whole thing from the projection booth."]}
+  {id:"theo2",pic:"theo",who:"Theo",role:"Theater crew",at:"the auditorium",gate:function(){return teamHas("theo")&&styUps("auditorium")>=3},lines:["First sold-out screening.","I watched the whole thing from the projection booth."]},
+  /* the dungeon sets (29d_dungeon.js): someone remarks when each is finished */
+  {id:"sable3",pic:"sable",who:"Sable",role:"Scout",at:"the Trophy Room",gate:function(){return teamHas("sable")&&typeof dgDone==="function"&&dgDone("goblin")},lines:["That's the whole set. Helm to boots.","Whatever was wearing that crown down there isn't wearing it anymore."]},
+  {id:"rafe4",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&typeof dgDone==="function"&&dgDone("amulet")},lines:["Five shards, one amulet. I saw a drawing of it once, in a museum in Lisbon.","The card under it said lost at sea, 1891."]}
 ];
-function styBeatPic(b){var u=window.QBART&&(QBART["ui_story_"+b.pic+".webp"]||QBART["ui_team_"+b.pic+".webp"]);
+/* a return visit uses the character's own portrait, else their first scene's (Mara: chef, Theo: auditorium), else their team banner */
+var STYPICAKA={mara:"chef",theo:"auditorium"};
+function styBeatPic(b){var u=window.QBART&&(QBART["ui_story_"+b.pic+".webp"]||QBART["ui_story_"+(STYPICAKA[b.pic]||"-")+".webp"]||QBART["ui_team_"+b.pic+".webp"]);
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(b.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
 function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o.lastScene||0)<25*60000)return false;
   for(var i=0;i<BEATS.length;i++){var b=BEATS[i],ok=false;if(o.beats[b.id])continue;try{ok=b.gate()}catch(e){}if(!ok)continue;
