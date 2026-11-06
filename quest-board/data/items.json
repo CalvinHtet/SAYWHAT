@@ -668,7 +668,8 @@
   "slot": "neck"
  },
  "sm_pendant": {
-  "slot": "neck"
+  "slot": "neck",
+  "frontOnly": true
  },
  "sm_hoodie": {
   "slot": "top"
@@ -700,5 +701,54 @@
  "sm_boots": {
   "slot": "shoes",
   "over": true
+ },
+ "smk_band": {
+  "slot": "hat",
+  "noClip": true
+ },
+ "smk_cowl": {
+  "slot": "mask",
+  "frontOnly": true
+ },
+ "smk_wrap": {
+  "slot": "hat"
+ },
+ "smk_tape": {
+  "slot": "neck"
+ },
+ "smk_pouch": {
+  "slot": "neck"
+ },
+ "smk_jacket": {
+  "slot": "top"
+ },
+ "smk_mesh": {
+  "slot": "top"
+ },
+ "smk_vest": {
+  "slot": "top"
+ },
+ "smk_cloak": {
+  "slot": "top"
+ },
+ "smk_cargo": {
+  "slot": "pants"
+ },
+ "smk_hakama": {
+  "slot": "pants",
+  "wide": true
+ },
+ "smk_shorts": {
+  "slot": "pants"
+ },
+ "smk_sandal": {
+  "slot": "shoes"
+ },
+ "smk_tabi": {
+  "slot": "shoes",
+  "over": true
+ },
+ "smk_runner": {
+  "slot": "shoes"
  }
 }
