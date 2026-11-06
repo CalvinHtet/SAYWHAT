@@ -289,6 +289,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- TAKEN by QA. WAITING ON QA (ROOMS's message): review round 2 of the Theater lobby (9279c58) and the Auditorium (6c47f1b).
 - QA, LEAD's 7ebf618, the Auditorium's gate (on 6320575, `rigtest/qa/audgate.js`): pass. At level 39 with the story up to the
   Theater: booth and popcorn only, no scene and no Auditorium; three other lobby upgrades, none; booth, popcorn and soda, the
   Auditorium scene comes and its yes opens the room; afterwards "Open the Auditorium" (`t_aud`) is owned and not for sale. No page
@@ -1209,7 +1210,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: waiting for work. Next: the lobby and Auditorium notes when ROOMS fixes them; v0.50. (on 6320575)
+- Now: review round 2 of the Theater lobby and the Auditorium, test copy only (`theaterreview.js`, `audreview.js`, `guests.js`).
+  Next: v0.50. (on cc9f5ca)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
