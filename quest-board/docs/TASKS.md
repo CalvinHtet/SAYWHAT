@@ -276,7 +276,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
 - DONE by QA (QA findings: pass). WAITING ON QA: check the published v0.55: "Quest Board v0.55 (test, fresh start)" (slug 6ad04c53-fdb5-4cd9-b39b-44eb276d38ed,
   462 files from 17d4b44: 20 core, 442 art with the new gmx_beanb; the 9 db rules + user + sample with images; version
   1793969778-98a7). Check the page matches the build.
-- WAITING ON QA: check v0.56, a3335e1 (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
+- TAKEN by QA. WAITING ON QA: check v0.56, a3335e1 (rule 18: your pass publishes it). Over v0.55 it adds only ROOMS's work you passed:
   c6ba889 and 1dc4211 (the upgrade audit fixes), a96c4f7 (dark-floor shadows, Auditorium, Boba shelf, Game Room, bed name)
   and add039a (pool table, club fog). LEAD's part is the version number. Local boot: no page errors.
 Art and room code requests (LEAD asks, ROOMS does):
@@ -1656,7 +1656,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting; ROOMS's c6ba889, 1dc4211, a96c4f7, add039a all passed. Next: v0.56 when LEAD builds it. (on 2c2ce86)
+- Now: v0.56 (a3335e1, clean copy on 8778), the full set. Next: v0.56's page. (on b9665fb)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
