@@ -259,7 +259,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   `<m|f>_<id>_yawn.webp` (and `<m|f>_base_yawn.webp`) in `art/app/` at 720 x 828; the build packs them. Nothing changes
   for any top without one. `rigtest/template.html?pose=stretch&check=<id>` is the alignment self-check. Show Cal the pilot
   side by side before it goes in; QA checks every outfit combination after.
-- Writing pass (Cal, 2026-11-05: "professional and not corny or too obvious that it is AI"). Read `docs/VOICE.md`, then
+- DONE by ROOMS in e74cf92 (QA's list plus the same tells in the Arcade, Rhythm, VR, Bowling, Karaoke and Nightclub lines, and
+  no "!" in room help titles; `10_app_a.js:1515` Squat Rack stays LEAD's). Writing pass (Cal, 2026-11-05: "professional and not corny or too obvious that it is AI"). Read `docs/VOICE.md`, then
   rewrite the room and upgrade lines in your files (`27_rooms.js`, `27b_skins.js`, `data/loft.json`, `data/items.json`,
   room `help` text) to it. Worst offenders to look for: quips at the end ("It probably works.", "Do not touch."), "Obviously",
   exclamation marks, "sleek" more than once a screen. LEAD did `10_app_a.js`'s upgrade lines in cf7b36a as examples.
@@ -418,6 +419,9 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   only the arrow; (2) the front-right edge has no rail at all, an open drop, while the front-left has glass. The sky still shows
   dusk at noon and 10 pm (ROOMS: next). No page errors. Owner: ROOMS.
 - DONE by QA (QA findings and docs/QA.md: Rooftop 6 notes, Lock and Key 3). WAITING ON QA (Cal, 2026-11-05: "Please send any rooms to QA for further notes and analysis before coming back to me for
+- WAITING ON QA: the writing pass at e74cf92 (re-run voice.js; every room and upgrade line in ROOMS's files should now be one
+  concrete detail with no tag line, and no "!" in room help titles; the bowling STRIKE! sign stays), and the Nightclub DJ
+  (the spot now in front of the decks, longer shifts).
 - DONE by QA (QA findings, 5ed2375: floor and bartender pass, the DJ wanders). WAITING ON QA: the Nightclub's two notes at 1eb0bbc (one dance floor on one grid; a DJ at the decks and a bartender behind
   the bar, staff on cb_dj and cb_bar), and the team in their rooms at abb6513: with a member joined (S.story.team), they
   stand in their home room (Mara Restaurant, Rafe Lock and Key, Nova Mall, Theo Theater, Sable Lair) in their own look
@@ -1111,12 +1115,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now: WAITING ON QA: the Nightclub's two notes (1eb0bbc: one dance floor grid, a DJ and a bartender) and the team in their
-  rooms (abb6513, LEAD's request 3). WAITING ON CAL: ten rooms through QA's design reviews (Lock and Key, the Rooftop,
-  the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm Room, the VR Arena, Bowling, Karaoke). The storyboard
-  rooms are all reworked. Next: signature cosmetics for the team (request 3's "better still"), then Cal's notes. LEAD: ids
-  unchanged. Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`,
-  `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on 1eb0bbc)
+- Now: WAITING ON QA: the writing pass and the Nightclub DJ (e74cf92). WAITING ON CAL: eleven rooms through QA's design
+  reviews (Lock and Key, the Rooftop, the Mall, the Theater lobby, the Auditorium, the Arcade, the Rhythm Room, the VR
+  Arena, Bowling, Karaoke, the Nightclub); the team in their rooms passed QA (abb6513). Held for Cal: signature team
+  cosmetics wait on his look at the team banners and portraits (approvals 12, 13), so they match. LEAD: ids unchanged.
+  Retired ids so far: `sb_chester`, `sb_trolley`, `rf_lng2`, `rf_towel`, `rf_ice`, `rf_umb`, `ml_gum`, `ml_ride`,
+  `ml_photo`, `ml_flower`, `ml_dir`, `vr_pod2`; new `sb_band`; `ml_kar` needs `ml_bow`. Chrome claimed. (on e74cf92)
   The Game Room guests wait on Cal (his friends' looks). The Loft is ready for QA's full sweep when Cal says go. WAITING ON
   CAL, all committed and NOT ready to publish until he says yes: approvals 6 (bd895a7), 8 (8caf214, LEAD wired it),
   9 (a4e2a4a), 10 (9c30788), 11 (45930bc), 12 (625d9e3), 13 (4fc1542), 14 (6b7b9c8), 15 (dungeon icons, d48ed81),
