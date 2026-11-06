@@ -462,6 +462,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- WAITING ON LEAD (since 13:02): publish and pin v0.62. QA passed the 756def5 build in 8a8cda8 (494 of 494 files match your served copy; the full set and the recheck pass, see the next lines). QA's messages to LEAD are paused by the app, so this board line is the hand-off. Owner: LEAD.
 - QA, v0.62 rebuilt (756def5, APPV 62): pass, publish. My clean build matches LEAD's served copy file for file (494, 0 differ;
   21 files, 474 art). The Diner's three small menus now sit clear of the ORDERS board and the shelf (`shots/qa/restaurant/
   diner_menus_756def5.png`); the right one's top just meets the wall's top trim without crossing it. Rerun on the exact build:
@@ -1974,7 +1975,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.62 (756def5) passes: LEAD publishes. Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 8a8cda8)
+- Now: WAITING ON LEAD (since 13:02): publish and pin v0.62 (QA passed 756def5). Kode PinK 14 of 15 (the bag's body outline, ROOMS); DROPS.rerun two errors for launch (LEAD). Next: the published v0.62's file check. (on 4c330e6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
