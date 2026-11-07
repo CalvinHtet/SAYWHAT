@@ -2111,7 +2111,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1308059): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- Now (on ede09d8): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- WAITING ON QA: check 633ffe2 and ede09d8 for v0.68. (1) The Upstairs Bar (r_bar) needs White Linen Service (r_t3, Cal's "fine dining")
+  and is hidden until then; a save that owns the bar keeps it. (2) The Garden lot is for sale from level 5 (padlock at 4), matching
+  The Loft's welcome card. ROOMS checked headless, 0 page errors.
 - TAKEN by QA. WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
   Bedroom keeps its lamp button); the street and building views stop at 1.6x (was 2.6x). (2) The stage-1 and stage-2 Restaurant
   double shelf runs along the back wall above the wainscot (it was mirrored). (3) The Grand Menu Board (CARTE DU JOUR / OUR MENU) is
