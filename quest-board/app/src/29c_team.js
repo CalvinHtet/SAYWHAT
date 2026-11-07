@@ -9,7 +9,7 @@ var TEAM={
   mara:{name:"Mara",role:"Chef",how:"Bought your vegetables all week, then partnered on the restaurant.",
     stats:{Cook:9,Charm:6,Hustle:7,Grit:5,Luck:4},buff:{text:"Restaurant, Boba and Dessert earn 15% more",rooms:["restaurant","boba","dessert"],pct:15},
     look:{body:"f",hairStyle:"h2",hairColor:"brown",equipped:{top:{art:"npc_chef"},hat:{art:"npc_hat"}}},ac:"#ffb066"},
-  rafe:{name:"Rafe Calloway",role:"Travelling adventurer",how:"Came in for an Old Fashioned between expeditions. Now the bar fills up whenever he tells a story.",
+  rafe:{name:"Rafe Calloway",role:"Traveling adventurer",how:"Came in for an Old Fashioned between expeditions. Now the bar fills up whenever he tells a story.",
     stats:{Cook:3,Charm:10,Hustle:4,Grit:8,Luck:8},buff:{text:"Lock and Key and the Rooftop earn 15% more: people come to hear his stories",rooms:["skybar","rooftop"],pct:15},
     look:{body:"m",hairStyle:"h1",hairColor:"brown",equipped:{top:{art:"al_anorak"},hat:{art:"y_bucket"}}},ac:"#d4a8ff"},
   nova:{name:"Nova Lin",role:"Fashion vlogger",how:"Filmed a haul outside your clothing store. Her followers have been shopping here ever since.",
