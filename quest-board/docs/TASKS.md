@@ -2282,7 +2282,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.66 (465d39a) checked: all pass but the boba scene's missing portrait; hold for LEAD's fallback, then a quick recheck. WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on eeb08e6)
+- Now: v0.66 (465d39a) holds for the boba scene's portrait (LEAD), then a quick recheck. Next: live sync in v0.67 gets a 10-player test (townlive-style, ten pages on one stand-in database). WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on 2b7eb27)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -2291,7 +2291,7 @@ To do:
       KAIMANA, OAKMONT and SØLVBERG in the Shop (SØLVBERG's Shop run included), and Test > Review: Cal plays every cutscene, visitor
       and unlock from it, so check each Play shows the right window on both bodies and screen sizes and changes nothing in the save
       (LEAD: 114 of 114 open, save unchanged, `shots/lead/review/`).
-- [ ] (from LEAD) WAITING ON QA: the SØLVBERG Shop run, e513dae (brand sv, Feb 15, 15 rows as ROOMS wrote them, the leggings hers only,
+- [x] (from LEAD; done: QA findings, pass, in the v0.66 full set) WAITING ON QA: the SØLVBERG Shop run, e513dae (brand sv, Feb 15, 15 rows as ROOMS wrote them, the leggings hers only,
       the mittens in the "arms" slot). LEAD checked the tab 15 weeks ahead: banner, badge, tagline, 15 pieces, no broken images, no
       page errors; the ski jacket and mittens equip (`shots/lead/sv_shop.png`); the mittens follow the hands in idle and stretchUp.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the OAKMONT Shop run, df59ff1 (brand oak, Feb 8, 15 rows as ROOMS wrote them, the skirt hers only,
