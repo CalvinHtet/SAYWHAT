@@ -17,8 +17,8 @@ Doing:
   overalls over the top faebcd8 and 91ef6e8); clean build, QA PASSED the full set (df51588). v0.63 (f5234d3,
   QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
   session brings them back), so Cal must restart. v0.64 goes out then: its passed build is staged in `SAYWHAT/r/` (22 files and 477 art), and `docs/RELEASING.md` (e3a69ed) has the publish step by step for a new LEAD session.
-  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498 and its Shop run passes; it rides in v0.65 with the arms slot (QA: no change to anything existing, f100e51). Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
-  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on f100e51)
+  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498 and its Shop run passes; it rides in v0.65 with the arms slot (QA: no change to anything existing, f100e51). BARD & BLADE in the Shop on Jan 18 (a6e9d16; ROOMS's rows and colours, the skirt hers only, bracers in the arms slot); WAITING ON QA, its wear test and Shop run. Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
+  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on a6e9d16)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2163,6 +2163,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the BARD & BLADE Shop run, a6e9d16 (brand bb, Jan 18, 15 rows as ROOMS wrote them, the skirt hers
+      only, the bracers the first piece in the rig's "arms" slot). LEAD checked the tab 11 weeks ahead: banner with art, tagline,
+      15 pieces, no broken images, no page errors; wearing the bracers with the doublet puts them in equipped.arms
+      (`shots/lead/bb_shop.png`). Please check the bracers in every pose with the wear test.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the SAVE POINT Shop run, 29f496c (brand sp, Jan 11, 15 rows as ROOMS wrote them, none for one body
       only). LEAD checked the tab at 10 weeks ahead: banner with art, tagline, 15 pieces, no broken images, no page errors
       (`shots/lead/sp_shop.png`). Rerun the slip-ons and headset rows after ROOMS's fixes.
