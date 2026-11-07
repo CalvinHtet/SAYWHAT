@@ -17,8 +17,8 @@ Doing:
   overalls over the top faebcd8 and 91ef6e8); clean build, loads with no page errors, WAITING ON QA for the full set. v0.63 (f5234d3,
   QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
   session brings them back), so Cal must restart. Whichever passed version is newest then goes out: v0.64 if it passes, else v0.63.
-  TAKEN: SAVE POINT's 15 Shop rows (ROOMS's message; art bad0b45; brand sp, Jan 11, "Respawn looking good", c #3b1e54 #6c389a #8a8a8a, ac #3daf9d teal), added once QA's wear test passes. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
-  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on e17b80b)
+  SAVE POINT in the Shop on Jan 11 (29f496c; ROOMS's 15 rows and colours); QA 13 of 15, the headset's back and the slip-ons are ROOMS's, so no build ships it until it passes. v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
+  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on 29f496c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2143,6 +2143,9 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the SAVE POINT Shop run, 29f496c (brand sp, Jan 11, 15 rows as ROOMS wrote them, none for one body
+      only). LEAD checked the tab at 10 weeks ahead: banner with art, tagline, 15 pieces, no broken images, no page errors
+      (`shots/lead/sp_shop.png`). Rerun the slip-ons and headset rows after ROOMS's fixes.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the full set on v0.64, 4a1dbe8 (APPV 64). New since v0.63 (f5234d3): SMOKE BOMB (Dec 28) and GACHA
       POP (Jan 4) in the Shop, the armpit rule (2be3eda, bc757e2), overalls over the top (faebcd8, 91ef6e8). LEAD built it clean in a
       worktree and it loads with no page errors (creator to Loft, v0.64 in the header). Publishing waits on the restart either way.
