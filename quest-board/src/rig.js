@@ -402,10 +402,13 @@
             // would leave a bite out of the edge.
             if (here.length > 1) {
               for (const [limb, bone] of here) {
-                const t = corners.map((v) => (this.limbOf[v.b0] === limb || related(v.b0, bone) ? v : follow(v, bone)));
+                // Arms overhead (rig.armpit), below the armpit line: each limb's copy moves with that limb alone, so it is never
+                // stretched between an arm and the trunk (that stretch tore sleeves into shreds at large sizes, QA).
+                const rigid = ap && cy * step > armpitY;
+                const t = corners.map((v) => (rigid ? follow(v, bone) : this.limbOf[v.b0] === limb || related(v.b0, bone) ? v : follow(v, bone)));
                 // Cut to its own pixels, this copy has little to smear, so it may stretch further.
                 t.loose = 2;
-                if (cy * step > armpitY && ap.cap) t.cap = ap.cap;
+                if (cy * step > armpitY && ap.cap && !rigid) t.cap = ap.cap;
                 const seam = seams[slot.group != null ? slot.group : groupOf[bone]];
                 if (!seam.has(limb)) seam.set(limb, []);
                 seam.get(limb).push(t);
