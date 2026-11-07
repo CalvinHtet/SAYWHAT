@@ -3286,7 +3286,8 @@ LFROOM.bedroom=function(C){
   if(AN){C.annex={lair:0,lr:H("bd_lair"),shoe:H("bd_cl_shoe"),isle:H("bd_cl_isle"),rack:H("bd_lr_rack"),desk:H("bd_lr_desk"),trophy:H("bd_lr_trophy"),arm:H("bd_lr_arm"),suit:H("bd_lr_suit"),holo:H("bd_lr_holo")};
     if(C.annex.lr)lfSLairItem(C);lfSClosetItem(C)}
   lfWander(C,[[3.2,3.6,-1],[5,5.2,1],[6.4,4,-1],[7.4,6.4,1],[4.6,8,-1],[2.4,6.6,1]]);
-  if(H("bd_rug"))lfSpr4(C,"bd4_rug",4.3,3.6,2.8,2.8,{h:1,nosh:1,dk:99,sc:1});
+  /* QA (every room against references): the round rug floated in the open floor; it now tucks under the foot of the bed */
+  if(H("bd_rug"))lfSpr4(C,"bd4_rug",2.3,2.6,2.8,2.8,{h:1,nosh:1,dk:99,sc:1});
   var bk=H("bd_bed2")?"bd4_bed2":H("bd_bed1")?"bd4_bed1":"bd4_bed0";
   var bo={h:14,occ:1.3,flip:1,fit:1,sc:H("bd_bed2")?1:H("bd_bed1")?.86:.88,dy:H("bd_bed2")?4:H("bd_bed1")?7:6};
   lfSpr4(C,bk,.1,1.0,3.3,2.7,Object.assign({id:"lfbed"+C.chu},bo));
