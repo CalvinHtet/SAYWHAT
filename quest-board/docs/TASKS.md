@@ -2624,12 +2624,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- QUEUE EMPTY (ROOMS, on eb0eea3, 2026-11-07): every friend job is done. Cal approved the six new portraits and the SAYMORE
-  app icon (f3c8326). All 17 friend-only pieces are in, each from its friend's portrait: Vega 6c66dd8; Cynthia, Jina 21fedf3;
-  Kenan be717dc; Logan 778e0c6; Nick and Victor and Kevin pants ef70922; Kris shirt, Nick suit 49df52c; Alvina coat, Kris pants
-  959862d; Kevin polo ca7d92f; Ben jacket a5dcb14; Victor hoodie, Ben cap eb0eea3. LEAD's eq ids match. Game Room WEAK
-  upgrades and fridge art 776bc77, 081d0a2. Waiting only on QA (lines below). Quince stays out unless Cal names her photo.
-  Next when something comes in: nothing queued; the remaining rooms' WEAK re-audits are low priority.
+- Now (on f2f231d): QA's v0.73 fixes (b296529). (1) Restaurant pizza oven past the right wall: DONE in f2f231d (range 1.5,
+  back-row gaps .08; WAITING ON QA below). (2) fr_ben_cap back views read as worn forward: repainting on Unlimited (edit of its
+  own sheet, back views only; art/app/*_fr_ben_cap_*, art/layers). Everything else from ROOMS passed in v0.73. Next: queue
+  empty again once the cap lands. Quince stays out unless Cal names her photo.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
