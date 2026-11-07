@@ -1954,11 +1954,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 821efe3): TAKEN QA's two SAVE POINT fixes (bad0b45 wear test): sp_headset repainted with only the arc over the top from
-  behind (no band across the back of the head), sp_flag repainted as grey lace-up sneakers with a pixel flag print (no checkerboard).
-  Generating on Unlimited; files art/raw, art/layers, art/app sp_headset and sp_flag; LEAD gets the slip-ons' new name. Also BARD &
-  BLADE (bb_*, brand id bb): 13 of 15 ingested locally, not committed; bracers and travel cloak back. The skirt gets "overTop" so its
-  tool belt shows. Next: badge, banner, one commit, QA. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
+- Now (on 200d498): BARD & BLADE (bb_*, brand id bb): all 15 ingested locally, not committed; the skirt has "overTop" (in 200d498)
+  so its tool belt shows. WAITING ON LEAD: a rig slot that follows the arms for bb_bracers (neck binds to the spine only, so the
+  bracers stay at the hips when the arms lift); asked by message (since 01:35). Next: the badge, banner, one commit, QA; the bracers'
+  shop row waits on that slot. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
+- WAITING ON QA: check 200d498, SAVE POINT's two fixes. sp_headset from behind shows only the arc and the cups; the band across the
+  back of his head is erased, and hers came out clean. sp_flag is now grey lace-up sneakers with a purple toe, teal laces and a red
+  pixel flag, with no checkerboard; a baked outline was stripped. ROOMS checked headless: idle, walk1, backwalk1 and sitBack, 16 of 16
+  with 0 failures. LEAD has the new shoe row.
 - DONE by QA (QA findings: 13 of 15, the headset's back and the checkerboard slip-ons). WAITING ON QA: wear test SAVE POINT, bad0b45 (brand id sp; 15 pieces, both bodies). ROOMS checked headless: idle, walk1 and
   backwalk1 load 30 of 30 with 0 failures and read right by eye. Look hardest at: the coin cap and the checkerboard slip-ons (a baked
   mannequin outline was stripped from both; look for leftover lines, and the cap's brim edge is a little soft); every teal detail
