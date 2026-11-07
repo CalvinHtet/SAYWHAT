@@ -464,6 +464,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's bc757e2 armpit (on 0852011; `shots/qa/armpit_before_after_bc757e2.png`, `armpit_pants_bc757e2.png`): pass as an
+  improvement, no regression. The pixel sweep (8 tops, 15 rows, 22 poses) against 17b8bd0: only stretchUp and stretch differ. The
+  trouser specks from 2be3eda are gone: light pixels on the trousers at 300 px stretchUp count the same as before the rig change on
+  both bodies with the jacket and o_tee (4/2/2/3 against 4/2/2/3; 2be3eda had 5/9/3/9). At 300 px the sleeves hold together better in
+  stretchUp; still open, as LEAD said: a ragged underside, skin patches near the armpit with long sleeves in stretch, and one dark
+  shard trailing past o_tee's left hand in stretchUp (also before). Owner: LEAD.
 - QA, LEAD's 2be3eda armpit fix (on 9cfec0e; `shots/qa/armpit_before_after_2be3eda.png`, `armpit_pants_specks_2be3eda.png`): better
   sleeves, one new error. Regression sweep: 8 tops (o_tee, smk_jacket, sm_hoodie, kp_varsity, nc_hoodie, smk_cloak, tm_rafe_jacket,
   y_baby), 15 body rows, all 22 poses, before (17b8bd0) and after compared pixel by pixel: only stretchUp and stretch changed, every
@@ -2073,7 +2079,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. The armpit fix (2be3eda) helps sleeves but speckles trousers with skin in stretchUp (LEAD). (on 9cfec0e)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. The armpit fix (bc757e2) passes as an improvement; ragged undersides remain (LEAD). (on 0852011)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
