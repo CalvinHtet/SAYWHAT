@@ -13,13 +13,15 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.72 (083fec9, APPV 72) PUBLISHED in place on Cal's Test link (3855000; QA PASS a3c2cb6: lag 60 fps at CPU x4, story
-  64/64, Review 119/119, all 30 rooms; players10's quiet minute passed 1 run in 3 under load 16-34, called timing as no save code
-  changed since v0.71; not on a real phone yet). r/ and the worktree removed. Next build (v0.73): ROOMS's facb194 (Dessert hutch and Flower Mirror, VR Arena dark neon), d328e88 (Sculptural Vases art),
-  8602ed7 (Chef's Neon), b3e3510 (Restaurant WEAK fixes): QA PASSED all of it (121dc00). Still to come for v0.73,
-  from ROOMS: the Drip Coffee and napkin box overlap, and thinner Restaurant tables (LEAD's decision on QA's note: seating
-  doesn't change income or the 11-guest cap, so 2-tops in the middle row or 7 to 5 tables; every seating upgrade still visible) and the Restaurant thinned by superseding (10f64be: Curved Corner Booth, Fire Pit, Sculptural Vases, Wine Wall; nothing
-  off sale, no ids changed; with QA). Fewer dining tables would touch seating: ROOMS brings that to LEAD first. Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+- Now: v0.73 BUILT from 6152eb5 (APPV 73 = v0.72 plus ROOMS's room work: Dessert and VR Arena facb194, Restaurant thinning 10f64be,
+  Sculptural Vases d328e88, Chef's Neon 8602ed7, WEAK fixes b3e3510, drip coffee 828990f, 2-top middle row 21b292a, Neon Sign and
+  Black Marble Counter c50714d + eadc75b, all QA-passed; Brass Sconces 6152eb5 not yet checked; and Cal's Test > Next event 0b20e11:
+  "a button that triggers the next event such as the investor coming ... test everything myself but quickly"). Clean build, 492
+  files, loads clean, Review 118/118 save unchanged, the whole story plays, Next event 35 taps to the end, livesync PASS, no page
+  errors. WAITING ON QA (the new session): the v0.73 full set on 6152eb5 (the old session's run on fb0b6cb stopped at lagcheck), plus
+  6152eb5's sconces and Next event (scratchpad nextevent.js: fresh save, tap Test > Next event until "every story event"). Then
+  the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into v0.74. v0.72 (083fec9) is on the Test link.
+  Cal wants it off Claude as an installable web app for about 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
@@ -27,7 +29,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 828990f)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 6152eb5)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
