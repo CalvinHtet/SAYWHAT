@@ -1279,5 +1279,13 @@
   "slot": "pants",
   "wide": true,
   "friendOnly": 1
+ },
+ "fr_kris_shirt": {
+  "slot": "top",
+  "friendOnly": 1
+ },
+ "fr_nick_suit": {
+  "slot": "top",
+  "friendOnly": 1
  }
 }
