@@ -15,28 +15,41 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      # before the first release there is no live branch and no key: skip quietly instead of failing every night
+      - name: Is there a release to publish?
+        id: ready
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$SA" ]; then echo "No FIREBASE_SERVICE_ACCOUNT yet: nothing to do"; exit 0; fi
+          code=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/branches/live")
+          if [ "$code" != "200" ]; then echo "No live branch yet: nothing to do"; exit 0; fi
+          echo "go=1" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
+        if: steps.ready.outputs.go == '1'
         with:
           ref: live
           fetch-depth: 1
       - name: Anything new for Live?
         id: check
+        if: steps.ready.outputs.go == '1'
         run: |
           want=$(git rev-parse HEAD)
           have=$(curl -fsS https://saywhat-b7ae8.web.app/version.txt || echo none)
           echo "live branch: $want   Live site: $have"
           if [ "$want" = "$have" ]; then echo "skip=1" >> "$GITHUB_OUTPUT"; fi
       - name: Build the web version
-        if: steps.check.outputs.skip != '1'
+        if: steps.ready.outputs.go == '1' && steps.check.outputs.skip != '1'
         run: |
           QB_TARGET=web python3 quest-board/tools/build.py
           git rev-parse HEAD > quest-board/dist-web/version.txt
       - uses: actions/setup-node@v4
-        if: steps.check.outputs.skip != '1'
+        if: steps.ready.outputs.go == '1' && steps.check.outputs.skip != '1'
         with:
           node-version: "22"
       - name: Publish to the Live site
-        if: steps.check.outputs.skip != '1'
+        if: steps.ready.outputs.go == '1' && steps.check.outputs.skip != '1'
         env:
           SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
