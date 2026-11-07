@@ -494,6 +494,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 90d5653 (QA's two arrival notes) on a clean build of 90d5653: PASS. visits.js now also checks every frame (0, 0.2,
+  0.45, 0.7, 1.1, 2 s) that no friend's visible picture crosses the names or the card's edge; it caught both on f7a43bb (drop and
+  pop at 0.45 and 0.7 s) and finds none on 90d5653, at 360 and 390, one friend and two; reduced motion and the 12-visit rotation
+  (all four, none twice running) still pass. Mid-spin the second friend is now cut at the picture area's edge rather than poking
+  out (shots/qa/visits/arrivals_fixed_360.png). For v0.71.
 - QA, LEAD's f7a43bb, Cal's four visit arrivals, on a clean build of f7a43bb (`rigtest/qa/visits.js`): PASS, two cosmetic notes,
   0 page errors. At 390 and 360, one friend and two: Knock knock (the door swings open, they step through), Someone pulled up
   (skid in, dust), Look who dropped in (fall, squash, shadow), Surprise! (spin up) all end with the friends at rest inside the
