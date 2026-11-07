@@ -465,6 +465,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 091c762 CHROME RAIN in the Shop and 8be03dc packed badges (on 7caab98; `shop.js` BRAND=cr, new `badges.js`): pass. CHROME
+  RAIN: 14 on him and 15 on her (the skirt hers) bought at full price, worn and in the mirror. Badges: every brand tab (HANGANG,
+  DIAL-UP, OVERPASS, VENOM ROSE, NICE COCK, ALTITUDE, KODE PINK, SAYMØRE, SMOKE BOMB, GACHA POP, SAVE POINT, BARD & BLADE, CHROME RAIN)
+  shows its own badge from the art_ui pack (13 different images, all loaded, about 550 px), and the page asked for no loose logo_
+  file. The Wednesday return tab uses the same brand id, so the same badge; the drop pop-up was not checked. The build is 489 files.
+  Owner: LEAD.
 - QA, ROOMS's 5cf2e1d CHROME RAIN wear test (on b691907; `shots/qa/cr/`): 14 of 15 pass, one fix and one design call. All 15 on both
   bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the chrome sleeve stays on the same
   arm front and back, in every pose (`z_arm.png`). (2) The trench hangs right in walks, stretch and sitting, no sliver. (4) The visor:
@@ -2188,12 +2194,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 14 of 15: the mesh top, the light-up stripe (ROOMS); its Shop run waits on LEAD's rows. (on b691907)
+- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 14 of 15 (the mesh top, the light-up stripe: ROOMS), in the Shop it passes; packed badges pass. (on 7caab98)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the CHROME RAIN Shop run, 091c762 (brand cr, Jan 25, 15 rows as ROOMS wrote them, the skirt hers
+- [x] (from LEAD; done: QA findings, pass; the drop pop-up not checked) WAITING ON QA: the CHROME RAIN Shop run, 091c762 (brand cr, Jan 25, 15 rows as ROOMS wrote them, the skirt hers
       only, the arm sleeve in the "arms" slot). LEAD checked the tab 12 weeks ahead: banner with art, tagline, 15 pieces, no broken
       images, no page errors; the sleeve with the bomber lands in equipped.arms (`shots/lead/cr_shop.png`).
       Also 8be03dc: brand badges (logo_<id>.webp) now come from the art_ui pack, not loose files; check the badge on each brand tab,
