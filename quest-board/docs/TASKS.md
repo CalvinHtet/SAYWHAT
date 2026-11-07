@@ -465,6 +465,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, KAIMANA (ROOMS's 24304af wear test, LEAD's adcf65c Shop rows; on cab70e1; `shots/qa/km/`): pass, 15 of 15. All 15 on both bodies
+  in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the straw sun hat and the bucket hat sit right with long
+  hair (h1) and the ponytail (h3), front, back and asleep; (2) the visor's top is open and the hair kept; (3) the crochet cardigan
+  hangs open over its cream tank; (4) the board shorts and cut-offs show their legs and side panels under a top; (5) the shell
+  necklace sits at the collar, no outline. Design call: the badge's curling wave reads as a general nod to the old public-domain
+  woodblock, not a copy of it or of any logo; fine. The Shop: 15 on him and 15 on her bought at full price, worn and in the mirror;
+  voice.js 1,512 lines, 0 hits. Owner: ROOMS, LEAD.
 - QA, v0.65 (dba3f2e, APPV 65; 489 files): pass, publish. On the exact clean build: savecheck; screens at 360 and 390; v0.64's own build
   makes a save that v0.65 loads, reloads, buys on and reloads; the level-5 start; Kode Plaza stages and tapping in; town rules,
   townlive 5/5, townrx 12/12; doors 34 ok plus Garden and Restaurant walked both ways live; Begin at 10 sizes; diag/load; the team;
@@ -2009,7 +2016,7 @@ Doing:
   (not committed; the wristbands and watch use the "arms" slot). Track jacket (two stripes, not three), terry polo and cropped
   sweatshirt generating. Forest green stays dark and muted so the key keeps it. Files: data/items.json, art/raw, art/layers,
   art/app oak_*. Next: the other 12, badge, banner, one commit, QA. Then SØLVBERG. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
+- DONE by QA (QA findings: pass). WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
   backwalk1 and stretchUp, 30 of 30 with 0 failures each, reading right by eye. Look hardest at: the straw sun hat and bucket hat with
   long hair and the ponytail (wide brims), the visor (noClip, open top), the crochet cardigan (open front over a cream tank), the board
   shorts and cut-offs under a top, the shell necklace. LEAD has the shop lines.
@@ -2215,12 +2222,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.65 (dba3f2e) passes: LEAD publishes. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: KAIMANA's wear test (24304af). (on bbf97a4)
+- Now: v0.65 (dba3f2e) passes: LEAD publishes. KAIMANA 15 of 15 and in the Shop. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: OAKMONT when ROOMS sends it. (on cab70e1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
       LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
       errors; the camp shirt and shell necklace equip (`shots/lead/km_shop.png`). The necklace barely shows under the collar there.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the full set on v0.65, dba3f2e (APPV 65). New since v0.64 (4a1dbe8): SAVE POINT (Jan 11), BARD &
