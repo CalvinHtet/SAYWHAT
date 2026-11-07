@@ -93,8 +93,9 @@ LFROOM.theater=function(C){
   C.walls.push(lfFaceX(0,5.1,104,lfGoDoor(C,0,5.1,104,1.9,audOn?"gotoaud":"thdoorlock",audOn?"SCREEN 1":"NOW SHOWING",audOn?"#ffd27a":"#ff9a6a")+dg));
   C.thq={x:4.7,y:2.5,dx:.95,door:[.75,4.2],xmax:wing?11.4:W-1.3};
   /* the ticket booth, the rope and the line */
-  lfSpr(C,lux4?"loL_sign":H("t_booth1")?"lo_booth":"thx_booth0",3.5,.2,1.9,1.5,{h:34,flip:1,ctr:1,H:96});
-  C.s("work",2.9,1.5,1,"look",[6,14],{tag:"clerk"});
+  /* QA (Cal's use check): the booth stood in front of the second sofa; a little to the right, the clerk at its side */
+  lfSpr(C,lux4?"loL_sign":H("t_booth1")?"lo_booth":"thx_booth0",4.0,.2,1.9,1.5,{h:34,flip:1,ctr:1,H:96});
+  C.s("work",3.6,1.55,1,"look",[6,14],{tag:"clerk"});
   var ropeEnd=10.2;for(var rx=4.5;rx<ropeEnd;rx+=1.8)lfSpr(C,"thx_rope",rx,3.25,1.8,.15,{h:6,flip:1,ctr:1,nosh:1,sh:1,dk:-.2});
   /* the screens */
   thBoard(C,6.2,72,H);

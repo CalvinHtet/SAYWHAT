@@ -364,7 +364,8 @@ LFROOM.restaurant=function(C){
     var prepAt=H("r_k2")?front(LFSPR.rsx_prepi?"rsx_prepi":"rsx_prep",2.0,.95,30):ix+1;C.s("work",prepAt,isl-.45,-1,"work",[6,10],{tag:"prep"});
     if(H("r_k6"))front("rsx_bake",.9,.8,50);if(H("r_k9")&&st>1)front("rsx_dish",1.6,.9,30)}
   else{var pz=H("r_k2")?back("rsx_prep",1.8,.95,30):bx+.8;C.s("work",pz,1.5,-1,"work",[6,10],{tag:"prep"})}
-  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",Wt-1.7,isl,1.3,.9,26,{flip:1});/* QA: the drip machine stood on a stool; it sits on the counter now, where the diners pour */
+  /* QA (Cal's use check): at the island's far end it half blocked the pizza oven; it takes the next island spot instead */
+  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",st>1&&H("r_k7")?Math.min(ix,Wt-3.2):Wt-1.7,isl,1.3,.9,26,{flip:1});/* QA: the drip machine stood on a stool; it sits on the counter now, where the diners pour */
   /* the pass is on the dining room side of that wall: food comes over it, and the good seats face it */
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
   /* QA: the till faces the diners across the counter, not the kitchen */
@@ -382,7 +383,9 @@ LFROOM.restaurant=function(C){
      the wall to make space for it */
   var crescent=H("r_more2")&&st>1&&LFSPR.rdx_curve;
   if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2,10.55]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
-  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[5.7,6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  /* QA (Cal's use check): with the crescent booth in, its nearest table moves out of the booth's opening */
+  var cres0=H("r_more2")&&st>1&&LFSPR.rdx_curve;
+  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[cres0?7.4:5.7,cres0?4.9:6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   /* Cal: the crescent opens toward the room, straight down the picture (rdx_curve2 is drawn symmetric for the corner) */
   if(crescent){var cvx=.3,cvy=.25,cw=3.5,cv2=!!LFSPR.rdx_curve2;lfSpr(C,cv2?"rdx_curve2":"rdx_curve",cvx,cvy,cw,cv2?cw:3.3,{h:30,dk:2.4,ctr:1});
@@ -426,7 +429,8 @@ LFROOM.restaurant=function(C){
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
     /* QA: out on the deck between the two bistro sets, not across the kitchen half wall */
     if(H("r_p4")){rsS(C,"rsx_heater",px+3.55,kd+1.6,.7,.7,60,{H:116});lfLight(C,px+3.9,kd+1.95,80,"#ff9a3a",3.0,.62)}
-    if(H("r_p6"))rsS(C,"rsx_bbq",px+4.7,kd+.3,1.7,1.0,28,{flip:1});
+    /* QA (Cal's use check): the smoker faced a bistro chair; it stands in the corner by the olive tree */
+    if(H("r_p6"))rsS(C,"rsx_bbq",Wt-3.0,kd+.25,1.7,1.0,28,{flip:1});
     /* QA: a little wider and centred on its table, so the posts stand clear of the chairs */
     if(H("r_p5")){rsS(C,"rsx_pergola",px+5.22,D-3.18,2.85,2.85,90,{dk:-4});lfLight(C,px+6.65,D-1.75,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */

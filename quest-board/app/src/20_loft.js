@@ -3310,7 +3310,8 @@ LFROOM.bedroom=function(C){
     var _hl=_lo.slice(0,-1).concat(_up.slice(0,-1)),_tp=lfP(.7,6.7,92);
     C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/></g>')}
   /* on the bare wall between the bed and the desk; at 4.75 the PC tower stood in front of it */
-  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",3.2,.05,.85,.4,{h:70,H:96});C.s("art",3.8,1.3,1,"look",[6,11],{tag:"mirror",fxwall:1})}
+  /* QA (Cal's use check): in the corner it stood half over the record cabinet and half against the glass; on the open left wall now */
+  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",.05,4.7,.4,.85,{h:70,H:96,flip:1});C.s("art",1.3,5.1,-1,"look",[6,11],{tag:"mirror",fxwall:1})}
   var dk=H("bd_pc2")?"bd4_pc2":H("bd_pc1")?"bd4_pc1":H("bd_desk1")?"bd4_desk1":"bd4_desk0";
   var PCt=H("bd_pc1")||H("bd_pc2");
   var LH=PCt?17:0;
