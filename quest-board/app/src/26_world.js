@@ -382,7 +382,8 @@ LFROOM.restaurant=function(C){
   /* Cal, 2026-11-05: the red crescent booth sits in the back-left corner, open toward the room; the window booths move down
      the wall to make space for it */
   var crescent=H("r_more2")&&st>1&&LFSPR.rdx_curve;
-  if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2,10.55]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
+  /* LEAD (QA every-room review: thin the fully bought room by superseding): the Curved Corner Booth takes the third booth's place */
+  if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
   /* QA (Cal's use check): with the crescent booth in, its nearest table moves out of the booth's opening */
   var cres0=H("r_more2")&&st>1&&LFSPR.rdx_curve;
   ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[cres0?7.4:5.7,cres0?4.9:6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
@@ -400,14 +401,15 @@ LFROOM.restaurant=function(C){
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
   if(!H("r_d1"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
-  if(H("r_d1"))lfSpr(C,"rdx_olive",crescent&&H("r_b1")?14.4:.3,D-1.3,1,1,{h:40,ctr:1});/* the booths fill the left wall then */
+  /* superseded: once the Sculptural Vases piece stands at the front, the potted tree goes (one tree, not two) */
+  if(H("r_d1")&&!(H("r_d8")&&st>1))lfSpr(C,"rdx_olive",crescent&&H("r_b1")?14.4:.3,D-1.3,1,1,{h:40,ctr:1});/* the booths fill the left wall then */
   if(H("r_d8")&&st>1)lfSpr(C,"rdx_olive",4.4,D-1.2,1,1,{h:40,ctr:1});
-  if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4,10.75]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
+  if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
   /* the white drinks cooler has no place in Noir's fine dining once the backlit wine wall does its job (QA) */
   /* QA: against the back wall by the bar stools, not free in the walkway beside the door mat */
-  if(H("r_cool")&&st>0&&!(noir&&H("r_d5")))lfSpr(C,"rsx_cooler",Wi-2.95,.2,.75,.7,{h:50,ctr:1});
+  if(H("r_cool")&&st>0&&!H("r_d5"))/* superseded by the Backlit Wine Wall in every style, not only Noir */lfSpr(C,"rsx_cooler",Wi-2.95,.2,.75,.7,{h:50,ctr:1});
   /* QA: beside the door mat, not in front of it */
   var hy=Math.max(2.2,D*.5-.2)+1.7;if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.0,hy,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.0,hy,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.0,hy,.8,.8,30,{});
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
@@ -428,7 +430,7 @@ LFROOM.restaurant=function(C){
     /* a low rail between the deck and the dining room, open at the front door */
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
     /* QA: out on the deck between the two bistro sets, not across the kitchen half wall */
-    if(H("r_p4")){rsS(C,"rsx_heater",px+3.55,kd+1.6,.7,.7,60,{H:116});lfLight(C,px+3.9,kd+1.95,80,"#ff9a3a",3.0,.62)}
+    if(H("r_p4")&&!H("r_p7")){/* superseded: the Fire Pit Lounge warms the patio */rsS(C,"rsx_heater",px+3.55,kd+1.6,.7,.7,60,{H:116});lfLight(C,px+3.9,kd+1.95,80,"#ff9a3a",3.0,.62)}
     /* QA (Cal's use check): the smoker faced a bistro chair; it stands in the corner by the olive tree */
     if(H("r_p6"))rsS(C,"rsx_bbq",Wt-3.0,kd+.25,1.7,1.0,28,{flip:1});
     /* QA: a little wider and centred on its table, so the posts stand clear of the chairs */
