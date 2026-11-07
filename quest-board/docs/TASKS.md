@@ -504,6 +504,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's c4c8e53 (rigtest/matrix.html knows which pictures exist): checked on a clean build of bf08f94 (artnames.json written,
+  48 KB): the stretch sheet now matches the game; sv_quilt and cr_bomber (no yawn art) keep the arms down, o_tee and kp_sailor (yawn
+  art) raise them. QA can use the matrix again for the yawn batches. Info, no owner.
 - QA, ROOMS's yawn pictures 8 and 9 (25939d4 nc_qzip, bf08f94 kp_sailor) on a clean build of bf08f94: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the quarter-zip's cuffs at the wrists with the emblem on the raised sleeve; the sailor blouse's
   puffed short sleeves with bare forearms, the red tie in place); stretch frames 3 to 21 changed, nothing else
@@ -2657,8 +2660,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on bf08f94. Done: ROOMS's yawn pictures 1-9 (pass, each with every hair and necklace); the hair lock (pass). Next: ROOMS's
-  next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
+- Now: on 045ca50. Done: ROOMS's yawn pictures 1-9 (pass); the hair lock (pass); the matrix's art list (c4c8e53) checked. Next:
+  ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
