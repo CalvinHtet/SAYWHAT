@@ -201,7 +201,22 @@ var EXTRA_ITEMS=[
  ["gx_km_cutoff","a_pants","Cut-Off Shorts",700,1,"Faded denim, frayed hems.",{gar:"km_cutoff",b:"km"}],
  ["gx_km_slides","a_shoes","Woven Slides",550,1,"A straw strap, a coral edge.",{gar:"km_slides",b:"km"}],
  ["gx_km_deck","a_shoes","Canvas Deck Shoes",800,1,"Faded teal, a rope heel.",{gar:"km_deck",b:"km"}],
- ["gx_km_sandal","a_shoes","Sport Sandals",750,1,"Teal webbing, a layered sole.",{gar:"km_sandal",b:"km"}]];
+ ["gx_km_sandal","a_shoes","Sport Sandals",750,1,"Teal webbing, a layered sole.",{gar:"km_sandal",b:"km"}],
+ ["gx_oak_headband","a_hat","Terry Headband",450,1,"Cream, one burgundy and one green stripe.",{gar:"oak_headband",b:"oak"}],
+ ["gx_oak_visor","a_hat","Tennis Visor",500,1,"Crisp white, a burgundy edge.",{gar:"oak_visor",b:"oak"}],
+ ["gx_oak_cap","a_hat","Sweatband Cap",650,1,"Cream crown, burgundy brim.",{gar:"oak_cap",b:"oak"}],
+ ["gx_oak_wrist","a_acc","Terry Wristbands",400,1,"A pair, striped.",{gar:"oak_wrist",b:"oak"}],
+ ["gx_oak_watch","a_acc","Retro Sport Watch",700,1,"Burgundy case, cream strap.",{gar:"oak_watch",b:"oak"}],
+ ["gx_oak_track","a_top","Club Track Jacket",1300,1,"Cream and burgundy, two green stripes.",{gar:"oak_track",b:"oak"}],
+ ["gx_oak_polo","a_top","Terry Polo",900,1,"Burgundy terry, a cream collar.",{gar:"oak_polo",b:"oak"}],
+ ["gx_oak_crop","a_top","Cropped Club Sweatshirt",850,1,"Cream, crossed rackets on the chest.",{gar:"oak_crop",b:"oak"}],
+ ["gx_oak_vest","a_top","Cable-Knit Tennis Vest",1000,1,"Cream, a striped V neck.",{gar:"oak_vest",b:"oak"}],
+ ["gx_oak_trackpant","a_pants","Club Track Pants",1000,1,"Cream, burgundy side panels.",{gar:"oak_trackpant",b:"oak"}],
+ ["gx_oak_skirt","a_pants","Pleated Tennis Skirt",850,1,"Cream pleats, a striped hem.",{gar:"oak_skirt",b:"oak",fo:1}],
+ ["gx_oak_shorts","a_pants","Retro Running Shorts",700,1,"Burgundy, cream piping.",{gar:"oak_shorts",b:"oak"}],
+ ["gx_oak_court","a_shoes","Canvas Court Shoes",850,1,"Cream canvas, a burgundy toe.",{gar:"oak_court",b:"oak"}],
+ ["gx_oak_suede","a_shoes","Suede Runners",950,1,"Burgundy suede, a gum sole.",{gar:"oak_suede",b:"oak"}],
+ ["gx_oak_tube","a_shoes","Tube Socks and Trainers",750,1,"Striped socks, white trainers.",{gar:"oak_tube",b:"oak"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
@@ -211,6 +226,7 @@ var EXTRA_ITEMS=[
 /* BARD & BLADE (high fantasy, approved): ROOMS's f843b25 pieces and shop lines; the bracers use the rig's "arms" slot */
 /* CHROME RAIN (cyberpunk, approved): ROOMS's 5cf2e1d pieces and shop lines; the arm sleeve uses the "arms" slot */
 /* KAIMANA (surf club, BRANDS_PROPOSAL.md; made on Cal's standing approval, rule 19): ROOMS's 24304af pieces and shop lines */
+/* OAKMONT (80s country-club athletic, BRANDS_15.md; rule 19): ROOMS's 78c961b pieces and shop lines; the wristbands and watch use the "arms" slot */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
