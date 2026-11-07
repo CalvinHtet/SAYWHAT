@@ -68,29 +68,29 @@ async function handle(req, deps) {
 
 module.exports = { handle, parseJson, MODEL, PER_DAY };
 
-/* Firebase wiring: only when deployed (or in the emulator), so the tests above load this file without it */
-if (process.env.FUNCTION_TARGET || process.env.K_SERVICE || process.env.FUNCTIONS_EMULATOR) {
-  const { onRequest } = require("firebase-functions/v2/https");
-  const { defineSecret } = require("firebase-functions/params");
-  const { initializeApp } = require("firebase-admin/app");
-  const { getAuth } = require("firebase-admin/auth");
-  const { getFirestore } = require("firebase-admin/firestore");
-  const KEY = defineSecret("ANTHROPIC_API_KEY");
-  initializeApp();
-  let client = null;
-  module.exports.sample = onRequest({ secrets: [KEY], timeoutSeconds: 60, memory: "256MiB", maxInstances: 10 }, async (req, res) => {
-    if (!client) client = new Anthropic({ apiKey: KEY.value(), timeout: 45000, maxRetries: 1 });
-    const db = getFirestore();
-    const deps = {
-      verify: async (t) => (await getAuth().verifyIdToken(t)).uid,
-      /* limits/<uid>_<day>: the day's count, raised in a transaction so two calls at once both count */
-      count: (uid, day) => db.runTransaction(async (tx) => {
-        const ref = db.doc("limits/" + uid + "_" + day), s = await tx.get(ref), n = (s.exists ? s.data().n : 0) + 1;
-        tx.set(ref, { n, uid, day }); return n;
-      }),
-      client,
-    };
-    const [status, out] = await handle(req, deps);
-    res.set("Cache-Control", "no-store").status(status).json(out);
-  });
-}
+/* Firebase wiring. Firebase set-up happens on the first request, so loading this file (the deploy's code scan, functions/test.js)
+   needs no project or credentials. */
+const { onRequest } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
+const KEY = defineSecret("ANTHROPIC_API_KEY");
+let client = null, admin = null;
+module.exports.sample = onRequest({ secrets: [KEY], invoker: "public", timeoutSeconds: 60, memory: "256MiB", maxInstances: 10 }, async (req, res) => {
+  if (!admin) {
+    const { initializeApp } = require("firebase-admin/app");
+    initializeApp();
+    admin = { auth: require("firebase-admin/auth").getAuth(), db: require("firebase-admin/firestore").getFirestore() };
+  }
+  if (!client) client = new Anthropic({ apiKey: KEY.value(), timeout: 45000, maxRetries: 1 });
+  const db = admin.db;
+  const deps = {
+    verify: async (t) => (await admin.auth.verifyIdToken(t)).uid,
+    /* limits/<uid>_<day>: the day's count, raised in a transaction so two calls at once both count */
+    count: (uid, day) => db.runTransaction(async (tx) => {
+      const ref = db.doc("limits/" + uid + "_" + day), s = await tx.get(ref), n = (s.exists ? s.data().n : 0) + 1;
+      tx.set(ref, { n, uid, day }); return n;
+    }),
+    client,
+  };
+  const [status, out] = await handle(req, deps);
+  res.set("Cache-Control", "no-store").status(status).json(out);
+});
