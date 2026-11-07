@@ -141,12 +141,28 @@ var EXTRA_ITEMS=[
  ["gx_gp_overall","a_pants","Pastel Overalls",1100,1,"Lilac denim, a gold star patch.",{gar:"gp_overall",b:"gp"}],
  ["gx_gp_mary","a_shoes","Platform Mary Janes",1000,1,"Pink gloss, frilly socks.",{gar:"gp_mary",b:"gp"}],
  ["gx_gp_slipper","a_shoes","Fluffy Slipper Boots",800,1,"Sky-blue fur, pink pompoms.",{gar:"gp_slipper",b:"gp"}],
- ["gx_gp_glitter","a_shoes","Light-Up Glitter Kicks",1200,1,"Gold glitter, glowing soles.",{gar:"gp_glitter",b:"gp"}]];
+ ["gx_gp_glitter","a_shoes","Light-Up Glitter Kicks",1200,1,"Gold glitter, glowing soles.",{gar:"gp_glitter",b:"gp"}],
+ ["gx_sp_beanie","a_hat","Pixel Heart Beanie",700,1,"Purple knit, one red pixel heart.",{gar:"sp_beanie",b:"sp"}],
+ ["gx_sp_headset","a_hat","Gaming Headset",1200,1,"Purple cups, teal glow, a boom mic.",{gar:"sp_headset",b:"sp"}],
+ ["gx_sp_cap","a_hat","Coin Cap",650,1,"Worn backwards, a gold coin up front.",{gar:"sp_cap",b:"sp"}],
+ ["gx_sp_cart","a_acc","Cartridge Pendant",800,1,"A tiny game cartridge on a ball chain.",{gar:"sp_cart",b:"sp"}],
+ ["gx_sp_shades","a_acc","Pixel Shades",600,1,"Eight bits of cool.",{gar:"sp_shades",b:"sp"}],
+ ["gx_sp_varsity","a_top","Arcade Varsity",1500,1,"Joystick patch, pixel heart on the back.",{gar:"sp_varsity",b:"sp"}],
+ ["gx_sp_pad","a_top","Button Tee",850,1,"Four round buttons, no symbols.",{gar:"sp_pad",b:"sp"}],
+ ["gx_sp_p2","a_top","Player 2 Ringer",900,1,"Press start to join.",{gar:"sp_p2",b:"sp"}],
+ ["gx_sp_hpknit","a_top","Health Bar Sweater",1200,1,"Four and a half hearts left.",{gar:"sp_hpknit",b:"sp"}],
+ ["gx_sp_camo","a_pants","Pixel Camo Cargo",1100,1,"Purple, grey and teal blocks.",{gar:"sp_camo",b:"sp"}],
+ ["gx_sp_track","a_pants","D-Pad Track Pants",950,1,"Purple, d-pads down the stripe.",{gar:"sp_track",b:"sp"}],
+ ["gx_sp_denim","a_pants","Sticker Denim Shorts",850,1,"Hearts, a star, cherries, a coin.",{gar:"sp_denim",b:"sp"}],
+ ["gx_sp_flame","a_shoes","Pixel Flame High-Tops",1200,1,"Eight-bit fire up the sides.",{gar:"sp_flame",b:"sp"}],
+ ["gx_sp_runner","a_shoes","Retro Runners",1000,1,"Grey, purple and teal, a pixel star.",{gar:"sp_runner",b:"sp"}],
+ ["gx_sp_flag","a_shoes","Checkpoint Slip-Ons",800,1,"Checkerboard, a tiny teal flag.",{gar:"sp_flag",b:"sp"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
 /* SMOKE BOMB (ninja anime, approved): ROOMS's a07439f pieces and shop lines */
 /* GACHA POP (MMO cash shop, approved): ROOMS's 03274a7 pieces and shop lines */
+/* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons are being redone (QA d14813a) */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
