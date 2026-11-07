@@ -504,6 +504,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 24 and 25 (edefc90 sp_p2, 45658f8 sp_hpknit) on a clean build of 45658f8: PASS, 0 page errors.
+  Both stretch arms-up on both bodies (the Player 2 ringer tee with purple trim; the sage cable knit with long sleeves and ribbed
+  cuffs); stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch12_before_after.png). sp_p2's repaint: PLAYER and 2 read
+  in frames 9, 12 and 15 at 4x (sp_p2_print.png; the girl's default long hair covers "PL", as it covers any print). No outline
+  residue: against the passed sp_pad, same hair, sp_p2 adds 3 pixels on the boy and 35 on the girl, all at her hem, none around the
+  head or legs; on a light background no arc or dark edge shows (sp_p2_hpknit_residue.png). sp_hpknit's red hearts keep their colour
+  in the stretch: median (187,67,71) boy and (194,66,64) girl against (195,63,64) and (194,67,58) in idle (sp_hpknit_hearts.png).
+  Sweep: all hairstyles with all 19 neck items plus none, 240 pictures, all clean (sheet_<top>_<body>.png). SAVE POINT is
+  complete; 25 of the 44 done and checked. Also on 68eb5aa: savecheck all passed; screens.js at 360 and 390 fit with no errors.
 - QA, ROOMS's yawn pictures 22 and 23 (68eb5aa: sp_varsity, sp_pad) on a clean build of 68eb5aa: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the purple varsity jacket with grey sleeves and teal cuffs; the grey controller-button tee);
   stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch11_before_after.png). sp_pad's repaint: both short sleeves wrap
@@ -2432,8 +2441,8 @@ Doing:
 - Now (on 45658f8): LEAD's 44 yawn pictures on Unlimited, 25 done (23 passed QA; sp_p2 and sp_hpknit in, SAVE POINT complete); next
   bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece (designs to render).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 45658f8, yawn picture 25 (sp_hpknit): your yawnfall.js and yawnsweep.js.
-- TAKEN by QA. WAITING ON QA: check edefc90, yawn picture 24 (sp_p2): your yawnfall.js and yawnsweep.js. A second paint; check the PLAYER 2 print reads.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 45658f8, yawn picture 25 (sp_hpknit): your yawnfall.js and yawnsweep.js.
+- DONE by QA (QA findings: pass). WAITING ON QA: check edefc90, yawn picture 24 (sp_p2): your yawnfall.js and yawnsweep.js. A second paint; check the PLAYER 2 print reads.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
   the first left the boy's far sleeve hanging under his arm.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 360da8a, yawn pictures 20 and 21 (gp_star, gp_sailor): your yawnfall.js and yawnsweep.js.
@@ -2709,9 +2718,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 2249427. Done: ROOMS's yawn pictures 1-23 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
-  complete, SAVE POINT varsity and pad); savecheck and screens (360, 390) on 360da8a pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 681aa32). Next: sp_p2 (repainting) when ROOMS sends it. (on 2249427)
+- Now: on 2ec4878. Done: ROOMS's yawn pictures 1-25 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP and
+  SAVE POINT complete); savecheck and screens (360, 390) on 68eb5aa pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 2ec4878). Next: the bb_ tops when ROOMS sends them. (on 2ec4878)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
