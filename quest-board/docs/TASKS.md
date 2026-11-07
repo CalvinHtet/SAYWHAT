@@ -2535,7 +2535,8 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on f6ba9a6): LEAD's 44 yawn pictures all painted on Unlimited; sv_quilt recoloured to the idle crimson after QA's colour fail.
-  Next from my list: re-check the 'every upgrade visible' bug list (bought-but-never-drawn, never-buyable) against today's code.
+  Re-checked the 'every upgrade visible' bug lists: all fixed already. Next from my list: the WEAK upgrades (need new art or a
+  bigger change), worst first, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - TAKEN by QA. WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - TAKEN by QA. WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
@@ -2816,7 +2817,12 @@ To do:
 - [ ] Every upgrade in every room clearly visible (Cal, on v43). MEASURED 2026-11-05 (all 21 rooms, 397 upgrades, each bought
       alone in unlock order; report, numbers and before/after sheets in `art/raw/audit/`, git-ignored): 318 OK, 33 WEAK,
       9 NONE, 35 not visual by design (staff, menus, money caps, pets, expansions). Fix, worst first:
-      - Bugs, bought but never drawn: Bedroom Canvas Art and Figurine Shelf vanish once Floor-to-Ceiling Glass is owned
+      - RE-CHECKED 2026-11-07 by ROOMS on 77ae1d3: both lists below are fixed in today's code. Canvas Art and Figurine Shelf are no
+        longer sold once the glass wall is owned (Cal's call); Dividers (`r_d3`), Drinks Cooler and Dish Station carry `also:r_x1/x2`
+        and More Plots `also:g_x1`, so none can be bought before their expansion; the Film Reel hangs at 5.9 clear of the poster;
+        Neon Trim draws two tubes by day. The never-buyable ones are freed at load (`27b_skins.js`, `window.__qbFreedReq`: 7) or
+        re-pointed (Sprinklers to `g_can`, Gourmet Menu to `t_ctr`); a headless check finds none left. Only the WEAK list remains.
+      - (old) Bugs, bought but never drawn: Bedroom Canvas Art and Figurine Shelf vanish once Floor-to-Ceiling Glass is owned
         (`!w3` in `20_loft.js`), and the shop sells them after it; Restaurant Walnut Dividers, Drinks Cooler and Dish Station
         only draw after expansions they are sold before; Garden More Plots adds no bed until Buy the Empty Lot; Theater Film
         Reel Wall Art sits behind the movie poster; Arcade Neon Trim is only a glow (nothing by day).
