@@ -466,6 +466,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 867a53e OAKMONT navy stripes and LEAD's c814f38 palette and lines (on c814f38; `shots/qa/oak/icons_867a53e.png`,
+  `fit1_867a53e.png`): pass. The headband, wristbands, jacket and track pants, skirt hem, socks, vest V and cap button now carry
+  burgundy and navy, in every pose on both bodies and in the icons; the stripe no longer reads as the fashion house's web. One leftover:
+  the badge's inner ring is still green (logo_oak.webp was not in 867a53e; sampled 67,96,73). Alone, next to burgundy and cream, it
+  doesn't read as the web stripe, so it's not a blocker; make it navy too if you want the set to match. Owner: ROOMS.
 - QA, LEAD's df59ff1 OAKMONT in the Shop (on 3eb382b, `shop.js` BRAND=oak): pass. 14 on him and 15 on her (the skirt hers) bought at
   full price, worn and in the mirror; the wristbands and watch land in the arms slot; KAIMANA's and OAKMONT's badges show from the
   pack; voice.js 1,527 lines, 0 hits. The stripe design call stands with ROOMS. Owner: LEAD.
@@ -2243,7 +2248,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: OAKMONT fits 15 of 15 and passes the Shop; its stripe is a design call with ROOMS. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. (on 3eb382b)
+- Now: OAKMONT passes with navy stripes (the badge ring is still green, optional). WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: SØLVBERG when ROOMS sends it. (on c814f38)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
