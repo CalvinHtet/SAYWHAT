@@ -501,6 +501,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 7d7c5df yawn fallback (rig.js), drawn the game's own way (QBLoft.warm + frameOrNear, with the art pack and list) on
+  clean builds of c012014 (before) and 7d7c5df (after) (`rigtest/qa/yawnfall.js`): PASS. (1) sv_ski, cr_bomber, bb_cloak and
+  kp_hoodie on both bodies: before, the arms went out sideways and the sleeves tore (white patches on the ski jacket, ragged
+  cloak and hoodie sleeves); after, the arms stay down at the sides, no tears, the yawn face (eyes closed) still plays; only the
+  stretch frames that use the painted pose changed (3 to 23). (2) o_tee and the starter tee: every frame pixel-identical, still
+  the painted arms-up yawn. (3) idle, walk and stretch frame 0 pixel-identical for all six tops. Picture: shots/qa/yawn/
+  yawn_before_after.png (stretch frame 12, before then after, m and f). Note for QA's own tools: rigtest/matrix.html cannot show
+  this, because it has neither the art list nor the art pack, so the rig there assumes every yawn picture exists.
 - QA, extra on v0.71 (3840577) while waiting: every room window's frame rate after the lag fix (`rigtest/qa/roomfps.js`), all 21
   rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
   frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
@@ -2591,9 +2599,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 7d7c5df. Doing: LEAD's yawn fallback (rig.js): every frame of all nine clips on both bodies, before (c012014) and after
-  (7d7c5df), pixel-compared; the stretch for sv_ski, cr_bomber, bb_cloak, kp_hoodie, o_tee and the starter tee. Next: the verdict
-  to LEAD. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
+- Now: on 7d7c5df. Done: LEAD's yawn fallback (pass). Next: whatever LEAD or ROOMS send. BLOCKED: the published-file checks
+  (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
