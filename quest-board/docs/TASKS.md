@@ -2040,7 +2040,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 57527b0): SØLVBERG done and with QA; LEAD has its shop lines. Next: RATTLER (BRANDS_PROPOSAL.md's DUST & SPUR list).
+- Now (on 8909550): RATTLER (id rt, BRANDS_PROPOSAL.md's DUST & SPUR list) started: felt cowboy hat, straw cattleman and bandana generating. SØLVBERG (57527b0) is with QA; LEAD has its shop lines. Next: AUREL.
 - DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
   on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
   the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
