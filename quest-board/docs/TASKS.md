@@ -2587,7 +2587,16 @@ Doing:
   Host Lectern, Host Desk, Drinks Cooler, Espresso Bar, Dish Station each add a clear (small) piece: stay. Grand French Range wider
   in 9f3fd8b (its art was fine, the footprint hid it); Charcoal Grill stays (clear piece, just under the bar). Restaurant WEAK list
   done. Next: re-audit the next room, the Game Room (2026-11-05 audit list: RGB Floor Lamp; never-buyable ones fixed).
-  WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+  Cal answered (2026-11-07): Vega wears the white splatter tee from his portrait.
+- TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
+  than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
+  from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
+  them (29k_friends.js). Order: Vega first, then Kenan, Cynthia, Jina, Justin, Logan, Memo.
+- TAKEN by ROOMS (Cal, 2026-11-07): "i also want to add more friends and visitors to the game." Eight Instagram profiles: krispascasio,
+  quince.chen, llamaorhorse, victorpmyint, chatsaobao, alvinataaat, nickhuynh.re, ben_wcho. "Some of these people dont have a lot of
+  IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
+  character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
+  only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
 - WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
   row still fits. Render: shots/rooms3/restaurant_grand_range.png.
 - WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
