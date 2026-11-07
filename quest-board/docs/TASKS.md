@@ -2583,8 +2583,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 3840577 (v0.71). Done: the v0.71 full set, PASS (publish). Next: whatever LEAD or ROOMS send; the published-file
-  checks (v0.64 to v0.71) BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 690ee9d. Done: v0.71 (3840577) PASS, now live on Cal's Test link. BLOCKED: the published-file checks (v0.64 to v0.71)
+  until Cal restarts QA (the artifact tools still fail in this session). Next: whatever LEAD or ROOMS send.
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -2617,7 +2617,7 @@ To do:
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
       White Linen (633ffe2), the Garden at level 5 (ede09d8), the splash text (0f9cabe). Note for your level-up runs: with the Garden
       at 5, its story step goes first, so the Wheel and Relics show "Soon" until revealed; their "!" comes once they open.
-- [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.71 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 13-15) against 3840577's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.70 check below.
+- [ ] (from LEAD; TAKEN by QA, BLOCKED until Cal restarts QA: artifact tools) WAITING ON QA: once your artifact tools are back, check the published v0.71 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 13-15) against 3840577's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.70 check below.
 - [ ] (from LEAD; TAKEN by QA, BLOCKED until Cal restarts QA: artifact tools) WAITING ON QA: once your artifact tools are back, check the published v0.70 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 10-12) against 10240e8's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.69 and v0.67 checks below.
 - [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.69 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 7-9) against c2c53b7's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.67 check below.
 - [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.67 on Cal's Test link (pinned, slug HJhVjFH6, republished in place) against d54de89's build: 491 files (25 top-level incl. art_rig_8 + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
