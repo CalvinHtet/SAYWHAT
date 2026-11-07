@@ -1974,10 +1974,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 157b52d): CHROME RAIN (cr_*, brand id cr): 14 of 15 ingested locally, not committed (the visor's baked outline stripped,
-  the mesh top's holes opened so skin shows). Combat boots, badge and banner generating. Its hot magenta is the mannequin key colour,
-  so the art uses rose hot pink. Files: data/items.json, art/raw, art/layers, art/app cr_*. Next: pack, check, one commit, QA.
-  Then the ten (KAIMANA first). Brand runway: OK. Chrome: ROOMS.
+- Now (on 5cf2e1d): CHROME RAIN is done in 5cf2e1d. Next: the ten new brands, starting with KAIMANA (km_*, brand id km; pieces
+  per BRANDS_PROPOSAL.md): add its 15 ids to data/items.json, then paint on Unlimited. Files: data/items.json, art/raw, art/layers,
+  art/app km_*. Brand runway: OK. Chrome: ROOMS.
+- WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
+  on c3088b5: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye. Look hardest at: the cyber-arm
+  sleeve (one arm, "arms" slot); the trench in stretch and walks (knee length); the mesh top (its holes opened so skin shows; it reads
+  mostly as a harness over skin at game size, so say if it needs more net); the visor (a baked outline stripped); the mohawk helmet and
+  hood over every hairstyle; the platform and combat boots ("over") with each pant. LEAD has the shop lines.
 - DONE by QA (QA findings: 15 of 15, two rig notes for LEAD). WAITING ON QA: wear test BARD & BLADE, f843b25 (brand id bb; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on f100e51: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye; the travel cloak, mantle,
   circlet, crystal and bracers also in stretch and sleep. Look hardest at: the bracers in the new "arms" slot (LEAD 23bf14f; the far
