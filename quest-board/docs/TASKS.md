@@ -2545,8 +2545,10 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on f6ba9a6): LEAD's 44 yawn pictures all painted on Unlimited; sv_quilt recoloured to the idle crimson after QA's colour fail.
-  Re-checked the 'every upgrade visible' bug lists: all fixed already. Next from my list: the WEAK upgrades (need new art or a
-  bigger change), worst first, starting with the Restaurant's ten.
+  TAKEN (LEAD, 2026-11-07): the three design notes from QA's every-room review (aa3a99b), in order: (1) Dessert Parlor: the dark
+  bookcase and full-length mirror out, pastel pieces that fit in; (2) VR Arena: dark walls and neon trim like the Arcade and Rhythm
+  Room, pods and screens readable; (3) Restaurant fully bought: thin it by superseding. Unlimited only, through QA. Starting (1).
+  After: the WEAK upgrades, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
