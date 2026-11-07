@@ -493,6 +493,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- CAL (2026-11-07, to QA, passed on as said): "I want 4 different animations of when the visitors come visit our base. I want each
+  visit to be unique." Not QA's to build; for LEAD to assign. QA reads it as the friend visits (29k_friends.js: the visit card,
+  the banner and the friend walking into The Loft), four distinct arrival animations rotating so no two visits in a row look the
+  same; it may also mean neighbours' "Say hi" walk-ins (socVisitors). Worth asking Cal which. QA will check them when they land.
+  Owner: LEAD.
 - QA, LEAD's 40c4b14 (Cal: "every story beat and character cutscenes to make sense"), on a clean build of af12b92: the gates
   PASS (storygates.js: Lock and Key closed without White Linen, open with it; Nova closed without the Clothing Store, open with it),
   Review > Play the whole story plays all 57 parts at 390 with 0 page errors and saves nothing (only an empty story.beats appears).
