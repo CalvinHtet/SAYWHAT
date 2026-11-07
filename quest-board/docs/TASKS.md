@@ -6,7 +6,7 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (Higgsfield: NICE COCK, Garden art)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.64 (4a1dbe8, slug NSmu55hk), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.65 (dba3f2e, slug HJhVjFH6), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
@@ -19,6 +19,7 @@ Doing:
   QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
   has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 87 days. Waiting on Cal: a launch date. Parked: the
   arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on adcf65c)
+- v0.65 PUBLISHED and pinned (slug HJhVjFH6, 490 files: 24 top-level + 466 art, 9 db rules, user, sample images), v0.64 unpinned. The publish session checked r/ byte for byte against dba3f2e's clean build and every published size against r/ (index.html +364 bytes, the publish wrapper); v0.64's published list (499) matched what was sent too. Title reads "Quest Board" (the build's <title> wins). r/ left for LEAD to delete. WAITING ON QA: check the published v0.65 once QA's artifact tools are back. (on b6efb12)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2227,6 +2228,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.65 (pinned, slug HJhVjFH6) against dba3f2e's build: 490 files (24 top-level + 466 art/, no loose logo_ files now that the badges are in art_ui), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
       LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
       errors; the camp shirt and shell necklace equip (`shots/lead/km_shop.png`). The necklace barely shows under the collar there.
