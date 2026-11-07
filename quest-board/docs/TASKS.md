@@ -2956,7 +2956,11 @@ Doing:
   Next: nothing in this session. ON HOLD, do not run on 6152eb5: (1) above, the v0.73 full set. Cal, via LEAD: "Tell QA to run
   the check after ROOMS creates the other characters." LEAD rebuilds v0.73 with the friends' outfits and new friends and posts a
   WAITING ON QA line; that full set adds each friend's outfit on both bodies in every pose (yawn included) and every visit with
-  the new friends, plus ROOMS's 6152eb5 sconces. (on 9def211)
+  the new friends, plus ROOMS's 6152eb5 sconces. LEAD's later additions: the web build too (QB_TARGET=web build.py -> dist-web:
+  rigtest/lead/webtest.js, the usual sweeps on /dist-web/index.html with the stand-in Firebase rigtest/lead/mockfirebase.js, art
+  arriving on demand with no broken pictures in any room on both bodies), Test > Next event (0b20e11), Vega's outfit (be38e7c,
+  ROOMS's 7d016d1). Real Google sign-in and the Claude call are Cal's phone test. Cal gets the web link only after QA passes
+  (Cal: "make sure the other agents have finished all their tasks"). (on 6650caa)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
