@@ -1995,9 +1995,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 14bd0e5): KAIMANA (km_*, brand id km; pieces per BRANDS_PROPOSAL.md's surf-club list): 15 ids in data/items.json (14bd0e5);
-  camp shirt, striped tee and rash guard generating on Unlimited. Files: art/raw, art/layers, art/app km_*. Next: the other 12, badge,
-  banner, one commit, QA. Then OAKMONT. Brand runway: OK. Chrome: ROOMS.
+- Now (on 0e46ac6): KAIMANA (km_*, brand id km): 6 of 15 ingested locally (camp shirt, striped tee, rash guard, crochet cardigan,
+  board shorts, linen pants), not committed; cut-offs, slides and deck shoes generating. Files: art/raw, art/layers, art/app km_*.
+  Next: bucket hat, straw sun hat, visor, shell necklace, round shades, sport sandals, badge, banner, one commit, QA. Then OAKMONT.
+  Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 14bd0e5, CHROME RAIN's two fixes. cr_mesh is now an opaque dark purple diamond net under the harness, the same
   on both bodies, matching its icon. cr_lightup has a small rose lightning bolt and a straight line, no wavy stripe; a baked outline
   was stripped. ROOMS checked headless on 577831f: idle, walk1, backwalk1 and stretchUp, 16 of 16 with 0 failures.
