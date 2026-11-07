@@ -2399,9 +2399,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f18de4c): LEAD's 44 yawn pictures on Unlimited, 13 done (11 passed QA; sm_tee and sm_vest in); next smk_jacket, smk_mesh,
-  smk_vest, smk_cloak, gp_blazer, gp_bear and the rest. WAITING ON Cal: Vega's in-game tee (black Spray Paint
+- Now (on aab35f3): LEAD's 44 yawn pictures on Unlimited, 15 done (13 passed QA; smk_jacket and smk_mesh in); smk_vest generating;
+  next smk_cloak, gp_blazer, gp_bear and the rest. WAITING ON Cal: Vega's in-game tee (black Spray Paint
   Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check aab35f3, yawn pictures 14 and 15 (smk_jacket, smk_mesh): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f18de4c, yawn pictures 12 and 13 (sm_tee, sm_vest): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 57dafa4, yawn pictures 10 and 11 (kp_bomber, sm_track): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 25939d4 and bf08f94, yawn pictures 8 and 9 (nc_qzip, kp_sailor): your yawnfall.js and yawnsweep.js.
