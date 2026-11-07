@@ -2488,7 +2488,7 @@ Doing:
 - Now (on d89dfbb): LEAD's 44 yawn pictures on Unlimited, 34 done (33 passed QA; km_camp in); km_boat repainting (the first gave it long
   sleeves over the hands); next km_rash, km_crochet, then oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check d89dfbb, yawn picture 34 (km_camp): your yawnfall.js and yawnsweep.js; short sleeves, forearms bare.
+- TAKEN by QA. WAITING ON QA: check d89dfbb, yawn picture 34 (km_camp): your yawnfall.js and yawnsweep.js; short sleeves, forearms bare.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
   (both repainted for a strip of arm under the sleeves) and the mesh's edges on a dark background (light-grey sheet).
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
