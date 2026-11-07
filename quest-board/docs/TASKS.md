@@ -504,6 +504,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 40 and 41 (ca391d3: oak_crop, oak_vest) on a clean build of ca391d3: PASS, 0 page errors. Both
+  stretch arms-up on both bodies; stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch24_idle_stretch.png). oak_crop:
+  long sleeves, both hands out, no strip; oak_vest: the white short sleeves wrap the arms, no hollow; on hot pink with short hair
+  (oak_crop_vest_pink.png). ROOMS's question, the 1-2 px plum line under the vest's hem at the boy's left hip: QA's call is pass,
+  no repaint. At 4x on the usual, hot-pink and light backgrounds it reads as the hem's own outline (oak_vest_hem.png); plum pixels
+  in the hem-to-trousers band are 8 (boy) and 7 (girl), against 59 and 67 on the passed km_boat (the trousers' drawstring and
+  shading). Sweep: all hairstyles with all 19 neck items plus none, 240 pictures, all clean (sheet_<top>_<body>.png). OAKMONT is
+  complete; 41 of the 44 done and checked.
 - QA, ROOMS's yawn picture 39 (029de55: oak_track, third paint) on a clean build of 029de55: PASS, 0 page errors. It stretches
   arms-up on both bodies (the wine and cream retro track jacket); stretch frames 3 to 21 changed, nothing else
   (shots/qa/yawn/batch23_idle_stretch.png). Both hands are fully out past the ribbed cuffs and the sleeves wrap the arms with no
@@ -2519,7 +2527,7 @@ Doing:
 - Now (on ca391d3): LEAD's 44 yawn pictures on Unlimited, 41 done (39 passed QA; oak_crop and oak_vest in, OAKMONT complete); last three:
   sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
+- DONE by QA (QA findings: pass). WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
   hem on the boy's left hip (mannequin outline residue), your call.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 029de55, yawn picture 39 (oak_track, third paint): your yawnfall.js and yawnsweep.js; both hands show, no strip under
   the arms.
@@ -2815,9 +2823,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 0fb7c49. Done: ROOMS's yawn pictures 1-39 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT, BARD & BLADE, CHROME RAIN and KAIMANA complete, OAKMONT polo and track); savecheck and screens (360, 390) on 35d51d2 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 0fb7c49). Next: oak_crop, oak_vest, then the three SØLVBERG tops. (on 0fb7c49)
+- Now: on cdbb1e1. Done: ROOMS's yawn pictures 1-41 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT, BARD & BLADE, CHROME RAIN, KAIMANA and OAKMONT complete); savecheck and screens (360, 390) on 35d51d2 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at cdbb1e1; Cal is told a new session fixes it). Next: the three SØLVBERG tops (sv_nordic, sv_quilt, sv_fleece). (on cdbb1e1)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
