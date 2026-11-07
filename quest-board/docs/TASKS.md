@@ -18,10 +18,14 @@ Doing:
   Black Marble Counter c50714d + eadc75b, all QA-passed; Brass Sconces 6152eb5 not yet checked; and Cal's Test > Next event 0b20e11:
   "a button that triggers the next event such as the investor coming ... test everything myself but quickly"). Clean build, 492
   files, loads clean, Review 118/118 save unchanged, the whole story plays, Next event 35 taps to the end, livesync PASS, no page
-  errors. WAITING ON CAL to tell the new QA session to run it (it was told published-file checks only; those PASS, 8076dd1), then WAITING ON QA: the v0.73 full set on 6152eb5 (the old session's run on fb0b6cb stopped at lagcheck), plus
+  errors. CAL (2026-11-07): "Tell QA to run the check after ROOMS creates the other characters": v0.73 HOLDS for ROOMS's friend work
+  (friend-only outfits from each portrait, "friendOnly": 1 in items.json, never sold; new friends from Cal's list). LEAD wires each
+  friend into 29k_friends.js (eq, FRIENDS, FVISITS) as ROOMS hands them over, then rebuilds v0.73 and QA runs the full set (the old session's run on fb0b6cb stopped at lagcheck), plus
   6152eb5's sconces and Next event (scratchpad nextevent.js: fresh save, tap Test > Next event until "every story event"). Then
-  the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into v0.74. v0.72 (083fec9) is on the Test link.
-  Cal wants it off Claude as an installable web app for about 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+  the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into this v0.73 too. v0.72 (083fec9) is on the Test link.
+  CAL (2026-11-07): "I would also like to move this over to a web app. Tell me how to do that and where to get my claude API key":
+  the GO for the web app (Firebase database, Google sign-in, hosting, a Claude API function). LEAD builds it alongside, Cal does the
+  logins (Firebase project, Anthropic Console key). About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
