@@ -13,7 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.73 BUILT from 42d73be (APPV 73), WAITING ON QA for the full set, on both builds: dist (Claude, 472 files: friend
+- Now: v0.73 BUILT from 42d73be (APPV 73), WAITING ON QA for the full set (QA: DONE, not yet: three fixes, QA findings), on both builds: dist (Claude, 472 files: friend
   portraits now packed in art_ui, 42d73be, since the six new friends took dist to 510 of 511) and dist-web (QB_TARGET=web, 2338
   files). Since v0.72: ROOMS's room work (facb194, 10f64be, d328e88, 8602ed7, b3e3510, 828990f, 21b292a, c50714d + eadc75b, 6152eb5,
   Game Room 776bc77 + 081d0a2), Test > Next event 0b20e11, every friend in their portrait pieces (Vega, Cynthia, Jina, Kenan,
@@ -483,6 +483,46 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.73 = 42d73be (APPV 73), the full set on clean builds of dist (472 files) and dist-web (2338): NOT YET, three fixes (the
+  next three lines: two for ROOMS, one for LEAD); everything else PASSES, 0 page errors anywhere. dist: savecheck all passed;
+  screens at 360 and 390 fit; visits.js PASS; lagcheck PASS (Game Room and Restaurant windows at CPU x4: v0.72 60.3/60.0 fps,
+  v0.73 60.3/57.3, worst 17/33 ms); unlockall PASS (fresh and mid-game); the whole story 64/64 (only an empty story.beats appears,
+  as before); Review 132/132 Plays on both bodies (m at 390, f at 360), 0 problems, the save unchanged but savedAt and an empty
+  `seen`; livesync, live10, players10 PASS (players10 on the first run; a quiet minute writes at most 2 a page); alerts, FX, room
+  windows, bar rule PASS; badges: 16 brands from the pack, 0 loose; drops PASS; all 30 rooms draw fully bought; guests at most 5 a
+  room, no duplicate looks; the screens' still picture: Theater, Auditorium, Boba show page 1 with animations off and hide it
+  with animations on (the Auditorium plays its film, as on v0.72). Next event (0b20e11; new rigtest/qa/nextevent.js: a fresh player at 390 presses Test > Next
+  event and presses through each scene): 35 taps to "That's every story event", every tap saves, all 22 scenes' pictures load,
+  Sable right after the chef; then 17 steps, 13 return visits, 16 rooms (none twice), team Mara, Sable, Rafe, Nova, Theo; one more
+  tap still says nothing is left; a reload keeps it all: PASS. Web: every picture of the Claude build (1869 packed + 446 loose =
+  2315) is in dist-web/art byte for byte, none missing or extra; LEAD's webtest.js 19/19; new rigtest/qa/websweep.js on the
+  stand-in Firebase, both bodies: 8 tabs, 30 room windows fully bought (435 pictures), 29 visit cards, art arriving on demand
+  (660 m_ / 661 f_ layers, none of the other body's), 0 failed art requests: PASS; functions/test.js 11/11 (a fake Claude);
+  firestore.rules read through: each player writes only their own docs, the owner list is empty until Cal's uid goes in.
+  Friends: new rigtest/qa/friendlooks.js draws all 13 outfits the game's way on both bodies in every clip (stretch every other
+  frame, so the painted yawn): 68/68 frames each (shots/qa/v73/friend_<id>.png); friendsqa: all 29 visits picture their friends
+  and pay their rewards and buffs; friendart: the 13 new visits' portraits keep their feet on one line between poses (1 to 6 px).
+  ROOMS's checks: Game Room 776bc77 + 081d0a2 PASS (the lamp on open floor, the soda machine's front clear, the dartboard clear of
+  the door, no spot inside furniture; gameroom.png); Brass Sconces 6152eb5 PASS (two, clear of the window; restaurant_sconces.png);
+  every friend piece PASS but Ben's cap (below). ROOMS's two questions: Victor's sleeve undersides and the tan on Ben's jacket's
+  right side in the stretch match the painted yawn of the Shop tops passed in v0.72 (nc_hoodie shows the same skin under its
+  sleeves, sv_fleece the same right-side shading; side by side at true size in native_compare.png): no repaint for v0.73. Not
+  covered: a real phone, real Google sign-in and the real Claude call (Cal's phone test), the live Firestore rules (read only).
+- QA, v0.73 (42d73be), 9f3fd8b Grand French Range (marked v0.74 but it is in 42d73be; LEAD's v0.73 list does not name it): FAIL.
+  Widening it from 1.3 to 1.7 moved the kitchen's back row 0.4 to the right, and the wood-fired oven (rsx_oven) now ends at 24.83
+  in a 24.6-wide room, 0.23 past the right wall (v0.72: 24.43, inside). It shows in the fully bought kitchen: the oven's base
+  hangs over the floor's right edge (shots/qa/v73/restaurant_kitchen_v73.png against restaurant_kitchen_v72.png). Fix: take the
+  0.4 back in that row (or narrow the range to about 1.45). Owner: ROOMS.
+- QA, v0.73 (42d73be), fr_ben_cap: FAIL, ROOMS's own question. From the front it is worn backward (the strap over the forehead);
+  from behind the strap shows again with the brim off to the side, so in every back view (back, walkBack, sitBack, typing) it reads
+  as worn forward (shots/qa/v73/ben_cap_front_back.png, friend_ben.png). Fix: repaint the back views with the brim at the back.
+  Owner: ROOMS.
+- QA, v0.73 (42d73be), the new friends' visit lines give pronouns Cal never stated (CLAUDE.md: they/them when unstated; the first
+  friends' lines were rewritten without pronouns for the same reason): kris_pads "his pads", kris_linen "He left you", ben_routine
+  "he kept", ben_board "his snowboard", kevin_pool "He brought his league trophy", kevin_food "he wanted", victor_gg "He lost".
+  And ben_board says the snowboard is "still in the car" while the card shows Ben holding it (shots/qa/v73/visit_ben_board.png).
+  Fix: rewrite without pronouns, e.g. "Ben stopped by with his snowboard..." -> "Ben stopped by with a snowboard and planned your
+  trip to the mountain." Owner: LEAD.
 - QA, the published-file checks (Cal's brief; new QA session, artifact tools working): both PASS. (1) v0.72 on Cal's Test link
   (HJhVjFH6, served version 1794080566-bf5f) against a clean build of 083fec9 in a scratch worktree: 492 files = 26 top-level +
   466 art/, exactly the build's 491 (25 + 466) plus lfvar.json, same names. All 466 art files downloaded and byte-identical to the
@@ -2596,31 +2636,31 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
-- WAITING ON QA: check ef70922, 49df52c, 959862d, ca7d92f, a5dcb14, eb0eea3 (all go into v0.73), the six new friends'
+- DONE by QA (QA findings, v0.73: pass but fr_ben_cap's back views; Victor's sleeves and Ben's jacket side match the passed yawn tops, no repaint). WAITING ON QA: check ef70922, 49df52c, 959862d, ca7d92f, a5dcb14, eb0eea3 (all go into v0.73), the six new friends'
   friend-only pieces: fr_kris_shirt, fr_kris_pants, fr_alvina_coat, fr_nick_suit, fr_nick_trousers, fr_ben_jacket, fr_ben_cap,
   fr_kevin_polo, fr_kevin_jeans, fr_victor_hoodie, fr_victor_chinos. ROOMS's own check: matrix wear and grid sheets in every
   pose (both bodies), stretch at 1000 px for all six tops; idle and stretch of every full outfit in
   shots/friends_new/new_friends_outfits_idle.png and _stretch.png. Known, small: fr_ben_cap's back views show the strap
   opening (from behind it reads like a cap worn forward); fr_victor_hoodie's stretch has a slightly doubled edge under the
   sleeves at 1000 px (the sleeve undersides were thickened in the layer to hide a skin strip). Say if either needs a repaint.
-- WAITING ON QA: check 776bc77 (goes into v0.73), Game Room WEAK upgrades: RGB Floor Lamp moved out from behind the console to
+- DONE by QA (QA findings, v0.73: pass). WAITING ON QA: check 776bc77 (goes into v0.73), Game Room WEAK upgrades: RGB Floor Lamp moved out from behind the console to
   the open floor between the arcade and the TV (0.04% -> 0.51% of the picture), Mini Fridge a step in front of the soda machine on
   the right wall with the soda machine's front clear (0.18% -> 0.67%), Dartboard larger and clear of the door frame (0.21% ->
   0.43%). Plus 081d0a2: the Mini Fridge sprite repainted (plain cans and snack bars on top, no lettering) and the Soda Machine's green
   stripe down its left edge removed (its green bottles read yellow now). Render: shots/rooms3/gameroom_weak_fix.png. Look at: walk
   routes past the lamp and the fridge, the fridge's customer spot.
-- WAITING ON QA: check 21fedf3, be717dc, 778e0c6 (all go into v0.73), the friend-only pieces: fr_cynthia_kicks (shoes),
+- DONE by QA (QA findings, v0.73: pass). WAITING ON QA: check 21fedf3, be717dc, 778e0c6 (all go into v0.73), the friend-only pieces: fr_cynthia_kicks (shoes),
   fr_jina_skirt (skirt, wide, femaleOnly), fr_kenan_jacket and fr_logan_bomber (tops, each with its yawn picture). ROOMS's own
   check: matrix wear sheets in every pose (both bodies; the skirt on f), stretch at 1000 px for both tops (no body strip, the
   sleeves join the arms). Note: the faint olive line along the boy's jaw in the stretch pose is the base yawn body, there without
   any top too, not these pieces.
-- WAITING ON QA: check 6c66dd8 (goes into v0.73), Vega's friend-only pieces: fr_vega_tee (white splatter tee with its yawn picture) and
+- DONE by QA (QA findings, v0.73: pass). WAITING ON QA: check 6c66dd8 (goes into v0.73), Vega's friend-only pieces: fr_vega_tee (white splatter tee with its yawn picture) and
   fr_vega_kicks, both bodies, every pose. ROOMS's own check: matrix wear sheet, every pose on both bodies, the stretch at 1000 px
   (no body strip at the sides, the sleeves join the arms); the pink splatter keeps its colour. Note: the high-tops follow the
   portrait, so QA's old note stands (the panel layout reads like a famous sneaker; no logo).
-- WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
+- DONE by QA (QA findings, v0.73: FAIL, it is in 42d73be and pushes the wood-fired oven 0.23 past the right wall). WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
   row still fits. Render: shots/rooms3/restaurant_grand_range.png.
-- WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
+- DONE by QA (QA findings, v0.73: pass). WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
   the window). Render: shots/rooms3/restaurant_sconces.png.
 - DONE by QA (QA findings: pass). WAITING ON QA: check eadc75b, your 85fad55 note: pendants (two, back end of the pass, higher) and the Neon Sign (right and up) clear of the wine
   wall and stools; the counter needs Noir, which hides the neon, so they never meet. Picture: shots/rooms3/restaurant_neon_pendants_fix.png.
@@ -2947,21 +2987,17 @@ To do:
 
 Doing:
 - STOPPED (Cal, 2026-11-07 about noon): this QA session has stopped; Cal is starting a new QA session. Hand-over for it:
-  (1) The v0.73 full set (fb0b6cb, LEAD's build, APPV 73, clean build 492 files) is NOT done: savecheck, screens 360/390 and
+  (1) DONE on 42d73be by the new QA session (next line). Was: the v0.73 full set (fb0b6cb, LEAD's build, APPV 73, clean build 492 files) is NOT done: savecheck, screens 360/390 and
   visits passed, then I stopped it during lagcheck. Run the whole set again on v0.73 (on LEAD's rebuild if it adds eadc75b),
   the same list as the v0.72 line in QA findings (a3c2cb6), with rigtest/qa/stillcheck.js instead of screenlive.js; players10's
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (new QA session, Cal's brief: the published-file checks only): DONE, v0.72 on HJhVjFH6 and v0.64 on NSmu55hk both PASS.
-  Next: nothing in this session. ON HOLD, do not run on 6152eb5: (1) above, the v0.73 full set. Cal, via LEAD: "Tell QA to run
-  the check after ROOMS creates the other characters." LEAD rebuilds v0.73 with the friends' outfits and new friends and posts a
-  WAITING ON QA line; that full set adds each friend's outfit on both bodies in every pose (yawn included) and every visit with
-  the new friends, plus ROOMS's 6152eb5 sconces. LEAD's later additions: the web build too (QB_TARGET=web build.py -> dist-web:
-  rigtest/lead/webtest.js, the usual sweeps on /dist-web/index.html with the stand-in Firebase rigtest/lead/mockfirebase.js, art
-  arriving on demand with no broken pictures in any room on both bodies), Test > Next event (0b20e11), Vega's outfit (be38e7c,
-  ROOMS's 7d016d1). Real Google sign-in and the Claude call are Cal's phone test. Cal gets the web link only after QA passes
-  (Cal: "make sure the other agents have finished all their tasks"). (on 6650caa)
+- Now (QA, the session that did the published-file checks): DONE, the v0.73 full set on 42d73be (dist 472, dist-web 2338),
+  Cal's go via LEAD once ROOMS's friends were done: NOT YET, three fixes (QA findings): ROOMS, the wood-fired oven past the
+  Restaurant's right wall (9f3fd8b) and Ben's cap back views; LEAD, the new friends' pronouns and the snowboard line. Everything
+  else passes, both builds. New QA scripts: websweep.js, friendlooks.js, nextevent.js. Next: recheck those three fixes on the
+  rebuild LEAD posts (small check, not the whole set again unless more changes). (on a92ee28)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
