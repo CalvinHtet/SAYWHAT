@@ -2599,13 +2599,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 6c66dd8): Cal's friend jobs (v0.73 holds for them). Vega's friend-only pieces done in 6c66dd8: fr_vega_tee (white
-  splatter tee, every angle plus the yawn picture) and fr_vega_kicks (white, black and orange high-tops), "friendOnly": 1, no shop
-  row; eq sent to LEAD. Portrait check of the other six: their shop pieces already match their portraits (Jina's skirt is a shade
-  off); each still gets at least one signature friend-only piece next. New friends: 7 of 8 identified from their own posts;
-  llamaorhorse is private (skipped). Quince: her solo shots don't agree on one face, so held for Cal. Portraits done for Kris and
-  Alvina; Nick and Ben generating; Kevin and Victor next (Victor's photos are about 12 years old). Then a batch approval to Cal.
-  After that: LEAD's app icon (low priority), then the Game Room WEAK re-audit. Restaurant WEAK list done (see below).
+- Now (on 6c66dd8): WAITING ON CAL (big approval, batch): six new friend portraits and the SAYMORE app icon (pictures in
+  shots/friends_new/, not committed until he says yes). Vega's friend-only pieces are in (6c66dd8) and LEAD wired them.
+  New friends from Cal's eight profiles, each identified from their own posts: Kris Pascasio (Muay Thai fighter), Alvina Tat
+  (occupational therapist) and Nick Huynh (Bay Area realtor), a couple, Ben (Berkeley grad, Marine vet, snowboarder), Kevin Tsao
+  (foodie, pool player), Victor Myint (gamer; his photos are about 12 years old). Skipped: llamaorhorse (private). Held: Quince
+  (her solo shots don't clearly show one face); asked Cal. After his yes: the portraits go in, then each new friend's
+  friend-only outfit (one sheet per piece, every angle plus yawn), and the spec to LEAD. Next for the six current friends: one
+  signature friend-only piece each (Kenan, Cynthia, Jina, Justin, Logan, Memo). Then the Game Room WEAK re-audit.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
