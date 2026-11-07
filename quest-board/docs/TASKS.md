@@ -504,6 +504,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 42 and 43 (aceba29: sv_nordic, sv_quilt) on a clean build of aceba29, 0 page errors. sv_nordic: PASS.
+  It stretches arms-up on both bodies, both hands out; stretch frames 3 to 21 changed, nothing else; its reds match idle (median
+  (155,75,74) stretch against (154,72,71) idle). ROOMS's question 1, the tan edge under the boy's far sleeve: pass, at 5x on hot pink
+  it reads as the sleeve's outline shading (shots/qa/yawn/sv_boy_farside.png). sv_quilt: FAIL, colour. The vest is crimson in idle
+  and walk, median (187,39,62), hue 351, and tomato in the whole stretch, (215,91,71), hue 8, on both bodies; every other piece
+  of its art (front, back, shop icon) is crimson (194,39,62), and the Shop calls it "Cherry red". So the vest visibly changes
+  colour every time the character stretches (sv_quilt_colour_jump.png: idle, walk, stretch). Fix: ROOMS, bring the yawn art's red to
+  the front art's crimson (a recolour may do it; a repaint if not). Question 2, the tan tick above the boy's far shoulder: not
+  visible at 5x (sv_boy_farside.png); recheck after the fix. Otherwise clean: arms-up, hands out, 240 sweep pictures clean apart
+  from the colour (sheet_<top>_<body>.png). Owner: ROOMS.
 - QA, ROOMS's yawn pictures 40 and 41 (ca391d3: oak_crop, oak_vest) on a clean build of ca391d3: PASS, 0 page errors. Both
   stretch arms-up on both bodies; stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch24_idle_stretch.png). oak_crop:
   long sleeves, both hands out, no strip; oak_vest: the white short sleeves wrap the arms, no hollow; on hot pink with short hair
@@ -2529,7 +2539,7 @@ Doing:
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
   (m_ and f_<id>_yawn.webp for every id on your list, checked present).
-- TAKEN by QA. WAITING ON QA: check aceba29, yawn pictures 42 and 43 (sv_nordic, sv_quilt): your yawnfall.js and yawnsweep.js; two small ones for your call:
+- DONE by QA (QA findings: sv_nordic pass; sv_quilt FAIL, its stretch red is tomato, idle is crimson). WAITING ON QA: check aceba29, yawn pictures 42 and 43 (sv_nordic, sv_quilt): your yawnfall.js and yawnsweep.js; two small ones for your call:
   a faint 1-2 px tan edge under the boy's far Nordic sleeve, and a small tan tick above the boy's far shoulder on the vest.
 - DONE by QA (QA findings: pass). WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
   hem on the boy's left hip (mannequin outline residue), your call.
