@@ -2480,7 +2480,7 @@ Doing:
 - Now (on f106365): LEAD's 44 yawn pictures on Unlimited, 33 done (31 passed QA; cr_mesh and cr_vest in, CHROME RAIN complete);
   next km_camp, km_boat, km_rash, km_crochet (designs rendered), then oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
+- TAKEN by QA. WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
   (both repainted for a strip of arm under the sleeves) and the mesh's edges on a dark background (light-grey sheet).
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
   and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
