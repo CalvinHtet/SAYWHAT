@@ -126,11 +126,27 @@ var EXTRA_ITEMS=[
  ["gx_smk_shorts","a_pants","Shorts over Fishnet",900,1,"Ember stripe, mesh to the ankle.",{gar:"smk_shorts",b:"smk"}],
  ["gx_smk_sandal","a_shoes","Shinobi Sandals",700,1,"Open toe, black straps.",{gar:"smk_sandal",b:"smk"}],
  ["gx_smk_tabi","a_shoes","Split-Toe Tabi Boots",1100,1,"Worn over the trouser hem.",{gar:"smk_tabi",b:"smk"}],
- ["gx_smk_runner","a_shoes","Wrapped Runners",1000,1,"Running shoes bound in cloth tape.",{gar:"smk_runner",b:"smk"}]];
+ ["gx_smk_runner","a_shoes","Wrapped Runners",1000,1,"Running shoes bound in cloth tape.",{gar:"smk_runner",b:"smk"}],
+ ["gx_gp_cathood","a_hat","Cat-Ear Hood",800,1,"Lilac knit, pink-lined ears.",{gar:"gp_cathood",b:"gp"}],
+ ["gx_gp_bunny","a_hat","Bunny Beanie",750,1,"Candy pink, one ear flopped.",{gar:"gp_bunny",b:"gp"}],
+ ["gx_gp_bow","a_hat","Satin Bow",500,1,"Lilac, a gold star in the knot.",{gar:"gp_bow",b:"gp"}],
+ ["gx_gp_wings","a_acc","Little Angel Wings",1200,1,"White feathers, gold tips.",{gar:"gp_wings",b:"gp"}],
+ ["gx_gp_hearts","a_acc","Heart Shades",700,1,"Pink frames, sky-blue hearts.",{gar:"gp_hearts",b:"gp"}],
+ ["gx_gp_blazer","a_top","Candy School Blazer",1400,1,"Pink, blue piping, a lilac bow.",{gar:"gp_blazer",b:"gp"}],
+ ["gx_gp_bear","a_top","Bear Onesie Top",1300,1,"Sky-blue fleece, ears on the hood.",{gar:"gp_bear",b:"gp"}],
+ ["gx_gp_star","a_top","Star Hoodie",1100,1,"Oversized lilac, gold stars.",{gar:"gp_star",b:"gp"}],
+ ["gx_gp_sailor","a_top","Frilled Sailor Blouse",1000,1,"Sky-blue collar, pink scarf.",{gar:"gp_sailor",b:"gp"}],
+ ["gx_gp_skirt","a_pants","Star Pleated Skirt",900,1,"Sky blue, gold stars on the hem.",{gar:"gp_skirt",b:"gp",fo:1}],
+ ["gx_gp_shorts","a_pants","Bubble Shorts",850,1,"Puffy pink, starry suspenders.",{gar:"gp_shorts",b:"gp"}],
+ ["gx_gp_overall","a_pants","Pastel Overalls",1100,1,"Lilac denim, a gold star patch.",{gar:"gp_overall",b:"gp"}],
+ ["gx_gp_mary","a_shoes","Platform Mary Janes",1000,1,"Pink gloss, frilly socks.",{gar:"gp_mary",b:"gp"}],
+ ["gx_gp_slipper","a_shoes","Fluffy Slipper Boots",800,1,"Sky-blue fur, pink pompoms.",{gar:"gp_slipper",b:"gp"}],
+ ["gx_gp_glitter","a_shoes","Light-Up Glitter Kicks",1200,1,"Gold glitter, glowing soles.",{gar:"gp_glitter",b:"gp"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
 /* SMOKE BOMB (ninja anime, approved): ROOMS's a07439f pieces and shop lines */
+/* GACHA POP (MMO cash shop, approved): ROOMS's 03274a7 pieces and shop lines */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
