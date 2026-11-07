@@ -85,7 +85,8 @@ function lfLS(){
 function lfLightUseful(){return lfLS().dark>.12}
 /* Cal (playtest): "The light on option should not matter for the other rooms. Only the bedroom where you can't see anything at night".
    Every room but the Bedroom is lit whenever it is dark; the Bedroom keeps its lamp toggle (rm.lit). */
-function lfLit(C){return !!(C&&C.room&&(C.room.t!=="bedroom"||C.room.lit)&&lfLightUseful())}
+/* QA: an open-air room (C.noshell 2: the Rooftop, the Sky Patio) has no ceiling light, so it keeps the night (it read like noon at 22:00) */
+function lfLit(C){return !!(C&&C.room&&C.noshell!==2&&(C.room.t!=="bedroom"||C.room.lit)&&lfLightUseful())}
 function lfInLS(C){var L=lfLS();if(!lfLit(C))return L;return Object.assign({},L,{dark:.13,golden:0,direct:0,moonK:0,mul:"#fff3e4"})}
 function lfSkyCols(L){
   L=L||lfLS();var b=lfSkyBase(L.el),wxW=({sun:0,cloud:.5,fog:.85,rain:.72})[L.wx]||0;wxW=Math.max(wxW,L.cl*.55);
