@@ -2152,7 +2152,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on c7acdc1): on call for Cal's playtest. Vega's high-tops stay as they are (Cal, 2026-11-07: "Leave them").
+- Now (on 1e8a3b4): on call for Cal's playtest; QA's every-room notes (aa3a99b) taken. WAITING ON Cal: Vega's in-game tee (black
+  Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
+  Boba TV show a still picture when animations are off. (2) The Rooftop and Sky Patio stay dark at 22:00 (abe06dd had lit them).
+  (3) Kenan's three portraits wear the same black shades as his in-game look (Cal). (4) The Bedroom rug tucks under the bed; the
+  dog beds stay on the front edge (an earlier call). (5) The Rhythm Room's front floor gets a neon dance circle with the Pulsing
+  Floor. (6) The Sky Patio keeps the wicker lounge chair by the fire once the Egg Swing is in. Not taken (design calls, need art or
+  Cal): the Dessert bookcase and mirror, the VR Arena palette, the full Restaurant's density.
 - DONE by QA (QA findings: pass). - WAITING ON QA: check 633ffe2 and ede09d8 for v0.68. (1) The Upstairs Bar (r_bar) needs White Linen Service (r_t3, Cal's "fine dining")
   and is hidden until then; a save that owns the bar keeps it. (2) The Garden lot is for sale from level 5 (padlock at 4), matching
   The Loft's welcome card. ROOMS checked headless, 0 page errors. Also 0f9cabe: Take Over Next Door's splash now says white linen comes before the bar upstairs.
