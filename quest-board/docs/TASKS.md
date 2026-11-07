@@ -18,7 +18,8 @@ Doing:
   clean, Review 119/119, the whole story 64/64 with the save unchanged, livesync PASS. WAITING ON QA for the full set (TAKEN,
   a88b262). When it passes: the publish session republishes it in place on Cal's Test link (HJhVjFH6), then LEAD removes r/ and
   the worktree and tells Cal. Next build (v0.73): ROOMS's facb194 (Dessert hutch and Flower Mirror, VR Arena dark neon; with QA
-  after v0.72) and the Restaurant thinning when it lands. Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+  after v0.72) and the Restaurant thinned by superseding (10f64be: Curved Corner Booth, Fire Pit, Sculptural Vases, Wine Wall; nothing
+  off sale, no ids changed; with QA). Fewer dining tables would touch seating: ROOMS brings that to LEAD first. Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), stay on Claude or move off it, which artifact is Live, a launch date. Before release: QB_TEST_START
   0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 083fec9)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on eda711d)
