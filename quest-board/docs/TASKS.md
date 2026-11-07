@@ -2512,11 +2512,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 10f64be): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+- Now (on d328e88): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
-  Now: the WEAK upgrades, starting with the Restaurant's. First, Sculptural Vases (r_d8): it is sold as 'black ceramic and dry
-  branches' but draws the olive tree; its own sprite (rdx_vases) is generating on Unlimited.
+  Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
+  next, re-measure the rest of the Restaurant's WEAK list on today's room (it was rebuilt since the 2026-11-05 audit).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
+  olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
 - TAKEN by QA (after the v0.72 full set). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
   Fire Pit replaces the Patio Heaters; Sculptural Vases replace the potted tree; Wine Wall replaces the Drinks Cooler in every
   style). Before/after: shots/rooms3/restaurant_*.png. Your note 3 from aa3a99b: clearly 'never cluttered' now?
