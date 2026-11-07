@@ -352,7 +352,8 @@ LFROOM.restaurant=function(C){
   /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
-  if(H("r_chef")&&!noir)lfSpr(C,"rs_chef",Wi+1.8,.05,.1,.05,{h:1,flip:1,H:26,dy:-112,nosh:1});
+  /* re-audit 2026-11-07: 26 px tall it changed 0.06% of the room and Noir hid it; bigger, lower, in every style */
+  if(H("r_chef"))lfSpr(C,"rs_chef",st>0?Wi+5.3:Wi-1.3,.05,.1,.05,{h:1,flip:1,H:58,dy:-116,nosh:1});/* past the order board and the two menu boards; the first kitchen is too narrow, so there it hangs on the dining wall by the pass */
   if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:64,dy:-86,nosh:1});/* QA audit: bigger and lower, readable on a phone */
   if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
