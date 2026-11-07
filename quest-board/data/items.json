@@ -1254,5 +1254,10 @@
   "femaleOnly": true,
   "wide": true,
   "friendOnly": 1
+ },
+ "fr_kenan_jacket": {
+  "slot": "top",
+  "neutral": true,
+  "friendOnly": 1
  }
 }
