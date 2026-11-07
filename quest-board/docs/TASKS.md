@@ -504,6 +504,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 18 and 19 (2d2ea91: gp_blazer, gp_bear) on a clean build of 2d2ea91: PASS, 0 page errors. Both
+  stretch arms-up on both bodies (the pink blazer with its lilac bow; the blue bear onesie top with its cream belly); stretch frames
+  3 to 21 changed, nothing else (shots/qa/yawn/batch9_before_after.png). The blazer's repaint: the boy's right side under the arm is
+  one pink sleeve edge, no strip of body and no doubled dark line, frames 9, 12 and 15 at 4x and 5x (gp_blazer_underarm.png,
+  gp_blazer_underarm_5x.png, next to the passed smk_jacket). Sweep: all hairstyles with all 19 neck items plus none, 240 pictures,
+  all clean (sheet_<top>_<body>.png). 19 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 16 and 17 (b62c0a2: smk_vest, smk_cloak) on a clean build of b62c0a2: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the puffer vest over its cream undersleeves; the cloak's short sleeves, bare forearms and jagged
   hem over the trousers); stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch8_before_after.png). The vest's neck,
@@ -2412,7 +2418,7 @@ Doing:
 - Now (on 2d2ea91): LEAD's 44 yawn pictures on Unlimited, 19 done (17 passed QA; gp_blazer and gp_bear in); next gp_star, gp_sailor,
   sp_*, bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece. WAITING ON Cal: Vega's in-game tee (black Spray Paint
   Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
+- DONE by QA (QA findings: pass). WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
   the first left a thin strip of the boy's body down his right side.
 - DONE by QA (QA findings: pass). WAITING ON QA: check b62c0a2, yawn pictures 16 and 17 (smk_vest, smk_cloak): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check aab35f3, yawn pictures 14 and 15 (smk_jacket, smk_mesh): your yawnfall.js and yawnsweep.js.
@@ -2684,9 +2690,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on b62c0a2. Done: ROOMS's yawn pictures 1-17 (pass, each with every hair and necklace; SMOKE BOMB complete); the hair
-  lock (pass). Next: ROOMS's next yawn batches (gp_blazer generating). BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools).
+- Now: on 5821095. Done: ROOMS's yawn pictures 1-19 (pass, each with every hair and necklace; SMOKE BOMB complete; GACHA POP
+  blazer and bear top); the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools). (on 5821095)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
