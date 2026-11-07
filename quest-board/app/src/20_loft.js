@@ -1258,6 +1258,12 @@ function lfPreview(r,uid){
 /* Zoom for the room preview in the upgrade screen: buttons, wheel, pinch and drag.
    Zoom survives the screen redrawing after a purchase, so the change stays in view. */
 var LFPZ={};
+/* Cal (playtest): "Is it possible to make them glow and flash for a second so we know what was just added?" The install effect
+   (lfInstallFx) tags the pieces a purchase adds with .isonew; they now pulse gold twice, about 1.3 s, instead of one faint flash. */
+(function(){var st=document.createElement("style");st.textContent="svg .isonew{animation:lfnewpulse 1.3s ease-in-out!important}"
+ +"@keyframes lfnewpulse{0%{filter:none}18%{filter:brightness(1.75) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 10px #ffc94d)}42%{filter:brightness(1.1) drop-shadow(0 0 2px #ffe08a)}66%{filter:brightness(1.75) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 10px #ffc94d)}100%{filter:none}}"
+ +"svg .isonew[filter],svg .isonew[clip-path]{animation:none!important}"/* the soft-shadow layer changes with every piece; it is not the new piece */
+ +"@media (prefers-reduced-motion:reduce){svg .isonew:not([filter]):not([clip-path]){animation:none!important;outline:2px solid #ffd36b}}";(document.head||document.documentElement).appendChild(st)})();
 function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z)return;svg.dataset.z=1;wrap.classList.add("rbigz");
   /* Cal (playtest): "zooming in makes the game lag a lot. If there's no clean way to fix this, don't allow us to zoom in so the
      experience is seamless". Room windows no longer zoom: no + and - buttons, no wheel or pinch; the room always shows whole at its
@@ -1692,7 +1698,7 @@ function lfMount(){
   if(w){var t=lfTint();if(t){var gg=document.createElementNS("http://www.w3.org/2000/svg","g");gg.innerHTML=t;w.appendChild(gg.firstChild)}}
   if(!LFV.init)lfInitView(c);else{lfClamp();lfApply()}
   lfBind(c);
-  Object.keys(LFA).forEach(function(k){var a=LFA[k];a._in=0;a._k=null;a._ph=null;a._em=null;var C=lfC(a);if(!C){if(a.pv)lfPvKeep(a);delete LFA[k];return}if(a.role=="me"&&!a.pv){try{lfRestore(a,lfSnap(a),C)}catch(e){lfRebind(a,C)}}else lfRebind(a,C);lfDraw(a,true)});
+  Object.keys(LFA).forEach(function(k){var a=LFA[k];a._in=0;a._k=null;a._ph=null;a._em=null;var C=lfC(a);if(!C){if(a.pv){try{lfPvMem(a)}catch(e){}lfPvKeep(a)}delete LFA[k];return}if(a.role=="me"&&!a.pv){try{lfRestore(a,lfSnap(a),C)}catch(e){lfRebind(a,C)}}else lfRebind(a,C);lfDraw(a,true)});
   if(!LFRAF){LFLT=performance.now();LFRAF=requestAnimationFrame(lfLoop)}
 }
 setInterval(function(){if(document.getElementById("lfwrap")&&!document.hidden){try{lfSync()}catch(e){}try{lfWeatherInit()}catch(e){}try{lfRelight()}catch(e){}}},20000);
@@ -1704,7 +1710,16 @@ var LFPCS={};
 var LFPVSNAP=null;
 function lfPvKeep(a){if(a.role!=="me"||a.pvslot==null)return;LFPVSNAP={slot:a.pvslot,t:Date.now(),sn:lfSnap(a)};
   var wa=LFA.me;if(wa&&!wa.pv&&wa.room===a.pvslot){var C=lfC(wa);if(C){try{lfRestore(wa,LFPVSNAP.sn,C)}catch(e){}}}}
-function lfPvStop(){Object.keys(LFA).forEach(function(k){var a=LFA[k];if(a.pv){var u=a.room;lfPvKeep(a);delete LFA[k];delete LFMETA[u]}})}
+/* Cal (playtest): "Adding a new upgrade resets all the NPCs positions". A purchase redraws the room window, so everyone in it
+   (not only you) is remembered for a few seconds: where they are, what they are doing, their seat and order, and their look. */
+var LFPVS={},LFPVX=["sat","wait","look","ths","want","last","gid"];
+function lfPvMem(a){var M=LFPVS[a.pvslot];if(!M||Date.now()-M.t>1500)M=LFPVS[a.pvslot]={t:Date.now(),m:{}};var x={sn:lfSnap(a),st0:a.st,arr0:a.arr};LFPVX.forEach(function(f){x[f]=a[f]});M.m[a.id]=x}
+function lfPvBack(a,C){var M=LFPVS[a.pvslot],x=M&&Date.now()-M.t<6000&&M.m[a.id];if(!x)return false;
+  C.st.forEach(function(q){if(q.by===a.id)q.by=null});/* lfPlace may have claimed another spot */
+  try{lfRestore(a,x.sn,C)}catch(e){return false}LFPVX.forEach(function(f){if(x[f]!==undefined)a[f]=x[f]});
+  [[a.st,x.st0],[typeof a.arr==="object"?a.arr:null,typeof x.arr0==="object"?x.arr0:null]].forEach(function(q){if(q[0]&&q[1])LFSF.forEach(function(f){if(q[1][f]!=null)q[0][f]=q[1][f]})});
+  if(a.st)a.st.by=a.id;a.fade=0;return true}
+function lfPvStop(){Object.keys(LFA).forEach(function(k){var a=LFA[k];if(a.pv){var u=a.room;try{lfPvMem(a)}catch(e){}lfPvKeep(a);delete LFA[k];delete LFMETA[u]}})}
 function lfPvStart(i,mm){
   lfPvStop();var r=S.base.slots[i];if(!r||!LFMETA[i])return;
   var it=mm.querySelector(".lfitems");if(!it)return;var uid=+it.getAttribute("data-i"),C=LFPCS[uid];if(!C)return;
@@ -1714,6 +1729,7 @@ function lfPvStart(i,mm){
     var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:w.visitor?0:0});
     var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
     lfPlace(a);if(a.role!=="guest"&&a.alpha<1){a.alpha=1;a.fade=0}
+    if(lfPvBack(a,C))return;
     if(a.role==="me"){var sn=null;if(LFPVSNAP&&LFPVSNAP.slot===i&&Date.now()-LFPVSNAP.t<6000)sn=LFPVSNAP.sn;else{var wa=LFA[w.id];if(wa&&wa.room===i&&!wa.pv)sn=lfSnap(wa)}
       if(sn){try{lfRestore(a,sn,C)}catch(e){}}}});
   /* The Patio window shows you and the dogs out there too (Cal): copies of the Bedroom's people for this window, each
