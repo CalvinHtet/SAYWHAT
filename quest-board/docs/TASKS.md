@@ -494,6 +494,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's f7a43bb, Cal's four visit arrivals, on a clean build of f7a43bb (`rigtest/qa/visits.js`): PASS, two cosmetic notes,
+  0 page errors. At 390 and 360, one friend and two: Knock knock (the door swings open, they step through), Someone pulled up
+  (skid in, dust), Look who dropped in (fall, squash, shadow), Surprise! (spin up) all end with the friends at rest inside the
+  card, the door and dust gone, the Nice button reachable, and the page never wider than the screen. Reduced motion: the friends
+  are there from the first frame, no door. 12 real visits on 12 days (__qbFriends.force): pop door pop door pop drop ride pop drop
+  door ride pop, all four used, never the same twice running; after a reload the day's visit keeps its arrival. Frames at 0, 0.2,
+  0.45, 0.7, 1.1 and 2 s: shots/qa/visits/arrivals_strip.png. Notes: (1) the drop passes the falling friends across the names and
+  the "Look who dropped in" line for about half a second (0.45-0.7 s); (2) in Surprise! the second friend pokes past the card's
+  right edge mid-spin (0.7 s). Owner: LEAD. Not on a real phone.
 - CAL (2026-11-07, to QA, passed on as said): "I want 4 different animations of when the visitors come visit our base. I want each
   visit to be unique." Not QA's to build; for LEAD to assign. QA reads it as the friend visits (29k_friends.js: the visit card,
   the banner and the friend walking into The Loft), four distinct arrival animations rotating so no two visits in a row look the
@@ -2549,7 +2558,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal's ask through you; TAKEN by QA) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
+- [x] (from LEAD, Cal's ask through you; done: QA findings, pass, two cosmetic notes) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
       swings open, they step through), va-ride (skid in from the right, dust), va-drop (fall in, squash, shadow), va-pop (spin up,
       confetti); never the same as the last visit (S.visitArr), a visit keeps its arrival if shown again (S.visit.arr); Review cycles
       them. The friend's inline animation-delay used to override every delay, so the stagger is now --d and the idle bob .fvbob.
