@@ -501,6 +501,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's first three yawn pictures (2dde59c nc_hoodie, 8f026ce nc_tee, 05e7c19 kp_varsity) on a clean build of 05e7c19,
+  drawn the game's own way: PASS, 0 page errors. Before (7d7c5df) they used the arms-down fallback; now each has its painted
+  arms-up stretch on both bodies, sleeves to the wrists, no tears; only the stretch frames changed, idle and walk pixel-identical
+  (shots/qa/yawn/batch1_before_after.png). Nothing stray on the tee's head. The sweep (`rigtest/qa/yawnsweep.js`): each top in
+  the stretch with all three hairstyles of each body and all 19 neck items plus none, 360 pictures: every necklace sits on the
+  chest, the hair is whole (no fallback gaps), the wings and headphones sit right (shots/qa/yawn/sheet_<top>_<body>.png).
 - QA, LEAD's yawn fallback (7d7c5df), seen while checking ROOMS's first yawn pictures: on the female body with long hair, in the
   stretch with the arms-down fallback, the hair falling over her right shoulder has a broken, comb-like edge and the top shows
   through the gaps (a white sliver on nc_tee and kp_varsity before their pictures, the yellow stripe through the hair on
@@ -2346,7 +2352,7 @@ Doing:
 - Now (on 05e7c19): LEAD's 44 yawn pictures on Unlimited, 3 done (nc_hoodie, nc_tee, kp_varsity); sm_hoodie (retry: cuffs at the
   wrists) and sv_ski generating, then nc_tank, kp_hoodie and the rest a few at a time. WAITING ON Cal: Vega's in-game tee (black
   Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
+- DONE by QA (QA findings: pass). WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
   on both bodies with every hair and necklace: no tears, sleeves to the wrists, nothing stray on the head (the tee's sheet had a drawn
   face, dropped). ROOMS checked the matrix stretch pose on both bodies.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
@@ -2608,8 +2614,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 7d7c5df. Done: LEAD's yawn fallback (pass). Next: whatever LEAD or ROOMS send. BLOCKED: the published-file checks
-  (v0.64 to v0.71) until Cal restarts QA (artifact tools).
+- Now: on 05e7c19. Done: ROOMS's first three yawn pictures (pass, with every hair and necklace); LEAD's yawn fallback (pass, one
+  note: gaps in long hair). Next: ROOMS's next yawn batches as they land. BLOCKED: the published-file checks (v0.64 to v0.71)
+  until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
