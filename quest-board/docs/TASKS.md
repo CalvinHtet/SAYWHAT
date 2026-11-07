@@ -504,6 +504,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's hairFront slot (4f30ef5) with ROOMS's front lock (30d93a9), on clean builds of bc4a575 (before) and 30d93a9 (after),
+  drawn the game's own way (`rigtest/qa/hairfront.js`, 337 pictures each): PASS, 0 page errors. The idle notch is gone: the long
+  hair's front lock now lies solid over the near sleeve, no dots, and the hoodie's yellow stripe no longer shows through it
+  (shots/qa/hairlock/before_after.png). Female, long hair, all 65 tops that fit her: idle, walk, sit and stretch all draw the lock
+  (all_tops_idle.png, all_tops_stretch.png); in the stretch it sits in front of the raised sleeve on the painted tops; on four
+  painted tops with a hood or high collar (o_puffer, nc_hoodie, sm_hoodie, sv_ski) the stretch is unchanged and reads fine. The lock
+  matches black, brown, blonde and auburn hair; hats trim it like the hair (halo mask, beanie, straw hat, bucket hat, bow), and the
+  cat hood keeps the hair inside, lock and all (colours_hats.png). Pixel-identical: the back views (8 of 8) and every other style
+  (m h1, h2, h3 and f h2, h3 with three tops in idle, walk and stretch: 45 of 45). Not on a real phone.
 - QA, ROOMS's yawn pictures 6 and 7 (bc4a575: nc_tank, kp_hoodie) on a clean build of bc4a575: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the tank's bare painted arms; the cloud hoodie's cuffs at the wrists, its lightning stripe on
   the raised sleeve); only stretch frames changed (shots/qa/yawn/batch3_before_after.png). Sweep: all hairstyles with all 19
@@ -2640,9 +2649,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 30d93a9. Doing: LEAD's hairFront slot with ROOMS's front lock: every top on f h1 (idle, walk, sit, stretch), four hair
-  colours, six hats, back views, and m h1-h3 / f h2-h3 unchanged, before (bc4a575) and after (30d93a9). Next: the verdict to LEAD
-  and ROOMS; ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
+- Now: on 30d93a9. Done: the hair lock (pass, 337 pictures before and after); ROOMS's yawn pictures 1-7 (pass). Next: ROOMS's
+  next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
