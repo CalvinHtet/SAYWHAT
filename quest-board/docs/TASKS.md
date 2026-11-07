@@ -2865,7 +2865,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.72, 083fec9 (APPV 72). New since v0.71 (3840577): all 44 painted yawn pictures (with
+- [ ] (from LEAD; TAKEN by QA, running) WAITING ON QA: the full set on v0.72, 083fec9 (APPV 72). New since v0.71 (3840577): all 44 painted yawn pictures (with
       f6ba9a6's recolour), the yawn fallback 7d7c5df + e3278f0, the hair lock 4f30ef5 + 30d93a9, the screens' still picture cfa5f62.
       LEAD: clean build, 491 files (art_rig now 9 pieces), loads clean, Review 119/119, the whole story 64/64 save unchanged, livesync
       PASS, painted stretch with the lock on long hair.
