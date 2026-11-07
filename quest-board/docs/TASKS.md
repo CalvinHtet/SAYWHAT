@@ -486,6 +486,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's v0.69 room fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4) on a clean build of 6430d13: all PASS, 0 page
+  errors. With animations off (allrooms.js, as reduced motion) the Auditorium shows its dragon-over-the-city still, the lobby its
+  NOW SHOWING times, the Boba its TODAY menu; with animations on (bigrooms.js) the slides play and no still shows under them. At
+  22:00 the Rooftop and Sky Patio are dark (the Patio lit by its string lights only). Kenan wears the same black shades in all three
+  portraits. The Bedroom rug tucks under the bed's foot; the Rhythm Room's front floor has its neon circle; the Sky Patio's wicker
+  lounge chair sits at the fire, usable. Pictures: shots/qa/v69/. Not on a real phone.
 - QA, v0.68 = e276038, the full set: PASS, nothing new broken; Cal's call whether it goes to the Test link before the placement
   list below. On a clean build of e276038 (and 428c8a5, same code but the portraits): Test > Review plays 114 of 114 at 390 on
   both bodies, no window off screen, no broken image (the save gains only an empty "seen" record); livesync.js PASS (5.1 s state,
@@ -2188,7 +2194,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 1e8a3b4): on call for Cal's playtest; QA's every-room notes (aa3a99b) taken. WAITING ON Cal: Vega's in-game tee (black
   Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
+- DONE by QA (QA findings: pass). WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
   Boba TV show a still picture when animations are off. (2) The Rooftop and Sky Patio stay dark at 22:00 (abe06dd had lit them).
   (3) Kenan's three portraits wear the same black shades as his in-game look (Cal). (4) The Bedroom rug tucks under the bed; the
   dog beds stay on the front edge (an earlier call). (5) The Rhythm Room's front floor gets a neon dance circle with the Pulsing
@@ -2435,10 +2441,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on e276038 (v0.68). Done: the v0.68 full set (PASS); Cal's ten players (PASS on e276038, portraits fixed); every room
-  against references; Cal's accessibility check (13 placement problems for ROOMS, the pinball first). Next: ROOMS's v0.69 checks
-  (86bb8b2: 62d336d screens, dbf2593 Rooftop night, a4be384 Kenan, aca27a1, 1e8a3b4) and the placement fixes as they land. Published
-  v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 6430d13. Done: ROOMS's v0.69 room fixes (pass); before that v0.68 (e276038) PASS, waiting on Cal's call to publish
+  it before the placement fixes. Next: ROOMS's fixes for Cal's 13 placement problems (the pinball first) as they land, then the
+  v0.69 full set. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
