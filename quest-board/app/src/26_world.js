@@ -354,7 +354,7 @@ LFROOM.restaurant=function(C){
   if(H("r_d4")&&!noir)lfSpr(C,"w_neonrs",st>0?Wi-2.2:1.0,.05,.1,.05,{h:1,flip:1,H:54,dy:-84,nosh:1});
   /* re-audit 2026-11-07: 26 px tall it changed 0.06% of the room and Noir hid it; bigger, lower, in every style */
   if(H("r_chef"))lfSpr(C,"rs_chef",st>0?Wi+5.3:Wi-1.3,.05,.1,.05,{h:1,flip:1,H:58,dy:-116,nosh:1});/* past the order board and the two menu boards; the first kitchen is too narrow, so there it hangs on the dining wall by the pass */
-  if(H("r_star"))lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:64,dy:-86,nosh:1});/* QA audit: bigger and lower, readable on a phone */
+  if(H("r_star")){lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,2.45,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
   if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
   var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.12;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
@@ -376,7 +376,8 @@ LFROOM.restaurant=function(C){
   if(H("r_till")&&!fine){var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48"),dc=lfP(bx0+.21,by0+.36,39);
     C.add(bx0+by0+.8+.05,cb+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="2.2" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".5"/>')}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
-  if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.9,1.25,.5,.45,1,{flip:1,dy:-34,nosh:1,dk:-.5});
+  /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now at the front end, a little bigger */
+  if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.62,2.12,.55,.5,1,{flip:1,dy:-34,nosh:1,dk:.5});
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
@@ -397,7 +398,7 @@ LFROOM.restaurant=function(C){
   lfWander(C,[[Wi-3,1.6,-1],[Wi*.6,D*.72,1],[Wi-1.6,D*.62,-1]]);
   /* light */
   /* QA audit: Brass Chandeliers drew only in the biggest room (in the smaller ones buying them just took the bulb away) */
-  if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-126,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
+  if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.7,p[1]-.7,1.4,1.4,{h:1,dy:-118,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)/* re-audit 2026-11-07: 0.2% by day, now 1.4 tiles and a little lower */});
   if(H("r_l1"))(st===0?[1.6]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
