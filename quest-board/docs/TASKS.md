@@ -1917,10 +1917,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on a199020): TAKEN QA's GACHA POP fix: repainting gp_cathood so its back has outline, seams and shading, not a flat blob
-  (art/raw, art/layers, art/app gp_cathood). The overalls' and shorts' bib under every top: proposed to LEAD a pants flag drawing that
-  layer after the top (no art split needed); ROOMS adds the flag to gp_overall and gp_shorts once LEAD names it. Also SAVE POINT (sp_*,
-  brand id sp): 15 ids added to data/items.json, not committed; varsity jacket, button tee and PLAYER 2 ringer tee generating.
+- Now (on d4d8fd8): TAKEN QA's GACHA POP fix: repainting gp_cathood so its back has outline, seams and shading, not a flat blob
+  (art/raw, art/layers, art/app gp_cathood). The overalls' and shorts' bib: "overTop": true is on gp_overall and gp_shorts in d4d8fd8
+  (LEAD's flag; LEAD commits the rig side, pantsOver after top). Also SAVE POINT (sp_*, brand id sp): 15 ids in data/items.json
+  (d4d8fd8); varsity jacket, button tee and PLAYER 2 ringer tee generating.
   Next: the other 12 SAVE POINT pieces, badge, banner, one commit, QA. Then BARD & BLADE. Brand runway: OK, 45 days. Chrome: ROOMS.
 - DONE by QA (QA findings: 14 of 15, the cat hood's back; the overalls' bib). WAITING ON QA: wear test GACHA POP, 03274a7 (brand id gp; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless:
   idle and walk1 load 29 of 29 with 0 failures; backwalk1 for the wings, hood, bear, sailor, bunny, bow and shades looks right.
