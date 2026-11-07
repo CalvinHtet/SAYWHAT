@@ -494,6 +494,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.70 = 10240e8 (APPV 70), the full set: PASS, publish, 0 page errors anywhere. On a clean build of 10240e8: unlockall.js
+  PASS (fresh and mid-game saves; Next story step "The story has no steps left"; every upgrade in every room buys through; it gives
+  the openers' prerequisites bd_ward1, bd_win2, bd_win3 and r_t1-r_t3 up front, as buying the openers would, so those six are not
+  seen being bought); the whole story re-read, 64 parts in order, all 8 notes from c5739a7 fixed (one leftover: Rafe's title still
+  says "Travelling" while the rest now spells favor, parlor); Test > Review 119 of 119 on both bodies at 390, nothing off screen or
+  broken. On 396376b (the same code outside the story, welcomes and tester): livesync, live10 and players10 PASS; alerts, FX, room
+  windows, bar rule PASS; badges all from the pack; drops PASS (0 repeats in 192 rerun slots); all 21 rooms buy through; only the
+  Bedroom has a lamp; every business at most 5, no duplicate looks. Not on a real phone.
 - QA, LEAD's 90d5653 (QA's two arrival notes) on a clean build of 90d5653: PASS. visits.js now also checks every frame (0, 0.2,
   0.45, 0.7, 1.1, 2 s) that no friend's visible picture crosses the names or the card's edge; it caught both on f7a43bb (drop and
   pop at 0.45 and 0.7 s) and finds none on 90d5653, at 360 and 390, one friend and two; reduced motion and the 12-visit rotation
@@ -2555,9 +2563,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 797d435. Done: Cal's four visit arrivals (f7a43bb, pass, two cosmetic notes); on v0.70 (10240e8): unlockall.js PASS,
-  the whole story re-read (64 parts, all 8 notes fixed), Review body m 119/119. Doing: Review body f on 10240e8 and the rest of the
-  full set on 396376b. Next: the v0.70 verdict to LEAD. Published-file checks BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 1fefb41. Done: v0.70 (10240e8) full set PASS, publish; Cal's visit arrivals and their fix (90d5653) pass, for v0.71.
+  Next: v0.71 when LEAD builds it; the published-file checks (v0.64, v0.65, v0.67, v0.69, v0.70) BLOCKED until Cal restarts QA
+  (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -2568,7 +2576,7 @@ To do:
       them. The friend's inline animation-delay used to override every delay, so the stagger is now --d and the idle bob .fvbob.
       LEAD: 12 visits used all four with 0 repeats; rigtest/lead/visitarrivals.js measures each one's path; shots/lead/visits/.
       Please check one and two friends at 360 and 390, and reduced motion. For v0.71.
-- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.70, now 10240e8 (APPV 70; 396376b plus your story-read fixes: Theater in the mall's end unit, Rhythm upstairs and VR next door, four new welcomes, Sable before Rafe on the Old Metro, the amulet line, parlor/favor/favorite, Loft welcome "Soon", Lair and Closet before Sable in Play the whole story, Speakeasy out of the tester), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
+- [x] (from LEAD; done: QA findings, PASS on 10240e8, publish) WAITING ON QA: the full set on v0.70, now 10240e8 (APPV 70; 396376b plus your story-read fixes: Theater in the mall's end unit, Rhythm upstairs and VR next door, four new welcomes, Sable before Rafe on the Old Metro, the amulet line, parlor/favor/favorite, Loft welcome "Soon", Lair and Closet before Sable in Play the whole story, Speakeasy out of the tester), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
       everything (0f7ce90) with your two fixes (Next story step skips the Speakeasy; the tester owns an opener's prerequisites, so
       bd_ward1 comes with bd_ward2), the story in order (40c4b14: Desmond after White Linen, Nova after the Clothing Store, Review >
       Play the whole story). Please rerun unlockall.js and read the whole story through for sense.
