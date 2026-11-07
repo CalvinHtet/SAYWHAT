@@ -504,6 +504,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 31 (8fe507c: cr_trench, second paint, cut with --pastel) on a clean build of 8fe507c: PASS, 0 page
+  errors. It stretches arms-up on both bodies; stretch frames 3 to 21 changed, nothing else. Colour, idle against stretch on the
+  usual, hot-pink and light backgrounds: the same holographic pastel, no dark smudges, nothing showing through
+  (shots/qa/yawn/batch17_idle_stretch_3bg.png); coat median (178,199,245) idle and (185,202,243) stretch on the boy,
+  (184,203,240) and (192,205,240) on the girl; semi-transparent coat pixels 0 idle, 5 and 2 stretch (edge only). ROOMS's question,
+  body beside the belt and under the boy's near armpit: QA's call is pass, no third paint. In the game it is a thin tan sliver,
+  at most 2 px a row and about 10 px in all on the boy; with short hair, 2 px on the girl. Skin-coloured pixels in the waist band
+  are 2 and 13 against 36 to 297 on passed tops (cr_trench_waist.png, frames 9, 12 and 15 at 4x). Sweep: all hairstyles with
+  all 19 neck items plus none, 120 pictures, all clean (sheet_cr_trench_<body>.png). 31 of the 44 done and checked.
 - QA, ROOMS's yawn picture 30 (1cc42bc: cr_bomber, CHROME RAIN) on a clean build of 1cc42bc: PASS, 0 page errors. It stretches
   arms-up on both bodies (glossy black, cyan piping); stretch frames 3 to 21 changed, nothing else
   (shots/qa/yawn/batch16_before_after.png). Green fringe from the paler mint sheet: in the art, 78 (boy) and 52 (girl) of about
@@ -2471,7 +2480,7 @@ Doing:
 - Now (on 8fe507c): LEAD's 44 yawn pictures on Unlimited, 31 done (30 passed QA; cr_trench in); next cr_mesh, cr_vest (designs to
   render), km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
+- DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
   and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
   Your call whether that passes; if not I repaint.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 1cc42bc, yawn picture 30 (cr_bomber): your yawnfall.js and yawnsweep.js.
@@ -2756,9 +2765,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 7aa5d30. Done: ROOMS's yawn pictures 1-30 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT and BARD & BLADE complete, CHROME RAIN bomber); savecheck and screens (360, 390) on 4287952 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 25cc05e). Next: cr_trench (repainting, cut with --pastel): idle against stretch colour on hot pink and light. (on 7aa5d30)
+- Now: on 509af57. Done: ROOMS's yawn pictures 1-31 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT and BARD & BLADE complete, CHROME RAIN bomber and trench); savecheck and screens (360, 390) on 4287952 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 25cc05e). Next: cr_mesh and cr_vest when ROOMS sends them. (on 509af57)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
