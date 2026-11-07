@@ -360,9 +360,9 @@ LFROOM.restaurant=function(C){
   if(H("r_star")){lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,2.45,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
   if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
-  var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.12;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
-  /* re-audit 2026-11-07 (0.37%): the Grand French Range's art is square, but it was drawn in the old range's footprint behind the pot rack; wider now */
-  var cookAt=H("r_k8")?back("rsx_grand",1.7,1.05,34):back(H("r_k1")?"rsx_range":"rsx_hotplate",1.3,1.0,30);C.s("work",cookAt,1.5,-1,"work",[8,16],{tag:"cook"});
+  var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.08;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
+  /* re-audit 2026-11-07 (0.37%): the Grand French Range's art is square, but it was drawn in the old range's footprint behind the pot rack; wider now (1.5, gaps .08: QA b296529, at 1.7 the full row pushed the pizza oven past the right wall) */
+  var cookAt=H("r_k8")?back("rsx_grand",1.5,1.05,34):back(H("r_k1")?"rsx_range":"rsx_hotplate",1.3,1.0,30);C.s("work",cookAt,1.5,-1,"work",[8,16],{tag:"cook"});
   back(H("r_k3")?"rsx_fridge":"rsx_minifridge",1.1,.9,50);
   if(st>0){if(H("r_k4"))back("rsx_grill",1.6,1.0,40);if(H("r_k5"))back("rsx_fryer",1.9,1.0,30);
     if(st>1&&H("r_k7")){var ov=back("rsx_oven",1.7,1.2,44);C.s("work",ov,1.8,-1,"work",[6,12],{tag:"oven"});lfLight(C,ov,1.0,40,"#ff9a3a",1.4,.5)}
