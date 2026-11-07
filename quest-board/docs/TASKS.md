@@ -2571,7 +2571,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA, small check: 19ef0d9, phone lag. Cal's iPhone (diag/perf, APPV 67): Game Room window 38 fps, worst 421 ms;
+- [ ] (from LEAD; TAKEN by QA) WAITING ON QA, small check: 19ef0d9, phone lag. Cal's iPhone (diag/perf, APPV 67): Game Room window 38 fps, worst 421 ms;
       Restaurant window 38 fps, worst 214 ms; the Loft alone 57 fps. Cause: the UI effects behind the window kept animating. Fix: while
       any #layer .modal is open, #app, .nav and .fxo animations are paused (index.html). LEAD at CPU x4, 440x840 dpr 3: Game Room 25 ->
       60 fps, Restaurant 31 -> 60, worst 17 ms; they resume on close; the window's own animations run (rigtest/lead/roomperf.js).
