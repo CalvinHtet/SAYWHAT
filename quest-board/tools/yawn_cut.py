@@ -1,7 +1,9 @@
 """Cut a painted-pose sheet (both bodies side by side, 16:9) into the rig's two frame-sized layers.
 
   yawn_cut.py body <sheet.png> <template_body.png> <out_dir> [<name>]
-  yawn_cut.py item <sheet.png> <template_body.png> <out_dir> <id>
+  yawn_cut.py item <sheet.png> <template_body.png> <out_dir> <id> [--pastel]
+
+--pastel keys only low-green magenta, for garments with pink highlights the default key would thin and grey (cr_trench).
 
 The sheet was painted over a template from rigtest/template.html (?pose=stretch&scale=4: 2880x1656, man left, woman right)
 padded 32 px each side to 2944x1656 for the generator's 16:9. It is scaled back to that, unpadded and split.
@@ -21,13 +23,17 @@ from scipy import ndimage as ndi
 PAD, FW, FH, OUT = 32, 1440, 1656, (720, 828)
 
 
-def key(rgb, magenta):
+def key(rgb, magenta, pastel=False):
     a = rgb.astype(float)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     green = np.clip((g - np.maximum(r, b) - 30) / 60, 0, 1)
     alpha = 1 - green
     if magenta:
         mag = np.clip((np.minimum(r, b) - g - 60) / 60, 0, 1)
+        if pastel:
+            # garments with pink highlights (holographic, candy): the mannequin's flat magenta and its dark outline both have
+            # little green, a pastel pink has plenty, so only low-green magenta is keyed (fades out between g 70 and 100)
+            mag = mag * np.clip((100 - g) / 30, 0, 1)
         alpha = alpha * (1 - mag)
     out = a.copy()
     # despill: green fringe pulled back to neutral
@@ -41,11 +47,13 @@ def key(rgb, magenta):
 
 
 def main():
-    mode, sheet, tmpl, out_dir = sys.argv[1:5]
-    name = sys.argv[5] if len(sys.argv) > 5 else "base"
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    pastel = "--pastel" in sys.argv
+    mode, sheet, tmpl, out_dir = args[:4]
+    name = args[4] if len(args) > 4 else "base"
     im = Image.open(sheet).convert("RGB").resize((FW * 2 + 2 * PAD, FH), Image.LANCZOS)
     im = im.crop((PAD, 0, PAD + FW * 2, FH))
-    rgb, alpha = key(np.asarray(im), mode == "item")
+    rgb, alpha = key(np.asarray(im), mode == "item", pastel)
     t = np.asarray(Image.open(tmpl).convert("RGBA"))[..., 3] > 40
     for i, body in enumerate(("m", "f")):
         sl = slice(i * FW, (i + 1) * FW)
