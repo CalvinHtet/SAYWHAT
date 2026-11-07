@@ -2033,11 +2033,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 39407f1): SØLVBERG (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): 15 ids added to data/items.json (not committed;
-  the mitten clips use the "arms" slot). Two changes from the list, both to stay clear of real marks: the badge avoids a red cross on
-  white (a protected emblem), and the "moon boots" become puffer snow boots (sv_puffer). Ski jacket, Nordic sweater and quilted vest
-  generating. Files: data/items.json, art/raw, art/layers, art/app sv_*. Next: the other 12, badge, banner, one commit, QA.
-  Then RATTLER. Brand runway: OK. Chrome: ROOMS.
+- Now (on 60ed38e): SØLVBERG (sv_*, brand id sv): 5 of 15 ingested locally (ski jacket, Nordic sweater, quilted vest, fleece
+  half-zip, snow pants), not committed; ski leggings and cord trousers generating. The badge avoids a red cross on white and the moon
+  boots are puffer snow boots (sv_puffer), to stay clear of real marks. Files: data/items.json, art/raw, art/layers, art/app sv_*.
+  Next: the hats, scarf, mitten clips, three boots, badge, banner, one commit, QA. Then RATTLER. Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: pass; the badge ring is still green). WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
   every green stripe to navy: headband, wristbands, track jacket and pants, skirt hem, tube socks, tennis vest, the crop's second
   racket, the cap button and the badge ring. ROOMS checked headless: idle and backwalk1, 17 of 17 with 0 failures. LEAD gets the new
