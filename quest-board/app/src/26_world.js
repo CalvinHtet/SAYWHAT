@@ -343,9 +343,11 @@ LFROOM.restaurant=function(C){
   if(!(H("r_d3")&&!noir&&st>0))[["r_m1","BREAKFAST",["Eggs","Pancakes"]],["r_m2","BURGERS",["Burger","Fries"]]].forEach(function(m,i){if(!H(m[0]))return;
     var c='<rect x="-2" y="-2" width="34" height="30" rx="1.5" fill="#6a4426" stroke="'+LFOL+'" stroke-width=".7"/><rect width="30" height="26" fill="#1d2a26"/><text x="15" y="7.5" text-anchor="middle" font-size="5" font-weight="700" fill="#ffd27a" font-family="Arial">'+m[1]+'</text>'+m[2].map(function(t,k){return '<text x="3" y="'+(15+k*7)+'" font-size="4.6" fill="#d8efe6" font-family="Arial">'+t+'</text>'}).join("");
     C.walls.push(lfFaceY(Wi+2.65+i*1.05,0,118,'<g transform="scale(.8)">'+c+'</g>'))});
-  if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.2,.02,1.8,.1,1,{flip:1,H:58,dy:-58,nosh:1});
+  /* Cal (playtest): the double shelf was mirrored for the other wall, so it crossed the trim. Unmirrored it runs along the back
+     wall, seated above the wainscot */
+  if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.6,.02,1.8,.1,1,{H:58,dy:-74,nosh:1});
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
-  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,132,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),100,noir)));
+  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,130,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),66,noir)));/* Cal (playtest): "Make the tasting menu rectangular so it's not extending to the floor": 66 high, wholly above the wainscot rail */
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
   /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});

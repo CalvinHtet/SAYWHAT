@@ -1259,9 +1259,12 @@ function lfPreview(r,uid){
    Zoom survives the screen redrawing after a purchase, so the change stays in view. */
 var LFPZ={};
 function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z)return;svg.dataset.z=1;wrap.classList.add("rbigz");
-  var base=svg.getAttribute("viewBox").split(" ").map(Number),key=base.join(" "),MAX=5;wrap.style.setProperty("aspect-ratio",base[2]+" / "+base[3],"important");wrap.style.setProperty("height","auto","important");
+  /* Cal (playtest): "zooming in makes the game lag a lot. If there's no clean way to fix this, don't allow us to zoom in so the
+     experience is seamless". Room windows no longer zoom: no + and - buttons, no wheel or pinch; the room always shows whole at its
+     fitted size (a frame too short for it still drags up and down). */
+  var base=svg.getAttribute("viewBox").split(" ").map(Number),key=base.join(" "),MAX=1;wrap.style.setProperty("aspect-ratio",base[2]+" / "+base[3],"important");wrap.style.setProperty("height","auto","important");
   /* widest zoom: the room reaches both sides of the frame. If the frame is too short for all of it, drag up and down. */
-  var ar=Math.min(base[3]/base[2],(wrap.clientHeight/wrap.clientWidth)||base[3]/base[2]),v0=[base[0],base[1]+(base[3]-base[2]*ar)*.42,base[2],base[2]*ar],v=(LFPZ[key]||v0).slice();
+  var ar=Math.min(base[3]/base[2],(wrap.clientHeight/wrap.clientWidth)||base[3]/base[2]),v0=[base[0],base[1]+(base[3]-base[2]*ar)*.42,base[2],base[2]*ar],v=v0.slice();
   var clamp=function(){v[0]=Math.min(base[0]+base[2]-v[2],Math.max(base[0],v[0]));v[1]=Math.min(base[1]+base[3]-v[3],Math.max(base[1],v[1]))};
   /* LEAD (Cal, 2026-11-06: "zooming in on any room drastically reduces frame rate"; ROOMS OK'd). Setting the viewBox redraws the
      whole room at the zoomed size, 80 to 150 ms a step at CPU x4. While a finger moves, the drawn picture is moved and scaled as
@@ -1273,15 +1276,15 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
     var k=(svg.clientWidth||wrap.clientWidth)/v[2];svg.style.transformOrigin="0 0";svg.style.willChange="transform";
     svg.style.transform="translate("+((c[0]-v[0])*k).toFixed(2)+"px,"+((c[1]-v[1])*k).toFixed(2)+"px) scale("+(c[2]/v[2]).toFixed(4)+")";clearTimeout(T);T=setTimeout(commit,140)};
   var zoom=function(f,fx,fy,live){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show(live)};
-  var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML='<button type="button" aria-label="Zoom in">+</button><button type="button" aria-label="Zoom out">−</button><button type="button" aria-label="Reset zoom">◎</button>';wrap.appendChild(ctl);
-  show();ctl.children[0].onclick=function(){zoom(1.4,.5,.5)};ctl.children[1].onclick=function(){zoom(1/1.4,.5,.5)};ctl.children[2].onclick=function(){v=v0.slice();show()};
+  var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML="";wrap.appendChild(ctl);
+  show();
   if(wrap.dataset.room!=null&&lfLightUseful()&&(bslot(+wrap.dataset.room)||{}).t==="bedroom"){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
+  if(!ctl.children.length)ctl.remove();/* only the Bedroom keeps a control there, its lamp */
   var at=function(e){var r=svg.getBoundingClientRect();return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
-  svg.addEventListener("wheel",function(e){e.preventDefault();var q=at(e);zoom(Math.exp(-e.deltaY*.0022),q[0],q[1])},{passive:false});
   var P={},pinch=0,R=null;
   svg.addEventListener("pointerdown",function(e){if(T)commit();P[e.pointerId]=[e.clientX,e.clientY];try{svg.setPointerCapture(e.pointerId)}catch(_){}pinch=0;R=svg.getBoundingClientRect()});
   svg.addEventListener("pointermove",function(e){var o=P[e.pointerId];if(!o)return;var ids=Object.keys(P),r=R||svg.getBoundingClientRect();
-    if(ids.length===2){P[e.pointerId]=[e.clientX,e.clientY];var A=P[ids[0]],B=P[ids[1]],d=Math.hypot(A[0]-B[0],A[1]-B[1]);if(pinch)zoom(d/pinch,((A[0]+B[0])/2-r.left)/r.width,((A[1]+B[1])/2-r.top)/r.height,true);pinch=d;return}
+    if(ids.length===2){P[e.pointerId]=[e.clientX,e.clientY];return}
     var dx=e.clientX-o[0],dy=e.clientY-o[1];P[e.pointerId]=[e.clientX,e.clientY];
     // Not zoomed in, a drag should scroll the screen as usual.
     if(v[2]>=base[2]-.01&&v[3]>=base[3]-.01){var sc=wrap.closest(".modal")||wrap.parentElement;if(sc)sc.scrollTop-=dy;return}
@@ -1644,7 +1647,9 @@ function lfClamp(){var c=document.getElementById("lfwrap");if(!c)return;var cw=c
 var LFNAVC={t:0,v:0};
 function lfNavCover(c){var t=Date.now();if(t-LFNAVC.t<1500)return LFNAVC.v;LFNAVC.t=t;var n=document.querySelector(".nav");
   LFNAVC.v=n?Math.max(0,Math.round(c.getBoundingClientRect().bottom-n.getBoundingClientRect().top)):0;return LFNAVC.v}
-function lfZoomAt(f,cx,cy){var n=Math.min(2.6,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
+/* Cal (playtest): zooming in lagged. The street and building views keep their controls but stop at 1.6x (was 2.6x) */
+var LFZMAX=1.6;
+function lfZoomAt(f,cx,cy){var n=Math.min(LFZMAX,Math.max(lfMinS(),LFV.s*f));f=n/LFV.s;LFV.x=cx-(cx-LFV.x)*f;LFV.y=cy-(cy-LFV.y)*f;LFV.s=n;lfClamp();lfApply()}
 window.__qbLoft=function(){return {fx:typeof LFFX!=="undefined"?LFFX:null,defs:typeof ROOMDEF!=="undefined"?ROOMDEF:null,A:LFA,V:LFV,apply:lfApply,clamp:lfClamp,go:lfGo,C:lfC,P:lfP,arrive:lfArrive,draw:lfDraw,route:lfRoute,seatish:lfSeatish,blocked:lfBlockedAt,rerender:render,roomCtx:lfRoomCtx,roomSvg:lfRoomSvg,addons:ADDONS,roomT:ROOMT}};
 /* Zoomed all the way out, the whole street fits the width of the screen. */
 function lfMinS(){var c=document.getElementById("lfwrap"),cw=(c&&c.clientWidth)||360;return Math.min(.32,cw/((window.LFWW||2400)+120))}
@@ -1661,7 +1666,7 @@ function lfBind(c){
     if(Object.keys(P).length===1){var p=P[e.pointerId];drag={x:p[0],y:p[1],vx:LFV.x,vy:LFV.y}}
     else if(Object.keys(P).length===2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),s:LFV.s,cx:(a[0]+b[0])/2,cy:(a[1]+b[1])/2,vx:LFV.x,vy:LFV.y};drag=null;moved=99}});
   c.addEventListener("pointermove",function(e){if(!P[e.pointerId])return;P[e.pointerId]=pt(e);
-    if(pinch&&Object.keys(P).length>=2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);var n=Math.min(2.6,Math.max(lfMinS(),pinch.s*d/pinch.d)),f=n/pinch.s;LFV.s=n;LFV.x=pinch.cx-(pinch.cx-pinch.vx)*f;LFV.y=pinch.cy-(pinch.cy-pinch.vy)*f;lfClamp();lfApply();return}
+    if(pinch&&Object.keys(P).length>=2){var k=Object.keys(P),a=P[k[0]],b=P[k[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);var n=Math.min(LFZMAX,Math.max(lfMinS(),pinch.s*d/pinch.d)),f=n/pinch.s;LFV.s=n;LFV.x=pinch.cx-(pinch.cx-pinch.vx)*f;LFV.y=pinch.cy-(pinch.cy-pinch.vy)*f;lfClamp();lfApply();return}
     if(drag){var p=P[e.pointerId],dx=p[0]-drag.x,dy=p[1]-drag.y;if(moved||Math.hypot(dx,dy)>6){if(!moved){try{c.setPointerCapture(e.pointerId)}catch(x){}}moved=1;c.classList.add("grab");LFV.x=drag.vx+dx;LFV.y=drag.vy+dy;lfClamp();lfApply()}}});
   function up(e){if(!P[e.pointerId])return;delete P[e.pointerId];
     if(!Object.keys(P).length){c.classList.remove("grab");
