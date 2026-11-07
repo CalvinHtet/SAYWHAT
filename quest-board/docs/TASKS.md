@@ -2084,7 +2084,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on abe06dd): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- Now (on 93d33f1): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- WAITING ON QA: check 93d33f1, Cal's Restaurant notes in every business. (1) No two identical customers in one room, and fewer: one or
+  two stay, more about halved, five at most (`lfGuestN`). (2) Chair shadows sized to the chair; beds and sofas unchanged. (3) The
+  Sidewalk Sign is now the Open Sign: chalkboard plus a neon OPEN in the first window (not in Noir). ROOMS checked headless: Restaurant,
+  Boba, Dessert, Arcade, Theater, Mall and Club sampled 12 times each in the building views, 0 duplicates, at most 5; stage-1
+  Restaurant 2. Not checked: the Auditorium, Speakeasy, Bowling, Karaoke, VR and Rooftop one by one, and phones.
 - DONE by QA (QA findings: pass). WAITING ON QA: check abe06dd, night lights (Cal: only the Bedroom needs a light switch). At 10 pm: every room but the Bedroom draws lit with
   no lamp button (window and building view); the Bedroom stays dark until its lamp is on, and its button and saved rm.lit work as
   before. ROOMS checked headless: Bedroom off and on, Lounge, Restaurant, the Loft and Plaza building views, 0 page errors.
