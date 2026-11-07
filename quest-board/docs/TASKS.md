@@ -465,6 +465,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's f843b25 BARD & BLADE wear test (on efaf4ec; `shots/qa/bb/`): 15 of 15 pass, two rig notes. All 15 on both bodies (the
+  skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the bracers follow both arms, in the new arms
+  slot, over sleeves; from behind the far arm's bracer sits as a rough patch beside the body in sitBack and type1, the same as that
+  arm's sleeves (rig, LEAD's, known). (2) The travel cloak hangs right in walks, sitting and sleep with no sliver; in stretch and
+  stretchUp a few brown flecks fray at the wrists, the same armpit raggedness every top has at that pose (LEAD's open rig item, not
+  the art). (3) The wizard hat, (4) the ranger hood (its back now has a seam and folds) and the circlet sit right with long hair and
+  the ponytail, front, back and asleep. (5) The tool-belt skirt's belt and pouch show over the doublet. (6) The crystal: no outline
+  left. Designs read as generic fantasy (no single game's costume); badge, banner and icons clean. Shop rows not in yet (no gx_bb_),
+  so the Shop run waits on LEAD. Owner: ROOMS (done), LEAD (rows; the far-arm and wrist raggedness stay with the rig rework).
 - QA, LEAD's 23bf14f rig slot "arms" (on 6c4bba2; small check, no request was posted): no regression. Ten existing outfits (tees,
   jackets, hoodie, overalls over a tee, pendant over a hoodie, puffer, boots, flares, the halo mask, the cassette bag), both bodies,
   all 22 poses, pixel-compared against 92fbe67: 0 pixels differ. The slot itself gets its real test with BARD & BLADE's bracers.
@@ -1964,7 +1973,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on f843b25): BARD & BLADE is done in f843b25. Next: CHROME RAIN (cr_*, brand id cr): add its 15 ids to data/items.json,
   then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app cr_*. Then the ten. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: wear test BARD & BLADE, f843b25 (brand id bb; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
+- DONE by QA (QA findings: 15 of 15, two rig notes for LEAD). WAITING ON QA: wear test BARD & BLADE, f843b25 (brand id bb; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on f100e51: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye; the travel cloak, mantle,
   circlet, crystal and bracers also in stretch and sleep. Look hardest at: the bracers in the new "arms" slot (LEAD 23bf14f; the far
   one is ragged from behind in type1, like that arm's sleeves); the travel cloak in stretch and walks (knee length, my earlier cloak
@@ -2158,7 +2167,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD (RELEASING has the steps). SAVE POINT 15 of 15; the new arms slot changes nothing existing. Next: BARD & BLADE when ROOMS sends it. (on 6c4bba2)
+- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. BARD & BLADE 15 of 15; its Shop run waits on LEAD's rows. (on efaf4ec)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
