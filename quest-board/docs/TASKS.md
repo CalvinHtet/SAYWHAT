@@ -2542,7 +2542,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.70, 396376b (APPV 70), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
+- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.70, 396376b (APPV 70), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
       everything (0f7ce90) with your two fixes (Next story step skips the Speakeasy; the tester owns an opener's prerequisites, so
       bd_ward1 comes with bd_ward2), the story in order (40c4b14: Desmond after White Linen, Nova after the Clothing Store, Review >
       Play the whole story). Please rerun unlockall.js and read the whole story through for sense.
