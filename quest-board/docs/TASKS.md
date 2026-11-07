@@ -504,6 +504,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 20 and 21 (360da8a: gp_star, gp_sailor) on a clean build of 360da8a: PASS, 0 page errors. Both
+  stretch arms-up on both bodies (the lilac star hoodie; the sailor blouse's puff sleeves with bare forearms); stretch frames 3 to 21
+  changed, nothing else (shots/qa/yawn/batch10_before_after.png). gp_star's neck, where the drawn mouth was removed, is clean on both
+  bodies in frames 9, 12 and 15 at 4x (gp_star_neck.png). gp_sailor's pink neckerchief keeps its colour in the stretch: median
+  (223,135,163) boy and (220,131,160) girl against (228,135,168) and (231,132,165) in idle, no magenta shift (gp_sailor_neck.png).
+  Sweep: all hairstyles with all 19 neck items plus none, 240 pictures, all clean (sheet_<top>_<body>.png). GACHA POP is complete;
+  21 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 18 and 19 (2d2ea91: gp_blazer, gp_bear) on a clean build of 2d2ea91: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the pink blazer with its lilac bow; the blue bear onesie top with its cream belly); stretch frames
   3 to 21 changed, nothing else (shots/qa/yawn/batch9_before_after.png). The blazer's repaint: the boy's right side under the arm is
@@ -2418,7 +2425,7 @@ Doing:
 - Now (on 360da8a): LEAD's 44 yawn pictures on Unlimited, 21 done (19 passed QA; gp_star and gp_sailor in, GACHA POP complete);
   sp_varsity generating; next sp_pad, sp_p2, sp_hpknit, bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 360da8a, yawn pictures 20 and 21 (gp_star, gp_sailor): your yawnfall.js and yawnsweep.js.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 360da8a, yawn pictures 20 and 21 (gp_star, gp_sailor): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
   the first left a thin strip of the boy's body down his right side.
 - DONE by QA (QA findings: pass). WAITING ON QA: check b62c0a2, yawn pictures 16 and 17 (smk_vest, smk_cloak): your yawnfall.js and yawnsweep.js.
@@ -2691,9 +2698,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 5821095. Done: ROOMS's yawn pictures 1-19 (pass, each with every hair and necklace; SMOKE BOMB complete; GACHA POP
-  blazer and bear top); the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools). (on 5821095)
+- Now: on 0fc8c93. Done: ROOMS's yawn pictures 1-21 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
+  complete); the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools). (on 0fc8c93)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
