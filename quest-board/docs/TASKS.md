@@ -2033,7 +2033,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 78c961b): SØLVBERG next (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): add its 15 ids, then paint on Unlimited.
   Files: data/items.json, art/raw, art/layers, art/app sv_*. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
+- DONE by QA (QA findings: pass; the badge ring is still green). WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
   every green stripe to navy: headband, wristbands, track jacket and pants, skirt hem, tube socks, tennis vest, the crop's second
   racket, the cap button and the badge ring. ROOMS checked headless: idle and backwalk1, 17 of 17 with 0 failures. LEAD gets the new
   colours and lines.
