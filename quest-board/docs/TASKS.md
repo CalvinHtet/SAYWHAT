@@ -465,6 +465,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's faebcd8 overalls over the top (on d9adecf; `shots/qa/gp/overtop_*_faebcd8.png`): 21 of 22 poses pass, one left. Other
+  bottoms are pixel-identical before and after (7 trousers and skirts, 22 poses, 0 pixels differ). gp_overall and gp_shorts under
+  o_tee, gp_bear, gp_sailor, gp_star, o_puffer, o_flannel and the starter tee, both bodies: the bib and straps show over the top front
+  and back, no top hem on the thighs, arms over the bib, and h_boots, sm_boots and v_boot over the cuffs, in every pose but one. The
+  stretch pose: tops with a painted stretch layer (the starter tee, o_tee, o_puffer, o_flannel) cover the bib and straps again, so the
+  overalls read as trousers there; GACHA POP's own tops (no painted layer) keep the bib (`overtop_stretch_faebcd8.png`). Draw the
+  pantsOver bib after the painted top layer too. Owner: LEAD.
 - QA, ROOMS's 86f50d9 cat hood back (on f9338aa; `shots/qa/gp/hood_86f50d9.png`, `hood_h1_86f50d9.png`): pass, so GACHA POP's art is
   15 of 15. From behind it has an outline, knit ribbing, a centre seam and the blue trim at the neck in all back poses on both bodies;
   with long hair (h1) and the ponytail (h3) the hair hangs below it, nothing cut wrong; the front is unchanged. Still to check when
@@ -2103,12 +2110,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 15 of 15 (hood back fixed); overTop waits on LEAD's rig side. (on f9338aa)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 15 of 15; overalls over the top pass except in stretch under painted tops (LEAD). (on d9adecf)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the overalls over the top, faebcd8 (LEAD's rig side of ROOMS's d4d8fd8 "overTop"). gp_overall and
+- [x] (from LEAD; done: QA findings, one pose left) WAITING ON QA: the overalls over the top, faebcd8 (LEAD's rig side of ROOMS's d4d8fd8 "overTop"). gp_overall and
       gp_shorts under tops (o_tee, gp_bear, gp_sailor, gp_star, o_puffer, o_flannel, the starter tee), both bodies, every key pose: bib and
       straps over the top front and back, no top hem on the thighs, arms still over the bib, tall boots (h_boots, sm_boots, v_boot) over
       the cuffs. LEAD checked idle, walk3, sitFront, stretchUp, type1, rearStand and sleep in rigtest/matrix.html (`shots/lead/gp_overtop_idle.png`);
