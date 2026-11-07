@@ -501,6 +501,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's e3278f0 (yawn fallback keeps the standing spine, head and pelvis), long hair, on clean builds of 7d7c5df and
+  e3278f0 with six tops still on the fallback (cr_bomber, bb_cloak, kp_hoodie, cr_trench, nc_tank, gp_bear), both bodies: PASS. The
+  comb-like gaps are gone: the stretch is now the standing pose with the yawn face, and on the female body with long hair it
+  matches idle (shots/qa/yawn/fallback_fixed_and_idle_notch.png: rows are before, after, and idle). Only stretch frames changed.
+  (Test note: QBLoft.frameOrNear sometimes gives a neighbouring frame, so the same build drawn twice differed on 1 of 64 frames;
+  two idle-16 differences between the builds were that, not a change.)
+- QA, new, pre-existing (LEAD's note): in plain idle, the female body with long hair (h1) has a notched, dotted edge where the
+  front strand of hair crosses the near sleeve, and the sleeve shows through it (the yellow stripe through the hair on kp_hoodie,
+  dots on bb_cloak, cr_bomber, cr_trench, gp_bear, nc_tank): bottom row of shots/qa/yawn/fallback_fixed_and_idle_notch.png. Worth
+  fixing: idle is the pose players see most, and long hair is the female default. Owner: LEAD (sleeve drawn after the hair).
 - QA, ROOMS's first three yawn pictures (2dde59c nc_hoodie, 8f026ce nc_tee, 05e7c19 kp_varsity) on a clean build of 05e7c19,
   drawn the game's own way: PASS, 0 page errors. Before (7d7c5df) they used the arms-down fallback; now each has its painted
   arms-up stretch on both bodies, sleeves to the wrists, no tears; only the stretch frames changed, idle and walk pixel-identical
@@ -2616,9 +2626,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 05e7c19. Done: ROOMS's first three yawn pictures (pass, with every hair and necklace); LEAD's yawn fallback (pass, one
-  note: gaps in long hair). Next: ROOMS's next yawn batches as they land. BLOCKED: the published-file checks (v0.64 to v0.71)
-  until Cal restarts QA (artifact tools).
+- Now: on e3278f0. Done: LEAD's yawn fallback hair fix (pass); logged the idle long-hair notch for LEAD; ROOMS's first three yawn
+  pictures (pass). Next: ROOMS's next yawn batches (653138e already landed: smk_hoodie, sv_ski). BLOCKED: the published-file
+  checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
