@@ -1432,7 +1432,9 @@ function gDot(it){var f=it[6].fo;return '<span class="gdot g_'+(f?"f":"u")+'" ti
 function garThumb(it){var g=window.LFVAR&&LFVAR.gar&&LFVAR.gar[it[6].gar];return '<div class="thumb">'+(g?'<img class="garth" src="'+g[2]+'" alt="">':'<b class="mono" style="color:var(--muted)">...</b>')+gDot(it)+'</div>'}
 /* an art file's URL with its content fingerprint (tools/build.py), so a phone never shows a cached old picture */
 function artQ(n){var H=QBLoft.data.arthash;return H&&H[n]?"?h="+H[n]:""}
-function brandLogo(b,big){return '<div class="blg'+(big?" big":"")+' blg_'+b.id+'"><img class="blg_e" src="'+QBLoft.data.loft.artBase+'logo_'+b.id+'.webp'+artQ('logo_'+b.id+'.webp')+'" alt="" onerror="this.remove()"><span><b>'+b.name+'</b><small>'+b.sub+'</small></span></div>'}
+/* Brand badges travel in the art_ui pack (build.py), so a publish stays under its file limit; a loose file still works. */
+function brandLogoSrc(id){var n='logo_'+id+'.webp';return (window.QBART&&QBART[n])||QBLoft.data.loft.artBase+n+artQ(n)}
+function brandLogo(b,big){return '<div class="blg'+(big?" big":"")+' blg_'+b.id+'"><img class="blg_e" src="'+brandLogoSrc(b.id)+'" alt="" onerror="this.remove()"><span><b>'+b.name+'</b><small>'+b.sub+'</small></span></div>'}
 var _shopOld=shopHtml;
 shopHtml=function(){
   var d=dropState();

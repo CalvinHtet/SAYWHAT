@@ -37,6 +37,7 @@ for art in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")):
 
 # character layers and icons travel as two packs, so a published page stays under its file limit
 import base64
+# Brand badges (logo_<id>.webp) ride in art_ui too: each new brand would otherwise add a loose file (505 of 511, 2026-11-06).
 # ui_<name>.webp replaces the built-in picture <name> (a class, coach, rank or reward picture), see docs/HANDOFF.md
 # A pack bigger than PIECE is cut into numbered pieces (art_rig.js -> art_rig_1.js, art_rig_2.js ...): a browser keeps small
 # files in its cache between visits but not 15 MB ones (QA, c5766ed), and the loading bar moves as each piece lands.
@@ -58,7 +59,7 @@ def split(name, items, wrap):
     return names
 
 
-for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_",)), ("art_ex.js", ("ex_",))):
+for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_", "logo_")), ("art_ex.js", ("ex_",))):
     parts = []
     for art in sorted(glob.glob(os.path.join(DIST, "art", "*.webp"))):
         name = os.path.basename(art)

@@ -19,7 +19,7 @@ The first load on a new `APPV` copies the save to `data/users/<id>/backup`. That
 their own page can read it. Restore backup is in the Test panel, which only the owner sees. If a release goes wrong, publish the
 previous version again; saves are not affected.
 
-An artifact version holds at most 511 files and `dist` is at about 500. Before adding many more sprites, bundle another group
+An artifact version holds at most 511 files; `dist` was at 505 with CHROME RAIN, 491 once brand badges moved into `art_ui.js` (2026-11-06). Room art is most of the rest. Before adding many more sprites, bundle another group
 into a pack in `tools/build.py` (`ex_` is the next candidate; it would also need its image paths routed through `QBART`).
 
 ## Testing upgrade tiers
