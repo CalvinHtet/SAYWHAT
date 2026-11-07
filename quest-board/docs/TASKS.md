@@ -2449,7 +2449,7 @@ Doing:
 - Now (on e70ef55): LEAD's 44 yawn pictures on Unlimited, 28 done (27 passed QA; bb_doublet in); bb_cloak repainting (the first hung
   open over a bare chest); next cr_trench, cr_bomber, cr_mesh, cr_vest, km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check e70ef55, yawn picture 28 (bb_doublet): your yawnfall.js and yawnsweep.js.
+- TAKEN by QA. WAITING ON QA: check e70ef55, yawn picture 28 (bb_doublet): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 56f58a2, yawn pictures 26 and 27 (bb_tunic, bb_gambeson): your yawnfall.js and yawnsweep.js. The tunic is a second
   paint; the first left a strip of arm under the boy's far sleeve.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 45658f8, yawn picture 25 (sp_hpknit): your yawnfall.js and yawnsweep.js.
