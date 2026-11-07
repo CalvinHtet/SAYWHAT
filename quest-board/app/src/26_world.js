@@ -441,7 +441,7 @@ LFROOM.restaurant=function(C){
     if(u[0]==="r_d8"){u[1]="Sculptural Vases";u[4]="Black ceramic and dry branches.";e.also="r_noir"}
     if(u[0]==="r_d5"){u[1]="Backlit Wine Wall"}
     if(u[0]==="r_d6"){u[3].cut=1}
-    if(u[0]==="r_x2"){u[4]="A huge room with space between every table.";e.splash="The whole floor is yours now, and it has room to breathe. Next: go dark with Noir, and open the bar upstairs."}
+    if(u[0]==="r_x2"){u[4]="A huge room with space between every table.";e.splash="The whole floor is yours now, and it has room to breathe. Next: white linen and candlelight, and once it looks the part, the bar upstairs."}
     if(u[0]==="r_bar"){u[1]="Open the Upstairs Bar";u[4]="Stairs up to a moody cocktail bar in its own room above.";e.opens="skybar";e.also="r_x2";e.lv=30;e.splash="A staircase now leads up to a brand new room above the Restaurant: a dark cocktail bar with high-top tables. Tap the glowing door to go up."}});
   RS_UPS=RS_UPS.filter(function(u){return !u[3].cut});
   /* Cal, 2026-11-05: "a bigger menu on the wall as an upgrade to add more dishes". It follows the screen and takes its place */
