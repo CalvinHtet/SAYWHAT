@@ -504,6 +504,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 26 and 27 (56f58a2: bb_tunic, bb_gambeson, BARD & BLADE) on a clean build of 56f58a2: PASS, 0 page
+  errors. Both stretch arms-up on both bodies (the forest-green laced tunic with its belt; the cream quilted gambeson with open
+  collar); stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch13_before_after.png). The tunic's repaint: the far
+  sleeve wraps the whole arm on both bodies, no strip of arm under it, frames 9, 12 and 15 at 4x on hot pink
+  (bb_tunic_farunderarm.png, bb_tunic_underarm.png). See-through: the tunic's art has one enclosed hole per body, 94 px boy and
+  84 px girl, both at the laced V neck (the passed sp_pad has 283 px at its neckline); the gambeson has none. In the game, on hot
+  pink, no pink shows through either top, and the V neck and open collar show skin (bb_tunic_gambeson_seethrough.png). Sweep: all
+  hairstyles with all 19 neck items plus none, 240 pictures, all clean (sheet_<top>_<body>.png). 27 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 24 and 25 (edefc90 sp_p2, 45658f8 sp_hpknit) on a clean build of 45658f8: PASS, 0 page errors.
   Both stretch arms-up on both bodies (the Player 2 ringer tee with purple trim; the sage cable knit with long sleeves and ribbed
   cuffs); stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch12_before_after.png). sp_p2's repaint: PLAYER and 2 read
@@ -2441,7 +2449,7 @@ Doing:
 - Now (on 56f58a2): LEAD's 44 yawn pictures on Unlimited, 27 done (25 passed QA; bb_tunic and bb_gambeson in); bb_doublet generating;
   next bb_cloak, cr_*, km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 56f58a2, yawn pictures 26 and 27 (bb_tunic, bb_gambeson): your yawnfall.js and yawnsweep.js. The tunic is a second
+- DONE by QA (QA findings: pass). WAITING ON QA: check 56f58a2, yawn pictures 26 and 27 (bb_tunic, bb_gambeson): your yawnfall.js and yawnsweep.js. The tunic is a second
   paint; the first left a strip of arm under the boy's far sleeve.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 45658f8, yawn picture 25 (sp_hpknit): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check edefc90, yawn picture 24 (sp_p2): your yawnfall.js and yawnsweep.js. A second paint; check the PLAYER 2 print reads.
@@ -2720,9 +2728,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 2ec4878. Done: ROOMS's yawn pictures 1-25 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP and
-  SAVE POINT complete); savecheck and screens (360, 390) on 68eb5aa pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 2ec4878). Next: the bb_ tops when ROOMS sends them. (on 2ec4878)
+- Now: on 8ef1349. Done: ROOMS's yawn pictures 1-27 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP and
+  SAVE POINT complete, BARD & BLADE tunic and gambeson); savecheck and screens (360, 390) on 68eb5aa pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 2ec4878). Next: bb_doublet when ROOMS sends it. (on 8ef1349)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
