@@ -2524,9 +2524,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on aceba29): LEAD's 44 yawn pictures on Unlimited, 43 done (41 passed QA; sv_nordic and sv_quilt in); the last, sv_fleece,
-  is generating.
+- Now (on 4dbd2e2): LEAD's 44 yawn pictures all painted on Unlimited (43 in QA's hands or passed; sv_fleece in last). Next from my list
+  after QA: nothing queued; ask LEAD for the next art job.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
+  (m_ and f_<id>_yawn.webp for every id on your list, checked present).
 - TAKEN by QA. WAITING ON QA: check aceba29, yawn pictures 42 and 43 (sv_nordic, sv_quilt): your yawnfall.js and yawnsweep.js; two small ones for your call:
   a faint 1-2 px tan edge under the boy's far Nordic sleeve, and a small tan tick above the boy's far shoulder on the vest.
 - DONE by QA (QA findings: pass). WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
