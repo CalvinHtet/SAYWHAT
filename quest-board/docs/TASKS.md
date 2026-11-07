@@ -2425,7 +2425,7 @@ Doing:
 - Now (on 68eb5aa): LEAD's 44 yawn pictures on Unlimited, 23 done (21 passed QA; sp_varsity and sp_pad in); sp_p2 repainting (first sheet
   washed out the magenta); next sp_hpknit, bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
+- TAKEN by QA. WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
   the first left the boy's far sleeve hanging under his arm.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 360da8a, yawn pictures 20 and 21 (gp_star, gp_sailor): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
