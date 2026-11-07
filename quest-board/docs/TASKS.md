@@ -485,6 +485,39 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.68 = e276038, the full set: PASS, nothing new broken; Cal's call whether it goes to the Test link before the placement
+  list below. On a clean build of e276038 (and 428c8a5, same code but the portraits): Test > Review plays 114 of 114 at 390 on
+  both bodies, no window off screen, no broken image (the save gains only an empty "seen" record); livesync.js PASS (5.1 s state,
+  1.0 s posts); live10.js PASS (quiet minute 0-1 writes); players10.js PASS on e276038 with the neighbours now in their own
+  outfits (Hall rows draw with the rig, `calav nbav`); alerts.js PASS (Garden "!" at 5, Relics and Wheel "!" when they open, "+",
+  brands); fxcheck.js PASS; roomwin.js, barlock.js PASS; badges.js: all 15 brand tabs from the pack, 0 loose files; drops.js PASS
+  (Mon/Thu, HANGANG first, 0 repeats in 192 rerun slots); stuckscan.js: all 21 rooms buy through; 0 page errors anywhere.
+  Correction to my aa3a99b note (1): the "black screens" were my capture setup (lib.js turns animations off, and every screen's
+  picture only appears through its animation); ROOMS's 62d336d gives reduced-motion players the still picture too.
+- QA, Cal (2026-11-07): "the pinball machine on the right wall is facing towards the other machine with no space to play. Do a QA
+  check on every asset to make sure the assets are accessible." Every room fully bought, drawn large (`rigtest/qa/bigrooms.js`,
+  shots/qa/access/big_<room>.png) and checked piece by piece for its use side, plus `rigtest/qa/access.js` (each piece's front
+  strip and every guest spot against the room's own layout; it cannot see which way the art itself is drawn, which is exactly the
+  pinball's fault, so the eye pass is the real check). Pieces that cannot be used as placed, most visible first:
+  (1) Arcade, Pinball Machine (ar_pin): its table runs along the back wall, so the flipper end where a player stands is pressed
+      against the claw machines (shots/qa/access/arcade_pinball.png). Turn it to face the room or give its flipper end a clear unit.
+  (2) Lock and Key (stage room), upright piano: the keyboard faces the drum kit on the stage, no room for a pianist or bench.
+  (3) Lock and Key, bar counter: built against the back wall, no space behind it for a bartender.
+  (4) Nightclub DJ booth and Rooftop DJ deck: both pushed against speakers or the parapet, nowhere for the DJ to stand.
+  (5) Bowling, the orange bench: faces away from the lanes, straight into the back of the snack cart.
+  (6) VR Arena: the blue flight pod sits right in front of the sofa's seat.
+  (7) Rhythm Room: the music-game cabinet stands behind the dance machine (its player side faces the machine's back); the bench
+      sits in front of the mirror wall.
+  (8) Theater lobby: the ticket booth stands in front of the second recliner.
+  (9) Restaurant: the patio smoker faces a bistro chair; the pizza oven's mouth is half blocked by the condiment counter; a square
+      table sits in the round booth's opening.
+  (10) Upstairs Bar: the glass wine cabinet's doors press against the green sofa's end.
+  (11) Bedroom: the full-length mirror stands half over the record-player cabinet and half against the window.
+  (12) Mall: the fountain's back rim sits in the clothing store's doorway.
+  (13) Smaller: Arcade Skee-Ball's throwing end is at the front edge beside the photo booth; Boba's drinks fridge at the front edge
+      faces out of the room; Dessert's counter end and macaron and cupcake towers crowd the bookcase; Garden potting bench behind the
+      compost crate; VR ring chair at the front edge.
+  Fine as placed: Game Room, Karaoke, Auditorium, Closet, Lair, Sky Patio, Garden beds, the rest of each room above. Owner: ROOMS.
 - QA, Cal's "check all the rooms and assets ... use references for everything" (v0.68 code, 428c8a5): all 21 rooms fully bought
   at 13:00 and 22:00 plus the street and the three buildings, against isometric references of each kind (docs/QA.md "Every room
   against references", sheets in shots/qa/rooms/). 0 page errors; nothing out of place in the street or building views; 13 rooms
@@ -2401,17 +2434,15 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 428c8a5 (same code as v0.68, 9b3a428). Done: ROOMS's 4e93d54, 1308059, 633ffe2, ede09d8 (all pass). Doing: the v0.68 full set,
-  plus Cal (2026-11-07): "do a full quality check and see how this platform would function with 10 saves files from different
-  players. check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for
-  everything". Done: ten players (players10.js, pass with one gap: neighbour portraits ignore outfits); every room against
-  references (8 notes for ROOMS). Next: the rest of v0.68's full set (Review plays, livesync, alerts, cosmetics wear). Published
+- Now: on e276038 (v0.68). Done: the v0.68 full set (PASS); Cal's ten players (PASS on e276038, portraits fixed); every room
+  against references; Cal's accessibility check (13 placement problems for ROOMS, the pinball first). Next: ROOMS's v0.69 checks
+  (86bb8b2: 62d336d screens, dbf2593 Rooftop night, a4be384 Kenan, aca27a1, 1e8a3b4) and the placement fixes as they land. Published
   v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal: "Give me the latest version to test when ready"; TAKEN by QA, with Cal's 10-player and every-room check) WAITING ON QA: the full set on v0.68, now e276038 (APPV 68; 9b3a428 plus your 3f6c696 fix: nbAv draws neighbors with the rig, outfit included, in the Hall list, visit header and board posts; rigtest/lead/nbav.js). New
+- [x] (from LEAD, Cal: "Give me the latest version to test when ready"; done: QA findings, PASS on e276038, the placement list is Cal's call) WAITING ON QA: the full set on v0.68, now e276038 (APPV 68; 9b3a428 plus your 3f6c696 fix: nbAv draws neighbors with the rig, outfit included, in the Hall list, visit header and board posts; rigtest/lead/nbav.js). New
       since v0.67 (d54de89): LEAD's alerts (3bba5f1, d0adfdc) and FX (59d31a0, d0adfdc); ROOMS's lamp (abe06dd), Restaurant notes
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
       White Linen (633ffe2), the Garden at level 5 (ede09d8), the splash text (0f9cabe). Note for your level-up runs: with the Garden

@@ -39,7 +39,7 @@ fs.mkdirSync(OUT, { recursive: true });
   const after = await snap();
   console.log(`played ${btns.length}; problems ${bad.length}`); bad.forEach((x) => console.log('  ' + x));
   console.log('save unchanged after every Play:', before === after);
-  if (before !== after) { const a = JSON.parse(before), c = JSON.parse(after); console.log('  keys that changed:', Object.keys(c).filter((k) => JSON.stringify(a[k]) !== JSON.stringify(c[k])).slice(0, 10).join(' ')); }
+  if (before !== after) { const a = JSON.parse(before), c = JSON.parse(after); console.log('  keys that changed:', Object.keys(c).filter((k) => JSON.stringify(a[k]) !== JSON.stringify(c[k])).slice(0, 10).join(' ')); if (a.seen || c.seen) console.log('  seen before:', String(JSON.stringify(a.seen)).slice(0, 300), '\n  seen after: ', String(JSON.stringify(c.seen)).slice(0, 300)); }
   console.log('page errors', errs.length, errs.slice(0, 3));
   fs.writeFileSync(path.join(OUT, 'cells.json'), JSON.stringify(cells));
   await b.close();
