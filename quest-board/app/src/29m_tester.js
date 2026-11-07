@@ -11,7 +11,8 @@ function qbtOpen(t,quiet){if(qbtSlot(t)>=0)return;var o=styState(),s=styStep(t);
   /* the story's earlier rooms first, so the street and the knock-throughs make sense */
   if(s){for(var k=0;k<STORY.length&&STORY[k]!==s;k++){var p=STORY[k];if(p.room&&ROOMCELL[p.room]&&qbtSlot(p.room)<0)qbtOpen(p.room,1);if(p.how==="team"){o.done[p.id]=1;o.offer[p.id]=1;try{o.team[(p.scene&&p.scene.team)||p.id]=1}catch(e){}}}o.done[s.id]=1;o.offer[s.id]=1}
   S.base.slots.push({t:t,a:{},st:0,pend:0});
-  S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){if(a[3]&&a[3].opens===t){r.a=r.a||{};r.a[a[0]]=1}})});
+  /* QA (unlockall.js): the opener comes with what it needs first (the Walk-in Closet needs the wardrobe), as buying it would */
+  S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){if(a[3]&&a[3].opens===t){r.a=r.a||{};r.a[a[0]]=1;var q=ADDREQ[a[0]],n=0;while(q&&!r.a[q]&&n++<9){r.a[q]=1;q=ADDREQ[q]}}})});
   try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}
   if(!quiet){persist();render();pop("Opened "+((ROOMT[t]||{}).name||t))}}
 function qbtAll(t,on){var i=qbtSlot(t);if(i<0){qbtOpen(t,1);i=qbtSlot(t)}var r=S.base.slots[i];r.a={};
@@ -19,7 +20,7 @@ function qbtAll(t,on){var i=qbtSlot(t);if(i<0){qbtOpen(t,1);i=qbtSlot(t)}var r=S
   if(on)(ADDONS[t]||[]).forEach(function(a){var m=a[3]||{};if(m.retired)return;r.a[a[0]]=1;if(m.opens&&qbtSlot(m.opens)<0)qbtOpen(m.opens,1)});persist();render();pop(((ROOMT[t]||{}).name||t)+(on?": every upgrade":": no upgrades"))}
 /* QA: a lot or upgrade step only offered the room, so every tap re-offered the Garden. A step plays its scene first (if it has
    one and hasn't been accepted), and otherwise is built right away, the way Open does it. */
-function qbtNextStep(){var o=styState();for(var k=0;k<STORY.length;k++){var s=STORY[k];if(o.done[s.id]||(s.room&&styHas(s.room)))continue;
+function qbtNextStep(){var o=styState();for(var k=0;k<STORY.length;k++){var s=STORY[k];if(s.how==="never"||o.done[s.id]||(s.room&&styHas(s.room)))continue;
     document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});
     if(s.scene&&!o.offer[s.id]&&!(o.seen&&o.seen[s.id])){try{styScene(s);return}catch(e){}}
     if(s.room&&ROOMCELL[s.room]){qbtOpen(s.room);return}
