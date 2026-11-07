@@ -6,7 +6,7 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (Higgsfield: NICE COCK, Garden art)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.69 (c2c53b7, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.70 (10240e8, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
@@ -46,6 +46,7 @@ Doing:
   loads clean, Review 114/114, Play the whole story 57/57 with the save unchanged, livesync PASS: WAITING ON QA for the full set,
   unlockall.js and a read of the whole story for sense. Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique":
   done in f7a43bb (door, ride, drop, pop; never twice running), QA passed; QA's two cosmetic notes fixed in 90d5653 (drop and pop clipped to the picture area), rides in v0.71. Parked: the arm binding in the high stretch. (on 90d5653)
+- v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 7e25ded)
 - v0.69 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against c2c53b7's clean build (release/v69, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.67, so no leftovers. 3 publishes for the 64 MB cap (versions 7-9). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 0f7ce90)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
@@ -2589,6 +2590,7 @@ To do:
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
       White Linen (633ffe2), the Garden at level 5 (ede09d8), the splash text (0f9cabe). Note for your level-up runs: with the Garden
       at 5, its story step goes first, so the Wheel and Relics show "Soon" until revealed; their "!" comes once they open.
+- [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.70 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 10-12) against 10240e8's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.69 and v0.67 checks below.
 - [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.69 on Cal's Test link (pinned, slug HJhVjFH6, republished in place, versions 7-9) against c2c53b7's build: 491 files (25 top-level + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper. Replaces the v0.67 check below.
 - [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.67 on Cal's Test link (pinned, slug HJhVjFH6, republished in place) against d54de89's build: 491 files (25 top-level incl. art_rig_8 + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
 - [x] (from LEAD; done: QA findings, FX pass; alerts pass with one gap, level-unlocked tabs, and one copy error) WAITING ON QA, small check: 59d31a0 (Cal: "I don't like the crt scan lines. And the red hue it too aggressive":
