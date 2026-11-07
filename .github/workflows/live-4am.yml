@@ -1,0 +1,48 @@
+# SAYWHAT's Live link, published at 4 am Pacific while everyone sleeps (Cal, 2026-11-07: "We can publish a new version at 4 am
+# when they are all asleep so it never messes up their current progress"). See quest-board/docs/WEBAPP.md and RELEASING.md.
+# What goes out is the `live` branch, which LEAD moves forward only to a commit QA passed and Cal tested. If the Live site already
+# runs that commit (its version.txt), nothing happens. Players' apps pick the new version up the next time they open it.
+# Needs the repo secret FIREBASE_SERVICE_ACCOUNT (a Firebase service account key that Cal makes and pastes into GitHub himself).
+name: Live at 4 am
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 12:00 UTC = 4:00 am PST (winter); 5:00 am PDT in summer
+  workflow_dispatch: {}
+concurrency: live
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: live
+          fetch-depth: 1
+      - name: Anything new for Live?
+        id: check
+        run: |
+          want=$(git rev-parse HEAD)
+          have=$(curl -fsS https://saywhat-b7ae8.web.app/version.txt || echo none)
+          echo "live branch: $want   Live site: $have"
+          if [ "$want" = "$have" ]; then echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Build the web version
+        if: steps.check.outputs.skip != '1'
+        run: |
+          QB_TARGET=web python3 quest-board/tools/build.py
+          git rev-parse HEAD > quest-board/dist-web/version.txt
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.skip != '1'
+        with:
+          node-version: "22"
+      - name: Publish to the Live site
+        if: steps.check.outputs.skip != '1'
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          test -n "$SA" || { echo "FIREBASE_SERVICE_ACCOUNT is not set"; exit 1; }
+          printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          cd quest-board
+          npx -y firebase-tools@15.35.0 deploy --only hosting --project saywhat-b7ae8 --non-interactive -m "live $(git rev-parse --short HEAD)"
+          rm -f "$RUNNER_TEMP/sa.json"

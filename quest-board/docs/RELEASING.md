@@ -63,3 +63,23 @@ The passed build is staged in `SAYWHAT/r/` (git-ignored through `.git/info/exclu
 
 If the artifact tools answer "not available to this session" or "The files could not be attached", the session lost them:
 Cal restarts Claude Code or opens a new LEAD session, and the publish goes ahead from `r/`.
+
+## The web version (off Claude, Cal 2026-11-07; docs/WEBAPP.md)
+
+Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his login (`npx -y firebase-tools@15.35.0 ...` from
+`quest-board/`). Two links, as on Claude:
+
+- **Test** (Cal only): the Hosting channel `test` (30-day expiry; each deploy renews it). After QA passes a build:
+  `QB_TARGET=web python3 tools/build.py && npx -y firebase-tools@15.35.0 hosting:channel:deploy test --expires 30d --project saywhat-b7ae8`.
+  Cal reloads and has it. Never paste the channel URL in chat; it is in the deploy commit message.
+- **Live** (the friends): `saywhat-b7ae8.web.app`, published only by `.github/workflows/live-4am.yml` at 12:00 UTC (4 am PST,
+  5 am PDT) from the `live` branch. To release: after QA's pass and Cal's test, LEAD moves `live` forward to that commit
+  (`git push origin <commit>:refs/heads/live`, fast-forward only). The job skips when the site's `version.txt` already names it.
+  The job needs the repo secret `FIREBASE_SERVICE_ACCOUNT`, which Cal makes himself (Firebase console > Project settings >
+  Service accounts > Generate new private key, then GitHub > SAYWHAT > Settings > Secrets and variables > Actions > New secret).
+  The key never goes in the chat or the repo.
+- **Rules and the AI function** change rarely and are deployed by hand when they do:
+  `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
+  QA like any other (functions/test.js first).
+- Before Live goes to friends: the release list above (Test pill, Review, Unlock everything, Next event, `window.__qb*` hooks,
+  `QB_TEST_START` 0) and Cal's uid in `firestore.rules` and `web/config.js` as the owner.
