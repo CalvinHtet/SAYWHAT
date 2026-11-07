@@ -171,7 +171,22 @@ var EXTRA_ITEMS=[
  ["gx_bb_breeches","a_pants","Tucked Breeches",850,1,"Tan wool, buckled below the knee.",{gar:"bb_breeches",b:"bb"}],
  ["gx_bb_cuffboot","a_shoes","Cuffed Boots",1200,1,"Folded cuffs, a brass ankle buckle.",{gar:"bb_cuffboot",b:"bb"}],
  ["gx_bb_slipper","a_shoes","Moonsilver Slippers",800,1,"Soft suede, curled toes.",{gar:"bb_slipper",b:"bb"}],
- ["gx_bb_hobnail","a_shoes","Hobnail Boots",1000,1,"Brass studs, a wool sock.",{gar:"bb_hobnail",b:"bb"}]];
+ ["gx_bb_hobnail","a_shoes","Hobnail Boots",1000,1,"Brass studs, a wool sock.",{gar:"bb_hobnail",b:"bb"}],
+ ["gx_cr_visor","a_acc","LED Visor",1100,1,"A row of cyan lights across the eyes.",{gar:"cr_visor",b:"cr"}],
+ ["gx_cr_mohawk","a_hat","Mohawk Helmet",1300,1,"Matte black, a crest of neon spikes.",{gar:"cr_mohawk",b:"cr"}],
+ ["gx_cr_hood","a_hat","Glow-Rim Hood",900,1,"Techwear black, a cyan edge.",{gar:"cr_hood",b:"cr"}],
+ ["gx_cr_arm","a_acc","Chrome Arm Sleeve",1400,1,"One arm, plated, cyan seams.",{gar:"cr_arm",b:"cr"}],
+ ["gx_cr_shades","a_acc","Mirror Shades",700,1,"Chrome frames, a neon gradient.",{gar:"cr_shades",b:"cr"}],
+ ["gx_cr_trench","a_top","Holo Trench",1800,1,"Knee-length, iridescent, collar up.",{gar:"cr_trench",b:"cr"}],
+ ["gx_cr_bomber","a_top","Glow-Seam Bomber",1500,1,"Glossy black, cyan along every seam.",{gar:"cr_bomber",b:"cr"}],
+ ["gx_cr_mesh","a_top","Mesh Harness Top",1000,1,"Cropped black mesh, chrome-ringed straps.",{gar:"cr_mesh",b:"cr"}],
+ ["gx_cr_vest","a_top","Street Armour Vest",1400,1,"Chrome plates, rose light strips.",{gar:"cr_vest",b:"cr"}],
+ ["gx_cr_cargo","a_pants","Neon Piped Cargo",1100,1,"Glossy black, cyan piping.",{gar:"cr_cargo",b:"cr"}],
+ ["gx_cr_skirt","a_pants","Techno Panel Skirt",950,1,"Split panels, glowing seams.",{gar:"cr_skirt",b:"cr",fo:1}],
+ ["gx_cr_knee","a_pants","Armoured Knee Joggers",1100,1,"Chrome knee pads, cyan rings.",{gar:"cr_knee",b:"cr"}],
+ ["gx_cr_lightup","a_shoes","Light-Up Sneakers",1200,1,"Soles that glow cyan.",{gar:"cr_lightup",b:"cr"}],
+ ["gx_cr_platform","a_shoes","Platform Buckle Boots",1300,1,"Patent black, rose-lit soles.",{gar:"cr_platform",b:"cr"}],
+ ["gx_cr_combat","a_shoes","Chrome-Toe Combat Boots",1200,1,"Steel toes, a cyan cuff.",{gar:"cr_combat",b:"cr"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
@@ -179,6 +194,7 @@ var EXTRA_ITEMS=[
 /* GACHA POP (MMO cash shop, approved): ROOMS's 03274a7 pieces and shop lines */
 /* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons, now lace-ups, redone in 200d498 */
 /* BARD & BLADE (high fantasy, approved): ROOMS's f843b25 pieces and shop lines; the bracers use the rig's "arms" slot */
+/* CHROME RAIN (cyberpunk, approved): ROOMS's 5cf2e1d pieces and shop lines; the arm sleeve uses the "arms" slot */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
