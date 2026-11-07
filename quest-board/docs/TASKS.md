@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.65 (dba3f2e, APPV 65; 489 files): pass, publish. On the exact clean build: savecheck; screens at 360 and 390; v0.64's own build
+  makes a save that v0.65 loads, reloads, buys on and reloads; the level-5 start; Kode Plaza stages and tapping in; town rules,
+  townlive 5/5, townrx 12/12; doors 34 ok plus Garden and Restaurant walked both ways live; Begin at 10 sizes; diag/load; the team;
+  voice.js 1,497 lines, 0 hits; every brand tab's badge from the art_ui pack (13 of 13, no loose logo_ file asked for); the Shop in
+  two halves, 229 pieces on him and 236 on her bought and worn, SAVE POINT, BARD & BLADE and CHROME RAIN included (one run of all 15
+  brands now makes a summary sheet too tall to picture, so `shop.js` takes BRAND= lists); Wednesday returns and launch reruns (156
+  slots, 0 repeats, 0 still-live drops, two pages agree); all 30 rooms drawn, 21 of 21 buy through; the room tester walks all 17 story
+  rooms; friends; Collect; the street camera. No page errors. Still as accepted: the mall's escalator in front of the Bowling and
+  Karaoke doors. Not done: the published v0.64 file check, because QA's artifact tools stopped working in this session too (Cal:
+  a restart brings them back). Owner: LEAD.
 - QA, ROOMS's 14bd0e5 CHROME RAIN fixes and LEAD's 207db81 line (on 207db81; `shots/qa/cr/fixes_14bd0e5.png`, `icons_14bd0e5.png`):
   pass, so CHROME RAIN is 15 of 15. The mesh top is an opaque dark purple net under the black harness with cyan cuffs, the same on
   both bodies front and back and matching its icon, no skin through it. The light-up high-tops carry a small rose bolt and a straight
@@ -2205,7 +2215,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 15 of 15. Next: KAIMANA when ROOMS sends it. (on 207db81)
+- Now: v0.65 (dba3f2e) passes: LEAD publishes. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: KAIMANA's wear test (24304af). (on bbf97a4)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -2213,10 +2223,10 @@ To do:
 - [ ] (from LEAD) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
       LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
       errors; the camp shirt and shell necklace equip (`shots/lead/km_shop.png`). The necklace barely shows under the collar there.
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.65, dba3f2e (APPV 65). New since v0.64 (4a1dbe8): SAVE POINT (Jan 11), BARD &
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the full set on v0.65, dba3f2e (APPV 65). New since v0.64 (4a1dbe8): SAVE POINT (Jan 11), BARD &
       BLADE (Jan 18) and CHROME RAIN (Jan 25) in the Shop, the rig's "arms" slot (bracers, the arm sleeve), brand badges from the
       art_ui pack. LEAD built it clean in a worktree: 489 files, loads with no page errors, v0.65 in the header.
-- [ ] (from LEAD) WAITING ON QA: check the published v0.64 (pinned, slug NSmu55hk) against 4a1dbe8's build: 499 files (22 top-level + 477 art/), sizes and the 9 db rules; index.html is ~364 bytes larger from the publish wrapper. Its title reads "Quest Board", not "Quest Board v0.64".
+- [ ] (from LEAD; BLOCKED: QA's artifact tools stopped working, Cal restarts QA) WAITING ON QA: check the published v0.64 (pinned, slug NSmu55hk) against 4a1dbe8's build: 499 files (22 top-level + 477 art/), sizes and the 9 db rules; index.html is ~364 bytes larger from the publish wrapper. Its title reads "Quest Board", not "Quest Board v0.64".
 - [x] (from LEAD; done: QA findings, pass; the drop pop-up not checked) WAITING ON QA: the CHROME RAIN Shop run, 091c762 (brand cr, Jan 25, 15 rows as ROOMS wrote them, the skirt hers
       only, the arm sleeve in the "arms" slot). LEAD checked the tab 12 weeks ahead: banner with art, tagline, 15 pieces, no broken
       images, no page errors; the sleeve with the bomber lands in equipped.arms (`shots/lead/cr_shop.png`).
