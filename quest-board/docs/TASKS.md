@@ -503,6 +503,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 4 and 5 (653138e: sm_hoodie, sv_ski) on a clean build of e3278f0, drawn the game's own way: PASS,
+  0 page errors. Both now stretch arms-up on both bodies instead of the arms-down fallback; the neon hoodie's cuffs stop at the
+  wrists with the hands showing; nothing stray on the ski jacket's head; only stretch frames changed (one idle frame differed,
+  the frameOrNear neighbour-frame noise) (shots/qa/yawn/batch2_before_after.png). Sweep: all three hairstyles of each body with
+  all 19 neck items plus none, 240 pictures, every necklace on the chest and the hair whole (shots/qa/yawn/sheet_<top>_<body>.png).
 - QA, LEAD's e3278f0 (yawn fallback keeps the standing spine, head and pelvis), long hair, on clean builds of 7d7c5df and
   e3278f0 with six tops still on the fallback (cr_bomber, bb_cloak, kp_hoodie, cr_trench, nc_tank, gp_bear), both bodies: PASS. The
   comb-like gaps are gone: the stretch is now the standing pose with the yawn face, and on the female body with long hair it
@@ -2364,7 +2369,7 @@ Doing:
 - Now (on 653138e): LEAD's 44 yawn pictures on Unlimited, 5 done (nc_hoodie, nc_tee, kp_varsity passed QA; sm_hoodie, sv_ski in);
   nc_tank and kp_hoodie generating, then nc_qzip, kp_sailor, kp_bomber, sm_track, sm_tee, sm_vest and the rest. WAITING ON Cal: Vega's
   in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
+- DONE by QA (QA findings: pass). WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
   with cuffs at the wrists (the first sheet ran the sleeves over the hands); the ski jacket's sheet had a drawn face, dropped.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
   on both bodies with every hair and necklace: no tears, sleeves to the wrists, nothing stray on the head (the tee's sheet had a drawn
