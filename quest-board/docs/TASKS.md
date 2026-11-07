@@ -33,14 +33,15 @@ Doing:
   version to test when ready": v0.68 BUILT from e276038 (APPV 68; 9b3a428 plus QA's 3f6c696 fix: neighbors drawn in their own outfits; everything above plus ROOMS's 633ffe2 bar rule, ede09d8 Garden at
   level 5, 0f9cabe splash text); clean build, 490 files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS:
   QA PASSED the full set (6430d13) and it is staged in r/. WAITING ON CAL: publish v0.68 to the Test link now, or hold
-  for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes PASSED (570b2f3, QA ad05db6); v0.69 waits only on ROOMS's Nightclub fix (DJ and bartender
-  behind their counters, QA's last known error); if QA passes them before Cal answers, LEAD builds
+  for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes PASSED (570b2f3, QA ad05db6); v0.69 BUILT from c2c53b7 (APPV 69: v0.68 + ROOMS's room fixes,
+  placement 570b2f3, Nightclub staff 567ea26, screens cfa5f62/1ab3753); clean build, 490 files, loads clean, Review 114/114, livesync
+  PASS, alerts PASS: WAITING ON QA for the full set (567ea26 included), then Cal's Test link in place; if QA passes them before Cal answers, LEAD builds
   v0.69 with everything (v0.68 + ROOMS's room fixes + placement + 1ab3753) for QA's full set and publishes that instead. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
   for the published-file checks, opening v0.66 on his phone. For v0.69: ROOMS's 62d336d (screens keep a still first picture with animations off; now in 24_screens.js, cfa5f62; ROOMS drops its
-  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). Parked: the arm binding in the high stretch. (on 1ab3753)
+  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). Parked: the arm binding in the high stretch. (on c2c53b7)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
@@ -2483,6 +2484,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
+      separately). Since v0.68 (e276038): ROOMS's room-review fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4), every piece usable
+      (570b2f3), the Nightclub staff and patio chair (567ea26, your check), LEAD's screens (cfa5f62, 1ab3753). LEAD: clean build, 490
+      files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS.
 - [x] (from LEAD, Cal: "Give me the latest version to test when ready"; done: QA findings, PASS on e276038, the placement list is Cal's call) WAITING ON QA: the full set on v0.68, now e276038 (APPV 68; 9b3a428 plus your 3f6c696 fix: nbAv draws neighbors with the rig, outfit included, in the Hall list, visit header and board posts; rigtest/lead/nbav.js). New
       since v0.67 (d54de89): LEAD's alerts (3bba5f1, d0adfdc) and FX (59d31a0, d0adfdc); ROOMS's lamp (abe06dd), Restaurant notes
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
