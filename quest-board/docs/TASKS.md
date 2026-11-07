@@ -2040,7 +2040,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 8909550): RATTLER (id rt, BRANDS_PROPOSAL.md's DUST & SPUR list) started: felt cowboy hat, straw cattleman and bandana generating. SØLVBERG (57527b0) is with QA; LEAD has its shop lines. Next: AUREL.
+- Now (on f39f668): RATTLER stopped (Cal via LEAD: no more brands; the 15 through SØLVBERG are the set). Its three finished sheets stay on Higgsfield, not downloaded, nothing committed. SØLVBERG passed QA (6499356) and is in the Shop (e513dae). Next: on call for Cal's playtest; ticked my to-dos that git shows done.
 - DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
   on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
   the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
@@ -2219,13 +2219,14 @@ To do:
 - [x] Yawn pilot: Cal approved, in `art/app` (b506b8c), see Ready to publish. Next, ask Cal: roll it out to every top?
 - [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
-- [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand).
+- [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand). ROOMS on f39f668:
+      all four render clean in idle and backwalk1 on both bodies, so they stay as they are during the playtest (no new art).
 - [ ] New outfits as Cal asks: one sheet per cosmetic, every angle; test every combination and pose before calling
       it ready.
 - [ ] UI pictures redrawn in the game's style (`ui_*`: classes, coaches, crew, ranks, rewards). List in HANDOFF, Art.
-- [ ] Black Tulle Skirt (`v_tulle`): HANDOFF used to say it was held back, but it has all its files and is on sale. Nobody
+- [x] Black Tulle Skirt (`v_tulle`) (DONE: skirt flag be8e92c, QA's wear test 51977b7): HANDOFF used to say it was held back, but it has all its files and is on sale. Nobody
       has looked at how it renders. Wear-test it on the body it fits, in every pose.
-- [ ] This clone's Python has no `PIL`, `numpy` or `scipy`, and the art tools need them (`rs_art.py`, `pack.py` and so on).
+- [x] (DONE: ROOMS uses `~/.venvs/questboard`, set `QB_PY` to it) This clone's Python has no `PIL`, `numpy` or `scipy`, and the art tools need them (`rs_art.py`, `pack.py` and so on).
       Set them up before the first ingest.
 - [ ] MAIN JOB. Painted walls for every room: wall-and-floor art in upgrade tiers, same camera every tier, matching the
       room's size (list in HANDOFF), our furniture sprites on top. Built-in upgrades become part of the wall art (Club tier
@@ -2255,7 +2256,7 @@ To do:
 - [ ] Game Room art: back-to-back gaming rigs at the front with the racing chairs facing them, a cream three-piece
       sectional with a futon piece, then an 80 inch TV and a floating modern media console as later upgrades.
 - [ ] Club (optional): back-view booth art if Cal wants booths along the bottom edge too.
-- [ ] Speakeasy: `depth.js` flags the piano drawn over the stage; look at it.
+- [x] Speakeasy: `depth.js` flags the piano drawn over the stage; look at it. DONE in b19a578 and 707cac1 (the piano stands by the band stage).
 
 ---
 
