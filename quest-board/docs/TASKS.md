@@ -2544,12 +2544,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f6ba9a6): LEAD's 44 yawn pictures all painted on Unlimited; sv_quilt recoloured to the idle crimson after QA's colour fail.
-  TAKEN (LEAD, 2026-11-07): the three design notes from QA's every-room review (aa3a99b), in order: (1) Dessert Parlor: the dark
-  bookcase and full-length mirror out, pastel pieces that fit in; (2) VR Arena: dark walls and neon trim like the Arcade and Rhythm
-  Room, pods and screens readable; (3) Restaurant fully bought: thin it by superseding. Unlimited only, through QA. Starting (1).
+- Now (on facb194): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+  (1) Dessert Parlor and (2) VR Arena done in facb194, WAITING ON QA below; (3) Restaurant thinning by superseding: next.
   After: the WEAK upgrades, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
+  the Arched Mirror, id de_arch kept) and VR Arena (dark neon shell vrw_t1, dark:1). Before/after: shots/rooms3/. Your notes from aa3a99b.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
   (m_ and f_<id>_yawn.webp for every id on your list, checked present).
