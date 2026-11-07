@@ -16,9 +16,9 @@ Doing:
 - Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
   ping-pong retired). QA PASSED the full set (495 of 495). BLOCKED: publish_files refuses every file
   ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. SMOKE BOMB in the Shop on Dec 28 (4f0d21f; band and vest renamed 9d1092e); QA 14 of 15, the cloak's
-  stretch sliver is ROOMS's, so no build ships it until it passes. Publish retried: still blocked. GACHA POP in the Shop on Jan 4 (07dfb84; QA wear test). ROOMS paints SAVE POINT.
+  stretch sliver is ROOMS's, so no build ships it until it passes. Publish retried: still blocked. GACHA POP in the Shop on Jan 4 (07dfb84); QA 15 of 15 after the hood fix. faebcd8: overalls and suspenders over the top (items.json overTop, rig slot pantsOver; legs right after the bib, boots over the cuffs), WAITING ON QA. ROOMS paints SAVE POINT.
   Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. 2be3eda rig: arms-up seam cells rigid per limb (QA's 300 px armpit tear; long sleeves in stretch still show skin, next). bc757e2 limits it to the armpit band (QA: trouser specks). Parked: long sleeves in the high stretch still show skin patches at large
-  size (cells the bare-body map gives the trunk; growing the shirt's own map changed nothing), a deeper rework of the arm binding. (on 07dfb84)
+  size (cells the bare-body map gives the trunk; growing the shirt's own map changed nothing), a deeper rework of the arm binding. (on faebcd8)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2108,6 +2108,11 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the overalls over the top, faebcd8 (LEAD's rig side of ROOMS's d4d8fd8 "overTop"). gp_overall and
+      gp_shorts under tops (o_tee, gp_bear, gp_sailor, gp_star, o_puffer, o_flannel, the starter tee), both bodies, every key pose: bib and
+      straps over the top front and back, no top hem on the thighs, arms still over the bib, tall boots (h_boots, sm_boots, v_boot) over
+      the cuffs. LEAD checked idle, walk3, sitFront, stretchUp, type1, rearStand and sleep in rigtest/matrix.html (`shots/lead/gp_overtop_idle.png`);
+      the ragged sleeves in type1 and the boot specks in walk3 look the same without the flag. Other bottoms are untouched (no pantsOver slot).
 - [x] (from LEAD, version check; done: reruns on 3a6fdd5, d7ae577, d0c9ea4 and 961b632, old test copies removed) The economy simulator ran on 1a7b690; game files changed since: 1900b94 (Rafe and Nova
       replace the investors on the team, so different room buffs) and 98210a2 (eleven return visits at +15 XP each). Rebuild on
       the latest commit and rerun. Your test copy `scratchpad/qa/wt-1a7b690` is stale: remove it when done.
