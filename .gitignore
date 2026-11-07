@@ -8,3 +8,4 @@ quest-board/art/parts/
 __pycache__/
 quest-board/rigtest/artnames.json
 quest-board/dist-web/
+quest-board/functions/node_modules/

@@ -1,0 +1,96 @@
+/* Quest Board's one server piece (docs/WEBAPP.md): /api/sample, the web build's stand-in for Claude's in-page AI.
+   The game sends a prompt (and for photo checks one JPEG, already shrunk to 1024 px on the phone); this checks who is asking,
+   caps how often, asks Claude, and hands back the JSON the prompt asked for.
+   The key is a Firebase secret Cal sets himself (firebase functions:secrets:set ANTHROPIC_API_KEY); it never reaches the code,
+   the repo or the browser.
+   Model: Claude Haiku 5.5, Cal's pick (2026-11-07): "Definitely the cheapest option for checking photos and scoring quests.
+   Cheap but fast checks. i DONT WAnt them to wait minutes for a photo verification". Effort low keeps each check to seconds. */
+"use strict";
+const Anthropic = require("@anthropic-ai/sdk");
+
+const MODEL = "claude-haiku-5-5";
+const PER_DAY = 80;                 // AI calls per player per day (photo checks, brain dumps, bounty ideas)
+const MAX_PROMPT = 20000;           // characters
+const MAX_IMAGE = 1500000;          // base64 characters (a 1024 px JPEG is about 100-300 KB)
+
+/* the JSON the prompt asked for, out of the model's text (it may wrap it in a code fence or a sentence) */
+function parseJson(text) {
+  const t = String(text || "").replace(/```(?:json)?/gi, "").trim();
+  try { return JSON.parse(t); } catch (e) { /* fall through */ }
+  const starts = [t.indexOf("{"), t.indexOf("[")].filter((i) => i >= 0);
+  if (!starts.length) return null;
+  const s = Math.min(...starts), close = t[s] === "{" ? "}" : "]", e = t.lastIndexOf(close);
+  if (e <= s) return null;
+  try { return JSON.parse(t.slice(s, e + 1)); } catch (err) { return null; }
+}
+
+/* one request, with what it needs passed in, so a test can run it without Firebase or a key:
+   deps = { verify(token) -> uid, count(uid, day) -> calls so far today including this one, client: an Anthropic client } */
+async function handle(req, deps) {
+  const auth = String((req.headers && (req.headers.authorization || req.headers.Authorization)) || "");
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (req.method !== "POST") return [405, { error: "POST only", code: "invalid-argument" }];
+  if (!token) return [401, { error: "sign in first", code: "unauthenticated" }];
+  let uid;
+  try { uid = await deps.verify(token); } catch (e) { return [401, { error: "sign in again", code: "unauthenticated" }]; }
+  const body = req.body || {};
+  const prompt = typeof body.prompt === "string" ? body.prompt : "";
+  const image = typeof body.image === "string" ? body.image : "";
+  if (!prompt || prompt.length > MAX_PROMPT || image.length > MAX_IMAGE) return [400, { error: "too big or empty", code: "invalid-argument" }];
+  const day = new Date().toISOString().slice(0, 10);
+  if ((await deps.count(uid, day)) > PER_DAY) return [429, { error: "That's enough checks for today. Try again tomorrow.", code: "resource-exhausted" }];
+
+  const content = [];
+  if (image) content.push({ type: "image", source: { type: "base64", media_type: "image/jpeg", data: image } });
+  content.push({ type: "text", text: prompt });
+  let msg;
+  try {
+    msg = await deps.client.messages.create({
+      model: MODEL,
+      max_tokens: image ? 1024 : 8000,      // a brain dump returns up to 40 quests
+      output_config: { effort: "low" },
+      messages: [{ role: "user", content }],
+    });
+  } catch (e) {
+    if (e instanceof Anthropic.RateLimitError) return [503, { error: "busy, try again in a minute", code: "unavailable" }];
+    if (e instanceof Anthropic.APIConnectionError) return [503, { error: "could not reach Claude", code: "unavailable" }];
+    if (e instanceof Anthropic.AuthenticationError) return [500, { error: "the server's Claude key is not working", code: "internal" }];
+    if (e instanceof Anthropic.BadRequestError) return [400, { error: "Claude could not read that", code: "invalid-argument" }];
+    if (e instanceof Anthropic.APIError) return [503, { error: "Claude error " + e.status, code: "unavailable" }];
+    return [500, { error: "server error", code: "internal" }];
+  }
+  if (msg.stop_reason === "refusal") return [422, { error: "Claude would not check that", code: "failed-precondition" }];
+  const text = (msg.content || []).filter((b) => b.type === "text").map((b) => b.text).join("");
+  const result = parseJson(text);
+  if (result === null) return [502, { error: "no JSON in the answer", code: "unavailable" }];
+  return [200, { result }];
+}
+
+module.exports = { handle, parseJson, MODEL, PER_DAY };
+
+/* Firebase wiring: only when deployed (or in the emulator), so the tests above load this file without it */
+if (process.env.FUNCTION_TARGET || process.env.K_SERVICE || process.env.FUNCTIONS_EMULATOR) {
+  const { onRequest } = require("firebase-functions/v2/https");
+  const { defineSecret } = require("firebase-functions/params");
+  const { initializeApp } = require("firebase-admin/app");
+  const { getAuth } = require("firebase-admin/auth");
+  const { getFirestore } = require("firebase-admin/firestore");
+  const KEY = defineSecret("ANTHROPIC_API_KEY");
+  initializeApp();
+  let client = null;
+  module.exports.sample = onRequest({ secrets: [KEY], timeoutSeconds: 60, memory: "256MiB", maxInstances: 10 }, async (req, res) => {
+    if (!client) client = new Anthropic({ apiKey: KEY.value(), timeout: 45000, maxRetries: 1 });
+    const db = getFirestore();
+    const deps = {
+      verify: async (t) => (await getAuth().verifyIdToken(t)).uid,
+      /* limits/<uid>_<day>: the day's count, raised in a transaction so two calls at once both count */
+      count: (uid, day) => db.runTransaction(async (tx) => {
+        const ref = db.doc("limits/" + uid + "_" + day), s = await tx.get(ref), n = (s.exists ? s.data().n : 0) + 1;
+        tx.set(ref, { n, uid, day }); return n;
+      }),
+      client,
+    };
+    const [status, out] = await handle(req, deps);
+    res.set("Cache-Control", "no-store").status(status).json(out);
+  });
+}

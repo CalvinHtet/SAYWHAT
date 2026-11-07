@@ -1,0 +1,30 @@
+rules_version = '2';
+// Quest Board's web build (docs/WEBAPP.md): the same rules the Claude version declares, on Firestore.
+// Every doc holds {j: "<json>", t: <ms>} (web/web.js), so these only look at paths and who is signed in.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    // Cal's uid goes here (and in web/config.js) after his first sign-in on the web build
+    function owner() { return signedIn() && request.auth.uid in []; }
+    function mine(uid) { return signedIn() && request.auth.uid == uid; }
+
+    // what others see of each player, their town-hall posts and reactions, and their visit notes: everyone signed in reads,
+    // only that player writes
+    match /worlds/{uid} { allow read: if signedIn(); allow write: if mine(uid); }
+    match /board/{uid}  { allow read: if signedIn(); allow write: if mine(uid); }
+    match /pings/{uid}  { allow read: if signedIn(); allow write: if mine(uid); }
+
+    // each player's save, backup and save-choice record: that player only
+    match /data/users/{uid}/{doc} { allow read, write: if mine(uid); }
+
+    // the owner's inbox and the frame and speed logs the owner reads to debug phones
+    match /inbox/{doc} { allow read, write: if owner(); }
+    match /diag/{doc}  { allow read: if owner(); allow write: if signedIn(); }
+
+    // the Claude version's old single save, looked up once by the owner's first boot; nothing is ever there on the web
+    match /player/{doc} { allow read: if owner(); allow write: if false; }
+
+    // the AI function's daily counts: the function only (it runs as admin and skips these rules)
+    match /limits/{doc} { allow read, write: if false; }
+  }
+}
