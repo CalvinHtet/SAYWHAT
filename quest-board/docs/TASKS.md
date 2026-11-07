@@ -2091,7 +2091,15 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 93d33f1): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- Now (on 1308059): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
+  Bedroom keeps its lamp button); the street and building views stop at 1.6x (was 2.6x). (2) The stage-1 and stage-2 Restaurant
+  double shelf runs along the back wall above the wainscot (it was mirrored). (3) The Grand Menu Board (CARTE DU JOUR / OUR MENU) is
+  66 high and wholly above the rail, clear of the wine wall. ROOMS checked headless, 0 page errors; not on a phone.
+- WAITING ON QA: check 1308059, buying an upgrade with the room window open. People keep their places, what they are doing, their
+  seat and order and their look; the new pieces pulse gold twice (about 1.3 s) after the crate opens, the soft-shadow layer does
+  not. ROOMS checked headless buying the Restaurant Open Sign with 5 people in the window. Not done: a flash in the building view
+  (it is hidden behind the window while you buy); not checked on a phone or in other rooms.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 93d33f1, Cal's Restaurant notes in every business. (1) No two identical customers in one room, and fewer: one or
   two stay, more about halved, five at most (`lfGuestN`). (2) Chair shadows sized to the chair; beds and sofas unchanged. (3) The
   Sidewalk Sign is now the Open Sign: chalkboard plus a neon OPEN in the first window (not in Noir). ROOMS checked headless: Restaurant,
