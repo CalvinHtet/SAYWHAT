@@ -1933,8 +1933,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on bad0b45): SAVE POINT is done in bad0b45. Next: BARD & BLADE (bb_*, brand id bb): add its 15 ids to data/items.json, then
-  paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app bb_*. Then CHROME RAIN. Brand runway: OK. Chrome: ROOMS.
+- Now (on 8ad135a): BARD & BLADE (bb_*, brand id bb): 15 ids added to data/items.json (not committed); tunic, gambeson and doublet
+  generating on Unlimited. Files: data/items.json, art/raw, art/layers, art/app bb_*. Next: the other 12, badge, banner, one commit,
+  QA, shop lines to LEAD. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
 - WAITING ON QA: wear test SAVE POINT, bad0b45 (brand id sp; 15 pieces, both bodies). ROOMS checked headless: idle, walk1 and
   backwalk1 load 30 of 30 with 0 failures and read right by eye. Look hardest at: the coin cap and the checkerboard slip-ons (a baked
   mannequin outline was stripped from both; look for leftover lines, and the cap's brim edge is a little soft); every teal detail
