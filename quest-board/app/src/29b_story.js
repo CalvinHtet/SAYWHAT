@@ -64,7 +64,9 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
   pop((s.why&&!s.scene?s.why+" ":"")+(s.how==="lot"?"A new lot is open on the street: "+ROOMT[s.room].name+".":ROOMT[s.room].name+" can now be opened from its room's upgrades."))}
 /* the reason a room is still closed, for its locked card */
 function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
+/* QA (v0.66): a step without its own portrait uses the same person's portrait from another step (the boba scene is Mara's: chef) */
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
+  if(!u&&window.QBART&&s.scene)STORY.some(function(o){if(o!==s&&o.scene&&o.scene.who===s.scene.who&&QBART["ui_story_"+o.id+".webp"]){u=QBART["ui_story_"+o.id+".webp"];return true}});
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(s.scene.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
 /* one line per screen, tap to continue (Cal: a lot of reading for one screen); the choices come with the last line */
 function styCard(c,pic,acts){var n=c.lines.length;

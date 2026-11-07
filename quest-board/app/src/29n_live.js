@@ -7,8 +7,8 @@
    - Down: the database pushes changes to worlds, board and pings as they happen (onSnapshot). Any push re-reads the
      neighborhood (socLoad: neighbors, posts, reactions, visit notes), at most once a second, so with ten players a change
      shows on every open screen within a second or two.
-   - Back: a tab coming back from the background, or the network coming back, reloads at once and re-subscribes if the
-     database dropped a subscription. If this database cannot push at all, the old polling keeps working as before. */
+   - Back: a tab coming back from the background, or the network coming back, re-reads at once; a subscription is started
+     again only if the host stopped answering ("unavailable"), as the platform's db.d.ts says. If this database cannot push at all, the old polling keeps working as before. */
 var LIVE={subs:[],on:0,lastErr:"",pend:0,timer:0,pubT:0,pubJson:"",retry:0};
 /* what others see of this player, without the timestamp, to tell whether anything changed */
 function liveShape(d){var c=Object.assign({},d);delete c.t;return JSON.stringify(c)}
@@ -28,13 +28,16 @@ function liveKick(){if(LIVE.timer){LIVE.pend=1;return}LIVE.timer=setTimeout(asyn
 function liveStop(){LIVE.subs.forEach(function(u){try{u()}catch(e){}});LIVE.subs=[];LIVE.on=0}
 function liveStart(){if(!socOn()||LIVE.on)return;var ok=0;liveStop();
   ["worlds","board","pings"].forEach(function(c){try{var ref=db.collection(c);if(!ref||typeof ref.onSnapshot!=="function")return;
-      var u=ref.onSnapshot(function(){liveKick()},function(e){LIVE.lastErr=(e&&e.code)||"error";LIVE.on=0;clearTimeout(LIVE.retry);LIVE.retry=setTimeout(liveStart,30000)});
+      /* db.d.ts: an error is terminal for that subscription; only "unavailable" (the host stopped answering) is recovered by a fresh
+         onSnapshot. Anything else is left to the polls, never re-subscribed in a loop. */
+      var u=ref.onSnapshot(function(){liveKick()},function(e){LIVE.lastErr=(e&&e.code)||"error";if(LIVE.lastErr==="unavailable"){LIVE.on=0;clearTimeout(LIVE.retry);LIVE.retry=setTimeout(liveStart,5000)}});
       if(typeof u==="function"){LIVE.subs.push(u);ok++}}catch(e){LIVE.lastErr=(e&&e.code)||String(e)}});
   /* some collections pushing and some not is fine: the polls in 29g_town.js cover the rest */LIVE.on=ok?1:0}
 /* catch up the moment the player comes back */
-function liveWake(){if(!socOn()||document.hidden)return;if(!LIVE.on)liveStart();SOC.loaded=0;liveKick();try{livePublish()}catch(e){}}
+/* the listener keeps retrying on its own while offline (db.d.ts: never subscribe again to recover), so coming back only re-reads */
+function liveWake(){if(!socOn()||document.hidden)return;if(!LIVE.on&&LIVE.lastErr==="unavailable")liveStart();SOC.loaded=0;liveKick();try{livePublish()}catch(e){}}
 document.addEventListener("visibilitychange",liveWake);
-window.addEventListener("online",function(){LIVE.on=0;liveWake()});
+window.addEventListener("online",liveWake);
 window.addEventListener("focus",liveWake);
 /* start once the save and the player id are in */
 (function liveBoot(){if(socOn()&&loaded&&S&&S.created){liveStart();liveKick();liveQueuePub();return}setTimeout(liveBoot,1500)})();

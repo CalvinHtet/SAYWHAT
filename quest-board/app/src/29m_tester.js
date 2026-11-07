@@ -91,7 +91,7 @@ function qbrvHtml(){var h='<div class="card box2 qbtr qbrv"><span class="label">
   BRANDS.forEach(function(b){h+=qbrvRow(b.name,esc(b.sub)+" &middot; "+esc(b.start),qbrvBtn("brand",b.id))});
   return h+'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="mclose">Close</button></div></div>'}
 function qbrvPlay(k,v){
-  if(k==="scene"){var s=STORY.filter(function(x){return x.id===v})[0];if(s)modal(styCard(s.scene,styPortrait(s),QBRV_CLOSE));return}
+  if(k==="scene"){var s=STORY.filter(function(x){return x.id===v})[0];if(s&&s.scene)modal(styCard(s.scene,styPortrait(s),QBRV_CLOSE));return}
   if(k==="beat"){var b=BEATS.filter(function(x){return x.id===v})[0];if(b)modal(styCard(b,styBeatPic(b),QBRV_CLOSE));return}
   if(k==="visit"){var f=FVISITS.filter(function(x){return x.id===v})[0];if(f)fvShow(f);return}
   if(k==="welcome"){S.seen=S.seen||{};var was=S.seen[v];roomSplash(v,true);if(!was)delete S.seen[v];persist();return}
