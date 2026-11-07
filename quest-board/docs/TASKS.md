@@ -465,6 +465,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.64 (4a1dbe8, APPV 64; 22 files, 477 art): pass, publish when the artifact tools are back. On the exact clean build:
+  savecheck; screens at 360 and 390; v0.63's own build makes a save that v0.64 loads, reloads, buys on and reloads; the level-5 start;
+  Kode Plaza stages 0-2 and tapping in; town rules, townlive 5/5, townrx 12/12; doors 34 ok plus Garden and Restaurant walked both
+  ways live; Begin at 10 sizes; diag/load; the team; voice.js 1,452 lines, 0 hits; the Shop, 186 pieces on him and 191 on her bought
+  and worn, SMOKE BOMB and GACHA POP included; Wednesday returns and launch reruns (120 slots, 0 repeats, 0 still-live drops, two
+  pages agree); all 30 rooms drawn, 21 of 21 buy through; the room tester walks all 17 story rooms; friends (16 visits, every figure
+  drawn, rooms, dogs); Collect; the street camera. No page errors. The rig changes (armpit, overalls over the top) were checked on
+  their own commits. Still as accepted: the mall's escalator in front of the Bowling and Karaoke doors. LEAD: check the published
+  files against this build once it is up. Owner: LEAD (publish and pin).
 - QA, LEAD's 91ef6e8 overalls over a painted top (on fb71c7c; `shots/qa/gp/overtop_stretch_91ef6e8.png`): pass, so the overalls and
   suspender shorts read right in all 22 poses. In stretch the bib and straps now show over the starter tee, o_tee, o_puffer and
   o_flannel on both bodies, and h_boots and sm_boots still sit over the cuffs. Pixel checks: seven other trousers and skirts, o_tee and
@@ -2119,12 +2128,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. nothing waiting on QA: GACHA POP 15 of 15, overalls over the top pass in every pose. v0.63's publish waits on LEAD's artifact tools (Cal). (on fb71c7c)
+- Now: v0.64 (4a1dbe8) passes; publishing waits on LEAD's artifact tools (Cal restarts LEAD). Next: SAVE POINT's wear test (bad0b45). (on bad0b45)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.64, 4a1dbe8 (APPV 64). New since v0.63 (f5234d3): SMOKE BOMB (Dec 28) and GACHA
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the full set on v0.64, 4a1dbe8 (APPV 64). New since v0.63 (f5234d3): SMOKE BOMB (Dec 28) and GACHA
       POP (Jan 4) in the Shop, the armpit rule (2be3eda, bc757e2), overalls over the top (faebcd8, 91ef6e8). LEAD built it clean in a
       worktree and it loads with no page errors (creator to Loft, v0.64 in the header). Publishing waits on the restart either way.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the overalls in the stretch pose, 91ef6e8 (your 0246a11 finding). With a painted top (the starter tee,
