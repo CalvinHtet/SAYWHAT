@@ -2372,9 +2372,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on bc4a575): LEAD's 44 yawn pictures on Unlimited, 7 done (5 passed QA; nc_tank and kp_hoodie in); next nc_qzip, kp_sailor,
-  kp_bomber, sm_track, sm_tee, sm_vest. Also for LEAD: f_h1front_front.webp, the long hair's front lock for a hairFront slot (cut
-  from existing art). WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee?
+- Now (on 30d93a9): LEAD's 44 yawn pictures on Unlimited, 7 done and passed QA; nc_qzip and kp_sailor generating, then kp_bomber,
+  sm_track, sm_tee, sm_vest and the rest. f_h1front_front.webp (the long hair's front lock) is in for LEAD's hairFront slot (30d93a9).
+  WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - DONE by QA (QA findings: pass). WAITING ON QA: check bc4a575, yawn pictures 6 and 7 (nc_tank, kp_hoodie): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
   with cuffs at the wrists (the first sheet ran the sleeves over the hands); the ski jacket's sheet had a drawn face, dropped.
