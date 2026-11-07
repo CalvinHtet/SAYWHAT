@@ -2195,8 +2195,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1e8a3b4): on call for Cal's playtest; QA's every-room notes (aa3a99b) taken. WAITING ON Cal: Vega's in-game tee (black
-  Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- Now (on 570b2f3): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
+  portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
+  room; Skee-Ball's player at its throwing end; the Speakeasy upright piano on the back wall facing the room and its bar off the
+  wall; the Club and Rooftop DJ decks off the wall with the DJ behind; VR flight pod off the sofa, ring chair in from the edge;
+  Rhythm dance pads a tile out, bench off the mirrors; lobby booth clear of the sofa; Restaurant coffee off the pizza oven, smoker
+  in the olive corner, table out of the crescent's opening; skybar glass cabinet clear of the sofa; Bedroom mirror on the left
+  wall (clear of the Closet door); Mall fountain clear of the clothing store; Boba fridge on the back wall; Dessert towers off the
+  bookcase; Garden potting bench ends the tool column. Bowling unchanged: bwx_seatb is a rear view, the seats face the lane ends.
+  ROOMS checked all 21 rooms headless, 0 page errors.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
   Boba TV show a still picture when animations are off. (2) The Rooftop and Sky Patio stay dark at 22:00 (abe06dd had lit them).
   (3) Kenan's three portraits wear the same black shades as his in-game look (Cal). (4) The Bedroom rug tucks under the bed; the
