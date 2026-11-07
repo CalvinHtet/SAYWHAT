@@ -2045,7 +2045,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f39f668): RATTLER stopped (Cal via LEAD: no more brands; the 15 through SØLVBERG are the set). Its three finished sheets stay on Higgsfield, not downloaded, nothing committed. SØLVBERG passed QA (6499356) and is in the Shop (e513dae). Next: on call for Cal's playtest; ticked my to-dos that git shows done.
+- Now (on 2b7eb27): on call for Cal's playtest. Sent Cal the seven friend visitors and their three poses (`shots/cal/visitors_poses.png`); WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them. RATTLER stopped (Cal: no more brands).
 - DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
   on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
   the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
