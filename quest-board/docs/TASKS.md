@@ -2600,17 +2600,15 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 081d0a2): WAITING ON CAL (big approval, batch, since 12:59): six new friend portraits and the SAYMORE app icon
-  (pictures in shots/friends_new/, nothing committed until he says yes). New friends, each identified from their own posts:
-  Kris Pascasio, Alvina Tat and Nick Huynh (a couple), Ben, Kevin Tsao, Victor Myint (photos about 12 years old). Skipped:
-  llamaorhorse (private). Held: Quince (asked Cal which photo is her).
-  Friend-only pieces from the current friends' portraits, all wired by LEAD as they landed: Vega tee and high-tops 6c66dd8;
-  Cynthia flatform sneakers and Jina long pleated skirt 21fedf3; Kenan open biker jacket over a white tee be717dc; Logan open
-  black bomber over a black tee 778e0c6 (eq sent). Justin and Memo keep their shop pieces: their portraits already match them,
-  and Justin's shoe repaint came back the same as h_derby.
-  Meanwhile: Game Room WEAK re-audit done in 776bc77 (lamp, fridge, dartboard) and the Mini Fridge repainted without brand-like
-  cans or lettering, the Soda Machine's green edge stripe removed (both WAITING ON QA below). Next: after Cal's yes, the portraits and the icon go in (web/icons/), then each new
-  friend's friend-only outfit and their spec to LEAD.
+- Now (on f3c8326): CAL APPROVED (2026-11-07, "Approve all"): the six new friend portraits and the SAYMORE app icon, both in
+  f3c8326 (art/app/friend_<id>.webp x3 each; web/icons/ icon-512, icon-maskable-512, icon-192, apple-touch-icon). Quince stays
+  out unless Cal says which photo is her; llamaorhorse skipped (private).
+  Now: the new friends' friend-only outfits from their portraits, each edited on Unlimited from an existing sheet so the fit
+  holds (every angle plus the yawn picture for tops): fr_kris_shirt (beige linen) + fr_kris_pants (white linen),
+  fr_alvina_coat (cream teddy coat over burgundy), fr_nick_suit (navy jacket, white shirt) + fr_nick_trousers, fr_ben_jacket
+  (light grey zip, white tee) + fr_ben_cap (backwards black), fr_kevin_polo (red) + fr_kevin_jeans (dark), fr_victor_hoodie
+  (black zip, white tee) + fr_victor_chinos (khaki). Files: art/app, data/items.json. Specs sent to LEAD.
+  Game Room WEAK upgrades and fridge art done (776bc77, 081d0a2; WAITING ON QA below).
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
