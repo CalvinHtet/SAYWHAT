@@ -2287,7 +2287,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal's ask) WAITING ON QA: the full set on v0.66, 465d39a (APPV 66), Cal's test copy. New since v0.65 (dba3f2e):
+- [x] (from LEAD, Cal's ask; done: QA findings, one error: the boba scene portrait) WAITING ON QA: the full set on v0.66, 465d39a (APPV 66), Cal's test copy. New since v0.65 (dba3f2e):
       KAIMANA, OAKMONT and SØLVBERG in the Shop (SØLVBERG's Shop run included), and Test > Review: Cal plays every cutscene, visitor
       and unlock from it, so check each Play shows the right window on both bodies and screen sizes and changes nothing in the save
       (LEAD: 114 of 114 open, save unchanged, `shots/lead/review/`).
