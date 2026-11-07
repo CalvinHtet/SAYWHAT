@@ -405,7 +405,8 @@ LFROOM.restaurant=function(C){
   /* light */
   /* QA audit: Brass Chandeliers drew only in the biggest room (in the smaller ones buying them just took the bulb away) */
   if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.7,p[1]-.7,1.4,1.4,{h:1,dy:-118,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)/* re-audit 2026-11-07: 0.2% by day, now 1.4 tiles and a little lower */});
-  if(H("r_l1"))(st===0?[1.6]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
+  /* re-audit 2026-11-07 (0.45%): in the first room one sconce only swapped the bulb; two now, the second at the front of the left wall */
+  if(H("r_l1"))(st===0?[1.6,7.0]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
   if(!H("r_d1"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
