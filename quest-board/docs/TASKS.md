@@ -466,6 +466,8 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 633be95 OAKMONT badge ring (on 633be95): pass. The inner ring samples navy all round (about 42,59,95) and no greenish
+  pixel is left in logo_oak.webp (0 of 307,468). OAKMONT is done: every piece, its stripes, the Shop and the badge. Owner: ROOMS.
 - QA, ROOMS's 867a53e OAKMONT navy stripes and LEAD's c814f38 palette and lines (on c814f38; `shots/qa/oak/icons_867a53e.png`,
   `fit1_867a53e.png`): pass. The headband, wristbands, jacket and track pants, skirt hem, socks, vest V and cap button now carry
   burgundy and navy, in every pose on both bodies and in the icons; the stripe no longer reads as the fashion house's web. One leftover:
@@ -2248,7 +2250,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: OAKMONT passes with navy stripes (the badge ring is still green, optional). WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: SØLVBERG when ROOMS sends it. (on c814f38)
+- Now: nothing waiting on QA. OAKMONT done (navy stripes and badge). WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: SØLVBERG when ROOMS sends it. (on 633be95)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
