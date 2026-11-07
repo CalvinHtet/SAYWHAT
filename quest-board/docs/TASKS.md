@@ -504,6 +504,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 34 (d89dfbb: km_camp, KAIMANA) on a clean build of d89dfbb: PASS, 0 page errors. It stretches arms-up
+  on both bodies (the hibiscus camp shirt, short sleeves, bare forearms); stretch frames 3 to 21 changed, nothing else
+  (shots/qa/yawn/batch19_idle_stretch.png). Shoulders on hot pink at 3x, frames 6, 12 and 18 and with short hair: the sleeves sit
+  on both shoulders and the bare arm comes cleanly out of each; no hollow, no strip, on either body (km_camp_shoulders.png,
+  km_camp_shoulders_short.png). Sweep: all hairstyles with all 19 neck items plus none, 120 pictures, all clean
+  (sheet_km_camp_<body>.png). 34 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 32 and 33 (f106365: cr_mesh cut with --regreen, cr_vest; both second paints) on a clean build of
   f106365: PASS, 0 page errors. Both stretch arms-up on both bodies; stretch frames 3 to 21 changed, nothing else
   (shots/qa/yawn/batch18_idle_stretch.png). Underarms: the loose sleeves wrap the arms on both tops and both bodies, no tan strip,
@@ -2488,7 +2494,7 @@ Doing:
 - Now (on d89dfbb): LEAD's 44 yawn pictures on Unlimited, 34 done (33 passed QA; km_camp in); km_boat repainting (the first gave it long
   sleeves over the hands); next km_rash, km_crochet, then oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check d89dfbb, yawn picture 34 (km_camp): your yawnfall.js and yawnsweep.js; short sleeves, forearms bare.
+- DONE by QA (QA findings: pass). WAITING ON QA: check d89dfbb, yawn picture 34 (km_camp): your yawnfall.js and yawnsweep.js; short sleeves, forearms bare.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
   (both repainted for a strip of arm under the sleeves) and the mesh's edges on a dark background (light-grey sheet).
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
@@ -2776,9 +2782,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 55d4086. Done: ROOMS's yawn pictures 1-33 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT, BARD & BLADE and CHROME RAIN complete); savecheck and screens (360, 390) on f106365 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 55d4086). Next: KAIMANA when ROOMS sends it. (on 55d4086)
+- Now: on 0faf58f. Done: ROOMS's yawn pictures 1-34 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT, BARD & BLADE and CHROME RAIN complete, KAIMANA camp shirt); savecheck and screens (360, 390) on f106365 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 55d4086). Next: km_boat (repainting, elbow-length) when ROOMS sends it. (on 0faf58f)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
