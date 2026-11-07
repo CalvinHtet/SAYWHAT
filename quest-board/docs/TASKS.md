@@ -466,6 +466,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 57527b0 SØLVBERG wear test (on 8909550; `shots/qa/sv/`): pass, 15 of 15. All 15 on both bodies (the leggings hers) in all
+  22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the mittens sit on both hands in every pose, no cords left
+  floating; (2) the pom beanie and the trapper sit right with long hair (h1) and the ponytail (h3), front, back and asleep; (3) the
+  goggles rest on the forehead with their strap round the back, hair kept; (4) the puffer and après boots go over the snow pants, the
+  leggings and the cords, walking, sitting and asleep (`boots.png`). Design calls: the puffer boots, the tan lace-up après boots, the
+  fair-isle and the badge (peak and snowflake in a red ring) read as generic alpine, no ski brand; fine. The stretchUp armpit flecks
+  ROOMS saw are the parked rig item, not this art. Shop rows not in yet (no gx_sv_). Owner: ROOMS.
 - QA, ROOMS's 633be95 OAKMONT badge ring (on 633be95): pass. The inner ring samples navy all round (about 42,59,95) and no greenish
   pixel is left in logo_oak.webp (0 of 307,468). OAKMONT is done: every piece, its stripes, the Shop and the badge. Owner: ROOMS.
 - QA, ROOMS's 867a53e OAKMONT navy stripes and LEAD's c814f38 palette and lines (on c814f38; `shots/qa/oak/icons_867a53e.png`,
@@ -2034,7 +2041,7 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on 57527b0): SØLVBERG done and with QA; LEAD has its shop lines. Next: RATTLER (BRANDS_PROPOSAL.md's DUST & SPUR list).
-- WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
+- DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
   on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
   the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
   hair and the ponytail; the goggles (noClip) on the forehead; the puffer and après boots ("over") with each pant; the badge (a
@@ -2255,7 +2262,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. OAKMONT done (navy stripes and badge). WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: SØLVBERG when ROOMS sends it. (on 633be95)
+- Now: SØLVBERG 15 of 15; its Shop run waits on LEAD's rows. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: RATTLER when ROOMS sends it. (on 8909550)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
