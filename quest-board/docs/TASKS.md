@@ -2493,7 +2493,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
+- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
       separately). Since v0.68 (e276038): ROOMS's room-review fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4), every piece usable
       (570b2f3), the Nightclub staff and patio chair (567ea26, your check), LEAD's screens (cfa5f62, 1ab3753). LEAD: clean build, 490
       files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS.
