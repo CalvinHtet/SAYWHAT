@@ -23,11 +23,13 @@ Doing:
   pings, unordered, so it breaks past about 60 players; fix offered, Cal's call. CAL (2026-11-07): about 10 players, "synced perfectly so we can all see each others progress"; "perfectly consistent for
   everyone ... publish a new version at 4 am when they are all asleep": RELEASING "Two links, and the 4 am publish" (one Live artifact
   republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). QA held v0.66 for one thing (the boba scene's "M" box); fixed in v0.67 = d54de89 (portrait fallback, 7 of 7 scenes; plus live
-  sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Live sync (019f21f, app/src/29n_live.js):
+  sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Next build (v0.68): Cal's "I don't like the crt scan lines. And the red hue it too aggressive" (59d31a0: Starlight
+  for scanlines, softer vignette and edge glow, no overlay on the Loft or rooms) and "The light on option should not matter for the
+  other rooms. Only the bedroom" (ROOMS, 20_loft.js lfLit and the lamp button). Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on d54de89)
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 59d31a0)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
