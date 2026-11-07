@@ -717,6 +717,14 @@
         const moved = order.filter(early).sort((a, b) => seq.indexOf(a[1]) - seq.indexOf(b[1]) || (a[0] === so) - (b[0] === so)), rest = order.filter((e) => !early(e));
         const at = rest.findIndex(([i, g]) => i === po && g === trunk);
         if (at >= 0) { rest.splice(at + 1, 0, ...moved); order.splice(0, order.length, ...rest); }
+        // A painted top (the stretch pose's yawn art) is one flat picture drawn in its last group, arms and all, so the bib would
+        // land under it again (QA, 0246a11). Then the whole piece follows the picture; in that pose the arms are up, clear of the bib.
+        if (ti >= 0) {
+          const mine = ([i, g]) => i === po || (so >= 0 && i === so && seq.indexOf(g) < tAt);
+          const take = order.filter(mine), keep = order.filter((e) => !mine(e));
+          const at2 = keep.findIndex(([i, g]) => i === ti && g === lastGroup[ti]);
+          if (at2 >= 0) { keep.splice(at2 + 1, 0, ...take); order.splice(0, order.length, ...keep); }
+        }
       }
       for (const [i, g] of order) {
         (({ s, l }) => {
