@@ -33,8 +33,13 @@ Doing:
   0b6c5e2 (functions/index.js, 11/11 on a fake Claude; firestore.rules; firebase.json). CAL: test on the web link, give feedback, see
   fixes there: a Test channel on Firebase Hosting that updates on each QA-passed deploy; the Live link updates at 4 am. Done too:
   f09b39d, installable (manifest, home-screen icon as a stand-in until ROOMS draws one, asked), service worker, quiet update on return,
-  art fetched ahead; webtest.js 19 PASS. Blaze is on (Cal). WAITING ON CAL: npx firebase-tools login and the API key secret (commands
-  given); then LEAD deploys rules, the function and a Test channel for Cal's phone. Left: the 4 am deploy job. About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+  art fetched ahead; webtest.js 19 PASS. Blaze is on (Cal). Cal logged in and set the key; DEPLOYED (be38e7c): Firestore
+  rules, the sample function (us-central1), the web build on the Test channel (opens to sign-in in 1.2 s, no errors). Not tested:
+  real Google sign-in and a real Claude call (need a person; Cal's phone test). If sign-in shows redirect_uri_mismatch, the channel's
+  /__/auth/handler must be added to the OAuth client (Cal's Google Cloud console). CAL: "Once it is ready for me to test, make sure the
+  other agents have finished all their tasks": Cal gets the web link only after ROOMS's friends and the SAYMØRE chibi app icon
+  (Cal: "my SAYMORE mascot but in the same chibi form"), LEAD's wiring and rebuild, and QA's full set on dist and dist-web. Vega
+  wired (be38e7c). Left for LEAD: the 4 am deploy job. About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
@@ -42,7 +47,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on f09b39d)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on be38e7c)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
