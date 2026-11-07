@@ -13,13 +13,12 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.64 built from 4a1dbe8 (APPV 64; since v0.63: SMOKE BOMB Dec 28, GACHA POP Jan 4, the armpit fixes 2be3eda and bc757e2,
-  overalls over the top faebcd8 and 91ef6e8); clean build, QA PASSED the full set (df51588). v0.63 (f5234d3,
-  QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
-  session brings them back), so Cal must restart. v0.64 goes out then: its passed build is staged in `SAYWHAT/r/` (22 files and 477 art), and `docs/RELEASING.md` (e3a69ed) has the publish step by step for a new LEAD session.
-  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498 and its Shop run passes; it rides in v0.65 with the arms slot (QA: no change to anything existing, f100e51). BARD & BLADE in the Shop on Jan 18 (a6e9d16; ROOMS's rows and colours, the skirt hers only, bracers in the arms slot); QA passed it, 15 of 15 and the Shop run (1f047b9, d9af9b2). CHROME RAIN in the Shop on Jan 25 (091c762; ROOMS's rows and colours, the skirt hers only, the arm sleeve in the arms slot); QA 15 of 15 after ROOMS's 14bd0e5 (0e46ac6) and the Shop run passes (577831f); the mesh top's line is 207db81. The drop pop-up's badge goes through the same brandLogo/brandLogoSrc as the Shop banner QA passed; LEAD could not trigger the pop-up headless, so it is not seen yet. v0.65 carries SAVE POINT, BARD & BLADE, CHROME RAIN, the arms slot and the packed badges once v0.64 is out. Publishing v0.64: this session's artifact tools stay broken after Cal's restart, so a fresh session "Publish v0.64 (LEAD)" is proposed to Cal to do it from r/. Brand badges now ride in the art_ui pack (8be03dc): the publish was at 505 of 511 files and is at 491; banners were packed already. QA passed every brand tab's badge (577831f). Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
-  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding (QA adds: the far arm from behind in type1, and wrist flecks in stretch). (on 45cb1c3)
-- v0.64 PUBLISHED and pinned (new slug NSmu55hk, 499 files: 22 top-level + 477 art, db rules, user, sample images), v0.62 unpinned; WAITING ON QA: check the published files against 4a1dbe8's build. The artifact is titled "Quest Board" (the build's own <title> wins over the publish title), not "Quest Board v0.64". `SAYWHAT/r/` and the v63 release worktree removed by LEAD.
+- Now: v0.65 built from dba3f2e (APPV 65; since v0.64: SAVE POINT Jan 11, BARD & BLADE Jan 18, CHROME RAIN Jan 25, the rig's arms
+  slot 23bf14f, brand badges in the art_ui pack 8be03dc); clean build, 489 files, loads with no page errors (v0.65 in the header),
+  WAITING ON QA for the full set. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
+  QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
+  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 80 days. Waiting on Cal: a launch date. Parked: the
+  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on dba3f2e)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2207,6 +2206,9 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the full set on v0.65, dba3f2e (APPV 65). New since v0.64 (4a1dbe8): SAVE POINT (Jan 11), BARD &
+      BLADE (Jan 18) and CHROME RAIN (Jan 25) in the Shop, the rig's "arms" slot (bracers, the arm sleeve), brand badges from the
+      art_ui pack. LEAD built it clean in a worktree: 489 files, loads with no page errors, v0.65 in the header.
 - [ ] (from LEAD) WAITING ON QA: check the published v0.64 (pinned, slug NSmu55hk) against 4a1dbe8's build: 499 files (22 top-level + 477 art/), sizes and the 9 db rules; index.html is ~364 bytes larger from the publish wrapper. Its title reads "Quest Board", not "Quest Board v0.64".
 - [x] (from LEAD; done: QA findings, pass; the drop pop-up not checked) WAITING ON QA: the CHROME RAIN Shop run, 091c762 (brand cr, Jan 25, 15 rows as ROOMS wrote them, the skirt hers
       only, the arm sleeve in the "arms" slot). LEAD checked the tab 12 weeks ahead: banner with art, tagline, 15 pieces, no broken
