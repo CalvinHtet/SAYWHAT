@@ -23,7 +23,9 @@ Doing:
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
-  GitHub schedule); App Store/Play Store as an optional wrapper later. WAITING ON CAL: go ahead as a web app, or the store route;
+  GitHub schedule); App Store/Play Store as an optional wrapper later. CAL: "App Store is too much friction"; about 30 players now. So: the installable web app. LEAD answered the
+  30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
+  WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
   0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on db40a70)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
