@@ -14,10 +14,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 Doing:
 - Now: v0.64 built from 4a1dbe8 (APPV 64; since v0.63: SMOKE BOMB Dec 28, GACHA POP Jan 4, the armpit fixes 2be3eda and bc757e2,
-  overalls over the top faebcd8 and 91ef6e8); clean build, loads with no page errors, WAITING ON QA for the full set. v0.63 (f5234d3,
+  overalls over the top faebcd8 and 91ef6e8); clean build, QA PASSED the full set (df51588). v0.63 (f5234d3,
   QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
-  session brings them back), so Cal must restart. Whichever passed version is newest then goes out: v0.64 if it passes, else v0.63.
-  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498, its Shop run next. Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart.
+  session brings them back), so Cal must restart. v0.64 goes out then.
+  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498, its Shop run next. Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
   restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on eaf8c09)
 
 To do:
