@@ -89,7 +89,7 @@ const N = P.length, uid = (i) => 'u_' + P[i][0].toLowerCase();
   ok(`three posts made at once reach all ten (${((Date.now() - t2) / 1000).toFixed(1)} s)`, posts.every((q) => ['Mia', 'Sam', 'Lapsed'].every((n) => q.includes('post from ' + n))), posts.map((q) => q.length));
   // a quiet minute
   const w0 = await Promise.all(pages.map((p) => p.evaluate(() => window.__writes))); await pages[0].waitForTimeout(60000); const w1 = await Promise.all(pages.map((p) => p.evaluate(() => window.__writes)));
-  const quiet = w1.map((v, i) => v - w0[i]); const wk = await Promise.all(pages.map((p, i) => p.evaluate((n) => window.__wk.slice(-n).join(' '), quiet[i] || 0))); console.log('  what each page wrote in the quiet minute: ' + wk.map((x, i) => P[i][0] + '[' + (x || '-') + ']').join(' '));
+  const quiet = w1.map((v, i) => v - w0[i]); const wk = await Promise.all(pages.map((p, i) => p.evaluate((n) => (n ? window.__wk.slice(-n).join(' ') : ''), quiet[i] || 0))); console.log('  what each page wrote in the quiet minute: ' + wk.map((x, i) => P[i][0] + '[' + (x || '-') + ']').join(' '));
   ok('a quiet minute writes at most 2 per page', quiet.every((v) => v <= 2), quiet);
   // the shared docs
   const docs = await pages[0].evaluate(() => { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('__mdb:')) o[k.slice(6)] = localStorage.getItem(k).length; } return o; });

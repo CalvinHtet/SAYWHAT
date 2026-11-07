@@ -692,6 +692,18 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
   frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
   Restaurant, Nightclub, Theater or Arcade at 21:00, opened from their buildings), and not on a real phone. Info, no owner.
+- QA, v0.72 = 083fec9 (APPV 72), the full set on a clean build (491 files): PASS, publish, 0 page errors anywhere. savecheck all
+  passed; screens at 360 and 390 fit; visits.js PASS; lagcheck.js PASS (Game Room and Restaurant windows at CPU x4: v0.71 58.3/57.8
+  fps, worst 67/83 ms; v0.72 60.3/60.3 fps, worst 17/17 ms); unlockall.js PASS (fresh and mid-game); the whole story 64/64 (the
+  save gains an empty story.beats and the friend-visit day, as on v0.71: defaults, not progress); Review 119/119 on both bodies, 0
+  problems; livesync, live10 PASS; alerts, FX, room windows, bar rule PASS; badges all from the pack, 0 loose; drops PASS; all 30
+  rooms draw fully bought (shots/qa/v72/allrooms.png); guests at most 5, no duplicates. The screens' still picture (cfa5f62), new
+  rigtest/qa/stillcheck.js: Theater, Auditorium and Boba screens show page 1 with animations off (not black) and hide it with
+  animations on (shots/qa/v72/screens_still_noanim.png); my old screenlive.js targets the retired Mall Directory and no longer
+  applies. players10: 1 pass in 3 runs on v0.72 (Mia's page wrote 3 in the quiet minute twice: her save twice and her world, after
+  her board post, under load 16-34), 1 pass in 1 on v0.71 today; no saving code changed between them (only APPV, rig.json, build.py,
+  yawn_cut.py), so it is timing, not v0.72. Fixed my players10.js listing every write for a page that wrote none. Painted stretch
+  for all 44 tops passed one by one (above). Not on a real phone.
 - QA, v0.71 = 3840577 (APPV 71), the full set on a clean build (490 files): PASS, publish, 0 page errors anywhere. visits.js PASS
   (four arrivals at 360 and 390, one and two friends, nothing over the names or past the card at any frame, reduced motion, 12 real
   visits with all four and none twice running); lagcheck.js PASS (Game Room and Restaurant windows at CPU x4: v0.70 28.8/29.3 fps,
@@ -2522,7 +2534,7 @@ Doing:
   Re-measured the Restaurant on c1e9a9d: 14 visual upgrades still change under 0.5% of the picture. Chef's Neon (worst,
   0.06%) fixed in 8602ed7; next Drip Coffee, Brass Chandeliers by day, Star Plaque, then the rest, worst first.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 8602ed7, Restaurant Chef's Neon: bigger (58 px), in every style incl. Noir, past the kitchen boards (first kitchen: on
+- TAKEN by QA (with the Restaurant checks). WAITING ON QA: check 8602ed7, Restaurant Chef's Neon: bigger (58 px), in every style incl. Noir, past the kitchen boards (first kitchen: on
   the dining wall by the pass). Three sizes: shots/rooms3/restaurant_chefneon_3sizes.png.
 - TAKEN by QA (after the v0.72 full set, with 10f64be). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
   olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
@@ -2840,14 +2852,13 @@ Doing:
 - Now: on 1695375. Done: all 44 of ROOMS's yawn pictures (pass, each with every hair and necklace; sv_quilt after its recolour),
   and an idle-vs-stretch colour check over all 79 tops with yawn art; savecheck and screens (360, 390) on ca391d3 pass; the hair lock (pass).
   BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until a new QA session (artifact tools down here
-  at 3ca553b; Cal has the first message for it). Doing now: the full set on v0.72 = 083fec9 (clean build, 491 files, APPV 72), running; 15 of 22 done (savecheck, screens,
-  visits, lag, unlock-all, story 64/64, Review 119/119 both bodies, livesync, live10, alerts, FX pass; players10 one page wrote 3
-  in the quiet minute against 2, under load 19, as on v0.71's first run: rerun when the run ends). Then ROOMS's facb194 (Dessert, VR Arena) and the Restaurant thinning. (on 083fec9)
+  at 3ca553b; Cal has the first message for it). Done: v0.72 = 083fec9 full set, PASS, publish. Now: ROOMS's room checks: facb194 (Dessert, VR Arena), 10f64be
+  (Restaurant thinning), d328e88 (Sculptural Vases), 8602ed7 (Chef's Neon). (on 083fec9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD; TAKEN by QA, running) WAITING ON QA: the full set on v0.72, 083fec9 (APPV 72). New since v0.71 (3840577): all 44 painted yawn pictures (with
+- [x] (from LEAD; done: QA findings, PASS, publish) WAITING ON QA: the full set on v0.72, 083fec9 (APPV 72). New since v0.71 (3840577): all 44 painted yawn pictures (with
       f6ba9a6's recolour), the yawn fallback 7d7c5df + e3278f0, the hair lock 4f30ef5 + 30d93a9, the screens' still picture cfa5f62.
       LEAD: clean build, 491 files (art_rig now 9 pieces), loads clean, Review 119/119, the whole story 64/64 save unchanged, livesync
       PASS, painted stretch with the lock on long hair.
