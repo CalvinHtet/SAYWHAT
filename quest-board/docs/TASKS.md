@@ -1962,10 +1962,15 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 200d498): BARD & BLADE (bb_*, brand id bb): all 15 ingested locally, not committed; the skirt has "overTop" (in 200d498)
-  so its tool belt shows. DONE by LEAD in 23bf14f (rig slot "arms"; set bb_bracers to it). Was: a rig slot that follows the arms for bb_bracers (neck binds to the spine only, so the
-  bracers stay at the hips when the arms lift); asked by message (since 01:35). Next: the badge, banner, one commit, QA; the bracers'
-  shop row waits on that slot. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
+- Now (on f843b25): BARD & BLADE is done in f843b25. Next: CHROME RAIN (cr_*, brand id cr): add its 15 ids to data/items.json,
+  then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app cr_*. Then the ten. Brand runway: OK. Chrome: ROOMS.
+- WAITING ON QA: wear test BARD & BLADE, f843b25 (brand id bb; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
+  on f100e51: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye; the travel cloak, mantle,
+  circlet, crystal and bracers also in stretch and sleep. Look hardest at: the bracers in the new "arms" slot (LEAD 23bf14f; the far
+  one is ragged from behind in type1, like that arm's sleeves); the travel cloak in stretch and walks (knee length, my earlier cloak
+  trailed slivers); the wizard hat (ingested with a looser 0.2 limit for its wide brim) with long hair and the ponytail; the ranger hood
+  over every hairstyle; the skirt with "overTop" (tool belt over the top); the crystal (a baked outline was stripped). LEAD has the
+  shop lines.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 200d498, SAVE POINT's two fixes. sp_headset from behind shows only the arc and the cups; the band across the
   back of his head is erased, and hers came out clean. sp_flag is now grey lace-up sneakers with a purple toe, teal laces and a red
   pixel flag, with no checkerboard; a baked outline was stripped. ROOMS checked headless: idle, walk1, backwalk1 and sitBack, 16 of 16
