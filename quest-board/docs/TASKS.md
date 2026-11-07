@@ -486,6 +486,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's cfa5f62 (the screens' still picture moved into 24_screens.js scrPages, replacing ROOMS's 62d336d wrapper), on a clean
+  build of 67d375e: PASS. Same as c9a940e: with animations off the Auditorium, lobby and Boba screens show their still; with
+  animations on the slides play and no still shows under them; 0 page errors.
 - QA, ROOMS's v0.69 room fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4) on a clean build of 6430d13: all PASS, 0 page
   errors. With animations off (allrooms.js, as reduced motion) the Auditorium shows its dragon-over-the-city still, the lobby its
   NOW SHOWING times, the Boba its TODAY menu; with animations on (bigrooms.js) the slides play and no still shows under them. At
@@ -2441,9 +2444,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 6430d13. Done: ROOMS's v0.69 room fixes (pass); before that v0.68 (e276038) PASS, waiting on Cal's call to publish
-  it before the placement fixes. Next: ROOMS's fixes for Cal's 13 placement problems (the pinball first) as they land, then the
-  v0.69 full set. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 67d375e. Done: LEAD's cfa5f62 screens (pass); ROOMS's v0.69 room fixes (pass); v0.68 (e276038) PASS, WAITING ON
+  CAL to publish or hold. Next: ROOMS's fixes for Cal's 13 placement problems (the pinball first) as they land, then the v0.69
+  full set. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
