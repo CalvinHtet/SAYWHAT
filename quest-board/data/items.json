@@ -1243,5 +1243,16 @@
   "slot": "shoes",
   "over": true,
   "friendOnly": 1
+ },
+ "fr_cynthia_kicks": {
+  "slot": "shoes",
+  "friendOnly": 1
+ },
+ "fr_jina_skirt": {
+  "skirt": true,
+  "slot": "pants",
+  "femaleOnly": true,
+  "wide": true,
+  "friendOnly": 1
  }
 }
