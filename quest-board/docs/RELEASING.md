@@ -27,6 +27,24 @@ into a pack in `tools/build.py` (`ex_` is the next candidate; it would also need
 In the page, buy each upgrade one at a time in unlock order and rebuild the room with `window.__qbLoft().roomCtx` and `roomSvg` after each
 purchase, reading the footprints from `.lfitems > g[data-b]`. Overlaps at mid tiers do not show up when a room is only checked fully upgraded.
 
+## Two links, and the 4 am publish (Cal, 2026-11-07)
+
+Cal: "There's only going to be about 10 people playing. I need this to work with 10 ppl and have everything synced perfectly so we
+can all see each others progress." And: "I want this to be perfectly consistent for everyone. So they can open it and if there is
+an update it will have synced. We can publish a new version at 4 am when they are all asleep so it never messes up their current
+progress and it is basically invisible and non intrusive."
+
+- **Live**: one permanent artifact everyone opens. Never a new artifact for it: every release republishes the same slug with its
+  `base_version`, so its database (every save, the town board, reactions, visit notes) stays. A new artifact would start an empty
+  world and everyone would lose their progress.
+- **Test**: one permanent artifact for Cal, also republished in place, so his test save carries from version to version. A version
+  goes here first, any time of day.
+- **The 4 am publish**: once QA passes a version (rule 18) and it has been on Test, the same files are republished to Live at
+  4:00 am Pacific (the game's own day boundary is Pacific too), by a scheduled task that starts a fresh LEAD session. A page left
+  open overnight from the older version stops saving as soon as the new one saves (qbWatchSave) and asks for a reload, so it can
+  never overwrite newer progress; the platform also moves open pages to the new version at a quiet moment.
+- Only additive changes in a release (see the list at the top): saves are never wiped or reshaped without a migration.
+
 ## The publish, step by step (LEAD; any LEAD session can do it)
 
 The passed build is staged in `SAYWHAT/r/` (git-ignored through `.git/info/exclude`): `dist/` of the passed commit plus
