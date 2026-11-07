@@ -2013,10 +2013,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on cab70e1): OAKMONT (oak_*, brand id oak): 5 of 15 ingested locally (track jacket with two stripes, terry polo, cropped
-  sweatshirt, tennis vest, tennis skirt), not committed; track pants (redone, the first came back with eight figures), running shorts
-  and terry headband generating. Files: data/items.json, art/raw, art/layers, art/app oak_*. Next: visor, sweatband cap, wristbands,
-  watch, three shoes, badge, banner, one commit, QA. Then SØLVBERG. Brand runway: OK. Chrome: ROOMS.
+- Now (on ef0e096): OAKMONT (oak_*, brand id oak): 13 of 15 ingested locally, not committed; the court shoes redone (the first
+  read as a famous perforated tennis shoe) and the tube socks generating. Files: data/items.json, art/raw, art/layers, art/app oak_*.
+  Next: badge, banner, one commit, QA. Then SØLVBERG. Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: pass). WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
   backwalk1 and stretchUp, 30 of 30 with 0 failures each, reading right by eye. Look hardest at: the straw sun hat and bucket hat with
   long hair and the ponytail (wide brims), the visor (noClip, open top), the crochet cardigan (open front over a cream tank), the board
