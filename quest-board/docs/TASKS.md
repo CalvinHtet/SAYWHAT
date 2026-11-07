@@ -2567,7 +2567,7 @@ Doing:
   0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; next
   Espresso Bar, Host Desk/Lectern, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check eadc75b, your 85fad55 note: pendants (two, back end of the pass, higher) and the Neon Sign (right and up) clear of the wine
+- TAKEN by QA. WAITING ON QA: check eadc75b, your 85fad55 note: pendants (two, back end of the pass, higher) and the Neon Sign (right and up) clear of the wine
   wall and stools; the counter needs Noir, which hides the neon, so they never meet. Picture: shots/rooms3/restaurant_neon_pendants_fix.png.
 - DONE by QA (QA findings: neon reads; pendants and neon overlap the wine wall and stools, small move). WAITING ON QA: check c50714d, Restaurant Neon Sign (bigger, pink glow) and Black Marble Counter (three brass pendants over the pass, which
   the partition hides). Renders: shots/rooms3/restaurant_neon.png, restaurant_marble_pendants.png.
