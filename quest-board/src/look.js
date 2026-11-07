@@ -27,6 +27,11 @@
       iris: { ...frontOnly(b, "iris"), tint: ramp(find(data.eyeColors, c.eyeColor)) },
       hair: { ...views(b, c.hairStyle), tint: ramp(find(data.hairColors, c.hairColor)) },
     };
+    // The lock of long hair that drapes over the near shoulder, drawn again after the arms (rig slot hairFront, group of the near
+    // arm) so a sleeve never shows through it (QA's idle notch). Only styles that have the cut file get it; the same pixels are
+    // still in the main hair, so without the file nothing is missing.
+    const lockArt = `${b}_${c.hairStyle}front_front.webp`, G = global.QBDATA, QA = global.QBART;
+    if ((QA && QA[lockArt]) || (G && G.arthash && G.arthash[lockArt])) layers.hairFront = { front: lockArt, tint: layers.hair.tint };
     for (const [slot, item] of Object.entries(c.equipped || {})) {
       const set = item.frontOnly ? frontOnly(b, item.art) : views(b, item.art);
       if (slot === "shoes") {
@@ -36,7 +41,7 @@
       } else {
         layers[slot] = set;
       }
-      if (slot === "hat" && item.clip && item.clip[b]) layers.hair.clip = item.clip[b];
+      if (slot === "hat" && item.clip && item.clip[b]) { layers.hair.clip = item.clip[b]; if (layers.hairFront) layers.hairFront.clip = item.clip[b]; }
       if (item.lift && item.lift[b]) layers[slot].lift = item.lift[b];
       // A long skirt moves as one piece (rig.js bindLayer). The flag lives in data/items.json; read it there too, so every
       // place that equips an item gets it without copying one more field.

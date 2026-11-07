@@ -247,6 +247,13 @@
    ]
   },
   {
+   "id": "hairFront",
+   "bones": [
+    "head"
+   ],
+   "group": 6
+  },
+  {
    "id": "neck",
    "bones": [
     "spine"
