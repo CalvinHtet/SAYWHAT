@@ -8,15 +8,15 @@
    something real for that day: an XP buff on the matching quests, a coin gift, a streak freeze, or watering the Garden.
    This replaces maybeVisit's 25-minute lounge-only visits, whose XP "boosts" were never applied (S.boost was written, never read). */
 function fvLook(spec){var D=window.QBLoft&&QBLoft.data,c=Object.assign({},(D&&D.creator&&D.creator.defaults)||{},spec);delete c.eq;
-  if(spec.eq&&D&&D.items){var eq={};spec.eq.forEach(function(g){var M=D.items[g];if(M)eq[M.slot]={art:g,frontOnly:M.frontOnly,over:M.over,wide:M.wide,lift:M.lift,clip:M.clip}});c.equipped=eq}
+  if(spec.eq&&D&&D.items){var eq={};spec.eq.forEach(function(g){var M=D.items[g];if(M)eq[M.slot]={art:g,frontOnly:M.frontOnly,over:M.over,wide:M.wide,skirt:M.skirt,overTop:M.overTop,lift:M.lift,clip:M.clip}});c.equipped=eq}
   return {rig:c,sex:spec.body,npc:1}}
 FRIENDS={
  justin:{name:"Justin",tag:"Singer and dancer, best friend",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"tee",topColor:"white",eq:["h_chain","h_trous","h_derby"]}},
  vega:{name:"Vega",tag:"Rapper and manager, best friend",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["fr_vega_tee","o_lock","h_cargo","fr_vega_kicks"]}},
  logan:{name:"Logan",tag:"Actor and streamer, from the 3rd floor",spec:{body:"m",skin:"s1",hairStyle:"h3",hairColor:"brown",top:"bomber",topColor:"black",bottom:"joggers",bottomColor:"black",eq:["h_sneak"]}},
  kenan:{name:"Kenan",tag:"The other half of Kode PinK",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",eq:["v_biker","h_shades","h_tech","h_boots"]}},
- jina:{name:"Jina",tag:"Food and travel",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"black",eq:["h_knit","h_pleat","h_loafer"]}},
- cynthia:{name:"Cynthia",tag:"Married to Memo",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","y_plat"]}},
+ jina:{name:"Jina",tag:"Food and travel",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"black",eq:["h_knit","fr_jina_skirt","h_loafer"]}},
+ cynthia:{name:"Cynthia",tag:"Married to Memo",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","fr_cynthia_kicks"]}},
  memo:{name:"Memo",tag:"Married to Cynthia",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}}
 };
 Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
