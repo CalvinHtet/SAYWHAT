@@ -97,7 +97,7 @@ function qbrvPlay(k,v){
   if(k==="story"){document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});qbrvStory();return}
   if(k==="scene"){var s=STORY.filter(function(x){return x.id===v})[0];if(s&&s.scene)modal(styCard(s.scene,styPortrait(s),QBRV_CLOSE));return}
   if(k==="beat"){var b=BEATS.filter(function(x){return x.id===v})[0];if(b)modal(styCard(b,styBeatPic(b),QBRV_CLOSE));return}
-  if(k==="visit"){var f=FVISITS.filter(function(x){return x.id===v})[0];if(f)fvShow(f);return}
+  if(k==="visit"){var f=FVISITS.filter(function(x){return x.id===v})[0];if(f)fvShow(f,1);return}
   if(k==="welcome"){S.seen=S.seen||{};var was=S.seen[v];roomSplash(v,true);if(!was)delete S.seen[v];persist();return}
   if(k==="team"){var o=styState(),had=o.team[v];teamJoin(v);if(!had)delete o.team[v];persist();return}
   if(k==="area"){var a=AREAS.filter(function(x){return x[0]===v})[0];if(a)modal('<div class="card box2"><span class="label">Level up</span><h2>Level '+a[2]+'</h2>'+areaCard(a,0)+'<div class="row" style="margin-top:10px">'+QBRV_CLOSE+'</div></div>');return}

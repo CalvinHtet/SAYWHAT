@@ -65,11 +65,23 @@ function fvPoses(w){var o=[fvArt(w)];[2,3].forEach(function(k){var u=fvArt(w+"_"
 setInterval(function(){var q=document.querySelectorAll(".fvposes");for(var i=0;i<q.length;i++){var e=q[i],im=e.querySelectorAll("img");if(im.length<2)continue;var k=(+e.dataset.k||0)+1;e.dataset.k=k;for(var j=0;j<im.length;j++){var on=j===k%im.length;im[j].classList.toggle("on",on);if(on){im[j].classList.remove("hop");void im[j].offsetWidth;im[j].classList.add("hop")}}}},1700);
 /* QA: a 0.45 s cross-fade between different poses read as a double image; now a 0.1 s cut with a small hop */
 function fvArt(w){var n="friend_"+w+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
-function fvShow(v){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
-  var m=modal('<div class="card box2 adv visit"><span class="label">Someone stopped by</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="animation-delay:'+(k*.35)+'s">'+visitorImg(w,true)+'</span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
+/* Cal, 2026-11-07: "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique."
+   Each visit arrives one of four ways, never the same as the visit before: a door swings open and they step through, they
+   pull up and skid to a stop, they drop in from above and land, or they pop up with a spin and confetti. Each has its own line
+   at the top. A visit keeps its arrival if its card is shown again. */
+var FVARR=[["door","Knock knock"],["ride","Someone pulled up"],["drop","Look who dropped in"],["pop","Surprise!"]];
+var FVPREV=0;
+function fvArrival(v,preview){if(preview){FVPREV=(FVPREV+1)%FVARR.length;return FVARR[FVPREV]}
+  var cur=S.visit&&S.visit.id===v.id&&S.visit.d===today()?S.visit:null;if(cur&&cur.arr!=null)return FVARR[cur.arr]||FVARR[0];
+  var last=S.visitArr==null?-1:S.visitArr,seed=0,k;for(k=0;k<(v.id+today()).length;k++)seed=(seed*31+(v.id+today()).charCodeAt(k))>>>0;
+  var pick=seed%FVARR.length;if(pick===last)pick=(pick+1+seed%(FVARR.length-1))%FVARR.length;
+  S.visitArr=pick;if(cur)cur.arr=pick;try{persist()}catch(e){}return FVARR[pick]}
+function fvShow(v,preview){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
+  var A=fvArrival(v,preview);var m=modal('<div class="card box2 adv visit va-'+A[0]+'"><span class="label">'+esc(A[1])+'</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="--d:'+(k*.35)+'s"><span class="fvbob">'+visitorImg(w,true)+'</span></span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
     +(v.coin?'<div class="reward">+'+v.coin+' coins</div>':'')+(v.freeze?(v._cap?'<div class="reward">+300 coins (your streak freezes are full)</div>':'<div class="reward">+'+v.freeze+' streak freeze</div>'):'')+(v.water&&typeof hasRoom==="function"&&hasRoom("garden")?'<div class="reward">Garden watered</div>':'')+(v.buff?'<div class="reward">'+esc(v.buff.text)+'</div>':'')
     +'<p class="note">'+'They\'re hanging out in '+esc(here)+' today.</p><button class="btn big" id="vok">Nice</button></div>');
-  var b=m&&m.querySelector("#vok");if(b)b.onclick=function(){m.remove();render()}}
+  var b=m&&m.querySelector("#vok");if(b)b.onclick=function(){m.remove();render()};
+  if(A[0]==="pop")setTimeout(function(){try{var f=m.querySelector(".vfig"),r=f&&f.getBoundingClientRect();if(r)burst(r.left+r.width/2,r.top+r.height*.6,34)}catch(e){}},420)}
 function fvCheck(){if(!loaded||!S||!S.created)return;if(S.visit&&S.visit.card)fvCard();if(document.querySelector("#layer .modal"))return;
   var t=today();if(S.fvDay===t)return;S.fvDay=t;
   if(S.visit&&S.visit.d===t){persist();return}
