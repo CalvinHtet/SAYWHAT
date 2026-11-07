@@ -2534,9 +2534,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 4dbd2e2): LEAD's 44 yawn pictures all painted on Unlimited (43 in QA's hands or passed; sv_fleece in last). Next from my list
-  after QA: nothing queued; ask LEAD for the next art job.
+- Now (on f6ba9a6): LEAD's 44 yawn pictures all painted on Unlimited; sv_quilt recoloured to the idle crimson after QA's colour fail.
+  Next from my list: re-check the 'every upgrade visible' bug list (bought-but-never-drawn, never-buyable) against today's code.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - TAKEN by QA. WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
   (m_ and f_<id>_yawn.webp for every id on your list, checked present).
 - DONE by QA (QA findings: sv_nordic pass; sv_quilt FAIL, its stretch red is tomato, idle is crimson). WAITING ON QA: check aceba29, yawn pictures 42 and 43 (sv_nordic, sv_quilt): your yawnfall.js and yawnsweep.js; two small ones for your call:
@@ -2791,7 +2792,7 @@ To do:
       photos for the dog art (study only): Pluto is a beige, curly toy poodle; Chopstick is a black-and-tan
       chihuahua-dachshund mix with long feathered ears. Art for Cal's approval first.
 - [x] Yawn pilot: Cal approved, in `art/app` (b506b8c), see Ready to publish. Next, ask Cal: roll it out to every top?
-- [ ] (LEAD's request) Lag: drag applies the transform at most once per frame.
+- [x] (LEAD's request) Lag: drag applies the transform at most once per frame. DONE in 47d2ffd (`lfApply`, requestAnimationFrame).
 - [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand). ROOMS on f39f668:
       all four render clean in idle and backwalk1 on both bodies, so they stay as they are during the playtest (no new art).
