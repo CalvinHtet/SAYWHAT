@@ -17,7 +17,7 @@ Doing:
   visit lines without unstated pronouns, Ben carries the snowboard (da04cc3, done). ROOMS's: the pizza oven past the right wall
   (f2f231d, done) and Ben's cap back views (5698ead, done). v0.73 REBUILT from 660eb30 (all three in; dist 472, dist-web 2338):
   loads clean, Review 131/131 save unchanged, Next event 35 taps, every friend equips every piece, the new visits open, webtest
-  PASS, livesync PASS. WAITING ON QA: recheck those three on 660eb30. Then LEAD deploys dist-web to the Test channel for Cal.
+  PASS, livesync PASS. WAITING ON QA: recheck those three on 660eb30 (QA: DONE, PASS, publish; QA findings). Then LEAD deploys dist-web to the Test channel for Cal.
   Was: v0.73 BUILT from 42d73be (APPV 73), on both builds: dist (Claude, 472 files: friend
   portraits now packed in art_ui, 42d73be, since the six new friends took dist to 510 of 511) and dist-web (QB_TARGET=web, 2338
   files). Since v0.72: ROOMS's room work (facb194, 10f64be, d328e88, 8602ed7, b3e3510, 828990f, 21b292a, c50714d + eadc75b, 6152eb5,
@@ -488,6 +488,18 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.73 rebuilt = 660eb30 (APPV 73; since 42d73be only the three fixes, the functions lock file and TASKS lines), the recheck of
+  b296529's three fixes on clean builds (dist 472, dist-web 2338): PASS, publish. (1) ROOMS's f2f231d: the Grand French Range at 1.5,
+  the back row ends with the wood-fired oven at 24.47 inside the 24.6 room (was 24.83); nothing outside the room, the Restaurant's
+  audit the same as v0.72's (shots/qa/v74/kitchen.png). (2) ROOMS's 5698ead: fr_ben_cap from behind is the plain crown with the brim
+  out over the neck on both bodies in back, walkBack, sitBack and typing, so it reads worn backward like the front; the fronts look
+  unchanged (they and the icon were re-exported); friendlooks: Ben 68/68 frames, 0 page errors (ben_cap_fix.png). (3) LEAD's
+  da04cc3: all seven lines without pronouns, Ben's "a snowboard under one arm" matches his card; across all 29 visits the only
+  pronoun left is Pluto's (a dog). The web build again holds every picture of the Claude build byte for byte (2315/2315, the new cap
+  art included), and websweep.js passes on both bodies (30 rooms, 435 pictures, 29 visit cards, 0 failed art, 0 page errors).
+  Seen in passing, not new: in sitBack and typing every top's sleeves fray at the edges (Ben's jacket, Kris, Nick, and the Shop's
+  h_varsity and v_biker alike); that is the rig item already on the board (the far-arm raggedness waiting for the rig rework).
+  Not covered: a real phone, real Google sign-in and the real Claude call (Cal's test). Owner: LEAD (deploy).
 - QA, v0.73 = 42d73be (APPV 73), the full set on clean builds of dist (472 files) and dist-web (2338): NOT YET, three fixes (the
   next three lines: two for ROOMS, one for LEAD); everything else PASSES, 0 page errors anywhere. dist: savecheck all passed;
   screens at 360 and 390 fit; visits.js PASS; lagcheck PASS (Game Room and Restaurant windows at CPU x4: v0.72 60.3/60.0 fps,
@@ -2627,7 +2639,7 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - QUEUE EMPTY (ROOMS, on 5698ead): both of QA's v0.73 fixes (b296529) are done: the Restaurant oven f2f231d, Ben's cap
-  back views 5698ead (both WAITING ON QA below). Everything else from ROOMS passed in v0.73. Quince stays out unless Cal names
+  back views 5698ead (both WAITING ON QA below; TAKEN by QA, done: both pass on 660eb30, QA findings). Everything else from ROOMS passed in v0.73. Quince stays out unless Cal names
   her photo. Optional from QA, not done: a 1-2 px tan nick at Kenan's right armpit in the stretch.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
@@ -2638,7 +2650,7 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
-- DONE by QA (QA findings, v0.73: pass but fr_ben_cap's back views; Victor's sleeves and Ben's jacket side match the passed yawn tops, no repaint). WAITING ON QA: check ef70922, 49df52c, 959862d, ca7d92f, a5dcb14, eb0eea3 (all go into v0.73), the six new friends'
+- DONE by QA (QA findings, v0.73: pass but fr_ben_cap's back views; Victor's sleeves and Ben's jacket side match the passed yawn tops, no repaint; the cap fixed in 5698ead, QA recheck on 660eb30: pass). WAITING ON QA: check ef70922, 49df52c, 959862d, ca7d92f, a5dcb14, eb0eea3 (all go into v0.73), the six new friends'
   friend-only pieces: fr_kris_shirt, fr_kris_pants, fr_alvina_coat, fr_nick_suit, fr_nick_trousers, fr_ben_jacket, fr_ben_cap,
   fr_kevin_polo, fr_kevin_jeans, fr_victor_hoodie, fr_victor_chinos. ROOMS's own check: matrix wear and grid sheets in every
   pose (both bodies), stretch at 1000 px for all six tops; idle and stretch of every full outfit in
@@ -2660,7 +2672,7 @@ Doing:
   fr_vega_kicks, both bodies, every pose. ROOMS's own check: matrix wear sheet, every pose on both bodies, the stretch at 1000 px
   (no body strip at the sides, the sleeves join the arms); the pink splatter keeps its colour. Note: the high-tops follow the
   portrait, so QA's old note stands (the panel layout reads like a famous sneaker; no logo).
-- DONE by QA (QA findings, v0.73: FAIL, it is in 42d73be and pushes the wood-fired oven 0.23 past the right wall). WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
+- DONE by QA (QA findings, v0.73: FAIL, it is in 42d73be and pushes the wood-fired oven 0.23 past the right wall; fixed in f2f231d, QA recheck on 660eb30: pass). WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
   row still fits. Render: shots/rooms3/restaurant_grand_range.png.
 - DONE by QA (QA findings, v0.73: pass). WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
   the window). Render: shots/rooms3/restaurant_sconces.png.
@@ -2995,11 +3007,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA, the session that did the published-file checks): DONE, the v0.73 full set on 42d73be (dist 472, dist-web 2338),
-  Cal's go via LEAD once ROOMS's friends were done: NOT YET, three fixes (QA findings): ROOMS, the wood-fired oven past the
-  Restaurant's right wall (9f3fd8b) and Ben's cap back views; LEAD, the new friends' pronouns and the snowboard line. Everything
-  else passes, both builds. New QA scripts: websweep.js, friendlooks.js, nextevent.js. Next: recheck those three fixes on the
-  rebuild LEAD posts (small check, not the whole set again unless more changes). (on a92ee28)
+- Now (QA): DONE. v0.73 full set on 42d73be (b296529: three fixes) and the recheck on 660eb30: PASS, publish (QA findings).
+  Next: nothing waiting on QA. (on ec247ce)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
