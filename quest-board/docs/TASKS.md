@@ -2187,7 +2187,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 1e8a3b4): on call for Cal's playtest; QA's every-room notes (aa3a99b) taken. WAITING ON Cal: Vega's in-game tee (black
   Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
+- TAKEN by QA. WAITING ON QA: check 62d336d, dbf2593, a4be384, aca27a1 and 1e8a3b4. (1) Screens: the Auditorium, the lobby trailer and showtimes and the
   Boba TV show a still picture when animations are off. (2) The Rooftop and Sky Patio stay dark at 22:00 (abe06dd had lit them).
   (3) Kenan's three portraits wear the same black shades as his in-game look (Cal). (4) The Bedroom rug tucks under the bed; the
   dog beds stay on the front edge (an earlier call). (5) The Rhythm Room's front floor gets a neon dance circle with the Pulsing
