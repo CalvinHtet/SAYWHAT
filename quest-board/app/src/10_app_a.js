@@ -1395,7 +1395,8 @@ var BRANDS=[
  {id:"gp",name:"GACHA POP",tag:"Every outfit a rare drop",c:["#ffb3d1","#9fd3ff","#c9a8f5"],ac:"#ffd65a",start:"2027-01-04",sub:"MMO cash shop"},
  {id:"sp",name:"SAVE POINT",tag:"Respawn looking good",c:["#3b1e54","#6c389a","#8a8a8a"],ac:"#3daf9d",start:"2027-01-11",sub:"retro video games"},
  {id:"bb",name:"BARD & BLADE",tag:"Dressed for the side quest",c:["#4c3227","#3f5e4c","#dddee3"],ac:"#b8925a",start:"2027-01-18",sub:"high fantasy"},
- {id:"cr",name:"CHROME RAIN",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"}];
+ {id:"cr",name:"CHROME RAIN",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"},
+ {id:"km",name:"KAIMANA",tag:"Back when the waves were bigger",c:["#e6d7c2","#34a1a0","#fb7167"],ac:"#fb7167",start:"2027-02-01",sub:"surf club"}];
 var GITEMS=[
  ["gx_h_snap","a_hat","Flat-brim Snapback",90,1,"Black cap, cream HANGANG patch.",{gar:"h_snap",b:"hanga"}],
  ["gx_h_beret","a_hat","Wool Beret",80,1,"Charcoal wool, tilted.",{gar:"h_beret",b:"hanga"}],

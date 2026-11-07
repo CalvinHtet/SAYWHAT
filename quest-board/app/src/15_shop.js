@@ -186,7 +186,22 @@ var EXTRA_ITEMS=[
  ["gx_cr_knee","a_pants","Armoured Knee Joggers",1100,1,"Chrome knee pads, cyan rings.",{gar:"cr_knee",b:"cr"}],
  ["gx_cr_lightup","a_shoes","Light-Up Sneakers",1200,1,"Soles that glow cyan.",{gar:"cr_lightup",b:"cr"}],
  ["gx_cr_platform","a_shoes","Platform Buckle Boots",1300,1,"Patent black, rose-lit soles.",{gar:"cr_platform",b:"cr"}],
- ["gx_cr_combat","a_shoes","Chrome-Toe Combat Boots",1200,1,"Steel toes, a cyan cuff.",{gar:"cr_combat",b:"cr"}]];
+ ["gx_cr_combat","a_shoes","Chrome-Toe Combat Boots",1200,1,"Steel toes, a cyan cuff.",{gar:"cr_combat",b:"cr"}],
+ ["gx_km_bucket","a_hat","Faded Bucket Hat",600,1,"Sea teal cotton, a coral tag.",{gar:"km_bucket",b:"km"}],
+ ["gx_km_straw","a_hat","Straw Sun Hat",750,1,"Woven straw, a teal ribbon.",{gar:"km_straw",b:"km"}],
+ ["gx_km_visor","a_hat","Coral Sun Visor",500,1,"All brim, no top.",{gar:"km_visor",b:"km"}],
+ ["gx_km_shell","a_acc","Shell Necklace",550,1,"Puka beads and a spiral shell.",{gar:"km_shell",b:"km"}],
+ ["gx_km_round","a_acc","Round Tinted Shades",650,1,"Gold wire, teal lenses.",{gar:"km_round",b:"km"}],
+ ["gx_km_camp","a_top","Hibiscus Camp Shirt",1000,1,"Sand, coral flowers, teal leaves.",{gar:"km_camp",b:"km"}],
+ ["gx_km_boat","a_top","Striped Boat-Neck Tee",750,1,"Cream and sea teal stripes.",{gar:"km_boat",b:"km"}],
+ ["gx_km_rash","a_top","Zip Rash Guard",900,1,"Teal with coral side panels.",{gar:"km_rash",b:"km"}],
+ ["gx_km_crochet","a_top","Crochet Cardigan",1100,1,"Sand yarn, a scalloped coral edge.",{gar:"km_crochet",b:"km"}],
+ ["gx_km_board","a_pants","Board Shorts",800,1,"Teal, a wave-print band.",{gar:"km_board",b:"km"}],
+ ["gx_km_linen","a_pants","Linen Drawstring Pants",900,1,"Pale sand, loose and creased.",{gar:"km_linen",b:"km"}],
+ ["gx_km_cutoff","a_pants","Cut-Off Shorts",700,1,"Faded denim, frayed hems.",{gar:"km_cutoff",b:"km"}],
+ ["gx_km_slides","a_shoes","Woven Slides",550,1,"A straw strap, a coral edge.",{gar:"km_slides",b:"km"}],
+ ["gx_km_deck","a_shoes","Canvas Deck Shoes",800,1,"Faded teal, a rope heel.",{gar:"km_deck",b:"km"}],
+ ["gx_km_sandal","a_shoes","Sport Sandals",750,1,"Teal webbing, a layered sole.",{gar:"km_sandal",b:"km"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
@@ -195,6 +210,7 @@ var EXTRA_ITEMS=[
 /* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons, now lace-ups, redone in 200d498 */
 /* BARD & BLADE (high fantasy, approved): ROOMS's f843b25 pieces and shop lines; the bracers use the rig's "arms" slot */
 /* CHROME RAIN (cyberpunk, approved): ROOMS's 5cf2e1d pieces and shop lines; the arm sleeve uses the "arms" slot */
+/* KAIMANA (surf club, BRANDS_PROPOSAL.md; made on Cal's standing approval, rule 19): ROOMS's 24304af pieces and shop lines */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
