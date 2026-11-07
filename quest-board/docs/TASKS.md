@@ -479,6 +479,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.67 (d54de89, APPV 67; 490 files): pass, publish. The boba scene now shows Mara's portrait (`shots/qa/review/
+  boba_portrait_d54de89.png`). Review: all 114 Plays on both bodies at 360 and 390 (456) open, fit, no broken image, no page errors;
+  the save keeps its progress (only savedAt and the seen list move). Live sync: LEAD's livesync.js passes on the clean build (Ben's
+  streak and upgrade reach Ana and Cy in 5.1 s, his post and hi in 1.0 s; with pushes off, 50 to 60 s by the old polling). New
+  `live10.js`, ten players on one pushing database on different tabs: all ten change their streak and an upgrade at the same moment and
+  every page sees the other nine in 5.1 s; two posts made in the same moment both reach all ten in 1.0 s; in a quiet minute nine pages
+  write nothing and one writes once. Also on the exact build: savecheck, screens 360 and 390, a v0.65 save loads, buys and reloads,
+  town rules, townlive 5/5, townrx 12/12; no page errors. Note: LEAD's server on 65410 now serves newer work (app.js and qbdata.js
+  differ from d54de89), so the publish session must build d54de89 itself, not copy from that server. Not done: the published v0.64
+  and v0.65 file checks (QA's artifact tools, Cal's restart). Owner: LEAD.
 - QA, v0.66 (465d39a, APPV 66; 490 files; Cal: "Do a full QA check and send me the latest version to test"): passes everything but
   one small visible error, so hold for it. Test > Review (new `review.js`): all 114 Play buttons on both bodies at 360 and 390 (456
   plays) open a window that fits the screen, with a reachable button, no broken image and nothing past the right edge; no page errors.
@@ -2293,7 +2303,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.66 (465d39a) holds for the boba scene's portrait (LEAD), then a quick recheck. Next: live sync in v0.67 gets a 10-player test (townlive-style, ten pages on one stand-in database). WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on 2b7eb27)
+- Now: v0.67 (d54de89) passes: the publish session builds and publishes it. Next: ROOMS's night lights (abe06dd), then v0.68 (alerts, FX). WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on ef08f17)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
@@ -2303,7 +2313,7 @@ To do:
       "+": a bouncing ! on the tab for a new room, a newly unlocked tab or a new brand, until opened; ! over street buildings with a new
       room; + on the new room's spot inside, tapping opens the room that sells it with that upgrade first). LEAD's shots in
       `shots/lead/alerts/` and `shots/lead/fx_*_after.png`. Both go into v0.68 with ROOMS's fixes.
-- [ ] (from LEAD) WAITING ON QA: v0.67, d54de89 (APPV 67) = v0.66 + your boba fix (styPortrait falls back to the same person's portrait:
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: v0.67, d54de89 (APPV 67) = v0.66 + your boba fix (styPortrait falls back to the same person's portrait:
       boba shows Mara's chef portrait; LEAD: 7 of 7 scenes with a portrait) + live sync (app/src/29n_live.js, 019f21f; Cal: "synced
       perfectly so we can all see each others progress"). Please recheck Review and the file match, and the town with live sync:
       townlive, townrx, and `rigtest/lead/livesync.js` (three players on a stand-in db that pushes; NOPUSH=1 for the polling path).
