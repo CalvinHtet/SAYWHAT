@@ -28,7 +28,8 @@ Doing:
   other rooms. Only the bedroom" (ROOMS abe06dd, QA 2f3d3a6), Cal's "!" on tabs and buildings and "+" on new rooms (3bba5f1,
   app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (93d33f1,
   QA passed 9a946ed), the wall shelf, the menu board and no zoom in room windows (4e93d54, with QA); still to come from ROOMS: people
-  keep their places when you buy, a new upgrade flashes. Live sync (019f21f, app/src/29n_live.js):
+  keep their places when you buy, a new upgrade flashes. CAL (2026-11-07) on the Restaurant's bar: "No I want the bar to be available
+  after it starts to look like a fine dining luxury restaurant": r_bar needs Fine Dining Service (r_t3), hidden until then (ROOMS). Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
