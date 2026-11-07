@@ -503,6 +503,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 6 and 7 (bc4a575: nc_tank, kp_hoodie) on a clean build of bc4a575: PASS, 0 page errors. Both
+  stretch arms-up on both bodies (the tank's bare painted arms; the cloud hoodie's cuffs at the wrists, its lightning stripe on
+  the raised sleeve); only stretch frames changed (shots/qa/yawn/batch3_before_after.png). Sweep: all hairstyles with all 19
+  neck items plus none, 240 pictures, all clean, no stray edges on the tank's bare shoulders (shots/qa/yawn/sheet_<top>_<body>.png).
+  7 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 4 and 5 (653138e: sm_hoodie, sv_ski) on a clean build of e3278f0, drawn the game's own way: PASS,
   0 page errors. Both now stretch arms-up on both bodies instead of the arms-down fallback; the neon hoodie's cuffs stop at the
   wrists with the hands showing; nothing stray on the ski jacket's head; only stretch frames changed (one idle frame differed,
@@ -2369,7 +2374,7 @@ Doing:
 - Now (on bc4a575): LEAD's 44 yawn pictures on Unlimited, 7 done (5 passed QA; nc_tank and kp_hoodie in); next nc_qzip, kp_sailor,
   kp_bomber, sm_track, sm_tee, sm_vest. Also for LEAD: f_h1front_front.webp, the long hair's front lock for a hairFront slot (cut
   from existing art). WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee?
-- TAKEN by QA. WAITING ON QA: check bc4a575, yawn pictures 6 and 7 (nc_tank, kp_hoodie): your yawnfall.js and yawnsweep.js.
+- DONE by QA (QA findings: pass). WAITING ON QA: check bc4a575, yawn pictures 6 and 7 (nc_tank, kp_hoodie): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
   with cuffs at the wrists (the first sheet ran the sleeves over the hands); the ski jacket's sheet had a drawn face, dropped.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
@@ -2634,9 +2639,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on e3278f0. Done: LEAD's yawn fallback hair fix (pass); logged the idle long-hair notch for LEAD; ROOMS's first three yawn
-  pictures (pass). Next: ROOMS's next yawn batches (653138e already landed: smk_hoodie, sv_ski). BLOCKED: the published-file
-  checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
+- Now: on bc4a575. Done: ROOMS's yawn pictures 1-7 (pass, each with every hair and necklace); LEAD's fallback hair fix (pass);
+  logged the idle long-hair notch for LEAD. Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71)
+  until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
