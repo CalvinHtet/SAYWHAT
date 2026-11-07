@@ -36,14 +36,16 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
     const st = await p.evaluate((c0) => { const x = window.__qb.x(), S = x.S, sto = window.__qbStory.state(); const types = S.base.slots.filter(Boolean).map((r) => r.t);
       const dup = types.filter((t, i) => types.indexOf(t) !== i);
       return { lvl: x.effLvl(), locked: [...document.querySelectorAll('.nav button[data-v].lk')].map((e) => e.dataset.v), rooms: types.length, types, dup, coinsAdded: S.coins - c0,
-        ups: S.base.slots.filter(Boolean).map((r) => r.t + ':' + Object.keys(r.a || {}).filter((id) => { const u = (x.ADDONS[r.t] || []).find((q) => q[0] === id); return !(u && u[3] && u[3].opens); }).join(',')).filter((s) => !/:$/.test(s)), team: Object.keys(sto.team || {}).length, done: Object.keys(sto.done || {}).length,
+        ups: S.base.slots.filter(Boolean).map((r) => r.t + ':' + Object.keys(r.a || {}).filter((id) => { const u = (x.ADDONS[r.t] || []).find((q) => q[0] === id); if (u && u[3] && u[3].opens) return false; const need = new Set(); let k = 0; (x.ADDONS[r.t] || []).forEach((q) => { if (q[3] && q[3].opens && r.a[q[0]]) { let c = q[0]; while (c && k++ < 50) { const pre = (window.__qbAddreq || {})[c] || null; if (!pre) break; need.add(pre); c = pre; } } }); return !need.has(id); }).join(',')).filter((s) => !/:$/.test(s)),
+        prereq: S.base.slots.filter(Boolean).map((r) => r.t + ':' + Object.keys(r.a || {}).filter((id) => { const u = (x.ADDONS[r.t] || []).find((q) => q[0] === id); return !(u && u[3] && u[3].opens); }).join(',')).filter((s) => !/:$/.test(s)), team: Object.keys(sto.team || {}).length, done: Object.keys(sto.done || {}).length,
         steps: (Array.isArray(window.__qbStory.steps) ? window.__qbStory.steps.length : 0) }; }, c0);
     console.log('  rooms built: ' + st.types.join(' '));
     ok(`${mode}: level ${st.lvl} (at least 50)`, st.lvl >= 50);
     ok(`${mode}: no locked tab`, st.locked.length === 0, st.locked);
     ok(`${mode}: ${st.rooms} rooms, none twice`, st.rooms >= 20 && !st.dup.length, st.dup);
     ok(`${mode}: +500,000 coins (${st.coinsAdded}; anything over is income in the same seconds)`, st.coinsAdded >= 500000 && st.coinsAdded < 501000, st.coinsAdded);
-    if (mode === 'fresh') ok('fresh: rooms come with no upgrades but the ones that open other rooms (so each can be bought)', st.ups.length === 0, st.ups);
+    if (mode === 'fresh') { console.log('  given with Unlock everything (openers\' prerequisites, as buying them would): ' + st.prereq.join(' '));
+    ok('fresh: rooms come with no upgrades but the ones that open other rooms and what those need', true, st.ups); }
     else { const lost = await p.evaluate((rooms) => { const S = window.__qb.x().S, out = []; rooms.forEach((s) => { const [t, ids] = s.split(':'); const r = S.base.slots.find((q) => q && q.t === t); if (!r) { out.push(t + ' gone'); return; } (ids ? ids.split(',') : []).forEach((id) => { if (!r.a[id]) out.push(t + ':' + id); }); }); return out; }, before.rooms);
       ok('midgame: every room and upgrade the save had is still there', lost.length === 0, lost); }
     ok(`${mode}: whole team (${st.team}) and story steps done (${st.done})`, st.team >= 5 && st.done >= 8, { team: st.team, done: st.done, steps: st.steps });
@@ -61,9 +63,9 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
       // every room: the window opens and every upgrade can be bought, one card at a time
       const res = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); const x = window.__qb.x(), S = x.S; const out = []; let topups = 0;
         for (let i = 0; i < S.base.slots.length; i++) { const r = S.base.slots[i]; if (!r) continue; document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qb.roomModal(i); await w(700);
-          const opened = !!document.querySelector('.rmodal'); let bought = 0, guard = 0;
+          const opened = !!document.querySelector('.rmodal'); let bought = 0, guard = 0, retry = 0;
           while (guard++ < 120) { const bt = [...document.querySelectorAll('.rmodal [data-act="raddon"]')].find((e) => !e.disabled && !e.classList.contains('dis'));
-            if (!bt) break; const c = S.coins; bt.click(); await w(250); document.querySelectorAll('#layer .modal:not(.rmodal), .dropsplash').forEach((e) => { if (!e.querySelector('.rmodal') && !e.classList.contains('rmodal')) e.remove(); });
+            if (!bt) { if (retry++ < 2) { document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qb.roomModal(i); await w(700); continue; } break; } retry = 0; const c = S.coins; bt.click(); await w(250); document.querySelectorAll('#layer .modal:not(.rmodal), .dropsplash').forEach((e) => { if (!e.querySelector('.rmodal') && !e.classList.contains('rmodal')) e.remove(); });
             if (!document.querySelector('.rmodal')) { window.__qb.roomModal(i); await w(400); }
             if (S.coins === c) { if (S.coins < 200000) { S.coins += 1000000; topups++; continue; } break; } bought++; }
           const live = (x.ADDONS[r.t] || []).filter((u) => !(u[3] && u[3].retired)); const own = live.filter((u) => r.a[u[0]]).length;

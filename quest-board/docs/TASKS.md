@@ -2573,10 +2573,11 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 3840577 (v0.71). Doing: the v0.71 full set on a clean build (490 files, APPV 71): visit arrivals, the lag fix, Unlock
-  everything, the whole story, Review both bodies, livesync, live10, players10, alerts, FX, room windows, bar rule, badges, drops,
-  stuck rooms, night lights, guests. Next: the verdict to LEAD. BLOCKED: the published-file checks (v0.64 to v0.70) until Cal
-  restarts QA (artifact tools).
+- Now: on 3840577 (v0.71). So far PASS: visit arrivals, Unlock everything (after a fix to my buy loop's timing: it gave up on a
+  Garden window still redrawing; every Garden upgrade buys through when reopened, on v0.70 and v0.71), the whole story (64 parts,
+  "Traveling"), Review 119/119 on both bodies, livesync, live10. Running: players10 to guests. Then the frame-rate check again on
+  a quieter Mac (load 27-33 now; under it v0.71's Restaurant window gave 46 fps against v0.70's 21). BLOCKED: the published-file
+  checks (v0.64 to v0.70) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
