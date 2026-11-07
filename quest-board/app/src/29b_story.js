@@ -16,7 +16,7 @@ var STORY=[
     scene:{who:"Mara",role:"Chef",lines:["Wait, you grew these? I've been buying your vegetables from that window.","Knock through into the space next to your garden and I'll run the stove. Partners?"],yes:"Partners. Let's build it",team:"mara"}},
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
-  {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
+  {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlor.",gate:function(){return styUps("boba")>=4}},
   /* Cal, 2026-11-07: "I want the bar to be available after it starts to look like a fine dining luxury restaurant": Desmond only
      comes once the Restaurant has White Linen Service (r_t3), the same piece its own Upstairs Bar upgrade waits for */
   {id:"lockkey",room:"skybar",how:"free",why:"Once the Restaurant looks like fine dining, an investor starts eating there.",gate:function(){return styHas("dessert")&&(S.earnedC||0)>=ECON.gateLockKey&&styFine()},
@@ -28,13 +28,13 @@ var STORY=[
     scene:{who:"Priya Okafor",role:"Investor",lines:["I've been watching your plaza. Restaurant, drinks, dessert, a speakeasy upstairs. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3&&styMallHas("ml_shop1")},
     scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers keep asking where I shop. Could I film here every week?\""],yes:"Deal. Roll the camera",team:"nova"}},
-  {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
+  {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: its empty end unit could be a movie theater.",gate:function(){return styUps("mall")>=4}},
   /* Cal: the Auditorium opens free once the lobby has its basics (ticket booth, popcorn, soda) and someone to run it: Theo */
   {id:"auditorium",room:"auditorium",how:"free",why:"A theater needs its basics in the lobby (a ticket booth, popcorn and a soda fountain) and someone to run it.",gate:function(){var r=S.base.slots.filter(function(x){return x&&x.t==="theater"})[0];return !!r&&["t_booth1","t_pop","t_soda"].every(function(k){return r.a&&r.a[k]})},
     scene:{who:"Theo",role:"Theater crew",lines:["Saw the ticket stand go up. You're going to need someone behind it.","Hire me and we can open the screen room tonight."],yes:"Hire Theo, open the Auditorium",team:"theo"}},
   {id:"arcade",room:"arcade",how:"upgrade",why:"Movie crowds want something to do before the show: the mall can open an arcade.",gate:function(){return styUps("auditorium")>=3}},
-  {id:"rhythm",room:"rhythm",how:"upgrade",why:"When the arcade is packed, its back room can become a rhythm floor.",gate:function(){return styUps("arcade")>=4}},
-  {id:"vr",room:"vr",how:"upgrade",why:"When the arcade is packed, its other back room can become a VR arena.",gate:function(){return styUps("arcade")>=4}},
+  {id:"rhythm",room:"rhythm",how:"upgrade",why:"When the arcade is packed, the room upstairs can become a rhythm floor.",gate:function(){return styUps("arcade")>=4}},
+  {id:"vr",room:"vr",how:"upgrade",why:"When the arcade is packed, the unit next door can become a VR arena.",gate:function(){return styUps("arcade")>=4}},
   {id:"bowling",room:"bowling",how:"upgrade",why:"The arcade crowd wants league nights: the mall can open a bowling alley.",gate:function(){return styUps("arcade")>=6}},
   {id:"karaoke",room:"karaoke",how:"upgrade",why:"After a few rounds of bowling everyone wants to sing: the mall can open karaoke.",gate:function(){return styUps("bowling")>=6}},
   {id:"club",room:"club",how:"lot",why:"Once everyone stays out late, the last empty unit becomes a nightclub.",gate:function(){return styUps("karaoke")>=6}},
@@ -89,18 +89,19 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 var BEATS=[
   {id:"mara1",pic:"mara",who:"Mara",role:"Chef",at:"the restaurant",gate:function(){return styUps("restaurant")>=5},lines:["Table six sent their compliments to the chef.","I'm keeping the note."]},
   {id:"mara2",pic:"mara",who:"Mara",role:"Chef",at:"the boba shop",gate:function(){return styUps("boba")>=2},lines:["Your boba kid keeps borrowing my tapioca for dessert experiments.","I'm letting it go. Two of them are going on the menu."]},
-  {id:"mara3",pic:"mara",who:"Mara",role:"Chef",at:"the dessert parlour",gate:function(){return styUps("dessert")>=3},lines:["Someone proposed at table four tonight. She said yes.","I sent out dessert on the house."]},
+  {id:"mara3",pic:"mara",who:"Mara",role:"Chef",at:"the dessert parlor",gate:function(){return styUps("dessert")>=3},lines:["Someone proposed at table four tonight. She said yes.","I sent out dessert on the house."]},
   {id:"desmond2",pic:"lockkey",who:"Desmond Hale",role:"Investor",at:"Lock and Key",gate:function(){return styUps("skybar")>=6},lines:["The singer you booked? Sold out three weekends running.","I've backed a lot of rooms. This is one of the good ones."]},
   {id:"rafe2",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"the rooftop",gate:function(){return teamHas("rafe")&&styHas("rooftop")},lines:["You can see the whole city from up here. Reminds me of the lighthouse at the edge of the Coral Reach.","Did I ever tell you about the sunken temple? Pull up a chair."]},
-  {id:"rafe3",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&teamHas("sable")&&(styState().missions||0)>=5},lines:["Your scouts have been down in the Old Metro? Next time, take me.","I've been down worse tunnels than those."]},
-  {id:"sable2",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",gate:function(){return teamHas("sable")&&(styState().missions||0)>=8},lines:["The Old Metro's gone quiet.","Something deeper down is collecting crowns. I've seen the scratch marks."]},
+  /* QA (story read): Sable names the Old Metro first, Rafe asks about it later */
+  {id:"sable2",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",gate:function(){return teamHas("sable")&&(styState().missions||0)>=5},lines:["The Old Metro's gone quiet.","Something deeper down is collecting crowns. I've seen the scratch marks."]},
+  {id:"rafe3",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&teamHas("sable")&&(styState().missions||0)>=8},lines:["Your scouts have been down in the Old Metro? Next time, take me.","I've been down worse tunnels than those."]},
   {id:"priya2",pic:"mall",who:"Priya Okafor",role:"Investor",at:"the strip mall",gate:function(){return styHas("theater")},lines:["A movie theater. In our strip mall.","Do you know what this does to foot traffic? Weekends are going to be full."]},
   {id:"nova2",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",gate:function(){return teamHas("nova")&&styUps("mall")>=6},lines:["The haul video just passed a million views.","Brace yourself for Saturday."]},
   {id:"nova3",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the arcade",gate:function(){return teamHas("nova")&&styHas("arcade")},lines:["I'm streaming from the arcade tonight.","Twelve thousand people watching me lose at the claw machine."]},
   {id:"theo2",pic:"theo",who:"Theo",role:"Theater crew",at:"the auditorium",gate:function(){return teamHas("theo")&&styUps("auditorium")>=3},lines:["First sold-out screening.","I watched the whole thing from the projection booth."]},
   /* the dungeon sets (29d_dungeon.js): someone remarks when each is finished */
   {id:"sable3",pic:"sable",who:"Sable",role:"Scout",at:"the Trophy Room",gate:function(){return teamHas("sable")&&typeof dgDone==="function"&&dgDone("goblin")},lines:["That's the whole set. Helm to boots.","Whatever was wearing that crown down there isn't wearing it anymore."]},
-  {id:"rafe4",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&typeof dgDone==="function"&&dgDone("amulet")},lines:["Five shards, one amulet. I saw a drawing of it once, in a museum in Lisbon.","The card under it said lost at sea, 1891."]}
+  {id:"rafe4",pic:"rafe",who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&typeof dgDone==="function"&&dgDone("amulet")},lines:["Those five shards your scouts kept bringing up from the Old Metro? Together they make an amulet. I saw a drawing of it once, in a museum in Lisbon.","The card under it said lost at sea, 1891."]}
 ];
 /* a return visit uses the character's own portrait, else their first scene's (Mara: chef, Theo: auditorium), else their team banner */
 var STYPICAKA={mara:"chef",theo:"auditorium"};

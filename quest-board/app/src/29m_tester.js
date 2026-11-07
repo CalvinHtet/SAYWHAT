@@ -5,7 +5,8 @@
    way the story's own free opening does), Everything (owns every upgrade, so all its art shows), Empty (no upgrades) and View
    (opens its window). Along the top: +6 hours (the game clock jumps, so rooms earn, the Garden grows, waters dry out), +20
    produce, +12 sold (Mara's trigger) and Next story step (plays the next step now, its scene included). */
-function qbtRooms(){var o={};Object.keys(ROOMCELL).forEach(function(t){var b=ROOMCELL[t][0];(o[b]=o[b]||[]).push(t)});return o}
+/* the old Speakeasy never opens (it became Lock and Key's second floor), so the tester leaves it out too (QA's story read) */
+function qbtRooms(){var o={};Object.keys(ROOMCELL).forEach(function(t){if(t==="speakeasy")return;var b=ROOMCELL[t][0];(o[b]=o[b]||[]).push(t)});return o}
 function qbtSlot(t){var sl=S.base.slots;for(var i=0;i<sl.length;i++)if(sl[i]&&sl[i].t===t)return i;return -1}
 function qbtOpen(t,quiet){if(qbtSlot(t)>=0)return;var o=styState(),s=styStep(t);
   /* the story's earlier rooms first, so the street and the knock-throughs make sense */
@@ -137,7 +138,9 @@ function qbrvSeq(){var q=[],n=0;
     if(s.scene)q.push(["scene",s.id]);
     if(s.scene&&s.scene.team&&TEAM[s.scene.team])q.push(["team",s.scene.team]);
     if(s.room&&ROOMHELP[s.room])q.push(["welcome",s.room]);
-    if(s.id==="garden"&&TEAM.sable)q.push(["note","Meanwhile, in the Hero's Lair","Your first mission comes home with someone: Sable."],["team","sable"]);
+    if(s.id==="chef"){q.push(["note","Meanwhile, at home","The Walk-in Closet opens the Shop, and a hollow panel at its back opens onto the Hero's Lair, where missions start."]);
+      if(ROOMHELP.closet)q.push(["welcome","closet"]);if(ROOMHELP.lair)q.push(["welcome","lair"]);
+      if(TEAM.sable)q.push(["note","Your first mission comes home","It brings someone back with it: Sable, found trapped below the city."],["team","sable"])}
     BEATS.forEach(function(b){if(QBRV_BEATAFTER[b.id]===s.id)q.push(["beat",b.id])})});
   q.push(["note","The end, for now","That is every story step, scene and return visit."]);
   return q}
