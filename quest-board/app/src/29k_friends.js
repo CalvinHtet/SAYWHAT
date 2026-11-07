@@ -17,7 +17,15 @@ FRIENDS={
  kenan:{name:"Kenan",tag:"The other half of Kode PinK",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",eq:["fr_kenan_jacket","h_shades","h_tech","h_boots"]}},
  jina:{name:"Jina",tag:"Food and travel",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"black",eq:["h_knit","fr_jina_skirt","h_loafer"]}},
  cynthia:{name:"Cynthia",tag:"Married to Memo",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","fr_cynthia_kicks"]}},
- memo:{name:"Memo",tag:"Married to Cynthia",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}}
+ memo:{name:"Memo",tag:"Married to Cynthia",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}},
+ /* Cal's new friends (2026-11-07, "Approve all"; ROOMS f3c8326). The fr_ pieces come from each portrait as ROOMS paints them; until
+    one exists fvLook skips it and the starter clothes below show instead. */
+ kris:{name:"Kris",tag:"Muay Thai fighter, sharpest dresser",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"white",eq:["fr_kris_shirt","fr_kris_pants"]}},
+ alvina:{name:"Alvina",tag:"Occupational therapist, with Nick",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"brown",top:"tee",topColor:"white",shoe:"sneakers",shoeColor:"white",eq:["fr_alvina_coat","h_denim"]}},
+ nick:{name:"Nick",tag:"Bay Area realtor, with Alvina",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",eq:["fr_nick_suit","fr_nick_trousers","h_derby"]}},
+ ben:{name:"Ben",tag:"Marine vet and snowboarder",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",top:"bomber",topColor:"black",bottom:"jeans",bottomColor:"black",shoe:"sneakers",shoeColor:"white",eq:["fr_ben_jacket","fr_ben_cap"]}},
+ kevin:{name:"Kevin",tag:"Foodie and pool shark",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_kevin_polo","fr_kevin_jeans"]}},
+ victor:{name:"Victor",tag:"Gamer, always says GG",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"hoodie",topColor:"black",bottom:"joggers",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_victor_hoodie","fr_victor_chinos"]}}
 };
 Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
   Object.defineProperty(f,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(f.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})});
@@ -37,6 +45,19 @@ var FVISITS=[
  {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by to check in and stayed for coffee.",buff:{cl:"social",pct:15,text:"Cynthia's sunshine: People quests +15% XP today"}},
  {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the loose shelf and stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
  {id:"memo_cynthia",who:["memo","cynthia"],w:7,place:"lounge",text:"Memo and Cynthia came over for dinner and brought dessert.",coin:150,buff:{cl:"social",pct:15,text:"Dinner with Memo and Cynthia: People quests +15% XP today"}},
+ {id:"kris_pads",who:["kris"],w:9,place:"gym",text:"Kris brought his pads over and ran you through three rounds of Muay Thai.",buff:{stat:"fitness",pct:20,text:"Pad work with Kris: Fitness quests +20% XP today"}},
+ {id:"kris_linen",who:["kris"],w:6,place:"lounge",text:"Kris got back from Hawaii in head-to-toe linen and still looked better than everyone. He left you the dried mango.",coin:120},
+ {id:"alvina_desk",who:["alvina"],w:8,place:"lounge",text:"Alvina watched you work for two minutes, then fixed your chair, your screen and how you sit.",buff:{stat:"discipline",pct:15,text:"Alvina's desk fix: Discipline quests +15% XP today"}},
+ {id:"alvina_hike",who:["alvina"],w:6,place:"lounge",text:"Alvina talked you into a morning hike. You complained the whole way up and loved the view.",buff:{cl:"out",pct:15,text:"Hike with Alvina: Outside quests +15% XP today"}},
+ {id:"nick_keys",who:["nick"],w:7,place:"lounge",text:"Nick came by between showings, still holding a set of house keys, and helped you sort your paperwork.",buff:{cl:"admin",pct:20,text:"Paperwork with Nick: Admin and day-job quests +20% XP today"}},
+ {id:"nick_niners",who:["nick"],w:6,place:"lounge",text:"Nick came over to watch the Niners. You both yelled at the TV and ate everything.",buff:{cl:"social",pct:10,text:"Game day with Nick: People quests +10% XP today"}},
+ {id:"nick_alvina",who:["nick","alvina"],w:7,place:"rooftop",text:"Nick and Alvina came over for date night and brought sparklers, the way they did for New Year in Taipei.",coin:150,buff:{cl:"social",pct:15,text:"Sparklers with Nick and Alvina: People quests +15% XP today"}},
+ {id:"ben_routine",who:["ben"],w:7,place:"gym",text:"Ben ran you through the morning routine he kept from the Marines. No snooze button allowed.",buff:{stat:"discipline",pct:20,text:"Ben's routine: Discipline quests +20% XP today"}},
+ {id:"ben_board",who:["ben"],w:6,place:"lounge",text:"Ben stopped by with his snowboard still in the car and planned your trip to the mountain.",buff:{cl:"out",pct:15,text:"Trip planning with Ben: Outside quests +15% XP today"}},
+ {id:"kevin_pool",who:["kevin"],w:8,place:"gameroom",text:"Kevin came over to shoot pool and ran the table twice. He brought his league trophy, just in case.",coin:100},
+ {id:"kevin_food",who:["kevin"],w:7,place:"restaurant",text:"Kevin showed up with a list of places he wanted to try. You made it to two and finished every plate.",buff:{cl:"out",pct:15,text:"Food run with Kevin: Outside quests +15% XP today"}},
+ {id:"victor_gg",who:["victor"],w:7,place:"gameroom",text:"Victor came over to play. He lost the last round and still said GG.",buff:{cl:"create",pct:10,text:"Game night with Victor: Creative quests +10% XP today"}},
+ {id:"victor_catchup",who:["victor"],w:5,place:"lounge",text:"Victor stopped by to catch up. It had been way too long.",buff:{cl:"social",pct:15,text:"Catching up with Victor: People quests +15% XP today"}},
  {id:"chopstick",who:["dog:chopstick"],w:5,place:"lounge",text:"Chopstick ran off with a sock. It turned up under the couch, next to some coins.",coin:80},
  {id:"pluto",who:["dog:pluto"],w:5,place:"lounge",text:"Pluto fell asleep on your lap in his sweater, so you stayed put and worked.",buff:{stat:"discipline",pct:15,text:"Pluto nap: Discipline quests +15% XP today"}}
 ];
