@@ -2013,9 +2013,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on ef0e096): OAKMONT (oak_*, brand id oak): 13 of 15 ingested locally, not committed; the court shoes redone (the first
-  read as a famous perforated tennis shoe) and the tube socks generating. Files: data/items.json, art/raw, art/layers, art/app oak_*.
-  Next: badge, banner, one commit, QA. Then SØLVBERG. Brand runway: OK. Chrome: ROOMS.
+- Now (on 78c961b): OAKMONT is done in 78c961b. Next: SØLVBERG (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): add its
+  15 ids, then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app sv_*. Brand runway: OK. Chrome: ROOMS.
+- WAITING ON QA: wear test OAKMONT, 78c961b (brand id oak; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless on
+  0a88ad4: idle, walk1, backwalk1 and stretchUp, 31 of 31 with 0 failures each (with cr_arm for reference). Look hardest at: the
+  wristbands and the watch in the "arms" slot (the watch is on one wrist; it matches the cr_arm sleeve, viewer-left from the front,
+  viewer-right from behind); the headband and visor (noClip) with long hair; the track jacket (two stripes, not three) and the
+  court shoes and suede runners as original, not any famous sportswear; the tube socks under trousers. LEAD has the shop lines.
 - DONE by QA (QA findings: pass). WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
   backwalk1 and stretchUp, 30 of 30 with 0 failures each, reading right by eye. Look hardest at: the straw sun hat and bucket hat with
   long hair and the ponytail (wide brims), the visor (noClip, open top), the crochet cardigan (open front over a cream tank), the board
