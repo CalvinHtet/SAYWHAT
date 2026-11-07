@@ -17,7 +17,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RUNWAY_DAYS = 21  # a brand is ~16 sheets plus QA's wear test: start three weeks before the last new drop
+RUNWAY_DAYS = 21
+# Cal, 2026-11-07: "I don't think we need anymore brand assets. We're approaching a long playtime". While True, report only.
+PAUSED = True  # a brand is ~16 sheets plus QA's wear test: start three weeks before the last new drop
 
 
 def read(rel):
@@ -61,6 +63,9 @@ def main():
     if unreleased:
         print("Not dropped yet: " + ", ".join(unreleased))
     print("Last new drop: %s (%d days from today, %s)." % (last, left, today))
+    if PAUSED:
+        print("PAUSED (Cal, 2026-11-07): no new brands; the Shop reruns the ones it has once they run out.")
+        return
     if left < days:
         print("NEED A NEW BRAND: fewer than %d days of new drops left. ROOMS: start the next one (docs/BRAND_AUTOGEN.md)." % days)
         sys.exit(2)

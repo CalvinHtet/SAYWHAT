@@ -61,6 +61,7 @@ source. No real person's face in any of them (no collaborators from the covers, 
 | KAIMANA | surf club | Back when the waves were bigger | sand, sea teal, coral | shuffled |
 | OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, navy, burgundy (green dropped: QA, too close to a fashion house's web stripe) | shuffled |
 | SØLVBERG | après-ski | Never actually skied | snow white, cherry red, alpine navy | shuffled |
+| *Below here not made: Cal, 2026-11-07, "I don't think we need anymore brand assets. We're approaching a long playtime".* | | | | |
 | RATTLER | western | Bites back | tan suede, rust, turquoise | shuffled |
 | AUREL | quiet luxury | If you have to ask | navy, cream, brushed gold | shuffled |
 | FERAL | 90s grunge | Unwashed since '94 | black, oxblood, safety-pin silver | shuffled |

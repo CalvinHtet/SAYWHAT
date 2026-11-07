@@ -1,5 +1,9 @@
 # New brands, made automatically (Cal, 2026-11-06)
 
+**PAUSED, Cal 2026-11-07: "I don't think we need anymore brand assets. We're approaching a long playtime".** The 16 brands in
+BRANDS (through SØLVBERG) are the set; when they have all dropped the Shop reruns them (DROPS.rerun). `brand_runway.py` reports
+only and never asks for a brand while this stands. Nothing below runs until Cal lifts it.
+
 Cal: "I want there to be an automatic generation of new brand assets when it gets close to running out. And it can run through
 without my approval as long as it works."
 
