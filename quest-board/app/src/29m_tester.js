@@ -27,6 +27,27 @@ function qbtNextStep(){var o=styState();for(var k=0;k<STORY.length;k++){var s=ST
     if(s.room&&ROOMCELL[s.room]){qbtOpen(s.room);return}
     styOpen(s);o.done[s.id]=1;persist();pop("Story: "+s.id);return}
   pop("The story has no steps left")}
+/* Cal (2026-11-07): "a button that triggers the next event such as the investor coming ... I want to be able to test everything
+   myself but quickly". Test > Next event plays the next thing in the story's order for real (it saves, unlike Review): a team
+   member's return visit whose step is done, Sable after the first mission, else the next story step (its scene first, then a tap
+   later its room, built free). It skips what the game would wait for (income, level, one step a day) and says what that was. */
+function qbtNextEvent(){var o=styState();o.beats=o.beats||{};
+  document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});
+  STORY.forEach(function(s){if(!o.done[s.id]&&s.room&&styHas(s.room))o.done[s.id]=1});
+  var beatsAfter=function(id){return BEATS.filter(function(b){return QBRV_BEATAFTER[b.id]===id&&!o.beats[b.id]})},
+    showBeat=function(b){o.beats[b.id]=1;o.lastScene=Date.now();S.coins+=60;S.earnedC+=60;persist();render();
+      modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+60 coins</small>'))};
+  for(var k=0;k<STORY.length;k++){var s=STORY[k];if(s.how==="never")continue;
+    if(o.done[s.id]){
+      if(s.id==="chef"&&TEAM.sable&&!teamHas("sable")){teamJoin("sable");pop("Next event: Sable (normally after your first mission)");return}
+      var bs=beatsAfter(s.id);if(bs.length){showBeat(bs[0]);pop("Next event: "+bs[0].who+(QBRV_BEATWHEN[bs[0].id]?" (normally: "+QBRV_BEATWHEN[bs[0].id]+")":""));return}
+      continue}
+    var why=s.why?" (normally: "+s.why.replace(/\.$/,"")+")":"";
+    if(s.scene&&!(o.seen&&o.seen[s.id])){try{styScene(s);pop("Next event: "+s.scene.who+why);return}catch(e){}}
+    if(s.room&&ROOMCELL[s.room]){qbtOpen(s.room);o.done[s.id]=1;persist();pop("Next event: "+((ROOMT[s.room]||{}).name||s.room)+" opened");return}
+    styOpen(s);o.done[s.id]=1;persist();render();pop("Next event: "+s.id+why);return}
+  var left=BEATS.filter(function(b){return !o.beats[b.id]});if(left.length){showBeat(left[0]);return}
+  pop("That's every story event. Nothing left to trigger.")}
 function qbtHtml(){var B=qbtRooms(),h='<div class="card box2 qbtr"><span class="label">Testing</span><h2 style="font-size:28px;margin:0 0 6px">Rooms</h2>'
   +'<p class="note">Skip the waiting. Open any room, own all of its upgrades to see every piece of art, or move the clock.</p>'
   +'<div class="qbtr-row"><button class="btn sm" data-qr="time">+6 hours</button><button class="btn sm" data-qr="veg">+20 produce</button><button class="btn sm" data-qr="sold">+12 sold</button><button class="btn sm" data-qr="next">Next story step</button></div>';
@@ -47,7 +68,7 @@ function qbRooms(){document.querySelectorAll("#layer .modal").forEach(function(m
     if(q==="sold"){var o=styState();o.sold=(o.sold||0)+12;persist();try{styCheck()}catch(x){}pop(o.sold+" produce sold so far")}
     if(q==="next"){m.remove();qbtNextStep();return}
     var c=m.querySelector(".qbtr");if(c){var y=m.scrollTop;c.outerHTML=qbtHtml();m.scrollTop=y}})}
-window.__qbRooms={pay:function(){return {room:payRoom(),quest:payQuest(),share:payShare(),eff:dqEff(),paid:dqState().paid}},open:qbtOpen,all:qbtAll,next:qbtNextStep,show:qbRooms,list:qbtRooms};
+window.__qbRooms={pay:function(){return {room:payRoom(),quest:payQuest(),share:payShare(),eff:dqEff(),paid:dqState().paid}},open:qbtOpen,all:qbtAll,next:qbtNextStep,nextEvent:qbtNextEvent,show:qbRooms,list:qbtRooms};
 /* ---------- Review (Cal, 2026-11-07: "Show me all the cutscenes and visitors and unlocks in this next test pass so I can give my
    opinion"). Testing only, removed at release with the Test pill. Test pill > Review lists everything a player meets along the
    way, in the order they meet it, each with a Play button that shows it exactly as the game does. Playing changes nothing in
