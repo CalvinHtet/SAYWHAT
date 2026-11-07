@@ -2509,9 +2509,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 35d51d2): LEAD's 44 yawn pictures on Unlimited, 38 done (37 passed QA; oak_polo in); oak_track on its third paint (the first
-  swallowed the hands, the second left a strip under the arms); next oak_crop, oak_vest, sv_nordic, sv_quilt, sv_fleece.
+- Now (on 029de55): LEAD's 44 yawn pictures on Unlimited, 39 done (38 passed QA; oak_track in); next oak_crop, oak_vest, sv_nordic,
+  sv_quilt, sv_fleece (designs rendered).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 029de55, yawn picture 39 (oak_track, third paint): your yawnfall.js and yawnsweep.js; both hands show, no strip under
+  the arms.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 35d51d2, yawn picture 38 (oak_polo): your yawnfall.js and yawnsweep.js; short sleeves, no sleeve hollow.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2d7ddc2, yawn pictures 36 and 37 (km_rash, km_crochet): your yawnfall.js and yawnsweep.js; the cardigan's cream top fills
   the open front.
