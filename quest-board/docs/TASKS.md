@@ -465,6 +465,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 23bf14f rig slot "arms" (on 6c4bba2; small check, no request was posted): no regression. Ten existing outfits (tees,
+  jackets, hoodie, overalls over a tee, pendant over a hoodie, puffer, boots, flares, the halo mask, the cassette bag), both bodies,
+  all 22 poses, pixel-compared against 92fbe67: 0 pixels differ. The slot itself gets its real test with BARD & BLADE's bracers.
+  Also on the board since: eaf8c09 renames the slip-ons "Checkpoint Sneakers" (900 coins) for ROOMS's lace-ups. Owner: LEAD.
 - QA, ROOMS's 200d498 SAVE POINT fixes (on 92fbe67; `shots/qa/sp/fixes_200d498.png`, `icon_flag_200d498.png`): pass, so SAVE POINT is
   15 of 15. The headset from behind shows only the arc and the two cups, no band, on both bodies in every back pose and with long hair.
   sp_flag is grey lace-ups with a purple toe cap, teal laces and a small red pixel flag: original, no outline left in any pose or on
@@ -2149,7 +2153,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. SAVE POINT 15 of 15. Next: BARD & BLADE when ROOMS sends it. (on 92fbe67)
+- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD (RELEASING has the steps). SAVE POINT 15 of 15; the new arms slot changes nothing existing. Next: BARD & BLADE when ROOMS sends it. (on 6c4bba2)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
