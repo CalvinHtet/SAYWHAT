@@ -2500,7 +2500,7 @@ Doing:
 - Now (on 2d7ddc2): LEAD's 44 yawn pictures on Unlimited, 37 done (35 passed QA; km_rash and km_crochet in, KAIMANA complete); next
   oak_track, oak_polo, oak_crop, oak_vest (designs to render), then sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 2d7ddc2, yawn pictures 36 and 37 (km_rash, km_crochet): your yawnfall.js and yawnsweep.js; the cardigan's cream top fills
+- TAKEN by QA. WAITING ON QA: check 2d7ddc2, yawn pictures 36 and 37 (km_rash, km_crochet): your yawnfall.js and yawnsweep.js; the cardigan's cream top fills
   the open front.
 - DONE by QA (QA findings: pass). WAITING ON QA: check b8d159c, yawn picture 35 (km_boat): your yawnfall.js and yawnsweep.js; sleeves stop short, both hands show.
 - DONE by QA (QA findings: pass). WAITING ON QA: check d89dfbb, yawn picture 34 (km_camp): your yawnfall.js and yawnsweep.js; short sleeves, forearms bare.
