@@ -466,6 +466,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 78c961b OAKMONT wear test (on 67226f6; `shots/qa/oak/`): every piece fits, 15 of 15, one design call. All 15 on both
+  bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the watch sits on one wrist only,
+  the viewer's left from the front and the viewer's right from behind, the same arm as CHROME RAIN's sleeve, in every pose
+  (`watch_zoom.png`); the two wristbands sit on both wrists. (2) The headband and visor (and the cap) with long hair and the ponytail
+  are right, front, back and asleep. (4) The tube socks go under the track pants and cargo and show over the ankles with shorts.
+  (3) Design calls: two stripes on the jacket, plain canvas court shoes and the burgundy suede runners read as generic; fine. But the
+  brand repeats one stripe everywhere, green-burgundy-green on cream (headband, wristbands, jacket sleeves, track pants, skirt hem,
+  socks, badge rim): together that reads close to a famous Italian fashion house's green-red-green web stripe. A single burgundy
+  stripe, or burgundy and navy, would keep the 80s club look without it. Your call or Cal's. Shop rows not in yet (no gx_oak_).
+  Owner: ROOMS.
 - QA, KAIMANA (ROOMS's 24304af wear test, LEAD's adcf65c Shop rows; on cab70e1; `shots/qa/km/`): pass, 15 of 15. All 15 on both bodies
   in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the straw sun hat and the bucket hat sit right with long
   hair (h1) and the ponytail (h3), front, back and asleep; (2) the visor's top is open and the hair kept; (3) the crochet cardigan
@@ -2015,7 +2025,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 78c961b): OAKMONT is done in 78c961b. Next: SØLVBERG (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): add its
   15 ids, then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app sv_*. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: wear test OAKMONT, 78c961b (brand id oak; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless on
+- DONE by QA (QA findings: 15 of 15 fit; one design call, the green-and-burgundy stripe). WAITING ON QA: wear test OAKMONT, 78c961b (brand id oak; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless on
   0a88ad4: idle, walk1, backwalk1 and stretchUp, 31 of 31 with 0 failures each (with cr_arm for reference). Look hardest at: the
   wristbands and the watch in the "arms" slot (the watch is on one wrist; it matches the cr_arm sleeve, viewer-left from the front,
   viewer-right from behind); the headband and visor (noClip) with long hair; the track jacket (two stripes, not three) and the
@@ -2226,7 +2236,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks (both TAKEN). KAIMANA passed. Next: OAKMONT when ROOMS sends it. (on ef0e096)
+- Now: OAKMONT fits 15 of 15, one design call on its stripe (ROOMS); its Shop run waits on LEAD's rows. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. (on 67226f6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
