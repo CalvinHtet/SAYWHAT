@@ -1087,11 +1087,11 @@ body:has(.creator.qbcc) #qbt{display:none}
 @keyframes vaDust{0%{opacity:0;transform:scale(.6)}30%{opacity:1}100%{opacity:0;transform:scale(1.5) translateY(-6px)}}
 .va-drop .fvpose{animation:vaDrop .8s cubic-bezier(.5,0,.6,1) var(--d,0s) both,vaSquash .35s ease-out calc(.8s + var(--d,0s)) forwards}
 .va-drop .vfig::after{content:"";position:absolute;left:30%;right:30%;bottom:0;height:16px;z-index:0;border-radius:50%;background:rgba(0,0,0,.45);animation:vaShadow .8s ease-in both}
-@keyframes vaDrop{0%{transform:translateY(-160%);opacity:0}25%{opacity:1}100%{transform:none}}
+@keyframes vaDrop{0%{transform:translateY(-110%);opacity:0}25%{opacity:1}100%{transform:none}}.va-drop .vfig,.va-pop .vfig{overflow:hidden}.va-ride.visit{overflow:hidden}
 @keyframes vaSquash{0%{transform:scale(1.12,.84)}60%{transform:scale(.96,1.05)}100%{transform:none}}
 @keyframes vaShadow{0%{transform:scale(.2);opacity:.1}100%{transform:none;opacity:1}}
 .va-pop .fvpose{animation:vaPop .7s cubic-bezier(.2,1.6,.4,1) calc(.2s + var(--d,0s)) both}
-@keyframes vaPop{0%{transform:translateY(40%) scale(0) rotate(-200deg);opacity:0}70%{transform:translateY(-6%) scale(1.12) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes vaPop{0%{transform:translateY(40%) scale(0) rotate(-200deg);opacity:0}70%{transform:translateY(-4%) scale(1.05) rotate(6deg);opacity:1}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){.visit .fvpose,.visit .fvbob,.va-door .vfig::before,.va-ride .vfig::after,.va-drop .vfig::after{animation:none!important}.va-door .vfig::before{display:none}}
 .visit .vfig .fvart{aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;object-position:50% 100%;height:230px;max-height:none;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45))}.visit .vfig>.fvpose img.calp{max-width:100%;height:auto}.visit .fvposes{display:grid;justify-items:center}.visit .fvposes .fvart{grid-area:1/1;opacity:0;transition:opacity .1s linear}.visit .fvposes .fvart.on{opacity:1}.visit .fvposes .fvart.hop{animation:fvHop .28s ease-out}@keyframes fvHop{0%{transform:translateY(0)}40%{transform:translateY(-6px)}100%{transform:none}}
 @keyframes fvIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}@keyframes fvIdle{0%,100%{transform:rotate(0) scaleY(1)}30%{transform:rotate(-1.2deg) scaleY(1.012)}70%{transform:rotate(1deg) scaleY(.994)}}
