@@ -2519,7 +2519,7 @@ Doing:
 - Now (on ca391d3): LEAD's 44 yawn pictures on Unlimited, 41 done (39 passed QA; oak_crop and oak_vest in, OAKMONT complete); last three:
   sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
+- TAKEN by QA. WAITING ON QA: check ca391d3, yawn pictures 40 and 41 (oak_crop, oak_vest): your yawnfall.js and yawnsweep.js; a 1-2 px plum line under the vest's
   hem on the boy's left hip (mannequin outline residue), your call.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 029de55, yawn picture 39 (oak_track, third paint): your yawnfall.js and yawnsweep.js; both hands show, no strip under
   the arms.
