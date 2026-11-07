@@ -1264,8 +1264,13 @@ function calImg(L,pose,H,cls){return '<img class="calp '+(cls||"")+'" alt="" src
 function calHyd(img){if(img.dataset.hy||!window.QBLoft)return;img.dataset.hy=1;
   var L=JSON.parse(img.dataset.look),ch=L.rig,H=+img.dataset.h,clip=img.dataset.pose==="walk"?"walk":img.dataset.pose==="stretch"?"stretch":"idle",D=QBLoft.data.loft;
   if(!ch)return;QBLoft.warm(ch,clip);img.style.width=(H*D.frame[0]/D.standPx).toFixed(1)+"px";img.style.height=(H*D.frame[1]/D.standPx).toFixed(1)+"px";
+  /* "still": one idle frame, no timer (neighbors in the Hall: ten of them animating would cost for nothing) */
+  if(img.dataset.pose==="still"){var tries=0,one=function(){if(!img.isConnected)return;var u=QBLoft.frameOrNear(ch,"idle",0);if(u){img.src=u;return}if(++tries<40)setTimeout(one,250)};one();return}
   var f=0,t=setInterval(function(){if(!img.isConnected){clearInterval(t);return}var c=QBLoft.clips[clip],u=QBLoft.frameOrNear(ch,clip,f);if(u&&img.src!==u)img.src=u;f=(f+QBLoft.step(clip))%c.frames},1000/QBLoft.clips[clip].fps*QBLoft.step(clip))}
 function calHydAll(){var l=document.querySelectorAll("img.calp:not([data-hy])");for(var i=0;i<l.length;i++)calHyd(l[i])}
+/* QA (3f6c696, Cal: "post a picture of your character with your current outfit"): neighbors are drawn with the rig, outfit and
+   all; a world doc from an old version without a rig look still gets the old drawing */
+function nbAv(L,sz){return L&&L.rig?'<span class="calav nbav" style="width:'+sz+'px;height:'+sz+'px">'+calImg(L,"still",Math.round(sz*2.5),"")+'</span>':figSvg(L||lookOf(),"30 6 40 40",sz,sz)}
 function calAv(L,sz){return '<span class="calav" style="width:'+sz+'px;height:'+sz+'px">'+calImg(L,"idle",Math.round(sz*2.2),"")+'</span>'}
 (function(){var go=function(){new MutationObserver(calHydAll).observe(document.body,{childList:true,subtree:true});calHydAll();var n=0,t=setInterval(function(){calHydAll();if(++n>20)clearInterval(t)},500)};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
 var cc=null, ccStage="name", ccEdit=false, ccBlank=true, loaded=false;

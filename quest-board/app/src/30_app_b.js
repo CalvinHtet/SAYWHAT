@@ -619,7 +619,7 @@ function socialBuffs(){var o=socState(),n=Math.min(3,o.vis.length),g=Math.min(3,
 /* friends who said hi today walk around your lounge for half an hour */
 function socVisitors(){var o=socState(),now=Date.now();return o.vis.filter(function(v){return v.look&&now-v.t<30*60000}).map(function(v,k){return {id:"sv:"+v.from,room:0,role:"visitor",look:v.look,visitor:1,fresh:now-v.t<90000,leaveAt:v.t+30*60000,k:k+5}})}
 function socWorldCard(w){
-  return '<div class="snw"><div class="snav">'+figSvg(w.look||lookOf(),"30 6 40 40",44,44)+'</div><div class="sni"><b>'+esc(w.name)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="snvisit" data-u="'+esc(w.id)+'">Visit</button></div>';
+  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="snvisit" data-u="'+esc(w.id)+'">Visit</button></div>';
 }
 function socialHtml(){
   var h='<section class="card panel snpanel" id="socnb">'+socInner()+'</section>';
@@ -641,7 +641,7 @@ function socPaint(){var el=document.getElementById("socnb");if(el)el.innerHTML=s
 function socVisitModal(uid){
   var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w)return;closeModals();
   var o=socState(),done=!!o.gave[uid],rooms=(w.rooms||[]).map(function(r,i){return r?'<div class="snroom"><div class="snrp">'+lfPreview({t:r.t,a:r.a||{},st:r.st||0},400+i)+'</div><small>'+esc((ROOMT[r.t]||{}).name||r.t)+' · '+Object.keys(r.a||{}).length+' upgrades</small></div>':''}).join("");
-  var h='<div class="card box2 snvisit"><span class="label">Visiting</span><div class="row" style="gap:12px;align-items:center">'+figSvg(w.look||lookOf(),"30 6 40 40",56,56)+'<div><h2 style="font-size:26px;margin:0">'+esc(w.name)+'’s Loft</h2><small class="mono">Lv '+(w.lv||1)+' · '+(w.crew||0)+' crew · '+(w.served||0)+' dishes served</small></div></div>'
+  var h='<div class="card box2 snvisit"><span class="label">Visiting</span><div class="row" style="gap:12px;align-items:center">'+nbAv(w.look||lookOf(),56)+'<div><h2 style="font-size:26px;margin:0">'+esc(w.name)+'’s Loft</h2><small class="mono">Lv '+(w.lv||1)+' · '+(w.crew||0)+' crew · '+(w.served||0)+' dishes served</small></div></div>'
     +'<div class="snrooms">'+rooms+'</div>'
     +'<div class="snhi"><input id="snmsg" maxlength="80" placeholder="Leave a note (optional)"/><button class="btn" data-act="snhi" data-u="'+esc(uid)+'">'+(done?'Update note':'Say hi')+'</button></div>'
     +'<p class="note">Saying hi gives '+esc(w.name)+' +5% XP today and you +2% XP. You walk into their lounge for half an hour.</p>'

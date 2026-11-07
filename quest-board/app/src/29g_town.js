@@ -22,7 +22,7 @@ function townMeter(worlds){var rows=townRows(worlds),goal=TOWNGOAL*rows.length,s
 var townInnerBase=socInner;
 socInner=function(){var h=townInnerBase();if(!db||!MYUID)return h;
   /* posts show the poster's character in the outfit they wore when posting */
-  (SOC.posts||[]).forEach(function(p){if(!p.look)return;var key='<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b>';h=h.split(key).join('<div class="snp has-look"><div class="snp-fig">'+figSvg(p.look,"30 6 40 40",52,52)+'</div><div><b>'+esc(p.name||"Neighbor")+'</b>')});
+  (SOC.posts||[]).forEach(function(p){if(!p.look)return;var key='<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b>';h=h.split(key).join('<div class="snp has-look"><div class="snp-fig">'+nbAv(p.look,52)+'</div><div><b>'+esc(p.name||"Neighbor")+'</b>')});
   return townMeter(SOC.worlds)+h};
 var townHallBase=hallHtml;
 hallHtml=function(){var bd=window.QBART&&QBART["ui_town_board.webp"];return '<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3><p class="note">Post your look and a short message for everyone in town.</p></section>'+socialHtml()+townHallBase()};
