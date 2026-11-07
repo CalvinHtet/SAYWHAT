@@ -1971,8 +1971,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f843b25): BARD & BLADE is done in f843b25. Next: CHROME RAIN (cr_*, brand id cr): add its 15 ids to data/items.json,
-  then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app cr_*. Then the ten. Brand runway: OK. Chrome: ROOMS.
+- Now (on efaf4ec): CHROME RAIN (cr_*, brand id cr): 15 ids added to data/items.json (not committed; the cyber-arm sleeve uses the
+  "arms" slot). Its hot magenta is the mannequin key colour, so the art uses rose hot pink instead. Bomber, vest and cargo generating.
+  Files: data/items.json, art/raw, art/layers, art/app cr_*. Next: the other 12, badge, banner, one commit, QA. Then the ten.
+  Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: 15 of 15, two rig notes for LEAD). WAITING ON QA: wear test BARD & BLADE, f843b25 (brand id bb; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on f100e51: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye; the travel cloak, mantle,
   circlet, crystal and bracers also in stretch and sleep. Look hardest at: the bracers in the new "arms" slot (LEAD 23bf14f; the far
