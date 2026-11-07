@@ -479,6 +479,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's abe06dd night lights (on ef08f17, new `nightlights.js`; `shots/qa/night/night_abe06dd.png`): pass. At 10 pm, twelve rooms
+  (Bedroom, Closet, Lair, Patio, Game Room, Restaurant, Boba, Mall, Arcade, Club, Theater, Garden): only the Bedroom shows the lamp
+  button and only the Bedroom changes with it (mean brightness 52 off, 94 on); every other room draws the same with rm.lit 0 or 1, so
+  an old save with the lamp off now draws lit: against d54de89 (before the change) the Closet went from 44 with the lamp off to 69, the
+  Lair 40 to 55, the Patio 66 to 82, the Game Room 43 to 66, the Mall 74 to 118, the Arcade 38 to 56, each now equal to its old lamp-on
+  look. The Bedroom's tap saves (lit 1, still 1 after a reload). No page errors. Not checked: the building views at night. Owner: ROOMS.
 - QA, v0.67 (d54de89, APPV 67; 490 files): pass, publish. The boba scene now shows Mara's portrait (`shots/qa/review/
   boba_portrait_d54de89.png`). Review: all 114 Plays on both bodies at 360 and 390 (456) open, fit, no broken image, no page errors;
   the save keeps its progress (only savedAt and the seen list move). Live sync: LEAD's livesync.js passes on the clean build (Ben's
@@ -2078,7 +2084,7 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on abe06dd): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
-- WAITING ON QA: check abe06dd, night lights (Cal: only the Bedroom needs a light switch). At 10 pm: every room but the Bedroom draws lit with
+- DONE by QA (QA findings: pass). WAITING ON QA: check abe06dd, night lights (Cal: only the Bedroom needs a light switch). At 10 pm: every room but the Bedroom draws lit with
   no lamp button (window and building view); the Bedroom stays dark until its lamp is on, and its button and saved rm.lit work as
   before. ROOMS checked headless: Bedroom off and on, Lounge, Restaurant, the Loft and Plaza building views, 0 page errors.
 - DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
@@ -2303,7 +2309,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.67 (d54de89) passes: the publish session builds and publishes it. Next: ROOMS's night lights (abe06dd), then v0.68 (alerts, FX). WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on ef08f17)
+- Now: v0.67 (d54de89) passed, the publish session builds it. Night lights pass. Next: v0.68 (alerts, FX) when LEAD asks. WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on ef08f17)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
