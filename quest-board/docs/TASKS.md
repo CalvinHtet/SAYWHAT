@@ -2554,7 +2554,7 @@ Doing:
   0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; next Neon Sign, Black Marble Counter, Espresso
   Bar, Host Desk/Lectern, Patio Heaters, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
+- TAKEN by QA. WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
   next rows (LEAD approved; before/after shots/rooms3/restaurant_tables_before_after.png), and Drip Coffee no longer covers the napkin
   box in the Hole in the Wall (shots/rooms3/restaurant_drip2.png).
 - DONE by QA (QA findings: plaque and chandeliers pass; drip: small nudge). WAITING ON QA: check b3e3510, Restaurant: Drip Coffee on the counter's front end (was behind the partition), Star Plaque bigger with a
