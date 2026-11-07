@@ -1985,9 +1985,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 5cf2e1d): CHROME RAIN is done in 5cf2e1d. Next: the ten new brands, starting with KAIMANA (km_*, brand id km; pieces
-  per BRANDS_PROPOSAL.md): add its 15 ids to data/items.json, then paint on Unlimited. Files: data/items.json, art/raw, art/layers,
-  art/app km_*. Brand runway: OK. Chrome: ROOMS.
+- Now (on 7caab98): TAKEN QA's two CHROME RAIN fixes (5cf2e1d wear test): cr_mesh repainted as an opaque dark net top under the
+  harness so it matches its icon on both bodies; cr_lightup repainted with a straight line and a small lightning bolt instead of the
+  wavy stripe. Generating on Unlimited; files art/raw, art/layers, art/app cr_mesh and cr_lightup. Next: KAIMANA (km_*, brand id km;
+  pieces per BRANDS_PROPOSAL.md). Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: 14 of 15, the mesh top; one design call). WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on c3088b5: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye. Look hardest at: the cyber-arm
   sleeve (one arm, "arms" slot); the trench in stretch and walks (knee length); the mesh top (its holes opened so skin shows; it reads
