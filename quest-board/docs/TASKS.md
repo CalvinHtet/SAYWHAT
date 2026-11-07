@@ -2550,10 +2550,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 10240e8 (v0.70). Done on it: unlockall.js PASS (both saves, Next story step "no steps left", every upgrade buys
-  through), the whole story re-read (64 parts, all 8 notes fixed). Doing: Review on both bodies on 10240e8, and the rest of the
-  full set on 396376b (same code outside story and tester). Next: the v0.70 verdict to LEAD. Published-file checks BLOCKED until
-  Cal restarts QA (artifact tools).
+- Now: on 797d435. Done: Cal's four visit arrivals (f7a43bb, pass, two cosmetic notes); on v0.70 (10240e8): unlockall.js PASS,
+  the whole story re-read (64 parts, all 8 notes fixed), Review body m 119/119. Doing: Review body f on 10240e8 and the rest of the
+  full set on 396376b. Next: the v0.70 verdict to LEAD. Published-file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
