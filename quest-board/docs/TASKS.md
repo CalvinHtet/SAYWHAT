@@ -504,6 +504,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 30 (1cc42bc: cr_bomber, CHROME RAIN) on a clean build of 1cc42bc: PASS, 0 page errors. It stretches
+  arms-up on both bodies (glossy black, cyan piping); stretch frames 3 to 21 changed, nothing else
+  (shots/qa/yawn/batch16_before_after.png). Green fringe from the paler mint sheet: in the art, 78 (boy) and 52 (girl) of about
+  3,900 edge pixels lean mint, against 0 to 3 on the tunic, cloak and pad; they are faint (alpha 20-80) and sit only where the
+  neon piping runs along the outline (cr_bomber_fringe_map.png, flagged in red), i.e. its glow, a touch greener than the piping
+  itself, (187,231,211) against (128,211,213). In the game at 3x on light and hot-pink backgrounds no green edge shows, only the
+  piping's thin cyan glow (cr_bomber_edges.png). The art's tiny grey prongs at the cuff and hem corners (4-6 px in the art, 1-2 px
+  in the game, not visible) are the usual cut corners: thin-protrusion count 54/62 against 43-89 on passed tops. Sweep: all
+  hairstyles with all 19 neck items plus none, 120 pictures, all clean (sheet_cr_bomber_<body>.png). 30 of the 44 done and
+  checked. Not tested: yawn_cut.py --pastel itself (a tool; the trench will show its result).
 - QA, ROOMS's yawn picture 29 (4287952: bb_cloak, repainted) on a clean build of 4287952: PASS, 0 page errors. It stretches
   arms-up on both bodies; stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch15_before_after.png: idle, the old
   fallback, the new stretch, on hot pink). The front is closed from the clasp down on both bodies, with only the hem slit showing
@@ -2461,7 +2471,7 @@ Doing:
 - Now (on 1cc42bc): LEAD's 44 yawn pictures on Unlimited, 30 done (29 passed QA; cr_bomber in); cr_trench repainting (the first pinched
   in at the belt and showed skin), cut with the new --pastel key; next cr_mesh, cr_vest, km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 1cc42bc, yawn picture 30 (cr_bomber): your yawnfall.js and yawnsweep.js.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 1cc42bc, yawn picture 30 (cr_bomber): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4287952, yawn picture 29 (bb_cloak): your yawnfall.js and yawnsweep.js. A second paint; the front should be closed like idle.
 - DONE by QA (QA findings: pass). WAITING ON QA: check e70ef55, yawn picture 28 (bb_doublet): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 56f58a2, yawn pictures 26 and 27 (bb_tunic, bb_gambeson): your yawnfall.js and yawnsweep.js. The tunic is a second
@@ -2743,9 +2753,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 25cc05e. Done: ROOMS's yawn pictures 1-29 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT and BARD & BLADE complete); savecheck and screens (360, 390) on 4287952 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 25cc05e). Next: CHROME RAIN (cr_) when ROOMS sends it; its trench has pink near the magenta key. (on 25cc05e)
+- Now: on 7aa5d30. Done: ROOMS's yawn pictures 1-30 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT and BARD & BLADE complete, CHROME RAIN bomber); savecheck and screens (360, 390) on 4287952 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 25cc05e). Next: cr_trench (repainting, cut with --pastel): idle against stretch colour on hot pink and light. (on 7aa5d30)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
