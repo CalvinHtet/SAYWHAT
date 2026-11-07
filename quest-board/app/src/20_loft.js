@@ -1262,6 +1262,7 @@ var LFPZ={};
    (lfInstallFx) tags the pieces a purchase adds with .isonew; they now pulse gold twice, about 1.3 s, instead of one faint flash. */
 (function(){var st=document.createElement("style");st.textContent="svg .isonew{animation:lfnewpulse 1.3s ease-in-out!important}"
  +"@keyframes lfnewpulse{0%{filter:none}18%{filter:brightness(1.75) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 10px #ffc94d)}42%{filter:brightness(1.1) drop-shadow(0 0 2px #ffe08a)}66%{filter:brightness(1.75) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 10px #ffc94d)}100%{filter:none}}"
+ +".scrBase{animation:scrBaseHide .05s forwards}@keyframes scrBaseHide{to{opacity:0}}"/* a screen's still picture, shown only when animations are off */
  +"svg .isonew[filter],svg .isonew[clip-path]{animation:none!important}"/* the soft-shadow layer changes with every piece; it is not the new piece */
  +"@media (prefers-reduced-motion:reduce){svg .isonew:not([filter]):not([clip-path]){animation:none!important;outline:2px solid #ffd36b}}";(document.head||document.documentElement).appendChild(st)})();
 function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z)return;svg.dataset.z=1;wrap.classList.add("rbigz");
@@ -2711,7 +2712,7 @@ LFROOM.library=function(C){
 function lfTbox(C,x,y,w,d,z0,h,col,top,lay){var r=LFREC;LFREC=null;var g=lfBox(x,y,z0,w,d,h,col,{top:top||col});LFREC=r;(lay==="w"?C.walls:C.decals).push(g)}
 function lfToon(uid,W,Hh){
   var P=function(n,r){return '<ellipse class="tnp tnp'+n+'" cx="'+r[0]+'" cy="-6" rx="1.6" ry="1" fill="#ffb8d0"/>'};
-  var css='<style>.tnA,.tnB,.tnC{opacity:0}.tnA{animation:tnA 30s infinite}.tnB{animation:tnB 30s infinite}.tnC{animation:tnC 30s infinite}'
+  var css='<style>.tnB,.tnC{opacity:0}.tnA{animation:tnA 30s infinite}.tnB{animation:tnB 30s infinite}.tnC{animation:tnC 30s infinite}'
   +'@keyframes tnA{0%,30%{opacity:1}34%,94%{opacity:0}100%{opacity:1}}@keyframes tnB{0%,30%{opacity:0}34%,63%{opacity:1}67%,100%{opacity:0}}@keyframes tnC{0%,63%{opacity:0}67%,94%{opacity:1}98%,100%{opacity:0}}'
   +'.tnS1{animation:tnS 14s linear infinite}.tnS2{animation:tnS 5s linear infinite}.tnS3{animation:tnS 22s linear infinite}@keyframes tnS{to{transform:translateX(-160px)}}'
   +'.tnp{animation:tnF 5s linear infinite}.tnp2{animation-delay:-1s}.tnp3{animation-delay:-2s;animation-duration:6s}.tnp4{animation-delay:-3.2s}.tnp5{animation-delay:-4s;animation-duration:7s}.tnp6{animation-delay:-.4s}@keyframes tnF{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(-42px,100px) rotate(540deg)}}'
