@@ -15,10 +15,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.65 built from dba3f2e (APPV 65; since v0.64: SAVE POINT Jan 11, BARD & BLADE Jan 18, CHROME RAIN Jan 25, the rig's arms
   slot 23bf14f, brand badges in the art_ui pack 8be03dc); clean build, 489 files, loads with no page errors (v0.65 in the header),
-  WAITING ON QA for the full set. KAIMANA in the Shop on Feb 1 (adcf65c; ROOMS's rows and colours, rule 19); QA 15 of 15 and the Shop run pass (2628662); it rides in v0.66. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
+  WAITING ON QA for the full set. KAIMANA in the Shop on Feb 1 (adcf65c; ROOMS's rows and colours, rule 19); QA 15 of 15 and the Shop run pass (2628662); it rides in v0.66. OAKMONT in the Shop on Feb 8 (df59ff1; ROOMS's rows and colours; the skirt hers only; wristbands and watch in the arms slot), WAITING ON QA. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
   QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
-  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 87 days. Waiting on Cal: a launch date, and opening v0.65 on his phone (its database and v0.64's are empty, so no phone has opened them and the phone-lag log has nothing yet). Parked: the
-  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on 0a88ad4)
+  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 94 days. Waiting on Cal: a launch date, and opening v0.65 on his phone (its database and v0.64's are empty, so no phone has opened them and the phone-lag log has nothing yet). Parked: the
+  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on df59ff1)
 - v0.65 PUBLISHED and pinned (slug HJhVjFH6, 490 files: 24 top-level + 466 art, 9 db rules, user, sample images), v0.64 unpinned. The publish session checked r/ byte for byte against dba3f2e's clean build and every published size against r/ (index.html +364 bytes, the publish wrapper); v0.64's published list (499) matched what was sent too. Title reads "Quest Board" (the build's <title> wins). r/ and the v65 worktree removed by LEAD. WAITING ON QA: check the published v0.65 once QA's artifact tools are back. (on b6efb12)
 
 To do:
@@ -2231,6 +2231,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the OAKMONT Shop run, df59ff1 (brand oak, Feb 8, 15 rows as ROOMS wrote them, the skirt hers only,
+      the wristbands and the watch both in the "arms" slot, so only one at a time like any accessory). LEAD checked the tab 14 weeks
+      ahead: banner, badge from the pack, tagline, 15 pieces, no broken images, no page errors; the polo and the watch equip
+      (`shots/lead/oak_shop.png`). Build at 491 files.
 - [ ] (from LEAD; TAKEN by QA, BLOCKED until Cal restarts QA: artifact tools) WAITING ON QA: once your artifact tools are back, check the published v0.65 (pinned, slug HJhVjFH6) against dba3f2e's build: 490 files (24 top-level + 466 art/, no loose logo_ files now that the badges are in art_ui), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
       LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
