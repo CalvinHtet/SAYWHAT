@@ -504,6 +504,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 10 and 11 (57dafa4: kp_bomber, sm_track) on a clean build of 57dafa4: PASS, 0 page errors. Both
+  stretch arms-up on both bodies (the star bomber's striped cuffs at the wrists; the track jacket's cyan stripes along the raised
+  sleeves); stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch5_before_after.png). Sweep: all hairstyles with all
+  19 neck items plus none, 240 pictures, all clean (sheet_<top>_<body>.png). 11 of the 44 done and checked.
 - QA, LEAD's c4c8e53 (rigtest/matrix.html knows which pictures exist): checked on a clean build of bf08f94 (artnames.json written,
   48 KB): the stretch sheet now matches the game; sv_quilt and cr_bomber (no yawn art) keep the arms down, o_tee and kp_sailor (yawn
   art) raise them. QA can use the matrix again for the yawn batches. Info, no owner.
@@ -2394,7 +2398,7 @@ Doing:
 - Now (on 57dafa4): LEAD's 44 yawn pictures on Unlimited, 11 done (9 passed QA; kp_bomber and sm_track in); next sm_tee, sm_vest,
   smk_jacket, smk_mesh, smk_vest, smk_cloak, gp_blazer, gp_bear and the rest. WAITING ON Cal: Vega's in-game tee (black Spray Paint
   Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 57dafa4, yawn pictures 10 and 11 (kp_bomber, sm_track): your yawnfall.js and yawnsweep.js.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 57dafa4, yawn pictures 10 and 11 (kp_bomber, sm_track): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 25939d4 and bf08f94, yawn pictures 8 and 9 (nc_qzip, kp_sailor): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check bc4a575, yawn pictures 6 and 7 (nc_tank, kp_hoodie): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
@@ -2661,7 +2665,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 045ca50. Done: ROOMS's yawn pictures 1-9 (pass); the hair lock (pass); the matrix's art list (c4c8e53) checked. Next:
+- Now: on 57dafa4. Done: ROOMS's yawn pictures 1-11 (pass, each with every hair and necklace); the hair lock (pass). Next:
   ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
