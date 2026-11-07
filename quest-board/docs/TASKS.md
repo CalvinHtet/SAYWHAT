@@ -30,13 +30,13 @@ Doing:
   QA passed 9a946ed), the wall shelf, the menu board and no zoom in room windows (4e93d54, with QA); people keep their places through a purchase and
   new pieces pulse gold (1308059, with QA). CAL (2026-11-07) on the Restaurant's bar: "No I want the bar to be available
   after it starts to look like a fine dining luxury restaurant": r_bar needs Fine Dining Service (r_t3), hidden until then (ROOMS). QA's ba1758a: level-opened tabs get their "!" (d0adfdc), the Garden lot at level 5 (ROOMS). CAL: "Give me the latest
-  version to test when ready": v0.68 BUILT from 9b3a428 (APPV 68, everything above plus ROOMS's 633ffe2 bar rule, ede09d8 Garden at
+  version to test when ready": v0.68 BUILT from e276038 (APPV 68; 9b3a428 plus QA's 3f6c696 fix: neighbors drawn in their own outfits; everything above plus ROOMS's 633ffe2 bar rule, ede09d8 Garden at
   level 5, 0f9cabe splash text); clean build, 490 files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS:
   WAITING ON QA for the full set, then the publish session puts it on Cal's Test link in place. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 9b3a428)
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on e276038)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
@@ -2391,7 +2391,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal: "Give me the latest version to test when ready"; TAKEN by QA, with Cal's 10-player and every-room check) WAITING ON QA: the full set on v0.68, 9b3a428 (APPV 68). New
+- [ ] (from LEAD, Cal: "Give me the latest version to test when ready"; TAKEN by QA, with Cal's 10-player and every-room check) WAITING ON QA: the full set on v0.68, now e276038 (APPV 68; 9b3a428 plus your 3f6c696 fix: nbAv draws neighbors with the rig, outfit included, in the Hall list, visit header and board posts; rigtest/lead/nbav.js). New
       since v0.67 (d54de89): LEAD's alerts (3bba5f1, d0adfdc) and FX (59d31a0, d0adfdc); ROOMS's lamp (abe06dd), Restaurant notes
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
       White Linen (633ffe2), the Garden at level 5 (ede09d8), the splash text (0f9cabe). Note for your level-up runs: with the Garden
