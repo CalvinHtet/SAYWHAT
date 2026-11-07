@@ -30,7 +30,8 @@ Shop items: add a line to `EXTRA_ITEMS` in `app/src/15_shop.js` and an entry to
 `data/items.json` (its rig slot, plus `over`, `frontOnly`, `femaleOnly` or `maleOnly` if
 they apply, and `neutral` for dark art that picks up a purple cast from the template).
 Pants cut wide enough to stick out around a boot set `wide`, so tall footwear goes under
-their hem. A hat whose brim covers the eyes sets `lift` per body, in art pixels. Then
+their hem. Overalls and suspenders set `overTop`, so the whole piece (bib, straps and legs) draws
+over the top while the arms still draw over it. A hat whose brim covers the eyes sets `lift` per body, in art pixels. Then
 run `tools/ingest_items.py <file_stem> <item>`, `tools/pack.py` and `tools/items.py`, which also makes the cut-out shop icon and works out the line where a
 hat trims the hair. A mesh panel needs `tools/fill_mesh.py` on its layers before
 `pack.py`, or the head shows through. Set `QB_PY` to a Python with pillow, numpy and scipy.

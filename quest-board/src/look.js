@@ -42,6 +42,12 @@
       // place that equips an item gets it without copying one more field.
       const meta = (typeof window !== "undefined" && window.QBDATA && window.QBDATA.items && window.QBDATA.items[item.art]) || {};
       if ((item.skirt || meta.skirt) && layers[slot]) layers[slot].skirt = true;
+      // Overalls and suspenders are worn over the shirt (QA, a199020): an "overTop" bottom draws in the pantsOver slot, which
+      // data/rig.json puts after the top, so its bib and straps show. The top's near sleeve still draws over it (a later group).
+      if (slot === "pants" && (item.overTop || meta.overTop) && layers.pants) {
+        layers.pantsOver = layers.pants;
+        delete layers.pants;
+      }
     }
     // A helmet that covers the whole face (SAYMØRE's Halo Mask, data/rig.json faceCover) hides glasses and face pieces, which
     // would otherwise draw on top of it; pieces in keepAsleep stay on in the sleeping pose (Cal: the SAYMØRE figure stays masked).

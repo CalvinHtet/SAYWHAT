@@ -228,6 +228,16 @@
    ]
   },
   {
+   "id": "pantsOver",
+   "bones": [
+    "pelvis",
+    "thN",
+    "snN",
+    "thF",
+    "snF"
+   ]
+  },
+  {
    "id": "neck",
    "bones": [
     "spine"

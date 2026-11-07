@@ -706,6 +706,18 @@
         rest.splice(at + 1, 0, ...moved);
         order.splice(0, order.length, ...rest);
       }
+      // An overTop bottom (look.js puts overalls and suspenders in pantsOver) would still draw its legs in the leg groups, before
+      // the trunk group, so the top's hem would land on its thighs (QA, a199020). Its leg groups move to just after its own bib, and
+      // tall footwear (shoesOver) moves with them so boots still cover the cuffs. Arms come later and stay on top.
+      const po = slots.findIndex((x) => x.s.id === "pantsOver");
+      if (po >= 0) {
+        const trunk = rig.drawOrder.findIndex((bs) => bs.indexOf("pelvis") >= 0), tAt = seq.indexOf(trunk);
+        const so = slots.findIndex((x) => x.s.id === "shoesOver");
+        const early = ([i, g]) => (i === po || (so >= 0 && i === so)) && seq.indexOf(g) < tAt;
+        const moved = order.filter(early).sort((a, b) => seq.indexOf(a[1]) - seq.indexOf(b[1]) || (a[0] === so) - (b[0] === so)), rest = order.filter((e) => !early(e));
+        const at = rest.findIndex(([i, g]) => i === po && g === trunk);
+        if (at >= 0) { rest.splice(at + 1, 0, ...moved); order.splice(0, order.length, ...rest); }
+      }
       for (const [i, g] of order) {
         (({ s, l }) => {
           if (flats[i]) {
