@@ -84,6 +84,9 @@ Object.assign(ADDREQ,{r_t2:"r_t1",r_t3:"r_t2",r_b2:"r_b1",r_c2:"r_c1",r_l2:"r_l1
 /* an upgrade that replaces another hides it from the Installed list; RSTCH hides the next step until the last one is in */
 window.RSSUP={r_t1:["r_t2"],r_t2:["r_t3"],r_b1:["r_b2"],r_c1:["r_c2"],r_l1:["r_l2"],r_k1:["r_k8"],r_cf1:["r_cf2"],r_hd1:["r_hd2"],r_d5:["r_d6"]};
 window.RSTCH={r_t2:1,r_t3:1,r_b2:1,r_c2:1,r_l2:1,r_k8:1,r_cf2:1,r_hd2:1,r_d6:1,r_x2:1,r_more2:1,r_p1:1,r_p2:1,r_p3:1,r_p4:1,r_p5:1,r_p6:1,r_p7:1,r_s2:1,r_s4:1};
+/* Cal (2026-11-07): "No I want the bar to be available after it starts to look like a fine dining luxury restaurant". The Cocktail
+   Bar needs Fine Dining Service and stays hidden until it is in (a save that already owns the bar keeps it). */
+ADDREQ.r_bar="r_t3";window.RSTCH.r_bar=1;
 LFDS.restaurant=[
  {id:"lino",name:"Scuffed Lino",cost:0,fl:"grey",wl:"plaster",wc:"#d9d3c6",wr:"plaster",wcr:"#c9c3b6"},
  {id:"bistro",name:"Warm Oak",cost:600,fl:"oak",wl:"plaster",wc:"#efe3cf",wr:"plaster",wcr:"#e2d3bb"},
