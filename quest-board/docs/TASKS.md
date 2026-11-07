@@ -1995,8 +1995,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on bbf97a4): KAIMANA (km_*, brand id km): all 15 ingested locally, not committed; badge and banner generating. Files: art/raw,
-  art/layers, art/app km_*. Next: pack, check, one commit, QA, shop lines to LEAD. Then OAKMONT (oak_*). Brand runway: OK. Chrome: ROOMS.
+- Now (on 24304af): KAIMANA is done in 24304af. Next: OAKMONT (oak_*, brand id oak; pieces per BRANDS_PROPOSAL.md's 80s-athletic
+  list): add its 15 ids, then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app oak_*. Brand runway: OK.
+  Chrome: ROOMS.
+- WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
+  backwalk1 and stretchUp, 30 of 30 with 0 failures each, reading right by eye. Look hardest at: the straw sun hat and bucket hat with
+  long hair and the ponytail (wide brims), the visor (noClip, open top), the crochet cardigan (open front over a cream tank), the board
+  shorts and cut-offs under a top, the shell necklace. LEAD has the shop lines.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 14bd0e5, CHROME RAIN's two fixes. cr_mesh is now an opaque dark purple diamond net under the harness, the same
   on both bodies, matching its icon. cr_lightup has a small rose lightning bolt and a straight line, no wavy stripe; a baked outline
   was stripped. ROOMS checked headless on 577831f: idle, walk1, backwalk1 and stretchUp, 16 of 16 with 0 failures.
