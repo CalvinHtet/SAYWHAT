@@ -44,8 +44,8 @@ Doing:
   wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). v0.70 BUILT from 10240e8 (APPV 70; 396376b plus QA's story-read fixes): Cal's "Unlock everything" (0f7ce90, QA's two fixes: Next story step skips
   the Speakeasy, the Walk-in Closet comes with its wardrobe) and "every story beat ... make sense" (40c4b14). Clean build, 490 files,
   loads clean, Review 114/114, Play the whole story 57/57 with the save unchanged, livesync PASS: WAITING ON QA for the full set,
-  unlockall.js and a read of the whole story for sense. v0.71 waits for Cal's notes from playing v0.70 (batched, so his test copy doesn't change under him); so far it has: Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique":
-  done in f7a43bb (door, ride, drop, pop; never twice running), QA passed; QA's two cosmetic notes fixed in 90d5653 (drop and pop clipped to the picture area), rides in v0.71. Parked: the arm binding in the high stretch. (on fb23589)
+  unlockall.js and a read of the whole story for sense. v0.71 waits for Cal's notes from playing v0.70 (batched, so his test copy doesn't change under him); so far it has: the phone-lag fix (19ef0d9: Cal's iPhone logged room windows at 37-38 fps with 214/421 ms frames on v0.67; the effects behind an open window now pause, 25 -> 60 fps at CPU x4), Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique":
+  done in f7a43bb (door, ride, drop, pop; never twice running), QA passed; QA's two cosmetic notes fixed in 90d5653 (drop and pop clipped to the picture area), rides in v0.71. Parked: the arm binding in the high stretch. (on 19ef0d9)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 7e25ded)
 - v0.69 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against c2c53b7's clean build (release/v69, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.67, so no leftovers. 3 publishes for the 64 MB cap (versions 7-9). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 0f7ce90)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
@@ -98,7 +98,7 @@ To do:
       a room window pauses the building view's animations (532 running, 30 with a window open).
       2026-11-06: the v0.50 and v0.51 logs hold only the Mac app's preview from publishing (120 fps, Electron); no phone
       has opened either yet. Nothing to fix until Cal opens v0.51 on his phone.
-      REAL NUMBERS, 2026-11-06 11:58, Cal's iPhone (iOS 18.7, Claude app, 440x956, dpr 3, 4 cores) on v0.53, the Loft with a
+      REAL NUMBERS again 2026-11-07 (APPV 67): room windows 37-38 fps, worst 214/421 ms; fixed in 19ef0d9. Earlier: REAL NUMBERS, 2026-11-06 11:58, Cal's iPhone (iOS 18.7, Claude app, 440x956, dpr 3, 4 cores) on v0.53, the Loft with a
       room window open: 54.6 fps then 40.8 fps over 5 s, worst frames 324 and 345 ms, 6 and 23 frames over 50 ms, 61 then 33
       animations running, about 6,600 elements. Real lag in room windows. Found and fixed in b46bc16: the level effect fx-pulse animated every card's
       box-shadow, so the browser re-drew everything inside a card every frame, a whole room window included (trace: 2.65 s of
@@ -2571,6 +2571,11 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA, small check: 19ef0d9, phone lag. Cal's iPhone (diag/perf, APPV 67): Game Room window 38 fps, worst 421 ms;
+      Restaurant window 38 fps, worst 214 ms; the Loft alone 57 fps. Cause: the UI effects behind the window kept animating. Fix: while
+      any #layer .modal is open, #app, .nav and .fxo animations are paused (index.html). LEAD at CPU x4, 440x840 dpr 3: Game Room 25 ->
+      60 fps, Restaurant 31 -> 60, worst 17 ms; they resume on close; the window's own animations run (rigtest/lead/roomperf.js).
+      Please check nothing behind a window looks frozen when it closes, and the level-up and visit cards still animate. For v0.71.
 - [x] (from LEAD, Cal's ask through you; done: QA findings, pass, two cosmetic notes) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
       swings open, they step through), va-ride (skid in from the right, dust), va-drop (fall in, squash, shadow), va-pop (spin up,
       confetti); never the same as the last visit (S.visitArr), a visit keeps its arrival if shown again (S.visit.arr); Review cycles
