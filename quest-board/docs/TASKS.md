@@ -495,6 +495,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 19ef0d9 phone-lag fix (Cal's iPhone: room windows 37-38 fps, worst frames 214 and 421 ms), on clean builds of
+  10240e8 (before) and 19ef0d9 (after), 390x844 at x3 with the CPU 4x slower, every upgrade bought (`rigtest/qa/lagcheck.js`):
+  PASS, 0 page errors. Game Room window 32.5 -> 60.3 fps, worst frame 100 -> 17 ms, frames over 50 ms 5 -> 0; Restaurant 33.3 ->
+  60.3 fps, worst 50 -> 17 ms. A room window, a level-up, a visit card, a story scene and a Review play each opened and closed:
+  inside each window nothing is paused (the level-up and visit cards' 8 animations, the scene's 3, the welcome's 2 all run); behind
+  it the Board's 19 effects (edge, sweep, spin, holo, the tab "!") pause while it is open; after it closes all 19 run again, 0
+  paused, no window left; the tab "!" bounces again. Not on a real phone: the iPhone numbers are Cal's to confirm on v0.71.
 - QA, v0.70 = 10240e8 (APPV 70), the full set: PASS, publish, 0 page errors anywhere. On a clean build of 10240e8: unlockall.js
   PASS (fresh and mid-game saves; Next story step "The story has no steps left"; every upgrade in every room buys through; it gives
   the openers' prerequisites bd_ward1, bd_win2, bd_win3 and r_t1-r_t3 up front, as buying the openers would, so those six are not
@@ -2564,14 +2571,14 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on a57004c. Done: v0.70 (10240e8) PASS, now published; Cal's visit arrivals and their fix (90d5653) pass, for v0.71.
-  BLOCKED: the published-file check of v0.70 (and v0.64, v0.65, v0.67, v0.69) until Cal restarts QA (the artifact tools still fail
-  in this session). Next: v0.71 when LEAD builds it.
+- Now: on 19ef0d9. Done: LEAD's phone-lag fix (pass: 32-33 -> 60 fps at CPU x4, nothing left paused); v0.70 PASS and published;
+  the visit arrivals and their fix (pass), for v0.71. BLOCKED: the published-file checks (v0.64 to v0.70) until Cal restarts QA
+  (artifact tools). Next: v0.71 when LEAD builds it.
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD; TAKEN by QA) WAITING ON QA, small check: 19ef0d9, phone lag. Cal's iPhone (diag/perf, APPV 67): Game Room window 38 fps, worst 421 ms;
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA, small check: 19ef0d9, phone lag. Cal's iPhone (diag/perf, APPV 67): Game Room window 38 fps, worst 421 ms;
       Restaurant window 38 fps, worst 214 ms; the Loft alone 57 fps. Cause: the UI effects behind the window kept animating. Fix: while
       any #layer .modal is open, #app, .nav and .fxo animations are paused (index.html). LEAD at CPU x4, 440x840 dpr 3: Game Room 25 ->
       60 fps, Restaurant 31 -> 60, worst 17 ms; they resume on close; the window's own animations run (rigtest/lead/roomperf.js).
