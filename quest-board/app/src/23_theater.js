@@ -192,8 +192,7 @@ function scrMovie(uid,W,H){var S2=function(i,inner){return '<g class="mvS" style
   return scrBox(W,H,'<g transform="scale('+(W/160).toFixed(3)+','+(H/90).toFixed(3)+')">'+'<g class="scrBase">'+dragon+'</g>'+[space,dragon,chase,sea,duel,kaiju].map(function(s,i){return S2(i,s)}).join("")+'</g>','#000')}
 /* QA (every room against references): the Auditorium screen, the lobby panels and the Boba TV read black whenever animations are
    off (reduced motion, still captures), since every scene and slide starts at opacity 0. Each now has a still first picture under
-   it (.scrBase) that hides itself the moment animations run. scrPages lives in LEAD's 24_screens.js; this wraps it. */
-var scrPagesBase=scrPages;scrPages=function(pages){return (pages&&pages[0]?'<g class="scrBase">'+pages[0]+'</g>':'')+scrPagesBase(pages)};
+   it (.scrBase) that hides itself the moment animations run. scrPages (LEAD's 24_screens.js) does its own first page. */
 LFROOM.auditorium=function(C){rsArtReady();
   var H=function(k){return C.has(k)},U=LF.U,W=C.W,D=C.D,HH=LF.H,big=H("au_imax"),scr2=H("au_scr2"),car=H("au_carpet");
   if(H("au_wall2"))thWalls(C,"#1d1320","#180f1a","rgba(90,140,255,.14)");else if(H("au_wall1"))thWalls(C,"#242630","#1f2029","rgba(255,255,255,.07)");else thWalls(C,"#2a2230","#241d29");
