@@ -325,6 +325,9 @@
       const armLimbs = new Set(ap ? ap.arms.map((id) => this.limbOf[id]) : []);
       const shoulderY = ap ? Math.max(...ap.joints.map((j) => bv.joints[j][1])) : Infinity;
       const armpitY = shoulderY - (ap ? ap.above : 0), sleeveY = shoulderY - (ap ? ap.armsAbove : 0);
+      // The rigid seam copies (below) only cover the shoulder and armpit band, down to the elbows; lower down the hands rest by
+      // the hips, and rigid copies there left skin-coloured dashes on the trousers (QA on 2be3eda).
+      const elbowY = ap ? Math.max(...["elbowN", "elbowF"].filter((j) => bv.joints[j]).map((j) => bv.joints[j][1])) : -Infinity;
       const verts = new Array((cols + 1) * (rows + 1));
       const vertex = (cx, cy) => {
         const k = cy * (cols + 1) + cx;
@@ -404,7 +407,7 @@
               for (const [limb, bone] of here) {
                 // Arms overhead (rig.armpit), below the armpit line: each limb's copy moves with that limb alone, so it is never
                 // stretched between an arm and the trunk (that stretch tore sleeves into shreds at large sizes, QA).
-                const rigid = ap && cy * step > armpitY;
+                const rigid = ap && cy * step > armpitY && cy * step < elbowY;
                 const t = corners.map((v) => (rigid ? follow(v, bone) : this.limbOf[v.b0] === limb || related(v.b0, bone) ? v : follow(v, bone)));
                 // Cut to its own pixels, this copy has little to smear, so it may stretch further.
                 t.loose = 2;
