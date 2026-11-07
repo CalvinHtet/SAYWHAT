@@ -2565,13 +2565,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on eadc75b): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+- Now (on 6152eb5): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
   Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
   Re-measured the Restaurant on c1e9a9d: 14 visual upgrades still change under 0.5% of the picture. Chef's Neon (worst,
-  0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; next
-  Espresso Bar, Host Desk/Lectern, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
+  0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; Brass Sconces in 6152eb5.
+  Host Lectern, Host Desk, Drinks Cooler, Espresso Bar, Dish Station each add a clear (small) piece: stay. Grand French Range and
+  Charcoal Grill need art (a glow alone does not show in a still picture): next, on Unlimited.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
+  the window). Render: shots/rooms3/restaurant_sconces.png.
 - DONE by QA (QA findings: pass). WAITING ON QA: check eadc75b, your 85fad55 note: pendants (two, back end of the pass, higher) and the Neon Sign (right and up) clear of the wine
   wall and stools; the counter needs Noir, which hides the neon, so they never meet. Picture: shots/rooms3/restaurant_neon_pendants_fix.png.
 - DONE by QA (QA findings: neon reads; pendants and neon overlap the wine wall and stools, small move). WAITING ON QA: check c50714d, Restaurant Neon Sign (bigger, pink glow) and Black Marble Counter (three brass pendants over the pass, which
