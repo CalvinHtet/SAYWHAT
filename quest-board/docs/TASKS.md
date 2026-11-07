@@ -2541,10 +2541,10 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 396376b (v0.70). Doing: the v0.70 full set on a clean build (490 files, APPV 70): unlockall.js with LEAD's two fixes,
-  the whole story again, Review both bodies, livesync, live10, players10, alerts, FX, room windows, bar rule, badges, drops, stuck
-  rooms, night lights, guests. The 8 story notes (c5739a7) are not in v0.70. Next: the verdict to LEAD. Published-file checks
-  BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 10240e8 (v0.70). Done on it: unlockall.js PASS (both saves, Next story step "no steps left", every upgrade buys
+  through), the whole story re-read (64 parts, all 8 notes fixed). Doing: Review on both bodies on 10240e8, and the rest of the
+  full set on 396376b (same code outside story and tester). Next: the v0.70 verdict to LEAD. Published-file checks BLOCKED until
+  Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
