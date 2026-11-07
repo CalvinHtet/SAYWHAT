@@ -33,7 +33,8 @@ Doing:
   version to test when ready": v0.68 BUILT from e276038 (APPV 68; 9b3a428 plus QA's 3f6c696 fix: neighbors drawn in their own outfits; everything above plus ROOMS's 633ffe2 bar rule, ede09d8 Garden at
   level 5, 0f9cabe splash text); clean build, 490 files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS:
   QA PASSED the full set (6430d13) and it is staged in r/. WAITING ON CAL: publish v0.68 to the Test link now, or hold
-  for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes are in (570b2f3, with QA); if QA passes them before Cal answers, LEAD builds
+  for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes PASSED (570b2f3, QA ad05db6); v0.69 waits only on ROOMS's Nightclub fix (DJ and bartender
+  behind their counters, QA's last known error); if QA passes them before Cal answers, LEAD builds
   v0.69 with everything (v0.68 + ROOMS's room fixes + placement + 1ab3753) for QA's full set and publishes that instead. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
