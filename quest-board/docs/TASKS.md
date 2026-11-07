@@ -17,7 +17,11 @@ Doing:
   visit lines without unstated pronouns, Ben carries the snowboard (da04cc3, done). ROOMS's: the pizza oven past the right wall
   (f2f231d, done) and Ben's cap back views (5698ead, done). v0.73 REBUILT from 660eb30 (all three in; dist 472, dist-web 2338):
   loads clean, Review 131/131 save unchanged, Next event 35 taps, every friend equips every piece, the new visits open, webtest
-  PASS, livesync PASS. WAITING ON QA: recheck those three on 660eb30 (QA: DONE, PASS, publish; QA findings). Then LEAD deploys dist-web to the Test channel for Cal.
+  PASS, livesync PASS. QA PASSED 660eb30 (58ffe96). PUBLISHED: dist-web of 660eb30 on the web Test channel
+  (version 3f5d7ab076c2d034; the live page's app.js fingerprint matches the build QA passed; sign-in screen in 1.9 s, no errors).
+  The Live site is still empty; the Claude Test link stays on v0.72. Next: Cal signs in once, LEAD adds his uid as owner
+  (web/config.js, firestore.rules) so he gets the Test tools, redeploys; then Cal's phone test and feedback. Not covered by QA: a
+  real phone, real Google sign-in, the real Claude call. QA in passing: sleeves fray in sitBack and typing (LEAD's open rig item).
   Was: v0.73 BUILT from 42d73be (APPV 73), on both builds: dist (Claude, 472 files: friend
   portraits now packed in art_ui, 42d73be, since the six new friends took dist to 510 of 511) and dist-web (QB_TARGET=web, 2338
   files). Since v0.72: ROOMS's room work (facb194, 10f64be, d328e88, 8602ed7, b3e3510, 828990f, 21b292a, c50714d + eadc75b, 6152eb5,
