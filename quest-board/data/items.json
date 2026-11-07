@@ -1264,5 +1264,20 @@
   "slot": "top",
   "neutral": true,
   "friendOnly": 1
+ },
+ "fr_nick_trousers": {
+  "slot": "pants",
+  "wide": true,
+  "friendOnly": 1
+ },
+ "fr_victor_chinos": {
+  "slot": "pants",
+  "wide": true,
+  "friendOnly": 1
+ },
+ "fr_kevin_jeans": {
+  "slot": "pants",
+  "wide": true,
+  "friendOnly": 1
  }
 }
