@@ -2477,8 +2477,8 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 8fe507c): LEAD's 44 yawn pictures on Unlimited, 31 done (30 passed QA; cr_trench in); next cr_mesh, cr_vest (designs to
-  render), km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
+- Now (on 8fe507c): LEAD's 44 yawn pictures on Unlimited, 31 done (31 passed QA, cr_trench with the new --pastel key); cr_mesh and
+  cr_vest generating; km_* designs rendered; then oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
   and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
