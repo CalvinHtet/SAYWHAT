@@ -465,6 +465,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, GACHA POP wear test (ROOMS's 03274a7, LEAD's 07dfb84 Shop rows; on 272645c; `shots/qa/gp/`): 14 of 15 pass, one fix and one
+  call. All 15 on both bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits; the Shop (`shop.js` BRAND=gp):
+  14 on him and 15 on her bought at full price, worn, in the mirror. ROOMS's points: (1) the wings sit right standing, sitting and
+  asleep, no stray specks (`z_wings.png`). (2) The heart shades: no grey line left anywhere. (3) The bow and bunny beanie with long
+  hair (h1) and the ponytail (h3) hang right front and back; the cat hood frames the face from the front with every hair. Fix: the
+  cat hood's back view (sitBack, type, rearStand, backwalks) is a flat lavender blob with no outline, seams or shading
+  (`z_hood_hearts.png`), so from behind it reads as a placeholder; paint the back like the front. Owner: ROOMS. (4) The call: with any
+  top on (every player always has one), the overalls read as plain lavender trousers and the suspender shorts as plain shorts
+  (`fit3.png`), so they never look like their icons. Draw the bib and straps over the top (a layer flag, like shoes' "over"). Owner:
+  LEAD (the layer rule), ROOMS (split the bib if needed). Badge, banner and icons read clean.
 - QA, LEAD's bc757e2 armpit (on 0852011; `shots/qa/armpit_before_after_bc757e2.png`, `armpit_pants_bc757e2.png`): pass as an
   improvement, no regression. The pixel sweep (8 tops, 15 rows, 22 poses) against 17b8bd0: only stretchUp and stretch differ. The
   trouser specks from 2be3eda are gone: light pixels on the trousers at 300 px stretchUp count the same as before the rig change on
@@ -1909,7 +1919,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 03274a7): GACHA POP is done in 03274a7. Next: SAVE POINT (sp_*, brand id sp): add its 15 ids to data/items.json,
   then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app sp_*. Brand runway: OK, 45 days. Chrome: ROOMS.
-- WAITING ON QA: wear test GACHA POP, 03274a7 (brand id gp; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless:
+- DONE by QA (QA findings: 14 of 15, the cat hood's back; the overalls' bib). WAITING ON QA: wear test GACHA POP, 03274a7 (brand id gp; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless:
   idle and walk1 load 29 of 29 with 0 failures; backwalk1 for the wings, hood, bear, sailor, bunny, bow and shades looks right.
   Look hardest at the wings (neck slot, ingested with a looser stray limit of 0.25, so check sits and sleep), the heart shades (a
   baked mannequin outline was stripped; look for leftover grey lines), the bow and bunny beanie with long hair and the ponytail
@@ -2083,7 +2093,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. The armpit fix (bc757e2) passes as an improvement; ragged undersides remain (LEAD). (on 0852011)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 14 of 15: the cat hood's back (ROOMS), the overalls' bib under every top (LEAD). (on 272645c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
