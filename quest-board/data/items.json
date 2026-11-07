@@ -1039,5 +1039,52 @@
  "cr_combat": {
   "slot": "shoes",
   "over": true
+ },
+ "km_bucket": {
+  "slot": "hat"
+ },
+ "km_straw": {
+  "slot": "hat"
+ },
+ "km_visor": {
+  "slot": "hat",
+  "noClip": true
+ },
+ "km_shell": {
+  "slot": "neck"
+ },
+ "km_round": {
+  "slot": "glasses",
+  "frontOnly": true
+ },
+ "km_camp": {
+  "slot": "top"
+ },
+ "km_boat": {
+  "slot": "top"
+ },
+ "km_rash": {
+  "slot": "top"
+ },
+ "km_crochet": {
+  "slot": "top"
+ },
+ "km_board": {
+  "slot": "pants"
+ },
+ "km_linen": {
+  "slot": "pants"
+ },
+ "km_cutoff": {
+  "slot": "pants"
+ },
+ "km_slides": {
+  "slot": "shoes"
+ },
+ "km_deck": {
+  "slot": "shoes"
+ },
+ "km_sandal": {
+  "slot": "shoes"
  }
 }
