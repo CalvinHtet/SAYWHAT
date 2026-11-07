@@ -465,6 +465,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 14bd0e5 CHROME RAIN fixes and LEAD's 207db81 line (on 207db81; `shots/qa/cr/fixes_14bd0e5.png`, `icons_14bd0e5.png`):
+  pass, so CHROME RAIN is 15 of 15. The mesh top is an opaque dark purple net under the black harness with cyan cuffs, the same on
+  both bodies front and back and matching its icon, no skin through it. The light-up high-tops carry a small rose bolt and a straight
+  line, no wavy stripe, no outline left; they read as original. voice.js 1,482+ lines, 0 hits. Owner: ROOMS.
 - QA, LEAD's 091c762 CHROME RAIN in the Shop and 8be03dc packed badges (on 7caab98; `shop.js` BRAND=cr, new `badges.js`): pass. CHROME
   RAIN: 14 on him and 15 on her (the skirt hers) bought at full price, worn and in the mirror. Badges: every brand tab (HANGANG,
   DIAL-UP, OVERPASS, VENOM ROSE, NICE COCK, ALTITUDE, KODE PINK, SAYMØRE, SMOKE BOMB, GACHA POP, SAVE POINT, BARD & BLADE, CHROME RAIN)
@@ -1994,7 +1998,7 @@ Doing:
 - Now (on 14bd0e5): KAIMANA (km_*, brand id km; pieces per BRANDS_PROPOSAL.md's surf-club list): 15 ids in data/items.json (14bd0e5);
   camp shirt, striped tee and rash guard generating on Unlimited. Files: art/raw, art/layers, art/app km_*. Next: the other 12, badge,
   banner, one commit, QA. Then OAKMONT. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: check 14bd0e5, CHROME RAIN's two fixes. cr_mesh is now an opaque dark purple diamond net under the harness, the same
+- DONE by QA (QA findings: pass). WAITING ON QA: check 14bd0e5, CHROME RAIN's two fixes. cr_mesh is now an opaque dark purple diamond net under the harness, the same
   on both bodies, matching its icon. cr_lightup has a small rose lightning bolt and a straight line, no wavy stripe; a baked outline
   was stripped. ROOMS checked headless on 577831f: idle, walk1, backwalk1 and stretchUp, 16 of 16 with 0 failures.
 - DONE by QA (QA findings: 14 of 15, the mesh top; one design call). WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
@@ -2196,7 +2200,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 14 of 15 (the mesh top, the light-up stripe: ROOMS), in the Shop it passes; packed badges pass. (on 7caab98)
+- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 15 of 15. Next: KAIMANA when ROOMS sends it. (on 207db81)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
