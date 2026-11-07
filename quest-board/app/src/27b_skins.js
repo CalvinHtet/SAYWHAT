@@ -84,15 +84,15 @@ var GMR={name:"Game Room",lv:18,startLv:18,step:1,wall:"#27304c",wain:"#1a2138",
   PL("gm_foos","Foosball",UP_M,"gmx_foos",9.8,6.5,1.65,2.5,1,"Wooden table, eleven rods, a cork ball.",{cust:[[9.25,7.75,1],[12.0,7.75,-1,GMB]]}),/* Cal: down toward the front so the arcade has its corner; clear of the pool table and the doorway */
   PL("gm_vend","Soda Machine",UP_S,"gmx_vend",11.6,.2,1.0,.9,0,"A red vending machine, lit from inside.",{cust:[[12.1,1.8,1,GMB]]}),
   PL("gm_neon","LED Wall Panels",UP_S,"gmx_led",.05,2.4,.1,2.0,1,"A cluster of hexagon lights in blue and violet.",{o:{dy:-62,h:1,nosh:1,nob:1,dk:30}}),
-  PL("gm_dart","Dartboard",UP_S,"gmx_dart",.05,6.25,.2,1.1,1,"A cork board in a wooden cabinet, three darts.",{o:{dy:-52,h:1,nob:1,nosh:1,dk:30},cust:[[2.6,6.85,-1,GMB]]}),/* QA: on the back wall it covered the lit hexes; on the left wall between the light panels and the old TV, thrown at from the open floor */
+  PL("gm_dart","Dartboard",UP_S,"gmx_dart",.05,5.75,.2,1.7,1,"A cork board in a wooden cabinet, three darts.",{o:{dy:-52,h:1,nob:1,nosh:1,dk:30},cust:[[2.6,6.85,-1,GMB]]}),/* QA: on the back wall it covered the lit hexes; on the left wall between the light panels and the old TV, thrown at from the open floor */
   ["gm_chair","Gaming Chairs",UP_S,"","",0,0,0,"For when the couch is taken.",{retired:1}],/* Cal on v0.58: the racing chairs looked random; retired, id kept */
   PL("gm_snack","Snack Bar",UP_S,"gmx_snack",9.4,.2,1.4,.8,0,"Chips and soda, always stocked.",{cust:[[10.1,1.7,-1,GMB]]}),
   /* Cal: "The beanbags are not facing the retro tv". The TV stands on the left wall with its screen to the room (unflipped:
      the flipped sprite faces the wall, Cal on v0.58) and the beanbags are drawn from behind (gmx_beanb, flipped), facing it */
   PL("gm_crt","Retro TV Corner",UP_S,"gmx_crt",.15,4.4,1.0,1.4,0,"The old console still works."),
   PL("gm_bean","Beanbags",UP_S,"gmx_beanb",1.5,4.25,1.25,1.2,1,"Two beanbags, blue and orange, facing the old TV.",{sit:[[1.9,4.65,-1,4,1],[2.45,5.1,-1,4,1]]}),
-  PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",10.9,.25,.65,.65,0,"A glass-front fridge stacked with cans.",{cust:[[11.2,1.7,-1,GMB]]}),/* with the gaming desks gone it stands with the snack bar and the soda machine, not alone mid-room */
-  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",8.9,.15,.5,.5,0,"Sets the whole room purple.",{light:[9.15,.4,70,"#b070ff",2.6,.5]}),
+  PL("gm_fridge","Mini Fridge",UP_S,"gmx_fridge",11.8,2.7,.8,.8,0,"A glass-front fridge stacked with cans.",{cust:[[11.0,4.1,-1,GMB]]}),/* with the snack bar and the soda machine, on the right wall a step in front of the soda machine (whose front stays clear), glass to the room (it was hidden between them: 0.16% of the picture) */
+  PL("gm_lamp","RGB Floor Lamp",UP_S,"gmx_lamp",2.7,.3,.75,.75,0,"Sets the whole room purple.",{light:[3.05,.65,70,"#b070ff",2.6,.5]}),/* on the open floor between the arcade and the TV (behind the console it was 0.04% of the picture) */
   /* Cal's later steps (HANDOFF): the 80 inch screen and the floating console replace the TV and the shelf, the cream
      sectional replaces the couch, and back-to-back gaming desks with their racing chairs stand on the right */
   PL("gm_tv80","80 inch Screen",UP_L,"gmx_tv80",4.4,.05,4.2,.2,1,"Wall to wall. You can see every pixel of the racing line.",{o:{dy:-58,h:1,nob:1,nosh:1,dk:30}}),
