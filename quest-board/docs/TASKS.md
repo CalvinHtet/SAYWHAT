@@ -2552,13 +2552,15 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 21b292a): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+- Now (on c50714d): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
   Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
   Re-measured the Restaurant on c1e9a9d: 14 visual upgrades still change under 0.5% of the picture. Chef's Neon (worst,
-  0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; next Neon Sign, Black Marble Counter, Espresso
-  Bar, Host Desk/Lectern, Patio Heaters, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
+  0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; next
+  Espresso Bar, Host Desk/Lectern, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check c50714d, Restaurant Neon Sign (bigger, pink glow) and Black Marble Counter (three brass pendants over the pass, which
+  the partition hides). Renders: shots/rooms3/restaurant_neon.png, restaurant_marble_pendants.png.
 - DONE by QA (QA findings: pass; not cluttered). WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
   next rows (LEAD approved; before/after shots/rooms3/restaurant_tables_before_after.png), and Drip Coffee no longer covers the napkin
   box in the Hole in the Wall (shots/rooms3/restaurant_drip2.png).
