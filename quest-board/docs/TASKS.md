@@ -2548,7 +2548,7 @@ Doing:
   (1) Dessert Parlor and (2) VR Arena done in facb194, WAITING ON QA below; (3) Restaurant thinning by superseding: next.
   After: the WEAK upgrades, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
+- TAKEN by QA (after the v0.72 full set). WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
   the Arched Mirror, id de_arch kept) and VR Arena (dark neon shell vrw_t1, dark:1). Before/after: shots/rooms3/. Your notes from aa3a99b.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
