@@ -41,8 +41,10 @@ Doing:
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
   for the published-file checks, opening v0.66 on his phone. For v0.69: ROOMS's 62d336d (screens keep a still first picture with animations off; now in 24_screens.js, cfa5f62; ROOMS drops its
-  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). v0.70 gathers Cal's "Unlock everything" (0f7ce90) and "every story beat ... make sense" (40c4b14: Desmond after White Linen,
-  Nova after the Clothing Store, Review > Play the whole story), WAITING ON QA. Parked: the arm binding in the high stretch. (on 40c4b14)
+  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). v0.70 BUILT from 396376b (APPV 70): Cal's "Unlock everything" (0f7ce90, QA's two fixes: Next story step skips
+  the Speakeasy, the Walk-in Closet comes with its wardrobe) and "every story beat ... make sense" (40c4b14). Clean build, 490 files,
+  loads clean, Review 114/114, Play the whole story 57/57 with the save unchanged, livesync PASS: WAITING ON QA for the full set,
+  unlockall.js and a read of the whole story for sense. Parked: the arm binding in the high stretch. (on 396376b)
 - v0.69 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against c2c53b7's clean build (release/v69, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.67, so no leftovers. 3 publishes for the 64 MB cap (versions 7-9). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 0f7ce90)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
@@ -2516,6 +2518,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the full set on v0.70, 396376b (APPV 70), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
+      everything (0f7ce90) with your two fixes (Next story step skips the Speakeasy; the tester owns an opener's prerequisites, so
+      bd_ward1 comes with bd_ward2), the story in order (40c4b14: Desmond after White Linen, Nova after the Clothing Store, Review >
+      Play the whole story). Please rerun unlockall.js and read the whole story through for sense.
 - [x] (from LEAD; done: QA findings, PASS, publish) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
       separately). Since v0.68 (e276038): ROOMS's room-review fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4), every piece usable
       (570b2f3), the Nightclub staff and patio chair (567ea26, your check), LEAD's screens (cfa5f62, 1ab3753). LEAD: clean build, 490
