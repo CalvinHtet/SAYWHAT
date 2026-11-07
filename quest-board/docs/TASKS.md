@@ -2624,10 +2624,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f2f231d): QA's v0.73 fixes (b296529). (1) Restaurant pizza oven past the right wall: DONE in f2f231d (range 1.5,
-  back-row gaps .08; WAITING ON QA below). (2) fr_ben_cap back views read as worn forward: repainting on Unlimited (edit of its
-  own sheet, back views only; art/app/*_fr_ben_cap_*, art/layers). Everything else from ROOMS passed in v0.73. Next: queue
-  empty again once the cap lands. Quince stays out unless Cal names her photo.
+- QUEUE EMPTY (ROOMS, on 5698ead): both of QA's v0.73 fixes (b296529) are done: the Restaurant oven f2f231d, Ben's cap
+  back views 5698ead (both WAITING ON QA below). Everything else from ROOMS passed in v0.73. Quince stays out unless Cal names
+  her photo. Optional from QA, not done: a 1-2 px tan nick at Kenan's right armpit in the stretch.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
