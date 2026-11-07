@@ -44,8 +44,8 @@ Doing:
   wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). v0.70 BUILT from 10240e8 (APPV 70; 396376b plus QA's story-read fixes): Cal's "Unlock everything" (0f7ce90, QA's two fixes: Next story step skips
   the Speakeasy, the Walk-in Closet comes with its wardrobe) and "every story beat ... make sense" (40c4b14). Clean build, 490 files,
   loads clean, Review 114/114, Play the whole story 57/57 with the save unchanged, livesync PASS: WAITING ON QA for the full set,
-  unlockall.js and a read of the whole story for sense. TAKEN: Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique"
-  (friend visits, 29k_friends). Parked: the arm binding in the high stretch. (on 10240e8)
+  unlockall.js and a read of the whole story for sense. Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique":
+  done in f7a43bb (door, ride, drop, pop; never twice running), WAITING ON QA, rides in v0.71. Parked: the arm binding in the high stretch. (on f7a43bb)
 - v0.69 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against c2c53b7's clean build (release/v69, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.67, so no leftovers. 3 publishes for the 64 MB cap (versions 7-9). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 0f7ce90)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
@@ -2549,6 +2549,12 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD, Cal's ask through you) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
+      swings open, they step through), va-ride (skid in from the right, dust), va-drop (fall in, squash, shadow), va-pop (spin up,
+      confetti); never the same as the last visit (S.visitArr), a visit keeps its arrival if shown again (S.visit.arr); Review cycles
+      them. The friend's inline animation-delay used to override every delay, so the stagger is now --d and the idle bob .fvbob.
+      LEAD: 12 visits used all four with 0 repeats; rigtest/lead/visitarrivals.js measures each one's path; shots/lead/visits/.
+      Please check one and two friends at 360 and 390, and reduced motion. For v0.71.
 - [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.70, now 10240e8 (APPV 70; 396376b plus your story-read fixes: Theater in the mall's end unit, Rhythm upstairs and VR next door, four new welcomes, Sable before Rafe on the Old Metro, the amulet line, parlor/favor/favorite, Loft welcome "Soon", Lair and Closet before Sable in Play the whole story, Speakeasy out of the tester), Cal's next test copy. New since v0.69 (c2c53b7): Test > Unlock
       everything (0f7ce90) with your two fixes (Next story step skips the Speakeasy; the tester owns an opener's prerequisites, so
       bd_ward1 comes with bd_ward2), the story in order (40c4b14: Desmond after White Linen, Nova after the Clothing Store, Review >
