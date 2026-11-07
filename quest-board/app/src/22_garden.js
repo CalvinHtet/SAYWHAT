@@ -2,7 +2,8 @@
    Passive: it grows ingredients on its own. The Restaurant uses them and earns more while
    the pantry has stock, and crops add dishes to its menu. To add an upgrade, add a line to
    GD_UPS and, if it shows in the room, a line in LFROOM.garden. */
-ROOMT.garden=Object.assign(ROOMT.garden,{lv:14,cost:3000,food:"veg",rate:3,coin:6,store:8,desc:"A small plot behind the building. It grows ingredients on its own, the Restaurant cooks with them and earns more, and spare produce sells for coins."});
+/* the Garden lot goes up for sale at level 5, as The Loft's welcome card says (QA ba1758a; LEAD: level 5) */
+ROOMT.garden=Object.assign(ROOMT.garden,{lv:5,cost:3000,food:"veg",rate:3,coin:6,store:8,desc:"A small plot behind the building. It grows ingredients on its own, the Restaurant cooks with them and earns more, and spare produce sells for coins."});
 /* effect: p output, fresh Restaurant income bonus, dish adds to its menu, shelf pantry size, cap stored hours, lv, g, also */
 var GD_UPS=[
  /* plots */
