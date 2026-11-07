@@ -2064,7 +2064,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 2b7eb27): on call for Cal's playtest. Sent Cal the seven friend visitors and their three poses (`shots/cal/visitors_poses.png`); WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them. RATTLER stopped (Cal: no more brands).
+- Now (on abe06dd): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- WAITING ON QA: check abe06dd, night lights (Cal: only the Bedroom needs a light switch). At 10 pm: every room but the Bedroom draws lit with
+  no lamp button (window and building view); the Bedroom stays dark until its lamp is on, and its button and saved rm.lit work as
+  before. ROOMS checked headless: Bedroom off and on, Lounge, Restaurant, the Loft and Plaza building views, 0 page errors.
 - DONE by QA (QA findings: pass, 15 of 15). WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
   on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
   the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
