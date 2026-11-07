@@ -656,12 +656,14 @@
       if (!pose) throw new Error("unknown pose: " + poseRef);
       // A painted pose (the stretch's yawn) needs the top's own painted picture. A top without one (every brand from NICE COCK on,
       // so far) would fall back to bending its normal art overhead, which tears at the armpits; instead the arms stay down and
-      // the rest of the pose (the yawn face, the head and spine tilt) plays. Missing art fails softly (CLAUDE.md); the list of
+      // the yawn face plays on the standing pose. Missing art fails softly (CLAUDE.md); the list of
       // missing yawn pictures is in docs/TASKS.md for ROOMS.
       const topFront = pose.painted && pose.view === "front" && look.layers.top && look.layers.top.front;
       if (topFront && !this.hasArt(topFront.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) && poses.idle) {
         const bones = { ...pose.bones };
-        ["uaN", "faN", "hnN", "uaF", "faF", "hnF"].forEach((b) => { if (poses.idle.bones[b]) bones[b] = poses.idle.bones[b]; });
+        /* the spine, head and pelvis too: the yawn's head tilt swung long hair over the lowered arm, which draws after the hair and
+        showed through it (QA) */
+        ["uaN", "faN", "hnN", "uaF", "faF", "hnF", "spine", "head", "pelvis"].forEach((b) => { if (poses.idle.bones[b]) bones[b] = poses.idle.bones[b]; });
         return this.render(look, { ...pose, bones, painted: undefined, armsUp: false });
       }
       const view = pose.view;
