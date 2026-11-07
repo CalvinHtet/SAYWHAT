@@ -695,6 +695,14 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
   frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
   Restaurant, Nightclub, Theater or Arcade at 21:00, opened from their buildings), and not on a real phone. Info, no owner.
+- QA, ROOMS's c50714d (Restaurant Neon Sign bigger with pink glow; Black Marble Counter's three brass pendants) on a clean build,
+  0 page errors: the neon reads now, the pendants need a small move. In the Bistro the left pendant hangs right in front of the wine
+  wall's glass and all three bulbs sit among the bar stools' backs; in Noir the left one overlaps the wine wall's lower right and the
+  first stool; the bigger neon also overlaps the wine wall's top-right corner (Bistro) and touches its top (Corner Diner). It reads
+  as clutter right where the room was thinned (shots/qa/rooms3/restaurant_neon_pendants.png: rows Diner, Bistro, Noir; left before,
+  right after). Fix: shift the pendants toward the kitchen end of the counter so none is in front of the wine wall (or two pendants,
+  or hang them higher so the bulbs clear the stools), and nudge the neon up/right so it clears the wine wall. Owner: ROOMS. FYI LEAD:
+  v0.73 (fb0b6cb) holds c50714d; QA runs the full set on fb0b6cb now and rechecks only this fix on the rebuild.
 - QA, ROOMS's two fixes from 121dc00 on clean builds of 828990f and 21b292a, 0 page errors: PASS. Drip Coffee: in the Hole in the
   Wall it sits on the counter behind the napkin box, smaller, both fully seen, nothing past the counter's end (shots/qa/rooms3/
   restaurant_drip_fixed.png: v0.72, b3e3510, 828990f). Tables: the fully bought floor's middle row is two 2-tops; clear aisles
@@ -2559,7 +2567,7 @@ Doing:
   0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; next
   Espresso Bar, Host Desk/Lectern, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check c50714d, Restaurant Neon Sign (bigger, pink glow) and Black Marble Counter (three brass pendants over the pass, which
+- DONE by QA (QA findings: neon reads; pendants and neon overlap the wine wall and stools, small move). WAITING ON QA: check c50714d, Restaurant Neon Sign (bigger, pink glow) and Black Marble Counter (three brass pendants over the pass, which
   the partition hides). Renders: shots/rooms3/restaurant_neon.png, restaurant_marble_pendants.png.
 - DONE by QA (QA findings: pass; not cluttered). WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
   next rows (LEAD approved; before/after shots/rooms3/restaurant_tables_before_after.png), and Drip Coffee no longer covers the napkin
