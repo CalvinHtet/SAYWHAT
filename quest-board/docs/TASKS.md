@@ -13,47 +13,14 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: CAL (2026-11-07): "Do a full QA check and send me the latest version to test. Show me all the cutscenes and visitors and
-  unlocks in this next test pass so I can give my opinion. And then I'll give the next task for everyone." v0.66 built from 465d39a
-  (APPV 66; since v0.65: KAIMANA Feb 1, OAKMONT Feb 8, SØLVBERG Feb 15, and Test > Review: every story scene, room
-  welcome, team join, return visit, friend visit, new area, UI upgrade, reward, big upgrade and brand drop in order, each with
-  Play, nothing saved; 114 of 114 open, save unchanged). Clean build, 490 files, no page errors. WAITING ON QA for the full set,
-  then the publish session publishes it and LEAD sends Cal the how-to. Brands: Cal stopped them at 16 (rule 19 PAUSED). Cal asked
-  about the database limits: 25,000 documents per version (about 4-7 per player); our town hall reads only 60 boards and 200
-  pings, unordered, so it breaks past about 60 players; fix offered, Cal's call. CAL (2026-11-07): about 10 players, "synced perfectly so we can all see each others progress"; "perfectly consistent for
-  everyone ... publish a new version at 4 am when they are all asleep": RELEASING "Two links, and the 4 am publish" (one Live artifact
-  republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). QA held v0.66 for one thing (the boba scene's "M" box); fixed in v0.67 = d54de89 (portrait fallback, 7 of 7 scenes; plus live
-  sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Next build (v0.68): Cal's "I don't like the crt scan lines. And the red hue it too aggressive" (59d31a0: Starlight
-  for scanlines, softer vignette and edge glow, no overlay on the Loft or rooms) and "The light on option should not matter for the
-  other rooms. Only the bedroom" (ROOMS abe06dd, QA 2f3d3a6), Cal's "!" on tabs and buildings and "+" on new rooms (3bba5f1,
-  app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (93d33f1,
-  QA passed 9a946ed), the wall shelf, the menu board and no zoom in room windows (4e93d54, with QA); people keep their places through a purchase and
-  new pieces pulse gold (1308059, with QA). CAL (2026-11-07) on the Restaurant's bar: "No I want the bar to be available
-  after it starts to look like a fine dining luxury restaurant": r_bar needs Fine Dining Service (r_t3), hidden until then (ROOMS). QA's ba1758a: level-opened tabs get their "!" (d0adfdc), the Garden lot at level 5 (ROOMS). CAL: "Give me the latest
-  version to test when ready": v0.68 BUILT from e276038 (APPV 68; 9b3a428 plus QA's 3f6c696 fix: neighbors drawn in their own outfits; everything above plus ROOMS's 633ffe2 bar rule, ede09d8 Garden at
-  level 5, 0f9cabe splash text); clean build, 490 files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS:
-  QA PASSED the full set (6430d13) and it is staged in r/. WAITING ON CAL: publish v0.68 to the Test link now, or hold
-  for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes PASSED (570b2f3, QA ad05db6); v0.69 BUILT from c2c53b7 (APPV 69: v0.68 + ROOMS's room fixes,
-  placement 570b2f3, Nightclub staff 567ea26, screens cfa5f62/1ab3753); clean build, 490 files, loads clean, Review 114/114, livesync
-  PASS, alerts PASS: QA PASSED the full set; PUBLISHED in place on Cal's Test link (69a368c), r/ and the worktree removed; if QA passes them before Cal answers, LEAD builds
-  v0.69 with everything (v0.68 + ROOMS's room fixes + placement + 1ab3753) for QA's full set and publishes that instead. Live sync (019f21f, app/src/29n_live.js):
-  progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
-  pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
-  errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. For v0.69: ROOMS's 62d336d (screens keep a still first picture with animations off; now in 24_screens.js, cfa5f62; ROOMS drops its
-  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). v0.70 BUILT from 10240e8 (APPV 70; 396376b plus QA's story-read fixes): Cal's "Unlock everything" (0f7ce90, QA's two fixes: Next story step skips
-  the Speakeasy, the Walk-in Closet comes with its wardrobe) and "every story beat ... make sense" (40c4b14). Clean build, 490 files,
-  loads clean, Review 114/114, Play the whole story 57/57 with the save unchanged, livesync PASS: WAITING ON QA for the full set,
-  unlockall.js and a read of the whole story for sense. v0.71 BUILT from 3840577 (APPV 71; built now rather than batched, as the lag fix matters for Cal's own testing): clean build,
-  490 files, loads clean, Review 119/119, the whole story 64/64 save unchanged, livesync PASS, the effects behind a room window paused
-  (frame rates on this Mac are noisy: load average 27). WAITING ON QA for the full set. It has: the phone-lag fix (19ef0d9: Cal's iPhone logged room windows at 37-38 fps with 214/421 ms frames on v0.67; the effects behind an open window now pause, 25 -> 60 fps at CPU x4), Cal (via QA) "I want 4 different animations of when the visitors come visit our base. I want each visit to be unique":
-  done in f7a43bb (door, ride, drop, pop; never twice running), QA passed; QA's two cosmetic notes fixed in 90d5653 (drop and pop clipped to the picture area), rides in v0.71. The arms-up tearing (7d7c5df): stretchUp is used nowhere in play; the in-game stretch swaps in each top's painted yawn picture, and 44
-  tops (every brand from NICE COCK on: nc_*, kp_*, sm_*, smk_*, gp_*, sp_*, bb_*, cr_*, km_*, oak_*, sv_* tops) have none, so they
-  tore. Now those stretch with arms down (yawn face kept); QA passed (painted tops pixel-identical, other poses unchanged). QA's long-hair note: the fallback now keeps the standing spine/head too (e3278f0), so no hair gaps; a small notch where long hair crosses the near sleeve is in plain idle too (pre-existing; QA logged it). Drawing all hair after
-  the arms put long side hair over both arms (tried, reverted); ROOMS cuts f_h1front_front.webp (the lock
-  stays in the main hair too); LEAD's hairFront slot is in 4f30ef5 (group 6, idle byte-identical without the file). The lock landed in 30d93a9; QA passed the sweep (all 65 tops, 4 poses, 4 colours, hats; other hair and back views pixel-identical). ROOMS: their yawn pictures are on ROOMS's list (Unlimited only). Two rig
-  experiments that did not help, reverted: dropping arm art outside the arm's tube, and lowering stretchUp's arms (holes). Next: Cal's v0.71 playtest notes; the next version carries the yawn fallback (7d7c5df, e3278f0),
-  hairFront (4f30ef5) and all 44 yawn pictures (ROOMS, through 4dbd2e2; QA 1-41 passed, 42-44 with QA); rigtest/matrix.html knows which art exists (c4c8e53). v0.72 BUILT from 083fec9 (APPV 72): 491 files, loads clean, Review 119/119, the whole story 64/64, livesync PASS, painted stretches with the hair lock: WAITING ON QA for the full set. ROOMS's next art: Dessert palette, VR Arena palette, thinning the full Restaurant (QA aa3a99b). (on 083fec9)
+- Now: v0.72 BUILT from 083fec9 (APPV 72 = v0.71 plus all 44 painted yawn pictures by ROOMS, the yawn fallback 7d7c5df/e3278f0
+  for tops without one, the long-hair lock 4f30ef5 + 30d93a9, the screens' still picture cfa5f62). Clean build, 491 files, loads
+  clean, Review 119/119, the whole story 64/64 with the save unchanged, livesync PASS. WAITING ON QA for the full set (TAKEN,
+  a88b262). When it passes: the publish session republishes it in place on Cal's Test link (HJhVjFH6), then LEAD removes r/ and
+  the worktree and tells Cal. Next build (v0.73): ROOMS's facb194 (Dessert hutch and Flower Mirror, VR Arena dark neon; with QA
+  after v0.72) and the Restaurant thinning when it lands. Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+  iPhone (diag/perf for the lag fix), stay on Claude or move off it, which artifact is Live, a launch date. Before release: QB_TEST_START
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 083fec9)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 7e25ded)
 - v0.69 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against c2c53b7's clean build (release/v69, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.67, so no leftovers. 3 publishes for the 64 MB cap (versions 7-9). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on 0f7ce90)
