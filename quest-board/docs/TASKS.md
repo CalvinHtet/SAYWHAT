@@ -2517,7 +2517,7 @@ Doing:
   Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
   next, re-measure the rest of the Restaurant's WEAK list on today's room (it was rebuilt since the 2026-11-05 audit).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
+- TAKEN by QA (after the v0.72 full set, with 10f64be). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
   olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
 - TAKEN by QA (after the v0.72 full set). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
   Fire Pit replaces the Patio Heaters; Sculptural Vases replace the potted tree; Wine Wall replaces the Drinks Cooler in every
