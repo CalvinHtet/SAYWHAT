@@ -2486,9 +2486,10 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on ab1f68f. Done: ROOMS's 567ea26 Nightclub staff and Patio chair (pass): the whole placement list is closed. v0.68
-  (e276038) PASS, WAITING ON CAL. Next: v0.69's full set when LEAD builds it. Published v0.64, v0.65 and v0.67 file checks
-  BLOCKED until Cal restarts QA (artifact tools).
+- Now: on c2c53b7 (v0.69). Doing: the v0.69 full set on a clean build of c2c53b7 (490 files): Review both bodies, livesync,
+  live10, players10, alerts, FX, room windows, bar rule, badges, drops, stuck rooms, access, night lights, guests. Before: ROOMS's
+  567ea26 (pass), placement list closed. Next: the verdict to LEAD. Published v0.64, v0.65 and v0.67 file checks BLOCKED until
+  Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
