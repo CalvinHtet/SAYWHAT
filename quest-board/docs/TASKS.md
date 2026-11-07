@@ -480,6 +480,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 93d33f1 Cal's Restaurant notes in every business (on 0a03968, new `guestcount.js`; `shots/qa/biz/`): pass. All 15
+  businesses (Arcade, Auditorium, Boba, Bowling, Club, Dessert, Karaoke, Mall, Restaurant, Rhythm, Rooftop, Sky Bar, Speakeasy, Theater,
+  VR), every building view, fully bought, sampled every 3 s for 30 s: never two customers with the same look in a room, never more than
+  5, someone in every sample, so none reads empty. Shadows against d54de89: bar stools, café chairs and the round tables' bases now cast
+  a tight shadow instead of a wide dark pool; the piano, beds and sofas keep theirs (`cmp_*.png`). The Open Sign: at 9 pm without Noir a
+  pink neon OPEN glows in the first window and the chalkboard stands by the door. No page errors. Not checked: phones, and the stage-1
+  Restaurant's two customers (ROOMS saw them). Owner: ROOMS.
 - QA, ROOMS's abe06dd night lights (on ef08f17, new `nightlights.js`; `shots/qa/night/night_abe06dd.png`): pass. At 10 pm, twelve rooms
   (Bedroom, Closet, Lair, Patio, Game Room, Restaurant, Boba, Mall, Arcade, Club, Theater, Garden): only the Bedroom shows the lamp
   button and only the Bedroom changes with it (mean brightness 52 off, 94 on); every other room draws the same with rm.lit 0 or 1, so
@@ -2085,7 +2092,7 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on 93d33f1): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
-- WAITING ON QA: check 93d33f1, Cal's Restaurant notes in every business. (1) No two identical customers in one room, and fewer: one or
+- DONE by QA (QA findings: pass). WAITING ON QA: check 93d33f1, Cal's Restaurant notes in every business. (1) No two identical customers in one room, and fewer: one or
   two stay, more about halved, five at most (`lfGuestN`). (2) Chair shadows sized to the chair; beds and sofas unchanged. (3) The
   Sidewalk Sign is now the Open Sign: chalkboard plus a neon OPEN in the first window (not in Noir). ROOMS checked headless: Restaurant,
   Boba, Dessert, Arcade, Theater, Mall and Club sampled 12 times each in the building views, 0 duplicates, at most 5; stage-1
