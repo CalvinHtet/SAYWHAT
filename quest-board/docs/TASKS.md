@@ -2337,9 +2337,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on c012014): TAKEN, LEAD's 44 yawn pictures (tops from NICE COCK on), on Unlimited, most-worn first: nc_hoodie generating,
-  then nc_tee and kp_varsity, then the rest a few at a time. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
-  portraits' white splatter tee: which one is his look?
+- Now (on 05e7c19): LEAD's 44 yawn pictures on Unlimited, 3 done (nc_hoodie, nc_tee, kp_varsity); sm_hoodie (retry: cuffs at the
+  wrists) and sv_ski generating, then nc_tank, kp_hoodie and the rest a few at a time. WAITING ON Cal: Vega's in-game tee (black
+  Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
+  on both bodies with every hair and necklace: no tears, sleeves to the wrists, nothing stray on the head (the tee's sheet had a drawn
+  face, dropped). ROOMS checked the matrix stretch pose on both bodies.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
   (onspot), and a staff aisle reaches them from the right (bar off the wall, speakers in line with the decks, coat check a little
   right and shallower). The Sky Patio lounge chair's seat has a walk-to point. ROOMS checked lfRoute to all three and the Club
