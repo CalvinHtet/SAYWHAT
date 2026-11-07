@@ -2896,11 +2896,13 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: the full set on v0.73 = fb0b6cb (clean build, 492 files, APPV 73), running; ROOMS's pendant/neon move passed
-  (eadc75b); recheck it on LEAD's rebuild. Done: ROOMS's room checks (Dessert, VR Arena, Restaurant
-  thinning, vases, Chef's Neon, plaque, chandeliers, drip fix, 2-top middle row: all pass); v0.72 = 083fec9 PASS, publish.
-  BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA session in the desktop app
-  (artifact tools down here; Cal has the first message). (on fb0b6cb)
+- STOPPED (Cal, 2026-11-07 about noon): this QA session has stopped; Cal is starting a new QA session. Hand-over for it:
+  (1) The v0.73 full set (fb0b6cb, LEAD's build, APPV 73, clean build 492 files) is NOT done: savecheck, screens 360/390 and
+  visits passed, then I stopped it during lagcheck. Run the whole set again on v0.73 (on LEAD's rebuild if it adds eadc75b),
+  the same list as the v0.72 line in QA findings (a3c2cb6), with rigtest/qa/stillcheck.js instead of screenlive.js; players10's
+  quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: Cal is pasting the
+  brief (v0.72 on HJhVjFH6 against 083fec9; v0.64 on NSmu55hk against 4a1dbe8). Everything else to QA is DONE: all 44 painted
+  stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
