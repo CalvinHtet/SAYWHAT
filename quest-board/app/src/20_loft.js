@@ -83,7 +83,9 @@ function lfLS(){
 }
 /* Each room has its own light. It changes how that room is lit and leaves the sky outside alone. */
 function lfLightUseful(){return lfLS().dark>.12}
-function lfLit(C){return !!(C&&C.room&&C.room.lit&&lfLightUseful())}
+/* Cal (playtest): "The light on option should not matter for the other rooms. Only the bedroom where you can't see anything at night".
+   Every room but the Bedroom is lit whenever it is dark; the Bedroom keeps its lamp toggle (rm.lit). */
+function lfLit(C){return !!(C&&C.room&&(C.room.t!=="bedroom"||C.room.lit)&&lfLightUseful())}
 function lfInLS(C){var L=lfLS();if(!lfLit(C))return L;return Object.assign({},L,{dark:.13,golden:0,direct:0,moonK:0,mul:"#fff3e4"})}
 function lfSkyCols(L){
   L=L||lfLS();var b=lfSkyBase(L.el),wxW=({sun:0,cloud:.5,fog:.85,rain:.72})[L.wx]||0;wxW=Math.max(wxW,L.cl*.55);
@@ -1271,7 +1273,7 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
   var zoom=function(f,fx,fy,live){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show(live)};
   var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML='<button type="button" aria-label="Zoom in">+</button><button type="button" aria-label="Zoom out">−</button><button type="button" aria-label="Reset zoom">◎</button>';wrap.appendChild(ctl);
   show();ctl.children[0].onclick=function(){zoom(1.4,.5,.5)};ctl.children[1].onclick=function(){zoom(1/1.4,.5,.5)};ctl.children[2].onclick=function(){v=v0.slice();show()};
-  if(wrap.dataset.room!=null&&lfLightUseful()){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
+  if(wrap.dataset.room!=null&&lfLightUseful()&&(bslot(+wrap.dataset.room)||{}).t==="bedroom"){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
   var at=function(e){var r=svg.getBoundingClientRect();return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
   svg.addEventListener("wheel",function(e){e.preventDefault();var q=at(e);zoom(Math.exp(-e.deltaY*.0022),q[0],q[1])},{passive:false});
   var P={},pinch=0,R=null;
