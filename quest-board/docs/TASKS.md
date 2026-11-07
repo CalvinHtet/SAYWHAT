@@ -487,6 +487,22 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 570b2f3 (Cal's use check) on a clean build of 9136fc1, every room fully bought drawn large (shots/qa/access2/),
+  access.js, stuckscan.js (21 rooms buy through), 0 page errors: PASS on all but one point. Fixed and checked: the Arcade pinball
+  now points into the room with its flipper end on open floor, the Skee-Ball end clear; Lock and Key upright piano on the back
+  wall facing the room (nothing in front of the keys: the lamp table is 2 units to the side) and the bar 0.8 off the wall; Rooftop
+  DJ deck 1.0 off the parapet; VR flight pod clear of the sofa, ring chair in from the edge; Rhythm pads out a tile (the DJ game
+  behind has room), bench off the mirrors (it faces the front edge, not the pads, but is usable); lobby ticket booth clear of the
+  recliner; Restaurant smoker in the olive corner facing open deck, pizza oven clear, the crescent booth's opening clear (tight
+  but walkable); Upstairs Bar wine cabinet clear of the sofa; Bedroom mirror on the left wall, record cabinet clear; Mall fountain
+  3.1 units from the store wall (its height made it look closer); Boba fridge on the back wall; Dessert towers off the bookcase;
+  Garden potting bench clear. Withdrawn: my (5) Bowling bench; it is a rear view and the seats face the ball return and lanes
+  (shots/qa/access2/bowl_zoom.png). STILL OPEN: the Nightclub's staff stand on the floor side. 27b_skins.js puts the DJ at y 0.5
+  behind the decks and the bartender at y 0.6, but the room built from it (roomCtx) has them at 2.5 and 2.1, in front of the
+  decks and the bar; live at 22:00 the bartender stands on the customer side (shots/qa/access2/club_live.png). The bar art starts
+  at y 0.2, so there is no room behind it; the DJ booth has 0.8 behind it, yet the spot still moves out. No other room's staff
+  spot is on the wrong side (lobby, Bowling, Arcade, VR, Upstairs Bar checked). Small: the Sky Patio lounge chair's sit spot
+  (4.75, 4) cannot be walked to from the door on access.js's 0.2 grid. Owner: ROOMS.
 - QA, LEAD's cfa5f62 (the screens' still picture moved into 24_screens.js scrPages, replacing ROOMS's 62d336d wrapper), on a clean
   build of 67d375e: PASS. Same as c9a940e: with animations off the Auditorium, lobby and Boba screens show their still; with
   animations on the slides play and no still shows under them; 0 page errors.
@@ -2198,7 +2214,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 570b2f3): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
   portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
+- DONE by QA (QA findings: pass but the Nightclub's staff spots). WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
   room; Skee-Ball's player at its throwing end; the Speakeasy upright piano on the back wall facing the room and its bar off the
   wall; the Club and Rooftop DJ decks off the wall with the DJ behind; VR flight pod off the sofa, ring chair in from the edge;
   Rhythm dance pads a tile out, bench off the mirrors; lobby booth clear of the sofa; Restaurant coffee off the pizza oven, smoker
@@ -2453,9 +2469,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 67d375e. Done: LEAD's cfa5f62 screens (pass); ROOMS's v0.69 room fixes (pass); v0.68 (e276038) PASS, WAITING ON
-  CAL to publish or hold. Next: ROOMS's fixes for Cal's 13 placement problems (the pinball first) as they land, then the v0.69
-  full set. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
+- Now: on 9136fc1. Done: ROOMS's 570b2f3 placement fixes (pass, one open point: the Nightclub's DJ and bartender stand on
+  the floor side). v0.68 (e276038) PASS, WAITING ON CAL to publish or hold. Next: the Nightclub staff fix when it lands, then the
+  v0.69 full set when LEAD asks. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
