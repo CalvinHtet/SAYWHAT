@@ -59,7 +59,7 @@ source. No real person's face in any of them (no collaborators from the covers, 
 | BARD & BLADE (approved) | high fantasy | Dressed for the side quest | forest green, leather brown, brass, moonsilver | shuffled |
 | CHROME RAIN (approved) | cyberpunk | Upgrades sold separately | black, neon cyan, hot magenta, chrome | shuffled |
 | KAIMANA | surf club | Back when the waves were bigger | sand, sea teal, coral | shuffled |
-| OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, forest green, burgundy | shuffled |
+| OAKMONT | 80s country-club athletic | Members only, dress code optional | cream, navy, burgundy (green dropped: QA, too close to a fashion house's web stripe) | shuffled |
 | SØLVBERG | après-ski | Never actually skied | snow white, cherry red, alpine navy | shuffled |
 | RATTLER | western | Bites back | tan suede, rust, turquoise | shuffled |
 | AUREL | quiet luxury | If you have to ask | navy, cream, brushed gold | shuffled |
