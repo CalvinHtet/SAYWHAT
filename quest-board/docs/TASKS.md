@@ -465,6 +465,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 5cf2e1d CHROME RAIN wear test (on b691907; `shots/qa/cr/`): 14 of 15 pass, one fix and one design call. All 15 on both
+  bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the chrome sleeve stays on the same
+  arm front and back, in every pose (`z_arm.png`). (2) The trench hangs right in walks, stretch and sitting, no sliver. (4) The visor:
+  no outline left. (5) The mohawk helmet and the hood sit right with long hair and the ponytail, front, back and asleep. (6) Platform
+  and combat boots over the cargo, the skirt and the knee pants, walking, sitting and asleep (`boots.png`). Rose stands in for pink
+  everywhere, no blank spots. Fix (3): the mesh top doesn't match its icon or itself: the icon is a dark purple net with long sleeves
+  and a harness, but on him it reads as bare skin with a harness and on her as a light grey crop top with a harness
+  (`z_mesh_trench.png`). Add the dark net back over the torso and arms on both bodies so it reads as the icon. Design call: the
+  light-up high-tops (cr_lightup) carry a pink wavy stripe down the side that reads like one famous skate brand's side stripe (the
+  same thing Kode PinK's runner was repainted for); a straight stripe or a lightning bolt would be safe. Visor, mohawk helmet, hood,
+  trench, vest, cargo and badge read as generic cyberpunk. Shop rows not in yet (no gx_cr_). Owner: ROOMS.
 - QA, LEAD's a6e9d16 BARD & BLADE in the Shop (on 1f047b9, `shop.js` BRAND=bb; `shots/qa/bb/shop_*_a6e9d16.png`): pass. 14 on him and
   15 on her (the skirt hers) bought at full price through Try on, Checkout, Confirm, worn and in the mirror; the bracers show in the
   mirror in the arms slot. voice.js: 1,482 lines, 0 hits. Owner: LEAD.
@@ -1977,7 +1988,7 @@ Doing:
 - Now (on 5cf2e1d): CHROME RAIN is done in 5cf2e1d. Next: the ten new brands, starting with KAIMANA (km_*, brand id km; pieces
   per BRANDS_PROPOSAL.md): add its 15 ids to data/items.json, then paint on Unlimited. Files: data/items.json, art/raw, art/layers,
   art/app km_*. Brand runway: OK. Chrome: ROOMS.
-- WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
+- DONE by QA (QA findings: 14 of 15, the mesh top; one design call). WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on c3088b5: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye. Look hardest at: the cyber-arm
   sleeve (one arm, "arms" slot); the trench in stretch and walks (knee length); the mesh top (its holes opened so skin shows; it reads
   mostly as a harness over skin at game size, so say if it needs more net); the visor (a baked outline stripped); the mohawk helmet and
@@ -2176,7 +2187,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. BARD & BLADE 15 of 15 and in the Shop. Next: CHROME RAIN when ROOMS sends it. (on 1f047b9)
+- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. CHROME RAIN 14 of 15: the mesh top, the light-up stripe (ROOMS); its Shop run waits on LEAD's rows. (on b691907)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
