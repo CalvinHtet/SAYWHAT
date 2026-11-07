@@ -2590,8 +2590,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 3840577 (v0.71 live). Done: v0.71 PASS; extra: every room window at 59-60 fps at CPU x4 (roomfps.js). BLOCKED: the
-  published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools). Next: whatever LEAD or ROOMS send.
+- Now: on 7d7c5df. Doing: LEAD's yawn fallback (rig.js): every frame of all nine clips on both bodies, before (c012014) and after
+  (7d7c5df), pixel-compared; the stretch for sv_ski, cr_bomber, bb_cloak, kp_hoodie, o_tee and the starter tee. Next: the verdict
+  to LEAD. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
