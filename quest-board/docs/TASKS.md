@@ -1995,9 +1995,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 24304af): KAIMANA is done in 24304af. Next: OAKMONT (oak_*, brand id oak; pieces per BRANDS_PROPOSAL.md's 80s-athletic
-  list): add its 15 ids, then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app oak_*. Brand runway: OK.
-  Chrome: ROOMS.
+- Now (on 4df0110): OAKMONT (oak_*, brand id oak; pieces per BRANDS_PROPOSAL.md's 80s-athletic list): 15 ids added to data/items.json
+  (not committed; the wristbands and watch use the "arms" slot). Track jacket (two stripes, not three), terry polo and cropped
+  sweatshirt generating. Forest green stays dark and muted so the key keeps it. Files: data/items.json, art/raw, art/layers,
+  art/app oak_*. Next: the other 12, badge, banner, one commit, QA. Then SØLVBERG. Brand runway: OK. Chrome: ROOMS.
 - WAITING ON QA: wear test KAIMANA, 24304af (brand id km; 15 pieces, both bodies). ROOMS checked headless on 2b65e9b: idle, walk1,
   backwalk1 and stretchUp, 30 of 30 with 0 failures each, reading right by eye. Look hardest at: the straw sun hat and bucket hat with
   long hair and the ponytail (wide brims), the visor (noClip, open top), the crochet cardigan (open front over a cream tank), the board
