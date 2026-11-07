@@ -103,3 +103,19 @@ function qbrvPlay(k,v){
 function qbReview(){document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});var m=modal(qbrvHtml());
   m.addEventListener("click",function(e){var b=e.target.closest("[data-rv]");if(!b)return;qbrvPlay(b.dataset.rv,b.dataset.v)})}
 window.__qbRooms.review=qbReview;window.__qbRooms.play=qbrvPlay;
+/* ---------- Unlock everything (Cal, 2026-11-07: "I need the test to be able to allow me to access every upgradable room and section
+   so I can test every section and cutscene and room"). Testing only, removed at release with the Test pill. One tap: level 50
+   (its trials passed), every tab open, every room built in story order (each with no upgrades, so every upgrade can still be
+   bought and seen), every story step done and the whole team hired, and 500,000 coins to buy with. Cutscenes play from Review. */
+function qbUnlockAll(){if(!S||!S.created)return;var x=S,g,n=0;
+  x.xp=Math.max(x.xp||0,cum(50));while((g=gated())!==null&&n++<40)x.gates.push(g);
+  x.areaOn=x.areaOn||{};AREAS.forEach(function(a){x.areaOn[a[0]]=1});x.unlockDay="";
+  var o=styState();o.sold=Math.max(o.sold||0,12);
+  STORY.forEach(function(s){if(s.how==="never")return;o.done[s.id]=1;o.offer[s.id]=1;if(s.scene&&s.scene.team)o.team[s.scene.team]=1});
+  Object.keys(TEAM).forEach(function(id){o.team[id]=1});
+  /* the story's rooms first, in its order, then every other room (Closet, Lair, Patio, Game Room ...) */
+  STORY.forEach(function(s){if(s.room&&s.how!=="never"&&ROOMCELL[s.room])qbtOpen(s.room,1)});
+  Object.keys(ROOMCELL).forEach(function(t){if(t==="speakeasy")return;if(STORY.some(function(s){return s.room===t&&s.how==="never"}))return;qbtOpen(t,1)});
+  x.coins=(x.coins||0)+500000;
+  try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}persist();render();pop("Everything unlocked: level "+effLvl()+", every room and tab, +500,000 coins")}
+window.__qbRooms.unlockAll=qbUnlockAll;
