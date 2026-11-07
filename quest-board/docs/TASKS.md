@@ -489,6 +489,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 567ea26 (Nightclub staff, Sky Patio chair) on a clean build of ab1f68f: PASS, 0 page errors. The room built from
+  the layout now has the DJ at (7.8, 0.5) behind the decks and the bartender at (2.2, 0.5) behind the bar; the bar sits at y 1.0,
+  the speakers at 0.85, the coat check from x 12.1, so an aisle runs along the back wall, entered between the right speakers and
+  the coat check. Live at 22:00 over 48 s: the DJ works at the decks facing the floor, the bartender works behind the bar, and
+  between jobs they walk the aisle (shots/qa/access3/club_live_3.png); the back wall reads clean (big_club.png). Sky Patio: the
+  lounge chair's seat has its walk-to point at (3.95, 4.6) and lfRoute from the door reaches the seat in 4 steps (nobody came to
+  the Patio window in my live run, so not seen live). Note, not seen on screen: at the start of the live run up to four guests
+  sat at exactly (3.0, 3.0) idle for about 30 s, apparently guests waiting to come in (none visible there in the pictures).
+  ROOMS's whole placement list (6430d13) is now closed.
 - QA, 1ab3753 (ROOMS drops the old screen wrapper) on a clean build of ad05db6: PASS. With animations off the Auditorium, lobby
   and Boba screens show their still; with animations on the slides play, no still under them; 0 page errors.
 - QA, ROOMS's 570b2f3 (Cal's use check) on a clean build of 9136fc1, every room fully bought drawn large (shots/qa/access2/),
@@ -2218,7 +2227,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 567ea26): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
   portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
+- DONE by QA (QA findings: pass). WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
   (onspot), and a staff aisle reaches them from the right (bar off the wall, speakers in line with the decks, coat check a little
   right and shallower). The Sky Patio lounge chair's seat has a walk-to point. ROOMS checked lfRoute to all three and the Club
   live at 22:00 (the DJ at the decks), 0 page errors.
@@ -2477,9 +2486,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on ad05db6. Done: 1ab3753 screens (pass); ROOMS's 570b2f3 placement fixes (pass, one open point: the Nightclub's DJ
-  and bartender stand on the floor side). v0.68 (e276038) PASS, WAITING ON CAL. Next: the Nightclub staff fix, then v0.69's full
-  set when LEAD builds it. Published v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
+- Now: on ab1f68f. Done: ROOMS's 567ea26 Nightclub staff and Patio chair (pass): the whole placement list is closed. v0.68
+  (e276038) PASS, WAITING ON CAL. Next: v0.69's full set when LEAD builds it. Published v0.64, v0.65 and v0.67 file checks
+  BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
