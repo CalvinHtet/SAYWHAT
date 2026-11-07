@@ -465,6 +465,11 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 91ef6e8 overalls over a painted top (on fb71c7c; `shots/qa/gp/overtop_stretch_91ef6e8.png`): pass, so the overalls and
+  suspender shorts read right in all 22 poses. In stretch the bib and straps now show over the starter tee, o_tee, o_puffer and
+  o_flannel on both bodies, and h_boots and sm_boots still sit over the cuffs. Pixel checks: seven other trousers and skirts, o_tee and
+  h_boots on their own are identical to before faebcd8 in every pose; the overalls under GACHA POP's tops differ from faebcd8 only in
+  the stretch cells with o_tee. Owner: LEAD.
 - QA, LEAD's faebcd8 overalls over the top (on d9adecf; `shots/qa/gp/overtop_*_faebcd8.png`): 21 of 22 poses pass, one left. Other
   bottoms are pixel-identical before and after (7 trousers and skirts, 22 poses, 0 pixels differ). gp_overall and gp_shorts under
   o_tee, gp_bear, gp_sailor, gp_star, o_puffer, o_flannel and the starter tee, both bodies: the bib and straps show over the top front
@@ -2110,12 +2115,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 15 of 15; overalls over the top pass except in stretch under painted tops (LEAD). (on d9adecf)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. nothing waiting on QA: GACHA POP 15 of 15, overalls over the top pass in every pose. v0.63's publish waits on LEAD's artifact tools (Cal). (on fb71c7c)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the overalls in the stretch pose, 91ef6e8 (your 0246a11 finding). With a painted top (the starter tee,
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the overalls in the stretch pose, 91ef6e8 (your 0246a11 finding). With a painted top (the starter tee,
       o_tee, o_puffer, o_flannel) the bib and straps, the legs and any tall boots now draw right after the painted picture. LEAD checked
       stretch and idle with the starter tee, o_tee+h_boots, o_puffer, o_flannel+v_boot, gp_star and gp_bear on both bodies
       (`shots/lead/gp_overtop_stretch.png`). Only stretch has a painted top; other poses take the same path as faebcd8.
