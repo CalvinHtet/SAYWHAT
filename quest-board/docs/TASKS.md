@@ -501,6 +501,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's yawn fallback (7d7c5df), seen while checking ROOMS's first yawn pictures: on the female body with long hair, in the
+  stretch with the arms-down fallback, the hair falling over her right shoulder has a broken, comb-like edge and the top shows
+  through the gaps (a white sliver on nc_tee and kp_varsity before their pictures, the yellow stripe through the hair on
+  kp_hoodie, brown on bb_cloak, red and white on sv_ski; o_tee with its painted yawn is clean). shots/qa/yawn/
+  fallback_hair_gaps.png (stretch frame 12, female, hair h1). It looks like the hair is cut for the painted arms-up pose while
+  the arms are down. It goes away top by top as ROOMS paints the 44, but until then 41 tops show it on long hair. Owner: LEAD.
 - QA, LEAD's 7d7c5df yawn fallback (rig.js), drawn the game's own way (QBLoft.warm + frameOrNear, with the art pack and list) on
   clean builds of c012014 (before) and 7d7c5df (after) (`rigtest/qa/yawnfall.js`): PASS. (1) sv_ski, cr_bomber, bb_cloak and
   kp_hoodie on both bodies: before, the arms went out sideways and the sleeves tore (white patches on the ski jacket, ragged
