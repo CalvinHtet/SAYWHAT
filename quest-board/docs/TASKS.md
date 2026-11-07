@@ -24,8 +24,9 @@ Doing:
   6152eb5's sconces and Next event (scratchpad nextevent.js: fresh save, tap Test > Next event until "every story event"). Then
   the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into this v0.73 too. v0.72 (083fec9) is on the Test link.
   CAL (2026-11-07): "I would also like to move this over to a web app. Tell me how to do that and where to get my claude API key":
-  the GO for the web app (Firebase database, Google sign-in, hosting, a Claude API function). LEAD builds it alongside, Cal does the
-  logins (Firebase project, Anthropic Console key). About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+  the GO for the web app (Firebase database, Google sign-in, hosting, a Claude API function). LEAD builds it alongside (plan: docs/WEBAPP.md;
+  a web.js stand-in for window.claude on Firestore, Google sign-in and one Claude API function; art loaded on demand), Cal does the
+  logins (Firebase project, Anthropic Console key). WAITING ON CAL: the model for the function (Haiku 5.5 or Opus 5.5). About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
