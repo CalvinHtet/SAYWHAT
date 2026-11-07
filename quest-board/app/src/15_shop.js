@@ -216,7 +216,22 @@ var EXTRA_ITEMS=[
  ["gx_oak_shorts","a_pants","Retro Running Shorts",700,1,"Burgundy, cream piping.",{gar:"oak_shorts",b:"oak"}],
  ["gx_oak_court","a_shoes","Canvas Court Shoes",850,1,"Cream canvas, a burgundy toe.",{gar:"oak_court",b:"oak"}],
  ["gx_oak_suede","a_shoes","Suede Runners",950,1,"Burgundy suede, a gum sole.",{gar:"oak_suede",b:"oak"}],
- ["gx_oak_tube","a_shoes","Tube Socks and Trainers",750,1,"Striped socks, white trainers.",{gar:"oak_tube",b:"oak"}]];
+ ["gx_oak_tube","a_shoes","Tube Socks and Trainers",750,1,"Striped socks, white trainers.",{gar:"oak_tube",b:"oak"}],
+ ["gx_sv_pom","a_hat","Pom-Pom Beanie",550,1,"Snowflake knit, a cherry pom.",{gar:"sv_pom",b:"sv"}],
+ ["gx_sv_trapper","a_hat","Trapper Hat",750,1,"Quilted navy, fleece earflaps.",{gar:"sv_trapper",b:"sv"}],
+ ["gx_sv_goggles","a_hat","Ski Goggles",700,1,"Mirrored lenses, pushed up.",{gar:"sv_goggles",b:"sv"}],
+ ["gx_sv_scarf","a_acc","Chunky Knit Scarf",500,1,"Red and white, fringed ends.",{gar:"sv_scarf",b:"sv"}],
+ ["gx_sv_mitten","a_acc","Snowflake Mittens",450,1,"Cherry red, a white snowflake.",{gar:"sv_mitten",b:"sv"}],
+ ["gx_sv_ski","a_top","Color-Block Ski Jacket",1300,1,"Red, white and navy panels.",{gar:"sv_ski",b:"sv"}],
+ ["gx_sv_nordic","a_top","Nordic Sweater",1000,1,"Cream, a red snowflake yoke.",{gar:"sv_nordic",b:"sv"}],
+ ["gx_sv_quilt","a_top","Quilted Vest",950,1,"Cherry red over a white turtleneck.",{gar:"sv_quilt",b:"sv"}],
+ ["gx_sv_fleece","a_top","Half-Zip Fleece",850,1,"Fuzzy navy, a red chest pocket.",{gar:"sv_fleece",b:"sv"}],
+ ["gx_sv_snow","a_pants","Puffy Snow Pants",1000,1,"Navy, red side stripes.",{gar:"sv_snow",b:"sv"}],
+ ["gx_sv_leggings","a_pants","Ski Leggings",800,1,"Navy stretch, a red stripe.",{gar:"sv_leggings",b:"sv",fo:1}],
+ ["gx_sv_cord","a_pants","Lodge Cords",850,1,"Cherry corduroy, cuffed.",{gar:"sv_cord",b:"sv"}],
+ ["gx_sv_puffer","a_shoes","Puffer Snow Boots",950,1,"Quilted white, red toggles.",{gar:"sv_puffer",b:"sv"}],
+ ["gx_sv_apres","a_shoes","Apr\u00e8s Boots",1000,1,"Tan leather, shearling cuffs.",{gar:"sv_apres",b:"sv"}],
+ ["gx_sv_shearling","a_shoes","Shearling Slippers",650,1,"Navy suede, a red snowflake.",{gar:"sv_shearling",b:"sv"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
@@ -227,6 +242,7 @@ var EXTRA_ITEMS=[
 /* CHROME RAIN (cyberpunk, approved): ROOMS's 5cf2e1d pieces and shop lines; the arm sleeve uses the "arms" slot */
 /* KAIMANA (surf club, BRANDS_PROPOSAL.md; made on Cal's standing approval, rule 19): ROOMS's 24304af pieces and shop lines */
 /* OAKMONT (80s country-club athletic, BRANDS_15.md; rule 19): ROOMS's 78c961b pieces and shop lines; the wristbands and watch use the "arms" slot */
+/* SØLVBERG (après-ski, BRANDS_15.md; rule 19): ROOMS's 57527b0 pieces and shop lines; the mittens use the "arms" slot */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
