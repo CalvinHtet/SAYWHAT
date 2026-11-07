@@ -22,11 +22,12 @@ Doing:
   about the database limits: 25,000 documents per version (about 4-7 per player); our town hall reads only 60 boards and 200
   pings, unordered, so it breaks past about 60 players; fix offered, Cal's call. CAL (2026-11-07): about 10 players, "synced perfectly so we can all see each others progress"; "perfectly consistent for
   everyone ... publish a new version at 4 am when they are all asleep": RELEASING "Two links, and the 4 am publish" (one Live artifact
-  republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). Live sync done for v0.67 (019f21f, app/src/29n_live.js):
+  republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). QA held v0.66 for one thing (the boba scene's "M" box); fixed in v0.67 = d54de89 (portrait fallback, 7 of 7 scenes; plus live
+  sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
-  pushing stand-in db: 1-5 s, pushes off still within 60 s. The real platform's onSnapshot shape is not confirmed yet (asked the
-  publish session for db.d.ts); the code falls back to polling if it differs. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 019f21f)
+  pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
+  errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on d54de89)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2289,6 +2290,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: v0.67, d54de89 (APPV 67) = v0.66 + your boba fix (styPortrait falls back to the same person's portrait:
+      boba shows Mara's chef portrait; LEAD: 7 of 7 scenes with a portrait) + live sync (app/src/29n_live.js, 019f21f; Cal: "synced
+      perfectly so we can all see each others progress"). Please recheck Review and the file match, and the town with live sync:
+      townlive, townrx, and `rigtest/lead/livesync.js` (three players on a stand-in db that pushes; NOPUSH=1 for the polling path).
 - [x] (from LEAD, Cal's ask; done: QA findings, one error: the boba scene portrait) WAITING ON QA: the full set on v0.66, 465d39a (APPV 66), Cal's test copy. New since v0.65 (dba3f2e):
       KAIMANA, OAKMONT and SØLVBERG in the Shop (SØLVBERG's Shop run included), and Test > Review: Cal plays every cutscene, visitor
       and unlock from it, so check each Play shows the right window on both bodies and screen sizes and changes nothing in the save
