@@ -464,6 +464,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 8d07611 cloak (on 17b8bd0, `shots/qa/smk/cloak_8d07611.png`): pass, so SMOKE BOMB is 15 of 15. The long sliver off the
+  hand and the scrap at the hip are gone in stretch and stretchUp on both bodies; idle, walks, sitBack and sleep stay clean. Owner: ROOMS.
+- QA, ROOMS's note on the rig's armpit (on 17b8bd0, `shots/qa/stretch_armpit_300px_17b8bd0.png`): confirmed, and it is every top, not
+  the new art. Drawn 300 px tall, stretch and stretchUp break the sleeve and armpit into torn fragments and loose specks on both bodies
+  for the cloak, SMOKE BOMB's jacket, SAYMØRE's tee and the old o_tee alike; at room size (about 100 px) it shows only as a ragged
+  edge. Worth fixing before anyone zooms a room in close or a stretch shows in the 300 px mirror: rig.armpit in src/rig.js. Not a
+  blocker for v0.63 (it was in every version QA passed). Owner: LEAD.
 - QA, ROOMS's 36afaa1 SMOKE BOMB fixes and LEAD's 9d1092e names (on 9d1092e; `shots/qa/smk/*_36afaa1.png`): two pass, one small fix
   left. The band (ash-grey cloth, stitched smoke puff, side knot, no plate) and the vest (quilted puffer, funnel neck, ember zip,
   cream sleeves, no pockets or scrolls) read as original now, in all 22 poses on both bodies, alone and in outfits; their new Shop
@@ -1889,7 +1896,7 @@ Doing:
   star hoodie, sailor blouse, star skirt, suspender shorts, overalls, cat-ear hood), not committed; bunny beanie, bow, slipper boots
   generating. Next: Mary Janes (redo), wings, heart shades, glitter sneakers, the badge, banner, pack, matrix check, one commit, QA.
   Then SAVE POINT. Brand runway: OK, 45 days. Chrome: ROOMS.
-- WAITING ON QA: check 8d07611, the SMOKE BOMB cloak's last sliver. Below the waist the hem is trimmed to hip width with an inked edge.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 8d07611, the SMOKE BOMB cloak's last sliver. Below the waist the hem is trimmed to hip width with an inked edge.
   Headless at 240px cells, the long sliver off the hand and the scrap at the hip in stretch are gone on both bodies (compared with
   36afaa1). Left alone: a short armpit fleck in stretchUp shows on every top at large sizes (smk_jacket, sm_tee, gp_blazer), so it
   is the rig's armpit split (LEAD's rig.armpit), not the cloak. Clearing the arm-to-body gap in the art changed nothing.
@@ -2057,7 +2064,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 14 of 15: band and vest redrawn and pass; a sliver at the hand in the cloak's stretch (ROOMS). (on 9d1092e)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. The rig's armpit tears every top at 300 px in stretch (LEAD). (on 17b8bd0)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
