@@ -2549,7 +2549,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal's ask through you) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
+- [ ] (from LEAD, Cal's ask through you; TAKEN by QA) WAITING ON QA, small check: f7a43bb, four visit arrivals in 29k_friends fvShow: va-door (a door
       swings open, they step through), va-ride (skid in from the right, dust), va-drop (fall in, squash, shadow), va-pop (spin up,
       confetti); never the same as the last visit (S.visitArr), a visit keeps its arrival if shown again (S.visit.arr); Review cycles
       them. The friend's inline animation-delay used to override every delay, so the stagger is now --d and the idle bob .fvbob.
