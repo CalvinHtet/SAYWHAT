@@ -1921,10 +1921,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 86f50d9): SAVE POINT (sp_*, brand id sp): 6 of 15 ingested locally (varsity jacket, button tee, PLAYER 2 ringer tee,
-  health-bar sweater, pixel camo cargo), not committed; track pants, denim patch shorts and heart beanie generating. Files: art/raw,
-  art/layers, art/app sp_*. Next: headset, coin cap, cartridge pendant, pixel shades, three shoes, badge, banner, one commit, QA.
-  Then BARD & BLADE. Brand runway: OK, 45 days. Chrome: ROOMS.
+- Now (on f9338aa): SAVE POINT (sp_*, brand id sp): 6 of 15 ingested locally (varsity jacket, button tee, PLAYER 2 ringer tee,
+  health-bar sweater, pixel camo cargo, d-pad track pants), not committed. Headset, coin cap and cartridge pendant generating. Redo:
+  the heart beanie (wrong layout) and the patch denim shorts (a mushroom patch read too close to a famous game's, now a cherry).
+  Files: art/raw, art/layers, art/app sp_*. Next: pixel shades, three shoes, badge, banner, one commit, QA. Then BARD & BLADE.
+  Brand runway: OK, 45 days. Chrome: ROOMS.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 86f50d9, GACHA POP's cat hood back. It is repainted with an outline, knit ribbing, a centre seam and the blue
   trim at the neck. ROOMS checked headless on both bodies: idle, backwalk1 and sitBack, 8 of 8 with 0 failures. The overalls' and shorts'
   "overTop" flag is in d4d8fd8; LEAD's rig side (pantsOver) decides when that shows.
