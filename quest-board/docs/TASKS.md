@@ -504,6 +504,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 38 (35d51d2: oak_polo, OAKMONT, second paint) on a clean build of 35d51d2: PASS, 0 page errors. It
+  stretches arms-up on both bodies (the wine pique polo with cream collar and cuffs); stretch frames 3 to 21 changed, nothing else
+  (shots/qa/yawn/batch22_idle_stretch.png). Shoulders on hot pink at 3x, frames 6, 12 and 18 and with short hair: the bare arm
+  comes cleanly out of each short sleeve on both bodies; no dark open sleeve, no hollow (oak_polo_shoulders.png,
+  oak_polo_shoulders_short.png). Sweep: all hairstyles with all 19 neck items plus none, 120 pictures, all clean
+  (sheet_oak_polo_<body>.png). 38 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 36 and 37 (2d7ddc2: km_rash, km_crochet) on a clean build of 2d7ddc2: PASS, 0 page errors. Both
   stretch arms-up on both bodies; stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch21_idle_stretch.png). The rash
   guard's coral underside panels cover both underarms on both bodies, on hot pink (km_rash_crochet_pink.png). The cardigan's
@@ -2506,7 +2512,7 @@ Doing:
 - Now (on 35d51d2): LEAD's 44 yawn pictures on Unlimited, 38 done (37 passed QA; oak_polo in); oak_track on its third paint (the first
   swallowed the hands, the second left a strip under the arms); next oak_crop, oak_vest, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 35d51d2, yawn picture 38 (oak_polo): your yawnfall.js and yawnsweep.js; short sleeves, no sleeve hollow.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 35d51d2, yawn picture 38 (oak_polo): your yawnfall.js and yawnsweep.js; short sleeves, no sleeve hollow.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2d7ddc2, yawn pictures 36 and 37 (km_rash, km_crochet): your yawnfall.js and yawnsweep.js; the cardigan's cream top fills
   the open front.
 - DONE by QA (QA findings: pass). WAITING ON QA: check b8d159c, yawn picture 35 (km_boat): your yawnfall.js and yawnsweep.js; sleeves stop short, both hands show.
@@ -2798,9 +2804,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 654a4ab. Done: ROOMS's yawn pictures 1-37 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT, BARD & BLADE, CHROME RAIN and KAIMANA complete); savecheck and screens (360, 390) on 2d7ddc2 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 654a4ab). Next: OAKMONT when ROOMS sends it. (on 654a4ab)
+- Now: on 92d57be. Done: ROOMS's yawn pictures 1-38 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT, BARD & BLADE, CHROME RAIN and KAIMANA complete, OAKMONT polo); savecheck and screens (360, 390) on 2d7ddc2 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 654a4ab). Next: oak_track (third paint) when ROOMS sends it. (on 92d57be)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
