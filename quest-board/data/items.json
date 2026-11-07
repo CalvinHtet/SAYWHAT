@@ -1234,5 +1234,14 @@
  },
  "sv_shearling": {
   "slot": "shoes"
+ },
+ "fr_vega_tee": {
+  "slot": "top",
+  "friendOnly": 1
+ },
+ "fr_vega_kicks": {
+  "slot": "shoes",
+  "over": true,
+  "friendOnly": 1
  }
 }
