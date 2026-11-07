@@ -2889,10 +2889,11 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: free; next, ROOMS's next batches and v0.73 when LEAD builds it. Done: ROOMS's room checks (Dessert, VR Arena, Restaurant
+- Now: the full set on v0.73 = fb0b6cb (clean build, 492 files, APPV 73), running; then recheck ROOMS's pendant/neon move
+  (c50714d) on the rebuild. Done: ROOMS's room checks (Dessert, VR Arena, Restaurant
   thinning, vases, Chef's Neon, plaque, chandeliers, drip fix, 2-top middle row: all pass); v0.72 = 083fec9 PASS, publish.
   BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA session in the desktop app
-  (artifact tools down here; Cal has the first message). (on 21b292a)
+  (artifact tools down here; Cal has the first message). (on fb0b6cb)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
