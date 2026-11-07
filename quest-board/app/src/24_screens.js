@@ -4,8 +4,9 @@
 var SCRN=0;
 function scrBox(W,H,inner,bg){var id="scrc"+(++SCRN);return '<clipPath id="'+id+'"><rect width="'+W+'" height="'+H+'"/></clipPath><g clip-path="url(#'+id+')"><rect width="'+W+'" height="'+H+'" fill="'+(bg||"#0b0d16")+'"/>'+inner+'</g>'}
 function scrFrame(W,H,inner,col){return '<rect x="-3" y="-3" width="'+(W+6)+'" height="'+(H+6)+'" rx="2" fill="'+(col||"#14141a")+'" stroke="'+LFOL+'" stroke-width=".8"/>'+inner}
-/* three pages taking turns, 12 seconds around */
-function scrPages(pages){return pages.slice(0,3).map(function(p,i){return '<g class="scrS" style="animation-delay:'+(i*4)+'s">'+p+'</g>'}).join("")}
+/* three pages taking turns, 12 seconds around; the first page also sits underneath as a still picture (.scrBase, hidden the
+   moment animations run), so a screen never reads black with animations off (ROOMS 62d336d, QA's every-room review) */
+function scrPages(pages){return (pages&&pages[0]?'<g class="scrBase">'+pages[0]+'</g>':'')+pages.slice(0,3).map(function(p,i){return '<g class="scrS" style="animation-delay:'+(i*4)+'s">'+p+'</g>'}).join("")}
 function scrTxt(x,y,t,sz,col,anchor,w){return '<text x="'+x+'" y="'+y+'" font-size="'+sz+'" font-weight="'+(w||700)+'" font-family="Arial,sans-serif" fill="'+col+'"'+(anchor?' text-anchor="'+anchor+'"':'')+'>'+esc(t)+'</text>'}
 function scrTicker(W,y,t,col){return '<g class="scrT"><text x="'+W+'" y="'+y+'" font-size="6" font-weight="700" font-family="Arial,sans-serif" fill="'+col+'">'+esc(t)+'</text></g>'}
 /* the Restaurant's menu, on rotation */
