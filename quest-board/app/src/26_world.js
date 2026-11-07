@@ -354,7 +354,7 @@ LFROOM.restaurant=function(C){
   /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});
   /* re-audit 2026-11-07 (0.26%): bigger, with a soft pink glow on the wall */
-  if(H("r_d4")&&!noir){var nx=st>0?Wi-2.2:1.0;lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,flip:1,H:76,dy:-90,nosh:1});lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
+  if(H("r_d4")&&!noir){var nx=st>0?Wi-1.75:1.0;lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,flip:1,H:76,dy:st>0?-104:-90,nosh:1});/* QA 85fad55: right and up, clear of the wine wall */lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
   /* re-audit 2026-11-07: 26 px tall it changed 0.06% of the room and Noir hid it; bigger, lower, in every style */
   if(H("r_chef"))lfSpr(C,"rs_chef",st>0?Wi+5.3:Wi-1.3,.05,.1,.05,{h:1,flip:1,H:58,dy:-116,nosh:1});/* past the order board and the two menu boards; the first kitchen is too narrow, so there it hangs on the dining wall by the pass */
   if(H("r_star")){lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,2.45,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
@@ -375,7 +375,7 @@ LFROOM.restaurant=function(C){
   /* QA: the till faces the diners across the counter, not the kitchen */
   for(var ti=0;ti<tiles;ti++)lfSpr(C,fine?"rdx_pass":"rsx_counter0",Wi-1.1,.2+ti*(td+.05),.95,td,{h:34,ctr:1,flip:fine?0:1});
   /* re-audit 2026-11-07 (0.26%): the partition hides most of the black marble pass, so brass pendants now hang over it */
-  if(fine)[[1.0,"rs_pend1"],[2.0,"rs_pend2"],[3.0,"rs_pend1"]].forEach(function(q){var x=Wi-.62;lfSpr(C,q[1],x,q[0],.2,.2,{h:1,H:62,dy:-84,nosh:1,dk:-5});lfLight(C,x,q[0]+.15,60,"#ffc968",1.6,.42)});
+  if(fine)[[.7,"rs_pend1"],[1.5,"rs_pend2"]].forEach(function(q){var x=Wi-.62;lfSpr(C,q[1],x,q[0],.2,.2,{h:1,H:54,dy:-98,nosh:1,dk:-5});/* QA 85fad55: two, at the back end of the pass, which on screen is clear of the wine wall and above the stools (fine needs Noir, and Noir hides the Neon Sign, so they never meet) */lfLight(C,x,q[0]+.15,60,"#ffc968",1.6,.42)});
   /* QA: Bigger Till changed nothing you could see. A green cash box with a brass lock beside the till on the counter
      (round 2: as a floor safe it stood in the diners' path) */
   if(H("r_till")&&!fine){var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48"),dc=lfP(bx0+.21,by0+.36,39);
