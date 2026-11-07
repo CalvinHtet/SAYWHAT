@@ -2429,9 +2429,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on edefc90): LEAD's 44 yawn pictures on Unlimited, 24 done (23 passed QA; sp_p2 in); sp_hpknit generating; next bb_*, cr_*,
-  km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece.
+- Now (on 45658f8): LEAD's 44 yawn pictures on Unlimited, 25 done (23 passed QA; sp_p2 and sp_hpknit in, SAVE POINT complete); next
+  bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece (designs to render).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 45658f8, yawn picture 25 (sp_hpknit): your yawnfall.js and yawnsweep.js.
 - WAITING ON QA: check edefc90, yawn picture 24 (sp_p2): your yawnfall.js and yawnsweep.js. A second paint; check the PLAYER 2 print reads.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
   the first left the boy's far sleeve hanging under his arm.
