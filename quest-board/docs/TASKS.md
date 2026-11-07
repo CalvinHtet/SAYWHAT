@@ -465,6 +465,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's a6e9d16 BARD & BLADE in the Shop (on 1f047b9, `shop.js` BRAND=bb; `shots/qa/bb/shop_*_a6e9d16.png`): pass. 14 on him and
+  15 on her (the skirt hers) bought at full price through Try on, Checkout, Confirm, worn and in the mirror; the bracers show in the
+  mirror in the arms slot. voice.js: 1,482 lines, 0 hits. Owner: LEAD.
 - QA, ROOMS's f843b25 BARD & BLADE wear test (on efaf4ec; `shots/qa/bb/`): 15 of 15 pass, two rig notes. All 15 on both bodies (the
   skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the bracers follow both arms, in the new arms
   slot, over sleeves; from behind the far arm's bracer sits as a rough patch beside the body in sitBack and type1, the same as that
@@ -2169,12 +2172,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. BARD & BLADE 15 of 15; its Shop run waits on LEAD's rows. (on efaf4ec)
+- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. BARD & BLADE 15 of 15 and in the Shop. Next: CHROME RAIN when ROOMS sends it. (on 1f047b9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the BARD & BLADE Shop run, a6e9d16 (brand bb, Jan 18, 15 rows as ROOMS wrote them, the skirt hers
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the BARD & BLADE Shop run, a6e9d16 (brand bb, Jan 18, 15 rows as ROOMS wrote them, the skirt hers
       only, the bracers the first piece in the rig's "arms" slot). LEAD checked the tab 11 weeks ahead: banner with art, tagline,
       15 pieces, no broken images, no page errors; wearing the bracers with the doublet puts them in equipped.arms
       (`shots/lead/bb_shop.png`). Please check the bracers in every pose with the wear test.
