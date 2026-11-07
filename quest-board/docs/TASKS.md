@@ -497,6 +497,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.71 = 3840577 (APPV 71), the full set on a clean build (490 files): PASS, publish, 0 page errors anywhere. visits.js PASS
+  (four arrivals at 360 and 390, one and two friends, nothing over the names or past the card at any frame, reduced motion, 12 real
+  visits with all four and none twice running); lagcheck.js PASS (Game Room and Restaurant windows at CPU x4: v0.70 28.8/29.3 fps,
+  worst 117/50 ms; v0.71 60.3/60.3 fps, worst 17/17 ms; every window's own animations run, nothing left paused after closing);
+  unlockall.js PASS (fresh and mid-game; my buy loop now reopens a window before giving up, it had stopped on a Garden window still
+  redrawing: every Garden upgrade buys on v0.70 and v0.71); the whole story 64 parts, "Traveling"; Review 119/119 on both bodies;
+  livesync, live10, players10 PASS (a first players10 run had one page write 3 times in the quiet minute under load 27; rerun 0-2);
+  alerts, FX, room windows, bar rule PASS; badges all from the pack; drops PASS; all 21 rooms buy through; only the Bedroom has a
+  lamp; guests at most 5, no duplicates. Not on a real phone: the lag fix is Cal's to feel on his iPhone.
 - QA, LEAD's 19ef0d9 phone-lag fix (Cal's iPhone: room windows 37-38 fps, worst frames 214 and 421 ms), on clean builds of
   10240e8 (before) and 19ef0d9 (after), 390x844 at x3 with the CPU 4x slower, every upgrade bought (`rigtest/qa/lagcheck.js`):
   PASS, 0 page errors. Game Room window 32.5 -> 60.3 fps, worst frame 100 -> 17 ms, frames over 50 ms 5 -> 0; Restaurant 33.3 ->
@@ -2573,16 +2582,13 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 3840577 (v0.71). So far PASS: visit arrivals, Unlock everything (after a fix to my buy loop's timing: it gave up on a
-  Garden window still redrawing; every Garden upgrade buys through when reopened, on v0.70 and v0.71), the whole story (64 parts,
-  "Traveling"), Review 119/119 on both bodies, livesync, live10. Running: players10 to guests. Then the frame-rate check again on
-  a quieter Mac (load 27-33 now; under it v0.71's Restaurant window gave 46 fps against v0.70's 21). BLOCKED: the published-file
-  checks (v0.64 to v0.70) until Cal restarts QA (artifact tools).
+- Now: on 3840577 (v0.71). Done: the v0.71 full set, PASS (publish). Next: whatever LEAD or ROOMS send; the published-file
+  checks (v0.64 to v0.71) BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.71, 3840577 (APPV 71). New since v0.70 (10240e8): the phone-lag fix 19ef0d9 (yours
+- [x] (from LEAD; done: QA findings, PASS, publish) WAITING ON QA: the full set on v0.71, 3840577 (APPV 71). New since v0.70 (10240e8): the phone-lag fix 19ef0d9 (yours
       passed), the four visit arrivals f7a43bb with 90d5653 (yours passed), Rafe "Traveling" b3dfe9b. LEAD: clean build, 490 files, loads
       clean, Review 119/119, the whole story 64/64, livesync PASS, effects behind a window paused (7 paused, 0 running). Frame rates on
       this Mac are noisy under load (load average 27), so please measure lag with your lagcheck.js when the machine is quieter.
