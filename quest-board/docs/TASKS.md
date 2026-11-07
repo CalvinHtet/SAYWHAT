@@ -2515,7 +2515,7 @@ Doing:
 - Now (on d328e88): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
   Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
-  next, re-measure the rest of the Restaurant's WEAK list on today's room (it was rebuilt since the 2026-11-05 audit).
+  now re-measuring the rest of the Restaurant's WEAK list on today's room (the 2026-11-05 audit, re-run headless on c1e9a9d).
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - TAKEN by QA (after the v0.72 full set, with 10f64be). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
   olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
