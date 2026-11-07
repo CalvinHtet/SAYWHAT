@@ -2571,9 +2571,10 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 19ef0d9. Done: LEAD's phone-lag fix (pass: 32-33 -> 60 fps at CPU x4, nothing left paused); v0.70 PASS and published;
-  the visit arrivals and their fix (pass), for v0.71. BLOCKED: the published-file checks (v0.64 to v0.70) until Cal restarts QA
-  (artifact tools). Next: v0.71 when LEAD builds it.
+- Now: on 3840577 (v0.71). Doing: the v0.71 full set on a clean build (490 files, APPV 71): visit arrivals, the lag fix, Unlock
+  everything, the whole story, Review both bodies, livesync, live10, players10, alerts, FX, room windows, bar rule, badges, drops,
+  stuck rooms, night lights, guests. Next: the verdict to LEAD. BLOCKED: the published-file checks (v0.64 to v0.70) until Cal
+  restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
