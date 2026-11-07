@@ -2197,7 +2197,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 570b2f3): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
   portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
+- TAKEN by QA. WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
   room; Skee-Ball's player at its throwing end; the Speakeasy upright piano on the back wall facing the room and its bar off the
   wall; the Club and Rooftop DJ decks off the wall with the DJ behind; VR flight pod off the sofa, ring chair in from the edge;
   Rhythm dance pads a tile out, bench off the mirrors; lobby booth clear of the sofa; Restaurant coffee off the pizza oven, smoker
