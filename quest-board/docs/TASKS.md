@@ -2698,9 +2698,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 0fc8c93. Done: ROOMS's yawn pictures 1-21 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
-  complete); the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools). (on 0fc8c93)
+- Now: on 681aa32. Done: ROOMS's yawn pictures 1-21 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
+  complete); savecheck and screens (360, 390) on 360da8a pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 681aa32). Next: sp_varsity when ROOMS sends it. (on 681aa32)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
