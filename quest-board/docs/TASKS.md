@@ -1907,11 +1907,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 72778c2): GACHA POP (gp_*, brand id gp): 12 of 15 ingested and packed locally (blazer, bear onesie, star hoodie, sailor
-  blouse, star skirt, suspender shorts, overalls, cat-ear hood, angel wings, Mary Janes, slipper boots, glitter sneakers), not
-  committed; idle, walk1 and backwalk1 matrices load 23 of 23 with 0 failures. Bunny beanie and bow (both redone with short ears and
-  tails) and heart shades generating. Next: the badge, banner, one commit, QA, shop lines to LEAD. Then SAVE POINT. Brand runway:
-  OK, 45 days. Chrome: ROOMS.
+- Now (on 0852011): GACHA POP (gp_*, brand id gp): all 15 ingested and packed locally, badge `logo_gp.webp` done; idle and walk1
+  matrices load 29 of 29 with 0 failures. Not committed yet. The banner is being regenerated (the first had painted sign text).
+  Next: the banner, one commit, QA, shop lines to LEAD. Then SAVE POINT. Brand runway: OK, 45 days. Chrome: ROOMS.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8d07611, the SMOKE BOMB cloak's last sliver. Below the waist the hem is trimmed to hip width with an inked edge.
   Headless at 240px cells, the long sliver off the hand and the scrap at the hip in stretch are gone on both bodies (compared with
   36afaa1). Left alone: a short armpit fleck in stretchUp shows on every top at large sizes (smk_jacket, sm_tee, gp_blazer), so it
