@@ -691,6 +691,22 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
   frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
   Restaurant, Nightclub, Theater or Arcade at 21:00, opened from their buildings), and not on a real phone. Info, no owner.
+- QA, ROOMS's room checks on a clean build of b3e3510 (holds facb194, 10f64be, d328e88, 8602ed7, b3e3510), against v0.72, 0 page
+  errors. Dessert Parlor (facb194): PASS. The dark library bookcase is a mint and blush patisserie hutch of cakes and teacups, the
+  gold mirror a blush scalloped Flower Mirror; both on their walls, same footprint, the hutch's front to open floor; the room now
+  reads as one pastel palette (shots/qa/rooms3/dessert_before_after.png). VR Arena (facb194): PASS. Dark navy panels, cyan neon
+  line, glowing hex floor and a launch ring under the treadmill, now one family with the Arcade next door; every piece's use side
+  to open floor (vr_before_after.png). Restaurant thinning (10f64be): PASS. In Noir and without it the third booth and divider, the
+  patio heater, the front olive tree and the white drinks cooler are gone, replaced as planned; the edges breathe
+  (restaurant_noir_before_after.png, restaurant_bistro_before_after.png). QA's call on "never cluttered": better, not yet clearly:
+  the middle is still a grid of 7 four-seat tables with chairs nearly touching between rows. Suggest 7 to 5 tables (or 4-tops to
+  2-tops in the middle row); seating is LEAD's call. Sculptural Vases (d328e88): PASS, black vases with dry branches and pampas, 0
+  greenish pixels, no fringe at 5x on the dark herringbone (restaurant_vases_5x.png). Chef's Neon (8602ed7): PASS, clearly seen on
+  the kitchen tiles in Bistro and Noir. Star Plaque and Brass Chandeliers (b3e3510): PASS, both read by day. Drip Coffee (b3e3510):
+  small fix. In the Hole in the Wall it now sits on the till counter's front end, but it hides the left third of the napkin box and
+  its base hangs about 5 px past the counter's end (restaurant_drip_zoom.png, left pair); nudge it right and up a little, or shrink
+  it. In bigger rooms a better coffee machine supersedes it by design (a with/without render of the full room differs by 0 px).
+  Owner: ROOMS (drip nudge), LEAD (tables).
 - QA, v0.72 = 083fec9 (APPV 72), the full set on a clean build (491 files): PASS, publish, 0 page errors anywhere. savecheck all
   passed; screens at 360 and 390 fit; visits.js PASS; lagcheck.js PASS (Game Room and Restaurant windows at CPU x4: v0.71 58.3/57.8
   fps, worst 67/83 ms; v0.72 60.3/60.3 fps, worst 17/17 ms); unlockall.js PASS (fresh and mid-game); the whole story 64/64 (the
@@ -2534,16 +2550,16 @@ Doing:
   0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; next Neon Sign, Black Marble Counter, Espresso
   Bar, Host Desk/Lectern, Patio Heaters, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA (with the Restaurant checks). WAITING ON QA: check b3e3510, Restaurant: Drip Coffee on the counter's front end (was behind the partition), Star Plaque bigger with a
+- DONE by QA (QA findings: plaque and chandeliers pass; drip: small nudge). WAITING ON QA: check b3e3510, Restaurant: Drip Coffee on the counter's front end (was behind the partition), Star Plaque bigger with a
   picture light, Brass Chandeliers 1.4 tiles. Renders: shots/rooms3/restaurant_drip.png, restaurant_star_chand.png.
-- TAKEN by QA (with the Restaurant checks). WAITING ON QA: check 8602ed7, Restaurant Chef's Neon: bigger (58 px), in every style incl. Noir, past the kitchen boards (first kitchen: on
+- DONE by QA (QA findings: pass). WAITING ON QA: check 8602ed7, Restaurant Chef's Neon: bigger (58 px), in every style incl. Noir, past the kitchen boards (first kitchen: on
   the dining wall by the pass). Three sizes: shots/rooms3/restaurant_chefneon_3sizes.png.
-- TAKEN by QA (after the v0.72 full set, with 10f64be). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
+- DONE by QA (QA findings: pass). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
   olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
-- TAKEN by QA (after the v0.72 full set). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
+- DONE by QA (QA findings: pass; tables: LEAD). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
   Fire Pit replaces the Patio Heaters; Sculptural Vases replace the potted tree; Wine Wall replaces the Drinks Cooler in every
   style). Before/after: shots/rooms3/restaurant_*.png. Your note 3 from aa3a99b: clearly 'never cluttered' now?
-- TAKEN by QA (after the v0.72 full set). WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
+- DONE by QA (QA findings: pass). WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
   the Arched Mirror, id de_arch kept) and VR Arena (dark neon shell vrw_t1, dark:1). Before/after: shots/rooms3/. Your notes from aa3a99b.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
@@ -2851,10 +2867,10 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: ROOMS's room checks, in order: facb194 (Dessert Parlor, VR Arena), 10f64be (Restaurant thinning), d328e88 (Sculptural
-  Vases), 8602ed7 (Chef's Neon). Done: v0.72 = 083fec9 full set, PASS, publish (a3c2cb6); all 44 painted stretch pictures and the
-  colour check over 79 tops. BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA
-  session in the desktop app (artifact tools down here; Cal has the first message). (on a3c2cb6)
+- Now: free; next, ROOMS's next batches and v0.73 when LEAD builds it. Done: ROOMS's room checks (Dessert, VR Arena, Restaurant
+  thinning, vases, Chef's Neon, plaque, chandeliers pass; drip coffee small nudge; tables to LEAD); v0.72 = 083fec9 PASS, publish.
+  BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA session in the desktop app
+  (artifact tools down here; Cal has the first message). (on b3e3510)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
