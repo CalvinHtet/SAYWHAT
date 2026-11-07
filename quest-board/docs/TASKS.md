@@ -498,6 +498,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, extra on v0.71 (3840577) while waiting: every room window's frame rate after the lag fix (`rigtest/qa/roomfps.js`), all 21
+  rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
+  frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
+  Restaurant, Nightclub, Theater or Arcade at 21:00, opened from their buildings), and not on a real phone. Info, no owner.
 - QA, v0.71 = 3840577 (APPV 71), the full set on a clean build (490 files): PASS, publish, 0 page errors anywhere. visits.js PASS
   (four arrivals at 360 and 390, one and two friends, nothing over the names or past the card at any frame, reduced motion, 12 real
   visits with all four and none twice running); lagcheck.js PASS (Game Room and Restaurant windows at CPU x4: v0.70 28.8/29.3 fps,
@@ -2583,8 +2587,8 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 690ee9d. Done: v0.71 (3840577) PASS, now live on Cal's Test link. BLOCKED: the published-file checks (v0.64 to v0.71)
-  until Cal restarts QA (the artifact tools still fail in this session). Next: whatever LEAD or ROOMS send.
+- Now: on 3840577 (v0.71 live). Done: v0.71 PASS; extra: every room window at 59-60 fps at CPU x4 (roomfps.js). BLOCKED: the
+  published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools). Next: whatever LEAD or ROOMS send.
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
