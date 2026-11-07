@@ -18,7 +18,7 @@ Doing:
   Black Marble Counter c50714d + eadc75b, all QA-passed; Brass Sconces 6152eb5 not yet checked; and Cal's Test > Next event 0b20e11:
   "a button that triggers the next event such as the investor coming ... test everything myself but quickly"). Clean build, 492
   files, loads clean, Review 118/118 save unchanged, the whole story plays, Next event 35 taps to the end, livesync PASS, no page
-  errors. WAITING ON QA (the new session): the v0.73 full set on 6152eb5 (the old session's run on fb0b6cb stopped at lagcheck), plus
+  errors. WAITING ON CAL to tell the new QA session to run it (it was told published-file checks only; those PASS, 8076dd1), then WAITING ON QA: the v0.73 full set on 6152eb5 (the old session's run on fb0b6cb stopped at lagcheck), plus
   6152eb5's sconces and Next event (scratchpad nextevent.js: fresh save, tap Test > Next event until "every story event"). Then
   the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into v0.74. v0.72 (083fec9) is on the Test link.
   Cal wants it off Claude as an installable web app for about 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
