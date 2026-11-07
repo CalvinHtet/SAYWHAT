@@ -6,3 +6,4 @@ quest-board/art/raw/
 quest-board/art/layers/
 quest-board/art/parts/
 __pycache__/
+quest-board/rigtest/artnames.json

@@ -21,7 +21,12 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
     // &armpit=off draws without the armpit rule (data/rig.json), for comparing.
     if (q.get("armpit") === "off") delete cfg.armpit;
     if (q.get("bodyrule")) cfg.armpit = { ...cfg.armpit, slots: { ...cfg.armpit.slots, body: JSON.parse(q.get("bodyrule")) } };
-    const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p });
+    // The game knows which pictures exist (packs and art list); this page loads art from disk, so it reads rigtest/artnames.json (tools/build.py writes it), or the
+    // yawn fallback and the long-hair lock (both keyed on that) would not show here (QA, ROOMS). &allart=1 assumes everything exists.
+    let names = null;
+    try { if (q.get("allart") !== "1") names = new Set(await (await fetch("artnames.json?t=" + Date.now())).json()); } catch (e) {}
+    if (names) { window.QBART = new Proxy({}, { get: (o, k) => (names.has(k) ? 1 : undefined) }); }
+    const rig = await QBRig.create({ rig: cfg, bodies: D.bodies, poses, clips, assetUrl: (p) => "../art/app/" + p, hasArt: names ? (p) => names.has(p) : undefined });
     const [W, H] = cfg.frame;
     const by = (slot) => Object.keys(I).filter((k) => I[k].slot === slot);
     const fits = (art, b) => !art || !I[art] || !((I[art].femaleOnly && b === "m") || (I[art].maleOnly && b === "f"));

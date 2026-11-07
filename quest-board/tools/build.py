@@ -87,6 +87,11 @@ def fp(path):
 
 data = {name: json.loads(read(ROOT, "data", name + ".json")) for name in ("rig", "bodies", "poses", "creator", "loft", "items", "rsart")}
 data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.join(DIST, "art", "*.webp")))}
+# every runtime picture by name, packed or loose, for the rig test pages (rigtest/matrix.html; written there, never into dist, so a
+# publish carries no extra file), which load art straight from
+# art/app and so cannot tell from the packs which pictures exist (QA: the yawn fallback and the hair lock key on that)
+with open(os.path.join(ROOT, "rigtest", "artnames.json"), "w", encoding="utf-8") as f:
+    json.dump(sorted(os.path.basename(a) for a in glob.glob(os.path.join(ROOT, "art", "app", "*.webp"))), f)
 with open(os.path.join(DIST, "qbdata.js"), "w", encoding="utf-8") as f:
     f.write("window.QBDATA=" + json.dumps(data, separators=(",", ":")) + ";\n")
 
