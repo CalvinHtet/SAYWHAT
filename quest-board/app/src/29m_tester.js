@@ -46,3 +46,60 @@ function qbRooms(){document.querySelectorAll("#layer .modal").forEach(function(m
     if(q==="next"){m.remove();qbtNextStep();return}
     var c=m.querySelector(".qbtr");if(c){var y=m.scrollTop;c.outerHTML=qbtHtml();m.scrollTop=y}})}
 window.__qbRooms={pay:function(){return {room:payRoom(),quest:payQuest(),share:payShare(),eff:dqEff(),paid:dqState().paid}},open:qbtOpen,all:qbtAll,next:qbtNextStep,show:qbRooms,list:qbtRooms};
+/* ---------- Review (Cal, 2026-11-07: "Show me all the cutscenes and visitors and unlocks in this next test pass so I can give my
+   opinion"). Testing only, removed at release with the Test pill. Test pill > Review lists everything a player meets along the
+   way, in the order they meet it, each with a Play button that shows it exactly as the game does. Playing changes nothing in
+   the save: no coins, no team member, no seen flags, no brand marked as shown. */
+var QBRV_BEATWHEN={mara1:"Restaurant with 5 upgrades",mara2:"Boba Shop with 2 upgrades",mara3:"Dessert Parlour with 3 upgrades",
+  desmond2:"Lock and Key with 6 upgrades",rafe2:"Rafe on the team and a Rooftop",rafe3:"Rafe and Sable on the team, 5 missions",
+  sable2:"Sable on the team, 8 missions",priya2:"the Movie Theater opens",nova2:"Nova on the team, mall with 6 upgrades",
+  nova3:"Nova on the team and an Arcade",theo2:"Theo on the team, Auditorium with 3 upgrades",sable3:"the Goblin King's set finished in Relics",
+  rafe4:"the amulet's five shards found"};
+var QBRV_CLOSE='<button class="btn" data-act="mclose">Close</button><small class="sty-xp">Review: nothing saved</small>';
+function qbrvName(t){return (ROOMT[t]||{}).name||t}
+function qbrvRow(title,sub,btns){return '<div class="qbtr-room"><div><b>'+esc(title)+'</b><small>'+sub+'</small></div><div class="qbtr-b">'+btns+'</div></div>'}
+function qbrvBtn(k,v,label){return '<button class="btn ghost sm" data-rv="'+k+'" data-v="'+esc(String(v))+'">'+esc(label||"Play")+'</button>'}
+function qbrvHtml(){var h='<div class="card box2 qbtr qbrv"><span class="label">Testing</span><h2 style="font-size:28px;margin:0 0 6px">Review</h2>'
+  +'<p class="note">Everything a player meets along the way, in order. Play shows it the way the game does; nothing is saved.</p>';
+  /* 1. the story: each step's scene, the room's welcome window and a new team member */
+  h+='<h3 class="label" style="margin-top:14px">The story, in order</h3>';
+  STORY.forEach(function(s,k){if(s.how==="never")return;var L=(ECON.stepLv||{})[s.id],b="";
+    if(s.scene)b+=qbrvBtn("scene",s.id,"Scene");
+    if(s.room&&ROOMHELP[s.room])b+=qbrvBtn("welcome",s.room,"Welcome");
+    if(s.scene&&s.scene.team&&TEAM[s.scene.team])b+=qbrvBtn("team",s.scene.team,"Joins");
+    var title=(k+1)+". "+(s.room?qbrvName(s.room):(s.scene?s.scene.who+" joins":s.id));
+    h+=qbrvRow(title,(L?"Level "+L+" &middot; ":"")+esc(s.why)+(s.scene?" &middot; "+esc(s.scene.who)+", "+esc(s.scene.role):""),b)});
+  if(ROOMHELP.loft)h+=qbrvRow("The first time in The Loft","The welcome window on day one",qbrvBtn("welcome","loft","Welcome"));
+  if(TEAM.sable)h+=qbrvRow("Sable joins","After the first mission comes home",qbrvBtn("team","sable","Joins"));
+  /* 2. return visits from the people you met */
+  h+='<h3 class="label" style="margin-top:14px">Return visits (+60 coins each, one at a time)</h3>';
+  BEATS.forEach(function(b){h+=qbrvRow(b.who+" at "+b.at,esc(QBRV_BEATWHEN[b.id]||"later in the story"),qbrvBtn("beat",b.id))});
+  /* 3. friends who drop by, at most one a day */
+  h+='<h3 class="label" style="margin-top:14px">Friends who visit (one a day)</h3>';
+  FVISITS.forEach(function(v){var r=v.buff?v.buff.text:v.coin?"+"+v.coin+" coins":v.freeze?"+1 streak freeze":v.water?"waters the Garden":"just hanging out";
+    h+=qbrvRow(fvNames(v.who),(v.need?"Needs the "+esc(qbrvName(v.need))+" &middot; ":"")+esc(r),qbrvBtn("visit",v.id))});
+  /* 4. level-up unlocks: new areas, UI upgrades, rewards */
+  h+='<h3 class="label" style="margin-top:14px">Level-up unlocks</h3>';
+  AREAS.filter(function(a){return a[2]>1&&a[0]!=="hideout"&&a[0]!=="board"}).sort(function(x,y){return x[2]-y[2]}).forEach(function(a){h+=qbrvRow(a[1]+" (new area)","Level "+a[2],qbrvBtn("area",a[0]))});
+  FX.forEach(function(f){h+=qbrvRow(f[2]+" (UI upgrade)","Level "+f[0],qbrvBtn("fx",f[1]))});
+  REWARDS.forEach(function(r){h+=qbrvRow(r[1]+" (reward)","Level "+r[0],"")});
+  /* 5. big upgrades that celebrate */
+  var ups=[];Object.keys(ADDONS).forEach(function(t){(ADDONS[t]||[]).forEach(function(a){if(a[3]&&a[3].splash&&!a[3].retired)ups.push([t,a])})});
+  if(ups.length){h+='<h3 class="label" style="margin-top:14px">Big upgrades</h3>';ups.forEach(function(x){h+=qbrvRow(x[1][1],esc(qbrvName(x[0])),qbrvBtn("up",x[0]+"|"+x[1][0]))})}
+  /* 6. brand drops, by date */
+  h+='<h3 class="label" style="margin-top:14px">Brand drops</h3>';
+  BRANDS.forEach(function(b){h+=qbrvRow(b.name,esc(b.sub)+" &middot; "+esc(b.start),qbrvBtn("brand",b.id))});
+  return h+'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="mclose">Close</button></div></div>'}
+function qbrvPlay(k,v){
+  if(k==="scene"){var s=STORY.filter(function(x){return x.id===v})[0];if(s)modal(styCard(s.scene,styPortrait(s),QBRV_CLOSE));return}
+  if(k==="beat"){var b=BEATS.filter(function(x){return x.id===v})[0];if(b)modal(styCard(b,styBeatPic(b),QBRV_CLOSE));return}
+  if(k==="visit"){var f=FVISITS.filter(function(x){return x.id===v})[0];if(f)fvShow(f);return}
+  if(k==="welcome"){S.seen=S.seen||{};var was=S.seen[v];roomSplash(v,true);if(!was)delete S.seen[v];persist();return}
+  if(k==="team"){var o=styState(),had=o.team[v];teamJoin(v);if(!had)delete o.team[v];persist();return}
+  if(k==="area"){var a=AREAS.filter(function(x){return x[0]===v})[0];if(a)modal('<div class="card box2"><span class="label">Level up</span><h2>Level '+a[2]+'</h2>'+areaCard(a,0)+'<div class="row" style="margin-top:10px">'+QBRV_CLOSE+'</div></div>');return}
+  if(k==="fx"){var x=FX.filter(function(y){return y[1]===v})[0];if(x)modal('<div class="card box2"><span class="label">Level up</span><h2>Level '+x[0]+'</h2>'+fxCard(x,0)+'<div class="row" style="margin-top:10px">'+QBRV_CLOSE+'</div></div>');return}
+  if(k==="up"){var p=v.split("|"),ad=(ADDONS[p[0]]||[]).filter(function(y){return y[0]===p[1]})[0];if(ad)upSplash(ad);return}
+  if(k==="brand"){var br=BRANDS.filter(function(y){return y.id===v})[0];if(!br)return;var m=brandSplash(br),g=m&&m.querySelector(".bs-go");if(g){g.removeAttribute("data-b");g.setAttribute("data-act","mclose");g.textContent="Close"}return}}
+function qbReview(){document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});var m=modal(qbrvHtml());
+  m.addEventListener("click",function(e){var b=e.target.closest("[data-rv]");if(!b)return;qbrvPlay(b.dataset.rv,b.dataset.v)})}
+window.__qbRooms.review=qbReview;window.__qbRooms.play=qbrvPlay;
