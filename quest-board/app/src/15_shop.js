@@ -156,13 +156,13 @@ var EXTRA_ITEMS=[
  ["gx_sp_denim","a_pants","Sticker Denim Shorts",850,1,"Hearts, a star, cherries, a coin.",{gar:"sp_denim",b:"sp"}],
  ["gx_sp_flame","a_shoes","Pixel Flame High-Tops",1200,1,"Eight-bit fire up the sides.",{gar:"sp_flame",b:"sp"}],
  ["gx_sp_runner","a_shoes","Retro Runners",1000,1,"Grey, purple and teal, a pixel star.",{gar:"sp_runner",b:"sp"}],
- ["gx_sp_flag","a_shoes","Checkpoint Slip-Ons",800,1,"Checkerboard, a tiny teal flag.",{gar:"sp_flag",b:"sp"}]];
+ ["gx_sp_flag","a_shoes","Checkpoint Sneakers",900,1,"Grey canvas, purple toe, a pixel flag.",{gar:"sp_flag",b:"sp"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
 /* SMOKE BOMB (ninja anime, approved): ROOMS's a07439f pieces and shop lines */
 /* GACHA POP (MMO cash shop, approved): ROOMS's 03274a7 pieces and shop lines */
-/* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons are being redone (QA d14813a) */
+/* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons, now lace-ups, redone in 200d498 */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options
