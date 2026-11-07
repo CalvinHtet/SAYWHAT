@@ -2599,14 +2599,16 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 6c66dd8): WAITING ON CAL (big approval, batch): six new friend portraits and the SAYMORE app icon (pictures in
-  shots/friends_new/, not committed until he says yes). Vega's friend-only pieces are in (6c66dd8) and LEAD wired them.
-  New friends from Cal's eight profiles, each identified from their own posts: Kris Pascasio (Muay Thai fighter), Alvina Tat
-  (occupational therapist) and Nick Huynh (Bay Area realtor), a couple, Ben (Berkeley grad, Marine vet, snowboarder), Kevin Tsao
-  (foodie, pool player), Victor Myint (gamer; his photos are about 12 years old). Skipped: llamaorhorse (private). Held: Quince
-  (her solo shots don't clearly show one face); asked Cal. After his yes: the portraits go in, then each new friend's
-  friend-only outfit (one sheet per piece, every angle plus yawn), and the spec to LEAD. Next for the six current friends: one
-  signature friend-only piece each (Kenan, Cynthia, Jina, Justin, Logan, Memo). Then the Game Room WEAK re-audit.
+- Now (on 778e0c6): WAITING ON CAL (big approval, batch, since 12:59): six new friend portraits and the SAYMORE app icon
+  (pictures in shots/friends_new/, nothing committed until he says yes). New friends, each identified from their own posts:
+  Kris Pascasio, Alvina Tat and Nick Huynh (a couple), Ben, Kevin Tsao, Victor Myint (photos about 12 years old). Skipped:
+  llamaorhorse (private). Held: Quince (asked Cal which photo is her).
+  Friend-only pieces from the current friends' portraits, all wired by LEAD as they landed: Vega tee and high-tops 6c66dd8;
+  Cynthia flatform sneakers and Jina long pleated skirt 21fedf3; Kenan open biker jacket over a white tee be717dc; Logan open
+  black bomber over a black tee 778e0c6 (eq sent). Justin and Memo keep their shop pieces: their portraits already match them,
+  and Justin's shoe repaint came back the same as h_derby.
+  Next: after Cal's yes, the portraits and the icon go in (web/icons/), then each new friend's friend-only outfit and their
+  spec to LEAD. Then the Game Room WEAK re-audit.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
@@ -2616,6 +2618,11 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
+- WAITING ON QA: check 21fedf3, be717dc, 778e0c6 (all go into v0.73), the friend-only pieces: fr_cynthia_kicks (shoes),
+  fr_jina_skirt (skirt, wide, femaleOnly), fr_kenan_jacket and fr_logan_bomber (tops, each with its yawn picture). ROOMS's own
+  check: matrix wear sheets in every pose (both bodies; the skirt on f), stretch at 1000 px for both tops (no body strip, the
+  sleeves join the arms). Note: the faint olive line along the boy's jaw in the stretch pose is the base yawn body, there without
+  any top too, not these pieces.
 - WAITING ON QA: check 6c66dd8 (goes into v0.73), Vega's friend-only pieces: fr_vega_tee (white splatter tee with its yawn picture) and
   fr_vega_kicks, both bodies, every pose. ROOMS's own check: matrix wear sheet, every pose on both bodies, the stretch at 1000 px
   (no body strip at the sides, the sleeves join the arms); the pink splatter keeps its colour. Note: the high-tops follow the
