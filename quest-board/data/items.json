@@ -816,10 +816,12 @@
   "femaleOnly": true
  },
  "gp_shorts": {
-  "slot": "pants"
+  "slot": "pants",
+  "overTop": true
  },
  "gp_overall": {
-  "slot": "pants"
+  "slot": "pants",
+  "overTop": true
  },
  "gp_mary": {
   "slot": "shoes"
@@ -828,6 +830,53 @@
   "slot": "shoes"
  },
  "gp_glitter": {
+  "slot": "shoes"
+ },
+ "sp_beanie": {
+  "slot": "hat"
+ },
+ "sp_headset": {
+  "slot": "hat",
+  "noClip": true
+ },
+ "sp_cap": {
+  "slot": "hat"
+ },
+ "sp_cart": {
+  "slot": "neck"
+ },
+ "sp_shades": {
+  "slot": "glasses",
+  "frontOnly": true
+ },
+ "sp_varsity": {
+  "slot": "top"
+ },
+ "sp_pad": {
+  "slot": "top"
+ },
+ "sp_p2": {
+  "slot": "top"
+ },
+ "sp_hpknit": {
+  "slot": "top"
+ },
+ "sp_camo": {
+  "slot": "pants"
+ },
+ "sp_track": {
+  "slot": "pants"
+ },
+ "sp_denim": {
+  "slot": "pants"
+ },
+ "sp_flame": {
+  "slot": "shoes"
+ },
+ "sp_runner": {
+  "slot": "shoes"
+ },
+ "sp_flag": {
   "slot": "shoes"
  }
 }
