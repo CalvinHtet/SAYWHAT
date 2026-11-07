@@ -16,9 +16,9 @@ Doing:
 - Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
   ping-pong retired). QA PASSED the full set (495 of 495). BLOCKED: publish_files refuses every file
   ("The files could not be attached", any folder, even one file), so v0.63 is staged in r/ and waits for the app's upload to work. SMOKE BOMB in the Shop on Dec 28 (4f0d21f; band and vest renamed 9d1092e); QA 14 of 15, the cloak's
-  stretch sliver is ROOMS's, so no build ships it until it passes. Publish retried: still blocked. ROOMS paints GACHA POP.
+  stretch sliver is ROOMS's, so no build ships it until it passes. Publish retried: still blocked. GACHA POP in the Shop on Jan 4 (07dfb84; QA wear test). ROOMS paints SAVE POINT.
   Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. 2be3eda rig: arms-up seam cells rigid per limb (QA's 300 px armpit tear; long sleeves in stretch still show skin, next). bc757e2 limits it to the armpit band (QA: trouser specks). Parked: long sleeves in the high stretch still show skin patches at large
-  size (cells the bare-body map gives the trunk; growing the shirt's own map changed nothing), a deeper rework of the arm binding. (on bc757e2)
+  size (cells the bare-body map gives the trunk; growing the shirt's own map changed nothing), a deeper rework of the arm binding. (on 07dfb84)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
