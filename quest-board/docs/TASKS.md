@@ -2329,8 +2329,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 8837587): on call for Cal's playtest; my room fixes are in v0.69 (c2c53b7), which QA passed for publishing. WAITING ON
-  Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- Now (on c012014): TAKEN, LEAD's 44 yawn pictures (tops from NICE COCK on), on Unlimited, most-worn first: nc_hoodie generating,
+  then nc_tee and kp_varsity, then the rest a few at a time. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
+  portraits' white splatter tee: which one is his look?
 - DONE by QA (QA findings: pass). WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
   (onspot), and a staff aisle reaches them from the right (bar off the wall, speakers in line with the decks, coat check a little
   right and shallower). The Sky Patio lounge chair's seat has a walk-to point. ROOMS checked lfRoute to all three and the Club
