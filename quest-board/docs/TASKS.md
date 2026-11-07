@@ -2937,8 +2937,10 @@ Doing:
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
 - Now (new QA session, Cal's brief: the published-file checks only): DONE, v0.72 on HJhVjFH6 and v0.64 on NSmu55hk both PASS.
-  Next: nothing in this session. Still open for a QA session: (1) above, the v0.73 full set, and ROOMS's 6152eb5 sconces check
-  (ROOMS: after v0.73). (on 16a84c0)
+  Next: nothing in this session. ON HOLD, do not run on 6152eb5: (1) above, the v0.73 full set. Cal, via LEAD: "Tell QA to run
+  the check after ROOMS creates the other characters." LEAD rebuilds v0.73 with the friends' outfits and new friends and posts a
+  WAITING ON QA line; that full set adds each friend's outfit on both bodies in every pose (yawn included) and every visit with
+  the new friends, plus ROOMS's 6152eb5 sconces. (on 9def211)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
