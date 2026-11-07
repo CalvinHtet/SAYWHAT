@@ -2512,11 +2512,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on d328e88): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+- Now (on 8602ed7): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
   Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
-  now re-measuring the rest of the Restaurant's WEAK list on today's room (the 2026-11-05 audit, re-run headless on c1e9a9d).
+  Re-measured the Restaurant on c1e9a9d: 14 visual upgrades still change under 0.5% of the picture. Chef's Neon (worst,
+  0.06%) fixed in 8602ed7; next Drip Coffee, Brass Chandeliers by day, Star Plaque, then the rest, worst first.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 8602ed7, Restaurant Chef's Neon: bigger (58 px), in every style incl. Noir, past the kitchen boards (first kitchen: on
+  the dining wall by the pass). Three sizes: shots/rooms3/restaurant_chefneon_3sizes.png.
 - TAKEN by QA (after the v0.72 full set, with 10f64be). WAITING ON QA: check d328e88, Restaurant Sculptural Vases (r_d8) draw their own art (rdx_vases, black ceramic and dry branches) instead of the
   olive tree; fully bought render: shots/rooms3/restaurant_vases.png. Look for green fringe on the pampas on dark floors.
 - TAKEN by QA (after the v0.72 full set). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
