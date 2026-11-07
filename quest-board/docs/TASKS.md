@@ -466,6 +466,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's df59ff1 OAKMONT in the Shop (on 3eb382b, `shop.js` BRAND=oak): pass. 14 on him and 15 on her (the skirt hers) bought at
+  full price, worn and in the mirror; the wristbands and watch land in the arms slot; KAIMANA's and OAKMONT's badges show from the
+  pack; voice.js 1,527 lines, 0 hits. The stripe design call stands with ROOMS. Owner: LEAD.
 - QA, ROOMS's 78c961b OAKMONT wear test (on 67226f6; `shots/qa/oak/`): every piece fits, 15 of 15, one design call. All 15 on both
   bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the watch sits on one wrist only,
   the viewer's left from the front and the viewer's right from behind, the same arm as CHROME RAIN's sleeve, in every pose
@@ -2236,12 +2239,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: OAKMONT fits 15 of 15, one design call on its stripe (ROOMS); its Shop run waits on LEAD's rows. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. (on 67226f6)
+- Now: OAKMONT fits 15 of 15 and passes the Shop; its stripe is a design call with ROOMS. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. (on 3eb382b)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the OAKMONT Shop run, df59ff1 (brand oak, Feb 8, 15 rows as ROOMS wrote them, the skirt hers only,
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the OAKMONT Shop run, df59ff1 (brand oak, Feb 8, 15 rows as ROOMS wrote them, the skirt hers only,
       the wristbands and the watch both in the "arms" slot, so only one at a time like any accessory). LEAD checked the tab 14 weeks
       ahead: banner, badge from the pack, tagline, 15 pieces, no broken images, no page errors; the polo and the watch equip
       (`shots/lead/oak_shop.png`). Build at 491 files.
