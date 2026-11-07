@@ -2468,9 +2468,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1cc42bc): LEAD's 44 yawn pictures on Unlimited, 30 done (29 passed QA; cr_bomber in); cr_trench repainting (the first pinched
-  in at the belt and showed skin), cut with the new --pastel key; next cr_mesh, cr_vest, km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
+- Now (on 8fe507c): LEAD's 44 yawn pictures on Unlimited, 31 done (30 passed QA; cr_trench in); next cr_mesh, cr_vest (designs to
+  render), km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
+  and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
+  Your call whether that passes; if not I repaint.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 1cc42bc, yawn picture 30 (cr_bomber): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 4287952, yawn picture 29 (bb_cloak): your yawnfall.js and yawnsweep.js. A second paint; the front should be closed like idle.
 - DONE by QA (QA findings: pass). WAITING ON QA: check e70ef55, yawn picture 28 (bb_doublet): your yawnfall.js and yawnsweep.js.
