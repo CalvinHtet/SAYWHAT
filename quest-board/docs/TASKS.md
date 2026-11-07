@@ -471,6 +471,20 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.66 (465d39a, APPV 66; 490 files; Cal: "Do a full QA check and send me the latest version to test"): passes everything but
+  one small visible error, so hold for it. Test > Review (new `review.js`): all 114 Play buttons on both bodies at 360 and 390 (456
+  plays) open a window that fits the screen, with a reachable button, no broken image and nothing past the right edge; no page errors.
+  Playing everything leaves the save as it was apart from two empty defaults (story's done/offer/team/sold/later/biz created empty by
+  the Garden welcome, story.beats by the Lock and Key scene), no progress, harmless. The error: the boba scene (Mara, "Half our
+  customers ask for something cold to drink") shows an orange "M" box instead of her portrait, because ui_story_boba.webp doesn't
+  exist (the only scene of 7 without one; the same since v0.61, so players have always seen it; Cal will look at it now). Fix: let
+  styPortrait fall back to the same person's portrait (Mara's ui_story_chef), or ROOMS paints ui_story_boba. The rest passes on the
+  exact build: savecheck; screens 360 and 390; a v0.65 save loads, reloads, buys and reloads; the level-5 start; Kode Plaza; town
+  rules, townlive 5/5, townrx 12/12; doors 34 ok plus Garden and Restaurant walked live; Begin at 10 sizes; diag/load; the team;
+  voice.js 1,542 lines, 0 hits; 16 of 16 brand badges from the pack; the Shop in two halves, 272 pieces on him and 281 on her bought
+  and worn, KAIMANA, OAKMONT and SØLVBERG included (SØLVBERG's Shop run done); Wednesday returns and launch reruns (192 slots, 0
+  repeats, 0 still-live); 30 rooms, 21 of 21 buy through, the tester walks all 17 story rooms; friends; Collect; the camera.
+  Owner: LEAD (the portrait fallback, then rebuild; QA rechecks Review and the file match).
 - QA, ROOMS's 57527b0 SØLVBERG wear test (on 8909550; `shots/qa/sv/`): pass, 15 of 15. All 15 on both bodies (the leggings hers) in all
   22 key poses, 0 draw failures; three outfits. ROOMS's points: (1) the mittens sit on both hands in every pose, no cords left
   floating; (2) the pom beanie and the trapper sit right with long hair (h1) and the ponytail (h3), front, back and asleep; (3) the
@@ -2268,7 +2282,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: SØLVBERG 15 of 15; its Shop run waits on LEAD's rows. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: RATTLER when ROOMS sends it. (on 8909550)
+- Now: v0.66 (465d39a) checked: all pass but the boba scene's missing portrait; hold for LEAD's fallback, then a quick recheck. WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on eeb08e6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
