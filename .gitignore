@@ -7,3 +7,4 @@ quest-board/art/layers/
 quest-board/art/parts/
 __pycache__/
 quest-board/rigtest/artnames.json
+quest-board/dist-web/

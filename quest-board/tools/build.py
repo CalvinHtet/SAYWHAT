@@ -1,6 +1,7 @@
 """Assemble the app into dist/, ready to serve or publish.
 
-  build.py            run from anywhere
+  build.py                    run from anywhere: dist/, the Claude build
+  QB_TARGET=web build.py      dist-web/, the build that runs off Claude (docs/WEBAPP.md)
 
 app/src/*.js are joined in filename order into one file because the app shares a
 single closure. Character art and data files sit next to the page so they never
@@ -13,7 +14,11 @@ import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(ROOT, "app")
-DIST = os.path.join(ROOT, "dist")
+# The web build (docs/WEBAPP.md) loads Firebase and web/web.js, which answers the game's window.claude calls, and leaves the art
+# as loose files that load when first drawn instead of packing them into scripts (the Claude build packs them because a
+# published page may hold only so many files).
+WEB = os.environ.get("QB_TARGET") == "web"
+DIST = os.path.join(ROOT, "dist-web" if WEB else "dist")
 
 
 def read(*path):
@@ -60,6 +65,9 @@ def split(name, items, wrap):
 
 
 for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_", "logo_")), ("art_ex.js", ("ex_",))):
+    if WEB:
+        PACKS[pack] = []
+        continue
     parts = []
     for art in sorted(glob.glob(os.path.join(DIST, "art", "*.webp"))):
         name = os.path.basename(art)
@@ -98,6 +106,16 @@ with open(os.path.join(DIST, "qbdata.js"), "w", encoding="utf-8") as f:
 # The scripts come in through a small loader that adds them as ordinary script tags, in order, and shows how much has arrived
 # (the art is about 40 MB, so a phone on mobile data would otherwise stare at a blank page).
 SCRIPTS = [n for p in ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "blobs.js") for n in PACKS[p]] + ["qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"]
+if WEB:
+    # Firebase first, then the project's config; web.js needs qbdata.js (the art list) and must be in place before the game boots
+    WEBDIR = os.path.join(ROOT, "web")
+    for name in ("firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"):
+        shutil.copy(os.path.join(WEBDIR, "vendor", name), os.path.join(DIST, name))
+    for name in ("config.js", "web.js"):
+        shutil.copy(os.path.join(WEBDIR, name), os.path.join(DIST, name))
+    shutil.copy(os.path.join(APP, "lfvar.json"), os.path.join(DIST, "lfvar.json"))
+    i = SCRIPTS.index("qbdata.js") + 1
+    SCRIPTS = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js", "config.js"] + SCRIPTS[:i] + ["web.js"] + SCRIPTS[i:]
 files = [["%s?h=%s" % (s, fp(os.path.join(DIST, s))), os.path.getsize(os.path.join(DIST, s))] for s in SCRIPTS]
 tags = read(APP, "loader.html").replace("/*FILES*/[]", json.dumps(files))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
