@@ -259,11 +259,16 @@
     /* A painted pose (pose.painted, e.g. "yawn"): a layer can have a picture already drawn in that pose, frame-sized and
        lined up with the rig's own render of the pose (rigtest/template.html makes the template). It is drawn flat in place
        of the bent mesh. Optional: anything without one keeps the mesh, and a missing file is never an error. */
+    hasArt(p) {
+      if (this.cfg.hasArt) return this.cfg.hasArt(p);
+      const D = global.QBLoft && global.QBLoft.data;
+      return !(D && D.arthash) || !!(D.arthash[p] || (global.QBART && global.QBART[p]));
+    }
+
     flat(path) {
       const key = "flat|" + path;
       if (this.meshes.has(key)) return this.meshes.get(key);
-      const has = this.cfg.hasArt || ((p) => { const D = global.QBLoft && global.QBLoft.data; return !(D && D.arthash) || !!(D.arthash[p] || (global.QBART && global.QBART[p])); });
-      const made = !has(path) ? Promise.resolve(null) : this.image(path).then((im) => {
+      const made = !this.hasArt(path) ? Promise.resolve(null) : this.image(path).then((im) => {
         const gl = this.gl, tex = gl.createTexture();
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -649,6 +654,16 @@
       const { rig, poses } = this.cfg;
       const pose = typeof poseRef === "string" ? poses[poseRef] : poseRef;
       if (!pose) throw new Error("unknown pose: " + poseRef);
+      // A painted pose (the stretch's yawn) needs the top's own painted picture. A top without one (every brand from NICE COCK on,
+      // so far) would fall back to bending its normal art overhead, which tears at the armpits; instead the arms stay down and
+      // the rest of the pose (the yawn face, the head and spine tilt) plays. Missing art fails softly (CLAUDE.md); the list of
+      // missing yawn pictures is in docs/TASKS.md for ROOMS.
+      const topFront = pose.painted && pose.view === "front" && look.layers.top && look.layers.top.front;
+      if (topFront && !this.hasArt(topFront.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) && poses.idle) {
+        const bones = { ...pose.bones };
+        ["uaN", "faN", "hnN", "uaF", "faF", "hnF"].forEach((b) => { if (poses.idle.bones[b]) bones[b] = poses.idle.bones[b]; });
+        return this.render(look, { ...pose, bones, painted: undefined, armsUp: false });
+      }
       const view = pose.view;
       // A pose can swap a slot's art for an expression, or hide it with null.
       // ...except a piece that stays on asleep (data/rig.json keepAsleep, flagged by look.js), which keeps its own art.
