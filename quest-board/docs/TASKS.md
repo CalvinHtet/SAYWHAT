@@ -2215,8 +2215,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 570b2f3): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
+- Now (on 567ea26): on call for Cal's playtest. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
   portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 567ea26, your open point on 570b2f3. Nightclub: the DJ and bartender spots stay behind the decks and the bar
+  (onspot), and a staff aisle reaches them from the right (bar off the wall, speakers in line with the decks, coat check a little
+  right and shallower). The Sky Patio lounge chair's seat has a walk-to point. ROOMS checked lfRoute to all three and the Club
+  live at 22:00 (the DJ at the decks), 0 page errors.
 - DONE by QA (QA findings: pass but the Nightclub's staff spots). WAITING ON QA: check 570b2f3, Cal's use check (your 6430d13 list). Every room fully bought: the Arcade pinball points into the
   room; Skee-Ball's player at its throwing end; the Speakeasy upright piano on the back wall facing the room and its bar off the
   wall; the Club and Rooftop DJ decks off the wall with the DJ behind; VR flight pod off the sofa, ring chair in from the edge;
