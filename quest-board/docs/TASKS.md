@@ -2640,9 +2640,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on bc4a575. Done: ROOMS's yawn pictures 1-7 (pass, each with every hair and necklace); LEAD's fallback hair fix (pass);
-  logged the idle long-hair notch for LEAD. Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71)
-  until Cal restarts QA (artifact tools).
+- Now: on 30d93a9. Doing: LEAD's hairFront slot with ROOMS's front lock: every top on f h1 (idle, walk, sit, stretch), four hair
+  colours, six hats, back views, and m h1-h3 / f h2-h3 unchanged, before (bc4a575) and after (30d93a9). Next: the verdict to LEAD
+  and ROOMS; ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
