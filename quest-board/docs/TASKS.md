@@ -2111,7 +2111,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on ede09d8): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
+- Now (on c7acdc1): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
 - WAITING ON QA: check 633ffe2 and ede09d8 for v0.68. (1) The Upstairs Bar (r_bar) needs White Linen Service (r_t3, Cal's "fine dining")
   and is hidden until then; a save that owns the bar keeps it. (2) The Garden lot is for sale from level 5 (padlock at 4), matching
   The Loft's welcome card. ROOMS checked headless, 0 page errors. Also 0f9cabe: Take Over Next Door's splash now says white linen comes before the bar upstairs.
