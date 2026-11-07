@@ -24,12 +24,14 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
   // (2) fresh player at level 5: the Garden lot
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 90000 });
   await p.fill('#ccname', 'Cal'); await p.click('[data-act="ccnext"]'); await p.waitForFunction(() => document.querySelector('[data-act="ccdone"]'), null, { timeout: 60000 }); await p.waitForTimeout(600);
-  await p.evaluate(() => document.querySelector('[data-act="ccdone"]').click()); await p.waitForTimeout(6000); await tab('hideout'); await tab('board');
-  ok('a new player sees no Garden "!" before its level (the lot is locked to level 14)', !(await p.evaluate(() => window.__qbAlerts.rooms().some((x) => x.room === 'garden'))));
-  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(14); S.gates = [5, 10]; x.persist(); x.render(); }); await tab('board');
+  await p.evaluate(() => document.querySelector('[data-act="ccdone"]').click()); await p.waitForTimeout(6000); await tab('board');
+  ok('a new player (who starts at level 5) has the Garden lot offered at once', await p.evaluate(() => window.__qb.x().effLvl() >= 5 && window.__qbAlerts.rooms().some((x) => x.room === 'garden')), await p.evaluate(() => window.__qb.x().effLvl()));
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(4); x.persist(); x.render(); }); await tab('board');
+  ok('at level 4 no Garden "!" yet (the lot shows its padlock)', !(await p.evaluate(() => window.__qbAlerts.rooms().some((x) => x.room === 'garden'))));
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(5); S.gates = [5]; x.persist(); x.render(); }); await tab('board');
   const r2 = await p.evaluate(() => ({ lvl: window.__qb.x().effLvl(), rooms: window.__qbAlerts.rooms().map((x) => x.room + (x.lot ? '(lot)' : '')), offer: window.__qbStory.state().offer }));
-  ok('at level 14 the Garden lot is among the new rooms', r2.rooms.some((x) => /garden/.test(x)), r2);
-  ok('...and The Loft shows a "!"', (await bangs()).includes('hideout'), await bangs());
+  ok('at level 5 the Garden lot is among the new rooms', r2.rooms.some((x) => /garden/.test(x)), r2);
+  ok('...and The Loft shows a "!"', (await bangs()).includes('hideout'), { bangs: await bangs(), tabs: await p.evaluate(() => window.__qbAlerts.tabs()), seen: await p.evaluate(() => window.__qbAlerts.seen().room), nav: await p.evaluate(() => (document.querySelector('.nav button[data-v="hideout"]') || {}).className) });
   await tab('hideout'); await p.screenshot({ path: path.join(OUT, 'al_street_garden.png') });
   ok('the street shows a "!" for the lot', (await svg('#lfw .albang')) >= 1, await svg('#lfw .albang'));
   await tab('board'); ok('opening The Loft cleared its "!"', !(await bangs()).includes('hideout'), await bangs());

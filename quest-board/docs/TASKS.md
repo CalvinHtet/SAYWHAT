@@ -484,6 +484,20 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's four for v0.68 on a clean build of 428c8a5 (same code as 9b3a428), phone size 390: all PASS, 0 page errors.
+  4e93d54 (`rigtest/qa/roomwin.js`): all 21 room windows have no zoom buttons, and a wheel or a two-finger pinch leaves the view
+  exactly as it was; the street stops at 1.6x by + and by pinch, all 3 buildings open at or under 1.6x and + stops there (by day the
+  Bedroom shows no control at all; its lamp shows at night, nightlights.js). Restaurant pictures at each stage: the double shelf runs
+  along the back wall above the wainscot, the menu board is a rectangle above the tiles. 1308059: buying with the window open in 12
+  businesses: the new pieces pulse gold (seen at about 0.8-1.3 s; the shadow layer never pulses); where people were in the window
+  (Boba 6, Arcade 6, Theater 9) nobody left, changed seat or look, and nobody moved further than they do in the same time without
+  a purchase. Hiring the Head Chef (r_s4) with 8 in the Restaurant changed one person's look and moved them 13 units, which is the
+  new chef arriving, not a reset. In headless runs customers came in some runs and not others, so not every business was checked
+  with people in it. 633ffe2 (`rigtest/qa/barlock.js`): without White Linen only White Linen is offered; with it the bar stays
+  hidden until the story's earnings step opens, then its card shows; an old save owning the bar without White Linen keeps the bar
+  and the Sky Bar, also after a reload. ede09d8 (`rigtest/qa/alerts.js`): level 4 no Garden "!", level 5 the lot is for sale with
+  "!" on The Loft and over the lot; a new player starts at level 5, so the "!" is there from the start. LEAD's d0adfdc: Relics and
+  Wheel now get their "!" when they unlock (my gap from ba1758a is fixed). Not checked on a real phone.
 - QA, 59d31a0 (FX) and 3bba5f1 ("!" and "+") on a clean build of 0a03968, phone size 390: FX PASS, alerts PASS but one gap and one
   copy error. `rigtest/qa/fxcheck.js`: at levels 23/24/28/34/45 no scanline layer exists anywhere; Starlight from 24, behind the
   panels (z-index -1); vignette inset 110 px at .32 black; edge glow 48 px -28 at half the accent; on The Loft street, inside a
@@ -2113,14 +2127,14 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on c7acdc1): on call for Cal's playtest. Vega's high-tops stay as they are (Cal, 2026-11-07: "Leave them").
-- WAITING ON QA: check 633ffe2 and ede09d8 for v0.68. (1) The Upstairs Bar (r_bar) needs White Linen Service (r_t3, Cal's "fine dining")
+- DONE by QA (QA findings: pass). - WAITING ON QA: check 633ffe2 and ede09d8 for v0.68. (1) The Upstairs Bar (r_bar) needs White Linen Service (r_t3, Cal's "fine dining")
   and is hidden until then; a save that owns the bar keeps it. (2) The Garden lot is for sale from level 5 (padlock at 4), matching
   The Loft's welcome card. ROOMS checked headless, 0 page errors. Also 0f9cabe: Take Over Next Door's splash now says white linen comes before the bar upstairs.
-- TAKEN by QA. WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
+- DONE by QA (QA findings: pass). - WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
   Bedroom keeps its lamp button); the street and building views stop at 1.6x (was 2.6x). (2) The stage-1 and stage-2 Restaurant
   double shelf runs along the back wall above the wainscot (it was mirrored). (3) The Grand Menu Board (CARTE DU JOUR / OUR MENU) is
   66 high and wholly above the rail, clear of the wine wall. ROOMS checked headless, 0 page errors; not on a phone.
-- TAKEN by QA. WAITING ON QA: check 1308059, buying an upgrade with the room window open. People keep their places, what they are doing, their
+- DONE by QA (QA findings: pass). - WAITING ON QA: check 1308059, buying an upgrade with the room window open. People keep their places, what they are doing, their
   seat and order and their look; the new pieces pulse gold twice (about 1.3 s) after the crate opens, the soft-shadow layer does
   not. ROOMS checked headless buying the Restaurant Open Sign with 5 people in the window. Not done: a flash in the building view
   (it is hidden behind the window while you buy); not checked on a phone or in other rooms.
@@ -2354,14 +2368,16 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on e40cbaf. Done: LEAD's FX and alerts check (59d31a0, 3bba5f1; findings: FX pass, alerts one gap and one copy error).
-  Next: ROOMS's 4e93d54 (room windows) and 1308059 (buying with the window open), then v0.68's full set when LEAD asks. Published
+- Now: on 428c8a5 (same code as v0.68, 9b3a428). Done: ROOMS's 4e93d54, 1308059, 633ffe2, ede09d8 (all pass). Doing: the v0.68 full set,
+  plus Cal (2026-11-07): "do a full quality check and see how this platform would function with 10 saves files from different
+  players. check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for
+  everything". Next: ten different players on one live town, then every room and asset against isometric references. Published
   v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD, Cal: "Give me the latest version to test when ready") WAITING ON QA: the full set on v0.68, 9b3a428 (APPV 68). New
+- [ ] (from LEAD, Cal: "Give me the latest version to test when ready"; TAKEN by QA, with Cal's 10-player and every-room check) WAITING ON QA: the full set on v0.68, 9b3a428 (APPV 68). New
       since v0.67 (d54de89): LEAD's alerts (3bba5f1, d0adfdc) and FX (59d31a0, d0adfdc); ROOMS's lamp (abe06dd), Restaurant notes
       (93d33f1), room windows without zoom, shelf and menu board (4e93d54), people kept and new pieces pulsing (1308059), the bar after
       White Linen (633ffe2), the Garden at level 5 (ede09d8), the splash text (0f9cabe). Note for your level-up runs: with the Garden
