@@ -940,7 +940,9 @@ function applyClass(){
   for(k=1;k<=t;k++)document.body.classList.add("tier-"+k);
   var cb=ensureEl("clsbg",!!S.cls&&t>=2,"");
   if(cb){cb.className="cls-"+S.cls;cb.style.setProperty("--ci",(0.1+0.04*t).toFixed(2))}
-  ensureEl("fxo-scan",lv>=24);ensureEl("fxo-vignette",lv>=28);ensureEl("fxo-edgeglow",lv>=34);
+  /* Cal, 2026-11-07: "I don't like the crt scan lines. And the red hue it too aggressive": scanlines became Starlight (behind
+     the panels, never over the art) and the vignette and edge glow are much softer; none of them cover the Loft and its rooms */
+  ensureEl("fxo-scan",false);ensureEl("fxo-stars",lv>=24);ensureEl("fxo-vignette",lv>=28);ensureEl("fxo-edgeglow",lv>=34);
 }
 function burst(x,y,n){
   var L=document.getElementById("layer");
@@ -1073,7 +1075,7 @@ function render(){
   var nt=document.getElementById("cap");
   if(nt){ fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
   applyFx();
-  document.body.classList.toggle("shopmode",view==="shop");
+  document.body.classList.toggle("shopmode",view==="shop");document.body.classList.toggle("loftmode",view==="hideout");
   if(view==="hideout"&&typeof lfMount==="function")lfMount();
   try{dropCheck()}catch(e){}
 }
