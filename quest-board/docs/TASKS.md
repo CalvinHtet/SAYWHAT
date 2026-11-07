@@ -2026,8 +2026,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 78c961b): OAKMONT is done in 78c961b. Next: SØLVBERG (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): add its
-  15 ids, then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app sv_*. Brand runway: OK. Chrome: ROOMS.
+- Now (on 78c961b): SØLVBERG next (sv_*, brand id sv; the WHITEOUT list in BRANDS_15.md): add its 15 ids, then paint on Unlimited.
+  Files: data/items.json, art/raw, art/layers, art/app sv_*. Brand runway: OK. Chrome: ROOMS.
+- WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
+  every green stripe to navy: headband, wristbands, track jacket and pants, skirt hem, tube socks, tennis vest, the crop's second
+  racket, the cap button and the badge ring. ROOMS checked headless: idle and backwalk1, 17 of 17 with 0 failures. LEAD gets the new
+  colours and lines.
 - DONE by QA (QA findings: 15 of 15 fit; one design call, the green-and-burgundy stripe). WAITING ON QA: wear test OAKMONT, 78c961b (brand id oak; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless on
   0a88ad4: idle, walk1, backwalk1 and stretchUp, 31 of 31 with 0 failures each (with cr_arm for reference). Look hardest at: the
   wristbands and the watch in the "arms" slot (the watch is on one wrist; it matches the cr_arm sleeve, viewer-left from the front,
