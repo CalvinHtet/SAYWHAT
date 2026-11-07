@@ -35,8 +35,7 @@ Doing:
   QA PASSED the full set (6430d13) and it is staged in r/. WAITING ON CAL: publish v0.68 to the Test link now, or hold
   for ROOMS's placement fixes (QA's 13, the pinball first; none new in v0.68). ROOMS's placement fixes PASSED (570b2f3, QA ad05db6); v0.69 BUILT from c2c53b7 (APPV 69: v0.68 + ROOMS's room fixes,
   placement 570b2f3, Nightclub staff 567ea26, screens cfa5f62/1ab3753); clean build, 490 files, loads clean, Review 114/114, livesync
-  PASS, alerts PASS: QA PASSED the full set; staged in r/ (491 files). WAITING ON CAL: the app paused LEAD's messages to other chats until
-  Cal types in LEAD's chat, so the publish session can't be asked yet; if QA passes them before Cal answers, LEAD builds
+  PASS, alerts PASS: QA PASSED the full set; PUBLISHED in place on Cal's Test link (69a368c), r/ and the worktree removed; if QA passes them before Cal answers, LEAD builds
   v0.69 with everything (v0.68 + ROOMS's room fixes + placement + 1ab3753) for QA's full set and publishes that instead. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
