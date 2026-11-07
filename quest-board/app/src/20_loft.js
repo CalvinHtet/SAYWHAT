@@ -176,7 +176,9 @@ function lfRoomLight(C,uid,t,out){
      walk boxes), the same blur and strength everywhere, a little wider at the front so it shows past solid bases */
   var cs="",cb=(C.shd||[]).concat((C.obsRaw||[]).filter(function(b){return !b.spr}));cb.forEach(function(b){var w=b[2]-b[0],d=b[3]-b[1];if(w*d>16||w*d<.04)return;/* QA: on the near-black floors (Lock and Key, Speakeasy, Arcade, Rhythm, Karaoke, Club, Lair, Trophy Room) the shadow
      vanished; there it is pure black, stronger and a little wider */
-  var dkF={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t],p=dkF?.12:.16,q=dkF?.44:.4;
+  /* Cal (playtest): "The shadows are too big for the chairs". The margin past the base grows with the piece, so a chair's
+     shadow hugs its own legs while beds and sofas keep the full margin. */
+  var dkF={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t],sz=Math.min(1,Math.sqrt(w*d)/1.4),p=(dkF?.12:.16)*sz,q=(dkF?.44:.4)*sz;
   cs+=lfPolyS([lfP(b[0]-p,b[1]-p,0),lfP(b[2]+q,b[1]-p,0),lfP(b[2]+q,b[3]+q,0),lfP(b[0]-p,b[3]+q,0)],dkF?"#000":"#1c1410")});
   if(cs){var dkO={skybar:1,speakeasy:1,arcade:1,rhythm:1,karaoke:1,club:1,lair:1,trophy:1,auditorium:1}[t];defs+='<filter id="'+id("cb")+'" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="'+(dkO?3.8:4.6)+'"/></filter>';res.pre='<g clip-path="url(#'+id("cf")+')" pointer-events="none" filter="url(#'+id("cb")+')" opacity="'+(dkO?.92:.42+L.dark*.1).toFixed(2)+'">'+cs+'</g>'+res.pre}
   /* emitters */
@@ -1312,6 +1314,10 @@ function lfRand(a,b){return a+Math.random()*(b-a)}
 function lfPick(a){return a[Math.floor(Math.random()*a.length)]}
 var LFGUEST=[{skin:"#e9b892",hair:"#2a1d18",hair_s:"textured",tc:"#c9503e"},{skin:"#c68a5e",hair:"#1a1426",hair_s:"bob",tc:"#4a8ad9",f:1},{skin:"#f2c9a0",hair:"#8a5a3c",hair_s:"waves",tc:"#e8a33a",f:1},{skin:"#8d5a3b",hair:"#1a1426",hair_s:"buzz",tc:"#4fb58a"},{skin:"#e0b08a",hair:"#4a2a1a",hair_s:"sidepart",tc:"#8a5ad9"},{skin:"#d9a67c",hair:"#1a1416",hair_s:"long",tc:"#d94f8a",f:1}];
 function lfGuestLook(){var g=lfPick(LFGUEST);return {sex:g.f?"f":"m",skin:g.skin,hair:g.hair,hair_s:g.hair_s,eyes:"#2a2030",top:{s:g.f?"tank":"tee",c:g.tc},bottom:{s:g.f?"skirt":"pants",c:lfPick(["#2a2a36","#3a4a6a","#e9e2d0"])},shoes:{s:"sneakers",c:"#eef1f6"}}}
+/* Cal (playtest): "there are two of the same NPCs in the restaurant. Keep it unique but sparse ... Make it busy but tasteful".
+   lfGuestN thins every business's customer count (one or two stay as they are, more are about halved, five at most), so the
+   eight guest looks never have to repeat in a room. */
+function lfGuestN(n){n=Math.max(0,n|0);return n<=2?n:Math.min(5,2+Math.round((n-2)*.5))}
 /* ---- desired agents ---- */
 var LFWANDER=240000;function lfHash(t){var h=7;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;return h}
 function lfLoungeIdx(){var k=-1;S.base.slots.forEach(function(r,i){if(r&&r.t==="lounge"&&k<0)k=i});return k}
@@ -1343,7 +1349,7 @@ function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(func
     }
     if(r.t==="gym"){cs0.gym.forEach(function(c,j){out.push({id:"k:"+c.id,room:i,role:"crew",look:c.L,ix:2+j})})}
     roomCrew(i).forEach(function(k,j){out.push({id:"c:"+k,room:i,role:"crew",look:crewLook(CREW[k].a),ix:j})});
-    var SD=SVC[r.t];if(SD){var seats=C.st.filter(function(s){return s.cust}).length,n=SD.guests?SD.guests(r,C,seats):Math.min(seats,2+Math.floor(addonsOf(r).length/2));n=Math.min(n,seats);for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
+    var SD=SVC[r.t];if(SD){var seats=C.st.filter(function(s){return s.cust}).length,n=SD.guests?SD.guests(r,C,seats):Math.min(seats,2+Math.floor(addonsOf(r).length/2));n=Math.min(lfGuestN(n),seats);for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
   });
   return out;
 }
@@ -1379,7 +1385,7 @@ function lfPlace(a){
   var C=lfC(a);if(!C){return}
   if(a.visitor&&a.fresh&&C.door){a.x=C.door.x;a.y=C.door.y+.25;a.alpha=0;a.fade=1;a.mode="idle";a.t=.3;return}
   if(a.role==="dog"&&a.bed&&!a.visitor){a.x=a.bed[0];a.y=a.bed[1];a.mode="do";a.act="sleep";a.t=lfRand(8,30);a.sleep=1;return}
-  if(a.role==="guest"){a.alpha=0;a.mode="idle";a.t=lfRand(.5,6)*(a.gi+1);a.look=lfGuestLook();return}
+  if(a.role==="guest"){a.alpha=0;a.mode="idle";a.t=lfRand(.5,6)*(a.gi+1);a.look=lfGuestLook(a);return}
   if(a.wand&&a.wspawn){var dd=C.door;a.alpha=0;a.fade=1;a.mode="idle";a.t=.2;if(dd){a.x=dd.x;a.y=dd.y+.3;return}}
   var s=lfPick(C.st.filter(function(s){return s.kind==="wander"||s.kind==="look"}));
   if(s){var sp=lfFreeNear(C,s.x+lfRand(-.3,.3),s.y+lfRand(-.3,.3),2)}else{var sp=lfRandFree(C)}
@@ -1805,7 +1811,7 @@ function lfGuestNext(a,C,r){
   if(a.alpha>0&&a.mode!=="idle"){a.mode="idle";a.t=1;return}
   var f=lfFree(C,a,function(s){return s.cust});if(!f.length){a.alpha=0;a.mode="idle";a.t=6;return}
   var dv=ROOMDEF[r.t]&&ROOMDEF[r.t].visitors,me=dv&&a.vis&&dv.filter(function(v){return v.id===a.vis})[0];
-  var o=lfPick(f);a.look=me?rsNpc(me.look):lfGuestLook(r.t);a.si=o.i;o.s.by=a.id;o.s.ord=0;o.s.served=0;o.s.hand=null;o.s.stage=0;
+  var o=lfPick(f);a.look=me?rsNpc(me.look):lfGuestLook(a);a.si=o.i;o.s.by=a.id;o.s.ord=0;o.s.served=0;o.s.hand=null;o.s.stage=0;
   var d=lfDoorOf(C);a.x=d.x;a.y=d.y+.3;a.alpha=0;a.fade=1;a.sat=0;a.speed=lfRand(.85,1.1);
   lfGo(a,o.s.x,o.s.y,o.s);
 }

@@ -49,7 +49,7 @@ var RS_UPS=[
  ["r_l1","Pendant Lights",800,{p:.08,lv:10,g:"Decor"},"Brass pendants instead of one bare bulb."],
  ["r_l2","Crystal Chandeliers",12000,{p:.3,lv:36,g:"Decor",also:"r_x2"},"Three of them, and every table looks better."],
  /* decor */
- ["r_sign","Sidewalk Sign",120,{p:.05,lv:8,g:"Decor"},"A chalkboard out front. Foot traffic loves a doodle."],
+ ["r_sign","Open Sign",120,{p:.05,lv:8,g:"Decor"},"A neon OPEN in the window and a chalkboard by the door."],
  ["r_d1","Potted Plants",400,{p:.06,lv:9,g:"Decor"},"Some green in the corners."],
  ["r_d2","Shelves & Pictures",600,{p:.06,lv:9,g:"Decor"},"Makes it look like someone cares."],
  ["r_d3","Menu Boards",900,{p:.08,lv:11,g:"Decor"},"Real menus on the wall."],
@@ -231,9 +231,12 @@ var RSSTAFF={r_s1:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",bottom:"j
  r_s4:{body:"f",skin:"s1",hairStyle:"h3",hairColor:"blonde",bottom:"joggers",bottomColor:"grey",shoe:"sneakers",shoeColor:"white",eq:["npc_chef","npc_hat"]}};
 function rsNpc(spec){var D=QBLoft.data,c=Object.assign({},spec);delete c.eq;if(spec.eq){var eq={};spec.eq.forEach(function(g){var M=D.items[g];if(M)eq[M.slot]={art:g,frontOnly:M.frontOnly,over:M.over,wide:M.wide,lift:M.lift,clip:M.clip}});c.equipped=eq}
   return {rig:c,sex:spec.body,npc:1}}
-lfGuestLook=function(){return rsNpc(RSGUESTS[Math.floor(Math.random()*RSGUESTS.length)])};
+/* never two of the same customer in one room at once (Cal): pick from the looks nobody else in the room is wearing */
+lfGuestLook=function(a){var used={},free=[];if(a)Object.keys(LFA).forEach(function(k){var b=LFA[k];if(b!==a&&b.room===a.room&&b.look&&b.look.gid!=null)used[b.look.gid]=1});
+  for(var i=0;i<RSGUESTS.length;i++)if(!used[i])free.push(i);var g=free.length?free[Math.floor(Math.random()*free.length)]:Math.floor(Math.random()*RSGUESTS.length);
+  var L=rsNpc(RSGUESTS[g]);L.gid=g;return L};
 var rsRigState0=lfRigState;
 lfRigState=function(a){var r=rsRigState0(a);if(r&&r.f!=null&&a.look&&a.look.npc){var q=/^(idle|back|sit)$/.test(r.clip)?4:2;r.f-=r.f%q}return r};
 function rsStaffOf(r){var a=r.a||{};return ["r_s1","r_s2","r_s3","r_s4"].filter(function(k){return a[k]})}
 function rsPeople(r,i,C,out){rsStaffOf(r).forEach(function(k,j){out.push({id:"rs:"+k,room:i,role:"crew",look:rsNpc(RSSTAFF[k]),ix:j})});
-  var seats=C.st.filter(function(s){return s.cust}).length,n=Math.min(seats,SVC.restaurant.guests(r,C,seats));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
+  var seats=C.st.filter(function(s){return s.cust}).length,n=Math.min(seats,lfGuestN(SVC.restaurant.guests(r,C,seats)));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}

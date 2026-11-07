@@ -254,7 +254,7 @@ function genPeople(r,i,C,out){var d=ROOMDEF[r.t];if(!d)return;var a=r.a||{},seat
   (d.staff||[]).forEach(function(q,j){if(!q[0]||a[q[0]])out.push({id:"st:"+r.t+j,room:i,role:"crew",look:rsNpc(q[1]),ix:j})});
   /* d.visitors: a room only these people visit (the Game Room's friends). Nobody else comes in, and with an empty list nobody does. */
   if(d.visitors){var vs=d.visitors.filter(function(v){return v&&v.look});for(var v=0;v<Math.min(seats,vs.length);v++)out.push({id:"g:"+i+":"+v,room:i,role:"guest",gi:v,vis:vs[v].id});return}
-  var n=d.guests===0?0:Math.min(seats,(d.guests||2)+Math.floor(addonsOf(r).length/3));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
+  var n=d.guests===0?0:Math.min(seats,lfGuestN((d.guests||2)+Math.floor(addonsOf(r).length/3)));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
 function genNote(r){var d=ROOMDEF[r.t];if(!d||!d.stageNames)return "";return '<p class="note"><b>'+esc(d.stageNames[roomStageOf(r.t,r.a)]||d.name)+'.</b></p>'}
 /* ---- the Restaurant: small and plain to start, dark and spacious at the end ---- */
 /* The dining room is the square. The kitchen is a wing off its top right corner: [width, depth] past the dining room. */
@@ -302,6 +302,13 @@ function rsBigMenu(items,W,H,noir){var h=function(s){var n=0;for(var i=0;i<s.len
     o+=scrTxt(x0,y.toFixed(1),m,f.toFixed(1),ink,"start",600)+scrTxt(x1,y.toFixed(1),"$"+(8+h(m)%22),fs.toFixed(1),acc,"end",700)});
   return o+'<rect x="'+(W/2-.4)+'" y="22" width=".8" height="'+(H-28)+'" fill="'+acc+'" opacity=".35"/>'}
 function rsWalls(C){thWalls(C,"#191619","#141214","rgba(201,160,110,.14)");roomFloor(C,["#2b211b","rgba(0,0,0,.28)",.8])}
+function rsNeonOpen(C,yc){var U=LF.U,w=U*1.25,h=U*.46,nt=typeof lfLightUseful==="function"&&lfLightUseful(),gid="rsno"+(window.LFRID=(window.LFRID||0)+1);
+  var sign='<rect x="0" y="0" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+(h/2).toFixed(1)+'" fill="none" stroke="#ff4fa3" stroke-width="1.7"/>'
+   +'<text x="'+(w/2).toFixed(1)+'" y="'+(h*.74).toFixed(1)+'" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="'+(h*.62).toFixed(1)+'" letter-spacing="1.2" fill="#ffe1f0">OPEN</text>';
+  var g='<defs><filter id="'+gid+'" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="'+(nt?2.6:1.2)+'"/></filter></defs>'
+   +'<rect x="-2" y="-2" width="'+(w+4).toFixed(1)+'" height="'+(h+4).toFixed(1)+'" rx="'+(h/2+2).toFixed(1)+'" fill="rgba(25,10,22,.55)"/>'
+   +'<g filter="url(#'+gid+')" opacity="'+(nt?1:.55)+'"><g stroke="#ff4fa3" stroke-width="2.4">'+sign.replace('fill="#ffe1f0"','fill="#ff4fa3"')+'</g></g>'+sign;
+  C.add(.05,lfFaceX(.03,yc+w/U/2,92,g))}
 LFROOM.restaurant=function(C){
   rsArtReady();
   var H=function(k){return C.has(k)},st=H("r_x2")?2:H("r_x1")?1:0,Wi=RSSIZE[st][0],D=RSSIZE[st][1],kw=RSKIT[st][0],kd=RSKIT[st][1],Wt=Wi+kw,patio=H("r_patio"),px=Wi,noir=H("r_noir")&&st===2;
@@ -399,6 +406,9 @@ LFROOM.restaurant=function(C){
   /* QA: beside the door mat, not in front of it */
   var hy=Math.max(2.2,D*.5-.2)+1.7;if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.0,hy,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.0,hy,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.0,hy,.8,.8,30,{});
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
+  /* Cal (playtest): "Sidewalk sign doesn't really change anything". It also hangs a neon OPEN in the first window, bright after
+     dark and soft by day (not in Noir's fine dining) */
+  if(H("r_sign")&&!noir)rsNeonOpen(C,[4.2,5.0,5.0][st]);
   /* the patio fills the corner below the kitchen wing */
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<kw;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,kd,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
