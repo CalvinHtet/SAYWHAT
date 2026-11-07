@@ -695,6 +695,11 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   rooms fully bought, 390x844 at x3, CPU 4x slower: every window 59-60.5 fps, worst frame 17 ms (Bedroom and Theater 33 ms), no
   frame over 50 ms, 0 page errors. Not measured: windows with customers walking (a fresh Unlock-everything save drew none in the
   Restaurant, Nightclub, Theater or Arcade at 21:00, opened from their buildings), and not on a real phone. Info, no owner.
+- QA, ROOMS's two fixes from 121dc00 on clean builds of 828990f and 21b292a, 0 page errors: PASS. Drip Coffee: in the Hole in the
+  Wall it sits on the counter behind the napkin box, smaller, both fully seen, nothing past the counter's end (shots/qa/rooms3/
+  restaurant_drip_fixed.png: v0.72, b3e3510, 828990f). Tables: the fully bought floor's middle row is two 2-tops; clear aisles
+  between every row, no chair against a neighbouring table, in Bistro and Noir (restaurant_tables_bistro.png,
+  restaurant_tables_noir.png). QA's call: the full Restaurant now reads as not cluttered.
 - QA, ROOMS's room checks on a clean build of b3e3510 (holds facb194, 10f64be, d328e88, 8602ed7, b3e3510), against v0.72, 0 page
   errors. Dessert Parlor (facb194): PASS. The dark library bookcase is a mint and blush patisserie hutch of cakes and teacups, the
   gold mirror a blush scalloped Flower Mirror; both on their walls, same footprint, the hutch's front to open floor; the room now
@@ -2554,7 +2559,7 @@ Doing:
   0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; next Neon Sign, Black Marble Counter, Espresso
   Bar, Host Desk/Lectern, Patio Heaters, Grand French Range, Charcoal Grill, Drinks Cooler, Dish Station, Brass Sconces.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
+- DONE by QA (QA findings: pass; not cluttered). WAITING ON QA: check 21b292a and 828990f, your 121dc00 notes: the full Restaurant floor's middle row is 2-tops with chairs clear of the
   next rows (LEAD approved; before/after shots/rooms3/restaurant_tables_before_after.png), and Drip Coffee no longer covers the napkin
   box in the Hole in the Wall (shots/rooms3/restaurant_drip2.png).
 - DONE by QA (QA findings: plaque and chandeliers pass; drip: small nudge). WAITING ON QA: check b3e3510, Restaurant: Drip Coffee on the counter's front end (was behind the partition), Star Plaque bigger with a
@@ -2875,9 +2880,9 @@ To do:
 
 Doing:
 - Now: free; next, ROOMS's next batches and v0.73 when LEAD builds it. Done: ROOMS's room checks (Dessert, VR Arena, Restaurant
-  thinning, vases, Chef's Neon, plaque, chandeliers pass; drip coffee small nudge; tables to LEAD); v0.72 = 083fec9 PASS, publish.
+  thinning, vases, Chef's Neon, plaque, chandeliers, drip fix, 2-top middle row: all pass); v0.72 = 083fec9 PASS, publish.
   BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA session in the desktop app
-  (artifact tools down here; Cal has the first message). (on b3e3510)
+  (artifact tools down here; Cal has the first message). (on 21b292a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
