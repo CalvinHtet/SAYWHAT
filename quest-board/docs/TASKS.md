@@ -1907,9 +1907,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 0852011): GACHA POP (gp_*, brand id gp): all 15 ingested and packed locally, badge `logo_gp.webp` done; idle and walk1
-  matrices load 29 of 29 with 0 failures. Not committed yet. The banner is being regenerated (the first had painted sign text).
-  Next: the banner, one commit, QA, shop lines to LEAD. Then SAVE POINT. Brand runway: OK, 45 days. Chrome: ROOMS.
+- Now (on 03274a7): GACHA POP is done in 03274a7. Next: SAVE POINT (sp_*, brand id sp): add its 15 ids to data/items.json,
+  then paint on Unlimited. Files: data/items.json, art/raw, art/layers, art/app sp_*. Brand runway: OK, 45 days. Chrome: ROOMS.
+- WAITING ON QA: wear test GACHA POP, 03274a7 (brand id gp; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless:
+  idle and walk1 load 29 of 29 with 0 failures; backwalk1 for the wings, hood, bear, sailor, bunny, bow and shades looks right.
+  Look hardest at the wings (neck slot, ingested with a looser stray limit of 0.25, so check sits and sleep), the heart shades (a
+  baked mannequin outline was stripped; look for leftover grey lines), the bow and bunny beanie with long hair and the ponytail
+  (noClip on the bow), and the cat hood over each hairstyle. The suspenders and the overalls' bib sit under any top, so with a top
+  on they read as shorts and trousers. LEAD has the shop lines.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8d07611, the SMOKE BOMB cloak's last sliver. Below the waist the hem is trimmed to hip width with an inked edge.
   Headless at 240px cells, the long sliver off the hand and the scrap at the hip in stretch are gone on both bodies (compared with
   36afaa1). Left alone: a short armpit fleck in stretchUp shows on every top at large sizes (smk_jacket, sm_tee, gp_blazer), so it
