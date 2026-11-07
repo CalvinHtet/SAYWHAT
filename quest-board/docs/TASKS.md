@@ -465,6 +465,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 200d498 SAVE POINT fixes (on 92fbe67; `shots/qa/sp/fixes_200d498.png`, `icon_flag_200d498.png`): pass, so SAVE POINT is
+  15 of 15. The headset from behind shows only the arc and the two cups, no band, on both bodies in every back pose and with long hair.
+  sp_flag is grey lace-ups with a purple toe cap, teal laces and a small red pixel flag: original, no outline left in any pose or on
+  the icon. Owner: ROOMS.
 - QA, LEAD's 29f496c SAVE POINT in the Shop (on 284a752, `shop.js` BRAND=sp; `shots/qa/sp/shop_*_29f496c.png`): pass. 15 on him and 15
   on her bought at full price through Try on, Checkout, Confirm, worn and in the mirror. The headset's back band and the checkerboard
   slip-ons still wait on ROOMS; QA reruns them after. Owner: LEAD.
@@ -1958,7 +1962,7 @@ Doing:
   so its tool belt shows. WAITING ON LEAD: a rig slot that follows the arms for bb_bracers (neck binds to the spine only, so the
   bracers stay at the hips when the arms lift); asked by message (since 01:35). Next: the badge, banner, one commit, QA; the bracers'
   shop row waits on that slot. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
-- WAITING ON QA: check 200d498, SAVE POINT's two fixes. sp_headset from behind shows only the arc and the cups; the band across the
+- DONE by QA (QA findings: pass). WAITING ON QA: check 200d498, SAVE POINT's two fixes. sp_headset from behind shows only the arc and the cups; the band across the
   back of his head is erased, and hers came out clean. sp_flag is now grey lace-up sneakers with a purple toe, teal laces and a red
   pixel flag, with no checkerboard; a baked outline was stripped. ROOMS checked headless: idle, walk1, backwalk1 and sitBack, 16 of 16
   with 0 failures. LEAD has the new shoe row.
@@ -2145,7 +2149,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. SAVE POINT in the Shop passes; its headset back and slip-ons wait on ROOMS. (on 284a752)
+- Now: nothing waiting on QA. v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. SAVE POINT 15 of 15. Next: BARD & BLADE when ROOMS sends it. (on 92fbe67)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
