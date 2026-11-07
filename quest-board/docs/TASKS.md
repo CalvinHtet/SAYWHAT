@@ -13,38 +13,17 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.73 BUILT from 6152eb5 (APPV 73 = v0.72 plus ROOMS's room work: Dessert and VR Arena facb194, Restaurant thinning 10f64be,
-  Sculptural Vases d328e88, Chef's Neon 8602ed7, WEAK fixes b3e3510, drip coffee 828990f, 2-top middle row 21b292a, Neon Sign and
-  Black Marble Counter c50714d + eadc75b, all QA-passed; Brass Sconces 6152eb5 not yet checked; and Cal's Test > Next event 0b20e11:
-  "a button that triggers the next event such as the investor coming ... test everything myself but quickly"). Clean build, 492
-  files, loads clean, Review 118/118 save unchanged, the whole story plays, Next event 35 taps to the end, livesync PASS, no page
-  errors. CAL (2026-11-07): "Tell QA to run the check after ROOMS creates the other characters": v0.73 HOLDS for ROOMS's friend work
-  (friend-only outfits from each portrait, "friendOnly": 1 in items.json, never sold; new friends from Cal's list). LEAD wires each
-  friend into 29k_friends.js (eq, FRIENDS, FVISITS) as ROOMS hands them over, then rebuilds v0.73 and QA runs the full set (the old session's run on fb0b6cb stopped at lagcheck), plus
-  6152eb5's sconces and Next event (scratchpad nextevent.js: fresh save, tap Test > Next event until "every story event"). Then
-  the publish session puts it on Cal's Test link. Room work after 6152eb5 goes into this v0.73 too. v0.72 (083fec9) is on the Test link.
-  CAL (2026-11-07): "I would also like to move this over to a web app. Tell me how to do that and where to get my claude API key":
-  the GO for the web app (Firebase database, Google sign-in, hosting, a Claude API function). LEAD builds it alongside (plan: docs/WEBAPP.md;
-  a web.js stand-in for window.claude on Firestore, Google sign-in and one Claude API function; art loaded on demand), Cal does the
-  logins (Firebase project, Anthropic Console key). Done: Cal's Firebase project saywhat-b7ae8 (e1ca626); the web build
-  a827114 (QB_TARGET=web -> dist-web; web/web.js; about 16 MB up front instead of 65; rigtest/lead/webtest.js PASS on a stand-in
-  Firebase). Next: firestore.rules, firebase.json, the app manifest, icons and update check, functions/ (the Claude call), the
-  4 am deploy job. CAL: "Definitely the cheapest option ... Cheap but fast checks": Haiku 5.5 at low effort,
-  0b6c5e2 (functions/index.js, 11/11 on a fake Claude; firestore.rules; firebase.json). CAL: test on the web link, give feedback, see
-  fixes there: a Test channel on Firebase Hosting that updates on each QA-passed deploy; the Live link updates at 4 am. Done too:
-  f09b39d, installable (manifest, home-screen icon as a stand-in until ROOMS draws one, asked), service worker, quiet update on return,
-  art fetched ahead; webtest.js 19 PASS. Blaze is on (Cal). Cal logged in and set the key; DEPLOYED (be38e7c): Firestore
-  rules, the sample function (us-central1), the web build on the Test channel (opens to sign-in in 1.2 s, no errors). Not tested:
-  real Google sign-in and a real Claude call (need a person; Cal's phone test). If sign-in shows redirect_uri_mismatch, the channel's
-  /__/auth/handler must be added to the OAuth client (Cal's Google Cloud console). CAL: "Once it is ready for me to test, make sure the
-  other agents have finished all their tasks": Cal gets the web link only after ROOMS's friends and the SAYMØRE chibi app icon
-  (Cal: "my SAYMORE mascot but in the same chibi form"), LEAD's wiring and rebuild, and QA's full set on dist and dist-web. Vega
-  wired (be38e7c); Cynthia and Jina wired (8d76624); Kenan (b9e9622) and Logan (be159f4): every
-  current friend wears their portrait pieces (Justin and Memo keep shop pieces that already match). CAL: "Approve all": six new friends and the SAYMØRE icon
-  (ROOMS f3c8326). Kris, Alvina, Nick, Ben, Kevin, Victor wired with 13 visits (this commit; Review 131/131); their fr_ pieces show as
-  ROOMS lands them. Then: ROOMS's "queue empty" line, LEAD rebuilds v0.73 (Claude and web), QA's full set, Cal's web test. The 4 am job is in (39a7cf7, b85a444: .github/workflows/live-4am.yml
-  publishes the live branch to the Live site; skips quietly until there is a live branch and the key). Before the first Live release,
-  Cal makes the FIREBASE_SERVICE_ACCOUNT repo secret himself (RELEASING.md, "The web version"). Now LEAD waits on ROOMS's friends. About 30 friends; Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
+- Now: v0.73 BUILT from 42d73be (APPV 73), WAITING ON QA for the full set, on both builds: dist (Claude, 472 files: friend
+  portraits now packed in art_ui, 42d73be, since the six new friends took dist to 510 of 511) and dist-web (QB_TARGET=web, 2338
+  files). Since v0.72: ROOMS's room work (facb194, 10f64be, d328e88, 8602ed7, b3e3510, 828990f, 21b292a, c50714d + eadc75b, 6152eb5,
+  Game Room 776bc77 + 081d0a2), Test > Next event 0b20e11, every friend in their portrait pieces (Vega, Cynthia, Jina, Kenan,
+  Logan) and six new friends with 13 visits (ba45c99; ROOMS's 17 fr_ pieces through eb0eea3; known nits for QA: Ben's cap back,
+  Victor's hoodie sleeve underside in the stretch), the web version (web/, functions/, firestore.rules, firebase.json), and the
+  SAYMØRE app icon. LEAD's checks on this build: loads clean, Review 131/131 save unchanged, the whole story plays (a real friend
+  visit can pop mid-run), Next event 35 taps to the end, livesync PASS, webtest.js PASS (19), all 13 friends equip every listed
+  piece, the 13 new visits open with their portraits. When QA passes: LEAD deploys dist-web to the web Test channel and sends Cal
+  the how-to (CAL: "make sure the other agents have finished all their tasks" first: ROOMS's queue is empty, 253fcb4).
+  Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
   own link, Firebase database and Google sign-in, Claude API function for photo checks, scoring and bounties, 4 am publish by
@@ -52,7 +31,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on ba45c99)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 42d73be)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
