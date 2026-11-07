@@ -2409,9 +2409,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on b62c0a2): LEAD's 44 yawn pictures on Unlimited, 17 done (15 passed QA; smk_vest and smk_cloak in); gp_blazer generating;
-  next gp_bear, gp_star, gp_sailor and the rest. WAITING ON Cal: Vega's in-game tee (black Spray Paint
+- Now (on 2d2ea91): LEAD's 44 yawn pictures on Unlimited, 19 done (17 passed QA; gp_blazer and gp_bear in); next gp_star, gp_sailor,
+  sp_*, bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece. WAITING ON Cal: Vega's in-game tee (black Spray Paint
   Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
+  the first left a thin strip of the boy's body down his right side.
 - DONE by QA (QA findings: pass). WAITING ON QA: check b62c0a2, yawn pictures 16 and 17 (smk_vest, smk_cloak): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check aab35f3, yawn pictures 14 and 15 (smk_jacket, smk_mesh): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f18de4c, yawn pictures 12 and 13 (sm_tee, sm_vest): your yawnfall.js and yawnsweep.js.
