@@ -13,7 +13,7 @@ const { ORDER } = require('./lib.js');
   await p.waitForTimeout(1500); const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   const rows = [];
   const LIST = (process.env.ROOMS || ORDER.join(',')).split(','), LIVE = !!process.env.LIVE;
-  if (LIVE) await p.evaluate(() => { const now = new Date(Date.now()), t = new Date(now); t.setHours(21, 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (t - now); });
+  if (LIVE) await p.evaluate(() => { const now = new Date(Date.now()), t = new Date(now); t.setHours(+(window.__qbHour || 13), 0, 0, 0); window.__qbShift = (window.__qbShift || 0) + (t - now); const S = window.__qb.x().S; S.base.served = 1e6; window.__qb.x().persist(); });
   for (const t of LIST) {
     const i = await p.evaluate((t) => { document.querySelectorAll('#layer .modal,.dropsplash').forEach((m) => m.remove()); const S = window.__qb.x().S; const i = S.base.slots.findIndex((s) => s && s.t === t); if (i >= 0) window.__qb.roomModal(i); return i; }, t);
     if (i < 0) { rows.push([t, 'not built']); continue; }
