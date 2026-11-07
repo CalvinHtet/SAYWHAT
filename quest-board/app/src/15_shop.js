@@ -156,13 +156,29 @@ var EXTRA_ITEMS=[
  ["gx_sp_denim","a_pants","Sticker Denim Shorts",850,1,"Hearts, a star, cherries, a coin.",{gar:"sp_denim",b:"sp"}],
  ["gx_sp_flame","a_shoes","Pixel Flame High-Tops",1200,1,"Eight-bit fire up the sides.",{gar:"sp_flame",b:"sp"}],
  ["gx_sp_runner","a_shoes","Retro Runners",1000,1,"Grey, purple and teal, a pixel star.",{gar:"sp_runner",b:"sp"}],
- ["gx_sp_flag","a_shoes","Checkpoint Sneakers",900,1,"Grey canvas, purple toe, a pixel flag.",{gar:"sp_flag",b:"sp"}]];
+ ["gx_sp_flag","a_shoes","Checkpoint Sneakers",900,1,"Grey canvas, purple toe, a pixel flag.",{gar:"sp_flag",b:"sp"}],
+ ["gx_bb_wizard","a_hat","Wizard Hat",1100,1,"Midnight felt, a brass buckle, a few stars.",{gar:"bb_wizard",b:"bb"}],
+ ["gx_bb_mantle","a_hat","Ranger Hood",900,1,"Pine wool, a brass leaf clasp.",{gar:"bb_mantle",b:"bb"}],
+ ["gx_bb_circlet","a_hat","Leaf Circlet",800,1,"Silver leaves and one moonstone.",{gar:"bb_circlet",b:"bb"}],
+ ["gx_bb_bracers","a_acc","Leather Bracers",700,1,"Laced, a leaf on each.",{gar:"bb_bracers",b:"bb"}],
+ ["gx_bb_crystal","a_acc","Crystal on a Cord",600,1,"A raw blue point, silver-wrapped.",{gar:"bb_crystal",b:"bb"}],
+ ["gx_bb_tunic","a_top","Adventurer's Tunic",1000,1,"Pine green, a brass-buckled belt.",{gar:"bb_tunic",b:"bb"}],
+ ["gx_bb_gambeson","a_top","Quilted Gambeson",1300,1,"Oatmeal linen, laced up the front.",{gar:"bb_gambeson",b:"bb"}],
+ ["gx_bb_doublet","a_top","Bard's Doublet",1400,1,"Burgundy velvet, slashed puffed sleeves.",{gar:"bb_doublet",b:"bb"}],
+ ["gx_bb_cloak","a_top","Travel Cloak",1500,1,"Knee-length wool, a round brass clasp.",{gar:"bb_cloak",b:"bb"}],
+ ["gx_bb_leather","a_pants","Laced Leather Trousers",1100,1,"Dark brown, laced down the sides.",{gar:"bb_leather",b:"bb"}],
+ ["gx_bb_skirt","a_pants","Tool-Belt Skirt",1000,1,"Layered linen, pouches and a brass key.",{gar:"bb_skirt",b:"bb",fo:1}],
+ ["gx_bb_breeches","a_pants","Tucked Breeches",850,1,"Tan wool, buckled below the knee.",{gar:"bb_breeches",b:"bb"}],
+ ["gx_bb_cuffboot","a_shoes","Cuffed Boots",1200,1,"Folded cuffs, a brass ankle buckle.",{gar:"bb_cuffboot",b:"bb"}],
+ ["gx_bb_slipper","a_shoes","Moonsilver Slippers",800,1,"Soft suede, curled toes.",{gar:"bb_slipper",b:"bb"}],
+ ["gx_bb_hobnail","a_shoes","Hobnail Boots",1000,1,"Brass studs, a wool sock.",{gar:"bb_hobnail",b:"bb"}]];
 /* NICE COCK (Cal's brand, drop 5): ROOMS's 67d0e85 pieces and shop lines, prices a notch above ALTITUDE */
 /* KODE PINK (Cal's music project): ROOMS's 1dde4e1 + c382557 pieces and shop lines */
 /* SAYMØRE (Cal's artist brand): ROOMS's 9e19cdf pieces and shop lines */
 /* SMOKE BOMB (ninja anime, approved): ROOMS's a07439f pieces and shop lines */
 /* GACHA POP (MMO cash shop, approved): ROOMS's 03274a7 pieces and shop lines */
 /* SAVE POINT (retro video games, approved): ROOMS's bad0b45 pieces and shop lines; the headset's back and the slip-ons, now lace-ups, redone in 200d498 */
+/* BARD & BLADE (high fantasy, approved): ROOMS's f843b25 pieces and shop lines; the bracers use the rig's "arms" slot */
 EXTRA_ITEMS.forEach(function(x){if(!x[6].soon)SHOP.push(x)});
 
 /* The basics from the character creator, each sold on its own. They set the same options

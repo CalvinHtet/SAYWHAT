@@ -1393,7 +1393,8 @@ var BRANDS=[
  /* Cal's first approved five, in BRANDS_15.md order: the next free Monday each until the launch schedule places them */
  {id:"smk",name:"SMOKE BOMB",tag:"Vanish in style",c:["#111114","#3a3d44","#ff6a1f"],ac:"#f2e6c8",start:"2026-12-28",sub:"ninja anime"},
  {id:"gp",name:"GACHA POP",tag:"Every outfit a rare drop",c:["#ffb3d1","#9fd3ff","#c9a8f5"],ac:"#ffd65a",start:"2027-01-04",sub:"MMO cash shop"},
- {id:"sp",name:"SAVE POINT",tag:"Respawn looking good",c:["#3b1e54","#6c389a","#8a8a8a"],ac:"#3daf9d",start:"2027-01-11",sub:"retro video games"}];
+ {id:"sp",name:"SAVE POINT",tag:"Respawn looking good",c:["#3b1e54","#6c389a","#8a8a8a"],ac:"#3daf9d",start:"2027-01-11",sub:"retro video games"},
+ {id:"bb",name:"BARD & BLADE",tag:"Dressed for the side quest",c:["#4c3227","#3f5e4c","#dddee3"],ac:"#b8925a",start:"2027-01-18",sub:"high fantasy"}];
 var GITEMS=[
  ["gx_h_snap","a_hat","Flat-brim Snapback",90,1,"Black cap, cream HANGANG patch.",{gar:"h_snap",b:"hanga"}],
  ["gx_h_beret","a_hat","Wool Beret",80,1,"Charcoal wool, tilted.",{gar:"h_beret",b:"hanga"}],
