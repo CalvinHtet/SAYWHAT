@@ -2563,9 +2563,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 1fefb41. Done: v0.70 (10240e8) full set PASS, publish; Cal's visit arrivals and their fix (90d5653) pass, for v0.71.
-  Next: v0.71 when LEAD builds it; the published-file checks (v0.64, v0.65, v0.67, v0.69, v0.70) BLOCKED until Cal restarts QA
-  (artifact tools).
+- Now: on b3dfe9b. Done: v0.70 (10240e8) full set PASS, publish; Cal's visit arrivals and their fix (90d5653) pass, for v0.71;
+  LEAD's b3dfe9b spelling (Traveling) checked in the source. Next: v0.71 when LEAD builds it; the published-file checks (v0.64,
+  v0.65, v0.67, v0.69, v0.70) BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
