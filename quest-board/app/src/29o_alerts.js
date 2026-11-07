@@ -14,9 +14,11 @@
    - in the street view, a bouncing "!" over each building with a new room in it you have not looked at yet (gone once you go in);
    - inside the building, a "+" on the spot the new room will take, until it is built; tapping it opens the room window that sells
      it, where that upgrade is listed first. Lots already had their "+"; they get the "!" too. */
+/* a tab is open the way the nav bar draws it: its level reached and nothing gating it (areaGate covers rooms and one-a-day reveals) */
+function alOpenTab(a){return effLvl()>=a[2]&&!areaGate(a[0])}
 function alSeen(){if(!S.alSeen||typeof S.alSeen!=="object")S.alSeen={};var o=S.alSeen;o.room=o.room||{};o.bld=o.bld||{};o.tab=o.tab||{};o.brand=o.brand||{};
   /* first run on a save: what is already open counts as seen, so an old save does not light every tab at once */
-  if(!o.init&&loaded&&S.created){o.init=1;try{AREAS.forEach(function(a){if(!areaGate(a[0]))o.tab[a[0]]=1});dropState().live.forEach(function(b){o.brand[b.id]=1})}catch(e){}}
+  if(!o.init&&loaded&&S.created){o.init=1;try{AREAS.forEach(function(a){if(alOpenTab(a))o.tab[a[0]]=1});dropState().live.forEach(function(b){o.brand[b.id]=1})}catch(e){}}
   return o}
 /* the upgrades that would open a room now: [{room, slot, id, name}] */
 function alOpeners(){var out=[];if(!S||!S.base)return out;
@@ -33,7 +35,7 @@ function alRooms(){var out=alOpeners().map(function(x){return Object.assign({lot
   return out.filter(function(x){return ROOMCELL[x.room]})}
 function alTabs(){var o=alSeen(),t={};if(!o.init)return t;
   if(alRooms().some(function(x){return !o.room[x.room]}))t.hideout=1;
-  try{AREAS.forEach(function(a){if(a[0]!=="hideout"&&!areaGate(a[0])&&!o.tab[a[0]])t[a[0]]=1})}catch(e){}
+  try{AREAS.forEach(function(a){if(a[0]!=="hideout"&&alOpenTab(a)&&!o.tab[a[0]])t[a[0]]=1})}catch(e){}
   try{if(!areaGate("shop")&&dropState().live.some(function(b){return !o.brand[b.id]}))t.shop=1}catch(e){}
   return t}
 /* opening a tab clears its "!" */
