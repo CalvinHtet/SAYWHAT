@@ -2789,9 +2789,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 8ed7fb3. Done: ROOMS's yawn pictures 1-35 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT, BARD & BLADE and CHROME RAIN complete, KAIMANA camp shirt and boat tee); savecheck and screens (360, 390) on f106365 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 55d4086). Next: km_rash and km_crochet when ROOMS sends them. (on 8ed7fb3)
+- Now: on 75bc860. Done: ROOMS's yawn pictures 1-35 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT, BARD & BLADE and CHROME RAIN complete, KAIMANA camp shirt and boat tee); savecheck and screens (360, 390) on b8d159c pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 75bc860). Next: km_rash and km_crochet when ROOMS sends them. (on 75bc860)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
