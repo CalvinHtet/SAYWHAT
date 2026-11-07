@@ -504,6 +504,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 29 (4287952: bb_cloak, repainted) on a clean build of 4287952: PASS, 0 page errors. It stretches
+  arms-up on both bodies; stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch15_before_after.png: idle, the old
+  fallback, the new stretch, on hot pink). The front is closed from the clasp down on both bodies, with only the hem slit showing
+  the trousers, the same as idle; no bare chest and nothing showing through, frames 9, 12 and 15 at 3x (bb_cloak_front.png). The
+  art has no enclosed holes. Sweep: all hairstyles with all 19 neck items plus none, 120 pictures, all clean
+  (sheet_bb_cloak_<body>.png). BARD & BLADE is complete; 29 of the 44 done and checked.
 - QA, ROOMS's yawn picture 28 (e70ef55: bb_doublet, BARD & BLADE) on a clean build of e70ef55: PASS, 0 page errors. It stretches
   arms-up on both bodies (the wine velvet doublet); stretch frames 3 to 21 changed, nothing else
   (shots/qa/yawn/batch14_before_after.png). On hot pink at 3x, frames 9, 12 and 15: the puffed, slashed upper sleeves show cream
@@ -2455,7 +2461,7 @@ Doing:
 - Now (on 4287952): LEAD's 44 yawn pictures on Unlimited, 29 done (28 passed QA; bb_cloak in, BARD & BLADE complete); next cr_trench,
   cr_bomber, cr_mesh, cr_vest, km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 4287952, yawn picture 29 (bb_cloak): your yawnfall.js and yawnsweep.js. A second paint; the front should be closed like idle.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 4287952, yawn picture 29 (bb_cloak): your yawnfall.js and yawnsweep.js. A second paint; the front should be closed like idle.
 - DONE by QA (QA findings: pass). WAITING ON QA: check e70ef55, yawn picture 28 (bb_doublet): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 56f58a2, yawn pictures 26 and 27 (bb_tunic, bb_gambeson): your yawnfall.js and yawnsweep.js. The tunic is a second
   paint; the first left a strip of arm under the boy's far sleeve.
@@ -2736,9 +2742,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on e289702. Done: ROOMS's yawn pictures 1-28 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP and
-  SAVE POINT complete, BARD & BLADE tunic, gambeson and doublet); savecheck and screens (360, 390) on 68eb5aa pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 2ec4878). Next: bb_cloak (repainting) when ROOMS sends it. (on e289702)
+- Now: on 2e6e1de. Done: ROOMS's yawn pictures 1-29 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT and BARD & BLADE complete); savecheck and screens (360, 390) on 68eb5aa pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 2ec4878). Next: CHROME RAIN (cr_) when ROOMS sends it; its trench has pink near the magenta key. (on 2e6e1de)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
