@@ -481,6 +481,23 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, 59d31a0 (FX) and 3bba5f1 ("!" and "+") on a clean build of 0a03968, phone size 390: FX PASS, alerts PASS but one gap and one
+  copy error. `rigtest/qa/fxcheck.js`: at levels 23/24/28/34/45 no scanline layer exists anywhere; Starlight from 24, behind the
+  panels (z-index -1); vignette inset 110 px at .32 black; edge glow 48 px -28 at half the accent; on The Loft street, inside a
+  building and in a room window opened from The Loft no overlay shows. Note, not an error: a room window opened over the Board (story
+  scenes, friend visits) or the Shop keeps the vignette and edge glow around it (body.loftmode is only set on The Loft tab).
+  `rigtest/qa/alerts.js` (fresh player through the real path): an old save lights nothing; the Garden lot at level 14 puts "!" on
+  The Loft and over its street lot, opening The Loft clears it and a reload keeps that; with the Garden built and Mara's step open,
+  "Knock Through to a Restaurant" puts "!" on The Loft and over the building, inside a "+" on its spot, tapping "+" opens the
+  Garden window with that upgrade listed first, building the Restaurant removes the "+"; building the Closet and the Lair puts "!" on
+  Shop and Dungeons, each clears on opening and stays cleared after a reload; a brand not yet seen puts "!" on the Shop until opened;
+  0 page errors. (1) GAP: a tab unlocked by LEVEL never gets a "!" (Relics and Wheel going from locked to open at 14 to 45: no "!").
+  alSeen()'s first run marks every tab not gated by a room as seen, locked ones included, and alTabs() only checks areaGate (the
+  Closet/Lair rule), not the level lock (lv < AREAS[2]) or areaWaiting. Fix idea: at first run mark only tabs that are open by all
+  three rules, and in alTabs skip tabs still locked by level. Owner: LEAD. (2) COPY: The Loft's welcome card says "At level 5 the
+  empty lot next door goes up for sale", but the Garden lot is locked until level 14 (ROOMT.garden.lv in 22_garden.js; the street
+  shows a padlock, "The Garden unlocks at level 14"). One of the two is wrong; Cal's storyboard call. Owner: LEAD.
+  Pictures: shots/qa/alerts/ and shots/qa/fx/.
 - QA, ROOMS's 93d33f1 Cal's Restaurant notes in every business (on 0a03968, new `guestcount.js`; `shots/qa/biz/`): pass. All 15
   businesses (Arcade, Auditorium, Boba, Bowling, Club, Dessert, Karaoke, Mall, Restaurant, Rhythm, Rooftop, Sky Bar, Speakeasy, Theater,
   VR), every building view, fully bought, sampled every 3 s for 30 s: never two customers with the same look in a room, never more than
@@ -2093,11 +2110,11 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on 1308059): on call for Cal's playtest. WAITING ON Cal: repaint Vega's high-tops (QA: they read as a famous sneaker) or leave them.
-- WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
+- TAKEN by QA. WAITING ON QA: check 4e93d54, Cal's room-window notes. (1) Room windows never zoom: no + - or reset, no wheel or pinch (only the
   Bedroom keeps its lamp button); the street and building views stop at 1.6x (was 2.6x). (2) The stage-1 and stage-2 Restaurant
   double shelf runs along the back wall above the wainscot (it was mirrored). (3) The Grand Menu Board (CARTE DU JOUR / OUR MENU) is
   66 high and wholly above the rail, clear of the wine wall. ROOMS checked headless, 0 page errors; not on a phone.
-- WAITING ON QA: check 1308059, buying an upgrade with the room window open. People keep their places, what they are doing, their
+- TAKEN by QA. WAITING ON QA: check 1308059, buying an upgrade with the room window open. People keep their places, what they are doing, their
   seat and order and their look; the new pieces pulse gold twice (about 1.3 s) after the crate opens, the soft-shadow layer does
   not. ROOMS checked headless buying the Restaurant Open Sign with 5 people in the window. Not done: a flash in the building view
   (it is hidden behind the window while you buy); not checked on a phone or in other rooms.
@@ -2331,13 +2348,15 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.67 (d54de89) passed, the publish session builds it. Night lights pass. Next: v0.68 (alerts, FX) when LEAD asks. WAITING ON CAL: restart QA for the published v0.64 and v0.65 file checks. (on ef08f17)
+- Now: on e40cbaf. Done: LEAD's FX and alerts check (59d31a0, 3bba5f1; findings: FX pass, alerts one gap and one copy error).
+  Next: ROOMS's 4e93d54 (room windows) and 1308059 (buying with the window open), then v0.68's full set when LEAD asks. Published
+  v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
 - [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.67 on Cal's Test link (pinned, slug HJhVjFH6, republished in place) against d54de89's build: 491 files (25 top-level incl. art_rig_8 + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
-- [ ] (from LEAD) WAITING ON QA, small check: 59d31a0 (Cal: "I don't like the crt scan lines. And the red hue it too aggressive":
+- [x] (from LEAD; done: QA findings, FX pass; alerts pass with one gap, level-unlocked tabs, and one copy error) WAITING ON QA, small check: 59d31a0 (Cal: "I don't like the crt scan lines. And the red hue it too aggressive":
       level-24 scanlines are Starlight, softer vignette and edge glow, no overlay over the Loft or rooms) and 3bba5f1 (Cal's "!" and
       "+": a bouncing ! on the tab for a new room, a newly unlocked tab or a new brand, until opened; ! over street buildings with a new
       room; + on the new room's spot inside, tapping opens the room that sells it with that upgrade first). LEAD's shots in
