@@ -2849,11 +2849,10 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 1695375. Done: all 44 of ROOMS's yawn pictures (pass, each with every hair and necklace; sv_quilt after its recolour),
-  and an idle-vs-stretch colour check over all 79 tops with yawn art; savecheck and screens (360, 390) on ca391d3 pass; the hair lock (pass).
-  BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until a new QA session (artifact tools down here
-  at 3ca553b; Cal has the first message for it). Done: v0.72 = 083fec9 full set, PASS, publish. Now: ROOMS's room checks: facb194 (Dessert, VR Arena), 10f64be
-  (Restaurant thinning), d328e88 (Sculptural Vases), 8602ed7 (Chef's Neon). (on 083fec9)
+- Now: ROOMS's room checks, in order: facb194 (Dessert Parlor, VR Arena), 10f64be (Restaurant thinning), d328e88 (Sculptural
+  Vases), 8602ed7 (Chef's Neon). Done: v0.72 = 083fec9 full set, PASS, publish (a3c2cb6); all 44 painted stretch pictures and the
+  colour check over 79 tops. BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until Cal starts a new QA
+  session in the desktop app (artifact tools down here; Cal has the first message). (on a3c2cb6)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
