@@ -13,12 +13,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.72 BUILT from 083fec9 (APPV 72 = v0.71 plus all 44 painted yawn pictures by ROOMS, the yawn fallback 7d7c5df/e3278f0
-  for tops without one, the long-hair lock 4f30ef5 + 30d93a9, the screens' still picture cfa5f62). Clean build, 491 files, loads
-  clean, Review 119/119, the whole story 64/64 with the save unchanged, livesync PASS. WAITING ON QA for the full set (TAKEN,
-  a88b262). When it passes: the publish session republishes it in place on Cal's Test link (HJhVjFH6), then LEAD removes r/ and
-  the worktree and tells Cal. Next build (v0.73): ROOMS's facb194 (Dessert hutch and Flower Mirror, VR Arena dark neon; with QA
-  after v0.72) and the Restaurant thinned by superseding (10f64be: Curved Corner Booth, Fire Pit, Sculptural Vases, Wine Wall; nothing
+- Now: v0.72 (083fec9, APPV 72) PUBLISHED in place on Cal's Test link (3855000; QA PASS a3c2cb6: lag 60 fps at CPU x4, story
+  64/64, Review 119/119, all 30 rooms; players10's quiet minute passed 1 run in 3 under load 16-34, called timing as no save code
+  changed since v0.71; not on a real phone yet). r/ and the worktree removed. Next build (v0.73): ROOMS's facb194 (Dessert hutch and Flower Mirror, VR Arena dark neon), d328e88 (Sculptural Vases art),
+  8602ed7 (Chef's Neon), b3e3510 (Restaurant WEAK fixes), all with QA and the Restaurant thinned by superseding (10f64be: Curved Corner Booth, Fire Pit, Sculptural Vases, Wine Wall; nothing
   off sale, no ids changed; with QA). Fewer dining tables would touch seating: ROOMS brings that to LEAD first. Waiting on Cal: v0.71/v0.72 playtest notes, opening the Test link on his
   iPhone (diag/perf for the lag fix), a launch date. CAL (2026-11-07): "I would like to host it off of Claude so anybody can play
   it without Claude ... What is the most seamless way to play this". LEAD recommended an installable web app (Add to Home Screen,
