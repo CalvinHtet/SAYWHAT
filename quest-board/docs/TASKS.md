@@ -1991,10 +1991,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 7caab98): TAKEN QA's two CHROME RAIN fixes (5cf2e1d wear test): cr_mesh repainted as an opaque dark net top under the
-  harness so it matches its icon on both bodies; cr_lightup repainted with a straight line and a small lightning bolt instead of the
-  wavy stripe. Generating on Unlimited; files art/raw, art/layers, art/app cr_mesh and cr_lightup. Next: KAIMANA (km_*, brand id km;
-  pieces per BRANDS_PROPOSAL.md). Brand runway: OK. Chrome: ROOMS.
+- Now (on 14bd0e5): KAIMANA (km_*, brand id km; pieces per BRANDS_PROPOSAL.md's surf-club list): 15 ids in data/items.json (14bd0e5);
+  camp shirt, striped tee and rash guard generating on Unlimited. Files: art/raw, art/layers, art/app km_*. Next: the other 12, badge,
+  banner, one commit, QA. Then OAKMONT. Brand runway: OK. Chrome: ROOMS.
+- WAITING ON QA: check 14bd0e5, CHROME RAIN's two fixes. cr_mesh is now an opaque dark purple diamond net under the harness, the same
+  on both bodies, matching its icon. cr_lightup has a small rose lightning bolt and a straight line, no wavy stripe; a baked outline
+  was stripped. ROOMS checked headless on 577831f: idle, walk1, backwalk1 and stretchUp, 16 of 16 with 0 failures.
 - DONE by QA (QA findings: 14 of 15, the mesh top; one design call). WAITING ON QA: wear test CHROME RAIN, 5cf2e1d (brand id cr; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless
   on c3088b5: idle, walk1, backwalk1 and stretchUp, 29 of 29 with 0 failures each, reading right by eye. Look hardest at: the cyber-arm
   sleeve (one arm, "arms" slot); the trench in stretch and walks (knee length); the mesh top (its holes opened so skin shows; it reads
