@@ -2033,7 +2033,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on b1760f5): SØLVBERG 12 of 15 ingested locally (tops, pants, hats, scarf, mitten); puffer, après and shearling boots generating, then badge and banner, then QA wear test. Next: RATTLER.
+- Now (on 57527b0): SØLVBERG done and with QA; LEAD has its shop lines. Next: RATTLER (BRANDS_PROPOSAL.md's DUST & SPUR list).
+- WAITING ON QA: wear test SØLVBERG, 57527b0 (brand id sv; 15 pieces, both bodies; the leggings are hers only). ROOMS checked headless
+  on 1660269: idle, walk1, backwalk1, stretchUp, stretch and sitBack, 10 of 10 outfit cells with 0 failures each. Look hardest at:
+  the mittens in the "arms" slot (their clip-cords floated beside the arm, so I stripped them); the trapper and pom beanie with long
+  hair and the ponytail; the goggles (noClip) on the forehead; the puffer and après boots ("over") with each pant; the badge (a
+  snowcapped peak and snowflake, no cross). Rig note for LEAD, not this brand: stretchUp shows white flecks at the armpits on every
+  top, older passed ones too (oak_track, sp_hpknit, cr_bomber).
 - DONE by QA (QA findings: pass; the badge ring is still green). WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
   every green stripe to navy: headband, wristbands, track jacket and pants, skirt hem, tube socks, tennis vest, the crop's second
   racket, the cap button and the badge ring. ROOMS checked headless: idle and backwalk1, 17 of 17 with 0 failures. LEAD gets the new
