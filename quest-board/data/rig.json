@@ -238,6 +238,15 @@
    ]
   },
   {
+   "id": "arms",
+   "bones": [
+    "uaN",
+    "faN",
+    "uaF",
+    "faF"
+   ]
+  },
+  {
    "id": "neck",
    "bones": [
     "spine"

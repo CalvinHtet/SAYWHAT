@@ -694,13 +694,14 @@
 
       gl.uniform1i(this.u.uTex, 0);
       gl.uniform1i(this.u.uPart, 1);
+      // (Bracers in the "arms" slot move with it the same way, so a painted top never hides them.)
       // Draw order: each group in turn, each slot in rig order. A painted top lands in its last group, after the neck layer
       // was drawn in an earlier one, so a necklace's parts up to that group move to just after the painted top (QA, a8c2a1f).
       const seq = rig.drawSequence[view], order = [];
       for (const g of seq) slots.forEach((x, i) => order.push([i, g]));
       const ti = slots.findIndex((x, i) => x.s.id === "top" && flats[i] && lastGroup[i] >= 0);
       if (ti >= 0) {
-        const upTo = seq.indexOf(lastGroup[ti]), isNeck = ([i, g]) => slots[i].s.id === "neck" && !flats[i] && seq.indexOf(g) <= upTo;
+        const upTo = seq.indexOf(lastGroup[ti]), isNeck = ([i, g]) => (slots[i].s.id === "neck" || slots[i].s.id === "arms") && !flats[i] && seq.indexOf(g) <= upTo;
         const moved = order.filter(isNeck), rest = order.filter((e) => !isNeck(e));
         const at = rest.findIndex(([i, g]) => i === ti && g === lastGroup[ti]);
         rest.splice(at + 1, 0, ...moved);
