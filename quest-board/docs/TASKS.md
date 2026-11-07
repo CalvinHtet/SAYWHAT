@@ -17,7 +17,7 @@ Doing:
   overalls over the top faebcd8 and 91ef6e8); clean build, loads with no page errors, WAITING ON QA for the full set. v0.63 (f5234d3,
   QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
   session brings them back), so Cal must restart. Whichever passed version is newest then goes out: v0.64 if it passes, else v0.63.
-  ROOMS paints SAVE POINT (11 of 15). Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
+  TAKEN: SAVE POINT's 15 Shop rows (ROOMS's message; art bad0b45; brand sp, Jan 11, "Respawn looking good"), added once QA's wear test passes. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
   restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on 4a1dbe8)
 
 To do:

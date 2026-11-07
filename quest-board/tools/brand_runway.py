@@ -28,7 +28,8 @@ def read(rel):
 def brands():
     src = read("app/src/10_app_a.js")
     block = src[src.index("var BRANDS=["):src.index("];", src.index("var BRANDS=["))]
-    return [(m.group(1), m.group(2), m.group(3)) for m in re.finditer(r'\{id:"([^"]+)",name:"([^"]+)".*?start:"(\d{4}-\d{2}-\d{2})"', block)]
+    unesc = lambda t: re.sub(r"\\u([0-9a-fA-F]{4})", lambda u: chr(int(u.group(1), 16)), t)  # SAYM\u00d8RE in the JS source
+    return [(m.group(1), unesc(m.group(2)), m.group(3)) for m in re.finditer(r'\{id:"([^"]+)",name:"([^"]+)".*?start:"(\d{4}-\d{2}-\d{2})"', block)]
 
 
 def drops():
