@@ -2592,15 +2592,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 9f3fd8b): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
-  (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
-  Now: the WEAK upgrades, starting with the Restaurant's. Sculptural Vases (r_d8) got its own art in d328e88 (WAITING ON QA below);
-  Re-measured the Restaurant on c1e9a9d: 14 visual upgrades still change under 0.5% of the picture. Chef's Neon (worst,
-  0.06%) fixed in 8602ed7; Drip Coffee, Star Plaque, Brass Chandeliers in b3e3510; Neon Sign, Black Marble Counter in c50714d; Brass Sconces in 6152eb5.
-  Host Lectern, Host Desk, Drinks Cooler, Espresso Bar, Dish Station each add a clear (small) piece: stay. Grand French Range wider
-  in 9f3fd8b (its art was fine, the footprint hid it); Charcoal Grill stays (clear piece, just under the bar). Restaurant WEAK list
-  done. Next: re-audit the next room, the Game Room (2026-11-05 audit list: RGB Floor Lamp; never-buyable ones fixed).
-  Cal answered (2026-11-07): Vega wears the white splatter tee from his portrait.
+- Now (on 6c66dd8): Cal's friend jobs (v0.73 holds for them). Vega's friend-only pieces done in 6c66dd8: fr_vega_tee (white
+  splatter tee, every angle plus the yawn picture) and fr_vega_kicks (white, black and orange high-tops), "friendOnly": 1, no shop
+  row; eq sent to LEAD. Portrait check of the other six: their shop pieces already match their portraits (Jina's skirt is a shade
+  off); each still gets at least one signature friend-only piece next. New friends: 7 of 8 identified from their own posts;
+  llamaorhorse is private (skipped). Quince: her solo shots don't agree on one face, so held for Cal. Portraits done for Kris and
+  Alvina; Nick and Ben generating; Kevin and Victor next (Victor's photos are about 12 years old). Then a batch approval to Cal.
+  After that: LEAD's app icon (low priority), then the Game Room WEAK re-audit. Restaurant WEAK list done (see below).
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
@@ -2610,6 +2608,10 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
+- WAITING ON QA: check 6c66dd8 (goes into v0.73), Vega's friend-only pieces: fr_vega_tee (white splatter tee with its yawn picture) and
+  fr_vega_kicks, both bodies, every pose. ROOMS's own check: matrix wear sheet, every pose on both bodies, the stretch at 1000 px
+  (no body strip at the sides, the sleeves join the arms); the pink splatter keeps its colour. Note: the high-tops follow the
+  portrait, so QA's old note stands (the panel layout reads like a famous sneaker; no logo).
 - WAITING ON QA: check 9f3fd8b (v0.74), Restaurant Grand French Range: 1.7 wide so its navy and brass front shows past the pot rack; the back
   row still fits. Render: shots/rooms3/restaurant_grand_range.png.
 - WAITING ON QA: check 6152eb5, Restaurant Brass Sconces: two sconces in the Hole in the Wall (the second at the front of the left wall, clear of
