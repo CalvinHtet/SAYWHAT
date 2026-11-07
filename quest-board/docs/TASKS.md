@@ -484,6 +484,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Cal's "check all the rooms and assets ... use references for everything" (v0.68 code, 428c8a5): all 21 rooms fully bought
+  at 13:00 and 22:00 plus the street and the three buildings, against isometric references of each kind (docs/QA.md "Every room
+  against references", sheets in shots/qa/rooms/). 0 page errors; nothing out of place in the street or building views; 13 rooms
+  read like their references as they are. Notes for ROOMS, most visible first: (1) black screens where references show a picture:
+  the Auditorium screen (black at noon and at 22:00), the Theater lobby's two big back-wall panels, the Boba wall TV (references
+  put the menu board there); (2) Sky Patio: no seats around the fire bowl except two dog beds; (3) Rooftop: a large bare pale floor
+  with no plants or string lights, lit like noon at 22:00; (4) Dessert: a dark library bookcase and a full-length mirror break the
+  pastry-shop palette; (5) Bedroom: the round rug floats in the open floor and the dog beds sit loose at the front edge;
+  (6) VR Arena: a white clinical room beside the dark neon Arcade and Rhythm Room; (7) the Restaurant fully bought (73 pieces) is
+  only just inside Cal's "never cluttered"; (8) Rhythm: a big empty front-left floor. The placement audit does not cover the
+  newer rooms (Mall to Club report 0 pieces), so those were checked by eye only. Owner: ROOMS; (1) may be LEAD's (show state).
 - QA, Cal's "how this platform would function with 10 saves files from different players" (v0.68 code, 428c8a5, phone 390,
   `rigtest/qa/players10.js` on LEAD's stand-in database, each page its own device save): PASS but one real gap. Ten different saves
   (new player at 5, casual 8, 12 lapsed, 15, 22, old save at 25 owning the retired gm_ping, 38, 45, 60, 80 with every outfit owned;
@@ -2385,7 +2396,8 @@ Doing:
 - Now: on 428c8a5 (same code as v0.68, 9b3a428). Done: ROOMS's 4e93d54, 1308059, 633ffe2, ede09d8 (all pass). Doing: the v0.68 full set,
   plus Cal (2026-11-07): "do a full quality check and see how this platform would function with 10 saves files from different
   players. check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for
-  everything". Done: ten players (players10.js, pass with one gap: neighbour portraits ignore outfits). Next: every room and asset against isometric references. Published
+  everything". Done: ten players (players10.js, pass with one gap: neighbour portraits ignore outfits); every room against
+  references (8 notes for ROOMS). Next: the rest of v0.68's full set (Review plays, livesync, alerts, cosmetics wear). Published
   v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.

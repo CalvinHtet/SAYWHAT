@@ -29,6 +29,48 @@ The copies of `rigtest/browser/*.js` in the worktree also run against 8769: `sav
 What the pictures cannot show: people (the room pictures leave them out, so the dogs and guests are checked separately),
 motion, and a real phone.
 
+## Every room against references (Cal, 2026-11-07: "check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for everything"; v0.68 code, 428c8a5)
+
+How: every one of the 21 rooms fully bought in its window at 13:00 and 22:00 (`roomreview.js`, `allrooms.js`), the street and
+the three buildings by day and night at desktop and phone (`streetall.js`), against a fresh look at isometric game-art references
+of each kind (DuckDuckGo images, "isometric <room> interior game art", study only, nothing copied). Sheets: `shots/qa/rooms/`.
+The placement audit (pieces outside the room, overlaps, drawing order, guest spots) only covers rooms built from the older piece
+lists (Bedroom to Auditorium); the newer rooms (Mall, Bowling, Karaoke, Arcade, Rhythm, VR, Club) report 0 pieces, so for those
+only the pictures were checked. 0 page errors in every run.
+
+What the references keep doing: the room's hero piece against the back wall (a bed with its headboard, a bar back with lit
+bottles, a menu board behind a counter, a lit screen), furniture grouped around a rug or a focal point, light you can see
+(string lights, neon, lamps), and walls filled at more than one height.
+
+Room by room, fully bought (Good = reads like its references; Note = one thing that does not):
+- Bedroom. Good: headboard on the wall with a nightstand and lamp, desk by the window, art up high. Note: the round rug floats in
+  the open floor instead of under the bed or seating, and the two dog beds sit loose at the front edge.
+- Walk-in Closet. Good: floor-to-ceiling lit built-ins and an island, very close to the references.
+- Hero's Lair. Good: command wall of screens, suit cases, holo table; matches the hideout references.
+- Sky Patio. Good: string lights overhead, planters, fire bowl on a rug, skyline. Note: nothing to sit on around the fire except
+  the two dog beds; every reference groups chairs or a sofa around it.
+- Game Room. Good: LED strips, wall TV, sectional on a rug, arcade, pool and foosball; matches the references.
+- Restaurant. Good: booths on the wall, menu board and bar back, kitchen line, the deck corner reads as a patio. Note: fully
+  bought it is the busiest room (73 pieces, about 11 tables); within Cal's "never cluttered" rule only just.
+- Upstairs Bar (speakeasy look). Good: brick, lit bottle wall, piano, small stage, velvet sofa.
+- Rooftop. Good: pool, hot tub, cabana, bar. Note: a large bare pale floor with no plants or string lights (the Patio has both),
+  and at 22:00 the deck stays lit like noon under a night sky.
+- Boba. Good: pastel, counter, jars, window seat. Note: a solid black TV hangs where every reference has its menu board.
+- Dessert. Good: glass cases, macaron tower, pastel booth. Note: a dark wooden library bookcase and a full-length mirror do not
+  belong to a pastry shop and break the palette.
+- Lock and Key (stage room). Good: stage with curtain and band, bar, jukebox, club chairs.
+- Garden. Good: raised beds in a grid with paths, walls, shed, greenhouse; matches the references.
+- Theater lobby. Good: concessions, red carpet and ropes, posters. Note: two large black panels on the back wall read as missing art.
+- Auditorium. Good: tiered seats, speakers, projector. Note: the screen is solid black at noon and at 22:00; every reference shows
+  a lit picture on it.
+- Mall. Good: storefronts, fountain, escalator, kiosk.  Bowling. Good: lanes, ball return, seating, snack bar.
+- Karaoke. Good: stage, disco ball, sofas, lyric screen.  Arcade. Good: cabinet row, neon, air hockey, claw.
+- Rhythm. Good: dance stage, drums, taiko. Note: a big empty floor at the front left.
+- VR Arena. Good: pods and rigs. Note: a white clinical room where every VR reference is dark with neon; it stands apart from
+  the Arcade and Rhythm Room next door.
+- Nightclub. Good: LED floor, DJ, booths, neon; matches the references.
+- The street and buildings: rooms sit cleanly in their cells by day and night, nothing overlaps a cell edge.
+
 ## Run log (latest first)
 
 ### 2026-11-05, 62c311d
