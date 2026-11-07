@@ -2859,7 +2859,8 @@ Doing:
 - Now: on 1695375. Done: all 44 of ROOMS's yawn pictures (pass, each with every hair and necklace; sv_quilt after its recolour),
   and an idle-vs-stretch colour check over all 79 tops with yawn art; savecheck and screens (360, 390) on ca391d3 pass; the hair lock (pass).
   BLOCKED: the published-file checks (v0.71 on HJhVjFH6, v0.64 on NSmu55hk) until a new QA session (artifact tools down here
-  at 3ca553b; Cal has the first message for it). Next: v0.72 when LEAD builds it. (on 3ca553b)
+  at 3ca553b; Cal has the first message for it). Doing now: the full set on v0.72 = 083fec9 (clean build, 491 files, APPV 72), running.
+  (on 083fec9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
