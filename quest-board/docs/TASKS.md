@@ -1951,9 +1951,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 8ad135a): BARD & BLADE (bb_*, brand id bb): 15 ids added to data/items.json (not committed); tunic, gambeson and doublet
-  generating on Unlimited. Files: data/items.json, art/raw, art/layers, art/app bb_*. Next: the other 12, badge, banner, one commit,
-  QA, shop lines to LEAD. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
+- Now (on c67f55e): BARD & BLADE (bb_*, brand id bb): 7 of 15 ingested locally (tunic, gambeson, doublet, breeches, cuffed boots,
+  soft slippers, hobnail boots), not committed; leather trousers and layered skirt (redone, the first came back with extra figures)
+  and the wizard hat generating. Files: data/items.json, art/raw, art/layers, art/app bb_*. Next: ranger mantle, circlet, bracers,
+  crystal, travel cloak, badge, banner, one commit, QA. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
 - DONE by QA (QA findings: 13 of 15, the headset's back and the checkerboard slip-ons). WAITING ON QA: wear test SAVE POINT, bad0b45 (brand id sp; 15 pieces, both bodies). ROOMS checked headless: idle, walk1 and
   backwalk1 load 30 of 30 with 0 failures and read right by eye. Look hardest at: the coin cap and the checkerboard slip-ons (a baked
   mannequin outline was stripped from both; look for leftover lines, and the cap's brim edge is a little soft); every teal detail
