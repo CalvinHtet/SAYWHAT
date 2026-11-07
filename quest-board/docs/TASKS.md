@@ -484,6 +484,20 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, Cal's "how this platform would function with 10 saves files from different players" (v0.68 code, 428c8a5, phone 390,
+  `rigtest/qa/players10.js` on LEAD's stand-in database, each page its own device save): PASS but one real gap. Ten different saves
+  (new player at 5, casual 8, 12 lapsed, 15, 22, old save at 25 owning the retired gm_ping, 38, 45, 60, 80 with every outfit owned;
+  both bodies; 1 to 21 rooms; outfits picked from the Shop) each boot in 1.4-6 s with ten open, draw Board/Training/Loft/Hall/Shop
+  with no error, and see the other nine with the right level and streak; both Halls list nine neighbours; Cal visits all nine
+  (each Loft opens with the right rooms, fits the phone) and Newbie visits Max's 21 rooms; "Say hi" reaches Max in 1 s; three posts
+  at once reach all ten in 1 s; a quiet minute writes 0-1 per page; database: 27 docs (10 worlds, largest 6 KB; 10 saves, largest
+  16 KB; board, pings; far under the 25,000-doc limit); reloading all ten, each save is still its own; 0 page errors. GAP (Cal's
+  town-hall ask "post a picture of your character with your current outfit"): every neighbour portrait (the Hall list, the visit
+  window's header and the town board posts) is drawn by the old chibi parts (pxImg > chImg > chParts in 30_app_b.js), which only
+  know the starter clothes, so no Shop outfit or hat ever shows: Kai and Max in a visor, Mia in a bow and Ari in a bucket hat all
+  show the same bare head, and every man looks alike and every woman looks alike (shots/qa/players10/heads.png, hall_list_Cal.png).
+  The world doc does carry the outfit (look.gar, rig.equipped), so it is the drawing. Fix idea: draw these with the rig, as the
+  Board avatar and the friends are. Owner: LEAD. Note: visits show "0 crew" for everyone (my saves hire nobody), not checked further.
 - QA, ROOMS's four for v0.68 on a clean build of 428c8a5 (same code as 9b3a428), phone size 390: all PASS, 0 page errors.
   4e93d54 (`rigtest/qa/roomwin.js`): all 21 room windows have no zoom buttons, and a wheel or a two-finger pinch leaves the view
   exactly as it was; the street stops at 1.6x by + and by pinch, all 3 buildings open at or under 1.6x and + stops there (by day the
@@ -2371,7 +2385,7 @@ Doing:
 - Now: on 428c8a5 (same code as v0.68, 9b3a428). Done: ROOMS's 4e93d54, 1308059, 633ffe2, ede09d8 (all pass). Doing: the v0.68 full set,
   plus Cal (2026-11-07): "do a full quality check and see how this platform would function with 10 saves files from different
   players. check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for
-  everything". Next: ten different players on one live town, then every room and asset against isometric references. Published
+  everything". Done: ten players (players10.js, pass with one gap: neighbour portraits ignore outfits). Next: every room and asset against isometric references. Published
   v0.64, v0.65 and v0.67 file checks BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
