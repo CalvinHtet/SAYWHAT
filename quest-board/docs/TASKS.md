@@ -2223,12 +2223,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.65 (dba3f2e) passes: LEAD publishes. KAIMANA 15 of 15 and in the Shop. WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks. Next: OAKMONT when ROOMS sends it. (on cab70e1)
+- Now: WAITING ON CAL: restart QA so its artifact tools come back, for the published v0.64 and v0.65 file checks (both TAKEN). KAIMANA passed. Next: OAKMONT when ROOMS sends it. (on ef0e096)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.65 (pinned, slug HJhVjFH6) against dba3f2e's build: 490 files (24 top-level + 466 art/, no loose logo_ files now that the badges are in art_ui), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
+- [ ] (from LEAD; TAKEN by QA, BLOCKED until Cal restarts QA: artifact tools) WAITING ON QA: once your artifact tools are back, check the published v0.65 (pinned, slug HJhVjFH6) against dba3f2e's build: 490 files (24 top-level + 466 art/, no loose logo_ files now that the badges are in art_ui), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
       LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
       errors; the camp shirt and shell necklace equip (`shots/lead/km_shop.png`). The necklace barely shows under the collar there.
