@@ -13,13 +13,15 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.65 built from dba3f2e (APPV 65; since v0.64: SAVE POINT Jan 11, BARD & BLADE Jan 18, CHROME RAIN Jan 25, the rig's arms
-  slot 23bf14f, brand badges in the art_ui pack 8be03dc); clean build, 489 files, loads with no page errors (v0.65 in the header),
-  WAITING ON QA for the full set. KAIMANA in the Shop on Feb 1 (adcf65c; ROOMS's rows and colours, rule 19); QA 15 of 15 and the Shop run pass (2628662); it rides in v0.66. OAKMONT in the Shop on Feb 8 (df59ff1; ROOMS's rows and colours; the skirt hers only; wristbands and watch in the arms slot; green turned navy in 867a53e, 633be95 and c814f38 after QA's stripe call); QA passed it (29699ff, 39407f1). SØLVBERG in the Shop on Feb 15 (e513dae; the leggings hers only, mittens in the arms slot; they follow the hands in idle and stretchUp), WAITING ON QA. v0.66 gets KAIMANA, OAKMONT and SØLVBERG; LEAD builds it once a few more brands pass, since every drop is dated February and nothing a player sees changes before then. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
-  QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
-  has the steps). CAL (2026-11-07): "I don't think we need anymore brand assets. We're approaching a long playtime": rule 19 PAUSED (TEAMWORK, BRAND_AUTOGEN, brand_runway reports only), ROOMS stops RATTLER; the 16 brands through SØLVBERG (Feb 15) are the set, reruns after. Cal asked for the database limits (the publish session reads them). Waiting on Cal: a launch date, and opening v0.65 on his phone (its database and v0.64's are empty, so no phone has opened them and the phone-lag log has nothing yet). Parked: the
-  arm binding in the high stretch (skin patches at large size, wrist flecks; ROOMS: white armpit flecks in stretchUp on every top) and the far arm from behind in type1. (on f39f668)
-- v0.65 PUBLISHED and pinned (slug HJhVjFH6, 490 files: 24 top-level + 466 art, 9 db rules, user, sample images), v0.64 unpinned. The publish session checked r/ byte for byte against dba3f2e's clean build and every published size against r/ (index.html +364 bytes, the publish wrapper); v0.64's published list (499) matched what was sent too. Title reads "Quest Board" (the build's <title> wins). r/ and the v65 worktree removed by LEAD. WAITING ON QA: check the published v0.65 once QA's artifact tools are back. (on b6efb12)
+- Now: CAL (2026-11-07): "Do a full QA check and send me the latest version to test. Show me all the cutscenes and visitors and
+  unlocks in this next test pass so I can give my opinion. And then I'll give the next task for everyone." v0.66 built from 465d39a
+  (APPV 66; since v0.65: KAIMANA Feb 1, OAKMONT Feb 8, SØLVBERG Feb 15, and Test > Review: every story scene, room
+  welcome, team join, return visit, friend visit, new area, UI upgrade, reward, big upgrade and brand drop in order, each with
+  Play, nothing saved; 114 of 114 open, save unchanged). Clean build, 490 files, no page errors. WAITING ON QA for the full set,
+  then the publish session publishes it and LEAD sends Cal the how-to. Brands: Cal stopped them at 16 (rule 19 PAUSED). Cal asked
+  about the database limits: 25,000 documents per version (about 4-7 per player); our town hall reads only 60 boards and 200
+  pings, unordered, so it breaks past about 60 players; fix offered, Cal's call. Waiting on Cal: a launch date, a QA restart for
+  the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 465d39a)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2268,6 +2270,10 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD, Cal's ask) WAITING ON QA: the full set on v0.66, 465d39a (APPV 66), Cal's test copy. New since v0.65 (dba3f2e):
+      KAIMANA, OAKMONT and SØLVBERG in the Shop (SØLVBERG's Shop run included), and Test > Review: Cal plays every cutscene, visitor
+      and unlock from it, so check each Play shows the right window on both bodies and screen sizes and changes nothing in the save
+      (LEAD: 114 of 114 open, save unchanged, `shots/lead/review/`).
 - [ ] (from LEAD) WAITING ON QA: the SØLVBERG Shop run, e513dae (brand sv, Feb 15, 15 rows as ROOMS wrote them, the leggings hers only,
       the mittens in the "arms" slot). LEAD checked the tab 15 weeks ahead: banner, badge, tagline, 15 pieces, no broken images, no
       page errors; the ski jacket and mittens equip (`shots/lead/sv_shop.png`); the mittens follow the hands in idle and stretchUp.
