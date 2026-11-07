@@ -1889,7 +1889,7 @@ Doing:
   star hoodie, sailor blouse, star skirt, suspender shorts, overalls), not committed; Mary Janes and cat hood generating.
   Next: bunny beanie, bow, wings, heart shades, slipper boots, glitter sneakers, the badge, banner, pack, matrix check, one commit, QA.
   Then SAVE POINT. Brand runway: OK, 45 days. Chrome: ROOMS.
-- WAITING ON QA: check 36afaa1, SMOKE BOMB's three fixes. smk_cloak is repainted closed with the torn hem at the hip; look at stretch,
+- DONE by QA (QA findings: 14 of 15, a sliver at the hand in the cloak's stretch). WAITING ON QA: check 36afaa1, SMOKE BOMB's three fixes. smk_cloak is repainted closed with the torn hem at the hip; look at stretch,
   stretchUp and walks, which ROOMS checked in stretchUp and walk1. smk_band is plain stitched cloth with a smoke puff and no plate;
   its knot shows at the back on her and not on him. smk_vest is a quilted funnel-neck puffer over cream sleeves. LEAD: rename two rows,
   band to "Stitched Headband" and vest to "Quilted Puffer Vest" (texts in ROOMS's message).
