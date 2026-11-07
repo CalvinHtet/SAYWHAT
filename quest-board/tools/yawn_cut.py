@@ -4,6 +4,7 @@
   yawn_cut.py item <sheet.png> <template_body.png> <out_dir> <id> [--pastel]
 
 --pastel keys only low-green magenta, for garments with pink highlights the default key would thin and grey (cr_trench).
+--regreen turns a light grey background (the generator sometimes keeps the design's) into green before keying (cr_mesh).
 
 The sheet was painted over a template from rigtest/template.html (?pose=stretch&scale=4: 2880x1656, man left, woman right)
 padded 32 px each side to 2944x1656 for the generator's 16:9. It is scaled back to that, unpadded and split.
@@ -46,6 +47,24 @@ def key(rgb, magenta, pastel=False):
     return out.astype(np.uint8), (alpha * 255).astype(np.uint8)
 
 
+def regreen(rgb):
+    """For a sheet painted on the design's light grey instead of green: flood the border-connected background to pure green,
+    and fade its light, unsaturated antialias ring (3 px) toward green so no pale halo survives the key."""
+    from scipy import ndimage as ndi
+    im = rgb.astype(float)
+    bg = np.median(np.concatenate([im[:20].reshape(-1, 3), im[-20:].reshape(-1, 3)]), axis=0)
+    lab, _ = ndi.label(np.abs(im - bg).max(-1) < 28)
+    edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+    mask = np.isin(lab, list(edge))
+    mx, mn = im.max(-1), im.min(-1)
+    ring = ndi.binary_dilation(mask, iterations=3) & ~mask & (mx > 120) & ((mx - mn) < 40)
+    t = np.clip((mx - 90) / 120, 0, 1)[..., None]
+    green = np.array([0.0, 255.0, 0.0])
+    im[mask] = green
+    im[ring] = im[ring] * (1 - t[ring]) + green * t[ring]
+    return im.astype(np.uint8)
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     pastel = "--pastel" in sys.argv
@@ -53,7 +72,10 @@ def main():
     name = args[4] if len(args) > 4 else "base"
     im = Image.open(sheet).convert("RGB").resize((FW * 2 + 2 * PAD, FH), Image.LANCZOS)
     im = im.crop((PAD, 0, PAD + FW * 2, FH))
-    rgb, alpha = key(np.asarray(im), mode == "item", pastel)
+    src = np.asarray(im)
+    if "--regreen" in sys.argv:
+        src = regreen(src)
+    rgb, alpha = key(src, mode == "item", pastel)
     t = np.asarray(Image.open(tmpl).convert("RGBA"))[..., 3] > 40
     for i, body in enumerate(("m", "f")):
         sl = slice(i * FW, (i + 1) * FW)
