@@ -1259,5 +1259,10 @@
   "slot": "top",
   "neutral": true,
   "friendOnly": 1
+ },
+ "fr_logan_bomber": {
+  "slot": "top",
+  "neutral": true,
+  "friendOnly": 1
  }
 }
