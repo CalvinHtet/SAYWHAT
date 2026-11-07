@@ -1292,6 +1292,10 @@
   "slot": "top",
   "friendOnly": 1
  },
+ "fr_kevin_polo": {
+  "slot": "top",
+  "friendOnly": 1
+ },
  "fr_kris_pants": {
   "slot": "pants",
   "wide": true,
