@@ -2581,7 +2581,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the full set on v0.71, 3840577 (APPV 71). New since v0.70 (10240e8): the phone-lag fix 19ef0d9 (yours
+- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.71, 3840577 (APPV 71). New since v0.70 (10240e8): the phone-lag fix 19ef0d9 (yours
       passed), the four visit arrivals f7a43bb with 90d5653 (yours passed), Rafe "Traveling" b3dfe9b. LEAD: clean build, 490 files, loads
       clean, Review 119/119, the whole story 64/64, livesync PASS, effects behind a window paused (7 paused, 0 running). Frame rates on
       this Mac are noisy under load (load average 27), so please measure lag with your lagcheck.js when the machine is quieter.
