@@ -376,8 +376,8 @@ LFROOM.restaurant=function(C){
   if(H("r_till")&&!fine){var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48"),dc=lfP(bx0+.21,by0+.36,39);
     C.add(bx0+by0+.8+.05,cb+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="2.2" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".5"/>')}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
-  /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now at the front end, a little bigger */
-  if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.62,2.12,.55,.5,1,{flip:1,dy:-34,nosh:1,dk:.5});
+  /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
+  if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
