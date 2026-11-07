@@ -2471,7 +2471,7 @@ Doing:
 - Now (on 8fe507c): LEAD's 44 yawn pictures on Unlimited, 31 done (30 passed QA; cr_trench in); next cr_mesh, cr_vest (designs to
   render), km_*, oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
+- TAKEN by QA. WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
   and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
   Your call whether that passes; if not I repaint.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 1cc42bc, yawn picture 30 (cr_bomber): your yawnfall.js and yawnsweep.js.
