@@ -493,6 +493,30 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 40c4b14 (Cal: "every story beat and character cutscenes to make sense"), on a clean build of af12b92: the gates
+  PASS (storygates.js: Lock and Key closed without White Linen, open with it; Nova closed without the Clothing Store, open with it),
+  Review > Play the whole story plays all 57 parts at 390 with 0 page errors and saves nothing (only an empty story.beats appears).
+  The whole text, in order: shots/qa/story/story_af12b92.md (`rigtest/qa/storyread.js`). Read through once; it mostly holds
+  together (Mara before she is named, "another investor" after Desmond, Theo after the ticket stand, Nova outside the clothing
+  store, Desmond's white linen). Lines that do not fit, most visible first:
+  (1) Where the Theater is: Step 10 says "the lot next door could be a movie theater", then Priya says "A movie theater. In our
+      strip mall." (and it sits in the Mall's building). Pick one.
+  (2) Where the Rhythm Room and VR Arena are: the Arcade's welcome says "A Rhythm Room upstairs, and a VR Arena next door", then
+      Step 13 says the arcade's "back room" and Step 14 its "other back room". The room windows agree with the welcome.
+  (3) No "New room" welcome for the Rhythm Room, VR Arena, Karaoke and Nightclub; every other story room (Garden to Bowling) has one,
+      so the last four steps are a bare step card each.
+  (4) Sable arrives third ("Meanwhile, in the Hero's Lair: Your first mission comes home with someone"), between the Garden and the
+      Restaurant, but nothing in the story has introduced the Lair or missions yet (the Lair comes from the Closet's hidden upgrade).
+      Either a line that says how the Lair appeared, or Sable placed where the Lair opens.
+  (5) The ending: Rafe asks about "the Old Metro" before Sable has said anything about it (swap 53 and 54 so Sable reports first),
+      and Rafe's "Five shards, one amulet" has no setup anywhere in the story.
+  (6) Two speakeasies: Desmond offers to "fund a speakeasy up there ... Lock and Key", and there is also a room called the
+      Speakeasy behind the Dessert's Hidden Door (its story step says "Part of Lock and Key now"). A player sees both names.
+  (7) Spelling is mixed: "Dessert Parlor" (Step 4 title and its welcome) but "parlour" (Step 4 text, "At the dessert parlour");
+      "neighborhood" in Step 2 while the rest writes neighbour, colour, favour, travelling.
+  (8) Small: the Loft welcome says "At level 5 the empty lot next door goes up for sale" to a player who starts at level 5 (it is
+      already for sale).
+  Owner: LEAD (story text), ROOMS for the four missing welcomes if those need art.
 - QA, LEAD's 0f7ce90 Test > Unlock everything (Cal's "access every upgradable room and section"), pressed from the Test pill
   at 390 on a clean build of 0f7ce90 (`rigtest/qa/unlockall.js`): works, two small things to fix. Fresh player and a mid-game save
   (level 20, five rooms with upgrades, half the story): level 50, no locked tab, 21 rooms built once, the only upgrades given are
@@ -2511,9 +2535,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 0f7ce90. Done: LEAD's Unlock everything (works; two small fixes for LEAD: Next story step opens the Speakeasy, and
-  bd_ward1 cannot be bought after it). v0.69 (c2c53b7) PASS, being published. Next: the v0.70 check when LEAD sends it; the
-  published-file checks (v0.64, v0.65, v0.67, v0.69) BLOCKED until Cal restarts QA (artifact tools).
+- Now: on af12b92. Done: LEAD's 40c4b14 story gates (pass) and the whole story read for sense (8 notes); Unlock everything (two
+  small fixes for LEAD). Next: the v0.70 check when LEAD sends it; the published-file checks (v0.64, v0.65, v0.67, v0.69) BLOCKED
+  until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
