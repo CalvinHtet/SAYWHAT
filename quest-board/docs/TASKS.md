@@ -13,12 +13,12 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.63 built from f5234d3 (APPV 63; Kode PinK Dec 14, SAYMØRE Dec 21, reactions and the Hall badge, launch reruns,
-  ping-pong retired). QA PASSED the full set (495 of 495). BLOCKED: publish_files refuses every file
-  ("The files could not be attached", any folder, even one file), and now every artifact tool says it is not available to this session (fixed by restarting Claude Code or a new session), so v0.63 is staged in r/ and waits for Cal. SMOKE BOMB in the Shop on Dec 28 (4f0d21f; band and vest renamed 9d1092e); QA 14 of 15, the cloak's
-  stretch sliver is ROOMS's, so no build ships it until it passes. Publish retried: still blocked. GACHA POP in the Shop on Jan 4 (07dfb84); QA 15 of 15 after the hood fix. faebcd8: overalls and suspenders over the top (items.json overTop, rig slot pantsOver; legs right after the bib, boots over the cuffs); QA 21 of 22, the stretch pose under painted tops fixed in 91ef6e8, WAITING ON QA. ROOMS paints SAVE POINT.
-  Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date. 2be3eda rig: arms-up seam cells rigid per limb (QA's 300 px armpit tear; long sleeves in stretch still show skin, next). bc757e2 limits it to the armpit band (QA: trouser specks). Parked: long sleeves in the high stretch still show skin patches at large
-  size (cells the bare-body map gives the trunk; growing the shirt's own map changed nothing), a deeper rework of the arm binding. (on 91ef6e8)
+- Now: v0.64 built from 4a1dbe8 (APPV 64; since v0.63: SMOKE BOMB Dec 28, GACHA POP Jan 4, the armpit fixes 2be3eda and bc757e2,
+  overalls over the top faebcd8 and 91ef6e8); clean build, loads with no page errors, WAITING ON QA for the full set. v0.63 (f5234d3,
+  QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
+  session brings them back), so Cal must restart. Whichever passed version is newest then goes out: v0.64 if it passes, else v0.63.
+  ROOMS paints SAVE POINT (11 of 15). Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
+  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on 4a1dbe8)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2120,6 +2120,9 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the full set on v0.64, 4a1dbe8 (APPV 64). New since v0.63 (f5234d3): SMOKE BOMB (Dec 28) and GACHA
+      POP (Jan 4) in the Shop, the armpit rule (2be3eda, bc757e2), overalls over the top (faebcd8, 91ef6e8). LEAD built it clean in a
+      worktree and it loads with no page errors (creator to Loft, v0.64 in the header). Publishing waits on the restart either way.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the overalls in the stretch pose, 91ef6e8 (your 0246a11 finding). With a painted top (the starter tee,
       o_tee, o_puffer, o_flannel) the bib and straps, the legs and any tall boots now draw right after the painted picture. LEAD checked
       stretch and idle with the starter tee, o_tee+h_boots, o_puffer, o_flannel+v_boot, gp_star and gp_bear on both bodies
