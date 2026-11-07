@@ -274,15 +274,17 @@ function rsTier(C){return C.has("r_t3")?3:C.has("r_t2")?2:C.has("r_t1")?1:0}
 var lfSprNat=lfSpr;lfSpr=function(C,k,x,y,w,d,o){if(o&&o.H&&/^(rdx|sbx|rfx|bbx|dsx|spx|acx|rhx|vrx|bwx|kax|cbx|gmx|mlx|hmx|clx)_/.test(k)){o=Object.assign({},o);delete o.H}return lfSprNat(C,k,x,y,w,d,o)};
 var RDT=[null,["rdx_tlong",2.5,1.5,46],["rdx_tround",2.0,2.0,50],["rdx_tsq",2.2,2.0,50]];
 function rsSitAt(C,x,y,face,cx,cy,back,lbl){var n0=C.st.length;C.s("sit",x,y,face,"eat",[10,20],back?{tag:"diner",lift:1,sz:5,facewall:1,dk:0,wx:x,wy:y+1,tb:[cx,cy]}:{tag:"diner",lift:1,sz:5,wx:cx+1.8,wy:cy+1.8,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"})}
-function rsDinner(C,cx,cy,lbl){var tr=rsTier(C),T=RSCH[tr];
+/* two (LEAD and QA, 2026-11-07: the full floor read as packed): a 2-top, the tier's own table art at .65 with one chair each side */
+function rsDinner(C,cx,cy,lbl,two){var tr=rsTier(C),T=RSCH[tr];
   if(tr===0||!LFSPR.rdx_chairf){[[cx-1.15,cy-.1,1],[cx-.1,cy-1.15,-1]].forEach(function(p){lfSpr(C,T[1],p[0]-.3,p[1]-.3,.6,.6,{h:1,H:T[3],flip:p[2]>0?1:0,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,p[0],p[1],p[2],cx,cy,0,lbl)});lfSpr(C,T[0],cx-.9,cy-.9,1.8,1.8,{h:28,H:T[2],ctr:1});return}
   var K=RDT[tr],w=K[1],d=K[2];
   var chF=tr===1?"rdx_wchf":"rdx_chairf",chB=tr===1?"rdx_wchb":"rdx_chairb";
   /* Cal: fine dining in Noir gets sleek furniture: black marble and brass tables, charcoal velvet chairs */
   if(tr===3&&C.has("r_noir")&&C.has("r_x2")&&LFSPR.rdx_ntsq){K=["rdx_ntsq",K[1],K[2],K[3]];chF="rdx_nchairf";chB="rdx_nchairb"}
-  [cx-.62,cx+.62].forEach(function(x){var y=cy-d/2-.28;lfSpr(C,chF,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,x,y,-1,cx,cy,0,lbl)});
+  if(two){w*=.65;d*=.8}var cxs=two?[cx]:[cx-.62,cx+.62];
+  cxs.forEach(function(x){var y=cy-d/2-.28;lfSpr(C,chF,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,x,y,-1,cx,cy,0,lbl)});
   lfSpr(C,K[0],cx-w/2,cy-d/2,w,d,{h:28,ctr:1,flip:1,dk:1.7});
-  [cx-.62,cx+.62].forEach(function(x){var y=cy+d/2+.28;rsSitAt(C,x,y,1,cx,cy,1,lbl);lfSpr(C,chB,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:0,nob:1,nosh:1,ctr:1})})}
+  cxs.forEach(function(x){var y=cy+d/2+.28;rsSitAt(C,x,y,1,cx,cy,1,lbl);lfSpr(C,chB,x-.36,y-.36,.72,.72,{h:1,flip:1,dk:0,nob:1,nosh:1,ctr:1})})}
 /* a booth is two high-backed benches and a table, so a guest can really sit inside one */
 function rsBooth(C,x0,Y){if(!LFSPR.rdx_bench)return;lfSpr(C,"rdx_bench",x0,Y,3.2,.9,{h:28,H:74,flip:1,dk:.5,nosh:1,sh:1,ctr:1});
   [x0+.9,x0+2.3].forEach(function(x){rsSitAt(C,x,Y+.62,-1,x0+1.6,Y+1.65,0,"B")});
@@ -388,7 +390,8 @@ LFROOM.restaurant=function(C){
   if(H("r_b1")&&st>0)(st===2?(crescent?[3.85,7.2]:[.7,4.3,7.9]):[.7,4.3]).forEach(function(Y){rsBooth(C,.25,Y)});
   /* QA (Cal's use check): with the crescent booth in, its nearest table moves out of the booth's opening */
   var cres0=H("r_more2")&&st>1&&LFSPR.rdx_curve;
-  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[cres0?7.4:5.7,cres0?4.9:6.2],[9.8,6.2],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  /* p[2]: a 2-top. The full floor's middle row is 2-tops so chairs in neighbouring rows never touch (LEAD/QA 121dc00) */
+  ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[cres0?7.4:5.7,cres0?5.9:6.2,1],[9.8,6.3,1],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T",p[2])});
   if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   /* Cal: the crescent opens toward the room, straight down the picture (rdx_curve2 is drawn symmetric for the corner) */
   if(crescent){var cvx=.3,cvy=.25,cw=3.5,cv2=!!LFSPR.rdx_curve2;lfSpr(C,cv2?"rdx_curve2":"rdx_curve",cvx,cvy,cw,cv2?cw:3.3,{h:30,dk:2.4,ctr:1});
