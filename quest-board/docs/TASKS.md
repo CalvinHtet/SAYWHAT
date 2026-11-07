@@ -2033,10 +2033,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 60ed38e): SØLVBERG (sv_*, brand id sv): 5 of 15 ingested locally (ski jacket, Nordic sweater, quilted vest, fleece
-  half-zip, snow pants), not committed; ski leggings and cord trousers generating. The badge avoids a red cross on white and the moon
-  boots are puffer snow boots (sv_puffer), to stay clear of real marks. Files: data/items.json, art/raw, art/layers, art/app sv_*.
-  Next: the hats, scarf, mitten clips, three boots, badge, banner, one commit, QA. Then RATTLER. Brand runway: OK. Chrome: ROOMS.
+- Now (on 4011b3a): SØLVBERG (sv_*, brand id sv): 9 of 15 ingested locally (ski jacket, Nordic sweater, quilted vest, fleece,
+  snow pants, ski leggings, cord trousers, pom-pom beanie, trapper hat), not committed; goggles, scarf and mitten clips generating.
+  The badge avoids a red cross on white and the moon boots are puffer snow boots (sv_puffer). Files: data/items.json, art/raw,
+  art/layers, art/app sv_*. Next: three boots, badge, banner, one commit, QA. Then RATTLER. Brand runway: OK. Chrome: ROOMS.
 - DONE by QA (QA findings: pass; the badge ring is still green). WAITING ON QA: check OAKMONT's stripes, recoloured. QA's design call (the green-burgundy-green web stripe) is answered by recolouring
   every green stripe to navy: headband, wristbands, track jacket and pants, skirt hem, tube socks, tennis vest, the crop's second
   racket, the cap button and the badge ring. ROOMS checked headless: idle and backwalk1, 17 of 17 with 0 failures. LEAD gets the new
