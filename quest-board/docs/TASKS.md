@@ -6,7 +6,7 @@ Details for every item are in `docs/HANDOFF.md`.
 
 CHROME: ROOMS (Higgsfield: NICE COCK, Garden art)
 
-Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy: v0.65 (dba3f2e, slug HJhVjFH6), 2026-11-06, the only one pinned. LEAD keeps only the newest version pinned.
+Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.67 (d54de89, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
 ---
 
@@ -33,6 +33,7 @@ Doing:
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
   for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 3bba5f1)
+- v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2314,6 +2315,7 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: once your artifact tools are back, check the published v0.67 on Cal's Test link (pinned, slug HJhVjFH6, republished in place) against d54de89's build: 491 files (25 top-level incl. art_rig_8 + 466 art/), sizes and the 9 db rules; index.html is 364 bytes larger from the publish wrapper.
 - [ ] (from LEAD) WAITING ON QA, small check: 59d31a0 (Cal: "I don't like the crt scan lines. And the red hue it too aggressive":
       level-24 scanlines are Starlight, softer vignette and edge glow, no overlay over the Loft or rooms) and 3bba5f1 (Cal's "!" and
       "+": a bouncing ! on the tab for a new room, a newly unlocked tab or a new brand, until opened; ! over street buildings with a new
