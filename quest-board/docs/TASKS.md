@@ -29,11 +29,13 @@ Doing:
   app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (93d33f1,
   QA passed 9a946ed), the wall shelf, the menu board and no zoom in room windows (4e93d54, with QA); people keep their places through a purchase and
   new pieces pulse gold (1308059, with QA). CAL (2026-11-07) on the Restaurant's bar: "No I want the bar to be available
-  after it starts to look like a fine dining luxury restaurant": r_bar needs Fine Dining Service (r_t3), hidden until then (ROOMS). Live sync (019f21f, app/src/29n_live.js):
+  after it starts to look like a fine dining luxury restaurant": r_bar needs Fine Dining Service (r_t3), hidden until then (ROOMS). QA's ba1758a: level-opened tabs get their "!" (d0adfdc), the Garden lot at level 5 (ROOMS). CAL: "Give me the latest
+  version to test when ready": LEAD builds v0.68 as soon as ROOMS's bar rule and Garden level land, QA runs the full set, the publish
+  session puts it on Cal's Test link in place. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on e40cbaf)
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on d0adfdc)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
