@@ -465,6 +465,10 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 86f50d9 cat hood back (on f9338aa; `shots/qa/gp/hood_86f50d9.png`, `hood_h1_86f50d9.png`): pass, so GACHA POP's art is
+  15 of 15. From behind it has an outline, knit ribbing, a centre seam and the blue trim at the neck in all back poses on both bodies;
+  with long hair (h1) and the ponytail (h3) the hair hangs below it, nothing cut wrong; the front is unchanged. Still to check when
+  LEAD's rig side lands: the overalls' and shorts' "overTop" (d4d8fd8). Owner: ROOMS.
 - QA, GACHA POP wear test (ROOMS's 03274a7, LEAD's 07dfb84 Shop rows; on 272645c; `shots/qa/gp/`): 14 of 15 pass, one fix and one
   call. All 15 on both bodies (the skirt hers) in all 22 key poses, 0 draw failures; three outfits; the Shop (`shop.js` BRAND=gp):
   14 on him and 15 on her bought at full price, worn, in the mirror. ROOMS's points: (1) the wings sit right standing, sitting and
@@ -1921,7 +1925,7 @@ Doing:
   health-bar sweater, pixel camo cargo), not committed; track pants, denim patch shorts and heart beanie generating. Files: art/raw,
   art/layers, art/app sp_*. Next: headset, coin cap, cartridge pendant, pixel shades, three shoes, badge, banner, one commit, QA.
   Then BARD & BLADE. Brand runway: OK, 45 days. Chrome: ROOMS.
-- WAITING ON QA: check 86f50d9, GACHA POP's cat hood back. It is repainted with an outline, knit ribbing, a centre seam and the blue
+- DONE by QA (QA findings: pass). WAITING ON QA: check 86f50d9, GACHA POP's cat hood back. It is repainted with an outline, knit ribbing, a centre seam and the blue
   trim at the neck. ROOMS checked headless on both bodies: idle, backwalk1 and sitBack, 8 of 8 with 0 failures. The overalls' and shorts'
   "overTop" flag is in d4d8fd8; LEAD's rig side (pantsOver) decides when that shows.
 - DONE by QA (QA findings: 14 of 15, the cat hood's back; the overalls' bib). WAITING ON QA: wear test GACHA POP, 03274a7 (brand id gp; 15 pieces, both bodies; the skirt is hers only). ROOMS checked headless:
@@ -2098,7 +2102,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 14 of 15: the cat hood's back (ROOMS), the overalls' bib under every top (LEAD). (on 272645c)
+- Now: v0.63 (f5234d3) passed; LEAD's publish is blocked by the app (publish_files cannot attach files), the build stays staged; QA checks the published files after. SMOKE BOMB 15 of 15. GACHA POP 15 of 15 (hood back fixed); overTop waits on LEAD's rig side. (on f9338aa)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
