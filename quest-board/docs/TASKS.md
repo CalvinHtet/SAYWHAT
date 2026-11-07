@@ -22,9 +22,11 @@ Doing:
   about the database limits: 25,000 documents per version (about 4-7 per player); our town hall reads only 60 boards and 200
   pings, unordered, so it breaks past about 60 players; fix offered, Cal's call. CAL (2026-11-07): about 10 players, "synced perfectly so we can all see each others progress"; "perfectly consistent for
   everyone ... publish a new version at 4 am when they are all asleep": RELEASING "Two links, and the 4 am publish" (one Live artifact
-  republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). LEAD building live sync (instant updates of
-  everyone's progress, board, reactions and notes) for v0.67. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 465d39a)
+  republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). Live sync done for v0.67 (019f21f, app/src/29n_live.js):
+  progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
+  pushing stand-in db: 1-5 s, pushes off still within 60 s. The real platform's onSnapshot shape is not confirmed yet (asked the
+  publish session for db.d.ts); the code falls back to polling if it differs. Waiting on Cal: which artifact is Live, a launch date, a QA restart
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 019f21f)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
