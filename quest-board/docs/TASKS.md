@@ -465,6 +465,15 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's bad0b45 SAVE POINT wear test (on df51588; `shots/qa/sp/`): 13 of 15 pass, two fixes. All 15 on both bodies in all 22
+  key poses, 0 draw failures; three outfits. ROOMS's points: (1) no leftover outline on the cap or the slip-ons; the cap's brim edge
+  is soft but fine at game size. (2) The teal stand-ins for green (PLAYER 2, varsity cuffs, headset rings, pompom, track stripe,
+  cartridge star) all read, no white blanks. (3) The cap and beanie with long hair (h1) and the ponytail (h3) hang right front and
+  back. Fixes: the headset from behind (sitBack, type, rearStand, backwalks) shows a wide grey band wrapped straight across the back
+  of the head under the arc, like a blindfold strip (`z_headset_cap.png`); from behind only the arc over the top should show.
+  (4) Your design call: yes, the purple-trimmed checkerboard slip-on (sp_flag) reads as one well-known skate brand's classic
+  slip-on; repaint it (another pattern, or a lace-up). The pixel "deal with it" shades, the controller tee and the cartridge pendant
+  read as generic gaming, fine. Shop rows not in yet (no gx_sp_ in 15_shop.js), so the Shop run waits on LEAD. Owner: ROOMS.
 - QA, v0.64 (4a1dbe8, APPV 64; 22 files, 477 art): pass, publish when the artifact tools are back. On the exact clean build:
   savecheck; screens at 360 and 390; v0.63's own build makes a save that v0.64 loads, reloads, buys on and reloads; the level-5 start;
   Kode Plaza stages 0-2 and tapping in; town rules, townlive 5/5, townrx 12/12; doors 34 ok plus Garden and Restaurant walked both
@@ -1945,7 +1954,7 @@ Doing:
 - Now (on 8ad135a): BARD & BLADE (bb_*, brand id bb): 15 ids added to data/items.json (not committed); tunic, gambeson and doublet
   generating on Unlimited. Files: data/items.json, art/raw, art/layers, art/app bb_*. Next: the other 12, badge, banner, one commit,
   QA, shop lines to LEAD. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
-- WAITING ON QA: wear test SAVE POINT, bad0b45 (brand id sp; 15 pieces, both bodies). ROOMS checked headless: idle, walk1 and
+- DONE by QA (QA findings: 13 of 15, the headset's back and the checkerboard slip-ons). WAITING ON QA: wear test SAVE POINT, bad0b45 (brand id sp; 15 pieces, both bodies). ROOMS checked headless: idle, walk1 and
   backwalk1 load 30 of 30 with 0 failures and read right by eye. Look hardest at: the coin cap and the checkerboard slip-ons (a baked
   mannequin outline was stripped from both; look for leftover lines, and the cap's brim edge is a little soft); every teal detail
   (the brand's bright green is the key colour, so greens inside clothing became teal: PLAYER 2 letters, varsity cuffs, headset rings,
@@ -2128,7 +2137,7 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.64 (4a1dbe8) passes; publishing waits on LEAD's artifact tools (Cal restarts LEAD). Next: SAVE POINT's wear test (bad0b45). (on bad0b45)
+- Now: v0.64 (4a1dbe8) passes; publishing waits on LEAD's artifact tools (Cal restarts LEAD). SAVE POINT 13 of 15: the headset's back, the checkerboard slip-ons (ROOMS); its Shop run waits on LEAD's rows. (on df51588)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
