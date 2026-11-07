@@ -16,7 +16,7 @@ const TOPS = (process.env.TOPS || 'nc_hoodie').split(','), F = +(process.env.F |
       const it = x.SHOP.find((q) => q[6] && q[6].gar === top); if (!it) return { skip: 'no item' };
       for (const hs of ['h1', 'h2', 'h3']) { S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: body }); S.char.rig = Object.assign({}, window.QBLoft.data.creator.defaults, { body, hairStyle: hs, hairColor: 'brown' }); S.owned = S.owned || {}; S.owned[it[0]] = true;
         for (const nk of [null].concat(necks)) { const ovr = {}; ovr[it[1]] = it[0]; if (nk) { const q = x.SHOP.find((z) => z[0] === nk); S.owned[nk] = true; ovr[q[1]] = nk; }
-          const L = window.__qb.lookOf(ovr), ch = L.rig; if (!hairs.includes(hs + '=' + ch.hairStyle)) hairs.push(hs + '=' + (ch.hairStyle || ch.hair || JSON.stringify(ch).slice(0, 60))); window.QBLoft.warm(ch, 'stretch'); let u = null, t = 0; while (!u && t++ < 80) { u = window.QBLoft.frameOrNear(ch, 'stretch', F); if (!u) await w(120); }
+          const L = window.__qb.lookOf(ovr), ch = L.rig; if (!hairs.includes(hs + '=' + ch.hairStyle)) hairs.push(hs + '=' + (ch.hairStyle || ch.hair || JSON.stringify(ch).slice(0, 60))); window.QBLoft.warm(ch, 'stretch'); let u = null, t = 0; while (!u && t++ < 80) { u = window.QBLoft.frame(ch, 'stretch', F); if (!u) await w(120); }
           if (u && u.startsWith('blob:')) { const bl = await (await fetch(u)).blob(); u = await new Promise((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(bl); }); } out.push([hs, nk || 'none', u]); } }
       return { out, hairs }; }, [top, body, necks, F]);
     if (res.skip) { console.log(top, body, res.skip); continue; }
