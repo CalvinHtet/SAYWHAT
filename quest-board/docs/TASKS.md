@@ -15,10 +15,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.65 built from dba3f2e (APPV 65; since v0.64: SAVE POINT Jan 11, BARD & BLADE Jan 18, CHROME RAIN Jan 25, the rig's arms
   slot 23bf14f, brand badges in the art_ui pack 8be03dc); clean build, 489 files, loads with no page errors (v0.65 in the header),
-  WAITING ON QA for the full set. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
+  WAITING ON QA for the full set. KAIMANA in the Shop on Feb 1 (adcf65c; ROOMS's rows and colours, rule 19), WAITING ON QA; it is not in v0.65. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
   QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
-  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 80 days. Waiting on Cal: a launch date. Parked: the
-  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on dba3f2e)
+  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 87 days. Waiting on Cal: a launch date. Parked: the
+  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on adcf65c)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2209,6 +2209,9 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA: the KAIMANA Shop run, adcf65c (brand km, Feb 1, 15 rows as ROOMS wrote them, none for one body only).
+      LEAD checked the tab 13 weeks ahead: banner with art, badge from the pack, tagline, 15 pieces, no broken images, no page
+      errors; the camp shirt and shell necklace equip (`shots/lead/km_shop.png`). The necklace barely shows under the collar there.
 - [ ] (from LEAD) WAITING ON QA: the full set on v0.65, dba3f2e (APPV 65). New since v0.64 (4a1dbe8): SAVE POINT (Jan 11), BARD &
       BLADE (Jan 18) and CHROME RAIN (Jan 25) in the Shop, the rig's "arms" slot (bracers, the arm sleeve), brand badges from the
       art_ui pack. LEAD built it clean in a worktree: 489 files, loads with no page errors, v0.65 in the header.
