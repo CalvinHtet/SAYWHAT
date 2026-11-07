@@ -2512,10 +2512,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on facb194): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
-  (1) Dessert Parlor and (2) VR Arena done in facb194, WAITING ON QA below; (3) Restaurant thinning by superseding: next.
+- Now (on 10f64be): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
+  (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
   After: the WEAK upgrades, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
+  Fire Pit replaces the Patio Heaters; Sculptural Vases replace the potted tree; Wine Wall replaces the Drinks Cooler in every
+  style). Before/after: shots/rooms3/restaurant_*.png. Your note 3 from aa3a99b: clearly 'never cluttered' now?
 - TAKEN by QA (after the v0.72 full set). WAITING ON QA: check facb194, your reference check on two rooms: Dessert Parlor (pastel hutch for the bookcase in dsw_t1, Flower Mirror for
   the Arched Mirror, id de_arch kept) and VR Arena (dark neon shell vrw_t1, dark:1). Before/after: shots/rooms3/. Your notes from aa3a99b.
 - DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
