@@ -25,11 +25,14 @@ Doing:
   republished in place, one Test artifact, Live only at 4 am PT by a scheduled task). QA held v0.66 for one thing (the boba scene's "M" box); fixed in v0.67 = d54de89 (portrait fallback, 7 of 7 scenes; plus live
   sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Next build (v0.68): Cal's "I don't like the crt scan lines. And the red hue it too aggressive" (59d31a0: Starlight
   for scanlines, softer vignette and edge glow, no overlay on the Loft or rooms) and "The light on option should not matter for the
-  other rooms. Only the bedroom" (ROOMS, 20_loft.js lfLit and the lamp button). Live sync (019f21f, app/src/29n_live.js):
+  other rooms. Only the bedroom" (ROOMS abe06dd, QA 2f3d3a6), Cal's "!" on tabs and buildings and "+" on new rooms (3bba5f1,
+  app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (no
+  identical customers, fewer, smaller chair shadows, the sidewalk sign), the misplaced wall shelf, no zoom in room windows, people
+  keep their places when you buy, a new upgrade flashes. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 59d31a0)
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 3bba5f1)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -2295,6 +2298,11 @@ Doing:
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
+- [ ] (from LEAD) WAITING ON QA, small check: 59d31a0 (Cal: "I don't like the crt scan lines. And the red hue it too aggressive":
+      level-24 scanlines are Starlight, softer vignette and edge glow, no overlay over the Loft or rooms) and 3bba5f1 (Cal's "!" and
+      "+": a bouncing ! on the tab for a new room, a newly unlocked tab or a new brand, until opened; ! over street buildings with a new
+      room; + on the new room's spot inside, tapping opens the room that sells it with that upgrade first). LEAD's shots in
+      `shots/lead/alerts/` and `shots/lead/fx_*_after.png`. Both go into v0.68 with ROOMS's fixes.
 - [ ] (from LEAD) WAITING ON QA: v0.67, d54de89 (APPV 67) = v0.66 + your boba fix (styPortrait falls back to the same person's portrait:
       boba shows Mara's chef portrait; LEAD: 7 of 7 scenes with a portrait) + live sync (app/src/29n_live.js, 019f21f; Cal: "synced
       perfectly so we can all see each others progress"). Please recheck Review and the file match, and the town with live sync:
