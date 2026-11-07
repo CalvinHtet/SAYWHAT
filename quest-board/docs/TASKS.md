@@ -489,6 +489,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.69 = c2c53b7 (APPV 69), the full set on a clean build (490 files): PASS, publish it, 0 page errors anywhere. Test >
+  Review plays 114 of 114 at 390 on both bodies, nothing off screen or broken (the save gains only an empty "seen" record);
+  livesync.js PASS; live10.js PASS (quiet minute 0-1 writes per page); players10.js PASS (ten different saves, neighbours in their
+  outfits, all visits, posts and hellos in 1 s, every save its own after reloading, 27 docs); alerts.js PASS; fxcheck.js PASS;
+  roomwin.js PASS (no zoom, street and buildings at 1.6x, purchases keep people, gold pulse); barlock.js PASS; badges.js: every
+  brand tab from the pack, 0 loose files; drops.js PASS (Mon/Thu, HANGANG first, 0 repeats in 192 rerun slots); stuckscan.js: all
+  21 rooms buy through; nightlights.js: only the Bedroom has a lamp button and it survives a reload; guestcount.js: every business
+  at most 5 at once, 0 duplicate looks, someone in every sample; access.js: as on ab1f68f (only the known false alarms: booth
+  and sofa seats, theatre rows, the pinball's art direction). Room layouts are those QA checked by eye on 9136fc1 and ab1f68f.
+  Not on a real phone; the published-file check after the publish needs Cal to restart QA (artifact tools).
 - QA, ROOMS's 567ea26 (Nightclub staff, Sky Patio chair) on a clean build of ab1f68f: PASS, 0 page errors. The room built from
   the layout now has the DJ at (7.8, 0.5) behind the decks and the bartender at (2.2, 0.5) behind the bar; the bar sits at y 1.0,
   the speakers at 0.85, the coat check from x 12.1, so an aisle runs along the back wall, entered between the right speakers and
@@ -2486,15 +2496,13 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on c2c53b7 (v0.69). Doing: the v0.69 full set on a clean build of c2c53b7 (490 files): Review both bodies, livesync,
-  live10, players10, alerts, FX, room windows, bar rule, badges, drops, stuck rooms, access, night lights, guests. Before: ROOMS's
-  567ea26 (pass), placement list closed. Next: the verdict to LEAD. Published v0.64, v0.65 and v0.67 file checks BLOCKED until
-  Cal restarts QA (artifact tools).
+- Now: on c2c53b7 (v0.69). Done: the v0.69 full set, PASS (publish). Next: check the published v0.69 against c2c53b7's build
+  once Cal restarts QA (artifact tools; also v0.64, v0.65 and v0.67 still BLOCKED), and whatever LEAD or ROOMS send next.
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD; TAKEN by QA) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
+- [x] (from LEAD; done: QA findings, PASS, publish) WAITING ON QA: the full set on v0.69, c2c53b7 (APPV 69), Cal's next test copy and the one to publish (no v0.68
       separately). Since v0.68 (e276038): ROOMS's room-review fixes (62d336d, dbf2593, a4be384, aca27a1, 1e8a3b4), every piece usable
       (570b2f3), the Nightclub staff and patio chair (567ea26, your check), LEAD's screens (cfa5f62, 1ab3753). LEAD: clean build, 490
       files, loads clean, Review 114/114 save unchanged, livesync PASS, alerts PASS.
