@@ -17,8 +17,8 @@ Doing:
   slot 23bf14f, brand badges in the art_ui pack 8be03dc); clean build, 489 files, loads with no page errors (v0.65 in the header),
   WAITING ON QA for the full set. KAIMANA in the Shop on Feb 1 (adcf65c; ROOMS's rows and colours, rule 19); QA 15 of 15 and the Shop run pass (2628662); it rides in v0.66. v0.64 (4a1dbe8) is PUBLISHED and pinned (slug NSmu55hk, 499 files), v0.62 unpinned; WAITING ON
   QA: check its published files. This session's artifact tools are broken, so each publish runs in a fresh LEAD session (RELEASING
-  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 87 days. Waiting on Cal: a launch date. Parked: the
-  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on bee7bd0)
+  has the steps). Rule 19 (436a82b): new brands without Cal's approval; runway 87 days. Waiting on Cal: a launch date, and opening v0.65 on his phone (its database and v0.64's are empty, so no phone has opened them and the phone-lag log has nothing yet). Parked: the
+  arm binding in the high stretch (skin patches at large size, wrist flecks) and the far arm from behind in type1. (on 0a88ad4)
 - v0.65 PUBLISHED and pinned (slug HJhVjFH6, 490 files: 24 top-level + 466 art, 9 db rules, user, sample images), v0.64 unpinned. The publish session checked r/ byte for byte against dba3f2e's clean build and every published size against r/ (index.html +364 bytes, the publish wrapper); v0.64's published list (499) matched what was sent too. Title reads "Quest Board" (the build's <title> wins). r/ and the v65 worktree removed by LEAD. WAITING ON QA: check the published v0.65 once QA's artifact tools are back. (on b6efb12)
 
 To do:
