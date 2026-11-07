@@ -2602,15 +2602,12 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f3c8326): CAL APPROVED (2026-11-07, "Approve all"): the six new friend portraits and the SAYMORE app icon, both in
-  f3c8326 (art/app/friend_<id>.webp x3 each; web/icons/ icon-512, icon-maskable-512, icon-192, apple-touch-icon). Quince stays
-  out unless Cal says which photo is her; llamaorhorse skipped (private).
-  Now: the new friends' friend-only outfits from their portraits, each edited on Unlimited from an existing sheet so the fit
-  holds (every angle plus the yawn picture for tops): fr_kris_shirt (beige linen) + fr_kris_pants (white linen),
-  fr_alvina_coat (cream teddy coat over burgundy), fr_nick_suit (navy jacket, white shirt) + fr_nick_trousers, fr_ben_jacket
-  (light grey zip, white tee) + fr_ben_cap (backwards black), fr_kevin_polo (red) + fr_kevin_jeans (dark), fr_victor_hoodie
-  (black zip, white tee) + fr_victor_chinos (khaki). Files: art/app, data/items.json. Specs sent to LEAD.
-  Game Room WEAK upgrades and fridge art done (776bc77, 081d0a2; WAITING ON QA below).
+- QUEUE EMPTY (ROOMS, on eb0eea3, 2026-11-07): every friend job is done. Cal approved the six new portraits and the SAYMORE
+  app icon (f3c8326). All 17 friend-only pieces are in, each from its friend's portrait: Vega 6c66dd8; Cynthia, Jina 21fedf3;
+  Kenan be717dc; Logan 778e0c6; Nick and Victor and Kevin pants ef70922; Kris shirt, Nick suit 49df52c; Alvina coat, Kris pants
+  959862d; Kevin polo ca7d92f; Ben jacket a5dcb14; Victor hoodie, Ben cap eb0eea3. LEAD's eq ids match. Game Room WEAK
+  upgrades and fridge art 776bc77, 081d0a2. Waiting only on QA (lines below). Quince stays out unless Cal names her photo.
+  Next when something comes in: nothing queued; the remaining rooms' WEAK re-audits are low priority.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
@@ -2620,6 +2617,13 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
+- WAITING ON QA: check ef70922, 49df52c, 959862d, ca7d92f, a5dcb14, eb0eea3 (all go into v0.73), the six new friends'
+  friend-only pieces: fr_kris_shirt, fr_kris_pants, fr_alvina_coat, fr_nick_suit, fr_nick_trousers, fr_ben_jacket, fr_ben_cap,
+  fr_kevin_polo, fr_kevin_jeans, fr_victor_hoodie, fr_victor_chinos. ROOMS's own check: matrix wear and grid sheets in every
+  pose (both bodies), stretch at 1000 px for all six tops; idle and stretch of every full outfit in
+  shots/friends_new/new_friends_outfits_idle.png and _stretch.png. Known, small: fr_ben_cap's back views show the strap
+  opening (from behind it reads like a cap worn forward); fr_victor_hoodie's stretch has a slightly doubled edge under the
+  sleeves at 1000 px (the sleeve undersides were thickened in the layer to hide a skin strip). Say if either needs a repaint.
 - WAITING ON QA: check 776bc77 (goes into v0.73), Game Room WEAK upgrades: RGB Floor Lamp moved out from behind the console to
   the open floor between the arcade and the TV (0.04% -> 0.51% of the picture), Mini Fridge a step in front of the soda machine on
   the right wall with the soda machine's front clear (0.18% -> 0.67%), Dartboard larger and clear of the door frame (0.21% ->
