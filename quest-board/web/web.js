@@ -144,5 +144,51 @@
       return Promise.resolve(null);
     }
   };
-  window.__qbWeb = { live: live, signedIn: signedIn };
+  /* ---- the installed app: offline copy, a quiet update when it comes back, and art fetched ahead ---- */
+  var mine = function (src) { var u = new URL(src, location.href); return u.pathname.replace(/^.*\//, "") + u.search; };
+  var appHash = function (html) { var m = /app\.js\?h=([0-9a-f]+)/.exec(html); return m ? m[1] : ""; };
+  var running = appHash([].map.call(document.scripts, function (s) { return s.src; }).join(" "));
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  }
+  /* tell the worker which files this version uses, so copies of older art are dropped */
+  function keepList() {
+    if (!navigator.serviceWorker || !navigator.serviceWorker.controller) return;
+    var keep = Object.keys(HASH).map(function (n) { return n + "?h=" + HASH[n]; });
+    [].forEach.call(document.scripts, function (s) { if (s.src && /\?h=/.test(s.src)) keep.push(mine(s.src)); });
+    navigator.serviceWorker.controller.postMessage({ keep: keep });
+  }
+  /* back from the background after a while: if a new version went out meanwhile (the 4 am publish), load it now, unless a
+     window is open (a photo check, a story scene); the save is already in the database, so nothing is lost */
+  var hiddenAt = 0;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { hiddenAt = Date.now(); return; }
+    if (!running || Date.now() - hiddenAt < 10 * 60000) return;
+    fetch("index.html", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (html) {
+      var h = appHash(html);
+      if (h && h !== running && !document.querySelector("#layer .modal")) location.reload();
+    }).catch(function () {});
+  });
+  /* fetch ahead, a few at a time and only while the app is on screen: the buildings and rooms first, then this player's own
+     body (the other body's layers load only if someone wearing them is drawn), then icons. Each picture is downloaded once. */
+  function fetchAhead() {
+    var sex = (window.QBGAME && QBGAME.sex()) || "m", other = sex === "f" ? "m_" : "f_", rank = function (n) {
+      return /^(bld_|ui_|logo_)/.test(n) ? 0 : /^[mf]_/.test(n) ? 2 : /^icon_/.test(n) ? 3 : 1; };
+    var q = Object.keys(HASH).filter(function (n) { return n.indexOf(other) !== 0; }).sort(function (a, b) { return rank(a) - rank(b); });
+    var busy = 0, next = function () {
+      while (busy < 3 && q.length) {
+        if (document.hidden) { setTimeout(next, 5000); return; }
+        var n = q.shift(); busy++;
+        fetch(urlOf(n), { priority: "low" }).catch(function () {}).then(function () { busy--; next(); });
+      }
+    };
+    window.__qbWeb.ahead = q; next();
+  }
+  (function afterBoot() {
+    if (!(window.QBGAME && QBGAME.ready())) { setTimeout(afterBoot, 2000); return; }
+    setTimeout(keepList, 5000);
+    if (!(navigator.connection && navigator.connection.saveData)) setTimeout(fetchAhead, 15000);
+  })();
+
+  window.__qbWeb = { live: live, signedIn: signedIn, running: running };
 })();

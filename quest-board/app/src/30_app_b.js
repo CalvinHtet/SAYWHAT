@@ -1525,4 +1525,7 @@ render();try{chLoad()}catch(e){}
   checkPending();
   try{if(db&&MYUID){socPublish(true);socCheckPings()}}catch(e){}
 })();
+/* read-only, for the web build's shell (web/web.js: fetch-ahead and dropping old art once the game is up). Not a test hook:
+   it stays in release builds. */
+window.QBGAME={ready:function(){return !!(loaded&&S&&S.created)},sex:function(){return (S&&S.char&&S.char.sex)||"m"}};
 })();

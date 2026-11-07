@@ -119,6 +119,17 @@ if WEB:
 files = [["%s?h=%s" % (s, fp(os.path.join(DIST, s))), os.path.getsize(os.path.join(DIST, s))] for s in SCRIPTS]
 tags = read(APP, "loader.html").replace("/*FILES*/[]", json.dumps(files))
 page = read(APP, "index.html").replace("<!--APP-SCRIPTS-->", tags)
+if WEB:
+    # installable: the manifest and icons for Add to Home Screen (full screen, own icon), and the service worker (web/sw.js)
+    for name in ("manifest.webmanifest", "sw.js"):
+        shutil.copy(os.path.join(WEBDIR, name), os.path.join(DIST, name))
+    shutil.copytree(os.path.join(WEBDIR, "icons"), os.path.join(DIST, "icons"), dirs_exist_ok=True)
+    head = ('<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">'
+            '<link rel="icon" href="icons/icon-192.png"><meta name="theme-color" content="#14121c">'
+            '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">'
+            '<meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="SAYWHAT">')
+    assert page.count("</head>") == 1
+    page = page.replace("</head>", head + "</head>").replace("<title>Quest Board</title>", "<title>SAYWHAT</title>")
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)
 

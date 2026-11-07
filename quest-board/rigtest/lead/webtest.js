@@ -71,6 +71,15 @@ let fails = 0; const ok = (name, cond, info) => { if (!cond) fails++; console.lo
   const ai = await A.p.evaluate(async () => { const s = await window.claude.use('sample'); const lim = await s.limits(); const r = await s.json('Return ONLY JSON {"matches":true}', { modelTier: 'quick' }); return { lim, r }; });
   ok('sample.json goes to /api/sample and hands back the result', ai.lim.images && ai.r && ai.r.matches === true && apiBody && apiBody.prompt && apiBody.tier === 'quick', { ai, apiBody });
 
+  // 6. installable: manifest, home-screen icon, service worker; art fetched ahead, the other body's layers left alone
+  const inst = await A.p.evaluate(async () => { const m = document.querySelector('link[rel=manifest]'); const mf = m ? await (await fetch(m.href)).json() : null;
+    const reg = await navigator.serviceWorker.getRegistration(); return { name: mf && mf.name, display: mf && mf.display, icons: mf && mf.icons.length, touch: !!document.querySelector('link[rel=apple-touch-icon]'), sw: !!reg, title: document.title }; });
+  ok('installable: manifest (SAYWHAT, standalone, icons), home-screen icon, service worker', inst.name === 'SAYWHAT' && inst.display === 'standalone' && inst.icons >= 2 && inst.touch && inst.sw && inst.title === 'SAYWHAT', inst);
+  await A.p.waitForTimeout(20000);
+  const ah = await A.p.evaluate(() => ({ left: (window.__qbWeb.ahead || []).length, started: !!window.__qbWeb.ahead, sex: window.QBGAME.sex() }));
+  const other = ah.sex === 'f' ? /^m_/ : /^f_/;
+  ok('fetch-ahead runs after boot', ah.started, ah);
+  ok("fetch-ahead never takes the other body's layers", !art.some((n) => other.test(n)), art.filter((n) => other.test(n)).slice(0, 3));
   ok('no page errors', !A.errs.length && !B.errs.length, A.errs.concat(B.errs).slice(0, 4));
   console.log(fails ? 'FAIL ' + fails : 'PASS'); await b.close(); process.exit(fails ? 1 : 0);
 })();
