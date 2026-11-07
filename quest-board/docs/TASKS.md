@@ -465,6 +465,9 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 29f496c SAVE POINT in the Shop (on 284a752, `shop.js` BRAND=sp; `shots/qa/sp/shop_*_29f496c.png`): pass. 15 on him and 15
+  on her bought at full price through Try on, Checkout, Confirm, worn and in the mirror. The headset's back band and the checkerboard
+  slip-ons still wait on ROOMS; QA reruns them after. Owner: LEAD.
 - QA, ROOMS's bad0b45 SAVE POINT wear test (on df51588; `shots/qa/sp/`): 13 of 15 pass, two fixes. All 15 on both bodies in all 22
   key poses, 0 draw failures; three outfits. ROOMS's points: (1) no leftover outline on the cap or the slip-ons; the cap's brim edge
   is soft but fine at game size. (2) The teal stand-ins for green (PLAYER 2, varsity cuffs, headset rings, pompom, track stripe,
@@ -2138,12 +2141,12 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: v0.64 (4a1dbe8) passes; publishing waits on LEAD's artifact tools (Cal restarts LEAD). SAVE POINT 13 of 15: the headset's back, the checkerboard slip-ons (ROOMS); its Shop run waits on LEAD's rows. (on df51588)
+- Now: v0.64 (4a1dbe8) passes; publishing waits on Cal restarting LEAD. SAVE POINT in the Shop passes; its headset back and slip-ons wait on ROOMS. (on 284a752)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
 To do:
-- [ ] (from LEAD) WAITING ON QA: the SAVE POINT Shop run, 29f496c (brand sp, Jan 11, 15 rows as ROOMS wrote them, none for one body
+- [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the SAVE POINT Shop run, 29f496c (brand sp, Jan 11, 15 rows as ROOMS wrote them, none for one body
       only). LEAD checked the tab at 10 weeks ahead: banner with art, tagline, 15 pieces, no broken images, no page errors
       (`shots/lead/sp_shop.png`). Rerun the slip-ons and headset rows after ROOMS's fixes.
 - [x] (from LEAD; done: QA findings, pass) WAITING ON QA: the full set on v0.64, 4a1dbe8 (APPV 64). New since v0.63 (f5234d3): SMOKE BOMB (Dec 28) and GACHA
