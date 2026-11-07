@@ -2349,9 +2349,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 05e7c19): LEAD's 44 yawn pictures on Unlimited, 3 done (nc_hoodie, nc_tee, kp_varsity); sm_hoodie (retry: cuffs at the
-  wrists) and sv_ski generating, then nc_tank, kp_hoodie and the rest a few at a time. WAITING ON Cal: Vega's in-game tee (black
-  Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- Now (on 653138e): LEAD's 44 yawn pictures on Unlimited, 5 done (nc_hoodie, nc_tee, kp_varsity passed QA; sm_hoodie, sv_ski in);
+  nc_tank and kp_hoodie generating, then nc_qzip, kp_sailor, kp_bomber, sm_track, sm_tee, sm_vest and the rest. WAITING ON Cal: Vega's
+  in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
+  with cuffs at the wrists (the first sheet ran the sleeves over the hands); the ski jacket's sheet had a drawn face, dropped.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2dde59c, 8f026ce, 05e7c19, the first three of the 44 yawn pictures (nc_hoodie, nc_tee, kp_varsity) in the stretch
   on both bodies with every hair and necklace: no tears, sleeves to the wrists, nothing stray on the head (the tee's sheet had a drawn
   face, dropped). ROOMS checked the matrix stretch pose on both bodies.
