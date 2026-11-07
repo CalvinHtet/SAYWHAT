@@ -26,13 +26,13 @@ Doing:
   sync), clean build, 490 files, Review 114 of 114 with the save unchanged, livesync.js PASS, no page errors: WAITING ON QA. Next build (v0.68): Cal's "I don't like the crt scan lines. And the red hue it too aggressive" (59d31a0: Starlight
   for scanlines, softer vignette and edge glow, no overlay on the Loft or rooms) and "The light on option should not matter for the
   other rooms. Only the bedroom" (ROOMS abe06dd, QA 2f3d3a6), Cal's "!" on tabs and buildings and "+" on new rooms (3bba5f1,
-  app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (no
-  identical customers, fewer, smaller chair shadows, the sidewalk sign), the misplaced wall shelf, no zoom in room windows, people
+  app/src/29o_alerts.js; rigged headless: Restaurant via Mara, a new tab, a new brand), and from ROOMS: Cal's restaurant notes (93d33f1,
+  QA passed 9a946ed), the wall shelf, the menu board and no zoom in room windows (4e93d54, with QA); still to come from ROOMS: people
   keep their places when you buy, a new upgrade flashes. Live sync (019f21f, app/src/29n_live.js):
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 3bba5f1)
+  for the published-file checks, opening v0.66 on his phone. Parked: the arm binding in the high stretch. (on 9a946ed)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
