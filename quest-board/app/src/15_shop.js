@@ -179,7 +179,7 @@ var EXTRA_ITEMS=[
  ["gx_cr_shades","a_acc","Mirror Shades",700,1,"Chrome frames, a neon gradient.",{gar:"cr_shades",b:"cr"}],
  ["gx_cr_trench","a_top","Holo Trench",1800,1,"Knee-length, iridescent, collar up.",{gar:"cr_trench",b:"cr"}],
  ["gx_cr_bomber","a_top","Glow-Seam Bomber",1500,1,"Glossy black, cyan along every seam.",{gar:"cr_bomber",b:"cr"}],
- ["gx_cr_mesh","a_top","Mesh Harness Top",1000,1,"Cropped black mesh, chrome-ringed straps.",{gar:"cr_mesh",b:"cr"}],
+ ["gx_cr_mesh","a_top","Mesh Harness Top",1000,1,"Cropped dark mesh, chrome-ringed straps.",{gar:"cr_mesh",b:"cr"}],
  ["gx_cr_vest","a_top","Street Armour Vest",1400,1,"Chrome plates, rose light strips.",{gar:"cr_vest",b:"cr"}],
  ["gx_cr_cargo","a_pants","Neon Piped Cargo",1100,1,"Glossy black, cyan piping.",{gar:"cr_cargo",b:"cr"}],
  ["gx_cr_skirt","a_pants","Techno Panel Skirt",950,1,"Split panels, glowing seams.",{gar:"cr_skirt",b:"cr",fo:1}],
