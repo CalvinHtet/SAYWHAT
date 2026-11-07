@@ -60,7 +60,8 @@ function qbrvName(t){return (ROOMT[t]||{}).name||t}
 function qbrvRow(title,sub,btns){return '<div class="qbtr-room"><div><b>'+esc(title)+'</b><small>'+sub+'</small></div><div class="qbtr-b">'+btns+'</div></div>'}
 function qbrvBtn(k,v,label){return '<button class="btn ghost sm" data-rv="'+k+'" data-v="'+esc(String(v))+'">'+esc(label||"Play")+'</button>'}
 function qbrvHtml(){var h='<div class="card box2 qbtr qbrv"><span class="label">Testing</span><h2 style="font-size:28px;margin:0 0 6px">Review</h2>'
-  +'<p class="note">Everything a player meets along the way, in order. Play shows it the way the game does; nothing is saved.</p>';
+  +'<p class="note">Everything a player meets along the way, in order. Play shows it the way the game does; nothing is saved.</p>'
+  +'<div class="qbtr-row"><button class="btn" data-rv="story" data-v="all">Play the whole story</button></div>';
   /* 1. the story: each step's scene, the room's welcome window and a new team member */
   h+='<h3 class="label" style="margin-top:14px">The story, in order</h3>';
   STORY.forEach(function(s,k){if(s.how==="never")return;var L=(ECON.stepLv||{})[s.id],b="";
@@ -91,6 +92,7 @@ function qbrvHtml(){var h='<div class="card box2 qbtr qbrv"><span class="label">
   BRANDS.forEach(function(b){h+=qbrvRow(b.name,esc(b.sub)+" &middot; "+esc(b.start),qbrvBtn("brand",b.id))});
   return h+'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="mclose">Close</button></div></div>'}
 function qbrvPlay(k,v){
+  if(k==="story"){document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});qbrvStory();return}
   if(k==="scene"){var s=STORY.filter(function(x){return x.id===v})[0];if(s&&s.scene)modal(styCard(s.scene,styPortrait(s),QBRV_CLOSE));return}
   if(k==="beat"){var b=BEATS.filter(function(x){return x.id===v})[0];if(b)modal(styCard(b,styBeatPic(b),QBRV_CLOSE));return}
   if(k==="visit"){var f=FVISITS.filter(function(x){return x.id===v})[0];if(f)fvShow(f);return}
@@ -119,3 +121,33 @@ function qbUnlockAll(){if(!S||!S.created)return;var x=S,g,n=0;
   x.coins=(x.coins||0)+500000;
   try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}persist();render();pop("Everything unlocked: level "+effLvl()+", every room and tab, +500,000 coins")}
 window.__qbRooms.unlockAll=qbUnlockAll;
+/* ---------- Review > Play the whole story (Cal, 2026-11-07: "I also want every story beat and character cutscenes to make
+   sense"). Plays everything a player meets, one after another in the order they meet it: each story step (a short card saying
+   what happens and why, when it has no scene of its own), its scene, the room's welcome window, a new team member, and the return
+   visits where they fall. Close a window to go on; Stop ends it. Nothing is saved. */
+/* where each return visit falls: right after this story step */
+var QBRV_BEATAFTER={mara1:"chef",mara2:"boba",mara3:"dessert",desmond2:"rafe",rafe2:"rooftop",priya2:"theater",nova2:"theater",theo2:"auditorium",nova3:"arcade",sable2:"club",rafe3:"club",sable3:"club",rafe4:"club"};
+function qbrvSeq(){var q=[],n=0;
+  q.push(["note","The Loft","Day one. Your home base: quests pay coins, and coins build it up."]);
+  if(ROOMHELP.loft)q.push(["welcome","loft"]);
+  STORY.forEach(function(s){if(s.how==="never")return;n++;
+    var name=s.room?qbrvName(s.room):(s.scene?s.scene.who:s.id),lv=(ECON.stepLv||{})[s.id];
+    q.push(["note","Step "+n+": "+(s.room?name:s.scene.who+" joins"),(lv?"Level "+lv+". ":"")+s.why]);
+    if(s.scene)q.push(["scene",s.id]);
+    if(s.scene&&s.scene.team&&TEAM[s.scene.team])q.push(["team",s.scene.team]);
+    if(s.room&&ROOMHELP[s.room])q.push(["welcome",s.room]);
+    if(s.id==="garden"&&TEAM.sable)q.push(["note","Meanwhile, in the Hero's Lair","Your first mission comes home with someone: Sable."],["team","sable"]);
+    BEATS.forEach(function(b){if(QBRV_BEATAFTER[b.id]===s.id)q.push(["beat",b.id])})});
+  q.push(["note","The end, for now","That is every story step, scene and return visit."]);
+  return q}
+var QBRV_RUN=null;
+function qbrvStory(){var q=qbrvSeq(),k=0,run={stop:0};QBRV_RUN=run;
+  var next=function(){if(run.stop||QBRV_RUN!==run)return;if(k>=q.length){QBRV_RUN=null;return}var it=q[k++],before=document.querySelectorAll("#layer .modal").length;
+    if(it[0]==="note"){var m=modal('<div class="card box2"><span class="label">The story &middot; '+k+' / '+q.length+'</span><h2 style="font-size:26px">'+esc(it[1])+'</h2><p>'+esc(it[2])+'</p><div class="row"><button class="btn" data-act="mclose">Next</button><button class="btn ghost" data-qrv="stop">Stop</button></div></div>');
+      m.querySelector("[data-qrv=stop]").onclick=function(){run.stop=1;m.remove()}}
+    else qbrvPlay(it[0],it[1]);
+    /* wait for the window it opened to close (a team join opens after a short delay), then go on */
+    var waited=0,t=setInterval(function(){waited+=300;var now=document.querySelectorAll("#layer .modal").length;if(now>before||waited>1500){if(now<=before){clearInterval(t);next()}}},300)};
+  next()}
+window.__qbRooms.story=qbrvStory;window.__qbRooms.storySeq=qbrvSeq;
+window.__qbRooms.gate=function(id){var s=STORY.filter(function(x){return x.id===id})[0];try{return !!(s&&s.gate())}catch(e){return "err:"+e.message}};

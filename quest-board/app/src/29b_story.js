@@ -17,16 +17,18 @@ var STORY=[
   {id:"boba",room:"boba",how:"lot",why:"Once the restaurant is busy, customers start asking for drinks.",gate:function(){return styHas("restaurant")&&(S.base.served||0)>=80},
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlour.",gate:function(){return styUps("boba")>=4}},
-  {id:"lockkey",room:"skybar",how:"free",why:"An investor is watching how much you earn.",gate:function(){return styHas("dessert")&&(S.earnedC||0)>=ECON.gateLockKey},
-    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
+  /* Cal, 2026-11-07: "I want the bar to be available after it starts to look like a fine dining luxury restaurant": Desmond only
+     comes once the Restaurant has White Linen Service (r_t3), the same piece its own Upstairs Bar upgrade waits for */
+  {id:"lockkey",room:"skybar",how:"free",why:"Once the Restaurant looks like fine dining, an investor starts eating there.",gate:function(){return styHas("dessert")&&(S.earnedC||0)>=ECON.gateLockKey&&styFine()},
+    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. White linen, candlelight, a real kitchen. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
   {id:"rafe",room:null,how:"team",why:"Someone has become a regular at Lock and Key.",gate:function(){return styUps("skybar")>=3},
     scene:{who:"Rafe Calloway",role:"Travelling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred.","\"Best drink since a dockside bar off the Coral Reach. I'm in town between expeditions. Mind if I make this my spot?\""],yes:"Pour him another",team:"rafe"}},
   {id:"rooftop",room:"rooftop",how:"upgrade",why:"Lock and Key's regulars keep asking about the roof.",gate:function(){return styUps("skybar")>=6}},
   {id:"mall",room:"mall",how:"lot",why:"Another investor is watching how much you earn.",gate:function(){return styHas("rooftop")&&(S.earnedC||0)>=ECON.gateMall},
     scene:{who:"Priya Okafor",role:"Investor",lines:["I've been watching your plaza. Restaurant, drinks, dessert, a speakeasy upstairs. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
-  {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
-  {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3},
+  {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3&&styMallHas("ml_shop1")},
     scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers keep asking where I shop. Could I film here every week?\""],yes:"Deal. Roll the camera",team:"nova"}},
+  {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: the lot next door could be a movie theater.",gate:function(){return styUps("mall")>=4}},
   /* Cal: the Auditorium opens free once the lobby has its basics (ticket booth, popcorn, soda) and someone to run it: Theo */
   {id:"auditorium",room:"auditorium",how:"free",why:"A theater needs its basics in the lobby (a ticket booth, popcorn and a soda fountain) and someone to run it.",gate:function(){var r=S.base.slots.filter(function(x){return x&&x.t==="theater"})[0];return !!r&&["t_booth1","t_pop","t_soda"].every(function(k){return r.a&&r.a[k]})},
     scene:{who:"Theo",role:"Theater crew",lines:["Saw the ticket stand go up. You're going to need someone behind it.","Hire me and we can open the screen room tonight."],yes:"Hire Theo, open the Auditorium",team:"theo"}},
@@ -44,6 +46,8 @@ var STORY=[
   /* first in the Garden's menu, so it shows as the teaser from day one and as the next buy once Mara says yes */
   ADDONS.garden.unshift(["gd_rest","Knock Through to a Restaurant",(ROOMT.restaurant&&ROOMT.restaurant.cost)||2500,{opens:"restaurant",g:"Expansion",fixed:1},"Open the wall next to the beds into a small kitchen and a dining room. Mara runs the stove."])})();
 function styState(){if(!S.story||typeof S.story!=="object")S.story={};var o=S.story;o.done=o.done||{};o.offer=o.offer||{};o.team=o.team||{};o.sold=o.sold||0;o.later=o.later||{};o.biz=o.biz||0;return o}
+function styFine(){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t==="restaurant"})[0];return !!(r&&r.a&&r.a.r_t3)}
+function styMallHas(k){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t==="mall"})[0];return !!(r&&r.a&&r.a[k])}
 function styHas(t){return !!t&&S.base&&S.base.slots.some(function(r){return r&&r.t===t})}
 function styUps(t){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t===t})[0];return r?addonsOf(r).length:0}
 function styStep(room){return STORY.filter(function(s){return s.room===room})[0]}
