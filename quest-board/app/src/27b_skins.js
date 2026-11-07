@@ -186,19 +186,20 @@ autoRoom("club",{name:"Nightclub",lv:50,cost:4000,buy:1,startLv:50,step:1,wall:"
  floor:function(){return window.LFSPR&&LFSPR.cbw_t1?null:undefined},
  draw:function(C,H){if(window.LFSPR&&LFSPR.cbw_t1)C.shellK="cbw_t1";else roomSkin(C,{floor:cbFloor,back:cbWall,left:cbWall});if(H("cb_floor"))cbBeams(C);
   /* a DJ on the decks and a bartender behind the bar (QA design review) */
-  if(H("cb_dj"))C.s("work",7.8,.5,1,"work",[20,40],{tag:"dj"});/* QA (Cal's use check): the DJ stands behind the decks, facing the floor */if(H("cb_bar"))C.s("work",2.3,.6,1,"work",[6,12],{tag:"bartender"})},
+  if(H("cb_dj"))C.s("work",7.8,.5,1,"work",[20,40],{tag:"dj",onspot:1});/* QA (Cal's use check): the DJ and the bartender stand behind the decks and the bar,
+   facing the floor (onspot: the room build would otherwise move a spot behind a piece out to the open floor) */if(H("cb_bar"))C.s("work",2.2,.5,1,"work",[6,12],{tag:"bartender",onspot:1})},
  items:[
   /* 6 x 5 tiles of floor (four panels, 8 x 8 lights) straight in front of the DJ */
   cbU("cb_floor","LED Dance Floor",UP_L,"cbx_floor",cbP("cbx_floor",[[4.8,2.5,6,5]],{fit:1}),"The whole floor changes colour, and lasers come on.",
    {plat:5,cust:[[5.8,3.4,1,CBB],[7.8,3.3,-1,CBB],[9.8,3.5,1,CBB],[6.4,5.2,-1,CBB],[9.0,5.0,1,CBB],[5.7,6.8,1],[7.8,6.6,-1],[9.9,6.9,-1]],light:[7.8,5,46,"#ff3df0",4.2,.6],splash:"The floor lights up and the lasers come on. Now it is a club."}),
   PL("cb_dj","DJ Booth",UP_M,"cbx_dj",6.2,.8,3.2,1.5,0,"Two decks, a mixer and a wall of speakers."),
-  cbU("cb_spk","Speaker Stacks",UP_M,"cbx_spk",cbP("cbx_spk",[[4.6,.2,1.3,1.2],[9.7,.2,1.3,1.2]]),"Two black stacks of woofers either side of the decks."),
+  cbU("cb_spk","Speaker Stacks",UP_M,"cbx_spk",cbP("cbx_spk",[[4.6,.85,1.3,1.2],[9.7,.85,1.3,1.2]])/* in line with the decks, so a walkway runs behind them (QA) */,"Two black stacks of woofers either side of the decks."),
   /* Cal, 2026-11-05: every booth on the left wall and the entrance on the right, so the bar moves to the back wall, its
      bottle shelf against the wall, beside the DJ's speakers */
-  PL("cb_bar","Neon Bar",UP_M,"cbx_bar",.3,.2,4.0,1.6,0,"Lit from the inside.",{cust:[[2.0,2.3,1,CBB],[3.1,2.3,-1,CBB]]}),
+  PL("cb_bar","Neon Bar",UP_M,"cbx_bar",.3,1.0,3.5,1.6,0,"Lit from the inside.",{cust:[[2.8,3.1,1,CBB],[3.6,3.1,-1,CBB]]}),
   PL("cb_rope","Velvet Rope",UP_S,"cbx_rope",12.3,3.4,1.3,.9,0,"Brass posts and a red velvet rope by the door.",{cust:[[11.9,4.5,1]]}),
   PL("cb_smoke","Smoke Machine",UP_S,"cbx_smoke",3.95,1.95,.75,.75,0,"Low fog right on the drop.",{fx:cbFog}),
-  PL("cb_coat","Coat Check",UP_M,"cbx_coat",11.6,.2,2.2,1.0,1,"A rail of coats and a small tip jar.",{cust:[[12.7,1.9,1,CBB]]}),
+  /* QA: a little to the right, so a walkway opens between it and the speakers to the staff aisle behind the decks and bar */PL("cb_coat","Coat Check",UP_M,"cbx_coat",12.1,.2,1.9,.8,1,"A rail of coats and a small tip jar.",{cust:[[13.0,1.9,1,CBB]]}),
   PL("cb_cart","Glow Cocktail Cart",UP_S,"cbx_cart",2.9,8.85,1.0,1.0,0,"A glowing cart of bottles that rolls between the booths."),
   PL("cb_laser","Laser Rig",UP_M,"cbx_laser",10.95,1.7,.7,.7,0,"Green beams across the room.",{fx:cbLaser}),
   /* the VIP booth closes the row of booths down the left wall, in the front corner, opening onto the floor */
