@@ -504,6 +504,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn picture 44 (4dbd2e2: sv_fleece) and the sv_quilt recolour (f6ba9a6), on clean builds, 0 page errors: PASS, all
+  44 yawn pictures now pass. sv_fleece: arms-up, both hands out, no strip, navy matches idle, frames 6, 12 and 18 on hot pink
+  (shots/qa/yawn/sv_fleece_arms.png); sweep 120 clean. sv_quilt: the stretch red is now hue 351 like idle, (184,39,60) boy and
+  (176,39,60) girl against (187,39,62) and (187,40,60) idle; only stretch frames changed (sv_quilt_fixed.png: idle, walk,
+  stretch); the shoulder tick is a 1 px tan line along the sleeve top, the body's shoulder outline, which reads as a seam on
+  all three backgrounds: pass (sv_quilt_tick.png); sweep 120 clean (sheet_sv_quilt_<body>.png, replacing the tomato ones).
+  Colour check, idle (front) art against stretch art for all 79 tops with yawn art, both bodies: median colour difference dE
+  2.9 (not visible); by eye on the 16 lowest histogram matches and the highest dE (colour_check_low16.png, colour_check_high.png,
+  colour_check_dE.txt), only sv_quilt was a real jump. Optional, not blocking: km_camp's hibiscus (dE 13-14) and km_crochet's
+  scalloped trim are a little duller in the stretch, visible side by side, not at game size. FYI LEAD: v0.72's yawn art is ready.
 - QA, ROOMS's yawn pictures 42 and 43 (aceba29: sv_nordic, sv_quilt) on a clean build of aceba29, 0 page errors. sv_nordic: PASS.
   It stretches arms-up on both bodies, both hands out; stretch frames 3 to 21 changed, nothing else; its reds match idle (median
   (155,75,74) stretch against (154,72,71) idle). ROOMS's question 1, the tan edge under the boy's far sleeve: pass, at 5x on hot pink
@@ -2538,8 +2548,8 @@ Doing:
   Re-checked the 'every upgrade visible' bug lists: all fixed already. Next from my list: the WEAK upgrades (need new art or a
   bigger change), worst first, starting with the Restaurant's ten.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
-- TAKEN by QA. WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
+- DONE by QA (QA findings: pass). WAITING ON QA: check f6ba9a6, sv_quilt yawn recoloured to crimson (your fail on aceba29): colour idle vs stretch, and the shoulder tick.
+- DONE by QA (QA findings: pass). WAITING ON QA: check 4dbd2e2, yawn picture 44 (sv_fleece, the last): your yawnfall.js and yawnsweep.js. FYI LEAD: all 44 tops now have yawn art
   (m_ and f_<id>_yawn.webp for every id on your list, checked present).
 - DONE by QA (QA findings: sv_nordic pass; sv_quilt FAIL, its stretch red is tomato, idle is crimson). WAITING ON QA: check aceba29, yawn pictures 42 and 43 (sv_nordic, sv_quilt): your yawnfall.js and yawnsweep.js; two small ones for your call:
   a faint 1-2 px tan edge under the boy's far Nordic sleeve, and a small tan tick above the boy's far shoulder on the vest.
@@ -2844,9 +2854,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 0c64b6f. Done: ROOMS's yawn pictures 1-41 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT, BARD & BLADE, CHROME RAIN, KAIMANA and OAKMONT complete); savecheck and screens (360, 390) on ca391d3 pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 0c64b6f; Cal is told a new session fixes it). Next: the three SØLVBERG tops (sv_nordic, sv_quilt, sv_fleece). (on 0c64b6f)
+- Now: on 1695375. Done: all 44 of ROOMS's yawn pictures (pass, each with every hair and necklace; sv_quilt after its recolour),
+  and an idle-vs-stretch colour check over all 79 tops with yawn art; savecheck and screens (360, 390) on ca391d3 pass;
+  Cal restarts QA (artifact tools; still down at 0c64b6f; Cal is told a new session fixes it). Next: v0.72 when LEAD builds it. (on 1695375)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
