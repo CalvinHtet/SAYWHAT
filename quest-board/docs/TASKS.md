@@ -504,6 +504,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 22 and 23 (68eb5aa: sp_varsity, sp_pad) on a clean build of 68eb5aa: PASS, 0 page errors. Both
+  stretch arms-up on both bodies (the purple varsity jacket with grey sleeves and teal cuffs; the grey controller-button tee);
+  stretch frames 3 to 21 changed, nothing else (shots/qa/yawn/batch11_before_after.png). sp_pad's repaint: both short sleeves wrap
+  the upper arms on both bodies, with no sleeve hanging under a raised arm and no dark hollow, frames 6 to 18 at 3x
+  (sp_pad_shoulders.png), and the girl's far shoulder at 6x with short hair against the passed varsity and star hoodie
+  (sp_pad_f_shoulders.png, sp_pad_f_farsleeve.png). Sweep: all hairstyles with all 19 neck items plus none, 240 pictures, all
+  clean (sheet_<top>_<body>.png). 23 of the 44 done and checked.
 - QA, ROOMS's yawn pictures 20 and 21 (360da8a: gp_star, gp_sailor) on a clean build of 360da8a: PASS, 0 page errors. Both
   stretch arms-up on both bodies (the lilac star hoodie; the sailor blouse's puff sleeves with bare forearms); stretch frames 3 to 21
   changed, nothing else (shots/qa/yawn/batch10_before_after.png). gp_star's neck, where the drawn mouth was removed, is clean on both
@@ -2425,7 +2432,7 @@ Doing:
 - Now (on 68eb5aa): LEAD's 44 yawn pictures on Unlimited, 23 done (21 passed QA; sp_varsity and sp_pad in); sp_p2 repainting (first sheet
   washed out the magenta); next sp_hpknit, bb_*, cr_*, km_*, oak_*, then sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
+- DONE by QA (QA findings: pass). WAITING ON QA: check 68eb5aa, yawn pictures 22 and 23 (sp_varsity, sp_pad): your yawnfall.js and yawnsweep.js. sp_pad is a second paint;
   the first left the boy's far sleeve hanging under his arm.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 360da8a, yawn pictures 20 and 21 (gp_star, gp_sailor): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 2d2ea91, yawn pictures 18 and 19 (gp_blazer, gp_bear): your yawnfall.js and yawnsweep.js. The blazer is a second paint;
@@ -2700,9 +2707,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 681aa32. Done: ROOMS's yawn pictures 1-21 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
-  complete); savecheck and screens (360, 390) on 360da8a pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 681aa32). Next: sp_varsity when ROOMS sends it. (on 681aa32)
+- Now: on 2249427. Done: ROOMS's yawn pictures 1-23 (pass, each with every hair and necklace; SMOKE BOMB and GACHA POP
+  complete, SAVE POINT varsity and pad); savecheck and screens (360, 390) on 360da8a pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 681aa32). Next: sp_p2 (repainting) when ROOMS sends it. (on 2249427)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
