@@ -2391,9 +2391,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on bf08f94): LEAD's 44 yawn pictures on Unlimited, 9 done (7 passed QA; nc_qzip and kp_sailor in); next kp_bomber, sm_track,
-  sm_tee, sm_vest and the rest. The hair lock passed QA. WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his
-  portraits' white splatter tee: which one is his look?
+- Now (on 57dafa4): LEAD's 44 yawn pictures on Unlimited, 11 done (9 passed QA; kp_bomber and sm_track in); next sm_tee, sm_vest,
+  smk_jacket, smk_mesh, smk_vest, smk_cloak, gp_blazer, gp_bear and the rest. WAITING ON Cal: Vega's in-game tee (black Spray Paint
+  Boxy Tee) or his portraits' white splatter tee: which one is his look?
+- WAITING ON QA: check 57dafa4, yawn pictures 10 and 11 (kp_bomber, sm_track): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 25939d4 and bf08f94, yawn pictures 8 and 9 (nc_qzip, kp_sailor): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check bc4a575, yawn pictures 6 and 7 (nc_tank, kp_hoodie): your yawnfall.js and yawnsweep.js.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 653138e, yawn pictures 4 and 5 (sm_hoodie, sv_ski): your yawnfall.js and yawnsweep.js. The hoodie was repainted
