@@ -491,6 +491,17 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's 0f7ce90 Test > Unlock everything (Cal's "access every upgradable room and section"), pressed from the Test pill
+  at 390 on a clean build of 0f7ce90 (`rigtest/qa/unlockall.js`): works, two small things to fix. Fresh player and a mid-game save
+  (level 20, five rooms with upgrades, half the story): level 50, no locked tab, 21 rooms built once, the only upgrades given are
+  the ones that open other rooms, the mid-game save keeps every room and upgrade it had, the whole team, +500,000 coins, 17 story
+  steps done, a reload keeps it, 0 page errors. Every room window opens and, from a fresh unlock, every upgrade in all 22 rooms
+  (the Speakeasy via the Dessert's Hidden Door) buys through its window with the 500,000 coins to spare (they never ran out);
+  Review still plays (23 of 23 sampled of 114). (1) "Next story step" is not empty after it: it opens the Speakeasy ("Opened
+  Speakeasy"), because qbtNextStep (29m_tester.js) does not skip the story's how:"never" step; it should say nothing is left.
+  (2) After Unlock everything the Bedroom's first wardrobe (bd_ward1) can never be bought: the Walk-in Closet's opener (bd_ward2,
+  which needs bd_ward1) is given directly, and bd_ward1 is then no longer offered, so its look and splash cannot be tested.
+  Owner: LEAD. Not on a real phone.
 - QA, v0.69 = c2c53b7 (APPV 69), the full set on a clean build (490 files): PASS, publish it, 0 page errors anywhere. Test >
   Review plays 114 of 114 at 390 on both bodies, nothing off screen or broken (the save gains only an empty "seen" record);
   livesync.js PASS; live10.js PASS (quiet minute 0-1 writes per page); players10.js PASS (ten different saves, neighbours in their
@@ -2498,8 +2509,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on c2c53b7 (v0.69). Done: the v0.69 full set, PASS (publish). Next: check the published v0.69 against c2c53b7's build
-  once Cal restarts QA (artifact tools; also v0.64, v0.65 and v0.67 still BLOCKED), and whatever LEAD or ROOMS send next.
+- Now: on 0f7ce90. Done: LEAD's Unlock everything (works; two small fixes for LEAD: Next story step opens the Speakeasy, and
+  bd_ward1 cannot be bought after it). v0.69 (c2c53b7) PASS, being published. Next: the v0.70 check when LEAD sends it; the
+  published-file checks (v0.64, v0.65, v0.67, v0.69) BLOCKED until Cal restarts QA (artifact tools).
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
