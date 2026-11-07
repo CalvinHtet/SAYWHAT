@@ -2514,7 +2514,8 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 10f64be): LEAD's 44 yawn pictures all done and passed (QA 3ca553b). LEAD's art job from QA's every-room review (aa3a99b):
   (1) Dessert Parlor and (2) VR Arena done in facb194, (3) Restaurant thinning by superseding in 10f64be; both WAITING ON QA below.
-  After: the WEAK upgrades, starting with the Restaurant's ten.
+  Now: the WEAK upgrades, starting with the Restaurant's. First, Sculptural Vases (r_d8): it is sold as 'black ceramic and dry
+  branches' but draws the olive tree; its own sprite (rdx_vases) is generating on Unlimited.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
 - TAKEN by QA (after the v0.72 full set). WAITING ON QA: check 10f64be, Restaurant fully bought, thinned by superseding (Curved Corner Booth replaces the third booth and its divider;
   Fire Pit replaces the Patio Heaters; Sculptural Vases replace the potted tree; Wine Wall replaces the Drinks Cooler in every
