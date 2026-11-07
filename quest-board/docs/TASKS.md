@@ -504,6 +504,14 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's yawn pictures 32 and 33 (f106365: cr_mesh cut with --regreen, cr_vest; both second paints) on a clean build of
+  f106365: PASS, 0 page errors. Both stretch arms-up on both bodies; stretch frames 3 to 21 changed, nothing else
+  (shots/qa/yawn/batch18_idle_stretch.png). Underarms: the loose sleeves wrap the arms on both tops and both bodies, no tan strip,
+  on hot pink (cr_mesh_vest_underarms.png). Mesh halo: 24 (boy) and 13 (girl) light pixels in the art's outer edge ring, against 7
+  and 1 on smk_jacket and 432 and 460 on cr_bomber (its neon glow); on near-black no light ring shows (cr_mesh_dark.png). Vest
+  piping keeps its colour: median (161,65,90) stretch against (168,65,93) idle on the boy, (162,67,91) against (170,63,93) on the
+  girl (a crimson, the same as idle). Sweep: all hairstyles with all 19 neck items plus none, 240 pictures, all clean
+  (sheet_<top>_<body>.png). CHROME RAIN is complete; 33 of the 44 done and checked. Not tested: --regreen itself (a tool).
 - QA, ROOMS's yawn picture 31 (8fe507c: cr_trench, second paint, cut with --pastel) on a clean build of 8fe507c: PASS, 0 page
   errors. It stretches arms-up on both bodies; stretch frames 3 to 21 changed, nothing else. Colour, idle against stretch on the
   usual, hot-pink and light backgrounds: the same holographic pastel, no dark smudges, nothing showing through
@@ -2480,7 +2488,7 @@ Doing:
 - Now (on f106365): LEAD's 44 yawn pictures on Unlimited, 33 done (31 passed QA; cr_mesh and cr_vest in, CHROME RAIN complete);
   next km_camp, km_boat, km_rash, km_crochet (designs rendered), then oak_*, sv_nordic, sv_quilt, sv_fleece.
   WAITING ON Cal: Vega's in-game tee (black Spray Paint Boxy Tee) or his portraits' white splatter tee: which one is his look?
-- TAKEN by QA. WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
+- DONE by QA (QA findings: pass). WAITING ON QA: check f106365, yawn pictures 32 and 33 (cr_mesh cut with --regreen, cr_vest): your yawnfall.js and yawnsweep.js; underarms
   (both repainted for a strip of arm under the sleeves) and the mesh's edges on a dark background (light-grey sheet).
 - DONE by QA (QA findings: pass). WAITING ON QA: check 8fe507c, yawn picture 31 (cr_trench, cut with --pastel): your yawnfall.js and yawnsweep.js, colour idle vs stretch,
   and the waist: a few px of body beside the belt and under the boy's near armpit (map: shots/yawn/cr_trench_exposed_map.png, yellow).
@@ -2767,9 +2775,9 @@ To do:
 ## QA: tests, pilots, quality checks
 
 Doing:
-- Now: on 2f61783. Done: ROOMS's yawn pictures 1-31 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
-  SAVE POINT and BARD & BLADE complete, CHROME RAIN bomber and trench); savecheck and screens (360, 390) on 8fe507c pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
-  Cal restarts QA (artifact tools; still down at 2f61783). Next: cr_mesh and cr_vest when ROOMS sends them. (on 2f61783)
+- Now: on 1a49a18. Done: ROOMS's yawn pictures 1-33 (pass, each with every hair and necklace; SMOKE BOMB, GACHA POP,
+  SAVE POINT, BARD & BLADE and CHROME RAIN complete); savecheck and screens (360, 390) on 8fe507c pass; the hair lock (pass). Next: ROOMS's next yawn batches. BLOCKED: the published-file checks (v0.64 to v0.71) until
+  Cal restarts QA (artifact tools; still down at 2f61783). Next: KAIMANA when ROOMS sends it. (on 1a49a18)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
