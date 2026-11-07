@@ -37,8 +37,8 @@ Doing:
   progress up 4 s after a change, worlds/board/pings pushed down via onSnapshot; rigtest/lead/livesync.js with three players on a
   pushing stand-in db: 1-5 s, pushes off still within 60 s. Checked against the platform's db.d.ts (0.2.96): onSnapshot(next, error) returns an unsubscribe;
   errors are terminal, only "unavailable" re-subscribes. Waiting on Cal: which artifact is Live, a launch date, a QA restart
-  for the published-file checks, opening v0.66 on his phone. For v0.69: ROOMS's 62d336d (screens keep a still first picture with animations off; ROOMS wraps scrPages from 23_theater.js,
-  LEAD folds it into 24_screens.js after v0.68 ships) and dbf2593 (open-air rooms dark at night again). Parked: the arm binding in the high stretch. (on 003a030)
+  for the published-file checks, opening v0.66 on his phone. For v0.69: ROOMS's 62d336d (screens keep a still first picture with animations off; now in 24_screens.js, cfa5f62; ROOMS drops its
+  wrapper; QA passed ROOMS's v0.69 room fixes, c9a940e) and dbf2593 (open-air rooms dark at night again). Parked: the arm binding in the high stretch. (on cfa5f62)
 - v0.67 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version. The publish session checked r/ byte for byte against d54de89's clean build (release/v67) and every published size against r/ (index.html +364 bytes, the publish wrapper); no leftover files from v0.65. Top-level is 69 MB, over the 64 MB per-publish cap, so it went in 3 publishes (versions 4-6). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. (on e96a56f)
 
 To do:
