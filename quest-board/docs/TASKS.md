@@ -2600,7 +2600,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 778e0c6): WAITING ON CAL (big approval, batch, since 12:59): six new friend portraits and the SAYMORE app icon
+- Now (on 776bc77): WAITING ON CAL (big approval, batch, since 12:59): six new friend portraits and the SAYMORE app icon
   (pictures in shots/friends_new/, nothing committed until he says yes). New friends, each identified from their own posts:
   Kris Pascasio, Alvina Tat and Nick Huynh (a couple), Ben, Kevin Tsao, Victor Myint (photos about 12 years old). Skipped:
   llamaorhorse (private). Held: Quince (asked Cal which photo is her).
@@ -2608,8 +2608,10 @@ Doing:
   Cynthia flatform sneakers and Jina long pleated skirt 21fedf3; Kenan open biker jacket over a white tee be717dc; Logan open
   black bomber over a black tee 778e0c6 (eq sent). Justin and Memo keep their shop pieces: their portraits already match them,
   and Justin's shoe repaint came back the same as h_derby.
-  Next: after Cal's yes, the portraits and the icon go in (web/icons/), then each new friend's friend-only outfit and their
-  spec to LEAD. Then the Game Room WEAK re-audit.
+  Meanwhile: Game Room WEAK re-audit done in 776bc77 (lamp, fridge, dartboard; WAITING ON QA below). Now: repainting the Mini
+  Fridge sprite (art/app/gmx_fridge.webp) on Unlimited: its top cans read like a famous energy drink and the candy bars carry
+  lettering (Cal's no-logos rule). Next: after Cal's yes, the portraits and the icon go in (web/icons/), then each new
+  friend's friend-only outfit and their spec to LEAD.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
@@ -2619,6 +2621,10 @@ Doing:
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
   only), then portraits for Cal's approval (big approval), then their outfits like above; LEAD adds them to the friend list.
+- WAITING ON QA: check 776bc77 (goes into v0.73), Game Room WEAK upgrades: RGB Floor Lamp moved out from behind the console to
+  the open floor between the arcade and the TV (0.04% -> 0.51% of the picture), Mini Fridge a step in front of the soda machine on
+  the right wall with the soda machine's front clear (0.18% -> 0.67%), Dartboard larger and clear of the door frame (0.21% ->
+  0.43%). Render: shots/rooms3/gameroom_weak_fix.png. Look at: walk routes past the lamp and the fridge, the fridge's customer spot.
 - WAITING ON QA: check 21fedf3, be717dc, 778e0c6 (all go into v0.73), the friend-only pieces: fr_cynthia_kicks (shoes),
   fr_jina_skirt (skirt, wide, femaleOnly), fr_kenan_jacket and fr_logan_bomber (tops, each with its yawn picture). ROOMS's own
   check: matrix wear sheets in every pose (both bodies; the skirt on f), stretch at 1000 px for both tops (no body strip, the
