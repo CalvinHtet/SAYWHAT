@@ -17,8 +17,8 @@ Doing:
   overalls over the top faebcd8 and 91ef6e8); clean build, loads with no page errors, WAITING ON QA for the full set. v0.63 (f5234d3,
   QA passed) never went out: this session lost its artifact tools ("not available to this session"; restarting Claude Code or a new
   session brings them back), so Cal must restart. Whichever passed version is newest then goes out: v0.64 if it passes, else v0.63.
-  SAVE POINT in the Shop on Jan 11 (29f496c; ROOMS's 15 rows and colours); QA 13 of 15, the headset's back and the slip-ons are ROOMS's, so no build ships it until it passes. v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart. Rule 19 (436a82b): new brands without Cal's approval. Waiting on Cal: a launch date and the
-  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on 29f496c)
+  SAVE POINT in the Shop on Jan 11 (29f496c; slip-ons now Checkpoint Sneakers, eaf8c09); QA 15 of 15 after ROOMS's 200d498, its Shop run next. Rig slot "arms" for bracers (23bf14f, ROOMS's ask; checked idle, stretch, stretchUp, walk2, sitFront, type1, rearStand, sleep with 6 tops; the far bracer is ragged from behind in type1 like that arm's sleeves). v0.64 (4a1dbe8) PASSED QA's full set and waits only on the restart.
+  restart. Parked: long sleeves in the high stretch still show skin patches at large size, a deeper rework of the arm binding. (on eaf8c09)
 
 To do:
 - [x] Shop text in Bebas Neue Light (titles stay), the Shop banner a real rectangle on a phone, next drop as its own line
@@ -1959,7 +1959,7 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on 200d498): BARD & BLADE (bb_*, brand id bb): all 15 ingested locally, not committed; the skirt has "overTop" (in 200d498)
-  so its tool belt shows. WAITING ON LEAD: a rig slot that follows the arms for bb_bracers (neck binds to the spine only, so the
+  so its tool belt shows. DONE by LEAD in 23bf14f (rig slot "arms"; set bb_bracers to it). Was: a rig slot that follows the arms for bb_bracers (neck binds to the spine only, so the
   bracers stay at the hips when the arms lift); asked by message (since 01:35). Next: the badge, banner, one commit, QA; the bracers'
   shop row waits on that slot. Then CHROME RAIN. Brand runway: OK, 59 days. Chrome: ROOMS.
 - DONE by QA (QA findings: pass). WAITING ON QA: check 200d498, SAVE POINT's two fixes. sp_headset from behind shows only the arc and the cups; the band across the
