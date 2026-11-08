@@ -2785,8 +2785,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1da0f7e): MAIN JOB, the last three rooms without painted walls, building order first: the Hero's Lair (painting its
-  shell on Unlimited, then side by side for Cal before it goes in), then the Movie Theater (its wall tiers) and the Auditorium.
+- Now (on 1da0f7e): MAIN JOB, the last rooms without painted walls. The Hero's Lair already is one painting (checked), so: the Movie
+  Theater lobby's three wall/floor tiers PAINTED at 12 x 9 (fit within 5 px at 4x), the 16 x 10 expanded lobby painting now; then
+  side by side for Cal before they go in (the loader is written: walls from the wall upgrade's tier, floor from the floor's).
+  Then the Auditorium.
   Patio dog spots DONE in 1da0f7e, WAITING ON QA (below). The dogs and the Dessert Parlor are in v0.75 (LEAD e30a13a) waiting on
   QA; the 12 art slots wait on Cal. Old boxes on this list ticked (done long ago).
   Was (on 1f87497): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068 + 1f87497 (LEAD: the cupcake stand
