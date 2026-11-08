@@ -173,19 +173,19 @@ LFROOM.garden=function(C){
   /* tools down the far side */
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
-  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:[.7,2.3,3.9,5.5,st===0?8.7:7.0],tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
+  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:st===0?[.6,2.3,4.2,5.6,7.4]:[.7,2.3,3.9,5.5,7.0]/* rule 20: on the Back Plot the barrel and bench sat into the stand */,tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
   tool("g_can","gdx_can",TY[0],1.2,1.0,14,{act:"gdwater",hit:110});
   /* the watering can in the back corner waters the beds when tapped (LEAD's gdwater); the Hose & Watering Can takes over */
   if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater",hit:110});/* QA (Cal's use check): the compost crate stood in front of the potting bench's work side; the bench ends the column now, open
      in front, and the low wheelbarrow takes its old place */
-  tool("g_wheel","gdx_wheel",TY[1],1.4,1.0,16);tool("g_comp","gdx_comp",TY[2],1.2,1.1,24);tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_bench","gdx_bench",TY[4],1.4,1.0,26);
+  tool("g_wheel","gdx_wheel",TY[1],1.4,1.0,16);tool("g_comp","gdx_comp",TY[2],st===0?1.0:1.2,st===0?.95:1.1,24);if(st===0){if(H("g_barrel"))gdS(C,"gdx_barrel",.05,3.75,.75,.75,28,{H:56})/* rule 20: the Back Plot's tool column has no room for it; under the wall tap instead */}else tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_bench","gdx_bench",TY[4],1.4,1.0,26);
   /* the Back Plot's gate corner is the produce stand's */
-  if(H("g_scare"))gdS(C,"gd_scare",.3,st===0?8.3:6.0,.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
+  if(H("g_scare"))gdS(C,"gd_scare",st===1?5.05:.3,st===0?8.3:st===1?3.45:6.0,/* rule 20: in the Kitchen Garden the hanging pots painted on the left wall run its whole front, so there it guards the crossing between the four back beds */.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
   /* on the Back Plot the stand takes the wheelbarrow's place, a tile further in, so a wide screen shows it whole (QA) */
-  var sp=st===0?[10.0,7.0]:st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
+  var sp=st===0?[2.6,8.4]:/* rule 20: off the tool column, in the open front-left of the Back Plot */st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
   /* tap either stand to sell (LEAD's stysell, 29b_story.js) */
   if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk,act:"stysell"});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk,act:"stysell"});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
@@ -195,9 +195,9 @@ LFROOM.garden=function(C){
     if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.5,4.8,1.1,1.1,70,{H:120})}
     if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx,E?6.8:6.6,3.6,1.0,50,{H:96});
     var hx=st===2?Rx:zx,hy=st===2?10.6:8.6;
-    if(st===1){hx=.6;hy=9.75}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
+    if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
-    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:2.2,st===2?12.2:9.65,1.7,1.3,36,{H:78});
+    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:3.0,/* rule 20: off the hive, a lantern between them */st===2?12.2:9.65,1.7,1.3,36,{H:78});
     if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+3.7:Rx,st===2?4.8:8.4,1.6,1.3,50,{H:92});
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
     if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:14.3,E?7.8:8.6,.9,.8,40,{H:70});
@@ -214,7 +214,7 @@ LFROOM.garden=function(C){
         gdFountain(C,fc[0],fc[1]);
         [[-2.3,.6,1],[.5,-2.3,1],[2.0,-.9,-1],[-1.1,2.1,1],[1.3,2.0,-1]].forEach(function(o){C.s("look",fc[0]+o[0],fc[1]+o[1],o[2],"look",[6,12],{tag:"admire"})})}
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
-      if(H("g_lant"))[.12,.38,.62,.86].forEach(function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
+      if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
       if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
