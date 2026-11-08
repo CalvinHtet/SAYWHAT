@@ -2790,7 +2790,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
+- Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
+  portrait brand banners (art slots 67 of 67) and the Theater lobby shells. Nothing else queued: the Auditorium's walls wait on
+  Cal's word. Patio visitor clipping 5776eda is in LEAD's v0.75 cut 5b00b40, WAITING ON QA.
+  Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
   tier, floor from the floor upgrade's; it uses the drawn tiers until the shells are added to art/app on his yes. The Auditorium
@@ -2822,6 +2825,14 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check 8c756be (rule 17), Cal's "Approve all" (2026-11-08): (1) six relic icons `ui_relic_<streak|team|build|exped|
+  quests|collect>` (128 px), in the Relics tab; (2) Sable's story portrait `ui_story_sable` (300 x 400), on her return visits;
+  (3) portrait brand banners `ui_banner_<hanga|y2k|over|rose|alt>_p` (720 x 1080), in the drop window; (4) the Theater lobby's
+  painted shells `thw_t1-3` (12 x 9) and `thw_w1-3` (16 x 10), loader 03ceedb: walls from the wall upgrade's tier, floor from the
+  floor upgrade's. ROOMS's own check: all twelve ui files load at their sizes on a fresh build (art_slots 67/67); the Theater
+  fully bought headless with the shells, and each tier and a mixed one (gold walls over walnut) earlier, no piece misplaced.
+  Look at: the lobby at every wall and floor combination, expanded and not; the Relics tab, the drop window and Sable's visit
+  in the app (not opened by ROOMS).
 - WAITING ON QA: check 5776eda (rule 17), QA's v0.75 blocker: visitors on the Patio not clipped to the glass. Now everyone with
   y < -0.02 in a Bedroom with the Patio goes into the glass clip group (lfpcg), whatever their role (line 1594 dropped the role
   test). And people (deck "look" stations) get only spots at y -2.6 or nearer the glass, where a standing person fits under its
