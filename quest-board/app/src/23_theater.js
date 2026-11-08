@@ -83,10 +83,18 @@ function thWalls(C,col,col2,trim){var D=C.D,W=C.W,Hh=LF.H,P=lfP;
 LFROOM.theater=function(C){
   rsArtReady();
   var H=function(k){return C.has(k)},U=LF.U,W=C.W,D=C.D,wing=H("t_wing"),lux2=H("t_lux2"),lux4=H("t_lux4");
-  /* walls and floors first: everything else sits on top */
-  if(H("t_wl3"))thWalls(C,"#2e1420","#27111b","#e8c56a");else if(H("t_wl2"))thWalls(C,"#2e1420","#27111b","rgba(0,0,0,.35)");else if(H("t_wl1"))thWalls(C,"#7a2a36","#6c2430");
+  /* walls and floors first: everything else sits on top. Painted shells per tier (thw_t<n> for the 12 x 9 lobby, thw_w<n> once
+     it is expanded to 16 x 10): the walls come from the wall upgrade's tier and the floor from the floor upgrade's, so the two
+     still mix (tier 1 is red paint with cream trim over walnut, 2 velvet over the cinema carpet, 3 gold-framed velvet over
+     marble). The free lobby keeps its drawn walls; its floor is the tier 1 walnut. Without the art, the drawn tiers. */
+  var TS=window.LFSPR||{},tp=wing?"thw_w":"thw_t",wt=H("t_wl3")?3:H("t_wl2")?2:H("t_wl1")?1:0,ft=H("t_fl3")?3:H("t_fl2")?2:1,
+    shell=function(k,part){if(!TS[k])return null;if(C.chu==null)C.chu="th"+(window.LFTHU=(window.LFTHU||0)+1);var sv=LFSHELLK;LFSHELLK=k;try{return lfShellPart(C.chu+part,part)}finally{LFSHELLK=sv}},
+    pw=wt?shell(tp+wt,"walls"):null,pf=shell(tp+ft,"floor");
+  if(pw)C.walls.push(pw);else{
+  if(H("t_wl3"))thWalls(C,"#2e1420","#27111b","#e8c56a");else if(H("t_wl2"))thWalls(C,"#2e1420","#27111b","rgba(0,0,0,.35)");else if(H("t_wl1"))thWalls(C,"#7a2a36","#6c2430");}
+  if(pf)C.decals.push(pf);else{
   if(H("t_fl3"))C.decals.push(lfFloorG(.05,.05,'<rect width="'+U*(W-.1)+'" height="'+U*(D-.1)+'" fill="#e6e0d2"/><path d="'+Array.apply(0,Array(Math.ceil(W))).map(function(_,k){return 'M'+U*k+' 0V'+U*(D-.1)}).join("")+Array.apply(0,Array(Math.ceil(D))).map(function(_,k){return 'M0 '+U*k+'H'+U*(W-.1)}).join("")+'" stroke="rgba(0,0,0,.08)"/>'));
-  else if(H("t_fl2")){var pat='<rect width="'+U*(W-.1)+'" height="'+U*(D-.1)+'" fill="#3c1020"/>';for(var ci=0;ci<W*2;ci++)for(var cj=0;cj<D*2;cj++)pat+='<circle cx="'+(ci*U/2+7)+'" cy="'+(cj*U/2+7)+'" r="3" fill="'+((ci+cj)%2?"#b0344a":"#d9a441")+'" opacity=".55"/>';C.decals.push(lfFloorG(.05,.05,pat))}
+  else if(H("t_fl2")){var pat='<rect width="'+U*(W-.1)+'" height="'+U*(D-.1)+'" fill="#3c1020"/>';for(var ci=0;ci<W*2;ci++)for(var cj=0;cj<D*2;cj++)pat+='<circle cx="'+(ci*U/2+7)+'" cy="'+(cj*U/2+7)+'" r="3" fill="'+((ci+cj)%2?"#b0344a":"#d9a441")+'" opacity=".55"/>';C.decals.push(lfFloorG(.05,.05,pat))}}
   if(H("t_fl1")||H("t_fl3"))C.decals.push(lfFloorG(.5,3.2,lfRr(0,0,U*(W-1.2),U*1.5,3,H("t_fl3")?"#6a1830":"#7a1a2c","rgba(0,0,0,.3)")+'<rect x="4" y="4" width="'+(U*(W-1.2)-8)+'" height="'+(U*1.5-8)+'" fill="none" stroke="rgba(255,210,122,.6)" stroke-width="1.2"/>'));
   /* the double doors on the left wall: glow in the gap when somebody goes through */
   var audOn=H("t_aud"),dg='<rect class="thdoorgap" width="'+U*1.9+'" height="96" fill="#fff2c0" opacity="0"/>';
