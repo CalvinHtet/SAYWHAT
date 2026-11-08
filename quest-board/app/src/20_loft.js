@@ -128,7 +128,7 @@ function lfRoomLight(C,uid,t,out){
      instead of tinting a wall-high box of sky */
   var L=out?lfLS():lfInLS(C),N=LF.W,M=LF.D,H=C.noshell===2?(t==="rooftop"&&window.LFSPR&&LFSPR.rfw_t1?60:40):LF.H,U=29.07,res={pre:"",mid:"",post:""},defs="",R=(window.LFRID=(window.LFRID||0)+1),id=function(n){return "lf"+n+uid+"_"+R}/* Cal: shadows vanished for a moment after a buy; ids unique per render, so a repaint never points at filters being swapped out */;
   var floor=[lfP(0,0,0),lfP(N,0,0),lfP(N,M,0),lfP(0,M,0)];
-  var hexIn=out?[lfP(-.2,-.2,-8),lfP(N+.2,-.2,-8),lfP(N+.2,-.2,H+16),lfP(-.2,-.2,H+16),lfP(-.2,M+.2,H+16),lfP(-.2,M+.2,-8)]:C.rsW?[lfP(0,M,H),lfP(0,0,H),lfP(C.rsW,0,H),lfP(C.rsW,0,36),lfP(N,0,36),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)]:[lfP(0,M,H),lfP(0,0,H),lfP(N,0,H),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)];
+  var hexIn=out?/* Cal (Garden at night): "a weird divide between the dark and light parts": this outline left out the front floor corner, so the night shade stopped on a straight line across the lawn */[lfP(N+.2,-.2,-8),lfP(N+.2,M+.2,-8),lfP(-.2,M+.2,-8),lfP(-.2,M+.2,H+16),lfP(-.2,-.2,H+16),lfP(N+.2,-.2,H+16)]:C.rsW?[lfP(0,M,H),lfP(0,0,H),lfP(C.rsW,0,H),lfP(C.rsW,0,36),lfP(N,0,36),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)]:[lfP(0,M,H),lfP(0,0,H),lfP(N,0,H),lfP(N,0,-15),lfP(N,M,-15),lfP(0,M,-15)];
   var hs=lfHull(floor.concat([lfP(0,0,64),lfP(N,0,64),lfP(N,M,64),lfP(0,M,64)]));
   defs+='<clipPath id="'+id("cf")+'"><polygon points="'+floor.map(lfPt).join(" ")+'"/></clipPath><clipPath id="'+id("ci")+'"><polygon points="'+hs.map(lfPt).join(" ")+'"/></clipPath><clipPath id="'+id("hx")+'"><polygon points="'+hexIn.map(lfPt).join(" ")+'"/></clipPath>';
   /* source: sun or moon */
@@ -193,20 +193,21 @@ function lfRoomLight(C,uid,t,out){
     var gk=(src&&src.sun?kk*.5:0)+L.dark*.18*(L.wx==="rain"?.5:1)+(1-L.dark)*(1-L.direct)*.08,gc=src&&src.sun?src.col:(L.dark>.5?"#7f93ff":"#e8f0ff");
     var gid=id("wg"+Math.floor(x0*10));defs+='<radialGradient id="'+gid+'"><stop offset="0" stop-color="'+gc+'" stop-opacity=".9"/><stop offset="1" stop-color="'+gc+'" stop-opacity="0"/></radialGradient>';
     wl+=lfFaceY(x0-.5,0,100,'<ellipse cx="'+(.5*U+26)+'" cy="40" rx="64" ry="66" fill="url(#'+gid+')" opacity="'+lfCl(gk,0,.7).toFixed(2)+'"/>')})}
-  /* ambient multiply with lamp holes */
+  /* ambient multiply with lamp holes. Cal (v0.73 phone, Garden Estate at night): "a weird divide between the dark and light
+     parts": the dark layer was a fixed 1400x1000 box, smaller than the big rooms, so past its edge the floor stayed lit */
   var amb="";
   var hole=function(Ls){return Ls.map(function(q,i){var p=lfP(q[0],q[1],0),pz=lfP(q[0],q[1],q[2]||60),r=q[4]||3,k=lfCl((q[5]||.6)*(.35+L.dark*1.1),0,1);
     var gid=id("lh"+i);defs+='<radialGradient id="'+gid+'"><stop offset="0" stop-color="#000" stop-opacity="1"/><stop offset=".55" stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>';
     return '<ellipse cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" rx="'+(r*U*.95).toFixed(1)+'" ry="'+(r*U*.5).toFixed(1)+'" fill="url(#'+gid+')" opacity="'+k.toFixed(2)+'"/><circle cx="'+pz[0].toFixed(1)+'" cy="'+pz[1].toFixed(1)+'" r="'+(r*U*.45).toFixed(1)+'" fill="url(#'+gid+')" opacity="'+(k*.8).toFixed(2)+'"/>'}).join("")};
   if(L.mul!=="#ffffff"){
-    defs+='<mask id="'+id("am")+'" maskUnits="userSpaceOnUse" x="-500" y="-400" width="1400" height="1000"><rect x="-500" y="-400" width="1400" height="1000" fill="#fff"/>'+(L.dark>.12?hole(lights):"")+'</mask>';
-    amb='<g clip-path="url(#'+id("hx")+')" pointer-events="none" style="mix-blend-mode:multiply"><rect x="-500" y="-400" width="1400" height="1000" fill="'+(out?L.mul:lfMix(L.mul,"#a69fc4",L.dark*.62))+'" mask="url(#'+id("am")+')"/></g>';
+    defs+='<mask id="'+id("am")+'" maskUnits="userSpaceOnUse" x="-4000" y="-3000" width="10000" height="8000"><rect x="-4000" y="-3000" width="10000" height="8000" fill="#fff"/>'+(L.dark>.12?hole(lights):"")+'</mask>';
+    amb='<g clip-path="url(#'+id("hx")+')" pointer-events="none" style="mix-blend-mode:multiply"><rect x="-4000" y="-3000" width="10000" height="8000" fill="'+(out?L.mul:lfMix(L.mul,"#a69fc4",L.dark*.62))+'" mask="url(#'+id("am")+')"/></g>';
   }
   /* lamp glows (screen) */
   if(L.dark>.1||L.golden>.2){lights.forEach(function(q,i){var p=lfP(q[0],q[1],q[2]||60),pf=lfP(q[0],q[1],0),r=q[4]||3,k=lfCl((q[5]||.6)*(.25+L.dark*1.05),0,1)*(q[3]==="none"?0:1);
     var gid=id("lg"+i);defs+='<radialGradient id="'+gid+'"><stop offset="0" stop-color="'+q[3]+'" stop-opacity=".85"/><stop offset=".5" stop-color="'+q[3]+'" stop-opacity=".25"/><stop offset="1" stop-color="'+q[3]+'" stop-opacity="0"/></radialGradient>';
     gl+='<ellipse cx="'+pf[0].toFixed(1)+'" cy="'+pf[1].toFixed(1)+'" rx="'+(r*U*.9).toFixed(1)+'" ry="'+(r*U*.45).toFixed(1)+'" fill="url(#'+gid+')" opacity="'+(k*.55).toFixed(2)+'"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(r*U*.4).toFixed(1)+'" fill="url(#'+gid+')" opacity="'+(k*.5).toFixed(2)+'"/>'})}
-  var flash=(LFW.storm&&L.wx==="rain")?'<g clip-path="url(#'+id("hx")+')" pointer-events="none"><rect x="-500" y="-400" width="1400" height="1000" fill="#dfe8ff" class="lfflash" style="mix-blend-mode:screen"/></g>':"";
+  var flash=(LFW.storm&&L.wx==="rain")?'<g clip-path="url(#'+id("hx")+')" pointer-events="none"><rect x="-4000" y="-3000" width="10000" height="8000" fill="#dfe8ff" class="lfflash" style="mix-blend-mode:screen"/></g>':"";
   res.post='<g class="lflt" pointer-events="none">'+amb+'<g clip-path="url(#'+id("hx")+')" style="mix-blend-mode:screen">'+gl+wl+'</g>'+flash+'</g>';
   res.defs='<defs>'+defs+'</defs>';
   return res;

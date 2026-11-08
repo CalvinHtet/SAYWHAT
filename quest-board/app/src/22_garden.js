@@ -84,7 +84,7 @@ function gdS(C,k,x,y,w,d,h,o){return lfSpr(C,k,x,y,w,d,Object.assign({h:h,ctr:1}
 /* Cal: the beds sat at a steeper angle than the room. Each bed's top face (t back, r right, l left corner, as fractions of
    the MIRRORED art, and rim, its side height) is mapped exactly onto its footprint, so every bed lines up with the walls. */
 var GDFIT={gdx_seed:{t:[.33,.03],r:[.99,.66],l:[.01,.37],rim:.03},gdx_raised:{t:[.31,.12],r:[.995,.585],l:[.005,.305],rim:.21},
-  gdx_tomato:{t:[.31,.27],r:[.995,.65],l:[.005,.44],rim:.17},gdx_herb:{t:[.25,.13],r:[.995,.57],l:[.005,.25],rim:.31},
+  gdx_tomato:{t:[.31,.27],r:[.995,.65],l:[.005,.44],rim:.17},gdx_herb:{t:[.31,.2],r:[.995,.616],l:[.005,.387],rim:.186}/* Cal: "the same type of plot as the others": the tomato bed's box, planted with herbs (its box geometry, offset for the shorter plants) */,
   gd_bed1:{t:[.33,.12],r:[.995,.55],l:[.005,.35],rim:.22},gd_bed2:{t:[.33,.03],r:[.995,.48],l:[.005,.26],rim:.26},
   gd_berry:{t:[.53,.08],r:[.995,.47],l:[.005,.33],rim:.26,w:2.2}};
 /* a grow light along a bed, drawn on the room's own grid: two thin posts, an LED bar down the middle, a violet wash */
