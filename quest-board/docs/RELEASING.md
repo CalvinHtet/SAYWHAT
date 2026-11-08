@@ -78,6 +78,12 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   The job needs the repo secret `FIREBASE_SERVICE_ACCOUNT`, which Cal makes himself (Firebase console > Project settings >
   Service accounts > Generate new private key, then GitHub > SAYWHAT > Settings > Secrets and variables > Actions > New secret).
   The key never goes in the chat or the repo.
+- **Google sign-in on a new address**: Google blocks sign-in ("Access blocked: invalid request", a redirect_uri_mismatch) from
+  any page address its OAuth client does not list, and web.js signs in on the page's own address (iPhone needs that). Firebase
+  lists only firebaseapp.com by itself. For each new address (a new channel, a custom domain), Cal adds in Google Cloud console >
+  APIs & Services > Credentials > "Web client (auto created by Google Service)": the origin `https://<address>` and the redirect
+  URI `https://<address>/__/auth/handler`. Cal was given the Test channel and `saywhat-b7ae8.web.app` on 2026-11-07. Keep the
+  channel name `test` so its address never changes.
 - **Rules and the AI function** change rarely and are deployed by hand when they do:
   `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
   QA like any other (functions/test.js first).

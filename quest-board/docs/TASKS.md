@@ -19,7 +19,9 @@ Doing:
   loads clean, Review 131/131 save unchanged, Next event 35 taps, every friend equips every piece, the new visits open, webtest
   PASS, livesync PASS. QA PASSED 660eb30 (58ffe96). PUBLISHED: dist-web of 660eb30 on the web Test channel
   (version 3f5d7ab076c2d034; the live page's app.js fingerprint matches the build QA passed; sign-in screen in 1.9 s, no errors).
-  The Live site is still empty; the Claude Test link stays on v0.72. Next: Cal signs in once, LEAD adds his uid as owner
+  The Live site is still empty; the Claude Test link stays on v0.72. CAL: sign-in said "access blocked, invalid request" (the
+  test address not on the Google OAuth client): Cal given the steps to add it and the Live address (RELEASING.md, "Google sign-in
+  on a new address"). WAITING ON CAL: that change. Next: Cal signs in once, LEAD adds his uid as owner
   (web/config.js, firestore.rules) so he gets the Test tools, redeploys; then Cal's phone test and feedback. Not covered by QA: a
   real phone, real Google sign-in, the real Claude call. QA in passing: sleeves fray in sitBack and typing (LEAD's open rig item).
   Was: v0.73 BUILT from 42d73be (APPV 73), on both builds: dist (Claude, 472 files: friend
