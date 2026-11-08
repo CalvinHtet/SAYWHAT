@@ -109,7 +109,10 @@ function lfInstallFx(w,r,dp,i,mm){
   var wr=w.getBoundingClientRect(),tx=wr.width/2,ty=wr.height*.6;
   if(fresh.length){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;fresh.forEach(function(e){var b=e.getBoundingClientRect();if(!b.width&&!b.height)return;x0=Math.min(x0,b.left);y0=Math.min(y0,b.top);x1=Math.max(x1,b.right);y1=Math.max(y1,b.bottom)});
     if(x1>x0){tx=(x0+x1)/2-wr.left;ty=y1-wr.top-Math.min(18,(y1-y0)*.25)}
-    fresh.forEach(function(e){e.style.opacity="0";e.style.transition="opacity .45s ease-out"})}
+    /* Cal (v0.73): "some of the upgrades appear before the box fully drops". They are hidden at once now (they used to fade out
+       over .45 s, so they showed first), and fade in only when the box opens. */
+    fresh.forEach(function(e){e.style.transition="none";e.style.opacity="0"});void w.offsetWidth;
+    fresh.forEach(function(e){e.style.transition="opacity .45s ease-out"})}
   var cr=document.createElement("div");cr.className="isocrate";cr.innerHTML=isoCrate();cr.style.left=(tx-30)+"px";cr.style.top=(ty-60)+"px";
   var sh=document.createElement("div");sh.className="isoshadow";sh.style.left=(tx-26)+"px";sh.style.top=(ty-7)+"px";
   w.appendChild(sh);w.appendChild(cr);
@@ -118,11 +121,34 @@ function lfInstallFx(w,r,dp,i,mm){
   },620);
   setTimeout(function(){if(!w.isConnected)return;cr.classList.add("open");},1050);
   setTimeout(function(){if(!w.isConnected)return;cr.remove();sh.remove();w.classList.remove("dropshake2");
-    fresh.forEach(function(e){e.style.opacity="1";e.classList.add("isonew")});
+    fresh.forEach(function(e){e.style.opacity="1"});lfNewGlow(svg,fresh);
     var g=document.createElement("div");g.className="isoglow";g.style.left=(tx-60)+"px";g.style.top=(ty-90)+"px";w.appendChild(g);setTimeout(function(){g.remove()},1600);
     var n=document.createElement("div");n.className="dropname";n.style.animationDelay="0s";n.textContent=dp.name+(fresh.length?" installed":" upgrade active");w.appendChild(n);setTimeout(function(){n.remove()},2600);
-    setTimeout(function(){fresh.forEach(function(e){e.classList.remove("isonew")})},1800)},1400);
+  },1400);
 }
+/* Cal (v0.73): "It is also hard to know what item just got added. Can we have a glowing sort of outline around the newly added
+   object that dissapears after 3 secones?" Each new piece gets a gold outline that follows its own shape (the piece's outline
+   grown by a few pixels, blurred, in gold, under the piece), pulsing for 3 s and then fading. It is an SVG filter, not a CSS one,
+   because iPhone Safari does not draw CSS filters on the parts of an SVG picture. Pieces that carry their own filter or clip (the
+   soft-shadow layer) are left alone. With reduced motion it holds still for 3 s. */
+var LFGLOWN=0;
+function lfNewGlow(svg,fresh){
+  var vb=svg.viewBox&&svg.viewBox.baseVal,bw=svg.getBoundingClientRect().width,k=(vb&&vb.width&&bw)?vb.width/bw:1;
+  var id="lfnewglow"+(++LFGLOWN),NS="http://www.w3.org/2000/svg",still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var defs=svg.querySelector("defs");if(!defs){defs=document.createElementNS(NS,"defs");svg.insertBefore(defs,svg.firstChild)}
+  var f=document.createElementNS(NS,"filter");f.setAttribute("id",id);["x","y"].forEach(function(a){f.setAttribute(a,"-30%")});f.setAttribute("width","160%");f.setAttribute("height","160%");
+  f.innerHTML='<feMorphology in="SourceAlpha" operator="dilate" radius="'+(3*k).toFixed(2)+'" result="d"/>'
+    +'<feGaussianBlur in="d" stdDeviation="'+(2.5*k).toFixed(2)+'" result="b"/>'
+    +'<feFlood flood-color="#ffd36b" flood-opacity="1">'+(still?'':'<animate attributeName="flood-opacity" begin="indefinite" dur="3s" values="0;1;.55;1;.55;1;0" keyTimes="0;.1;.3;.5;.7;.85;1" fill="freeze"/>')+'</feFlood>'
+    +'<feComposite in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>';
+  defs.appendChild(f);
+  var wraps=[];
+  fresh.forEach(function(e){if(!e.parentNode||e.hasAttribute("filter")||e.hasAttribute("clip-path"))return;
+    var g=document.createElementNS(NS,"g");g.setAttribute("filter","url(#"+id+")");g.setAttribute("class","lfnewglow");e.parentNode.insertBefore(g,e);g.appendChild(e);wraps.push(g)});
+  /* SMIL restarts with the document clock, so start this filter's animation now rather than from page load */
+  try{var an=f.querySelector("animate");if(an&&an.beginElement)an.beginElement()}catch(x){}
+  setTimeout(function(){wraps.forEach(function(g){if(g.parentNode){while(g.firstChild)g.parentNode.insertBefore(g.firstChild,g);g.remove()}});f.remove()},3000);
+  return wraps.length}
 function buildModal(i){
   closeModals();
   var lv=effLvl(), types=buildableList();if(!buildableList().length){pop("Nothing to build yet.");return}
