@@ -2762,10 +2762,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 2faabd0): QA's two v0.74 findings DONE in d6c5007, WAITING ON QA (QA: Boba pass; Garden stand pass; the sprinkler fixed in 3dfe920, pass; QA findings) (and LEAD's rebuild): the Boba cafe table's customer
-  spot moved out of the table (layout 4.4 to 4.75, real (5.70, 5.46), 0.36 clear of the table, clear of the second table); the
-  Back Plot stand now ends the tool column on open floor at (10.1, 8.3), the column closed up (can .6, wheelbarrow 2.2, compost
-  3.75, bench 5.4), checked fully bought headless. Pluto and Chopstick DONE in 2faabd0 from Cal's photo, WAITING ON CAL to approve
+- Now (on 3dfe920): the empty art slots (`docs/ART_SLOTS.md`, 12 missing): six relic icons and Sable's story portrait painting on
+  Unlimited, then the five portrait brand banners; each goes to Cal side by side before it lands.
+  QA's v0.74 findings DONE and PASSED: d6c5007 (Boba customer spot, Back Plot stand) and 3dfe920 (the berry bed's sprinkler
+  moved to its left side, off the stand), QA d6c12a8. LEAD: v0.74 can be rebuilt. Painted dogs are OFF in builds
+  (`window.LFDOGON` unset) until Cal approves them. Pluto and Chopstick DONE in 2faabd0 from Cal's photo, WAITING ON CAL to approve
   the art (sent in ROOMS's chat), then WAITING ON QA: one Unlimited sheet per dog, stand/walk/sit/sleep (`dgx_<dog>_0-3`, cut by
   `tools/dog_cut.py`), drawn 34 tall so the body reaches Cal's knee to mid-thigh; pixel dog stays as the fallback. Checked
   headless next to Cal in the Bedroom: all four poses, the walk mirrored, sleeping in the bed. Not checked: night light, the
@@ -2777,11 +2778,11 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
-- TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
+- DONE by ROOMS (253fcb4; Justin and Memo keep their shop pieces, which match their portraits) (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
   them (29k_friends.js). Order: Vega first, then Kenan, Cynthia, Jina, Justin, Logan, Memo.
-- TAKEN by ROOMS (Cal, 2026-11-07): "i also want to add more friends and visitors to the game." Eight Instagram profiles: krispascasio,
+- DONE by ROOMS (six approved and in, ba45c99; outfits eb0eea3) (Cal, 2026-11-07): "i also want to add more friends and visitors to the game." Eight Instagram profiles: krispascasio,
   quince.chen, llamaorhorse, victorpmyint, chatsaobao, alvinataaat, nickhuynh.re, ben_wcho. "Some of these people dont have a lot of
   IG pics or they have pics with lots of other people. Make sure you figure out who they actually are before creating their
   character. If it is too complicated to figure out, ignore them." ROOMS: identify each from their own posts (Cal's Chrome, read
