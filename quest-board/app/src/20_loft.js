@@ -1457,7 +1457,7 @@ function lfDogNext(a,C){
   /* out on the Patio a dog mostly goes to its own Patio bed (QA: they lay on the deck instead), else sniffs around or
      comes back in */
   var onP=PR&&a.y<-.3;
-  if(PR&&!a.visitor&&(onP?Math.random()<.8:Math.random()<.3)){var pb=PR.beds[a.dname==="chopstick"?1:0]||PR.beds[0];
+  if(PR&&!a.visitor&&(onP?Math.random()<.8:Math.random()<.3)){var pb=PR.beds.filter(function(q){return q[2]===a.dname})[0];/* only its own bed: with one Patio bed bought both dogs went to it and one lay hidden under the other (QA); the other dog keeps its Bedroom bed */
     if(pb&&Math.random()<(onP?.7:.45)){a.speed=1.3;lfGo(a,pb[0],pb[1],{kind:"dogbed"});a.last="bed";return}
     var ps=lfPick(PR.spots.filter(function(q){return lfPaIn({pa:[],paR:PR},q[0],q[1])}));if(ps){a.last="run";a.speed=a.dname==="chopstick"?2.3:1.2;lfGo(a,ps[0]+lfRand(-.3,.3),ps[1]+lfRand(-.3,.3),{kind:"dogrun"});return}}
   if(!a.visitor&&bed&&(a.last==="run"||r<.28)){a.speed=1.3;lfGo(a,bed[0],bed[1],{kind:"dogbed"});a.last="bed";return}
@@ -3170,7 +3170,8 @@ function lfPatioReal(){
        hidden behind the fire bowl), so only the ones clear of every footprint are kept, plus two that stay clear when it is full and show through the Bedroom glass (between the beds and the
        chair, and the back left corner) */
     [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
-    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy]);
+    /* each Patio bed has its dog: the first is Pluto's, the second Chopstick's */
+    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
     R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})});
     /* only spots a walk from the sliding door reaches (QA on v0.75: with the Patio full, the back-left spot was boxed in by the
