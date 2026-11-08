@@ -13,7 +13,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.74 BUILT from 2866b5e (APPV 74), WAITING ON QA for the full set on dist (473 files) and dist-web (2339): v0.73 plus every
+- Now: v0.74 RE-CUT from ed0a4f9 (APPV 74; QA had not started 2866b5e), WAITING ON QA for the full set on dist (473) and dist-web
+  (2339). Added since 2866b5e: ROOMS's Boba Shop c342c2b + 89d4015 (Cal: "weirdly floating", "covering the doorway"; Dessert Parlor
+  matcha bar), Bedroom windows 14d060f, Garden stages 4562a76, part-bought sweep 6a5572f; LEAD's zoom buttons under the picture
+  ed0a4f9. LEAD's checks on ed0a4f9: loads clean, Review 131/131 save unchanged, story 64/64, Next event 35 taps, webtest PASS,
+  livesync PASS, roomfit 21/21 at 3 sizes in Chromium and WebKit. Was: v0.74 BUILT from 2866b5e: v0.73 plus every
   phone-test fix so far: LEAD's whole rooms in every window f314bca, the purchase reveal and outline fa5ff03 + ccc574f (your 54c9132
   findings), the bar after Noir 82ab448, zoom back cc71c5e (Cal: "bring zoom back, but if there is too much lag, then keep it off";
   at CPU x4, load 23: zoomed drag Game Room 54.5 fps, full Restaurant 38.2 fps, worst 100 ms), the update check counting every file;
@@ -71,7 +75,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 2866b5e)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on ed0a4f9)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
