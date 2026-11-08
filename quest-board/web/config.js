@@ -4,6 +4,7 @@
    authDomain is the hosting domain, not firebaseapp.com: Google sign-in by redirect fails on iPhone Safari and from the home
    screen when the sign-in helper runs on another domain than the page. */
 window.QB_WEB = {
+  noTest: true,   /* the Live build (Cal, 2026-11-08: "Take off the test tab"); main and the Test channel leave this out */
   firebase: {
     apiKey: "AIzaSyB7jKptM6sLaquKxQVUMZEHo71_n35SuiI",
     authDomain: "saywhat-b7ae8.web.app",
