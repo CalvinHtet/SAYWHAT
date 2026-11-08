@@ -2870,9 +2870,8 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on f53662c): holding to save Cal's usage (LEAD). Lock and Key 05500d3 and Victor's grey hoodie f53662c are in. WAITING ON CAL: Victor's
-  three repainted portraits (shots/pending_art/victor/, not in art/app), the Rooftop plan and the Mall plan (in ROOMS's chat); neither room
-  is built until he okays a plan. Not done: Victor's long hair on the rig (a new friend-only piece, one sheet plus every-pose checks,
+- Now (on f53662c): holding to save Cal's usage (LEAD). Lock and Key 05500d3 and Victor's grey hoodie f53662c are in. Victor's three portraits approved and in, 0a1cb8e, and his grey hoodie f53662c, WAITING ON QA (a quick look at his visit card and
+  portrait sizes). WAITING ON CAL: the Rooftop plan and the Mall plan (in ROOMS's chat); neither room is built until he okays a plan. Not done: Victor's long hair on the rig (a new friend-only piece, one sheet plus every-pose checks,
   after Thursday unless Cal wants it now); chubbier is portrait-only (the rig has no heavier body).
 - PAUSED (on 49295bc) until Cal's limit resets Thursday (Cal via LEAD: stop the automatic checks; ROOMS's loop cancelled). Stopped
   mid-way on the Auditorium's painted walls (Cal: "Paint it"): the taller shell frame is in (49295bc, inert for every existing shell);
