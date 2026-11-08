@@ -172,6 +172,10 @@ function lfFitFrame(wrap){
 }
 var lfPrevAttachBase=lfPrevAttach;
 lfPrevAttach=function(wrap){try{lfFitFrame(wrap)}catch(e){}return lfPrevAttachBase.apply(this,arguments)};
+/* Cal (2026-11-08): "I accidentally zoomed in and can't zoom back out". That was iPhone Safari zooming the whole page. The page no
+   longer zooms (the viewport caps it at 1x, and Safari's pinch gesture is stopped); a room window still zooms its own picture, which
+   listens to pointer events, not to this gesture. */
+["gesturestart","gesturechange","gestureend"].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault()},{passive:false})});
 var LFGLOWN=0;
 function lfNewGlow(svg,fresh){
   var vb=svg.viewBox&&svg.viewBox.baseVal,bw=svg.getBoundingClientRect().width,k=(vb&&vb.width&&bw)?vb.width/bw:1;
