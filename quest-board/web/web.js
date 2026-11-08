@@ -19,6 +19,10 @@
     }
   });
 
+  /* the Test tools show only once the game knows this player is the owner (30_app_b.js adds .qb-own): without this, a friend could
+     see the Test button for a moment between signing in and the save loading */
+  var css = document.createElement("style"); css.textContent = "body.qbweb:not(.qb-own) #qbt{display:none!important}"; (document.head || document.documentElement).appendChild(css);
+  if (document.body) document.body.classList.add("qbweb"); else document.addEventListener("DOMContentLoaded", function () { document.body.classList.add("qbweb"); });
   if (!window.firebase) return; /* the page then runs on this device only, as it does when Claude is not there */
 
   /* ---- Firebase: the hosting page's own config when served by Firebase Hosting, else the copy in web/config.js ---- */
