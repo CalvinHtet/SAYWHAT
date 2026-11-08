@@ -1343,8 +1343,9 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
    box's aspect-ratio (the picture's own shape won), so the box came out short and the bottom of the room was cut. The picture now
    lies over the box, which takes its height from its aspect-ratio alone, the same in every browser. */
 .rbig.rbigz>svg.lfprev{position:absolute;left:0;top:0;width:100%;height:100%}
-/* zoom is back (Cal, 2026-11-08): its + and - sit halfway down the right edge, clear of the door buttons in the corners */
-.rbigz .lfpzc{flex-direction:column!important;top:50%!important;bottom:auto!important;right:6px!important;left:auto!important;transform:translateY(-50%);gap:6px}
+/* zoom is back (Cal, 2026-11-08): its + and - (and the Bedroom lamp) sit in a row under the room picture, so they never cover a door */
+.rmodal>.lfpzc{position:static!important;display:flex!important;flex-direction:row!important;justify-content:flex-end;align-items:center;gap:8px;margin:6px 0 0!important;transform:none!important;inset:auto!important}
+.rmodal>.lfpzc button{width:34px!important;height:34px!important;font-size:18px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
