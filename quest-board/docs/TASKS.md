@@ -2913,6 +2913,7 @@ Doing:
   walkers stay clipped. ROOMS's own check, headless: routes from the Bedroom (4.5, 4.5) to every spot and bed, sampled 20 per
   leg against the Patio footprints, 0 inside furniture on full (1 spot, 2 beds), half (2 spots, 1 bed) and bare (4 spots); a
   visitor walking out: clipped 51 of 51 samples on the Patio, door open 67 of 67 samples near it.
+- WAITING ON QA: check 05500d3 (rule 17), Lock and Key, Cal's four notes via LEAD: Mirrored Back Bar flush on the back wall behind the bartender (footprint 1.6-5.55, unflipped: it was mirrored and scaled inside a 5.6 footprint); Oyster and Champagne Station on the back wall past the high-tops (customer spot in front); green booth flush to the left wall towards the front corner, short of the stairs down; glass table in its curve. ROOMS's own check: fully bought, headless (`shots/rooms3/lockkey_cal_notes.png`), nothing over anything, Roof door clear. Not checked: customers and bartender live, part bought.
 - WAITING ON QA: check b3d6b28 (rule 17, for v0.76), QA's note on 0729a6b: with only `pt_dbed` bought both dogs went to it (`||
   PR.beds[0]`) and one lay under the other. Patio beds now carry their dog (pt_dbed Pluto's, pt_dbed2 Chopstick's) and a dog goes
   only to its own; without one it runs the Patio and keeps its Bedroom bed. ROOMS's own check, headless: one bed bought, Pluto to
