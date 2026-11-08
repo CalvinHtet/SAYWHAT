@@ -2702,7 +2702,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 6a5572f): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
+- Now (on 89d4015): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
   neons bfe3dec; TEAMWORK rule 20 aa8bfd4; overlap sweep 4e5557c and the dessert trolley bcc3b41; Game Room TV flush and foosball
   in a row with the pool table 4915a05; Garden herb plot as a matching wooden bed and the night seam (outdoor rooms' night
   shade left out the floor's front corner) 3ad4129; Restaurant wall pieces in every stage and style a062a4b; Bigger Till as a
