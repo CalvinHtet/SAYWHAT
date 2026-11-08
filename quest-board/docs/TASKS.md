@@ -2792,8 +2792,8 @@ Requests for LEAD (from ROOMS):
 
 Doing:
 - Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
-  portrait brand banners (art slots 67 of 67) and the Theater lobby shells. Nothing else queued: the Auditorium's walls wait on
-  Cal's word. Patio visitor clipping 5776eda is in LEAD's v0.75 cut 5b00b40, WAITING ON QA.
+  portrait brand banners (art slots 67 of 67) and the Theater lobby shells; LEAD folds them into v0.76, cut from HEAD after v0.75 is published. Nothing else queued: the
+  Auditorium's walls wait on Cal's word. Patio visitor clipping 5776eda is in LEAD's v0.75 cut 5b00b40, WAITING ON QA.
   Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
