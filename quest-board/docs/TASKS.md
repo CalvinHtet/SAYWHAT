@@ -2775,7 +2775,8 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 3dfe920): the 12 empty art slots (`docs/ART_SLOTS.md`) are PAINTED, WAITING ON CAL (sent in ROOMS's chat): six relic
+- Now (on afc5d4f): Pluto and Chopstick ON in afc5d4f (Cal approved, via LEAD: "I approve the new dogs"), WAITING ON QA (below).
+  The 12 empty art slots (`docs/ART_SLOTS.md`) are PAINTED, WAITING ON CAL (sent in ROOMS's chat): six relic
   icons `ui_relic_<id>` (128 px), Sable's story portrait `ui_story_sable` (300 x 400), the five portrait brand banners
   `ui_banner_<id>_p` (720 x 1080). Held in `shots/pending_art/` (not in `art/app`, so nothing shows before his yes); on his yes they
   go into `art/app` and to QA. Note for LEAD: eleven newer brands (bb, cr, gp, km, kp, nc, oak, sm, smk, sp, sv) have no portrait
@@ -2794,6 +2795,13 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check 2faabd0 + afc5d4f (rule 17), the painted Pluto and Chopstick (Cal: "really tiny... bigger and more
+  recognizable"; approved 2026-11-08). `dgx_<dog>_0-3` stand/walk/sit/sleep, drawn 34 tall (`LFDOGH` in 20_loft.js), pixel dog if
+  the art is missing (or `window.LFDOGON=0`). ROOMS's own check, headless at 2x: next to Cal in the Bedroom at stand, walk (mirrored
+  when turning), sit, sleep; both asleep in the Bedroom beds; the Patio beds, standing and sitting on the Patio, and the Patio at
+  23:00 (night light applies) (`shots/dogs/dogs_in_room.png`, `dogs_patio_night.png`). Look at: size against people, rule 20 in
+  every room they visit and on friend visits (not checked), the walk's second frame live, and one Patio dog spot (3.75, -3.85)
+  behind the fire bowl: a sitting dog there is mostly hidden. Say if that spot should move.
 - DONE by ROOMS (253fcb4; Justin and Memo keep their shop pieces, which match their portraits) (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
