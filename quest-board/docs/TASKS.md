@@ -2870,6 +2870,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
+- STOPPED to save Cal's usage (weekly limit 96%, resets 2026-11-13). CAL APPROVED, not started, for after the reset, in this order: (1) Victor's long
+  black hair on the in-game character (friend-only piece, one sheet, every-pose check; (2) the Rooftop plan; (3) the Mall plan, room grown to about
+  16 x 12 (plans: ROOMS's chat, 2026-11-08). The Auditorium is paused too (see below).
 - Now (on f53662c): holding to save Cal's usage (LEAD). Lock and Key 05500d3 and Victor's grey hoodie f53662c are in. Victor's three portraits approved and in, 0a1cb8e, and his grey hoodie f53662c, WAITING ON QA (a quick look at his visit card and
   portrait sizes). WAITING ON CAL: the Rooftop plan and the Mall plan (in ROOMS's chat); neither room is built until he okays a plan. Not done: Victor's long hair on the rig (a new friend-only piece, one sheet plus every-pose checks,
   after Thursday unless Cal wants it now); chubbier is portrait-only (the rig has no heavier body).
