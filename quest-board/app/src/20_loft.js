@@ -3299,7 +3299,7 @@ LFROOM.bedroom=function(C){
     if(C.annex.lr){C.s("look",-11,12,1,"look",[8,14],{tag:"lair"});C.s("look",-13,14.5,-1,"look",[8,14],{tag:"lair"});C.s("look",-9,14.5,1,"look",[8,14],{tag:"lair"});C.s("look",-14.4,12.8,-1,"look",[6,10],{tag:"lair"});C.s("look",-11.4,9.9,-1,"look",[6,10],{tag:"lair"})}}
   if(C.patio&&C.patio.real){var PR=C.patio.real,dk0=0;PR.spots.forEach(function(q){if(dk0<6&&lfPaIn({pa:[],paR:PR},q[0],q[1])){dk0++;C.s("look",q[0],q[1],q[2],"look",[8,16],{tag:"deck"})}})}
   else if(C.patio&&C.patio.deck){C.s("look",7.7,-.95,1,"look",[8,14],{tag:"deck"});if(C.patio.swing)C.s("sit",3.0,-1.0,1,"sit",[14,30],{tag:"egg",lift:1,exit:[4.6,-.45],sz:QBLoft.data.loft.eggLift});if(!C.patio.swing){C.s("look",4.0,-1.9,-1,"look",[8,14],{tag:"deck"});C.s("look",2.6,-1.6,1,"look",[6,10],{tag:"deck"})}}
-  if(H("bd_nstand")){lfSpr4(C,"bd4_nstand",.15,4.3,.9,.8,{h:12,fit:1,flip:1,dk:-1.8});lfLight(C,.6,4.7,34,"#ffc27a",1.7,.5)}
+  if(H("bd_nstand")){lfSpr4(C,"bd4_nstand",.15,3.8,.9,.8,{h:12,fit:1,flip:1,dk:-1.8});lfLight(C,.6,4.2,34,"#ffc27a",1.7,.5)}
   if(H("bd_plant"))lfSpr4(C,"bd4_plant",9.0,7.9,.8,.8,{h:40,H:84,occ:.9});
   /* The Closet door is in the left wall where the wardrobe stood (Cal, 2026-11-05). The wardrobe upgrade became a
      figurine cabinet hung on the wall over the nightstand, clear of the door. Without its art nothing shows there. */
@@ -3311,7 +3311,8 @@ LFROOM.bedroom=function(C){
     C.add(40,'<g data-lf="closet:0" class="lfclo" style="cursor:pointer"><polygon points="'+_hl.map(lfPt).join(" ")+'" fill="rgba(255,255,255,0.004)"/></g>')}
   /* on the bare wall between the bed and the desk; at 4.75 the PC tower stood in front of it */
   /* QA (Cal's use check): in the corner it stood half over the record cabinet and half against the glass; on the open left wall now */
-  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",.05,4.7,.4,.85,{h:70,H:96,flip:1});C.s("art",1.3,5.1,-1,"look",[6,11],{tag:"mirror",fxwall:1})}
+  /* Cal (v0.73, phone): "the standing mirror is placed behind the night stand on the left. it looks weird": the nightstand moves up to the bed, the mirror gets its own stretch of wall between it and the Closet door */
+  if(H("bd_mirror")){lfSpr4(C,"bd4_mirror",.05,4.85,.4,.85,{h:70,H:96,flip:1});C.s("art",1.3,5.25,-1,"look",[6,11],{tag:"mirror",fxwall:1})}
   var dk=H("bd_pc2")?"bd4_pc2":H("bd_pc1")?"bd4_pc1":H("bd_desk1")?"bd4_desk1":"bd4_desk0";
   var PCt=H("bd_pc1")||H("bd_pc2");
   var LH=PCt?17:0;
