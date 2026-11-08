@@ -13,7 +13,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.74 RE-CUT from ed0a4f9 (APPV 74; QA had not started 2866b5e), WAITING ON QA for the full set (QA: DONE, not yet: two ROOMS fixes, the Boba cafe table on a customer spot and the Garden Back Plot stand behind a bed; everything else passes, QA findings) on dist (473) and dist-web
+- Now: QA's v0.74 full set on ed0a4f9: NOT YET (70debad), everything of LEAD's passes (zoom adds no lag in WebKit: 56.8 fps zoomed
+  vs 53.1); two ROOMS fixes: the Boba cafe table on a customer spot (5.05, 5.46), the Garden Back Plot stand behind a bed. When
+  ROOMS lands them LEAD rebuilds v0.74 and QA rechecks those two, then the publish to Cal's Test channel.
+  Was: v0.74 RE-CUT from ed0a4f9 (APPV 74; QA had not started 2866b5e), WAITING ON QA for the full set (QA: DONE, not yet: two ROOMS fixes, the Boba cafe table on a customer spot and the Garden Back Plot stand behind a bed; everything else passes, QA findings) on dist (473) and dist-web
   (2339). Added since 2866b5e: ROOMS's Boba Shop c342c2b + 89d4015 (Cal: "weirdly floating", "covering the doorway"; Dessert Parlor
   matcha bar), Bedroom windows 14d060f, Garden stages 4562a76, part-bought sweep 6a5572f; LEAD's zoom buttons under the picture
   ed0a4f9. LEAD's checks on ed0a4f9: loads clean, Review 131/131 save unchanged, story 64/64, Next event 35 taps, webtest PASS,
