@@ -1591,7 +1591,9 @@ function lfDraw(a,force){
       if(!inCl){var K=LFCL,D2=C.D,bx=pp[0],by=pp[1]-28,qs=[[lfP(0,D2,0),lfP(0,D2+K.CD,0),lfP(0,D2+K.CD,K.H),lfP(0,D2,K.H)],[lfP(0,D2,0),lfP(K.CW,D2,0),lfP(K.CW,D2,K.H),lfP(0,D2,K.H)]];
         for(var qi=0;qi<2&&!hid;qi++){var q=qs[qi],ins=false;for(var u=0,w2=3;u<4;w2=u++){if((q[u][1]>by)!==(q[w2][1]>by)&&bx<(q[w2][0]-q[u][0])*(by-q[u][1])/(q[w2][1]-q[u][1])+q[u][0])ins=!ins}if(ins)hid=1}}
       ce.setAttribute("cx",pp[0].toFixed(1));ce.setAttribute("cy",(pp[1]-28).toFixed(1));ce.setAttribute("rx",hid?"34":"0");ce.setAttribute("ry",hid?"46":"0")}}
-  var inPa=(a.role==="me"||a.role==="dog")&&C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
+  /* everyone out on the Patio is seen through the Bedroom glass, so all of them are clipped to it (QA on v0.75: a visiting friend
+     on a deck spot was drawn over the wall top and, at the far spot, outside the room) */
+  var inPa=C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
   if((a.role==="me"||a.role==="dog")&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var nw=Date.now();if((a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-1.6))dr._ou=nw+700;var op=nw<(dr._ou||0),tf=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)";if(dr._tf!==tf){dr._tf=tf;dr.style.transform=tf}}}
   if(inPa){if(g.parentNode!==inPa)inPa.appendChild(g)}else if(inLr){if(g.parentNode!==inLr)inLr.appendChild(g)}else if(inCl){if(g.parentNode!==inCl)inCl.appendChild(g)}else if(g.parentNode!==items){items.appendChild(g);a._in=0}
   if(a.role==="me"&&inLr){var ho=sv.querySelector("[id^=lfllho]"),hu=sv.querySelector("[id^=lfllhu]");if(ho){var bh=(a.x+a.y)<-3.8&&a.x<-9.5&&a.x>-17.5;ho.style.display=bh?"":"none";if(hu)hu.style.display=bh?"none":""}}
@@ -3323,7 +3325,9 @@ LFROOM.bedroom=function(C){
   if(AN&&!C.annex.lair){var K=LFCL,Y=C.D;C.s("browse",1.05,Y+.7,-1,"look",[6,11],{tag:"browse"});C.s("browse",2.2,Y+.85,1,"look",[6,11],{tag:"browse"});C.s("browse",3.0,Y+.85,1,"look",[6,11],{tag:"browse"});
     if(C.annex.lr&&C.annex.desk)C.s("sit",-17.2,10.7,-1,"type",[14,30],{tag:"lairpc",lift:1,sz:0,exit:[-14.9,11.0]});
     if(C.annex.lr){C.s("look",-11,12,1,"look",[8,14],{tag:"lair"});C.s("look",-13,14.5,-1,"look",[8,14],{tag:"lair"});C.s("look",-9,14.5,1,"look",[8,14],{tag:"lair"});C.s("look",-14.4,12.8,-1,"look",[6,10],{tag:"lair"});C.s("look",-11.4,9.9,-1,"look",[6,10],{tag:"lair"})}}
-  if(C.patio&&C.patio.real){var PR=C.patio.real,dk0=0;PR.spots.forEach(function(q){if(dk0<6&&lfPaIn({pa:[],paR:PR},q[0],q[1])){dk0++;C.s("look",q[0],q[1],q[2],"look",[8,16],{tag:"deck"})}})}
+  /* people get only the deck spots they fit under the glass at (y -2.6 or nearer the Bedroom; further back the glass top cuts a
+     standing person to their legs, QA on v0.75); the dogs, short enough, use every spot (lfPatioReal) */
+  if(C.patio&&C.patio.real){var PR=C.patio.real,dk0=0;PR.spots.forEach(function(q){if(dk0<6&&q[1]>-2.6&&lfPaIn({pa:[],paR:PR},q[0],q[1])){dk0++;C.s("look",q[0],q[1],q[2],"look",[8,16],{tag:"deck"})}})}
   else if(C.patio&&C.patio.deck){C.s("look",7.7,-.95,1,"look",[8,14],{tag:"deck"});if(C.patio.swing)C.s("sit",3.0,-1.0,1,"sit",[14,30],{tag:"egg",lift:1,exit:[4.6,-.45],sz:QBLoft.data.loft.eggLift});if(!C.patio.swing){C.s("look",4.0,-1.9,-1,"look",[8,14],{tag:"deck"});C.s("look",2.6,-1.6,1,"look",[6,10],{tag:"deck"})}}
   if(H("bd_nstand")){lfSpr4(C,"bd4_nstand",.15,3.8,.9,.8,{h:12,fit:1,flip:1,dk:-1.8});lfLight(C,.6,4.2,34,"#ffc27a",1.7,.5)}
   if(H("bd_plant"))lfSpr4(C,"bd4_plant",9.0,7.9,.8,.8,{h:40,H:84,occ:.9});
