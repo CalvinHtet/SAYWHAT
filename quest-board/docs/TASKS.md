@@ -3202,8 +3202,10 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, the published v0.74 on the web Test channel: PASS, 2347/2347 files byte-identical (QA findings). Next: the
-  dogs once Cal approves (LFDOGON on), and whatever comes next on the board. (on 44be3c2)
+- Now (QA): the v0.75 full set on LEAD's re-cut d1386bc (APPV 75, dist 481, dist-web 2347; the build differs from e30a13a only by
+  1da0f7e's Patio spots), running. Done so far, no blocker yet: the painted dogs (every pose, size against people, Bedroom, beds,
+  Patio bare/half/full, LFDOGON=0), the dog cards, the page-zoom block in WebKit as an iPhone, the Dessert Parlor. Two notes for
+  ROOMS on the Patio coming with the result. Was: DONE, the published v0.74 on the web Test channel: PASS. (on 09adae9)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
