@@ -3080,8 +3080,9 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, LEAD's fa5ff03 reveal and outline: not yet, three problems (QA findings). Next: ROOMS's 4e5557c WAITING ON QA
-  (mirror, neons, overlap sweep), then LEAD's fix of the reveal with a frame-rate check against v0.73. (on 5201e1a)
+- Now (QA): the v0.74 full set on ed0a4f9 (dist and dist-web), running: core set, the reveal, room fit, the bar gate, zoom lag,
+  ROOMS's room and Boba fixes (barista and customer routes live). Done on 2866b5e first (carries over): reveal PASS in WebKit,
+  room fit fully bought PASS, bar gate PASS, Next event 35, web art 2316/2316, webtest, websweep PASS. (on 24b98a3)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
