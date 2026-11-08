@@ -1594,7 +1594,7 @@ function lfDraw(a,force){
   /* everyone out on the Patio is seen through the Bedroom glass, so all of them are clipped to it (QA on v0.75: a visiting friend
      on a deck spot was drawn over the wall top and, at the far spot, outside the room) */
   var inPa=C.nav&&C.nav.pa&&a.y<-.02?sv.querySelector("[id^=lfpcg]"):null;
-  if((a.role==="me"||a.role==="dog")&&C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var nw=Date.now();if((a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-1.6))dr._ou=nw+700;var op=nw<(dr._ou||0),tf=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)";if(dr._tf!==tf){dr._tf=tf;dr.style.transform=tf}}}
+  if(C.nav&&C.nav.pa){var dr=sv.querySelector("[id^=lfpdr]");if(dr){var nw=Date.now();if((a.y<.95&&a.x>7.7&&a.x<9.9&&a.y>-1.6))dr._ou=nw+700;var op=nw<(dr._ou||0),tf=op?"translate(-28.6px,-14.3px)":"translate(-14.3px,-7.15px)";if(dr._tf!==tf){dr._tf=tf;dr.style.transform=tf}}}
   if(inPa){if(g.parentNode!==inPa)inPa.appendChild(g)}else if(inLr){if(g.parentNode!==inLr)inLr.appendChild(g)}else if(inCl){if(g.parentNode!==inCl)inCl.appendChild(g)}else if(g.parentNode!==items){items.appendChild(g);a._in=0}
   if(a.role==="me"&&inLr){var ho=sv.querySelector("[id^=lfllho]"),hu=sv.querySelector("[id^=lfllhu]");if(ho){var bh=(a.x+a.y)<-3.8&&a.x<-9.5&&a.x>-17.5;ho.style.display=bh?"":"none";if(hu)hu.style.display=bh?"none":""}}
   if(a.mode==="walk"){var sdy=(a.tx-a.x)+(a.ty-a.y);if(Math.abs(sdy)>.02)a.back=sdy<0}
@@ -1625,7 +1625,7 @@ function lfDraw(a,force){
   var em=g.querySelector(".lfe"),eh=lfEmoG(a);if(a._em!==eh){a._em=eh;em.innerHTML=eh}
   var EK=LFK*(a.role==="dog"?1:LFBIG),etf=lie?"translate(0,"+(-lz+30*LFK)+") scale("+EK+")":"translate(0,"+(lift-plz*0)+") scale("+EK+")";if(a._etf!==etf){a._etf=etf;em.setAttribute("transform",etf)}
   // depth: reinsert before first item with a larger key
-  if(!inCl&&!inLr&&(Math.abs((a._dk||-9)-dkey)>.02||!a._in)){a._dk=dkey;a._in=1;var cs=items.children,ref=null,start=0,i,c;
+  if(!inCl&&!inLr&&!inPa&&(Math.abs((a._dk||-9)-dkey)>.02||!a._in)){/* the depth sort is for the room's items: someone in the Patio's glass group stays there, walking too (QA) */a._dk=dkey;a._in=1;var cs=items.children,ref=null,start=0,i,c;
     /* Clearly in front of an item (past its near edge, not behind its other edge) means drawn after it, whatever other pieces sort around it. */
     if(!(a.st&&a.st.dk))for(i=0;i<cs.length;i++){c=cs[i];if(c===g)continue;var fb=c.getAttribute("data-b");if(fb){var fq=fb.split(",");if((a.x>=+fq[2]-.02&&a.y>=+fq[1]-.02)||(a.y>=+fq[3]-.02&&a.x>=+fq[0]-.02))start=i+1}}
     for(i=start;i<cs.length;i++){c=cs[i];if(c===g)continue;var kk=c.getAttribute("data-k");var ck=kk!=null?+kk:(c._dk!=null?c._dk:null);
@@ -3172,7 +3172,17 @@ function lfPatioReal(){
     [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
     if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
-    R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})})}
+    R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})});
+    /* only spots a walk from the sliding door reaches (QA on v0.75: with the Patio full, the back-left spot was boxed in by the
+       chaise and the fire pit set, the route fell back to a straight line and Pluto walked over the chaise). The walkable floor is
+       flood-filled from the door on lfPaPath's own grid with its own test (lfPaIn) */
+    var N={pa:[],paR:R},S3=.3,X0=ox,Y0=oy,nx=Math.ceil((Math.max(W,9.4-ox)+.2)/S3),ny=Math.ceil((D+1)/S3),seen=new Uint8Array(nx*ny),
+      cell=function(x,y){var i=Math.floor((x-X0)/S3),j=Math.floor((y-Y0)/S3);return i<0||j<0||i>=nx||j>=ny?-1:j*nx+i},
+      st=[cell(8.6,-.3)];if(st[0]>=0)seen[st[0]]=1;
+    while(st.length){var c0=st.pop(),ci=c0%nx,cj=(c0/nx)|0;for(var dx=-1;dx<=1;dx++)for(var dy=-1;dy<=1;dy++){if(!dx&&!dy)continue;var X=ci+dx,Y=cj+dy;
+      if(X<0||Y<0||X>=nx||Y>=ny)continue;var ni=Y*nx+X;if(seen[ni])continue;if(!lfPaIn(N,X0+(X+.5)*S3,Y0+(Y+.5)*S3))continue;seen[ni]=1;st.push(ni)}}
+    var reach=function(x,y){for(var dx=-1;dx<=1;dx++)for(var dy=-1;dy<=1;dy++){var k=cell(x+dx*S3,y+dy*S3);if(k>=0&&seen[k])return true}return false};
+    R.spots=R.spots.filter(function(q){return reach(q[0],q[1])});R.beds=R.beds.filter(function(q){return reach(q[0],q[1])})}
   catch(e){R=null}
   finally{LF.W=sv[0];LF.D=sv[1];LF.N=sv[2];LF.H=sv[3];window.LFCR=sv[4];LFDEC=sv[5];LFWINS=sv[6];LFREC=sv[7];window.rmPortalsOn=sv[8];LFWBR=sv[9]}
   return R}
