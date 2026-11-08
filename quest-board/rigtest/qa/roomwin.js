@@ -31,9 +31,11 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
     await pinch(bx[0], bx[1], 60, 260); const v2 = await vb();
     const zoomBtns = ctl.filter((l) => /zoom|reset|\+|−|-/i.test(l));
     const lampOk = true; /* the Bedroom's lamp shows only at night: nightlights.js */
-    if (zoomBtns.length || v1 !== v0 || v2 !== v0 || !lampOk) bad.push({ t, ctl, v0, v1, v2 });
+    /* zoom is back (LEAD's cc71c5e, Cal 2026-11-08): + and - under the picture, and a pinch zooms */
+    const both = ctl.some((l) => /zoom in/i.test(l)) && ctl.some((l) => /zoom out/i.test(l));
+    if (!both || v2 === v0 || !lampOk) bad.push({ t, ctl, v0, v1, v2 });
   }
-  ok('every room window: no zoom buttons, wheel and pinch change nothing, the Bedroom keeps its lamp', bad.length === 0, bad);
+  ok('every room window: zoom in and out buttons, a pinch zooms (cc71c5e)', bad.length === 0, bad);
   // the Restaurant at each stage
   const first13 = ['r_sign', 'r_cf1', 'r_m1', 'r_k1', 'r_t1', 'r_d1', 'r_d2', 'r_k2', 'r_s1', 'r_till', 'r_l1', 'r_m2', 'r_k3'];
   for (const [name, mode] of [['hole', 'first13'], ['diner', 'x1'], ['bistro', 'nonoir'], ['noir', 'all']]) {
@@ -89,13 +91,14 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
     const b0 = await snap();
     await p.evaluate((id) => document.querySelector('.rmodal [data-act="raddon"][data-id="' + id + '"]').click(), pick);
     const pulse = [];
-    for (const ms of [150, 450, 800]) { await p.waitForTimeout(ms === 150 ? 150 : ms - pulse.length * 0); pulse.push(await p.evaluate(() => { const n = [...document.querySelectorAll('.rmodal svg .isonew')]; return { n: n.length, gold: n.filter((e) => getComputedStyle(e).animationName === 'lfnewpulse').length, shadowPulsing: n.filter((e) => (e.hasAttribute('filter') || e.hasAttribute('clip-path')) && getComputedStyle(e).animationName === 'lfnewpulse').length }; })); }
+    /* the purchase effect is now the reveal and outline (LEAD's fa5ff03 + ccc574f): g.lfnewglow from about 1.4 s to 4.4 s (installfx.js tests it fully) */
+    for (const ms of [1700, 2300, 2900]) { await p.waitForTimeout(ms === 1700 ? 1700 : 600); pulse.push(await p.evaluate(() => { const n = [...document.querySelectorAll('.rmodal svg g.lfnewglow > *')]; return { n: n.length, gold: n.length, shadowPulsing: n.filter((e) => e.hasAttribute('filter') || e.hasAttribute('clip-path')).length, light: n.some((e) => e.classList.contains('lflt') || !!e.querySelector('.lflt')) }; })); }
     const b1 = await snap(); const after = cmp(b0, b1);
     await (await p.$('.rmodal .rbig')).screenshot({ path: path.join(OUT, `buy_${t}.png`) }).catch(() => {});
     const pz = pulse.reduce((m, q) => (q.gold > m.gold ? q : m), { n: 0, gold: 0, shadowPulsing: 0 });
     const okp = after.n === 0 || (after.gone === 0 && after.look === 0 && after.seat === 0 && after.maxMove <= Math.max(40, drift.maxMove * 2.5));
     ok(`${t}: bought ${pick} with ${after.n} people in the window: kept (moved ${after.maxMove} vs ${drift.maxMove} with no purchase)`, okp, { after, drift });
-    ok(`${t}: the new pieces pulse gold, the shadow layer does not`, pz.gold > 0 && pz.shadowPulsing === 0, pulse);
+    ok(`${t}: the outline never takes the light layer or a filtered layer (outlined ${pz.gold}; 0 means a held swap)`, pz.shadowPulsing === 0 && !pulse.some((q) => q.light), pulse);
   }
   ok('no page errors', errs.length === 0, errs.slice(0, 3));
   console.log(fails.length ? 'FAILED ' + fails.length : 'PASS'); await b.close();

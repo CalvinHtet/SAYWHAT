@@ -54,7 +54,7 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
   const taps = log.length;
   ok(`reaches "That's every story event" (${taps} taps)`, end, log.slice(-2).map((x) => x.said));
   ok('every tap before the end says what it did', log.slice(0, -1).every((x) => /Next event: /.test(x.said)), log.filter((x, i) => i < log.length - 1 && !/Next event: /.test(x.said)).map((x) => x.tap));
-  ok('every scene closes with its own buttons (a yes that adds someone then shows the game\'s NEW TEAM MEMBER card)', log.every((x) => !x.left || /NEW TEAM MEMBER/.test(x.leftText)), log.filter((x) => x.left).map((x) => [x.tap, x.leftText]));
+  ok('every scene closes with its own buttons (a yes that adds someone then shows the game\'s NEW TEAM MEMBER card; the day\'s real friend visit can also land mid-run)', log.every((x) => !x.left || /NEW TEAM MEMBER|PULLED UP|KNOCK KNOCK|SURPRISE|DROPPED IN|STOPPED BY/i.test(x.leftText)), log.filter((x) => x.left).map((x) => [x.tap, x.leftText]));
   ok('every tap before the end saves (its scene pressed through)', log.slice(0, -1).every((x) => x.saved), log.filter((x, i) => i < log.length - 1 && !x.saved).map((x) => x.tap + ' ' + x.said));
   const badPics = log.filter((x) => x.pics && (x.pics.bad.length || !x.pics.n));
   ok(`every scene's pictures load (${log.filter((x) => x.scene).length} scenes)`, !badPics.length, badPics.map((x) => [x.tap, x.pics]));

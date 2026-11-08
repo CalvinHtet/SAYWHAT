@@ -13,7 +13,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.74 RE-CUT from ed0a4f9 (APPV 74; QA had not started 2866b5e), WAITING ON QA for the full set on dist (473) and dist-web
+- Now: v0.74 RE-CUT from ed0a4f9 (APPV 74; QA had not started 2866b5e), WAITING ON QA for the full set (QA: DONE, not yet: two ROOMS fixes, the Boba cafe table on a customer spot and the Garden Back Plot stand behind a bed; everything else passes, QA findings) on dist (473) and dist-web
   (2339). Added since 2866b5e: ROOMS's Boba Shop c342c2b + 89d4015 (Cal: "weirdly floating", "covering the doorway"; Dessert Parlor
   matcha bar), Bedroom windows 14d060f, Garden stages 4562a76, part-bought sweep 6a5572f; LEAD's zoom buttons under the picture
   ed0a4f9. LEAD's checks on ed0a4f9: loads clean, Review 131/131 save unchanged, story 64/64, Next event 35 taps, webtest PASS,
@@ -46,12 +46,12 @@ Doing:
   room for unintended overlaps). (4) "pluto and chopstick are really tiny ... make them bigger and more recognizable": ROOMS, new
   painted dog art from Cal's photos, for his approval.
   More notes (all on his phone, v0.73): "Some rooms are cut off and not showing the whole room": LEAD f314bca (frame grows to the
-  room's real walls; iPhone Safari's short box fixed; roomfit.js 21/21 rooms at 3 sizes in Chromium and WebKit), WAITING ON QA.
+  room's real walls; iPhone Safari's short box fixed; roomfit.js 21/21 rooms at 3 sizes in Chromium and WebKit), WAITING ON QA (QA: pass on ed0a4f9, fully bought too).
   QA's three fa5ff03 problems (54c9132): LEAD ccc574f (lights never hidden or outlined; swaps and big changes keep the old room
   until the box opens; the web update check counts every file, which is why his Test button vanished after he became owner),
-  WAITING ON QA. "the test button is gone": an app kept open never got 5b45abb (config only); told to swipe it closed; fixed for
+  WAITING ON QA (QA: pass on ed0a4f9). "the test button is gone": an app kept open never got 5b45abb (config only); told to swipe it closed; fixed for
   next time in ccc574f. "After unlocking the noir upgrade, I want the bar to be a next event": LEAD 82ab448 (Desmond after Noir, no coin
-  threshold; __qbRooms.gates()), WAITING ON QA. For ROOMS (sent): Game Room TV flush to the wall and foosball in line with the pool
+  threshold; __qbRooms.gates()), WAITING ON QA (QA: pass on ed0a4f9). For ROOMS (sent): Game Room TV flush to the wall and foosball in line with the pool
   table; the Garden's skewed planter made the same raised bed as the others; the Garden lantern light seam; the Bigger Till visible;
   the Restaurant neon flush to the wall, the high-top stools given a reason, the wine rack along the wall, the Star Plaque off the
   window, the painting clear of the booth, the Grand Menu off the light. Open with Cal: room zoom (he removed it for lag earlier). Was: Cal signs in once, LEAD adds his uid as owner
@@ -527,6 +527,42 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.74 = ed0a4f9 (APPV 74), the full set on clean builds of dist (473) and dist-web (2339): NOT YET, two fixes for ROOMS (the
+  next two lines); everything else PASSES, 0 page errors anywhere. Core: savecheck all passed; screens at 360 and 390 fit; visits.js PASS; lagcheck PASS (alone: Game Room and Restaurant
+  windows at CPU x4, v0.73 54.3/56.5 fps, v0.74 57.5/60.3, worst 50/17 ms); unlockall PASS (fresh and mid-game); the whole story
+  64/64; Review 132/132 Plays on both bodies, 0 problems; livesync, live10, players10 PASS; alerts, FX, bar rule, badges (16 from
+  the pack), drops PASS; roomwin PASS (people kept when buying, the outline on 1 to 3 new pieces, never the light layer); all 30
+  rooms draw fully bought; guests at most 5, no duplicate looks; screens' still picture PASS. Next event 35 taps PASS. LEAD's fixes: (1) f314bca whole rooms: every room
+  FULLY BOUGHT (QA's rigtest/qa/roomfitfull.js: LEAD's roomfit.js with every upgrade bought, so the Restaurant and Garden
+  expansions and the Auditorium back row are in) fits at 390x844, 440x956 and 375x667 in WebKit and Chromium, 21/21; the VR
+  Arena's 60-80 px "cut" was its wall screen's slide strips, clipped to the screen (now skipped); picture of every window at 375
+  in WebKit: whole rooms. (2) ccc574f reveal: rigtest/qa/installfx.js, 14 purchases in WebKit (Safari's engine): pieces hidden
+  through the drop, outlined, gone by 4.7 s; the light layer never hidden or outlined (Brass Sconces, Grand French Range, Neon
+  Sign, Nightstand: lit rooms, no flat cream); the Ergo Chair swap and Knock Through / Take Over Next Door keep the old room on
+  screen until the box opens, then the new room; Floor-to-Ceiling Glass and Buy the Empty Lot now hidden and outlined. Chromium
+  agrees but runs late under this Mac's load (one frame 4 s). The update check counts config.js too (fingerprinted in the page).
+  (3) 82ab448 the bar: __qbRooms.gates().lockkey is true with Noir and the Dessert Parlor at 0 earned, false with White Linen and
+  no Noir, false with Noir and no Dessert Parlor; no step errors (18); Next event 35 taps, Desmond's Noir line ("Charcoal walls,
+  low light"). Not driven live at level 28: the unlock pacing (one step a day, areas waiting) holds a synthetic save, unchanged
+  code. (4) cc71c5e zoom and ed0a4f9 its row: the + / - row (and the Bedroom lamp) sit under the picture in every window, clear of
+  every door (375, WebKit). Zoom lag, rigtest/qa/zoomlag.js, full Restaurant at 390x844 x3, zoomed and unzoomed drags in turns:
+  WebKit 53.1 fps unzoomed against 56.8 zoomed (one worst frame per drag 118 against 165 ms), a + tap's worst
+  frame 18 ms; Chromium at CPU x4 under load 32 no worse zoomed (6.8 against 6.1 fps). Zoom adds no lag here; Cal's phone decides. ROOMS's: Bedroom mirror c5a65a1 and windows 14d060f, Restaurant neons bfe3dec and wall pieces a062a4b (the pizza neon off
+  the TODAY board), Dessert Trolley bcc3b41, Bigger Till e37df53, Game Room screen and foosball 4915a05, Garden herb bed 3ad4129,
+  Patio and Theater sweeps 4e5557c, 6a5572f: PASS by eye against v0.73, and the footprint audit finds no new overlap, nothing new
+  outside a room, no new spot inside furniture but the one below (shots/qa/v74/). Web: dist-web holds every picture of the Claude
+  build byte for byte (2316/2316); webtest.js 19/19; websweep.js both bodies (30 rooms, 445 pictures, 29 visits) PASS. Not covered: a real phone; the Boba barista and customers walking live (headless they idle at the entrance; the barista's work spot at
+  (3.8, 1.25) is clear of everything); the Garden at night. QA test fixes: unlockall.js tops up coins whenever a buy fails (it
+  stopped at a Garden expansion dearer than the coins left; every Garden upgrade buys through its window); nextevent.js lets the
+  day's real friend visit card land mid-run; roomwin.js expects the zoom buttons and the reveal's outline (the old gold pulse is gone).
+- QA, v0.74 (ed0a4f9), Boba Shop c342c2b: FAIL. Moving the cafe table put it on a customer spot: the spot at (5.05, 5.46) is
+  inside bbx_cafe's footprint, so a customer stands inside the table (Cal's "layed on top of the table"). v0.73 had that spot at
+  (4.95, 5.45), clear. The barista's spot (3.8, 1.25) and the other five customer spots are clear. Fix: move the spot or the
+  table. Owner: ROOMS.
+- QA, v0.74 (ed0a4f9), Garden 4562a76, the Back Plot (no lots bought) fully bought: FAIL, rule 20. The market stand moved to the
+  front-left now stands behind the front raised bed: only its striped awning shows above the carrots
+  (shots/qa/v74/garden_backplot_stand.png; v0.73 had it at the front right, in the open). Fix: give it its own open floor. Owner:
+  ROOMS.
 - QA, LEAD's fa5ff03 purchase reveal and 3 s outline (Cal's v0.73 notes), on a clean build of a3485ac (30_app_b.js unchanged to
   5201e1a), Chromium and WebKit at 390: NOT YET, three problems, all LEAD's. What works: on separate furniture pieces the new parts
   stay hidden through the drop (120 to 1300 ms), the gold outline follows each piece's own shape in both engines (sofa, Boucle and
@@ -2706,7 +2742,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 89d4015): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
+- Now (on 89d4015): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below (QA: done on ed0a4f9, all pass but two, QA findings: the Boba cafe table on a customer spot, the Garden Back Plot stand behind a bed): Bedroom mirror c5a65a1; Restaurant
   neons bfe3dec; TEAMWORK rule 20 aa8bfd4; overlap sweep 4e5557c and the dessert trolley bcc3b41; Game Room TV flush and foosball
   in a row with the pool table 4915a05; Garden herb plot as a matching wooden bed and the night seam (outdoor rooms' night
   shade left out the floor's front corner) 3ad4129; Restaurant wall pieces in every stage and style a062a4b; Bigger Till as a
@@ -3080,9 +3116,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): the v0.74 full set on ed0a4f9 (dist and dist-web), running: core set, the reveal, room fit, the bar gate, zoom lag,
-  ROOMS's room and Boba fixes (barista and customer routes live). Done on 2866b5e first (carries over): reveal PASS in WebKit,
-  room fit fully bought PASS, bar gate PASS, Next event 35, web art 2316/2316, webtest, websweep PASS. (on 24b98a3)
+- Now (QA): DONE, v0.74 full set on ed0a4f9: not yet, two ROOMS fixes (QA findings). Next: recheck those two on the rebuild
+  (small check). (on ea04efa)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 

@@ -67,14 +67,14 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
           while (guard++ < 120) { const bt = [...document.querySelectorAll('.rmodal [data-act="raddon"]')].find((e) => !e.disabled && !e.classList.contains('dis'));
             if (!bt) { if (retry++ < 2) { document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qb.roomModal(i); await w(700); continue; } break; } retry = 0; const c = S.coins; bt.click(); await w(250); document.querySelectorAll('#layer .modal:not(.rmodal), .dropsplash').forEach((e) => { if (!e.querySelector('.rmodal') && !e.classList.contains('rmodal')) e.remove(); });
             if (!document.querySelector('.rmodal')) { window.__qb.roomModal(i); await w(400); }
-            if (S.coins === c) { if (S.coins < 200000) { S.coins += 1000000; topups++; continue; } break; } bought++; }
+            if (S.coins === c) { if (topups < 40) { S.coins += 1000000; topups++; continue; } break; } bought++; }
           const live = (x.ADDONS[r.t] || []).filter((u) => !(u[3] && u[3].retired)); const own = live.filter((u) => r.a[u[0]]).length;
           out.push({ t: r.t, opened, bought, own, live: live.length, left: live.filter((u) => !r.a[u[0]]).map((u) => u[0]) }); }
         return { out, topups, spent: S.spent }; });
       res.out.forEach((r) => console.log(`  ${r.t.padEnd(11)} window ${r.opened ? 'opens' : 'DID NOT OPEN'}, bought ${r.bought}, owns ${r.own}/${r.live}${r.left.length ? ' (not bought: ' + r.left.join(' ') + ')' : ''}`));
       ok('fresh: every room window opens', res.out.every((r) => r.opened));
       ok('fresh: every upgrade in every room could be bought through its window', res.out.every((r) => r.left.length === 0), res.out.filter((r) => r.left.length).map((r) => r.t + ': ' + r.left.join(',')));
-      console.log(`  coins ran out ${res.topups} time(s) buying everything (the test added 1,000,000 each time)`);
+      console.log(`  coins ran out ${res.topups} time(s) buying everything (the test added 1,000,000 each time a buy did not go through, so an expansion dearer than the coins left still gets bought)`);
       // Review still plays (a sample)
       const rv = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)); window.__qbRooms.review(); await w(600); const bs = [...document.querySelectorAll('#layer .modal [data-rv]')].map((e) => [e.dataset.rv, e.dataset.v]); let n = 0, opened = 0;
         for (let i = 0; i < bs.length; i += Math.max(1, Math.floor(bs.length / 20))) { document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qbRooms.play(bs[i][0], bs[i][1]); await w(900); n++; if (document.querySelector('#layer .modal, .dropsplash')) opened++; } return { total: bs.length, n, opened }; });

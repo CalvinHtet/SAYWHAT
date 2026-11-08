@@ -2,7 +2,8 @@
 // drops" and "a glowing sort of outline around the newly added object that dissapears after 3 secones"), in Chromium or WebKit
 // (iPhone Safari's engine), at phone size. For each case the room owns every live upgrade but the one bought (and what needs it),
 // then the window's buy button is pressed. Sampled at fixed times: the new pieces stay hidden while the box drops and shakes
-// (120 to 1300 ms), carry the gold outline once it opens (1.9 s) and are fully shown by 2.6 s, and at 4.7 s the outline and its filter are gone,
+// (120 to 1300 ms), carry the gold outline once it opens (1.9 s) and are fully shown by 2.6 s; a swap or a big change (ccc574f)
+// keeps the old room on screen until the box opens; the room's light layer is never hidden or outlined, and at 4.7 s the outline and its filter are gone,
 // the pieces visible, in the same order as before. Also: an upgrade that changes the picture but hides nothing (the code skips
 // the effect when over half the picture is new) is listed, and the frame times while the outline runs (Chromium, CPU x4).
 // Pictures at 1.9 s (outline) per case.   B=chromium|webkit BASE=<server> OUT=<folder> [CASES="room:name,room:name"] node installfx.js
@@ -63,14 +64,15 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
         if (!fresh) fresh = [...svg.querySelectorAll('*')].filter((e) => e.style && e.style.opacity === '0' && !e.closest('.lfnewglow') && e.parentNode && (e.parentNode === svg || e.parentNode.parentNode === svg || e.closest('svg') === svg));
         const live = fresh.filter((e) => e.isConnected);
         const op = live.map((e) => +getComputedStyle(e).opacity);
-        samples[at] = { fresh: fresh.length, live: live.length, maxOp: op.length ? Math.max(...op) : null, minOp: op.length ? Math.min(...op) : null,
+        const hs = hrefs().join('|'), lflt = [...svg.querySelectorAll('.lflt')];
+        samples[at] = { pic: hs, lfltHidden: lflt.some((e) => +getComputedStyle(e).opacity === 0 || !!e.closest('.lfnewglow')), fresh: fresh.length, live: live.length, maxOp: op.length ? Math.max(...op) : null, minOp: op.length ? Math.min(...op) : null,
           wrapped: live.filter((e) => e.parentNode && e.parentNode.classList && e.parentNode.classList.contains('lfnewglow')).length,
           glows: svg.querySelectorAll('g.lfnewglow').length, filters: svg.querySelectorAll('filter[id^="lfnewglow"]').length,
           crate: !!(W() && W().querySelector('.isocrate')), open: !!(W() && W().querySelector('.isocrate.open')) };
         if (at === 1900) { const sb = svg.getBoundingClientRect(); samples[at].big = [...svg.querySelectorAll('g.lfnewglow')].map((g) => g.firstElementChild).filter(Boolean).map((e) => { const q = e.getBoundingClientRect(); return { tag: e.tagName, cls: (e.getAttribute('class') || '').slice(0, 40), area: +((q.width * q.height) / (sb.width * sb.height)).toFixed(2), what: (e.innerHTML.match(/([a-z0-9_]+)\.webp/) || [, e.innerHTML.replace(/\s+/g, ' ').slice(0, 60)])[1] }; }).filter((x) => x.area > 0.4); }
         if (at === 1900) { const bb = live.map((e) => e.getBoundingClientRect()).filter((q) => q.width || q.height); window.__qaBox = bb.length ? [Math.min(...bb.map((q) => q.left)), Math.min(...bb.map((q) => q.top)), Math.max(...bb.map((q) => q.right)), Math.max(...bb.map((q) => q.bottom))] : null; }
       }
-      run = false; const after = hrefs();
+      run = false; const after = hrefs(); const B = before.join('|'), A = after.join('|'); Object.values(samples).forEach((q) => { q.isBefore = q.pic === B; q.isAfter = q.pic === A; delete q.pic; });
       const glowFrames = frames.filter((f) => f[0] > 1450 && f[0] < 4400).map((f) => f[1]);
       const changed = JSON.stringify(before) !== JSON.stringify(after);
       return { fake, samples, changed, nBefore: before.length, nAfter: after.length, box: window.__qaBox, worst: glowFrames.length ? Math.round(Math.max(...glowFrames)) : null, fps: glowFrames.length ? +(glowFrames.length / ((glowFrames.reduce((a, c) => a + c, 0)) / 1000)).toFixed(1) : null };
@@ -88,7 +90,9 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
     ok(`${tag}: no room-sized layer outlined (it would paint over the whole room)`, !(s[1900].big || []).length, s[1900].big);
     const gone = s[4700].glows === 0 && s[4700].filters === 0 && s[4700].minOp === 1 && s[4700].live === s[4700].fresh;
     console.log(`  ${tag} (${setup.id}${r.fake ? ', button made: not in the menu' : ''}): ${s[120].fresh} new of ${r.nAfter} pictures; hidden ${early.map((q) => q.maxOp).join('/')}; at 1.9 s opacity ${s[1900].minOp}, outlined ${s[1900].wrapped}/${s[1900].live}; at 4.7 s glows ${s[4700].glows}, filters ${s[4700].filters}${ENG === 'chromium' ? `; while outlined at CPU x4 ${r.fps} fps, worst ${r.worst} ms` : ''}`);
-    if (!s[120].fresh) ok(`${tag}: ${r.changed ? 'the picture changed but nothing was hidden: it shows before the box drops' : 'nothing new in the picture'}`, !r.changed, { before: r.nBefore, after: r.nAfter });
+    ok(`${tag}: the room's light layer is never hidden or outlined`, ![120, 600, 1000, 1300, 1900, 2600].some((t) => s[t].lfltHidden), [120, 600, 1300, 1900].map((t) => s[t].lfltHidden));
+    // nothing hidden: either nothing changed, or (ccc574f) the room as it was stays on screen until the box opens, then the new room
+    if (!s[120].fresh) ok(`${tag}: ${r.changed ? 'held: the old room on screen while the box drops, the new room once it opens' : 'nothing new in the picture'}`, !r.changed || ([120, 600, 1000, 1300].every((t) => s[t].isBefore) && [2600, 4700].every((t) => s[t].isAfter)), [120, 600, 1300, 2600, 4700].map((t) => t + ':' + (s[t].isBefore ? 'old' : s[t].isAfter ? 'new' : 'other')));
     else { ok(`${tag}: hidden while the box drops (120-1300 ms)`, hidden, early); ok(`${tag}: outlined once the box opens (1.9 s), fully shown by 2.6 s`, shown, [s[1900], s[2600]]); ok(`${tag}: outline gone by 4.7 s, pieces visible`, gone, s[4700]); }
     await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((e) => e.remove()));
   }
