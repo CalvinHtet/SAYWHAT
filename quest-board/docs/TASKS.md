@@ -15,7 +15,7 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.74 PUBLISHED to Cal's web Test channel from 3dfe920 (QA PASSED: 70debad full set, d6c12a8 recheck; version
   3ac337176989cb8f; the live app.js fingerprint matches the build; APPV 74; dist 481, dist-web 2347; the new dogs ship switched off,
-  LFDOGON unset, until Cal approves them). WAITING ON CAL: his phone test of v0.74, and his yes on Pluto and Chopstick (sheet sent).
+  LFDOGON unset, until Cal approves them; QA's file check of the live channel: PASS, 2347/2347 byte-identical, QA findings). WAITING ON CAL: his phone test of v0.74, and his yes on Pluto and Chopstick (sheet sent).
   Was: QA's v0.74 full set on ed0a4f9: NOT YET (70debad), everything of LEAD's passes (zoom adds no lag in WebKit: 56.8 fps zoomed
   vs 53.1); two ROOMS fixes: the Boba cafe table on a customer spot (5.05, 5.46), the Garden Back Plot stand behind a bed. When
   ROOMS lands them LEAD rebuilds v0.74 and QA rechecks those two, then the publish to Cal's Test channel.
@@ -533,6 +533,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.74 on Cal's web Test channel (Firebase Hosting channel "test", release 3ac337176989cb8f, expires
+  2026-12-08) against a clean web build of 3dfe920: PASS. Every one of the build's 2347 files fetched from the channel answers 200
+  and is byte-identical (diff -r: 0 differ); the page loads app.js?h=0549b500a6, APPV 74; config.js holds Cal as the one owner (the
+  same uid as firestore.rules); nothing sets LFDOGON, so the dogs stay pixel. The live page in WebKit and Chromium at 390 reaches
+  the sign-in screen with 0 page errors, the service worker registered and the manifest in (not signed in). Not covered: files on
+  the channel beyond the build's (Hosting lists none without its API), the deployed Firestore rules, and a real phone (Cal's).
+  Owner: LEAD.
 - QA, ROOMS's 3dfe920 (the Back Plot sprinkler, and the painted dogs switched off) on a clean build of 3dfe920 (481 files: the 8
   dog pictures ship, unused): PASS. The berry bed's mist sprinkler stands in the lane on the bed's left side, its head clear of every
   piece; only its spray arcs toward the next bed, watering it (on purpose under rule 20); the market stand, its awning and crates
@@ -3147,8 +3154,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, ROOMS's 3dfe920 sprinkler and dogs-off: PASS; v0.74's fixes are all in (QA findings). Next: the dogs once Cal
-  approves (LFDOGON on), and whatever comes next on the board. (on 3dfe920)
+- Now (QA): DONE, the published v0.74 on the web Test channel: PASS, 2347/2347 files byte-identical (QA findings). Next: the
+  dogs once Cal approves (LFDOGON on), and whatever comes next on the board. (on 44be3c2)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
