@@ -23,7 +23,9 @@ Doing:
   test address not on the Google OAuth client): Cal given the steps to add it and the Live address (RELEASING.md, "Google sign-in
   on a new address"). Cal fixed it and signed in; CAL: "give me these tools just so i CAN TEST": he is the
   owner now (5b45abb: uid in web/config.js and firestore.rules; rules deployed; Test channel rebuilt from 660eb30 with only
-  config.js changed, app.js fingerprint unchanged). Now: Cal's phone test and feedback. CAL'S NOTES so far, for v0.74:
+  config.js changed, app.js fingerprint unchanged). Now: Cal's phone test and feedback. PHONE LAG CONFIRMED on Cal's iPhone (iOS 18.7, APPV 73, web build's diag/perf): room
+  windows 50.2-60.2 fps, worst 29-82 ms, no long tasks (v0.67 was 37-38 fps, worst 214 and 421 ms); the Loft 58-59 fps, worst 44-49 ms
+  (4 samples so far). CAL'S NOTES so far, for v0.74:
   (1) "some of the upgrades appear before the box fully drops" + "a glowing sort of outline around the newly added object that
   dissapears after 3 secones": LEAD, fa5ff03 (hidden until the box opens; a 3 s gold outline, SVG filter for Safari), WAITING ON QA.
   (2) "the standing mirror is plaaced behind the night stand on the left": ROOMS. (3) "neon sign is too close to the patio window
