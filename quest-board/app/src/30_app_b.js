@@ -1570,7 +1570,7 @@ render();try{chLoad()}catch(e){}
     db=window.claude?await window.claude.use("db"):null;
     var usr=null; try{usr=window.claude?await window.claude.use("user"):null}catch(e){}
     var uid=null, own=true; if(usr){try{uid=await usr.id();own=await usr.isOwner()}catch(e){}}
-    MYUID=uid||null;if(usr&&!own){window.__qbGuest=1;document.body.classList.add("qb-guest");var qt=document.getElementById("qbt");if(qt)qt.remove()}
+    MYUID=uid||null;if(own)document.body.classList.add("qb-own");if(usr&&!own){window.__qbGuest=1;document.body.classList.add("qb-guest");var qt=document.getElementById("qbt");if(qt)qt.remove()}
     /* every save, the owner's too, lives in a private per-person path */
     if(db&&uid){
       DOC="data/users/"+uid+"/state";
