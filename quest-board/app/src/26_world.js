@@ -347,18 +347,18 @@ LFROOM.restaurant=function(C){
     C.walls.push(lfFaceY(Wi+2.65+i*1.05,0,118,'<g transform="scale(.8)">'+c+'</g>'))});
   /* Cal (playtest): the double shelf was mirrored for the other wall, so it crossed the trim. Unmirrored it runs along the back
      wall, seated above the wainscot */
-  if(H("r_d2")&&!noir)rsS(C,"rsx_shelf",1.6,.02,1.8,.1,1,{H:58,dy:-74,nosh:1});
+  /* rule 20 (Cal): the shelf shared its wall with the TODAY board in the Hole in the Wall and with the painting later; superseded by them */if(H("r_d2")&&!noir&&!(st===0&&H("r_scr"))&&!(st>0&&H("r_d7")))rsS(C,"rsx_shelf",1.6,.02,1.8,.1,1,{H:58,dy:-74,nosh:1});
   /* clear of the painting at the left end of the back wall (QA) and of the wine wall to its right */
-  if(H("r_bigmenu")&&st>0&&C.room)C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,130,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),66,noir)));/* Cal (playtest): "Make the tasting menu rectangular so it's not extending to the floor": 66 high, wholly above the wainscot rail */
+  if(H("r_bigmenu")&&st>0&&C.room)/* Cal: "the grand menu covers one of the lights": in Noir the shell has brass picture lights painted on this wall; the board hangs lower, under one */C.walls.push(lfFaceY(st===1?4.15:Wi-9.4,0,noir?104:130,rsBigMenu(SVC.restaurant.menu(C.room),LF.U*(st===1?3.75:4.6),66,noir)));/* Cal (playtest): "Make the tasting menu rectangular so it's not extending to the floor": 66 high, wholly above the wainscot rail */
   else if(H("r_scr")&&C.room)C.walls.push(lfFaceY(Math.max(.6,Wi-7.4),0,126,scrMenu(SVC.restaurant.menu(C.room),LF.U*2.6,58)));
   /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});
   /* re-audit 2026-11-07 (0.26%): bigger, with a soft pink glow on the wall */
-  if(H("r_d4")&&!noir){var nx=st>0?Wi-1.75:.05;/* Cal: no unintended overlaps; in the Hole in the Wall it covered the TODAY board and the shelf, so the back corner, a little smaller */lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,flip:1,H:st>0?76:62,dy:st>0?-104:-90,nosh:1});/* QA 85fad55: right and up, clear of the wine wall */lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
+  if(H("r_d4")&&!noir){var nx=st===2?Wi-3.3:st>0?Wi-1.75:3.85;/* st 2: clear of the pass pendants *//* Cal: no unintended overlaps; in the Hole in the Wall it covered the TODAY board and the shelf, so the back corner, a little smaller *//* Cal (v0.73 phone): "fits flush with the wall instead of hanging in air": the art is painted for the back wall, so not mirrored */lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,H:st>0?76:62,dy:st===2?-114:st>0?-104:-90,nosh:1});/* QA 85fad55: right and up, clear of the wine wall */lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
   /* re-audit 2026-11-07: 26 px tall it changed 0.06% of the room and Noir hid it; bigger, lower, in every style */
   if(H("r_chef"))lfSpr(C,"rs_chef",st>0?Wi+5.3:Wi-1.3,.05,.1,.05,{h:1,flip:1,H:58,dy:-116,nosh:1});/* past the order board and the two menu boards; the first kitchen is too narrow, so there it hangs on the dining wall by the pass */
-  if(H("r_star")){lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,2.45,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
-  if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",.9,.05,2.3,.05,{h:1,flip:1,dy:-44,nosh:1,nob:1});
+  if(H("r_star")){var sty=1.0;/* rule 20 (Cal: "the star plaque is touching the window") */lfSpr(C,"rs_star",.05,sty,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,sty+.05,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
+  /* Cal: "the painting is being covered by the booth": smaller and higher, above the booth backs */if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",1.3,.05,1.6,.05,{h:1,flip:1,dy:-74,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
   var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.08;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
   /* re-audit 2026-11-07 (0.37%): the Grand French Range's art is square, but it was drawn in the old range's footprint behind the pot rack; wider now (1.5, gaps .08: QA b296529, at 1.7 the full row pushed the pizza oven past the right wall) */
@@ -384,7 +384,7 @@ LFROOM.restaurant=function(C){
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
-  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1});
+  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;/* Cal: "facing left but unclear why they are there": they face the counter now */lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1,flip:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
   /* Cal, 2026-11-05: the red crescent booth sits in the back-left corner, open toward the room; the window booths move down
@@ -407,7 +407,7 @@ LFROOM.restaurant=function(C){
   /* QA audit: Brass Chandeliers drew only in the biggest room (in the smaller ones buying them just took the bulb away) */
   if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.7,p[1]-.7,1.4,1.4,{h:1,dy:-118,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)/* re-audit 2026-11-07: 0.2% by day, now 1.4 tiles and a little lower */});
   /* re-audit 2026-11-07 (0.45%): in the first room one sconce only swapped the bulb; two now, the second at the front of the left wall */
-  if(H("r_l1"))(st===0?[1.6,7.0]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
+  if(H("r_l1"))(st===0?[6.1,7.3]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
   if(!H("r_d1"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
@@ -416,7 +416,7 @@ LFROOM.restaurant=function(C){
   /* QA audit (WEAK): Sculptural Vases drew the olive tree; it has its own art now, black ceramic and dry branches */
   if(H("r_d8")&&st>1)lfSpr(C,LFSPR.rdx_vases?"rdx_vases":"rdx_olive",4.4,D-1.2,1,1,{h:40,ctr:1});
   if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
-  if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
+  if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,ctr:1,nosh:1});
   if(H("r_d6")&&st>0)/* rule 20 sweep: at Wi-3.2 it stood inside the front table; now in the open floor before the counter end */lfSpr(C,"rdx_trolley",Wi-1.45,kd+.15,.8,.8,{h:30,ctr:1});
   /* the white drinks cooler has no place in Noir's fine dining once the backlit wine wall does its job (QA) */
   /* QA: against the back wall by the bar stools, not free in the walkway beside the door mat */
