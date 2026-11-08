@@ -98,16 +98,25 @@ function lfSeeded(fn){var s=48271,o=Math.random;Math.random=function(){s=(s*1680
 function lfInstallFx(w,r,dp,i,mm){
   var it0=w.querySelector(".lfitems"),uid=it0?+it0.getAttribute("data-i"):90+i;
   var r2=JSON.parse(JSON.stringify(r));delete r2.a[dp.id];
+  var arrows=function(x){return typeof rmArrows==="function"?rmArrows(x):""};
+  var oldHtml=lfSeeded(function(){return lfPreview(r2,uid)}),newHtml=lfSeeded(function(){return lfPreview(r,uid)});
   var tmp=document.createElement("div");tmp.style.cssText="position:absolute;left:-9999px;top:0;width:10px;height:10px;overflow:hidden;visibility:hidden";
-  tmp.innerHTML=lfSeeded(function(){return lfPreview(r2,uid)});document.body.appendChild(tmp);
+  tmp.innerHTML=oldHtml;document.body.appendChild(tmp);
   var base={},bs=tmp.querySelector("svg");if(bs)lfKids(bs).forEach(function(e){var s=lfSig(e);base[s]=(base[s]||0)+1});tmp.remove();
   /* Cal (v0.48): the door arrows live in the same box, so redraw them with the picture (a new room's arrow showed only after reopening) */
-  w.innerHTML=lfSeeded(function(){return lfPreview(r,uid)})+(typeof rmArrows==="function"?rmArrows(r):"");try{lfPvStart(i,mm)}catch(e){}
+  w.innerHTML=newHtml+arrows(r);try{lfPvStart(i,mm)}catch(e){}
   var svg=w.querySelector("svg");if(!svg)return;
-  var all=lfKids(svg),fresh=all.filter(function(e){var s=lfSig(e);if(base[s]>0){base[s]--;return false}return true});
-  if(fresh.length>all.length*.5)fresh=[];
+  /* QA (54c9132): the room's light layer (g.lflt, drawn with mix-blend-mode) changes with every light bought; it is not a piece.
+     Hiding it took the room's lighting away, and the outline's filter cut its blending off, so the whole room painted flat. */
+  var light=function(e){return e.classList.contains("lflt")||/mix-blend/.test(e.getAttribute("style")||"")||!!e.querySelector(".lflt,[style*='mix-blend']")};
+  var all=lfKids(svg),fresh=all.filter(function(e){var s=lfSig(e);if(base[s]>0){base[s]--;return false}return !light(e)});
+  /* QA (54c9132): when nothing new can be told apart (a swap in a furnished room) or most of the picture is new (a wall knocked
+     through, a lot bought, Floor-to-Ceiling Glass), the room as it was stays on screen until the box opens, then the new room
+     appears; only separate new pieces get the outline. */
+  var hold=!fresh.length||fresh.length>all.length*.5,outline=hold?[]:fresh;
   var wr=w.getBoundingClientRect(),tx=wr.width/2,ty=wr.height*.6;
-  if(fresh.length){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;fresh.forEach(function(e){var b=e.getBoundingClientRect();if(!b.width&&!b.height)return;x0=Math.min(x0,b.left);y0=Math.min(y0,b.top);x1=Math.max(x1,b.right);y1=Math.max(y1,b.bottom)});
+  if(hold){w.innerHTML=oldHtml+arrows(r2);try{lfPvStart(i,mm)}catch(e){}}
+  else{var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;fresh.forEach(function(e){var b=e.getBoundingClientRect();if(!b.width&&!b.height)return;x0=Math.min(x0,b.left);y0=Math.min(y0,b.top);x1=Math.max(x1,b.right);y1=Math.max(y1,b.bottom)});
     if(x1>x0){tx=(x0+x1)/2-wr.left;ty=y1-wr.top-Math.min(18,(y1-y0)*.25)}
     /* Cal (v0.73): "some of the upgrades appear before the box fully drops". They are hidden at once now (they used to fade out
        over .45 s, so they showed first), and fade in only when the box opens. */
@@ -121,9 +130,10 @@ function lfInstallFx(w,r,dp,i,mm){
   },620);
   setTimeout(function(){if(!w.isConnected)return;cr.classList.add("open");},1050);
   setTimeout(function(){if(!w.isConnected)return;cr.remove();sh.remove();w.classList.remove("dropshake2");
-    fresh.forEach(function(e){e.style.opacity="1"});lfNewGlow(svg,fresh);
+    if(hold){w.innerHTML=newHtml+arrows(r);try{lfPvStart(i,mm)}catch(e){}}
+    else{fresh.forEach(function(e){e.style.opacity="1"});lfNewGlow(svg,outline)}
     var g=document.createElement("div");g.className="isoglow";g.style.left=(tx-60)+"px";g.style.top=(ty-90)+"px";w.appendChild(g);setTimeout(function(){g.remove()},1600);
-    var n=document.createElement("div");n.className="dropname";n.style.animationDelay="0s";n.textContent=dp.name+(fresh.length?" installed":" upgrade active");w.appendChild(n);setTimeout(function(){n.remove()},2600);
+    var n=document.createElement("div");n.className="dropname";n.style.animationDelay="0s";n.textContent=dp.name+(oldHtml===newHtml?" upgrade active":" installed");w.appendChild(n);setTimeout(function(){n.remove()},2600);
   },1400);
 }
 /* Cal (v0.73): "It is also hard to know what item just got added. Can we have a glowing sort of outline around the newly added

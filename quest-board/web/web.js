@@ -146,7 +146,9 @@
   };
   /* ---- the installed app: offline copy, a quiet update when it comes back, and art fetched ahead ---- */
   var mine = function (src) { var u = new URL(src, location.href); return u.pathname.replace(/^.*\//, "") + u.search; };
-  var appHash = function (html) { var m = /app\.js\?h=([0-9a-f]+)/.exec(html); return m ? m[1] : ""; };
+  /* the version is every fingerprinted file the page loads, not app.js alone: a change to config.js (Cal made owner, 5b45abb) left
+     app.js the same, so an app kept open in the background never picked it up */
+  var appHash = function (html) { var m = String(html).match(/[\w.-]+\.js\?h=[0-9a-f]+/g); return m ? m.sort().join("|") : ""; };
   var running = appHash([].map.call(document.scripts, function (s) { return s.src; }).join(" "));
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
     navigator.serviceWorker.register("sw.js").catch(function () {});
