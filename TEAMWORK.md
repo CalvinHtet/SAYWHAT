@@ -161,6 +161,12 @@ ROOMS and QA. Paste each one's starter prompt (Part 3) as its first message.
     it, LEAD wires and publishes it, with no approval from Cal. Never spend credits: if Unlimited is off or a login is needed,
     stop and tell Cal.
 
+20. **No piece overlaps another unless it is meant to (Cal, 2026-11-07, v0.73 phone test: "No items should be overlayed on top
+    of each other like this unless it is intentional").** On purpose is fine: a lamp on a table, a rug under a sofa, art on a
+    wall, a neon in a window. Anything else clipping into a window, a door or another piece is a bug: a mirror behind a
+    nightstand, a neon over a window frame or a menu board. ROOMS checks every new or moved piece against its neighbours and
+    windows and doors in every style and stage of the room, fully bought, before WAITING ON QA; QA checks it the same way.
+
 ---
 
 ## How LEAD runs the work
