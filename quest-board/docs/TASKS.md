@@ -3305,10 +3305,9 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, the published v0.75 on the web Test channel: PASS, 2347/2347 files byte-identical (QA findings). Was: DONE,
-  v0.75 = release/v0.75 at 0729a6b: PASS, publish. Next: v0.76 (LEAD's 422d811 or his next cut): ROOMS's 8c756be (Cal's
-  "Approve all": relic icons, Sable, the portrait banners, the Theater lobby shells, every wall and floor at both lobby sizes)
-  and ROOMS's b3d6b28 (Patio beds per dog), when LEAD sends the cut. (on fa54cba)
+- Now (QA): STOPPED until Thursday (Cal, via LEAD: "stop the automatic checks because that is using my credits"). No loops or
+  crons running; QA's test servers shut down. Friends test v0.75 (0729a6b, QA PASSED) on the Live link; LEAD smoke-tests the
+  level-1 start himself. Waiting for Thursday: v0.76 (ROOMS's 8c756be approved art, b3d6b28 Patio beds per dog). (on 27f5198)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
