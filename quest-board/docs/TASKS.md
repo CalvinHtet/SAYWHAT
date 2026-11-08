@@ -15,7 +15,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 Doing:
 - Now: v0.74 PUBLISHED to Cal's web Test channel from 3dfe920 (QA PASSED: 70debad full set, d6c12a8 recheck; version
   3ac337176989cb8f; the live app.js fingerprint matches the build; APPV 74; dist 481, dist-web 2347; the new dogs ship switched off,
-  LFDOGON unset, until Cal approves them; QA's file check of the live channel: PASS, 2347/2347 byte-identical, QA findings). WAITING ON CAL: his phone test of v0.74, and his yes on Pluto and Chopstick (sheet sent). Phone log (diag/perf, APPV 73, 8 samples
+  LFDOGON unset, until Cal approves them; QA's file check of the live channel: PASS, 2347/2347 byte-identical, QA findings). CAL (2026-11-08): "I approve the new dogs": ROOMS switches them on (LFDOGON), then QA, then LEAD builds v0.75 for his Test link.
+  WAITING ON CAL: his phone test of v0.74. Phone log (diag/perf, APPV 73, 8 samples
   02:31 UTC): the board and Loft 56-60 fps, Boba window 57 fps worst 225 ms, the RESTAURANT window 36.8 fps worst 490 ms: the
   heaviest screen on his iPhone. LEAD: watch v0.74's samples; if the Restaurant stays near 37 fps, slim how it draws.
   Was: QA's v0.74 full set on ed0a4f9: NOT YET (70debad), everything of LEAD's passes (zoom adds no lag in WebKit: 56.8 fps zoomed
