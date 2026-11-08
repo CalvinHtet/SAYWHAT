@@ -27,7 +27,7 @@ Doing:
   windows 50.2-60.2 fps, worst 29-82 ms, no long tasks (v0.67 was 37-38 fps, worst 214 and 421 ms); the Loft 58-59 fps, worst 44-49 ms
   (4 samples so far). CAL'S NOTES so far, for v0.74:
   (1) "some of the upgrades appear before the box fully drops" + "a glowing sort of outline around the newly added object that
-  dissapears after 3 secones": LEAD, fa5ff03 (hidden until the box opens; a 3 s gold outline, SVG filter for Safari), WAITING ON QA.
+  dissapears after 3 secones": LEAD, fa5ff03 (hidden until the box opens; a 3 s gold outline, SVG filter for Safari), WAITING ON QA (QA: DONE, not yet: three problems, QA findings).
   (2) "the standing mirror is plaaced behind the night stand on the left": ROOMS. (3) "neon sign is too close to the patio window
   ... No items should be overlayed on top of each other like this unless it is intentional": ROOMS (the sign, and a sweep of every
   room for unintended overlaps). (4) "pluto and chopstick are really tiny ... make them bigger and more recognizable": ROOMS, new
@@ -504,6 +504,35 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, LEAD's fa5ff03 purchase reveal and 3 s outline (Cal's v0.73 notes), on a clean build of a3485ac (30_app_b.js unchanged to
+  5201e1a), Chromium and WebKit at 390: NOT YET, three problems, all LEAD's. What works: on separate furniture pieces the new parts
+  stay hidden through the drop (120 to 1300 ms), the gold outline follows each piece's own shape in both engines (sofa, Boucle and
+  Cream Sectionals, Velvet Tufted Bed, Bookshelf, Pool Table, LED Wall Panels, White Linen's 32 table parts), and by 4.7 s it is
+  gone, the filter removed and the pieces back in place; your Desk Chair case reproduces (3 parts hidden); 0 page errors
+  (shots/qa/v74fx/gameroom_sectional_outline.png, webkit_sofa_outline.png, restaurant_white_linen_outline.png).
+  (1) FAIL, light purchases paint the whole room flat. The room's light layer (g.lflt: the room-sized multiply shade and the lamp
+  glows, drawn with mix-blend-mode) counts as a new piece whenever a light is added or changed, so during the drop it is hidden (the
+  room loses its lighting) and then it is wrapped in the outline's filter, which cuts its blending off: the multiply rectangle
+  paints solid and for the 3 s of the outline the whole room is a flat cream (Restaurant) or lavender (Bedroom) shape with a gold
+  edge, in both engines (restaurant_sconces_drop_outline.png: before, outline, after; bedroom_neon_outline.png;
+  webkit_grand_range_outline.png). New rigtest/qa/installfx_map.js lists 46 such upgrades in 22 rooms (light_layer_list.txt), e.g.
+  Bedroom Nightstand, Neon Sign, Gaming PC, Picture Window; Restaurant Brass Sconces, Grand French Range, Brass Chandeliers, Pergola &
+  String Lights, Noir, Star Plaque; Garden Grow Lamps, Lantern Posts; Theater Lobby Chandeliers; Club LED Dance Floor, Disco Ball.
+  Fix idea: leave g.lflt (and anything drawn with mix-blend-mode) out of the new pieces: no hiding, no outline.
+  (2) FAIL, swaps in a furnished room show at once. Where one piece replaces another (the Ergo Chair over the Desk Chair in a fully
+  bought bedroom), lfSig finds nothing new, so nothing hides and the window just says "Ergo Chair upgrade active" while the new chair
+  is already there (bedroom_ergo_swap.png). In a bedroom with only the Desk Chair the same swap is found (1 part), so it depends on
+  the room. The map has 36 upgrades in this state ("not judged": the picture differs but nothing new is found).
+  (3) FAIL, big changes show at once: when over half the picture is new the effect skips hiding, so these appear before the box
+  drops: Restaurant Knock Through the Wall (64 of 68 new) and Take Over Next Door (123/142), Garden Clear the Back Lot (19/34) and
+  Buy the Empty Lot (137/182), Auditorium Back Row (118/217), and Bedroom Floor-to-Ceiling Glass (36 of 67 in a full bedroom; on
+  screen 250 ms after buying, bedroom_floor_glass_250ms.png). Cal's note covers these too; holding the old picture until the box
+  opens would.
+  Notes, not blocking: 7 upgrades whose new parts all carry their own filter or clip fade in with no outline (Bedroom Fresh Paint &
+  Oak Floors, Feature Walls, Cove Lighting; Game Room Carpet & Wall Panels, Hex Acoustic Panels, LED Lighting Rig; Restaurant Potted
+  Plants); your call. Frame rate while the outline runs was not measured cleanly (load 20 to 32 here; at CPU x4 on SwiftShader the
+  window ran 4 to 9 fps outlined against 15 to 18 without): I will measure it against v0.73 on the fix, when the Mac is quieter.
+  New QA scripts: rigtest/qa/installfx.js (live, B=chromium|webkit) and installfx_map.js (every upgrade, every room). Owner: LEAD.
 - QA, v0.73 rebuilt = 660eb30 (APPV 73; since 42d73be only the three fixes, the functions lock file and TASKS lines), the recheck of
   b296529's three fixes on clean builds (dist 472, dist-web 2338): PASS, publish. (1) ROOMS's f2f231d: the Grand French Range at 1.5,
   the back row ends with the wood-fired oven at 24.47 inside the 24.6 room (was 24.83); nothing outside the room, the Restaurant's
@@ -3027,8 +3056,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE. v0.73 full set on 42d73be (b296529: three fixes) and the recheck on 660eb30: PASS, publish (QA findings).
-  Next: nothing waiting on QA. (on ec247ce)
+- Now (QA): DONE, LEAD's fa5ff03 reveal and outline: not yet, three problems (QA findings). Next: ROOMS's 4e5557c WAITING ON QA
+  (mirror, neons, overlap sweep), then LEAD's fix of the reveal with a frame-rate check against v0.73. (on 5201e1a)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
