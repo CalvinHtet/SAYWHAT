@@ -43,7 +43,8 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
     ok(`${mode}: level ${st.lvl} (at least 50)`, st.lvl >= 50);
     ok(`${mode}: no locked tab`, st.locked.length === 0, st.locked);
     ok(`${mode}: ${st.rooms} rooms, none twice`, st.rooms >= 20 && !st.dup.length, st.dup);
-    ok(`${mode}: +500,000 coins (${st.coinsAdded}; anything over is income in the same seconds)`, st.coinsAdded >= 500000 && st.coinsAdded < 501000, st.coinsAdded);
+    const said = await p.evaluate(() => [...document.querySelectorAll('#layer .pop, #layer .modal .card')].map((e) => e.textContent.replace(/\s+/g, ' ').trim().slice(0, 120)));
+    ok(`${mode}: +500,000 coins (${st.coinsAdded}; anything over is income in the same seconds)`, st.coinsAdded >= 500000 && st.coinsAdded < 501000, { added: st.coinsAdded, onScreen: said });
     if (mode === 'fresh') { console.log('  given with Unlock everything (openers\' prerequisites, as buying them would): ' + st.prereq.join(' '));
     ok('fresh: rooms come with no upgrades but the ones that open other rooms and what those need', true, st.ups); }
     else { const lost = await p.evaluate((rooms) => { const S = window.__qb.x().S, out = []; rooms.forEach((s) => { const [t, ids] = s.split(':'); const r = S.base.slots.find((q) => q && q.t === t); if (!r) { out.push(t + ' gone'); return; } (ids ? ids.split(',') : []).forEach((id) => { if (!r.a[id]) out.push(t + ':' + id); }); }); return out; }, before.rooms);

@@ -16,7 +16,8 @@ Doing:
 - Now: v0.75 = release/v0.75 at 0729a6b: 5b00b40 + ROOMS's 5218011 cherry-picked (QA's Patio blocker: only reachable spots;
   the sliding door opens for visitors; walkers clipped), leaving out ROOMS's approved art 8c756be for v0.76. Build it from the
   branch release/v0.75. LEAD on 0729a6b: smoke, Review 131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING
-  ON QA: the Patio recheck on 0729a6b; then LEAD publishes it. Was: v0.75 CUT 5b00b40 = d1386bc + ROOMS's 260895e (Patio spot spacing), 5776eda (everyone on the Patio clipped to the
+  ON QA: the Patio recheck on 0729a6b; then LEAD publishes it. (QA: DONE, PASS, publish 0729a6b: the d1386bc full set and the
+  Patio, Theater and Loft rechecks on 0729a6b, QA findings.) Was: v0.75 CUT 5b00b40 = d1386bc + ROOMS's 260895e (Patio spot spacing), 5776eda (everyone on the Patio clipped to the
   glass, QA's blocker) and 03ceedb (Theater lobby shell loader, inert until Cal approves the art). LEAD on 5b00b40: smoke, Review
   131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING ON QA: the Patio with people and dogs, the Theater lobby
   unchanged, the Loft checks; then LEAD publishes 5b00b40. Next, v0.76 from HEAD: ROOMS's 8c756be (Cal: "Approve all": relic
@@ -555,6 +556,58 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, v0.75 = release/v0.75 at 0729a6b (APPV 75; dist 481, dist-web 2347): PASS, publish. Checked in two parts: the full set on
+  d1386bc (LEAD's earlier cut), then the three code changes since (ROOMS's 260895e, 5776eda, 0729a6b = 5218011, and the Theater
+  loader 03ceedb) on clean builds of each exact cut; 0729a6b's build differs from d1386bc only in app.js and the page fingerprint
+  (diff -r, both builds). The full set on d1386bc, 0 page errors anywhere: savecheck all passed; screens at 360 and 390 fit;
+  visits.js PASS; lagcheck PASS alone (Game Room and Restaurant windows at CPU x4: v0.74 59.3/43.5 fps, v0.75 60.3/54.5, worst
+  17/33 ms); unlockall PASS (fresh: every upgrade of every room bought through its window; mid-game: the first run added 501,050
+  coins, over the test's 1,000 allowance, from rewards landing in the same seconds; a rerun added 500,060 with a team scene's +60
+  on screen; the unlock code is unchanged since v0.74); the whole story 64/64 (only an empty story.beats and the day's friend-visit
+  roll change); Review 132/132 Plays on both bodies, 0 problems; livesync, live10, players10 PASS; alerts, FX, bar rule, badges
+  (from the pack, 0 loose), drops PASS; roomwin PASS (people kept when buying, the outline on 1 to 3 new pieces, never the light
+  layer; + / - and pinch in every window); all 30 rooms draw fully bought; guests at most 5 a room, no duplicate looks; screens'
+  still picture PASS; Next event 35 taps PASS; roomfitfull fully bought 21/21 at 390x844, 440x956 and 375x667 in Chromium and
+  WebKit; web on the stand-in Firebase: webtest.js 19/19, websweep.js both bodies (30 rooms fully bought, 445 pictures, 29 visit
+  cards, none of the other body's layers) PASS. On 0729a6b again (Loft code changed): savecheck all passed,
+  visits.js, Review 132/132 (0 problems), all 30 rooms fully bought, guests (at most 5, no duplicate looks), roomwin, screens'
+  still picture, Next event 35 taps, webtest 19/19 and websweep both bodies (445 pictures, 29 visit cards): PASS, 0 page errors.
+  The painted dogs (afc5d4f): stand, walk, sit and sleep all read, about a third of a person's height (34 against 97 units), with
+  Cal in the Bedroom (shots/qa/v75/dogs_painted_poses.png); window.LFDOGON=0 still gives the pixel dogs (dogs_pixel_LFDOGON0.png).
+  Both on their Bedroom beds, the six indoor wander spots and every Patio bed and spot they use: nothing clips a piece (at wander
+  spot (7.40, 6.40) a dog stands behind the fig plant, depth as for people). ROOMS's question, the spot (3.75, -3.85) behind the
+  fire bowl: the dogs never went there (lfPaIn already refused spots inside a footprint); 0729a6b keeps it only on a bare Patio,
+  where nothing is in front of it. The Patio on 0729a6b, bare, half and fully bought: every spot and bed kept is 0.9+ apart, in the
+  glass's span, and reached from the door by a route that crosses no piece (the game's own router); both dogs at every one show
+  through the glass; a friend visit walks out live: the sliding door opens for them (every sample near it), they stay clipped to
+  the glass walking and standing (every sample), and stand fully visible at the deck spot (patio_visitor_standing_5b00b40.png);
+  Pluto walking out stays clipped (30 of 30). The dog cards (775f4d5), WebKit and Chromium at 390: painted art (dgx_<dog>_0 and
+  _2), standing and sitting in turn every 1.7 s with a 0.1 s fade, not stretched (dog_cards.png). The page-zoom block (6ade4bd),
+  new rigtest/qa/zoomblock.js, WebKit as an iPhone 13: viewport maximum-scale=1, user-scalable=no, page scale 1; gesturestart/
+  change/end cancelled; the creator by taps and typing to the Board; typing 135 in Training's weight box, no page zoom; all 21 room
+  windows zoom their picture by + and - and by a two-finger pinch (pointer events); long windows scroll (wheel in desktop WebKit):
+  PASS. The Dessert Parlor (d528068 + 1f87497): zones as in Cal's two references (a back run of machines and cases, the register
+  counter by the door with a staff lane, a seating corner, a tea corner, an open lane), not crowded fully bought
+  (dessert_v74_v75_full.png); footprint audit clean (no overlap, nothing outside, no spot inside or touching furniture); every
+  customer spot and the counter's work spot reached from the door clear, bare, half and fully bought; the Hidden Door for old
+  Speakeasy owners: its floor glow now sits behind the counter, but its tap spot and the corner button both open the Speakeasy
+  (dessert_hidden_door_v74_v75.png). The Theater lobby loader (03ceedb): the same SVG as d1386bc in 8 states (bare, each wall
+  tier, each floor tier, full, no wing); no thw_ art in this cut. Notes, not blockers (both in v0.74 too), for ROOMS: with only
+  the first Patio dog bed bought, both dogs are sent to it (lfDogNext: beds[chopstick?1:0] || beds[0]) and one lies hidden under
+  the other; anyone passing behind a Patio piece is drawn over it (the Patio's glass group draws after the whole Patio view; clear
+  routes keep it from showing). Pluto's own Patio bed sits behind the Bedroom's PC tower, only the head shows asleep (ROOMS: the
+  Bedroom's desk, left as is). Not covered: a real iPhone (a real pinch, double tap and finger scroll), the Garden at night.
+- QA, v0.75 (d1386bc), ROOMS's 1da0f7e Patio spots: FAIL, two people on one spot: the new spot [1.8, 3.05] was 0.28 from the
+  Patio's own look spot, so fully bought Cal and Vega stood 3 px apart and Vega covered Cal (shots/qa/v75/patio_deck_overlap.png).
+  Owner: ROOMS. DONE by ROOMS in 260895e (spots 0.9+ apart and in the glass's span): PASS.
+- QA, the Patio seen from the Bedroom, in the published v0.74 and the v0.75 cuts before 5b00b40: FAIL, a friend visitor on the
+  Patio was drawn outside the room: 20_loft.js put only Cal and the dogs into the glass clip; on v0.74 Vega at the far deck spot
+  (6.85, -3.95) stood outside the Bedroom past its right wall (patio_visitor_outside_v074.png); on 20e1feb Vega at (1.75, -4.25)
+  showed over the wall top (patio_visitor_over_wall_20e1feb.png). Owner: ROOMS. DONE by ROOMS in 5776eda: PASS.
+- QA, v0.75 cut 5b00b40, the Patio fully bought: FAIL, the dogs walked through furniture: the route to the back-left spot
+  (1.75, -4.25) crossed four Patio footprints and Pluto walked across the chaise (patio_dog_route_through_chaise.png); with it, a
+  visiting friend walked through the closed sliding door, and anyone walking on the Patio was out of the glass clip until they
+  stopped (Cal 0 of 49 samples, a visitor 0 of 52, Pluto 0 of 30). Owner: ROOMS. DONE by ROOMS in 5218011 (= 0729a6b): PASS.
 - QA, the published v0.74 on Cal's web Test channel (Firebase Hosting channel "test", release 3ac337176989cb8f, expires
   2026-12-08) against a clean web build of 3dfe920: PASS. Every one of the build's 2347 files fetched from the channel answers 200
   and is byte-identical (diff -r: 0 differ); the page loads app.js?h=0549b500a6, APPV 74; config.js holds Cal as the one owner (the
@@ -2796,8 +2849,8 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
   portrait brand banners (art slots 67 of 67) and the Theater lobby shells; LEAD folds them into v0.76, cut from HEAD after v0.75 is published. Nothing else queued: the
-  Auditorium's walls wait on Cal's word. QA's Patio route, door and walking-clip fixes DONE in 5218011, WAITING ON QA; v0.75 needs a re-cut with it.
-  Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
+  Auditorium's walls wait on Cal's word. QA's Patio route, door and walking-clip fixes DONE in 5218011, WAITING ON QA; v0.75 needs a re-cut with it. (QA: PASS on 0729a6b, QA findings.)
+  Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. (QA: PASS.) QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
   tier, floor from the floor upgrade's; it uses the drawn tiers until the shells are added to art/app on his yes. The Auditorium
@@ -3240,10 +3293,9 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): the v0.75 full set on LEAD's re-cut d1386bc (APPV 75, dist 481, dist-web 2347; the build differs from e30a13a only by
-  1da0f7e's Patio spots), running. Done so far, no blocker yet: the painted dogs (every pose, size against people, Bedroom, beds,
-  Patio bare/half/full, LFDOGON=0), the dog cards, the page-zoom block in WebKit as an iPhone, the Dessert Parlor. Two notes for
-  ROOMS on the Patio coming with the result. Was: DONE, the published v0.74 on the web Test channel: PASS. (on 09adae9)
+- Now (QA): DONE, v0.75 = release/v0.75 at 0729a6b: PASS, publish (QA findings). Next: ROOMS's 8c756be (Cal's "Approve
+  all": relic icons, Sable, the portrait banners, the Theater lobby shells, every wall and floor at both lobby sizes) when LEAD
+  cuts v0.76, and whatever comes next on the board. (on 9f8acf7)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
