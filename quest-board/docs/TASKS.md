@@ -2693,13 +2693,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 4e5557c): Cal's v0.73 phone notes via LEAD. DONE: the Bedroom mirror behind the nightstand c5a65a1; the Restaurant
-  neons off the windows and boards bfe3dec; Cal's no-overlap rule written down as TEAMWORK rule 20 aa8bfd4; the overlap sweep of
-  every room fully bought (one style each, the fully bought stage) 4e5557c: Patio, Sky Bar, Bowling, Karaoke fixed; the rest
-  are clean or overlap on purpose (booth round its table, band on the stage, float in the pool, rugs). Not swept yet: the
-  Restaurant in Noir, the Bedroom with the glass wall, and earlier stages of the other rooms. All WAITING ON QA below.
-  WAITING ON CAL: a photo of Pluto and one of Chopstick (Cal: "pluto and chopstick are really tiny ... make them bigger and
-  more recognizable"), so their new chibi sprites look like his real dogs; then one Unlimited sheet per dog for his approval.
+- Now (on e37df53): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
+  neons bfe3dec; TEAMWORK rule 20 aa8bfd4; overlap sweep 4e5557c and the dessert trolley bcc3b41; Game Room TV flush and foosball
+  in a row with the pool table 4915a05; Garden herb plot as a matching wooden bed and the night seam (outdoor rooms' night
+  shade left out the floor's front corner) 3ad4129; Restaurant wall pieces in every stage and style a062a4b; Bigger Till as a
+  brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
+  WAITING ON CAL: a photo of Pluto and one of Chopstick for their bigger chibi sprites.
+  Not swept yet under rule 20: the Bedroom with the glass wall, and part-bought stages of rooms other than the Restaurant.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
