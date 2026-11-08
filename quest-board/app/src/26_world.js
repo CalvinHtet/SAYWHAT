@@ -379,8 +379,10 @@ LFROOM.restaurant=function(C){
   if(fine)[[.7,"rs_pend1"],[1.5,"rs_pend2"]].forEach(function(q){var x=Wi-.62;lfSpr(C,q[1],x,q[0],.2,.2,{h:1,H:54,dy:-98,nosh:1,dk:-5});/* QA 85fad55: two, at the back end of the pass, which on screen is clear of the wine wall and above the stools (fine needs Noir, and Noir hides the Neon Sign, so they never meet) */lfLight(C,x,q[0]+.15,60,"#ffc968",1.6,.42)});
   /* QA: Bigger Till changed nothing you could see. A green cash box with a brass lock beside the till on the counter
      (round 2: as a floor safe it stood in the diners' path) */
-  if(H("r_till")&&!fine){var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48"),dc=lfP(bx0+.21,by0+.36,39);
-    C.add(bx0+by0+.8+.05,cb+'<circle cx="'+dc[0].toFixed(1)+'" cy="'+dc[1].toFixed(1)+'" r="2.2" fill="#d9b46a" stroke="'+LFOL+'" stroke-width=".5"/>')}
+  /* Cal (v0.73 phone): "Not sure what it bigger till in the kitchen. Upgrading is not obvious": a big brass cash register on the
+     counter, open drawer full of notes, in every style (the green cash box was too small to notice) */
+  if(H("r_till")){if(LFSPR.rsx_register)rsS(C,"rsx_register",Wi-1.05,.85,.62,.62,1,{flip:1,dy:-34,nosh:1,H:66,dk:.4});
+    else{var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48");C.add(bx0+by0+.8+.05,cb)}}
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
