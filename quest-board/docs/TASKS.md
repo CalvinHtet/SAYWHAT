@@ -2793,7 +2793,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
   portrait brand banners (art slots 67 of 67) and the Theater lobby shells; LEAD folds them into v0.76, cut from HEAD after v0.75 is published. Nothing else queued: the
-  Auditorium's walls wait on Cal's word. Patio visitor clipping 5776eda is in LEAD's v0.75 cut 5b00b40, WAITING ON QA.
+  Auditorium's walls wait on Cal's word. QA's Patio route, door and walking-clip fixes DONE in 5218011, WAITING ON QA; v0.75 needs a re-cut with it.
   Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
@@ -2826,6 +2826,12 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check 5218011 (rule 17), QA's v0.75 Patio findings on 5b00b40: (blocker) a spot or bed is kept only if a walk from
+  the sliding door reaches it (flood fill on lfPaPath's own grid and test), so the full Patio's boxed-in back-left spot is gone;
+  (1) the sliding door opens for everyone near it, visitors too; (2) the depth sort skips anyone in the Patio's glass group, so
+  walkers stay clipped. ROOMS's own check, headless: routes from the Bedroom (4.5, 4.5) to every spot and bed, sampled 20 per
+  leg against the Patio footprints, 0 inside furniture on full (1 spot, 2 beds), half (2 spots, 1 bed) and bare (4 spots); a
+  visitor walking out: clipped 51 of 51 samples on the Patio, door open 67 of 67 samples near it.
 - WAITING ON QA: check 8c756be (rule 17), Cal's "Approve all" (2026-11-08): (1) six relic icons `ui_relic_<streak|team|build|exped|
   quests|collect>` (128 px), in the Relics tab; (2) Sable's story portrait `ui_story_sable` (300 x 400), on her return visits;
   (3) portrait brand banners `ui_banner_<hanga|y2k|over|rose|alt>_p` (720 x 1080), in the drop window; (4) the Theater lobby's
