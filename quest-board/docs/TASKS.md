@@ -2702,14 +2702,14 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on c342c2b): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
+- Now (on 6a5572f): Cal's v0.73 phone notes via LEAD, all done and WAITING ON QA below: Bedroom mirror c5a65a1; Restaurant
   neons bfe3dec; TEAMWORK rule 20 aa8bfd4; overlap sweep 4e5557c and the dessert trolley bcc3b41; Game Room TV flush and foosball
   in a row with the pool table 4915a05; Garden herb plot as a matching wooden bed and the night seam (outdoor rooms' night
   shade left out the floor's front corner) 3ad4129; Restaurant wall pieces in every stage and style a062a4b; Bigger Till as a
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   WAITING ON CAL: a photo of Pluto and one of Chopstick for their bigger chibi sprites.
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
-  barista c342c2b. Next, low priority: rule-20 sweep of part-bought states of the other rooms.
+  barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
 - TAKEN by ROOMS (Cal, 2026-11-07): "white splatter tee from his portrait. all characters should wear stuff from their portraits rather
   than putting an outfit on from the shop. This would make them more unique and recognizable." ROOMS: friend-only garments drawn
   from each friend's portrait (one sheet per piece, every angle, Unlimited), not sold in the shop; LEAD points each friend's eq at
