@@ -1544,6 +1544,11 @@ function lfAgentG(a){
   return g;
 }
 function lfDrop(id){var e=document.getElementById("lfa-"+id.replace(/[^a-z0-9_-]/gi,"_"));if(e)e.remove()}
+// Painted dogs (Cal, v0.74: "really tiny… make them bigger and more recognizable"): dgx_<name>_<0 stand|1 walk|2 sit|3 sleep>
+// in rsart.json, all frames of a dog at one scale so the standing frame is LFDOGH tall. Missing art falls back to the pixel dog.
+var LFDOGH={pluto:34,chopstick:34};
+function lfDogSpr(n,p){var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
+  if(!f||!f0)return null;var k=(LFDOGH[n]||34)/f0.h;return{u:f.u,w:f.w*k,h:f.h*k}}
 function lfDogURL(n,p){var k="dog2|"+n+"|"+p;if(PXC[k])return PXC[k];
   var g=PixAv.dog2(n,p),o=[],h=Math.ceil(36*PixAv.K*1.0);
   for(var y=0;y<h&&y<g.length;y++){var x=0,row=g[y];while(x<row.length){var c=row[x];if(!c){x++;continue}var x1=x;while(x1+1<row.length&&row[x1+1]===c)x1++;o.push('<rect x="'+x+'" y="'+y+'" width="'+(x1-x+1)+'" height="1" fill="'+c+'"/>');x=x1+1}}
@@ -1600,8 +1605,9 @@ function lfDraw(a,force){
   var gtf="translate("+p[0].toFixed(1)+","+p[1].toFixed(1)+")";if(g._tf!==gtf){g._tf=gtf;g.setAttribute("transform",gtf)}
   if(g._op!==a.alpha){g._op=a.alpha;g.style.opacity=a.alpha}
   if(a._k!==k||force){a._k=k;var img=g.querySelector(".lfi");
-    var cdg=a.role==="dog"&&typeof chDog==="function"?chDog(a.dname,f.p):null;
-    if(cdg){var DK=.19;img.setAttribute("href",cdg.u);img.setAttribute("width",(cdg.w*DK).toFixed(1));img.setAttribute("height",(cdg.h*DK).toFixed(1));img.setAttribute("x",(-cdg.ax*DK).toFixed(1));img.setAttribute("y",(-cdg.ay*DK).toFixed(1));a._chb=1}
+    var dsp=a.role==="dog"?lfDogSpr(a.dname,f.p):null,cdg=!dsp&&a.role==="dog"&&typeof chDog==="function"?chDog(a.dname,f.p):null;
+    if(dsp){img.setAttribute("href",dsp.u);img.setAttribute("width",dsp.w.toFixed(1));img.setAttribute("height",dsp.h.toFixed(1));img.setAttribute("x",(-dsp.w/2).toFixed(1));img.setAttribute("y",(-dsp.h*.97).toFixed(1));a._chb=0}
+    else if(cdg){var DK=.19;img.setAttribute("href",cdg.u);img.setAttribute("width",(cdg.w*DK).toFixed(1));img.setAttribute("height",(cdg.h*DK).toFixed(1));img.setAttribute("x",(-cdg.ax*DK).toFixed(1));img.setAttribute("y",(-cdg.ay*DK).toFixed(1));a._chb=1}
     else if(a.role==="dog"){img.setAttribute("href",lfDogURL(a.dname,f.p));var dw=Math.ceil(46*PixAv.K)*LFSC*1.12;img.setAttribute("width",dw);img.setAttribute("height",Math.ceil(36*PixAv.K)*LFSC*1.12);img.setAttribute("x",-dw*.5);img.setAttribute("y",-Math.ceil(33*PixAv.K)*LFSC*1.12)}
     else{if(img._bd==null){img._bd=1;img.style.animationDelay=(-Math.random()*3).toFixed(2)+"s"}img.classList.toggle("lfidle",a.mode!=="walk");var cf=cpi>=0?chFrame(a.look,cpi):null;
       if((a.role==="me"||(a.look&&a.look.npc))&&lfCalImg(a,f,img)){a._chb=0}else if(cf){var KK=CHB.K*LFBIG;img.setAttribute("href",cf.u);img.setAttribute("width",(cf.w*KK).toFixed(1));img.setAttribute("height",(cf.h*KK).toFixed(1));img.setAttribute("x",(-cf.ax*KK).toFixed(1));img.setAttribute("y",(-cf.ay*KK).toFixed(1));a._chb=1}
