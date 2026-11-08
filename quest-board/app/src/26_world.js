@@ -417,7 +417,7 @@ LFROOM.restaurant=function(C){
   if(H("r_d8")&&st>1)lfSpr(C,LFSPR.rdx_vases?"rdx_vases":"rdx_olive",4.4,D-1.2,1,1,{h:40,ctr:1});
   if(H("r_d3")&&st>0)(st===2?(crescent?[4.05,7.4]:[.9,4.5,8.1]):[.9,4.5]).forEach(function(y){lfSpr(C,"rdx_div",3.78,y,.25,2.5,{h:50,ctr:1})});
   if(H("r_d5")&&st>0)lfSpr(C,"rdx_wine",st===2?11.4:8.4,.1,1.6,.5,{h:60,flip:1,ctr:1,nosh:1});
-  if(H("r_d6")&&st>0)lfSpr(C,"rdx_trolley",Wi-3.2,kd+1.2,.8,.8,{h:30,ctr:1});
+  if(H("r_d6")&&st>0)/* rule 20 sweep: at Wi-3.2 it stood inside the front table; now in the open floor before the counter end */lfSpr(C,"rdx_trolley",Wi-1.45,kd+.15,.8,.8,{h:30,ctr:1});
   /* the white drinks cooler has no place in Noir's fine dining once the backlit wine wall does its job (QA) */
   /* QA: against the back wall by the bar stools, not free in the walkway beside the door mat */
   if(H("r_cool")&&st>0&&!H("r_d5"))/* superseded by the Backlit Wine Wall in every style, not only Noir */lfSpr(C,"rsx_cooler",Wi-2.95,.2,.75,.7,{h:50,ctr:1});
