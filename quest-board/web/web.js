@@ -23,6 +23,8 @@
      see the Test button for a moment between signing in and the save loading */
   var css = document.createElement("style"); css.textContent = "body.qbweb:not(.qb-own) #qbt{display:none!important}"; (document.head || document.documentElement).appendChild(css);
   if (document.body) document.body.classList.add("qbweb"); else document.addEventListener("DOMContentLoaded", function () { document.body.classList.add("qbweb"); });
+  /* a build for real players (config.js noTest): no Test button and no "Testing:" rows in the Shop or room windows, for anyone */
+  if (W.noTest) { var nt = document.createElement("style"); nt.textContent = "#qbt,.qs-dev{display:none!important}"; (document.head || document.documentElement).appendChild(nt); }
   if (!window.firebase) return; /* the page then runs on this device only, as it does when Claude is not there */
 
   /* ---- Firebase: the hosting page's own config when served by Firebase Hosting, else the copy in web/config.js ---- */

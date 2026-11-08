@@ -13,7 +13,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: PAUSED until Thursday (Cal: "im about to hit my limit. stop the automatic checks ... lets get ready to publish the game to a
+- Now (2026-11-08): LIVE for Cal and his girlfriend: release/v0.75 at 5641427 on both links (Cal: "Take off the test tab and initialize
+  the game for both of us"): noTest hides the Test button and Testing rows, QB_EPOCH 3 starts every save over, Cal's old state,
+  backup and world docs deleted (copies outside the repo). WebKit check: old-save and new players both reach the creator at 0 XP, 0 coins,
+  no test controls, no errors. Not checked: on a real phone; the __qb* hooks are still in this build (not a public release).
+  Was: PAUSED until Thursday (Cal: "im about to hit my limit. stop the automatic checks ... lets get ready to publish the game to a
   few people to test for a few day until my limit resets on thursday"). LEAD's loop cancelled; ROOMS and QA stopped theirs.
   LIVE for Cal's friends: saywhat-b7ae8.web.app serves release/v0.75 at 3107a83 = QA-passed 0729a6b + new players start at level 1
   (QB_TEST_START 0, 0d2831d) + the Test button only for the owner (body.qb-own, 3107a83; also on main 450d5e7). Checked: a friend's

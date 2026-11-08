@@ -84,6 +84,10 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   APIs & Services > Credentials > "Web client (auto created by Google Service)": the origin `https://<address>` and the redirect
   URI `https://<address>/__/auth/handler`. Cal was given the Test channel and `saywhat-b7ae8.web.app` on 2026-11-07. Keep the
   channel name `test` so its address never changes.
+- **Real players now (2026-11-08):** Live and the Test channel both run release/v0.75 at 5641427, `noTest: true` in `web/config.js` (no
+  Test button or Testing rows) and QB_EPOCH 3 (Cal's reset for him and his girlfriend). Both links share one database and one save per
+  player, so never deploy a different QB_EPOCH to either: an older number treats the new saves as empty and overwrites them. Main is at
+  3 too. To test with the tools, build a Test channel without `noTest`, and remember it plays on the real saves. Do not bump it again.
 - **Rules and the AI function** change rarely and are deployed by hand when they do:
   `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
   QA like any other (functions/test.js first).
