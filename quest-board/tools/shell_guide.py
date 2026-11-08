@@ -11,6 +11,7 @@ and ends dark, as in the game.
 --notch X,Y: no floor where x > X and y > Y (an L-shaped room, like the Restaurant before its patio); left green.
 --zone: a second floor area (a kitchen) in a darker tone, so the painting gives it its own material.
 """
+import os
 import sys
 
 from PIL import Image, ImageDraw
@@ -19,9 +20,11 @@ SX, SY, K, M, TH = 26, 13, 4, 12, 0.42
 
 
 def frame(W, D):
-    """Game px: x of the left edge, y of the top edge, width, height."""
+    """Game px: x of the left edge, y of the top edge, width, height. The frame is 5:4 unless QB_SHELL_ASPECT (height over
+    width, e.g. 0.88) makes it taller, for rooms whose walls do not fit (the Auditorium's 190 to 300 px walls); the game reads a
+    shell's own proportions (lfShellPart), so the painting is saved at the same aspect."""
     w = (W + D) * SX + 2 * M
-    h = w / 1.25
+    h = w * float(os.environ.get("QB_SHELL_ASPECT", "0.8"))
     left = -D * SX - M
     bottom = (W + D) * SY + M
     return left, bottom - h, w, h

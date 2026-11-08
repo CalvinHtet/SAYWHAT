@@ -57,7 +57,7 @@ Object.assign(ADDREQ,{bd_spk:"bd_radio",bd_vinyl:"bd_spk"});
    tools/shell_guide.py's: floor corners 12 px in from the sides and 12 px above the bottom, 5:4. */
 var LFSHELLK=null;
 function lfShellPart(uid,part){var k=LFSHELLK,S0=k&&window.LFSPR&&LFSPR[k];if(!S0)return null;var N=LF.W,M=LF.D,H=LF.H,th=.42,
-  w=(N+M)*26+24,h=w/1.25,x=-M*26-12,y=(N+M)*13+12-h,id="lfshc"+part+uid,
+  w=(N+M)*26+24,h=Math.abs(S0.h/S0.w-.8)<.02?w/1.25:w*S0.h/S0.w/* a taller shell (the Auditorium's high walls) keeps its own aspect, tools/shell_guide.py QB_SHELL_ASPECT */,x=-M*26-12,y=(N+M)*13+12-h,id="lfshc"+part+uid,
   P=function(a){return a.map(function(q){return lfPt(lfP(q[0],q[1],q[2]||0))}).join(" ")},
   polys=part==="floor"?[[[0,0],[N,0],[N,M],[0,M]]]:[[[-th,M,0],[0,M,0],[0,0,0],[0,0,H],[-th,-th,H],[-th,M,H]],[[0,0,0],[N,0,0],[N,-th,0],[N,-th,H],[-th,-th,H],[0,0,H]]];
   return '<clipPath id="'+id+'">'+polys.map(function(a){return '<polygon points="'+P(a)+'"/>'}).join("")+'</clipPath><image href="'+S0.u+'" x="'+x+'" y="'+y.toFixed(1)+'" width="'+w+'" height="'+h.toFixed(1)+'" preserveAspectRatio="none" clip-path="url(#'+id+')"/>'}
