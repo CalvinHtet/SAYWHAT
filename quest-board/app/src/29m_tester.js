@@ -144,6 +144,8 @@ function qbUnlockAll(){if(!S||!S.created)return;var x=S,g,n=0;
   x.coins=(x.coins||0)+500000;
   try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}persist();render();pop("Everything unlocked: level "+effLvl()+", every room and tab, +500,000 coins")}
 window.__qbRooms.unlockAll=qbUnlockAll;
+/* each story step's own condition, true or false, for tests (the game also waits for the step's level, one step a day and free unlock slots) */
+window.__qbRooms.gates=function(){var o={};STORY.forEach(function(s){try{o[s.id]=!!s.gate()}catch(e){o[s.id]="error"}});return o};
 /* ---------- Review > Play the whole story (Cal, 2026-11-07: "I also want every story beat and character cutscenes to make
    sense"). Plays everything a player meets, one after another in the order they meet it: each story step (a short card saying
    what happens and why, when it has no scene of its own), its scene, the room's welcome window, a new team member, and the return

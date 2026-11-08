@@ -18,9 +18,12 @@ var STORY=[
     scene:{who:"Mara",role:"Chef",lines:["Half our customers ask for something cold to drink on the way out.","The corner unit next door is empty. A boba shop there would never be quiet."],yes:"Let's do it"}},
   {id:"dessert",room:"dessert",how:"upgrade",why:"When the boba line runs out the door, the space upstairs can become a dessert parlor.",gate:function(){return styUps("boba")>=4}},
   /* Cal, 2026-11-07: "I want the bar to be available after it starts to look like a fine dining luxury restaurant": Desmond only
-     comes once the Restaurant has White Linen Service (r_t3), the same piece its own Upstairs Bar upgrade waits for */
-  {id:"lockkey",room:"skybar",how:"free",why:"Once the Restaurant looks like fine dining, an investor starts eating there.",gate:function(){return styHas("dessert")&&(S.earnedC||0)>=ECON.gateLockKey&&styFine()},
-    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. White linen, candlelight, a real kitchen. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
+     came once the Restaurant had White Linen Service (r_t3); see the next note for the rule now */
+  /* Cal (2026-11-08, v0.73 phone test): "whats the trigger for opening the bar? After unlocking the noir upgrade, I want the bar to be a
+     next event". Desmond comes once the Restaurant goes Noir (r_noir, level 28), with no earnings threshold; before, it waited for Fine
+     Dining Service (r_t3, level 36) and 25,000 coins earned. */
+  {id:"lockkey",room:"skybar",how:"free",why:"Once the Restaurant goes Noir, an investor starts eating there.",gate:function(){return styHas("dessert")&&styNoir()},
+    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Charcoal walls, low light, a real kitchen. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
   {id:"rafe",room:null,how:"team",why:"Someone has become a regular at Lock and Key.",gate:function(){return styUps("skybar")>=3},
     scene:{who:"Rafe Calloway",role:"Traveling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred.","\"Best drink since a dockside bar off the Coral Reach. I'm in town between expeditions. Mind if I make this my spot?\""],yes:"Pour him another",team:"rafe"}},
   {id:"rooftop",room:"rooftop",how:"upgrade",why:"Lock and Key's regulars keep asking about the roof.",gate:function(){return styUps("skybar")>=6}},
@@ -46,6 +49,7 @@ var STORY=[
   /* first in the Garden's menu, so it shows as the teaser from day one and as the next buy once Mara says yes */
   ADDONS.garden.unshift(["gd_rest","Knock Through to a Restaurant",(ROOMT.restaurant&&ROOMT.restaurant.cost)||2500,{opens:"restaurant",g:"Expansion",fixed:1},"Open the wall next to the beds into a small kitchen and a dining room. Mara runs the stove."])})();
 function styState(){if(!S.story||typeof S.story!=="object")S.story={};var o=S.story;o.done=o.done||{};o.offer=o.offer||{};o.team=o.team||{};o.sold=o.sold||0;o.later=o.later||{};o.biz=o.biz||0;return o}
+function styNoir(){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t==="restaurant"})[0];return !!(r&&r.a&&r.a.r_noir)}
 function styFine(){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t==="restaurant"})[0];return !!(r&&r.a&&r.a.r_t3)}
 function styMallHas(k){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t==="mall"})[0];return !!(r&&r.a&&r.a[k])}
 function styHas(t){return !!t&&S.base&&S.base.slots.some(function(r){return r&&r.t===t})}
