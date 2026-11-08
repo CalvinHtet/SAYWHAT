@@ -558,6 +558,12 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, the published v0.75 on Cal's web Test channel (Firebase Hosting channel "test", version d58f6f2dd61d61dd) against a clean
+  web build of release/v0.75 at 0729a6b: PASS. Every one of the build's 2347 files fetched from the channel answers 200 and is
+  byte-identical (diff -r: 0 differ, 0 missing); the page loads app.js?h=f44cd295a4, APPV 75; config.js holds Cal as the one owner
+  (the same uid as firestore.rules). The live page at 390 in WebKit and Chromium reaches the sign-in screen with its service worker
+  and manifest, 0 page errors (Chromium needed more than 30 s on this busy Mac to finish loading; with 120 s it is clean). Not
+  covered: signing in on the live channel (Cal's account).
 - QA, v0.75 = release/v0.75 at 0729a6b (APPV 75; dist 481, dist-web 2347): PASS, publish. Checked in two parts: the full set on
   d1386bc (LEAD's earlier cut), then the three code changes since (ROOMS's 260895e, 5776eda, 0729a6b = 5218011, and the Theater
   loader 03ceedb) on clean builds of each exact cut; 0729a6b's build differs from d1386bc only in app.js and the page fingerprint
@@ -3299,9 +3305,10 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, v0.75 = release/v0.75 at 0729a6b: PASS, publish (QA findings). Next: ROOMS's 8c756be (Cal's "Approve
-  all": relic icons, Sable, the portrait banners, the Theater lobby shells, every wall and floor at both lobby sizes) when LEAD
-  cuts v0.76, and whatever comes next on the board. (on 9f8acf7)
+- Now (QA): DONE, the published v0.75 on the web Test channel: PASS, 2347/2347 files byte-identical (QA findings). Was: DONE,
+  v0.75 = release/v0.75 at 0729a6b: PASS, publish. Next: v0.76 (LEAD's 422d811 or his next cut): ROOMS's 8c756be (Cal's
+  "Approve all": relic icons, Sable, the portrait banners, the Theater lobby shells, every wall and floor at both lobby sizes)
+  and ROOMS's b3d6b28 (Patio beds per dog), when LEAD sends the cut. (on fa54cba)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
