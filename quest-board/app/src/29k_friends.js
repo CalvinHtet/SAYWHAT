@@ -66,7 +66,14 @@ function fvToday(){var v=S.visit;return v&&v.d===today()&&v.id?FVISITS.filter(fu
 function fvNames(who){return who.map(function(w){return w.indexOf("dog:")===0?(w==="dog:pluto"?"Pluto":"Chopstick"):FRIENDS[w].name}).join(" and ")}
 /* a friend's picture: the rig, like the player; dogs keep their art */
 var fvImgBase=visitorImg;
-visitorImg=function(w,big){if(w.indexOf("dog:")===0||!FRIENDS[w])return fvImgBase(w,big);var A=big?fvPoses(w):[];if(A.length)return '<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(FRIENDS[w].name))+'">'}).join("")+'</span>';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
+/* Pluto and Chopstick's own painted art (ROOMS 2faabd0, Cal: "I approve the new dogs"): a visit card shows them standing and sitting,
+   taking turns like a friend's poses; the small picture stands. Without the art, the old pixel dog. */
+function fvDogArt(d,k){var n="dgx_"+d+"_"+k+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
+visitorImg=function(w,big){if(w.indexOf("dog:")===0){var dn=w.slice(4),nm=dn==="pluto"?"Pluto":"Chopstick",D=big?[fvDogArt(dn,0),fvDogArt(dn,2)].filter(Boolean):[fvDogArt(dn,0)].filter(Boolean);
+    if(!D.length)return fvImgBase(w,big);
+    if(!big)return '<img class="vart" src="'+D[0]+'" alt="'+nm+'" style="height:60px;width:auto">';
+    return '<span class="fvposes">'+D.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':nm)+'">'}).join("")+'</span>'}
+  if(!FRIENDS[w])return fvImgBase(w,big);var A=big?fvPoses(w):[];if(A.length)return '<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(FRIENDS[w].name))+'">'}).join("")+'</span>';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
 /* the day's roll, once a day, the same moment the app first settles */
 function fvPick(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
   var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
