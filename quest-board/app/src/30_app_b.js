@@ -131,6 +131,37 @@ function lfInstallFx(w,r,dp,i,mm){
    grown by a few pixels, blurred, in gold, under the piece), pulsing for 3 s and then fading. It is an SVG filter, not a CSS one,
    because iPhone Safari does not draw CSS filters on the parts of an SVG picture. Pieces that carry their own filter or clip (the
    soft-shadow layer) are left alone. With reduced motion it holds still for 3 s. */
+/* Cal (v0.73 phone test, the Hero's Lair): "Some rooms are cut off and not showing the whole room. Make sure all rooms are sized
+   properly". The room window's frame (lfPreview's viewBox) is worked out from the floor's size and one wall height, but painted wall
+   shells stand taller (17-64 picture units in most rooms, 116 in the Lair), so wall tops were cut off. Before the window frames the
+   room (lfPrevAttach, 20_loft.js), the frame grows to take in everything that belongs to the room: every piece no bigger than the
+   room itself whose middle lies near it. Skies and backdrops, which are much bigger than the room and meant to run off the edges,
+   are left out. The frame only ever grows, so nothing that fitted before is lost. rigtest/lead/roomfit.js measures it. */
+function lfFitFrame(wrap){
+  var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z||svg.dataset.fit)return;svg.dataset.fit=1;
+  var vb=(svg.getAttribute("viewBox")||"").split(/[ ,]+/).map(Number);if(vb.length!==4||!(vb[2]>0))return;
+  var sm=svg.getCTM();if(!sm)return;var inv=sm.inverse(),X0=vb[0],Y0=vb[1],X1=vb[0]+vb[2],Y1=vb[1]+vb[3];
+  var mx=vb[2]*.2,my=vb[3]*.2,x0=X0,y0=Y0,x1=X1,y1=Y1;
+  /* the city behind the Bedroom's glass wall, the Rooftop and the Patio is one big group drawn first (about 1,900 shapes): scenery */
+  var scen=[].filter.call(svg.children,function(c){return c.tagName==="g"&&c.getElementsByTagName("*").length>400});
+  [].forEach.call(svg.querySelectorAll("image,path,polygon,polyline,rect,ellipse,circle"),function(e){
+    if(e.closest("defs,clipPath,mask,pattern,filter,marker,symbol"))return;
+    for(var q=0;q<scen.length;q++)if(scen[q].contains(e))return;
+    var bb;try{bb=e.getBBox()}catch(x){return}if(!bb.width&&!bb.height)return;var m=e.getCTM();if(!m)return;m=inv.multiply(m);
+    var px=[bb.x,bb.x+bb.width,bb.x,bb.x+bb.width],py=[bb.y,bb.y,bb.y+bb.height,bb.y+bb.height],a=1e9,b=1e9,c=-1e9,d=-1e9;
+    for(var k=0;k<4;k++){var x=m.a*px[k]+m.c*py[k]+m.e,y=m.b*px[k]+m.d*py[k]+m.f;a=Math.min(a,x);b=Math.min(b,y);c=Math.max(c,x);d=Math.max(d,y)}
+    if(c-a>vb[2]*1.15||d-b>vb[3]*1.3)return;/* a sky or a backdrop */
+    var cx=(a+c)/2,cy=(b+d)/2;if(cx<X0-mx||cx>X1+mx||cy<Y0-my||cy>Y1+my)return;/* far off to one side: scenery */
+    x0=Math.min(x0,a);y0=Math.min(y0,b);x1=Math.max(x1,c);y1=Math.max(y1,d)});
+  if(x0<X0-1||y0<Y0-1||x1>X1+1||y1>Y1+1){var pad=6;x0=Math.min(X0,x0-pad);y0=Math.min(Y0,y0-pad);x1=Math.max(X1,x1+pad);y1=Math.max(Y1,y1+pad);
+    svg.setAttribute("viewBox",[x0,y0,x1-x0,y1-y0].map(function(n){return n.toFixed(2)}).join(" "));vb=[x0,y0,x1-x0,y1-y0]}
+  /* iPhone Safari leaves the box at the wrong height (it ignores the box's aspect-ratio here; only a set height works), and the
+     frame is then cut to that height. So the box is given the room's height outright, no taller than the window allows. */
+  var cw=wrap.clientWidth,mh=parseFloat(getComputedStyle(wrap).maxHeight)||1e9;
+  if(cw>0)wrap.style.minHeight=Math.min(cw*vb[3]/vb[2],mh).toFixed(1)+"px";
+}
+var lfPrevAttachBase=lfPrevAttach;
+lfPrevAttach=function(wrap){try{lfFitFrame(wrap)}catch(e){}return lfPrevAttachBase.apply(this,arguments)};
 var LFGLOWN=0;
 function lfNewGlow(svg,fresh){
   var vb=svg.viewBox&&svg.viewBox.baseVal,bw=svg.getBoundingClientRect().width,k=(vb&&vb.width&&bw)?vb.width/bw:1;
