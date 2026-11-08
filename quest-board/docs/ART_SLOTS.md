@@ -3,7 +3,7 @@
 Written by `tools/art_slots.py` (LEAD). Drop a file with the exact name into `quest-board/art/app`, run
 `python3 quest-board/tools/build.py`, and it shows in the game with no code change. Until then the stand-in in the last
 column shows. Rerun the script to refresh this page.
-**55 of 67 slots filled.**
+**67 of 67 slots filled.**
 
 
 ## Classes (8 of 8)
@@ -24,11 +24,11 @@ column shows. Rerun the script to refresh this page.
 - Size: 300 x 400. Shows: The scene that opens each story step (step id: chef is Mara, lockkey Desmond, mall Priya, auditorium Theo). Until then: initials.
 - Status: all in
 
-## Return visits (0 of 1)
+## Return visits (1 of 1)
 
 - Files: `ui_story_sable.webp`
 - Size: 300 x 400. Shows: Sable's later visits (Mara and Theo reuse ui_story_chef and ui_story_auditorium). Until then: her team banner, then initials.
-- Status: missing: `ui_story_sable.webp`
+- Status: all in
 
 ## Brand banners (5 of 5)
 
@@ -36,11 +36,11 @@ column shows. Rerun the script to refresh this page.
 - Size: 1600 x 600. Shows: Top of each brand's Shop tab. Until then: the brand's colours and logo.
 - Status: all in
 
-## Portrait banners (0 of 5)
+## Portrait banners (5 of 5)
 
 - Files: `ui_banner_hanga_p.webp`, `ui_banner_y2k_p.webp`, `ui_banner_over_p.webp`, `ui_banner_rose_p.webp`, `ui_banner_alt_p.webp`
 - Size: 720 x 1080. Shows: The weekly drop window. Until then: the landscape banner, cropped.
-- Status: missing: `ui_banner_hanga_p.webp`, `ui_banner_y2k_p.webp`, `ui_banner_over_p.webp`, `ui_banner_rose_p.webp`, `ui_banner_alt_p.webp`
+- Status: all in
 
 ## Brand logos (5 of 5)
 
@@ -66,11 +66,11 @@ column shows. Rerun the script to refresh this page.
 - Size: 256 x 256. Shows: Gift reveal, Trophies tab (set: its emblem). Until then: a diamond glyph.
 - Status: all in
 
-## Relics (0 of 6)
+## Relics (6 of 6)
 
 - Files: `ui_relic_streak.webp`, `ui_relic_team.webp`, `ui_relic_build.webp`, `ui_relic_exped.webp`, `ui_relic_quests.webp`, `ui_relic_collect.webp`
 - Size: 128 x 128. Shows: Relics tab, one icon for all three tiers. Until then: a star glyph.
-- Status: missing: `ui_relic_streak.webp`, `ui_relic_team.webp`, `ui_relic_build.webp`, `ui_relic_exped.webp`, `ui_relic_quests.webp`, `ui_relic_collect.webp`
+- Status: all in
 
 ## Daily Quest (2 of 2)
 
