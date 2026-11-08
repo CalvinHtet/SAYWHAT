@@ -2774,8 +2774,11 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 3dfe920): the empty art slots (`docs/ART_SLOTS.md`, 12 missing): six relic icons and Sable's story portrait painting on
-  Unlimited, then the five portrait brand banners; each goes to Cal side by side before it lands.
+- Now (on 3dfe920): the 12 empty art slots (`docs/ART_SLOTS.md`) are PAINTED, WAITING ON CAL (sent in ROOMS's chat): six relic
+  icons `ui_relic_<id>` (128 px), Sable's story portrait `ui_story_sable` (300 x 400), the five portrait brand banners
+  `ui_banner_<id>_p` (720 x 1080). Held in `shots/pending_art/` (not in `art/app`, so nothing shows before his yes); on his yes they
+  go into `art/app` and to QA. Note for LEAD: eleven newer brands (bb, cr, gp, km, kp, nc, oak, sm, smk, sp, sv) have no portrait
+  banner either; ART_SLOTS doesn't list them, say if the drop window wants them too.
   QA's v0.74 findings DONE and PASSED: d6c5007 (Boba customer spot, Back Plot stand) and 3dfe920 (the berry bed's sprinkler
   moved to its left side, off the stand), QA d6c12a8. LEAD: v0.74 can be rebuilt. Painted dogs are OFF in builds
   (`window.LFDOGON` unset) until Cal approves them. Pluto and Chopstick DONE in 2faabd0 from Cal's photo, WAITING ON CAL to approve
