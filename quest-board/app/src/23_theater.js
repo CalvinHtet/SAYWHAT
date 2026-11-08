@@ -102,7 +102,7 @@ LFROOM.theater=function(C){
   if(H("t_tv"))C.walls.push(lfFaceX(0,2.9,110,scrTrailer(C,U*2.2,56)));
   lfW1(C,"w_thposter",.05,D-.7,64,-70,0);
   if(H("t_marq"))lfW1(C,"w_thmarq",.05,6.7,34,-108,0);
-  if(H("t_reel"))lfW1(C,"w_threel",.05,5.9,38,-70,0);/* QA audit: at 8.2 it hung behind the film poster (8.3); now between the Screen 1 doors and the sconce */
+  if(H("t_reel"))lfW1(C,"w_threel",.05,5.6,34,-40,0);/* rule 20: it touched the lightbox and the sconce; lower, just past the doors *//* QA audit: at 8.2 it hung behind the film poster (8.3); now between the Screen 1 doors and the sconce */
   if(H("t_clap"))lfW1(C,"w_thclap",2.2,.05,46,-96,1);
   if(H("t_wl2"))(H("t_tv")?[7.1]:[1.6,7.1]).forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)});/* the 1.6 sconce would sit on the trailer screen */
   /* the concession against the left wall, facing the carpet (QA design review): the stand, a staff aisle, and the candy,
