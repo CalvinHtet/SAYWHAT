@@ -530,6 +530,13 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's 3dfe920 (the Back Plot sprinkler, and the painted dogs switched off) on a clean build of 3dfe920 (481 files: the 8
+  dog pictures ship, unused): PASS. The berry bed's mist sprinkler stands in the lane on the bed's left side, its head clear of every
+  piece; only its spray arcs toward the next bed, watering it (on purpose under rule 20); the market stand, its awning and crates
+  are clear (shots/qa/v74/garden_backplot_stand_3dfe920.png, garden_backplot_sprinkler_3dfe920.png); all three Garden stages audit
+  clean (no stack, nothing outside, no spot inside furniture). The dogs: lfDogSpr returns nothing unless window.LFDOGON is set, and
+  nothing in app/, web/ or tools/ sets it, so a build from HEAD keeps the pixel dogs (not seen live: no dog came by in the sampled
+  building view). With this, the v0.74 fixes are all in: LEAD may build v0.74 from 3dfe920. Owner: LEAD.
 - QA, ROOMS's d6c5007 (the two v0.74 fixes) on a clean build of d6c5007: Boba PASS, Garden one small fix left. (1) Boba: the
   cafe table's customer spot is now at (5.4, 5.41), clear of every piece; the room's footprint audit is clean (no spot inside
   furniture, no stack, nothing outside); the barista's spot (3.8, 1.25) clear (shots/qa/v74/boba_full_fix.png). (2) Garden Back
@@ -2755,7 +2762,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 2faabd0): QA's two v0.74 findings DONE in d6c5007, WAITING ON QA (QA: Boba pass; Garden stand pass but the mist sprinkler's arc runs into it, small fix, QA findings) (and LEAD's rebuild): the Boba cafe table's customer
+- Now (on 2faabd0): QA's two v0.74 findings DONE in d6c5007, WAITING ON QA (QA: Boba pass; Garden stand pass; the sprinkler fixed in 3dfe920, pass; QA findings) (and LEAD's rebuild): the Boba cafe table's customer
   spot moved out of the table (layout 4.4 to 4.75, real (5.70, 5.46), 0.36 clear of the table, clear of the second table); the
   Back Plot stand now ends the tool column on open floor at (10.1, 8.3), the column closed up (can .6, wheelbarrow 2.2, compost
   3.75, bench 5.4), checked fully bought headless. Pluto and Chopstick DONE in 2faabd0 from Cal's photo, WAITING ON CAL to approve
@@ -3136,8 +3143,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, ROOMS's d6c5007 recheck: Boba pass; the Garden sprinkler arc into the stand, small fix (QA findings). Next:
-  that fix, then the dogs (2faabd0) after Cal's approval. (on 1eafc77)
+- Now (QA): DONE, ROOMS's 3dfe920 sprinkler and dogs-off: PASS; v0.74's fixes are all in (QA findings). Next: the dogs once Cal
+  approves (LFDOGON on), and whatever comes next on the board. (on 3dfe920)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
