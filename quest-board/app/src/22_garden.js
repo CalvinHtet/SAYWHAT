@@ -173,7 +173,7 @@ LFROOM.garden=function(C){
   /* tools down the far side */
   /* The Estate (stage 2) is laid out on a measured plan: the tools column steps out from the orchard, and every piece
      on the right keeps at least .3 of a tile to its neighbour and .5 to anything you walk past. */
-  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:st===0?[.6,2.3,4.2,5.6,7.4]:[.7,2.3,3.9,5.5,7.0]/* rule 20: on the Back Plot the barrel and bench sat into the stand */,tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
+  var E=st===2,Rx=E?W-1.75:W-2.0,TY=E?[.6,2.0,3.4,4.9,6.1]:st===0?[.6,2.2,3.75,5.4,5.4]:[.7,2.3,3.9,5.5,7.0]/* rule 20: on the Back Plot the barrel and bench sat into the stand */,tool=function(id,k,y,w,d,h,o){if(H(id))gdS(C,k,Rx,y,w,d,h,o)};
   tool("g_can","gdx_can",TY[0],1.2,1.0,14,{act:"gdwater",hit:110});
   /* the watering can in the back corner waters the beds when tapped (LEAD's gdwater); the Hose & Watering Can takes over */
   if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater",hit:110});/* QA (Cal's use check): the compost crate stood in front of the potting bench's work side; the bench ends the column now, open
@@ -185,7 +185,7 @@ LFROOM.garden=function(C){
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
   /* on the Back Plot the stand takes the wheelbarrow's place, a tile further in, so a wide screen shows it whole (QA) */
-  var sp=st===0?[2.6,8.4]:/* rule 20: off the tool column, in the open front-left of the Back Plot */st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
+  var sp=st===0?[10.1,8.3]:/* rule 20: the tool column closes up (the barrel lives under the wall tap) and the stand ends it, on open floor; front-left it stood behind the front bed (QA v0.74) */st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
   /* tap either stand to sell (LEAD's stysell, 29b_story.js) */
   if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk,act:"stysell"});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk,act:"stysell"});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
