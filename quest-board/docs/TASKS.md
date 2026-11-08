@@ -530,6 +530,16 @@ Art and room code requests (LEAD asks, ROOMS does):
   most once per frame (requestAnimationFrame). Measured by ROOMS headless; real phone numbers come with the next publish.
 
 QA findings (QA adds one line each: what, where, how to see it, screenshot, owner; LEAD moves them into the right list):
+- QA, ROOMS's d6c5007 (the two v0.74 fixes) on a clean build of d6c5007: Boba PASS, Garden one small fix left. (1) Boba: the
+  cafe table's customer spot is now at (5.4, 5.41), clear of every piece; the room's footprint audit is clean (no spot inside
+  furniture, no stack, nothing outside); the barista's spot (3.8, 1.25) clear (shots/qa/v74/boba_full_fix.png). (2) Garden Back
+  Plot: the market stand shows whole at the end of the tool column, clear of the bench and the beds; all three Garden stages
+  audit clean. FAIL, small, rule 20 (your own note): the berry bed's mist sprinkler head stands against the stand's back-left
+  post and its spray arc runs into the awning and the tomato crate (garden_backplot_stand_fix.png). Fix: the sprinkler to the
+  bed's other side, or the stand about 0.3 to the right. Owner: ROOMS.
+  LEAD, before you rebuild v0.74: HEAD also holds 2faabd0, Pluto and Chopstick's new sprites, which draw in the game as soon as
+  their art is in (lfDogSpr, rsart.json): not yet approved by Cal (TEAMWORK: nothing goes in before he approves). Build v0.74
+  without 2faabd0 (from d6c5007 plus the sprinkler fix), or wait for his yes. Owner: LEAD.
 - QA, v0.74 = ed0a4f9 (APPV 74), the full set on clean builds of dist (473) and dist-web (2339): NOT YET, two fixes for ROOMS (the
   next two lines); everything else PASSES, 0 page errors anywhere. Core: savecheck all passed; screens at 360 and 390 fit; visits.js PASS; lagcheck PASS (alone: Game Room and Restaurant
   windows at CPU x4, v0.73 54.3/56.5 fps, v0.74 57.5/60.3, worst 50/17 ms); unlockall PASS (fresh and mid-game); the whole story
@@ -2745,7 +2755,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 2faabd0): QA's two v0.74 findings DONE in d6c5007, WAITING ON QA (and LEAD's rebuild): the Boba cafe table's customer
+- Now (on 2faabd0): QA's two v0.74 findings DONE in d6c5007, WAITING ON QA (QA: Boba pass; Garden stand pass but the mist sprinkler's arc runs into it, small fix, QA findings) (and LEAD's rebuild): the Boba cafe table's customer
   spot moved out of the table (layout 4.4 to 4.75, real (5.70, 5.46), 0.36 clear of the table, clear of the second table); the
   Back Plot stand now ends the tool column on open floor at (10.1, 8.3), the column closed up (can .6, wheelbarrow 2.2, compost
   3.75, bench 5.4), checked fully bought headless. Pluto and Chopstick DONE in 2faabd0 from Cal's photo, WAITING ON CAL to approve
@@ -3126,8 +3136,8 @@ Doing:
   quiet-minute limit is timing-sensitive under load (see the v0.72 line). (2) The published-file checks: DONE by the new QA
   session, both PASS (QA findings). Everything else to QA is DONE: all 44 painted
   stretch pictures, ROOMS's room work through eadc75b (pendants and neon pass), v0.72 PASS. No WAITING ON QA left open. (on 1d02341)
-- Now (QA): DONE, v0.74 full set on ed0a4f9: not yet, two ROOMS fixes (QA findings). Next: recheck those two on the rebuild
-  (small check). (on ea04efa)
+- Now (QA): DONE, ROOMS's d6c5007 recheck: Boba pass; the Garden sprinkler arc into the stand, small fix (QA findings). Next:
+  that fix, then the dogs (2faabd0) after Cal's approval. (on 1eafc77)
 - FYI LEAD and ROOMS: TEAMWORK rule 14 (Cal): every Doing line ends `(on <commit>)`; nobody starts until all three name the
   latest commit and nothing they touch is uncommitted elsewhere; LEAD checks it all before every publish and wrap-up.
 
