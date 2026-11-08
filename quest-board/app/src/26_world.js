@@ -354,7 +354,7 @@ LFROOM.restaurant=function(C){
   /* QA (v0.62): the three-panel sprite reaches left from its anchor, so it sits one board-width right of ORDERS */
   if(H("r_d3")&&!noir&&st>0)lfSpr(C,"w_menu",Wi+4.3,.05,.1,.05,{h:1,flip:1,H:42,dy:-125,nosh:1,noclamp:1});
   /* re-audit 2026-11-07 (0.26%): bigger, with a soft pink glow on the wall */
-  if(H("r_d4")&&!noir){var nx=st>0?Wi-1.75:1.0;lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,flip:1,H:76,dy:st>0?-104:-90,nosh:1});/* QA 85fad55: right and up, clear of the wine wall */lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
+  if(H("r_d4")&&!noir){var nx=st>0?Wi-1.75:.05;/* Cal: no unintended overlaps; in the Hole in the Wall it covered the TODAY board and the shelf, so the back corner, a little smaller */lfSpr(C,"w_neonrs",nx,.05,.1,.05,{h:1,flip:1,H:st>0?76:62,dy:st>0?-104:-90,nosh:1});/* QA 85fad55: right and up, clear of the wine wall */lfLight(C,nx+.4,.35,96,"#ff6ec7",1.3,.32)}
   /* re-audit 2026-11-07: 26 px tall it changed 0.06% of the room and Noir hid it; bigger, lower, in every style */
   if(H("r_chef"))lfSpr(C,"rs_chef",st>0?Wi+5.3:Wi-1.3,.05,.1,.05,{h:1,flip:1,H:58,dy:-116,nosh:1});/* past the order board and the two menu boards; the first kitchen is too narrow, so there it hangs on the dining wall by the pass */
   if(H("r_star")){lfSpr(C,"rs_star",.05,2.4,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,2.45,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
@@ -426,7 +426,7 @@ LFROOM.restaurant=function(C){
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
   /* Cal (playtest): "Sidewalk sign doesn't really change anything". It also hangs a neon OPEN in the first window, bright after
      dark and soft by day (not in Noir's fine dining) */
-  if(H("r_sign")&&!noir)rsNeonOpen(C,[4.2,5.0,5.0][st]);
+  if(H("r_sign")&&!noir)rsNeonOpen(C,[4.2,5.6,5.35][st])/* Cal (v0.73 phone): at 5.0 it sat over a window frame in the Diner and close to one in the Bistro; between the windows now */;
   /* the patio fills the corner below the kitchen wing */
   if(patio){var P=[lfP(px,kd,0),lfP(Wt,kd,0),lfP(Wt,D,0),lfP(px,D,0)],pl=lfPoly(P,"#b98c5e","rgba(50,30,15,.6)",1);
     for(var q=.5;q<kw;q+=.5)pl+='<path d="M'+lfPt(lfP(px+q,kd,0))+' L'+lfPt(lfP(px+q,D,0))+'" stroke="rgba(60,35,15,.28)" stroke-width="1"/>';
