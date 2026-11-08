@@ -3159,11 +3159,15 @@ function lfPatioReal(){
   try{window.rmPortalsOn=0;var C=lfRoomCtx(r,900+i),W=C.W||7.5,D=C.D||5,ox=(x0+x1)/2-W/2,oy=-.45-D,a=r.a||{};
     R={ox:ox,oy:oy,W:W,D:D,box:((C.nav&&C.nav.obs)||[]).map(function(o){return [o.x0,o.y0,o.x1,o.y1]}),spots:[],beds:[]};
     var clear=function(x,y){return !R.box.some(function(o){return x>o[0]-.15&&x<o[2]+.15&&y>o[1]-.15&&y<o[3]+.15})};
-    (C.st||[]).forEach(function(q){if(!q.lift&&!q.seat&&/^(look|wander|art|admire|smell|browse)$/.test(q.kind)&&clear(q.x,q.y))R.spots.push([q.x+ox,q.y+oy,q.fx||1])});
+    /* a spot is kept only if it is clear of every footprint, seen through the Bedroom glass (its screen column, x - y, inside the
+       glass, or a dog there vanishes past its end) and 0.9 or more from every spot kept before it (QA: two spots 0.28 apart
+       became two stations and a visitor stood exactly on Cal) */
+    var add=function(x,y,f){var wx=x+ox,wy=y+oy,c=wx-wy;if(!clear(x,y)||c<x0+.3||c>x1-.3||R.spots.some(function(p){return Math.hypot(p[0]-wx,p[1]-wy)<.9}))return;R.spots.push([wx,wy,f])};
+    (C.st||[]).forEach(function(q){if(!q.lift&&!q.seat&&/^(look|wander|art|admire|smell|browse)$/.test(q.kind))add(q.x,q.y,q.fx||1)});
     /* the open-floor spots were set for a bare Patio: with it furnished each one falls inside a piece (QA, the painted dogs: one sat
        hidden behind the fire bowl), so only the ones clear of every footprint are kept, plus two that stay clear when it is full and show through the Bedroom glass (between the beds and the
        chair, and the back left corner) */
-    [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){if(clear(q[0],q[1]))R.spots.push([q[0]+ox,q[1]+oy,1])});
+    [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
     if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
     R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})})}
