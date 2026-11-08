@@ -2784,8 +2784,10 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1da0f7e): Patio dog spots DONE in 1da0f7e, WAITING ON QA (below). Nothing else queued: the dogs and the Dessert Parlor are in
-  v0.75 (LEAD e30a13a) waiting on QA; the 12 art slots wait on Cal.
+- Now (on 1da0f7e): MAIN JOB, the last three rooms without painted walls, building order first: the Hero's Lair (painting its
+  shell on Unlimited, then side by side for Cal before it goes in), then the Movie Theater (its wall tiers) and the Auditorium.
+  Patio dog spots DONE in 1da0f7e, WAITING ON QA (below). The dogs and the Dessert Parlor are in v0.75 (LEAD e30a13a) waiting on
+  QA; the 12 art slots wait on Cal. Old boxes on this list ticked (done long ago).
   Was (on 1f87497): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068 + 1f87497 (LEAD: the cupcake stand
   joined the matcha bar as one tea corner), WAITING ON QA (below).
   Pluto and Chopstick ON in afc5d4f (Cal approved, via LEAD: "I approve the new dogs"), WAITING ON QA (below).
@@ -3109,7 +3111,7 @@ To do:
       pools on the floor in Wardrobe Lights; (3) a new last step, the Hero's Lair (`cl_lair`, id kept): the cabinet in the
       far corner (top of the picture) slides open, animated, to reveal a hidden entrance that leads to the Lair. Paintings in
       `art/raw/walls/closet/`.
-- [ ] Doors that make sense (Cal, 2026-11-05): "make sure that the entrances from each room to the other room make sense."
+- [x] (DONE: 3962ee2, fd80c50, doors.js) Doors that make sense (Cal, 2026-11-05): "make sure that the entrances from each room to the other room make sense."
       Bedroom: the Closet entrance goes where the wardrobe upgrade stands (left wall, front part). The wardrobe upgrade
       becomes a wall-mounted figurine cabinet that never covers that door (keep the ids `bd_ward1`, `bd_ward2`). Closet: you
       enter from the bottom-right edge, since in the Bedroom you leave by the upper left. "Take this logic and apply it to
@@ -3121,17 +3123,17 @@ To do:
       Bedroom back-right wall at the Patio door, the Boba, Dessert and Mall back-right walls (way up), the Arcade back-right
       wall (Rhythm) and the Arcade left wall (Mall): those rooms need pieces moved before their doors can go there. Also from
       QA: put each way-up arrow on its own door's side (`rmArrows`), and nothing standing on a door glow.
-- [ ] Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
+- [x] (DONE: 61d4a44, 65cf7fd) Bedroom walls (Cal approved the four tiers, 2026-11-05: "this is great!"). Before they go in, from his answer: (1) keep
       the wall colour options, the Loft should be the most customizable: a painted version of each tier per colour scheme;
       (2) the patio: buying it must put a patio door in the Bedroom, and the view through the glass must show the patio
       furniture he owns in the Patio room (the old Bedroom patio view looked great): DONE in 17ab80d. Tiers are in
       `art/raw/walls/bedroom/`; the preview loader is `scratchpad`-only for now, the real one goes in `26_world.js`.
-- [ ] Trophy Room (Cal, 2026-11-05): a new room above the Lair (`ROOMCELL` `[0,1,2]`, free), opened by a new door on the
+- [x] (DONE: built, approval 16; QA passed b3bca79) Trophy Room (Cal, 2026-11-05): a new room above the Lair (`ROOMCELL` `[0,1,2]`, free), opened by a new door on the
       Lair's upper (back-right) wall, entered from the Trophy Room's front-left edge. Offered in the Lair only after a crew
       member brings back the first raid trophy (LEAD adds `qbRaidTrophies()`, requested). The Lair's Trophy Wall (`lr_trophy`)
       is retired when the room ships (id kept, hidden, drawn nowhere). Art for Cal's approval first: the Lair's new door
       (closed, then open), the Trophy Room walls in tiers, and trophy displays that fill as raids bring more back.
-- [ ] Patio (Cal, 2026-11-05): (1) replace the fairy-light tower on the left (`pt_lights`, `hmx_strings`) with something
+- [x] (DONE: ef2ab15; dogs 2faabd0/afc5d4f) Patio (Cal, 2026-11-05): (1) replace the fairy-light tower on the left (`pt_lights`, `hmx_strings`) with something
       else, keep the id; (2) the Artificial Grass reads as a green square tile: paint real, comfy, plush artificial turf;
       (3) a second patio dog bed, for Chopstick; (4) the character and the dogs walk in and out between the Bedroom and the
       Patio through the new door; (5) once the dogs are bought, see them run around and interact with the room. Cal sent
@@ -3139,7 +3141,7 @@ To do:
       chihuahua-dachshund mix with long feathered ears. Art for Cal's approval first.
 - [x] Yawn pilot: Cal approved, in `art/app` (b506b8c), see Ready to publish. Next, ask Cal: roll it out to every top?
 - [x] (LEAD's request) Lag: drag applies the transform at most once per frame. DONE in 47d2ffd (`lfApply`, requestAnimationFrame).
-- [ ] (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
+- [x] (DONE: art slots Buildings 6/6) (LEAD's request) Three buildings: paint the exteriors and inside backgrounds, side by side for Cal.
 - [ ] Regenerate `o_lock`, `al_carab`, `v_shade`, `v_corset` cleanly (their baked-in mannequin was cut out by hand). ROOMS on f39f668:
       all four render clean in idle and backwalk1 on both bodies, so they stay as they are during the playtest (no new art).
 - [ ] New outfits as Cal asks: one sheet per cosmetic, every angle; test every combination and pose before calling
@@ -3149,15 +3151,16 @@ To do:
       has looked at how it renders. Wear-test it on the body it fits, in every pose.
 - [x] (DONE: ROOMS uses `~/.venvs/questboard`, set `QB_PY` to it) This clone's Python has no `PIL`, `numpy` or `scipy`, and the art tools need them (`rs_art.py`, `pack.py` and so on).
       Set them up before the first ingest.
-- [ ] MAIN JOB. Painted walls for every room: wall-and-floor art in upgrade tiers, same camera every tier, matching the
+- [ ] MAIN JOB (left, checked 2026-11-08: Hero's Lair, Movie Theater, Auditorium still draw their walls; every other
+      room has its painted shell). Painted walls for every room: wall-and-floor art in upgrade tiers, same camera every tier, matching the
       room's size (list in HANDOFF), our furniture sprites on top. Built-in upgrades become part of the wall art (Club tier
       1 suede walls, then the bar upgrade adds a glowing hanging liquor cabinet). No two rooms share a final. Bedroom first,
       then up through the building order. For each room: generate, show Cal the tiers side by side, build the loader and put
       them in only after he approves.
 - [ ] Generic stage loader for wall shells (like `clPaint` in `27_rooms.js`), fitted to each room, green removed. After
       Cal approves the first set.
-- [ ] Closet (Cal, on v43): Wardrobe Lights and Super Sleek Modern look like nothing changed. Make each one obvious.
-- [ ] Closet (Cal, on v43): Jewelry Tower stops being the `clx_jewel` sprite. Another part of the closet opens up and shows
+- [x] (DONE: 93c95b6, every upgrade its own painting) Closet (Cal, on v43): Wardrobe Lights and Super Sleek Modern look like nothing changed. Make each one obvious.
+- [x] (DONE: 93c95b6) Closet (Cal, on v43): Jewelry Tower stops being the `clx_jewel` sprite. Another part of the closet opens up and shows
       jewelry, just like the shoe and bag wall. Art for his approval.
 - [ ] Every upgrade in every room clearly visible (Cal, on v43). MEASURED 2026-11-05 (all 21 rooms, 397 upgrades, each bought
       alone in unlock order; report, numbers and before/after sheets in `art/raw/audit/`, git-ignored): 318 OK, 33 WEAK,
@@ -3179,7 +3182,7 @@ To do:
         but the view shrinks to fit), Bedroom Neon Sign and Racing Chair, Game Room RGB Floor Lamp, Sky Bar Champagne Trolley
         (behind the piano), Club Laser Rig and Smoke Machine. Closet Wardrobe Lights and Super Sleek Modern: new art done.
       Not measured: expansions (their doors), people, pets and animation.
-- [ ] Game Room art: back-to-back gaming rigs at the front with the racing chairs facing them, a cream three-piece
+- [x] (DONE, then changed by Cal on v0.58: 3c27004, 6f04ed8, 4915a05) Game Room art: back-to-back gaming rigs at the front with the racing chairs facing them, a cream three-piece
       sectional with a futon piece, then an 80 inch TV and a floating modern media console as later upgrades.
 - [ ] Club (optional): back-view booth art if Cal wants booths along the bottom edge too.
 - [x] Speakeasy: `depth.js` flags the piano drawn over the stage; look at it. DONE in b19a578 and 707cac1 (the piano stands by the band stage).
