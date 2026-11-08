@@ -13,7 +13,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.75 = release/v0.75 at 0729a6b: 5b00b40 + ROOMS's 5218011 cherry-picked (QA's Patio blocker: only reachable spots;
+- Now: v0.75 PUBLISHED to Cal's web Test channel from release/v0.75 at 0729a6b (QA PASSED 0ba467c; version d58f6f2dd61d61dd; the
+  live app.js fingerprint matches; APPV 75; Cal still owner). Next: v0.76 from main with ROOMS's approved art 8c756be.
+  Was: v0.75 = release/v0.75 at 0729a6b: 5b00b40 + ROOMS's 5218011 cherry-picked (QA's Patio blocker: only reachable spots;
   the sliding door opens for visitors; walkers clipped), leaving out ROOMS's approved art 8c756be for v0.76. Build it from the
   branch release/v0.75. LEAD on 0729a6b: smoke, Review 131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING
   ON QA: the Patio recheck on 0729a6b; then LEAD publishes it. (QA: DONE, PASS, publish 0729a6b: the d1386bc full set and the
