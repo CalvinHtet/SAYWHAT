@@ -2784,7 +2784,9 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1f87497): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068 + 1f87497 (LEAD: the cupcake stand
+- Now (on 1da0f7e): Patio dog spots DONE in 1da0f7e, WAITING ON QA (below). Nothing else queued: the dogs and the Dessert Parlor are in
+  v0.75 (LEAD e30a13a) waiting on QA; the 12 art slots wait on Cal.
+  Was (on 1f87497): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068 + 1f87497 (LEAD: the cupcake stand
   joined the matcha bar as one tea corner), WAITING ON QA (below).
   Pluto and Chopstick ON in afc5d4f (Cal approved, via LEAD: "I approve the new dogs"), WAITING ON QA (below).
   The 12 empty art slots (`docs/ART_SLOTS.md`) are PAINTED, WAITING ON CAL (sent in ROOMS's chat): six relic
@@ -2806,6 +2808,12 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check 1da0f7e (rule 17), the Patio's dog spots (my own note on the dogs: one Patio spot sat behind the fire bowl).
+  The four fixed open-floor spots in lfPatioReal were set for a bare Patio; fully bought, every one fell inside a piece's footprint
+  (fire pit set, chair, telescope), and so did some room spots. Now a spot is used only if it is clear of every footprint (0.15
+  margin), plus two that stay clear and show through the Bedroom glass: between the dog beds and the chair (local 1.8, 3.05) and
+  the back left corner (.4, 1.2). Checked fully bought, headless: a dog at each spot is in view, none inside furniture. Not
+  checked: a bare or half-bought Patio (the old spots come back there when clear), and both dogs picking spots live.
 - WAITING ON QA: check d528068 + 1f87497 (rule 17), the Dessert Parlor in zones (Cal: "very randomly placed. Run a reference check of a
   similar room and place the assets accordingly"; LEAD's references `docs/refs/dessert_ref_*.png`, layout only). Back wall: one run
   of bingsu, soft serve, cake case, mochi case (now on the back wall, mirrored) and macaron tower, short of the painted hutch. The
