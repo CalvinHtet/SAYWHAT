@@ -25,7 +25,7 @@ FRIENDS={
  nick:{name:"Nick",tag:"Bay Area realtor, with Alvina",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",eq:["fr_nick_suit","fr_nick_trousers","h_derby"]}},
  ben:{name:"Ben",tag:"Marine vet and snowboarder",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",top:"bomber",topColor:"black",bottom:"jeans",bottomColor:"black",shoe:"sneakers",shoeColor:"white",eq:["fr_ben_jacket","fr_ben_cap"]}},
  kevin:{name:"Kevin",tag:"Foodie and pool shark",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_kevin_polo","fr_kevin_jeans"]}},
- victor:{name:"Victor",tag:"Gamer, always says GG",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"hoodie",topColor:"black",bottom:"joggers",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_victor_hoodie","fr_victor_chinos"]}}
+ victor:{name:"Victor",tag:"Gamer, always says GG",spec:{body:"m",skin:"s4",hairStyle:"h3",hairColor:"black",top:"hoodie",topColor:"grey",bottom:"joggers",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_victor_hoodie","fr_victor_chinos"]}}
 };
 Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
   Object.defineProperty(f,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(f.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})});
