@@ -13,7 +13,11 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now (2026-11-08): LIVE for Cal and his girlfriend: release/v0.75 at 5641427 on both links (Cal: "Take off the test tab and initialize
+- Now (2026-11-08): LIVE on both links: v0.76 = branch release/live at ee3548c (main 05500d3 + noTest + QB_TEST_START 0), Cal: "publish the
+  latest version for me and my gf to use before my usage runs out". NOT QA-PASSED: LEAD's checks only (loads, Review 131/131, webtest,
+  roomfit in WebKit, returning save kept, new player at 0, no test tools, no arcade or bowling hint). QA owes v0.76 when Cal's usage is back:
+  8c756be art, b3d6b28, 05500d3 Lock and Key (part bought, people walking), cdf5683. ROOMS next: Victor, Rooftop and Mall plans for Cal.
+  Was: release/v0.75 at 5641427 on both links (Cal: "Take off the test tab and initialize
   the game for both of us"): noTest hides the Test button and Testing rows, QB_EPOCH 3 starts every save over, Cal's old state,
   backup and world docs deleted (copies outside the repo). WebKit check: old-save and new players both reach the creator at 0 XP, 0 coins,
   no test controls, no errors. Not checked: on a real phone; the __qb* hooks are still in this build (not a public release).
