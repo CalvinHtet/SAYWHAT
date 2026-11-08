@@ -553,7 +553,7 @@ function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return 
      under it at that height, since a floor shadow would be hidden under the deck */
     if(!C._sfd){C._sfd="lfsoft"+C.uid+"_"+(window.LFRID=(window.LFRID||0)+1);C.add(-999,'<defs><filter id="'+C._sfd+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter></defs>')}
     var zz=o.shz,p2=.14,q2=.36;C.add(x+w+y+d-(o.dk||0)-.02,'<g filter="url(#'+C._sfd+')" opacity=".5" pointer-events="none">'+lfPolyS([lfP(x-p2,y-p2,zz),lfP(x+w+q2,y-p2,zz),lfP(x+w+q2,y+d+q2,zz),lfP(x-p2,y+d+q2,zz)],"#1c1410")+'</g>')}
-  else if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){(C.shd=C.shd||[]).push([x,y,x+w,y+d])}
+  else if(o.sh||(!o.nosh&&!o.dy&&(o.h||24)>=4&&w*d>=.04)){var ss=o.shs||1,sx0=w*(1-ss)/2,sy0=d*(1-ss)/2;/* o.shs: a smaller shadow for open, leggy pieces (Cal: a cafe table "weirdly floating" over a full-footprint shadow) */(C.shd=C.shd||[]).push([x+sx0,y+sy0,x+w-sx0,y+d-sy0])}
   C._lb=(!o.nob&&(o.h||24)>=10&&Math.abs(o.dk||0)<50)?[x,y,x+w,y+d]:null;
   /* o.act: the sprite is a button (data-act, a pointer cursor, and it takes clicks even where the room picture does not) */
   C.add(x+w+y+d-(o.dk||0),'<g'+(o.act?' data-act="'+o.act+'" style="cursor:pointer;pointer-events:auto"':'')+' transform="translate('+(a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0)).toFixed(1)+','+(a[1]+(o.dy||0)).toFixed(1)+') scale('+fx+',1)"><image href="'+lfSprUrl(k)+'" x="'+(-W/2).toFixed(1)+'" y="'+(-Hh).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+Hh.toFixed(1)+'" preserveAspectRatio="none"'+(o.fl?' filter="url(#'+o.fl+')"':'')+' style=""/>'
