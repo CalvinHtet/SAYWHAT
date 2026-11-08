@@ -13,7 +13,13 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.74 PUBLISHED to Cal's web Test channel from 3dfe920 (QA PASSED: 70debad full set, d6c12a8 recheck; version
+- Now: v0.75 BUILT from e30a13a (APPV 75), WAITING ON QA for the full set on dist (481) and dist-web (2347): v0.74 plus ROOMS's painted
+  Pluto and Chopstick switched on afc5d4f (Cal: "I approve the new dogs") and LEAD's dog visit cards 775f4d5, LEAD's page-zoom block
+  6ade4bd (Cal: "I accidentally zoomed in and can't zoom back out"), ROOMS's Dessert Parlor in zones d528068 + 1f87497 (Cal: "very
+  randomly placed. Run a reference check"). LEAD's checks: loads clean, Review 131/131 save unchanged, story plays (a friend visit
+  popped mid-run), Next event 35 taps, both dog cards show the painted dogs, webtest PASS, livesync PASS, roomfit 21/21 in both
+  engines. Cal's phone was still on v0.73 at 04:49 UTC (told to reload).
+  Was: v0.74 PUBLISHED to Cal's web Test channel from 3dfe920 (QA PASSED: 70debad full set, d6c12a8 recheck; version
   3ac337176989cb8f; the live app.js fingerprint matches the build; APPV 74; dist 481, dist-web 2347; the new dogs ship switched off,
   LFDOGON unset, until Cal approves them; QA's file check of the live channel: PASS, 2347/2347 byte-identical, QA findings). CAL (2026-11-08): "I approve the new dogs": ROOMS switched them on (afc5d4f), dog visit cards use them (LEAD 775f4d5).
   "I accidentally zoomed in and can't zoom back out": iPhone Safari's page zoom; blocked (LEAD 6ade4bd). "The dessert parlor is also
@@ -87,7 +93,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 6ade4bd)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on e30a13a)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
