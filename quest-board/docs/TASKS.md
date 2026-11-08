@@ -2787,7 +2787,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 260895e): QA's Patio spacing fix DONE in 260895e, WAITING ON QA. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
+- Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
   tier, floor from the floor upgrade's; it uses the drawn tiers until the shells are added to art/app on his yes. The Auditorium
@@ -2819,6 +2819,13 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check 5776eda (rule 17), QA's v0.75 blocker: visitors on the Patio not clipped to the glass. Now everyone with
+  y < -0.02 in a Bedroom with the Patio goes into the glass clip group (lfpcg), whatever their role (line 1594 dropped the role
+  test). And people (deck "look" stations) get only spots at y -2.6 or nearer the glass, where a standing person fits under its
+  top; further back the clip cut them to their legs. Dogs keep every spot. Deck stations now: full (3.35, -2.20), half and bare
+  (3.60, -1.95). ROOMS's own check, headless: a person given role "visitor" at every deck spot, full, half and bare, sits in the
+  clip group and is cut at the glass (the first spot tested reads unclipped once, a test-timing quirk: the same spot tested later
+  is clipped). Not checked: a real friend visit walking out to the deck live.
 - WAITING ON QA: check 1da0f7e + 260895e (rule 17; QA on 1da0f7e: two spots 0.28 apart, fixed in 260895e: spots keep 0.9 apart and
   stay inside the Bedroom glass's span; full: 2 spots, half: 2, bare: 4, all 1.8 or more apart, in view), the Patio's dog spots (my own note on the dogs: one Patio spot sat behind the fire bowl).
   The four fixed open-floor spots in lfPatioReal were set for a bare Patio; fully bought, every one fell inside a piece's footprint
