@@ -16,7 +16,8 @@ Doing:
 - Now: v0.75 CUT 5b00b40 = d1386bc + ROOMS's 260895e (Patio spot spacing), 5776eda (everyone on the Patio clipped to the
   glass, QA's blocker) and 03ceedb (Theater lobby shell loader, inert until Cal approves the art). LEAD on 5b00b40: smoke, Review
   131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING ON QA: the Patio with people and dogs, the Theater lobby
-  unchanged, the Loft checks; then LEAD publishes 5b00b40. Was: v0.75 FINAL CUT 20e1feb = d1386bc + ROOMS's 260895e Patio spot spacing (the only code change; smoke, Review 131/131,
+  unchanged, the Loft checks; then LEAD publishes 5b00b40. Next, v0.76 from HEAD: ROOMS's 8c756be (Cal: "Approve all": relic
+  icons, Sable's portrait, brand banners, the Theater lobby's painted shells). Was: v0.75 FINAL CUT 20e1feb = d1386bc + ROOMS's 260895e Patio spot spacing (the only code change; smoke, Review 131/131,
   webtest PASS on 20e1feb). QA: the full set on d1386bc, then 260895e rechecked on 20e1feb; then LEAD publishes 20e1feb.
   Was: v0.75 RE-CUT from d1386bc (adds ROOMS's Patio dog spots 1da0f7e; QA had not started e30a13a; smoke, Review 131/131,
   Next event, webtest, roomfit PASS on d1386bc). Was: v0.75 BUILT from e30a13a (APPV 75), WAITING ON QA for the full set on dist (481) and dist-web (2347): v0.74 plus ROOMS's painted
