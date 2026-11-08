@@ -2778,7 +2778,8 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on afc5d4f): Pluto and Chopstick ON in afc5d4f (Cal approved, via LEAD: "I approve the new dogs"), WAITING ON QA (below).
+- Now (on d528068): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068, WAITING ON QA (below).
+  Pluto and Chopstick ON in afc5d4f (Cal approved, via LEAD: "I approve the new dogs"), WAITING ON QA (below).
   The 12 empty art slots (`docs/ART_SLOTS.md`) are PAINTED, WAITING ON CAL (sent in ROOMS's chat): six relic
   icons `ui_relic_<id>` (128 px), Sable's story portrait `ui_story_sable` (300 x 400), the five portrait brand banners
   `ui_banner_<id>_p` (720 x 1080). Held in `shots/pending_art/` (not in `art/app`, so nothing shows before his yes); on his yes they
@@ -2798,6 +2799,15 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
+- WAITING ON QA: check d528068 (rule 17), the Dessert Parlor in zones (Cal: "very randomly placed. Run a reference check of a
+  similar room and place the assets accordingly"; LEAD's references `docs/refs/dessert_ref_*.png`, layout only). Back wall: one run
+  of bingsu, soft serve, cake case, mochi case (now on the back wall, mirrored) and macaron tower, short of the painted hutch. The
+  pastry counter is the register, in front of the hutch with a staff lane behind it (staff spot 8.3, 1.45 layout), nearest the
+  door; customers at its front. Front right: a tea corner, the matcha bar and the cake stand. Left: the seating corner (booth,
+  marble table, the sakura between them). An open lane from the door mat to the counter; the stairs down (front left) clear.
+  Same pieces, no new art; the room has one stage. ROOMS's own check: fully bought and half bought, no piece over another on
+  screen, footprints clear (`shots/rooms3/dessert_zones_before_after_half.png`: before, after, half). Look at: every customer and
+  the barista walking live (headless they idle), the Hidden Door portal behind the counter (owners of the old Speakeasy only).
 - WAITING ON QA: check 2faabd0 + afc5d4f (rule 17), the painted Pluto and Chopstick (Cal: "really tiny... bigger and more
   recognizable"; approved 2026-11-08). `dgx_<dog>_0-3` stand/walk/sit/sleep, drawn 34 tall (`LFDOGH` in 20_loft.js), pixel dog if
   the art is missing (or `window.LFDOGON=0`). ROOMS's own check, headless at 2x: next to Cal in the Bedroom at stand, walk (mirrored
