@@ -5,7 +5,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
     // Cal's uid goes here (and in web/config.js) after his first sign-in on the web build
-    function owner() { return signedIn() && request.auth.uid in []; }
+    function owner() { return signedIn() && request.auth.uid in ["RwoCZ8hu7GNFof5SjKzZFtlqqRH3"]; }
     function mine(uid) { return signedIn() && request.auth.uid == uid; }
 
     // what others see of each player, their town-hall posts and reactions, and their visit notes: everyone signed in reads,

@@ -13,5 +13,5 @@ window.QB_WEB = {
     appId: "1:363595943030:web:957c811819571b049ce357"
   },
   /* Cal's uid, filled in after his first sign-in on the web build: the owner sees the Test tools and reads diag and inbox */
-  owners: []
+  owners: ["RwoCZ8hu7GNFof5SjKzZFtlqqRH3"]   /* Cal, signed in 2026-11-07 */
 };
