@@ -13,7 +13,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now: v0.75 CUT 5b00b40 = d1386bc + ROOMS's 260895e (Patio spot spacing), 5776eda (everyone on the Patio clipped to the
+- Now: v0.75 = release/v0.75 at 0729a6b: 5b00b40 + ROOMS's 5218011 cherry-picked (QA's Patio blocker: only reachable spots;
+  the sliding door opens for visitors; walkers clipped), leaving out ROOMS's approved art 8c756be for v0.76. Build it from the
+  branch release/v0.75. LEAD on 0729a6b: smoke, Review 131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING
+  ON QA: the Patio recheck on 0729a6b; then LEAD publishes it. Was: v0.75 CUT 5b00b40 = d1386bc + ROOMS's 260895e (Patio spot spacing), 5776eda (everyone on the Patio clipped to the
   glass, QA's blocker) and 03ceedb (Theater lobby shell loader, inert until Cal approves the art). LEAD on 5b00b40: smoke, Review
   131/131 save unchanged, Next event 35 taps, webtest, roomfit PASS. WAITING ON QA: the Patio with people and dogs, the Theater lobby
   unchanged, the Loft checks; then LEAD publishes 5b00b40. Next, v0.76 from HEAD: ROOMS's 8c756be (Cal: "Approve all": relic
@@ -100,7 +103,7 @@ Doing:
   30-player, API cost and what-uses-Claude questions (4 uses: proof photos, level-trial photos, brain-dump scoring, bounty ideas).
   WAITING ON CAL: the go to start;
   then he makes the Firebase project (his login) and, for the AI parts, his own API key. Before release: QB_TEST_START
-  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 5b00b40)
+  0, drop S.testFree, the Test pill, room tester, Review, Unlock everything, and every window.__qb* hook. (on 0729a6b)
 - v0.72 PUBLISHED in place on Cal's Test link (HJhVjFH6), 492 files (26 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. QA passed it in a3c2cb6 (build 083fec9, APPV 72). The publish session checked the staged r/ against both 083fec9 worktrees (release/v72 and QA's wt-083fec9, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (app.js 1252884; index.html +364 bytes, the publish wrapper); art/ list unchanged, so no leftovers. 3 publishes for the 64 MB cap (versions 16-18). (on b60a552)
 - v0.71 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 3840577's clean build (release/v71 and QA's wt-3840577, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.70, so no leftovers. 3 publishes for the 64 MB cap (versions 13-15). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on eda711d)
 - v0.70 PUBLISHED in place on Cal's Test link (HJhVjFH6), 491 files (25 top-level + 466 art), same 9 db rules, user, sample images; still the only pinned version, so Cal's saves carry over. The publish session checked r/ against 10240e8's clean build (release/v70 and QA's wt-10240e8, diff -r, lfvar.json = app/lfvar.json) and every published size against r/ (index.html +364 bytes, the publish wrapper); no art added, removed or changed since v0.69, so no leftovers. 3 publishes for the 64 MB cap (versions 10-12). r/ left for LEAD. WAITING ON QA: check the published files once QA's artifact tools are back. SUPERSEDED by QA's published v0.72 check (PASS, QA findings). (on 7e25ded)
