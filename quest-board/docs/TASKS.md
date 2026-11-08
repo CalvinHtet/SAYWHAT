@@ -2851,7 +2851,7 @@ Requests for LEAD (from ROOMS):
 Doing:
 - Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
   portrait brand banners (art slots 67 of 67) and the Theater lobby shells; LEAD folds them into v0.76, cut from HEAD after v0.75 is published. Nothing else queued: the
-  Auditorium's walls wait on Cal's word. QA's Patio route, door and walking-clip fixes DONE in 5218011, WAITING ON QA; v0.75 needs a re-cut with it. (QA: PASS on 0729a6b, QA findings.)
+  Auditorium's walls wait on Cal's word. QA's Patio fixes 5218011 PASSED on LEAD's v0.75 0729a6b. Patio beds per dog DONE in b3d6b28 (QA's note), WAITING ON QA, for v0.76. (QA: PASS on 0729a6b, QA findings.)
   Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. (QA: PASS.) QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
@@ -2890,6 +2890,10 @@ Doing:
   walkers stay clipped. ROOMS's own check, headless: routes from the Bedroom (4.5, 4.5) to every spot and bed, sampled 20 per
   leg against the Patio footprints, 0 inside furniture on full (1 spot, 2 beds), half (2 spots, 1 bed) and bare (4 spots); a
   visitor walking out: clipped 51 of 51 samples on the Patio, door open 67 of 67 samples near it.
+- WAITING ON QA: check b3d6b28 (rule 17, for v0.76), QA's note on 0729a6b: with only `pt_dbed` bought both dogs went to it (`||
+  PR.beds[0]`) and one lay under the other. Patio beds now carry their dog (pt_dbed Pluto's, pt_dbed2 Chopstick's) and a dog goes
+  only to its own; without one it runs the Patio and keeps its Bedroom bed. ROOMS's own check, headless: one bed bought, Pluto to
+  (3.30, -1.40), Chopstick none; both bought, one each; every route still clear of furniture.
 - WAITING ON QA: check 8c756be (rule 17), Cal's "Approve all" (2026-11-08): (1) six relic icons `ui_relic_<streak|team|build|exped|
   quests|collect>` (128 px), in the Relics tab; (2) Sable's story portrait `ui_story_sable` (300 x 400), on her return visits;
   (3) portrait brand banners `ui_banner_<hanga|y2k|over|rose|alt>_p` (720 x 1080), in the drop window; (4) the Theater lobby's
