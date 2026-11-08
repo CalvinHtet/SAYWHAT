@@ -166,7 +166,7 @@ LFROOM.garden=function(C){
     var j=beds.indexOf("gdx_seed");if(j<0)j=beds.indexOf("gd_bed1");if(j>=0)beds[j]=c[1];else beds.push(c[1])});
   beds=beds.slice(0,spots.length);
   beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
-  if(H("g_spr"))beds.forEach(function(k,i){var p=spots[i];gdMist(C,p[0]+3.7,p[1]+.8)});/* QA re-audit: one per bed, not every other */
+  if(H("g_spr"))beds.forEach(function(k,i){var p=spots[i];gdMist(C,st===0&&p[0]>5&&p[1]>7?p[0]-.25:p[0]+3.7,p[1]+.8)});/* QA re-audit: one per bed, not every other. On the Back Plot the front right bed's sprinkler goes on its left side: on the right it sprayed into the produce stand (QA v0.74, rule 20) */
   /* QA audit: a hairline before. A black drip hose along each bed's front with water beads, so it can be seen */
   if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.82,0),lfP(p[0]-.1,p[1]+1.82,0)],"#16191f"));
     for(var b=0;b<6;b++){var d=lfP(p[0]+.25+b*.6,p[1]+1.9,0);C.decals.push('<ellipse cx="'+d[0].toFixed(1)+'" cy="'+d[1].toFixed(1)+'" rx="2.4" ry="1.2" fill="#7fc3ff" opacity=".75"/>')}});

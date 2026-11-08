@@ -1547,7 +1547,8 @@ function lfDrop(id){var e=document.getElementById("lfa-"+id.replace(/[^a-z0-9_-]
 // Painted dogs (Cal, v0.74: "really tiny… make them bigger and more recognizable"): dgx_<name>_<0 stand|1 walk|2 sit|3 sleep>
 // in rsart.json, all frames of a dog at one scale so the standing frame is LFDOGH tall. Missing art falls back to the pixel dog.
 var LFDOGH={pluto:34,chopstick:34};
-function lfDogSpr(n,p){var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
+// Off until Cal approves the art (CLAUDE.md: new art goes to Cal first); tests set window.LFDOGON=1. Turn on with his yes.
+function lfDogSpr(n,p){if(!window.LFDOGON)return null;var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
   if(!f||!f0)return null;var k=(LFDOGH[n]||34)/f0.h;return{u:f.u,w:f.w*k,h:f.h*k}}
 function lfDogURL(n,p){var k="dog2|"+n+"|"+p;if(PXC[k])return PXC[k];
   var g=PixAv.dog2(n,p),o=[],h=Math.ceil(36*PixAv.K*1.0);
