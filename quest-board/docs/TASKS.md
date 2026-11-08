@@ -13,7 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now (2026-11-08): LIVE on both links: v0.76 = branch release/live at ee3548c (main 05500d3 + noTest + QB_TEST_START 0), Cal: "publish the
+- Now (2026-11-08): LIVE on both links: release/live-fca61c1 at 0ca5de1 (main fca61c1 with Victor's hoodie and portraits + noTest + QB_TEST_START 0; not QA-passed, as below). ALL CHATS STOPPED: Cal's weekly limit at 96%, resets in about 4 days. After the reset: QA on v0.76, Victor's long hair, Rooftop, Mall (Cal approved all three).
+  Was: v0.76 = branch release/live at ee3548c (main 05500d3 + noTest + QB_TEST_START 0), Cal: "publish the
   latest version for me and my gf to use before my usage runs out". NOT QA-PASSED: LEAD's checks only (loads, Review 131/131, webtest,
   roomfit in WebKit, returning save kept, new player at 0, no test tools, no arcade or bowling hint). QA owes v0.76 when Cal's usage is back:
   8c756be art, b3d6b28, 05500d3 Lock and Key (part bought, people walking), cdf5683. ROOMS next: Victor, Rooftop and Mall plans for Cal.
