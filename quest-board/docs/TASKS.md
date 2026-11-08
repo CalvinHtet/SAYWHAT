@@ -2855,7 +2855,13 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
+- PAUSED (on 49295bc) until Cal's limit resets Thursday (Cal via LEAD: stop the automatic checks; ROOMS's loop cancelled). Stopped
+  mid-way on the Auditorium's painted walls (Cal: "Paint it"): the taller shell frame is in (49295bc, inert for every existing shell);
+  guides for its three sizes (12x11 H190, 14x14 H236, 16x17 H300, QB_SHELL_ASPECT=0.9) are in shots/pending_art/auditorium/;
+  two paintings of the 12x11 (plain, acoustic panels) were queued on Higgsfield (they land in Cal's history); still to do: the
+  velvet look, the two bigger sizes from swatches, the loader in 23_theater.js, the checks, then Cal. b3d6b28 (Patio beds per dog)
+  waits for after Thursday (LEAD).
+  Was: Now (on 8c756be): Cal approved all ("Approve all") and it is in 8c756be, WAITING ON QA (below): relic icons, Sable's portrait, the
   portrait brand banners (art slots 67 of 67) and the Theater lobby shells; LEAD folds them into v0.76, cut from HEAD after v0.75 is published. Nothing else queued: the
   Auditorium's walls wait on Cal's word. QA's Patio fixes 5218011 PASSED on LEAD's v0.75 0729a6b. Patio beds per dog DONE in b3d6b28 (QA's note), WAITING ON QA, for v0.76. (QA: PASS on 0729a6b, QA findings.)
   Was: Now (on 5776eda): QA's Patio visitor clipping (v0.75 blocker) DONE in 5776eda, WAITING ON QA. (QA: PASS.) QA's Patio spacing fix 260895e: PASS. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
