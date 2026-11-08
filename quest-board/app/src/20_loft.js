@@ -3289,8 +3289,9 @@ LFROOM.bedroom=function(C){
   if(w3||pr)C.patio={deck:pr||w3&&H("bd_patio"),swing:H("bd_swing"),deco:H("bd_pdeco"),room:pr};
   if(pr&&C.patio)C.patio.real=lfPatioReal();
   if(w3||pr)lfWinFtc(C,uid);
-  if(!w3){if(w2)lfWinPic(C,2.6,4.9,50,114,uid);
-  else{lfSprWin(C,"w_win1",3.5,.05,.1,.05,{flip:1,H:76,dy:-26});LFWINS.push(2.7)}}
+  /* rule 20: the PC tower's top touched the window above it; both windows a step left, over the record cabinet */
+  if(!w3){if(w2)lfWinPic(C,1.7,4.0,50,114,uid);
+  else{lfSprWin(C,"w_win1",3.0,.05,.1,.05,{flip:1,H:76,dy:-26});LFWINS.push(2.2)}}
   var AN=H("bd_ward2")&&!window.LFNOANX;
   if(AN){C.annex={lair:0,lr:H("bd_lair"),shoe:H("bd_cl_shoe"),isle:H("bd_cl_isle"),rack:H("bd_lr_rack"),desk:H("bd_lr_desk"),trophy:H("bd_lr_trophy"),arm:H("bd_lr_arm"),suit:H("bd_lr_suit"),holo:H("bd_lr_holo")};
     if(C.annex.lr)lfSLairItem(C);lfSClosetItem(C)}
