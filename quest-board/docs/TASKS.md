@@ -2790,8 +2790,11 @@ Doing:
 - Now (on 260895e): QA's Patio spacing fix DONE in 260895e, WAITING ON QA. MAIN JOB, the last rooms without painted walls (the Hero's Lair already
   is one painting). Movie Theater lobby: three wall/floor tiers PAINTED at 12 x 9 and 16 x 10 (fit within 5 px at 4x), WAITING ON
   CAL (shots/pending_art/review_theater_lobby.png, sent in ROOMS's chat). The loader is in (03ceedb): walls from the wall upgrade's
-  tier, floor from the floor upgrade's; it uses the drawn tiers until the shells are added to art/app on his yes. Next: the
-  Auditorium (its walls change height with the screen upgrades).
+  tier, floor from the floor upgrade's; it uses the drawn tiers until the shells are added to art/app on his yes. The Auditorium
+  is the last room with drawn walls, and it is CAL'S CALL whether to paint it: three sizes (12 x 11, 14 x 14, 16 x 17) with wall
+  heights 190, 236, 300 and three wall looks, so about nine paintings plus a taller shell frame (the 5:4 frame holds 477 px, the
+  walls need 500 to 610); the gain is small, since the screen covers most of the left wall and the seats most of the floor, and
+  the drawn dark walls read fine (shots in ROOMS's scratch). Waiting for his word before starting it.
   Patio dog spots DONE in 1da0f7e, WAITING ON QA (below). The dogs and the Dessert Parlor are in v0.75 (LEAD e30a13a) waiting on
   QA; the 12 art slots wait on Cal. Old boxes on this list ticked (done long ago).
   Was (on 1f87497): Dessert Parlor re-laid in zones (Cal via LEAD, references in docs/refs/) DONE in d528068 + 1f87497 (LEAD: the cupcake stand
