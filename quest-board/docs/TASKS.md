@@ -2785,7 +2785,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on 1da0f7e): MAIN JOB, the last rooms without painted walls. The Hero's Lair already is one painting (checked), so: the Movie
+- Now (on 260895e): QA's Patio spacing fix DONE in 260895e, WAITING ON QA. MAIN JOB, the last rooms without painted walls. The Hero's Lair already is one painting (checked), so: the Movie
   Theater lobby's three wall/floor tiers PAINTED at 12 x 9 (fit within 5 px at 4x), the 16 x 10 expanded lobby painting now; then
   side by side for Cal before they go in (the loader is written: walls from the wall upgrade's tier, floor from the floor's).
   Then the Auditorium.
@@ -2813,7 +2813,8 @@ Doing:
   brass register e37df53. LEAD has my OK to edit the zoom block of lfPrevAttach in 20_loft.js (Cal: bring zoom back).
   Bedroom swept in all three window states (14d060f); Garden's two smaller stages (4562a76); Boba Shop floating table and
   barista c342c2b; part-bought sweep of every room 6a5572f. The rule-20 sweep is done; nothing else queued.
-- WAITING ON QA: check 1da0f7e (rule 17), the Patio's dog spots (my own note on the dogs: one Patio spot sat behind the fire bowl).
+- WAITING ON QA: check 1da0f7e + 260895e (rule 17; QA on 1da0f7e: two spots 0.28 apart, fixed in 260895e: spots keep 0.9 apart and
+  stay inside the Bedroom glass's span; full: 2 spots, half: 2, bare: 4, all 1.8 or more apart, in view), the Patio's dog spots (my own note on the dogs: one Patio spot sat behind the fire bowl).
   The four fixed open-floor spots in lfPatioReal were set for a bare Patio; fully bought, every one fell inside a piece's footprint
   (fire pit set, chair, telescope), and so did some room spots. Now a spot is used only if it is clear of every footprint (0.15
   margin), plus two that stay clear and show through the Bedroom glass: between the dog beds and the chair (local 1.8, 3.05) and
