@@ -1,0 +1,18 @@
+// LEAD's cdf5683: the arcade and bowling alley stay a secret: in the Mall's window, no "? ? ?" card for them until the story opens them. Everything else in the Mall bought.
+//   BASE=<server> node mallsecret.js
+const { open } = require('./lib.js');
+(async () => { const { b, p, errs } = await open({ width: 1000, height: 1000, owned: 'none' });
+  const r = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)), x = window.__qb.x(), S = x.S; let k = S.base.slots.findIndex((s) => s.t === 'mall'); if (k < 0) { S.base.slots.push({ t: 'mall', a: {}, st: 0, pend: 0 }); k = S.base.slots.length - 1; } const m = S.base.slots[k];
+    const opens = x.ADDONS.mall.filter((u) => u[3] && u[3].opens).map((u) => [u[0], u[3].opens]); m.a = {}; x.ADDONS.mall.forEach((u) => { if (!(u[3] && (u[3].opens || u[3].retired))) m.a[u[0]] = 1; }); S.coins = 9e6; x.persist();
+    const look = async () => { document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qb.roomModal(k); await w(500); document.querySelectorAll('.rmodal details').forEach((d) => { d.open = true; }); const c = [...document.querySelectorAll('.rmodal .addon')].map((e) => e.innerText.replace(/\s+/g, ' ').slice(0, 90)); return { mystery: document.querySelectorAll('.rmodal .addon.mystery').length, arc: c.filter((t) => /arcade|bowl/i.test(t)), buy: [...document.querySelectorAll('.rmodal [data-act="raddon"]')].map((e) => e.dataset.id), allow: opens.map((q) => [q[1], window.__qbStory.allows(q[1])]) }; };
+    const before = await look(); const st = window.__qbStory.state(); st.offer = st.offer || {}; opens.forEach((q) => { st.offer[q[1]] = 1; }); const after = await look(); return { opens, before, after }; });
+
+  // the real path: a Mall with nothing bought, tapping the window's first Buy again and again, story NOT open: any card that names them?
+  const walk = await p.evaluate(async () => { const w = (ms) => new Promise((o) => setTimeout(o, ms)), x = window.__qb.x(), S = x.S, k = S.base.slots.findIndex((s) => s.t === 'mall'), m = S.base.slots[k]; m.a = {}; const st = window.__qbStory.state(); ['arcade', 'bowling', 'karaoke'].forEach((q) => { if (st.offer) delete st.offer[q]; }); const seen = {}; let n = 0;
+    for (let g = 0; g < 60; g++) { S.coins = 9e6; document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); window.__qb.roomModal(k); await w(160); document.querySelectorAll('.rmodal details').forEach((d) => { d.open = true; });
+      [...document.querySelectorAll('.rmodal .addon')].forEach((e) => { const t = e.innerText.replace(/\s+/g, ' ').slice(0, 100); if (/arcade|bowl/i.test(t)) seen[t] = seen[t] || (n + ' bought'); });
+      const b = [...document.querySelectorAll('.rmodal [data-act="raddon"]')].find((e) => !e.disabled); if (!b) break; b.click(); await w(60); n++; }
+    return { n, seen, esc: m.a.ml_esc ? 'bought' : 'not bought', allow: window.__qbStory.allows('bowling') }; });
+  console.log('real path:', JSON.stringify(walk).slice(0, 700));
+  console.log(JSON.stringify(r).slice(0, 900)); const arcIds = r.opens.filter((q) => /arcade|bowling/.test(q[1])).map((q) => q[0]);
+  const hiddenBefore = !arcIds.some((id) => r.before.buy.includes(id)) && r.before.arc.length === 0; console.log((r.before.allow.some((q) => /arcade|bowling/.test(q[0]) && q[1]) ? 'NOTE story already allows one ' : '') + (hiddenBefore ? '  ok   no card for them before the story opens them' : '  FAIL a card shows'), r.before.mystery, 'mystery cards'); console.log('errors', errs.length, errs.slice(0, 2)); await b.close(); })().catch((e) => { console.error(e); process.exit(1); });
