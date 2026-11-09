@@ -3,8 +3,11 @@
 # What goes out is the `live` branch, which LEAD moves forward only to a commit QA passed and Cal tested. If the Live site already
 # runs that commit (its version.txt), nothing happens. Players' apps pick the new version up the next time they open it.
 # Needs the repo secret FIREBASE_SERVICE_ACCOUNT (a Firebase service account key that Cal makes and pastes into GitHub himself).
+# Cal, 2026-11-09: a push to `live` publishes right away too, so an update reaches his phone without waiting for 4 am.
 name: Live at 4 am
 on:
+  push:
+    branches: [live]
   schedule:
     - cron: "0 12 * * *"   # 12:00 UTC = 4:00 am PST (winter); 5:00 am PDT in summer
   workflow_dispatch: {}
