@@ -25,7 +25,54 @@
   if (document.body) document.body.classList.add("qbweb"); else document.addEventListener("DOMContentLoaded", function () { document.body.classList.add("qbweb"); });
   /* a build for real players (config.js noTest): no Test button and no "Testing:" rows in the Shop or room windows, for anyone */
   if (W.noTest) { var nt = document.createElement("style"); nt.textContent = "#qbt,.qs-dev{display:none!important}"; (document.head || document.documentElement).appendChild(nt); }
+  /* the sandbox link (tools/build.py with QB_SANDBOX=1; Cal, 2026-11-08: "test all the upgrades without it overwriting my personal
+     save"): the game gets a stand-in database that lives in this browser only. It returns before Firebase starts, so this build
+     has no way to sign in or to reach anyone's real save. */
+  if (W.sandbox) { sandboxHost(); return; }
   if (!window.firebase) return; /* the page then runs on this device only, as it does when Claude is not there */
+
+  /* ---- the sandbox's database: the same calls as makeDb below, kept in localStorage under qbsbx: ---- */
+  function sandboxHost() {
+    var PRE = "qbsbx:", subs = [];
+    var read = function (p) { try { var r = localStorage.getItem(PRE + p); return r === null ? undefined : JSON.parse(r); } catch (e) { return undefined; } };
+    var snapD = function (p) {
+      var v = read(p);
+      return { id: p.split("/").pop(), exists: v !== undefined, data: function () { return v === undefined ? undefined : JSON.parse(JSON.stringify(v)); } };
+    };
+    var paths = function (name) {
+      var at = PRE + name + "/", out = [];
+      for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k.indexOf(at) === 0 && k.slice(at.length).indexOf("/") < 0) out.push(k.slice(PRE.length)); }
+      return out;
+    };
+    var snapC = function (name, n) { var ps = paths(name); if (n) ps = ps.slice(0, n); var docs = ps.map(snapD); return { docs: docs, size: docs.length, empty: !docs.length }; };
+    var told = function (p) { subs.slice().forEach(function (s) { if (s.path === p || s.col + "/" === p.slice(0, p.lastIndexOf("/") + 1)) setTimeout(s.tell, 0); }); };
+    var listen = function (s) { subs.push(s); setTimeout(s.tell, 0); return function () { subs.splice(subs.indexOf(s), 1); }; };
+    var db = {
+      doc: function (p) {
+        return {
+          get: function () { return Promise.resolve(snapD(p)); },
+          set: function (d) { localStorage.setItem(PRE + p, JSON.stringify(d === undefined ? null : d)); told(p); return Promise.resolve(); },
+          delete: function () { localStorage.removeItem(PRE + p); told(p); return Promise.resolve(); },
+          onSnapshot: function (next) { return listen({ path: p, tell: function () { next(snapD(p)); } }); }
+        };
+      },
+      collection: function (name) {
+        return {
+          limit: function (n) { return { get: function () { return Promise.resolve(snapC(name, n)); } }; },
+          get: function () { return Promise.resolve(snapC(name, 0)); },
+          onSnapshot: function (next) { return listen({ col: name, tell: function () { next(snapC(name, 0)); } }); }
+        };
+      }
+    };
+    var me = { id: function () { return Promise.resolve("sandbox"); }, isOwner: function () { return Promise.resolve(true); } };
+    window.claude = { use: function (what) { return Promise.resolve(what === "db" ? db : what === "user" ? me : null); } };
+    var badge = function () {
+      var b = document.createElement("div"); b.id = "qbsandbox"; b.textContent = "SANDBOX";
+      b.setAttribute("style", "position:fixed;top:calc(env(safe-area-inset-top,0px) + 2px);left:50%;transform:translateX(-50%);z-index:99998;font:800 10px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;padding:4px 10px;border-radius:999px;background:#ff5a7a;color:#14121c;pointer-events:none");
+      document.body.appendChild(b); document.title = "SAYWHAT Sandbox";
+    };
+    if (document.body) badge(); else document.addEventListener("DOMContentLoaded", badge);
+  }
 
   /* ---- Firebase: the hosting page's own config when served by Firebase Hosting, else the copy in web/config.js ---- */
   var started = fetch("/__/firebase/init.json").then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })

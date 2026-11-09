@@ -114,6 +114,9 @@ if WEB:
         shutil.copy(os.path.join(WEBDIR, "vendor", name), os.path.join(DIST, name))
     for name in ("config.js", "web.js"):
         shutil.copy(os.path.join(WEBDIR, name), os.path.join(DIST, name))
+    if os.environ.get("QB_SANDBOX"):  # the sandbox link: saves stay in this browser, Test tools on (docs/RELEASING.md)
+        with open(os.path.join(DIST, "config.js"), "a", encoding="utf-8") as f:
+            f.write("\nwindow.QB_WEB.sandbox = true;\n")
     shutil.copy(os.path.join(APP, "lfvar.json"), os.path.join(DIST, "lfvar.json"))
     i = SCRIPTS.index("qbdata.js") + 1
     SCRIPTS = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js", "config.js"] + SCRIPTS[:i] + ["web.js"] + SCRIPTS[i:]
