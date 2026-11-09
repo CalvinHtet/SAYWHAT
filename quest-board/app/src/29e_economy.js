@@ -88,9 +88,11 @@ function econTrained(x,plan){dqState().tx+=x;var k=TRAINSTAT[plan];if(k&&x>=ECON
 function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),e=dqEff(),p=Math.min(1,x/g),o=Math.min(1,Math.max(0,x/g-1)),sp=stats4(),d=dqState();
   return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+x+' / '+g+' XP</span></div>'
     +'<div class="dq-bar"><i style="width:'+(p*100)+'%"></i><i class="ot" style="width:'+(o*100)+'%"></i></div>'
-    +'<p class="note">'+(x<=0?'Your town is closed until you finish a task today.':'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden quest: +10%)':'')+'. '+(p<1?(g-x)+' XP to complete the Daily Quest.':o<1?'Overtime.':'Hidden quest complete.'))+'</p>'
+    +'<p class="note">'+(x<=0?'Finish a task to start your day. ':p<1?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':o<1?'Daily Quest done. Overtime counts toward the hidden quest. ':'Hidden quest complete. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden quest: +10%)':'')+'.':'')+'</p>'
     +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
-    +'<div class="dq-row"><span class="note">Goal</span>'+ECON.dqGoals.map(function(n){return '<button class="dq-g'+(n===g?' on':'')+'" data-act="dqgoal" data-v="'+n+'">'+n+'</button>'}).join("")+'</div>'
+    /* Cal, 2026-11-09: "I don't understand the 100, 150, 200, 250 buttons for the goal" */
+    +'<p class="note dq-gx"><b>Daily goal</b>: how much XP counts as a full day. Reaching it pays a coin chest and runs your town at full speed. A bigger goal pays a bigger chest.</p>'
+    +'<div class="dq-row">'+ECON.dqGoals.map(function(n){return '<button class="dq-g'+(n===g?' on':'')+'" data-act="dqgoal" data-v="'+n+'">'+n+'</button>'}).join("")+'</div>'
     +'<div class="dq-row">'+Object.keys(STATN).map(function(k){var ic=econArt("ui_stat_"+k+".webp");return '<span class="chip dq-st" title="'+STATD[k]+'">'+(ic?'<img src="'+ic+'" alt="">':'')+STATN[k]+' '+sp[k]+'</span>'}).join("")+'</div></section>'}
 function econArt(n){return window.QBART&&QBART[n]}
 function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),g=dqGoal(),sp=stats4();
@@ -107,8 +109,9 @@ function trialHonor(){if(!loaded||!S.created||gated()===null)return;var t=today(
 setInterval(trialHonor,4000);
 var econSocBase=socialBuffs;socialBuffs=function(){var o=econSocBase();if(dqState().buff)o.push({who:"Hidden quest",b:{special:"all",pct:10,text:"All quests +10% XP today"}});return o};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=dqgoal]");if(!b)return;S.dqg=+b.dataset.v;persist();render()});
-var econBoardBase=boardHtml;
-boardHtml=function(){var h=econBoardBase(),i=h.indexOf('<section class="card panel bty"');if(i<0)i=h.indexOf('<section class="cluster"');var c=dqHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
+/* the Daily Quest lives in the profile now, right under the level card (Cal, 2026-11-09: a simpler Board) */
+var econProfBase=profileHtml;
+profileHtml=function(){var h=econProfBase(),i=h.indexOf('<section class="card wstrip"');var c=dqHtml();return i<0?c+h:h.slice(0,i)+c+h.slice(i)};
 /* ---- prices by what a thing is (QA's effort_model.py, new_price) ---- */
 var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowers?|rug|curtains?|frames?|prints|clock|sign|garland|neon|lamp|lights?|palm|fern|leaf|trim|plaque)\b/i;
 (function(){Object.keys(ADDONS).forEach(function(k){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;(ADDONS[k]||[]).forEach(function(a){if(!a[2]||(a[3]&&a[3].fixed))return;var base=a[2]/st,P=ECON.price,b;

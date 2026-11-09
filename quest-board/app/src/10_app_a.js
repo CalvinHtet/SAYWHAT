@@ -759,7 +759,9 @@ function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+", opens at your next level-up":(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':'Lv '+a[2])+'</small>':'')+'</button>';
+    /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
+    var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+", opens at your next level-up":rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
@@ -1365,9 +1367,11 @@ function charCard(){
   return '<section class="card charcard"><div class="figwrap">'+calImg(lookOf(),"idle",190,"")+'</div><div><span class="label">Character</span><h2>'+esc(c.name||"Hunter")+'</h2><div class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+'</div>'
    +'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="wardrobe">Wardrobe</button></div></div></section>';
 }
+/* the avatar opens the profile (Cal, 2026-11-09): the character, then everything that used to crowd the Board (profileHtml) */
 function charModal(){
-  var m=modal('<div class="card box2 adv"><div class="figwrap">'+calImg(lookOf(),"idle",220,"")+'</div><h2 style="font-size:32px">'+esc((S.char&&S.char.name)||"Hunter")+'</h2><p class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+' &middot; '+S.coins+' coins</p>'
-   +'<div class="row" style="justify-content:center"><button class="btn ghost" data-act="wardrobe">Wardrobe</button><button class="btn ghost" data-act="mclose">Close</button></div></div>');
+  var m=modal('<div class="card box2 adv prof"><div class="prof-top"><div class="figwrap">'+calImg(lookOf(),"idle",120,"")+'</div><div><h2>'+esc((S.char&&S.char.name)||"Hunter")+'</h2><p class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+' &middot; '+S.coins+' coins</p>'
+   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button></div></div><div class="prof-body">'+profileHtml()+'</div></div>');
+  m.classList.add("profm");
   return m;
 }
 

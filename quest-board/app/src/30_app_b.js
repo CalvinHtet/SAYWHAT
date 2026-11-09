@@ -1061,25 +1061,55 @@ function radar(){
 }
 function titleFor(k){var v=S.stats[k]||0,t=TITLES[k],r=null;[5,15,30].forEach(function(th,i){if(v>=th)r=t[i]});return r}
 
-function boardHtml(){
-  var lv=effLvl(), g=gated(), ri=rankIdx(), rk=RANKS[ri], nd=need(Math.min(lv,MAXL-1)), maxed=(lv>=MAXL&&!g), into=(maxed||g)?nd:S.xp-cum(lv);
-  var all=ordered();
-  var total=all.reduce(function(a,q){return a+q.xp},0);
-  var gained=all.reduce(function(a,q){return a+(S.done[q.id]?doneXp(q):0)},0);
-  var cur=all.filter(function(q){return !S.done[q.id]})[0];
-  var h=stripHtml();
-
+/* Cal, 2026-11-09: "The main board for to do list should be pretty simple ... I have to scroll down way too far in order to see
+   my to do list." The Board is the task list (one slim progress line, the brain dump, the categories, bounties at the bottom).
+   Level, streak, Daily Quest, Weekly Warrior, class, rewards and stats moved to the profile: tap your avatar (profileHtml). */
+function profileHtml(){
+  var lv=effLvl(), g=gated(), nd=need(Math.min(lv,MAXL-1)), maxed=(lv>=MAXL&&!g), into=(maxed||g)?nd:S.xp-cum(lv);
   var nextFx=FX.filter(function(f){return f[0]>lv})[0], unlocked=FX.filter(function(f){return f[0]<=lv}).length;
-  h+='<section class="card hero">'+petHtml()+'<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent2)"/></linearGradient></defs>'
+  var h='<section class="card hero">'+petHtml()+'<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent2)"/></linearGradient></defs>'
    +'<circle class="t" cx="60" cy="60" r="54"/><circle class="p" cx="60" cy="60" r="54" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-into/nd)).toFixed(1)+'"/></svg>'
    +'<div class="c"><small>LEVEL</small><b>'+lv+'</b></div></div><div>'
    +'<div class="xp mono">'+S.xp+'<span>XP</span></div><div class="note mono" style="margin-top:6px">'+(maxed?"MAX LEVEL. Monarch XP keeps flowing.":g?"Bar full. Pass the gate to level up.":(nd-into)+" XP to level "+(lv+1))+'</div>'
-   +'<div class="meta"><div><span class="label">Streak</span><b class="mono">'+streakNow()+'d</b></div><div><span class="label">Today</span><b class="mono">'+gained+'/'+total+'</b></div><div><span class="label">Integrity</span><b class="mono" style="color:'+(integrity()<.5?"var(--accent)":"var(--done)")+'">'+Math.round(integrity()*100)+'%</b></div></div>'
-   +'<div class="streakline">Streak bonus <b>+'+Math.round(Math.min(streakCap(),.02*streakNow())*100)+'% XP</b>'+(function(){var n=[3,7,14,30,60,100].filter(function(d){return d>streakNow()})[0];return n?'. Chest at day <b>'+n+'</b>':''})()+'. Freezes: <b>'+(S.freezes||0)+'</b></div>'
+   +'<div class="meta"><div><span class="label">Streak</span><b class="mono">'+streakNow()+'d</b></div><div><span class="label">Freezes</span><b class="mono">'+(S.freezes||0)+'</b></div><div><span class="label">Photo proof</span><b class="mono" style="color:'+(integrity()<.5?"var(--accent)":"var(--done)")+'">'+Math.round(integrity()*100)+'%</b></div></div>'
+   +'<div class="streakline">Streak bonus <b>+'+Math.round(Math.min(streakCap(),.02*streakNow())*100)+'% XP</b>'+(function(){var n=[3,7,14,30,60,100].filter(function(d){return d>streakNow()})[0];return n?'. Chest at day <b>'+n+'</b>.':'.'})()+'</div>'
    +'<div class="upg">'+unlocked+' UI upgrade'+(unlocked===1?"":"s")+' active'+(nextFx?'. Next upgrade at <b>level '+nextFx[0]+'</b>.':'.')+'</div>'
    +'</div></section>';
+  h+=weekStrip()+classBanner();
 
-  h+=classBanner()+weekStrip();
+  /* rewards: unlocked-unclaimed, next two locked, then a mystery row */
+  var ready=REWARDS.filter(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
+  var locked=REWARDS.filter(function(r){return r[0]>lv}), vis=locked.slice(0,2), hid=locked.length-vis.length, nClaimed=Object.keys(S.claimed).length;
+  h+='<section class="card panel"><h3 class="label">Rewards</h3><div class="ladder">';
+  ready.forEach(function(r){h+='<div class="rw ready'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><button class="btn claim" data-act="claim" data-lv="'+r[0]+'">Claim</button></div>'});
+  vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><span class="st">LOCKED</span></div>'});
+  if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
+  if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
+  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Make these rewards yours</button></section>';
+
+  var ri=rankIdx();
+  h+='<section class="card panel"><h3 class="label">Stats</h3>';
+  if(ri>=1){
+    h+=radar()+'<div class="titles">'+STATS.map(function(s){return '<span class="chip">'+s[1].split(" ")[0]+' <span style="color:var(--fg)">'+(S.stats[s[0]]||0)+'</span></span>'}).join("")+'</div>';
+  }else h+=statBars();
+  if(ri>=3){
+    h+='<h3 class="label" style="margin-top:4px">Titles</h3><div class="titles">'+STATS.map(function(s){var t=titleFor(s[0]);return '<span class="chip" style="'+(t?'color:var(--s-'+s[0]+');border-color:var(--s-'+s[0]+')':'')+'">'+(t?esc(t):s[1].split(" ")[0]+': next title at '+([5,15,30].filter(function(x){return x>(S.stats[s[0]]||0)})[0]||"max"))+'</span>'}).join("")+'</div>';
+  }
+  h+='</section>';
+  h+='<div class="foot"><span class="note">Photo proof: '+Math.round(integrity()*100)+'% of your big-quest XP has a photo. Photos are optional and pay double XP and coins. Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared.</span></div>';
+  return h;
+}
+/* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
+function boardLine(){
+  var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(gl?Math.min(100,x/gl*100):0)+'%"></i></span><span class="bl-t mono">'+(gl&&x>=gl?'Daily Quest done':x+' / '+gl+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+}
+function boardHtml(){
+  var g=gated(), ri=rankIdx(), rk=RANKS[ri];
+  var all=ordered();
+  var cur=all.filter(function(q){return !S.done[q.id]})[0];
+  var h=stripHtml()+boardLine();
+
   if(g){
     var nr=RANKS[Math.min(ri+1,5)], stored=Math.max(0,S.xp-cum(g));
     h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
@@ -1092,8 +1122,8 @@ function boardHtml(){
      +'</section>';
   }
 
-  h+='<section class="card capture"><span class="label">Brain dump</span><div class="cap-row"><textarea id="cap" rows="2" placeholder="Dump everything here, messy is fine. Bullets, run-on sentences, notes to self. I split it into tasks, score the XP, and sort each one." aria-label="Brain dump">'+esc(draft)+'</textarea>'
-   +'<button class="btn" id="capgo"'+(busy?" disabled":"")+'>'+(busy?"Sorting":"Sort it")+'</button></div><div class="cap-status">'+status+'</div></section>';
+  h+='<section class="card capture slim"><div class="cap-row"><textarea id="cap" rows="1" placeholder="Add tasks (messy is fine)" aria-label="Brain dump: add tasks">'+esc(draft)+'</textarea>'
+   +'<button class="btn" id="capgo"'+(busy?" disabled":"")+'>'+(busy?"Sorting":"Add")+'</button></div>'+(status?'<div class="cap-status">'+status+'</div>':'')+'</section>';
 
   /* Cal, 2026-11-09: no "Now" card. Quests go in without any order, so every quest is equal and sits in its category below. */
   if(!cur){
@@ -1119,33 +1149,6 @@ function boardHtml(){
     h+='</section>';
   });
 
-  /* rewards: unlocked-unclaimed, next two locked, then a mystery row */
-  var ready=REWARDS.filter(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
-  var locked=REWARDS.filter(function(r){return r[0]>lv}), vis=locked.slice(0,2), hid=locked.length-vis.length, nClaimed=Object.keys(S.claimed).length;
-  h+='<section class="card panel"><h3 class="label">Rewards</h3><div class="ladder">';
-  ready.forEach(function(r){h+='<div class="rw ready'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><button class="btn claim" data-act="claim" data-lv="'+r[0]+'">Claim</button></div>'});
-  vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><span class="st">LOCKED</span></div>'});
-  if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
-  if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
-  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Make these rewards yours</button></section>';
-
-  var mx=Math.max(10,Math.max.apply(null,STATS.map(function(s){return S.stats[s[0]]||0})));
-  h+='<section class="card panel"><h3 class="label">Stats</h3>';
-  if(ri>=1){
-    h+=radar()+'<div class="titles">'+STATS.map(function(s){return '<span class="chip">'+s[1].split(" ")[0]+' <span style="color:var(--fg)">'+(S.stats[s[0]]||0)+'</span></span>'}).join("")+'</div>';
-  }else{
-    STATS.forEach(function(s){
-      var v=S.stats[s[0]]||0;
-      h+='<div class="stat"><span>'+s[1]+'</span><div class="track"><div class="fill" style="width:'+(v/mx*100)+'%;background-color:var(--s-'+s[0]+');color:var(--s-'+s[0]+')"></div></div><span class="n mono">'+v+'</span></div>';
-    });
-  }
-  if(ri>=3){
-    h+='<h3 class="label" style="margin-top:4px">Titles</h3><div class="titles">'+STATS.map(function(s){var t=titleFor(s[0]);return '<span class="chip" style="'+(t?'color:var(--s-'+s[0]+');border-color:var(--s-'+s[0]+')':'')+'">'+(t?esc(t):s[1].split(" ")[0]+': next title at '+([5,15,30].filter(function(x){return x>(S.stats[s[0]]||0)})[0]||"max"))+'</span>'}).join("")+'</div>';
-  }
-  h+='</section>';
-  var ig=integrity();
-  h+='<section class="card panel"><h3 class="label">Integrity</h3><div class="integ"><div class="track"><i style="width:'+Math.round(ig*100)+'%"></i></div><span>'+Math.round(ig*100)+'% of your big-quest XP has a photo. Photos are optional and pay double XP and coins.</span></div></section>';
-  h+='<div class="foot"><span class="note">Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared. Saves automatically.</span></div>';
 
   return h;
 }
@@ -1160,6 +1163,7 @@ function render(){
   h+=navHtml();
   var ta=document.getElementById("cap"), hadFocus=ta&&document.activeElement===ta;
   document.getElementById("app").innerHTML=h;
+  var pfb=document.querySelector("#layer .modal .prof-body");if(pfb)pfb.innerHTML=profileHtml();
   newIds={};
   var nt=document.getElementById("cap");
   if(nt){ fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
@@ -1563,7 +1567,7 @@ document.addEventListener("click",function(e){
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+" opens at your next level-up");return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+" opens at your next level-up");return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}

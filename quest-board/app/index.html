@@ -1374,6 +1374,27 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .rwe{padding:10px 0;border-top:1px solid var(--line)}.rwe-h{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
 .rwe input{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:inherit;font-size:16px}
 .rwe input::placeholder{color:var(--soft)}
+/* simpler Board + profile (Cal, 2026-11-09): one progress line, a one-row brain dump; the rest lives behind the avatar */
+.bline{display:flex;align-items:center;gap:10px;width:100%;margin:10px 0 2px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);font:inherit;cursor:pointer;text-align:left}
+.bline .bl-lv{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.06em;flex:none}
+.bline .bl-bar{flex:1;height:6px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.bline .bl-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}
+.bline .bl-t{font-size:12px;color:var(--muted);flex:none}
+.bline .bl-rw{flex:none;font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--gold);border-radius:99px;padding:3px 8px}
+.capture.slim{padding:10px}
+.capture.slim .cap-row{flex-direction:row;gap:8px;align-items:flex-start}
+.capture.slim textarea{min-height:44px;padding:11px 12px}
+.capture.slim .btn{min-height:44px;padding:0 16px;flex:none}
+.modal.profm{place-items:start center}
+.prof{gap:12px}
+.prof .prof-top{display:flex;gap:14px;align-items:center}
+.prof .prof-top .figwrap{flex:none;width:96px}
+.prof .prof-top h2{font-size:28px}
+.prof .prof-top .btn{margin-top:8px}
+.prof .prof-body{display:flex;flex-direction:column;gap:12px}
+.prof .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
+.prof .meta{justify-content:center}
+.dq-gx{margin-top:4px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
