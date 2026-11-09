@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 2026-11-08: Victor's long hair, then Rooftop and Mall sheets)
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -13,7 +13,8 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now (2026-11-08, on 0c218ca): LIVE on both real links (Live and Test): release/live-0c218ca at d262b10 = main 0c218ca + noTest + QB_TEST_START 0, QB_EPOCH 5, APPV 78. Cal: "fully initialized at lvl 1 from the beginning of the game with nothing unlocked", confirmed for both accounts; board, pings and worlds cleared; a save from before a reset is in data/users/<id>/backup_e<epoch>. The Test channel is a REAL link Cal plays on: never repurpose it, always deploy the same build to both. SANDBOX is its own channel `sandbox`, from main with QB_SANDBOX=1 (RELEASING.md): saves in the browser only, no Firebase, level 1, Test tools on, the story's friends stand in. New: Town Square at the top of the Hall (app/src/29p_square.js, Cal: "see each other's characters and interact with them"; test rigtest/lead/squaretest.js).
+- Now (2026-11-08): LIVE on Live and Test: release/live-7ae3634 at 4748f25, APPV 79, QB_EPOCH 5; sandbox rebuilt from main 7ae3634. Cal's economy and prizes: tasks 6 coins an XP plus the day's momentum, weekly workout at least 3,000, training 300, chest 2.5x, 13 prizes rewritten, docs/ECONOMY.md. NOT QA-passed (LEAD's checks: loads, Review 131/131, webtest, save carried, 13-task day and undo). QA still owes d7d3467's open items (lobby left wall; the Escalator names the bowling alley, against Cal's secret).
+  Was (on 0c218ca): LIVE on both real links (Live and Test): release/live-0c218ca at d262b10 = main 0c218ca + noTest + QB_TEST_START 0, QB_EPOCH 5, APPV 78. Cal: "fully initialized at lvl 1 from the beginning of the game with nothing unlocked", confirmed for both accounts; board, pings and worlds cleared; a save from before a reset is in data/users/<id>/backup_e<epoch>. The Test channel is a REAL link Cal plays on: never repurpose it, always deploy the same build to both. SANDBOX is its own channel `sandbox`, from main with QB_SANDBOX=1 (RELEASING.md): saves in the browser only, no Firebase, level 1, Test tools on, the story's friends stand in. New: Town Square at the top of the Hall (app/src/29p_square.js, Cal: "see each other's characters and interact with them"; test rigtest/lead/squaretest.js).
   NOT QA-PASSED (Cal's call, he asked for it live). LEAD's checks on the exact Live build, headless Chromium on the stand-in Firebase: level 1, 0 XP, 0 coins through the creator and two reloads, only Board and Training open; old save backed up; two players see each other and greetings land and pay once. Not checked: a real phone, real Firestore with two real people. (QA: v0.76's list DONE on ca68e45, five FIX lines in QA findings; Town Square and sandbox not started.) WAITING ON QA: v0.78 at 0c218ca: the Town Square with several players, the sandbox, and everything v0.76 still owes: 8c756be, b3d6b28, 05500d3, cdf5683, fcae2ed, f53662c, 0a1cb8e.
   Next: when ROOMS has Victor's long hair: point his spec in 29k_friends.js at it and keep that style out of 15_shop.js (which sells every hairStyle). Before a public release: window.__qb and window.__qbLoft are still in Live (146 rigtest files use them), plan is to strip them in the Live cut only so main keeps them for ROOMS and QA; the Testing rows are hidden by noTest.
   Was: LIVE on both links: release/live-fca61c1 at 0ca5de1 (main fca61c1 with Victor's hoodie and portraits + noTest + QB_TEST_START 0; not QA-passed, as below). ALL CHATS STOPPED: Cal's weekly limit at 96%, resets in about 4 days. After the reset: QA on v0.76, Victor's long hair, Rooftop, Mall (Cal approved all three).
@@ -2847,6 +2848,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
+- After Cal approves Victor's hair (ROOMS will say when it is committed): in 29k_friends.js set Victor's spec to `hairStyle:"fr_victor_hair"`. No change to 15_shop.js is needed: the style is deliberately NOT in creator.json's hairStyles, so the Shop and the creator never list it; look.js only uses the name to find m_fr_victor_hair_front/back.
 - DONE by LEAD in 68fcc56: `window.qbRaidTrophies()` returns trophy pieces brought home (0 before the first); the first is
   announced ("The first trophy is home. A Trophy Room can now be built above the Hero's Lair."). Please give the room the id
   `trophy`: the Relics tab shows the pieces once a `trophy` room exists (or the old `lr_trophy` in saves that own it). Trophy Room (Cal, 2026-11-05): "trophy wall should be removed and turned into a trophy room but only after a team member
@@ -2887,7 +2889,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
-- Now (on c31b46d, new ROOMS chat after the reset): Victor's long hair painted and pose-tested (m_fr_victor_hair_front/back, not committed), WAITING ON CAL. Painting the Rooftop sheets (rfw_t1, rfx_*), then 27_rooms.js. Next: Mall (27_rooms.js, 14x10 to 16x12). Test port 8767 (8765 is held by the old chat's server on a stale copy).
+- Now (on d7d3467, new ROOMS chat after the reset): WAITING ON CAL (sent 2026-11-08) for three approvals, all painted and rendered, NOTHING COMMITTED until he answers: (1) Victor's long hair, m_fr_victor_hair_front/back; (2) Rooftop, 27_rooms.js rfDeck and items, rfw_t1, rfx_pool/bar/lng/sect/palm/planter; (3) Mall at 16x12 H210, 27_rooms.js, mlw_t1, mlx_food, new mlx_lift, rsart.json. Uncommitted in the working folder: please leave those files alone. After approval: commit, then a WAITING ON QA line for each. Next: LEAD's Town Square backdrop, then the Auditorium walls. Test port 8767 (8765 is held by the old chat's server on a stale copy).
 - STOPPED to save Cal's usage (weekly limit 96%, resets 2026-11-13). CAL APPROVED, not started, for after the reset, in this order: (1) Victor's long
   black hair on the in-game character (friend-only piece, one sheet, every-pose check; (2) the Rooftop plan; (3) the Mall plan, room grown to about
   16 x 12 (plans: ROOMS's chat, 2026-11-08). The Auditorium is paused too (see below).
