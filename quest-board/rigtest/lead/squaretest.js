@@ -12,7 +12,7 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
   await ctx.route(/firebase-(app|auth|firestore)-compat\.js/, (r) => r.fulfill({ contentType: 'text/javascript', body: /app-compat/.test(r.request().url()) ? MOCK : '' }));
   await ctx.route(/\/__\/firebase\/init\.json/, (r) => r.fulfill({ status: 404, body: '' }));
   // both stand-in players are owners here, so the test can use Unlock everything to reach the Hall
-  await ctx.route(/\/config\.js/, (r) => r.fulfill({ contentType: 'text/javascript', body: fs.readFileSync(path.join(__dirname, '../../dist-web/config.js'), 'utf8') + '\nwindow.QB_WEB.owners=["ana","ben"];' }));
+  await ctx.route(/\/config\.js/, (r) => r.fulfill({ contentType: 'text/javascript', body: fs.readFileSync(path.join(__dirname, '../../dist-web/config.js'), 'utf8') + '\nwindow.QB_WEB.owners=["ana","ben"];window.QB_WEB.noTest=false;' }));
   const open = async (uid, name) => {
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
     await p.addInitScript((u) => { window.__mockUid = u; window.__mockSignedIn = 1; }, uid);
