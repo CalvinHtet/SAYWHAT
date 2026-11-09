@@ -8,7 +8,9 @@ const ONLY = (process.argv[2] || '').split(',').filter(Boolean);
 const UID = 'u_test', STATE = 'data/users/' + UID + '/state', BACKUP = 'data/users/' + UID + '/backup', OTHER = 'data/users/' + UID + '/backup_choice';
 
 // A save as an older version wrote it: no savedAt. Flags that make merge() leave the numbers alone.
-const save = (over) => Object.assign({ epoch: 2, appv: 34, created: true, rst2: true, xpc2: 1, v001: 1, k10: 1, hire1: true, char: { name: 'Tester', sex: 'f' }, xp: 700, total: 10, coins: 1000, earnedC: 1000, spent: 0, lvPaid: 8, runDate: '2026-11-05', quests: [], stats: { creativity: 2, discipline: 3, fitness: 0, productivity: 7, social: 0 } }, over);
+// The epoch comes from the game: a seed with an older one is rightly treated as a save from before a reset, and every case fails.
+const EPOCH = +/QB_EPOCH=(\d+)/.exec(require('fs').readFileSync(require('path').join(__dirname, '../../app/src/00_clock.js'), 'utf8'))[1];
+const save = (over) => Object.assign({ epoch: EPOCH, appv: 34, created: true, rst2: true, xpc2: 1, v001: 1, k10: 1, hire1: true, char: { name: 'Tester', sex: 'f' }, xp: 700, total: 10, coins: 1000, earnedC: 1000, spent: 0, lvPaid: 8, runDate: '2026-11-05', quests: [], stats: { creativity: 2, discipline: 3, fitness: 0, productivity: 7, social: 0 } }, over);
 const ONLINE = save({ xp: 715, total: 12, coins: 8000, char: { name: 'Online', sex: 'f' } });
 const DEVICE = save({ xp: 980, total: 31, coins: 2500, char: { name: 'Device', sex: 'f' }, appv: 44 });
 
