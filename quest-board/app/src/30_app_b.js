@@ -751,7 +751,17 @@ var ART={"coach_brick":__B[181],"coach_tam":__B[182],"coach_oru":__B[183],"coach
 (function(){var Q=window.QBART||{};Object.keys(ART).forEach(function(k){var u=Q["ui_"+k+".webp"];if(u)ART[k]=u})})();
 /*ART-END*/
 /*ART2-HELPERS*/
-function rwImg(r,lock){var A=ART["rew_"+r[0]];return A?'<span class="rwimg'+(lock?' lock':'')+'"><img src="'+A+'" alt=""></span>':''}
+/* Cal (2026-11-08): "give people the option to edit their own rewards". Every prize, its name and its line, in the player's own words;
+   a cleared box goes back to the game's wording. */
+function rwEditor(){
+  var rows=REWARDS.map(function(r){var e=rwEd(r)||{};return '<div class="rwe" data-tier="'+rwTier(r)+'" data-lv="'+r[0]+'"><div class="rwe-h"><span class="lv">Lv '+r[0]+'</span><i class="rtier">'+rwTier(r)+'</i></div>'
+    +'<input class="rwe-t" maxlength="48" aria-label="Level '+r[0]+' reward name" placeholder="'+esc(r[1])+'" value="'+esc(e.t||"")+'">'
+    +'<input class="rwe-d" maxlength="100" aria-label="Level '+r[0]+' reward details" placeholder="'+esc(r[2])+'" value="'+esc(e.d||"")+'"></div>'}).join("");
+  var m=modal('<div class="card box2 rweditor"><span class="label">Your rewards</span><h2>Make them yours</h2><p class="note">Write what would actually get you moving. Leave a box empty to keep the game\'s version. This shows every prize, so it spoils the surprises.</p>'+rows
+    +'<div class="row"><button class="btn" id="rwesave">Save</button><button class="btn ghost" data-act="mclose">Cancel</button></div></div>');
+  m.querySelector("#rwesave").onclick=function(){var o={};[].forEach.call(m.querySelectorAll(".rwe"),function(d){var t=d.querySelector(".rwe-t").value.trim().slice(0,48),x=d.querySelector(".rwe-d").value.trim().slice(0,100);if(t||x)o[d.dataset.lv]={t:t,d:x||null}});
+    S.rwEdit=o;m.remove();render();persist();pop("Rewards saved")}}
+function rwImg(r,lock){var A=!rwEd(r)&&ART["rew_"+r[0]];/* a reward the player rewrote has no stock painting */return A?'<span class="rwimg'+(lock?' lock':'')+'"><img src="'+A+'" alt=""></span>':''}
 function chestModal(note){var parts=String(note).split(" | "),main=parts.filter(function(x){return /Streak chest/.test(x)})[0]||note,rest=parts.filter(function(x){return x!==main});
   var m=modal('<div class="card box2 adv chestm"><span class="label">Day '+S.streak+' streak</span><div class="chestimg"><img src="'+ART.chest+'" alt=""></div><h2>Streak chest</h2><div class="reward">'+esc(main.replace("Streak chest: ",""))+'</div>'+rest.map(function(x){return '<p class="note">'+esc(x)+'</p>'}).join("")+'<button class="btn big" id="chok">Collect</button></div>');
   var b=m.querySelector("#chok");b.focus({preventScroll:true});b.onclick=function(){m.remove();render()};burst(innerWidth/2,innerHeight/3,30)}
@@ -899,7 +909,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=79, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=80, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1106,11 +1116,11 @@ function boardHtml(){
   var ready=REWARDS.filter(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
   var locked=REWARDS.filter(function(r){return r[0]>lv}), vis=locked.slice(0,2), hid=locked.length-vis.length, nClaimed=Object.keys(S.claimed).length;
   h+='<section class="card panel"><h3 class="label">Rewards</h3><div class="ladder">';
-  ready.forEach(function(r){h+='<div class="rw ready'+(ART["rew_"+r[0]]?' hasimg':'')+'">'+rwImg(r)+'<span class="lv">Lv '+r[0]+'</span><span>'+esc(r[1])+'<small>'+esc(r[2])+'</small></span><button class="btn claim" data-act="claim" data-lv="'+r[0]+'">Claim</button></div>'});
-  vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]?' hasimg':'')+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span>'+esc(r[1])+'<small>'+esc(r[2])+'</small></span><span class="st">LOCKED</span></div>'});
+  ready.forEach(function(r){h+='<div class="rw ready'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><button class="btn claim" data-act="claim" data-lv="'+r[0]+'">Claim</button></div>'});
+  vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><span class="st">LOCKED</span></div>'});
   if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
   if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
-  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'</section>';
+  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Make these rewards yours</button></section>';
 
   var mx=Math.max(10,Math.max.apply(null,STATS.map(function(s){return S.stats[s[0]]||0})));
   h+='<section class="card panel"><h3 class="label">Stats</h3>';
@@ -1187,7 +1197,7 @@ function levelUp(lv,extra,from){
   var m=modal('<div class="card box2">'+(ART.levelup?'<div class="rhero lvhero" style="background-image:url('+ART.levelup+')"><span class="label">Level up</span><h2>Level '+lv+'</h2></div>':'<span class="label">Level up</span><h2>Level '+lv+'</h2>')
    +(extra?'<p class="note">'+extra+'</p>':'')
    +cards+more
-   +(pay?'<div class="reward reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">Level bonus: +'+pay+' coins</div>':'')+rws.map(function(r){return '<div class="reward reveal'+(ART["rew_"+r[0]]?' rwun':'')+'" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">'+(ART["rew_"+r[0]]?'<img src="'+ART["rew_"+r[0]]+'" alt="">':'')+'<span>Reward unlocked: '+esc(r[1])+'</span></div>'}).join("")
+   +(pay?'<div class="reward reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">Level bonus: +'+pay+' coins</div>':'')+rws.map(function(r){return '<div class="reward reveal'+(ART["rew_"+r[0]]&&!rwEd(r)?' rwun':'')+'" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">'+(ART["rew_"+r[0]]&&!rwEd(r)?'<img src="'+ART["rew_"+r[0]]+'" alt="">':'')+'<span>Reward unlocked: '+esc(rwT(r))+'</span></div>'}).join("")
    +'<div style="display:flex;flex-direction:column;gap:10px">'+statBars()+'</div>'
    +'<p class="note">Level '+(lv+1)+': ???</p><button class="btn big" id="lvok">Keep going</button></div>');
   var b=m.querySelector("#lvok");b.focus({preventScroll:true});b.onclick=function(){m.remove()};
@@ -1517,6 +1527,7 @@ document.addEventListener("click",function(e){
   if(a==="equip")equip(b.dataset.id);
   if(a==="unequip")unequip(b.dataset.id);
   if(a==="raid"){S.raid={id:b.dataset.id,end:Date.now()+25*60000};render();persist()}
+  if(a==="rwedit"){rwEditor();return}
   if(a==="claim"){
     if(integrity()<.5){pop("Integrity "+Math.round(integrity()*100)+"%. Verify more big quests to claim (need 50%).");return}
     S.claimed[b.dataset.lv]=true;render();persist();burst(e.clientX,e.clientY,26);pop("Reward claimed. Enjoy it.");

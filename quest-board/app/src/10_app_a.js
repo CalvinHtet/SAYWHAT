@@ -6,23 +6,28 @@ var TIER_RANK=[0,1,2,2,3,3,4,4,5,5];
 var STATS=[["creativity","Creativity"],["discipline","Discipline"],["fitness","Fitness"],["productivity","Productivity"],["social","Social Balance"]];
 var CLUSTERS=[["out","Outside run"],["reset","Reset"],["home","Home sweep"],["body","Body"],["admin","Admin and day job"],["create","Creative block"],["social","People"],["boss","Boss"]];
 var REWARDS=[
- /* Cal (2026-11-08): "more universal ... Ask yourself if these are prizes that would excite my friends or just be a throwaway prize."
-    No brands, no set budgets, nothing that assumes a diet or a city. Each is a real yes to something people talk themselves out of:
-    experiences and your own choice motivate more than cash-like prizes. Keyed by level, so what a save has claimed still holds. */
- [5,"The treat you always skip","Fancy coffee, dessert, the good snack. Today the answer is yes."],
- [10,"Takeout, your favorite","No cooking, no dishes. Order the thing you actually want."],
- [15,"A night off the list","No chores, no catching up. Movie, game, long bath, early bed."],
- [20,"That thing in your cart","The small one you keep almost buying. Buy it."],
- [25,"Dinner out with someone you like","Pick the place, invite them, get the dessert."],
- [30,"A day somewhere new","Beach, trail, or a town you have never stopped in. Bring someone."],
- [35,"Get taken care of","Massage, facial, or a really good haircut. Phone off."],
- [40,"The bigger thing you keep putting off","You know the one. You earned it now."],
- [45,"Tickets to something live","Concert, game, comedy, theater. Go with someone who will care."],
- [50,"A night away","Hotel, cabin, or a friend's city. Anywhere that is not home."],
- [60,"A whole day that is only yours","Cancel what you can. Sleep in. Do only what sounds good."],
- [75,"The thing you keep saying someday about","A class, a jump, a trip, a first. Book it today."],
- [100,"Name your own prize","You reached the top. Pick the big one, tell someone, and go do it."]
+ /* Cal (2026-11-08): "more universal ... prizes that would excite my friends", then "a bit more unique and stylized" and "give people the
+    option to edit their own rewards". Loot in the game's own voice, each matched to its painting (ART rew_<level>). No brands, no set
+    budgets. Keyed by level, so what a save has claimed still holds. A player's own wording lives in S.rwEdit (rwT, rwD). */
+ [5,"Extra Life","One guilt-free night of whatever you play or watch. Nobody is keeping score."],
+ [10,"Cart Liberation","That small thing you keep almost buying. Free it."],
+ [15,"Contraband Sweets","The dessert you always talk yourself out of. Today it's legal."],
+ [20,"Feast of Allies","Your favorite food, your favorite people. Order what you actually want."],
+ [25,"The Hammock Protocol","One afternoon, zero tasks. The list cannot find you."],
+ [30,"Side Quest: Unknown Map","A day somewhere you have never been. Bring a party member."],
+ [35,"Total Recharge","Massage, soak, or a really good haircut. Phone stays in your inventory."],
+ [40,"The White Whale","The bigger thing you keep talking yourself out of. Hunt it down."],
+ [45,"Front Row Pass","Concert, game, comedy, theater. Go loud with someone who cares."],
+ [50,"Portal Out of Town","One night anywhere that isn't home. Pack the bag first, think later."],
+ [60,"The Stopped Clock","A whole day that's only yours. Sleep in. Everyone else can wait."],
+ [75,"The Someday Scroll","The trip or first you keep saying someday about. Today is someday. Book it."],
+ [100,"Legend's Wish","You reached the top. Name the big one, tell someone, and go do it."]
 ];
+/* a reward as this player worded it, and its rarity by level */
+function rwEd(r){return (S.rwEdit&&S.rwEdit[r[0]])||null}
+function rwT(r){var e=rwEd(r);return (e&&e.t)||r[1]}
+function rwD(r){var e=rwEd(r);return e&&e.d!=null?e.d:r[2]}
+function rwTier(r){return r[0]>=60?"Legendary":r[0]>=35?"Epic":r[0]>=20?"Rare":"Common"}
 var RANKS=[
  {l:"E",n:"Awakened",f:["Quests, XP, stats, and rewards"]},
  {l:"D",n:"Bass Hunter",f:["Combo meter: chain quests inside 45 minutes for up to x1.5 XP","Stat radar replaces the bars","HUD interface"]},
@@ -799,7 +804,7 @@ function trophyHtml(){
     return '<div class="cup '+(g?"got":"lock")+'">'+cupSvg("hsl("+((i*37+20)%360)+" 85% 62%)",44)+'<b>'+(g?esc(b[1]):"???")+'</b><small>'+(g?esc(b[2]):"Sealed")+'</small></div>';
   }).join("")+'</div></section>';
   var cl=REWARDS.filter(function(r){return S.claimed[r[0]]});
-  if(cl.length)h+='<section class="card panel"><h3 class="label">Rewards claimed</h3><div class="titles">'+cl.map(function(r){return '<span class="chip">'+esc(r[1])+'</span>'}).join("")+'</div></section>';
+  if(cl.length)h+='<section class="card panel"><h3 class="label">Rewards claimed</h3><div class="titles">'+cl.map(function(r){return '<span class="chip">'+esc(rwT(r))+'</span>'}).join("")+'</div></section>';
   return h;
 }
 function buy(id,ev){ifSound("buy");

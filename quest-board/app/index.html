@@ -1362,6 +1362,14 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .sq-card{text-align:center}.sq-big{display:flex;justify-content:center;min-height:200px}.sq-card h2{margin:6px 0 2px}
 .sq-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 8px}.sq-acts .btn{display:flex;align-items:center;justify-content:center;gap:7px;padding-left:6px;padding-right:6px;white-space:nowrap}.sq-card .row{justify-content:center}
 @media (prefers-reduced-motion:reduce){.sq-p.hop .calp{animation:none}}
+/* reward rarity and the reward editor (Cal, 2026-11-08) */
+.rtier{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1.5;color:var(--soft)}
+[data-tier="Rare"] .rtier{color:#62c2ff}[data-tier="Epic"] .rtier{color:#c79bff}[data-tier="Legendary"] .rtier{color:#ffc857}
+.rw[data-tier="Rare"]{border-color:rgba(98,194,255,.35)}.rw[data-tier="Epic"]{border-color:rgba(199,155,255,.45)}.rw[data-tier="Legendary"]{border-color:rgba(255,200,87,.6);box-shadow:0 0 14px rgba(255,200,87,.16)}
+.btn.rwedit{width:100%;margin-top:10px}
+.rwe{padding:10px 0;border-top:1px solid var(--line)}.rwe-h{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.rwe input{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:inherit;font-size:16px}
+.rwe input::placeholder{color:var(--soft)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
