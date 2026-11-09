@@ -81,7 +81,7 @@ function roomModal(i){
   h+=avail.join("")+(more?'<p class="note addmore">More appear as you install these.</p>':'')+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
   /* owner-only testing link (hidden from guests like the Shop's Testing row; remove both before release): refunds this
      room's upgrades so its stages can be bought again one at a time. Upgrades that open another room stay. */
-  if(inst.length)h+='<p class="qs-dev">Testing: <button class="qs-link" data-act="simundo" data-i="'+i+'">Undo this room\'s upgrades</button></p>';
+  if(inst.length&&!(window.QB_WEB&&QB_WEB.noTest))h+='<p class="qs-dev">Testing: <button class="qs-link" data-act="simundo" data-i="'+i+'">Undo this room\'s upgrades</button></p>';
   h+='</div><div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>';
   var dp=(DROP&&DROP.i===i)?DROP:null;DROP=null;
   var mm=modal(h);
