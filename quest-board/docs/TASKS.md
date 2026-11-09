@@ -455,6 +455,13 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
   errors (`shots/v61/plazasign_gardenonly.png`). Check with ROOMS's 9189946.
 Art and room code requests (LEAD asks, ROOMS does):
+- WAITING ON ROOMS (Windows session asks for Cal, 2026-11-09: "The imax projector in the theater is still facing to the left"):
+  a back view of both Auditorium projectors, `art/app/thx_proj2b.webp` (IMAX Laser Projector) and `thx_proj1b.webp` (Digital
+  Projector). The screen is on the back-left wall (x = 0) and the projector stands on the back landing at the right, so its lens
+  must point up and left, away from the camera: we see the back panel and the side, the lens barrel pointing into the room.
+  Same style, size and stand as `thx_proj2.webp` / `thx_proj1.webp` (today's art only faces front-left; mirrored it faces the
+  camera, so no code fix is possible). Pack them into LFSPR as `thx_proj2b` / `thx_proj1b`: `23_theater.js` already draws the
+  "b" key when it exists and falls back to today's sprite, so nothing else changes. Check the beam still meets the lens.
 - WAITING ON ROOMS (LEAD asks, no rush, after Victor, Rooftop and Mall): `art/app/ui_town_square.webp`, the backdrop of the Town Square at the top of the Hall (29p_square.js picks it up by name; until then a plaza painted in CSS shows, so nothing is broken). An open town plaza seen straight on, in the game's painted style, no people, no text, no logos. About 1024x1130, horizon in the top third, the lower two thirds clear open paving because up to eleven characters stand on it. Show Cal first.
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the

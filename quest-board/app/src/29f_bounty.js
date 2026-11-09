@@ -65,7 +65,7 @@ var btyBoardBase=boardHtml;
    tasks can be all the way at the bottom") */
 boardHtml=function(){btyPrune();var h=btyBoardBase(),i=h.indexOf('<details class="donebox donelast"');var c=btyHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 var btyMultsBase=mults;
-mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
+mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.cm=(r.cm||1)*f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};/* a bounty pays its bonus in coins too */
 var BTYBUSY=0;
 async function btyAsk(k){var b=btyState(),mine=S.quests.map(function(q){return q.name}).slice(0,40).join("; ");
   try{var sample=window.claude?await window.claude.use("sample"):null;if(!sample)return null;

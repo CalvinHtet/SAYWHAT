@@ -507,14 +507,16 @@ function spin(){
 }
 
 /*v51*/
+/* Cal, 2026-11-09: "dont tell us how many coins it gives. Make it a random number depending on the difficulty." c is each
+   dungeon's usual haul (a roll leans low), with a small chance of a much bigger one; the card only says how rich it is (loot) */
 var DNG=[
- {id:"cellar",name:"Mossy Cellar",lv:5,mins:30,c:[40,70],x:[10,15],ic:"\u{1F344}",tag:"Damp stairs and glowing mushrooms."},
- {id:"metro",name:"Forgotten Metro",lv:10,mins:30,c:[70,110],x:[12,18],ic:"\u{1F687}",tag:"A station that was never on any map."},
- {id:"sewer",name:"Neon Sewers",lv:16,mins:45,c:[100,150],x:[15,22],ic:"\u{1F4A1}",tag:"Flickering pipes and standing water."},
- {id:"tower",name:"Clocktower Vault",lv:24,mins:45,c:[130,190],x:[18,26],ic:"\u{23F0}",tag:"Every gear ticks a different time."},
- {id:"mines",name:"Crystal Mines",lv:32,mins:60,c:[170,240],x:[22,32],ic:"\u{1F48E}",tag:"The walls hum when you walk past."},
- {id:"arcade",name:"Sunken Arcade",lv:42,mins:60,c:[220,300],x:[26,38],ic:"\u{1F579}",tag:"Cabinets glow under a foot of water."},
- {id:"spire",name:"Obsidian Spire",lv:55,mins:60,c:[280,380],x:[30,45],ic:"\u{1F5FC}",tag:"The last floor is always one more floor."}];
+ {id:"cellar",name:"Mossy Cellar",lv:5,mins:30,c:[35,100],x:[10,15],loot:"Pocket change",ic:"\u{1F344}",tag:"Damp stairs and glowing mushrooms."},
+ {id:"metro",name:"Forgotten Metro",lv:10,mins:30,c:[55,140],x:[12,18],loot:"Modest",ic:"\u{1F687}",tag:"A station that was never on any map."},
+ {id:"sewer",name:"Neon Sewers",lv:16,mins:45,c:[80,200],x:[15,22],loot:"Decent",ic:"\u{1F4A1}",tag:"Flickering pipes and standing water."},
+ {id:"tower",name:"Clocktower Vault",lv:24,mins:45,c:[110,260],x:[18,26],loot:"Rich",ic:"\u{23F0}",tag:"Every gear ticks a different time."},
+ {id:"mines",name:"Crystal Mines",lv:32,mins:60,c:[140,340],x:[22,32],loot:"Very rich",ic:"\u{1F48E}",tag:"The walls hum when you walk past."},
+ {id:"arcade",name:"Sunken Arcade",lv:42,mins:60,c:[180,430],x:[26,38],loot:"A hoard",ic:"\u{1F579}",tag:"Cabinets glow under a foot of water."},
+ {id:"spire",name:"Obsidian Spire",lv:55,mins:60,c:[230,540],x:[30,45],loot:"Legendary",ic:"\u{1F5FC}",tag:"The last floor is always one more floor."}];
 var DNPC=[
  {id:"pip",d:"cellar",name:"Pip the Cellar Cook",line:"Was stuck behind a barrel door for three weeks.",buff:{special:"coin",pct:3,text:"Coins +3%"}},
  {id:"mara",d:"metro",name:"Mara the Conductor",line:"Still waiting on the 9:15 that never came.",buff:{special:"all",pct:3,text:"All quests +3% XP"}},
@@ -533,7 +535,8 @@ function dngSlots(){return 1+(S.owned&&S.owned.bf_away?1:0)}
 function dngRand(a){return a[Math.floor(Math.random()*a.length)]}
 function dngRoll(d){
   var lv=effLvl(),rec=d.lv+4,risk=lv>=rec?.06:.06+.08*(rec-lv),bad=Math.random()<risk,D=dngInit();
-  var c=Math.round(d.c[0]+Math.random()*(d.c[1]-d.c[0])),x=Math.round(d.x[0]+Math.random()*(d.x[1]-d.x[0]));
+  var c=Math.round(d.c[0]+Math.pow(Math.random(),1.4)*(d.c[1]-d.c[0])),x=Math.round(d.x[0]+Math.random()*(d.x[1]-d.x[0]));
+  if(Math.random()<.06)c=Math.round(d.c[1]*(1.5+Math.random()));/* a rare big haul */
   var npc=null,story=dngRand(DNG_OPEN)+" ";
   if(bad){c=Math.round(c*(.35+Math.random()*.2));x=Math.round(x*.6);story+=dngRand(DNG_BAD)+" "+dngRand(DNG_BAD2)}
   else{story+=dngRand(DNG_WIN)+" "+dngRand(DNG_END);
@@ -541,11 +544,12 @@ function dngRoll(d){
     if(n&&Math.random()<.025){npc=n.id;story+=" Behind a rusted gate, someone was waving at you."}}
   return {id:d.id,start:Date.now(),end:Date.now()+d.mins*60000,bad:bad,c:c,x:x,npc:npc,story:story}
 }
+function dngPerDay(){return (typeof ECON!=="undefined"&&ECON.dngPerDay)||5}
 function dngStart(id){
   var d=DNG.filter(function(q){return q.id===id})[0],D=dngInit(),t=today();
   if(!d||d.lv>effLvl()||D.runs.length>=dngSlots())return;
   if(D.cd.d!==t)D.cd={d:t,n:0};
-  if(D.cd.n>=3){pop("Three delves a day is plenty. Rest up.");return}
+  if(D.cd.n>=dngPerDay()){pop(dngPerDay()+" delves a day is plenty. Rest up.");return}
   D.cd.n++;D.runs.push(dngRoll(d));render();persist();pop("Entered "+d.name+". Go do your day!");
 }
 function dngClaim(k,ev){
@@ -563,16 +567,19 @@ function dngClaim(k,ev){
 }
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
-  var h='<section class="card panel"><h3 class="label">Dungeons</h3><p class="note">Tap a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Delves today: <b>'+D.cd.n+'/3</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.</p>';
+  var h='<section class="card panel"><h3 class="label">Dungeons</h3><p class="note">Tap a dungeon, put the phone down and go do your real quests. Come back when the timer is up. What you bring back is luck, and deeper dungeons hide more. Delves today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
     h+='<div class="dng run"><b>'+d.ic+' '+esc(d.name)+'</b>'+(done?'<small class="note"> You made it back.</small><button class="btn" data-act="dclaim" data-k="'+k+'">Return</button>':'<small class="note"> back in '+mins+' min</small><div class="dbar"><i style="width:'+pct+'%"></i></div>')+'</div>'});
     h+='</div>'}
+  /* Cal, 2026-11-09: "Only show 5 dungeons total to keep the size of the screen low": the deepest one open now, the two below
+     it that are still open, and the two locked ones above it */
+  var cur=-1;DNG.forEach(function(d,i){if(d.lv<=lv)cur=i});
   h+='<div class="lrows">';
-  DNG.forEach(function(d){
+  DNG.slice(Math.max(0,cur-2),cur<0?2:cur+3).forEach(function(d){
     var locked=d.lv>lv,rec=d.lv+4,risk=lv>=rec?"Safe":lv>=d.lv+2?"Risky":"Dangerous";
     h+='<div class="dng'+(locked?' lock':'')+'"><b>'+d.ic+' '+esc(d.name)+'</b><small class="note"> '+esc(d.tag)+'</small>'
-     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+d.mins+' min</span><span>'+d.c[0]+'-'+d.c[1]+' coins</span><span>'+(locked?'Locked':risk)+'</span></div>'
+     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+d.mins+' min</span><span>Loot: '+esc(d.loot)+'</span><span>'+(locked?'Locked':risk)+'</span></div>'
      +(locked?'':(D.runs.length>=dngSlots()?'<small class="note">All delve slots busy.</small>':'<button class="btn alt" data-act="dgo" data-id="'+d.id+'">Enter</button>'))+'</div>'});
   h+='</div></section>';
   var got=DNPC.filter(function(n){return D.npcs[n.id]});
@@ -623,7 +630,7 @@ var view="board";
    coins an XP (was 2.5), and the more you do in a day the more each pays: full rate for the first 3, then +12.5% a task, double from
    the 11th. A light day still counts, a big day buys several upgrades. See docs/ECONOMY.md. */
 function coinMomentum(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(1,Math.max(0,n-2)*.125)}
-function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+.01*(effLvl()-1))*coinMomentum()))}
+function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+((typeof ECON!=="undefined"&&ECON.coinLv)||.01)*(effLvl()-1))*coinMomentum()))}
 var SHOP=[
  ["th_sunset","theme","Sunset Drive",60,3,"Warm orange and hot pink across the board.",{a:"#ff8a3d",b:"#ff3d81"}],
  ["th_mint","theme","Mint Circuit",70,5,"Cool mint and cyan.",{a:"#4dffc3",b:"#22d3ee"}],
@@ -650,7 +657,7 @@ var SHOP=[
  ["bf_xp2","buff","Focus Rune II",450,10,"All quests +3% more XP.",{k:"xp",v:3,req:"bf_xp1"}],
  ["bf_coin2","buff","Merchant Seal II",450,10,"All quests +10% more coins.",{k:"coin",v:10,req:"bf_coin1"}],
  ["bf_streak","buff","Anchor Sigil",500,12,"Streak bonus cap +5%.",{k:"streak"}],
- ["bf_away","buff","Scout Map",600,14,"One extra expedition slot.",{k:"away"}],
+ ["bf_away","buff","Scout Map",600,14,"Run two dungeon delves at once.",{k:"away"}],
  ["bf_xp3","buff","Focus Rune III",1000,25,"All quests +4% more XP.",{k:"xp",v:4,req:"bf_xp2"}],
  ["bf_coin3","buff","Merchant Seal III",1000,25,"All quests +15% more coins.",{k:"coin",v:15,req:"bf_coin2"}],
  ["hr_wolf","a_hair","Wolf Cut",90,2,"Layered and sharp.",{s:"wolf",g:"m"}],

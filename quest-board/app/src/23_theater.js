@@ -232,7 +232,11 @@ LFROOM.auditorium=function(C){rsArtReady();
     for(var s=0;s<3;s++)lfCust(C,x+.55,yb+.5+s*.85,-1,{sit:1,sz:4,facewall:1,dk:3.1-.85*s,uact:"eat",wact:"sit",lbl:String.fromCharCode(65+r),grp:"r"+r,num:b*3+s+1,wx:x+1.6,wy:yb+.5+s*.85,udur:[40,70]})}});
   /* projector, and its beam across the room */
   /* bare: a small projector (the tripod camera read as filming); the upgrades bring the bigger ones */
-  lfSpr(C,H("au_proj2")?"thx_proj2":"thx_proj1",W-1.4,D*.5-.5,1.0,1.0,{h:30,ctr:1,H:H("au_proj2")?96:H("au_proj1")?80:58,dy:-DZ,shz:DZ});
+  /* Cal, 2026-11-09: "The imax projector in the theater is still facing to the left". The painted projectors only face front-left
+     (and mirrored they face the camera), but the screen is on the back-left wall: a back view (key + "b", lens away up-left) is
+     requested from ROOMS and used as soon as it is packed */
+  var pk=H("au_proj2")?"thx_proj2":"thx_proj1",po={h:30,ctr:1,H:H("au_proj2")?96:H("au_proj1")?80:58,dy:-DZ,shz:DZ};
+  if(!lfSpr(C,pk+"b",W-1.4,D*.5-.5,1.0,1.0,po))lfSpr(C,pk,W-1.4,D*.5-.5,1.0,1.0,po);
   var pj=lfP(W-1.2,D*.5,DZ+50),s1=lfP(0,y0-sw,z0+sh/2),s2=lfP(0,y0,z0+sh/2);C.front.push('<polygon class="mvBeam" points="'+pj.join(",")+' '+s1.join(",")+' '+s2.join(",")+'" fill="rgba(200,220,255,.09)" pointer-events="none"/>');
   C.s("door",W-.8,.9,1,"look",[1,1]);C.door={x:W-.8,y:.9};
   lfPrep(C,"counter",W-1.5,2);

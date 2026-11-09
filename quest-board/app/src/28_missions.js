@@ -1,5 +1,7 @@
 /* ---------- missions: the Hero's Lair sends people out, 5 a day ---------- */
-var MS_LIST=[{id:"m1",n:"Check the Old Metro",k:1,mins:20,c:120,x:25,t:"Quick look. Back by lunch."},{id:"m2",n:"Cellar Sweep",k:1,mins:30,c:160,x:35,t:"Something is living down there."},{id:"m3",n:"Clocktower Break-In",k:2,mins:45,c:420,x:80,t:"One to climb, one to watch."},{id:"m4",n:"Neon Sewer Rescue",k:2,mins:60,c:560,x:110,t:"Needs a second pair of hands."},{id:"m5",n:"Obsidian Spire",k:3,mins:90,c:1200,x:240,t:"A real team job. The big payout."}];
+/* coins per energy grow with the job (1.8 for the quick look, 2.5 for the Spire), so saving a day's energy for the big one pays;
+   energy costs are ECON.mcost in 29e_economy.js (Cal, 2026-11-09: "There needs to be a reason for everything and a balance") */
+var MS_LIST=[{id:"m1",n:"Check the Old Metro",k:1,mins:20,c:45,x:25,t:"Quick look. Back by lunch."},{id:"m2",n:"Cellar Sweep",k:1,mins:30,c:85,x:35,t:"Something is living down there."},{id:"m3",n:"Clocktower Break-In",k:2,mins:45,c:160,x:80,t:"One to climb, one to watch."},{id:"m4",n:"Neon Sewer Rescue",k:2,mins:60,c:250,x:110,t:"Needs a second pair of hands."},{id:"m5",n:"Obsidian Spire",k:3,mins:90,c:400,x:240,t:"A real team job. The big payout."}];
 var MS_HERO=["Mina","Jae","Rook","Sol","Dae","Vera"];
 function msState(){var t=today();if(!S.ms||S.ms.d!==t){var run=(S.ms&&S.ms.run)||{},last=(S.ms&&S.ms.last)||{};S.ms={d:t,done:{},run:run,last:last}}if(!S.ms.last)S.ms.last={};return S.ms}
 /* Cal, 2026-11-05: each mission runs twice a day, with 3 hours between runs (ECON.msPerDay, ECON.msGapH) */
@@ -13,7 +15,7 @@ function msMins(q){return q.mins}
 /* QA's simulator: a tap should not out-earn real tasks. Missions pay coins (1% more per level) and a little XP, flat. */
 function msPay(q){return {c:Math.round(q.c*(1+ECON.mcoinLv*effLvl())),x:0}}
 awayHtml=function(){var m=msState(),hs=msHeroes(),busy=msBusy(),free=hs.filter(function(h){return !busy[h]}),now=Date.now();
-  var h='<section class="card panel"><h3 class="label">Missions</h3><p class="note">Send your people out from the Hero\'s Lair. Each job runs twice a day, 3 hours apart. Bigger jobs need more people and pay far more.</p><p class="note"><b>Your team:</b> '+hs.map(function(n){return busy[n]?'<s>'+esc(n)+'</s>':esc(n)}).join(", ")+'. Upgrade the Lair to recruit more.</p></section>';
+  var h='<section class="card panel"><h3 class="label">Missions</h3><p class="note">Send your people out from the Hero\'s Lair. They run on the energy your real tasks made today (it never costs you XP), bring home coins, and are the only way to find trophy pieces. Each job runs twice a day, 3 hours apart. Bigger jobs need more people and pay more for each point of energy.</p><p class="note"><b>Your team:</b> '+hs.map(function(n){return busy[n]?'<s>'+esc(n)+'</s>':esc(n)}).join(", ")+'. Upgrade the Lair to recruit more.</p></section>';
   MS_LIST.forEach(function(q){var pay=msPay(q),run=m.run[q.id],done=msRuns(q.id)>=ECON.msPerDay,wait=msWait(q.id),body;
     if(done&&!run)body='<span class="chip">Done for today</span>';
     else if(!run&&wait){var wm=Math.ceil(wait/6e4);body='<span class="chip">Back out in '+(wm>=60?Math.floor(wm/60)+' h '+(wm%60)+' min':wm+' min')+'</span>'}

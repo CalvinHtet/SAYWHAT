@@ -885,7 +885,8 @@ function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.
 var CUMT2=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT2.push(CUMT2[L]+Math.min(600,Math.round(50+6*L+.2*L*L)))})();
 function cum2(L){return L<=1?0:L<CUMT2.length?CUMT2[L]:CUMT2[CUMT2.length-1]+(L-CUMT2.length+1)*600}
 function cumOld(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
-function levelPay(L){return 100+10*L}
+/* QA, 2026-11-09: halved (was 100 + 10 x level, 60,000 coins on the way to level 100, up to 9,000 a day while levelling fast) */
+function levelPay(L){return ECON.lvPay[0]+ECON.lvPay[1]*L}
 function lvlOf(xp){var L=1;while(L<MAXL&&xp>=cum(L+1))L++;return L}
 function need(L){return cum(L+1)-cum(L)}
 function rawLvl(){return lvlOf(S.xp)}
@@ -900,7 +901,7 @@ function rankIdx(){return TIER_RANK[Math.min(S.gates.length,9)]}
 /* multipliers */
 function bountyId(){var l=ordered().filter(function(q){return q.xp>=25});if(!l.length)return null;var d=today(),h=0;for(var i=0;i<d.length;i++)h=(h*31+d.charCodeAt(i))>>>0;return l[h%l.length].id}
 function mults(q,o){
-  o=o||{};var m=1,tags=[],now=Date.now(),ri=rankIdx();
+  o=o||{};var m=1,cm=1,tags=[],now=Date.now(),ri=rankIdx();
   /* Cal, 2026-11-09: photos are a pure bonus. With no photo a quest pays its listed XP; a verified photo pays at least double
      the no-photo XP and coins on every quest (2.1x with the verify perk). vb is applied last, in payXp, after rounding. */
   var vb=o.verified?(hasSpecial("verify")?2.1:2):1;if(vb>1)tags.push("Verified x"+vb);
@@ -908,14 +909,16 @@ function mults(q,o){
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
   if(ri>=1){var n=(S.combo&&now-S.combo.t<(hasSpecial("combo")?3300000:2700000))?S.combo.n+1:1;var c=Math.min(1.5,1+0.1*(n-1));if(c>1){m*=c;tags.push("Combo x"+c.toFixed(1))}if(o.commit)S.combo={n:n,t:now}}
-  if(ri>=2&&q.id===bountyId()){m*=2;tags.push("Bounty x2")}
+  if(ri>=2&&q.id===bountyId()){m*=2;cm*=2;tags.push("Bounty x2")}
   if(ri>=4&&S.raid&&S.raid.id===q.id&&now<=S.raid.end){m*=1.25;tags.push("Raid x1.25")}
   if(ri>=5){m*=1.1;tags.push("Monarch x1.1")}
   if(o.commit&&isCrit(q)){m*=1.5;tags.push("CRITICAL HIT")}
-  return payXp(q,{m:m,vb:vb,tags:tags});
+  return payXp(q,{m:m,cm:cm,vb:vb,tags:tags});
 }
-/* hx: what the quest pays with no photo; xp: what this completion pays (with a photo, hx x vb rounded up: never under double) */
-function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);return r}
+/* hx: what the quest pays with no photo; xp: what this completion pays (with a photo, hx x vb rounded up: never under double).
+   cx: the XP its coins are paid on (QA, 2026-11-09): the listed XP, x2 for the bounty. Streak, combo, crit and rank bonuses are
+   XP only; with them in the coins too, quest coins ran to 10x by level 100 and every price went stale within days. */
+function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
 var DOC="player/state", ownerView=false, APPV=84, saveMode="local", newerSeen=false, saveWarned=false;
@@ -1110,7 +1113,9 @@ function profileHtml(){
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
 function boardLine(){
   var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
-  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(gl?Math.min(100,x/gl*100):0)+'%"></i></span><span class="bl-t mono">'+(gl&&x>=gl?'Daily Quest done':x+' / '+gl+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+  /* past the Daily Quest, the bar runs to the next chest (29e_economy.js) */
+  var nx=typeof dqNext==="function"&&x>=gl?dqNext():null;if(nx)gl=nx[0];
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(gl?Math.min(100,x/gl*100):0)+'%"></i></span><span class="bl-t mono">'+(gl&&x>=gl?'Every chest open':nx?x+' / '+gl+' XP: next chest':x+' / '+gl+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
 }
 function boardHtml(){
   var g=gated(), ri=rankIdx(), rk=RANKS[ri];
@@ -1324,7 +1329,7 @@ function toggle(id,ev,mode){
     S.total++; if(ver)S.vcount++; crit=mu.tags.indexOf("CRITICAL HIT")>=0; if(crit)S.crits++;
     S.stats[q.stat]=(S.stats[q.stat]||0)+1;
     /* coins from the no-photo XP with every perk, then x2 (or 2.1) for a verified photo, so a photo always pays double coins too */
-    var roll=coinMomentum(),cn=coinsFor(mu.hx)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.ceil(Math.round(cn*(1+specialPct("coin")/100))*mu.vb);S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
+    var roll=coinMomentum(),cn=coinsFor(mu.cx)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.ceil(Math.round(cn*(1+specialPct("coin")/100))*mu.vb);S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
     if(S.raid&&S.raid.id===id)S.raid=null;
     var t=today(); if(S.dayXp.d!==t)S.dayXp={d:t,x:0}; S.dayXp.x+=mu.xp;
     if(S.dayXp.x>=50)note=creditStreak();
@@ -1367,7 +1372,7 @@ function askProof(id){
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
   proofModal=modal('<div class="card box2"><span class="label">Quest done? Double it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
    +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for double XP and coins.":"Snap a live photo of the finished result for double XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
-   +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.xp)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.xp)+' coins</span></div>'
+   +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.cx)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.cx)+' coins</span></div>'
    +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
    +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'
    +'<div class="proof" id="proofmsg"></div>'+(q.rep==="weekly4"?'<p class="note">Only workouts with a photo count toward Weekly Warrior.</p>':'')+'<button class="btn ghost" data-act="honor">Done without a photo</button><button class="btn ghost" data-act="closeproof">Cancel</button></div>');
