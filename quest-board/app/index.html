@@ -1346,6 +1346,22 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 /* zoom is back (Cal, 2026-11-08): its + and - (and the Bedroom lamp) sit in a row under the room picture, so they never cover a door */
 .rmodal>.lfpzc{position:static!important;display:flex!important;flex-direction:row!important;justify-content:flex-end;align-items:center;gap:8px;margin:6px 0 0!important;transform:none!important;inset:auto!important}
 .rmodal>.lfpzc button{width:34px!important;height:34px!important;font-size:18px}
+/* LEAD: the Town Square (29p_square.js). The plaza is painted here until ui_town_square.webp exists. */
+.sq-stage{position:relative;height:360px;margin-top:8px;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 46px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 30px),linear-gradient(180deg,#2c2748 0,#5b4b7e 22%,#d08f78 34%,#857b92 34.5%,#5f5a72 100%)}
+.sq-stage.has-art{background-size:cover;background-position:center}
+.sq-p{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;border:0;background:none;color:#fff;cursor:pointer}
+.sq-p.away{opacity:.7}
+.sq-n{display:inline-flex;align-items:center;gap:4px;max-width:78px;padding:2px 6px;border-radius:8px;background:rgba(15,12,24,.74);font:700 10px/1.25 Inter,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sq-p.me .sq-n{background:#ffc857;color:#14121c}
+.sq-on{flex:none;width:6px;height:6px;border-radius:50%;background:#5ee08a}
+.sq-p.hop .calp{animation:sqhop .55s ease 3}
+.sq-e{position:absolute;z-index:200;font-size:30px;pointer-events:none;animation:sqfloat 2.4s ease-out forwards}
+@keyframes sqhop{0%,100%{transform:translateY(0)}45%{transform:translateY(-16px)}}
+@keyframes sqfloat{0%{opacity:0;transform:translate(-50%,0) scale(.6)}15%{opacity:1;transform:translate(-50%,-14px) scale(1.15)}100%{opacity:0;transform:translate(-50%,-74px) scale(1)}}
+.sq-feed{margin-top:10px;display:grid;gap:5px}.sq-f{display:flex;align-items:center;gap:6px;font-size:13px}.sq-f small{margin-left:auto;opacity:.65}
+.sq-card{text-align:center}.sq-big{display:flex;justify-content:center;min-height:200px}.sq-card h2{margin:6px 0 2px}
+.sq-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 8px}.sq-acts .btn{display:flex;align-items:center;justify-content:center;gap:7px;padding-left:6px;padding-right:6px;white-space:nowrap}.sq-card .row{justify-content:center}
+@media (prefers-reduced-motion:reduce){.sq-p.hop .calp{animation:none}}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
