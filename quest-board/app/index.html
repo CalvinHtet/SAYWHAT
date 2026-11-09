@@ -1395,6 +1395,11 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .prof .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
 .prof .meta{justify-content:center}
 .dq-gx{margin-top:4px}
+/* the Edit toggle above the quests (Cal, 2026-11-09): delete buttons only while editing */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:6px 2px -4px}
+.qedit{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:6px 14px;min-height:34px;font:600 13px/1 var(--font-body);cursor:pointer}
+.qedit.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.q .x.del{color:#ff8a8a}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

@@ -47,13 +47,11 @@ var RANKS=[
 var FX=[[2,"grid","Grid overlay"],[3,"burst","Completion bursts"],[4,"pulse","Neon edge pulse"],[6,"brackets","HUD brackets"],[7,"sweep","Scan sweep"],[8,"orbs","Drifting orbs"],[9,"ringglow","Ring afterglow"],[10,"embers","Ember particles"],[11,"chipglow","Chip glow"],[12,"aurora","Aurora sky"],[13,"holo","Holo shimmer"],[14,"shimmer","Stat bar shimmer"],[16,"halo","Orbiting halo"],[18,"glowtext","Glowing headlines"],[20,"flares","Corner flares"],[24,"stars","Starlight"],[28,"vignette","Cinematic vignette"],[34,"edgeglow","Screen edge glow"],[50,"gilded","Gilded headlines"]];
 var TITLES={creativity:["Sketcher","Sound Smith","Dreamweaver"],discipline:["Early Riser","Iron Will","Unbreakable"],fitness:["Sprinter","Iron Body","Titan"],productivity:["Operator","Taskmaster","Architect"],social:["Good Friend","Anchor","Heart of the Party"]};
 var DEFAULTS=[
- ["Feed dogs",10,"discipline","out","Under 15 minutes, daily routine","daily"],["Walk dogs",25,"fitness","out","About 30 minutes, physical","daily"],["Unload car",10,"productivity","out","Quick, no thinking","once"],
- ["Make bed",10,"discipline","reset","60 seconds, sets the tone","daily"],["Brush teeth",10,"discipline","reset","Daily habit","daily"],["Shower",10,"discipline","reset","Daily habit","daily"],
- ["Take out trash",10,"productivity","home","Quick chore, five minutes","once"],["Fold laundry",10,"productivity","home","Quick and mindless","once"],["Measure carpet",10,"productivity","home","Tape measure, two minutes","once"],["Wash dishes",10,"productivity","home","Short chore","daily"],["Finish laundry",25,"productivity","home","Several steps over time","once"],["Clean living room",25,"productivity","home","Around 30 to 45 minutes","once"],["Put together couch",25,"productivity","home","Hands-on assembly","once"],
- ["Workout",40,"fitness","body","4 times a week, live photo proof","weekly4"],
- ["Clean studio",25,"creativity","create","Resets your creative space","once"],["Edit car 360 vid",25,"creativity","create","Focused edit, one clip","once"],["Edit EP 3",50,"creativity","create","Full episode edit, 1 to 3 hours","once"],["Film EP 4",50,"creativity","create","Setup, shoot, and teardown","once"],["Post 5 things on trial reels",25,"productivity","create","Repetitive posting work","daily"],
- ["Finish artist management platform",75,"productivity","boss","Open-ended build, multi-hour","once"]
+ ["Workout",40,"fitness","body","4 times a week, live photo proof","weekly4"]
 ];
+/* Cal, 2026-11-09: "get rid of the example quests": a new board starts with the Workout quest only. The old sample list
+   (Cal's own to-dos) is gone; only its repeat types are kept for very old saves that never stored one. */
+var OLDREP={"Feed dogs":"daily","Walk dogs":"daily","Make bed":"daily","Brush teeth":"daily","Shower":"daily","Wash dishes":"daily","Post 5 things on trial reels":"daily"};
 var CHESTS={3:50,7:100,14:200,30:400,60:800,100:1500};
 var BADGES=[["class","Chosen Path","Choose a class"],["spec","Fork in the Road","Choose a specialization"],["asc","Ascended","Clear all 9 advancements"],["first","First Blood","Complete your first quest"],["ten","Ten Down","Clear 10 quests"],["hundred","Centurion","Clear 100 quests"],["s3","On a Roll","3-day streak"],["s7","Locked In","7-day streak"],["s30","Unbreakable","30-day streak"],["early","Early Bird","Clear a quest before 7 AM"],["crit","Critical Hit","Land a critical hit"],["ver10","Honest Hunter","10 verified quests"],["gate","Gate Breaker","Pass a job advancement"],["spend","Retail Therapy","Buy your first shop item"],["decor","Interior Designer","Own 5 shop items"],["coins500","Coin Hoarder","Earn 500 coins"],["l10","Double Digits","Reach level 10"],["l25","Quarter Century","Reach level 25"],["s14","Fortnight","14-day streak"]];
 var CREW={
@@ -755,13 +753,16 @@ function stripHtml(){
   return '<div class="strip"><div class="who"><button class="avbtn" data-act="char" aria-label="Your character">'+'<span class="calfull">'+calImg(lookOf(),"idle",86,"")+'</span>'+'</button><div><span class="brand">'+(ART.logo_board?'<img class="blogo" src="'+ART.logo_board+'" alt="">':'<i></i>')+esc((S.char&&S.char.name)||"Quest Board")+'</span>'+'<div class="ttl">'+(t?'<span class="ttlx '+t[0]+'">'+esc(ifTitle(t))+'</span> &middot; ':'')+'v0.'+APPV+' &middot; <span id="savest">'+saveLbl()+'</span></div></div></div><span class="right"><span class="coinpill" aria-label="'+S.coins+' coins"><i class="coin"></i>'+S.coins+'</span><span class="rankpill">'+(ART["rank_"+rk.l]?'<img class="rkimg" src="'+ART["rank_"+rk.l]+'" alt="Rank '+rk.l+'">':'<b>'+rk.l+'</b>')+''+esc(tierName(S.gates.length))+'</span></span>'+(view==="board"?'<button class="infobtn" data-act="welcome" aria-label="A note from Cal: what SAYWHAT is">i</button>':'')+'</div>';
 }
 function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]<m)m=a[2]});return m}
+/* QA 2026-11-09: below level 10 one area opens per day (29h_unlocks.js), so once today's is used a waiting area opens tomorrow,
+   not "at your next level-up" */
+function areaTomorrow(a){return typeof unlockSlotFree==="function"&&!unlockSlotFree(a[2])}
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
     /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
     var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+", opens at your next level-up":rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
@@ -1320,7 +1321,7 @@ function introHtml(){
     return '<section class="card intro"><span class="label">System notice</span><h1 class="ititle">A new hunter awakens</h1>'
      +'<p class="note">Every task is a quest. Every quest pays XP and coins. Level up, pass the gates, choose a class, and evolve.</p>'
      +'<label class="label" for="ccname">Name your character</label><input id="ccname" class="tin" maxlength="16" autocomplete="off" autocapitalize="words" placeholder="Your name" value="'+esc(cc.name||"")+'">'
-     +(nw?'<span class="label">Starting quests</span><div class="ccopts"><button class="ccopt'+(ccBlank?" on":"")+'" data-act="ccq" data-v="blank">Blank board</button><button class="ccopt'+(!ccBlank?" on":"")+'" data-act="ccq" data-v="ex">Example quests</button></div><p class="note">'+(ccBlank?'You start empty and add your own tasks in the brain dump.':'You start with a sample list you can edit or delete.')+'</p>':'')
+     +(nw?'<p class="note">You start with an empty board: add your own tasks in the box at the top and each one becomes a quest.</p>':'')
      +'<button class="btn big" data-act="ccnext">Continue</button></section>';
   }
   setTimeout(ccMount,0);

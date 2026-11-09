@@ -1383,7 +1383,7 @@ function lfDesired(){if(window.LFNOCHAR){var o=[],me=0;S.base.slots.forEach(func
 function lfVisitRoom(place){var sl=S.base.slots,f=function(t){for(var i=0;i<sl.length;i++)if(sl[i]&&sl[i].t===t&&LFMETA[i])return i;return -1};
   /* QA: a room you own in another building is drawn there, not here too; the Lounge/Bedroom fallback is only for a place you don't own */
   var own=place&&sl.some(function(r){return r&&r.t===place});if(own)return f(place);
-  var i=f("lounge");if(i<0)i=f("bedroom");return i}
+  var i=f("lounge");return i}/* Cal, 2026-11-09 "Fix the bedroom": the Bedroom is private ("Nobody visits here"), never a visitor fallback */
 function lfVisitors(){
   var v=S.visit;if(!v||v.d!==today()||!v.t)return [];
   var el=Date.now()-v.t,rm=lfVisitRoom(v.place);if(rm<0)return [];

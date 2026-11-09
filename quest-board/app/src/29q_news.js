@@ -7,7 +7,7 @@
 var WELCOME='<div class="card box2 welcome"><span class="label">A note from Cal</span><h2>Hey, it&rsquo;s Cal &#128075;</h2>'
  +'<p>I&rsquo;m bad at finishing my to-do list. The boring stuff (laundry, dishes, emails, the gym) always slides to tomorrow. So I built SAYWHAT to make those tasks worth doing.</p>'
  +'<h3 class="label">How it works</h3><ul class="wl">'
- +'<li><b>Add your tasks.</b> Dump everything in the brain dump and it turns them into quests.</li>'
+ +'<li><b>Add your tasks.</b> Type them, messy is fine, in the box at the top of the Board and each one becomes a quest.</li>'
  +'<li><b>Finish quests</b> to earn XP and coins. Prove the big ones with a photo for double rewards.</li>'
  +'<li><b>Level up</b> to unlock new places, missions and gear.</li>'
  +'<li><b>Spend coins</b> on your character and your Loft.</li>'

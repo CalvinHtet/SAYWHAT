@@ -11,18 +11,18 @@ function fvLook(spec){var D=window.QBLoft&&QBLoft.data,c=Object.assign({},(D&&D.
   if(spec.eq&&D&&D.items){var eq={};spec.eq.forEach(function(g){var M=D.items[g];if(M)eq[M.slot]={art:g,frontOnly:M.frontOnly,over:M.over,wide:M.wide,skirt:M.skirt,overTop:M.overTop,lift:M.lift,clip:M.clip}});c.equipped=eq}
   return {rig:c,sex:spec.body,npc:1}}
 FRIENDS={
- justin:{name:"Justin",tag:"Best friend, always singing",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"tee",topColor:"white",eq:["h_chain","h_trous","h_derby"]}},
- vega:{name:"Vega",tag:"Best friend, keeps you on track",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["fr_vega_tee","o_lock","h_cargo","fr_vega_kicks"]}},
- logan:{name:"Logan",tag:"Neighbor and gym buddy",spec:{body:"m",skin:"s1",hairStyle:"h3",hairColor:"brown",bottom:"joggers",bottomColor:"black",eq:["fr_logan_bomber","h_sneak"]}},
- kenan:{name:"Kenan",tag:"Music partner",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",eq:["fr_kenan_jacket","h_shades","h_tech","h_boots"]}},
+ justin:{name:"Justin",tag:"Always has a song stuck in his head",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"tee",topColor:"white",eq:["h_chain","h_trous","h_derby"]}},
+ vega:{name:"Vega",tag:"Keeps you on track",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["fr_vega_tee","o_lock","h_cargo","fr_vega_kicks"]}},
+ logan:{name:"Logan",tag:"Gym buddy",spec:{body:"m",skin:"s1",hairStyle:"h3",hairColor:"brown",bottom:"joggers",bottomColor:"black",eq:["fr_logan_bomber","h_sneak"]}},
+ kenan:{name:"Kenan",tag:"Night owl",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",eq:["fr_kenan_jacket","h_shades","h_tech","h_boots"]}},
  jina:{name:"Jina",tag:"Always knows the best food spots",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"black",eq:["h_knit","fr_jina_skirt","h_loafer"]}},
- cynthia:{name:"Cynthia",tag:"Married to Memo",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","fr_cynthia_kicks"]}},
- memo:{name:"Memo",tag:"Married to Cynthia",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}},
+ cynthia:{name:"Cynthia",tag:"Brightens every room",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","fr_cynthia_kicks"]}},
+ memo:{name:"Memo",tag:"Can fix anything",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}},
  /* Cal's new friends (2026-11-07, "Approve all"; ROOMS f3c8326). The fr_ pieces come from each portrait as ROOMS paints them; until
     one exists fvLook skips it and the starter clothes below show instead. */
  kris:{name:"Kris",tag:"Sharpest dresser",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"white",eq:["fr_kris_shirt","fr_kris_pants"]}},
- alvina:{name:"Alvina",tag:"With Nick",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"brown",top:"tee",topColor:"white",shoe:"sneakers",shoeColor:"white",eq:["fr_alvina_coat","h_denim"]}},
- nick:{name:"Nick",tag:"With Alvina",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",eq:["fr_nick_suit","fr_nick_trousers","h_derby"]}},
+ alvina:{name:"Alvina",tag:"Plans the best days out",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"brown",top:"tee",topColor:"white",shoe:"sneakers",shoeColor:"white",eq:["fr_alvina_coat","h_denim"]}},
+ nick:{name:"Nick",tag:"Always down for game day",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",eq:["fr_nick_suit","fr_nick_trousers","h_derby"]}},
  ben:{name:"Ben",tag:"Up before the sun",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",top:"bomber",topColor:"black",bottom:"jeans",bottomColor:"black",shoe:"sneakers",shoeColor:"white",eq:["fr_ben_jacket","fr_ben_cap"]}},
  kevin:{name:"Kevin",tag:"Foodie and pool shark",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_kevin_polo","fr_kevin_jeans"]}},
  victor:{name:"Victor",tag:"Gamer, always says GG",spec:{body:"m",skin:"s4",hairStyle:"fr_victor_hair",hairColor:"black",top:"hoodie",topColor:"grey",bottom:"joggers",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["fr_victor_hoodie","fr_victor_chinos"]}}
@@ -32,28 +32,28 @@ Object.keys(FRIENDS).forEach(function(k){var f=FRIENDS[k],L=null;
 /* place: the room they hang out in when you have it (the Lounge otherwise). buff: today only, on matching quests. */
 var FVISITS=[
  {id:"justin_dance",who:["justin"],w:10,place:"gym",text:"Justin came by to dance it out and get your heart rate up.",buff:{stat:"fitness",pct:15,text:"Rehearsal with Justin: Fitness quests +15% XP today"}},
- {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin came over with a melody stuck in his head. You spent the afternoon making something out of it.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
+ {id:"justin_hook",who:["justin"],w:9,place:"studio",text:"Justin came over with a tune stuck in his head. You spent the afternoon making something out of it.",buff:{cl:"create",pct:20,text:"Writing with Justin: Creative quests +20% XP today"}},
  {id:"vega_manager",who:["vega"],w:9,place:"lounge",text:"Vega came over to go through your week with you.",buff:{cl:"admin",pct:20,text:"Vega's plan: Admin and day-job quests +20% XP today"}},
  {id:"vega_merch",who:["vega"],w:6,place:"lounge",text:"Vega dropped off a box of things he did not need. Some of it sold fast.",coin:250},
  {id:"logan_spot",who:["logan"],w:10,place:"gym",text:"Logan came by to train. You took turns spotting.",buff:{cl:"body",pct:20,text:"Spotting Logan: Body quests +20% XP today"}},
  {id:"logan_stream",who:["logan"],w:7,place:"gameroom",text:"Logan took over your couch for a gaming session and won you a few bets.",coin:150},
  {id:"kenan_checkup",who:["kenan"],w:7,place:"lounge",text:"Kenan stopped in to check on you and made sure you ate something.",freeze:1},
- {id:"kodepink",who:["kenan"],w:9,place:"studio",text:"Kenan brought his gear over for a late-night jam session.",buff:{cl:"create",pct:25,text:"Jam session with Kenan: Creative quests +25% XP today"}},
+ {id:"kodepink",who:["kenan"],w:9,place:"studio",text:"Kenan came over for a late-night jam session.",buff:{cl:"create",pct:25,text:"Jam session with Kenan: Creative quests +25% XP today"}},
  {id:"jina_food",who:["jina"],w:8,place:"lounge",text:"Jina took you around to try some new food spots nearby.",buff:{cl:"out",pct:15,text:"Food crawl with Jina: Outside quests +15% XP today"}},
  {id:"habibimbaps",who:["kenan","jina"],w:6,place:"restaurant",text:"Kenan and Jina cooked dinner at your place and left the leftovers.",buff:{cl:"home",pct:15,text:"Cooking night: Home quests +15% XP today"},coin:100},
  {id:"cynthia_garden",who:["cynthia"],w:8,place:"garden",need:"garden",text:"Cynthia came by with seedlings and watered the beds.",water:1,buff:{cl:"home",pct:10,text:"Cynthia's visit: Home quests +10% XP today"}},
  {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by to check in and stayed for coffee.",buff:{cl:"social",pct:15,text:"Cynthia's sunshine: People quests +15% XP today"}},
  {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the loose shelf and stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
  {id:"memo_cynthia",who:["memo","cynthia"],w:7,place:"lounge",text:"Memo and Cynthia came over for dinner and brought dessert.",coin:150,buff:{cl:"social",pct:15,text:"Dinner with Memo and Cynthia: People quests +15% XP today"}},
- {id:"kris_pads",who:["kris"],w:9,place:"gym",text:"Kris came over and put you through a tough boxing workout.",buff:{stat:"fitness",pct:20,text:"Pad work with Kris: Fitness quests +20% XP today"}},
+ {id:"kris_pads",who:["kris"],w:9,place:"gym",text:"Kris came over and pushed you through a tough workout.",buff:{stat:"fitness",pct:20,text:"Training with Kris: Fitness quests +20% XP today"}},
  {id:"kris_linen",who:["kris"],w:6,place:"lounge",text:"Kris showed up dressed better than everyone, as usual, with a snack for you.",coin:120},
- {id:"alvina_desk",who:["alvina"],w:8,place:"lounge",text:"Alvina watched you work for two minutes, then fixed your chair, your screen and how you sit.",buff:{stat:"discipline",pct:15,text:"Alvina's desk fix: Discipline quests +15% XP today"}},
+ {id:"alvina_desk",who:["alvina"],w:8,place:"lounge",text:"Alvina stopped by and helped you set up a better desk.",buff:{stat:"discipline",pct:15,text:"Alvina's desk fix: Discipline quests +15% XP today"}},
  {id:"alvina_hike",who:["alvina"],w:6,place:"lounge",text:"Alvina talked you into a morning hike. You complained the whole way up and loved the view.",buff:{cl:"out",pct:15,text:"Hike with Alvina: Outside quests +15% XP today"}},
  {id:"nick_keys",who:["nick"],w:7,place:"lounge",text:"Nick came by and helped you sort through your paperwork.",buff:{cl:"admin",pct:20,text:"Paperwork with Nick: Admin and day-job quests +20% XP today"}},
  {id:"nick_niners",who:["nick"],w:6,place:"lounge",text:"Nick came over to watch the game. You both yelled at the TV and ate everything.",buff:{cl:"social",pct:10,text:"Game day with Nick: People quests +10% XP today"}},
- {id:"nick_alvina",who:["nick","alvina"],w:7,place:"rooftop",text:"Nick and Alvina came over for date night on the roof and brought sparklers.",coin:150,buff:{cl:"social",pct:15,text:"Sparklers with Nick and Alvina: People quests +15% XP today"}},
+ {id:"nick_alvina",who:["nick","alvina"],w:7,place:"rooftop",text:"Nick and Alvina came over to hang out on the roof and brought sparklers.",coin:150,buff:{cl:"social",pct:15,text:"Sparklers with Nick and Alvina: People quests +15% XP today"}},
  {id:"ben_routine",who:["ben"],w:7,place:"gym",text:"Ben ran you through his early morning routine. No snooze button allowed.",buff:{stat:"discipline",pct:20,text:"Ben's routine: Discipline quests +20% XP today"}},
- {id:"ben_board",who:["ben"],w:6,place:"lounge",text:"Ben stopped by and planned a weekend trip to the mountains with you.",buff:{cl:"out",pct:15,text:"Trip planning with Ben: Outside quests +15% XP today"}},
+ {id:"ben_board",who:["ben"],w:6,place:"lounge",text:"Ben stopped by and helped you plan a weekend trip.",buff:{cl:"out",pct:15,text:"Trip planning with Ben: Outside quests +15% XP today"}},
  {id:"kevin_pool",who:["kevin"],w:8,place:"gameroom",text:"Kevin came over to shoot pool and ran the table twice.",coin:100},
  {id:"kevin_food",who:["kevin"],w:7,place:"restaurant",text:"Kevin showed up with a list of places to try. You made it to two and finished every plate.",buff:{cl:"out",pct:15,text:"Food run with Kevin: Outside quests +15% XP today"}},
  {id:"victor_gg",who:["victor"],w:7,place:"gameroom",text:"Victor came over to play, lost the last round and still said GG.",buff:{cl:"create",pct:10,text:"Game night with Victor: Creative quests +10% XP today"}},
@@ -76,8 +76,12 @@ visitorImg=function(w,big){if(w.indexOf("dog:")===0){var dn=w.slice(4),nm=dn==="
   if(!FRIENDS[w])return fvImgBase(w,big);var A=big?fvPoses(w):[];if(A.length)return '<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(FRIENDS[w].name))+'">'}).join("")+'</span>';return calImg(FRIENDS[w].look,"idle",big?150:60,"fvfig")};
 /* the day's roll, once a day, the same moment the app first settles */
 function fvPick(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
-  var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
+  /* Cal, 2026-11-09 "Fix the bedroom": the Bedroom is private, so a visit needs its own room or a Lounge to hang out in, and a dog
+     visit needs that dog adopted (bd_pluto / bd_chop) */
+  var dogOk=function(v){return v.who.every(function(w){return w.indexOf("dog:")!==0||fvHasAddon(w==="dog:pluto"?"bd_pluto":"bd_chop")})};
+  var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last&&(have(v.place)||have("lounge"))&&dogOk(v)});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
   var tot=pool.reduce(function(a,v){return a+v.w},0),r=Math.random()*tot;for(var i=0;i<pool.length;i++){r-=pool[i].w;if(r<=0)return pool[i]}return pool[0]}
+function fvHasAddon(id){return S.base.slots.some(function(r){return r&&r.a&&r.a[id]})}
 function fvApply(v){var t=today();S.visit={d:t,t:Date.now(),who:v.who.slice(),id:v.id,place:v.place};S.base.visits=(S.base.visits||0)+1;
   if(v.coin){S.coins+=v.coin;S.earnedC+=v.coin}
   /* QA: freezes stop at maxFreeze(); at the cap the gift is 300 coins, as on the wheel */
@@ -104,16 +108,23 @@ function fvArrival(v,preview){if(preview){FVPREV=(FVPREV+1)%FVARR.length;return 
   var last=S.visitArr==null?-1:S.visitArr,seed=0,k;for(k=0;k<(v.id+today()).length;k++)seed=(seed*31+(v.id+today()).charCodeAt(k))>>>0;
   var pick=seed%FVARR.length;if(pick===last)pick=(pick+1+seed%(FVARR.length-1))%FVARR.length;
   S.visitArr=pick;if(cur)cur.arr=pick;try{persist()}catch(e){}return FVARR[pick]}
-function fvShow(v,preview){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here="the "+(hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"Bedroom");
+function fvShow(v,preview){var names=fvNames(v.who),hr=function(t){return typeof hasRoom==="function"&&hasRoom(t)&&ROOMT[t]},here=hr(v.place)?ROOMT[v.place].name:hr("lounge")?ROOMT.lounge.name:"";
   var A=fvArrival(v,preview);var m=modal('<div class="card box2 adv visit va-'+A[0]+'"><span class="label">'+esc(A[1])+'</span><h2 style="font-size:32px">'+esc(names)+'</h2><div class="vfig">'+v.who.map(function(w,k){return '<span class="fvpose" style="--d:'+(k*.35)+'s"><span class="fvbob">'+visitorImg(w,true)+'</span></span>'}).join("")+'</div><p>'+esc(v.text)+'</p>'
     +(v.coin?'<div class="reward">+'+v.coin+' coins</div>':'')+(v.freeze?(v._cap?'<div class="reward">+300 coins (your streak freezes are full)</div>':'<div class="reward">+'+v.freeze+' streak freeze</div>'):'')+(v.water&&typeof hasRoom==="function"&&hasRoom("garden")?'<div class="reward">Garden watered</div>':'')+(v.buff?'<div class="reward">'+esc(v.buff.text)+'</div>':'')
-    +'<p class="note">'+'They\'re hanging out in '+esc(here)+' today.</p><button class="btn big" id="vok">Nice</button></div>');
+    +(here?'<p class="note">They\'re hanging out in the '+esc(here)+' today.</p>':'')+'<button class="btn big" id="vok">Nice</button></div>');
   var b=m&&m.querySelector("#vok");if(b)b.onclick=function(){m.remove();render()};
   if(A[0]==="pop")setTimeout(function(){try{var f=m.querySelector(".vfig"),r=f&&f.getBoundingClientRect();if(r)burst(r.left+r.width/2,r.top+r.height*.6,34)}catch(e){}},420)}
+/* Cal, 2026-11-09: a friend dropped in before the welcome note on a brand-new board. "Every visitor should start appearing very
+   sparsely only after we unlock the loft": no visits before the welcome note has been read and The Loft is open, none on the day
+   it opens, then at most about one day in three rolls a visit, with at least 3 days between visits (roughly one a week). */
+function fvLoftOpen(){return typeof areaOn==="function"&&!!areaOn().hideout&&effLvl()>=2}
+function fvDaysSince(d){var a=Date.parse(d),b=Date.parse(today());return isNaN(a)||isNaN(b)?99:Math.round((b-a)/864e5)}
 function fvCheck(){if(!loaded||!S||!S.created)return;if(S.visit&&S.visit.card)fvCard();if(document.querySelector("#layer .modal"))return;
-  var t=today();if(S.fvDay===t)return;S.fvDay=t;
-  if(S.visit&&S.visit.d===t){persist();return}
-  if(Math.random()>.57){persist();return}
+  var t=today();if(S.fvDay===t)return;
+  if(!S.welcomed||!fvLoftOpen())return;
+  S.fvDay=t;if(!S.fvFrom){S.fvFrom=t;persist();return}
+  if(S.visit&&S.visit.d&&fvDaysSince(S.visit.d)<3){persist();return}
+  if(Math.random()>.35){persist();return}
   var v=fvPick();if(!v){persist();return}fvApply(v);S.visit.card=1;persist();setTimeout(fvCard,1200)}
 /* QA: the card waits until no other window is open, so a reward never lands unseen */
 function fvCard(){var v=fvToday();if(!v||!S.visit.card)return;if(document.querySelector("#layer .modal")){setTimeout(fvCard,4000);return}S.visit.card=0;persist();fvShow(v)}

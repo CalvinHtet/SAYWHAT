@@ -859,7 +859,7 @@ function fresh(){
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
     xpc2:1,xpc3:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
-var S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
+var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function dstr(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -980,7 +980,7 @@ if(!S.v001){S.v001=1;if(S.xp<cum(3))S.xp=cum(3)}
 if(!S.base.t53){S.base.slots=["bedroom"].map(function(t){return {t:t,a:{},st:0,pend:0}});S.base.t53=1;S.base.loungeT=Date.now()}/*v53 TEST ROOMS*/
 S.base.slots=S.base.slots.map(function(r){return r&&ROOMT[r.t]?Object.assign({a:{},st:0,pend:0},r):null});
 var rsKeep=S.base.slots.filter(function(r){return r&&r.t!=="bedroom"&&ROOMCELL[r.t]});S.base.slots=S.base.slots.filter(function(r){return r&&r.t==="bedroom"}).slice(0,1);if(!S.base.slots.length)S.base.slots=[{t:"bedroom",a:{},st:0,pend:0}];S.base.slots=S.base.slots.concat(rsKeep);S.base.crew={};try{worldMigrate()}catch(e){}
-  S.quests.forEach(function(q){if(!q.rep){var d=DEFAULTS.filter(function(x){return x[0]===q.name})[0];q.rep=d?d[5]:"once"}});
+  S.quests.forEach(function(q){if(!q.rep){var d=DEFAULTS.filter(function(x){return x[0]===q.name})[0];q.rep=d?d[5]:OLDREP[q.name]||"once"}});
 }
 function rollover(){
   var t=today(); if(S.runDate===t)return false;
@@ -1113,7 +1113,7 @@ function boardHtml(){
   if(g){
     var nr=RANKS[Math.min(ri+1,5)], stored=Math.max(0,S.xp-cum(g));
     h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
-     +'<p class="note">Your XP bar is full at level '+(g-1)+'. Pass now with a fresh photo of you being active (a workout, a run, a walk with the dogs, a hike, a game, a class), or on honor by being active (50+ XP) on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b> so far.</p>'
+     +'<p class="note">Your XP bar is full at level '+(g-1)+'. Pass now with a fresh photo of you being active (a workout, a run, a walk, a hike, a game, a class), or on honor by being active (50+ XP) on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b> so far.</p>'
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
      +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
@@ -1131,6 +1131,8 @@ function boardHtml(){
   }
 
   var bid=ri>=2?bountyId():null;
+  /* Cal, 2026-11-09: "add the delete button behind an edit toggle": the &times; on each quest shows only while editing */
+  if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+(qEdit?'Tap &times; to remove a quest':'')+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
   CLUSTERS.forEach(function(c){
     var qs=S.quests.filter(function(q){return q.cl===c[0]&&visQ(q)}); if(!qs.length)return;
     var dn=qs.filter(function(q){return S.done[q.id]}).length;
@@ -1142,7 +1144,7 @@ function boardHtml(){
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
        +(d||proofPend[q.id]?'':'<button class="x" data-act="prove" data-id="'+q.id+'" aria-label="Prove '+esc(q.name)+' with a photo for double XP and coins">2x</button>')
-       +'<button class="x" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button></div>';
+       +(qEdit?'<button class="x del" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button>':'')+'</div>';
       if(d){doneH+=h;h=h0}
     });
     if(doneH)h+='<details class="donebox"><summary class="note mono">Completed ('+dn+') &middot; tap to review or undo</summary>'+doneH+'</details>';
@@ -1362,7 +1364,7 @@ async function handleProof(file){
   if(ex&&ex.dt){
     var m=ex.dt.match(/^(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/);
     if(m){var mins=(Date.now()-new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]).getTime())/60000;
-      if(mins<-3||mins>30){pl("bad","The photo is "+Math.round(Math.abs(mins))+" minutes "+(mins<0?"in the future":"old")+". It has to be from the last 30.");ok=false}}
+      if((mins<-3||mins>30)&&!(window.QB_WEB&&QB_WEB.sandbox)){pl("bad","The photo is "+Math.round(Math.abs(mins))+" minutes "+(mins<0?"in the future":"old")+". It has to be from the last 30.");ok=false}}
   }
   proofBusy=false;
   if(!ok||proofId!==id)return; /* cancelled while the photo was being read */
@@ -1372,10 +1374,14 @@ async function handleProof(file){
   proofPend[id]={t:Date.now(),h:hh}; pendMark(); closeProof(); render(); pop("Photo sent. Checking it in the background");
   proofCheck(id,file,hh);
 }
+function sbLum(file){try{return createImageBitmap(file).then(function(b){var c=document.createElement("canvas");c.width=c.height=24;var x=c.getContext("2d");x.drawImage(b,0,0,24,24);var d=x.getImageData(0,0,24,24).data,s=0;for(var i=0;i<d.length;i+=4)s+=.3*d[i]+.59*d[i+1]+.11*d[i+2];return s/(d.length/4)}).catch(function(){return 128})}catch(e){return Promise.resolve(128)}}
 async function proofCheck(id,file,hh){
   var q=S.quests.filter(function(x){return x.id===id})[0], vis=null;
   try{
     var sample=window.claude?await window.claude.use("sample"):null;
+    /* local sandbox only (QB_WEB.sandbox): there is no photo checker, so a stand-in answers after about 6 s, passing any photo that
+       is not nearly black (cover the lens to see a failure). Lets Cal try the background check; never in a web or Live build. */
+    if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,6000)});var lum=await sbLum(file);vis={matches:lum>35,what:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
     var lim=sample?await sample.limits().catch(function(){return null}):null;
     if(sample&&lim&&lim.images&&q){
       vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false});
@@ -1392,7 +1398,8 @@ async function proofCheck(id,file,hh){
   if(S.done[id]&&!S.vdone[id])toggle(id); /* finished on the honor system meanwhile: the verified completion replaces it */
   var x0=S.xp,c0=S.coins;
   if(!S.done[id])toggle(id,null,"v");
-  proofVerdict(q,true,vis.what||q.name,S.xp-x0,S.coins-c0);
+  /* QA 2026-11-09: the quest's own pay (S.vdone / S.cdone), not the level bonus or milestone the same tap may also have paid */
+  proofVerdict(q,true,vis.what||q.name,S.vdone[id]||S.xp-x0,S.cdone[id]||S.coins-c0);
 }
 /* the new popup: on top of anything open (a level-up from the same completion sits underneath until this one is closed) */
 function proofVerdict(q,ok,msg,dx,dc){
@@ -1503,7 +1510,8 @@ function clearGate(savedGym){
 
 /* ---------- brain dump: parse, score, sort ---------- */
 function fallbackSplit(txt){
-  var parts=[];txt.split(/\n|;|\s+and then\s+|,\s*then\s+|\s+also\s+/i).forEach(function(x){var c=x.split(/,\s*/);if(c.length>1&&c.every(function(p){return p.trim().split(/\s+/).length>=2}))parts=parts.concat(c);else parts.push(x)});
+  /* QA 2026-11-09: a plain comma list ("laundry, dishes, vacuum") stayed one task because single words did not split; now every comma splits */
+  var parts=[];txt.split(/\n|;|\s+and then\s+|,\s*then\s+|\s+also\s+/i).forEach(function(x){parts=parts.concat(x.split(/,\s*/))});
   return parts.map(function(x){return x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,"").trim()}).filter(function(x){return x.length>1}).slice(0,40);
 }
 function clampXp(n){n=Math.round((+n||25)/5)*5;return Math.max(5,Math.min(100,n))}
@@ -1561,13 +1569,14 @@ document.addEventListener("click",function(e){
   var b=e.target.closest("[data-act]"); if(!b)return;
   var a=b.dataset.act;
   if(a==="welcome"){showWelcome();return}
+  if(a==="qedit"){qEdit=!qEdit;render();return}
   if(a==="updnow"){updNow(+b.dataset.v);return}
   if(baseAct(a,b,e))return;
   if(/^wk/.test(a)&&trainAct(a,b))return;
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+" opens at your next level-up");return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+(areaTomorrow(ar2)?" opens tomorrow":" opens at your next level-up"));return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
