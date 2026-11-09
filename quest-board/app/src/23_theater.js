@@ -107,12 +107,12 @@ LFROOM.theater=function(C){
   var ropeEnd=10.2;for(var rx=4.5;rx<ropeEnd;rx+=1.8)lfSpr(C,"thx_rope",rx,3.25,1.8,.15,{h:6,flip:1,ctr:1,nosh:1,sh:1,dk:-.2});
   /* the screens */
   thBoard(C,6.2,72,H);
-  if(H("t_tv"))C.walls.push(lfFaceX(0,2.9,110,scrTrailer(C,U*2.2,56)));
+  if(H("t_tv"))C.walls.push(lfFaceX(0,2.6,110,scrTrailer(C,U*2.2,56)));/* QA, rule 20: at 2.9 it touched the doors' right frame */
   lfW1(C,"w_thposter",.05,D-.7,64,-70,0);
   if(H("t_marq"))lfW1(C,"w_thmarq",.05,6.7,34,-108,0);
-  if(H("t_reel"))lfW1(C,"w_threel",.05,5.6,34,-40,0);/* rule 20: it touched the lightbox and the sconce; lower, just past the doors *//* QA audit: at 8.2 it hung behind the film poster (8.3); now between the Screen 1 doors and the sconce */
+  if(H("t_reel"))lfW1(C,"w_threel",.05,6.15,34,-40,0);/* QA, rule 20: at 5.6 it sat over the doors' left frame; clear of them now, and the front sconce gives way to it *//* QA audit: at 8.2 it hung behind the film poster (8.3); now between the Screen 1 doors and the sconce */
   if(H("t_clap"))lfW1(C,"w_thclap",2.2,.05,46,-96,1);
-  if(H("t_wl2"))(H("t_tv")?[7.1]:[1.6,7.1]).forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)});/* the 1.6 sconce would sit on the trailer screen */
+  if(H("t_wl2")){var scY=H("t_reel")?[]:[D===9?6.75:7.1];if(!H("t_tv"))scY.unshift(1.6);scY.forEach(function(y){lfW1(C,"w_thsconce",.05,y,44,-60,0)})}/* the 1.6 sconce would sit on the trailer screen; the front one makes way for the reel (QA, rooms-never-cluttered) and at 12 x 9 stands clear of the poster */
   /* the concession against the left wall, facing the carpet (QA design review): the stand, a staff aisle, and the candy,
      hot dog and nachos on a back counter on the wall behind it; popcorn at the stand's near end, soda at its far end */
   var lx=lux2,cx=1.8;
