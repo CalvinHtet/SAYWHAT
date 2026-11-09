@@ -6,9 +6,15 @@
 /* Each step has a "why": the reason it happens now, shown when it opens and on its locked card until then. Investors look at
    every coin ever earned (S.earnedC, ECON.gateLockKey and gateMall; Cal: "it should never feel like you are at a
    standstill"), so upgrading other rooms while a gate fills still counts. */
+/* rooms built in The Loft (building 0 in ROOMCELL: Bedroom, Walk-in Closet, Hero's Lair, Trophy Room, Patio, Game Room) */
+function loftRooms(){return S.base.slots.filter(function(r){return r&&ROOMCELL[r.t]&&ROOMCELL[r.t][0]===0}).length}
 var STORY=[
   /* Cal, 2026-11-05: the Garden is its own lot, at level 5 (ECON.stepLv); each later step has a least level too */
-  {id:"garden",room:"garden",how:"lot",why:"The empty lot next to your building is up for sale. Put it to work.",gate:function(){return true}},
+  /* Cal, 2026-11-09: "garden should be available after you build 4 rooms. For example, the bedroom, the walk in closet, the game
+     room, and the patio, or sub out one for the heros lair ... then there should be a popup that says something like you decided
+     to pick up a new hobby and try gardening." Four rooms in The Loft (the Bedroom counts), then a short scene. */
+  {id:"garden",room:"garden",how:"lot",why:"Build 4 rooms in The Loft and you might pick up a new hobby.",gate:function(){return loftRooms()>=4},
+    scene:{who:"A new hobby",role:"The Loft",lines:["Four rooms in, and the place finally feels like home. You decided to pick up a new hobby: gardening.","There's an empty lot right next to your building. Time to see if you have a green thumb."],yes:"Check out the lot"}},
   /* Cal: "the next upgrade should be a restaurant that expands from it": Mara's yes unlocks the Garden's expansion upgrade */
   /* Cal, 2026-11-06: "The restaurant upgrade should come sooner so we have incentive to keep upgrading the garden past the main
      lot": 12 produce sold (about a day of a watered first bed), not 60 */
@@ -74,6 +80,8 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
 function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
 /* QA (v0.66): a step without its own portrait uses the same person's portrait from another step (the boba scene is Mara's: chef) */
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
+  /* the Garden's scene is the player's own idea: their character, not a stranger's initials */
+  if(!u&&s.id==="garden")return '<span class="sty-pic sty-me">'+calImg(lookOf(),"idle",88,"")+'</span>';
   if(!u&&window.QBART&&s.scene)STORY.some(function(o){if(o!==s&&o.scene&&o.scene.who===s.scene.who&&QBART["ui_story_"+o.id+".webp"]){u=QBART["ui_story_"+o.id+".webp"];return true}});
   return u?'<img class="sty-pic" src="'+u+'" alt="">':'<div class="sty-pic sty-pic0" aria-hidden="true">'+esc(s.scene.who.split(" ").map(function(w){return w[0]}).join("").slice(0,2))+'</div>'}
 /* one line per screen, tap to continue (Cal: a lot of reading for one screen); the choices come with the last line */
@@ -123,6 +131,9 @@ function styReadyLow(){var o=styState();if(o.stepDay===today()&&!(S.testFree>0))
   if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow||ECON.slotFree[s.id])continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return L||1}return 0}
 function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
+  /* the 4-room Garden rule (2026-11-09) also applies to a save that was offered the lot before it and never built it: the offer
+     goes back, and the hobby scene comes once The Loft has 4 rooms */
+  if(o.offer.garden&&!o.done.garden&&!styHas("garden")&&loftRooms()<4){delete o.offer.garden;persist()}
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;

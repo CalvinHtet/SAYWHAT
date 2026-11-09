@@ -37,6 +37,9 @@ ADDONS.bedroom.forEach(function(a){var e=a[3];
   if(a[0]==="bd_bed2"){a[1]="Velvet Tufted Bed";a[4]="A tall tufted headboard in navy velvet."}/* QA: it showed no LEDs */
   if(a[0]==="bd_patio"){a[1]="Patio Door";a[4]="Slide the glass open to your own patio, 30 floors up.";e.opens="patio"}});
 ADDONS.bedroom.push(["bd_game","Knock Into the Game Room",1500,{lv:18,opens:"gameroom",fp:1,g:"Expansion"},"A door to a room with one job: having fun."]);
+/* Cal, 2026-11-09: "I want the game room expansion to be available only after the walk in closet is built. Not right away."
+   It needs the Walk-in Closet (bd_ward2) and stays hidden until then (RSTCH: no "Needs ..." teaser card) */
+ADDREQ.bd_game="bd_ward2";window.RSTCH=window.RSTCH||{};window.RSTCH.bd_game=1;
 ADDONS.bedroom.push(["bd_dbed1","Dog Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);
 ADDONS.bedroom.push(["bd_pluto","Adopt Pluto",400,{fp:1,g:"Dogs"},"A toy poodle with opinions."]);
 ADDONS.bedroom.push(["bd_dbed2","Second Dog Bed",200,{fp:1,g:"Dogs"},"So nobody has to share."]);
