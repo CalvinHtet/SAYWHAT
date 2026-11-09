@@ -1151,7 +1151,6 @@ function boardHtml(){
       h+='<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(cur&&cur.id===q.id?" current":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
-       +(d||proofPend[q.id]?'':'<button class="x" data-act="prove" data-id="'+q.id+'" aria-label="Prove '+esc(q.name)+' with a photo for double XP and coins">2x</button>')
        +(qEdit?'<button class="x del" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button>':'')+'</div>';
       if(d){doneH+=h;h=h0}
     });
@@ -1284,9 +1283,21 @@ function uncreditStreak(){
 function onTap(id,ev){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
   if(proofPend[id]){pop("Still checking that photo");return}
-  /* Cal, 2026-11-09: no photo is asked for by default. A tap finishes the quest; the row's 2x button offers the photo. The
-     Workout still opens the photo window first, since only workouts with a photo count toward Weekly Warrior. */
-  if(!S.done[id]&&q.rep==="weekly4")askProof(id); else toggle(id,ev);
+  /* Cal, 2026-11-09: "I dont want the 2x button on the side. I want to do the task, and then if it makes sense to show a picture
+     proof, then I want the popup to show for photo proof." A tap on a quest that suits a photo (canProve) opens the photo window
+     (Open camera for 2x, or Done without a photo); any other tap just finishes the quest. */
+  if(!S.done[id]&&canProve(q))askProof(id); else toggle(id,ev);
+}
+/* "not every task needs photo proof. Sending a work email, or something digital does not really need proof. Something big like
+   editing a video ... can take photo proof." The brain dump's AI marks each new task (q.proof); without that mark: the Workout,
+   real-world tasks of 25+ XP, and creative or boss work of 50+ XP; never messages, emails, calls, payments or other admin. */
+function canProve(q){
+  if(q.proof===true||q.proof===false)return q.proof;
+  if(q.rep==="weekly4")return true;
+  if(/^(admin|social)$/.test(q.cl))return false;
+  if(/\b(e-?mails?|texts?|reply|replies|message|messages|dm|call|calls|phone|pay|payments?|invoices?|book|order|schedule|post|posts|send|sign up|register|renew|cancel|transfer|zoom|meeting)\b/i.test(q.name))return false;
+  if(/^(create|boss)$/.test(q.cl))return q.xp>=50;
+  return q.xp>=25;
 }
 function toggle(id,ev,mode){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
@@ -1350,8 +1361,8 @@ function askProof(id){
   /* wake the photo checker while the player is still framing the shot (web build only; a no-op elsewhere) */
   try{if(window.claude)window.claude.use("sample").then(function(s){if(s&&s.warm)s.warm()}).catch(function(){})}catch(e){}
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
-  proofModal=modal('<div class="card box2"><span class="label">Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
-   +'<p class="note">'+(isDigital(q)?"Take a live photo of your screen showing the finished work.":"Take a live photo of the finished result.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
+  proofModal=modal('<div class="card box2"><span class="label">Quest done? Double it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
+   +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for double XP and coins.":"Snap a live photo of the finished result for double XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
    +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.xp)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.xp)+' coins</span></div>'
    +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
    +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'
@@ -1539,9 +1550,10 @@ function validate(o,src){
   o=o||{};
   var st=STATS.some(function(s){return s[0]===o.stat})?o.stat:"productivity";
   var cl=CLUSTERS.some(function(c){return c[0]===o.cluster||c[0]===o.cl})?(o.cluster||o.cl):"admin";
-  return {name:String(o.name||src).slice(0,90),xp:clampXp(o.xp),stat:st,cl:cl,why:String(o.why||"").slice(0,80),rep:o.repeat==="daily"?"daily":"once"};
+  return {name:String(o.name||src).slice(0,90),xp:clampXp(o.xp),stat:st,cl:cl,why:String(o.why||"").slice(0,80),rep:o.repeat==="daily"?"daily":"once",proof:o.proof===true?true:o.proof===false?false:undefined};
 }
-var PARSE="The user pasted a messy brain dump for a gamified to-do app (bullets, run-on sentences, commas, 'and then', notes to self). Extract every distinct actionable task and ignore anything that is not a task. Split compound sentences into separate tasks. Merge duplicates. For each task return an object with: name (tidy short rewrite, keep the meaning), xp (integer, multiple of 5), stat, cluster, repeat, why (under 9 words, say what drove the XP).\n"
+var PARSE="The user pasted a messy brain dump for a gamified to-do app (bullets, run-on sentences, commas, 'and then', notes to self). Extract every distinct actionable task and ignore anything that is not a task. Split compound sentences into separate tasks. Merge duplicates. For each task return an object with: name (tidy short rewrite, keep the meaning), xp (integer, multiple of 5), stat, cluster, repeat, why (under 9 words, say what drove the XP), proof.\n"
+ +"proof is true only when a photo could fairly show the task done AND it is worth proving: physical or real-world work of 15+ minutes (cleaning, laundry, errands, workouts, cooking, building) or big creative work (editing a video, filming, a finished design). proof is false for quick tasks and for messages, emails, calls, payments, bookings, posting and other small digital admin.\n"
  +"repeat is 'daily' for routines that recur every day (feeding pets, hygiene, making the bed, gym) and 'once' for one-off tasks.\n"
  +"XP scale: 5 = trivial, under 5 minutes. 10 = under 15 minutes. 25 = 15 to 60 minutes. 50 = 1 to 3 hours of focused or physically demanding work. 75 = multi-hour, open-ended, or something the person is likely avoiding. 100 = whole-day effort or a major milestone. Reward effort and difficulty, not importance. Open-ended building or 'finish X' tasks score at least 50.\n"
  +"stat must be one of: creativity (music, video, design, content making), discipline (habits, hygiene, routines, things avoided), fitness (exercise, walking), productivity (chores, admin, work, building, logistics), social (time with people, relationships, rest and fun).\n"
@@ -1565,7 +1577,7 @@ async function submitCap(){
   busy=true; status="Reading your brain dump..."; render();
   var res=await scoreAll(text);
   var est=res.some(function(r){return r.why==="Quick offline estimate"}), sum=0, by={};
-  res.forEach(function(r){var id="q"+(S.next++); S.quests.push({id:id,name:r.name,xp:r.xp,stat:r.stat,cl:r.cl,why:r.why,rep:r.rep}); newIds[id]=1; sum+=r.xp; by[r.cl]=(by[r.cl]||0)+1});
+  res.forEach(function(r){var id="q"+(S.next++),nq={id:id,name:r.name,xp:r.xp,stat:r.stat,cl:r.cl,why:r.why,rep:r.rep};if(r.proof===true||r.proof===false)nq.proof=r.proof;S.quests.push(nq); newIds[id]=1; sum+=r.xp; by[r.cl]=(by[r.cl]||0)+1});
   var parts=CLUSTERS.filter(function(c){return by[c[0]]}).map(function(c){return by[c[0]]+" "+c[1]});
   draft=""; busy=false;
   status="Sorted <b>"+res.length+"</b> task"+(res.length===1?"":"s")+" worth <b>"+sum+" XP</b>: "+esc(parts.join(", "))+(est?". AI scoring was unavailable, so these are rough estimates.":".");
