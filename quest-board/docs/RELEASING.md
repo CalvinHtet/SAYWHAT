@@ -84,10 +84,17 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   APIs & Services > Credentials > "Web client (auto created by Google Service)": the origin `https://<address>` and the redirect
   URI `https://<address>/__/auth/handler`. Cal was given the Test channel and `saywhat-b7ae8.web.app` on 2026-11-07. Keep the
   channel name `test` so its address never changes.
-- **Real players now (2026-11-08):** Live and the Test channel both run release/v0.75 at 5641427, `noTest: true` in `web/config.js` (no
-  Test button or Testing rows) and QB_EPOCH 3 (Cal's reset for him and his girlfriend). Both links share one database and one save per
-  player, so never deploy a different QB_EPOCH to either: an older number treats the new saves as empty and overwrites them. Main is at
-  3 too. To test with the tools, build a Test channel without `noTest`, and remember it plays on the real saves. Do not bump it again.
+- **Real players now (2026-11-08):** Live and the Test channel both run the same Live cut (`release/live-<main hash>`: main plus
+  `noTest: true` in `web/config.js` and `QB_TEST_START` 0) at QB_EPOCH 5 (Cal's reset for him and his girlfriend). Both links share one
+  database and one save per player, so always deploy the same build to both, and never a different QB_EPOCH to either: an older number
+  treats the new saves as empty and overwrites them. **Cal plays on the Test channel link: it is a real link, never make it anything
+  else.** Do not bump QB_EPOCH again unless Cal asks; a bump also needs `board`, `pings` and `worlds` cleared
+  (`firestore:delete <name> --recursive --force`). A save from before a reset goes to `data/users/<id>/backup_e<epoch>`.
+- **Sandbox (Cal, 2026-11-08: "test all the upgrades without it overwriting my personal save"):** the Hosting channel `sandbox`, built
+  from main with `QB_TARGET=web QB_SANDBOX=1 python3 tools/build.py`, then `hosting:channel:deploy sandbox --expires 30d`. Its database
+  lives in the browser (`sandboxHost` in `web/web.js`) and it returns before Firebase starts, so it has no way to reach a real save and
+  needs no Google sign-in. It starts at level 1 with the Test tools on (Unlock everything, 500,000 coins), and the story's friends stand
+  in as neighbors and greet back. Saves are per device. The link lasts 30 days from each deploy.
 - **Rules and the AI function** change rarely and are deployed by hand when they do:
   `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
   QA like any other (functions/test.js first).

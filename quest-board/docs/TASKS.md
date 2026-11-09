@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (Higgsfield: NICE COCK, Garden art)
+CHROME: ROOMS (since 2026-11-08: Victor's long hair, then Rooftop and Mall sheets)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -13,7 +13,10 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:
-- Now (2026-11-08): LIVE on both links: release/live-fca61c1 at 0ca5de1 (main fca61c1 with Victor's hoodie and portraits + noTest + QB_TEST_START 0; not QA-passed, as below). ALL CHATS STOPPED: Cal's weekly limit at 96%, resets in about 4 days. After the reset: QA on v0.76, Victor's long hair, Rooftop, Mall (Cal approved all three).
+- Now (2026-11-08, on 0c218ca): LIVE on both real links (Live and Test): release/live-0c218ca at d262b10 = main 0c218ca + noTest + QB_TEST_START 0, QB_EPOCH 5, APPV 78. Cal: "fully initialized at lvl 1 from the beginning of the game with nothing unlocked", confirmed for both accounts; board, pings and worlds cleared; a save from before a reset is in data/users/<id>/backup_e<epoch>. The Test channel is a REAL link Cal plays on: never repurpose it, always deploy the same build to both. SANDBOX is its own channel `sandbox`, from main with QB_SANDBOX=1 (RELEASING.md): saves in the browser only, no Firebase, level 1, Test tools on, the story's friends stand in. New: Town Square at the top of the Hall (app/src/29p_square.js, Cal: "see each other's characters and interact with them"; test rigtest/lead/squaretest.js).
+  NOT QA-PASSED (Cal's call, he asked for it live). LEAD's checks on the exact Live build, headless Chromium on the stand-in Firebase: level 1, 0 XP, 0 coins through the creator and two reloads, only Board and Training open; old save backed up; two players see each other and greetings land and pay once. Not checked: a real phone, real Firestore with two real people. WAITING ON QA: v0.78 at 0c218ca: the Town Square with several players, the sandbox, and everything v0.76 still owes: 8c756be, b3d6b28, 05500d3, cdf5683, fcae2ed, f53662c, 0a1cb8e.
+  Next: when ROOMS has Victor's long hair: point his spec in 29k_friends.js at it and keep that style out of 15_shop.js (which sells every hairStyle). Before a public release: window.__qb and window.__qbLoft are still in Live (146 rigtest files use them), plan is to strip them in the Live cut only so main keeps them for ROOMS and QA; the Testing rows are hidden by noTest.
+  Was: LIVE on both links: release/live-fca61c1 at 0ca5de1 (main fca61c1 with Victor's hoodie and portraits + noTest + QB_TEST_START 0; not QA-passed, as below). ALL CHATS STOPPED: Cal's weekly limit at 96%, resets in about 4 days. After the reset: QA on v0.76, Victor's long hair, Rooftop, Mall (Cal approved all three).
   Was: v0.76 = branch release/live at ee3548c (main 05500d3 + noTest + QB_TEST_START 0), Cal: "publish the
   latest version for me and my gf to use before my usage runs out". NOT QA-PASSED: LEAD's checks only (loads, Review 131/131, webtest,
   roomfit in WebKit, returning save kept, new player at 0, no test tools, no arcade or bowling hint). QA owes v0.76 when Cal's usage is back:
@@ -447,6 +450,7 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
   errors (`shots/v61/plazasign_gardenonly.png`). Check with ROOMS's 9189946.
 Art and room code requests (LEAD asks, ROOMS does):
+- WAITING ON ROOMS (LEAD asks, no rush, after Victor, Rooftop and Mall): `art/app/ui_town_square.webp`, the backdrop of the Town Square at the top of the Hall (29p_square.js picks it up by name; until then a plaza painted in CSS shows, so nothing is broken). An open town plaza seen straight on, in the game's painted style, no people, no text, no logos. About 1024x1130, horizon in the top third, the lower two thirds clear open paving because up to eleven characters stand on it. Show Cal first.
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
   hem swings as one piece instead of splitting like culottes (QA's b58bf48). `src/look.js` reads the flag from QBDATA.items,
@@ -2871,6 +2875,7 @@ Requests for LEAD (from ROOMS):
 ## ROOMS: all art, the art tools, the room code
 
 Doing:
+- Now (on c31b46d, new ROOMS chat after the reset): Victor's long hair painted and pose-tested (m_fr_victor_hair_front/back, not committed), WAITING ON CAL. Painting the Rooftop sheets (rfw_t1, rfx_*), then 27_rooms.js. Next: Mall (27_rooms.js, 14x10 to 16x12). Test port 8767 (8765 is held by the old chat's server on a stale copy).
 - STOPPED to save Cal's usage (weekly limit 96%, resets 2026-11-13). CAL APPROVED, not started, for after the reset, in this order: (1) Victor's long
   black hair on the in-game character (friend-only piece, one sheet, every-pose check; (2) the Rooftop plan; (3) the Mall plan, room grown to about
   16 x 12 (plans: ROOMS's chat, 2026-11-08). The Auditorium is paused too (see below).
