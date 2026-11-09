@@ -37,6 +37,11 @@ travel as a git bundle zip that Cal emails to his Mac (see "Shipping" below).
      it (request in TASKS.md).
    Not checked: a real phone; two real players; the Shop screen after these prices beyond the sandbox screenshots.
    Open for Cal: levelling runs faster than his targets (Cal's routine level 100 around day 20; see ECONOMY.md).
+   Later the same day, Cal: "Merge dungeons and missions. dont need two separate ones. Dungeon Crawls will be the new name": one
+   tab (nav label Crawls), 5 crawls a day, coins every crawl, a rare find at least every 4th crawl (trophy piece, relic shard,
+   ally, clothes; Sable on the first crawl), no energy. Measured again: Cal's routine every room upgrade day 42, casual about
+   the same as before. Old saves: a mission still out pays its coins once; an old delve that had spotted its ally brings them
+   home. QA's sim.js, riftlive.js and team.js still drive missions (request in TASKS.md).
 2. **Shop** (branch `shop-ui`, commit 0344b46, WIP from a stopped helper, untested; based on v0.84, so rebase onto qa-local).
    Cal: (a) "There should only be one new clothing drop every 3 days ... only show Hangang splash screen as soon as we
    unlock the walk in closet" (decided: per player; HANGANG first when the Closet is built, then one brand every 3 days

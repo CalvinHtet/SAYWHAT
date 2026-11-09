@@ -1,13 +1,13 @@
 /* ---------- the effort-first economy (QA's proposal in docs/QA.md, Cal approved 2026-11-05) ----------
    Cal: "doing chores and training will always reward you more than having a virtual restaurant give you money or sending
    people out on missions." Real life is the engine; the town is a multiplier on it.
-   - XP comes only from real life: tasks, workouts, trials, bounties, the Daily Quest. Missions, delves, story visits and
+   - XP comes only from real life: tasks, workouts, trials, bounties, the Daily Quest. Dungeon crawls, story visits and
      rooms give none.
    - The Daily Quest: a daily XP goal the player picks. Today's progress sets the town's efficiency: closed with no task,
      25% after the first, 100% at the goal, up to 150% at twice the goal, where a hidden quest completes.
    - Rooms pay out each day at most a share of today's task coins (20% with a bare town, 50% fully upgraded), times the
      efficiency. What is not collected waits in the room.
-   - Missions cost energy; every task XP point today is one energy point. They pay coins and loot, no XP.
+   - Dungeon crawls (5 a day) pay coins times the town's efficiency, and now and then a rare find; no XP.
    - Training: a full session is worth a 50 XP task and gives a stat point (STR, AGI, VIT, INT) that helps the town.
    - Prices go by what a thing is (decor, furniture, equipment, a big piece, a moment), times the room's story step.
    Cal: "take it step by step until it feels right ... it could be tightened more." Every number is in ECON. */
@@ -18,11 +18,10 @@ var ECON={
   dqGoal:150,dqTiers:[[150,150],[200,150],[250,200],[300,300]],
   effFirst:.25,effOver:1.5,hidden:2,              /* efficiency after the first task; cap in overtime; hidden quest at 2x goal */
   shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */
-  /* Cal, 2026-11-09: "500 energy cost for a mission requires 500 exp gained. that seems expensive right? And the payout is not
-     that great". Energy is today's task XP and is never taken from your XP, so missions are a bonus on a good day: a normal day
-     (about 200 XP) runs the big one, or two small ones twice. Bigger jobs pay more per energy (MS_LIST in 28_missions.js). */
-  mcost:{m1:25,m2:45,m3:75,m4:110,m5:160},
-  mcoinLv:.005,                                   /* mission coins grow 0.5% a level (was 1%) */
+  /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
+     gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
+     Lair upgrade (the Lair's reason now that it sends no missions), and always on the crawlPity-th crawl in a row without one */
+  crawlRare:.12,crawlLair:.005,crawlPity:4,
   /* quest coins grow this much a level (was 1%). Quest coins are paid on the listed XP (x2 for a photo or the bounty), not on
      streak, combo, crit and rank XP bonuses, which stay XP only: with all of them, coins ran to 10x by level 100 (QA, 2026-11-09) */
   coinLv:.005,
@@ -40,7 +39,6 @@ var ECON={
   freeMiss:1,freezeEvery:5,streakKeep:.5,         /* streak: one missed day a week is free; a freeze every 5 days; short of freezes it halves */
   catchGap:8,catchPct:25,                         /* 8+ levels under the median of friends active this week: quests +25% XP */
   slotFree:{garden:1,chef:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
-  msPerDay:2,msGapH:3,                            /* Cal: each mission twice a day, 3 hours apart */
   /* Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from there. Otherwise we are unlocking too
      many things before lvl 10." The least level for each story step, on top of its own gate; one step every few levels. */
   waterH:24,sprAlso:"g_x2",sprPrice:2000,         /* Cal: Sprinklers "much later": only with the Garden's Estate stage (was 6,000) */
@@ -51,7 +49,7 @@ var ECON={
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
   trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
   /* each stat point, and its cap. INT had none: the hidden quest adds one most days, so the chest grew without end (QA) */
-  vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,intMax:.25,
+  vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.05,int:.05,intMax:.25,
   /* ---- prices (QA, 2026-11-09). Cal: "i want everyone to feel like buying stuff is worth it and not too expensive, but also
      not too easy. Once the garden and other income generating stuff gets unlocked, certain upgrades should be more expensive.
      But when you are first starting off with no passive income, it is hard to get 2000 ... if we are passively collecting a
@@ -99,23 +97,12 @@ function payRoom(){return Math.max(0,Math.round(payQuest()*payShare()*dqEff())-d
 function payTake(n){dqState().paid+=n}
 /* rooms produce at the Daily Quest's efficiency too (was: full speed after 3 quests), never below 20% */
 openMult=function(){return Math.max(.2,dqEff())};
-/* ---- missions: energy in, coins out, no XP ---- */
-function msCost(q){return ECON.mcost[q.id]||Math.round(q.mins*2)}
-function msEnergy(){return Math.max(0,dqXp()-dqState().spent)}
-var econMinsBase=msMins;msMins=function(q){return Math.max(5,Math.round(econMinsBase(q)*(1-Math.min(ECON.agiMax,stats4().agi*ECON.agi))))};
+/* ---- Dungeon Crawls (10_app_a.js, the finds in 29d_dungeon.js): STR makes rare finds likelier, AGI brings a crawl back sooner ---- */
 var econGiftBase=dgBuff;dgBuff=function(k){return econGiftBase(k)+(k==="gift"?Math.min(ECON.strMax,stats4().str*ECON.str):0)};
-var MSWAS={};
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msgo]");if(!b)return;var q=MS_LIST.filter(function(x){return x.id===b.dataset.id})[0];if(!q)return;
-  var c=msCost(q);if(msEnergy()<c){e.stopImmediatePropagation();e.preventDefault();pop(dqXp()?"Needs "+c+" energy, you have "+msEnergy()+". Every task XP point is one energy.":"Your team waits for you: finish a task today first.");return}
-  MSWAS[q.id]=!!msState().run[q.id]},true);
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msgo]");if(!b)return;var q=MS_LIST.filter(function(x){return x.id===b.dataset.id})[0];if(!q)return;
-  if(!MSWAS[q.id]&&msState().run[q.id]){dqState().spent+=msCost(q);MSWAS[q.id]=true;persist();render()}});
-var econAwayBase=awayHtml;
-awayHtml=function(){return '<section class="card panel"><h3 class="label">Energy</h3><p class="note"><b class="mono">'+msEnergy()+'</b> energy today. Every XP point from today\'s tasks is one energy; missions spend it.</p></section>'+econAwayBase()};
 /* ---- training ---- */
 var TRAINSTAT={push:"str",chest:"str",shoulders:"str",arms:"str",pull:"str",legs:"agi",full:"vit",core:"vit",back:"vit"};
 var STATN={str:"STR",agi:"AGI",vit:"VIT",int:"INT"};
-var STATD={str:"better loot from missions",agi:"missions come back sooner",vit:"rooms pay a larger share",int:"a bigger Daily Quest chest"};
+var STATD={str:"more rare finds on dungeon crawls",agi:"dungeon crawls come back sooner",vit:"rooms pay a larger share",int:"a bigger Daily Quest chest"};
 function econTrainXp(done,full){return done>=ECON.trainFull?ECON.trainXp:10*done}
 function econTrained(x,plan){dqState().tx+=x;var k=TRAINSTAT[plan];if(k&&x>=ECON.trainXp){stats4()[k]++;persist();setTimeout(function(){pop("+1 "+STATN[k]+": "+STATD[k])},2600)}}
 /* ---- the Daily Quest card, its chest, and the hidden quest ---- */
@@ -178,4 +165,4 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
       if(s==="buff"){it[3]=ECON.buff[it[0]]||Math.round(it[3]/50)*50;return}
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
       it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})})})();
-window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,energy:msEnergy,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
+window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};

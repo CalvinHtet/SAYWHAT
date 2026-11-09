@@ -129,7 +129,7 @@ function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o
   for(var i=0;i<BEATS.length;i++){var b=BEATS[i],ok=false;if(o.beats[b.id])continue;try{ok=b.gate()}catch(e){}if(!ok)continue;
     o.beats[b.id]=1;o.lastScene=now;S.coins+=60;S.earnedC+=60;persist();modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+60 coins</small>'));return true}
   return false}
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(b){var o=styState();o.missions=(o.missions||0)+1}},true);
+/* every dungeon crawl brought home counts in styState().missions (dngClaim in 10_app_a.js) */
 /* look for the next step now and then, never over another window, one scene at a time */
 /* a story step below the shared-slot level that is ready to open (gate and level met), for 29h_unlocks.js */
 /* returns that step's own level, or 0 when none is ready */

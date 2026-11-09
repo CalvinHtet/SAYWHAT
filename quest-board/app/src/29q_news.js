@@ -9,7 +9,7 @@ var WELCOME='<div class="card box2 welcome"><span class="label">A note from Cal<
  +'<h3 class="label">How it works</h3><ul class="wl">'
  +'<li><b>Add your tasks.</b> Type them, messy is fine, in the box at the top of the Board and each one becomes a quest.</li>'
  +'<li><b>Finish quests</b> to earn XP and coins. Prove the big ones with a photo for double rewards.</li>'
- +'<li><b>Level up</b> to unlock new places, missions and gear.</li>'
+ +'<li><b>Level up</b> to unlock new places, dungeons and gear.</li>'
  +'<li><b>Spend coins</b> on your character and your Loft.</li>'
  +'<li><b>Show off</b> your character in the Town Hall and see how your friends are doing.</li>'
  +'<li><b>Challenges</b> are coming: see your friends&rsquo; wins in the Town Hall, then bet coins you can beat them this week (like more gym days). <i>Coming soon.</i></li>'

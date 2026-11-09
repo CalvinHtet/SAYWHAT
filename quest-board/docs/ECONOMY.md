@@ -35,8 +35,7 @@ routine (10 chores, the gym with a photo and a Training session on weekdays) rea
 | Hidden quest (300 XP) | a streak freeze, or +1 INT, or 300 coins once INT is full |
 | Level up | 50 + 5 x level, paid once per level (`ECON.lvPay`) |
 | Businesses | each day at most a share of the day's quest coins: 20% with a bare town, up to 50% with every upgrade of every room a player can open, +1% a VIT point (10% at most), times the town's efficiency (0 to 150%). The rest waits in the room |
-| Missions | energy in, coins out: see below |
-| Dungeons, 5 a day | a random haul by how deep the dungeon is: see below |
+| Dungeon Crawls, 5 a day | a random haul by how deep the dungeon is, and now and then a rare find: see below |
 | Wheel (level 6+) | about 230 a day |
 | Trophies | 250 each |
 | Weekly workout bonus | at least 250 XP and 3,000 coins (Cal) |
@@ -46,29 +45,29 @@ routine (10 chores, the gym with a photo and a Training session on weekdays) rea
 200 listed XP) about 3,000 to 4,500 in the first days, 6,000 when the Garden opens, 9,000 to 10,000 at the Restaurant, then 11,000
 to 15,000 from Boba on, where it levels off. Before this pass it ran to 30,000 a day by day 25 and 600,000 coins sat unspent.
 
-### Missions (`28_missions.js`, `ECON.mcost`)
+### Dungeon Crawls (`DNG` and `dngClaim` in `10_app_a.js`, the finds in `29d_dungeon.js`)
 
-Energy is today's task XP and is never taken from your XP. Cal: "500 energy cost for a mission requires 500 exp gained. that seems
-expensive right? And the payout is not that great." Now a normal day runs the big job, and bigger jobs pay more per energy:
+Cal, 2026-11-09: "Merge dungeons and missions. dont need two separate ones. Dungeon Crawls will be the new name. A dungeon crawl and
+bring loot, a new cosmetic, a new ally, or a relic piece, or something for the trophy room. But these items are rare, with success
+gauranteed by the 4th crawl." One tab (the nav says Crawls), open once the Hero's Lair is built. No energy any more.
 
-| Mission | Team | Energy | Coins (+0.5% a level) |
-| --- | --- | --- | --- |
-| Check the Old Metro | 1 | 25 | 45 |
-| Cellar Sweep | 1 | 45 | 85 |
-| Clocktower Break-In | 2 | 75 | 160 |
-| Neon Sewer Rescue | 2 | 110 | 250 |
-| Obsidian Spire | 3 | 160 | 400 |
-
-Each runs twice a day, 3 hours apart. Missions are the only way to find trophy pieces (29d_dungeon.js).
-
-### Dungeons (`DNG` in `10_app_a.js`)
-
-Cal: "dont tell us how many coins it gives. Make it a random number depending on the difficulty", "run 5 dungeons a day total",
-"Only show 5 dungeons": the deepest one open, the two below it that are open, the two locked ones above it. The card says how rich
-a dungeon is (Pocket change, Modest, Decent, Rich, Very rich, A hoard, Legendary), never a number. A run brings home a roll inside
-the dungeon's band (leaning low), and 6% of runs a big haul of 1.5 to 2.5 times its top, times the town's efficiency (50% to 150%):
-Cellar 35-100, Metro 55-140, Sewers 80-200, Clocktower 110-260, Mines 140-340, Sunken Arcade 180-430, Spire 230-540. Dungeons are
-your own runs, free of energy, and the only way to rescue allies. The Scout Map runs two at once.
+- **5 crawls a day** (`ECON.dngPerDay`), one at a time (two with the Scout Map), 30 to 60 minutes each (AGI and the Tunnel-Runner
+  Greaves bring them back sooner). Only 5 dungeons are listed: the deepest one open, the two below it, the two locked ones above.
+  The Mossy Cellar is open from level 1, so the first crawl never waits for a level.
+- **Coins every crawl**, never shown on the cards (a loot word instead: Pocket change to Legendary): a roll inside the dungeon's
+  band, leaning low, 6% of the time a big haul of 1.5 to 2.5 times its top; times the town's efficiency today (50% to 150%) and
+  the crawl perks (trophy pieces, the Regalia set, Sable). Bands: Cellar 30-80, Metro 40-110, Sewers 65-155, Clocktower 85-205,
+  Mines 110-265, Sunken Arcade 140-335, Spire 180-420. Below a dungeon's safe level a crawl can be a setback (a smaller haul).
+- **Rare finds**: 12% a crawl (`ECON.crawlRare`), plus the Hushstep Boots (3%), the full Regalia (5%), STR (up to 5%) and 0.5%
+  for every Hero's Lair upgrade (`ECON.crawlLair`; the Lair's reason now that it sends no missions). Three crawls running
+  with no find and the **fourth always has one** (`ECON.crawlPity`). A find is one of what that dungeon still hides (each card
+  says how many): a piece of The Goblin King's Regalia (for the Trophy Room), a shard of The Hollow Amulet (a relic piece), the
+  ally trapped there (each with a perk for good), the Rift Mask at the bottom of the Spire, or a piece of clothing you do not own
+  (a brand that has left the Shop first, then the brands on sale, then the basics). A dungeon with nothing left: half its finds
+  are clothes, half a strongbox (the band's top in coins). A find is kept the moment the crawl comes home.
+- **The first crawl** brings Sable home (your first teammate) instead of a find.
+- Every crawl counts toward the Expedition Ledger relic and the return visits that used to count missions.
+- A save with a mission still out from before the merge gets that mission's coins once (`28_missions.js`).
 
 ## Prices
 

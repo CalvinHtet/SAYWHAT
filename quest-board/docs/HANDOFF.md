@@ -23,8 +23,10 @@ is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up
 
 Economy pass (Windows session, 2026-11-09, on qa-local): income and every price rebuilt on measured play, see `docs/ECONOMY.md`
 and `docs/WINDOWS_HANDOFF_2026-11-09.md`. Prices now come from one place, `econPrice` and `ECON` in `29e_economy.js` (the older
-layers in `10_app_a.js` and `29_prices.js` only say what a thing is). Dungeons: 5 a day, 5 listed, no coin numbers. Missions:
-cheaper energy. Daily Quest: chests at 150/200/250/300 XP. The Calibur Mall is held closed in Live builds until Cal reviews it
+layers in `10_app_a.js` and `29_prices.js` only say what a thing is). Missions and dungeons are one thing now, Dungeon Crawls
+(Cal: "Merge dungeons and missions"): 5 a day, 5 dungeons listed, no coin numbers, coins every crawl and a rare find (a trophy, a
+relic shard, an ally, clothes) at least every 4th crawl; `dngClaim`/`dngHtml` in `10_app_a.js`, `crawlFind` in `29d_dungeon.js`; no
+energy. Daily Quest: chests at 150/200/250/300 XP. The Calibur Mall is held closed in Live builds until Cal reviews it
 (`MALLHOLD`, `29b_story.js`). The Auditorium projector waits on a back-view sprite from ROOMS (TASKS.md).
 
 Rooftop and Mall rebuilt (2026-11-08, Cal approved; d35c90d). Rooftop: dark deck `rfw_t1`, cut to a 14 px kerb, glass rail on every side. Mall: 16 x 12, 210 high walls, `mlw_t1` holds the upper level, new `mlx_lift`; `MLBACK` and `MLLEFT` are the painted shop units, so a new shell must keep them. Victor's hair is `fr_victor_hair` (d7d318c), not in `hairStyles` on purpose. GPT Image 2 is no longer Unlimited on Cal's Higgsfield; Nano Banana Pro is.

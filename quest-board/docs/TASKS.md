@@ -3356,6 +3356,14 @@ To do:
 
 ---
 
+Requests for QA (Windows session, 2026-11-09):
+- WAITING ON QA: missions and dungeon delves are one thing now, Dungeon Crawls (Cal: "Merge dungeons and missions"; 10_app_a.js
+  dngClaim and dngHtml, finds in 29d_dungeon.js crawlFind, docs/ECONOMY.md). Three of your scripts drive the old missions and
+  need a new path: `rigtest/qa/sim.js` (msgo/msclaim; `tools/windows/econsim.js` shows the crawl version), `riftlive.js`
+  (`__qbDungeon.roll('m5')` is gone: `__qbDungeon.find({id:"spire",c:[180,420]})` or a Spire crawl) and `team.js`. Check: Sable
+  joins on the first crawl, a rare find at least every 4th crawl, 5 crawls a day, the Trophy Room opener once the first piece is
+  home, and a save with a mission still out gets its coins once.
+
 ## QA: tests, pilots, quality checks
 
 Doing:

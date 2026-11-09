@@ -507,16 +507,24 @@ function spin(){
 }
 
 /*v51*/
-/* Cal, 2026-11-09: "dont tell us how many coins it gives. Make it a random number depending on the difficulty." c is each
-   dungeon's usual haul (a roll leans low), with a small chance of a much bigger one; the card only says how rich it is (loot) */
+/* ---------- Dungeon Crawls (Cal, 2026-11-09: "Merge dungeons and missions. dont need two separate ones. Dungeon Crawls will be the
+   new name. A dungeon crawl and bring loot, a new cosmetic, a new ally, or a relic piece, or something for the trophy room. But these
+   items are rare, with success gauranteed by the 4th crawl.") ----------
+   One activity on its own tab, open once the Hero's Lair is built: pick a dungeon, put the phone down, come back when the timer is
+   up. Every crawl brings coins: a roll inside the dungeon's band (leaning low, 6% a big haul; the cards never show numbers, Cal),
+   times the town's effort today and the crawl perks (crawlMult). Some crawls also bring a rare find (crawlFind in 29d_dungeon.js):
+   a trophy for the Trophy Room, a relic shard, an ally trapped down there, or something to wear. Three crawls running with no find
+   and the fourth always has one (ECON.crawlPity). ECON.dngPerDay crawls a day, one at a time (two with the Scout Map). The old
+   missions went to the same places from the Lair: their trophy pieces, Sable and the Rift Mask now come home from crawls. */
 var DNG=[
- {id:"cellar",name:"Mossy Cellar",lv:5,mins:30,c:[35,100],x:[10,15],loot:"Pocket change",ic:"\u{1F344}",tag:"Damp stairs and glowing mushrooms."},
- {id:"metro",name:"Forgotten Metro",lv:10,mins:30,c:[55,140],x:[12,18],loot:"Modest",ic:"\u{1F687}",tag:"A station that was never on any map."},
- {id:"sewer",name:"Neon Sewers",lv:16,mins:45,c:[80,200],x:[15,22],loot:"Decent",ic:"\u{1F4A1}",tag:"Flickering pipes and standing water."},
- {id:"tower",name:"Clocktower Vault",lv:24,mins:45,c:[110,260],x:[18,26],loot:"Rich",ic:"\u{23F0}",tag:"Every gear ticks a different time."},
- {id:"mines",name:"Crystal Mines",lv:32,mins:60,c:[140,340],x:[22,32],loot:"Very rich",ic:"\u{1F48E}",tag:"The walls hum when you walk past."},
- {id:"arcade",name:"Sunken Arcade",lv:42,mins:60,c:[180,430],x:[26,38],loot:"A hoard",ic:"\u{1F579}",tag:"Cabinets glow under a foot of water."},
- {id:"spire",name:"Obsidian Spire",lv:55,mins:60,c:[230,540],x:[30,45],loot:"Legendary",ic:"\u{1F5FC}",tag:"The last floor is always one more floor."}];
+ {id:"cellar",name:"Mossy Cellar",lv:1,rec:1,mins:30,c:[30,80],loot:"Pocket change",ic:"\u{1F344}",tag:"Damp stairs and glowing mushrooms."},
+ {id:"metro",name:"Forgotten Metro",lv:10,mins:30,c:[40,110],loot:"Modest",ic:"\u{1F687}",tag:"A station that was never on any map."},
+ {id:"sewer",name:"Neon Sewers",lv:16,mins:45,c:[65,155],loot:"Decent",ic:"\u{1F4A1}",tag:"Flickering pipes and standing water."},
+ {id:"tower",name:"Clocktower Vault",lv:24,mins:45,c:[85,205],loot:"Rich",ic:"\u{23F0}",tag:"Every gear ticks a different time."},
+ {id:"mines",name:"Crystal Mines",lv:32,mins:60,c:[110,265],loot:"Very rich",ic:"\u{1F48E}",tag:"The walls hum when you walk past."},
+ {id:"arcade",name:"Sunken Arcade",lv:42,mins:60,c:[140,335],loot:"A hoard",ic:"\u{1F579}",tag:"Cabinets glow under a foot of water."},
+ {id:"spire",name:"Obsidian Spire",lv:55,mins:60,c:[180,420],loot:"Legendary",ic:"\u{1F5FC}",tag:"The last floor is always one more floor."}];
+/* the allies trapped in each dungeon: one of the rare finds (crawlFind), each with a perk for good */
 var DNPC=[
  {id:"pip",d:"cellar",name:"Pip the Cellar Cook",line:"Was stuck behind a barrel door for three weeks.",buff:{special:"coin",pct:3,text:"Coins +3%"}},
  {id:"mara",d:"metro",name:"Mara the Conductor",line:"Still waiting on the 9:15 that never came.",buff:{special:"all",pct:3,text:"All quests +3% XP"}},
@@ -529,47 +537,60 @@ var DNG_OPEN=["You stepped in as the lights flickered on.","A cold draft pushed 
 var DNG_WIN=["A loose panel gave way to a stash of coins.","You waited out a patrol and slipped past with their supplies.","A map scrawled on the wall pointed to a hidden cache.","You solved a three-switch lock on the first try.","A friendly stranger traded you a pouch for directions out.","You found a dusty chest and sprang only one small trap."];
 var DNG_END=["You climbed out with your pack heavier and your head high.","It was bright out when you surfaced.","You were home before the kettle stopped whistling.","Nobody believed the story. The coins were real.","You left a chalk arrow for whoever comes next."];
 var DNG_BAD=["You were a bit green for this place: a rockfall cut the path, so you dropped your pack and ran.","A trap you should have spotted at a higher level sent you tumbling. Half the loot stayed behind.","Something large woke up. You left coins on the floor and ran for the exit.","The floor gave out. You climbed back with what you could carry.","Your lantern died in a long corridor. You felt your way out and lost the bag on the stairs.","A goblin at a gate charged a toll. You paid most of what you had."];
-var DNG_BAD2=["Level up a little and this place will feel a lot kinder.","Lesson learned: bring a rope next time.","Even the best delvers drop the pack sometimes.","Next time, bring a second lantern."];
+var DNG_BAD2=["Level up a little and this place will feel a lot kinder.","Lesson learned: bring a rope next time.","Even the best crawlers drop the pack sometimes.","Next time, bring a second lantern."];
 function dngInit(){if(!S.dng||typeof S.dng!=="object")S.dng={};var D=S.dng;if(!Array.isArray(D.runs))D.runs=[];if(!D.cd)D.cd={d:"",n:0};if(!D.npcs)D.npcs={};if(!D.log)D.log=[];return D}
 function dngSlots(){return 1+(S.owned&&S.owned.bf_away?1:0)}
 function dngRand(a){return a[Math.floor(Math.random()*a.length)]}
+/* the level a dungeon is safe at (the first one always is) */
+function dngRec(d){return d.rec||d.lv+4}
+/* how long a crawl takes: AGI and the Tunnel-Runner Greaves bring you back sooner */
+function crawlMins(d){var f=0;try{f=Math.min(ECON.agiMax,stats4().agi*ECON.agi)+dgBuff("mt")}catch(e){}return Math.max(5,Math.round(d.mins*(1-Math.min(.4,f))))}
+/* the crawl perks on coins: trophy pieces and sets (29d_dungeon.js), Sable (29c_team.js) */
+function crawlMult(){var f=1;try{f+=dgBuff("mc")+dgBuff("mission")}catch(e){}try{f*=teamCrawlMult()}catch(e){}return f}
 function dngRoll(d){
-  var lv=effLvl(),rec=d.lv+4,risk=lv>=rec?.06:.06+.08*(rec-lv),bad=Math.random()<risk,D=dngInit();
-  var c=Math.round(d.c[0]+Math.pow(Math.random(),1.4)*(d.c[1]-d.c[0])),x=Math.round(d.x[0]+Math.random()*(d.x[1]-d.x[0]));
+  var lv=effLvl(),rec=dngRec(d),risk=lv>=rec?.06:.06+.08*(rec-lv),bad=Math.random()<risk;
+  var c=Math.round(d.c[0]+Math.pow(Math.random(),1.4)*(d.c[1]-d.c[0]));
   if(Math.random()<.06)c=Math.round(d.c[1]*(1.5+Math.random()));/* a rare big haul */
-  var npc=null,story=dngRand(DNG_OPEN)+" ";
-  if(bad){c=Math.round(c*(.35+Math.random()*.2));x=Math.round(x*.6);story+=dngRand(DNG_BAD)+" "+dngRand(DNG_BAD2)}
-  else{story+=dngRand(DNG_WIN)+" "+dngRand(DNG_END);
-    var n=DNPC.filter(function(q){return q.d===d.id&&!D.npcs[q.id]})[0];
-    if(n&&Math.random()<.025){npc=n.id;story+=" Behind a rusted gate, someone was waving at you."}}
-  return {id:d.id,start:Date.now(),end:Date.now()+d.mins*60000,bad:bad,c:c,x:x,npc:npc,story:story}
+  var story=dngRand(DNG_OPEN)+" ";
+  if(bad){c=Math.round(c*(.35+Math.random()*.2));story+=dngRand(DNG_BAD)+" "+dngRand(DNG_BAD2)}
+  else story+=dngRand(DNG_WIN)+" "+dngRand(DNG_END);
+  return {id:d.id,start:Date.now(),end:Date.now()+crawlMins(d)*60000,bad:bad,c:c,story:story}
 }
 function dngPerDay(){return (typeof ECON!=="undefined"&&ECON.dngPerDay)||5}
 function dngStart(id){
   var d=DNG.filter(function(q){return q.id===id})[0],D=dngInit(),t=today();
   if(!d||d.lv>effLvl()||D.runs.length>=dngSlots())return;
   if(D.cd.d!==t)D.cd={d:t,n:0};
-  if(D.cd.n>=dngPerDay()){pop(dngPerDay()+" delves a day is plenty. Rest up.");return}
-  D.cd.n++;D.runs.push(dngRoll(d));render();persist();pop("Entered "+d.name+". Go do your day!");
+  if(D.cd.n>=dngPerDay()){pop(dngPerDay()+" crawls a day is plenty. Rest up.");return}
+  D.cd.n++;D.runs.push(dngRoll(d));render();persist();pop("Into "+d.name+". Go do your day!");
 }
 function dngClaim(k,ev){
   var D=dngInit(),r=D.runs[k];if(!r||Date.now()<r.end)return;
-  var d=DNG.filter(function(q){return q.id===r.id})[0],m=Math.max(.5,openMult()),c=Math.max(5,Math.round(r.c*m)),x=0,n=r.npc&&DNPC.filter(function(q){return q.id===r.npc})[0];
-  D.runs.splice(k,1);if(n)D.npcs[n.id]=1;
-  D.log.unshift({d:d.name,c:c,x:x,bad:r.bad,t:Date.now()});D.log=D.log.slice(0,6);
+  var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],m=Math.max(.5,openMult()),c=Math.max(5,Math.round(r.c*m*crawlMult()));
+  D.runs.splice(k,1);
+  /* every crawl counts where the old missions did: the Expedition Ledger relic and the return visits (29b_story.js) */
+  try{var so=styState();so.missions=(so.missions||0)+1}catch(e){}
+  /* the very first crawl brings Sable home (29c_team.js); after that, maybe a rare find, kept at once so a closed app loses nothing */
+  var sable=typeof TEAM!=="undefined"&&TEAM.sable&&typeof teamHas==="function"&&!teamHas("sable");
+  if(sable)try{styState().team.sable=1}catch(e){}/* on the team at once; her welcome banner shows when this window closes with Done */
+  var f=sable?null:(typeof crawlFind==="function"?crawlFind(d,r):null);
+  D.log.unshift({d:d.name,c:c,bad:r.bad,f:f?f.kind:"",t:Date.now()});D.log=D.log.slice(0,6);
   var rel=(m<1?'<p class="note">The town ran at '+Math.round(m*100)+'% today, so the loot was trimmed. Complete the Daily Quest for the full haul.</p>':'');
-  var mm=modal('<div class="card box2 adv"><span class="label">'+(r.bad?'Setback':'Delve complete')+'</span><h2>'+esc(d.name)+'</h2><p class="note">'+esc(r.story)+'</p>'
+  var mm=modal('<div class="card box2 adv"><span class="label">'+(r.bad?'Setback':'Crawl complete')+'</span><h2>'+esc(d.name)+'</h2><p class="note">'+esc(r.story)+'</p>'
     +'<div class="reward reveal">+'+c+' coins</div>'+rel
-    +(n?'<div class="card panel" style="margin-top:10px"><span class="label">Rescued</span><b>'+esc(n.name)+'</b><p class="note">'+esc(n.line)+' Now lives in your Loft.</p><span class="chip mult">'+esc(n.buff.text)+'</span></div>':'')
-    +'<div class="row"><button class="btn" id="dgok">Done</button></div></div>');
-  var b=mm&&mm.querySelector("#dgok");if(b)b.onclick=function(){mm.remove()};
-  grantXp(x,c,null);if(ev&&ev.clientX!=null)burst(ev.clientX,ev.clientY,n?40:20);
+    +(sable?'<p class="note">On the way out, someone called from behind a collapsed grate. You dug them out.</p>':'')
+    +(f?'<div class="card panel dg-find"><span class="label">A rare find</span><p class="note">Something else came home with you.</p></div>':'')
+    +'<div class="row"><button class="btn" id="dgok">'+(f?'Open it':'Done')+'</button></div></div>');
+  var b=mm&&mm.querySelector("#dgok");if(b)b.onclick=function(){mm.remove();if(f&&typeof dgReveal==="function"){DGPEND={g:f};dgReveal()}if(sable&&typeof teamJoin==="function")teamJoin("sable")};
+  grantXp(0,c,null);if(ev&&ev.clientX!=null)burst(ev.clientX,ev.clientY,f?40:20);
 }
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
-  var h='<section class="card panel"><h3 class="label">Dungeons</h3><p class="note">Tap a dungeon, put the phone down and go do your real quests. Come back when the timer is up. What you bring back is luck, and deeper dungeons hide more. Delves today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.</p>';
+  var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
+  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare: a trophy, a relic shard, an ally or something to wear. Three crawls with nothing rare and the fourth always finds something.</p>'
+    +'<p class="note">Crawls today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.'+(sure?' <b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
-    var d=DNG.filter(function(q){return q.id===r.id})[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
+    var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
     h+='<div class="dng run"><b>'+d.ic+' '+esc(d.name)+'</b>'+(done?'<small class="note"> You made it back.</small><button class="btn" data-act="dclaim" data-k="'+k+'">Return</button>':'<small class="note"> back in '+mins+' min</small><div class="dbar"><i style="width:'+pct+'%"></i></div>')+'</div>'});
     h+='</div>'}
   /* Cal, 2026-11-09: "Only show 5 dungeons total to keep the size of the screen low": the deepest one open now, the two below
@@ -577,13 +598,13 @@ function dngHtml(){
   var cur=-1;DNG.forEach(function(d,i){if(d.lv<=lv)cur=i});
   h+='<div class="lrows">';
   DNG.slice(Math.max(0,cur-2),cur<0?2:cur+3).forEach(function(d){
-    var locked=d.lv>lv,rec=d.lv+4,risk=lv>=rec?"Safe":lv>=d.lv+2?"Risky":"Dangerous";
+    var locked=d.lv>lv,rec=dngRec(d),risk=lv>=rec?"Safe":lv>=rec-2?"Risky":"Dangerous",left=typeof crawlLeft==="function"?crawlLeft(d):0;
     h+='<div class="dng'+(locked?' lock':'')+'"><b>'+d.ic+' '+esc(d.name)+'</b><small class="note"> '+esc(d.tag)+'</small>'
-     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+d.mins+' min</span><span>Loot: '+esc(d.loot)+'</span><span>'+(locked?'Locked':risk)+'</span></div>'
-     +(locked?'':(D.runs.length>=dngSlots()?'<small class="note">All delve slots busy.</small>':'<button class="btn alt" data-act="dgo" data-id="'+d.id+'">Enter</button>'))+'</div>'});
+     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+crawlMins(d)+' min</span><span>Loot: '+esc(d.loot)+'</span><span>'+(locked?'Locked':risk)+'</span>'+(!locked&&left?'<span>'+left+' rare left</span>':'')+'</div>'
+     +(locked?'':(D.runs.length>=dngSlots()?'<small class="note">You are already down a dungeon.</small>':D.cd.n>=dngPerDay()?'<small class="note">Done for today.</small>':'<button class="btn alt" data-act="dgo" data-id="'+d.id+'">Crawl</button>'))+'</div>'});
   h+='</div></section>';
   var got=DNPC.filter(function(n){return D.npcs[n.id]});
-  h+='<section class="card panel"><h3 class="label">Rescued allies</h3>'+(got.length?'<div class="lrows">'+got.map(function(n){return '<div class="dng"><b>'+esc(n.name)+'</b><small class="note"> '+esc(n.line)+'</small><span class="chip mult">'+esc(n.buff.text)+'</span></div>'}).join("")+'</div>':'<p class="note">Very rarely, a delve ends with someone trapped inside waving at you. Rescue one and they move in with a permanent perk.</p>')+'</section>';
+  h+='<section class="card panel"><h3 class="label">Rescued allies</h3>'+(got.length?'<div class="lrows">'+got.map(function(n){return '<div class="dng"><b>'+esc(n.name)+'</b><small class="note"> '+esc(n.line)+'</small><span class="chip mult">'+esc(n.buff.text)+'</span></div>'}).join("")+'</div>':'<p class="note">Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good.</p>')+'</section>';
   return h;
 }
 
@@ -622,8 +643,8 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeons",1]];
-var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your team out from the Hero\'s Lair. Missions bring home coins, gifts and trophies."};
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
+var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
@@ -657,7 +678,7 @@ var SHOP=[
  ["bf_xp2","buff","Focus Rune II",450,10,"All quests +3% more XP.",{k:"xp",v:3,req:"bf_xp1"}],
  ["bf_coin2","buff","Merchant Seal II",450,10,"All quests +10% more coins.",{k:"coin",v:10,req:"bf_coin1"}],
  ["bf_streak","buff","Anchor Sigil",500,12,"Streak bonus cap +5%.",{k:"streak"}],
- ["bf_away","buff","Scout Map",600,14,"Run two dungeon delves at once.",{k:"away"}],
+ ["bf_away","buff","Scout Map",600,14,"Run two dungeon crawls at once.",{k:"away"}],
  ["bf_xp3","buff","Focus Rune III",1000,25,"All quests +4% more XP.",{k:"xp",v:4,req:"bf_xp2"}],
  ["bf_coin3","buff","Merchant Seal III",1000,25,"All quests +15% more coins.",{k:"coin",v:15,req:"bf_coin2"}],
  ["hr_wolf","a_hair","Wolf Cut",90,2,"Layered and sharp.",{s:"wolf",g:"m"}],
@@ -766,13 +787,15 @@ function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]
 /* QA 2026-11-09: below level 10 one area opens per day (29h_unlocks.js), so once today's is used a waiting area opens tomorrow,
    not "at your next level-up" */
 function areaTomorrow(a){return typeof unlockSlotFree==="function"&&!unlockSlotFree(a[2])}
+/* a tab whose name is too long for the bar ("Dungeon Crawls" ran off the button at 390 px) shows a short label there */
+var NAVSHORT={away:"Crawls"};
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
     /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
     var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":a[1])+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){

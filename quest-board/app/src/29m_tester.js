@@ -29,7 +29,7 @@ function qbtNextStep(){var o=styState();for(var k=0;k<STORY.length;k++){var s=ST
   pop("The story has no steps left")}
 /* Cal (2026-11-07): "a button that triggers the next event such as the investor coming ... I want to be able to test everything
    myself but quickly". Test > Next event plays the next thing in the story's order for real (it saves, unlike Review): a team
-   member's return visit whose step is done, Sable after the first mission, else the next story step (its scene first, then a tap
+   member's return visit whose step is done, Sable after the first dungeon crawl, else the next story step (its scene first, then a tap
    later its room, built free). It skips what the game would wait for (income, level, one step a day) and says what that was. */
 function qbtNextEvent(){var o=styState();o.beats=o.beats||{};
   document.querySelectorAll("#layer .modal").forEach(function(m){m.remove()});
@@ -39,7 +39,7 @@ function qbtNextEvent(){var o=styState();o.beats=o.beats||{};
       modal(styCard(b,styBeatPic(b),'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">+60 coins</small>'))};
   for(var k=0;k<STORY.length;k++){var s=STORY[k];if(s.how==="never")continue;
     if(o.done[s.id]){
-      if(s.id==="chef"&&TEAM.sable&&!teamHas("sable")){teamJoin("sable");pop("Next event: Sable (normally after your first mission)");return}
+      if(s.id==="chef"&&TEAM.sable&&!teamHas("sable")){teamJoin("sable");pop("Next event: Sable (normally after your first dungeon crawl)");return}
       var bs=beatsAfter(s.id);if(bs.length){showBeat(bs[0]);pop("Next event: "+bs[0].who+(QBRV_BEATWHEN[bs[0].id]?" (normally: "+QBRV_BEATWHEN[bs[0].id]+")":""));return}
       continue}
     var why=s.why?" (normally: "+s.why.replace(/\.$/,"")+")":"";
@@ -74,8 +74,8 @@ window.__qbRooms={pay:function(){return {room:payRoom(),quest:payQuest(),share:p
    way, in the order they meet it, each with a Play button that shows it exactly as the game does. Playing changes nothing in
    the save: no coins, no team member, no seen flags, no brand marked as shown. */
 var QBRV_BEATWHEN={mara1:"Restaurant with 5 upgrades",mara2:"Boba Shop with 2 upgrades",mara3:"Dessert Parlour with 3 upgrades",
-  desmond2:"Lock and Key with 6 upgrades",rafe2:"Rafe on the team and a Rooftop",rafe3:"Rafe and Sable on the team, 5 missions",
-  sable2:"Sable on the team, 8 missions",priya2:"the Movie Theater opens",nova2:"Nova on the team, mall with 6 upgrades",
+  desmond2:"Lock and Key with 6 upgrades",rafe2:"Rafe on the team and a Rooftop",rafe3:"Rafe and Sable on the team, 8 dungeon crawls",
+  sable2:"Sable on the team, 5 dungeon crawls",priya2:"the Movie Theater opens",nova2:"Nova on the team, mall with 6 upgrades",
   nova3:"Nova on the team and an Arcade",theo2:"Theo on the team, Auditorium with 3 upgrades",sable3:"the Goblin King's set finished in Relics",
   rafe4:"the amulet's five shards found"};
 var QBRV_CLOSE='<button class="btn" data-act="mclose">Close</button><small class="sty-xp">Review: nothing saved</small>';
@@ -94,7 +94,7 @@ function qbrvHtml(){var h='<div class="card box2 qbtr qbrv"><span class="label">
     var title=(k+1)+". "+(s.room?qbrvName(s.room):(s.scene?s.scene.who+" joins":s.id));
     h+=qbrvRow(title,(L?"Level "+L+" &middot; ":"")+esc(s.why)+(s.scene?" &middot; "+esc(s.scene.who)+", "+esc(s.scene.role):""),b)});
   if(ROOMHELP.loft)h+=qbrvRow("The first time in The Loft","The welcome window on day one",qbrvBtn("welcome","loft","Welcome"));
-  if(TEAM.sable)h+=qbrvRow("Sable joins","After the first mission comes home",qbrvBtn("team","sable","Joins"));
+  if(TEAM.sable)h+=qbrvRow("Sable joins","After the first dungeon crawl comes home",qbrvBtn("team","sable","Joins"));
   /* 2. return visits from the people you met */
   h+='<h3 class="label" style="margin-top:14px">Return visits (+60 coins each, one at a time)</h3>';
   BEATS.forEach(function(b){h+=qbrvRow(b.who+" at "+b.at,esc(QBRV_BEATWHEN[b.id]||"later in the story"),qbrvBtn("beat",b.id))});
@@ -161,9 +161,9 @@ function qbrvSeq(){var q=[],n=0;
     if(s.scene)q.push(["scene",s.id]);
     if(s.scene&&s.scene.team&&TEAM[s.scene.team])q.push(["team",s.scene.team]);
     if(s.room&&ROOMHELP[s.room])q.push(["welcome",s.room]);
-    if(s.id==="chef"){q.push(["note","Meanwhile, at home","The Walk-in Closet opens the Shop, and a hollow panel at its back opens onto the Hero's Lair, where missions start."]);
+    if(s.id==="chef"){q.push(["note","Meanwhile, at home","The Walk-in Closet opens the Shop, and a hollow panel at its back opens onto the Hero's Lair, where dungeon crawls start."]);
       if(ROOMHELP.closet)q.push(["welcome","closet"]);if(ROOMHELP.lair)q.push(["welcome","lair"]);
-      if(TEAM.sable)q.push(["note","Your first mission comes home","It brings someone back with it: Sable, found trapped below the city."],["team","sable"])}
+      if(TEAM.sable)q.push(["note","Your first dungeon crawl comes home","It brings someone back with it: Sable, found trapped below the city."],["team","sable"])}
     BEATS.forEach(function(b){if(QBRV_BEATAFTER[b.id]===s.id)q.push(["beat",b.id])})});
   q.push(["note","The end, for now","That is every story step, scene and return visit."]);
   return q}

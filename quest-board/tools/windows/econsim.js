@@ -3,15 +3,16 @@
 // Needs headless Chrome on port 9350 and the sandbox build served on 8765 (see docs/WINDOWS_HANDOFF_2026-11-09.md).
 //   bash node.sh econsim.js <type> <days> [url]      type: casual | regular | cal | grinder
 // One line per day, and out/econ_<type>.json with every day's coins by source, purchases and unlocks.
-// Added to sim.js: dungeon delves (up to one at a time), "cal" (Cal's own day: 10 chores, the gym with a photo every weekday),
+// Added to sim.js: Dungeon Crawls (quick check-ins between visits bring one home and send the next, 5 a day), "cal" (Cal's own
+// day: 10 chores, the gym with a photo every weekday),
 // and shopping like a player: save for the next new room (a lot, or an upgrade that opens a room), else the cheapest upgrade.
 const fs = require("fs"), path = require("path");
 const OUT = path.join(__dirname, "out"); fs.mkdirSync(OUT, { recursive: true });
 const TYPE = process.argv[2] || "regular", DAYS = +(process.argv[3] || 30), URL0 = process.argv[4] || "http://localhost:8765/";
 const P = {
-  casual: { goal: 100, tasks: [10, 10, 10, 10, 25, 30], proof: 0, workouts: [1, 4], play: [1, 2, 3, 4, 5], visits: [9, 20] },
-  regular: { goal: 150, tasks: [10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 15, 25], proof: 2, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
-  cal: { goal: 150, tasks: [10, 10, 10, 15, 15, 15, 25, 25, 25, 25], proof: 1, workouts: [1, 2, 3, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
+  casual: { goal: 100, tasks: [10, 10, 10, 10, 25, 30], proof: 0, workouts: [1, 4], play: [1, 2, 3, 4, 5], visits: [9, 20], ticks: [12, 16] },
+  regular: { goal: 150, tasks: [10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 15, 25], proof: 2, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20], ticks: [10, 16, 18] },
+  cal: { goal: 150, tasks: [10, 10, 10, 15, 15, 15, 25, 25, 25, 25], proof: 1, workouts: [1, 2, 3, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20], ticks: [10, 16, 18] },
   grinder: { goal: 300, tasks: [10, 10, 10, 10, 10, 10, 10, 10, 25, 25, 25, 25, 25, 25, 25, 25, 50, 50, 25, 25], proof: 99, workouts: [1, 2, 4, 5], play: [0, 1, 2, 3, 4, 5, 6], visits: [8, 13, 20] },
 }[TYPE];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -59,7 +60,14 @@ async function cdp() {
       unl: [], curDay: 0,
       clear() { try { window.lfPvStop(); } catch (e) {} document.querySelectorAll("#layer .modal,.modal,.overlay,.dropsplash").forEach((e) => { if (e.__seen) return; const cs = [...e.querySelectorAll(".unl")]; if (cs.length) { e.__seen = 1; const h = (e.querySelector("h1,h2,.lvl,.big") || {}).textContent || ""; this.unl.push({ d: this.curDay + 1, lv: window.__qb.x().effLvl(), head: h.trim().slice(0, 40), cards: cs.map((c) => (((c.querySelector(".label") || {}).textContent || "") + ": " + ((c.querySelector("b") || {}).textContent || "")).trim()) }); } }); document.querySelectorAll("#layer .modal,.modal,.overlay,.dropsplash").forEach((e) => { if (!e.querySelector("#wwok")) e.remove(); }); },
       act(a, d) { const el = document.createElement("button"); el.dataset.act = a; Object.assign(el.dataset, d || {}); el.style.display = "none"; document.body.appendChild(el); el.click(); el.remove(); },
-      led: { quests: 0, level: 0, missions: 0, rooms: 0, produce: 0, wheel: 0, weekly: 0, dq: 0, training: 0, dungeons: 0, other: 0 },
+      led: { quests: 0, level: 0, crawls: 0, rooms: 0, produce: 0, wheel: 0, weekly: 0, dq: 0, training: 0, other: 0 },
+      finds: {},
+      // Dungeon Crawls: bring home every finished crawl (the find is kept at once), then go down the deepest safe dungeon open
+      crawlBack() { const S = window.__qb.x().S, D = S.dng || {}; for (let k = (D.runs || []).length - 1; k >= 0; k--) { if (D.runs[k].end <= Date.now()) { this.track("crawls", () => this.act("dclaim", { k: String(k) })); const f = ((S.dng.log || [])[0] || {}).f; if (f) this.finds[f] = (this.finds[f] || 0) + 1; this.clear(); } } },
+      // a collector: the deepest safe dungeon that still hides something rare (its card says so), else the deepest safe one
+      crawlGo() { const x = window.__qb.x(), S = x.S; if (!S.base.slots.some((r) => r && r.t === "lair")) return; if (((S.dng || {}).runs || []).length) return; const lv = x.effLvl();
+        const safe = [["spire", 59], ["arcade", 46], ["mines", 36], ["tower", 28], ["sewer", 20], ["metro", 14], ["cellar", 1]].filter((q) => q[1] <= lv);
+        const best = safe.find((q) => window.__qbDungeon.hidden({ id: q[0] }).length) || safe[0]; if (best) { this.act("dgo", { id: best[0] }); this.clear(); } },
       spend: { upgrades: 0, lots: 0 },
       xpled: {},
       track(k, f) { const S = window.__qb.x().S, c0 = S.coins, x0 = S.xp, lp = S.lvPaid, b0 = Object.keys(S.badges || {}).length; f(); const S2 = window.__qb.x().S; let d = S2.coins - c0;
@@ -76,6 +84,8 @@ async function cdp() {
     const day = { d: d + 1, played: playing, bought: [], built: [], story: [] };
     for (let v = 0; v < P.visits.length; v++) {
       if (!playing) break;
+      // quick check-ins between visits, only to bring a crawl home and send the next (5 a day at most, one at a time)
+      for (const th of (P.ticks || []).filter((h) => h < P.visits[v] && (v === 0 || h > P.visits[v - 1]))) await ev(({ d, th }) => { const sim = window.__sim, x = window.__qb.x(); sim.at(d, th); x.rollover(); sim.clear(); sim.crawlBack(); sim.crawlGo(); }, { d, th });
       const res = await ev(({ d, hour, first, P, dow }) => {
         const sim = window.__sim, x = window.__qb.x(), S = x.S, out = { bought: [], built: [], story: [] };
         sim.at(d, hour); x.rollover(); sim.clear();
@@ -85,12 +95,7 @@ async function cdp() {
         sim.track("rooms", () => sim.act("rall"));
         if (S.base.food && S.base.food.veg >= 1) sim.track("produce", () => sim.act("stysell"));
         if (first) sim.track("wheel", () => sim.act("spin"));
-        ["m1", "m2", "m3", "m4", "m5"].forEach((id) => { const run = S.ms && S.ms.run && S.ms.run[id]; if (run && run.end <= Date.now()) sim.track("missions", () => sim.act("msclaim", { id })); });
-        sim.clear();
-        // dungeons: return from a finished delve, then enter the best one open (3 a day, one slot)
-        const D = S.dng || {}; (D.runs || []).forEach((r, k) => { if (r.end <= Date.now()) { sim.track("dungeons", () => sim.act("dclaim", { k: String(k) })); sim.clear(); } });
-        sim.clear();
-        if (S.base.slots.some((r) => r && r.t === "lair")) ["m5", "m4", "m3", "m2", "m1"].forEach((id) => { const m = S.ms; if (m && m.d === S.runDate && (m.run || {})[id]) return; sim.act("msgo", { id }); });
+        sim.crawlBack();
         if (P.tasks) {
           const qs = S.quests.filter((q) => q.rep === "daily"), per = Math.ceil(qs.length / P.visits.length);
           const mine = qs.slice(per * P.visits.indexOf(hour), per * (P.visits.indexOf(hour) + 1));
@@ -102,10 +107,8 @@ async function cdp() {
           const plan = ["push", "legs", "pull", "full"][(d + dow) % 4]; sim.act("wkplan", { v: plan }); sim.clear();
           if (S.wk) { (S.wk.list || []).forEach((id) => { const n = (S.wk.setsN && S.wk.setsN[id]) || 3; S.wk.sets[id] = Array.from({ length: n }, () => true); }); sim.track("training", () => sim.act("wkdone")); sim.clear(); } }
         if (window.__qbEcon) for (let k = 0; k < 6; k++) { sim.track("dq", () => window.__qbEcon.check()); sim.clear(); } // one chest a check
-        // after the tasks, a delve (the town now runs at today's effort)
-        const D2 = S.dng || {}, dc = D2.cd || {}; if ((D2.runs || []).length === 0 && !(dc.d === S.runDate && dc.n >= 3)) {
-          const lv = x.effLvl(), best = [["spire", 55], ["arcade", 42], ["mines", 32], ["tower", 24], ["sewer", 16], ["metro", 10], ["cellar", 5]].find((q) => q[1] + 4 <= lv) || null;
-          if (best) { sim.act("dgo", { id: best[0] }); sim.clear(); } }
+        // after the tasks, a crawl (the town now runs at today's effort)
+        sim.crawlGo();
         for (let k = 0; k < 4; k++) {
           sim.clear(); window.__qbStory.check();
           const yes = document.querySelector('[data-act="styyes"]');
@@ -149,14 +152,14 @@ async function cdp() {
       const E = window.__qbEcon;
       return { lv: x.effLvl(), raw: x.lvlOf(S.xp), xp: S.xp, coins: S.coins, earned: S.earnedC, spent: S.spent, streak: S.streak, gates: S.gates.length,
         rooms: S.base.slots.filter(Boolean).map((r) => r.t), ups, offers: offer.sort((a, b) => a - b), led: Object.assign({}, sim.led), xpled: Object.assign({}, sim.xpled), spend: Object.assign({}, sim.spend),
-        share: E ? +E.share().toFixed(3) : null, sp: E ? E.stats() : null, unl: sim.unl.splice(0), storyDone: Object.keys(window.__qbStory.state().done) }; });
+        share: E ? +E.share().toFixed(3) : null, sp: E ? E.stats() : null, finds: Object.assign({}, sim.finds), crawlsToday: ((S.dng || {}).cd || {}).n || 0, unl: sim.unl.splice(0), storyDone: Object.keys(window.__qbStory.state().done) }; });
     Object.assign(day, s);
     const prev = days.length ? days[days.length - 1] : null;
     const dled = {}; Object.keys(s.led).forEach((k) => { dled[k] = s.led[k] - ((prev && prev.led[k]) || 0); });
     day.dled = dled; day.dearned = s.earned - (prev ? prev.earned : 0);
     days.push(day);
     const top = Object.keys(dled).filter((k) => dled[k]).map((k) => k + " " + dled[k]).join(", ");
-    console.log(`day ${String(d + 1).padStart(3)} ${playing ? "play" : "rest"} lv ${s.lv}${s.raw > s.lv ? "(" + s.raw + ")" : ""} coins ${s.coins} +${day.dearned} [${top}] rooms ${s.rooms.length} ups ${s.ups} bought ${day.bought.length}${day.built.length ? " built " + day.built.join(",") : ""}${day.story.length ? " story " + day.story.join(",") : ""} share ${s.share} offers ${s.offers.slice(0, 4).join("/")}`);
+    console.log(`day ${String(d + 1).padStart(3)} ${playing ? "play" : "rest"} lv ${s.lv}${s.raw > s.lv ? "(" + s.raw + ")" : ""} coins ${s.coins} +${day.dearned} [${top}] rooms ${s.rooms.length} ups ${s.ups} bought ${day.bought.length}${day.built.length ? " built " + day.built.join(",") : ""}${day.story.length ? " story " + day.story.join(",") : ""} share ${s.share} crawls ${s.crawlsToday} finds ${Object.values(s.finds).reduce((a, b) => a + b, 0)} offers ${s.offers.slice(0, 4).join("/")}`);
     fs.writeFileSync(path.join(OUT, "econ_" + TYPE + ".json"), JSON.stringify({ type: TYPE, P, days, errs }));
   }
   console.log("page errors", errs.length, [...new Set(errs)].slice(0, 5));

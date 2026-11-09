@@ -1,10 +1,10 @@
 /* ---------- your team (Cal, 2026-11-05) ----------
    Five people who join through the story and the dungeons. Each has base stats, a buff that helps progression, a join banner
    (art/app/ui_team_<id>.webp, anime style, from ROOMS) and a signature look, so in the building view they stand out from the
-   guests (ROOMS draws them in their rooms from TEAM[id].look). They also lead the Lair's missions before any hired hands. */
+   guests (ROOMS draws them in their rooms from TEAM[id].look). The team page sits on top of the Dungeon Crawls tab. */
 var TEAM={
-  sable:{name:"Sable",role:"Scout",how:"Found trapped below the city on your first mission. Stayed to repay the favor.",
-    stats:{Cook:2,Charm:4,Hustle:6,Grit:9,Luck:7},buff:{text:"Missions pay 10% more coins",mission:.10},
+  sable:{name:"Sable",role:"Scout",how:"Found trapped below the city on your first dungeon crawl. Stayed to repay the favor.",
+    stats:{Cook:2,Charm:4,Hustle:6,Grit:9,Luck:7},buff:{text:"Dungeon crawls bring home 10% more coins",mission:.10},
     look:{body:"f",hairStyle:"h3",hairColor:"black",equipped:{top:{art:"al_shell"},hat:{art:"y_bucket"}}},ac:"#4dffc3"},
   mara:{name:"Mara",role:"Chef",how:"Bought your vegetables all week, then partnered on the restaurant.",
     stats:{Cook:9,Charm:6,Hustle:7,Grit:5,Luck:4},buff:{text:"Restaurant, Boba and Dessert earn 15% more",rooms:["restaurant","boba","dessert"],pct:15},
@@ -29,21 +29,15 @@ function teamJoin(id){var t=TEAM[id];if(!t)return;var o=styState();o.team[id]=1;
     +(art?'<img class="tmj-art" src="'+art+'" alt="">':'<div class="tmj-art tmj-art0"><b>'+esc(ini)+'</b></div>')
     +'<h2>'+esc(t.name)+'</h2><span class="chip">'+esc(t.role)+'</span><p class="note">'+esc(t.how)+'</p>'+bars
     +'<p class="tmj-buff">'+esc(t.buff.text)+'</p><div class="row"><button class="btn" data-act="mclose">Welcome aboard</button></div></div>');try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}},400)}
-/* their buffs: business rooms earn more, missions pay more */
+/* their buffs: business rooms earn more, dungeon crawls bring home more */
 var teamRoomMultBase=roomMult;
 roomMult=function(i){var m=teamRoomMultBase(i),r=bslot(i);if(!r)return m;var k=S.cls==="tamer"?1.5:1;/* the Tamer's Bond: team buffs 50% stronger */teamList().forEach(function(id){var b=TEAM[id].buff;if(b.rooms&&b.rooms.indexOf(r.t)>=0)m*=1+k*b.pct/100});return m};
-var teamMsPayBase=msPay;
-msPay=function(q){var p=teamMsPayBase(q),f=1,k=S.cls==="tamer"?1.5:1;teamList().forEach(function(id){f+=k*(TEAM[id].buff.mission||0)});return {c:Math.round(p.c*f),x:Math.round(p.x*f)}};
-/* team members lead the missions; hired hands fill the rest */
-var teamHeroesBase=msHeroes;
-msHeroes=function(){var base=teamHeroesBase(),names=teamList().map(function(id){return TEAM[id].name.split(" ")[0]});return names.concat(base.filter(function(n){return names.indexOf(n)<0})).slice(0,Math.max(base.length,names.length))};
-/* Sable: the first mission home brings someone back with it */
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=msclaim]");if(!b||teamHas("sable"))return;setTimeout(function(){if(!teamHas("sable"))teamJoin("sable")},900)});
-/* the team, on the Dungeons tab above the missions */
+function teamCrawlMult(){var f=1,k=S.cls==="tamer"?1.5:1;teamList().forEach(function(id){f+=k*(TEAM[id].buff.mission||0)});return f}
+/* Sable joins on the first dungeon crawl home (dngClaim in 10_app_a.js) */
+/* the team, on top of the Dungeon Crawls tab (dngHtml) */
 function teamHtml(){var ids=teamList();if(!ids.length)return '';
   return '<section class="card panel"><h3 class="label">Your team</h3><div class="tm-grid">'+ids.map(function(id){var t=TEAM[id],art=window.QBART&&QBART["ui_team_"+id+".webp"];
     return '<div class="tm-card" style="--tac:'+t.ac+'">'+(art?'<img src="'+art+'" alt="">':'<i>'+esc(t.name[0])+'</i>')+'<b>'+esc(t.name)+'</b><small>'+esc(t.role)+'</small><span>'+esc(t.buff.text)+'</span></div>'}).join("")+'</div></section>'}
-var teamAwayBase=awayHtml;awayHtml=function(){return teamHtml()+teamAwayBase()};
 /* class pictures: a man's and a woman's version when ROOMS has painted them (ui_class_<id>_m.webp, _f.webp) */
 function clsArt(id){var x=(S.char&&S.char.sex)==="f"?"f":"m",u=window.QBART&&QBART["ui_class_"+id+"_"+x+".webp"];return u||ART["class_"+id]}
 window.__qbTeam={join:teamJoin,list:teamList,TEAM:TEAM};
