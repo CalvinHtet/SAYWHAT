@@ -744,7 +744,7 @@ function stockCard(n,i){
 }
 function stripHtml(){
   var rk=RANKS[rankIdx()], t=eqItem("title");
-  return '<div class="strip"><div class="who"><button class="avbtn" data-act="char" aria-label="Your character">'+'<span class="calfull">'+calImg(lookOf(),"idle",86,"")+'</span>'+'</button><div><span class="brand">'+(ART.logo_board?'<img class="blogo" src="'+ART.logo_board+'" alt="">':'<i></i>')+esc((S.char&&S.char.name)||"Quest Board")+'</span>'+'<div class="ttl">'+(t?'<span class="ttlx '+t[0]+'">'+esc(ifTitle(t))+'</span> &middot; ':'')+'v0.'+APPV+' &middot; <span id="savest">'+saveLbl()+'</span></div></div></div><span class="right"><span class="coinpill" aria-label="'+S.coins+' coins"><i class="coin"></i>'+S.coins+'</span><span class="rankpill">'+(ART["rank_"+rk.l]?'<img class="rkimg" src="'+ART["rank_"+rk.l]+'" alt="Rank '+rk.l+'">':'<b>'+rk.l+'</b>')+''+esc(tierName(S.gates.length))+'</span></span></div>';
+  return '<div class="strip"><div class="who"><button class="avbtn" data-act="char" aria-label="Your character">'+'<span class="calfull">'+calImg(lookOf(),"idle",86,"")+'</span>'+'</button><div><span class="brand">'+(ART.logo_board?'<img class="blogo" src="'+ART.logo_board+'" alt="">':'<i></i>')+esc((S.char&&S.char.name)||"Quest Board")+'</span>'+'<div class="ttl">'+(t?'<span class="ttlx '+t[0]+'">'+esc(ifTitle(t))+'</span> &middot; ':'')+'v0.'+APPV+' &middot; <span id="savest">'+saveLbl()+'</span></div></div></div><span class="right"><span class="coinpill" aria-label="'+S.coins+' coins"><i class="coin"></i>'+S.coins+'</span><span class="rankpill">'+(ART["rank_"+rk.l]?'<img class="rkimg" src="'+ART["rank_"+rk.l]+'" alt="Rank '+rk.l+'">':'<b>'+rk.l+'</b>')+''+esc(tierName(S.gates.length))+'</span></span>'+(view==="board"?'<button class="infobtn" data-act="welcome" aria-label="A note from Cal: what SAYWHAT is">i</button>':'')+'</div>';
 }
 function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]<m)m=a[2]});return m}
 function navHtml(){
@@ -1348,7 +1348,7 @@ function ccAct(a,b,e){
       var tc=Math.round(cum(QB_TEST_START)*2.5),pl;for(pl=(S.lvPaid||1)+1;pl<=QB_TEST_START;pl++)tc+=levelPay(pl);
       S.coins=(S.coins||0)+tc;S.earnedC=(S.earnedC||0)+tc;S.lvPaid=Math.max(S.lvPaid||0,QB_TEST_START)}
     render();persist();
-    if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your first quest awaits.")}
+    if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your first quest awaits.");setTimeout(welcomeOnce,2600)}
     else pop("Look saved");
   }
 }

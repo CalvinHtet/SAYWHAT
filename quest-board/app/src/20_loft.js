@@ -438,10 +438,14 @@ var LFDS={
   {id:"modern",name:"Modern Dining",cost:3400,fl:"concrete",wl:"plaster",wc:"#d9dde6",wr:"plaster",wcr:"#c7ccd8",acc:{w:"L",a:.3,b:4.7,c:"#2b3552"}},
   {id:"trattoria",name:"Trattoria Red",cost:4200,fl:"walnut",wl:"plaster",wc:"#efdcc3",wr:"plaster",wcr:"#e2cdb0",acc:{w:"L",a:.3,b:4.7,c:"#9a3a3a"}}]
 };
+Object.keys(LFDS).forEach(function(k){LFDS[k].forEach(function(q){q.cost=lfStylePrice(q.cost)})});
+/* Cal, 2026-11-09: "It should not be that expensive to paint a room". A style was 2,200 to 5,200 coins, more than the room's
+   furniture; now 7.5% of that, 150 to 400, so a new look is always the cheapest thing in the room. Free styles stay free. */
+function lfStylePrice(c){return c>0?Math.round(Math.min(400,Math.max(150,c*.075))/50)*50:0}
 function lfDecSets(t){if(LFDS[t])return LFDS[t];var th=LFTH[t]||LFTH.lounge,w=th.wall||"#86a6cc",f=LFDEFFL[th.fl]||"oak";
   return [{id:"std",name:"Neutral",cost:0,fl:f,wl:"plaster",wc:"#ddd8cf",wr:"plaster",wcr:"#cfcac1"},
-   {id:"ind",name:"Industrial",cost:3000,fl:"concrete",wl:"plaster",wc:"#d6d2cb",wr:"plaster",wcr:"#c6c2bb",acc:{w:"L",a:1,b:7,tex:"brick"}},
-   {id:"mod",name:"Modern",cost:2600,fl:"grey",wl:"plaster",wc:"#d8dce6",wr:"plaster",wcr:"#c4c9d6",acc:{w:"R",a:2,b:8,c:"#2b3552"}}]}
+   {id:"ind",name:"Industrial",cost:lfStylePrice(3000),fl:"concrete",wl:"plaster",wc:"#d6d2cb",wr:"plaster",wcr:"#c6c2bb",acc:{w:"L",a:1,b:7,tex:"brick"}},
+   {id:"mod",name:"Modern",cost:lfStylePrice(2600),fl:"grey",wl:"plaster",wc:"#d8dce6",wr:"plaster",wcr:"#c4c9d6",acc:{w:"R",a:2,b:8,c:"#2b3552"}}]}
 function lfDecUnlocked(r,s){return !s.cost||(r.du&&r.du[s.id])}
 function lfDecFor(r,T){if(!window.LFTEX||T.out)return null;var sets=lfDecSets(r.t),s=sets.filter(function(q){return q.id===r.ds&&lfDecUnlocked(r,q)})[0]||sets[0];return s}
 function lfTexFloor(uid){var N=LF.W,M=LF.D,id="lfpf"+uid,s=lfPat(id,"f_"+LFDEC.fl,4,2.667,"matrix(26,13,-26,13,0,0)");

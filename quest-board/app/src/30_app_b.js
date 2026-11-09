@@ -1093,8 +1093,8 @@ function boardHtml(){
     var doneH='';
     qs.slice().sort(function(x,y){return (S.done[x.id]?1:0)-(S.done[y.id]?1:0)}).forEach(function(q){
       var d=!!S.done[q.id]; var h0=h; if(d)h='';
-      h+='<div class="q'+(d?" done":"")+(cur&&cur.id===q.id?" current":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
-       +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+'</span></span>'
+      h+='<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(cur&&cur.id===q.id?" current":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
+       +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
        +'<button class="x" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button></div>';
       if(d){doneH+=h;h=h0}
@@ -1229,6 +1229,7 @@ function uncreditStreak(){
 }
 function onTap(id,ev){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
+  if(proofPend[id]){pop("Still checking that photo");return}
   if(!S.done[id]&&q.xp>=25)askProof(id); else toggle(id,ev);
 }
 function toggle(id,ev,mode){
@@ -1274,11 +1275,19 @@ function remove(id){
 
 /* ---------- quest proof ---------- */
 var proofId=null, proofBusy=false, proofModal=null;
+/* photo checks running in the background, by quest id: {t: when sent, h: the photo's hash} (in memory only: a check cut off by
+   closing the app simply leaves its quest open) */
+var proofPend={};
+function pendHash(h){for(var k in proofPend)if(proofPend[k].h===h)return true;return false}
+/* body.qbpend while any check runs, so web.js's return-from-background reload waits instead of dropping it */
+function pendMark(){if(document.body)document.body.classList.toggle("qbpend",Object.keys(proofPend).length>0)}
 function closeProof(){if(proofModal){proofModal.remove();proofModal=null}proofId=null;proofBusy=false}
 function isDigital(q){return /^(create|admin|boss)$/.test(q.cl)}
 function askProof(id){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
   proofId=id;
+  /* wake the photo checker while the player is still framing the shot (web build only; a no-op elsewhere) */
+  try{if(window.claude)window.claude.use("sample").then(function(s){if(s&&s.warm)s.warm()}).catch(function(){})}catch(e){}
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
   proofModal=modal('<div class="card box2"><span class="label">Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
    +'<p class="note">'+(isDigital(q)?"Take a live photo of your screen showing the finished work.":"Take a live photo of the finished result.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
@@ -1288,46 +1297,60 @@ function askProof(id){
    +'<div class="proof" id="proofmsg"></div>'+(q.rep==="weekly4"?'<p class="note">Workouts only count with a live photo. No honor system.</p>':'<button class="btn ghost" data-act="honor">Use the honor system</button>')+'<button class="btn ghost" data-act="closeproof">Cancel</button></div>');
 }
 function pl(k,t){var el=document.getElementById("proofmsg");if(!el)return;var d=document.createElement("div");d.className=k;d.innerHTML='<span>'+(k==="ok"?"&#10003;":k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(t)+'</span>';el.appendChild(d)}
-function clockMins(c){var m=String(c||"").match(/(\d{1,2}):(\d{2})/);return m?(+m[1])*60+(+m[2]):null}
 async function handleProof(file){
   if(!file||proofBusy||!proofId)return;
-  var q=S.quests.filter(function(x){return x.id===proofId})[0]; if(!q)return;
+  var id=proofId; /* this check's own quest: Cancel clears proofId while the file is read, and the next window may be for another quest */
+  var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
   proofBusy=true; var box=document.getElementById("proofmsg"); if(box)box.innerHTML="";
   /* the camera gives a JPEG; a screenshot or a saved PNG/WebP is refused before anything else */
   if(file.type&&!/jpe?g/i.test(file.type)){pl("bad","That is a screenshot or a saved image. Use the camera.");proofBusy=false;return}
   pl("info","Reading the image...");
-  var ok=true, ex={}, hh=null, buf=null, now=new Date(), nowM=now.getHours()*60+now.getMinutes();
+  var ok=true, ex={}, hh=null, buf=null;
   try{buf=await file.slice(0,262144).arrayBuffer()}catch(e){}
-  if(buf){hh=hashFile(buf);if(S.hashes.indexOf(hh)>=0){pl("bad","This exact image was already used. Take a new one.");proofBusy=false;return}ex=readExif(buf)}
-  var exifOk=null;
+  if(buf){hh=hashFile(buf);if(S.hashes.indexOf(hh)>=0||pendHash(hh)){pl("bad","This exact image was already used. Take a new one.");proofBusy=false;return}ex=readExif(buf)}
   if(ex&&ex.dt){
     var m=ex.dt.match(/^(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/);
     if(m){var mins=(Date.now()-new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]).getTime())/60000;
-      if(mins<-3||mins>30){exifOk=false;pl("bad","The photo is "+Math.round(Math.abs(mins))+" minutes "+(mins<0?"in the future":"old")+". It has to be from the last 30.");ok=false}
-      else{exifOk=true;pl("ok","Taken "+(mins<1?"just now":Math.round(mins)+" min ago"))}}
-  }
-  var vis=null;
-  if(ok){
-    pl("info","Claude is reviewing it...");
-    try{
-      var sample=window.claude?await window.claude.use("sample"):null;
-      var lim=sample?await sample.limits().catch(function(){return null}):null;
-      if(sample&&lim&&lim.images){
-        var hhmm=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-        vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". The current local time is '+hhmm+'. Look at the image. Return ONLY JSON: {"matches":true,"what":"","clock":null,"screen":false,"note":""} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, clock = HH:MM in 24-hour time if any clock or time is visible (phone status bar, computer menu bar or taskbar) else null, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false});
-      }
-    }catch(e){vis=null}
-    if(!vis){pl("bad","Verification needs Claude access on this page. Allow it and retry, or use the honor system.");ok=false}
-    else{
-      if(!vis.matches){pl("bad","Doesn't look like this task. "+(vis.note||""));ok=false}
-      else pl("ok","Looks right: "+(vis.what||q.name));
-      if(vis.screen&&!isDigital(q)){pl("bad","That looks like a screen. This quest needs a real photo.");ok=false}
-    }
+      if(mins<-3||mins>30){pl("bad","The photo is "+Math.round(Math.abs(mins))+" minutes "+(mins<0?"in the future":"old")+". It has to be from the last 30.");ok=false}}
   }
   proofBusy=false;
-  if(!ok)return;
+  if(!ok||proofId!==id)return; /* cancelled while the photo was being read */
+  /* Cal, 2026-11-09: "keep waiting, but let the check run in the background and award or deny the exp once the check completes".
+     The proof window closes now and the quest shows "checking photo"; XP and coins land only when Claude has looked, and a
+     popup then says whether the photo passed. */
+  proofPend[id]={t:Date.now(),h:hh}; pendMark(); closeProof(); render(); pop("Photo sent. Checking it in the background");
+  proofCheck(id,file,hh);
+}
+async function proofCheck(id,file,hh){
+  var q=S.quests.filter(function(x){return x.id===id})[0], vis=null;
+  try{
+    var sample=window.claude?await window.claude.use("sample"):null;
+    var lim=sample?await sample.limits().catch(function(){return null}):null;
+    if(sample&&lim&&lim.images&&q){
+      vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false});
+    }
+  }catch(e){vis=null}
+  delete proofPend[id]; pendMark();
+  q=S.quests.filter(function(x){return x.id===id})[0];
+  if(!q){render();return} /* the quest was removed while its photo was being checked */
+  var why=!vis?"The photo checker couldn't be reached, so nothing was counted. Try again in a minute."
+    :!vis.matches?"It doesn't look like this quest."+(vis.note?" "+vis.note:"")
+    :(vis.screen&&!isDigital(q))?"That looks like a photo of a screen. This quest needs a real photo.":"";
+  if(why){render();proofVerdict(q,false,why);return}
   if(hh){S.hashes.push(hh);S.hashes=S.hashes.slice(-300)}
-  var id=proofId; closeProof(); toggle(id,null,"v");
+  if(S.done[id]&&!S.vdone[id])toggle(id); /* finished on the honor system meanwhile: the verified completion replaces it */
+  var x0=S.xp,c0=S.coins;
+  if(!S.done[id])toggle(id,null,"v");
+  proofVerdict(q,true,vis.what||q.name,S.xp-x0,S.coins-c0);
+}
+/* the new popup: on top of anything open (a level-up from the same completion sits underneath until this one is closed) */
+function proofVerdict(q,ok,msg,dx,dc){
+  modal('<div class="card box2"><span class="label">Photo check</span><h2>'+(ok?'Verification succeeded':'Verification failed')+'</h2>'
+   +'<p class="note"><b>'+esc(q.name)+'</b> &middot; '+esc(ok?"Claude saw: "+msg:msg)+'</p>'
+   +(ok?'<div class="row"><span class="chip xp">+'+(dx||0)+' XP</span><span class="chip xp"><i class="coin"></i> +'+(dc||0)+'</span></div><div class="btns"><button class="btn" data-act="mclose">Nice</button></div>'
+       :'<p class="note">No XP or coins were given. The quest is still open.</p><div class="btns"><button class="btn" data-act="proofretry" data-id="'+q.id+'">Try another photo</button>'
+        +(q.rep==="weekly4"?'':'<button class="btn ghost" data-act="proofhonor" data-id="'+q.id+'">Use the honor system</button>')+'</div>')
+   +'</div>');
 }
 
 /* ---------- gate trial: photo proof ---------- */
@@ -1486,6 +1509,8 @@ document.addEventListener("click",function(e){
   if(e.target.id==="capgo"){submitCap();return}
   var b=e.target.closest("[data-act]"); if(!b)return;
   var a=b.dataset.act;
+  if(a==="welcome"){showWelcome();return}
+  if(a==="updnow"){updNow(+b.dataset.v);return}
   if(baseAct(a,b,e))return;
   if(/^wk/.test(a)&&trainAct(a,b))return;
   if(a==="toggle")onTap(b.dataset.id,e);
@@ -1525,6 +1550,9 @@ document.addEventListener("click",function(e){
   }
   if(a==="honor"){var id=proofId;closeProof();if(id)toggle(id,e,"h")}
   if(a==="closeproof")closeProof();
+  /* the photo-check popup's buttons */
+  if(a==="proofretry"){var mr=b.closest(".modal");if(mr)mr.remove();askProof(b.dataset.id);return}
+  if(a==="proofhonor"){var mh2=b.closest(".modal");if(mh2)mh2.remove();if(!S.done[b.dataset.id]&&!proofPend[b.dataset.id])toggle(b.dataset.id,e,"h");return}
 });
 document.addEventListener("change",function(e){
   var t=e.target; if(!t||!t.id)return;
@@ -1597,6 +1625,7 @@ render();try{chLoad()}catch(e){}
   checkInbox();
   render();
   checkPending();
+  newsBoot(); /* Cal's welcome note once, and the "New Update!" check (29q_news.js) */
   try{if(db&&MYUID){socPublish(true);socCheckPings()}}catch(e){}
 })();
 /* read-only, for the web build's shell (web/web.js: fetch-ahead and dropping old art once the game is up). Not a test hook:

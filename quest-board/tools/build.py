@@ -137,5 +137,11 @@ if WEB:
 with open(os.path.join(DIST, "index.html"), "w", encoding="utf-8") as f:
     f.write(page)
 
+# Cal, 2026-11-09: a page left open on an older version reads this and offers "New Update!" with a Refresh (app/src/29q_news.js)
+import re
+_appv = re.search(r"\bAPPV=(\d+)", read(APP, "src", "30_app_b.js"))
+with open(os.path.join(DIST, "version.json"), "w", encoding="utf-8") as f:
+    json.dump({"appv": int(_appv.group(1)) if _appv else 0}, f)
+
 size = sum(os.path.getsize(os.path.join(d, n)) for d, _, ns in os.walk(DIST) for n in ns)
 print("dist %.1f MB, page %.0f KB, app.js %.0f KB" % (size / 1e6, len(page) / 1e3, len(code) / 1e3))

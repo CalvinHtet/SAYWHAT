@@ -158,29 +158,53 @@
   }
 
   /* ---- AI: one Cloud Function (functions/index.js) calls Claude with the owner's key; photos are shrunk on the phone first ---- */
+  /* Cal, 2026-11-09: checks run in the background now, so the shrink must not freeze the game: img.decode() decodes off the main
+     thread, and toBlob encodes without blocking. Quality 0.75 keeps the upload small; 1024 px still reads a clock in the photo. */
   function shrink(file) {
     return new Promise(function (ok, no) {
       var img = new Image(), url = URL.createObjectURL(file);
-      img.onload = function () {
+      var draw = function () {
+        if (!img.naturalWidth || !img.naturalHeight) { URL.revokeObjectURL(url); return no(new Error("image")); }
         var k = Math.min(1, 1024 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement("canvas");
         c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
         c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
-        ok(c.toDataURL("image/jpeg", 0.82).split(",")[1]);
+        /* never send an empty picture: Claude would then judge the quest from the words alone */
+        var give = function (s) { if (s) ok(s); else no(new Error("image")); };
+        var viaUrl = function () { give(c.toDataURL("image/jpeg", 0.75).split(",")[1]); };
+        if (!c.toBlob) return viaUrl();
+        c.toBlob(function (b) {
+          if (!b) return viaUrl();
+          var r = new FileReader(); r.onload = function () { give(String(r.result).split(",")[1]); }; r.onerror = viaUrl; r.readAsDataURL(b);
+        }, "image/jpeg", 0.75);
       };
+      img.onload = function () { if (img.decode) img.decode().then(draw, draw); else draw(); };
       img.onerror = function () { URL.revokeObjectURL(url); no(new Error("image")); };
       img.src = url;
     });
   }
+  var warmT = 0;
+  var post = function (body) {
+    return signedIn.then(function (u) { return u.getIdToken(); }).then(function (tok) {
+      return fetch(W.api || "/api/sample", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify(body) });
+    });
+  };
   var sample = {
     limits: function () { return Promise.resolve({ images: true }); },
+    /* wakes the server while the player is still taking the photo (the proof window calls this); at most once every 2 minutes */
+    warm: function () {
+      if (Date.now() - warmT < 120000) return; warmT = Date.now();
+      post({ warm: true }).catch(function () {});
+    },
     json: async function (prompt, opt) {
       opt = opt || {};
-      var body = { prompt: String(prompt), tier: opt.modelTier || "" }, f = opt.images;
+      var body = { prompt: String(prompt), tier: opt.modelTier || "" }, f = opt.images, t0 = performance.now();
       if (Array.isArray(f)) f = f[0];
       if (f) body.image = await shrink(f);
-      var u = await signedIn, tok = await u.getIdToken();
-      var r = await fetch(W.api || "/api/sample", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify(body) });
+      var t1 = performance.now();
+      var r = await post(body);
       var j = await r.json().catch(function () { return null; });
+      /* how long the phone and the server took, for the owner's diag/perf log (29_prices.js) */
+      if (f) window.__qbPhotoT = { shrink: Math.round(t1 - t0), server: Math.round(performance.now() - t1), kb: Math.round(body.image.length * 0.75 / 1024), status: r.status, t: Date.now() };
       if (!r.ok || !j) { var e = new Error((j && j.error) || "sample " + r.status); e.code = (j && j.code) || "unavailable"; throw e; }
       return j.result;
     }
@@ -221,7 +245,7 @@
     if (!running || Date.now() - hiddenAt < 10 * 60000) return;
     fetch("index.html", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (html) {
       var h = appHash(html);
-      if (h && h !== running && !document.querySelector("#layer .modal")) location.reload();
+      if (h && h !== running && !document.querySelector("#layer .modal") && !document.body.classList.contains("qbpend")) location.reload();
     }).catch(function () {});
   });
   /* fetch ahead, a few at a time and only while the app is on screen: the buildings and rooms first, then this player's own

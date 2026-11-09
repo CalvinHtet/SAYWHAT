@@ -24,6 +24,16 @@ const req = (body, tok) => ({ method: "POST", headers: tok === null ? {} : { aut
   ok("no JSON in the answer: 502", s === 502, o);
   [s, o] = await handle(req({ prompt: "x" }), deps(fake(new Error("boom"))));
   ok("any other failure: 500 with a code", s === 500 && o.code, o);
+  let warmed = 0, counted = 0; fake.last = null;
+  [s, o] = await handle(req({ warm: true }), { verify: async () => "u1", count: async () => { counted++; return 1; }, warm: async () => { warmed++; }, client: fake("{}") });
+  ok("a warm-up wakes the server without calling Claude or counting a check", s === 200 && o.warm === true && warmed === 1 && counted === 0 && fake.last === null, [s, o, warmed, counted]);
+  [s, o] = await handle(req({ warm: true }, "forged"), deps(fake("{}")));
+  ok("a warm-up still needs a valid sign-in", s === 401, o);
+  [s, o] = await handle(req({ warm: true }), { verify: async () => "u1", count: async () => 1, warm: async () => { throw new Error("db down"); }, client: fake("{}") });
+  ok("a failed warm-up still answers 200", s === 200 && o.warm === true, o);
+  const ms = {};
+  [s, o] = await handle(req({ prompt: "Return ONLY JSON", image: "AAAA" }), Object.assign(deps(fake('{"matches":true}')), { ms }));
+  ok("each step's time is recorded for the log", s === 200 && ms.verify >= 0 && ms.count >= 0 && ms.claude >= 0, ms);
   ok("parseJson leaves plain JSON alone", parseJson('{"a":[1,2]}').a[1] === 2);
   console.log(fails ? "FAIL " + fails : "PASS"); process.exit(fails ? 1 : 0);
 })();

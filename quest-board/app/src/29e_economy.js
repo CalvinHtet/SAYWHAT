@@ -29,8 +29,11 @@ var ECON={
   trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
   chest:2.5,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
-  price:{decor:150,furniture:300,equipment:600,big:1200,moment:1},  /* QA, for Cal's "all upgrades ... around lvl 80" */
-  stepK:.25,stepMax:2,                            /* the room's story step, softened: min(2, 1 + (ROOMSTEP-1) x 0.25) */
+  /* Cal, 2026-11-09: "make everything very very accessible so you are excited to open the app rather than having it feel very
+     grindy": room upgrades at half (was decor 150, furniture 300, equipment 600, big 1200, moments x1, later rooms up to x2) */
+  price:{decor:75,furniture:150,equipment:300,big:600,moment:.5},
+  stepK:.25,stepMax:1.5,                          /* the room's story step, softened: min(1.5, 1 + (ROOMSTEP-1) x 0.25) */
+  shopK:.5,                                       /* every Shop price (clothes, interface, gear) x this, once at load */
 };
 /* ---- today's effort ---- */
 function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d:t,tx:0,spent:0,paid:0,done:0,hid:0,buff:prev.hidFor===t?1:0}}return S.dq}
@@ -90,4 +93,8 @@ var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowe
 (function(){Object.keys(ADDONS).forEach(function(k){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;(ADDONS[k]||[]).forEach(function(a){if(!a[2]||(a[3]&&a[3].fixed))return;var base=a[2]/st,P=ECON.price,b;
   if((a[3]&&a[3].decor)||DECORW.test(a[1]))b=P.decor;else if(base<=250)b=P.furniture;else if(base<=500)b=P.equipment;else if(base<=1000)b=P.big;else b=base*P.moment;
   var st2=Math.min(ECON.stepMax,1+(st-1)*ECON.stepK);a[2]=Math.round(b*st2/50)*50})})})();
+/* Shop prices (SHOP and GITEMS in 10_app_a.js, EXTRA_ITEMS in 15_shop.js) x ECON.shopK, each item once even if it sits in two lists */
+(function(){var seen=typeof WeakSet==="function"?new WeakSet():null;
+  [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
+    (l||[]).forEach(function(it){if(!Array.isArray(it)||!(+it[3]>0)||(seen&&seen.has(it)))return;if(seen)seen.add(it);it[3]=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10)})})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,energy:msEnergy,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
