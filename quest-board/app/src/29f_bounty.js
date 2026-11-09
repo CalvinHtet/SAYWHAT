@@ -61,8 +61,9 @@ function btyHtml(){if(!S.created)return '';return '<section class="card panel bt
 /* bounty quests leave when their window ends, done or not (done ones leave with the day's run as usual) */
 function btyPrune(){var t=today();S.quests=S.quests.filter(function(q){return !q.bty||q.bty.end>=t||S.done[q.id]})}
 var btyBoardBase=boardHtml;
-/* Cal, 2026-11-09: "Bounties should be towards the bottom", under the task categories */
-boardHtml=function(){btyPrune();return btyBoardBase()+btyHtml()};
+/* Cal, 2026-11-09: "Bounties should be towards the bottom", under the task categories; finished quests stay last ("Completed
+   tasks can be all the way at the bottom") */
+boardHtml=function(){btyPrune();var h=btyBoardBase(),i=h.indexOf('<details class="donebox donelast"');var c=btyHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 var btyMultsBase=mults;
 mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
 var BTYBUSY=0;

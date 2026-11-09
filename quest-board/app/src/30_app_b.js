@@ -1141,22 +1141,26 @@ function boardHtml(){
   var bid=ri>=2?bountyId():null;
   /* Cal, 2026-11-09: "add the delete button behind an edit toggle": the &times; on each quest shows only while editing */
   if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+(qEdit?'Tap &times; to remove a quest':'')+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
-  CLUSTERS.forEach(function(c){
-    var qs=S.quests.filter(function(q){return q.cl===c[0]&&visQ(q)}); if(!qs.length)return;
-    var dn=qs.filter(function(q){return S.done[q.id]}).length;
-    h+='<section class="cluster"><header'+(ART["cl_"+c[0]]?' class="hasart" style="--cl:url('+ART["cl_"+c[0]]+')"':'')+'><h3 class="label">'+c[1]+'</h3><span class="note mono">'+dn+'/'+qs.length+'</span></header><div class="cbar"><i style="width:'+(dn/qs.length*100)+'%"></i></div>';
-    var doneH='';
-    qs.slice().sort(function(x,y){return (S.done[x.id]?1:0)-(S.done[y.id]?1:0)}).forEach(function(q){
-      var d=!!S.done[q.id]; var h0=h; if(d)h='';
-      h+='<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(cur&&cur.id===q.id?" current":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
+  /* Cal, 2026-11-09: "if there are no quests, which is the beginning of the game, there should be no categories ... only
+     categorize them once tasks start coming in" and "Completed tasks can be all the way at the bottom". Open quests are a plain
+     list while they all sit in one category, with category headers once they span two or more; every finished quest goes into
+     one Completed list at the very bottom of the Board (below the Bounties: 29f_bounty.js puts them before it). */
+  var vis=S.quests.filter(function(q){return visQ(q)}),open=vis.filter(function(q){return !S.done[q.id]}),fin=vis.filter(function(q){return S.done[q.id]});
+  var qRow=function(q){
+      var d=!!S.done[q.id];
+      return '<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
        +(qEdit?'<button class="x del" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button>':'')+'</div>';
-      if(d){doneH+=h;h=h0}
-    });
-    if(doneH)h+='<details class="donebox"><summary class="note mono">Completed ('+dn+') &middot; tap to review or undo</summary>'+doneH+'</details>';
-    h+='</section>';
+  };
+  var cats=CLUSTERS.filter(function(c){return open.some(function(q){return q.cl===c[0]})});
+  if(cats.length<2){if(open.length)h+='<section class="cluster plain">'+open.map(qRow).join("")+'</section>'}
+  else cats.forEach(function(c){
+    var qs=vis.filter(function(q){return q.cl===c[0]}),dn=qs.filter(function(q){return S.done[q.id]}).length;
+    h+='<section class="cluster"><header'+(ART["cl_"+c[0]]?' class="hasart" style="--cl:url('+ART["cl_"+c[0]]+')"':'')+'><h3 class="label">'+c[1]+'</h3><span class="note mono">'+dn+'/'+qs.length+'</span></header><div class="cbar"><i style="width:'+(dn/qs.length*100)+'%"></i></div>'
+      +open.filter(function(q){return q.cl===c[0]}).map(qRow).join("")+'</section>';
   });
+  if(fin.length)h+='<details class="donebox donelast"><summary class="note mono">Completed ('+fin.length+') &middot; tap to review or undo</summary>'+fin.map(qRow).join("")+'</details>';
 
 
   return h;
