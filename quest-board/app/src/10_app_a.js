@@ -6,19 +6,22 @@ var TIER_RANK=[0,1,2,2,3,3,4,4,5,5];
 var STATS=[["creativity","Creativity"],["discipline","Discipline"],["fitness","Fitness"],["productivity","Productivity"],["social","Social Balance"]];
 var CLUSTERS=[["out","Outside run"],["reset","Reset"],["home","Home sweep"],["body","Body"],["admin","Admin and day job"],["create","Creative block"],["social","People"],["boss","Boss"]];
 var REWARDS=[
- [5,"Order something on DoorDash","Your pick. Delivered, no cooking."],
- [10,"Buy something under $100","You pick it."],
- [15,"Order dessert","Anywhere you want."],
- [20,"Full-send takeout night","Order whatever you want. Nobody counts macros tonight."],
- [25,"Zero-task afternoon","No tasks, no content, no guilt."],
- [30,"Day trip","Beach, hike, or somewhere new. Your call."],
- [35,"Spa or massage","Phone stays in the locker."],
- [40,"Buy something under $150","Anything you like, up to $150."],
- [45,"Live event ticket","Concert, show, or game. You choose."],
- [50,"One-night getaway","Budget it in cash first."],
- [60,"A real sick day","Stay in bed. You earned it."],
- [75,"Book one trip activity","Lock in one thing for your next trip."],
- [100,"Name your own reward","Anything you want."]
+ /* Cal (2026-11-08): "more universal ... Ask yourself if these are prizes that would excite my friends or just be a throwaway prize."
+    No brands, no set budgets, nothing that assumes a diet or a city. Each is a real yes to something people talk themselves out of:
+    experiences and your own choice motivate more than cash-like prizes. Keyed by level, so what a save has claimed still holds. */
+ [5,"The treat you always skip","Fancy coffee, dessert, the good snack. Today the answer is yes."],
+ [10,"Takeout, your favorite","No cooking, no dishes. Order the thing you actually want."],
+ [15,"A night off the list","No chores, no catching up. Movie, game, long bath, early bed."],
+ [20,"That thing in your cart","The small one you keep almost buying. Buy it."],
+ [25,"Dinner out with someone you like","Pick the place, invite them, get the dessert."],
+ [30,"A day somewhere new","Beach, trail, or a town you have never stopped in. Bring someone."],
+ [35,"Get taken care of","Massage, facial, or a really good haircut. Phone off."],
+ [40,"The bigger thing you keep putting off","You know the one. You earned it now."],
+ [45,"Tickets to something live","Concert, game, comedy, theater. Go with someone who will care."],
+ [50,"A night away","Hotel, cabin, or a friend's city. Anywhere that is not home."],
+ [60,"A whole day that is only yours","Cancel what you can. Sleep in. Do only what sounds good."],
+ [75,"The thing you keep saying someday about","A class, a jump, a trip, a first. Book it today."],
+ [100,"Name your own prize","You reached the top. Pick the big one, tell someone, and go do it."]
 ];
 var RANKS=[
  {l:"E",n:"Awakened",f:["Quests, XP, stats, and rewards"]},
@@ -601,7 +604,12 @@ function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="t
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",4],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeons",1]];
 var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Send your team out from the Hero\'s Lair. Missions bring home coins, gifts and trophies."};
 var view="board";
-function coinsFor(xp){return Math.max(10,Math.round(xp*2.5*(1+.01*(effLvl()-1))))}
+/* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
+   able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
+   coins an XP (was 2.5), and the more you do in a day the more each pays: full rate for the first 3, then +12.5% a task, double from
+   the 11th. A light day still counts, a big day buys several upgrades. See docs/ECONOMY.md. */
+function coinMomentum(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(1,Math.max(0,n-2)*.125)}
+function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+.01*(effLvl()-1))*coinMomentum()))}
 var SHOP=[
  ["th_sunset","theme","Sunset Drive",60,3,"Warm orange and hot pink across the board.",{a:"#ff8a3d",b:"#ff3d81"}],
  ["th_mint","theme","Mint Circuit",70,5,"Cool mint and cyan.",{a:"#4dffc3",b:"#22d3ee"}],

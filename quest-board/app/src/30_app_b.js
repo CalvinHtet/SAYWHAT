@@ -320,7 +320,7 @@ function wkKey(d){d=d||new Date();var x=new Date(d.getFullYear(),d.getMonth(),d.
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:Math.round(x*2.5)}}
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:Math.round(x*12)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -899,7 +899,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=78, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=79, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1248,11 +1248,11 @@ function toggle(id,ev,mode){
     S.done[id]=mu.xp; S.vdone[id]=ver?mu.xp:0; S.xp+=mu.xp; if(ver)S.vxp+=mu.xp; if(q.xp>=25)S.bigxp+=mu.xp;
     S.total++; if(ver)S.vcount++; crit=mu.tags.indexOf("CRITICAL HIT")>=0; if(crit)S.crits++;
     S.stats[q.stat]=(S.stats[q.stat]||0)+1;
-    var cn=coinsFor(mu.xp)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.round(cn*(1+specialPct("coin")/100));S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
+    var roll=coinMomentum(),cn=coinsFor(mu.xp)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.round(cn*(1+specialPct("coin")/100));S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
     if(S.raid&&S.raid.id===id)S.raid=null;
     var t=today(); if(S.dayXp.d!==t)S.dayXp={d:t,x:0}; S.dayXp.x+=mu.xp;
     if(S.dayXp.x>=50)note=creditStreak();
-    pop("+"+mu.xp+" XP  +"+cn+" coins"+(mu.tags.length?"  "+mu.tags.join(", "):""));
+    pop("+"+mu.xp+" XP  +"+cn+" coins"+(roll>1?"  On a roll +"+Math.round((roll-1)*100)+"%":"")+(mu.tags.length?"  "+mu.tags.join(", "):""));
     if(note&&/Streak chest/.test(note)&&ART.chest)setTimeout(function(){chestModal(note)},1800);else if(note)setTimeout(function(){pop(note)},1800);
     if(ev&&ev.clientX!=null&&effLvl()>=3)burst(ev.clientX,ev.clientY);
     if(crit)burst(innerWidth/2,innerHeight/2,30);

@@ -21,16 +21,16 @@ under 50 XP, that day's streak credit and any chest it opened.
 
 | Source | Amount |
 | --- | --- |
-| Quests | XP x 2.5, plus 1% per level, so level 100 pays twice as much per XP |
+| Quests | XP x 6, plus 1% per level, times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, double from the 11th (Cal, 2026-11-08) |
 | Level up | 100 + 10 x level, paid once per level |
 | Wheel (level 6+) | about 230 a day |
 | Dungeons, 3 a day | 40 to 70 each at the start, 280 to 380 at the top. Scaled down by quest effort |
 | Trophies | 250 each |
 | Streak chests | chest XP x 5 |
-| Weekly workout bonus | at least 250 XP and 625 coins, growing with the level cost |
+| Weekly workout bonus | at least 250 XP and 3,000 coins, growing with the level cost |
 | Restaurant | 15 an hour at the start, about 240 an hour fully upgraded |
 
-A day comes to about 800 coins at level 5, 1,500 at level 20 and 2,300 at level 100.
+All 514 room upgrades cost 381,500 coins. A 12-task, 200 XP day at level 20 now earns about 2,100 from tasks before rooms and extras (was about 600), a busy 450 XP day several thousand.
 
 ## Prices
 

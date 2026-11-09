@@ -26,9 +26,9 @@ var ECON={
   oneSlotBelow:10,                                /* below this level, one unlock (area or story step) a day in all */
   stepLv:{garden:5,chef:7,boba:9,dessert:11,lockkey:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
   gateLockKey:25000,gateMall:80000,               /* Cal: story gates count every coin ever earned (S.earnedC) */
-  trainXp:50,trainCoins:120,trainFull:3,          /* a session with at least 3 exercises done */
+  trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.10,int:.05,  /* each stat point, and its cap */
-  chest:1.0,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
+  chest:2.5,                                      /* Daily Quest chest: coins = goal x this x (1 + INT bonus) */
   price:{decor:150,furniture:300,equipment:600,big:1200,moment:1},  /* QA, for Cal's "all upgrades ... around lvl 80" */
   stepK:.25,stepMax:2,                            /* the room's story step, softened: min(2, 1 + (ROOMSTEP-1) x 0.25) */
 };
