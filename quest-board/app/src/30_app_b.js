@@ -899,7 +899,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=77, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=78, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1576,7 +1576,8 @@ render();try{chLoad()}catch(e){}
       DOC="data/users/"+uid+"/state";
       var snap=await db.doc(DOC).get(),sd0=snap.exists?snap.data():null,ld0=saveOnDevice(uid);
       /* a copy of the save from the last version, before this version writes anything */
-      if(sd0&&(+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup").set(sd0).catch(function(){});
+      /* a save from before a reset goes to its own backup_e<epoch>, so a later version's backup can never overwrite it */
+      if(sd0&&(+sd0.appv||0)!==APPV)db.doc("data/users/"+uid+"/backup"+(sd0.epoch===QB_EPOCH?"":"_e"+(+sd0.epoch||0))).set(sd0).catch(function(){});
       if(!sd0&&!ld0&&own){var old=await db.doc("player/state").get();if(old.exists){merge(old.data());migrated=true;db.doc("player/state").delete().catch(function(){})}}
       else{var pick=await saveWhich(sd0&&sd0.epoch===QB_EPOCH?sd0:null,ld0);
         if(pick.keep)db.doc("data/users/"+uid+"/backup_choice").set(pick.keep).catch(function(){});

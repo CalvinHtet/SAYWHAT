@@ -1328,7 +1328,7 @@ function ccAct(a,b,e){
     if(first&&(!S.areaOn||typeof S.areaOn!=="object"))S.areaOn={};
     /* test copy only (QB_TEST_START in 29_prices.js; Cal: "Start me at level 5 as if I've just completed the job advancement"):
        a new character begins at that level with its trials passed and the areas below it already open; the class is still theirs to pick */
-    if(first&&typeof QB_TEST_START==="number"&&QB_TEST_START>1){S.xp=Math.max(S.xp||0,cum(QB_TEST_START));
+    if(first&&typeof QB_TEST_START==="number"&&QB_TEST_START>1&&!(window.QB_WEB&&QB_WEB.sandbox)){S.xp=Math.max(S.xp||0,cum(QB_TEST_START));
       GATES.forEach(function(g){if(g<=QB_TEST_START&&S.gates.indexOf(g)<0)S.gates.push(g)});
       AREAS.forEach(function(x){if(x[2]<QB_TEST_START)S.areaOn[x[0]]=1});S.unlockDay="";
       /* and the coins that player would have earned on the way (QA): quest pay on the XP so far plus each level's pay, marked paid */
