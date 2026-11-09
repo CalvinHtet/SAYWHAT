@@ -326,7 +326,7 @@ function grantXp(x,coins,stat){
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
   var t=today();if(S.dayXp.d!==t)S.dayXp={d:t,x:0};S.dayXp.x+=x;
   render();persist();
-  var after=effLvl();if(after>before)levelUp(after,null,before);else if(!wasGate&&gated())gateOpened(gated());
+  var after=effLvl();if(after>before)levelUp(after,null,before);else if(!wasGate&&gated())gateOpened(gated());renownCheck();
 }
 function markActive(){
   if(!S.active)S.active={};S.active[today()]=1;
@@ -686,6 +686,9 @@ async function socCheckPings(){
 function socialBuffs(){var o=socState(),n=Math.min(3,o.vis.length),g=Math.min(3,Object.keys(o.gave).length),out=[];
   if(n)out.push({who:"Neighbors",b:{special:"all",pct:5*n,text:"All quests +"+(5*n)+"% XP ("+n+" visit"+(n>1?"s":"")+" today)"}});
   if(g)out.push({who:"Good neighbor",b:{special:"all",pct:2*g,text:"All quests +"+(2*g)+"% XP (you visited "+g+")"}});
+  /* catching up (Cal, 2026-11-09): ECON.catchGap or more levels under the median of friends active this week, quests pay more */
+  var lvs=(SOC.worlds||[]).filter(function(w){return w&&w.lv&&Date.now()-(w.t||0)<7*864e5}).map(function(w){return +w.lv}).sort(function(a,b){return a-b}),gap=lvs.length>=3?lvs[Math.floor(lvs.length/2)]-effLvl():0;
+  if(gap>=ECON.catchGap)out.push({who:"Catching up",b:{special:"all",pct:ECON.catchPct,text:"All quests +"+ECON.catchPct+"% XP ("+gap+" levels behind your friends)"}});
   return out}
 /* friends who said hi today walk around your lounge for half an hour */
 function socVisitors(){var o=socState(),now=Date.now();return o.vis.filter(function(v){return v.look&&now-v.t<30*60000}).map(function(v,k){return {id:"sv:"+v.from,room:0,role:"visitor",look:v.look,visitor:1,fresh:now-v.t<90000,leaveAt:v.t+30*60000,k:k+5}})}
@@ -854,7 +857,7 @@ function chPose(a,f){
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    xpc2:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,xpc3:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -863,20 +866,24 @@ function dstr(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0
 function today(){return dstr(new Date())}
 function yest(){var d=new Date();d.setDate(d.getDate()-1);return dstr(d)}
 function dayDiff(a,b){var p=function(x){var t=x.split("-");return new Date(+t[0],+t[1]-1,+t[2])};return Math.round((p(b)-p(a))/86400000)}
-function streakNow(){if(!S.lastDone)return 0;var g=dayDiff(S.lastDone,today());return (g<=1||(g===2&&S.freezes>0))?S.streak:0}
+function streakNow(){if(!S.lastDone)return 0;var g=dayDiff(S.lastDone,today());return g<=1||streakGap(g).ok?S.streak:Math.floor(S.streak*ECON.streakKeep)}
 function visQ(q){return !(q.rep==="weekly4"&&typeof weekCount==="function"&&weekCount()>=4)}
 function ordered(){var o=[];CLUSTERS.forEach(function(c){S.quests.forEach(function(q){if(q.cl===c[0]&&visQ(q))o.push(q)})});return o}
 function statName(k){return (STATS.filter(function(s){return s[0]===k})[0]||["","General"])[1]}
 function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
 
 /* level, gates, ranks */
-/* a level a day early on, about ten days a level at the cap. See docs/ECONOMY.md */
-/* XP to reach level L. Cal, 2026-11-05 (docs/PROGRESSION.md): level L to L+1 costs min(600, 50+6L+0.2L²), so level 10 comes in
-   about 4 days and no level takes more than about 3 normal days. cumOld is the old curve, kept for moving old saves over. */
-/* Cal, 2026-11-05: "a serious player can get to lvl 100 in 50 ish days". With XP only from real life a heavy player earns
-   about 950 a day, so level 100 costs about 46,700 XP: min(ECON.xpCap, ECON.xpK x (50 + 6L + 0.2L^2)), xpK 1, cap 600. */
-var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+Math.min(ECON.xpCap,Math.round(ECON.xpK*(50+6*L+.2*L*L))))})();
-function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*ECON.xpCap}
+/* Cal, 2026-11-09: "Normally in games, lvl 1 to lvl 2 takes minutes whereas lvl 50 to lvl 51 could take hours to days. This is
+   what makes people fall off ... never feels like every level takes longer". XP from level L to L+1 (curve 3): level 1 to 2 is
+   one or two quests, the cost ramps to ECON.lvFlat by level ECON.lvRamp, then grows only ECON.lvGrow a level, so chores alone
+   level a player up 1 to 2 times a day and a full day (workout, Training, bounties) 3 to 4 times, all the way up. Level 100 is
+   13,905 XP. See docs/ECONOMY.md. cum2 is curve 2 and cumOld curve 1, kept only to move old saves over (merge). */
+function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat*(1+c.lvGrow*(L-c.lvRamp)))}
+var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+lvNeed(L))})();
+function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*lvNeed(CUMT.length-1)}
+/* curve 2 (2026-11-05 to 2026-11-09): min(600, 50 + 6L + 0.2L^2), frozen here so retuning ECON never changes the move-over */
+var CUMT2=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT2.push(CUMT2[L]+Math.min(600,Math.round(50+6*L+.2*L*L)))})();
+function cum2(L){return L<=1?0:L<CUMT2.length?CUMT2[L]:CUMT2[CUMT2.length-1]+(L-CUMT2.length+1)*600}
 function cumOld(L){return Math.round(((L-1)*100+.19*(L-2)*(L-1)*(2*L-3)/6)/5)*5}
 function levelPay(L){return 100+10*L}
 function lvlOf(xp){var L=1;while(L<MAXL&&xp>=cum(L+1))L++;return L}
@@ -894,9 +901,9 @@ function rankIdx(){return TIER_RANK[Math.min(S.gates.length,9)]}
 function bountyId(){var l=ordered().filter(function(q){return q.xp>=25});if(!l.length)return null;var d=today(),h=0;for(var i=0;i<d.length;i++)h=(h*31+d.charCodeAt(i))>>>0;return l[h%l.length].id}
 function mults(q,o){
   o=o||{};var m=1,tags=[],now=Date.now(),ri=rankIdx();
-  if(q.xp>=50&&!o.verified){m*=.5;tags.push("Honor x0.5")}
-  /* Prove it pays double, coins included (coins follow XP), so a photo is always worth taking (Cal, 2026-11-05) */
-  if(q.xp>=25&&o.verified){var vb2=hasSpecial("verify")?2.1:2;m*=vb2;tags.push("Verified x"+vb2)}
+  /* Cal, 2026-11-09: photos are a pure bonus. With no photo a quest pays its listed XP; a verified photo pays at least double
+     the no-photo XP and coins on every quest (2.1x with the verify perk). vb is applied last, in payXp, after rounding. */
+  var vb=o.verified?(hasSpecial("verify")?2.1:2):1;if(vb>1)tags.push("Verified x"+vb);
   var sm=1+Math.min(streakCap(),.02*streakNow());if(sm>1){m*=sm;tags.push("Streak x"+sm.toFixed(2))}
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
@@ -905,8 +912,10 @@ function mults(q,o){
   if(ri>=4&&S.raid&&S.raid.id===q.id&&now<=S.raid.end){m*=1.25;tags.push("Raid x1.25")}
   if(ri>=5){m*=1.1;tags.push("Monarch x1.1")}
   if(o.commit&&isCrit(q)){m*=1.5;tags.push("CRITICAL HIT")}
-  return {m:m,tags:tags,xp:Math.max(1,Math.round(q.xp*m))};
+  return payXp(q,{m:m,vb:vb,tags:tags});
 }
+/* hx: what the quest pays with no photo; xp: what this completion pays (with a photo, hx x vb rounded up: never under double) */
+function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
 var DOC="player/state", ownerView=false, APPV=81, saveMode="local", newerSeen=false, saveWarned=false;
@@ -937,7 +946,7 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
   if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -954,6 +963,12 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the new curve (xpc2): a save keeps its level and its progress through it; it never drops */
   if(curve2){var ox=S.xp||0,oL=1;while(oL<MAXL&&ox>=cumOld(oL+1))oL++;if(lvlOf(ox)<oL){var fr=(ox-cumOld(oL))/Math.max(1,cumOld(oL+1)-cumOld(oL));S.xp=Math.round(cum(oL)+fr*(cum(oL+1)-cum(oL)))}}
   S.xpc2=1;
+  /* curve 3 (xpc3, 2026-11-09): a save keeps exactly its level and its progress through it, so nobody loses a level, an unlock
+     or a trial, and nobody skips levels whose coins (levelPay from lvPaid) would then arrive in one lump. Only the XP total is
+     rescaled; this week's town meter start moves with it. Gates, lvPaid, areas, prizes and badges are left as they are. */
+  if(curve3){var x2=S.xp||0,L2=1;while(L2<MAXL&&x2>=cum2(L2+1))L2++;var f2=(x2-cum2(L2))/Math.max(1,cum2(L2+1)-cum2(L2)),x3=Math.round(cum(L2)+f2*(cum(L2+1)-cum(L2)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x3-x2;S.xp=x3}
+  S.xpc3=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}
@@ -970,7 +985,7 @@ var rsKeep=S.base.slots.filter(function(r){return r&&r.t!=="bedroom"&&ROOMCELL[r
 function rollover(){
   var t=today(); if(S.runDate===t)return false;
   var keep=[];S.quests.forEach(function(q){if(q.rep==="once"&&S.done[q.id]){S.cleared++}else keep.push(q)});
-  S.quests=keep;S.done={};S.vdone={};S.cdone={};S.raid=null;S.combo=null;S.runDate=t;return true;
+  S.quests=keep;S.done={};S.vdone={};S.cdone={};S.rdone={};S.raid=null;S.combo=null;S.runDate=t;return true;
 }
 
 /* ---------- FX ---------- */
@@ -1068,7 +1083,7 @@ function boardHtml(){
   if(g){
     var nr=RANKS[Math.min(ri+1,5)], stored=Math.max(0,S.xp-cum(g));
     h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
-     +'<p class="note">Your XP bar is full, so you cannot reach level '+g+' until you move your body. Send a fresh photo of you being active: a workout, a run, a walk with the dogs, a hike, a game, a class.</p>'
+     +'<p class="note">Your XP bar is full at level '+(g-1)+'. Pass now with a fresh photo of you being active (a workout, a run, a walk with the dogs, a hike, a game, a class), or on honor by being active (50+ XP) on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b> so far.</p>'
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
      +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
@@ -1096,6 +1111,7 @@ function boardHtml(){
       h+='<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(cur&&cur.id===q.id?" current":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
+       +(d||proofPend[q.id]?'':'<button class="x" data-act="prove" data-id="'+q.id+'" aria-label="Prove '+esc(q.name)+' with a photo for double XP and coins">2x</button>')
        +'<button class="x" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button></div>';
       if(d){doneH+=h;h=h0}
     });
@@ -1128,7 +1144,7 @@ function boardHtml(){
   }
   h+='</section>';
   var ig=integrity();
-  h+='<section class="card panel"><h3 class="label">Integrity</h3><div class="integ'+(ig<.5?" low":"")+'"><div class="track"><i style="width:'+Math.round(ig*100)+'%"></i></div><span>'+Math.round(ig*100)+'% of your big-quest XP is verified. Rewards need 50%. Honor-system XP on 50+ quests pays half, and a photo or screenshot pays a 20% bonus.</span></div></section>';
+  h+='<section class="card panel"><h3 class="label">Integrity</h3><div class="integ"><div class="track"><i style="width:'+Math.round(ig*100)+'%"></i></div><span>'+Math.round(ig*100)+'% of your big-quest XP has a photo. Photos are optional and pay double XP and coins.</span></div></section>';
   h+='<div class="foot"><span class="note">Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared. Saves automatically.</span></div>';
 
   return h;
@@ -1168,6 +1184,15 @@ function statBars(){
   var mx=Math.max(10,Math.max.apply(null,STATS.map(function(s){return S.stats[s[0]]||0})));
   return STATS.map(function(s){return '<div class="stat"><span>'+s[1]+'</span><div class="track"><div class="fill" style="width:'+((S.stats[s[0]]||0)/mx*100)+'%;background-color:var(--s-'+s[0]+');color:var(--s-'+s[0]+')"></div></div><span class="n mono">'+(S.stats[s[0]]||0)+'</span></div>'}).join("");
 }
+/* Something at every level (Cal, 2026-11-09). A level with no prize, trial, effect, new stock, tab or dungeon brings a crate:
+   a wardrobe piece you do not own yet (basics and the live brands, like Weekly Warrior's prize), else a stat point. Once per
+   level, so an undo and redo never pays twice. Renown ranks past level 100 use the same crate. */
+function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GATES.indexOf(L)<0&&!FX.some(function(f){return f[0]===L})&&!SHOP.some(function(x){return x[4]===L})&&!AREAS.some(function(a){return a[2]===L})&&!DNG.some(function(d){return d.lv===L})}
+function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.crates[L])return null;S.crates[L]=1;var live=[];try{live=dropState().live.map(function(x){return x.id})}catch(e){}
+  var pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null,k=["str","agi","vit","int"][L%4];
+  if(pz)S.owned[pz[0]]=true;else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":"+1 "+STATN[k])}
+/* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
+function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
 function levelUp(lv,extra,from){
   from=(from==null)?lv-1:from;
   ifOnLevel();
@@ -1182,6 +1207,7 @@ function levelUp(lv,extra,from){
        floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
     FX.filter(function(f){return f[0]===L}).forEach(function(f){cards+=fxCard(f,i++)});
     var ns=SHOP.filter(function(x){return x[4]===L}).length; if(ns&&L>=3)cards+=stockCard(ns,i++);
+    if(lvEmpty(L)){var cr=lvCrate(L);if(cr)cards+='<div class="reward reveal" style="animation-delay:'+(0.3+(i++)*0.45).toFixed(2)+'s"><span>'+esc(cr)+'</span></div>'}
   }
   var more=start>from+1?'<p class="note">Plus '+(start-from-1)+' earlier unlock'+(start-from-1===1?'':'s')+' waiting in The Loft.</p>':'';
   var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv});
@@ -1196,7 +1222,7 @@ function levelUp(lv,extra,from){
 }
 function gateOpened(g){
   var nr=RANKS[Math.min(rankIdx()+1,5)];
-  var m=modal('<div class="card box2"><span class="label">Gate opened</span><h2>Job advancement trial</h2><p>Your bar is full at level '+(g-1)+'. Extra XP is stored. Send a fresh photo of you being active in the trial card to start your '+gateTitle().toLowerCase()+'.</p><button class="btn big" id="gok">Show me the trial</button></div>');
+  var m=modal('<div class="card box2"><span class="label">Gate opened</span><h2>Job advancement trial</h2><p>Your bar is full at level '+(g-1)+'. Extra XP is stored. Send a fresh photo of you being active in the trial card to start your '+gateTitle().toLowerCase()+' now, or be active (50+ XP) on '+ECON.trialDays+' days.</p><button class="btn big" id="gok">Show me the trial</button></div>');
   var b=m.querySelector("#gok");b.focus();b.onclick=function(){m.remove();window.scrollTo({top:0,behavior:"smooth"})};
 }
 
@@ -1210,36 +1236,53 @@ function checkBadges(){
   if(S.cls)addBadge("class");if(S.spec)addBadge("spec");if(S.gates.length>=9)addBadge("asc");
   var el2=effLvl();if(el2>=10)addBadge("l10");if(el2>=25)addBadge("l25");if(S.streak>=14)addBadge("s14");
 }
+/* Streak repair (Cal, 2026-11-09: a weekend off should not wipe a streak). Over a gap of g days each missed day takes a
+   freeze, except one missed day a week (ECON.freeMiss); short of freezes the streak halves (ECON.streakKeep), never resets. */
+function streakGap(g){var miss=Math.max(0,g-1),free=miss>0&&ECON.freeMiss&&S.freeWk!==wkKey()?1:0,use=Math.max(0,miss-free);return {ok:g<99&&use<=(S.freezes||0),use:use,free:free}}
+/* the Weekly Quest: active (50+ XP) on ECON.wqDays days, Monday to Sunday, pays one level of XP (in creditStreak) */
+function wqState(){var w=wkKey();if(!S.wq||S.wq.w!==w)S.wq={w:w,n:0,paid:0};return S.wq}
+/* Rested XP: each full day with no quest banks ECON.restDay of a level, up to ECON.restMax levels; while some is banked a
+   quest pays double (coins follow), the extra coming out of the bank. Banked once per absence, keyed on the last active day. */
+function restBank(){if(!S.rest||typeof S.rest!=="object")S.rest={x:0,from:""};var t=today();
+  if(S.lastDone&&S.lastDone!==t&&S.rest.from!==S.lastDone){var miss=dayDiff(S.lastDone,t)-1,nd=need(Math.min(effLvl(),MAXL-1));
+    if(miss>0)S.rest.x=Math.min(Math.round(nd*ECON.restMax),(S.rest.x||0)+Math.round(miss*nd*ECON.restDay));S.rest.from=S.lastDone}
+  return S.rest}
 function creditStreak(){
   var t=today(); if(S.lastDone===t)return null;
-  var g=S.lastDone?dayDiff(S.lastDone,t):99, out=[];
-  S.skUndo={d:t,streak:S.streak,lastDone:S.lastDone,freezes:S.freezes,best:S.best||0,chest:0};
+  var g=S.lastDone?dayDiff(S.lastDone,t):99, out=[], sg=streakGap(g);
+  S.skUndo={d:t,streak:S.streak,lastDone:S.lastDone,freezes:S.freezes,best:S.best||0,chest:0,fw:S.freeWk||""};
   if(g===1)S.streak++;
-  else if(g===2&&S.freezes>0){S.freezes--;S.streak++;out.push("A streak freeze saved your streak")}
-  else S.streak=1;
+  else if(sg.ok){S.freezes-=sg.use;if(sg.free)S.freeWk=wkKey();S.streak++;out.push(sg.use?"Streak saved: "+sg.use+" freeze"+(sg.use>1?"s":"")+" used":"Rest day: your streak is safe")}
+  else S.streak=g<99?Math.floor(S.streak*ECON.streakKeep)+1:1;
   S.lastDone=t;if(S.streak>(S.best||0))S.best=S.streak;
   if(CHESTS[S.streak]&&!S.chests[S.streak]){S.skUndo.chest=S.streak;S.chests[S.streak]=true;S.xp+=CHESTS[S.streak];var cc=Math.round(CHESTS[S.streak]*5);S.coins+=cc;S.earnedC+=cc;out.push("Streak chest: +"+CHESTS[S.streak]+" XP and "+cc+" coins")}
-  if(S.streak%7===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
+  if(S.streak%ECON.freezeEvery===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
+  var wq=wqState();wq.n++;S.skUndo.wq=1;
+  if(wq.n>=ECON.wqDays&&!wq.paid){var wx=need(Math.min(effLvl(),MAXL-1)),wc=wx*6;wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
   return out.join(" | ")||("Streak: day "+S.streak);
 }
 function uncreditStreak(){
   var u=S.skUndo; if(!u||u.d!==today()||S.lastDone!==today())return;
   if(u.chest){var cx=CHESTS[u.chest],cc=Math.round(cx*5);delete S.chests[u.chest];S.xp=Math.max(0,S.xp-cx);S.coins-=cc;S.earnedC=Math.max(0,S.earnedC-cc)}
-  S.streak=u.streak;S.lastDone=u.lastDone;S.freezes=u.freezes;S.best=u.best;S.skUndo=null;
+  if(u.wq){var wq=wqState();wq.n=Math.max(0,wq.n-1);if(u.wqx){wq.paid=0;S.xp=Math.max(0,S.xp-u.wqx);S.coins-=u.wqc;S.earnedC=Math.max(0,S.earnedC-u.wqc)}}
+  S.streak=u.streak;S.lastDone=u.lastDone;S.freezes=u.freezes;S.best=u.best;S.freeWk=u.fw||"";S.skUndo=null;
 }
 function onTap(id,ev){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
   if(proofPend[id]){pop("Still checking that photo");return}
-  if(!S.done[id]&&q.xp>=25)askProof(id); else toggle(id,ev);
+  /* Cal, 2026-11-09: no photo is asked for by default. A tap finishes the quest; the row's 2x button offers the photo. The
+     Workout still opens the photo window first, since only workouts with a photo count toward Weekly Warrior. */
+  if(!S.done[id]&&q.rep==="weekly4")askProof(id); else toggle(id,ev);
 }
 function toggle(id,ev,mode){
   var q=S.quests.filter(function(x){return x.id===id})[0]; if(!q)return;
-  if(q.rep==="weekly4"&&!S.done[id]&&mode!=="v"){askProof(id);return}
+  if(q.rep==="weekly4"&&!S.done[id]&&!mode){askProof(id);return}
   var actFlag=false;
   var before=effLvl(), wasGate=gated(), note=null, crit=false;
   if(S.done[id]){
     var back=doneXp(q), vb=S.vdone[id]||0; delete S.done[id]; delete S.vdone[id]; if(q.rep==="weekly4"&&vb>0)unmarkActive();
-    S.xp=Math.max(0,S.xp-back); S.vxp=Math.max(0,S.vxp-vb); if(q.xp>=25)S.bigxp=Math.max(0,S.bigxp-back);
+    if(S.rdone&&S.rdone[id]){restBank().x+=S.rdone[id];delete S.rdone[id]}
+    S.xp=Math.max(0,S.xp-back); if(q.xp>=25){S.vxp=Math.max(0,S.vxp-vb);S.bigxp=Math.max(0,S.bigxp-back)}
     S.total=Math.max(0,S.total-1); if(vb>0)S.vcount=Math.max(0,S.vcount-1);
     var cb=S.cdone[id]||0;S.coins-=cb;S.earnedC=Math.max(0,S.earnedC-cb);delete S.cdone[id];
     S.stats[q.stat]=Math.max(0,(S.stats[q.stat]||0)-1);
@@ -1247,10 +1290,12 @@ function toggle(id,ev,mode){
     if(S.combo){if(S.combo.n>1)S.combo.n--;else S.combo=null}
   }else{
     var ver=(mode==="v"), mu=mults(q,{commit:true,verified:ver}); if(ver&&q.rep==="weekly4")actFlag=true;
-    S.done[id]=mu.xp; S.vdone[id]=ver?mu.xp:0; S.xp+=mu.xp; if(ver)S.vxp+=mu.xp; if(q.xp>=25)S.bigxp+=mu.xp;
+    var rs=restBank(),rb=Math.min(rs.x||0,mu.xp);if(rb>0){mu.xp+=rb;rs.x-=rb;mu.tags.push("Rested +"+rb);if(!S.rdone)S.rdone={};S.rdone[id]=rb}
+    S.done[id]=mu.xp; S.vdone[id]=ver?mu.xp:0; S.xp+=mu.xp; if(q.xp>=25){if(ver)S.vxp+=mu.xp;S.bigxp+=mu.xp}
     S.total++; if(ver)S.vcount++; crit=mu.tags.indexOf("CRITICAL HIT")>=0; if(crit)S.crits++;
     S.stats[q.stat]=(S.stats[q.stat]||0)+1;
-    var roll=coinMomentum(),cn=coinsFor(mu.xp)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.round(cn*(1+specialPct("coin")/100));S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
+    /* coins from the no-photo XP with every perk, then x2 (or 2.1) for a verified photo, so a photo always pays double coins too */
+    var roll=coinMomentum(),cn=coinsFor(mu.hx)+(crit?50:0); if(S.cls==="swiftblade"&&q.stat==="productivity")cn=Math.round(cn*1.25); cn=Math.ceil(Math.round(cn*(1+specialPct("coin")/100))*mu.vb);S.cdone[id]=cn;S.coins+=cn;S.earnedC+=cn;
     if(S.raid&&S.raid.id===id)S.raid=null;
     var t=today(); if(S.dayXp.d!==t)S.dayXp={d:t,x:0}; S.dayXp.x+=mu.xp;
     if(S.dayXp.x>=50)note=creditStreak();
@@ -1265,6 +1310,7 @@ function toggle(id,ev,mode){
   var after=effLvl();
   if(after>before)levelUp(after,null,before);
   else if(!wasGate&&gated())gateOpened(gated());
+  renownCheck();
   if(actFlag)markActive();
 }
 function remove(id){
@@ -1279,8 +1325,9 @@ var proofId=null, proofBusy=false, proofModal=null;
    closing the app simply leaves its quest open) */
 var proofPend={};
 function pendHash(h){for(var k in proofPend)if(proofPend[k].h===h)return true;return false}
-/* body.qbpend while any check runs, so web.js's return-from-background reload waits instead of dropping it */
-function pendMark(){if(document.body)document.body.classList.toggle("qbpend",Object.keys(proofPend).length>0)}
+/* window.__qbPendN: how many checks are running, so web.js's return-from-background reload waits instead of dropping one
+   (a body class would not survive: render() rewrites document.body.className) */
+function pendMark(){window.__qbPendN=Object.keys(proofPend).length}
 function closeProof(){if(proofModal){proofModal.remove();proofModal=null}proofId=null;proofBusy=false}
 function isDigital(q){return /^(create|admin|boss)$/.test(q.cl)}
 function askProof(id){
@@ -1291,10 +1338,10 @@ function askProof(id){
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
   proofModal=modal('<div class="card box2"><span class="label">Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
    +'<p class="note">'+(isDigital(q)?"Take a live photo of your screen showing the finished work.":"Take a live photo of the finished result.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
-   +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP</span><span class="chip">Honor +'+mh.xp+' XP</span></div>'
+   +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.xp)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.xp)+' coins</span></div>'
    +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
    +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'
-   +'<div class="proof" id="proofmsg"></div>'+(q.rep==="weekly4"?'<p class="note">Workouts only count with a live photo. No honor system.</p>':'<button class="btn ghost" data-act="honor">Use the honor system</button>')+'<button class="btn ghost" data-act="closeproof">Cancel</button></div>');
+   +'<div class="proof" id="proofmsg"></div>'+(q.rep==="weekly4"?'<p class="note">Only workouts with a photo count toward Weekly Warrior.</p>':'')+'<button class="btn ghost" data-act="honor">Done without a photo</button><button class="btn ghost" data-act="closeproof">Cancel</button></div>');
 }
 function pl(k,t){var el=document.getElementById("proofmsg");if(!el)return;var d=document.createElement("div");d.className=k;d.innerHTML='<span>'+(k==="ok"?"&#10003;":k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(t)+'</span>';el.appendChild(d)}
 async function handleProof(file){
@@ -1349,7 +1396,7 @@ function proofVerdict(q,ok,msg,dx,dc){
    +'<p class="note"><b>'+esc(q.name)+'</b> &middot; '+esc(ok?"Claude saw: "+msg:msg)+'</p>'
    +(ok?'<div class="row"><span class="chip xp">+'+(dx||0)+' XP</span><span class="chip xp"><i class="coin"></i> +'+(dc||0)+'</span></div><div class="btns"><button class="btn" data-act="mclose">Nice</button></div>'
        :'<p class="note">No XP or coins were given. The quest is still open.</p><div class="btns"><button class="btn" data-act="proofretry" data-id="'+q.id+'">Try another photo</button>'
-        +(q.rep==="weekly4"?'':'<button class="btn ghost" data-act="proofhonor" data-id="'+q.id+'">Use the honor system</button>')+'</div>')
+        +'<button class="btn ghost" data-act="proofhonor" data-id="'+q.id+'">Done without a photo</button></div>')
    +'</div>');
 }
 
@@ -1441,7 +1488,7 @@ async function handlePhoto(file){
 function clearGate(savedGym){
   var g=gated(); if(g===null)return;
   var beforeLv=effLvl(), prevRi=rankIdx();
-  S.gates.push(g); gateLines=[]; checkBadges();
+  S.gates.push(g); gateLines=[]; S.trialN=0; checkBadges();
   var afterLv=effLvl(), t=S.gates.length;
   render(); persist();
   var fl=document.createElement("div");fl.className="flash";document.getElementById("layer").appendChild(fl);setTimeout(function(){fl.remove()},800);
@@ -1514,6 +1561,7 @@ document.addEventListener("click",function(e){
   if(baseAct(a,b,e))return;
   if(/^wk/.test(a)&&trainAct(a,b))return;
   if(a==="toggle")onTap(b.dataset.id,e);
+  if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
   if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+" opens at your next level-up");return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeons");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
@@ -1545,7 +1593,7 @@ document.addEventListener("click",function(e){
   if(a==="raid"){S.raid={id:b.dataset.id,end:Date.now()+25*60000};render();persist()}
   if(a==="rwedit"){rwEditor();return}
   if(a==="claim"){
-    if(integrity()<.5){pop("Integrity "+Math.round(integrity()*100)+"%. Verify more big quests to claim (need 50%).");return}
+    /* Cal, 2026-11-09: prizes no longer need 50% verified XP; photos are a pure bonus */
     S.claimed[b.dataset.lv]=true;render();persist();burst(e.clientX,e.clientY,26);pop("Reward claimed. Enjoy it.");
   }
   if(a==="honor"){var id=proofId;closeProof();if(id)toggle(id,e,"h")}

@@ -11,11 +11,12 @@ function priceFlat(a){var id=a[0],e=a[3]||{};if(e.fp)return a[2];if(PRICE_HUGE[i
   if(e.g==="Decor"||e.g==="Menu"||e.g==="Grounds")return a[2]>6000?PRICE.medium:PRICE.small;
   return a[2]<=1200?PRICE.small:a[2]<=6000?PRICE.medium:PRICE.large}
 Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){a[2]=priceFlat(a);if(a[3]&&a[3].p)a[3].p=Math.round(a[3].p*50)/100})});
-ROOMT.restaurant.cost=1000;ROOMT.garden.cost=1500;ROOMT.theater.cost=2500;ADDONS.theater=TH_UPS;ADDONS.auditorium=AU_UPS;
+/* Cal, 2026-11-09 ("very very accessible"; the Garden and Restaurant on day 1-2): story lots and openers at about a third */
+ROOMT.restaurant.cost=500;ROOMT.garden.cost=200;ROOMT.theater.cost=1000;ADDONS.theater=TH_UPS;ADDONS.auditorium=AU_UPS;
+ROOMT.boba.cost=600;ROOMT.mall.cost=1200;ROOMT.club.cost=1500;
 /* interface items and permanent buffs: top out within a few days too */
 SHOP.forEach(function(it){var e=it[6]||{};if(it[1]==="buff")it[3]=it[3]<=1500?1000:it[3]<=6000?1500:2500;
   else if(!e.gar&&!e.basic&&it[3]>800)it[3]=it[3]<=2000?1000:it[3]<=5000?1500:2500});
-LFDS.restaurant.forEach(function(q){if(q.cost)q.cost=q.cost>=10000?1500:600});
 /* Cal, 2026-11-05 (docs/PROGRESSION.md): rooms later in the story cost more, since passive income and dungeons pay more by then. */
 var ROOMSTEP={garden:1,restaurant:1.25,boba:1.5,dessert:1.75,skybar:2,speakeasy:2,rooftop:2.5,mall:3,theater:3.5,auditorium:3.5,arcade:4.5,rhythm:4.5,vr:4.5,bowling:5,karaoke:5.5,club:6};
 Object.keys(ROOMSTEP).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[2])a[2]=Math.round(a[2]*ROOMSTEP[k]/50)*50})});

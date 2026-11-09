@@ -19,8 +19,16 @@ var REWARDS=[
  [40,"The White Whale","The bigger thing you keep talking yourself out of. Hunt it down."],
  [45,"Front Row Pass","Concert, game, comedy, theater. Go loud with someone who cares."],
  [50,"Portal Out of Town","One night anywhere that isn't home. Pack the bag first, think later."],
+ /* 55, 65, 70, 80, 85, 90 and 95: so the levels past 50 are never more than five apart (2026-11-09, drafts for Cal to reword) */
+ [55,"Gear Check","Replace the one worn-out thing you use every day. Shoes, headphones, the pan with the scratched bottom."],
  [60,"The Stopped Clock","A whole day that's only yours. Sleep in. Everyone else can wait."],
+ [65,"Field Trip","A day out with no errands attached. Pick a direction, not a plan."],
+ [70,"Chef's Table","Dinner somewhere you would normally save for a special occasion. This is the occasion."],
  [75,"The Someday Scroll","The trip or first you keep saying someday about. Today is someday. Book it."],
+ [80,"Hall of Fame","Frame something from this run: a photo, a ticket, a page. Hang it where you will see it."],
+ [85,"The Upgrade","Trade up one thing you use every week for the version you actually wanted."],
+ [90,"First Fragment","Something old and strange for the shelf: a print, a record, a find from a market stall."],
+ [95,"Victory Lap","Plan the celebration for 100 now. Book it and invite the party."],
  [100,"Legend's Wish","You reached the top. Name the big one, tell someone, and go do it."]
 ];
 /* a reward as this player worded it, and its rarity by level */
@@ -136,7 +144,7 @@ function activeBuffs(){
 function hasSpecial(k){return activeBuffs().some(function(x){return x.b.special===k})}
 function specialPct(k){return activeBuffs().reduce(function(a,x){return a+(x.b.special===k?(x.b.pct||0):0)},0)}
 function streakCap(){return (hasSpecial("streakcap")?.35:.30)+(S.cls==="vanguard"?.10:0)+(S.owned&&S.owned.bf_streak?.05:0)}
-function maxFreeze(){return 2+(hasSpecial("freeze")?1:0)+(S.owned&&S.owned.bf_freeze?1:0)}
+function maxFreeze(){return 3+(hasSpecial("freeze")?1:0)+(S.owned&&S.owned.bf_freeze?1:0)}/* 3 (was 2): Cal, 2026-11-09 streak repair */
 function crewPct(q){
   var t=0;
   activeBuffs().forEach(function(x){
@@ -1235,14 +1243,14 @@ function crewKeyOf(a){for(var k in CREW)if(CREW[k].a===a)return k;return null}
 function crewSvg(a,sz){var s=sz||52,k=crewKeyOf(a),A=k&&typeof ART!=="undefined"&&ART["crew_"+k];if(A)return '<img class="crart" src="'+A+'" width="'+s+'" height="'+s+'" style="width:'+s+'px;height:'+s+'px" alt="">';return pxImg(crewLook(a),"bust",s,s,"crew")}
 /* friends who visit */
 var FRIENDS={
- logan:{name:"Logan",tag:"From the 3rd floor",look:{sex:"m",skin:"#e9b892",hair:"#1e1a22",hair_s:"sidepart",eyes:"#4a3328",top:{s:"longsleeve",c:"#9fabbd"},bottom:{s:"cargo",c:"#c9cfd9"},shoes:{s:"sneakers",c:"#eef1f6"}}},
- justin:{name:"Justin",tag:"Singer-songwriter, best friend",look:{sex:"m",skin:"#efc6a2",hair:"#17131a",hair_s:"slick",eyes:"#2e211c",top:{s:"cardigan",c:"#e0392c",c2:"#f6f6f8"},bottom:{s:"pants",c:"#1e2029"},shoes:{s:"boots",c:"#1e2029"},acc:["chain","cross","earring"]}},
+ logan:{name:"Logan",tag:"Neighbor",look:{sex:"m",skin:"#e9b892",hair:"#1e1a22",hair_s:"sidepart",eyes:"#4a3328",top:{s:"longsleeve",c:"#9fabbd"},bottom:{s:"cargo",c:"#c9cfd9"},shoes:{s:"sneakers",c:"#eef1f6"}}},
+ justin:{name:"Justin",tag:"Best friend",look:{sex:"m",skin:"#efc6a2",hair:"#17131a",hair_s:"slick",eyes:"#2e211c",top:{s:"cardigan",c:"#e0392c",c2:"#f6f6f8"},bottom:{s:"pants",c:"#1e2029"},shoes:{s:"boots",c:"#1e2029"},acc:["chain","cross","earring"]}},
  vega:{name:"Vega",tag:"Best friend",look:{sex:"m",skin:"#d8a07a",hair:"#2a1d18",hair_s:"textured",tips:"#c9a46a",eyes:"#3a271c",top:{s:"hoodie",c:"#efe8d4",c2:"#bfb59c",logo:true},bottom:{s:"cargo",c:"#a3a19e"},shoes:{s:"sneakers",c:"#efe8d4"},beard:"#2a1d18",acc:["earring"]}},
  memo:{name:"Memo",tag:"Married to Cynthia",look:{sex:"m",skin:"#d99e78",hair:"#1a1416",hair_s:"buzz",eyes:"#3a2418",top:{s:"tee",c:"#1f8a4c"},bottom:{s:"pants",c:"#1e2029"},shoes:{s:"sneakers",c:"#eef1f6"},acc:["sunglasses"]}},
  cynthia:{name:"Cynthia",tag:"Married to Memo",look:{sex:"f",skin:"#d29a74",hair:"#1d1416",hair_s:"waves",eyes:"#3a2418",top:{s:"tank",c:"#1f5a3c"},bottom:{s:"skirt",c:"#f4f1ea"},shoes:{s:"flats",c:"#e9d8c4"},acc:["flower","hoops"]}}
 };
 var VISITS=[
- {who:["logan"],w:25,text:"Logan came up from the 3rd floor with leftovers and stayed a while.",coin:200},
+ {who:["logan"],w:25,text:"Logan came by with leftovers and stayed a while.",coin:200},
  {who:["justin"],w:20,text:"Justin dropped by to write a hook. You wrote one too.",boost:{stat:"creativity",pct:25,label:"Justin's session x1.25"}},
  {who:["memo","cynthia"],w:18,text:"Memo and Cynthia came over for dinner.",coin:150,boost:{coin:25,label:"Dinner night: coins +25%"}},
  {who:["vega"],w:10,text:"Vega showed up unannounced, as usual, and left you a gift.",coin:600},

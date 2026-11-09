@@ -63,7 +63,7 @@ function btyPrune(){var t=today();S.quests=S.quests.filter(function(q){return !q
 var btyBoardBase=boardHtml;
 boardHtml=function(){btyPrune();var h=btyBoardBase(),i=h.indexOf('<section class="cluster"');var c=btyHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 var btyMultsBase=mults;
-mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.tags.push("Bounty x"+f);r.xp=Math.max(1,Math.round(q.xp*r.m))}return r};
+mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
 var BTYBUSY=0;
 async function btyAsk(k){var b=btyState(),mine=S.quests.map(function(q){return q.name}).slice(0,40).join("; ");
   try{var sample=window.claude?await window.claude.use("sample"):null;if(!sample)return null;

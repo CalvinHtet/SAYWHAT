@@ -245,7 +245,7 @@
     if (!running || Date.now() - hiddenAt < 10 * 60000) return;
     fetch("index.html", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (html) {
       var h = appHash(html);
-      if (h && h !== running && !document.querySelector("#layer .modal") && !document.body.classList.contains("qbpend")) location.reload();
+      if (h && h !== running && !document.querySelector("#layer .modal") && !(window.__qbPendN > 0)) location.reload();
     }).catch(function () {});
   });
   /* fetch ahead, a few at a time and only while the app is on screen: the buildings and rooms first, then this player's own

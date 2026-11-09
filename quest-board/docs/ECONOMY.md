@@ -5,15 +5,22 @@ two early on, bigger goals later, and about a year of play to reach the top.
 
 ## XP and levels
 
-Cal, 2026-11-05 (`docs/PROGRESSION.md`): level L to L+1 costs `min(600, 50 + 6L + 0.2L²)` XP (`ECON.xpK`, `ECON.xpCap`): level 100 in about 50 days for a serious player (Cal).
+Cal, 2026-11-09: levels must never feel slower and slower, and "if they used it for daily tasks and chores everyday, they could
+lvl up 1-2 times ... pair that with working out, using the trainer, and other things, you could level up 3-4 times". Level L to
+L+1 costs `20 + 115(L-1)/5` XP below level 6 (level 1 to 2 is one or two quests), then `135 x (1 + 0.0015(L-6))`: 135 at 6, 144 at
+50, 154 at 100; level 100 is 13,905 XP (`lvNeed` in `30_app_b.js`, `ECON.lvFirst`, `lvRamp`, `lvFlat`, `lvGrow`). Chores only
+(about 180 XP a day): 1.2 to 1.3 levels a day at every stage, level 100 around day 77. Chores plus a photo workout, a Training
+session and a bounty (about 500 a day): 3.2 to 3.7 a day, level 100 around day 28, then Renown ranks past 100 (one every 154 XP).
+Saves keep their exact level and progress (`xpc3` in `merge`).
 Businesses pay out each day at most 200 coins plus 1.5 times the coins the day's quests earned (`29e_economy.js`); the rest
 waits in the room. Missions pay coins growing 1% a level and 30% of their listed XP, flat (`msPay`, `28_missions.js`).
-At 200 XP a day (about a dozen ordinary tasks): level 10 on day 4, 20 on day 13, 30 on day 29, 50 on day 84, 100 in about
-eight months; busy 450 XP days roughly halve that. No level ever takes more than about three normal days. Saves from the old
-curve keep their level and their progress through it (`xpc2` in `merge`).
+Trials pass with a fresh activity photo at once, or on honor after 2 active days of 50+ XP (`ECON.trialDays`).
+Catch-up: Daily Quest goal 50, rested XP (a quarter level per day away, up to one level, quests pay double until it is used), the
+Weekly Quest (active on 4 days pays a level), streak repair (one missed day a week free, freezes cover each missed day, a break
+halves the streak), and +25% XP while 8+ levels under the friends' median.
 
-Quest XP stays on the 5 to 100 scale. Honor system on a 50+ XP task pays half, photo proof
-on 25+ XP pays 2x (a live camera photo; Cal doubled it 2026-11-05 so proof is always worth taking), a streak adds up to 30%, and combos, bounties and crits stack on top
+Quest XP stays on the 5 to 100 scale. Without a photo a quest pays its listed XP; a live camera photo that
+passes the check pays at least double the XP and the coins on any quest (Cal, 2026-11-09: photos are a pure bonus), a streak adds up to 30%, and combos, bounties and crits stack on top
 as you rank up. Undoing a task takes back its XP, coins, combo step and, if the day falls
 under 50 XP, that day's streak credit and any chest it opened.
 

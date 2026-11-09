@@ -120,18 +120,20 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* a story step below the shared-slot level that is ready to open (gate and level met), for 29h_unlocks.js */
 /* returns that step's own level, or 0 when none is ready */
 function styReadyLow(){var o=styState();if(o.stepDay===today()&&!(S.testFree>0))return 0;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
-  if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow)continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return L||1}return 0}
+  if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow||ECON.slotFree[s.id])continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return L||1}return 0}
 function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
     var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
-    if((o.stepDay===today()&&!(S.testFree>0))||!unlockSlotFree(ECON.stepLv[s.id]||0))break;
+    /* Cal, 2026-11-09: the Garden and the Restaurant (ECON.slotFree) never wait for the early one-a-day slot or an area */
+    var sf=!!ECON.slotFree[s.id];
+    if((o.stepDay===today()&&!(S.testFree>0))||(!sf&&!unlockSlotFree(ECON.stepLv[s.id]||0)))break;
     /* QA (3d65b70): early unlocks go in order of their own level, so an area waiting from a lower level (the Hall at 4) goes before this step */
-    var wa=typeof areaLowestWaiting==="function"?areaLowestWaiting():0;if(wa&&wa<(ECON.stepLv[s.id]||0)&&wa<ECON.oneSlotBelow)break;
-    if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();unlockTake();styScene(s);return}
-    o.stepDay=today();unlockTake();styOpen(s);return}
+    var wa=typeof areaLowestWaiting==="function"?areaLowestWaiting():0;if(!sf&&wa&&wa<(ECON.stepLv[s.id]||0)&&wa<ECON.oneSlotBelow)break;
+    if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();if(!sf)unlockTake();styScene(s);return}
+    o.stepDay=today();if(!sf)unlockTake();styOpen(s);return}
   styBeat()}
 setInterval(styCheck,15000);setTimeout(styCheck,4000);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=styyes],[data-act=styno],[data-act=stysell]");if(!b)return;

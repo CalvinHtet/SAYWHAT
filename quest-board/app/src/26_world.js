@@ -460,7 +460,7 @@ LFROOM.restaurant=function(C){
     if(u[0]==="r_d8"){u[1]="Sculptural Vases";u[4]="Black ceramic and dry branches.";e.also="r_noir"}
     if(u[0]==="r_d5"){u[1]="Backlit Wine Wall"}
     if(u[0]==="r_d6"){u[3].cut=1}
-    if(u[0]==="r_x2"){u[4]="A huge room with space between every table.";e.splash="The whole floor is yours now, and it has room to breathe. Next: white linen and candlelight, and once it looks the part, the bar upstairs."}
+    if(u[0]==="r_x2"){u[4]="A huge room with space between every table.";e.lv=13;e.splash="The whole floor is yours now, and it has room to breathe. Next: white linen and candlelight, and once it looks the part, the bar upstairs."}
     if(u[0]==="r_bar"){u[1]="Open the Upstairs Bar";u[4]="Stairs up to a moody cocktail bar in its own room above.";e.opens="skybar";e.also="r_x2";e.lv=30;e.splash="A staircase now leads up to a brand new room above the Restaurant: a dark cocktail bar with high-top tables. Tap the glowing door to go up."}});
   RS_UPS=RS_UPS.filter(function(u){return !u[3].cut});
   /* Cal, 2026-11-05: "a bigger menu on the wall as an upgrade to add more dishes". It follows the screen and takes its place */
@@ -474,7 +474,9 @@ LFROOM.restaurant=function(C){
      kitchen, the dish station needs the second expansion's kitchen), so they are sold once that room exists, never as
      an upgrade that draws nothing */
   RS_UPS.forEach(function(u){var n={r_d3:"r_x1",r_cool:"r_x1",r_k9:"r_x2"}[u[0]];if(n)u[3].also=n});
-  RS_UPS.push(["r_noir","Noir",2500,{p:.8,lv:28,g:"Expansion",also:"r_x2",splash:"The walls go charcoal, the floor goes dark walnut and the lights drop low. This is the look of a Michelin star."},"Charcoal walls, dark walnut floor, low light."]);
+  /* Cal, 2026-11-09: Lock and Key's stated level 14 must be real, and it waits for Noir (29b_story.js): Take Over Next Door
+     and Noir now sort at 13 and 14 (were 24 and 28), so Noir comes after about 22 Restaurant upgrades, not about 44 */
+  RS_UPS.push(["r_noir","Noir",2500,{p:.8,lv:14,g:"Expansion",also:"r_x2",splash:"The walls go charcoal, the floor goes dark walnut and the lights drop low. This is the look of a Michelin star."},"Charcoal walls, dark walnut floor, low light."]);
   RS_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});ADDONS.restaurant=RS_UPS})();
 /* The team in their own rooms (LEAD's request 3): each member who has joined stands in their home room in their own look,
    with a ring in their colour and a name tag so they stand out from the guests. */
