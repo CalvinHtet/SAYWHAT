@@ -1385,7 +1385,8 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .capture.slim .cap-row{flex-direction:row;gap:8px;align-items:flex-start}
 .capture.slim textarea{min-height:44px;padding:11px 12px}
 .capture.slim .btn{min-height:44px;padding:0 16px;flex:none}
-.modal.profm{place-items:start center}
+.modal.profm{place-items:start center;grid-template-columns:minmax(0,1fr)}/* QA: the profile drew 406 px wide on a 390 px phone */
+.prof,.prof .prof-body,.prof .prof-body>*{min-width:0;max-width:100%;box-sizing:border-box}
 .prof{gap:12px}
 .prof .prof-top{display:flex;gap:14px;align-items:center}
 .prof .prof-top .figwrap{flex:none;width:96px}

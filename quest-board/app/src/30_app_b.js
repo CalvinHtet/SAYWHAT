@@ -933,13 +933,21 @@ function persist(){
   if(newerSeen){pop("A newer version saved your progress. Reload to continue.");return}
   S.appv=APPV;S.epoch=QB_EPOCH;S.tshift=window.__qbShift||0;
   clearTimeout(saveT);
-  saveT=setTimeout(function(){
+  saveFn=function(){
+    saveT=null;saveFn=null;
     S.savedAt=Date.now();if(MYUID)S.uid=MYUID;
     var js=JSON.stringify(S);
     try{localStorage.setItem("quest-board",js)}catch(e){}
     try{ if(db&&!blank){ db.doc(DOC).set(JSON.parse(js)).then(function(){SAVEOK=Date.now();SAVEERR="";var el=document.getElementById("savest");if(el)el.textContent=saveLbl()}).catch(function(er){SAVEERR=(er&&er.code)||"error";var el=document.getElementById("savest");if(el)el.textContent=saveLbl();if(!saveWarned){saveWarned=true;pop("Not saving: "+SAVEERR+". Reload the page.")}}) } }catch(e){}
-  },350);
+  };
+  saveT=setTimeout(saveFn,350);
 }
+/* QA 2026-11-09: a purchase followed by closing the app within 350 ms was lost; a waiting save now runs at once when the page
+   is hidden or closed (the local copy is written synchronously; the cloud write is sent) */
+var saveFn=null;
+function flushSave(){if(saveFn){clearTimeout(saveT);saveFn()}}
+window.addEventListener("pagehide",flushSave);
+document.addEventListener("visibilitychange",function(){if(document.hidden)flushSave()});
 /* The database hands back deep frozen objects, and merge writes into what it is given (S.stats below threw on `creativity`,
    which sent every device to "this device only" from about v37 on). So it works on its own copy. */
 function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d));window.__qbShift=d.tshift||0;

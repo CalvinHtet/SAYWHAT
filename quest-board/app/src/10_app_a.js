@@ -367,6 +367,9 @@ var picking=false;
 function pickModal(label,title,intro,opts,onPick){
   var m=modal('<div class="card box2 pick"><span class="label">'+label+'</span><h2>'+title+'</h2><p class="note">'+intro+'</p><div class="picks">'+opts.map(function(o,i){return '<button class="pickcard" data-i="'+i+'">'+o.html+'</button>'}).join("")+'</div><div class="pickinfo" id="pkinfo"><span class="note">Tap an option to see what it does.</span></div><button class="btn big" id="pkgo" disabled>Choose</button></div>');
   var sel=-1, go=m.querySelector("#pkgo"), info=m.querySelector("#pkinfo");
+  /* QA 2026-11-09: closing this with the X left the player without a class and no way back to the choice until a reload; the
+     choice is required, so the window has no X */
+  var mx0=m.querySelector(".mx");if(mx0)mx0.remove();
   [].forEach.call(m.querySelectorAll(".pickcard"),function(c){
     c.onclick=function(){
       sel=+c.dataset.i;
