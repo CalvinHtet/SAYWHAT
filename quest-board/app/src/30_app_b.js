@@ -909,7 +909,7 @@ function mults(q,o){
 }
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=80, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=81, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1080,17 +1080,8 @@ function boardHtml(){
   h+='<section class="card capture"><span class="label">Brain dump</span><div class="cap-row"><textarea id="cap" rows="2" placeholder="Dump everything here, messy is fine. Bullets, run-on sentences, notes to self. I split it into tasks, score the XP, and sort each one." aria-label="Brain dump">'+esc(draft)+'</textarea>'
    +'<button class="btn" id="capgo"'+(busy?" disabled":"")+'>'+(busy?"Sorting":"Sort it")+'</button></div><div class="cap-status">'+status+'</div></section>';
 
-  if(cur){
-    var mv=mults(cur,{verified:true}), mh=mults(cur,{verified:false}), heavy=cur.xp>=25;
-    h+='<section class="card now"><span class="label">Now</span><h2>'+esc(cur.name)+'</h2>'+(cur.why?'<p class="why">'+esc(cur.why)+'</p>':'')
-     +'<div class="row">'+(heavy?'<span class="chip xp'+(mv.xp>=50?" big":"")+'">+'+mv.xp+' XP verified</span><span class="chip">+'+mh.xp+' honor</span>':'<span class="chip xp">+'+mh.xp+' XP</span>')+'<span class="chip">+1 '+esc(statName(cur.stat))+'</span><span class="chip xp"><i class="coin"></i> +'+coinsFor(heavy?mv.xp:mh.xp)+'</span>'
-     +mv.tags.filter(function(t){return !/^(Honor|Verified)/.test(t)}).map(function(t){return '<span class="chip mult">'+esc(t)+'</span>'}).join("")+'</div>';
-    if(ri>=4){
-      if(S.raid&&S.raid.id===cur.id&&Date.now()<S.raid.end)h+='<div class="row"><span class="chip mult">Raid live</span><b class="mono" id="raidt"></b></div>';
-      else h+='<button class="btn ghost" data-act="raid" data-id="'+cur.id+'">Start 25-min raid</button>';
-    }
-    h+='<button class="btn big" data-act="toggle" data-id="'+cur.id+'">'+(heavy?"Prove it":"Quest done")+'</button></section>';
-  }else{
+  /* Cal, 2026-11-09: no "Now" card. Quests go in without any order, so every quest is equal and sits in its category below. */
+  if(!cur){
     h+='<section class="card allclear"><span class="label">'+(S.quests.length?'Run complete':'Empty board')+'</span><h2>'+(S.quests.length?'Every quest cleared':'No quests yet')+'</h2><p class="note" style="margin:6px 0 12px">'+(S.quests.length?'XP and stats stay. Start a fresh run tomorrow.':'Type your tasks in the brain dump above. Each one becomes a quest with XP and coins.')+'</p><button class="btn ghost" data-act="newday">New run</button></section>';
   }
 
