@@ -21,6 +21,8 @@ is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up
 
 ## Status of Cal's request below
 
+Rooftop and Mall rebuilt (2026-11-08, Cal approved; d35c90d). Rooftop: dark deck `rfw_t1`, cut to a 14 px kerb, glass rail on every side. Mall: 16 x 12, 210 high walls, `mlw_t1` holds the upper level, new `mlx_lift`; `MLBACK` and `MLLEFT` are the painted shop units, so a new shell must keep them. Victor's hair is `fr_victor_hair` (d7d318c), not in `hairStyles` on purpose. GPT Image 2 is no longer Unlimited on Cal's Higgsfield; Nano Banana Pro is.
+
 Done: flat prices, three buildings, shop and dungeon gates, 5 missions a day, dogs with poop and clean up,
 garden with fountain plaza, auditorium above the theater, six-scene movie, seats from behind.
 
