@@ -642,7 +642,7 @@ function socState(){if(!S.social||typeof S.social!=="object")S.social={};var o=S
 function socWorldDoc(){
   return {name:(S.char&&S.char.name)||"Player",look:lookOf(),lv:effLvl(),streak:S.streak||0,cls:S.cls||"",
     rooms:S.base.slots.map(function(r){return r?{t:r.t,a:r.a||{},st:r.st||0}:null}),
-    crew:crewUnlocked().length,served:Math.floor(S.base.served||0),t:Date.now(),appv:APPV}
+    crew:crewUnlocked().length,served:Math.floor(S.base.served||0),earnedC:Math.floor(S.earnedC||0),fw:fshMedals(),t:Date.now(),appv:APPV}
 }
 function socPublish(force){
   if(!socOn()||!S.created)return;var t=Date.now();if(!force&&t-SOC.lastPub<90000)return;SOC.lastPub=t;

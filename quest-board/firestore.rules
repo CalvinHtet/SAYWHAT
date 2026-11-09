@@ -17,6 +17,18 @@ service cloud.firestore {
     // each player's save, backup and save-choice record: that player only
     match /data/users/{uid}/{doc} { allow read, write: if mine(uid); }
 
+    // the Town Hall (app/src/29t_chat.js, 29u_style.js): chat/<id> holds that player's last messages in each room, chatnow/<id>
+    // the room they have open, likes/<id> whose looks they like this week. Everyone signed in reads; only that player writes. The
+    // owner may also write or delete any chat or chatnow doc and delete any likes doc (moderation). Each doc must be the {j, t}
+    // the web wrapper writes, with j capped, so nobody can fill the database.
+    function small(n) {
+      return request.resource.data.keys().hasOnly(["j", "t"]) && request.resource.data.j is string
+        && request.resource.data.j.size() < n && request.resource.data.t is number;
+    }
+    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if (mine(uid) || owner()) && small(20000); allow delete: if mine(uid) || owner(); }
+    match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if (mine(uid) || owner()) && small(2000); allow delete: if mine(uid) || owner(); }
+    match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
+
     // the owner's inbox and the frame and speed logs the owner reads to debug phones
     match /inbox/{doc} { allow read, write: if owner(); }
     match /diag/{doc}  { allow read: if owner(); allow write: if signedIn(); }
