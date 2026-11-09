@@ -98,5 +98,8 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
 - **Rules and the AI function** change rarely and are deployed by hand when they do:
   `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
   QA like any other (functions/test.js first).
-- Before Live goes to friends: the release list above (Test pill, Review, Unlock everything, Next event, `window.__qb*` hooks,
-  `QB_TEST_START` 0) and Cal's uid in `firestore.rules` and `web/config.js` as the owner.
+- Before Live goes to friends: `QB_TEST_START` 0 and Cal's uid in `firestore.rules` and `web/config.js` as the owner. The test tools
+  go by themselves on any cut with `noTest` (Cal, 2026-11-08): `app/src/31_release.js` deletes the `window.__qb*` test hooks at startup,
+  and the Test pill and Testing rows are never made. Main and the sandbox keep them. A new test hook goes on that file's list; a hook the
+  game itself reads (like `__qbTeam`) must not. `rigtest/lead/striptest.js` checks a Live cut. Restore backup lives in the Test pill, so
+  on Live a player's backup can only be restored by LEAD.
