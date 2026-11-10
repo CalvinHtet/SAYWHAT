@@ -112,19 +112,28 @@ function updAfterReload(){
 
 /* ---------- patch notes (SPEC7, Cal: "with each push, if it is worth including in the patch notes for the players, you could include
    a very very simple version of what changed and give a 200 coin bonus for opening the patch notes letter") ----------
-   One letter from Cal per release in PATCHNOTES ({v, lines}: 3 to 5 short plain lines; a release with nothing for players has
-   none, and one with no lines yet stays hidden). Opening it pays PNCOINS (200) once (S.letters.paid). A player who skipped
-   versions gets each missed letter, with coins on the newest 3 only. S.pn.from is the version a save last ran before it first
-   saw patch notes: a new player gets the letters of later releases only. */
+   Cal (2026-11-10, the amendment): one letter every 10 versions (v0.90, v1.00, ...), 500 coins once on opening, and a player who
+   skipped some gets each missed letter with coins on the newest 2 only. "dont give away too much of the game right away": a letter
+   says what changed, never how it works. PATCHNOTES = [{v, subj, lines}] (subj optional; a version not a multiple of 10, or one with
+   no lines, shows nothing). Coins go in S.letters.paid. S.pn.from is the version a save last ran before it first saw patch notes,
+   so a new player gets only later letters. */
 var PATCHNOTES=[
-  {v:90,lines:[]}  /* LEAD writes v0.90's lines */
+  {v:90,subj:"Ten updates in one letter",lines:[
+    "Level scaling and economy rebalanced",
+    "Daily quest goals and payouts rebalanced",
+    "Introduced relic tiers (low, med, high, legendary)",
+    "Town Hall: posts, chat, a weekly ranking and coin challenges",
+    "Training: your own workouts and progress graphs",
+    "New brand drops twice a week, with clothes priced by quality"]}
 ];
-var PNCOINS=200;
+var PNCOINS=500,PNPAID=2,PNEVERY=10;
+/* 90 -> "v0.90", 100 -> "v1.00" */
+function pnVer(v){return "v"+Math.floor(v/100)+"."+("0"+v%100).slice(-2)}
 function pnFrom(){if(!S.pn||typeof S.pn!=="object")S.pn={from:+S.appv||APPV};return +S.pn.from||0}
 /* a save loaded from before patch notes: start from the version it last ran (S.appv), so it gets the letters since */
 var pnMergeBase=merge;merge=function(d){var r=pnMergeBase.apply(this,arguments);try{if(S&&d&&!S.pn)S.pn={from:d.created?(+d.appv||0):APPV}}catch(e){}return r};
-INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){if(!S||!S.created)return [];var from=pnFrom(),L=PATCHNOTES.filter(function(p){return p&&p.v>from&&p.v<=APPV&&p.lines&&p.lines.length}).sort(function(a,b){return a.v-b.v});
-  return L.map(function(p,i){return {id:"pn"+p.v,from:"Cal",subj:"What’s new in v0."+p.v,pay:"open",coins:i>=L.length-3?PNCOINS:0,
+INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){if(!S||!S.created)return [];var from=pnFrom(),L=PATCHNOTES.filter(function(p){return p&&p.v%PNEVERY===0&&p.v>from&&p.v<=APPV&&p.lines&&p.lines.length}).sort(function(a,b){return a.v-b.v});
+  return L.map(function(p,i){return {id:"pn"+p.v,from:"Cal",subj:p.subj||"What’s new in "+pnVer(p.v),pay:"open",coins:i>=L.length-PNPAID?PNCOINS:0,
     body:'<ul class="wl">'+p.lines.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>'}})});
 /* opening a patch-notes letter pays its coins at once */
 var pnOpenBase=ibOpen;ibOpen=function(id){pnOpenBase(id);var l=id?ibFind(id):null;if(l&&l.pay==="open"&&l.coins>0&&!ibState().paid[l.id])ibClaim(l.id)};
