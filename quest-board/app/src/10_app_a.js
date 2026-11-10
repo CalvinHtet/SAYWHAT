@@ -491,7 +491,7 @@ var WHEEL=[["300 coins",300,0],["",0,0,1],["1,000 coins",1000,0],["",0,0,1],["50
 var WHEEL_W=[20,1,12,1,20,1,6,1,16,1,6,1,9,1,3,1];
 var WHEELSLIV=4,WHEEL_DEG=WHEEL.map(function(w){return w[3]?WHEELSLIV:(360-8*WHEELSLIV)/8}),WHEELALL=1000;
 var WCOL=["#ff3d81","#ffc857","#4dffc3","#6cb6ff","#b388ff","#ff8a3d","#f1f0fb","#22d3ee"];
-var spinning=false;
+var spinning=false,WHEELROT=0; /* where the wheel stopped, so a redraw leaves it there (QA, rc-0.89: it snapped back to 0) */
 function wheelStart(i){var a=0;for(var k=0;k<i;k++)a+=WHEEL_DEG[k];return a}
 /* a piece of clothing from any brand in the game, dropped yet or not: the Dungeon Crawls' rules (crawlWear) without dungeon pieces and
    basics, and only what fits this body and is not owned yet */
@@ -501,9 +501,11 @@ function wheelHtml(){
   var conic='conic-gradient('+WHEEL.map(function(w,i){var a=wheelStart(i),b=a+WHEEL_DEG[i],t=WHEEL_DEG[i]/3,g=function(c,p,q){return c+' '+p.toFixed(2)+'deg '+q.toFixed(2)+'deg'};
     /* a sliver: gold, a white line, gold */
     return w[3]?[g("#f5c518",a,a+t),g("#fffbe6",a+t,a+2*t),g("#f5c518",a+2*t,b)].join(","):g(WCOL[ci++%WCOL.length],a,b)}).join(",")+')';
-  var labels=WHEEL.map(function(w,i){return w[3]?'':'<span style="transform:rotate('+(wheelStart(i)+WHEEL_DEG[i]/2-90).toFixed(2)+'deg) translateX(34px)">'+esc(w[0])+'</span>'}).join("");
+  /* labels on the left half are turned the other way so none reads upside down (QA, rc-0.89) */
+  var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,t=c>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(-34px) translateX(-100%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(34px)';
+    return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
-   +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+'">'+labels+'</div></div>'
+   +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
    +(S.wheelRes?'<p class="note" style="text-align:center">Last result: <b>'+esc(S.wheelRes)+'</b></p>':'')+'</section>';
 }
@@ -520,7 +522,8 @@ function spin(){
   persist(); spinning=true;
   /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
   var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);
-  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+(1800-at).toFixed(2)+"deg)"}
+  var to=Math.ceil(WHEELROT/360)*360+1800-at;WHEELROT=to;
+  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+to.toFixed(2)+"deg)"}
   setTimeout(function(){spinning=false;checkBadges();render();persist();pop("Wheel: "+S.wheelRes)},3600);
 }
 
