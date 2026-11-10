@@ -14,7 +14,7 @@ function roomCell(i){
 function baseHtml(){
   simulate();
   var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r){return s+(r&&r.pend?Math.floor(r.pend):0)},0);
-  var hud='<div class="lfhud mono"><span><i class="coin"></i>&nbsp;'+Math.floor(S.coins)+'</span>'+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
+  var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+Math.floor(S.coins)+'"><i class="coin"></i>&nbsp;<b>'+Math.floor(S.coins).toLocaleString()+'</b></span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
   if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';
@@ -43,7 +43,7 @@ function roomModal(i){
   var cph=Math.round(coinRate(i)),stat=T.coin?cph+' coin'+(cph===1?'':'s')+' an hour, holds '+roomStore(r)+' hours':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+' an hour':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Yours to fill.');
   /* QA: the payout sentence ran off a phone inside the chip; it is its own line now */
   var payln=T.coin?'<p class="note">Your businesses can pay out '+payRoom().toLocaleString()+' more coins today.</p>':'';
-  var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
+  var h='<div class="card box2 rmodal">'+'<div class="rm-head"><h2 class="rm-title">'+esc(T.name)+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% today. Complete the Daily Quest for full speed.':'Full speed today.')+'</p>';
   if(r.t==="garden")h+=gdNote(r)+gdWaterHtml()+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
   if(false){
@@ -197,7 +197,7 @@ function lfNewGlow(svg,fresh){
 function buildModal(i){
   closeModals();
   var lv=effLvl(), types=buildableList();if(!buildableList().length){pop("Nothing to build yet.");return}
-  var h='<div class="card box2"><span class="label">Construction</span><h2 style="font-size:30px">Build a room</h2><div class="addons">';
+  var h='<div class="card box2"><span class="label">Construction</span><div class="rm-head"><h2 style="font-size:30px">Build a room</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="addons">';
   types.forEach(function(k){var T=ROOMT[k];
     if(T.lv>lv||hasRoom(k)){return}
     h+='<div class="addon next"><div class="bpart'+(ART["room_"+k]?' post':'')+'">'+(ART["room_"+k]?'<img class="rpost" src="'+ART["room_"+k]+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div><b>'+esc(T.name)+'</b><small>'+esc(T.desc)+'</small><button class="btn" data-act="rdo" data-i="'+i+'" data-t="'+k+'"><i class="coin"></i>&nbsp;'+T.cost+'</button></div>';
