@@ -85,11 +85,13 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   URI `https://<address>/__/auth/handler`. Cal was given the Test channel and `saywhat-b7ae8.web.app` on 2026-11-07. Keep the
   channel name `test` so its address never changes.
 - **Real players now (2026-11-08):** Live and the Test channel both run the same Live cut (`release/live-<main hash>`: main plus
-  `noTest: true` in `web/config.js` and `QB_TEST_START` 0) at QB_EPOCH 5 (Cal's reset for him and his girlfriend). Both links share one
+  `noTest: true` in `web/config.js` and `QB_TEST_START` 0) at QB_EPOCH 6 (Cal's second reset, v0.86, 2026-11-09: "start over from
+  scratch ... initalize everyone's save file"; 5 was the reset for him and his girlfriend). Both links share one
   database and one save per player, so always deploy the same build to both, and never a different QB_EPOCH to either: an older number
   treats the new saves as empty and overwrites them. **Cal plays on the Test channel link: it is a real link, never make it anything
-  else.** Do not bump QB_EPOCH again unless Cal asks; a bump also needs `board`, `pings` and `worlds` cleared
-  (`firestore:delete <name> --recursive --force`). A save from before a reset goes to `data/users/<id>/backup_e<epoch>`.
+  else.** Do not bump QB_EPOCH again unless Cal asks; a bump also needs `board`, `pings` and `worlds` cleared, and for a clean Town
+  Hall `chat`, `chatnow` and `likes` (`firestore:delete <name> --recursive --force`). A save from before a reset goes to
+  `data/users/<id>/backup_e<epoch>`. A rollback build must carry the same QB_EPOCH as the saves it should keep (rollback-v0.80 does).
 - **Sandbox (Cal, 2026-11-08: "test all the upgrades without it overwriting my personal save"):** the Hosting channel `sandbox`, built
   from main with `QB_TARGET=web QB_SANDBOX=1 python3 tools/build.py`, then `hosting:channel:deploy sandbox --expires 30d`. Its database
   lives in the browser (`sandboxHost` in `web/web.js`) and it returns before Firebase starts, so it has no way to reach a real save and

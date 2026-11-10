@@ -37,6 +37,12 @@ travel as a git bundle zip that Cal emails to his Mac (see "Shipping" below).
      it (request in TASKS.md).
    Not checked: a real phone; two real players; the Shop screen after these prices beyond the sandbox screenshots.
    Open for Cal: levelling runs faster than his targets (Cal's routine level 100 around day 20; see ECONOMY.md).
+   Cal published v0.85 from his Mac (16bae71, Live and Test), then asked for a clean start: "I want to start over from scratch.
+   can you initialize my save file? Can you initalize everyone's save file on there?" v0.86 = v0.85 with QB_EPOCH 6 (every
+   save starts over on its next load, the old one copied to data/users/<id>/backup_e5) and APPV 86; Cal clears worlds, board,
+   pings, chat, chatnow and likes after deploying (README in the zip). rollback-v0.80 moved to QB_EPOCH 6, APPV 87 (b096771) so a
+   rollback keeps the new saves. Tested in the sandbox: an epoch 5 save opens v0.86 at the new-character screen with backup_e5
+   written; a post-reset save loads and saves on the rollback build.
    Later the same day, Cal: "Merge dungeons and missions. dont need two separate ones. Dungeon Crawls will be the new name": one
    tab (nav label Crawls), 5 crawls a day, coins every crawl, a rare find at least every 4th crawl (trophy piece, relic shard,
    ally, clothes; Sable on the first crawl), no energy. Measured again: Cal's routine every room upgrade day 42, casual about
