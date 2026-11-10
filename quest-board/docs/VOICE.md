@@ -41,6 +41,16 @@ Say what the thing is, in a detail only someone who has seen it would know. Then
 - Toasts say what happened: "Relic found. Unbroken I: +150 coins". Not "Woohoo!".
 - Help explains in plain words, second person, present tense. One idea per sentence.
 
+## No spoilers (Cal, 2026-11-10)
+
+Cal: "i don't like 'then the mall'. Scrub the entire game for spoilers like this", and "dont give away too much of the game right
+away".
+- Never name or describe a room, building, character, feature, dungeon, relic set or brand the player does not have yet. That
+  covers goals, the "Next goal" line, locked cards, toasts, help, letters and patch notes.
+- Say what to DO, not what it opens: "Lock and Key: 2 more upgrades to half", "Earn 20,000 in the Restaurant: 12,400". At most
+  "Something new is waiting" or "? ? ?", never a name.
+- Patch notes and letters say what changed, never how it works or what comes later.
+
 ## Tells that read as written by AI (cut them)
 
 - Exclamation marks. Use none outside a character's actual shout.
