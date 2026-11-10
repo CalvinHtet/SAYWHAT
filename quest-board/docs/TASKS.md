@@ -24,9 +24,9 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 |---|---|---|---|---|
 | W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | DOING |
 | W1b | Performance fixes from QA's W1 list | BUILDER | w-perf | after W1 |
-| W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | TODO |
-| W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | TODO |
-| W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | TODO |
+| W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | READY FOR QA (3fdaeec) |
+| W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | READY FOR QA (3fdaeec) |
+| W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | TODO |
 | W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | TODO |
 | W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | TODO |
