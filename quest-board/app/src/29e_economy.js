@@ -25,10 +25,18 @@ var ECON={
   /* Cal: "the odds should be 50% low tier relic, 33% accessory, 13% mid, 4% high"; chestNone coins when every accessory is owned,
      relicDup coins by tier when every relic of the tier is owned (a relic is never given twice) */
   chest3:[["low",50],["acc",33],["mid",13],["high",4]],chestNone:300,relicDup:{low:150,mid:400,high:1000,legendary:2500},
-  /* placeholder relics' buffs (29y_free.js) until Cal picks the list: xp and coin are percents on quests, biz on business income,
-     gift and mt fractions on crawls. Legendary relics come from treasure hunts, not chests. */
-  relicBuff:{r2_compass:{xp:1},r2_thimble:{coin:1},r2_teacup:{biz:1},r2_lantern:{gift:.01},r2_foxmask:{mt:.03},r2_gauntlet:{xp:2},
-    r2_starmap:{xp:3},r2_moonshard:{coin:3},r2_ember:{xp:4},r2_aegis:{coin:4}},
+  /* the relics' buffs (Cal's list, SPEC6; the kinds are explained in 29y_free.js). Low: +0.5% XP on one quest group; mid: +1% on one
+     group or +2% income in one business; high: a small rule-bender; legendary (Rafe's hunts): each stronger than the last.
+     relicSet: owning every relic of a tier adds this % XP on every quest. */
+  relicBuff:{r2_keyring:{cl:"home",xp:.5},r2_compass:{cl:"out",xp:.5},r2_pen:{cl:"admin",xp:.5},r2_teacup:{cl:"reset",xp:.5},
+    r2_leash:{cl:"home",xp:.5},r2_whetstone:{cl:"body",xp:.5},r2_thimble:{cl:"create",xp:.5},r2_libcard:{cl:"admin",xp:.5},
+    r2_recipe:{cl:"home",xp:.5},r2_peg:{cl:"home",xp:.5},r2_doorbell:{cl:"social",xp:.5},r2_lunchtin:{cl:"body",xp:.5},
+    r2_lantern:{gift:.01},r2_shell:{rooms:["garden"],inc:2},r2_hilt:{train:1},r2_inkwell:{cl:"admin",xp:1},
+    r2_foxbell:{rooms:["boba","dessert"],inc:2},r2_monocle:{cl:"social",xp:1},r2_emberfox:{cl:"create",xp:1},r2_hourglass:{cl:"reset",xp:1},
+    r2_starcompass:{mt:.10},r2_phoenix:{freeze:1},r2_mirror:{first3:5},r2_familiar:{chest:5},r2_gauntlet:{stat:"fitness",xp:3},
+    r2_codex:{cl:["admin","create"],xp:3},
+    r2_crown:{all:2},r2_wyrmheart:{all:3,biz:5},r2_veil:{all:4,crawl:1},r2_worldseed:{all:5,rb:1.25}},
+  relicSet:{low:1,mid:1.5,high:2},
   /* the town's efficiency keeps its own 150 XP mark (the old goal), so the lower Daily Quest goal does not raise business income */
   effGoal:150,effFirst:.25,effOver:1.5,hidden:2,  /* efficiency after the first task; cap in overtime, reached at hidden x effGoal */
   shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */

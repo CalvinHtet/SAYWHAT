@@ -19,17 +19,39 @@ function freeItem(o){var p=freePool(o);return p.length?p[Math.floor(Math.random(
 function freeBrand(it){var b=BRANDS.filter(function(x){return x.id===(it&&it[6]&&it[6].b)})[0];return b?b.name:""}
 /* ---- relic tiers ---- */
 var R2TIERS=[["low","Low","Bronze"],["mid","Mid","Silver"],["high","High","Gold"],["legendary","Legendary","Legendary"]];
+/* Cal's list (approved 2026-11-10, SPEC6): 12 low heirlooms, 8 mid and 6 high artifacts, 4 legendary from Rafe's hunts (lv: the
+   hunt's level). The buffs are in ECON.relicBuff. */
 var RELICS2=[
-  {id:"r2_compass",tier:"low",name:"Grandfather's Compass",d:"A brass pocket compass, the lid engraved with initials nobody remembers."},
-  {id:"r2_thimble",tier:"low",name:"Silver Thimble",d:"Worn smooth on one side from forty years of mending."},
-  {id:"r2_teacup",tier:"low",name:"Chipped Teacup",d:"Bone china with a blue rim and one chip by the handle."},
-  {id:"r2_lantern",tier:"mid",name:"Delver's Lantern",d:"Green flame behind smoked glass. It burns brighter near treasure."},
-  {id:"r2_foxmask",tier:"mid",name:"Fox Mask Charm",d:"A small porcelain fox mask on a red cord, warm to the touch."},
-  {id:"r2_gauntlet",tier:"mid",name:"Scorched Gauntlet",d:"One plated glove, the knuckles still black from a fire long out."},
-  {id:"r2_starmap",tier:"high",name:"Starfall Map",d:"A chart of constellations that shift when you look away."},
-  {id:"r2_moonshard",tier:"high",name:"Moonsteel Shard",d:"A sliver of a broken sword that hums at night."},
-  {id:"r2_ember",tier:"legendary",name:"Phoenix Ember",d:"A coal that has not cooled since the day it fell from the sky."},
-  {id:"r2_aegis",tier:"legendary",name:"Aegis of the Hollow Gate",d:"A shield face with a door carved in it. The door is warm."}
+  {id:"r2_keyring",tier:"low",name:"Brass Key Ring",d:"Seven keys on a brass ring. Nobody knows what the smallest one opens."},
+  {id:"r2_compass",tier:"low",name:"Worn Trail Compass",d:"The glass is scratched and the needle sticks a little at north."},
+  {id:"r2_pen",tier:"low",name:"Ink-Stained Pen",d:"A fountain pen with a dented cap and blue ink worked into the grip."},
+  {id:"r2_teacup",tier:"low",name:"Chipped Tea Cup",d:"Bone china with a blue rim and one chip by the handle."},
+  {id:"r2_leash",tier:"low",name:"Braided Leash Charm",d:"A short braid of red leash cord with a brass clip on the end."},
+  {id:"r2_whetstone",tier:"low",name:"Pocket Whetstone",d:"A grey stone worn into a shallow dip from years of edges."},
+  {id:"r2_thimble",tier:"low",name:"Grandmother's Thimble",d:"Silver, worn smooth on one side from forty years of mending."},
+  {id:"r2_libcard",tier:"low",name:"Old Library Card",d:"Paper, stamped with due dates going back to 1987."},
+  {id:"r2_recipe",tier:"low",name:"Paper Recipe Card",d:"A soup recipe in pencil, with a grease spot on the corner."},
+  {id:"r2_peg",tier:"low",name:"Wooden Laundry Peg",d:"A spring peg gone grey from the sun, still with a good grip."},
+  {id:"r2_doorbell",tier:"low",name:"Brass Doorbell",d:"An old ringer from a front door, the button worn shiny."},
+  {id:"r2_lunchtin",tier:"low",name:"Dented Lunch Tin",d:"A blue tin box with a dent in the lid and a name scratched inside."},
+  {id:"r2_lantern",tier:"mid",name:"Moth-Wing Lantern",d:"Paper panels thin as moth wings. It glows brighter near treasure."},
+  {id:"r2_shell",tier:"mid",name:"Tidecaller's Shell",d:"A pale spiral shell that sounds like rain when held to the ear."},
+  {id:"r2_hilt",tier:"mid",name:"Ronin's Broken Hilt",d:"A sword hilt wrapped in faded cord. The blade snapped clean off."},
+  {id:"r2_inkwell",tier:"mid",name:"Inkwell of Quiet Hours",d:"Black glass. The room goes a little quieter when it is open."},
+  {id:"r2_foxbell",tier:"mid",name:"Fox Spirit Bell",d:"A small bronze bell on a red cord. It rings when no one touches it."},
+  {id:"r2_monocle",tier:"mid",name:"Wraithglass Monocle",d:"Smoky glass in a silver rim. Faces look kinder through it."},
+  {id:"r2_emberfox",tier:"mid",name:"Ember Fox Charm",d:"A carved fox with a coal-red eye that stays warm in the hand."},
+  {id:"r2_hourglass",tier:"mid",name:"Tidebound Hourglass",d:"Sea-green sand that slows down when you need more time."},
+  {id:"r2_starcompass",tier:"high",name:"Starforged Compass",d:"A gold compass that points at the nearest way out."},
+  {id:"r2_phoenix",tier:"high",name:"Phoenix Ash Vial",d:"A stoppered vial of grey ash that is still faintly warm."},
+  {id:"r2_mirror",tier:"high",name:"Mirror of the Second Self",d:"A hand mirror whose reflection always moves first."},
+  {id:"r2_familiar",tier:"high",name:"Clockwork Familiar",d:"A brass owl the size of a fist that ticks when it blinks."},
+  {id:"r2_gauntlet",tier:"high",name:"Oathbound Gauntlet",d:"One plated glove with a vow engraved along the knuckles."},
+  {id:"r2_codex",tier:"high",name:"Codex of Ashen Stars",d:"A grey book whose star charts rearrange between readings."},
+  {id:"r2_crown",tier:"legendary",lv:27,name:"Sunken Crown of Aldrath",d:"A sea-green crown pulled from a drowned throne room."},
+  {id:"r2_wyrmheart",tier:"legendary",lv:52,name:"Wyrmheart Ember",d:"A coal from a dragon's chest that has never gone out."},
+  {id:"r2_veil",tier:"legendary",lv:77,name:"Veil of the Thousand Doors",d:"A sheet of shimmering cloth. Every fold opens somewhere else."},
+  {id:"r2_worldseed",tier:"legendary",lv:93,name:"The Worldseed",d:"A seed the size of a fist with a forest asleep inside it."}
 ];
 function r2State(){if(!S.relics2||typeof S.relics2!=="object")S.relics2={};return S.relics2}
 function r2Of(id){return RELICS2.filter(function(r){return r.id===id})[0]||null}
@@ -37,14 +59,46 @@ function r2Tier(t){return R2TIERS.filter(function(x){return x[0]===t})[0]||R2TIE
 /* a relic of tier t the player does not own yet, or null */
 function r2Pick(t){var own=r2State(),pool=RELICS2.filter(function(r){return r.tier===t&&!own[r.id]});return pool.length?pool[Math.floor(Math.random()*pool.length)]:null}
 function r2Give(r){if(!r)return null;r2State()[r.id]=Date.now();persist();return r}
-/* what owned relics add, by kind: xp and coin are percents on quests, biz a percent on business income, gift and mt fractions on
-   crawls (rare finds, time) */
-function r2Buff(k){var own=r2State(),v=0;Object.keys(own).forEach(function(id){var b=(ECON.relicBuff||{})[id];if(b&&b[k])v+=b[k]});return v}
-function r2BuffTxt(id){var b=(ECON.relicBuff||{})[id]||{},o=[];if(b.xp)o.push("+"+b.xp+"% quest XP");if(b.coin)o.push("+"+b.coin+"% quest coins");if(b.biz)o.push("+"+b.biz+"% business income");
-  if(b.gift)o.push("+"+Math.round(b.gift*100)+"% rare finds on crawls");if(b.mt)o.push("crawls back "+Math.round(b.mt*100)+"% sooner");return o.join(", ")}
+/* what owned relics add (ECON.relicBuff): all (% XP on every quest), cl and xp (% XP on one quest group or a list of them), stat
+   and xp (% XP on quests of a stat), first3 (% XP on the first 3 quests of the day), train (% Training XP), gift and mt (crawls:
+   rare-find chance and time, fractions), rooms and inc (% income or produce in those rooms), biz (% income in every business),
+   chest (% Daily Quest chest coins), freeze (a free streak freeze each month), crawl (crawls a day), rb (Room Bonus times this).
+   Owning every relic of a tier adds ECON.relicSet % XP on every quest. */
+function r2Owned(){var own=r2State();return RELICS2.filter(function(r){return own[r.id]})}
+function r2Sum(k){var v=0;r2Owned().forEach(function(r){var b=(ECON.relicBuff||{})[r.id];if(b&&b[k])v+=b[k]});return v}
+function r2Sets(){var own=r2State(),v=0;Object.keys(ECON.relicSet||{}).forEach(function(t){var L=RELICS2.filter(function(r){return r.tier===t});if(L.length&&L.every(function(r){return own[r.id]}))v+=ECON.relicSet[t]});return v}
+function r2All(){return r2Sum("all")+r2Sets()}
+function r2Buff(k){return r2Sum(k)}
+function r2Rb(){var m=1;r2Owned().forEach(function(r){var b=(ECON.relicBuff||{})[r.id];if(b&&b.rb)m*=b.rb});return m}
+function r2RoomInc(t){var v=0;r2Owned().forEach(function(r){var b=(ECON.relicBuff||{})[r.id];if(b&&b.rooms&&b.rooms.indexOf(t)>=0)v+=b.inc||0});return v}
+var R2CLN={home:"Home sweep",out:"Outside run",admin:"Admin and day job",reset:"Reset",body:"Body",create:"Creative block",social:"People",boss:"Boss"};
+function r2BuffTxt(id){var b=(ECON.relicBuff||{})[id]||{},o=[];
+  if(b.all)o.push("+"+b.all+"% XP on every quest");
+  if(b.cl)o.push("+"+b.xp+"% XP on "+[].concat(b.cl).map(function(c){return R2CLN[c]||c}).join(" and ")+" quests");
+  if(b.stat)o.push("+"+b.xp+"% XP on "+b.stat+" quests");
+  if(b.first3)o.push("+"+b.first3+"% XP on the first 3 quests each day");if(b.train)o.push("+"+b.train+"% Training XP");
+  if(b.gift)o.push("+"+Math.round(b.gift*100)+"% rare finds on crawls");if(b.mt)o.push("crawls come home "+Math.round(b.mt*100)+"% sooner");
+  if(b.rooms)o.push("+"+b.inc+"% "+(b.rooms[0]==="garden"?"Garden produce":b.rooms.map(function(t){return (ROOMT[t]||{}).name||t}).join(" and ")+" income"));
+  if(b.biz)o.push("+"+b.biz+"% business income");if(b.chest)o.push("+"+b.chest+"% coins from Daily Quest chests");
+  if(b.freeze)o.push("a free streak freeze every month");if(b.crawl)o.push("+"+b.crawl+" crawl a day");if(b.rb)o.push("every Room Bonus x"+b.rb);
+  return o.join(", ")}
 var r2GiftBase=dgBuff;dgBuff=function(k){return r2GiftBase(k)+(k==="gift"||k==="mt"||k==="biz"?r2Buff(k):0)};
 var r2SocialBase=socialBuffs;
-socialBuffs=function(){var o=r2SocialBase(),x=r2Buff("xp"),c=r2Buff("coin");if(x)o.push({who:"Relics",b:{special:"all",pct:x,text:"Every quest earns "+x+"% more XP"}});if(c)o.push({who:"Relics",b:{special:"coin",pct:c,text:"Quests pay "+c+"% more coins"}});return o};
+socialBuffs=function(){var o=r2SocialBase(),a=r2All(),cl={},st={};
+  if(r2Sum("first3")&&Object.keys(S.done||{}).length<3)a+=r2Sum("first3");
+  if(a)o.push({who:"Relics",b:{special:"all",pct:a,text:"Every quest earns "+a+"% more XP"}});
+  r2Owned().forEach(function(r){var b=(ECON.relicBuff||{})[r.id];if(!b||!b.xp)return;if(b.cl)[].concat(b.cl).forEach(function(c){cl[c]=(cl[c]||0)+b.xp});if(b.stat)st[b.stat]=(st[b.stat]||0)+b.xp});
+  Object.keys(cl).forEach(function(c){o.push({who:"Relics",b:{cl:c,pct:cl[c],text:(R2CLN[c]||c)+" quests +"+cl[c]+"% XP"}})});
+  Object.keys(st).forEach(function(k){o.push({who:"Relics",b:{stat:k,pct:st[k],text:k+" quests +"+st[k]+"% XP"}})});
+  return o};
+/* the rest of the rule-benders */
+var r2RoomBase=roomMult;roomMult=function(i){var m=r2RoomBase(i),r=bslot(i),v=r?r2RoomInc(r.t):0;return v?m*(1+v/100):m};
+var r2TrainBase=econTrainXp;econTrainXp=function(d,f){var x=r2TrainBase(d,f),t=r2Sum("train");return t?Math.round(x*(1+t/100)):x};
+var r2ChestBase=dqChest;dqChest=function(c){var v=r2ChestBase(c),t=r2Sum("chest");return t?Math.round(v*(1+t/100)):v};
+var r2CrawlBase=dngPerDay;dngPerDay=function(){return r2CrawlBase()+r2Sum("crawl")};
+/* Phoenix Ash Vial: a free streak freeze each calendar month, when a slot is free */
+setInterval(function(){try{if(!loaded||!S.created||!r2Sum("freeze"))return;var m=today().slice(0,7);if(S.r2frz===m||S.freezes>=maxFreeze())return;
+  S.r2frz=m;S.freezes++;persist();pop("Phoenix Ash Vial: +1 streak freeze this month")}catch(e){}},30000);
 /* the picture: ui_relic2_<id>.webp when the Mac has painted it, else a gem drawn in the tier's colour; legendary cards get wings */
 var R2COL={low:["#e0a46a","#8a5426"],mid:["#eef3fa","#8d9bb0"],high:["#ffe07a","#c08a1e"],legendary:["#f6f0ff","#8b5cf6"]};
 function r2Icon(r,lock){var u=!lock&&window.QBART&&QBART["ui_relic2_"+r.id+".webp"],c=R2COL[r.tier]||R2COL.low;
