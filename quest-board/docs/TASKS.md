@@ -21,7 +21,7 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). NEXT RELEASE: ONE v0.90 (Cal 10:45, no v0.89; scope confirmed 11:00) = rc-0.89 (LEAD's merge: w-rank, w-hall, w-training, w-wheel, w-drops) + w-chests + w-econ, APPV 90, QB_EPOCH 6, saves kept.
+Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90.
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
