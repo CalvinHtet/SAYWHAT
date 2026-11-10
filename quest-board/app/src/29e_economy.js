@@ -66,7 +66,7 @@ var ECON={
   wqDays:4,                                       /* Weekly Quest: active (50+ XP) on this many days, Monday to Sunday, pays a level */
   freeMiss:1,freezeEvery:5,streakKeep:.5,         /* streak: one missed day a week is free; a freeze every 5 days; short of freezes it halves */
   catchGap:8,catchPct:25,                         /* 8+ levels under the median of friends active this week: quests +25% XP */
-  slotFree:{garden:1,chef:1,lockkey:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
+  slotFree:{garden:1,chef:1,lockkey:1,boba:1,dessert:1,rooftop:1,mall:1,theater:1,auditorium:1,arcade:1,rhythm:1,vr:1,bowling:1,karaoke:1,club:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
   /* Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from there. Otherwise we are unlocking too
      many things before lvl 10." The least level for each story step, on top of its own gate; one step every few levels. */
   waterH:24,sprAlso:"g_x2",sprPrice:2000,         /* Cal: Sprinklers "much later": only with the Garden's Estate stage (was 6,000) */
@@ -74,7 +74,8 @@ var ECON={
   oneSlotBelow:10,                                /* below this level, one unlock (area or story step) a day in all */
   /* Cal, 2026-11-09: the Loft and the Garden on day 1 and the Restaurant by day 2 or 3, for everyone (were levels 5 and 7) */
   /* SPEC8: Lock and Key now comes before Boba and Dessert, so their level floors swap */
-  stepLv:{garden:2,chef:3,lockkey:9,boba:11,dessert:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
+  /* w-unlock: the rooms open on Cal's table (ECON.unlock) with no level floor; the two people who join keep theirs */
+  stepLv:{rafe:15,nova:21},
   /* W25: coins earned since the story room before it opened (STYCHAIN in 29b_story.js) */
   storyCoins:{chef:2000,boba:6000,dessert:8000,lockkey:12000,mall:20000},
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
@@ -132,10 +133,22 @@ var ECON={
      before it, for a building's first room) has at least focusMin of its upgrades, plus its level floor. No day wait. The Garden's
      trigger is gardenLoft of the upgrades in loftCore (Cal: "garden at 50% of Loft upgrades"); Boba's is bobaEarn coins collected
      in the Restaurant since it opened */
+  /* w-unlock (Cal, 2026-11-10: "make the next room upgrades available only after you hit a certain percentage of all available
+     upgrades in that room"): what opens each room. at: that share of the room's own upgrades (openers, retired pieces and Trophy Room
+     finds don't count); loft: that share of all the Loft's core upgrades, built or not; earn: coins the Garden has made selling
+     produce; noir: the Restaurant's Noir upgrade; plaza: that share of all Kode Plaza upgrades, built or not. Replaces SPEC8's focus
+     rule. The Mall-building numbers are mine, from econsim (Cal: "Use this same logic") */
+  unlock:{closet:{at:"bedroom",pct:.3},patio:{at:"bedroom",pct:.5},gameroom:{at:"bedroom",pct:.7},garden:{loft:.6},
+    restaurant:{earn:"garden",coins:1200},skybar:{noir:1},rooftop:{at:"skybar",pct:.5},boba:{at:"skybar",pct:.75},dessert:{at:"boba",pct:.6},
+    mall:{plaza:.6},theater:{at:"mall",pct:.3},auditorium:{at:"theater",pct:.4},arcade:{at:"auditorium",pct:.4},rhythm:{at:"arcade",pct:.4},
+    vr:{at:"rhythm",pct:.4},bowling:{at:"vr",pct:.4},karaoke:{at:"bowling",pct:.4},club:{at:"karaoke",pct:.4}},
+  /* the one-time reset (Cal: "initialize the loft and refund all the money they have spent so far"): a save from before APPV
+     resetBefore gets its rooms and buildings reset and refunded once; resetScope "all" or "loft" (the Loft's rooms only) */
+  resetBefore:91,resetScope:"all",
   focusMin:.5,gardenLoft:.5,loftCore:["bedroom","closet","gameroom","patio"],bobaEarn:20000,
   /* the Mall waits for every Kode Plaza room to be built (econsim: going by only the rooms a player had, it opened on day 18, before
      Lock and Key, Boba and Dessert), then for the focus rule */
-  plazaAll:["garden","restaurant","skybar","rooftop","boba","dessert"],
+  plazaAll:["garden","restaurant","skybar","rooftop","boba","dessert"],   /* also Kode Plaza for the Mall's plaza share */
   /* the building Goals (SPEC8 part 3): [coins, XP] for a room half upgraded, fully upgraded and a story step; coins x the room's
      phase, paid once on a tap */
   goal:{half:[400,25],full:[1200,75],story:[300,25]},   /* w-econ3: half the XP, so level 100 does not come sooner */

@@ -7,14 +7,14 @@
 function glState(){if(!S.goals||typeof S.goals!=="object")S.goals={};return S.goals}
 function glCoins(k,t){return Math.round(ECON.goal[k][0]*((ECON.phase||{})[t]||1)/50)*50}
 /* the building a story step's trigger happens in, while that room is the player's (else it is not shown) */
-function glSrcBld(s){var t=STYSRC[s.id]||(STYUPS[s.id]||[])[0];return t&&slotOf(t)&&ROOMCELL[t]?ROOMCELL[t][0]:-1}
+function glSrcBld(s){var t=unlockSrc(s.room);return t&&slotOf(t)&&ROOMCELL[t]?ROOMCELL[t][0]:-1}
 function glList(bi){var out=[],G=ECON.goal,o=styState(),st=glState();
   S.base.slots.forEach(function(r){if(!r||!ROOMCELL[r.t]||ROOMCELL[r.t][0]!==bi)return;var f=roomFill(r),nm=rmName(r.t);if(!f.tot)return;
     out.push({id:"half:"+r.t,txt:nm+": half upgraded",met:f.n>=f.half,prog:Math.min(f.n,f.half)+" of "+f.half,c:glCoins("half",r.t),xp:G.half[1],ord:1});
     out.push({id:"full:"+r.t,txt:nm+": fully upgraded",met:f.n>=f.tot,prog:f.n+" of "+f.tot,c:glCoins("full",r.t),xp:G.full[1],ord:3})});
   STORY.forEach(function(s){if(!s.room||s.how==="never"||glSrcBld(s)!==bi)return;var tr=null;try{tr=styTrig(s)}catch(e){}if(!tr)return;
-    var done=!!(o.done[s.id]||o.offer[s.id]||styHas(s.room)),m=/: ([\d,]+ of [\d,]+)$/.exec(tr[2]);
-    out.push({id:"story:"+s.id,txt:m?tr[2].slice(0,m.index):tr[2],met:done||tr[1],prog:m&&!(done||tr[1])?m[1]:"",c:glCoins("story",s.room),xp:G.story[1],ord:2})});
+    var done=!!(o.done[s.id]||o.offer[s.id]||styHas(s.room)),m=/: ([\d,]+) of ([\d,]+)( \w+)?$/.exec(tr[2]);
+    out.push({id:"story:"+s.id,txt:m?tr[2].slice(0,m.index)+": "+m[2]+(m[3]||""):tr[2],met:done||tr[1],prog:m&&!(done||tr[1])?m[1]+" of "+m[2]:"",c:glCoins("story",s.room),xp:G.story[1],ord:2})});
   out.forEach(function(g){g.got=!!st[g.id]});
   return out.sort(function(a,b){return a.ord-b.ord})}
 function glReady(bi){return glList(bi).filter(function(g){return g.met&&!g.got}).length}
@@ -42,4 +42,4 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 var glStatsBase=rmStats;rmStats=function(r,i,base){var s=glStatsBase(r,i,base),f=roomFill(r);if(!f.tot||!s)return s;
   return s+". "+(f.n>=f.half?"Half ✓":"Half at "+f.half)+", "+(f.n>=f.tot?"full ✓":"full at "+f.tot)};
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbGoals={list:glList,claim:glClaim,ready:glReady,fill:function(t){var r=slotOf(t);return r?roomFill(r):null},
-  focus:focusLack,steps:function(){var o=styState();return STORY.filter(function(s){return s.room&&s.how!=="never"}).map(function(s){var g=null;try{g=!!s.gate()}catch(e){g="err"}return {id:s.id,room:s.room,open:!!(o.done[s.id]||o.offer[s.id]||styHas(s.room)),gate:g,lv:ECON.stepLv[s.id]||0,focus:focusOk(s.room),tr:(styTriggers(s)||[]).map(function(x){return (x[1]?"+":"-")+x[2]})}})},claimAll:function(){var n=0,c=0;[0,1,2].forEach(function(bi){glList(bi).forEach(function(g){if(g.met&&!g.got){glState()[g.id]=Date.now();grantXp(g.xp,g.c,null);n++;c+=g.c}})});return {n:n,c:c}}};
+  unlock:unlockLine,steps:function(){var o=styState();return STORY.filter(function(s){return s.room&&s.how!=="never"}).map(function(s){var g=null;try{g=!!s.gate()}catch(e){g="err"}return {id:s.id,room:s.room,open:!!(o.done[s.id]||o.offer[s.id]||styHas(s.room)),gate:g,lv:ECON.stepLv[s.id]||0,tr:(styTriggers(s)||[]).map(function(x){return (x[1]?"+":"-")+x[2]})}})},claimAll:function(){var n=0,c=0;[0,1,2].forEach(function(bi){glList(bi).forEach(function(g){if(g.met&&!g.got){glState()[g.id]=Date.now();grantXp(g.xp,g.c,null);n++;c+=g.c}})});return {n:n,c:c}}};
