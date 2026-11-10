@@ -123,7 +123,7 @@ var DGRELICS=[
 ];
 function dgRelicCheck(){if(!loaded||!S.created)return;dgState();var got=[];
   DGRELICS.forEach(function(R){var v=0;try{v=R.v()}catch(e){}R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(v>=n&&!S.relics[k]){S.relics[k]=Date.now();var c=150*(i+1);S.coins+=c;S.earnedC+=c;got.push(R.name+" "+["I","II","III"][i]+": +"+c+" coins")}})});
-  if(got.length){persist();got.forEach(function(t,k){setTimeout(function(){pop("Relic found. "+t)},k*2200)})}}
+  if(got.length){persist();got.forEach(function(t,k){setTimeout(function(){pop((relicsOpen()?"Relic found. ":"Found: ")+t)},k*2200)})}}
 setInterval(dgRelicCheck,20000);setTimeout(dgRelicCheck,6000);
 
 var DGTAB="relics";
