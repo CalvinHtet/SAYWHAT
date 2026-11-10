@@ -194,8 +194,10 @@ function unlArt(u){
   if(u.relic)h+=relicSvg(u.lv);
   return h+'</div>';
 }
+function relicsOpen(){var a=AREAS.filter(function(x){return x[0]==="trophy"})[0];return !a||effLvl()>=a[2]}
 function unlTitle(u){
-  if(u.relic)return "Relic found";
+  /* SPEC9 follow-up: "Relic" only once the Relics tab is open */
+  if(u.relic)return relicsOpen()?"Relic found":"Something found";
   var parts=[];if(u.room)parts.push("New room");if(u.crew)parts.push("New crew member");return parts.join(" + ");
 }
 function unlBuffs(u){
@@ -610,7 +612,7 @@ function dngClaim(k,ev){
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
   var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
-  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare: a trophy, a relic shard, an ally or something to wear. Three crawls with nothing rare and the fourth always finds something.</p>'
+  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Three crawls with nothing rare and the fourth always finds something.</p>'
     +'<p class="note">Crawls today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.'+(sure?' <b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
@@ -669,7 +671,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
+var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6

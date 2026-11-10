@@ -40,7 +40,7 @@ var GD_UPS=[
  /* the grounds */
  ["g_x1","Clear the Back Lot",4000,{p:.3,fresh:.05,cap:2,lv:20,g:"Expansion",splash:"The garden doubled. There is room now for trees, a shed and a greenhouse."},"A much bigger garden."],
  ["g_x2","Buy the Empty Lot",15000,{p:.5,fresh:.08,cap:2,lv:32,g:"Expansion",splash:"The whole block is green now. Next up: a glass conservatory and proper grounds."},"The whole block goes green."],
- ["g_green1","Small Greenhouse",10000,{p:.4,fresh:.1,lv:29,g:"Expansion",also:"g_x1",dish:"Winter Greens",splash:"Crops under glass grow all year. The Restaurant earns more from it right away."},"Grows through every season."],
+ ["g_green1","Small Greenhouse",10000,{p:.4,fresh:.1,lv:29,g:"Expansion",also:"g_x1",dish:"Winter Greens",splash:"Crops under glass grow all year."},"Grows through every season."],
  ["g_green2","Glass Conservatory",40000,{p:.9,fresh:.25,lv:55,g:"Expansion",also:"g_x2",dish:"Chef's Garden Plate",splash:"The finest building on the block, and the best produce in the city."},"A grand glass hall of rare plants."],
  ["g_walk","Stone Walkway",5000,{p:.1,lv:28,g:"Grounds",also:"g_x1",splash:"People from the neighborhood now wander through your garden."},"A winding path. Visitors start strolling through."],
  ["g_bench2","Garden Benches",3000,{p:.08,lv:29,g:"Grounds"},"Somewhere to sit and look at it all."],

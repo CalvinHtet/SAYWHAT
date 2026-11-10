@@ -10,21 +10,25 @@ function saleRand(seed){var r=dropRand("sale|"+seed);return r}
 /* the brands in this player's Shop on drop day ymd: each open floor's live ones, oldest first, then the Wednesday one */
 function saleBrands(ymd){var n=dropStart(ymd)+36e5,L=[];try{shopFloors().forEach(function(F){dropFloor(n,F).live.forEach(function(b){if(L.indexOf(b.id)<0)L.push(b.id)})});
   var bk=dropBack(n);if(bk&&L.indexOf(bk.id)<0)L.push(bk.id)}catch(e){}return L}
-function salePlace(ymd){var L=saleBrands(ymd),k=ymdN(ymd);return L.length?L[((k%L.length)+L.length)%L.length]:null}
+/* QA (v0.91): with one brand in the Shop there is no sale that day, so it can never be the same brand two days running */
+function salePlace(ymd){var L=saleBrands(ymd),k=ymdN(ymd);return L.length>1?L[((k%L.length)+L.length)%L.length]:null}
 /* the brand on sale on drop day ymd: the date picks a place in that day's list, moved one on if it lands on the day before's brand;
    worked forward from a week back, so the day before is its real sale brand and every phone agrees */
 function saleBrandOn(ymd){var k=ymdN(ymd),prev=null;for(var j=k-7;j<=k;j++){var d=ymdOfN(j),L=saleBrands(d),p=salePlace(d);
   if(p&&p===prev&&L.length>1)p=L[(L.indexOf(p)+1)%L.length];prev=p}return prev}
-function salePick(ymd){var b=saleBrandOn(ymd);if(!b)return {d:ymd,b:null,ids:[]};var r=saleRand(ymd+"|"+b);
+/* yb: the brand this player actually had on sale yesterday. The walk above replays past days with today's floors, so on the day a
+   floor opens it can differ from what the player saw (QA, v0.91) */
+function salePick(ymd,yb){var b=saleBrandOn(ymd);if(b&&b===yb){var BL=saleBrands(ymd);b=BL.length>1?BL[(BL.indexOf(b)+1)%BL.length]:null}if(!b)return {d:ymd,b:null,ids:[]};var r=saleRand(ymd+"|"+b);
   var L=SHOP.filter(function(it){return it[6]&&it[6].b===b&&/^a_/.test(it[1])&&+it[3]>0&&itemFits(it)}).map(function(it){return [it,r()]});
   L.sort(function(x,y){var ox=S.owned[x[0][0]]?1:0,oy=S.owned[y[0][0]]?1:0;return ox-oy||x[1]-y[1]});
   return {d:ymd,b:b,ids:L.slice(0,2).map(function(p){return [p[0][0],dropHash("salepct|"+ymd+"|"+p[0][0])%2?25:50]})}}
 /* today's sale on the items: put back yesterday's prices, then mark today's */
 function saleApply(){if(!loaded||!S||!S.created)return null;var day=dropYmd(dropNow());
-  if(!S.sale||typeof S.sale!=="object"||S.sale.d!==day){S.sale=salePick(day);persist()}
+  if(!S.sale||typeof S.sale!=="object"||S.sale.d!==day){var yb=S.sale&&S.sale.d===ymdOfN(ymdN(day)-1)?S.sale.b:null;S.sale=salePick(day,yb);persist()}
   var on={};(S.sale.ids||[]).forEach(function(p){on[p[0]]=p[1]});
   SHOP.forEach(function(it){if(it._p0!=null&&!on[it[0]]){it[3]=it._p0;delete it._p0;delete it._pc}
-    if(on[it[0]]&&it._p0==null){it._p0=it[3];it._pc=on[it[0]];it[3]=Math.max(10,Math.round(it._p0*(1-it._pc/100)/10)*10)}});
+    /* QA (v0.91): a piece still on sale the next day with a new discount is priced again (the app may stay open over the change) */
+    if(on[it[0]]&&(it._p0==null||it._pc!==on[it[0]])){if(it._p0==null)it._p0=it[3];it._pc=on[it[0]];it[3]=Math.max(10,Math.round(it._p0*(1-it._pc/100)/10)*10)}});
   return S.sale}
 /* the strip at the top of the Shop: the brand, its 2 pieces (the old price struck through) and when the next sale starts */
 function saleHtml(){var s=saleApply();if(!s||!s.b||!(s.ids||[]).length)return "";var br=BRANDS.filter(function(x){return x.id===s.b})[0]||{name:s.b};
