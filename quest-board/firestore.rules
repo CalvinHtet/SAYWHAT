@@ -35,6 +35,11 @@ service cloud.firestore {
     match /kudos/{uid}   { allow read: if mine(uid) || owner(); allow create, update: if mine(uid) && small(12000); allow delete: if mine(uid) || owner(); }
     match /kudosok/{uid} { allow read: if signedIn(); allow create, update: if owner() && small(30000); allow delete: if owner(); }
 
+    // challenges with a coin pot (app/src/29w_duel.js): duel/<id> holds the challenges that player sent, their answers to
+    // challenges sent to them and their own scores. Everyone signed in reads (both sides need the other's doc); only that player
+    // writes.
+    match /duel/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(30000); allow delete: if mine(uid) || owner(); }
+
     // the owner's inbox and the frame and speed logs the owner reads to debug phones
     match /inbox/{doc} { allow read, write: if owner(); }
     match /diag/{doc}  { allow read: if owner(); allow write: if signedIn(); }
