@@ -12,6 +12,9 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 ## Windows team (LEAD / BUILDER / QA)
 
+**PROTOCOL (Cal, 2026-11-10 09:25): every chat reads `.claude/team/README.md` (main folder) NOW and follows it: your block in
+`.claude/team/STATUS.md`, your to-do list in `.claude/team/todo/<ROLE>.md`, a TEAM LOOP cron. Requests come through the to-do lists.**
+
 The live list for the Windows laptop team (2026-11-10 on). The older sections below are history. Roles: LEAD owns `qa-local`
 (only LEAD commits there, merges after QA passes, bumps APPV, builds the zip for Cal's Mac); BUILDER codes on its own branch per
 task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/windows` and never edits game code. Never push.
@@ -39,8 +42,8 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W14 | "the town board to have a color palette similar to the picture of the town hall that is on that screen ... Every menu and screen should feel slightly different" | BUILDER | w-colors | TODO |
 | W15 | UI color schemes: "at least 3 different ones at the start, and then with each job or class advancement, can add 2 more" | BUILDER | w-colors | CANCELLED (Cal: "Nevermind on the themes. I forgot there are additional themes for purchase in the shop.") |
 | W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | READY FOR QA (d3cafea) |
-| W17 | (spec below) Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | TODO |
-| W18 | (spec below) Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | TODO |
+| W17 | (spec below) Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | READY FOR QA (w-rank 7131dd6) |
+| W18 | (spec below) Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | READY FOR QA (w-rank 7131dd6) |
 | W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (20b4418) |
 | W20 | (spec below) "The new brand of clothes drop on Monday and Wednesday of each week." | BUILDER | w-drops | TODO |
 | W21 | (spec below) Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
@@ -49,7 +52,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W24 | (spec below) Likes notify: "a small heart symbol with a number beside the character in the fashion tab just like an instagram like notification" (new likes since you last looked) | BUILDER | w-rank | TODO |
 | W25 | (spec below) Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
 
-BUILDER: READ "Specs for BUILDER" BELOW BEFORE EACH BRANCH (w-inbox needs a fix first).
+BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
 w-rank (on w-inbox, W17 + W18 + W24), w-training again (graph ranges), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
 w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
