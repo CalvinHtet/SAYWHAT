@@ -1,7 +1,7 @@
 /* ---------- the movie theater ----------
    Starts as a lobby: guests line up, buy a ticket and vanish through the double doors.
    "Open the Auditorium" builds what is behind those doors as a room of its own. */
-ROOMT.theater=Object.assign(ROOMT.theater,{lv:24,cost:9000,coin:40,store:8,desc:"A small cinema lobby. Guests line up, buy a ticket and walk through the double doors. Later you add snacks, a bar and the auditorium behind those doors."});
+ROOMT.theater=Object.assign(ROOMT.theater,{lv:24,cost:9000,coin:40,store:8,desc:"A small cinema lobby. Guests line up, buy a ticket and walk through the double doors. Later you add snacks and a bar."});
 ROOMT.auditorium=Object.assign(ROOMT.auditorium,{coin:50,store:8,desc:"The screening room behind the double doors. Better seats, sound and a bigger screen bring in more money."});
 var TH_UPS=[
  /* snacks */
@@ -177,7 +177,7 @@ function thPeople(r,i,C,out){var a=r.a||{};if(!a.t_aud){out.push({id:"th:clerk",
   if(a.t_st3)mk("bar",{body:"f",skin:"s5",hairStyle:"h1",hairColor:"black",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["npc_vest"]},3);
   var n=lfGuestN(3+(a.t_marq?1:0)+(a.t_ctr?1:0)+(a.t_tv?1:0)+(a.t_aud?1:0)+(a.t_wing?2:0)+(a.t_bar?1:0));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
 function auPeople(r,i,C,out){var seats=C.st.filter(function(s){return s.cust}).length,n=Math.min(seats,lfGuestN(4+Math.floor(addonsOf(r).length/2)));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}
-function thNote(r){var a=r.a||{},m=thSnackFor(r);return '<p class="note"><b>'+(a.t_wing?"Grand Lobby":"Small Lobby")+'.</b> '+(a.t_aud?'The Auditorium is open.':'Closed until the Auditorium opens: no customers and no money yet. Open it from the upgrades below.')+(m.length?' Selling: '+esc(m.join(", "))+'.':'')+'</p>'}
+function thNote(r){var a=r.a||{},m=thSnackFor(r);return '<p class="note"><b>'+(a.t_wing?"Grand Lobby":"Small Lobby")+'.</b> '+(a.t_aud?'The Auditorium is open.':'Behind these doors: not yet. No customers and no money yet.')+(m.length?' Selling: '+esc(m.join(", "))+'.':'')+'</p>'}
 /* ---- the Auditorium: the screen is the point. Everyone faces it, and a bigger screen makes the room itself bigger. ---- */
 AU_UPS=AU_UPS.filter(function(u){return u[0]!=="au_lux4"});
 AU_UPS.forEach(function(u){if(u[0]==="au_lux1"){u[1]="Premium Power Recliners";u[4]="Charcoal, heated, with a soft blue strip light."}

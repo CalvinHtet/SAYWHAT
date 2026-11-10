@@ -20,6 +20,12 @@ var TEAM={
     look:{body:"m",hairStyle:"h1",hairColor:"brown",equipped:{top:{art:"h_varsity"},hat:{art:"h_snap"}}},ac:"#ffd36b"}
 };
 function teamHas(id){return !!(S.story&&S.story.team&&S.story.team[id])}
+/* SPEC9: a buff names only the rooms the player has ("Your Restaurant earns 15% more"); the list grows as rooms open, and the
+   written line shows once all of them are there */
+function tmBuffTxt(t){var b=t.buff||{},R=b.rooms;if(!R||!R.length)return b.text||"";var own=R.filter(function(k){return hasRoom(k)});if(own.length===R.length)return b.text||"";
+  var nm=own.map(function(k){return (ROOMT[k]||{}).name||k}),tail=String(b.text||"").indexOf(":")>0?String(b.text).slice(String(b.text).indexOf(":")):"";
+  if(!nm.length)return "Your businesses will earn "+b.pct+"% more"+tail;
+  return "Your "+(nm.length>1?nm.slice(0,-1).join(", ")+" and "+nm[nm.length-1]+" earn ":nm[0]+" earns ")+b.pct+"% more"+tail}
 function teamList(){return Object.keys(TEAM).filter(teamHas)}
 /* the welcome: a banner, their stats and what they bring */
 function teamJoin(id){var t=TEAM[id];if(!t)return;var o=styState();o.team[id]=1;persist();
@@ -28,7 +34,7 @@ function teamJoin(id){var t=TEAM[id];if(!t)return;var o=styState();o.team[id]=1;
   setTimeout(function(){modal('<div class="card box2 tmj" style="--tac:'+t.ac+'"><span class="label">New team member</span>'
     +(art?'<img class="tmj-art" src="'+art+'" alt="">':'<div class="tmj-art tmj-art0"><b>'+esc(ini)+'</b></div>')
     +'<h2>'+esc(t.name)+'</h2><span class="chip">'+esc(t.role)+'</span><p class="note">'+esc(t.how)+'</p>'+bars
-    +'<p class="tmj-buff">'+esc(t.buff.text)+'</p><div class="row"><button class="btn" data-act="mclose">Welcome aboard</button></div></div>');try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}},400)}
+    +'<p class="tmj-buff">'+esc(tmBuffTxt(t))+'</p><div class="row"><button class="btn" data-act="mclose">Welcome aboard</button></div></div>');try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}},400)}
 /* their buffs: business rooms earn more, dungeon crawls bring home more */
 var teamRoomMultBase=roomMult;
 roomMult=function(i){var m=teamRoomMultBase(i),r=bslot(i);if(!r)return m;var k=S.cls==="tamer"?1.5:1;/* the Tamer's Bond: team buffs 50% stronger */teamList().forEach(function(id){var b=TEAM[id].buff;if(b.rooms&&b.rooms.indexOf(r.t)>=0)m*=1+k*b.pct/100});return m};
@@ -37,7 +43,7 @@ function teamCrawlMult(){var f=1,k=S.cls==="tamer"?1.5:1;teamList().forEach(func
 /* the team, on top of the Dungeon Crawls tab (dngHtml) */
 function teamHtml(){var ids=teamList();if(!ids.length)return '';
   return '<section class="card panel"><h3 class="label">Your team</h3><div class="tm-grid">'+ids.map(function(id){var t=TEAM[id],art=window.QBART&&QBART["ui_team_"+id+".webp"];
-    return '<div class="tm-card" style="--tac:'+t.ac+'">'+(art?'<img src="'+art+'" alt="">':'<i>'+esc(t.name[0])+'</i>')+'<b>'+esc(t.name)+'</b><small>'+esc(t.role)+'</small><span>'+esc(t.buff.text)+'</span></div>'}).join("")+'</div></section>'}
+    return '<div class="tm-card" style="--tac:'+t.ac+'">'+(art?'<img src="'+art+'" alt="">':'<i>'+esc(t.name[0])+'</i>')+'<b>'+esc(t.name)+'</b><small>'+esc(t.role)+'</small><span>'+esc(tmBuffTxt(t))+'</span></div>'}).join("")+'</div></section>'}
 /* class pictures: a man's and a woman's version when ROOMS has painted them (ui_class_<id>_m.webp, _f.webp) */
 function clsArt(id){var x=(S.char&&S.char.sex)==="f"?"f":"m",u=window.QBART&&QBART["ui_class_"+id+"_"+x+".webp"];return u||ART["class_"+id]}
 window.__qbTeam={join:teamJoin,list:teamList,TEAM:TEAM};
