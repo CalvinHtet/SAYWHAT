@@ -9,16 +9,16 @@
    - Times are real time (the game clock minus a Test "Skip a week" shift), so a shifted test phone never sorts or counts wrong.
    - Limits: 280 characters; one message a second and 10 a minute from one phone; control and text-direction characters removed.
    - Everything read from other players is treated as hostile: shapes checked, counts and lengths capped, every string escaped.
-   - The owner (Cal) can clear a room or hide one message. The marks live in his own chat doc (mod), and phones honor them only
-     from an owner id in web/config.js (and the sandbox's own player), so nobody else can hide anything. The rules also let him
-     delete anyone's chat doc. */
+   - Only you can delete your own messages (Cal, 2026-11-10): an × on your own lines takes that line out of your own chat doc.
+     Nobody, the owner included, can hide or clear anyone else's; the owner's old hide and clear marks (mod) are ignored, and the
+     rules let only the player write their chat and chatnow docs. */
 /* the rooms are plain "Room 1", "Room 2", "Room 3" for now (Cal, 2026-11-09); names are only shown, never stored */
 var TCHROOMS=[[1,"Room 1"],[2,"Room 2"],[3,"Room 3"]],TCHMAX=280,TCHKEEP=10,TCHHERE=120000,TCHBEAT=45000;
 /* control, zero-width, line-separator, text-direction and byte-order characters (built from char codes, so this file holds no
    invisible characters) */
 var TCHBAD=new RegExp("["+[[0,31],[127,159],[8203,8207],[8232,8238],[8288,8303],[65279,65279]].map(function(r){return String.fromCharCode(r[0])+"-"+String.fromCharCode(r[1])}).join("")+"]","g");
 var TCH={room:1,docs:{},now:{},me:null,ready:0,on:0,unsub:null,poll:0,polled:0,err:"",denyAt:0,nowUnsub:null,nowTick:0,nowOk:0,nowErr:"",
-  draft:"",sent:[],q:null,lastT:0,joined:0,beatT:0,seen:null,mod:{clr:{},hid:{}},logH:"",roomsH:"",whoH:"",stick:0,armed:0};
+  draft:"",sent:[],q:null,lastT:0,joined:0,beatT:0,seen:null,logH:"",roomsH:"",whoH:"",stick:0,armed:""};
 (function(){try{var r=+sessionStorage.getItem("qbChatRoom");if(r===1||r===2||r===3)TCH.room=r}catch(e){}})();
 htabCss("qb-chat-css",
   ".tch{gap:10px}"
@@ -30,7 +30,6 @@ htabCss("qb-chat-css",
   +".tch-rdot{position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff4d5e}"
   +".tch-who{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:18px}"
   +".tch-who small{min-width:0;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}"
-  +".tch-clr{flex:none;padding:4px 0;border:0;background:none;color:#ff9d7a;font-size:12px;cursor:pointer}"
   +".tch-logw{position:relative}"
   +".tch-log{height:calc(100vh - 440px);height:calc(100dvh - 440px);min-height:230px;max-height:640px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:12px;background:rgba(0,0,0,.18);border:1px solid var(--line)}"
   +".tch-empty{margin:auto;text-align:center;max-width:260px}"
@@ -57,32 +56,20 @@ function tchClean(s,n){s=(typeof s==="string"?s:"").slice(0,2000).replace(TCHBAD
   return s.slice(0,n||TCHMAX).replace(/[\ud800-\udbff]$/,"")}
 function tchName(x){return tchClean(x,24)||"Player"}
 function tchRoomName(r){var x=TCHROOMS.filter(function(q){return q[0]===r})[0];return x?x[1]:"Room "+r}
-function tchOwners(){var W=window.QB_WEB||{},o=Array.isArray(W.owners)?W.owners.slice():[];if(W.sandbox)o.push("sandbox");return o}
-function tchIsOwner(){return !!(ownerView&&MYUID&&tchOwners().indexOf(MYUID)>=0)}
 function tchEmpty(){return {msgs:{1:[],2:[],3:[]}}}
-/* a player's chat doc as read: anything malformed is dropped, never thrown */
+/* a player's chat doc as read: anything malformed is dropped, never thrown (an old mod field is not read) */
 function tchParse(id,d){if(!d||typeof d!=="object"||Array.isArray(d))return null;var o={id:id,name:tchName(d.name),msgs:{1:[],2:[],3:[]},t:+d.t||0},m=d.msgs;
   if(m&&typeof m==="object")TCHROOMS.forEach(function(r){var a=m[r[0]];if(!Array.isArray(a))return;
     a.slice(-TCHKEEP).forEach(function(x){if(!x||typeof x!=="object")return;var t=+x.t,s=tchClean(x.x);if(s&&isFinite(t)&&t>0)o.msgs[r[0]].push({x:s,t:t})})});
-  if(d.mod&&typeof d.mod==="object")o.mod=tchModClean(d.mod);
   return o}
-function tchModClean(m){var o={clr:{},hid:[]};if(!m||typeof m!=="object")return o;
-  if(m.clr&&typeof m.clr==="object")TCHROOMS.forEach(function(r){var v=+m.clr[r[0]];if(isFinite(v)&&v>0)o.clr[r[0]]=v});
-  if(Array.isArray(m.hid))m.hid.slice(-100).forEach(function(k){if(typeof k==="string"&&k.length<200)o.hid.push(k)});
-  return o}
-function tchCopy(p){var o=tchEmpty();TCHROOMS.forEach(function(r){o.msgs[r[0]]=(p.msgs[r[0]]||[]).map(function(x){return {x:x.x,t:x.t}})});if(p.mod)o.mod=tchModClean(p.mod);return o}
+function tchCopy(p){var o=tchEmpty();TCHROOMS.forEach(function(r){o.msgs[r[0]]=(p.msgs[r[0]]||[]).map(function(x){return {x:x.x,t:x.t}})});return o}
 /* this player's own doc, as this phone last wrote it */
-function tchMine(){var me=TCH.me||tchEmpty();return {id:MYUID,name:tchName((S.char&&S.char.name)||""),msgs:me.msgs,t:TCH.lastT,mod:me.mod}}
-/* the owner's marks: rooms cleared up to a time, single messages hidden */
-function tchModOf(docs){var clr={},hid={};tchOwners().forEach(function(u){var d=docs[u],m=d&&d.mod;if(!m)return;
-  Object.keys(m.clr).forEach(function(r){if(m.clr[r]>(clr[r]||0))clr[r]=m.clr[r]});m.hid.forEach(function(k){hid[k]=1})});
-  return {clr:clr,hid:hid}}
+function tchMine(){var me=TCH.me||tchEmpty();return {id:MYUID,name:tchName((S.char&&S.char.name)||""),msgs:me.msgs,t:TCH.lastT}}
 /* one room: everyone's messages, oldest first, the newest 60 */
-function tchRoomMsgs(r){var now=tchNow(),out=[],M=TCH.mod;
+function tchRoomMsgs(r){var now=tchNow(),out=[];
   Object.keys(TCH.docs).forEach(function(id){var d=TCH.docs[id];(d.msgs[r]||[]).forEach(function(m){
     if(m.t>now+600000)return;   /* dated in the future: a wrong clock, or someone pinning theirs to the bottom */
-    if(M.clr[r]&&m.t<=M.clr[r])return;var k=id+"|"+m.t;if(M.hid[k])return;
-    out.push({id:id,name:d.name,x:m.x,t:m.t,k:k})})});
+    out.push({id:id,name:d.name,x:m.x,t:m.t,k:id+"|"+m.t})})});
   out.sort(function(a,b){return a.t-b.t||(a.id<b.id?-1:a.id>b.id?1:0)});
   return out.slice(-60)}
 /* unread: per room, the newest message this phone has shown (kept on the device, not in the save) */
@@ -99,12 +86,12 @@ function tchMarkSeen(){if(!TCH.seen)return;var r=TCH.room,n=tchNewest(r,1);if(n>
 function tchOnSnap(q){var docs={};
   ((q&&q.docs)||[]).slice(0,300).forEach(function(s){try{var id=String(s.id||"");if(!id||id.length>128)return;var p=tchParse(id,s.data());if(p)docs[id]=p}catch(e){}});
   var mine=docs[MYUID],first=!TCH.ready;
-  /* this player's own doc: what this phone wrote, unless someone else (the owner) changed or deleted it since */
+  /* this player's own doc: what this phone wrote, unless their other phone changed or deleted it since */
   if(first){TCH.me=mine?tchCopy(mine):tchEmpty();TCH.lastT=mine?mine.t:0;TCH.ready=1}
   else if(!mine){if(TCH.lastT){TCH.me=tchEmpty();TCH.lastT=0}}
   else if(mine.t!==TCH.lastT){TCH.me=tchCopy(mine);TCH.lastT=mine.t}
   if(MYUID)docs[MYUID]=tchMine();
-  TCH.docs=docs;TCH.mod=tchModOf(docs);TCH.err="";
+  TCH.docs=docs;TCH.err="";
   if(first)tchSeenInit();
   tchUpdate()}
 /* the listener: from boot once the Hall is open (for the unread dot); polling only where the database cannot push */
@@ -126,15 +113,14 @@ function tchPollStart(){if(TCH.poll)return;
   TCH.poll=setInterval(go,8000);go()}
 /* writes to this player's own chat doc, one at a time, always the whole doc as this phone holds it */
 function tchFit(doc){var n=0;
-  while(JSON.stringify(doc).length>18000&&n++<60){var old=null;TCHROOMS.forEach(function(r){var a=doc.msgs[r[0]];if(a.length&&(!old||a[0].t<old[0].t))old=a});if(!old)break;old.shift()}
-  if(doc.mod&&JSON.stringify(doc).length>18000)doc.mod.hid=doc.mod.hid.slice(-20)}
+  while(JSON.stringify(doc).length>18000&&n++<60){var old=null;TCHROOMS.forEach(function(r){var a=doc.msgs[r[0]];if(a.length&&(!old||a[0].t<old[0].t))old=a});if(!old)break;old.shift()}}
 function tchWrite(mut){
   var run=function(){if(!socOn()||!TCH.me)return Promise.reject({code:"offline"});
     var undo=JSON.stringify(TCH.me);mut(TCH.me);
-    var t=Math.max(tchNow(),TCH.lastT+1),doc={name:tchName((S.char&&S.char.name)||""),msgs:TCH.me.msgs,t:t};if(TCH.me.mod)doc.mod=TCH.me.mod;tchFit(doc);
-    TCH.lastT=t;TCH.docs[MYUID]=tchMine();TCH.mod=tchModOf(TCH.docs);tchUpdate();
+    var t=Math.max(tchNow(),TCH.lastT+1),doc={name:tchName((S.char&&S.char.name)||""),msgs:TCH.me.msgs,t:t};tchFit(doc);
+    TCH.lastT=t;TCH.docs[MYUID]=tchMine();tchUpdate();
     return db.doc("chat/"+MYUID).set(JSON.parse(JSON.stringify(doc))).catch(function(er){
-      try{TCH.me=JSON.parse(undo)}catch(e){}TCH.docs[MYUID]=tchMine();TCH.mod=tchModOf(TCH.docs);tchUpdate();throw er})};
+      try{TCH.me=JSON.parse(undo)}catch(e){}TCH.docs[MYUID]=tchMine();tchUpdate();throw er})};
   var p=(TCH.q||Promise.resolve()).then(run);TCH.q=p.catch(function(){});return p}
 function tchSend(){var inp=document.getElementById("tchin"),x=tchClean(inp?inp.value:TCH.draft);if(!x)return;
   if(!socOn()){pop("Chat needs the cloud save");return}
@@ -173,12 +159,12 @@ function tchHue(id){var h=0;for(var i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i)
 function tchTime(t){try{var d=new Date(t),n=new Date(tchNow()),hm=d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
   if(d.toDateString()===n.toDateString())return hm;if(tchNow()-t<6*864e5)return d.toLocaleDateString([],{weekday:"short"})+" "+hm;
   return d.toLocaleDateString([],{month:"short",day:"numeric"})}catch(e){return ""}}
-function tchLogHtml(r){var ms=tchRoomMsgs(r),own=tchIsOwner(),prev=null,h="";
+function tchLogHtml(r){var ms=tchRoomMsgs(r),prev=null,h="";
   if(!ms.length)return '<p class="note tch-empty">No messages in '+esc(tchRoomName(r))+' yet. Say hi.</p>';
-  ms.forEach(function(m){var same=prev&&prev.id===m.id&&m.t-prev.t<180000;
-    h+='<div class="tch-m'+(m.id===MYUID?' me':'')+(same?' cont':'')+'" style="--h:'+tchHue(m.id)+'">'
-      +(same?'':'<div class="tch-h"><b>'+esc(m.id===MYUID?"You":m.name)+'</b><small>'+esc(tchTime(m.t))+'</small></div>')
-      +'<p>'+esc(m.x)+(own?'<button type="button" class="tch-x" data-act="tchhide" data-k="'+esc(m.k)+'" aria-label="Hide this message for everyone">&times;</button>':'')+'</p></div>';
+  ms.forEach(function(m){var same=prev&&prev.id===m.id&&m.t-prev.t<180000,me=m.id===MYUID;
+    h+='<div class="tch-m'+(me?' me':'')+(same?' cont':'')+'" style="--h:'+tchHue(m.id)+'">'
+      +(same?'':'<div class="tch-h"><b>'+esc(me?"You":m.name)+'</b><small>'+esc(tchTime(m.t))+'</small></div>')
+      +'<p>'+esc(m.x)+(me?'<button type="button" class="tch-x" data-act="tchdel" data-r="'+r+'" data-t="'+m.t+'" aria-label="Delete your message">&times;</button>':'')+'</p></div>';
     prev=m});
   return h}
 function tchLogBody(){if(TCH.err==="permission-denied")return '<p class="note tch-empty">Chat is not switched on yet. It needs a database update from Cal.</p>';
@@ -193,7 +179,7 @@ function tchHtml(){
   if(!socOn())return '<section class="card panel"><h3 class="label">Chat</h3><p class="note">Chat needs the cloud save. Open the game signed in.</p></section>';
   var r=TCH.room,nm=esc(tchRoomName(r));TCH.logH=tchLogBody();TCH.roomsH=tchRoomsHtml();TCH.whoH=tchWhoHtml();
   return '<section class="card panel tch" id="tchbox"><div class="tch-rooms" id="tchrooms" role="tablist" aria-label="Chat rooms">'+TCH.roomsH+'</div>'
-    +'<div class="tch-who"><small id="tchwho">'+TCH.whoH+'</small>'+(tchIsOwner()?'<button type="button" class="tch-clr" data-act="tchclear">Clear room</button>':'')+'</div>'
+    +'<div class="tch-who"><small id="tchwho">'+TCH.whoH+'</small></div>'
     +'<div class="tch-logw"><div class="tch-log" id="tchlog" role="log" aria-live="polite" aria-label="'+nm+' messages">'+TCH.logH+'</div>'
     +'<button type="button" class="tch-new" id="tchnew" data-act="tchdown" hidden>New messages ↓</button></div>'
     +'<div class="tch-in"><input id="tchin" type="text" maxlength="'+TCHMAX+'" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Message '+nm+'" placeholder="Message '+nm+'" value="'+esc(TCH.draft)+'"><button type="button" class="btn" data-act="tchsend">Send</button></div>'
@@ -235,11 +221,11 @@ document.addEventListener("focusout",function(e){if(e.target&&e.target.id==="tch
 document.addEventListener("scroll",function(e){var el=e.target;if(el&&el.id==="tchlog"&&el.scrollHeight-el.scrollTop-el.clientHeight<40)tchNewPill(0)},true);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;var a=b.dataset.act;
   if(a==="tchsend"){tchSend();var i=document.getElementById("tchin");if(i)try{i.focus({preventScroll:true})}catch(er){}return}
-  if(a==="tchroom"){var r=+b.dataset.r;if(r!==TCH.room&&(r===1||r===2||r===3)){TCH.room=r;TCH.stick=1;TCH.armed=0;try{sessionStorage.setItem("qbChatRoom",String(r))}catch(er){}render()}return}
+  if(a==="tchroom"){var r=+b.dataset.r;if(r!==TCH.room&&(r===1||r===2||r===3)){TCH.room=r;TCH.stick=1;TCH.armed="";try{sessionStorage.setItem("qbChatRoom",String(r))}catch(er){}render()}return}
   if(a==="tchdown"){var lg=document.getElementById("tchlog");if(lg)lg.scrollTop=lg.scrollHeight;tchNewPill(0);return}
-  if(a==="tchclear"){if(!tchIsOwner())return;var rr=TCH.room;
-    if(!TCH.armed){TCH.armed=1;b.textContent="Tap again to clear "+tchRoomName(rr);setTimeout(function(){TCH.armed=0;if(b.isConnected)b.textContent="Clear room"},4000);return}
-    TCH.armed=0;b.textContent="Clear room";var ct=tchNow();
-    tchWrite(function(me){me.mod=tchModClean(me.mod);me.mod.clr[rr]=ct}).then(function(){pop(tchRoomName(rr)+" cleared for everyone")},function(er){pop("Could not clear: "+((er&&er.code)||"error"))});return}
-  if(a==="tchhide"){if(!tchIsOwner())return;var k=String(b.dataset.k||"").slice(0,199);
-    tchWrite(function(me){me.mod=tchModClean(me.mod);if(me.mod.hid.indexOf(k)<0)me.mod.hid.push(k);if(me.mod.hid.length>100)me.mod.hid=me.mod.hid.slice(-100)}).catch(function(er){pop("Could not hide: "+((er&&er.code)||"error"))});return}});
+  /* your own line: the first tap turns the × into "Delete", the second (within 4 seconds) takes it out of your chat doc */
+  if(a==="tchdel"){var rr=+b.dataset.r,mt=+b.dataset.t,k=rr+"|"+mt;if(!(rr===1||rr===2||rr===3)||!(mt>0))return;
+    if(TCH.armed!==k){TCH.armed=k;b.classList.add("on");b.textContent="Delete";
+      setTimeout(function(){if(TCH.armed===k)TCH.armed="";if(b.isConnected){b.classList.remove("on");b.innerHTML="&times;"}},4000);return}
+    TCH.armed="";
+    tchWrite(function(me){me.msgs[rr]=(me.msgs[rr]||[]).filter(function(x){return x.t!==mt})}).then(function(){pop("Message deleted")},function(er){pop("Could not delete: "+((er&&er.code)||"error"))});return}});

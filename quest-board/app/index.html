@@ -1446,6 +1446,12 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .cxadd{display:flex;gap:8px;margin-top:10px}
 .cxadd input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
 .cxlist{margin-top:10px}.cxlist .lrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+/* BUILDER w-social: the chat × on your own lines (armed: "Delete"), likes left today, take back a like */
+.tch-x{padding:4px 8px;margin:-4px -4px -4px 2px}
+.tch-x.on{padding:1px 8px;margin:0 0 0 6px;border-radius:999px;background:#ff9d7a;color:#14121c;font:700 11px/1.5 var(--font-body,system-ui)}
+.fsh-like small{margin-left:6px;font-size:12px;font-weight:600;opacity:.8}
+.fsh-like:disabled{cursor:default}
+.fsh-back{margin:8px 0 2px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

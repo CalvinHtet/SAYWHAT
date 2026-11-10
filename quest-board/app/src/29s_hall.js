@@ -10,7 +10,8 @@
    Contract with the Posts feed (another file): hallPostsHtml() returns the feed's HTML and hallPostsMount(), if it exists, runs
    after every draw of the Posts tab. If the feed draws the Town board itself (its HTML holds id="socnb", or it sets
    HALL_POSTS_HAS_BOARD = true), the old board is not added under it. */
-var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"],["style","Style"]],booted:0};
+/* the third tab is labelled Rank (Cal, 2026-11-10: "Change style to Rank"); its id stays "style" for kept sessions */
+var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"],["style","Rank"]],booted:0};
 (function(){try{var t=sessionStorage.getItem("qbHallTab");if(t==="posts"||t==="chat"||t==="style")HTAB.tab=t}catch(e){}})();
 /* the Hall's own CSS goes in from here (as 10_app_a.js and 22_garden.js do), so index.html never clashes with other branches */
 function htabCss(id,css){if(document.getElementById(id))return;var st=document.createElement("style");st.id=id;st.textContent=css;(document.head||document.documentElement).appendChild(st)}
