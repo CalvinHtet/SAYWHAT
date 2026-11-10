@@ -1446,6 +1446,15 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .cxadd{display:flex;gap:8px;margin-top:10px}
 .cxadd input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
 .cxlist{margin-top:10px}.cxlist .lrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+/* BUILDER w-hall (Cal, 2026-11-10): a town board post reads top to bottom: the name, "new" and the time beside the look, the
+   text full width under them, small reactions under the text */
+.snp.has-look{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center}
+.snp.has-look>.snp-fig{grid-row:1}
+.snp.has-look>div:nth-child(2){display:flex;flex-wrap:wrap;align-items:baseline;min-width:0}
+.snp.has-look>p,.snp.has-look>.snrx{grid-column:1/-1}
+.snp>div>small{white-space:nowrap}
+.snp p{margin-top:6px;font-size:15px;line-height:1.4}
+.snrx{gap:4px;margin-top:6px}.snrxb{min-height:26px;padding:0 7px;gap:3px;font-size:12px}.snrxb small{font-size:11px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

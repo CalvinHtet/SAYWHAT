@@ -762,7 +762,7 @@ function coachRoster(){
 var MYUID=null,SOC={worlds:[],posts:[],notes:{},loaded:0,busy:0,lastPub:0,lastPost:0,err:""};
 function socOn(){return !!(db&&MYUID)}
 function socToday(){return today()}
-function socAgo(t){var s=Math.max(0,(Date.now()-t)/1000);return s<60?"just now":s<3600?Math.floor(s/60)+"m ago":s<86400?Math.floor(s/3600)+"h ago":Math.floor(s/86400)+"d ago"}
+function socAgo(t){var s=Math.max(0,(Date.now()-t)/1000),n;if(s<60)return "just now";if(s<3600)return Math.floor(s/60)+" min ago";if(s<86400)return Math.floor(s/3600)+" hr ago";n=Math.floor(s/86400);return n+(n===1?" day ago":" days ago")}
 function socState(){if(!S.social||typeof S.social!=="object")S.social={};var o=S.social;if(o.d!==socToday()){o.d=socToday();o.vis=[];o.gave={}}if(!o.seen)o.seen={};if(!o.vis)o.vis=[];if(!o.gave)o.gave={};return o}
 function socWorldDoc(){
   return {name:(S.char&&S.char.name)||"Player",look:lookOf(),lv:effLvl(),streak:S.streak||0,cls:S.cls||"",
