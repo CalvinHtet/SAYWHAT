@@ -46,6 +46,8 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W21 | Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
 | W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
 | W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
+| W24 | Likes notify: "a small heart symbol with a number beside the character in the fashion tab just like an instagram like notification" (new likes since you last looked) | BUILDER | w-rank | TODO |
+| W25 | Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
 
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
 w-rank (on w-inbox, W17 + W18), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
