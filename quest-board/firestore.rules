@@ -29,6 +29,12 @@ service cloud.firestore {
     match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if (mine(uid) || owner()) && small(2000); allow delete: if mine(uid) || owner(); }
     match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
 
+    // kind words for coins (app/src/29v_kudos.js): kudos/<id> holds the notes that player wrote the owner, read by them and the
+    // owner; kudosok/<id> holds the owner's answer to each. Only the owner writes answers, so only the owner can approve a note
+    // (and pay its coins). Everyone signed in reads the answers: the Town Hall pins the approved notes.
+    match /kudos/{uid}   { allow read: if mine(uid) || owner(); allow create, update: if mine(uid) && small(12000); allow delete: if mine(uid) || owner(); }
+    match /kudosok/{uid} { allow read: if signedIn(); allow create, update: if owner() && small(30000); allow delete: if owner(); }
+
     // the owner's inbox and the frame and speed logs the owner reads to debug phones
     match /inbox/{doc} { allow read, write: if owner(); }
     match /diag/{doc}  { allow read: if owner(); allow write: if signedIn(); }
