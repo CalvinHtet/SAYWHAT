@@ -1556,6 +1556,13 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .updtx{font-variant-numeric:tabular-nums}
 /* BUILDER w-floors (W42): the Shop's floor switch above the brand tabs */
 .qs-floors{margin-bottom:4px}.qs-floors .qs-tab{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+/* BUILDER w-sale (Cal, 2026-11-10): the daily sale strip and the sale badge on a card */
+.qs-sale{margin:8px 0 10px;padding:10px 12px;border-radius:16px;background:linear-gradient(135deg,rgba(255,77,94,.16),rgba(255,182,39,.12));border:1px solid rgba(255,120,80,.45)}
+.qs-sale-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}.qs-sale-h b{font-family:var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:#ff7a5c}.qs-sale-h small{color:var(--muted);font-size:12px}
+.qs-sale-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.qs-sale-it{position:relative;display:flex;align-items:center;gap:8px;padding:6px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);text-align:left;font:inherit;cursor:pointer;min-width:0}
+.qs-sale-it img{width:44px;height:44px;object-fit:contain;flex:none}.qs-sale-it span{min-width:0}.qs-sale-it b{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.qs-sale-it small{font-size:12px}
+.qs-sale-it s,.qs-onsale s{color:var(--muted);opacity:.8}.qs-sale-it em{position:absolute;top:-6px;right:-4px;padding:1px 6px;border-radius:999px;background:#ff4d5e;color:#fff;font:700 10px/16px var(--font-body,system-ui);font-style:normal}
+.qs-card.qs-onsale{position:relative;box-shadow:0 0 0 2px rgba(255,77,94,.55)}.qs-salebadge{position:absolute;top:8px;left:8px;z-index:2;padding:2px 8px;border-radius:999px;background:#ff4d5e;color:#fff;font:700 11px/1.4 var(--font-body,system-ui)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
