@@ -190,6 +190,24 @@ RAIN 477 -> 787, NICE COCK 455 -> 616, KAIMANA 301 -> 214, DIAL-UP 402 -> 251. E
 runs do not change. A new piece: grade it with QA's rules in the doc and add its id to `clothTier`; an ungraded piece keeps the
 old rule.
 
+**Shop floors** (W42; Cal: "Go on the shop floor plans"): one Shop with three floors (`ECON.floors`; a brand's floor is `fl` in
+BRANDS, one field per brand, none meaning the Street).
+
+| Floor | Opens | Brands now | New brand | Live | Prices |
+| --- | --- | --- | --- | --- | --- |
+| Street | with the Closet | the 12 street brands | Mondays and Fridays, 8 am | 2 | 120 to 450 |
+| Boutique | level 30 | VENOM ROSE, SAYMØRE, CHROME RAIN, NICE COCK (12 later) | every Friday, 8 am | 2 (about two weeks each) | 620 to 1,190 |
+| Atelier | level 70 | none yet, so it stays hidden | every other Friday, 8 am | 1 | 1,300 to 3,000 |
+
+Each floor's calendar starts at `DROPS.cal0` and is the same for everyone. A player sees only the floors they have opened: the Shop's
+floor switch, splashes, the Shop "!", alerts and the gifts from chests, the Wheel and crawls. The Wednesday vault is one brand for the
+whole Shop, from the floors the player has opened (the Boutique's 4 brands never qualify yet: each is live two weeks and drops again
+two weeks later, so none is gone 14 days without dropping within 5). Prices follow the floor (`ECON.clothFloor`), and QA's grade
+orders each piece inside its floor. Opening a floor shows "The Boutique is open" once (`S.floorSeen`), then its brands' splashes.
+Level 30 check (econsim, the cal run): a day then earns 7,000 to 10,000, of it 1,000 to 1,400 from rooms and produce and about 1,400
+from crawls, and spends 7,000 to 11,000 on room upgrades. Two Boutique pieces cost about 1,800: passive income plus crawls covers them,
+but not them plus the day's room upgrades.
+
 ## Checking it
 
 `tools/windows/econsim.js <casual|regular|cal|grinder> <days>` plays a new save through the real game with the clock moved
