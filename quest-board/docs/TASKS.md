@@ -45,7 +45,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W17 | (spec below) Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
 | W18 | (spec below) Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | READY FOR QA (w-rank b43759b) |
 | W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (c4da3fe) |
-| W20 | CHANGED 09:45: "change the brand drops to every Monday and Thursday at 8 AM" (Pacific; was "Monday and Wednesday"). Spec: ARCHITECT SPEC2 part 1 | BUILDER | w-drops | AMEND: 98b8558 had Mon/Wed 5 am; new commit coming, QA waits |
+| W20 | CHANGED AGAIN 09:50 (Cal via ARCHITECT): new brands every MONDAY and FRIDAY 8 am Pacific, only 2 active brands, a Wednesday vault brings one retired brand back for that day (was Mon/Wed 5 am, then Mon/Thu). Spec: SPEC2 part 1 + todo/BUILDER.md | BUILDER | w-drops | AMEND: 98b8558 had Mon/Wed 5 am; new commit coming, QA waits |
 | W21 | (spec below + ARCHITECT spec part A: level ramp) (spec below) Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
 | W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
 | W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
@@ -61,7 +61,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
-w-rank, w-training again, w-drops, w-wheel, THEN (09:45) the w-drops amend (Mon/Thu 8 am Pacific + HANGANG splash, W20 W32),
+w-rank, w-training again, w-drops, w-wheel, THEN (09:45) the w-drops amend (Mon/Fri 8 am Pacific, 2 active, Wednesday vault + HANGANG splash, W20 W32),
 w-chests (W26 W30, before w-econ), w-econ (W21 W22 W25 W27 W31), w-colors (W14), w-photos, w-pact (W28), w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
 
@@ -69,7 +69,7 @@ turns READY FOR QA.
 
 LEAD's queued messages reach a chat only when its turn ends, so the full specs live here. Cal's words are in the table above.
 - **NEW 09:45 (Cal via ARCHITECT), do after w-wheel:** the last three items in `.claude/team/todo/BUILDER.md`: the w-drops amend
-  (Monday and Thursday 8 am Pacific, HANGANG splash bug), the new w-chests branch (100/200/300 chests, relic tiers), and income by
+  (Monday and Friday 8 am Pacific, 2 active brands, Wednesday vault, HANGANG splash bug), the new w-chests branch (100/200/300 chests, relic tiers), and income by
   upgrade size added to w-econ. Spec: `.claude/team/ideas/2026-11-10_SPEC2_drops_chests_relics_income_splash.md`. The w-drops and
   W26 lines below are out of date where they differ.
 - **w-inbox fix, first (W7/W19):** S.inbox already belongs to checkInbox (30_app_b.js:1057, the owner's quest inbox: S.inbox[itemId]=1).
