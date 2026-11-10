@@ -1544,6 +1544,16 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .dq-past i.ot{min-width:4px}
 /* BUILDER w-econ2 (QA, 2026-11-10): a story room's triggers on its card, one per line, a tick on each one met */
 .stytr{display:flex;flex-direction:column;gap:2px;margin-top:6px}.stytr .ok{color:var(--done)}
+/* BUILDER w-polish (QA, 2026-11-10): the wheel's radius for its centred labels; the Training value label's backing */
+.wheel{--wr:min(140px,40vw)}
+.wkvb{fill:var(--surface,#14121c);opacity:.92;stroke:var(--line);stroke-width:1}
+/* BUILDER w-update (SPEC7, Cal 2026-11-10): the green "!" by the envelope while an update waits, and the Installing update bar */
+.updbtn{position:relative;width:28px;height:28px;border-radius:50%;border:0;background:#22c55e;color:#fff;font:800 16px/1 var(--font-body,system-ui);display:grid;place-items:center;cursor:pointer;flex:none;padding:0;animation:updp 2s ease-out infinite}
+@keyframes updp{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%,100%{box-shadow:0 0 0 8px rgba(34,197,94,0)}}
+@media (prefers-reduced-motion:reduce){.updbtn{animation:none}}
+.lfhud .updbtn{pointer-events:auto}
+.updbar{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;margin:12px 0 6px}.updbar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .2s}
+.updtx{font-variant-numeric:tabular-nums}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

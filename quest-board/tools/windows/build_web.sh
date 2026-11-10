@@ -53,8 +53,8 @@ head='<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-ic
 page=${page/"</head>"/"$head</head>"}
 page=${page//"<title>Quest Board</title>"/"<title>SAYWHAT</title>"}
 printf '%s\n' "$page" > "$DIST/index.html"
-# version.json, as tools/build.py writes it (the "New Update!" check)
+# version.json, as tools/build.py writes it: the version and the scripts with their sizes (the update check and its byte counter, SPEC7)
 appv=$(grep -oE "\bAPPV=[0-9]+" "$APP/src/30_app_b.js" | head -1 | cut -d= -f2)
-printf '{"appv": %s}' "${appv:-0}" > "$DIST/version.json"
+printf '{"appv": %s, "files": %s}' "${appv:-0}" "$files" > "$DIST/version.json"
 
 echo "dist-web $(du -sm "$DIST" | cut -f1) MB, page $(( $(stat -c %s "$DIST/index.html") / 1000 )) KB, app.js $(( $(stat -c %s "$DIST/app.js") / 1000 )) KB, $(ls "$DIST/art" | wc -l) pictures${SANDBOX:+ (sandbox)}"
