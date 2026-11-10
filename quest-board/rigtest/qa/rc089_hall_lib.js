@@ -1,7 +1,7 @@
 // rc-0.89 Hall QA helpers: a fresh phone profile with the advanced seed, the sandbox db, taps by selector.
 const fs = require('fs');
 const { browser, sleep } = require('./cdp.js');
-const BASE = process.env.BASE || 'http://127.0.0.1:8811', OUT = 'C:/Users/clvh/qa-wt/out/rc089/hall/';
+const BASE = process.env.BASE || 'http://127.0.0.1:8811', OUT = process.env.OUT || 'C:/Users/clvh/qa-wt/out/rc089/hall/';
 const SEED = JSON.parse(fs.readFileSync('C:/Users/clvh/qa-wt/out/seed_adv2.json', 'utf8'));
 fs.mkdirSync(OUT, { recursive: true });
 const log = [];
@@ -22,7 +22,7 @@ async function boot(o = {}) {
   await pg.ev(`(function(){window.__qaKilled=[];window.__qaPops=[];window.__qaModals=[];var keep=/fsh-modal|ibmodal|sq-card|fsh-card|Fashion week/;
     new MutationObserver(function(ms){ms.forEach(function(r){r.addedNodes.forEach(function(n){if(!n.classList)return;
       if(n.classList.contains("pop")){window.__qaPops.push(n.textContent);return}
-      if(n.classList.contains("modal")){var s=n.className+" "+n.innerHTML.slice(0,4000);window.__qaModals.push((n.innerText||"").slice(0,120));if(!keep.test(s)&&!window.__qaKeepAll){window.__qaKilled.push((n.innerText||"").slice(0,60));n.remove()}}})})}).observe(document.getElementById("layer"),{childList:true});return 1})()`);
+      if(n.classList.contains("modal")){var s=n.className+" "+n.innerHTML.slice(0,4000);window.__qaModals.push((n.innerText||"").slice(0,120));if((!keep.test(s)||/Welcome to SAYWHAT/i.test(n.innerText||""))&&!window.__qaKeepAll){window.__qaKilled.push((n.innerText||"").slice(0,60));n.remove()}}})})}).observe(document.getElementById("layer"),{childList:true});return 1})()`);
   return { br, pg };
 }
 const closeModals = (pg) => pg.ev('(function(){var n=document.querySelectorAll("#layer .modal").length;document.querySelectorAll("#layer .modal").forEach(function(e){e.remove()});return n})()');

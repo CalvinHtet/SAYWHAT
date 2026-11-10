@@ -9,12 +9,12 @@ const PER = +process.env.PER || 24;
   const br = await browser(); const pg = await br.page({ fresh: true, phone: false, width: 1400, height: 1000, dpr: 1 });
   await pg.go(BASE + '/'); await pg.wait('!!(window.__qb && window.__qb.x && window.QBLoft && QBLoft.data && QBLoft.data.items)', 120000); await sleep(1500);
   const items = await pg.ev(`(function(){var x=window.__qb.x(),SH=x.SHOP||[],I=QBLoft.data.items||{};
-    return SH.map(function(it){var m=it[6]||{};var g=m.gar||m.icon;var d=g&&I[g]||{};return {id:it[0],name:it[1],price:it[2],kind:it[3],slot:d.slot||m.slot||it[4]||'',brand:m.brand||m.br||d.brand||'',gar:m.gar||'',icon:'icon_'+(m.icon||m.gar)+'.webp',meta:JSON.stringify(m).slice(0,200),raw:JSON.stringify(it.slice(0,6)).slice(0,200)}})})()`);
+    return SH.map(function(it){var m=it[6]||{};var g=m.gar||m.icon;var d=g&&I[g]||{};return {id:it[0],type:it[1],name:it[2],price:it[3],lvl:it[4],desc:it[5],slot:d.slot||m.slot||'',brand:m.b||'',gar:m.gar||'',icon:'icon_'+(m.icon||m.gar)+'.webp',meta:JSON.stringify(m).slice(0,200),raw:JSON.stringify(it.slice(0,6)).slice(0,200)}})})()`);
   fs.writeFileSync(OUT + '/shop_items.json', JSON.stringify(items, null, 1));
-  const kinds = {}; items.forEach((i) => { kinds[i.kind] = (kinds[i.kind] || 0) + 1; });
+  const kinds = {}; items.forEach((i) => { kinds[i.type] = (kinds[i.type] || 0) + 1; });
   console.log('Shop entries ' + items.length + ', by kind ' + JSON.stringify(kinds));
   console.log('sample: ' + JSON.stringify(items.slice(0, 3)));
-  const cloth = items.filter((i) => i.gar);
+  const cloth = items.filter((i) => /^a_(top|pants|shoes|acc|back|eyet|hat)$/.test(i.type) && i.brand !== 'dungeon');
   console.log('with a garment (clothing): ' + cloth.length + '; brands ' + JSON.stringify(cloth.reduce((a, i) => { a[i.brand || '(none)'] = (a[i.brand || '(none)'] || 0) + 1; return a; }, {})));
   // sheets
   for (let s = 0; s * PER < cloth.length; s++) {
