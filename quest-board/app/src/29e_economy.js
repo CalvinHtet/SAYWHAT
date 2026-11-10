@@ -161,6 +161,11 @@ var ECON={
   bigMoment:{gameroom:["gm_tv80"],lair:["lr_core"],garden:["g_green2"],restaurant:["r_x2"],skybar:["sb_piano"],rooftop:["rf_pool","rf_tub"],
     boba:["bo_shake"],dessert:["de_soft"],mall:["ml_esc"],theater:["t_wing"],auditorium:["au_imax","au_proj2"],rhythm:["rh_lights"],
     vr:["vr_wall"],bowling:["bw_lane1"],karaoke:["ka_booth"],club:["cb_vip","cb_floor"]},
+  /* w-econ3: what a regular player makes in a day at a level and how much of it is quest coins (econsim), what a permanent upgrade
+     takes to pay back (payDays), and the share of a day an interface item or a non-percent upgrade costs */
+  dayInc:[[1,6000],[10,9500],[30,10500],[60,18500],[90,23000],[100,24000]],
+  questInc:[[1,3500],[10,4100],[30,4700],[60,5700],[90,5800],[100,5800]],
+  payDays:15,utilDay:{freeze:.5,streak:.6,away:.6},uiDay:.12,
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
@@ -271,15 +276,28 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
    graded clothes by their quality tier (ECON.cloth), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
    just x shopK), permanent upgrades from ECON.buff, and interface items (themes, frames, backdrops, companions, titles, tap
    effects, HUD, sounds, scenes) by the level they open */
+/* w-econ3 (Cal, 2026-11-10: "These upgrades should be much more expensive because they are permanent. Merchant seal is 10% extra coins
+   forever and it only costs 1500? ... Make sure these are scaled and balanced properly"): a regular player's daily income at a level
+   (ECON.dayInc) and its quest coins (ECON.questInc), from econsim, read between the measured levels */
+function econCurve(T,L){for(var i=1;i<T.length;i++)if(L<=T[i][0]){var a=T[i-1],b=T[i];return a[1]+(b[1]-a[1])*(L-a[0])/(b[0]-a[0])}return T[T.length-1][1]}
+function econDayInc(L){return econCurve(ECON.dayInc,L)}
+/* a permanent upgrade pays itself back in ECON.payDays at the level it opens: +X% coins against that day's quest coins, +X% XP
+   against the day's income (XP has no coin price, so a point of XP counts like a point of coins), and the other three (a freeze, the
+   streak, the time away) at ECON.utilDay of a day's income */
+function econBuffPrice(it){var e=it[6]||{},L=+it[4]||1,p;
+  if(e.k==="coin")p=ECON.payDays*e.v/100*econCurve(ECON.questInc,L);
+  else if(e.k==="xp")p=ECON.payDays*e.v/100*econDayInc(L);
+  else p=(ECON.utilDay[e.k]||.5)*econDayInc(L);
+  return Math.max(500,Math.round(p/50)*50)}
 /* a brand's Shop floor (W42): fl in BRANDS, else the Street (the Basics and the creator's pieces too) */
 function brandFloor(id){var b=(typeof BRANDS!=="undefined"?BRANDS:[]).filter(function(x){return x.id===id})[0];return (b&&b.fl)||"street"}
 (function(){var seen=typeof WeakSet==="function"?new WeakSet():null,graded=[];
   [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
     (l||[]).forEach(function(it){if(!Array.isArray(it)||!(+it[3]>0)||(seen&&seen.has(it)))return;if(seen)seen.add(it);var e=it[6]||{},s=it[1];
-      if(s==="buff"){it[3]=ECON.buff[it[0]]||Math.round(it[3]/50)*50;return}
+      if(s==="buff"){it[3]=econBuffPrice(it);return}
       var tr=/^a_/.test(s)&&ECON.clothSlot[s]!=null&&clothTier(it[0]);if(tr&&ECON.cloth[tr]){graded.push([it,tr]);return}
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
-      it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})});
+      it[3]=Math.round(ECON.uiDay*econDayInc(+it[4]||1)/50)*50})});
   /* each brand's average old price, so a piece its brand priced above the rest sits higher in its band */
   var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
   graded.forEach(function(g){var it=g[0],b=(it[6]&&it[6].b)||"",fb=ECON.clothFloor[brandFloor(b)],B=(fb&&fb[g[1]])||ECON.cloth[g[1]],a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
