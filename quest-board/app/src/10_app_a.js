@@ -501,8 +501,10 @@ function wheelHtml(){
   var conic='conic-gradient('+WHEEL.map(function(w,i){var a=wheelStart(i),b=a+WHEEL_DEG[i],t=WHEEL_DEG[i]/3,g=function(c,p,q){return c+' '+p.toFixed(2)+'deg '+q.toFixed(2)+'deg'};
     /* a sliver: gold, a white line, gold */
     return w[3]?[g("#f5c518",a,a+t),g("#fffbe6",a+t,a+2*t),g("#f5c518",a+2*t,b)].join(","):g(WCOL[ci++%WCOL.length],a,b)}).join(",")+')';
-  /* labels on the left half are turned the other way so none reads upside down (QA, rc-0.89) */
-  var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,t=c>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(-34px) translateX(-100%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(34px)';
+  /* labels on the left half, where the wheel rests now (WHEELROT), are turned the other way so none reads upside down, and each
+     sits centred in its slice (QA, v0.89) */
+  var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,e=((c+WHEELROT)%360+360)%360,
+      t=e>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(calc(var(--wr) * -.58)) translate(-50%,-50%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(calc(var(--wr) * .58)) translate(-50%,-50%)';
     return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'

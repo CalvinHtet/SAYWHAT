@@ -539,8 +539,12 @@ function wkChart(L,u,lab,ring,what){
    +pts.map(function(p,i){var on=i===ring;return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+hr.toFixed(1)+'" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(on?6:r)+'" class="wkdot'+(on?' on':'')+'"/><title>'+mmdd(L[i].d)+': '+fmtL(L[i].v,u)+' '+uLbl(u)+'</title></g>'
      /* QA (rc-0.89): a date next to the ringed one gave way to it, so the two never overlap */
      +(on||((n-1-i)%every===0&&!(rp&&Math.abs(p[0]-rp[0])<30))?'<text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt'+(on?' on':'')+'">'+mmdd(L[i].d)+'</text>':'')}).join("")
-   /* the value sits above the line around its point, with a dark edge, so the line never runs through it */
-   +'<text x="'+lx.toFixed(1)+'" y="'+Math.max(10,Math.min(lp[1],(pts[li-1]||lp)[1],(pts[li+1]||lp)[1])-9).toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u)+'</text></svg>'}
+   /* the value sits above every point under its whole width, on a dark backing, so the line never runs through it (QA, v0.89:
+      on a dense month the line ran under it) */
+   +(function(){var vt=fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u),vw=vt.length*6.6+8,bx=anchor==="end"?lx-vw+4:anchor==="start"?lx-4:lx-vw/2,
+      top=pts.reduce(function(m,p){return p[0]>=bx-hr&&p[0]<=bx+vw+hr?Math.min(m,p[1]):m},lp[1]),vy=Math.max(13,top-9);
+      return '<rect x="'+bx.toFixed(1)+'" y="'+(vy-11).toFixed(1)+'" width="'+vw.toFixed(1)+'" height="15" rx="4" class="wkvb"/>'
+        +'<text x="'+lx.toFixed(1)+'" y="'+vy.toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+esc(vt)+'</text>'})()+'</svg>'}
 /* every Training graph has a range (Cal, 2026-11-10: "40 sessions for gym graph is too much. Have the option to toggle graphs between
    last 7 days, and last month, last 3 months, and last 6 months"): 1 month by default, kept for the session. 7 days and 1 month plot
    each session, 3 and 6 months one point a week (that week's best). [key, button, days, by week, "in ..."] */
