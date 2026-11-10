@@ -1132,23 +1132,31 @@ function rollover(){
 }
 
 /* ---------- FX ---------- */
-var cv=null,raf=0;
+var cv=null,raf=0,emT=0,emCol="#ff3d81",emOld=1;
+/* BUILDER w-perf1 (QA W1): reading --accent every frame cost 17.5% of the main thread. applyFx (and a theme whose colors drift,
+   16_interface.js ifColors) marks the color stale and the next drawn frame reads it once. The loop draws 30 times a second and
+   asks for a frame only when it will draw: asking every frame kept the whole page redrawing 60 times a second */
+function emColor(){emOld=1}
 function embers(on){
-  if(!on){if(cv){cancelAnimationFrame(raf);cv.remove();cv=null}return}
+  if(!on){if(cv){cancelAnimationFrame(raf);clearTimeout(emT);cv.remove();cv=null}return}
   if(cv)return;
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0";
   document.body.appendChild(cv);
   var c=cv.getContext("2d");function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
   var pts=[];for(var i=0;i<46;i++)pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:1+Math.random()*2,v:.2+Math.random()*.6,a:Math.random()});
-  (function loop(){
+  var last=0;emOld=1;
+  function loop(t){
     if(!cv)return;
+    var k=last?Math.min(4,(t-last)/16.7):2;last=t; /* each step sized so the embers keep the speed they had at 60 frames a second */
+    if(emOld){emOld=0;emCol=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#ff3d81"}
     c.clearRect(0,0,cv.width,cv.height);
-    c.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#ff3d81";
-    pts.forEach(function(p){p.y-=p.v;p.x+=Math.sin((p.y+p.a*100)/40)*.3;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
+    c.fillStyle=emCol;
+    pts.forEach(function(p){p.y-=p.v*k;p.x+=Math.sin((p.y+p.a*100)/40)*.3*k;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
       c.globalAlpha=.15+.35*Math.abs(Math.sin(p.y/60+p.a*6));c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.fill()});
-    raf=requestAnimationFrame(loop);
-  })();
+    emT=setTimeout(function(){if(cv)raf=requestAnimationFrame(loop)},28);
+  }
+  raf=requestAnimationFrame(loop);
 }
 function applyFx(){
   var lv=effLvl(), ri=rankIdx();
@@ -1163,7 +1171,7 @@ function applyFx(){
   var bgi=eqItem("bg"), dc=document.getElementById("deco");
   if(bgi){if(!dc){dc=document.createElement("div");dc.id="deco";dc.setAttribute("aria-hidden","true");document.body.appendChild(dc)}dc.className="bgx "+bgi[0]}
   else if(dc)dc.remove();
-  embers(lv>=10);
+  embers(lv>=10);emColor();
   applyClass();
 }
 function ensureEl(id,on,cls){
@@ -1319,13 +1327,20 @@ function render(){
   var pfb=document.querySelector("#layer .modal .prof-body");if(pfb)pfb.innerHTML=profileHtml();
   newIds={};
   var nt=document.getElementById("cap");
-  if(nt){ fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
+  if(nt){ if(fitK===fitKey(nt))nt.style.height=fitH;else fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
   applyFx();
   document.body.classList.toggle("shopmode",view==="shop");document.body.classList.toggle("loftmode",view==="hideout");
   if(view==="hideout"&&typeof lfMount==="function")lfMount();
   try{dropCheck()}catch(e){}
 }
-function fit(t){t.style.height="auto";t.style.height=Math.min(160,t.scrollHeight+2)+"px"}
+/* BUILDER w-perf1 (QA W1): measuring the box (scrollHeight) forces a layout, and render() did it after every redraw. It now
+   measures only when the text or the button (Add or Sorting) changed since the last fit, or the window was resized or the fonts
+   arrived since. (Not keyed on innerWidth: reading that forces a layout too.) */
+var fitK=null,fitH="";
+function fitKey(t){return t.value+(busy?"\nb":"")}
+function fit(t){t.style.height="auto";var sh=t.scrollHeight;t.style.height=Math.min(160,sh+2)+"px";fitK=sh?fitKey(t):null;fitH=t.style.height}
+addEventListener("resize",function(){fitK=null});
+if(document.fonts&&document.fonts.addEventListener)document.fonts.addEventListener("loadingdone",function(){fitK=null});
 
 function pop(txt){
   var el=document.createElement("div");el.className="pop mono";el.textContent=txt;
