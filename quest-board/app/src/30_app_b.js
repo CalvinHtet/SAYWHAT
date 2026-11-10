@@ -1544,6 +1544,11 @@ async function handleProof(file){
   proofCheck(id,file,hh);
 }
 function sbLum(file){try{return createImageBitmap(file).then(function(b){var c=document.createElement("canvas");c.width=c.height=24;var x=c.getContext("2d");x.drawImage(b,0,0,24,24);var d=x.getImageData(0,0,24,24).data,s=0;for(var i=0;i<d.length;i+=4)s+=.3*d[i]+.59*d[i+1]+.11*d[i+2];return s/(d.length/4)}).catch(function(){return 128})}catch(e){return Promise.resolve(128)}}
+/* the time stamp burnt into every proof photo (web.js qbStamp, Cal, 2026-11-10): the checker is told what it should read and fails a
+   photo whose stamp is missing or more than 30 minutes off. The server's own clock check comes with Night watch (v0.91). */
+function stampText(){return typeof window.qbStampText==="function"?window.qbStampText():""}
+function stampAsk(t){return t?' The photo has a time stamp burnt into its bottom right corner that should read "'+t+'" (Pacific time). Also return "stamp_ok": true if that stamp is there and within 30 minutes of that time, false if it is missing or further off.':""}
+var STAMPBAD="The time stamp on the photo is missing or wrong. Take a new photo in the game.";
 async function proofCheck(id,file,hh){
   var q=S.quests.filter(function(x){return x.id===id})[0], vis=null;
   try{
@@ -1553,13 +1558,15 @@ async function proofCheck(id,file,hh){
     if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,6000)});var lum=await sbLum(file);vis={matches:lum>35,what:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
     var lim=sample?await sample.limits().catch(function(){return null}):null;
     if(sample&&lim&&lim.images&&q){
-      vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false});
+      var stp=stampText();
+      vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""'+(stp?',"stamp_ok":true':'')+'} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.'+stampAsk(stp),{images:file,stamp:stp,modelTier:"quick",cache:false});
     }
   }catch(e){vis=null}
   delete proofPend[id]; pendMark();
   q=S.quests.filter(function(x){return x.id===id})[0];
   if(!q){render();return} /* the quest was removed while its photo was being checked */
   var why=!vis?"The photo checker couldn't be reached, so nothing was counted. Try again in a minute."
+    :vis.stamp_ok===false?STAMPBAD
     :!vis.matches?"It doesn't look like this quest."+(vis.note?" "+vis.note:"")
     :(vis.screen&&!isDigital(q))?"That looks like a photo of a screen. This quest needs a real photo.":"";
   if(why){render();proofVerdict(q,false,why);return}
@@ -1645,11 +1652,12 @@ async function handlePhoto(file){
       /* the same sandbox stand-in as the quest proofs (proofCheck): any photo that is not nearly black passes, never in a web or Live build */
       if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,3000)});var lum=await sbLum(file);vis={active_setting:lum>35,setting:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
       var lim=sample?await sample.limits().catch(function(){return null}):null;
-      if(sample&&lim&&lim.images){vis=await sample.json(VISION,{images:file,modelTier:"quick",cache:false})}
+      if(sample&&lim&&lim.images){var stp2=stampText();vis=await sample.json(VISION+stampAsk(stp2),{images:file,stamp:stp2,modelTier:"quick",cache:false})}
       else if(!vis)visUnavail=true;
     }catch(e){visUnavail=true}
     if(vis){
-      if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}
+      if(vis.stamp_ok===false){gl("bad",STAMPBAD);ok=false}
+      else if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}
       else if(!vis.active_setting){gl("bad","Doesn't look like you're being active"+(vis.setting?" ("+vis.setting+")":"")+". "+(vis.note||""));ok=false}
       else gl("ok","Scene: "+(vis.setting||"workout space")+(vis.note?". "+vis.note:""));
     }else if(visUnavail){
