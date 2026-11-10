@@ -71,6 +71,11 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W43 | Focused unlocks + building Goals log (ARCHITECT SPEC8, Cal approved): a room opens on its story trigger AND every open room in that building half upgraded (no day wait; replaces W25), Lock and Key before Boba, Goals panel with XP and coins | BUILDER | w-focus (v0.91) | v0.91 #2, right after w-nospoil (Cal: economy is high priority) |
 | W44 | No spoilers (Cal: "Scrub the entire game for spoilers"): ARCHITECT SPEC9, about 25 fixes (mystery cards, help, team and relic text, Crawls tab, locked dungeons, next brand); rule in docs/VOICE.md | BUILDER | w-nospoil | TODO (top of v0.91) |
 | W45 | Economy scaling (Cal): EVERYTHING BOUGHT AROUND LEVEL 90 + BALANCE: % bought tracks level / 90 at every stage, never level 100 with upgrades left (Cal 14:37); (Cal 14:35: more brands and pets coming later); "big purchases to a day's income ... only some of them"; others priced for their tier; the wheel's prize pool scales with level; "all quests and sources of income should make sense and scale a bit" | BUILDER | w-econ3 (with or after w-focus) | TODO (v0.91, high) |
+| W46 | Permanent upgrades and interface priced by payback (Cal: "Merchant seal ... 1500? That seems way too cheap for a permanent buff") | BUILDER | w-econ3 | TODO (v0.91) |
+| W47 | Shop header: Wardrobe button on top; coins, + and envelope top right; "The Shop" top left over "NEW BRANDS MON AND FRI 8 AM"; no "old favorite" text; a Wednesday vault splash; the vault starts after 6 shops in rotation | BUILDER | w-shopui | TODO (v0.91) |
+| W48 | Upgrades and Interface appear only after the Lair's big screen; a button on that screen opens those Shop tabs | BUILDER | w-system | TODO (v0.91) |
+| W49 | Chat like Discord: a round face avatar left of the name; consecutive messages under one header | BUILDER | w-chat2 | TODO (v0.91) |
+| W50 | Town Hall colours from its banner picture (Cal again; W14 first part) | BUILDER | w-colors | TODO (v0.91) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
