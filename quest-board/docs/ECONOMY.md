@@ -11,8 +11,8 @@ in `ECON` in `app/src/29e_economy.js` unless it says otherwise.
 Cal, 2026-11-10: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl
 40", and "The leveling should definitely ramp up more ... The last few levels ... should take a day or 2 or even 3 to level up."
 Curve 4 (`lvNeed` in `30_app_b.js`; `ECON.lvFirst`, `lvRamp`, `lvFlat`, `lvK`, `lvP`): level L to L+1 costs `20 + 115(L-1)/5` XP
-below level 6, then `135 + 0.315 x (L-6)^2`: 140 at 10, 197 at 20, 499 at 40, 1,053 at 60, 1,856 at 80, 2,859 at 99; about
-97,000 XP to level 100 (was 13,905). The spec's first fit (`135 + 4.04 x (L-6)^1.25`) put Cal's level 100 at day 65 in econsim, so
+below level 6, then `135 + 0.315 x (L-6)^2`: 140 at 10, 197 at 20, 499 at 40, 1,054 at 60, 1,860 at 80, 2,859 at 99;
+98,850 XP to level 100 (was 13,905). The spec's first fit (`135 + 4.04 x (L-6)^1.25`) put Cal's level 100 at day 65 in econsim, so
 the top is steeper. Saves keep their exact level and their progress through it (`xpc4` in `merge`, from the frozen curve 3).
 Renown past 100 is every `lvNeed(100)` XP. Weekly Warrior's XP follows the curve; its coins stay 3,000 (`ECON.wwCoins`).
 Trials pass with a fresh activity photo at once, or on honor after 2 active days of 50+ XP (`ECON.trialDays`). Catch-up: rested XP
@@ -117,20 +117,25 @@ Trophy Room 1.3), Garden 1.3, Restaurant 1.8, Boba 2.2, Dessert 2.3, Lock and Ke
 Auditorium 3, Arcade 3.2, Rhythm and VR 3.3, Bowling 3.4, Karaoke 3.5, Nightclub 3.8. Examples: the first bedroom pieces 250 to 350,
 the Walk-in Closet 1,400, the Restaurant 5,050, the IMAX Laser Projector 10,500, the IMAX Screen 21,000, the Nightclub lot 34,200.
 `ECON.kindOf` settles an item the rule reads wrong (the plain Digital Projector is equipment, so the IMAX one is the clear step up).
-`fixed:1` on an upgrade keeps its price exactly as written. All 381 room upgrades cost about 1.38 million (was 474,250) and the lots
-about 85,000 (was 24,600).
+`fixed:1` on an upgrade keeps its price exactly as written. All 381 room upgrades cost 1,393,400 (was 474,250) and the lots 85,400
+(was 24,600).
 
 **Bigger upgrades earn more** (Cal: "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely
 start generating more income"): in a room that earns, each earning upgrade's share of the room's income follows what it is
-(`ECON.earnW`: furniture 1, equipment 2, big 3, grand 5), and the room's total stays what it was. The IMAX pieces are the
-Auditorium's biggest earners.
+(`ECON.earnW`: furniture 1, equipment 2, big 3, grand 5), and the room's total stays what it was. A grand piece also
+earns by its size: its weight x the square root of its size over `ECON.earnGrand` (1,000), so the IMAX Screen (size 4,000) earns
+more than the Bigger Screen (1,500). What a piece is and its size are read from its price before the late prices (`ECONKIND`,
+`ECONSIZE`). Auditorium: IMAX Screen +61% (v0.88 +54%), IMAX Laser Projector +43%, Bigger Screen and Leather Recliners +38%,
+the rows and speakers +18%. Nightclub: the VIP Booth +10%, the Velvet Rope +3%.
 
 **Story rooms open a day apart** (Cal: "Rooms should open a day apart ... only the ones that have questlines tagged to them such
 as the restaurant, boba shop, bar, dessert parlor, strip mall. There has to be multiple triggers"): the Restaurant, Boba, Dessert,
 Lock and Key and the Mall each open only when their story gate, their level (`ECON.stepLv`), the coins earned since the story room
 before them opened (`ECON.storyCoins`: 2,000 / 6,000 / 8,000 / 12,000 / 20,000) and a new game day since that room opened are all
-true. The game day (5 am) is the day, so a room opened late at night lets the next one open in the morning. The locked card lists
-each trigger with its progress. Other rooms open as before. Opening times live in `S.story.open`; rooms a save already has count as
+true. The game day (5 am) is the day, so a room opened late at night lets the next one open in the morning. What a locked story room waits
+for shows at the top of the room it grows from, one trigger per line with a tick on each one met ("Level 9 of 12", "1,240 of
+6,000 coins earned since the Restaurant opened", "Opens tomorrow at the earliest"): the Restaurant in the Garden, Boba in the
+Restaurant, Dessert in Boba, Lock and Key in the Restaurant (its bar upgrade), the Mall in Lock and Key. Other rooms open as before. Opening times live in `S.story.open`; rooms a save already has count as
 opened long ago.
 
 **Level gates** (Cal: "Once you get to lvl 20, you can wear a second accessory. At lvl 40, the option to wear face cosmetics"): a

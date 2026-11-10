@@ -181,7 +181,10 @@ profileHtml=function(){var h=econProfBase(),i=h.indexOf('<section class="card ws
    is: a small piece, a normal one, a big one, or a moment (PRICE_HUGE). This pass sets every room price. */
 var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowers?|rug|curtains?|frames?|prints|clock|sign|garland|neon|lamp|lights?|palm|fern|leaf|trim|plaque)\b/i;
 function econPhase(k){return ECON.phase[k]||1}
-function econKind(k,a){var e=a[3]||{},st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1,base=a[2]/st,T=ROOMT[k]||{};
+/* what each upgrade is, read once from its price before the pass below re-prices it (QA: read afterwards, nearly everything
+   came out "grand", so earn by size was flat) */
+var ECONKIND={},ECONSIZE={};
+function econKind(k,a){if(ECONKIND[k+"|"+a[0]])return ECONKIND[k+"|"+a[0]];var e=a[3]||{},st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1,base=a[2]/st,T=ROOMT[k]||{};
   if(ECON.kindOf[a[0]])return ECON.kindOf[a[0]];if(e.opens)return "opener";if(typeof PRICE_HUGE!=="undefined"&&PRICE_HUGE[a[0]])return "grand";
   /* in a room that earns, decor is what earns nothing (29_prices.js marks it): "Neon Bar" and "Indoor Palm" earn, so they are
      not priced as decor any more; in the Loft the name says */
@@ -195,6 +198,8 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
   return Math.round(p/50)*50}
 function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
 (function(){Object.keys(ADDONS).forEach(function(k){var L=(ADDONS[k]||[]).filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});
+  L.forEach(function(a){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;ECONKIND[k+"|"+a[0]]=econKind(k,a);
+    ECONSIZE[k+"|"+a[0]]=(typeof PRICE_HUGE!=="undefined"&&PRICE_HUGE[a[0]])||a[2]/st});
   L.forEach(function(a,i){var e=a[3]||{};if(e.fixed)return;a[2]=econPrice(k,a,i,L.length)})});
   /* lots on the street, and the Garden's knock-through that opens the Restaurant (it keeps the Restaurant's own price) */
   ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)*econLate(k)/50)*50});
@@ -227,11 +232,12 @@ function rbPct(r){return Math.round(addonsOf(r).reduce(function(s,a){return s+((
 function rbMult(t){return ECON.roomBonusRooms[t]&&typeof r2Rb==="function"?r2Rb():1}
 /* ---- bigger upgrades earn more (Cal, 2026-11-10: "bigger upgrades should give bigger passive buffs. Such as the imax screen should
    definitely start generating more income"): in a room that earns, each earning upgrade's share follows what it is (econKind)
-   by ECON.earnW, and the room's total stays what it was ---- */
-ECON.earnW={decor:1,furniture:1,equipment:2,big:3,grand:5};
+   by ECON.earnW, and the room's total stays what it was. A grand piece also earns by its size: x the square root of its size
+   (before re-pricing) over ECON.earnGrand, so the IMAX Screen (4,000) out-earns the Bigger Screen (1,500) ---- */
+ECON.earnW={decor:1,furniture:1,equipment:2,big:3,grand:5};ECON.earnGrand=1000;
 (function(){Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k];if(!T||!(T.coin||T.food))return;
   var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens});if(L.length<2)return;
-  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){return ECON.earnW[econKind(k,a)]||1}),ws=wt.reduce(function(s,w){return s+w},0);
+  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){var kd=econKind(k,a),sz=ECONSIZE[k+"|"+a[0]]||0;return (ECON.earnW[kd]||1)*(kd==="grand"&&sz>ECON.earnGrand?Math.sqrt(sz/ECON.earnGrand):1)}),ws=wt.reduce(function(s,w){return s+w},0);
   L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,old=Math.round(e.p*100);e.p=np;
     a[4]=String(a[4]||"").replace(new RegExp(" Earns \+"+old+"% here\."),"")+" Earns +"+Math.round(np*100)+"% here."})})})();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
