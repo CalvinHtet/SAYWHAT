@@ -169,10 +169,10 @@ Room upgrades have no level locks (Cal, 2026-11-05): each room shows its next 4,
 **Clothes by quality** (Cal: "A white shirt with a flower on it, should not be the same price as a sexy dress with diamond encrusted
 lacings ... higher shops with better quality clothes should be more expensive"): QA graded every Shop clothing piece from its
 icon, its line and its brand (`docs/qa-2026-11-10/CLOTHING_TIERS.md`; the table is `clothTier` in `29e_tiers.js`). Each tier has
-a band (`ECON.tier`): thrift 100 to 250, standard 250 to 500, premium 600 to 1,200, luxury 1,300 to 2,200, and designer 2,400
-to 3,000 held for a designer brand (no pieces or art yet). Inside its band a piece sits by its slot (`ECON.tierSlot`: a back
-piece highest, then a top, a bottom or shoes, a hat or accessory lowest), its brand (`ECON.tierBrand`: VENOM ROSE +0.25, CHROME
-RAIN +0.2, NICE COCK +0.15 ... KAIMANA -0.15, Basics -0.25) and its old price against its brand's other pieces (`ECON.tierNudge`,
+a band (`ECON.cloth`): thrift 100 to 250, standard 250 to 500, premium 600 to 1,200, luxury 1,300 to 2,200, and designer 2,400
+to 3,000 held for a designer brand (no pieces or art yet). Inside its band a piece sits by its slot (`ECON.clothSlot`: a back
+piece highest, then a top, a bottom or shoes, a hat or accessory lowest), its brand (`ECON.clothBrand`: VENOM ROSE +0.25, CHROME
+RAIN +0.2, NICE COCK +0.15 ... KAIMANA -0.15, Basics -0.25) and its old price against its brand's other pieces (`ECON.clothNudge`,
 at most 0.2 of the band either way). The eye styles (`et_*`) are face options and keep the old rule.
 
 | Tier | Pieces | Now | Before |
