@@ -505,7 +505,7 @@ function wheelHtml(){
      sits centred in its slice (QA, v0.89) */
   var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,e=((c+WHEELROT)%360+360)%360,
       t=e>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(calc(var(--wr) * -.58)) translate(-50%,-50%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(calc(var(--wr) * .58)) translate(-50%,-50%)';
-    return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
+    return '<span style="transform:'+t+'">'+esc(w[1]>0?econScaled(w[1],50).toLocaleString()+" coins":w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
@@ -518,9 +518,9 @@ function spin(){
   var pz=WHEEL[idx]; S.wheel=today();
   if(pz[3]){var it=wheelGift();
     if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (it waits in your Wardrobe for the Closet)")}
-    else{S.coins+=WHEELALL;S.earnedC+=WHEELALL;S.wheelRes=WHEELALL.toLocaleString()+" coins (you own every piece already)"}}
-  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{S.coins+=300;S.earnedC+=300;S.wheelRes="300 coins (freeze slots were full)"}}
-  else{S.coins+=pz[1];S.earnedC+=pz[1];S.wheelRes=pz[0]}
+    else{var wa=econScaled(WHEELALL,50);S.coins+=wa;S.earnedC+=wa;S.wheelRes=wa.toLocaleString()+" coins (you own every piece already)"}}
+  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{var wf=econScaled(300,50);S.coins+=wf;S.earnedC+=wf;S.wheelRes=wf.toLocaleString()+" coins (freeze slots were full)"}}
+  else{var wc=econScaled(pz[1],50);S.coins+=wc;S.earnedC+=wc;S.wheelRes=wc.toLocaleString()+" coins"}
   persist(); spinning=true;
   /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
   var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);

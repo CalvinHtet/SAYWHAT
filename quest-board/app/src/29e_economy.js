@@ -94,9 +94,11 @@ var ECON={
   tier:{decor:200,furniture:325,equipment:500,big:750},
   /* W21: later rooms cost more again, by their phase (x (1 + lateK x (phase - 1))): the Loft as before, the Restaurant about 2.1x,
      the Nightclub about 4.9x, so every upgrade lasts about three months of Cal's routine (econsim) */
-  lateK:1.25,
+  /* w-econ3 (Cal, 2026-11-10: "everything bought around lvl 90 ... reaching level 100 but having 200 upgrades left is severely
+     unbalanced"): the late rooms' multiplier comes down from 1.25 so buying keeps up with levels in the second half */
+  lateK:.8,
   kindOf:{au_proj1:"equipment"},                 /* the plain Digital Projector, so the IMAX one is the clear step up */
-  grandK:.5,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
+  grandK:.6,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
   /* measured (econsim.js, a heavy player): about 3,700 a day in the Loft's first days, 6,000 when the Garden opens, 10,000 at
      the Restaurant, then 13,000 to 15,000 from Boba on, where it levels off; the phases follow that, a bit under it */
   /* SPEC8: Lock and Key opens before Boba and Dessert, so it takes their place in the price phases */
@@ -136,7 +138,16 @@ var ECON={
   plazaAll:["garden","restaurant","skybar","rooftop","boba","dessert"],
   /* the building Goals (SPEC8 part 3): [coins, XP] for a room half upgraded, fully upgraded and a story step; coins x the room's
      phase, paid once on a tap */
-  goal:{half:[400,50],full:[1200,150],story:[300,50]},
+  goal:{half:[400,25],full:[1200,75],story:[300,25]},   /* w-econ3: half the XP, so level 100 does not come sooner */
+  /* w-econ3 (Cal: "im okay with keeping the big purchases to a day's income. only some of them should be that expensive"): each room's
+     big moments (1 or 2) cost about bigDay of a regular player's daily income at the time that room opens (roomDay, measured with
+     econsim); everything else is priced for its tier as before */
+  bigDay:1,
+  roomDay:{gameroom:6500,lair:11500,garden:11500,restaurant:11500,skybar:15500,rooftop:17000,boba:17000,dessert:18500,mall:18500,
+    theater:19000,auditorium:19000,arcade:21000,rhythm:21000,vr:21000,bowling:21000,karaoke:21000,club:22000},
+  bigMoment:{gameroom:["gm_tv80"],lair:["lr_core"],garden:["g_green2"],restaurant:["r_x2"],skybar:["sb_piano"],rooftop:["rf_pool","rf_tub"],
+    boba:["bo_shake"],dessert:["de_soft"],mall:["ml_esc"],theater:["t_wing"],auditorium:["au_imax","au_proj2"],rhythm:["rh_lights"],
+    vr:["vr_wall"],bowling:["bw_lane1"],karaoke:["ka_booth"],club:["cb_vip","cb_floor"]},
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
@@ -147,7 +158,11 @@ function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d
 function dqGoal(){return ECON.dqGoal}
 /* the next Daily Quest chest still closed today ([XP, coins]), or null when all are open */
 function dqNext(){var x=dqXp(),t=ECON.dqTiers;for(var i=0;i<t.length;i++)if(x<t[i][0])return t[i];return null}
-function dqChest(c){return Math.round(c*(1+Math.min(ECON.intMax,stats4().int*ECON.int)))}
+/* w-econ3 (Cal, 2026-11-10: "all quests and sources of income should make sense and scale a bit"): a flat payout grows with level at
+   the rate quest coins do (ECON.coinLv a level); Cal's numbers (the chests' 200 / 400 / 600, the Wheel's slices, Weekly Warrior's
+   3,000, a greeting's 3) are the level-1 values */
+function econScaled(c,step){step=step||10;var L=1;try{L=effLvl()}catch(e){}return Math.max(step>1?step:1,Math.round(c*(1+(ECON.coinLv||.01)*(L-1))/step)*step)}
+function dqChest(c){return Math.round(econScaled(c)*(1+Math.min(ECON.intMax,stats4().int*ECON.int)))}
 function dqXp(){var d=dqState();return Object.keys(S.done||{}).reduce(function(a,k){return a+(+S.done[k]||0)},0)+(d.tx||0)}
 function dqEff(){var x=dqXp(),p=x/ECON.effGoal,e;if(x<=0)return 0;e=p<1?ECON.effFirst+(1-ECON.effFirst)*p:Math.min(ECON.effOver,1+(ECON.effOver-1)*(p-1)/(ECON.hidden-1));return dqState().buff?e*1.1:e}
 function stats4(){if(!S.sp||typeof S.sp!=="object")S.sp={str:0,agi:0,vit:0,int:0};return S.sp}
@@ -193,7 +208,7 @@ function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),sp=sta
   if((d.tier||0)>=T.length||x<T[d.tier||0][0]||document.querySelector("#layer .dqc"))return;
   var k=d.tier||0,c=dqChest(T[k][1]),hid=k>=ECON.dqShown,art=econArt("ui_dq_chest.webp"),g3=null,r="";d.tier=k+1;d.done=1;S.coins+=c;S.earnedC+=c;
   if(hid){g3=chest3Roll();d.hid=1;var tm=gameNow();tm.setDate(tm.getDate()+1);d.hidFor=dstr(tm);
-    if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{S.coins+=300;S.earnedC+=300;r="+300 coins"}}
+    if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{var hc=econScaled(300);S.coins+=hc;S.earnedC+=hc;r="+"+hc.toLocaleString()+" coins"}}
   persist();
   modal('<div class="card box2 dqc"><span class="label">'+(hid?'Hidden chest':k?'Bonus chest':'Daily Quest complete')+'</span>'
     +(hid&&econArt("ui_hidden_quest.webp")?'<img class="dq-hid" src="'+econArt("ui_hidden_quest.webp")+'" alt="">':art?'<img class="dg-gift" src="'+art+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>')
@@ -232,7 +247,9 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
 function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
 (function(){Object.keys(ADDONS).forEach(function(k){var L=(ADDONS[k]||[]).filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});
   L.forEach(function(a){ECONKIND[k+"|"+a[0]]=econKind(k,a)});
-  L.forEach(function(a,i){var e=a[3]||{};if(e.fixed)return;a[2]=econPrice(k,a,i,L.length)})});
+  L.forEach(function(a,i){var e=a[3]||{};if(e.fixed)return;a[2]=econPrice(k,a,i,L.length)});
+  /* the room's big moments: about a day of income when the room opens (two of them: the second about two thirds of that) */
+  (ECON.bigMoment[k]||[]).forEach(function(id,j){var a=L.filter(function(x){return x[0]===id})[0];if(a&&ECON.roomDay[k])a[2]=Math.round(ECON.roomDay[k]*ECON.bigDay*(j?.65:1)/50)*50})});
   /* lots on the street, and the Garden's knock-through that opens the Restaurant (it keeps the Restaurant's own price) */
   ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)*econLate(k)/50)*50});
   if(ROOMT.garden)ROOMT.garden.cost=ECON.lotGarden;

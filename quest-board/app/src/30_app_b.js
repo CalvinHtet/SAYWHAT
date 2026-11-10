@@ -325,7 +325,7 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:ECON.wwCoins}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:econScaled(ECON.wwCoins,50)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -341,7 +341,7 @@ function markActive(){
     setTimeout(function(){
       var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
       /* nothing left to give: coins instead, as the Daily Quest chest pays */
-      var pc=pz?0:((typeof ECON!=="undefined"&&ECON.chestNone)||300);
+      var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
       var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
@@ -1480,7 +1480,7 @@ function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.cr
   var pz=freeItem({slots:/^a_/,brands:live,basics:true}),k=["str","agi","vit","int"][L%4];
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
   /* the Shop is open but you own every piece on offer: coins, as the Daily Quest chest pays */
-  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
+  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
   if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
