@@ -10,7 +10,8 @@
    Contract with the Posts feed (another file): hallPostsHtml() returns the feed's HTML and hallPostsMount(), if it exists, runs
    after every draw of the Posts tab. If the feed draws the Town board itself (its HTML holds id="socnb", or it sets
    HALL_POSTS_HAS_BOARD = true), the old board is not added under it. */
-var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"],["style","Style"]],booted:0};
+/* the third tab is labelled Rank (Cal, 2026-11-10: "Change style to Rank"); its id stays "style" for kept sessions */
+var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"],["style","Rank"]],booted:0};
 (function(){try{var t=sessionStorage.getItem("qbHallTab");if(t==="posts"||t==="chat"||t==="style")HTAB.tab=t}catch(e){}})();
 /* the Hall's own CSS goes in from here (as 10_app_a.js and 22_garden.js do), so index.html never clashes with other branches */
 function htabCss(id,css){if(document.getElementById(id))return;var st=document.createElement("style");st.id=id;st.textContent=css;(document.head||document.documentElement).appendChild(st)}
@@ -25,7 +26,7 @@ htabCss("qb-hall-css",
 function htabHallOpen(){try{var a=AREAS.filter(function(x){return x[0]==="hall"})[0];return !!a&&effLvl()>=a[2]&&!areaGate("hall")&&!(typeof areaWaiting==="function"&&areaWaiting("hall"))}catch(e){return false}}
 function htabSet(t){if(!HTAB.tabs.some(function(x){return x[0]===t}))return;HTAB.tab=t;try{sessionStorage.setItem("qbHallTab",t)}catch(e){}}
 function htabBar(){return '<div class="htab" role="tablist" aria-label="Town Hall">'+HTAB.tabs.map(function(x){var on=HTAB.tab===x[0];
-  return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" data-act="htab" data-t="'+x[0]+'">'+x[1]+(x[0]==="chat"?'<i class="tch-dot" aria-label="New messages" hidden></i>':'')+'</button>'}).join("")+'</div>'}
+  return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" data-act="htab" data-t="'+x[0]+'">'+x[1]+(x[0]==="chat"?'<i class="tch-dot" aria-label="New messages" hidden></i>':x[0]==="style"?'<i class="fsh-dot" aria-label="New likes" hidden></i>':'')+'</button>'}).join("")+'</div>'}
 /* Posts: the feed if it is there, the town board (meter and posts) unless the feed already draws it, then the Class Hall */
 function htabPosts(){var ph="";
   if(typeof hallPostsHtml==="function"){try{ph=String(hallPostsHtml()||"")}catch(e){ph='<section class="card panel"><p class="note">Posts could not load right now.</p></section>'}}
@@ -59,9 +60,9 @@ render=function(){var a=document.activeElement,k={};
 function htabShown(t){return view==="hall"&&HTAB.tab===t&&loaded&&S&&S.created&&!ccEdit&&!!document.querySelector(".htab")}
 function htabAfter(k){
   if(htabShown("chat"))tchMounted(k);else TCH.shown=0;
-  if(htabShown("style"))fshMounted();
+  if(htabShown("style"))fshMounted();else FSH.base=null;
   if(htabShown("posts")&&typeof hallPostsMount==="function"){try{hallPostsMount()}catch(e){}}
-  tchSync();tchDot()}
+  tchSync();tchDot();try{fshDot()}catch(e){}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=htab]");if(!b)return;var t=b.dataset.t;
   if(t===HTAB.tab)return;htabSet(t);render();window.scrollTo(0,0)});
 /* the live parts start once the save and the player id are in: likes for everyone (a winner is paid even without opening the
