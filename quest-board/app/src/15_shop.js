@@ -325,13 +325,13 @@ shopHtml=function(){
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
-  var h='<div class="qshop"><header class="qs-top"><div><small>New brands every Monday and Wednesday, a favorite back on Wednesdays</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(gameStart(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  var h='<div class="qshop"><header class="qs-top"><div><small>New brands Mondays and Fridays, 8 am; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(dropStart(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=d.live.filter(function(x){return x.id===shopTab})[0];qsTheme(b);
   if(b){
     h+=qsBanner(b,d);
     /* Cal: a brand back on Wednesday is here for the week only */
-    if(b.back)h+='<p class="qs-note qs-lead">Back for one week only. It leaves '+(function(){var t=gameStart(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
+    if(b.back)h+='<p class="qs-note qs-lead">Back for Wednesday only. It leaves '+(function(){var t=dropStart(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
   }else if(shopTab==="basics"){
     h+='<p class="qs-note qs-lead">The everyday pieces from character creation, sold one at a time.</p>';

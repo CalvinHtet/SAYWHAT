@@ -32,7 +32,7 @@ function dropPlan(rounds){var ids=BRANDS.map(function(b){return b.id}),fx=DROPS.
     row.forEach(function(id,k){out.push({id:id,slot:r*n+k,start:dropSlotDate(r*n+k)})})}
   return out}
 /* one brand every DROPS.every days per player (dropMine below), so the cadence reads in days */
-function dropCadence(){return "every Monday and Wednesday"}
+function dropCadence(){return "Mondays and Fridays at 8 am Pacific"}
 /* the Shop at any moment n, for both modes: live (newest first-dropped last), the retired ones, and the next drop */
 function dropAt(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
   if(!DROPS.on){var rel=BRANDS.filter(function(b){return ptMidnight(b.start)<=n});return {live:rel.slice(-3),vault:rel.slice(0,Math.max(0,rel.length-3)),next:BRANDS.filter(function(b){return ptMidnight(b.start)>n})[0]||null}}
@@ -68,22 +68,27 @@ dropState=function(){var n=dropNow(),d=dropAt(n),bk=dropBack(n);
    schedule the day this first runs, and keeps the brands it already bought from (S.shopKeep) in its Shop: they count as out
    on day one, so the schedule skips them. dropAt above stays the shared calendar (the tester's review list). */
 DROPS.every=3; /* no longer read: the cadence is DROPDAYS below (W20) */
-/* ---------- Monday and Wednesday drops (Cal, 2026-11-10: "The new brand of clothes drop on Monday and Wednesday of each week.") ----------
-   The Shop still opens with HANGANG alone the day the Walk-in Closet is built (S.shopDay). After that the next brand in the shared
-   order drops on every Monday and every Wednesday, at the start of the game day (DAYSTART, 5 am on the phone, like quests and
-   bounties), so a Closet built on a Monday waits for Wednesday. The returning favorite moves to the game day too: it comes back
-   on Wednesday at 5 am and leaves the next Wednesday at 5 am. Once all the brands have dropped, the order starts over (DROPS.rerun):
-   a rerun brand is for sale again but brings no splash or "!", which each brand shows once. */
-var DROPDAYS=[1,3];
+/* ---------- Monday and Friday drops, a Wednesday vault (Cal, 2026-11-10: "change that to every Monday and Friday for the new drops.
+   Wednesday is the wednesday vault where an old brand comes back to town. This only applies after some brands cycle out of rotation
+   ... only 2 active brands at a time ... the wednesday vault would make it 3 active brands. And then other days of the week, the
+   vault dissapears.") ----------
+   The Shop still opens with HANGANG alone the day the Walk-in Closet is built (S.shopDay). The next brand in the shared order drops
+   on each Monday and Friday at 8 am Pacific (DROPHOUR, the same moment for everyone), the first one at least DROPWAIT days after the
+   Closet. Only the DROPS.live (2) newest are for sale. On Wednesday, 8 am to Thursday 8 am Pacific, one retired brand is back: the one
+   out of the Shop longest, so every retired brand returns in turn (dropPick). So 1 brand at first, 2 most days, 3 on a Wednesday.
+   Once all the brands have dropped the order starts over (DROPS.rerun); a rerun brand is for sale again without a second splash. */
+DROPS.live=2;
+var DROPDAYS=[1,5],DROPHOUR=8,DROPWAIT=3;
 function ymdN(ymd){var a=String(ymd).split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/864e5)}
 function ymdOfN(k){return new Date(k*864e5).toISOString().slice(0,10)}
 function ymdWd(k){return (k+4)%7} /* 0 Sunday: day 0, 1970-01-01, was a Thursday */
-function gameYmd(n){return dstr(new Date(n-DAYSTART*36e5))}
-function gameStart(ymd){var a=String(ymd).split("-").map(Number);return new Date(a[0],a[1]-1,a[2],DAYSTART).getTime()}
-/* drop days after from, up to and including to */
-function dropCount(from,to){var a=ymdN(from),b=ymdN(to),c=0;if(!(b>a))return 0;DROPDAYS.forEach(function(w){c+=Math.floor((b+4-w)/7)-Math.floor((a+4-w)/7)});return c}
-/* the dates of the drops 0..k: 0 is the day the Shop opened, then each drop day after it */
-function dropSlotDays(day,k){var out=[day],x=ymdN(day);while(out.length<=k){x++;if(DROPDAYS.indexOf(ymdWd(x))>=0)out.push(ymdOfN(x))}return out}
+/* the drop day a moment falls in (it turns at 8 am Pacific), and the moment a drop day starts */
+function dropYmd(n){return ptYmd(n-DROPHOUR*36e5).ymd}
+function dropStart(ymd){return ptMidnight(ymd)+DROPHOUR*36e5}
+/* drop days counted from the Shop's first day: Mondays and Fridays at least DROPWAIT days after it, up to and including to */
+function dropCount(from,to){var a=ymdN(from)+DROPWAIT-1,b=ymdN(to),c=0;if(!(b>a))return 0;DROPDAYS.forEach(function(w){c+=Math.floor((b+4-w)/7)-Math.floor((a+4-w)/7)});return c}
+/* the dates of the drops 0..k: 0 is the day the Shop opened, then each drop day after the wait */
+function dropSlotDays(day,k){var out=[day],x=ymdN(day)+DROPWAIT-1;while(out.length<=k){x++;if(DROPDAYS.indexOf(ymdWd(x))>=0)out.push(ymdOfN(x))}return out}
 function ymdAdd(ymd,k){var a=ymd.split("-").map(Number);return new Date(Date.UTC(a[0],a[1]-1,a[2]+k)).toISOString().slice(0,10)}
 function ymdDiff(a,b){var p=a.split("-").map(Number),q=b.split("-").map(Number);return Math.round((Date.UTC(q[0],q[1]-1,q[2])-Date.UTC(p[0],p[1]-1,p[2]))/864e5)}
 /* the brand in place j of the order every player shares (null when the brands run out and DROPS.rerun is off) */
@@ -96,14 +101,14 @@ function dropStamp(){try{if(S.shopDay||!loaded||!S.created||!hasRoom("closet"))r
   var ids=BRANDS.map(function(b){return b.id}),first=dropOrderAt(0),keep=[];
   SHOP.forEach(function(x){var b=x[6]&&x[6].b;if(b&&b!==first&&S.owned&&S.owned[x[0]]&&ids.indexOf(b)>=0&&keep.indexOf(b)<0)keep.push(b)});
   keep.sort(function(a,b){return ids.indexOf(a)-ids.indexOf(b)});
-  S.shopDay=gameYmd(dropNow());if(keep.length)S.shopKeep=keep;
+  S.shopDay=dropYmd(dropNow());if(keep.length)S.shopKeep=keep;
   /* a brand seen before this Shop opened, and not in it now, gets its splash and its "!" again when it drops here */
-  var inShop={};[first].concat(keep).forEach(function(id){inShop[id]=1});
+  var inShop={};keep.forEach(function(id){inShop[id]=1}); /* HANGANG too, so its splash shows when the Shop opens (Cal, 2026-11-10) */
   [S.brandSeen,S.alSeen&&S.alSeen.brand].forEach(function(o){if(o&&typeof o==="object")Object.keys(o).forEach(function(id){if(!inShop[id])delete o[id]})});
   persist()}
 /* this player's Shop at moment n: live (oldest first), retired (vault, oldest first) and the next drop */
 function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
-  var today=gameYmd(n),day=S.shopDay||today,keep=(S.shopKeep||[]).filter(function(id){return byId[id]}),nb=BRANDS.length;
+  var today=dropYmd(n),day=S.shopDay||today,keep=(S.shopKeep||[]).filter(function(id){return byId[id]}),nb=BRANDS.length;
   var m=dropCount(day,today),seq=[],days=dropSlotDays(day,m+1);
   for(var j=0;seq.length<m+2;j++){var id=dropOrderAt(j);if(id==null)break;if(j===0||j>=nb||keep.indexOf(id)<0)seq.push(id)}
   var rel=keep.map(function(id){return {id:id,start:day}}).concat(seq.slice(0,m+1).map(function(id,k){return {id:id,start:days[k]}}));
@@ -112,14 +117,16 @@ function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
   for(var i=rel.length-1;i>=0;i--){var e=rel[i];if(seen[e.id])continue;seen[e.id]=1;(live.length<cap?live:vault).unshift(Object.assign({},byId[e.id],{start:e.start}))}
   var nx=seq[m+1];
   return {live:live,vault:vault,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
-/* the Wednesday a moment's favorite came back on, by the game day */
-dropWedOf=function(n){var x=ymdN(gameYmd(n));return ymdOfN(x-(ymdWd(x)-3+7)%7)};
-/* Wednesdays bring back one of this player's own retired brands */
-dropRaw=function(wd){var pool=dropMine(gameStart(wd)).vault;return pool.length?{pool:pool,i:dropHash(DROPS.seed+"|wed|"+wd)%pool.length}:null};
-dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+(S.shopDay||"")+"|"+(S.shopKeep||[]).join(",");if(k in DROPWED)return DROPWED[k];var r=dropRaw(wd),out=null;
-  if(r){var pa=wd.split("-").map(Number),pw=new Date(Date.UTC(pa[0],pa[1]-1,pa[2]-7)).toISOString().slice(0,10),last=dropPick(pw),i=r.i;
-    if(r.pool.length>1&&last&&r.pool[i].id===last.id)i=(i+1)%r.pool.length;out=r.pool[i]}
+/* the brand back on Wednesday wd: of this player's retired brands, the one out of the Shop longest (since its last day for sale or
+   its last Wednesday back). Worked out Wednesday by Wednesday from the Shop's first, so every phone with the same Shop days agrees. */
+dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+(S.shopDay||"")+"|"+(S.shopKeep||[]).join(",");if(k in DROPWED)return DROPWED[k];
+  var x0=ymdN(S.shopDay||wd),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
+  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="";
+    m.vault.forEach(function(b){var since=back[b.id]||b.start;if(!best||since<bs){best=b;bs=since}});
+    if(best)back[best.id]=w;if(x===x1)out=best}
   return DROPWED[k]=out};
+/* Wednesday only: the vault brand, from 8 am Wednesday to 8 am Thursday Pacific */
+dropBack=function(n){var t=dropYmd(n);if(ymdWd(ymdN(t))!==3)return null;var b=dropPick(t);return b?Object.assign({},b,{back:1,backFrom:t,backUntil:ymdAdd(t,1)}):null};
 dropState=function(){var n=dropNow();dropStamp();var d=dropMine(n),bk=dropBack(n);
   if(bk&&!d.live.some(function(x){return x.id===bk.id}))d.live=[bk].concat(d.live);
   return {n:n,live:d.live,vault:[],next:d.next,back:bk}};
@@ -129,4 +136,4 @@ setInterval(function(){try{if(!loaded||!S.created||document.hidden||areaGate("sh
   if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;if(document.querySelector("#layer .modal,.bsplash,.dropsplash,.modal.qbsv"))return;
   var seen=S.brandSeen||{};if(dropState().live.some(function(b){return !seen[b.id]}))brandCheck()}catch(e){}},2500);
 /* test hook, removed at release with window.__qb */
-window.__qbDrops={count:dropCount,days:dropSlotDays,gameYmd:function(t){return gameYmd(t==null?dropNow():t)},back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};
+window.__qbDrops={count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};

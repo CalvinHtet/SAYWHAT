@@ -32,6 +32,9 @@ function brandSplash(b){var picks=brandPicks(b);
   var art=window.QBART&&(QBART["ui_banner_"+b.id+"_p.webp"]||QBART["ui_banner_"+b.id+".webp"]);
   var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">NOW ON SALE</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
   return m}
-/* the newest live brand this player has not been shown yet */
+/* the oldest live brand this player has not been shown yet, one at a time (Cal, 2026-11-10: "We are also not seeing the hangang splash
+   screen for the first clothing drop": it showed only the newest and marked them all seen); brands carried over from before the
+   Shop schedule (S.shopKeep) count as seen */
 function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;
-  live.forEach(function(b){S.brandSeen[b.id]=1});persist();brandSplash(fresh[fresh.length-1])}
+  (S.shopKeep||[]).forEach(function(id){S.brandSeen[id]=1});fresh=fresh.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length){persist();return}
+  S.brandSeen[fresh[0].id]=1;persist();brandSplash(fresh[0])}
