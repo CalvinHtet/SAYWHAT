@@ -33,6 +33,12 @@ relic shard, an ally, clothes) at least every 4th crawl; `dngClaim`/`dngHtml` in
 energy. Daily Quest: chests at 150/200/250/300 XP. The Calibur Mall is held closed in Live builds until Cal reviews it
 (`MALLHOLD`, `29b_story.js`). The Auditorium projector waits on a back-view sprite from ROOMS (TASKS.md).
 
+v0.88 (Windows session, 2026-11-09, on qa-local; details in `docs/WINDOWS_HANDOFF_2026-11-09.md`): your own workouts in Training
+(`cex*` in `30_app_b.js`: gym plans fold, an activity is sorted by Claude into a plan with its own unit), kind words for coins (the +
+by the coin count, `29v_kudos.js`: only Cal approves, 1,500 a day at most, approved notes pinned in the Hall) and challenges with a
+coin pot (`29w_duel.js`, Hall, Posts). The last two need `firestore:rules` deployed (kudos, kudosok, duel). No coaches in Training,
+no zoom (page or room view), the Hall opens with The Loft, HANGANG alone first then one brand every 3 days per player.
+
 Rooftop and Mall rebuilt (2026-11-08, Cal approved; d35c90d). Rooftop: dark deck `rfw_t1`, cut to a 14 px kerb, glass rail on every side. Mall: 16 x 12, 210 high walls, `mlw_t1` holds the upper level, new `mlx_lift`; `MLBACK` and `MLLEFT` are the painted shop units, so a new shell must keep them. Victor's hair is `fr_victor_hair` (d7d318c), not in `hairStyles` on purpose. GPT Image 2 is no longer Unlimited on Cal's Higgsfield; Nano Banana Pro is.
 
 Done: flat prices, three buildings, shop and dungeon gates, 5 missions a day, dogs with poop and clean up,

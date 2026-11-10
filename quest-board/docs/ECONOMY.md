@@ -39,7 +39,9 @@ routine (10 chores, the gym with a photo and a Training session on weekdays) rea
 | Wheel (level 6+) | about 230 a day |
 | Trophies | 250 each |
 | Weekly workout bonus | at least 250 XP and 3,000 coins (Cal) |
-| Training | 300 coins a full session |
+| Training | 300 coins a full session (a plan of your own done in full counts as full) |
+| Kind words for Cal (the + by the coins) | 500, 1,000 or 1,500 when Cal approves the note; one note a game day, at most 1,500 a day (`KD` in `29v_kudos.js`). Only Cal's account can approve (firestore.rules) |
+| Challenges (Town Hall, Posts) | none made: both players stake 100 to 2,500, the winner takes both, a tie or a cancelled, declined or unanswered challenge gives the stakes back (`29w_duel.js`). Coins only move between players |
 
 **What a day earns** (measured, `econsim.js`, coins a day without level-ups and one-off trophies): the regular player (12 tasks,
 200 listed XP) about 3,000 to 4,500 in the first days, 6,000 when the Garden opens, 9,000 to 10,000 at the Restaurant, then 11,000

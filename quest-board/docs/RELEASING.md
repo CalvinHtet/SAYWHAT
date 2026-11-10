@@ -90,7 +90,7 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   database and one save per player, so always deploy the same build to both, and never a different QB_EPOCH to either: an older number
   treats the new saves as empty and overwrites them. **Cal plays on the Test channel link: it is a real link, never make it anything
   else.** Do not bump QB_EPOCH again unless Cal asks; a bump also needs `board`, `pings` and `worlds` cleared, and for a clean Town
-  Hall `chat`, `chatnow` and `likes` (`firestore:delete <name> --recursive --force`). A save from before a reset goes to
+  Hall `chat`, `chatnow` and `likes`, from v0.88 also `kudos`, `kudosok` and `duel` (`firestore:delete <name> --recursive --force`). A save from before a reset goes to
   `data/users/<id>/backup_e<epoch>`. A rollback build must carry the same QB_EPOCH as the saves it should keep (rollback-v0.80 does).
 - **Sandbox (Cal, 2026-11-08: "test all the upgrades without it overwriting my personal save"):** the Hosting channel `sandbox`, built
   from main with `QB_TARGET=web QB_SANDBOX=1 python3 tools/build.py`, then `hosting:channel:deploy sandbox --expires 30d`. Its database

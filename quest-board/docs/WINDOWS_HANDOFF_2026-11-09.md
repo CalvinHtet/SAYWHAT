@@ -50,20 +50,45 @@ travel as a git bundle zip that Cal emails to his Mac (see "Shipping" below).
    home. QA's sim.js, riftlive.js and team.js still drive missions (request in TASKS.md).
 2. **Shop** (branch `shop-ui`, commit 0344b46, WIP from a stopped helper, untested; based on v0.84, so rebase onto qa-local).
    Cal: (a) "There should only be one new clothing drop every 3 days ... only show Hangang splash screen as soon as we
-   unlock the walk in closet" (decided: per player; HANGANG first when the Closet is built, then one brand every 3 days
-   from that day, same order for everyone); (b) Upgrades and Interface move out of the Shop into "The System", a toggle
-   next to "The Shop" title that appears once the Hero's Lair is built; (c) no Wardrobe tab: a Wardrobe button next to the
-   character on the clothing tabs. Files: 15_shop.js, 29l_drops.js, 27_rooms.js, index.html.
-3. **Training** (partly done, v0.87). Done: Sgt. Brick removed; each set keeps the weight it was done with and shows last
+   unlock the walk in closet": DONE in v0.88 (397b92e, the schedule taken from shop-ui into 29l_drops.js: per player, HANGANG
+   alone with its splash when the Closet is built, then one brand every 3 days from that day, same order for everyone);
+   (b) Upgrades and Interface move out of the Shop into "The System", a toggle next to "The Shop" title that appears once the
+   Hero's Lair is built: NOT DONE; (c) no Wardrobe tab: a Wardrobe button next to the character on the clothing tabs: NOT DONE.
+   Files: 15_shop.js, 27_rooms.js, index.html.
+3. **Training** (v0.87 and v0.88). Done: Sgt. Brick removed, then every coach out of the Training view (Cal: "Remove all the
+   coaches in the training view. it is just too much clutter"); each set keeps the weight it was done with and shows last
    time's weight per set; supersets are one card and one guided screen; a summary after Finish with the last 7 sessions of
-   that day; no "Scheduled today" border (Cal, 2026-11-09). Still to do: Cal: "I would like the option to edit the workouts to
-   whatever we want. And get rid of seargent brick." Edit any plan (remove/add/reorder exercises, sets and reps), make a custom named workout with free-text
-   exercises, reset to default; remove COACHES id "brick" (30_app_b.js, ~line 431) with saves on "brick" falling back to
-   another coach. Keep econTrainXp / econTrained rewards working.
+   that day; no "Scheduled today" border; your own workouts (v0.88, below). Still open from an older ask ("I would like the
+   option to edit the workouts to whatever we want"): editing the gym plans themselves (remove/add/reorder exercises, sets and
+   reps, reset to default).
+
+## v0.87 and v0.88 (2026-11-09, later)
+- v0.87 (Cal published it, 40910d9): Training sets with weights, supersets on one card, the summary; trial photo with no
+  timestamp; Board: Clear completed, a Daily switch per quest, the game's day starts at 5 am.
+- v0.88 (qa-local, in the v0.88 zip): the class picker's text wraps on a phone; no page zoom on the main screens and no zoom in
+  the room view (it lagged; `LFRZOOM` in 20_loft.js); no coaches in Training; the Hall opens with The Loft; level-ups mention
+  the Shop only once it is open and count only interface items and permanent upgrades (`SHOPLV`, brand clothes come with
+  their drop); the Shop schedule above.
+- v0.88 your own workouts (Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their
+  own such as running, going for a walk, etc. And AI would sort that into a plan"): `cex*` in 30_app_b.js. Gym plans fold
+  (S.gymFold); an activity typed in is sorted by Claude (keywords without it, as in the sandbox) into a plan with a unit (mi,
+  km, min, reps, laps, floors, steps, lb), rounds and a step; it logs, remembers, charts and pays XP like the gym.
+- v0.88 kind words for coins (Cal: "1500 coins max per day, they can write me a very nice message and it gets pinned to the town
+  hall. If me and ONLY me approves it"): `29v_kudos.js`, the + by the coin count. Notes in kudos/<id>, Cal's answers in
+  kudosok/<id> (only the owner may write those), the writer's game pays itself once, 1,500 a day at most; approved notes pinned at
+  the top of the Hall's Posts.
+- v0.88 challenges (Cal: "challenge someone to a productivity or fitness challenge ... the winner"): `29w_duel.js`, Hall, Posts.
+  Most quest XP or Training XP in 1, 3 or 7 days, stakes 100 to 2,500 each, the winner takes the pot. Each player writes only
+  duel/<id>; scores come from a timed log (S.dlog) so only XP inside the window counts.
+- Needs `firestore:rules` deployed (kudos, kudosok, duel), in the v0.88 README.
+- Tested in the sandbox (headless Chrome, 390x844): custom workouts end to end; kind words both sides, paid once, day cap;
+  challenges won, lost, declined, cancelled, unanswered, duplicate and coin guards, the other player played by writing their
+  docs. Not tested: two real accounts on real Firestore, the rules themselves (no emulator here), a real phone. Honest limit: a
+  player who edits their own duel doc can fake a score; fine among friends, not cheat-proof.
 
 ## Open questions for Cal
 - Weekly Warrior counts only photo-proven workouts. Keep?
-- The other eight coaches: keep, trim, or drop the coach feature?
+- Interface items and permanent upgrades still unlock by level (brand clothes do not). Keep that?
 
 ## Known open problems (from the QA reports)
 - About 17 MB before the first draw (blobs.js holds 675 room sprites, 14 MB); slow first open on phones.
@@ -86,6 +111,10 @@ travel as a git bundle zip that Cal emails to his Mac (see "Shipping" below).
   out/econ_<type>.json. q.js attaches to the first open page, so never run q.js while a sim runs (it will drive the sim's tab).
 
 ## Shipping (push is blocked here)
+Since v0.85 each release is a zip on this laptop's local Desktop (not the OneDrive one): `git bundle create` of qa-local and
+rollback-v0.80 `--not` what Cal already pushed (`git fetch origin` first), patches and a README with every Mac command. The rollback
+build is renumbered one above each release (89 for v0.88) so it keeps the newest saves. The older notes below are from before.
+
 `git bundle create saywhat.bundle main qa-local --not origin/main origin/release/live-7fd8c97` (after `git fetch origin`),
 plus `git format-patch` copies, zipped with a README for the Mac. On the Mac: fetch the bundle into branches, deploy
 firestore.rules once (Town Hall chat and likes), then `git push origin qa-local:refs/heads/live` (the "Live at 4 am"

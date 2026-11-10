@@ -3534,6 +3534,9 @@ To do:
 
 ## Done (latest first, keep about ten)
 
+- 2026-11-09 v0.88 on qa-local (Windows): your own workouts, kind words for coins, challenges with a coin pot, no coaches in
+  Training, no zoom, Hall with The Loft, per-player brand schedule. Rules change: kudos, kudosok, duel. See WINDOWS_HANDOFF_2026-11-09.md.
+- 2026-11-09 v0.87 published by Cal (40910d9): Training weights per set, supersets, summary; Clear completed, Daily switch, 5 am day.
 - 2026-11-05 New roles: LEAD (board, app code, publishing) and ROOMS (all art, room code). See `TEAMWORK.md`.
 - 2026-11-05 The Loft fills the phone screen: Cal confirmed on his phone (v43).
 - 2026-11-05 Phone picks up new versions: Cal saw v42 in the header on his phone.
