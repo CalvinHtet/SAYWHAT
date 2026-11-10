@@ -43,7 +43,7 @@ var TH_UPS=[
  ["t_st2","Concession Staff",5000,{p:.25,lv:31,g:"Staff",also:"t_ctr"},"Someone behind the counter."],
  ["t_st3","Hire a Bartender",7000,{p:.25,lv:39,g:"Staff",also:"t_bar"},"Knows your usual."],
  /* the building */
- ["t_aud","Open the Auditorium",15000,{p:.5,lv:25,g:"Expansion",opens:"auditorium",splash:"You can finally see what is behind the double doors. The Auditorium is now a room of its own, with its own upgrades: seats, projector, walls, floors and, one day, an IMAX screen."},"Builds the room behind the double doors."],
+ ["t_aud","Open the Auditorium",15000,{p:.5,lv:25,g:"Expansion",opens:"auditorium",splash:"You can finally see what is behind the double doors. The Auditorium is now a room of its own, with its own upgrades: seats, projector, walls and floors."},"Builds the room behind the double doors."],
  ["t_wing","Expand the Lobby",12000,{p:.4,cap:2,lv:34,g:"Expansion",splash:"The lobby is much bigger now, with room for a bar and a longer line."},"A bigger lobby, a longer line and room for a bar."]
 ];
 TH_UPS.sort(function(a,b){return (a[3].lv-b[3].lv)||(a[2]-b[2])});
