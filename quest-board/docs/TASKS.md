@@ -73,7 +73,7 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W45 | Economy scaling (Cal): EVERYTHING BOUGHT AROUND LEVEL 90 + BALANCE: % bought tracks level / 90 at every stage, never level 100 with upgrades left (Cal 14:37); (Cal 14:35: more brands and pets coming later); "big purchases to a day's income ... only some of them"; others priced for their tier; the wheel's prize pool scales with level; "all quests and sources of income should make sense and scale a bit" | BUILDER | w-econ3 (with or after w-focus) | TODO (v0.91, high) |
 | W46 | Permanent upgrades and interface priced by payback (Cal: "Merchant seal ... 1500? That seems way too cheap for a permanent buff") | BUILDER | w-econ3 | TODO (v0.91) |
 | W47 | Shop header: Wardrobe button on top; coins, + and envelope top right; "The Shop" top left over "NEW BRANDS MON AND FRI 8 AM"; no "old favorite" text; a Wednesday vault splash; the vault starts after 6 shops in rotation | BUILDER | w-shopui | TODO (v0.91) |
-| W48 | Upgrades and Interface appear only after the Lair's big screen; a button on that screen opens those Shop tabs | BUILDER | w-system | TODO (v0.91) |
+| W48 | Upgrades and Interface appear only after the Lair's big screen; a button on that screen opens those Shop tabs | BUILDER | w-system | TODO (v0.91, IN the priority cut) |
 | W49 | Chat like Discord: a round face avatar left of the name; consecutive messages under one header | BUILDER | w-chat2 | TODO (v0.91) |
 | W50 | Town Hall colours from its banner picture (Cal again; W14 first part) | BUILDER | w-colors | TODO (v0.91) |
 | W51 | Unlocks by % of the previous room (Cal 15:05, replaces SPEC8's focus rule): Bedroom 30/50/70% for Closet/Patio/Game Room; Loft 60% for the Garden; a Garden earnings goal for the Restaurant; Noir for the bar; bar 75% for Boba; Boba 60% for Dessert; Plaza 60% for the Mall; Mall 30% for the Theater; the same through the Calibur Mall | BUILDER | w-unlock (on w-econ3) | TODO (v0.91, top) |
@@ -82,6 +82,8 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W54 | Weekly Town Boss (SPEC10 part 1): HP by active players, damage from quest + Training XP, art phases on the Town Hall picture, a win chest or a light penalty; 6 pictures per boss from the Mac | BUILDER | w-boss | LATER (v0.93+) |
 | W55 | Friends visit your businesses (SPEC10 part 2): real players in their outfits with name labels, a note, small capped tips | BUILDER | w-visitors | LATER (v0.93+) |
 | W56 | Purchase sounds for everyone (Cal: "a cash or coin sound"), synthesized, with an on/off switch | BUILDER | w-sound | LOW (v0.93) |
+| W57 | Hall: green online dot next to other players' names, plus their streak | BUILDER | (v0.92) | TODO |
+| W58 | Board sorted shortest task first (an estimated minutes value per quest) | BUILDER | (v0.92) | TODO |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
