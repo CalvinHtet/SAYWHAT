@@ -1,9 +1,13 @@
 <style>@keyframes qbsh{0%{background-position:200% 0}100%{background-position:-200% 0}}#qbloadbar{background-size:200% 100%!important;animation:qbsh 1.6s linear infinite}@media (prefers-reduced-motion:reduce){#qbloadbar{animation:none}}</style>
-<div id="qbload" role="status" aria-live="polite" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg)"><div style="width:min(300px,78vw);text-align:center"><div class="label">Quest Board</div><div style="margin:14px 0 8px;height:6px;border-radius:3px;background:var(--surface2);overflow:hidden"><i id="qbloadbar" style="display:block;height:100%;width:12%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),#fff6,var(--accent2),var(--accent));transition:width .25s"></i></div><small id="qbloadtx" class="mono" style="color:var(--muted)">Loading</small></div></div>
+<div id="qbload" role="status" aria-live="polite" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg)"><div style="width:min(300px,78vw);text-align:center"><div class="label" id="qbloadlb">Quest Board</div><div style="margin:14px 0 8px;height:6px;border-radius:3px;background:var(--surface2);overflow:hidden"><i id="qbloadbar" style="display:block;height:100%;width:12%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),#fff6,var(--accent2),var(--accent));transition:width .25s"></i></div><small id="qbloadtx" class="mono" style="color:var(--muted)">Loading</small></div></div>
 <script>/* LEAD: the game's scripts as ordinary script tags, run in order (async=false), with a bar that fills as each file lands.
-   Built by tools/build.py from app/loader.html. Plain tags keep the browser's own caching: a reload in the same tab is quick. */
+   Built by tools/build.py from app/loader.html. Plain tags keep the browser's own caching: a reload in the same tab is quick.
+   SPEC7 (Cal, 2026-11-10: "a visual loading bar that counts the kb downloaded with a forward slash in between and the total size"):
+   when the service worker runs the page and its copy lacks some of these files (a new version), they come down first, through the
+   worker, which keeps them, counting bytes ("Installing update", "286 KB / 850 KB downloaded"); the tags then run from that copy.
+   A start with every file already here goes straight on. */
 (function(){
-  var F=/*FILES*/[],box=document.getElementById("qbload"),bar=document.getElementById("qbloadbar"),tx=document.getElementById("qbloadtx");
+  var F=/*FILES*/[],box=document.getElementById("qbload"),bar=document.getElementById("qbloadbar"),tx=document.getElementById("qbloadtx"),lb=document.getElementById("qbloadlb");
   var tot=F.reduce(function(a,f){return a+f[1]},0),got={},ran=0;
   var mb=function(n){return (n/1048576).toFixed(n<10485760?1:0)};
   var paint=function(){var g=0;for(var k in got)g+=got[k];var f=Math.min(1,g/tot);bar.style.width=Math.max(g?4:12,Math.round(f*100))+"%";
@@ -13,7 +17,29 @@
   try{new PerformanceObserver(function(l){l.getEntries().forEach(function(e){var i=abs.indexOf(e.name);if(i>=0)land(i)})}).observe({type:"resource",buffered:true})}catch(e){}
   window.__qbLoad={shown:performance.now()};
   var done=function(){window.__qbLoad.ready=performance.now();bar.style.width="100%";setTimeout(function(){if(box&&box.parentNode)box.parentNode.removeChild(box)},60)};
-  F.forEach(function(f,i){var s=document.createElement("script");s.src=f[0];s.async=false;
+  var start=function(){if(window.__qbLoad.install)paint=function(){bar.style.width="100%";tx.textContent="Starting"};F.forEach(function(f,i){var s=document.createElement("script");s.src=f[0];s.async=false;
     s.onload=s.onerror=function(){land(i);if(++ran>=F.length)done()};document.body.appendChild(s)});
-  paint();
+    paint()};
+  var sw=navigator.serviceWorker&&navigator.serviceWorker.controller;
+  if(!sw||!window.caches||!F.length){start();return}
+  /* the copy is checked for at most 2 s, and a download that stops for 20 s gives way to the plain tags */
+  var went=false,go=function(){if(went)return;went=true;clearTimeout(t);start()},t=setTimeout(go,2000),
+    stall=function(){clearTimeout(t);t=setTimeout(go,20000)};
+  var kb=function(n){return n<999500?Math.round(n/1e3).toLocaleString()+" KB":(n/1e6).toFixed(1)+" MB"};
+  caches.open("qb-files").then(function(k){return Promise.all(abs.map(function(u){return k.match(u)})).then(function(hits){
+    if(went)return;
+    var miss=[],need=0,known=true,have=0;hits.forEach(function(h,i){if(h)return;miss.push(i);if(F[i][1]>0)need+=F[i][1];else known=false});
+    if(!miss.length){go();return}
+    window.__qbLoad.install=miss.length;stall();
+    if(lb)lb.textContent=miss.length<F.length?"Installing update":"Loading";
+    var show=function(){bar.style.width=(known&&need?Math.max(2,Math.min(100,have/need*100)):Math.min(95,2+have/1e5)).toFixed(1)+"%";
+      tx.textContent=(known&&need?kb(have)+" / "+kb(need):kb(have))+" downloaded"};
+    var one=function(i){return fetch(abs[i]).then(function(r){var rd=r.body&&r.body.getReader?r.body.getReader():null;
+      if(!rd)return r.blob().then(function(b){have+=b.size;show()});
+      var pump=function(){return rd.read().then(function(x){if(x.done)return;have+=x.value.length;stall();show();return pump()})};return pump()})};
+    var q=miss.slice(),run=function(){var i=q.shift();return i==null?null:one(i).then(run)};
+    /* a moment for the worker to finish keeping the last file, so the tags find every one */
+    var kept=function(){var t0=Date.now();return new Promise(function(ok){(function poll(){Promise.all(miss.map(function(i){return k.match(abs[i])}))
+      .then(function(h){if(h.every(Boolean)||Date.now()-t0>3000)ok();else setTimeout(poll,150)},ok)})()})};
+    show();return Promise.all([run(),run()]).then(kept).then(go,go)})}).catch(go);
 })();</script>

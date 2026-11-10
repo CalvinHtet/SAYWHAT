@@ -31,7 +31,7 @@ function ibIcon(){return '<svg viewBox="0 0 24 24" width="16" height="16" aria-h
 function ibBtn(){if(!loaded||!S||!S.created)return "";var n=ibUnread();
   return '<button class="ibbtn" data-ib="list" aria-label="Inbox'+(n?', '+n+' unread':'')+'">'+ibIcon()+(n?'<i>'+n+'</i>':'')+'</button>'}
 /* the count on the envelope, redrawn in place */
-function ibPaint(){[].forEach.call(document.querySelectorAll(".ibbtn"),function(b){var tmp=document.createElement("div");tmp.innerHTML=ibBtn();if(tmp.firstElementChild)b.replaceWith(tmp.firstElementChild)})}
+function ibPaint(){[].forEach.call(document.querySelectorAll(".ibbtn"),function(b){var tmp=document.createElement("div");tmp.innerHTML=ibBtn();var nb=tmp.querySelector(".ibbtn");if(nb)b.replaceWith(nb)})}
 function ibListHtml(){var I=ibState(),L=ibAll();
   return '<div class="card box2 ibox"><span class="label">Inbox</span><h2>Letters</h2>'
     +(L.length?'<div class="iblist">'+L.map(function(l){var un=ibNew(l);

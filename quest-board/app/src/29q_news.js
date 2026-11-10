@@ -24,25 +24,83 @@ function welcomeOnce(){
   S.welcomed=1;I.popped=1;persist();ibOpen("welcome");
 }
 
-var UPDT=0,UPDK="qbUpd";
+
+/* ---------- updates (SPEC7, Cal 2026-11-10: "if someone is playing on it while a new update is pushed, it can say New update
+   available, Refresh? or Later. If choosing later, there will be a notification on the top right of a green exclamation point
+   which will open the refresh splash screen again ... a visual loading bar that counts the kb downloaded with a forward slash in
+   between and the total size") ----------
+   version.json is {appv, files: [[name?h=fingerprint, bytes], ...]}, the same shape from tools/build.py and build_web.sh. The
+   window waits until nothing else is open (a photo check, a purchase, a chest, a text field). Later leaves a green "!" by the
+   envelope. Refresh downloads the files this phone's copy lacks (by fingerprint) itself, counting the bytes; the service worker
+   (web/sw.js) keeps them, so the reload after is quick. A cold start does the same in the loader (app/loader.html). */
+var UPDT=0,UPDK="qbUpd",UPDLATER=0,UPDWAIT=0,UPDINFO=null;
 function updCheck(){
   if(!loaded||Date.now()-UPDT<60000)return;UPDT=Date.now();
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(j){
-    var v=j&&+j.appv;if(v&&v>APPV)showUpdate(v);
+    var v=j&&+j.appv;if(!v||v<=APPV)return;UPDINFO=j;
+    if(UPDLATER>=v){updPaint();return}updOffer(v);
   }).catch(function(){}); /* the Claude build has no version.json; offline is fine too */
 }
+/* something the player is in the middle of: any window, a splash, or typing */
+function updBusy(){var a=document.activeElement;return !!(document.querySelector("#layer .modal,.bsplash,.dropsplash")||(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))||window.__qbPendN>0)}
+function updOffer(v){clearTimeout(UPDWAIT);if(document.querySelector("#layer .modal .upd"))return;
+  if(updBusy()){UPDWAIT=setTimeout(function(){updOffer(v)},3000);return}showUpdate(v)}
 function showUpdate(v,still){
   if(document.querySelector("#layer .modal .upd"))return;
-  modal('<div class="card box2 upd"><span class="label">Update</span><h2>New Update!</h2>'
-   +'<p class="note">Version <b>v0.'+v+'</b> is out. You&rsquo;re on v0.'+APPV+'.</p>'
-   +(still?'<p class="note">The update hasn&rsquo;t reached this phone yet. Give it a minute and tap Refresh again.</p>':'<p class="note">Your progress is saved. Refresh to get it.</p>')
-   +'<div class="btns"><button class="btn" data-act="updnow" data-v="'+v+'">Refresh</button></div></div>');
+  modal('<div class="card box2 upd"><span class="label">Update</span><h2>New update available</h2>'
+   +'<p class="note">Version <b>v0.'+v+'</b> is ready. You&rsquo;re on v0.'+APPV+'.</p>'
+   +(still?'<p class="note">The update hasn&rsquo;t reached this phone yet. Give it a minute and tap Refresh again.</p>':'<p class="note">Your progress is saved.</p>')
+   +'<div class="btns"><button class="btn" data-upd="now" data-v="'+v+'">Refresh</button><button class="btn ghost" data-upd="later" data-v="'+v+'">Later</button></div></div>');
 }
+/* the green "!" by the envelope while an update waits (ibBtn draws it, so it is wherever the envelope is) */
+function updBtn(){return UPDLATER>APPV?'<button class="updbtn" data-upd="open" aria-label="Update v0.'+UPDLATER+' is ready">!</button>':''}
+var updIbBase=ibBtn;ibBtn=function(){return updIbBase()?updBtn()+updIbBase():""};
+function updPaint(){try{render()}catch(e){}}
+function updLater(v){UPDLATER=Math.max(UPDLATER,v);closeModals();updPaint()}
 function updNow(v){
   try{sessionStorage.setItem(UPDK,String(v))}catch(e){}
   try{persist()}catch(e){}
   setTimeout(function(){location.reload()},400); /* a moment for the save to leave */
 }
+/* 286 KB / 850 KB: KB under 1,000 of them, MB above */
+function updFmt(n){return n<999500?Math.round(n/1e3).toLocaleString()+" KB":(n/1e6).toFixed(1)+" MB"}
+/* Refresh: fetch what this phone lacks, two files at a time, counting bytes as they arrive, then reload. Without the cache API or
+   a file list it just reloads. With the service worker in charge the worker keeps each file as it passes; without it, the page
+   keeps them in the same cache. */
+function updInstall(v){
+  closeModals();
+  var m=modal('<div class="card box2 upd"><span class="label">Update</span><h2>Installing update</h2><div class="updbar"><i style="width:2%"></i></div><p class="note mono updtx">Checking what is new</p></div>');
+  var bar=m&&m.querySelector(".updbar i"),tx=m&&m.querySelector(".updtx"),fin=false,
+    done=function(){if(fin)return;fin=true;if(tx)tx.textContent="Restarting";if(bar)bar.style.width="100%";updNow(v)};
+  if(m)m.classList.add("updmodal");
+  var files=UPDINFO&&+UPDINFO.appv===v?Promise.resolve(UPDINFO):fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null});
+  files.then(function(j){var F=j&&Array.isArray(j.files)?j.files:null;if(!F||!F.length||!window.caches){done();return}
+    var ctl=navigator.serviceWorker&&navigator.serviceWorker.controller;
+    return caches.open("qb-files").then(function(k){
+      var abs=F.map(function(f){return new URL(f[0],location.href).href});
+      return Promise.all(abs.map(function(u){return k.match(u)})).then(function(hits){
+        var miss=[],tot=0,known=true,got=0;hits.forEach(function(h,i){if(!h){miss.push(i);if(+F[i][1]>0)tot+=+F[i][1];else known=false}});
+        if(!miss.length){done();return}
+        var paint=function(){if(bar)bar.style.width=(known&&tot?Math.max(2,Math.min(100,got/tot*100)):Math.min(95,2+got/1e5)).toFixed(1)+"%";
+          if(tx)tx.textContent=(known&&tot?updFmt(got)+" / "+updFmt(tot):updFmt(got))+" downloaded"};
+        var one=function(i){var u=abs[i];return fetch(u).then(function(r){if(!r.ok)throw new Error("http "+r.status);
+          var ct=r.headers.get("content-type")||"",rd=r.body&&r.body.getReader?r.body.getReader():null,parts=[];
+          var keep=function(b){return ctl?null:k.put(u,new Response(b,{headers:{"Content-Type":ct}}))};
+          if(!rd)return r.blob().then(function(b){got+=b.size;paint();return keep(b)});
+          var pump=function(){return rd.read().then(function(x){if(x.done)return keep(new Blob(parts,{type:ct}));got+=x.value.length;if(!ctl)parts.push(x.value);paint();return pump()})};
+          return pump()})};
+        var q=miss.slice(),run=function(){var i=q.shift();return i==null?null:one(i).then(run)};
+        paint();
+        /* then a moment for the worker to finish keeping the last file, so the reload finds every one */
+        return Promise.all([run(),run()]).then(function(){return updCached(k,miss.map(function(i){return abs[i]}),3000)})})})
+  }).then(done,done);
+}
+function updCached(k,urls,ms){var t0=Date.now();return new Promise(function(ok){(function poll(){
+  Promise.all(urls.map(function(u){return k.match(u)})).then(function(h){if(h.every(Boolean)||Date.now()-t0>ms)ok();else setTimeout(poll,150)},ok)})()})}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-upd]");if(!b)return;var k=b.dataset.upd,v=+b.dataset.v||UPDLATER;
+  if(k==="now"){updInstall(v);return}
+  if(k==="later"){updLater(v);return}
+  if(k==="open"){showUpdate(UPDLATER);return}});
 /* after a Refresh: did it work? */
 function updAfterReload(){
   var want=0;try{want=+sessionStorage.getItem(UPDK)||0}catch(e){}
@@ -51,6 +109,27 @@ function updAfterReload(){
     modal('<div class="card box2 upd"><span class="label">Update</span><h2>You&rsquo;re up to date</h2><p class="note">Now on <b>v0.'+APPV+'</b>.</p><div class="btns"><button class="btn" data-act="mclose">Nice</button></div></div>')}
   else showUpdate(want,true);
 }
+
+/* ---------- patch notes (SPEC7, Cal: "with each push, if it is worth including in the patch notes for the players, you could include
+   a very very simple version of what changed and give a 200 coin bonus for opening the patch notes letter") ----------
+   One letter from Cal per release in PATCHNOTES ({v, lines}: 3 to 5 short plain lines; a release with nothing for players has
+   none, and one with no lines yet stays hidden). Opening it pays PNCOINS (200) once (S.letters.paid). A player who skipped
+   versions gets each missed letter, with coins on the newest 3 only. S.pn.from is the version a save last ran before it first
+   saw patch notes: a new player gets the letters of later releases only. */
+var PATCHNOTES=[
+  {v:90,lines:[]}  /* LEAD writes v0.90's lines */
+];
+var PNCOINS=200;
+function pnFrom(){if(!S.pn||typeof S.pn!=="object")S.pn={from:+S.appv||APPV};return +S.pn.from||0}
+/* a save loaded from before patch notes: start from the version it last ran (S.appv), so it gets the letters since */
+var pnMergeBase=merge;merge=function(d){var r=pnMergeBase.apply(this,arguments);try{if(S&&d&&!S.pn)S.pn={from:d.created?(+d.appv||0):APPV}}catch(e){}return r};
+INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){if(!S||!S.created)return [];var from=pnFrom(),L=PATCHNOTES.filter(function(p){return p&&p.v>from&&p.v<=APPV&&p.lines&&p.lines.length}).sort(function(a,b){return a.v-b.v});
+  return L.map(function(p,i){return {id:"pn"+p.v,from:"Cal",subj:"What’s new in v0."+p.v,pay:"open",coins:i>=L.length-3?PNCOINS:0,
+    body:'<ul class="wl">'+p.lines.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>'}})});
+/* opening a patch-notes letter pays its coins at once */
+var pnOpenBase=ibOpen;ibOpen=function(id){pnOpenBase(id);var l=id?ibFind(id):null;if(l&&l.pay==="open"&&l.coins>0&&!ibState().paid[l.id])ibClaim(l.id)};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbUpd={check:function(){UPDT=0;updCheck()},offer:updOffer,install:updInstall,notes:PATCHNOTES,from:pnFrom,fmt:updFmt,later:function(){return UPDLATER}};
+
 function newsBoot(){
   updAfterReload();
   setTimeout(updCheck,8000);
