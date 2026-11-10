@@ -12,7 +12,7 @@
    same tier, else coins (ECON.relicDup). Legendary relics do not come from chests (Rafe's treasure hunts, later). */
 /* opts: slots (a RegExp on the item's slot), brands ("all" or a list of brand ids), basics (true: the basics count too), lv (the
    highest item level allowed) */
-function freePool(o){o=o||{};var fo=typeof floorsOpen==="function"?floorsOpen().map(function(F){return F.id}):null,
+function freePool(o){o=o||{};var fo=typeof shopFloors==="function"?shopFloors().map(function(F){return F.id}):null,
     all=BRANDS.filter(function(b){return !fo||fo.indexOf(brandFloor(b.id))>=0}).map(function(b){return b.id}),bs=o.brands==="all"||!o.brands?all:o.brands,re=o.slots||CRAWLWEAR;
   return SHOP.filter(function(it){var e=it[6]||{};
     return re.test(it[1])&&!e.dungeon&&(bs.indexOf(e.b)>=0||(o.basics&&e.b==="basics"))&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)&&!(o.lv!=null&&it[4]>o.lv)})}
