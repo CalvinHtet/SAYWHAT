@@ -30,12 +30,12 @@
      has no way to sign in or to reach anyone's real save. */
   /* every proof photo carries a time stamp burnt in before the check (Cal, 2026-11-10: "the photo should all get a visible time stamp
      so that the AI knows when it was taken ... make it my SAYMORE color scheme of neon orange or neon cyan"): bottom right, small,
-     wide capitals ("NOV 10  11:42 PM", the game clock in Pacific time), orange with a cyan glow over a thin dark shadow so it reads
+     wide capitals ("NOV 10  11:42 PM", the phone's own clock: Cal, 2026-11-10, "just print the phone's time on there and have the ai judge it based off of that"), orange with a cyan glow over a thin dark shadow so it reads
      on dark, bright and orange photos. It stays on anything later stored or posted. qbStampText() is the text the app also sends. */
   window.qbStampText = function (t) {
     try {
       var d = new Date(t == null ? Date.now() : t), o = {};
-      new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true })
+      new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true })
         .formatToParts(d).forEach(function (p) { o[p.type] = p.value; });
       return (o.month + " " + o.day + "  " + o.hour + ":" + o.minute + " " + (o.dayPeriod || "")).toUpperCase().trim();
     } catch (e) { return ""; }
