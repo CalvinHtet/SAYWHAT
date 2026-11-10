@@ -27,7 +27,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | READY FOR QA (3fdaeec) |
-| W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | READY FOR QA (4cb156d) |
+| W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | DOING again: Cal 09:15 "40 sessions for gym graph is too much. Have the option to toggle graphs between last 7 days, and last month, last 3 months, and last 6 months" (4cb156d not to be tested) |
 | W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | TODO |
 | W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | TODO |
 | W8 | "Post pictures on the town board or chats" | BUILDER | w-photos | TODO |
@@ -50,7 +50,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W25 | Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
 
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
-w-rank (on w-inbox, W17 + W18), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
+w-rank (on w-inbox, W17 + W18 + W24), w-training again (graph ranges), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
 w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
 
