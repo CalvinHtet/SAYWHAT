@@ -491,21 +491,21 @@ var WHEEL=[["300 coins",300,0],["",0,0,1],["1,000 coins",1000,0],["",0,0,1],["50
 var WHEEL_W=[20,1,12,1,20,1,6,1,16,1,6,1,9,1,3,1];
 var WHEELSLIV=4,WHEEL_DEG=WHEEL.map(function(w){return w[3]?WHEELSLIV:(360-8*WHEELSLIV)/8}),WHEELALL=1000;
 var WCOL=["#ff3d81","#ffc857","#4dffc3","#6cb6ff","#b388ff","#ff8a3d","#f1f0fb","#22d3ee"];
-var spinning=false;
+var spinning=false,WHEELROT=0; /* where the wheel stopped, so a redraw leaves it there (QA, rc-0.89: it snapped back to 0) */
 function wheelStart(i){var a=0;for(var k=0;k<i;k++)a+=WHEEL_DEG[k];return a}
 /* a piece of clothing from any brand in the game, dropped yet or not: the Dungeon Crawls' rules (crawlWear) without dungeon pieces and
    basics, and only what fits this body and is not owned yet */
-function wheelGift(){var ids=BRANDS.map(function(b){return b.id}),pool=SHOP.filter(function(it){var e=it[6]||{};
-    return CRAWLWEAR.test(it[1])&&!e.dungeon&&e.b!=="basics"&&ids.indexOf(e.b)>=0&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)});
-  return pool.length?pool[Math.floor(Math.random()*pool.length)]:null}
+function wheelGift(){return freeItem({slots:CRAWLWEAR,brands:"all"})}
 function wheelHtml(){
   var can=S.wheel!==today(),ci=0;
   var conic='conic-gradient('+WHEEL.map(function(w,i){var a=wheelStart(i),b=a+WHEEL_DEG[i],t=WHEEL_DEG[i]/3,g=function(c,p,q){return c+' '+p.toFixed(2)+'deg '+q.toFixed(2)+'deg'};
     /* a sliver: gold, a white line, gold */
     return w[3]?[g("#f5c518",a,a+t),g("#fffbe6",a+t,a+2*t),g("#f5c518",a+2*t,b)].join(","):g(WCOL[ci++%WCOL.length],a,b)}).join(",")+')';
-  var labels=WHEEL.map(function(w,i){return w[3]?'':'<span style="transform:rotate('+(wheelStart(i)+WHEEL_DEG[i]/2-90).toFixed(2)+'deg) translateX(34px)">'+esc(w[0])+'</span>'}).join("");
+  /* labels on the left half are turned the other way so none reads upside down (QA, rc-0.89) */
+  var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,t=c>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(-34px) translateX(-100%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(34px)';
+    return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
-   +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+'">'+labels+'</div></div>'
+   +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
    +(S.wheelRes?'<p class="note" style="text-align:center">Last result: <b>'+esc(S.wheelRes)+'</b></p>':'')+'</section>';
 }
@@ -522,7 +522,8 @@ function spin(){
   persist(); spinning=true;
   /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
   var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);
-  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+(1800-at).toFixed(2)+"deg)"}
+  var to=Math.ceil(WHEELROT/360)*360+1800-at;WHEELROT=to;
+  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+to.toFixed(2)+"deg)"}
   setTimeout(function(){spinning=false;checkBadges();render();persist();pop("Wheel: "+S.wheelRes)},3600);
 }
 
@@ -1256,6 +1257,9 @@ function lookOf(ovr,base){
   var L={rig:rigChoice(c),sex:c.sex,beard:!!c.beard,skin:SKINS[c.skin],hair:HAIRC[c.hairC],hair_s:c.hair_s,eyes:EYEC[c.eyes],top:{s:c.top,c:CLOTH[c.topC],c2:"#eef0f5"},bottom:{s:c.pants,c:CLOTH[c.pantsC]},shoes:{s:c.shoes,c:CLOTH[c.shoesC]},acc:[c.hat,c.acc].filter(function(x){return x&&x!=="none"}),face:c.face,eyeT:c.eyeT,mouth:c.mouth,extra:[]};
   if(c.top==="hoodie")L.top.c2=CLOTH[c.topC]==="#eef0f5"?"#8a92a6":"#eef0f5";
   var it,_eq={};["a_hat","a_top","a_pants","a_shoes","a_acc"].forEach(function(sl){var q=pick(sl),M=q&&q[6].gar&&QBLoft.data.items[q[6].gar];if(M)_eq[M.slot]={art:q[6].gar,frontOnly:M.frontOnly,over:M.over,wide:M.wide,lift:M.lift,clip:M.clip}});
+  /* a second accessory from level ECON.accLv (Cal, 2026-11-10: "Once you get to lvl 20, you can wear a second accessory"): any
+     owned accessory that sits on a different part of the body from the first, drawn by the rig like the first */
+  var q2=acc2Item(base,ovr),M2=q2&&q2[6].gar&&QBLoft.data.items[q2[6].gar];if(M2&&!_eq[M2.slot])_eq[M2.slot]={art:q2[6].gar,frontOnly:M2.frontOnly,over:M2.over,wide:M2.wide,lift:M2.lift,clip:M2.clip};
   if(Object.keys(_eq).length)L.rig=Object.assign({},L.rig,{equipped:_eq});
   ["a_top","a_pants","a_shoes","a_hair","a_hairc","a_eyes"].forEach(function(sl){var q=pick(sl),bs=q&&q[6].basic;if(!bs)return;L.rig=Object.assign({},L.rig);L.rig[bs.key]=bs.id;if(bs.ckey)L.rig[bs.ckey]=bs.color});
   if((it=pick("a_hair"))&&!it[6].basic)L.hair_s=it[6].s;
@@ -1723,7 +1727,7 @@ function simulate(now){
 function baseBuffs(){
   var o=[];
   S.base.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t];if(!T.buff)return;
-    var pct=T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length;
+    var rbm=typeof rbMult==="function"?rbMult(r.t):1,pct=Math.round((T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)*rbm+roomCrew(i).length)*10)/10;
     var b=Object.assign({},T.buff,{pct:pct,text:(T.buff.stat?statName(T.buff.stat)+" quests":"All quests")+" +"+pct+"% XP"});
     o.push({who:T.name,b:b});
   });

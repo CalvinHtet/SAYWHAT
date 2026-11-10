@@ -1446,6 +1446,24 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .cxadd{display:flex;gap:8px;margin-top:10px}
 .cxadd input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
 .cxlist{margin-top:10px}.cxlist .lrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+/* BUILDER w-chests (Cal, 2026-11-10): relic cards with a border by tier: bronze, silver, gold, and white and purple with wings */
+.r2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:6px 0 12px}
+.r2-h{margin:12px 0 2px;font:800 12px/1.2 var(--font-body,system-ui);letter-spacing:.08em;text-transform:uppercase}
+.r2-h-low{color:#e0a46a}.r2-h-mid{color:#d6dde8}.r2-h-high{color:#ffd65a}.r2-h-legendary{color:#c4a5ff}
+.r2{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;border-radius:12px;text-align:center;background:var(--surface2)}
+.r2 b{font-size:12px;line-height:1.25}.r2 small{font-size:10.5px;color:var(--muted);line-height:1.3}
+.r2 .r2-t{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:9.5px}
+.r2 .r2-b{color:var(--done,#4dffc3)}
+.r2-frame{width:60px;height:60px;display:grid;place-items:center;border-radius:12px;background:rgba(0,0,0,.25)}
+.r2-img{width:44px;height:44px;object-fit:contain}
+.r2-low{border:3px solid #b0743c;box-shadow:inset 0 0 0 1px #5e3a17}.r2-low .r2-t{color:#e0a46a}
+.r2-mid{border:3px solid #c9d1dc;box-shadow:inset 0 0 0 1px #6b7689}.r2-mid .r2-t{color:#e6ebf3}
+.r2-high{border:3px solid #f2c230;box-shadow:inset 0 0 0 1px #8a6510,0 0 14px -4px #f2c230}.r2-high .r2-t{color:#ffd65a}
+.r2-legendary{margin:0 14px;border:3px solid #f4eeff;box-shadow:inset 0 0 0 2px #8b5cf6,0 0 18px -2px #8b5cf6;background:linear-gradient(180deg,#2a1d4a,#1a1430)}.r2-legendary .r2-t{color:#c4a5ff}
+.r2-wing{position:absolute;top:18px;width:22px;height:32px}.r2-wing svg{width:100%;height:100%}.r2-wing.l{left:-17px}.r2-wing.r{right:-17px;transform:scaleX(-1)}
+.r2.lock{opacity:.55}.r2.lock .r2-frame{background:rgba(0,0,0,.35)}
+.bline .bl-bar{display:flex}.bline .bl-bar i.ot{background:var(--gold,#ffd36b)}
+.r2-big{max-width:220px;margin:8px auto}.r2-big .r2-frame{width:84px;height:84px}.r2-big .r2-img{width:64px;height:64px}
 /* BUILDER w-inbox (Cal, 2026-11-10): the envelope by the coin count opens the inbox; the (i) and its space at the right are gone */
 .strip{padding-right:0}
 .ibbtn{position:relative;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--fg);padding:0;display:grid;place-items:center;cursor:pointer;flex:none}
