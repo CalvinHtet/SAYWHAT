@@ -8,23 +8,45 @@ in `ECON` in `app/src/29e_economy.js` unless it says otherwise.
 
 ## XP and levels
 
-Cal, 2026-11-09: levels must never feel slower and slower, and "if they used it for daily tasks and chores everyday, they could
-lvl up 1-2 times ... pair that with working out, using the trainer, and other things, you could level up 3-4 times". Level L to
-L+1 costs `20 + 115(L-1)/5` XP below level 6 (level 1 to 2 is one or two quests), then `135 x (1 + 0.0015(L-6))`: 135 at 6, 144 at
-50, 154 at 100; level 100 is 13,905 XP (`lvNeed` in `30_app_b.js`, `ECON.lvFirst`, `lvRamp`, `lvFlat`, `lvGrow`). Saves keep their
-exact level and progress (`xpc3` in `merge`). Trials pass with a fresh activity photo at once, or on honor after 2 active days of
-50+ XP (`ECON.trialDays`). Catch-up: rested XP (a quarter level per day away, up to one level, quests pay double until it is used),
-the Weekly Quest (active on 4 days pays a level), streak repair (one missed day a week free, freezes cover each missed day, a break
-halves the streak), and +25% XP while 8+ levels under the friends' median.
+Cal, 2026-11-10: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl
+40", and "The leveling should definitely ramp up more ... The last few levels ... should take a day or 2 or even 3 to level up."
+Curve 4 (`lvNeed` in `30_app_b.js`; `ECON.lvFirst`, `lvRamp`, `lvFlat`, `lvK`, `lvP`): level L to L+1 costs `20 + 115(L-1)/5` XP
+below level 6, then `135 + 0.315 x (L-6)^2`: 140 at 10, 197 at 20, 499 at 40, 1,053 at 60, 1,856 at 80, 2,859 at 99; about
+97,000 XP to level 100 (was 13,905). The spec's first fit (`135 + 4.04 x (L-6)^1.25`) put Cal's level 100 at day 65 in econsim, so
+the top is steeper. Saves keep their exact level and their progress through it (`xpc4` in `merge`, from the frozen curve 3).
+Renown past 100 is every `lvNeed(100)` XP. Weekly Warrior's XP follows the curve; its coins stay 3,000 (`ECON.wwCoins`).
+Trials pass with a fresh activity photo at once, or on honor after 2 active days of 50+ XP (`ECON.trialDays`). Catch-up: rested XP
+(a quarter level per day away, up to one level, quests pay double until it is used), the Weekly Quest (active on 4 days pays a
+level), streak repair (one missed day a week free, freezes cover each missed day, a break halves the streak), and +25% XP while 8+
+levels under the friends' median.
 
 Quest XP stays on the 5 to 100 scale. Without a photo a quest pays its listed XP; a live camera photo that passes the check pays
 at least double the XP and the coins on any quest (Cal, 2026-11-09: photos are a pure bonus), a streak adds up to 30%, and combos,
 bounties and crits stack on top as you rank up. Undoing a task takes back its XP, coins, combo step and, if the day falls under 50
 XP, that day's streak credit and any chest it opened.
 
-Measured (QA, 2026-11-09, `tools/windows/econsim.js`): those bonuses make a day's real XP 2 to 3.5 times its listed XP. Cal's
-routine (10 chores, the gym with a photo and a Training session on weekdays) reaches level 100 around day 20, a casual player
-(6 tasks, 5 days a week, 2 workouts) around day 55. That is faster than the targets above; left as it is for Cal to decide.
+**Room Bonus** (Cal: "a new bed would increase your productivity by 0.2% exp gain ... each room should have some stats on the
+screen"): each Loft room (Bedroom "Rested", Walk-in Closet, Game Room, Patio) gives at most +3% XP on every quest when fully
+upgraded (`ECON.roomBonus`), split across its upgrades by price; each card shows its share ("+0.2% XP") and the room window shows
+"Rested +1.8% XP on every quest (14 of 35 upgrades, up to +3%)". It replaces the Patio's and Game Room's old per-upgrade XP. Crew
+still add 1% each. Business rooms show the town's efficiency, the payout share and the upgrades owned.
+
+**Relics** (`29y_free.js`, Cal's list): 12 low, 8 mid, 6 high, 4 legendary, each with a small buff in `ECON.relicBuff` (quest
+group XP, business income, crawl odds and time, Training XP, chest coins, a monthly freeze); owning a whole tier adds 1 / 1.5 / 2% XP.
+They come from the hidden Daily Quest chest (legendary ones from Rafe's hunts, later). econsim includes them.
+
+**Measured** (`tools/windows/econsim.js`, 110 days, each player once; "before" is the build with the new chests, wheel and welcome
+coins and the old curve and prices):
+
+| Player | Level 40 | Level 100 | Every room upgrade | Passive share of a day's coins |
+| --- | --- | --- | --- | --- |
+| Cal's routine | day 9 -> 15 | day 21 -> 82 | day 38 -> 94 | at most 28% -> 24% |
+| Regular (12 tasks a day) | day 10 -> 14 | day 20 -> 76 | day 36 -> 88 | at most 25% -> 23% |
+| Casual (6 tasks, 5 days a week) | day 24 -> 38 | day 53 -> not by 110 (level 60 day 72) | not by 100 -> not by 110 (14 of 21 rooms) | at most 19% -> 14% |
+| Grinder | day 5 -> 7 | day 10 -> 38 | day 22 -> 50 | at most 31% -> 28% |
+
+Cal's routine was measured on the final curve; the other three on the run before it (lvK 0.30), so their level 100 lands about
+3 days later on the final curve.
 
 ## Coins
 
@@ -74,7 +96,11 @@ gauranteed by the 4th crawl." One tab (the nav says Crawls), open once the Hero'
 
 One rule for every room upgrade (`econPrice` in `29e_economy.js`):
 
-**price = what it is x when you reach it (the room's phase) x how far down the room's list it is (up to +50%)**, rounded to 50.
+**price = what it is x when you reach it (the room's phase) x how far down the room's list it is (up to +50%) x the late factor**,
+rounded to 50. The late factor (Cal, 2026-11-10: "upgrades later on cost more money. IMAX project and a bigger theater is
+definitely worth more than a painting") is `1 + ECON.lateK x (phase - 1)` with lateK 1.25: the Loft 1x, the Garden 1.4x, the
+Restaurant 2x, the Mall 3.25x, the Theater and Auditorium 3.5x, the Nightclub 4.5x. It is what makes every upgrade last about
+three months of Cal's routine.
 
 | What it is | Early price (phase 1) |
 | --- | --- |
@@ -89,20 +115,40 @@ One rule for every room upgrade (`econPrice` in `29e_economy.js`):
 Phases (`ECON.phase`) follow what a player earns by the time a room opens, a little under it: the Loft 1 (Game Room 1.2, Lair and
 Trophy Room 1.3), Garden 1.3, Restaurant 1.8, Boba 2.2, Dessert 2.3, Lock and Key 2.5, Rooftop 2.7, Mall 2.8, Theater and
 Auditorium 3, Arcade 3.2, Rhythm and VR 3.3, Bowling 3.4, Karaoke 3.5, Nightclub 3.8. Examples: the first bedroom pieces 250 to 350,
-the Walk-in Closet 1,400, the Restaurant 2,500, the IMAX Laser Projector 3,000 (Cal said about 2,500: the Auditorium opens when a
-regular player makes about 13,000 a day), the IMAX Screen 6,000, the Nightclub lot 7,600. `ECON.kindOf` settles an item the rule
-reads wrong (the plain Digital Projector is equipment, so the IMAX one is the clear step up). `fixed:1` on an upgrade keeps its
-price exactly as written. All 381 room upgrades cost 474,250 and the lots 24,600.
+the Walk-in Closet 1,400, the Restaurant 5,050, the IMAX Laser Projector 10,500, the IMAX Screen 21,000, the Nightclub lot 34,200.
+`ECON.kindOf` settles an item the rule reads wrong (the plain Digital Projector is equipment, so the IMAX one is the clear step up).
+`fixed:1` on an upgrade keeps its price exactly as written. All 381 room upgrades cost about 1.38 million (was 474,250) and the lots
+about 85,000 (was 24,600).
 
-**How long it lasts** (measured, buying like a player: save for the next new room, else the cheapest upgrade; no clothes):
+**Bigger upgrades earn more** (Cal: "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely
+start generating more income"): in a room that earns, each earning upgrade's share of the room's income follows what it is
+(`ECON.earnW`: furniture 1, equipment 2, big 3, grand 5), and the room's total stays what it was. The IMAX pieces are the
+Auditorium's biggest earners.
 
-| Player | Garden | Restaurant | Mall | Nightclub | Every room upgrade |
-| --- | --- | --- | --- | --- | --- |
-| Cal's routine | day 5 | day 6 | day 22 | day 32 | day 43 |
-| Regular (12 tasks a day) | day 4 | day 5 | day 22 | day 31 | day 41 |
-| Casual (6 tasks, 5 days a week) | day 11 | day 13 | day 62 | day 89 | about day 115 |
+**Story rooms open a day apart** (Cal: "Rooms should open a day apart ... only the ones that have questlines tagged to them such
+as the restaurant, boba shop, bar, dessert parlor, strip mall. There has to be multiple triggers"): the Restaurant, Boba, Dessert,
+Lock and Key and the Mall each open only when their story gate, their level (`ECON.stepLv`), the coins earned since the story room
+before them opened (`ECON.storyCoins`: 2,000 / 6,000 / 8,000 / 12,000 / 20,000) and a new game day since that room opened are all
+true. The game day (5 am) is the day, so a room opened late at night lets the next one open in the morning. The locked card lists
+each trigger with its progress. Other rooms open as before. Opening times live in `S.story.open`; rooms a save already has count as
+opened long ago.
 
-Before this pass Cal's routine had bought every room upgrade by day 20.
+**Level gates** (Cal: "Once you get to lvl 20, you can wear a second accessory. At lvl 40, the option to wear face cosmetics"): a
+second accessory from level 20 (`ECON.accLv`; any owned accessory that sits on a different part of the body from the first: "Wear
+as second" in the Wardrobe), face cosmetics in the Shop from level 40 (`ECON.faceLv`; none on sale yet, anyone wearing one keeps it).
+Pets at 30 and the level 90 set come with their art (the Mac).
+
+**How long it lasts** (measured, buying like a player: save for the next new room, else the cheapest upgrade; no clothes). Before is
+the 2026-11-09 pass; after is curve 4 and the late prices (2026-11-10), 110 days:
+
+| Player | Every room upgrade, 2026-11-09 | Every room upgrade, now |
+| --- | --- | --- |
+| Cal's routine | day 43 | day 94 |
+| Regular (12 tasks a day) | day 41 | day 88 |
+| Casual (6 tasks, 5 days a week) | about day 115 | not by day 110 (14 of 21 rooms) |
+| Grinder | | day 50 |
+
+Before the 2026-11-09 pass Cal's routine had bought every room upgrade by day 20.
 
 ### The Shop
 

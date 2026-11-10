@@ -56,10 +56,10 @@ var ECON={
      Chores, a photo workout, a Training session and a bounty (about 500 a day): 3.2 to 3.7 a day, level 100 around day 28. */
   /* Cal, 2026-11-10: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to
      lvl 40", and "The leveling should definitely ramp up more ... The last few levels ... should take a day or 2 or even 3":
-     curve 4. Levels 1 to 5 as before, then lvFlat + lvK x (L - lvRamp)^lvP: 140 at 10, 191 at 20, 466 at 40, 969 at 60, 1,701
-     at 80, 2,608 at 99; about 89,000 XP to level 100 (was 13,905). Measured (econsim, Cal's routine): the spec's first fit (4.04 x
+     curve 4. Levels 1 to 5 as before, then lvFlat + lvK x (L - lvRamp)^lvP: 140 at 10, 197 at 20, 499 at 40, 1,053 at 60, 1,856
+     at 80, 2,859 at 99; about 97,000 XP to level 100 (was 13,905). Measured (econsim, Cal's routine): the spec's first fit (4.04 x
      (L - 6)^1.25) put level 100 at day 65, so the top is steeper. */
-  lvFirst:20,lvRamp:6,lvFlat:135,lvK:.286,lvP:2,
+  lvFirst:20,lvRamp:6,lvFlat:135,lvK:.315,lvP:2,
   wwCoins:3000,                                   /* Weekly Warrior's coins, fixed (its XP follows the curve) */
   trialDays:2,                                    /* a level trial also passes on honor: active (50+ XP) on this many days */
   restDay:.25,restMax:1,                          /* rested XP: a quarter level banked per day with no quest, one level at most */
@@ -93,7 +93,7 @@ var ECON={
   tier:{decor:200,furniture:325,equipment:500,big:750},
   /* W21: later rooms cost more again, by their phase (x (1 + lateK x (phase - 1))): the Loft as before, the Restaurant about 2.1x,
      the Nightclub about 4.9x, so every upgrade lasts about three months of Cal's routine (econsim) */
-  lateK:1.4,
+  lateK:1.25,
   kindOf:{au_proj1:"equipment"},                 /* the plain Digital Projector, so the IMAX one is the clear step up */
   grandK:.5,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
   /* measured (econsim.js, a heavy player): about 3,700 a day in the Loft's first days, 6,000 when the Garden opens, 10,000 at
@@ -222,7 +222,9 @@ function rbList(t){return (ADDONS[t]||[]).filter(function(a){var e=a[3]||{};retu
   (ADDONS[t]||[]).forEach(function(a){var e=a[3]=a[3]||{};if(L.indexOf(a)<0){if(e.xp)e.xp=0;return}e.xp=Math.round(ECON.roomBonus*a[2]/tot*100)/100;
     a[4]=String(a[4]||"").replace(/ ?\+[\d.]+% XP on all quests\./,"")})})})();
 /* a Loft room's bonus now, rounded for the screen */
-function rbPct(r){return Math.round(addonsOf(r).reduce(function(s,a){return s+((a[3]&&a[3].xp)||0)},0)*10)/10}
+function rbPct(r){return Math.round(addonsOf(r).reduce(function(s,a){return s+((a[3]&&a[3].xp)||0)},0)*rbMult(r.t)*10)/10}
+/* The Worldseed (a legendary relic) multiplies every Loft room's bonus */
+function rbMult(t){return ECON.roomBonusRooms[t]&&typeof r2Rb==="function"?r2Rb():1}
 /* ---- bigger upgrades earn more (Cal, 2026-11-10: "bigger upgrades should give bigger passive buffs. Such as the imax screen should
    definitely start generating more income"): in a room that earns, each earning upgrade's share follows what it is (econKind)
    by ECON.earnW, and the room's total stays what it was ---- */

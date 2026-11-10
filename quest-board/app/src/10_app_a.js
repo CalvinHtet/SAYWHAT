@@ -1724,7 +1724,7 @@ function simulate(now){
 function baseBuffs(){
   var o=[];
   S.base.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t];if(!T.buff)return;
-    var pct=Math.round((T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length)*10)/10;
+    var rbm=typeof rbMult==="function"?rbMult(r.t):1,pct=Math.round((T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)*rbm+roomCrew(i).length)*10)/10;
     var b=Object.assign({},T.buff,{pct:pct,text:(T.buff.stat?statName(T.buff.stat)+" quests":"All quests")+" +"+pct+"% XP"});
     o.push({who:T.name,b:b});
   });
