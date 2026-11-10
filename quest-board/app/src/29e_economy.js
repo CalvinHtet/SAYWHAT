@@ -252,7 +252,11 @@ function rbMult(t){return ECON.roomBonusRooms[t]&&typeof r2Rb==="function"?r2Rb(
 ECON.earnW={decor:1,furniture:1,equipment:2,big:3,grand:5};ECON.earnGrand=1000;
 (function(){Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k];if(!T||!(T.coin||T.food))return;
   var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens});if(L.length<2)return;
-  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){var kd=econKind(k,a),sz=ECONSIZE[k+"|"+a[0]]||0;return (ECON.earnW[kd]||1)*(kd==="grand"&&sz>ECON.earnGrand?Math.sqrt(sz/ECON.earnGrand):1)}),ws=wt.reduce(function(s,w){return s+w},0);
+  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){var kd=econKind(k,a),sz=ECONSIZE[k+"|"+a[0]]||0;return (ECON.earnW[kd]||1)*(kd==="grand"&&sz>ECON.earnGrand?Math.sqrt(sz/ECON.earnGrand):1)});
+  /* QA (v0.90): a pricier piece never earns less than a cheaper one in the same room (the Lux seats under the Recliners): walking up
+     the room's prices, each weight is at least the one before it */
+  var mx=0;L.map(function(a,i){return i}).sort(function(x,y){return L[x][2]-L[y][2]||x-y}).forEach(function(i){if(wt[i]<mx)wt[i]=mx;mx=wt[i]});
+  var ws=wt.reduce(function(s,w){return s+w},0);
   L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,old=Math.round(e.p*100);e.p=np;
     a[4]=String(a[4]||"").replace(new RegExp(" Earns \+"+old+"% here\."),"")+" Earns +"+Math.round(np*100)+"% here."})})})();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
