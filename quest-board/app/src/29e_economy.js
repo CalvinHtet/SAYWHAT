@@ -119,6 +119,9 @@ var ECON={
      trigger is gardenLoft of the upgrades in loftCore (Cal: "garden at 50% of Loft upgrades"); Boba's is bobaEarn coins collected
      in the Restaurant since it opened */
   focusMin:.5,gardenLoft:.5,loftCore:["bedroom","closet","gameroom","patio"],bobaEarn:20000,
+  /* the Mall waits for every Kode Plaza room to be built (econsim: going by only the rooms a player had, it opened on day 18, before
+     Lock and Key, Boba and Dessert), then for the focus rule */
+  plazaAll:["garden","restaurant","skybar","rooftop","boba","dessert"],
   /* the building Goals (SPEC8 part 3): [coins, XP] for a room half upgraded, fully upgraded and a story step; coins x the room's
      phase, paid once on a tap */
   goal:{half:[400,50],full:[1200,150],story:[300,50]},

@@ -37,7 +37,7 @@ var STORY=[
      proper QA check ... I want to personally review all this". MALLHOLD keeps the Mall step (and so everything inside the Mall:
      Theater, Auditorium, Arcade, Bowling, Karaoke, Club) closed in a Live build (QB_WEB.noTest) until Cal approves the layout;
      the sandbox keeps it open for his review. A save that already owns the Mall keeps it. Set MALLHOLD to false to open it. */
-  {id:"mall",room:"mall",how:"lot",why:"Another investor is watching how much you earn.",gate:function(){return !mallHeld()&&styHas("restaurant")},
+  {id:"mall",room:"mall",how:"lot",why:"Another investor is watching how much you earn.",gate:function(){return !mallHeld()&&ECON.plazaAll.every(styHas)},
     scene:{who:"Priya Okafor",role:"Investor",lines:["I've been watching your plaza. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3&&styMallHas("ml_shop1")},
     scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers keep asking where I shop. Could I film here every week?\""],yes:"Deal. Roll the camera",team:"nova"}},

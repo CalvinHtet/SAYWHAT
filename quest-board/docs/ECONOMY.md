@@ -113,11 +113,11 @@ three months of Cal's routine.
 | A lot on the street | 2,000 x its phase (the Garden 1,000) |
 
 Phases (`ECON.phase`) follow what a player earns by the time a room opens, a little under it: the Loft 1 (Game Room 1.2, Lair and
-Trophy Room 1.3), Garden 1.3, Restaurant 1.8, Boba 2.2, Dessert 2.3, Lock and Key 2.5, Rooftop 2.7, Mall 2.8, Theater and
+Trophy Room 1.3), Garden 1.3, Restaurant 1.8, Lock and Key 2.2, Boba 2.3, Dessert 2.5, Rooftop 2.7, Mall 2.8, Theater and
 Auditorium 3, Arcade 3.2, Rhythm and VR 3.3, Bowling 3.4, Karaoke 3.5, Nightclub 3.8. Examples: the first bedroom pieces 250 to 350,
 the Walk-in Closet 1,400, the Restaurant 5,050, the IMAX Laser Projector 10,500, the IMAX Screen 21,000, the Nightclub lot 34,200.
 `ECON.kindOf` settles an item the rule reads wrong (the plain Digital Projector is equipment, so the IMAX one is the clear step up).
-`fixed:1` on an upgrade keeps its price exactly as written. All 381 room upgrades cost 1,393,400 (was 474,250) and the lots 85,400
+`fixed:1` on an upgrade keeps its price exactly as written. All 381 room upgrades cost about 1,388,900 (1,393,400 before SPEC8 moved the Plaza phases; was 474,250) and the lots 86,500
 (was 24,600).
 
 **Bigger upgrades earn more** (Cal: "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely
@@ -129,15 +129,57 @@ the Velvet Rope +3.9%. Garden: the Glass Conservatory +42%, the Sprinklers +23.5
 runs `econEarn("garden")` again). A room that doesn't earn coins (the Pond) keeps its shares in price order. What each piece is
 (`ECONKIND`, for its price) is read before the re-pricing.
 
-**Story rooms open a day apart** (Cal: "Rooms should open a day apart ... only the ones that have questlines tagged to them such
-as the restaurant, boba shop, bar, dessert parlor, strip mall. There has to be multiple triggers"): the Restaurant, Boba, Dessert,
-Lock and Key and the Mall each open only when their story gate, their level (`ECON.stepLv`), the coins earned since the story room
-before them opened (`ECON.storyCoins`: 2,000 / 6,000 / 8,000 / 12,000 / 20,000) and a new game day since that room opened are all
-true. The game day (5 am) is the day, so a room opened late at night lets the next one open in the morning. What a locked story room waits
-for shows at the top of the room it grows from, one trigger per line with a tick on each one met ("Level 9 of 12", "1,240 of
-6,000 coins earned since the Restaurant opened", "Opens tomorrow at the earliest"): the Restaurant in the Garden, Boba in the
-Restaurant, Dessert in Boba, Lock and Key in the Restaurant (its bar upgrade), the Mall in Lock and Key. Other rooms open as before. Opening times live in `S.story.open`; rooms a save already has count as
-opened long ago.
+**Story rooms open with focus** (SPEC8; Cal: "Instead of just waiting a day, perhaps we can lock the next rooms based off of number
+of upgrades ... by capping the amount of features, it allows more focus in the beginning"): a story room opens when ALL of these hold:
+its own trigger, its level floor (`ECON.stepLv`), and the focus rule. The focus rule: every room the player has in its building
+(the building before it, for a building's first room) has at least half its upgrades (`ECON.focusMin`; openers, retired pieces and
+Trophy Room finds don't count). There is no day wait any more.
+
+| Room | Trigger |
+| --- | --- |
+| Garden | half of the Loft's core upgrades (Bedroom, Closet, Game Room, Patio, built or not: `ECON.gardenLoft`, `loftCore`) |
+| Restaurant | 12 produce sold |
+| Lock and Key | the Restaurant goes Noir (no longer waits for Dessert) |
+| Boba | 20,000 coins collected from the Restaurant since it opened (`ECON.bobaEarn`; `r.earn` counts from this version on) |
+| Dessert | 4 upgrades in the Boba Shop |
+| Rooftop | 6 upgrades in Lock and Key |
+| Mall | every Kode Plaza room built (`ECON.plazaAll`) and the focus rule: each at least half upgraded |
+| Theater and on | as before (N upgrades in the room before), plus the focus rule inside the Mall |
+
+Lock and Key now comes before Boba and Dessert, so their price phases and level floors moved: Lock and Key 2.2 (level 9), Boba 2.3
+(level 11), Dessert 2.5 (level 14). A locked story room's card (an opener in a room window, or "Coming next" at the top of the room
+its trigger happens in) lists the level, the trigger and the focus line, each with its progress and a tick when met ("Level 9 of 9",
+"Earn 20,000 coins in the Restaurant: 12,400 of 20,000", "Lock and Key: 2 more upgrades to half"). It never names what opens.
+
+**Goals** (SPEC8; Cal: "there should be a goal or quest log in the building view such as fully upgraded the bedroom which gives you a
+little bit of experience and some coins as a reward"): the building view has a Goals button (with the number ready to claim) and a
+"Next goal" line. Each room has a half-upgraded goal (400 coins x its phase + 50 XP) and a fully-upgraded goal (1,200 x phase + 150
+XP), and each story trigger is a goal once the room it happens in is yours (300 x phase + 50 XP; `ECON.goal`). A goal that is met
+waits for a tap and pays once (`S.goals`); an old save claims the ones it has already met, one tap each.
+
+Econsim, Cal's routine over 110 days (the day each room opens; before = the v0.90 rules):
+
+| Room | Before | Now |
+| --- | --- | --- |
+| Garden | 4 | 4 |
+| Restaurant | 5 | 9 |
+| Lock and Key | 31 | 23 |
+| Rooftop | 33 | 25 |
+| Boba | 8 | 30 |
+| Dessert | 16 | 32 |
+| Mall | 35 | 35 |
+| Theater | 37 | 40 |
+| Auditorium | 41 | 45 |
+| Arcade | 43 | 49 |
+| Rhythm / VR | 49 / 50 | 52 / 53 |
+| Bowling | 52 | 60 |
+| Karaoke | 57 | 64 |
+| Club | 61 | 68 |
+
+Level 100 on day 81 (was 82), every upgrade bought by day 87 (was 94); the goals paid 86,950 coins and 4,650 XP over the run; the
+passive share is still 60% at the end. From the Restaurant (day 9) to Lock and Key (day 23) the Plaza is the Garden and the
+Restaurant alone: Lock and Key waits for the Noir upgrade and for both rooms to reach half (the Restaurant has 59 upgrades). The
+Mall waits for every Plaza room to be built (`ECON.plazaAll`): with only the rooms a player had, it opened on day 18.
 
 **Level gates** (Cal: "Once you get to lvl 20, you can wear a second accessory. At lvl 40, the option to wear face cosmetics"): a
 second accessory from level 20 (`ECON.accLv`; any owned accessory that sits on a different part of the body from the first: "Wear
