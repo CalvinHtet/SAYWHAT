@@ -331,7 +331,7 @@ shopHtml=function(){
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
-  var h='<div class="qshop"><header class="qs-top"><div><small>'+esc(FL.line||"New brands Mondays and Fridays, 8 am")+'; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(FD.next?'<small class="qs-cd">'+esc(FD.next.name)+' drops in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  var h='<div class="qshop"><header class="qs-top"><div><small>'+esc(FL.line||"New brands Mondays and Fridays, 8 am")+'; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(FD.next?'<small class="qs-cd">New brand in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
   if(FO.length>1)h+='<nav class="qs-tabs qs-floors" aria-label="Shop floors">'+FO.map(function(id){var F=flGet(id)||{name:id};return '<button class="qs-tab'+(QSFLOOR===id?" on":"")+'" data-qsfl="'+esc(id)+'">'+esc(F.name)+'</button>'}).join("")+'</nav>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=(FD.live||[]).filter(function(x){return x.id===shopTab})[0];qsTheme(b);

@@ -79,7 +79,9 @@ function r2BuffTxt(id){var b=(ECON.relicBuff||{})[id]||{},o=[];
   if(b.stat)o.push("+"+b.xp+"% XP on "+b.stat+" quests");
   if(b.first3)o.push("+"+b.first3+"% XP on the first 3 quests each day");if(b.train)o.push("+"+b.train+"% Training XP");
   if(b.gift)o.push("+"+Math.round(b.gift*100)+"% rare finds on crawls");if(b.mt)o.push("crawls come home "+Math.round(b.mt*100)+"% sooner");
-  if(b.rooms)o.push("+"+b.inc+"% "+(b.rooms[0]==="garden"?"Garden produce":b.rooms.map(function(t){return (ROOMT[t]||{}).name||t}).join(" and ")+" income"));
+  /* SPEC9: until the player has every room it names, the line names none */
+  if(b.rooms){var own=b.rooms.every(function(t){return hasRoom(t)}),nr=b.rooms.length;
+    o.push("+"+b.inc+"% "+(b.rooms[0]==="garden"?(own?"Garden produce":"produce"):own?b.rooms.map(function(t){return (ROOMT[t]||{}).name||t}).join(" and ")+" income":"income in "+(["","one","two","three","four"][nr]||nr)+" business"+(nr>1?"es":"")))}
   if(b.biz)o.push("+"+b.biz+"% business income");if(b.chest)o.push("+"+b.chest+"% coins from Daily Quest chests");
   if(b.freeze)o.push("a free streak freeze every month");if(b.crawl)o.push("+"+b.crawl+" crawl a day");if(b.rb)o.push("every Room Bonus x"+b.rb);
   var s=o.join(", ");return s.charAt(0).toUpperCase()+s.slice(1)}
@@ -113,7 +115,7 @@ function r2Wings(){var w='<svg viewBox="0 0 30 40" aria-hidden="true"><path d="M
   return '<i class="r2-wing l">'+w+'</i><i class="r2-wing r">'+w+'</i>'}
 function r2Card(r){var own=!!r2State()[r.id],T=r2Tier(r.tier);
   return '<div class="r2 r2-'+r.tier+(own?'':' lock')+'">'+(r.tier==="legendary"?r2Wings():'')+'<div class="r2-frame">'+r2Icon(r,!own)+'</div><small class="r2-t">'+T[2]+'</small><b>'+(own?esc(r.name):'Not found yet')+'</b>'
-    +(own?'<small>'+esc(r.d)+'</small><small class="r2-b">'+esc(r2BuffTxt(r.id))+'</small>':(r.tier==="legendary"?'<small>Found on treasure hunts.</small>':''))+'</div>'}
+    +(own?'<small>'+esc(r.d)+'</small><small class="r2-b">'+esc(r2BuffTxt(r.id))+'</small>':(r.tier==="legendary"?'<small>?</small>':''))+'</div>'}
 function r2Html(){var own=r2State(),n=Object.keys(own).filter(function(id){return r2Of(id)}).length;
   return '<section class="card panel"><h3 class="label">Relic collection &middot; '+n+' of '+RELICS2.length+'</h3><p class="note">Low relics are heirlooms, the rest are artifacts. Keep filling the Daily Quest bar: a hidden chest can hold one.</p>'
     +R2TIERS.map(function(T){var L=RELICS2.filter(function(r){return r.tier===T[0]});if(!L.length)return "";var k=L.filter(function(r){return own[r.id]}).length;
