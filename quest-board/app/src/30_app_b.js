@@ -1245,9 +1245,9 @@ function profileHtml(){
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
 function boardLine(){
   var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
-  /* past the Daily Quest, the bar runs to the next chest (29e_economy.js) */
-  var nx=typeof dqNext==="function"&&x>=gl?dqNext():null;if(nx)gl=nx[0];
-  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(gl?Math.min(100,x/gl*100):0)+'%"></i></span><span class="bl-t mono">'+(gl&&x>=gl?'Every chest open':nx?x+' / '+gl+' XP: next chest':x+' / '+gl+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+  /* the bar shows 100, then quietly 200, then fills on in gold with no number toward the hidden chest (29e_economy.js) */
+  var t=typeof dqTarget==="function"?dqTarget():gl,f=typeof dqFill==="function"?dqFill():[gl?Math.min(1,x/gl):0,0];
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(f[0]*100)+'%"></i>'+(f[1]?'<i class="ot" style="width:'+(f[1]*100)+'%"></i>':'')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
 }
 function boardHtml(){
   var g=gated(), ri=rankIdx(), rk=RANKS[ri];

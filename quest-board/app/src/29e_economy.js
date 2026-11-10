@@ -18,7 +18,10 @@ var ECON={
   /* Cal, 2026-11-10: "I would like the daily quest to be 100, 200, and 300. the 100exp daily quest should grant 200 coins, And the
      200 exp should grant 400 coins, and then the 300 exp should grant 600 plus either a low tier, mid tier, or high tier relic, or
      an accessory we don't own yet from any clothing brand that has dropped or not dropped yet" (chest3, 29y_free.js) */
-  dqGoal:100,dqTiers:[[100,200],[200,400],[300,600]],hiddenXp:400,
+  /* Cal, later: "make the hidden chest at 300 exp instead of the 300 exp being shown. At first, it should say 100 exp is the goal,
+     then once that finishes, the goal bar expands to 200 exp without any text indication. And then any additional exp gained will
+     move the bar farther until it reached 300 exp for the hidden chest." The first dqShown tiers are shown, the rest never named. */
+  dqGoal:100,dqTiers:[[100,200],[200,400],[300,600]],dqShown:2,
   /* Cal: "the odds should be 50% low tier relic, 33% accessory, 13% mid, 4% high"; chestNone coins when every accessory is owned,
      relicDup coins by tier when every relic of the tier is owned (a relic is never given twice) */
   chest3:[["low",50],["acc",33],["mid",13],["high",4]],chestNone:300,relicDup:{low:150,mid:400,high:1000,legendary:2500},
@@ -116,25 +119,34 @@ var STATN={str:"STR",agi:"AGI",vit:"VIT",int:"INT"};
 var STATD={str:"more rare finds on dungeon crawls",agi:"dungeon crawls come back sooner",vit:"rooms pay a larger share",int:"a bigger Daily Quest chest"};
 function econTrainXp(done,full){return done>=ECON.trainFull?ECON.trainXp:10*done}
 function econTrained(x,plan){dqState().tx+=x;var k=TRAINSTAT[plan];if(k&&x>=ECON.trainXp){stats4()[k]++;persist();setTimeout(function(){pop("+1 "+STATN[k]+": "+STATD[k])},2600)}}
-/* ---- the Daily Quest card, its chest, and the hidden quest ---- */
-function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),e=dqEff(),p=Math.min(1,x/g),o=Math.min(1,Math.max(0,(x-g)/(ECON.hiddenXp-g))),sp=stats4(),d=dqState();
-  return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+x+' / '+g+' XP</span></div>'
-    +'<div class="dq-bar"><i style="width:'+(p*100)+'%"></i><i class="ot" style="width:'+(o*100)+'%"></i></div>'
-    +'<p class="note">'+(x<=0?'Finish a task to start your day. ':p<1?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':o<1?'Daily Quest done. Overtime counts toward the hidden quest. ':'Hidden quest complete. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden quest: +10%)':'')+'.':'')+'</p>'
+/* ---- the Daily Quest card, its chests, and the hidden chest ---- */
+/* the goal the bar shows: the first shown tier still ahead (100, then 200), or null past them, when the bar fills on toward the
+   hidden chest with no number */
+function dqTarget(){var x=dqXp(),T=ECON.dqTiers.slice(0,ECON.dqShown);for(var i=0;i<T.length;i++)if(x<T[i][0])return T[i][0];return null}
+function dqHidden(){var T=ECON.dqTiers;return T[T.length-1][0]}
+/* [main fill, overtime fill]: toward the shown goal, then past it toward the hidden chest */
+function dqFill(){var x=dqXp(),t=dqTarget(),top=ECON.dqTiers[ECON.dqShown-1][0];return t?[Math.min(1,x/t),0]:[1,Math.min(1,Math.max(0,(x-top)/(dqHidden()-top)))]}
+function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),t=dqTarget(),f=dqFill(),e=dqEff(),sp=stats4(),d=dqState();
+  return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+(t?x+' / '+t+' XP':x+' XP')+'</span></div>'
+    +'<div class="dq-bar"><i style="width:'+(f[0]*100)+'%"></i><i class="ot" style="width:'+(f[1]*100)+'%"></i></div>'
+    +'<p class="note">'+(x<=0?'Finish a task to start your day. ':x<g?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':'Daily Quest done. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden chest: +10%)':'')+'.':'')+'</p>'
     +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
-    /* Cal, 2026-11-09: "I don't understand the 100, 150, 200, 250 buttons for the goal": no goal to pick, a chest at each tier */
-    +'<p class="note dq-gx"><b>Chests</b>: '+dqGoal()+' XP finishes the Daily Quest and opens the first chest. '+ECON.dqTiers.slice(1).map(function(t){return t[0]}).join(" and ")+' XP open bigger ones; the last also holds a relic or an accessory.</p>'
-    +'<div class="dq-row">'+ECON.dqTiers.map(function(t){var on=x>=t[0];return '<span class="dq-g dq-t'+(on?' on':'')+'" title="'+dqChest(t[1])+' coins">'+t[0]+' XP &middot; <b class="mono">'+dqChest(t[1]).toLocaleString()+'</b></span>'}).join("")+'</div>'
     +'<div class="dq-row">'+Object.keys(STATN).map(function(k){var ic=econArt("ui_stat_"+k+".webp");return '<span class="chip dq-st" title="'+STATD[k]+'">'+(ic?'<img src="'+ic+'" alt="">':'')+STATN[k]+' '+sp[k]+'</span>'}).join("")+'</div></section>'}
 function econArt(n){return window.QBART&&QBART[n]}
-function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),g=dqGoal(),sp=stats4(),T=ECON.dqTiers;
-  /* each tier's chest once a day (d.tier: how many are open; a save from before the tiers had d.done for the one chest) */
+/* each tier's chest once a day (d.tier: how many are open; a save from before the tiers had d.done for the one chest). The shown
+   chests say nothing about the next one; the last, hidden one adds the relic or accessory roll, the old hidden quest's reward (a
+   streak freeze, else +1 INT, else 300 coins) and tomorrow's +10% */
+function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),sp=stats4(),T=ECON.dqTiers;
   if(d.done&&!d.tier)d.tier=1;
-  if((d.tier||0)<T.length&&x>=T[d.tier||0][0]&&!document.querySelector("#layer .dqc")){var k=d.tier||0,c=dqChest(T[k][1]),nx=T[k+1];d.tier=k+1;d.done=1;S.coins+=c;S.earnedC+=c;persist();var g3=nx?null:chest3Roll();
-    modal('<div class="card box2 dqc"><span class="label">'+(k?'Bonus chest: '+T[k][0]+' XP':'Daily Quest complete')+'</span>'+(econArt("ui_dq_chest.webp")?'<img class="dg-gift" src="'+econArt("ui_dq_chest.webp")+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>')+'<h3>+'+c.toLocaleString()+' coins</h3>'+chest3Html(g3)+'<p class="note">'+(dqEff()>=1?'Your town runs at full speed today. ':'')+(nx?'The next chest opens at '+nx[0]+' XP.':'Every chest is open today.')+'</p><div class="row"><button class="btn" data-act="mclose">Done</button></div></div>');return}
-  if(!d.hid&&x>=ECON.hiddenXp&&!document.querySelector("#layer .dqc")){d.hid=1;var tm=gameNow();tm.setDate(tm.getDate()+1);d.hidFor=dstr(tm);var r;
-    if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{S.coins+=300;S.earnedC+=300;r="+300 coins"}
-    persist();modal('<div class="card box2 dqc"><span class="label">Hidden quest</span>'+(econArt("ui_hidden_quest.webp")?'<img class="dq-hid" src="'+econArt("ui_hidden_quest.webp")+'" alt="">':'')+'<h3>'+ECON.hiddenXp+' XP in one day</h3><p class="note">Nobody told you this one existed.</p><p class="dg-buff">'+esc(r)+'</p><p class="note">Tomorrow your quests earn 10% more XP and the town runs 10% faster.</p><div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}}
+  if((d.tier||0)>=T.length||x<T[d.tier||0][0]||document.querySelector("#layer .dqc"))return;
+  var k=d.tier||0,c=dqChest(T[k][1]),hid=k>=ECON.dqShown,art=econArt("ui_dq_chest.webp"),g3=null,r="";d.tier=k+1;d.done=1;S.coins+=c;S.earnedC+=c;
+  if(hid){g3=chest3Roll();d.hid=1;var tm=gameNow();tm.setDate(tm.getDate()+1);d.hidFor=dstr(tm);
+    if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{S.coins+=300;S.earnedC+=300;r="+300 coins"}}
+  persist();
+  modal('<div class="card box2 dqc"><span class="label">'+(hid?'Hidden chest':k?'Bonus chest':'Daily Quest complete')+'</span>'
+    +(hid&&econArt("ui_hidden_quest.webp")?'<img class="dq-hid" src="'+econArt("ui_hidden_quest.webp")+'" alt="">':art?'<img class="dg-gift" src="'+art+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>')
+    +'<h3>+'+c.toLocaleString()+' coins</h3>'+(hid?'<p class="note">Nobody told you this one existed.</p>'+chest3Html(g3)+'<p class="dg-buff">'+esc(r)+'</p><p class="note">Tomorrow your quests earn 10% more XP and the town runs 10% faster.</p>':'<p class="note">'+(!k&&dqEff()>=1?'Your town runs at full speed today.':'')+'</p>')
+    +'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}
 setInterval(dqCheck,4000);
 /* a level trial also passes on honor (Cal, 2026-11-09: photos are a bonus, never a wall): ECON.trialDays active days (50+ XP,
    the streak's test, whatever the Daily Quest goal) while the trial waits. A fresh activity photo still passes it at once. */
