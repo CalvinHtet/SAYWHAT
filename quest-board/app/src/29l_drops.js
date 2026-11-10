@@ -72,23 +72,29 @@ DROPS.every=3; /* no longer read: the cadence is DROPDAYS below (W20) */
    Wednesday is the wednesday vault where an old brand comes back to town. This only applies after some brands cycle out of rotation
    ... only 2 active brands at a time ... the wednesday vault would make it 3 active brands. And then other days of the week, the
    vault dissapears.") ----------
-   The Shop still opens with HANGANG alone the day the Walk-in Closet is built (S.shopDay). The next brand in the shared order drops
-   on each Monday and Friday at 8 am Pacific (DROPHOUR, the same moment for everyone), the first one at least DROPWAIT days after the
-   Closet. Only the DROPS.live (2) newest are for sale. On Wednesday, 8 am to Thursday 8 am Pacific, one retired brand is back: the one
-   out of the Shop longest, so every retired brand returns in turn (dropPick). So 1 brand at first, 2 most days, 3 on a Wednesday.
-   Once all the brands have dropped the order starts over (DROPS.rerun); a rerun brand is for sale again without a second splash. */
+   Cal, later the same day: "Keep the shop drops the same for every character so that it is consistent. If I open the shop for the
+   first time at week 4, there should be 2 drops already in the shop." So there is ONE calendar for everyone: HANGANG on DROPS.cal0
+   (the release this ships in), alone until the next drop day, then the next brand in the shared order every Monday and Friday at
+   8 am Pacific (DROPHOUR, the same moment for everyone). The DROPS.live (2) newest are for sale. On Wednesday, 8 am to Thursday
+   8 am Pacific, one retired brand is back for everyone: the one out of the Shop longest, so every retired brand returns in turn
+   (dropPick). A player whose Shop opens later sees what is live that day, and every live brand they have not seen gets its splash,
+   oldest first, then the Wednesday one (brandCheck, 25_splash.js). Once all the brands have dropped the order starts over
+   (DROPS.rerun). S.shopDay and S.shopKeep are still written by older code but no longer move the calendar; owned items stay owned.
+   */
 DROPS.live=2;
-var DROPDAYS=[1,5],DROPHOUR=8,DROPWAIT=3;
+/* HANGANG's day: set it to the day the release with this calendar goes out, so HANGANG is alone at first for everyone */
+DROPS.cal0="2026-11-10";
+var DROPDAYS=[1,5],DROPHOUR=8;
 function ymdN(ymd){var a=String(ymd).split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/864e5)}
 function ymdOfN(k){return new Date(k*864e5).toISOString().slice(0,10)}
 function ymdWd(k){return (k+4)%7} /* 0 Sunday: day 0, 1970-01-01, was a Thursday */
 /* the drop day a moment falls in (it turns at 8 am Pacific), and the moment a drop day starts */
 function dropYmd(n){return ptYmd(n-DROPHOUR*36e5).ymd}
 function dropStart(ymd){return ptMidnight(ymd)+DROPHOUR*36e5}
-/* drop days counted from the Shop's first day: Mondays and Fridays at least DROPWAIT days after it, up to and including to */
-function dropCount(from,to){var a=ymdN(from)+DROPWAIT-1,b=ymdN(to),c=0;if(!(b>a))return 0;DROPDAYS.forEach(function(w){c+=Math.floor((b+4-w)/7)-Math.floor((a+4-w)/7)});return c}
-/* the dates of the drops 0..k: 0 is the day the Shop opened, then each drop day after the wait */
-function dropSlotDays(day,k){var out=[day],x=ymdN(day)+DROPWAIT-1;while(out.length<=k){x++;if(DROPDAYS.indexOf(ymdWd(x))>=0)out.push(ymdOfN(x))}return out}
+/* drop days (Mondays and Fridays) after from, up to and including to */
+function dropCount(from,to){var a=ymdN(from),b=ymdN(to),c=0;if(!(b>a))return 0;DROPDAYS.forEach(function(w){c+=Math.floor((b+4-w)/7)-Math.floor((a+4-w)/7)});return c}
+/* the dates of the drops 0..k: 0 is HANGANG's day, then each drop day after it */
+function dropSlotDays(day,k){var out=[day],x=ymdN(day);while(out.length<=k){x++;if(DROPDAYS.indexOf(ymdWd(x))>=0)out.push(ymdOfN(x))}return out}
 function ymdAdd(ymd,k){var a=ymd.split("-").map(Number);return new Date(Date.UTC(a[0],a[1]-1,a[2]+k)).toISOString().slice(0,10)}
 function ymdDiff(a,b){var p=a.split("-").map(Number),q=b.split("-").map(Number);return Math.round((Date.UTC(q[0],q[1]-1,q[2])-Date.UTC(p[0],p[1]-1,p[2]))/864e5)}
 /* the brand in place j of the order every player shares (null when the brands run out and DROPS.rerun is off) */
@@ -107,20 +113,19 @@ function dropStamp(){try{if(S.shopDay||!loaded||!S.created||!hasRoom("closet"))r
   [S.brandSeen,S.alSeen&&S.alSeen.brand].forEach(function(o){if(o&&typeof o==="object")Object.keys(o).forEach(function(id){if(!inShop[id])delete o[id]})});
   persist()}
 /* this player's Shop at moment n: live (oldest first), retired (vault, oldest first) and the next drop */
+/* the Shop at moment n, the same for every player: live (oldest first), retired (vault, oldest first) and the next drop. Before
+   cal0 (a test clock) HANGANG is already there. */
 function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
-  var today=dropYmd(n),day=S.shopDay||today,keep=(S.shopKeep||[]).filter(function(id){return byId[id]}),nb=BRANDS.length;
-  var m=dropCount(day,today),seq=[],days=dropSlotDays(day,m+1);
-  for(var j=0;seq.length<m+2;j++){var id=dropOrderAt(j);if(id==null)break;if(j===0||j>=nb||keep.indexOf(id)<0)seq.push(id)}
-  var rel=keep.map(function(id){return {id:id,start:day}}).concat(seq.slice(0,m+1).map(function(id,k){return {id:id,start:days[k]}}));
-  /* on day one a carried-over save keeps every brand it had, even past the cap */
-  var cap=m===0?Math.max(DROPS.live,rel.length):DROPS.live,seen={},live=[],vault=[];
-  for(var i=rel.length-1;i>=0;i--){var e=rel[i];if(seen[e.id])continue;seen[e.id]=1;(live.length<cap?live:vault).unshift(Object.assign({},byId[e.id],{start:e.start}))}
+  var day=DROPS.cal0,m=dropCount(day,dropYmd(n)),seq=[],days=dropSlotDays(day,m+1);
+  for(var j=0;seq.length<m+2;j++){var id=dropOrderAt(j);if(id==null)break;seq.push(id)}
+  var seen={},live=[],vault=[];
+  for(var i=Math.min(m,seq.length-1);i>=0;i--){var id2=seq[i];if(seen[id2])continue;seen[id2]=1;(live.length<DROPS.live?live:vault).unshift(Object.assign({},byId[id2],{start:days[i]}))}
   var nx=seq[m+1];
   return {live:live,vault:vault,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
-/* the brand back on Wednesday wd: of this player's retired brands, the one out of the Shop longest (since its last day for sale or
-   its last Wednesday back). Worked out Wednesday by Wednesday from the Shop's first, so every phone with the same Shop days agrees. */
-dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+(S.shopDay||"")+"|"+(S.shopKeep||[]).join(",");if(k in DROPWED)return DROPWED[k];
-  var x0=ymdN(S.shopDay||wd),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
+/* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest (since its last day for sale or its last
+   Wednesday back). Worked out Wednesday by Wednesday from cal0, so every phone agrees. */
+dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0;if(k in DROPWED)return DROPWED[k];
+  var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
   for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="";
     m.vault.forEach(function(b){var since=back[b.id]||b.start;if(!best||since<bs){best=b;bs=since}});
     if(best)back[best.id]=w;if(x===x1)out=best}

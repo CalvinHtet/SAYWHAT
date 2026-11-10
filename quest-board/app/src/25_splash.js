@@ -36,5 +36,5 @@ function brandSplash(b){var picks=brandPicks(b);
    screen for the first clothing drop": it showed only the newest and marked them all seen); brands carried over from before the
    Shop schedule (S.shopKeep) count as seen */
 function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;
-  (S.shopKeep||[]).forEach(function(id){S.brandSeen[id]=1});fresh=fresh.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length){persist();return}
+  (S.shopKeep||[]).forEach(function(id){S.brandSeen[id]=1});fresh=fresh.filter(function(b){return !S.brandSeen[b.id]}).sort(function(a,b){return (a.back?1:0)-(b.back?1:0)}); /* the Wednesday brand last */if(!fresh.length){persist();return}
   S.brandSeen[fresh[0].id]=1;persist();brandSplash(fresh[0])}
