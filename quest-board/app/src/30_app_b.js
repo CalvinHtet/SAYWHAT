@@ -1547,7 +1547,7 @@ function sbLum(file){try{return createImageBitmap(file).then(function(b){var c=d
 /* the time stamp burnt into every proof photo (web.js qbStamp, Cal, 2026-11-10): the checker is told what it should read and fails a
    photo whose stamp is missing or more than 30 minutes off. The phone's clock decides; there is no server clock check (Cal, 2026-11-10). */
 function stampText(){return typeof window.qbStampText==="function"?window.qbStampText():""}
-function stampAsk(t){return t?' The photo has a time stamp burnt into its bottom right corner that should read "'+t+'" (the phone's time). Also return "stamp_ok": true if that stamp is there and within 30 minutes of that time, false if it is missing or further off.':""}
+function stampAsk(t){return t?' The photo has a time stamp burnt into its bottom right corner that should read "'+t+'" (the time on the phone). Also return "stamp_ok": true if that stamp is there and within 30 minutes of that time, false if it is missing or further off.':""}
 var STAMPBAD="The time stamp on the photo is missing or wrong. Take a new photo in the game.";
 async function proofCheck(id,file,hh){
   var q=S.quests.filter(function(x){return x.id===id})[0], vis=null;
