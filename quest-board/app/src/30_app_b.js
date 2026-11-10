@@ -357,8 +357,8 @@ function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   if(!E[4])return {w:"",line:"Last time: "+last.n+" sets "+(last.hit?"with every rep hit. Add a rep per set.":"done.")};
   var miss=0;for(var i=lg.length-1;i>=0&&!lg[i].hit;i--)miss++;
   var w=last.hit?last.w+E[4]:miss>=3?Math.max(E[4],Math.round(last.w*0.9/E[4])*E[4]):last.w;
-  var why=last.hit?"You hit every rep. Go up "+E[4]+" lb.":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
-  return {w:w,line:"Last: "+last.w+" lb on "+last.d.slice(5)+". "+why};
+  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
+  return {w:w,line:"Last: "+wU(last.w,"lb")+" on "+mmdd(last.d)+". "+why};
 }
 /* Demos show the start and end of a rep, drawn for your body, fading between the two.
    Every copy runs on one clock, so a screen redraw never makes them jump. */
@@ -377,6 +377,17 @@ function exStill(id){if(EX[id]&&EX[id][5])return cexTile(id,"still");return '<di
    bodyweight work), and the log keeps every set's weight (ws), so next time each box shows what that set was last time and the
    weight box starts there. Tap a done set again to undo it. */
 function fmtW(w){return String(Math.round(w*10)/10)}
+/* Cal, 2026-11-10: "put the lbs right next to the number. Make the date in this format 11/09": a weight reads "135 lbs" (other
+   units as they are: "3.5 mi", "30 min"), and every date in Training reads MM/DD */
+function uLbl(u){return u==="lb"?"lbs":u}
+function wU(w,u){return fmtW(w)+" "+uLbl(u)}
+function mmdd(d){return String(d||"").slice(5).replace("-","/")}
+/* the weight box is as wide as its number, so the unit sits right after it */
+function kgW(v){return Math.max(2,String(v==null?"":v).length)+1+"ch"}
+document.addEventListener("input",function(e){var t=e.target;if(t&&t.classList&&(t.classList.contains("kg")||t.classList.contains("ckg")))t.style.width=kgW(t.value)});
+/* the log keeps 40 sessions per exercise for its graph (it kept 12); past the newest 12 only the date and the top weight stay, so
+   each older session adds about 30 characters to the save */
+function gymKeep(L){L=L.slice(-40);var cut=L.length-12;return L.map(function(x,i){return i<cut&&x&&typeof x==="object"?{d:x.d,w:x.w}:x})}
 function lastLog(id){var L=(S.gymlog&&S.gymlog[id])||[];return L[L.length-1]||null}
 function lastSetW(id,n){var l=lastLog(id);if(!l)return null;if(l.ws)return l.ws[n]>0?l.ws[n]:null;return l.w>0?l.w:null}
 /* the weight shown before the next set: what you typed, else last time's weight for that set, else the weight of the set before
@@ -385,8 +396,8 @@ function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.
   var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
-    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+fmtW(v)+" "+exU(id):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
-      +(v?(wt?'<b>'+fmtW(v)+'</b><small>'+exU(id)+'</small>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
+    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+wU(v,exU(id)):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
+      +(v?(wt?'<b>'+fmtW(v)+'<small> '+uLbl(exU(id))+'</small></b>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
   return h+'</div>'}
 /* tap a set: save the weight in the box into it, or undo it. Returns true when the set was saved. */
 function wkSetTap(id,n,val){var wk=S.wk,E=EX[id];wk.sets[id]=wk.sets[id]||[];
@@ -405,7 +416,7 @@ function exCard(id,inPair){
    +'<div class="exhead"><b>'+esc(E[0])+'</b><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span></div>';
   if(nt)h+='<div class="note">'+esc(nt)+'</div>';
   h+='<div class="note">'+esc(sg.line)+'</div><div class="exrow">';
-  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>';
+  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>';
   h+=setBoxes(id,'data-act="wkset"')+'</div>'+(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div></div>';
   return h;
 }
@@ -431,7 +442,7 @@ function cexBuild(id){var p=cexPlans().filter(function(x){return x.id===id})[0],
 function cexTile(id,cls){return '<div class="xd xcust'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+'"><span>'+esc(EX[id][6]||"\u{1F3C3}")+'</span></div>'}
 function cexSuggest(id){var E=EX[id],last=lastLog(id);
   if(!last||!(last.w>0))return {w:"",line:"First time. Log what you did each round, in "+E[5]+"."};
-  return {w:"",line:"Last time: "+fmtW(last.w)+" "+E[5]+" on "+last.d.slice(5)+". Beat it?"}}
+  return {w:"",line:"Last time: "+wU(last.w,E[5])+" on "+mmdd(last.d)+". Beat it?"}}
 /* sort an activity with Claude, or by keywords */
 function cexGuess(t){var s=t.toLowerCase(),r=function(n,p,u,ic,st,sets,tg){return {n:n,p:p,u:u,ic:ic,st:st,sets:sets||1,t:tg}};
   var dist=(s.match(/(\d+(?:\.\d+)?)\s*(k|km|mi|mile|miles)\b/)||[]),mins=(s.match(/(\d+)\s*(min|mins|minutes)\b/)||[]);
@@ -471,10 +482,14 @@ function trainHtml(){cexSync();
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
     h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">Gym plans</h3><button class="btn ghost csm" data-act="wkfold" aria-expanded="'+!S.gymFold+'">'+(S.gymFold?'Show':'Hide')+'</button></div>'
       +(S.gymFold?'':'<p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>')+'</section>'+cexHtml();
-    var ss=(S.sessions||[]).slice(-5).reverse();
-    if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x){var pl=planOf(x.plan);return '<div class="lrow"><span class="lv">'+esc(x.d.slice(5))+'</span><span>'+esc(pl?pl[1]:x.plan)+'</span><span class="mono note">'+x.n+' lifts</span></div>'}).join("")+'</div></section>';
+    /* Cal, 2026-11-10: "show a graph of performance on that specific workout day if we click on any workout in the recent sessions
+       section, and also a separate graph that shows progression per exercise also at the bottom. These graphs are accessible with
+       a small i icon at the right of each entry". Tapping the row or its i opens the graph. */
+    var all=S.sessions||[],ss=all.slice(-5).reverse();
+    if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x,k){var pl=planOf(x.plan),nm=pl?pl[1]:x.plan,c=/^c_/.test(x.plan);
+      return '<button type="button" class="lrow wkrow" data-act="wkinfo" data-s="'+(all.length-1-k)+'" aria-label="'+esc(nm)+' on '+mmdd(x.d)+': show the graph"><span class="lv">'+esc(mmdd(x.d))+'</span><span>'+esc(nm)+'</span><span class="mono note">'+x.n+' '+(c?(x.n===1?'activity':'activities'):(x.n===1?'lift':'lifts'))+'</span><i class="wki" aria-hidden="true">i</i></button>'}).join("")+'</div></section>';
     var prs=Object.keys(S.gymlog||{}).filter(function(k){return EX[k]&&EX[k][4]}).map(function(k){return [k,Math.max.apply(null,S.gymlog[k].map(function(x){return x.w||0}))]}).filter(function(x){return x[1]>0});
-    if(prs.length)h+='<section class="card panel"><h3 class="label">Best weights</h3><div class="lrows">'+prs.map(function(x){return '<div class="lrow"><span class="lv mono">'+fmtW(x[1])+'</span><span>'+esc(EX[x[0]][0])+'</span><span class="note">'+exU(x[0])+'</span></div>'}).join("")+'</div></section>';
+    if(prs.length)h+='<section class="card panel"><h3 class="label">Personal bests</h3><div class="lrows">'+prs.map(function(x){return '<button type="button" class="lrow wkrow wkbest" data-act="wkexinfo" data-ex="'+x[0]+'" aria-label="'+esc(EX[x[0]][0])+', best '+esc(wU(x[1],exU(x[0])))+': show the graph"><span>'+esc(EX[x[0]][0])+'</span><span class="mono">'+esc(wU(x[1],exU(x[0])))+'</span><i class="wki" aria-hidden="true">i</i></button>'}).join("")+'</div></section>';
     return h;
   }
   var pl=planOf(S.wk.plan);
@@ -488,32 +503,60 @@ function trainHtml(){cexSync();
    shows your progression over the last 7 workouts of this day." A session's total is the weight of every set logged, added up
    (reps are not logged); the graph is that total for the last 7 sessions of the same day (Push, Legs ...). */
 function fmtL(v,u){return u==="lb"?Math.round(v).toLocaleString():fmtW(v)}
-function wkSumChart(plan){
-  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7),u=(L.length&&L[L.length-1].u)||"lb";
-  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day logged. From the next one, this shows how your total moves.':'')+'</p>';
-  var W=300,H=128,pl=34,pr=14,pt=22,pb=22,mx=Math.max.apply(null,L.map(function(x){return x.load})),mn=Math.min.apply(null,L.map(function(x){return x.load}));
-  var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(L.length===1?.5:i/(L.length-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
-  var pts=L.map(function(x,i){return [X(i),Y(x.load)]}),last=pts[pts.length-1],lv=L[L.length-1].load;
-  var s='<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total across your sets, last '+L.length+' sessions: '+L.map(function(x){return x.d.slice(5)+' '+fmtL(x.load,u)+' '+u}).join(", ")+'">'
+/* a line of values over dates: L = [{d, v}] oldest first, u the unit, lab the point whose value is written above it, ring the
+   point drawn ringed (-1 for none). Up to 8 dates are written under it; more points get smaller dots. */
+function wkChart(L,u,lab,ring,what){
+  var W=300,H=128,pl=34,pr=14,pt=22,pb=22,n=L.length,vs=L.map(function(x){return x.v}),mx=Math.max.apply(null,vs),mn=Math.min.apply(null,vs);
+  var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(n===1?.5:i/(n-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
+  var pts=L.map(function(x,i){return [X(i),Y(x.v)]}),every=Math.ceil(n/8),r=n>14?3:4.5,hr=Math.min(11,(W-pl-pr)/Math.max(1,n-1)/2+2),lp=pts[lab]||pts[n-1],lx=lp[0],
+    anchor=lx>W*.7?"end":lx<W*.3?"start":"middle";
+  return '<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(what)+': '+L.map(function(x){return mmdd(x.d)+' '+fmtL(x.v,u)+' '+uLbl(u)}).join(", ")+'">'
    +'<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" class="wkax"/>'
    +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+fmtL(hi,u)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+fmtL(lo,u)+'</text>'
    +'<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(" ")+'" class="wkln"/>'
-   +pts.map(function(p,i){return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" class="wkdot"/><title>'+L[i].d.slice(5)+': '+fmtL(L[i].load,u)+' '+u+'</title></g><text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt">'+L[i].d.slice(5)+'</text>'}).join("")
-   +'<text x="'+Math.min(W-pr,last[0]).toFixed(1)+'" y="'+(last[1]-9).toFixed(1)+'" text-anchor="end" class="wkv">'+fmtL(lv,u)+' '+u+'</text></svg>';
-  return s}
+   +pts.map(function(p,i){var on=i===ring;return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+hr.toFixed(1)+'" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(on?6:r)+'" class="wkdot'+(on?' on':'')+'"/><title>'+mmdd(L[i].d)+': '+fmtL(L[i].v,u)+' '+uLbl(u)+'</title></g>'
+     +((n-1-i)%every===0||on?'<text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt'+(on?' on':'')+'">'+mmdd(L[i].d)+'</text>':'')}).join("")
+   +'<text x="'+lx.toFixed(1)+'" y="'+(lp[1]-9).toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u)+'</text></svg>'}
+function wkSumChart(plan){
+  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7),u=(L.length&&L[L.length-1].u)||"lb";
+  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day logged. From the next one, this shows how your total moves.':'')+'</p>';
+  return wkChart(L.map(function(x){return {d:x.d,v:x.load}}),u,L.length-1,-1,"Total across your sets, last "+L.length+" sessions")}
 function wkSummary(o,after){var u=o.u||"lb";
   var pl=planOf(o.plan),prev=(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0});prev=prev.length>1?prev[prev.length-2]:null;
   var dl=prev?o.load-prev.load:null;
   var rows=o.rows.map(function(r){var E=EX[r.id],ch=r.top>0&&r.prev>0?r.top-r.prev:null;
-    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?fmtW(r.top)+' '+exU(r.id):r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+fmtW(ch)+' '+exU(r.id):ch<0?'&#9660; '+fmtW(ch)+' '+exU(r.id):'same')+'</span></div>'}).join("");
+    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?wU(r.top,exU(r.id)):r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+wU(ch,exU(r.id)):ch<0?'&#9660; '+wU(ch,exU(r.id)):'same')+'</span></div>'}).join("");
   var m=modal('<div class="card box2 wksum"><span class="label">Workout complete</span><h2>'+esc(pl?pl[1]:"Workout")+' day</h2>'
-    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+fmtL(o.load,u)+' '+u+'</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+fmtL(dl,u)+' '+u+'</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+fmtL(-dl,u)+' '+u+' less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
+    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+fmtL(o.load,u)+' '+uLbl(u)+'</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+fmtL(dl,u)+' '+uLbl(u)+'</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+fmtL(-dl,u)+' '+uLbl(u)+' less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
     +(o.load>0?(function(){var k=Math.min(7,(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0}).length);return (k>1?'<span class="label">Your last '+k+' '+esc(pl?pl[1]:"")+' days</span>':'')+wkSumChart(o.plan)})():'')
     +'<span class="label">Top set, against last time</span><div class="wksrows">'+rows+'</div>'
     +'<p class="note">+'+o.xp+' XP logged.</p><div class="row"><button class="btn" id="wksok">Done</button></div></div>');
   var b=m&&m.querySelector("#wksok");if(b)b.onclick=function(){m.remove();if(after)after()}}
+/* a recent session tapped: every logged session of that day (Push, Legs ... up to 12 around it), the one tapped ringed, and its
+   top sets */
+function wkSessInfo(i){var x=(S.sessions||[])[i];if(!x)return;var pl=planOf(x.plan),nm=pl?pl[1]:x.plan,u=x.u||"lb",c=/^c_/.test(x.plan);
+  var all=(S.sessions||[]).filter(function(s){return s.plan===x.plan&&s.load>0}),k=all.indexOf(x),ch="";
+  if(k>=0&&all.length>1){var a=Math.max(0,Math.min(k-6,all.length-12)),L=all.slice(a,a+12);
+    ch='<span class="label">Your '+esc(nm)+' days</span>'+wkChart(L.map(function(s){return {d:s.d,v:s.load}}),u,k-a,k-a,"Total across your sets, "+nm+" days")}
+  var tops=Object.keys(x.top||{}).filter(function(id){return EX[id]&&x.top[id]>0}).map(function(id){return '<div class="wksr"><b>'+esc(EX[id][0])+'</b><span class="mono">'+esc(wU(x.top[id],exU(id)))+'</span><span></span></div>'}).join("");
+  closeModals();
+  modal('<div class="card box2 wksum"><span class="label">'+esc(mmdd(x.d))+'</span><h2>'+esc(nm)+' day</h2>'
+    +(x.load>0?'<p class="note">Total across your '+(c?'rounds':'sets')+': <b class="mono">'+fmtL(x.load,u)+' '+uLbl(u)+'</b></p>':'<p class="note">'+x.n+' '+(c?(x.n===1?'activity':'activities'):(x.n===1?'lift':'lifts'))+' done, no weights logged.</p>')
+    +(ch||(x.load>0?'<p class="note">Your first '+esc(nm)+' day logged. The graph starts with the next one.</p>':''))
+    +(tops?'<span class="label">Top '+(c?'round':'set')+'</span><div class="wksrows">'+tops+'</div>':'')
+    +'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}
+/* a personal best tapped: that exercise's top set in every session the log keeps */
+function wkExInfo(id){var E=EX[id];if(!E)return;var u=exU(id),L=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return x&&x.w>0});if(!L.length)return;
+  var b=0;L.forEach(function(x,i){if(x.w>=L[b].w)b=i});var f=L[0],dl=L[L.length-1].w-f.w,what=E[5]?"Top round":"Top set";
+  closeModals();
+  modal('<div class="card box2 wksum"><span class="label">Progress</span><h2>'+esc(E[0])+'</h2>'
+    +'<p class="note">Best: <b class="mono">'+esc(wU(L[b].w,u))+'</b> on '+esc(mmdd(L[b].d))+'.'+(L.length>1?' '+(dl>0?'Up '+esc(wU(dl,u)):dl<0?'Down '+esc(wU(-dl,u)):'Level')+' since '+esc(mmdd(f.d))+'.':'')+'</p>'
+    +(L.length>1?'<span class="label">'+what+', last '+L.length+' sessions</span>'+wkChart(L.map(function(x){return {d:x.d,v:x.w}}),u,b,b,what+" each session"):'<p class="note">One session logged. The graph starts with the next one.</p>')
+    +'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}
 function trainAct(a,b){cexSync();
   if(a==="wkfold"){S.gymFold=!S.gymFold;persist();render();return true}
+  if(a==="wkinfo"){wkSessInfo(+b.dataset.s);return true}
+  if(a==="wkexinfo"){wkExInfo(b.dataset.ex);return true}
   if(a==="wkcxadd"){var ci=document.getElementById("cxin");if(ci&&ci.value.trim()){var tx=ci.value;ci.value="";pop("Sorting "+tx.trim().slice(0,30)+"...");cexAdd(tx)}return true}
   if(a==="wkcxdel"){if(S.cex)delete S.cex[b.dataset.id];persist();render();return true}
   if(a==="wkplan"){var bp=buildPlan(b.dataset.v);S.wk={coach:coachPick(),plan:b.dataset.v,list:bp.list,roles:bp.roles,notes:bp.notes||{},note:bp.note,setsN:bp.setsN,min:bp.min,sets:{},w:{},hit:{},t:today()};render();persist();window.scrollTo(0,0);setTimeout(function(){coachOpen(0)},60);return true}
@@ -530,7 +573,7 @@ function trainAct(a,b){cexSync();
       var ws=[];for(var i=0;i<NS;i++)ws.push(typeof st[i]==="number"?st[i]:null);
       var top=Math.max.apply(null,ws.map(function(x){return x||0})),pv=lastLog(id),prevTop=pv?(pv.ws?Math.max.apply(null,pv.ws.map(function(x){return x||0})):pv.w||0):0;
       ws.forEach(function(x){if(x&&exU(id)===cu)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
-      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:exU(id)}]).slice(-12)});
+      S.gymlog[id]=gymKeep((S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:exU(id)}]))});
     if(!done){pop("Tap the sets you finished first");return true}
     var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load*10)/10,u:cu,top:tops}]).slice(-60);S.wk=null;
     /* your own plan done in full counts as a full session, however few activities it has */
@@ -693,7 +736,7 @@ function coachExHtml(id,pair){
   return '<div class="cex'+(pair?' cpair':'')+'">'+(pair?'<div class="cstage cstage-sm">'+exDemo(id)+'</div>':'')+'<h2>'+esc(E[0])+'</h2>'+coachForm(id)
    +'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(!pair&&role?'<span class="chip">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span>':'')+'</div>'
    +(nt?'<div class="note">'+esc(nt)+'</div>':'')+'<div class="note">'+esc(sg.line)+'</div>'
-   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>':'')
+   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>':'')
    +setBoxes(id,'data-ca="set"')+'</div>'
    +(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div>'}
 function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
