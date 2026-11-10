@@ -41,6 +41,9 @@ function roomModal(i){
   simulate();
   var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
   var cph=Math.round(coinRate(i)),stat=T.coin?cph+' coin'+(cph===1?'':'s')+' an hour, holds '+roomStore(r)+' hours':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+' an hour':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Yours to fill.');
+  /* the room's numbers (Cal, 2026-11-10: "each room should have some stats on the screen"): a Loft room's bonus out of its most, a
+     business's town efficiency, payout share and upgrades */
+  if(typeof rmStats==="function")stat=rmStats(r,i,stat);
   /* QA: the payout sentence ran off a phone inside the chip; it is its own line now */
   var payln=T.coin?'<p class="note">Your businesses can pay out '+payRoom().toLocaleString()+' more coins today.</p>':'';
   var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
@@ -68,7 +71,7 @@ function roomModal(i){
     var elv=0;/* Cal: "Keep the arcade and bowling alley a secret": no hint card until the story opens them */if(e.opens&&!styAllows(e.opens)&&(e.opens==="arcade"||e.opens==="bowling"))return;if(e.opens&&!styAllows(e.opens)){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>'+esc(styWhy(e.opens))+'</small><button class="btn ghost" disabled>Not yet</button></div>');return}
     if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
     var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
-    var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):'';
+    var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):e.xp?'<em class="uptag up">+'+e.xp+'% XP</em>':'';
     avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+tag+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
   });
   /* QA (Restaurant pass): three "Needs Knock Through the Wall" cards filled the slots ahead of Knock Through itself, so nothing
@@ -320,7 +323,7 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:Math.round(x*12)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:ECON.wwCoins}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -982,7 +985,7 @@ function chPose(a,f){
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    xpc2:1,xpc3:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,xpc3:1,xpc4:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -1008,7 +1011,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
    one or two quests, the cost ramps to ECON.lvFlat by level ECON.lvRamp, then grows only ECON.lvGrow a level, so chores alone
    level a player up 1 to 2 times a day and a full day (workout, Training, bounties) 3 to 4 times, all the way up. Level 100 is
    13,905 XP. See docs/ECONOMY.md. cum2 is curve 2 and cumOld curve 1, kept only to move old saves over (merge). */
-function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat*(1+c.lvGrow*(L-c.lvRamp)))}
+function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP))}
+/* curve 3 (2026-11-09 to 2026-11-10), frozen here so a save made on it moves over at the same level and fraction (merge, xpc4) */
+var CUMT3=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT3.push(CUMT3[L]+Math.round(L<6?20+115*(L-1)/5:135*(1+.0015*(L-6))))})();
+function cum3(L){return L<=1?0:L<CUMT3.length?CUMT3[L]:CUMT3[CUMT3.length-1]+(L-CUMT3.length+1)*154}
 var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+lvNeed(L))})();
 function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*lvNeed(CUMT.length-1)}
 /* curve 2 (2026-11-05 to 2026-11-09): min(600, 50 + 6L + 0.2L^2), frozen here so retuning ECON never changes the move-over */
@@ -1087,7 +1093,7 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
   if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -1110,6 +1116,10 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   if(curve3){var x2=S.xp||0,L2=1;while(L2<MAXL&&x2>=cum2(L2+1))L2++;var f2=(x2-cum2(L2))/Math.max(1,cum2(L2+1)-cum2(L2)),x3=Math.round(cum(L2)+f2*(cum(L2+1)-cum(L2)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x3-x2;S.xp=x3}
   S.xpc3=1;
+  /* curve 4 (xpc4, 2026-11-10, the ramp): the same move, from curve 3 */
+  if(curve4){var x4=S.xp||0,L4=1;while(L4<MAXL&&x4>=cum3(L4+1))L4++;var f4=(x4-cum3(L4))/Math.max(1,cum3(L4+1)-cum3(L4)),x5=Math.round(cum(L4)+f4*(cum(L4+1)-cum(L4)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x5-x4;S.xp=x5}
+  S.xpc4=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}

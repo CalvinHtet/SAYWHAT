@@ -46,7 +46,13 @@ var ECON={
      level 1 to 2 costs lvFirst, the cost ramps to lvFlat by level lvRamp, then grows lvGrow a level (135 at 6, 144 at 50, 154 at
      100; 13,905 XP to level 100). Chores only (about 180 XP a day): 1.2 to 1.3 levels a day all the way up, level 100 around day 77.
      Chores, a photo workout, a Training session and a bounty (about 500 a day): 3.2 to 3.7 a day, level 100 around day 28. */
-  lvFirst:20,lvRamp:6,lvFlat:135,lvGrow:.0015,
+  /* Cal, 2026-11-10: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to
+     lvl 40", and "The leveling should definitely ramp up more ... The last few levels ... should take a day or 2 or even 3":
+     curve 4. Levels 1 to 5 as before, then lvFlat + lvK x (L - lvRamp)^lvP: 140 at 10, 191 at 20, 466 at 40, 969 at 60, 1,701
+     at 80, 2,608 at 99; about 89,000 XP to level 100 (was 13,905). Measured (econsim, Cal's routine): the spec's first fit (4.04 x
+     (L - 6)^1.25) put level 100 at day 65, so the top is steeper. */
+  lvFirst:20,lvRamp:6,lvFlat:135,lvK:.286,lvP:2,
+  wwCoins:3000,                                   /* Weekly Warrior's coins, fixed (its XP follows the curve) */
   trialDays:2,                                    /* a level trial also passes on honor: active (50+ XP) on this many days */
   restDay:.25,restMax:1,                          /* rested XP: a quarter level banked per day with no quest, one level at most */
   wqDays:4,                                       /* Weekly Quest: active (50+ XP) on this many days, Monday to Sunday, pays a level */
@@ -60,6 +66,8 @@ var ECON={
   oneSlotBelow:10,                                /* below this level, one unlock (area or story step) a day in all */
   /* Cal, 2026-11-09: the Loft and the Garden on day 1 and the Restaurant by day 2 or 3, for everyone (were levels 5 and 7) */
   stepLv:{garden:2,chef:3,boba:9,dessert:11,lockkey:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
+  /* W25: coins earned since the story room before it opened (STYCHAIN in 29b_story.js) */
+  storyCoins:{chef:2000,boba:6000,dessert:8000,lockkey:12000,mall:20000},
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
   trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
   /* each stat point, and its cap. INT had none: the hidden quest adds one most days, so the chest grew without end (QA) */
@@ -75,6 +83,9 @@ var ECON={
      lot on the street costs lot x its phase. Set fixed:1 on an upgrade to keep its price exactly as written (fp:1 only keeps
      29_prices.js from flattening it; this pass still prices it by what it is). */
   tier:{decor:200,furniture:325,equipment:500,big:750},
+  /* W21: later rooms cost more again, by their phase (x (1 + lateK x (phase - 1))): the Loft as before, the Restaurant about 2.1x,
+     the Nightclub about 4.9x, so every upgrade lasts about three months of Cal's routine (econsim) */
+  lateK:1.4,
   kindOf:{au_proj1:"equipment"},                 /* the plain Digital Projector, so the IMAX one is the clear step up */
   grandK:.5,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
   /* measured (econsim.js, a heavy player): about 3,700 a day in the Loft's first days, 6,000 when the Garden opens, 10,000 at
@@ -172,13 +183,15 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
   if(kind==="opener")p=ECON.opener*econPhase(e.opens);
   else if(kind==="grand")p=((typeof PRICE_HUGE!=="undefined"&&PRICE_HUGE[a[0]])||a[2]/st)*ECON.grandK*ph;
   else p=ECON.tier[kind]*ph*(1+ECON.ramp*(n>1?i/(n-1):0));
+  p*=econLate(kind==="opener"?e.opens:k);
   return Math.round(p/50)*50}
+function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
 (function(){Object.keys(ADDONS).forEach(function(k){var L=(ADDONS[k]||[]).filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});
   L.forEach(function(a,i){var e=a[3]||{};if(e.fixed)return;a[2]=econPrice(k,a,i,L.length)})});
   /* lots on the street, and the Garden's knock-through that opens the Restaurant (it keeps the Restaurant's own price) */
-  ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)/50)*50});
+  ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)*econLate(k)/50)*50});
   if(ROOMT.garden)ROOMT.garden.cost=ECON.lotGarden;
-  if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}})();
+  if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")*econLate("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}})();
 /* Shop prices (SHOP and GITEMS in 10_app_a.js, EXTRA_ITEMS in 15_shop.js), each item once even if it sits in two lists:
    clothes x shopK between clothesMin and clothesMax (the free-to-cheap basics just x shopK), permanent upgrades from ECON.buff,
    and interface items (themes, frames, backdrops, companions, titles, tap effects, HUD, sounds, scenes) by the level they open */
@@ -189,3 +202,45 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
       it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
+/* ---- Room Bonus (Cal, 2026-11-10: "some assets should provide a buff but very miniscule ... a new bed would increase your
+   productivity by 0.2% exp gain ... each room should have some stats on the screen that show you how much passive buff increase is
+   provided by that fully decked out room"): each Loft room gives at most ECON.roomBonus % XP on every quest when fully upgraded,
+   split across its upgrades by price (a[3].xp), so a 7-upgrade room and a 35-upgrade room both top out at the same. It replaces
+   the Patio's and Game Room's old per-upgrade XP. Crew in a room still add their 1% each. ---- */
+ECON.roomBonus=3;ECON.roomBonusRooms={bedroom:"Rested",closet:"Room bonus",gameroom:"Room bonus",patio:"Room bonus"};
+function rbList(t){return (ADDONS[t]||[]).filter(function(a){var e=a[3]||{};return a[2]>0&&!e.retired&&!e.opens&&e.g!=="Expansion"})}
+(function(){Object.keys(ECON.roomBonusRooms).forEach(function(t){var T=ROOMT[t];if(!T)return;var L=rbList(t),tot=L.reduce(function(s,a){return s+a[2]},0);if(!tot)return;
+  T.buff={special:"all"};T.pct=0;
+  (ADDONS[t]||[]).forEach(function(a){var e=a[3]=a[3]||{};if(L.indexOf(a)<0){if(e.xp)e.xp=0;return}e.xp=Math.round(ECON.roomBonus*a[2]/tot*100)/100;
+    a[4]=String(a[4]||"").replace(/ ?\+[\d.]+% XP on all quests\./,"")})})})();
+/* a Loft room's bonus now, rounded for the screen */
+function rbPct(r){return Math.round(addonsOf(r).reduce(function(s,a){return s+((a[3]&&a[3].xp)||0)},0)*10)/10}
+/* ---- bigger upgrades earn more (Cal, 2026-11-10: "bigger upgrades should give bigger passive buffs. Such as the imax screen should
+   definitely start generating more income"): in a room that earns, each earning upgrade's share follows what it is (econKind)
+   by ECON.earnW, and the room's total stays what it was ---- */
+ECON.earnW={decor:1,furniture:1,equipment:2,big:3,grand:5};
+(function(){Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k];if(!T||!(T.coin||T.food))return;
+  var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens});if(L.length<2)return;
+  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){return ECON.earnW[econKind(k,a)]||1}),ws=wt.reduce(function(s,w){return s+w},0);
+  L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,old=Math.round(e.p*100);e.p=np;
+    a[4]=String(a[4]||"").replace(new RegExp(" Earns \+"+old+"% here\."),"")+" Earns +"+Math.round(np*100)+"% here."})})})();
+/* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
+   items get ECON.l90 in econPrice when the Mac makes them; pets at 30 come with their art (W23) ---- */
+ECON.faceLv=40;ECON.accLv=20;
+(function(){(typeof SHOP!=="undefined"?SHOP:[]).forEach(function(it){if(it[1]==="a_xface")it[4]=Math.max(+it[4]||1,ECON.faceLv)})})();
+/* the second accessory: worn from S.eq.a_acc2 once the level is reached, never the same piece as the first, never on the same part
+   of the body (two necklaces would draw on top of each other) */
+function acc2Slot(it){var M=it&&it[6]&&it[6].gar&&QBLoft.data.items[it[6].gar];return M?M.slot:""}
+function acc2Ok(it){if(!it||it[1]!=="a_acc"||effLvl()<ECON.accLv)return false;var a1=S.eq.a_acc&&S.owned[S.eq.a_acc]?shopItem(S.eq.a_acc):null;
+  return !a1||(a1[0]!==it[0]&&acc2Slot(a1)!==acc2Slot(it))}
+function acc2Item(base,ovr){if(base||!S||!S.eq||!S.eq.a_acc2||effLvl()<ECON.accLv)return null;var it=shopItem(S.eq.a_acc2);
+  if(!it||!S.owned[it[0]]||!itemFits(it))return null;var a1=ovr&&ovr.a_acc!==undefined?(ovr.a_acc?shopItem(ovr.a_acc):null):(S.eq.a_acc&&S.owned[S.eq.a_acc]?shopItem(S.eq.a_acc):null);
+  return a1&&(a1[0]===it[0]||acc2Slot(a1)===acc2Slot(it))?null:it}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=equip2],[data-act=unequip2]");if(!b)return;
+  if(b.dataset.act==="equip2"){var it=shopItem(b.dataset.id);if(!acc2Ok(it))return;S.eq.a_acc2=it[0];pop(it[2]+" worn as your second accessory")}else delete S.eq.a_acc2;
+  persist();render()});
+function rmStats(r,i,base){var T=ROOMT[r.t],L=ADDONS[r.t]||[],own=addonsOf(r).length,all=L.filter(function(a){return !(a[3]&&(a[3].retired||a[3].opens))}).length;
+  if(ECON.roomBonusRooms[r.t]){var n=rbList(r.t).filter(function(a){return r.a&&r.a[a[0]]}).length,tot=rbList(r.t).length;
+    return ECON.roomBonusRooms[r.t]+" +"+rbPct(r)+"% XP on every quest ("+n+" of "+tot+" upgrades, up to +"+ECON.roomBonus+"%)"+(roomCrew(i).length?", crew +"+roomCrew(i).length+"%":"")}
+  if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, payout share "+Math.round(payShare()*100)+"%, "+own+" of "+all+" upgrades";
+  return base}

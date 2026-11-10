@@ -1254,6 +1254,9 @@ function lookOf(ovr,base){
   var L={rig:rigChoice(c),sex:c.sex,beard:!!c.beard,skin:SKINS[c.skin],hair:HAIRC[c.hairC],hair_s:c.hair_s,eyes:EYEC[c.eyes],top:{s:c.top,c:CLOTH[c.topC],c2:"#eef0f5"},bottom:{s:c.pants,c:CLOTH[c.pantsC]},shoes:{s:c.shoes,c:CLOTH[c.shoesC]},acc:[c.hat,c.acc].filter(function(x){return x&&x!=="none"}),face:c.face,eyeT:c.eyeT,mouth:c.mouth,extra:[]};
   if(c.top==="hoodie")L.top.c2=CLOTH[c.topC]==="#eef0f5"?"#8a92a6":"#eef0f5";
   var it,_eq={};["a_hat","a_top","a_pants","a_shoes","a_acc"].forEach(function(sl){var q=pick(sl),M=q&&q[6].gar&&QBLoft.data.items[q[6].gar];if(M)_eq[M.slot]={art:q[6].gar,frontOnly:M.frontOnly,over:M.over,wide:M.wide,lift:M.lift,clip:M.clip}});
+  /* a second accessory from level ECON.accLv (Cal, 2026-11-10: "Once you get to lvl 20, you can wear a second accessory"): any
+     owned accessory that sits on a different part of the body from the first, drawn by the rig like the first */
+  var q2=acc2Item(base,ovr),M2=q2&&q2[6].gar&&QBLoft.data.items[q2[6].gar];if(M2&&!_eq[M2.slot])_eq[M2.slot]={art:q2[6].gar,frontOnly:M2.frontOnly,over:M2.over,wide:M2.wide,lift:M2.lift,clip:M2.clip};
   if(Object.keys(_eq).length)L.rig=Object.assign({},L.rig,{equipped:_eq});
   ["a_top","a_pants","a_shoes","a_hair","a_hairc","a_eyes"].forEach(function(sl){var q=pick(sl),bs=q&&q[6].basic;if(!bs)return;L.rig=Object.assign({},L.rig);L.rig[bs.key]=bs.id;if(bs.ckey)L.rig[bs.ckey]=bs.color});
   if((it=pick("a_hair"))&&!it[6].basic)L.hair_s=it[6].s;
@@ -1721,7 +1724,7 @@ function simulate(now){
 function baseBuffs(){
   var o=[];
   S.base.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t];if(!T.buff)return;
-    var pct=T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length;
+    var pct=Math.round((T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length)*10)/10;
     var b=Object.assign({},T.buff,{pct:pct,text:(T.buff.stat?statName(T.buff.stat)+" quests":"All quests")+" +"+pct+"% XP"});
     o.push({who:T.name,b:b});
   });

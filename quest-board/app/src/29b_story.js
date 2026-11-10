@@ -80,10 +80,30 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
     S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){if(a[3]&&a[3].opens===s.room){r.a=r.a||{};r.a[a[0]]=1}})});try{if(typeof LFV!=="undefined")LFV.init=0}catch(e){}render();persist();try{roomSplash(s.room)}catch(e){};return}
   persist();render();
   pop((s.why&&!s.scene?s.why+" ":"")+(s.how==="lot"?"A new lot is open on the street: "+ROOMT[s.room].name+".":ROOMT[s.room].name+" can now be opened from its room's upgrades."))}
+/* ---- story rooms open a day apart, on several triggers (Cal, 2026-11-10: "Rooms should open a day apart ... only the ones that have
+   questlines tagged to them such as the restaurant, boba shop, bar, dessert parlor, strip mall. There has to be multiple triggers that
+   are met. One is the level cap, one is the amount of money gained before someone decides to open up another business with you and at
+   least a day.") ----
+   STYCHAIN: the story rooms in order, the Garden first. Each one's step opens only when its story gate, its level (ECON.stepLv), the
+   coins earned since the room before it opened (ECON.storyCoins) and a new game day since that room opened are all true. The game day
+   (5 am) is the "day": a room opened at 11 pm lets the next open from 5 am. When each room opened lives in S.story.open; rooms a save
+   already had count as opened long ago. Other rooms open as before. */
+var STYCHAIN=[["garden","garden"],["chef","restaurant"],["boba","boba"],["dessert","dessert"],["lockkey","skybar"],["mall","mall"]];
+function styOpened(){var o=styState();if(!o.open||typeof o.open!=="object"){o.open={};STYCHAIN.forEach(function(c){if(styHas(c[1]))o.open[c[1]]={d:"",c:0}})}
+  STYCHAIN.forEach(function(c){if(styHas(c[1])&&!o.open[c[1]]){o.open[c[1]]={d:today(),c:Math.floor(S.earnedC||0)};persist()}});return o.open}
+/* [what, met, text] for each trigger of a story step, or null for a step outside the chain */
+function styTriggers(s){var k=-1;STYCHAIN.forEach(function(c,i){if(c[0]===s.id)k=i});if(k<1)return null;
+  var prev=STYCHAIN[k-1][1],P=styOpened()[prev],L=ECON.stepLv[s.id]||0,need=(ECON.storyCoins||{})[s.id]||0,have=P?Math.max(0,Math.floor(S.earnedC||0)-P.c):0,pn=(ROOMT[prev]||{}).name||prev;
+  return [["lv",effLvl()>=L,"Level "+Math.min(effLvl(),L)+" of "+L],
+    ["coins",!!P&&have>=need,(P?Math.min(have,need).toLocaleString():"0")+" of "+need.toLocaleString()+" coins earned since the "+pn+" opened"],
+    ["day",!!P&&P.d<today(),!P?"After the "+pn+" opens":P.d<today()?"A day since the "+pn+" opened":"Opens tomorrow at the earliest"]]}
+function styChainOk(s){var T=styTriggers(s);return !T||T.every(function(x){return x[1]})}
 /* the reason a room is still closed, for its locked card */
 var MALLHOLD=true;
 function mallHeld(){return MALLHOLD&&!!(window.QB_WEB&&QB_WEB.noTest)&&!styHas("mall")}
-function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];if(s&&s.id==="mall"&&mallHeld())return "The Calibur Mall is still being fitted out. It opens in a coming update.";return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
+function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];if(s&&s.id==="mall"&&mallHeld())return "The Calibur Mall is still being fitted out. It opens in a coming update.";
+  var T=s&&styTriggers(s);if(T)return (s.why||"")+" "+T.map(function(x){return (x[1]?"✓ ":"")+x[2]}).join(". ")+".";
+  return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
 /* QA (v0.66): a step without its own portrait uses the same person's portrait from another step (the boba scene is Mara's: chef) */
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
   /* the Garden's scene is the player's own idea: their character, not a stranger's initials */
@@ -134,15 +154,15 @@ function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o
 /* a story step below the shared-slot level that is ready to open (gate and level met), for 29h_unlocks.js */
 /* returns that step's own level, or 0 when none is ready */
 function styReadyLow(){var o=styState();if(o.stepDay===today()&&!(S.testFree>0))return 0;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
-  if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow||ECON.slotFree[s.id])continue;var ok=false;try{ok=s.gate()&&effLvl()>=L}catch(e){}if(ok)return L||1}return 0}
+  if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow||ECON.slotFree[s.id])continue;var ok=false;try{ok=s.gate()&&effLvl()>=L&&styChainOk(s)}catch(e){}if(ok)return L||1}return 0}
 function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
-  STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});
+  STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});styOpened();
   /* the 4-room Garden rule (2026-11-09) also applies to a save that was offered the lot before it and never built it: the offer
      goes back, and the hobby scene comes once The Loft has 4 rooms */
   if(o.offer.garden&&!o.done.garden&&!styHas("garden")&&loftRooms()<4){delete o.offer.garden;persist()}
   if(document.querySelector("#layer .modal,.modal.qbsv,.dropsplash"))return;
   for(var i=0;i<STORY.length;i++){var s=STORY[i];if(o.done[s.id]||o.offer[s.id]||s.how==="never")continue;
-    var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)}catch(e){}if(!ok)continue;
+    var ok=false;try{ok=s.gate()&&effLvl()>=(ECON.stepLv[s.id]||0)&&styChainOk(s)}catch(e){}if(!ok)continue;
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
     /* Cal, 2026-11-09: the Garden and the Restaurant (ECON.slotFree) never wait for the early one-a-day slot or an area */
     var sf=!!ECON.slotFree[s.id];
