@@ -371,7 +371,10 @@ body.fr-royal .hero,body.fr-royal .now{outline:2px solid var(--gold);outline-off
 @keyframes pvo{from{transform:translate(-20px,10px)}to{transform:translate(30px,-12px)}}
 .pv-embers i{position:absolute;bottom:-6px;width:4px;height:4px;border-radius:50%;background:var(--accent);animation:rise 2s linear infinite}
 @keyframes rise{to{transform:translateY(-100px);opacity:0}}
-.pv-aurora::before{content:"";position:absolute;inset:-20px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--done),var(--accent));filter:blur(24px);opacity:.5;animation:hue 6s linear infinite}
+/* BUILDER w-perf1 (QA W1): the glow is blurred once and only its opacity and position move; animating blur or hue-rotate redrew it every frame */
+.pv-aurora::before,.pv-aurora::after{content:"";position:absolute;inset:-20px -20%;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--done),var(--accent));filter:blur(24px);opacity:.5;animation:pvaA 3s ease-in-out infinite alternate}
+.pv-aurora::after{filter:blur(24px) hue-rotate(180deg);opacity:0;animation-name:pvaB}
+@keyframes pvaA{from{transform:translateX(-10%);opacity:.5}to{transform:translateX(10%);opacity:.08}}@keyframes pvaB{from{transform:translateX(10%);opacity:0}to{transform:translateX(-10%);opacity:.45}}
 .pv-holo::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.18) 48%,transparent 60%);background-size:260% 100%;animation:holo 3s linear infinite}
 .pv-holo::after{content:"NOW";font-family:var(--font-display);letter-spacing:.3em;color:var(--muted)}
 .pv .sb{width:70%;height:10px;border-radius:5px;background:var(--surface2);overflow:hidden}
@@ -404,8 +407,12 @@ body.fx-orbs::after{opacity:1;animation:drift 18s ease-in-out infinite alternate
 @keyframes drift{to{transform:translate(50vw,-22vh) scale(1.2)}}
 body.fx-ringglow .ring .p{filter:drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 22px var(--shadow))}
 body.fx-chipglow .chip.xp{box-shadow:0 0 12px -2px var(--gold)}
-body.fx-aurora .wrap::before{content:"";position:absolute;left:-20%;right:-20%;top:-70px;height:240px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--done),var(--accent));filter:blur(80px);opacity:.26;z-index:-1;pointer-events:none;animation:hue 14s linear infinite}
-@keyframes hue{to{filter:blur(80px) hue-rotate(360deg)}}
+/* BUILDER w-perf1 (QA W1): animating filter (blur + hue-rotate) cost 22% of the main thread and 60 style recalcs a second on every screen.
+   Now the band is blurred once; a second copy turned to the opposite colors (a static hue-rotate) fades in as the first fades out, and both drift sideways */
+body.fx-aurora .wrap::before,body.fx-aurora .wrap::after{content:"";position:absolute;left:-20%;right:-20%;top:-70px;height:240px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--done),var(--accent));filter:blur(80px);opacity:.26;z-index:-1;pointer-events:none;animation:aurA 8s ease-in-out infinite alternate}
+body.fx-aurora .wrap::after{filter:blur(80px) hue-rotate(180deg);opacity:0;animation-name:aurB}
+@keyframes aurA{from{transform:translateX(-12%);opacity:.26}to{transform:translateX(12%);opacity:.05}}@keyframes aurB{from{transform:translateX(12%);opacity:0}to{transform:translateX(-12%);opacity:.24}}
+@media (prefers-reduced-motion:reduce){body.fx-aurora .wrap::before,body.fx-aurora .wrap::after,.pv-aurora::before,.pv-aurora::after{animation:none}}
 body.fx-holo .now::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.08) 48%,transparent 60%);background-size:260% 100%;animation:holo 6s linear infinite}
 @keyframes holo{from{background-position:130% 0}to{background-position:-130% 0}}
 body.fx-shimmer .stat .fill{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:shim 2.4s linear infinite}
