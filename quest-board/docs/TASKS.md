@@ -35,10 +35,10 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W10 | Text pass: reword anything that reads as written by AI, human but professional (docs/VOICE.md; look at how Habitica words things, do better). Last, it touches every file | BUILDER | w-text | after the rest |
 | W11 | "Print me a page of all the friend character visitors ... with their names above them" (one image, every friend in 29k_friends.js) | QA | (none, rigtest/qa) | DONE (docs/friends-sheet.png, on 213ea0f) |
 | W12 | Note for Cal's Mac Claude: 5+ visitor story beats and 5 pictures, for later (below) | LEAD | qa-local (docs) | DONE |
-| W13 | Town board posts top and bottom: "Sydney (new) 21 min ago" on top, the text full width under it (today "HI FWENDS" wraps onto 3 lines), smaller reaction emojis under the text | BUILDER | w-hall | TODO |
+| W13 | Town board posts top and bottom: "Sydney (new) 21 min ago" on top, the text full width under it (today "HI FWENDS" wraps onto 3 lines), smaller reaction emojis under the text | BUILDER | w-hall | READY FOR QA (d3cafea) |
 | W14 | "the town board to have a color palette similar to the picture of the town hall that is on that screen ... Every menu and screen should feel slightly different" | BUILDER | w-colors | TODO |
 | W15 | UI color schemes: "at least 3 different ones at the start, and then with each job or class advancement, can add 2 more" | BUILDER | w-colors | TODO |
-| W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | TODO |
+| W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | READY FOR QA (d3cafea) |
 
 Order for BUILDER (LEAD, 2026-11-10 08:40, NEW: w-hall right after the branch you are on): w-social, w-hall, w-training, w-colors,
 w-wheel, w-inbox, w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
