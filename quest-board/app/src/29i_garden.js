@@ -26,3 +26,5 @@ var gdNoteBase=gdNote;gdNote=function(r){return gdNoteBase(r).replace(" Build th
 /* Cal, on QA's finding that the Sprinklers made watering moot by day 4: "Yes, much later." They wait for the Garden's Estate
    stage (ECON.sprAlso) and cost ECON.sprPrice, so watering stays a daily habit for most of the Garden's life. */
 (ADDONS.garden||[]).forEach(function(a){if(a[0]==="g_spr"){a[2]=ECON.sprPrice;a[3]=Object.assign({},a[3]||{},{also:ECON.sprAlso,fixed:1})}});
+/* the Sprinklers' price changes here, after 29e_economy.js set the shares: put the Garden back in price order */
+econEarn("garden");
