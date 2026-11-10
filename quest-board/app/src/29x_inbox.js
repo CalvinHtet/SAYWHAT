@@ -6,14 +6,14 @@
    - Letters live in INBOX: a new letter is one line. A letter with an empty body stays hidden (the roadmap until Cal has its text).
      coins: a gift the letter pays once, with a Claim button. d: the date it shows; without one, the day the player first got it.
    - INBOXGEN holds functions that return more letters made from game data (the weekly Fashion winner, W18).
-   - The save keeps S.inbox = {read:{id:1}, paid:{id:coins}, at:{id:date}, popped}. Players from before the inbox get the welcome
+   - The save keeps S.letters = {read:{id:1}, paid:{id:coins}, at:{id:date}, popped} (S.inbox is the owner's quest inbox, 30_app_b.js). Players from before the inbox get the welcome
      letter, its coins and its one-time opening too (welcomeOnce in 29q_news.js). */
 var INBOX=[
   {id:"welcome",from:"Cal",subj:"Welcome to SAYWHAT",body:function(){return WELCOMEBODY},coins:3000},
   {id:"roadmap",from:"Cal",subj:"Roadmap",body:""}
 ];
 var INBOXGEN=[];
-function ibState(){if(!S.inbox||typeof S.inbox!=="object")S.inbox={};var I=S.inbox;["read","paid","at"].forEach(function(k){if(!I[k]||typeof I[k]!=="object")I[k]={}});return I}
+function ibState(){if(!S.letters||typeof S.letters!=="object")S.letters={};var I=S.letters;["read","paid","at"].forEach(function(k){if(!I[k]||typeof I[k]!=="object")I[k]={}});return I}
 function ibBody(l){var b=typeof l.body==="function"?l.body():l.body;return b?String(b):""}
 /* every letter this player can see, newest first; a letter's day is its own d, else the day this player first got it */
 function ibDay(l){return l.d||ibState().at[l.id]||""}
