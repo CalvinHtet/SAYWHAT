@@ -316,7 +316,7 @@ function buildPlan(id){
   return {list:list,roles:roles,notes:notes,setsN:setsN,note:note,min:estMin(list,roles,setsN)};
 }
 function wkList(){return (S.wk&&S.wk.list)||[]}
-function wkKey(d){d=d||new Date();var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return dstr(x)}
+function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return dstr(x)}
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
@@ -927,11 +927,16 @@ var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function dstr(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function today(){return dstr(new Date())}
-function yest(){var d=new Date();d.setDate(d.getDate()-1);return dstr(d)}
+/* Cal, 2026-11-09: daily quests come back "at 5 am each day". The game's day starts at DAYSTART for everything that runs by the
+   day (daily quests, the Daily Quest and its chests, the streak, crawls, the wheel), so a task done at 1 am still counts for the
+   evening before. gameNow() is the clock moved back by that many hours. */
+var DAYSTART=5;
+function gameNow(){return new Date(Date.now()-DAYSTART*36e5)}
+function today(){return dstr(gameNow())}
+function yest(){var d=gameNow();d.setDate(d.getDate()-1);return dstr(d)}
 function dayDiff(a,b){var p=function(x){var t=x.split("-");return new Date(+t[0],+t[1]-1,+t[2])};return Math.round((p(b)-p(a))/86400000)}
 function streakNow(){if(!S.lastDone)return 0;var g=dayDiff(S.lastDone,today());return g<=1||streakGap(g).ok?S.streak:Math.floor(S.streak*ECON.streakKeep)}
-function visQ(q){return !(q.rep==="weekly4"&&typeof weekCount==="function"&&weekCount()>=4)}
+function visQ(q){return !(q.rep==="weekly4"&&typeof weekCount==="function"&&weekCount()>=4)&&!(S.qhide&&S.qhide.d===today()&&S.qhide.ids&&S.qhide.ids[q.id])}
 function ordered(){var o=[];CLUSTERS.forEach(function(c){S.quests.forEach(function(q){if(q.cl===c[0]&&visQ(q))o.push(q)})});return o}
 function statName(k){return (STATS.filter(function(s){return s[0]===k})[0]||["","General"])[1]}
 function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
@@ -1057,6 +1062,8 @@ S.base.slots=S.base.slots.map(function(r){return r&&ROOMT[r.t]?Object.assign({a:
 var rsKeep=S.base.slots.filter(function(r){return r&&r.t!=="bedroom"&&ROOMCELL[r.t]});S.base.slots=S.base.slots.filter(function(r){return r&&r.t==="bedroom"}).slice(0,1);if(!S.base.slots.length)S.base.slots=[{t:"bedroom",a:{},st:0,pend:0}];S.base.slots=S.base.slots.concat(rsKeep);S.base.crew={};try{worldMigrate()}catch(e){}
   S.quests.forEach(function(q){if(!q.rep){var d=DEFAULTS.filter(function(x){return x[0]===q.name})[0];q.rep=d?d[5]:OLDREP[q.name]||"once"}});
 }
+/* the 5 am reset also happens while the app stays open */
+setInterval(function(){if(loaded&&S&&S.created&&rollover()){render();persist()}},60000);
 function rollover(){
   var t=today(); if(S.runDate===t)return false;
   var keep=[];S.quests.forEach(function(q){if(q.rep==="once"&&S.done[q.id]){S.cleared++}else keep.push(q)});
@@ -1220,6 +1227,8 @@ function boardHtml(){
       return '<div class="q'+(d?" done":"")+(proofPend[q.id]?" pend":"")+(newIds[q.id]?" new":"")+'"><button class="qmain" data-act="toggle" data-id="'+q.id+'" aria-pressed="'+d+'">'
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub">'+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
+       /* Cal, 2026-11-09: "a toggle for keeping the tasks reoccurring ... turn it on daily and it resets at 5 am each day" */
+       +(q.rep==="daily"||q.rep==="once"?'<button class="qrep'+(q.rep==="daily"?' on':'')+'" data-act="qrep" data-id="'+q.id+'" aria-pressed="'+(q.rep==="daily")+'" aria-label="'+esc(q.name)+': '+(q.rep==="daily"?'daily, comes back every morning at 5 am. Tap to make it a one-off':'one-off. Tap to make it come back every morning at 5 am')+'"><span aria-hidden="true">&#8635;</span><small>Daily</small></button>':'')
        +(qEdit?'<button class="x del" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button>':'')+'</div>';
   };
   var cats=CLUSTERS.filter(function(c){return open.some(function(q){return q.cl===c[0]})});
@@ -1229,7 +1238,8 @@ function boardHtml(){
     h+='<section class="cluster"><header'+(ART["cl_"+c[0]]?' class="hasart" style="--cl:url('+ART["cl_"+c[0]]+')"':'')+'><h3 class="label">'+c[1]+'</h3><span class="note mono">'+dn+'/'+qs.length+'</span></header><div class="cbar"><i style="width:'+(dn/qs.length*100)+'%"></i></div>'
       +open.filter(function(q){return q.cl===c[0]}).map(qRow).join("")+'</section>';
   });
-  if(fin.length)h+='<details class="donebox donelast"><summary class="note mono">Completed ('+fin.length+') &middot; tap to review or undo</summary>'+fin.map(qRow).join("")+'</details>';
+  /* Cal, 2026-11-09: "a clear completed quests button at the bottom to remove those quests" */
+  if(fin.length)h+='<details class="donebox donelast"><summary class="note mono">Completed ('+fin.length+') &middot; tap to review or undo</summary>'+fin.map(qRow).join("")+'</details><button class="btn ghost qclear" data-act="qclear">Clear completed ('+fin.length+')</button>';
 
 
   return h;
@@ -1662,6 +1672,11 @@ document.addEventListener("click",function(e){
   var a=b.dataset.act;
   if(a==="welcome"){showWelcome();return}
   if(a==="qedit"){qEdit=!qEdit;render();return}
+  if(a==="qrep"){var rq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(rq&&(rq.rep==="daily"||rq.rep==="once")){rq.rep=rq.rep==="daily"?"once":"daily";persist();render();pop(rq.rep==="daily"?"Daily: back every morning at 5 am":"One-off: gone once it's done")}return}
+  /* clear the finished quests: one-offs go for good (their XP and coins stay), daily ones hide until the 5 am reset */
+  if(a==="qclear"){var t0=today(),n0=0;if(!S.qhide||S.qhide.d!==t0)S.qhide={d:t0,ids:{}};
+    S.quests=S.quests.filter(function(q){if(!S.done[q.id]||!visQ(q))return true;n0++;if(q.rep==="once"){S.cleared=(S.cleared||0)+1;return false}S.qhide.ids[q.id]=1;return true});
+    persist();render();if(n0)pop("Cleared "+n0+" finished quest"+(n0>1?"s":""));return}
   if(a==="updnow"){updNow(+b.dataset.v);return}
   if(baseAct(a,b,e))return;
   if(/^wk/.test(a)&&trainAct(a,b))return;
