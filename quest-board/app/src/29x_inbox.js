@@ -57,15 +57,18 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
    purchase option. Like in the room view I couldnt tell how much money I had left when I bought a room upgrade") ----------
    coinBar(): the header's coin pill with the + (kind words) and the envelope beside it, for the room window, the Build window, the
    Shop and the Loft. Every .coinlive on screen follows S.coins and counts down (or up) to the new total after a purchase. */
-function coinPillHtml(cls){var c=Math.floor(S.coins||0);return '<span class="coinpill coinlive'+(cls?' '+cls:'')+'" data-c="'+c+'" aria-label="'+c+' coins"><i class="coin"></i><b>'+c.toLocaleString()+'</b></span>'}
+/* a pill drawn after a purchase starts at the total you last saw, so it counts to the new one even when the window was redrawn */
+var COINSHOWN=null;
+function coinShown(){var c=Math.floor(S.coins||0);return COINSHOWN==null?c:COINSHOWN}
+function coinPillHtml(cls){var c=coinShown();return '<span class="coinpill coinlive'+(cls?' '+cls:'')+'" data-c="'+c+'" aria-label="'+Math.floor(S.coins||0)+' coins"><i class="coin"></i><b>'+c.toLocaleString()+'</b></span>'}
 function coinBar(){return '<span class="coinbar">'+coinPillHtml()+(typeof kdBtn==="function"?kdBtn():'')+ibBtn()+'</span>'}
-var COINANIM={};
-setInterval(function(){try{if(!S)return;var c=Math.floor(S.coins||0);
-  [].forEach.call(document.querySelectorAll(".coinlive"),function(el){var from=+el.dataset.c;if(from===c||el._run)return;el.dataset.c=c;el._run=1;el.setAttribute("aria-label",c+" coins");
+setInterval(function(){try{if(!S)return;var c=Math.floor(S.coins||0),els=document.querySelectorAll(".coinlive");
+  if(!els.length||![].some.call(els,function(el){return el._run||+el.dataset.c!==c}))COINSHOWN=c;
+  [].forEach.call(els,function(el){var from=+el.dataset.c;if(from===c||el._run)return;el.dataset.c=c;el._run=1;el.setAttribute("aria-label",c+" coins");
     var b=el.querySelector("b")||el,t0=performance.now(),d=600,step=function(t){var k=Math.min(1,(t-t0)/d),v=Math.round(from+(c-from)*(1-Math.pow(1-k,3)));b.textContent=v.toLocaleString();
       if(k<1)requestAnimationFrame(step);else{el._run=0;el.classList.remove("coinflash");void el.offsetWidth;el.classList.add("coinflash")}};requestAnimationFrame(step)})}catch(e){}},250);
 /* the Shop's own header (the page header is hidden there): its coin pill follows the total, with the + and the envelope beside it.
    Done on the Shop's finished markup, so the Shop's header line can change without this */
 var ibShopBase=shopHtml;
 shopHtml=function(){return ibShopBase.apply(this,arguments).replace(/<div class="qs-coin"><i class="coin"><\/i><b>(\d+)<\/b><\/div>/,function(m,n){
-  return '<div class="qs-cbar"><div class="qs-coin coinlive" data-c="'+n+'"><i class="coin"></i><b>'+(+n).toLocaleString()+'</b></div>'+(typeof kdBtn==="function"?kdBtn():'')+ibBtn()+'</div>'})};
+  var c=coinShown();return '<div class="qs-cbar"><div class="qs-coin coinlive" data-c="'+c+'"><i class="coin"></i><b>'+c.toLocaleString()+'</b></div>'+(typeof kdBtn==="function"?kdBtn():'')+ibBtn()+'</div>'})};

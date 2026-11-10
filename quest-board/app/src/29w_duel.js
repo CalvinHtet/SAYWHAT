@@ -145,7 +145,7 @@ function dlNewHtml(){var f=DL.f,ws=(SOC.worlds||[]).filter(function(w){return w&
   if(f.to&&!ws.some(function(w){return w.id===f.to}))f.to="";
   var seg=function(k,list,lab){return '<div class="dlseg" role="radiogroup">'+list.map(function(v){var on=f[k]===v,dis=k==="stake"&&S.coins<v;
     return '<button type="button" role="radio" aria-checked="'+on+'" class="'+(on?'on':'')+'" data-dl="f" data-k="'+k+'" data-v="'+esc(String(v))+'"'+(dis?' disabled':'')+'>'+lab(v)+'</button>'}).join("")+'</div>'};
-  var h='<div class="card box2 dlm"><h3>Challenge someone</h3><p class="note">You both put in the stake. Whoever earns more in the time wins the whole pot; a tie gives both stakes back. They have a day to accept.</p>';
+  var h='<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div><p class="note">You both put in the stake. Whoever earns more in the time wins the whole pot; a tie gives both stakes back. They have a day to accept.</p>';
   h+='<h4 class="label">Who</h4>'+(ws.length?seg("to",ws.slice(0,24).map(function(w){return w.id}),function(id){var w=ws.filter(function(x){return x.id===id})[0];return esc(w.name)+' <small class="note">Lv '+(+w.lv||1)+'</small>'}):'<p class="note">'+(SOC.loaded?'No one else in town yet.':'Looking for players...')+'</p>');
   h+='<h4 class="label">What</h4>'+seg("kind",["q","w"],function(k){return DL.kinds[k][0]+' <small class="note">'+DL.kinds[k][1]+'</small>'});
   h+='<h4 class="label">How long</h4>'+seg("days",DL.days,function(d){return d+' day'+(d>1?'s':'')});
