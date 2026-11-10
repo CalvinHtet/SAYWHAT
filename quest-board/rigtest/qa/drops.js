@@ -9,7 +9,7 @@ const load = async (b, base) => { const p = await (await b.newContext({ viewport
   await p.waitForTimeout(1500); return { p, errs }; };
 const shopText = (p) => p.evaluate(() => (document.querySelector('#app').innerText.match(/[^\n]*(drop|Monday|Thursday|vault|HANGANG|Y2K)[^\n]*/g) || []).slice(0, 8).join(' | '));
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const A = await load(b, process.env.BASE0), B = await load(b, process.env.BASE);
   const ta = await shopText(A.p), tb = await shopText(B.p);
   console.log((ta === tb ? 'ok   ' : 'DIFF ') + 'off: the Shop drop text before and after'); if (ta !== tb) console.log('  before: ' + ta + '\n  after:  ' + tb); else console.log('  ' + tb.slice(0, 300));

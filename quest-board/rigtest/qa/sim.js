@@ -31,7 +31,7 @@ const P = {
 
 (async () => {
   P.water = WATER; P.nobuy = NOBUY;
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await b.newPage({ viewport: { width: 1000, height: 900 } });
   const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
   await p.goto(BASE + '/dist/index.html');

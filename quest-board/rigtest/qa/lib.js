@@ -8,7 +8,7 @@ exports.ORDER = ['bedroom', 'closet', 'lair', 'patio', 'gameroom', 'restaurant',
 
 // owned: 'all' (every upgrade), 'none' (every room, no upgrades)
 exports.open = async function ({ width = 1280, height = 900, body = 'm', owned = 'all', mobile = false, slow = 0 } = {}) {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const ctx = await b.newContext(mobile ? { viewport: { width, height }, deviceScaleFactor: 1, isMobile: true, hasTouch: true } : { viewport: { width, height }, deviceScaleFactor: 1 });
   const p = await ctx.newPage();
   const errs = [];

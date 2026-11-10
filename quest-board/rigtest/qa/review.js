@@ -8,7 +8,7 @@ const { chromium } = require('playwright');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', OUT = process.env.OUT || 'qa-out', W = +(process.env.W || 390), BODY = process.env.BODY || 'm';
 fs.mkdirSync(OUT, { recursive: true });
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: W, height: 844 }, isMobile: true, hasTouch: true })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft, null, { timeout: 90000 }); await p.waitForTimeout(1200);
   await p.evaluate((sex) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex }); S.xp = x.cum(12); S.gates = [5, 10]; x.persist(); x.render(); document.querySelectorAll('#layer .modal,.dropsplash').forEach((e) => e.remove()); }, BODY);

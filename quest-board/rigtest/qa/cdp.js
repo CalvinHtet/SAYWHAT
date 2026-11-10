@@ -12,7 +12,7 @@ async function ensureChrome() {
   try { await (await fetch(`http://127.0.0.1:${PORT}/json/version`)).json(); return; } catch (e) {}
   const dir = path.join(process.env.TEMP || 'C:/Temp', 'qa-chrome-' + PORT);
   const ch = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${PORT}`, `--user-data-dir=${dir}`, '--no-first-run', '--no-default-browser-check',
-    '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--window-size=390,844', 'about:blank'], { detached: true, stdio: 'ignore' });
+    '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--mute-audio', '--window-size=390,844', 'about:blank'], { detached: true, stdio: 'ignore' });
   ch.unref();
   for (let i = 0; i < 60; i++) { await sleep(250); try { await (await fetch(`http://127.0.0.1:${PORT}/json/version`)).json(); return; } catch (e) {} }
   throw new Error('chrome did not start on ' + PORT);

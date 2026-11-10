@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', OUT = process.env.OUT || 'qa-out/friendlooks'; fs.mkdirSync(OUT, { recursive: true });
 const CLIPS = { idle: [0, 6, 12, 18], walk: [0, 4, 8, 12], stretch: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22], sit: [0, 12], type: [0, 6], sleep: [0, 4], back: [0, 12], walkBack: [0, 4, 8, 12], sitBack: [0, 2] };
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: 1400, height: 1000 } })).newPage(); const errs = [];
   p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto(BASE + '/dist/index.html');

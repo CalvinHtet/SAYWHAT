@@ -13,7 +13,7 @@ const MOCK = ({ uid, owner }) => {
   window.claude = { use: async (n) => (n === 'db' ? { doc, collection: (p) => coll(p) } : n === 'user' ? { id: async () => uid, isOwner: async () => owner } : null) };
 };
 (async () => {
-  const b = await chromium.launch(); const ctx = await b.newContext(); const errs = [];
+  const b = await chromium.launch({ args: ['--mute-audio'] }); const ctx = await b.newContext(); const errs = [];
   const visit = async (p) => { await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 90000 }); await p.waitForTimeout(10500); };
   const p = await ctx.newPage(); p.on('pageerror', (e) => errs.push(e.message));
   await p.addInitScript(MOCK, { uid: 'u_cal', owner: true });

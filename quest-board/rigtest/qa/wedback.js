@@ -9,7 +9,7 @@ const walk = (p, on) => p.evaluate((on) => { const D = window.__qbDrops; D.cfg.o
     out.push([pt, s.back ? s.back.id : '-', s.live.length]); }
   window.__qbShift = keep; D.cfg.on = false; return out; }, on);
 (async () => {
-  const b = await chromium.launch(); const A = await load(b), B = await load(b);
+  const b = await chromium.launch({ args: ['--mute-audio'] }); const A = await load(b), B = await load(b);
   for (const on of [false, true]) {
     const a = await walk(A.p, on), c = await walk(B.p, on);
     const same = JSON.stringify(a.map((x) => x[1])) === JSON.stringify(c.map((x) => x[1]));

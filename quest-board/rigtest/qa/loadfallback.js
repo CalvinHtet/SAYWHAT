@@ -2,7 +2,7 @@
 // and the bar must go.   WAIT=<ms> node loadfallback.js <server>
 const { chromium } = require('playwright');
 (async () => {
-  const b = await chromium.launch(); const p = await b.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  const b = await chromium.launch({ args: ['--mute-audio'] }); const p = await b.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   let aborted = 0; await p.route('**/*', (r) => { if (r.request().resourceType() === 'fetch') { aborted++; return r.abort(); } return r.continue(); });
   const t0 = Date.now(); await p.goto(process.argv[2] + '/dist/index.html');
   await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && document.querySelector('#app').children.length, null, { timeout: 120000 });

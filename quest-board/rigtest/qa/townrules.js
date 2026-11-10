@@ -40,7 +40,7 @@ const MOCK = ({ uid, owner, rules }) => {
   window.claude = { use: async (n) => (n === 'db' ? db : n === 'user' ? { id: async () => uid, isOwner: async () => owner } : null) };
 };
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const errs = [];
   const open = async (uid, owner, name) => {

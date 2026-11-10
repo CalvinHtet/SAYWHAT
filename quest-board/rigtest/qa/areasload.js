@@ -4,7 +4,7 @@
 const { chromium } = require('playwright');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769';
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const fails = [], oks = [], t = (c, m) => (c ? oks : fails).push(m);
   for (const [lv, gates] of [[30, [5, 10, 20, 30]], [3, []]]) {
     const ctx = await b.newContext(); const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));

@@ -8,7 +8,7 @@ const PORT = process.env.PORT || '65410', B = process.env.B || 'chromium';
 const VIEWS = (process.env.VIEW || '390x844,440x956,375x667').split(',').map((v) => v.split('x').map(Number));
 const SHOT = process.env.SHOT || '';
 (async () => {
-  const b = await pw[B].launch(B === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : {});
+  const b = await pw[B].launch(B === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] } : {});
   let bad = 0;
   for (const [W, H] of VIEWS) {
     const p = await (await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));

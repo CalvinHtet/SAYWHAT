@@ -49,7 +49,7 @@ async function grab(br, base) {
   // ECONOMY.md anchors (2026-11-10)
   const g = (k) => N.up[k];
   const anchors = { 'auditorium.au_proj2 (IMAX Laser Projector)': [g('auditorium.au_proj2'), 10500], 'auditorium.au_imax (IMAX Screen)': [g('auditorium.au_imax'), 21000] };
-  const lotsSum = ['garden', 'boba', 'theater', 'mall', 'club'].reduce((s, k) => s + (N.lot[k + '.cost'] || 0), 0); anchors['lots garden+boba+theater+mall+club'] = [lotsSum, 85400];
+  const lotsSum = ['garden', 'boba', 'theater', 'mall', 'club'].reduce((s, k) => s + (N.lot[k + '.cost'] || 0), 0); anchors['lots garden+boba+theater+mall+club'] = [lotsSum, +(process.env.LOTS || 86500)]; // ECONOMY.md: 86,500 since SPEC8 (w-focus) moved Boba's phase; 85,400 before (LOTS=85400 for older builds)
   for (const [k, [v, want]] of Object.entries(anchors)) if (v !== want) P.push(`ECONOMY.md anchor ${k}: ${v}, doc says ${want}`);
   console.log(`checked ${nUp} room upgrades, ${Object.keys(N.lot).length} lot/opener prices, ${Object.keys(N.shop).length} Shop entries (${Object.keys(tiers).length} graded clothes) on ${BASE}${R ? ' against ' + REF : ''} in ${Math.round((Date.now() - t0) / 1000)} s`);
   console.log(`anchors: ${Object.entries(anchors).map(([k, [v, w]]) => `${k} ${v}${v === w ? ' ok' : ' (doc ' + w + ')'}`).join('; ')}`);

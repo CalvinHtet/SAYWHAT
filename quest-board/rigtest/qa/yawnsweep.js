@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const TOPS = (process.env.TOPS || 'nc_hoodie').split(','), F = +(process.env.F || 12);
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: 600, height: 800 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 140)));
   await p.goto(process.env.BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && window.QBLoft.data, null, { timeout: 90000 }); await p.waitForTimeout(1500);
   const necks = await p.evaluate(() => { const x = window.__qb.x(), I = window.QBLoft.data.items || {}; return x.SHOP.filter((q) => q[6] && q[6].gar && I[q[6].gar] && I[q[6].gar].slot === 'neck').map((q) => q[0]); });

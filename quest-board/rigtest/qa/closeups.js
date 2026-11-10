@@ -41,7 +41,7 @@ const { BASE, open, diff, ORDER } = require('./lib.js');
     }
     await b0.close();
   }
-  const b = await chromium.launch();
+  const b = await chromium.launch({ args: ['--mute-audio'] });
   const p = await b.newPage({ viewport: { width: 1500, height: 900 } });
   await p.goto(BASE + '/dist/index.html');
   await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 60000 });
