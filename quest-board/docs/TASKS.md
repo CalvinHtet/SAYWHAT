@@ -68,6 +68,10 @@ turns READY FOR QA.
 ### Specs for BUILDER (LEAD, 2026-11-10 09:20): read these before each branch
 
 LEAD's queued messages reach a chat only when its turn ends, so the full specs live here. Cal's words are in the table above.
+- **NEW 09:45 (Cal via ARCHITECT), do after w-wheel:** the last three items in `.claude/team/todo/BUILDER.md`: the w-drops amend
+  (Monday and Thursday 8 am Pacific, HANGANG splash bug), the new w-chests branch (100/200/300 chests, relic tiers), and income by
+  upgrade size added to w-econ. Spec: `.claude/team/ideas/2026-11-10_SPEC2_drops_chests_relics_income_splash.md`. The w-drops and
+  W26 lines below are out of date where they differ.
 - **w-inbox fix, first (W7/W19):** S.inbox already belongs to checkInbox (30_app_b.js:1057, the owner's quest inbox: S.inbox[itemId]=1).
   Keep letters in their own save field (for example S.letters {read, paid, at, popped}) so the two never share an object; nothing
   has shipped, so no migration. Also, the welcome text still says challenges are "Coming soon": they shipped in v0.88, so fix that
