@@ -17,7 +17,7 @@ function baseHtml(){
   var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
-  if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';
+  if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b>'+(typeof glBtn==="function"?glBtn(LFBSEL):'')+'</div>'+(typeof glNextHtml==="function"?glNextHtml(LFBSEL):'');
   return lfHtml().replace('<div class="lfctl">',hud+'<div class="lfctl">');
 }
 var DROP=null;
@@ -229,7 +229,7 @@ function baseAct(a,b,e){
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
-  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got));if(n<Math.floor(r.pend||0))capped=true;r.pend-=n;got+=n}});payTake(got);
+  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got));if(n<Math.floor(r.pend||0))capped=true;r.pend-=n;r.earn=(r.earn||0)+n;got+=n}});payTake(got);
     if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
     if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
