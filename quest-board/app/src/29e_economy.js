@@ -66,14 +66,15 @@ var ECON={
   wqDays:4,                                       /* Weekly Quest: active (50+ XP) on this many days, Monday to Sunday, pays a level */
   freeMiss:1,freezeEvery:5,streakKeep:.5,         /* streak: one missed day a week is free; a freeze every 5 days; short of freezes it halves */
   catchGap:8,catchPct:25,                         /* 8+ levels under the median of friends active this week: quests +25% XP */
-  slotFree:{garden:1,chef:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
+  slotFree:{garden:1,chef:1,lockkey:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
   /* Cal, 2026-11-05: "the garden can be unlocked at lvl 5 and scale things up from there. Otherwise we are unlocking too
      many things before lvl 10." The least level for each story step, on top of its own gate; one step every few levels. */
   waterH:24,sprAlso:"g_x2",sprPrice:2000,         /* Cal: Sprinklers "much later": only with the Garden's Estate stage (was 6,000) */
                                       /* Cal: watering the Garden lasts a day; Sprinklers make it automatic */
   oneSlotBelow:10,                                /* below this level, one unlock (area or story step) a day in all */
   /* Cal, 2026-11-09: the Loft and the Garden on day 1 and the Restaurant by day 2 or 3, for everyone (were levels 5 and 7) */
-  stepLv:{garden:2,chef:3,boba:9,dessert:11,lockkey:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
+  /* SPEC8: Lock and Key now comes before Boba and Dessert, so their level floors swap */
+  stepLv:{garden:2,chef:3,lockkey:9,boba:11,dessert:14,rafe:15,rooftop:17,mall:20,nova:21,theater:23,auditorium:25,arcade:28,rhythm:31,vr:31,bowling:34,karaoke:37,club:40},
   /* W25: coins earned since the story room before it opened (STYCHAIN in 29b_story.js) */
   storyCoins:{chef:2000,boba:6000,dessert:8000,lockkey:12000,mall:20000},
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
@@ -98,8 +99,8 @@ var ECON={
   grandK:.5,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
   /* measured (econsim.js, a heavy player): about 3,700 a day in the Loft's first days, 6,000 when the Garden opens, 10,000 at
      the Restaurant, then 13,000 to 15,000 from Boba on, where it levels off; the phases follow that, a bit under it */
-  phase:{bedroom:1,patio:1,closet:1,gameroom:1.2,lair:1.3,trophy:1.3,garden:1.3,restaurant:1.8,boba:2.2,dessert:2.3,
-    skybar:2.5,rooftop:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
+  /* SPEC8: Lock and Key opens before Boba and Dessert, so it takes their place in the price phases */
+  phase:{bedroom:1,patio:1,closet:1,gameroom:1.2,lair:1.3,trophy:1.3,garden:1.3,restaurant:1.8,skybar:2.2,boba:2.3,dessert:2.5,rooftop:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
   /* the Shop: clothes keep each brand's own spread x shopK, between clothesMin and clothesMax (Cal: "the shop is almost 1000
      for some items"); interface items cost uiBase + uiLv x the level they open at; permanent upgrades pay for themselves in
      about a week or two of quests, so each is priced by what it returns (Merchant Seal I was 500 for +10% coins forever) */
@@ -124,6 +125,18 @@ var ECON={
   clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,460],luxury:[440,460]},
     boutique:{thrift:[600,650],standard:[600,800],premium:[800,1050],luxury:[1050,1200]},
     atelier:{thrift:[1300,1400],standard:[1300,1800],premium:[1800,2400],luxury:[2400,3000]}},
+  /* SPEC8 (Cal, 2026-11-10: "by capping the amount of features, it allows more focus in the beginning and then the next expansion
+     makes more sense"): a story room opens only when its trigger is met AND every room the player has in its building (the building
+     before it, for a building's first room) has at least focusMin of its upgrades, plus its level floor. No day wait. The Garden's
+     trigger is gardenLoft of the upgrades in loftCore (Cal: "garden at 50% of Loft upgrades"); Boba's is bobaEarn coins collected
+     in the Restaurant since it opened */
+  focusMin:.5,gardenLoft:.5,loftCore:["bedroom","closet","gameroom","patio"],bobaEarn:20000,
+  /* the Mall waits for every Kode Plaza room to be built (econsim: going by only the rooms a player had, it opened on day 18, before
+     Lock and Key, Boba and Dessert), then for the focus rule */
+  plazaAll:["garden","restaurant","skybar","rooftop","boba","dessert"],
+  /* the building Goals (SPEC8 part 3): [coins, XP] for a room half upgraded, fully upgraded and a story step; coins x the room's
+     phase, paid once on a tap */
+  goal:{half:[400,50],full:[1200,150],story:[300,50]},
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
