@@ -286,7 +286,7 @@ var COACH={chest:["rook","Bar to chest, drive it up. Ego stays in the locker."],
 var REST={"Main lift":"Rest 2 min","Strength":"Rest 2 min","Superset A":"Back to back, rest 90 sec after both","Superset B":"Back to back, rest 90 sec after both","Support pair":"Back to back, rest 60 sec after both","Finisher":"Rest 45 sec"};
 var RESTM={"Main lift":2,"Strength":2,"Finisher":.75};
 var DAYPLAN={1:"push",3:"legs",5:"pull",0:"full"};
-function planOf(id){return PLANS.filter(function(p){return p[0]===id})[0]||null}
+function planOf(id){return PLANS.filter(function(p){return p[0]===id})[0]||(typeof cexPlanOf==="function"?cexPlanOf(id):null)}
 function recentMuscles(days){
   var cut=new Date();cut.setDate(cut.getDate()-days);var c=dstr(cut),o={};
   Object.keys(S.gymlog||{}).forEach(function(k){(S.gymlog[k]||[]).forEach(function(x){if(x.d>=c&&x.d<today())o[MUSC[k]]=1})});
@@ -299,7 +299,7 @@ function estMin(list,roles,setsN){
     else m+=n*(.75+(RESTM[r]||1.25));seen[id]=1});
   return Math.round(m);
 }
-function buildPlan(id){
+function buildPlan(id){if(/^c_/.test(id))return cexBuild(id);
   var src=SPLITS[id],F=FOCUS[id],list=[],roles={},notes={},setsN={},note="";
   var add=function(x){list.push(x[0]);roles[x[0]]=x[1];if(x[2])setsN[x[0]]=x[2]};
   if(src){src.forEach(add)}
@@ -350,7 +350,7 @@ function weekStrip(){
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Keep moving anyway.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div></div>'+weekDots()+'</section>';
 }
-function exSuggest(id){
+function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   var E=EX[id],lg=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return !E[4]||x.w>0}),last=lg[lg.length-1];
   var top=(E[3].match(/(\d+)(?!.*\d)/)||[])[1]||"";
   if(!last)return {w:"",line:E[4]?"First time. Pick a weight you can move for "+top+" clean reps.":"Bodyweight. Clean reps, full range."};
@@ -364,13 +364,13 @@ function exSuggest(id){
    Every copy runs on one clock, so a screen redraw never makes them jump. */
 var EXPLAN={push:"bench",pull:"pulldown",legs:"squat",full:"deadlift",arms:"curl",chest:"incline",back:"row",shoulders:"ohp",core:"hang"};
 function exBody(){return (S.char&&S.char.sex)==="f"?"f":"m"}
-function exDemo(id,cls){var bd=exBody(),t=-(Date.now()%2800);
+function exDemo(id,cls){if(EX[id]&&EX[id][5])return cexTile(id,cls);var bd=exBody(),t=-(Date.now()%2800);
   /* Walking swaps legs on each step; a fade would show four legs at once. */
   if(id==="farmer")cls=(cls?cls+" ":"")+"steps";
   return '<div class="xd'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+' demonstration" style="--xt:'+t+'ms"><img class="xa" src="'+exArt('ex_'+id+'_'+bd+'_a.webp')+'" alt=""><img class="xb" src="'+exArt('ex_'+id+'_'+bd+'_b.webp')+'" alt=""></div>'}
 /* exercise pictures travel in art_ex.js (a page holds at most 512 files); the plain file is the fallback */
 function exArt(n){return (window.QBART&&QBART[n])||"art/"+n}
-function exStill(id){return '<div class="xd still"><img src="'+exArt('ex_'+id+'_'+exBody()+'_b.webp')+'" alt=""></div>'}
+function exStill(id){if(EX[id]&&EX[id][5])return cexTile(id,"still");return '<div class="xd still"><img src="'+exArt('ex_'+id+'_'+exBody()+'_b.webp')+'" alt=""></div>'}
 /* ---------- sets that remember their weight (Cal, 2026-11-09) ----------
    "I want the weight for each set in the training tab to be remembered for upcoming weeks ... not just a tap to turn the checkmark
    green. But tapping would save the weight into that box for that set." A set now holds the weight it was done with (true for
@@ -385,8 +385,8 @@ function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.
   var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
-    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+fmtW(v)+" pounds":", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
-      +(v?(wt?'<b>'+fmtW(v)+'</b><small>lb</small>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
+    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+fmtW(v)+" "+exU(id):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
+      +(v?(wt?'<b>'+fmtW(v)+'</b><small>'+exU(id)+'</small>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
   return h+'</div>'}
 /* tap a set: save the weight in the box into it, or undo it. Returns true when the set was saved. */
 function wkSetTap(id,n,val){var wk=S.wk,E=EX[id];wk.sets[id]=wk.sets[id]||[];
@@ -405,23 +405,76 @@ function exCard(id,inPair){
    +'<div class="exhead"><b>'+esc(E[0])+'</b><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span></div>';
   if(nt)h+='<div class="note">'+esc(nt)+'</div>';
   h+='<div class="note">'+esc(sg.line)+'</div><div class="exrow">';
-  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds for the next set"><span>lb</span></label>';
-  h+=setBoxes(id,'data-act="wkset"')+'</div><button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div></div>';
+  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>';
+  h+=setBoxes(id,'data-act="wkset"')+'</div>'+(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div></div>';
   return h;
 }
 function stepCard(st){if(st.length<2)return exCard(st[0]);var r=S.wk.roles[st[0]];
   return '<div class="ssgrp"><div class="ssh"><span class="label">'+esc(r)+'</span><span class="note mono">'+esc(REST[r]||"")+'</span></div>'+st.map(function(id){return exCard(id,1)}).join("")+'</div>'}
-function trainHtml(){
+/* ---------- your own workouts (Cal, 2026-11-09) ----------
+   "I also want the option to add my own workouts. If people don't have access to the gym, they can collapse the gym workout plans
+   and add their own such as running, going for a walk, etc. And AI would sort that into a plan and do the same sort of book
+   keeping for that user in that category." An activity you add (S.cex) becomes an exercise in EX with its own unit (EX[id][5])
+   and icon (EX[id][6]), in a plan of its own ("c_" + the plan's name). Claude names it and picks the plan, the unit, the rounds
+   and the step (the same helper the brain dump uses); without it, keywords do. Sessions log each round's value, remember it
+   for next time and get the same summary and graph, in that plan's unit. */
+var CXUNITS={mi:.5,km:1,min:5,reps:1,laps:1,floors:1,lb:5,steps:500};
+function cexSlug(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,20)||"other"}
+function exU(id){return (EX[id]&&EX[id][5])||"lb"}
+function cexSync(){if(!S.cex||typeof S.cex!=="object")S.cex={};Object.keys(S.cex).forEach(function(id){var c=S.cex[id];
+  EX[id]=[c.n,"custom",c.sets,c.t,c.step,c.u,c.ic];TRAINSTAT["c_"+cexSlug(c.p)]=TRAINSTAT["c_"+cexSlug(c.p)]||c.st})}
+function cexPlans(){var o={};Object.keys(S.cex||{}).forEach(function(id){var c=S.cex[id],k="c_"+cexSlug(c.p);(o[k]=o[k]||{id:k,name:c.p,ex:[]}).ex.push(id)});return Object.keys(o).map(function(k){return o[k]})}
+function cexPlanOf(id){if(!/^c_/.test(id||""))return null;var p=cexPlans().filter(function(x){return x.id===id})[0];return p?[p.id,p.name]:[id,id.slice(2).replace(/-/g," ").replace(/^\w/,function(c){return c.toUpperCase()})]}
+function cexBuild(id){var p=cexPlans().filter(function(x){return x.id===id})[0],list=p?p.ex.slice():[],setsN={},min=5;
+  list.forEach(function(x){var c=S.cex[x];setsN[x]=c.sets;var n=parseFloat(c.t);min+=c.u==="min"&&n>0?n*c.sets:10*c.sets});
+  return {list:list,roles:{},notes:{},setsN:setsN,note:"Your own plan. Log what you did each round: it is kept for next time.",min:Math.round(min)}}
+function cexTile(id,cls){return '<div class="xd xcust'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+'"><span>'+esc(EX[id][6]||"\u{1F3C3}")+'</span></div>'}
+function cexSuggest(id){var E=EX[id],last=lastLog(id);
+  if(!last||!(last.w>0))return {w:"",line:"First time. Log what you did each round, in "+E[5]+"."};
+  return {w:"",line:"Last time: "+fmtW(last.w)+" "+E[5]+" on "+last.d.slice(5)+". Beat it?"}}
+/* sort an activity with Claude, or by keywords */
+function cexGuess(t){var s=t.toLowerCase(),r=function(n,p,u,ic,st,sets,tg){return {n:n,p:p,u:u,ic:ic,st:st,sets:sets||1,t:tg}};
+  var dist=(s.match(/(\d+(?:\.\d+)?)\s*(k|km|mi|mile|miles)\b/)||[]),mins=(s.match(/(\d+)\s*(min|mins|minutes)\b/)||[]);
+  var name=t.replace(/\s+/g," ").trim().replace(/^\w/,function(c){return c.toUpperCase()}).slice(0,28);
+  if(/run|jog|sprint/.test(s))return r(name,"Cardio",/km|\bk\b/.test(dist[2]||"")?"km":"mi","\u{1F3C3}","agi",1,dist[1]?dist[1]+" "+(/km|\bk\b/.test(dist[2])?"km":"mi"):"3 mi");
+  if(/walk|hike/.test(s))return r(name,"Cardio",mins[1]?"min":"mi","\u{1F6B6}","vit",1,mins[1]?mins[1]+" min":dist[1]?dist[1]+" mi":"2 mi");
+  if(/bike|cycl|spin/.test(s))return r(name,"Cardio",mins[1]?"min":"mi","\u{1F6B4}","agi",1,mins[1]?mins[1]+" min":"10 mi");
+  if(/swim/.test(s))return r(name,"Cardio","laps","\u{1F3CA}","vit",1,"20 laps");
+  if(/yoga|stretch|pilates|mobility|foam/.test(s))return r(name,"Mobility","min","\u{1F9D8}","vit",1,(mins[1]||20)+" min");
+  if(/push.?up|pull.?up|squat|lunge|burpee|sit.?up|crunch|dip/.test(s))return r(name,"Bodyweight","reps","\u{1F4AA}","str",3,"15 reps");
+  if(/plank/.test(s))return r(name,"Bodyweight","min","\u{1F4AA}","vit",3,"1 min");
+  if(/basket|soccer|football|tennis|pickle|volley|climb|box|martial|dance|golf|skate|surf/.test(s))return r(name,"Sports","min","\u{1F3C5}","agi",1,(mins[1]||45)+" min");
+  if(/stair/.test(s))return r(name,"Cardio","floors","\u{1FA9C}","agi",1,"20 floors");
+  return r(name,"Other","min","\u{2B50}","vit",1,(mins[1]||30)+" min")}
+function cexClean(o,t){var g=cexGuess(t),u=CXUNITS[o&&o.unit]!=null?o.unit:g.u,sets=Math.max(1,Math.min(5,Math.round(+(o&&o.sets)||g.sets))),step=+(o&&o.step);
+  var p=String((o&&o.plan)||g.p).replace(/[^A-Za-z &]/g,"").trim().slice(0,18)||g.p;p=p.replace(/\b\w/g,function(c){return c.toUpperCase()});
+  return {n:String((o&&o.name)||g.n).replace(/\s+/g," ").trim().slice(0,28)||g.n,p:p,u:u,sets:sets,t:String((o&&o.target)||g.t).slice(0,16),step:step>0&&step<=1000?step:CXUNITS[u],
+    ic:Array.from(String((o&&o.icon)||g.ic))[0]||g.ic,st:/^(str|agi|vit)$/.test(o&&o.stat)?o.stat:g.st}}
+async function cexAdd(text){text=String(text||"").trim().slice(0,60);if(!text)return;
+  var have=cexPlans().map(function(p){return p.name}),o=null;
+  try{var sample=window.claude?await window.claude.use("sample"):null;
+    if(sample)o=await sample.json('A habit game logs workouts. A player adds their own activity: "'+text.replace(/"/g,"'")+'". Plans they already have: '+(have.length?have.join(", "):"none")+'. Return ONLY JSON: {"name":"short name, 1 to 3 words","plan":"one of their plans if it fits, else one of Cardio, Mobility, Bodyweight, Sports, Outdoors, or a new 1 to 2 word name","unit":"what to log each round: one of mi, km, min, reps, laps, floors, steps, lb","sets":"rounds per session, 1 to 5","target":"a sensible amount per round, like 3 mi or 30 min","step":"the step for the number box, like 0.5","icon":"one emoji","stat":"str for strength, agi for speed and cardio, vit for endurance, mobility and recovery"}',{modelTier:"quick",cache:false})}catch(e){o=null}
+  var c=cexClean(o,text);if(!S.cex)S.cex={};S.cexN=(S.cexN||0)+1;var id="cx_"+S.cexN;S.cex[id]=c;cexSync();persist();render();
+  pop(c.n+" added to "+c.p+(o?"":" (sorted by keywords)"))}
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.id==="cxin"){e.preventDefault();var b=document.querySelector("[data-act=wkcxadd]");if(b)b.click()}});
+function cexHtml(){var ps=cexPlans();
+  return '<section class="card panel"><h3 class="label">Your own workouts</h3><p class="note">No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym.</p>'
+    +(ps.length?'<div class="plans">'+ps.map(function(p){var bp=cexBuild(p.id);return '<button class="plan" data-act="wkplan" data-v="'+p.id+'">'+exStill(p.ex[0])+'<b>'+esc(p.name)+'</b><small>'+p.ex.map(function(x){return esc(S.cex[x].n)}).join(", ")+' &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>':'')
+    +'<div class="cxadd"><input id="cxin" type="text" maxlength="60" placeholder="Run 5k, 30 min walk, yoga..." aria-label="Add your own workout"><button class="btn" data-act="wkcxadd">Add</button></div>'
+    +(ps.length?'<details class="cxlist"><summary class="note">Your activities ('+Object.keys(S.cex).length+')</summary>'+Object.keys(S.cex).map(function(id){var c=S.cex[id];return '<div class="lrow"><span>'+esc(c.ic)+' '+esc(c.n)+'</span><span class="note">'+esc(c.p)+' &middot; '+c.sets+' &times; '+esc(c.t)+'</span><button class="x del" data-act="wkcxdel" data-id="'+id+'" aria-label="Remove '+esc(c.n)+'">&times;</button></div>'}).join("")+'</details>':'')+'</section>'}
+function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
    +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize.</p></section>';
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
-    h+='<section class="card panel"><h3 class="label">Pick today\'s workout</h3><p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div></section>';
+    /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
+    h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">Gym plans</h3><button class="btn ghost csm" data-act="wkfold" aria-expanded="'+!S.gymFold+'">'+(S.gymFold?'Show':'Hide')+'</button></div>'
+      +(S.gymFold?'':'<p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>')+'</section>'+cexHtml();
     var ss=(S.sessions||[]).slice(-5).reverse();
     if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x){var pl=planOf(x.plan);return '<div class="lrow"><span class="lv">'+esc(x.d.slice(5))+'</span><span>'+esc(pl?pl[1]:x.plan)+'</span><span class="mono note">'+x.n+' lifts</span></div>'}).join("")+'</div></section>';
     var prs=Object.keys(S.gymlog||{}).filter(function(k){return EX[k]&&EX[k][4]}).map(function(k){return [k,Math.max.apply(null,S.gymlog[k].map(function(x){return x.w||0}))]}).filter(function(x){return x[1]>0});
-    if(prs.length)h+='<section class="card panel"><h3 class="label">Best weights</h3><div class="lrows">'+prs.map(function(x){return '<div class="lrow"><span class="lv mono">'+x[1]+'</span><span>'+esc(EX[x[0]][0])+'</span><span class="note">lb</span></div>'}).join("")+'</div></section>';
+    if(prs.length)h+='<section class="card panel"><h3 class="label">Best weights</h3><div class="lrows">'+prs.map(function(x){return '<div class="lrow"><span class="lv mono">'+fmtW(x[1])+'</span><span>'+esc(EX[x[0]][0])+'</span><span class="note">'+exU(x[0])+'</span></div>'}).join("")+'</div></section>';
     return h;
   }
   var pl=planOf(S.wk.plan);
@@ -434,31 +487,35 @@ function trainHtml(){
    "The end of the training session should show a summary or how much you've improved since the last workout with a graph that
    shows your progression over the last 7 workouts of this day." A session's total is the weight of every set logged, added up
    (reps are not logged); the graph is that total for the last 7 sessions of the same day (Push, Legs ...). */
+function fmtL(v,u){return u==="lb"?Math.round(v).toLocaleString():fmtW(v)}
 function wkSumChart(plan){
-  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7);
-  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day with weights. From the next one, this shows how your total moves.':'')+'</p>';
+  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7),u=(L.length&&L[L.length-1].u)||"lb";
+  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day logged. From the next one, this shows how your total moves.':'')+'</p>';
   var W=300,H=128,pl=34,pr=14,pt=22,pb=22,mx=Math.max.apply(null,L.map(function(x){return x.load})),mn=Math.min.apply(null,L.map(function(x){return x.load}));
   var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(L.length===1?.5:i/(L.length-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
   var pts=L.map(function(x,i){return [X(i),Y(x.load)]}),last=pts[pts.length-1],lv=L[L.length-1].load;
-  var s='<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total weight across your sets, last '+L.length+' sessions: '+L.map(function(x){return x.d.slice(5)+' '+Math.round(x.load)+' pounds'}).join(", ")+'">'
+  var s='<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total across your sets, last '+L.length+' sessions: '+L.map(function(x){return x.d.slice(5)+' '+fmtL(x.load,u)+' '+u}).join(", ")+'">'
    +'<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" class="wkax"/>'
-   +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+Math.round(hi)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+Math.round(lo)+'</text>'
+   +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+fmtL(hi,u)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+fmtL(lo,u)+'</text>'
    +'<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(" ")+'" class="wkln"/>'
-   +pts.map(function(p,i){return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" class="wkdot"/><title>'+L[i].d.slice(5)+': '+Math.round(L[i].load).toLocaleString()+' lb</title></g><text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt">'+L[i].d.slice(5)+'</text>'}).join("")
-   +'<text x="'+Math.min(W-pr,last[0]).toFixed(1)+'" y="'+(last[1]-9).toFixed(1)+'" text-anchor="end" class="wkv">'+Math.round(lv).toLocaleString()+' lb</text></svg>';
+   +pts.map(function(p,i){return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" class="wkdot"/><title>'+L[i].d.slice(5)+': '+fmtL(L[i].load,u)+' '+u+'</title></g><text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt">'+L[i].d.slice(5)+'</text>'}).join("")
+   +'<text x="'+Math.min(W-pr,last[0]).toFixed(1)+'" y="'+(last[1]-9).toFixed(1)+'" text-anchor="end" class="wkv">'+fmtL(lv,u)+' '+u+'</text></svg>';
   return s}
-function wkSummary(o,after){
+function wkSummary(o,after){var u=o.u||"lb";
   var pl=planOf(o.plan),prev=(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0});prev=prev.length>1?prev[prev.length-2]:null;
   var dl=prev?o.load-prev.load:null;
   var rows=o.rows.map(function(r){var E=EX[r.id],ch=r.top>0&&r.prev>0?r.top-r.prev:null;
-    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?fmtW(r.top)+' lb':r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+fmtW(ch)+' lb':ch<0?'&#9660; '+fmtW(ch)+' lb':'same')+'</span></div>'}).join("");
+    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?fmtW(r.top)+' '+exU(r.id):r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+fmtW(ch)+' '+exU(r.id):ch<0?'&#9660; '+fmtW(ch)+' '+exU(r.id):'same')+'</span></div>'}).join("");
   var m=modal('<div class="card box2 wksum"><span class="label">Workout complete</span><h2>'+esc(pl?pl[1]:"Workout")+' day</h2>'
-    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+Math.round(o.load).toLocaleString()+' lb</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+Math.round(dl).toLocaleString()+' lb</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+Math.round(-dl).toLocaleString()+' lb less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
+    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+fmtL(o.load,u)+' '+u+'</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+fmtL(dl,u)+' '+u+'</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+fmtL(-dl,u)+' '+u+' less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
     +(o.load>0?(function(){var k=Math.min(7,(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0}).length);return (k>1?'<span class="label">Your last '+k+' '+esc(pl?pl[1]:"")+' days</span>':'')+wkSumChart(o.plan)})():'')
     +'<span class="label">Top set, against last time</span><div class="wksrows">'+rows+'</div>'
     +'<p class="note">+'+o.xp+' XP logged.</p><div class="row"><button class="btn" id="wksok">Done</button></div></div>');
   var b=m&&m.querySelector("#wksok");if(b)b.onclick=function(){m.remove();if(after)after()}}
-function trainAct(a,b){
+function trainAct(a,b){cexSync();
+  if(a==="wkfold"){S.gymFold=!S.gymFold;persist();render();return true}
+  if(a==="wkcxadd"){var ci=document.getElementById("cxin");if(ci&&ci.value.trim()){var tx=ci.value;ci.value="";pop("Sorting "+tx.trim().slice(0,30)+"...");cexAdd(tx)}return true}
+  if(a==="wkcxdel"){if(S.cex)delete S.cex[b.dataset.id];persist();render();return true}
   if(a==="wkplan"){var bp=buildPlan(b.dataset.v);S.wk={coach:coachPick(),plan:b.dataset.v,list:bp.list,roles:bp.roles,notes:bp.notes||{},note:bp.note,setsN:bp.setsN,min:bp.min,sets:{},w:{},hit:{},t:today()};render();persist();window.scrollTo(0,0);setTimeout(function(){coachOpen(0)},60);return true}
   if(a==="wkcoach"){coachOpen(0);return true}
   if(a==="wkopen"){coachOpen(+b.dataset.i);return true}
@@ -466,19 +523,22 @@ function trainAct(a,b){
   if(a==="wkset"){var id=b.dataset.ex,inp=document.querySelector('.kg[data-ex="'+id+'"]');wkSetTap(id,+b.dataset.n,inp?inp.value:"");render();persist();return true}
   if(a==="wkhit"){S.wk.hit[b.dataset.ex]=!S.wk.hit[b.dataset.ex];render();persist();return true}
   if(a==="wkdone"){
-    var done=0,full=0,t=today(),load=0,rows=[],tops={};if(!S.gymlog)S.gymlog={};
+    /* a plan of your own adds up the unit most of its activities use (miles, minutes ...), the gym adds up pounds */
+    var done=0,full=0,t=today(),load=0,rows=[],tops={},cust=/^c_/.test(S.wk.plan),nl=wkList().length,cu="lb";if(!S.gymlog)S.gymlog={};
+    if(cust){var uc={};wkList().forEach(function(id){uc[exU(id)]=(uc[exU(id)]||0)+1});cu=Object.keys(uc).sort(function(p,q){return uc[q]-uc[p]})[0]||"min"}
     wkList().forEach(function(id){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],st=(S.wk.sets[id]||[]),ns=st.filter(Boolean).length;if(!ns)return;done++;if(ns>=NS)full++;
       var ws=[];for(var i=0;i<NS;i++)ws.push(typeof st[i]==="number"?st[i]:null);
       var top=Math.max.apply(null,ws.map(function(x){return x||0})),pv=lastLog(id),prevTop=pv?(pv.ws?Math.max.apply(null,pv.ws.map(function(x){return x||0})):pv.w||0):0;
-      ws.forEach(function(x){if(x)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
-      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:"lb"}]).slice(-12)});
+      ws.forEach(function(x){if(x&&exU(id)===cu)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
+      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:exU(id)}]).slice(-12)});
     if(!done){pop("Tap the sets you finished first");return true}
-    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load),top:tops}]).slice(-60);S.wk=null;
-    var x=econTrainXp(done,full);
+    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load*10)/10,u:cu,top:tops}]).slice(-60);S.wk=null;
+    /* your own plan done in full counts as a full session, however few activities it has */
+    var x=econTrainXp(cust&&full>=nl?Math.max(done,ECON.trainFull):done,full);
     grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,plan);
     /* the summary first; the Workout quest's photo comes after it closes */
     var gq=S.quests.filter(function(q){return q.stat==="fitness"&&!S.done[q.id]&&/gym|workout|lift|train/i.test(q.name)})[0];
-    wkSummary({plan:plan,load:load,rows:rows,xp:x},gq?function(){onTap(gq.id)}:null);
+    wkSummary({plan:plan,load:load,rows:rows,xp:x,u:cu},gq?function(){onTap(gq.id)}:null);
     return true}
   return false;
 }
@@ -633,9 +693,9 @@ function coachExHtml(id,pair){
   return '<div class="cex'+(pair?' cpair':'')+'">'+(pair?'<div class="cstage cstage-sm">'+exDemo(id)+'</div>':'')+'<h2>'+esc(E[0])+'</h2>'+coachForm(id)
    +'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(!pair&&role?'<span class="chip">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span>':'')+'</div>'
    +(nt?'<div class="note">'+esc(nt)+'</div>':'')+'<div class="note">'+esc(sg.line)+'</div>'
-   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds for the next set"><span>lb</span></label>':'')
+   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>':'')
    +setBoxes(id,'data-ca="set"')+'</div>'
-   +'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div>'}
+   +(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div>'}
 function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
 function coachDraw(newLine){
   if(!CSCR)return;var steps=wkSteps(),st=steps[CIDX],id=st[0],wk=S.wk,c=coachById(wk.coach),pair=st.length>1,role=(wk.roles&&wk.roles[id])||"";

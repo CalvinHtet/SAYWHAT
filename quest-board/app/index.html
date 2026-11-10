@@ -1440,6 +1440,12 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .pick,.pick .picks,.pickinfo{max-width:100%;min-width:0}
 .pickinfo .chip,.pick .chip{white-space:normal;line-height:1.35;border-radius:12px;max-width:100%;overflow-wrap:anywhere}
 .pickcard span,.pickinfo span{min-width:0;overflow-wrap:anywhere}
+/* WINDOWS (Training, 2026-11-09): your own workouts: an emoji tile in place of the exercise drawing, the add box, the list */
+.xd.xcust{display:grid;place-items:center;background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:10px;aspect-ratio:1}
+.xd.xcust span{font-size:44px;line-height:1}.xd.xcust.still span{font-size:34px}
+.cxadd{display:flex;gap:8px;margin-top:10px}
+.cxadd input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
+.cxlist{margin-top:10px}.cxlist .lrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
