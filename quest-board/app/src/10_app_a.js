@@ -481,15 +481,30 @@ function hallHtml(){
   }
   return h+'</div></section>';
 }
-var WHEEL=[["100 coins",100,0],["250 coins",250,0],["150 coins",150,0],["500 coins",500,0],["200 coins",200,0],["Streak freeze",0,1],["1000 coins",1000,0],["350 coins",350,0]];
-var WHEEL_W=[20,18,20,12,16,6,2,6];
+/* Cal, 2026-11-10: "Change the wheel's prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item
+   from any clothing brand drop in the game." Eight equal slices (about 835 coins a spin on average, was about 228) with a thin gold
+   sliver between each pair: a sliver gives a piece of clothing the player does not own, from any brand (WHEELGIFT), or 1,000 coins
+   when they own them all. [label, coins, freeze, sliver]; WHEEL_W the weights, WHEEL_DEG each one's share of the circle. The spin
+   always stops inside the segment it pays. */
+var WHEEL=[["300 coins",300,0],["",0,0,1],["1,000 coins",1000,0],["",0,0,1],["500 coins",500,0],["",0,0,1],["2,500 coins",2500,0],["",0,0,1],
+  ["750 coins",750,0],["",0,0,1],["Streak freeze",0,1],["",0,0,1],["1,500 coins",1500,0],["",0,0,1],["5,000 coins",5000,0],["",0,0,1]];
+var WHEEL_W=[20,1,12,1,20,1,6,1,16,1,6,1,9,1,3,1];
+var WHEELSLIV=4,WHEEL_DEG=WHEEL.map(function(w){return w[3]?WHEELSLIV:(360-8*WHEELSLIV)/8}),WHEELALL=1000;
 var WCOL=["#ff3d81","#ffc857","#4dffc3","#6cb6ff","#b388ff","#ff8a3d","#f1f0fb","#22d3ee"];
 var spinning=false;
+function wheelStart(i){var a=0;for(var k=0;k<i;k++)a+=WHEEL_DEG[k];return a}
+/* a piece of clothing from any brand in the game, dropped yet or not: the Dungeon Crawls' rules (crawlWear) without dungeon pieces and
+   basics, and only what fits this body and is not owned yet */
+function wheelGift(){var ids=BRANDS.map(function(b){return b.id}),pool=SHOP.filter(function(it){var e=it[6]||{};
+    return CRAWLWEAR.test(it[1])&&!e.dungeon&&e.b!=="basics"&&ids.indexOf(e.b)>=0&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)});
+  return pool.length?pool[Math.floor(Math.random()*pool.length)]:null}
 function wheelHtml(){
-  var can=S.wheel!==today();
-  var conic='conic-gradient('+WCOL.map(function(c,i){return c+' '+(i*45)+'deg '+((i+1)*45)+'deg'}).join(",")+')';
-  var labels=WHEEL.map(function(w,i){return '<span style="transform:rotate('+(i*45+22.5-90)+'deg) translateX(34px)">'+esc(w[0])+'</span>'}).join("");
-  return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, and now and then a streak freeze.</p>'
+  var can=S.wheel!==today(),ci=0;
+  var conic='conic-gradient('+WHEEL.map(function(w,i){var a=wheelStart(i),b=a+WHEEL_DEG[i],t=WHEEL_DEG[i]/3,g=function(c,p,q){return c+' '+p.toFixed(2)+'deg '+q.toFixed(2)+'deg'};
+    /* a sliver: gold, a white line, gold */
+    return w[3]?[g("#f5c518",a,a+t),g("#fffbe6",a+t,a+2*t),g("#f5c518",a+2*t,b)].join(","):g(WCOL[ci++%WCOL.length],a,b)}).join(",")+')';
+  var labels=WHEEL.map(function(w,i){return w[3]?'':'<span style="transform:rotate('+(wheelStart(i)+WHEEL_DEG[i]/2-90).toFixed(2)+'deg) translateX(34px)">'+esc(w[0])+'</span>'}).join("");
+  return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
    +(S.wheelRes?'<p class="note" style="text-align:center">Last result: <b>'+esc(S.wheelRes)+'</b></p>':'')+'</section>';
@@ -499,10 +514,15 @@ function spin(){
   var tot=WHEEL_W.reduce(function(a,b){return a+b},0), r=Math.random()*tot, idx=0;
   while(idx<WHEEL_W.length-1&&r>=WHEEL_W[idx]){r-=WHEEL_W[idx];idx++}
   var pz=WHEEL[idx]; S.wheel=today();
-  if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{S.coins+=300;S.earnedC+=300;S.wheelRes="300 coins (freeze slots were full)"}}
+  if(pz[3]){var it=wheelGift();
+    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (it waits in your Wardrobe for the Closet)")}
+    else{S.coins+=WHEELALL;S.earnedC+=WHEELALL;S.wheelRes=WHEELALL.toLocaleString()+" coins (you own every piece already)"}}
+  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{S.coins+=300;S.earnedC+=300;S.wheelRes="300 coins (freeze slots were full)"}}
   else{S.coins+=pz[1];S.earnedC+=pz[1];S.wheelRes=pz[0]}
   persist(); spinning=true;
-  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+(1800-(idx*45+22.5))+"deg)"}
+  /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
+  var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);
+  var w=document.getElementById("wheel"); if(w){void w.offsetWidth;w.style.transform="rotate("+(1800-at).toFixed(2)+"deg)"}
   setTimeout(function(){spinning=false;checkBadges();render();persist();pop("Wheel: "+S.wheelRes)},3600);
 }
 
