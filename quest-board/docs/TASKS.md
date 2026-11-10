@@ -78,6 +78,9 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W50 | Town Hall colours from its banner picture (Cal again; W14 first part) | BUILDER | w-colors | TODO (v0.91) |
 | W51 | Unlocks by % of the previous room (Cal 15:05, replaces SPEC8's focus rule): Bedroom 30/50/70% for Closet/Patio/Game Room; Loft 60% for the Garden; a Garden earnings goal for the Restaurant; Noir for the bar; bar 75% for Boba; Boba 60% for Dessert; Plaza 60% for the Mall; Mall 30% for the Theater; the same through the Calibur Mall | BUILDER | w-unlock (on w-econ3) | TODO (v0.91, top) |
 | W52 | One-time reset for all players: rooms and buildings reset (CONFIRMED by Cal: everything in the building tab incl. the Lair; Shop purchases kept and not refunded; letter only to players who bought there), coins refunded at today's prices, save backed up first, an inbox letter (Cal: "initialize the loft and refund all the money they have spent") | BUILDER | w-unlock | TODO (v0.91) |
+| W53 | Greetings: wave, high five, poke, spank (Hug and Cheer go, no opt-out); "Visit their Loft" removed | BUILDER | w-chat2 | TODO (v0.92) |
+| W54 | Weekly Town Boss (SPEC10 part 1): HP by active players, damage from quest + Training XP, art phases on the Town Hall picture, a win chest or a light penalty; 6 pictures per boss from the Mac | BUILDER | w-boss | LATER (v0.93+) |
+| W55 | Friends visit your businesses (SPEC10 part 2): real players in their outfits with name labels, a note, small capped tips | BUILDER | w-visitors | LATER (v0.93+) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
@@ -181,6 +184,8 @@ The second accessory (level 20) needs no new art: it reuses the accessories in t
    `ui_relic2_<id>.webp` exists.
 5. **Rafe's treasure hunts (W35).** Per hunt, 3-4 full-screen montage pictures (portrait, phone) with Rafe ahead and the player's first-person view (a hand reaching for a ledge, a rope, the relic), NO player character, through
    a dangerous journey to the legendary relic, plus the relic icon. Placeholders drawn in code until then.
+   7. **Town Boss (W54).** 6 pictures per boss for the Town Hall banner: full health, 75%, 50%, 25%, defeated (Sunday) and rampaging with
+   fire (Sunday). Original monsters only. Spec: .claude/team/ideas/2026-11-10_SPEC10_greetings_townboss_visitors.md.
    6. **New brands for the shop floors (W42).** Cal, 2026-11-10: street levels 1-30, mid (Boutique) 30-70, luxury (Atelier) 70-100, "if
    street has 12 brands, then mid should have 12 and luxury also should have 12". Today: 12 street, 4 mid (VENOM ROSE, SAYMØRE, CHROME RAIN,
    NICE COCK), 0 luxury. Needed: 8 mid brands and 12 luxury brands, made the way docs/BRAND_AUTOGEN.md describes (each with a splash,
