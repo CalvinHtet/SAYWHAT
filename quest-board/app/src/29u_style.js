@@ -1,25 +1,34 @@
 /* ---------- Style: everyone's character, a pedestal and three leaderboards (Cal, 2026-11-09) ----------
    Cal: "Style: show characters/outfits; likes; pedestal 1st/2nd/3rd + leaderboard. Toggle: Fashion (likes) / Most rich / Highest
-   level, live. Fashion likes: WEEKLY contest, likes reset every Monday; top 3 of the week get a badge and coins. Most rich = total
+   level, live. Fashion likes: WEEKLY contest, likes reset every week (Sunday 7 pm Pacific since 2026-11-10); top 3 of the week get a badge and coins. Most rich = total
    coins EARNED (earnedC), so spending never drops you." docs/TOWNHALL.md has the details.
    - Everyone comes from worlds/<id> (name, look, lv, earnedC, fw), live through 29n_live.js; this player's own numbers are local.
    - Likes (Cal, 2026-11-10: "Change the ability to like another character to two times per day."): likes/<id> =
      {wk, c:{<id>:n}, d, td:{<id>:n}, prev:{wk,c}, t}, written only by the one who likes. c counts this player's likes to each look
-     in the contest week wk (Monday 00:00 Pacific); every like counts. td counts today's (the game day, d, from today()), and only
+     in the contest week wk (from Sunday 19:00 Pacific); every like counts. td counts today's (the game day, d, from today()), and only
      today's can be taken back. FSHPERDAY likes a day for each other player (FSHDAYALL true makes it that many a day in total);
      never yourself. When the liker's first like of a new week rolls their doc over, last week's counts move to prev, so last
      week's final count can still be read during the new week. An old doc ({wk, to:[ids], prev:{wk,to}}) reads as one like each.
-   - At the end of the week each winner's own phone pays itself, once: the first time it sees the closed week (5 minutes into
-     Monday, for phones with slow clocks) it counts last week's likes, and if it placed 1st, 2nd or 3rd (ties share a place,
+   - At the end of the week each winner's own phone pays itself, once: the first time it sees the closed week (5 minutes after
+     the cutoff, for phones with slow clocks) it counts last week's likes, and if it placed 1st, 2nd or 3rd (ties share a place,
      at least one like) it adds the coins, the medal and the Best Dressed relic, and records the week in the save (S.fsh.last), so
      a reload never pays twice.
    - The week is Pacific time (pacWeek below): today() and townWeek() use the phone's own clock, the contest must not.
+   - The contest closes Sunday at 7 pm Pacific (Cal, 2026-11-10: "The cutoff ... is Sunday night at 7 PM"): fshWk() reads the
+     Pacific week 5 hours ahead (FSHCUT), so its Monday 00:00 falls on Sunday 19:00.
+   - The winners are announced in the inbox (Cal: "a weekly winner to be announced in the messages as a special event starting
+     next week"): when a phone settles a closed week it keeps that week's top 3 in the save (S.fsh.news), and each one becomes a
+     letter from the Town Hall (INBOXGEN in 29x_inbox.js). The first is the week that closes Sunday 2026-11-22 (FSHNEWS0).
+   - Who liked a look (Cal: "a little collapsible arrow next to the likes for each person that show who liked that person"): the
+     likes count on a character's card opens the list of this week's likers.
    - At most 10 characters are drawn (the pedestal and list rows 4 to 10), all on one still frame; the Town square and the
      Neighbors list fold out at the bottom. Live updates redraw only when what is shown changed. */
 var FSHPRIZE=[1500,1000,500],FSHMODES=[["fashion","Fashion"],["rich","Most rich"],["level","Highest level"]],FSHMEDAL=["\u{1F947}","\u{1F948}","\u{1F949}"];
 /* likes a game day: FSHPERDAY for each other player; FSHDAYALL=true makes it FSHPERDAY a day in total, across everyone */
 var FSHPERDAY=2,FSHDAYALL=false;
-var FSH={mode:"fashion",likes:{},ready:0,on:0,unsub:null,poll:0,err:"",mine:null,q:null,boxH:"",nbH:"",fold:{square:false,nb:false},wk:""};
+/* the week closes Sunday 7 pm Pacific: 5 hours before Monday 00:00; winner letters start with this week */
+var FSHCUT=5*36e5,FSHNEWS0="2026-W47";
+var FSH={mode:"fashion",likes:{},ready:0,on:0,unsub:null,poll:0,err:"",mine:null,q:null,boxH:"",nbH:"",fold:{square:false,nb:false},wk:"",who:0};
 (function(){try{var m=sessionStorage.getItem("qbStyleMode");if(m==="fashion"||m==="rich"||m==="level")FSH.mode=m;
   var f=JSON.parse(sessionStorage.getItem("qbStyleFold")||"null");if(f&&typeof f==="object")FSH.fold={square:!!f.square,nb:!!f.nb}}catch(e){}})();
 /* the medal on the Relics shelf (pays its 250 coins once, like every relic) */
@@ -81,7 +90,7 @@ function pacIso(mon){var y=new Date((mon+3)*864e5).getUTCFullYear(),w=Math.floor
 function pacWeek(ms){var p=pacParts(ms),day=Math.floor(Date.UTC(p.y,p.m-1,p.d)/864e5),k=(p.wd+6)%7,mon=day-k;
   return {key:pacIso(mon),prev:pacIso(mon-7),mins:k*1440+p.h*60+p.mi}}
 /* the game clock, so Test > Skip a week moves the contest too */
-function fshWk(){return pacWeek(Date.now())}
+function fshWk(){return pacWeek(Date.now()+FSHCUT)}
 /* ---- other players' docs are hostile: numbers coerced, strings capped, looks checked ---- */
 function fshStr(x,n){return (typeof x==="string"?x:typeof x==="number"&&isFinite(x)?String(x):"").replace(TCHBAD,"").slice(0,n)}
 function fshNum(x,lo,hi){x=Math.floor(+x);return isFinite(x)?Math.min(hi,Math.max(lo,x)):lo}
@@ -151,6 +160,7 @@ function fshPayCheck(){if(!FSH.ready||FSH.err||!socOn()||!loaded||!S||!S.created
   if(typeof F.last==="string"&&F.last>=wk.prev)return;
   var c=fshCounts(wk.prev),n=c[MYUID]||0,place=n>0?1+Object.keys(c).filter(function(u){return u!==MYUID&&c[u]>n}).length:0;
   F.last=wk.prev;
+  if(wk.prev>=FSHNEWS0)try{fshNews(wk.prev,c);ibPaint()}catch(e){}
   if(place>=1&&place<=3){var coins=FSHPRIZE[place-1];F.won[wk.prev]={p:place,n:n,c:coins};S.coins+=coins;S.earnedC+=coins;
     try{addBadge("style3")}catch(e){}
     persist();fshWinModal(place,n,coins);
@@ -159,6 +169,24 @@ function fshPayCheck(){if(!FSH.ready||FSH.err||!socOn()||!loaded||!S||!S.created
     try{if(typeof hallFeedPost==="function")hallFeedPost({kind:"fashion",wk:wk.prev,place:place,likes:n,coins:coins})}catch(e){}}
   else persist()}
 function fshWinModal(place,n,coins){setTimeout(function(){try{modal('<div class="card box2 fsh-card"><span class="label">Fashion week results</span><div class="fsh-medal">'+FSHMEDAL[place-1]+'</div><h2>'+["1st","2nd","3rd"][place-1]+' place</h2><p class="note">Your look got '+n+' like'+(n===1?'':'s')+' last week.</p><div class="reward">+'+coins.toLocaleString()+' coins and a medal</div><button class="btn big" data-act="mclose">Nice</button></div>')}catch(e){}},1200)}
+/* ---- the weekly winner letter (W18): the closed week's top 3 (ties share a place), kept in the save, the last 8 weeks ---- */
+function fshNews(wk,c){var F=S.fsh,ids=Object.keys(c).filter(function(u){return c[u]>0});if(!ids.length)return;
+  ids.sort(function(a,b){return c[b]-c[a]||(a<b?-1:1)});
+  var top=ids.map(function(u){return {u:u,l:c[u],p:1+ids.filter(function(v){return c[v]>c[u]}).length}}).filter(function(x){return x.p<=3}).slice(0,6)
+    .map(function(x){return {n:fshNameOf(x.u)||"A neighbor",l:x.l,p:x.p,me:x.u===MYUID?1:0}});
+  if(!F.news||typeof F.news!=="object")F.news={};F.news[wk]={d:today(),top:top};
+  var ks=Object.keys(F.news).sort();ks.slice(0,Math.max(0,ks.length-8)).forEach(function(k){delete F.news[k]})}
+/* the Sunday a contest week closes, from its key ("2026-W47" closes Sunday Nov 22) */
+function fshWkEnd(k){var m=/^(\d{4})-W(\d{2})$/.exec(k||"");if(!m)return "";var j4=Date.UTC(+m[1],0,4),mon=j4-((new Date(j4).getUTCDay()+6)%7)*864e5+(+m[2]-1)*7*864e5;
+  try{return new Date(mon+6*864e5).toLocaleDateString([],{month:"short",day:"numeric",timeZone:"UTC"})}catch(e){return ""}}
+function fshNewsBody(k,x){
+  return '<p>The Fashion contest closed Sunday, '+esc(fshWkEnd(k))+', at 7 pm Pacific. The top looks by likes:</p><ol class="fsh-nl">'
+    +x.top.map(function(t){var p=Math.min(3,Math.max(1,+t.p||1)),l=Math.max(0,+t.l||0);return '<li><span class="fsh-nm2">'+FSHMEDAL[p-1]+' <b>'+esc(fshStr(t.n,24)||"A neighbor")+(t.me?' (you)':'')+'</b></span><small>'+l+' like'+(l===1?'':'s')+' &middot; '+FSHPRIZE[p-1].toLocaleString()+' coins</small></li>'}).join("")+'</ol>'
+    +'<p class="note">A new week is open. Like the looks you rate in the Hall, under Rank.</p>'}
+function fshLetters(){var N=S&&S.fsh&&S.fsh.news;if(!N||typeof N!=="object")return [];
+  return Object.keys(N).filter(function(k){return fshWkOk(k)&&k>=FSHNEWS0&&N[k]&&Array.isArray(N[k].top)&&N[k].top.length}).map(function(k){var x=N[k];
+    return {id:"fsh-"+k,from:"Town Hall",subj:"Best dressed, week ending "+fshWkEnd(k),d:fshDayOk(x.d)?x.d:"",body:fshNewsBody(k,x)}})}
+INBOXGEN=INBOXGEN||[];INBOXGEN.push(fshLetters);
 /* ---- the ranking ---- */
 function fshNameOf(id){if(id===MYUID)return fshStr((S.char&&S.char.name)||"You",24)||"You";var w=(SOC.worlds||[]).filter(function(x){return x&&x.id===id})[0];return w?(fshStr(w.name,24).trim()||"Player"):""}
 function fshPlayers(){var out=[{id:MYUID||"me",me:1,name:fshStr((S.char&&S.char.name)||"You",24).trim()||"You",look:fshLook(lookOf()),lv:effLvl(),earnedC:Math.floor(S.earnedC||0),fw:fshMedals()}],seen={};seen[out[0].id]=1;
@@ -189,7 +217,7 @@ function fshHead(mode){
   if(mode==="rich")return '<p class="note">Total coins earned. Spending never drops you.</p>';
   if(mode==="level")return '<p class="note">Everyone\'s level right now.</p>';
   var wk=fshWk(),left=Math.max(1,7*1440-wk.mins),dd=Math.floor(left/1440),hh=Math.floor(left%1440/60);
-  return '<p class="note">Likes this week. Tap a look to like it. '+fshRule()+', and every like counts. Resets Monday 12 am Pacific (in '+(dd?dd+'d ':'')+hh+'h). The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
+  return '<p class="note">Likes this week. Tap a look to like it. '+fshRule()+', and every like counts. Closes Sunday 7 pm Pacific (in '+(dd?dd+'d ':'')+hh+'h). The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
 /* last week's top 3, read from the likes everyone gave last week */
 function fshLastWeek(){var c=fshCounts(fshWk().prev),ids=Object.keys(c).filter(function(u){return fshNameOf(u)});if(!ids.length)return "";
   ids.sort(function(a,b){return c[b]-c[a]||(a<b?-1:1)});
@@ -220,39 +248,48 @@ function fshMounted(){fshTick()}
 /* live: redraw only what changed */
 function fshPaint(){if(!htabShown("style"))return;var el=document.getElementById("fshbox");if(el){var h=fshBoxInner();if(h!==FSH.boxH){FSH.boxH=h;el.innerHTML=h}}
   var nb=document.getElementById("fshnb");if(nb){var h2=fshNbInner();if(h2!==FSH.nbH){FSH.nbH=h2;nb.innerHTML=h2}}}
-/* a new week (midnight Monday Pacific, or Test > Skip a week): settle the closed one and redraw */
+/* a new week (Sunday 7 pm Pacific, or Test > Skip a week): settle the closed one and redraw */
 function fshTick(){var k=fshWk().key;if(k!==FSH.wk){FSH.wk=k;try{fshPayCheck()}catch(e){}fshPaint()}}
 setInterval(function(){try{fshTick()}catch(e){}},60000);
 var fshSocPaintBase=socPaint;
 socPaint=function(){var r=fshSocPaintBase.apply(this,arguments);try{fshPaint();fshModalPaint()}catch(e){}return r};
 /* tap a character: a bigger look, the like, greetings and a visit */
+/* the likes count opens who gave them (W17): a small arrow, open or closed for the card on screen */
 function fshStats(p){var n=fshCounts(fshWk().key)[p.id]||0;
-  return '<span><b>'+n+'</b> like'+(n===1?'':'s')+' this week</span><span><b>'+(p.earnedC==null?'—':p.earnedC.toLocaleString())+'</b> coins earned</span><span><b>Lv '+p.lv+'</b></span>'}
+  return (n?'<button type="button" class="fsh-whob" data-act="fshwho" aria-expanded="'+!!FSH.who+'"><b>'+n+'</b> like'+(n===1?'':'s')+' this week <i aria-hidden="true">'+(FSH.who?'▾':'▸')+'</i></button>':'<span><b>0</b> likes this week</span>')+'<span><b>'+(p.earnedC==null?'—':p.earnedC.toLocaleString())+'</b> coins earned</span><span><b>Lv '+p.lv+'</b></span>'}
+/* this week's likers of a look, the most likes first */
+function fshWhoHtml(p){if(!FSH.who)return "";var wk=fshWk().key,out=[];
+  Object.keys(FSH.likes).forEach(function(from){if(from===p.id)return;var d=FSH.likes[from],x=d.wk===wk?d.c:(d.prev&&d.prev.wk===wk?d.prev.c:null),k=x&&x[p.id];
+    if(k>0)out.push({n:from===MYUID?"You":(fshNameOf(from)||"A neighbor"),k:k})});
+  out.sort(function(a,b){return b.k-a.k||(a.n<b.n?-1:1)});
+  return out.length?'<div class="fsh-who">'+out.map(function(o){return '<span><b>'+esc(o.n)+'</b>'+(o.k>1?' &times;'+o.k:'')+'</span>'}).join("")+'</div>':''}
 /* the like button says how many likes are left today for this look; today's likes can be taken back */
-function fshLikeBox(p){if(p.me)return '<p class="note">Your look. Friends can like it here; likes reset every Monday.</p>';
+function fshLikeBox(p){if(p.me)return '<p class="note">Your look. Friends can like it here. The week closes Sunday 7 pm Pacific.</p>';
   if(FSH.err==="permission-denied")return '<p class="note">Likes are not switched on yet.</p>';
   var wk=fshMyTo()[p.id]||0,left=fshLeft(p.id),back=fshBackable(p.id);
   return '<button type="button" class="btn big fsh-like'+(wk?' on':'')+'" data-act="fshlike" data-u="'+esc(p.id)+'"'+(left?'':' disabled')+'>'
       +(left?(wk?'♥ Like again':'♡ Like this look')+' <small>'+left+' left today</small>':'♥ No likes left today')+'</button>'
     +(back?'<button type="button" class="btn ghost sm fsh-back" data-act="fshunlike" data-u="'+esc(p.id)+'">Take back a like</button>':'')
-    +'<p class="note">'+(wk?'You liked this look '+(wk===1?'once':wk+' times')+' this week. ':'')+fshRule()+'. You can take back today\'s likes only. Likes reset Monday 12 am Pacific.</p>'}
+    +'<p class="note">'+(wk?'You liked this look '+(wk===1?'once':wk+' times')+' this week. ':'')+fshRule()+'. You can take back today\'s likes only. The week closes Sunday 7 pm Pacific.</p>'}
 function fshViewHtml(p){
   return '<div class="card box2 fsh-card"><div class="fsh-big">'+fshChar(p.look,200)+'</div><h2>'+esc(p.name)+(p.me?' <small>(you)</small>':'')+'</h2>'
-    +'<div class="fsh-stats">'+fshStats(p)+'</div>'+(fshMedalHtml(p.fw)?'<div>'+fshMedalHtml(p.fw)+'</div>':'')
+    +'<div class="fsh-stats">'+fshStats(p)+'</div><div class="fsh-wholist">'+fshWhoHtml(p)+'</div>'+(fshMedalHtml(p.fw)?'<div>'+fshMedalHtml(p.fw)+'</div>':'')
     +'<div class="fsh-likebox">'+fshLikeBox(p)+'</div>'
     +(p.me?'':'<div class="sq-acts">'+Object.keys(SQK).map(function(k){return '<button type="button" class="btn" data-act="sqgo" data-u="'+esc(p.id)+'" data-k="'+k+'"><span>'+SQK[k][0]+'</span> '+SQK[k][1]+'</button>'}).join("")+'</div>'
       +'<div class="row" style="justify-content:center"><button type="button" class="btn ghost" data-act="snvisit" data-u="'+esc(p.id)+'">Visit their Loft</button></div>')+'</div>'}
-function fshView(uid){var p=fshFind(uid);if(!p)return;closeModals();var m=modal(fshViewHtml(p));m.classList.add("fsh-modal");m.setAttribute("data-u",p.id)}
+function fshView(uid){var p=fshFind(uid);if(!p)return;closeModals();FSH.who=0;var m=modal(fshViewHtml(p));m.classList.add("fsh-modal");m.setAttribute("data-u",p.id)}
 function fshModalPaint(){var m=document.querySelector("#layer .modal.fsh-modal");if(!m)return;var p=fshFind(m.getAttribute("data-u"));if(!p)return;
-  var b=m.querySelector(".fsh-likebox"),s=m.querySelector(".fsh-stats"),h=fshLikeBox(p),h2=fshStats(p);if(b&&b._h!==h){b._h=h;b.innerHTML=h}if(s&&s._h!==h2){s._h=h2;s.innerHTML=h2}}
+  var b=m.querySelector(".fsh-likebox"),s=m.querySelector(".fsh-stats"),h=fshLikeBox(p),h2=fshStats(p);if(b&&b._h!==h){b._h=h;b.innerHTML=h}if(s&&s._h!==h2){s._h=h2;s.innerHTML=h2}
+  var w=m.querySelector(".fsh-wholist"),h3=fshWhoHtml(p);if(w&&w._h!==h3){w._h=h3;w.innerHTML=h3}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;var a=b.dataset.act;
   if(a==="fshmode"){var m=b.dataset.m;if(m!==FSH.mode&&FSHMODES.some(function(x){return x[0]===m})){FSH.mode=m;try{sessionStorage.setItem("qbStyleMode",m)}catch(er){}
       var tg=document.getElementById("fshtg");if(tg)tg.innerHTML=fshTg();var bx=document.getElementById("fshbox");if(bx){FSH.boxH=fshBoxInner();bx.innerHTML=FSH.boxH}else render()}return}
   if(a==="fshview"){fshView(b.dataset.u);return}
+  if(a==="fshwho"){FSH.who=!FSH.who;fshModalPaint();return}
   if(a==="fshlike"){fshLike(b.dataset.u);return}
   if(a==="fshunlike"){fshLike(b.dataset.u,1);return}
   if(a==="fshfold"){var k=b.dataset.k;if(k!=="square"&&k!=="nb")return;FSH.fold[k]=!FSH.fold[k];try{sessionStorage.setItem("qbStyleFold",JSON.stringify(FSH.fold))}catch(er){}render()}});
 /* test hook (sandbox and main only; a Live build never makes it) */
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbHall={tab:function(){return HTAB.tab},set:function(t){htabSet(t);render()},week:function(ms){return pacWeek(ms==null?Date.now():ms)},
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbHall={tab:function(){return HTAB.tab},set:function(t){htabSet(t);render()},week:function(ms){return pacWeek((ms==null?Date.now():ms)+FSHCUT)},wkEnd:fshWkEnd,
   chat:function(){return {room:TCH.room,ready:TCH.ready,err:TCH.err,joined:TCH.joined,nowOk:TCH.nowOk,me:TCH.me,seen:TCH.seen,msgs:TCHROOMS.map(function(r){return tchRoomMsgs(r[0]).length}),who:TCHROOMS.map(function(r){return tchWho(r[0])})}},
   style:function(m){return fshRank(m||FSH.mode).map(function(p){return {id:p.id,name:p.name,v:p.v,place:p.place}})},likes:function(){return {ready:FSH.ready,err:FSH.err,mine:FSH.mine,fsh:S.fsh}},pay:function(){fshPayCheck();return S.fsh}};
