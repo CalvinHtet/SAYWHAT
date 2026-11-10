@@ -59,11 +59,12 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W31 | "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely start generating more income." (SPEC2 part 4) | BUILDER | w-econ | TODO |
 | W32 | Bug: "We are also not seeing the hangang splash screen for the first clothing drop". CHANGED 10:15 (SPEC4 part 1): splash only for brands in rotation, again each time a brand returns (seen per stint) (SPEC2 part 5) | BUILDER | w-drops | READY FOR QA (4542bab) |
 | W33 | "make sure no item is gained twice": one shared helper for every free item (chests, level crates, wheel slivers, crawl finds, Weekly Warrior, story), relics too (SPEC3 part 4) | BUILDER | w-chests | READY FOR QA (be62935) |
-| W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | TODO |
+| W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | BUILT w-prices 717acf2, in v0.90, QA next |
 | W35 | Rafe's legendary treasure hunts at levels 27, 52, 77 and 93 (SPEC5; the first is how you meet Rafe): photo only, 3-4 picture montage, legendary relic (SPEC3 part 6) | BUILDER | w-rafe (after w-chests merges) | TODO |
 | W36 | Story side-quests: PHOTO ONLY (SPEC6); Night watch = in-bed photo timed by the server clock in the function, with the checked time stamped visibly on the photo (Cal 11:00). In v0.91+. Mara "Cook for me once", Nova "Clear out your closet", Theo "Movie night", the dogs' "Walkies" (Sable: "Night watch", bed before midnight, a clock photo; SPEC5) (SPEC4 part 5) | BUILDER | w-sidequests (after w-rafe) | TODO |
 | W37 | A visible time stamp burned into every proof photo before the AI check (bottom-right, SAYMORE orange #ff7a18 with cyan #17d4e6 glow); the AI reads it (SPEC6 part 4). v0.90 if no delay, client side only | BUILDER | w-stamp | TODO |
 | W38 | "total coins to be visible in every menu that has a purchase option" (room view upgrades first); for v0.90 with the envelope fix | BUILDER | (fix branch) | TODO |
+| W39 | Update flow (SPEC7): "New update available" Refresh or Later with a green "!", "Installing update 286 KB / 850 KB", a patch-notes letter per release with 200 coins (first v0.90) | BUILDER | w-update | TODO (v0.90) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
