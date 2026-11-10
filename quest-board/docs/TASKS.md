@@ -21,7 +21,7 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). NEXT RELEASE: ONE v0.90 (Cal 10:45, no v0.89; scope confirmed 11:00) = rc-0.89 (LEAD's merge: w-rank, w-hall, w-training, w-wheel, w-drops) + w-chests + w-econ, APPV 90, QB_EPOCH 6, saves kept.
+Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90.
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
@@ -47,7 +47,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (c4da3fe) |
 | W20 | CHANGED AGAIN 09:50 (Cal via ARCHITECT): new brands every MONDAY and FRIDAY 8 am Pacific, only 2 active brands, a Wednesday vault brings one retired brand back for that day (was Mon/Wed 5 am, then Mon/Thu). Spec: SPEC2 part 1 + todo/BUILDER.md | BUILDER | w-drops | READY FOR QA (4542bab: one calendar, splash once per stint; skip 98b8558, c192f06, 341b0fc) |
 | W21 | (spec below + ARCHITECT spec part A: level ramp) (spec below) Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
-| W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
+| W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 45 (Cal 13:10: "close to 2-3 weeks of play"; was 30); "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
 | W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
 | W24 | (spec below) Likes notify: "a small heart symbol with a number beside the character in the fashion tab just like an instagram like notification" (new likes since you last looked) | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
 | W25 | (spec below) CHANGED 10:15 (SPEC4 part 4): only STORY rooms (Restaurant, Boba, Dessert, Lock and Key, Mall) wait, at least A DAY apart, plus a level and coins earned; other rooms as today. Was: Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
@@ -59,11 +59,15 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W31 | "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely start generating more income." (SPEC2 part 4) | BUILDER | w-econ | TODO |
 | W32 | Bug: "We are also not seeing the hangang splash screen for the first clothing drop". CHANGED 10:15 (SPEC4 part 1): splash only for brands in rotation, again each time a brand returns (seen per stint) (SPEC2 part 5) | BUILDER | w-drops | READY FOR QA (4542bab) |
 | W33 | "make sure no item is gained twice": one shared helper for every free item (chests, level crates, wheel slivers, crawl finds, Weekly Warrior, story), relics too (SPEC3 part 4) | BUILDER | w-chests | READY FOR QA (be62935) |
-| W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | TODO |
+| W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | BUILT w-prices 717acf2, in v0.90, QA next |
 | W35 | Rafe's legendary treasure hunts at levels 27, 52, 77 and 93 (SPEC5; the first is how you meet Rafe): photo only, 3-4 picture montage, legendary relic (SPEC3 part 6) | BUILDER | w-rafe (after w-chests merges) | TODO |
 | W36 | Story side-quests: PHOTO ONLY (SPEC6); Night watch = in-bed photo timed by the server clock in the function, with the checked time stamped visibly on the photo (Cal 11:00). In v0.91+. Mara "Cook for me once", Nova "Clear out your closet", Theo "Movie night", the dogs' "Walkies" (Sable: "Night watch", bed before midnight, a clock photo; SPEC5) (SPEC4 part 5) | BUILDER | w-sidequests (after w-rafe) | TODO |
 | W37 | A visible time stamp burned into every proof photo before the AI check (bottom-right, SAYMORE orange #ff7a18 with cyan #17d4e6 glow); the AI reads it (SPEC6 part 4). v0.90 if no delay, client side only | BUILDER | w-stamp | TODO |
 | W38 | "total coins to be visible in every menu that has a purchase option" (room view upgrades first); for v0.90 with the envelope fix | BUILDER | (fix branch) | TODO |
+| W39 | Update flow (SPEC7): "New update available" Refresh or Later with a green "!", "Installing update 286 KB / 850 KB", a patch-notes letter per release with 200 coins (first v0.90) | BUILDER | w-update | TODO (v0.90) |
+| W40 | Daily sale: "2 things on sale in the shop each day but for only 1 brand each day ... a different brand in rotation ... 25% or 50% off" | BUILDER | w-sale | TODO (v0.91) |
+| W41 | Wardrobe filters: "categories for different item pieces, and also can be filtered by brand and the category of items" | BUILDER | w-wardrobe | TODO (v0.91) |
+| W42 | Brand price tiers: the lingerie brand and SAYMORE in mid tier; mid-tier shop opens once passives afford 1-2 pieces plus room upgrades a day; "It should always feel like progressing" | BUILDER | w-brandtier | Mid list APPROVED (VENOM ROSE, SAYMØRE, CHROME RAIN, NICE COCK). Cal 13:20: add a high-end luxury tier, equal numbers street / mid / luxury; WAITING ON CAL: districts vs one tiered Shop |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
@@ -154,7 +158,7 @@ chat with higgsfield to generate images, then let me know and put that as a to d
 later in the week". The Windows team builds the gates and slots (W22) so this art drops in. Same rules as above: Unlimited only, no
 credits, original designs, one Higgsfield image per cosmetic holding every angle, both bodies, every pose tested, Cal approves
 first.
-1. **Pets (level 30).** A few starter pets (for example a dog, a cat, a bird) in the game's chibi style, with idle, walk and sit
+1. **Pets (level 45; Cal 2026-11-10: "close to 2-3 weeks of play").** A few starter pets (for example a dog, a cat, a bird) in the game's chibi style, with idle, walk and sit
    frames in the room view. Then pet cosmetics and outfits for each: collars, a sweater, a hat, a bandana. Pluto and Chopstick
    (Cal's dogs, painted art in the Bedroom) stay as they are.
 2. **Face cosmetics (level 40).** Makeup (liner, blush, lip colours), scars, freckles, face paint, more detailed eyes and brows.

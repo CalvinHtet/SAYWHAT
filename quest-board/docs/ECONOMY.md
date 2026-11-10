@@ -159,12 +159,35 @@ Before the 2026-11-09 pass Cal's routine had bought every room upgrade by day 20
 
 | What | Price |
 | --- | --- |
-| Brand clothes | each brand's own spread x 0.4, between 150 and 700 (`shopK`, `clothesMin`, `clothesMax`); 349 pieces, about 130,000 in all |
-| Basics | x 0.4 |
+| Clothes | by quality (SPEC3 part 5, below): thrift 110 to 210, standard 280 to 460, premium 790 to 1,160, luxury 1,560 to 2,110; 316 graded pieces, 122,700 in all (was 121,220). A piece nobody graded keeps its brand's own spread x 0.4, between 150 and 700 (`shopK`, `clothesMin`, `clothesMax`) |
+| Basics (hair, dye, eye colour) | x 0.4; the Basics brand's tops, bottoms and shoes are clothes, graded thrift |
 | Interface items (themes, frames, backdrops, companions, titles, tap effects, HUD, sounds, scenes) | 200 + 25 x the level they open at: 300 at level 3, 700 at 20, 1,450 at 50 |
 | Permanent upgrades | priced by what they return, about a week or two of quests to pay back: Merchant Seal I, II, III 1,500, 3,000, 5,000; Focus Rune I, II, III 800, 1,500, 2,500; Frost Charm 1,000; Anchor Sigil 1,500; Scout Map 2,000 (`ECON.buff`) |
 
 Room upgrades have no level locks (Cal, 2026-11-05): each room shows its next 4, the 4th a mystery, and coins pace them.
+
+**Clothes by quality** (Cal: "A white shirt with a flower on it, should not be the same price as a sexy dress with diamond encrusted
+lacings ... higher shops with better quality clothes should be more expensive"): QA graded every Shop clothing piece from its
+icon, its line and its brand (`docs/qa-2026-11-10/CLOTHING_TIERS.md`; the table is `clothTier` in `29e_tiers.js`). Each tier has
+a band (`ECON.tier`): thrift 100 to 250, standard 250 to 500, premium 600 to 1,200, luxury 1,300 to 2,200, and designer 2,400
+to 3,000 held for a designer brand (no pieces or art yet). Inside its band a piece sits by its slot (`ECON.tierSlot`: a back
+piece highest, then a top, a bottom or shoes, a hat or accessory lowest), its brand (`ECON.tierBrand`: VENOM ROSE +0.25, CHROME
+RAIN +0.2, NICE COCK +0.15 ... KAIMANA -0.15, Basics -0.25) and its old price against its brand's other pieces (`ECON.tierNudge`,
+at most 0.2 of the band either way). The eye styles (`et_*`) are face options and keep the old rule.
+
+| Tier | Pieces | Now | Before |
+| --- | --- | --- | --- |
+| thrift | 102 | 110 to 210, average 144 | 60 to 520, average 256 |
+| standard | 173 | 280 to 460, average 363 | 200 to 680, average 417 |
+| premium | 36 | 790 to 1,160, average 998 | 280 to 700, average 566 |
+| luxury | 5 | 1,560 to 2,110, average 1,836 | 320 to 700, average 508 |
+
+Examples: VENOM ROSE's Lace Corset Top 560 -> 2,070, CHROME RAIN's Holo Trench 700 -> 2,110, the Crown 600 -> 1,710, HANGANG's
+varsity 640 -> 1,020, SØLVBERG's knit scarf 200 -> 130, a Basics tee 80 -> 140. Brand averages: VENOM ROSE 473 -> 932, CHROME
+RAIN 477 -> 787, NICE COCK 455 -> 616, KAIMANA 301 -> 214, DIAL-UP 402 -> 251. Every graded piece together costs 122,700 (was
+121,220), so total Shop spend barely moves; the money moves from plain pieces to special ones. Econsim buys no clothes, so its
+runs do not change. A new piece: grade it with QA's rules in the doc and add its id to `clothTier`; an ungraded piece keeps the
+old rule.
 
 ## Checking it
 

@@ -104,6 +104,14 @@ var ECON={
      for some items"); interface items cost uiBase + uiLv x the level they open at; permanent upgrades pay for themselves in
      about a week or two of quests, so each is priced by what it returns (Merchant Seal I was 500 for +10% coins forever) */
   shopK:.4,clothesMin:150,clothesMax:700,uiBase:200,uiLv:25,
+  /* clothes by quality (SPEC3 part 5; QA's grades through clothTier in 29e_tiers.js): a graded piece costs inside its tier's band,
+     placed by its slot (a coat above a cap), its brand's overall level (VENOM ROSE high, KAIMANA low) and its old price against
+     the brand's other pieces. designer waits for a designer brand (Cal: "could cost 3000 for a specific pair of pants or a top";
+     no art yet). Pieces nobody graded keep shopK, clothesMin and clothesMax */
+  tier:{thrift:[100,250],standard:[250,500],premium:[600,1200],luxury:[1300,2200],designer:[2400,3000]},
+  tierSlot:{a_top:.55,a_pants:.45,a_shoes:.45,a_back:.7,a_acc:.3,a_hat:.3,a_mask:.25},
+  tierBrand:{rose:.25,cr:.2,nc:.15,bb:.05,sm:.05,sp:-.05,smk:-.05,oak:-.05,y2k:-.1,km:-.15,basics:-.25},
+  tierNudge:.3,
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
@@ -206,14 +214,21 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
   if(ROOMT.garden)ROOMT.garden.cost=ECON.lotGarden;
   if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")*econLate("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}})();
 /* Shop prices (SHOP and GITEMS in 10_app_a.js, EXTRA_ITEMS in 15_shop.js), each item once even if it sits in two lists:
-   clothes x shopK between clothesMin and clothesMax (the free-to-cheap basics just x shopK), permanent upgrades from ECON.buff,
-   and interface items (themes, frames, backdrops, companions, titles, tap effects, HUD, sounds, scenes) by the level they open */
-(function(){var seen=typeof WeakSet==="function"?new WeakSet():null;
+   graded clothes by their quality tier (ECON.tier), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
+   just x shopK), permanent upgrades from ECON.buff, and interface items (themes, frames, backdrops, companions, titles, tap
+   effects, HUD, sounds, scenes) by the level they open */
+(function(){var seen=typeof WeakSet==="function"?new WeakSet():null,graded=[];
   [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
     (l||[]).forEach(function(it){if(!Array.isArray(it)||!(+it[3]>0)||(seen&&seen.has(it)))return;if(seen)seen.add(it);var e=it[6]||{},s=it[1];
       if(s==="buff"){it[3]=ECON.buff[it[0]]||Math.round(it[3]/50)*50;return}
+      var tr=/^a_/.test(s)&&ECON.tierSlot[s]!=null&&clothTier(it[0]);if(tr&&ECON.tier[tr]){graded.push([it,tr]);return}
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
-      it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})})})();
+      it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})});
+  /* each brand's average old price, so a piece its brand priced above the rest sits higher in its band */
+  var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
+  graded.forEach(function(g){var it=g[0],B=ECON.tier[g[1]],b=(it[6]&&it[6].b)||"",a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
+      p=ECON.tierSlot[it[1]]+(ECON.tierBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.tierNudge*rel));
+    it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
 /* ---- Room Bonus (Cal, 2026-11-10: "some assets should provide a buff but very miniscule ... a new bed would increase your
    productivity by 0.2% exp gain ... each room should have some stats on the screen that show you how much passive buff increase is
