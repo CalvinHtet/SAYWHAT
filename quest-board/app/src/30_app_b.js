@@ -338,8 +338,10 @@ function markActive(){
     S.weekPaid[wk]=1;var wb=weekBonus();
     setTimeout(function(){
       var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
-      if(pz){S.owned[pz[0]]=true;persist()}
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'')+'<button class="btn big" id="wwok">Claim</button></div>');
+      /* nothing left to give: coins instead, as the Daily Quest chest pays */
+      var pc=pz?0:((typeof ECON!=="undefined"&&ECON.chestNone)||300);
+      if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -1350,7 +1352,7 @@ function boardLine(){
   var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
   /* the bar shows 100, then quietly 200, then fills on in gold with no number toward the hidden chest (29e_economy.js) */
   var t=typeof dqTarget==="function"?dqTarget():gl,f=typeof dqFill==="function"?dqFill():[gl?Math.min(1,x/gl):0,0];
-  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(f[0]*100)+'%"></i>'+(f[1]?'<i class="ot" style="width:'+(f[1]*100)+'%"></i>':'')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar'+(t?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i>'+(t?'':'<i class="ot" style="width:'+(f[1]*100)+'%"></i>')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
 }
 function boardHtml(){
   var g=gated(), ri=rankIdx(), rk=RANKS[ri];
@@ -1463,7 +1465,9 @@ function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GAT
 function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.crates[L])return null;S.crates[L]=1;var live=[];try{live=dropState().live.map(function(x){return x.id})}catch(e){}
   var pz=freeItem({slots:/^a_/,brands:live,basics:true}),k=["str","agi","vit","int"][L%4];
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
-  if(pz)S.owned[pz[0]]=true;else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":"+1 "+STATN[k])}
+  /* the Shop is open but you own every piece on offer: coins, as the Daily Quest chest pays */
+  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
+  if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
 function levelUp(lv,extra,from){

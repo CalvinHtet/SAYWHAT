@@ -137,7 +137,7 @@ trophyHtml=function(){dgState();var h='',tabs='<nav class="dg-tabs" aria-label="
     return tabs+h}
   var earned=[];DGRELICS.forEach(function(R){R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(S.relics[k])earned.push({id:R.id,name:R.name+" "+["I","II","III"][i],d:R.d(n),t:S.relics[k]})})});
   var total=DGRELICS.reduce(function(a,R){return a+R.tiers.length},0),bad=BADGES.filter(function(b){return S.badges&&S.badges[b[0]]});
-  h+='<section class="card panel"><h3 class="label">Relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc">'+dgRelicIcon(r.id)+'<b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
+  h+='<section class="card panel"><h3 class="label">Milestone relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc">'+dgRelicIcon(r.id)+'<b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
     +(total>earned.length?'<p class="note">'+(total-earned.length)+' more to discover.</p>':'')+'</section>';
   if(bad.length)h+='<section class="card panel"><h3 class="label">Milestones</h3><div class="titles">'+bad.map(function(b){return '<span class="chip" title="'+esc(b[2])+'">'+esc(b[1])+'</span>'}).join("")+'</div></section>';
   return tabs+h};

@@ -81,7 +81,7 @@ function r2BuffTxt(id){var b=(ECON.relicBuff||{})[id]||{},o=[];
   if(b.rooms)o.push("+"+b.inc+"% "+(b.rooms[0]==="garden"?"Garden produce":b.rooms.map(function(t){return (ROOMT[t]||{}).name||t}).join(" and ")+" income"));
   if(b.biz)o.push("+"+b.biz+"% business income");if(b.chest)o.push("+"+b.chest+"% coins from Daily Quest chests");
   if(b.freeze)o.push("a free streak freeze every month");if(b.crawl)o.push("+"+b.crawl+" crawl a day");if(b.rb)o.push("every Room Bonus x"+b.rb);
-  return o.join(", ")}
+  var s=o.join(", ");return s.charAt(0).toUpperCase()+s.slice(1)}
 var r2GiftBase=dgBuff;dgBuff=function(k){return r2GiftBase(k)+(k==="gift"||k==="mt"||k==="biz"?r2Buff(k):0)};
 var r2SocialBase=socialBuffs;
 socialBuffs=function(){var o=r2SocialBase(),a=r2All(),cl={},st={};
@@ -101,17 +101,20 @@ setInterval(function(){try{if(!loaded||!S.created||!r2Sum("freeze"))return;var m
   S.r2frz=m;S.freezes++;persist();pop("Phoenix Ash Vial: +1 streak freeze this month")}catch(e){}},30000);
 /* the picture: ui_relic2_<id>.webp when the Mac has painted it, else a gem drawn in the tier's colour; legendary cards get wings */
 var R2COL={low:["#e0a46a","#8a5426"],mid:["#eef3fa","#8d9bb0"],high:["#ffe07a","#c08a1e"],legendary:["#f6f0ff","#8b5cf6"]};
-function r2Icon(r,lock){var u=!lock&&window.QBART&&QBART["ui_relic2_"+r.id+".webp"],c=R2COL[r.tier]||R2COL.low;
-  if(u)return '<img class="r2-img" src="'+u+'" alt="">';
+function r2Icon(r,lock,noart){var u=!lock&&!noart&&window.QBART&&QBART["ui_relic2_"+r.id+".webp"],c=R2COL[r.tier]||R2COL.low;
+  if(u)return '<img class="r2-img" src="'+u+'" alt="" data-r2="'+esc(r.id)+'">';
   return '<svg class="r2-img" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="r2g'+r.tier+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs>'
     +(lock?'<text x="24" y="31" text-anchor="middle" font-size="20" font-weight="800" fill="'+c[1]+'">?</text>':'<path d="M24 5 L39 18 L24 43 L9 18 Z" fill="url(#r2g'+r.tier+')" stroke="'+c[1]+'" stroke-width="1.5"/><path d="M9 18 H39 M24 5 L18 18 L24 43 L30 18 Z" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>')+'</svg>'}
+/* a relic picture that fails to load becomes the drawn gem, not the broken-image icon */
+document.addEventListener("error",function(e){var t=e.target,r;if(!t||t.tagName!=="IMG"||!t.dataset||!t.dataset.r2||!(r=r2Of(t.dataset.r2)))return;
+  var d=document.createElement("div");d.innerHTML=r2Icon(r,false,true);if(d.firstChild)t.replaceWith(d.firstChild)},true);
 function r2Wings(){var w='<svg viewBox="0 0 30 40" aria-hidden="true"><path d="M28 20 C20 4 8 2 2 6 C8 9 10 12 9 15 C4 15 1 18 1 21 C6 20 9 22 9 25 C5 27 4 31 5 34 C12 30 20 28 28 20 Z" fill="#f4eeff" stroke="#8b5cf6" stroke-width="1.4"/></svg>';
   return '<i class="r2-wing l">'+w+'</i><i class="r2-wing r">'+w+'</i>'}
 function r2Card(r){var own=!!r2State()[r.id],T=r2Tier(r.tier);
   return '<div class="r2 r2-'+r.tier+(own?'':' lock')+'">'+(r.tier==="legendary"?r2Wings():'')+'<div class="r2-frame">'+r2Icon(r,!own)+'</div><small class="r2-t">'+T[2]+'</small><b>'+(own?esc(r.name):'Not found yet')+'</b>'
     +(own?'<small>'+esc(r.d)+'</small><small class="r2-b">'+esc(r2BuffTxt(r.id))+'</small>':(r.tier==="legendary"?'<small>Found on treasure hunts.</small>':''))+'</div>'}
 function r2Html(){var own=r2State(),n=Object.keys(own).filter(function(id){return r2Of(id)}).length;
-  return '<section class="card panel"><h3 class="label">Relic collection &middot; '+n+' of '+RELICS2.length+'</h3><p class="note">Low relics are heirlooms, the rest are artifacts. The 300 XP Daily Quest chest can hold one.</p>'
+  return '<section class="card panel"><h3 class="label">Relic collection &middot; '+n+' of '+RELICS2.length+'</h3><p class="note">Low relics are heirlooms, the rest are artifacts. Keep filling the Daily Quest bar: a hidden chest can hold one.</p>'
     +R2TIERS.map(function(T){var L=RELICS2.filter(function(r){return r.tier===T[0]});if(!L.length)return "";var k=L.filter(function(r){return own[r.id]}).length;
       return '<h4 class="r2-h r2-h-'+T[0]+'">'+T[1]+' &middot; '+k+'/'+L.length+'</h4><div class="r2-grid">'+L.map(r2Card).join("")+'</div>'}).join("")+'</section>'}
 var r2TrophyBase=trophyHtml;

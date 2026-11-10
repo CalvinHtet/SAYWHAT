@@ -147,7 +147,7 @@ function dqHidden(){var T=ECON.dqTiers;return T[T.length-1][0]}
 function dqFill(){var x=dqXp(),t=dqTarget(),top=ECON.dqTiers[ECON.dqShown-1][0];return t?[Math.min(1,x/t),0]:[1,Math.min(1,Math.max(0,(x-top)/(dqHidden()-top)))]}
 function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),t=dqTarget(),f=dqFill(),e=dqEff(),sp=stats4(),d=dqState();
   return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+(t?x+' / '+t+' XP':x+' XP')+'</span></div>'
-    +'<div class="dq-bar"><i style="width:'+(f[0]*100)+'%"></i><i class="ot" style="width:'+(f[1]*100)+'%"></i></div>'
+    +'<div class="dq-bar'+(dqTarget()?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i><i class="ot" style="width:'+(f[1]*100)+'%"></i></div>'
     +'<p class="note">'+(x<=0?'Finish a task to start your day. ':x<g?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':'Daily Quest done. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden chest: +10%)':'')+'.':'')+'</p>'
     +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
     +'<div class="dq-row">'+Object.keys(STATN).map(function(k){var ic=econArt("ui_stat_"+k+".webp");return '<span class="chip dq-st" title="'+STATD[k]+'">'+(ic?'<img src="'+ic+'" alt="">':'')+STATN[k]+' '+sp[k]+'</span>'}).join("")+'</div></section>'}

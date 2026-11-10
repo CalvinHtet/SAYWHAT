@@ -150,7 +150,7 @@ function crewPct(q){
     if(b.special==="all")t+=b.pct;
     else if(b.pct&&((b.stat&&b.stat===q.stat)||(b.cl&&b.cl===q.cl)))t+=b.pct*f;
   });
-  return Math.round(Math.min(t,50));
+  return Math.round(Math.min(t,50)*100)/100;
 }
 function wingSvg(seed){
  var x=seed*9301+49297, r=function(){x=(x*9301+49297)%233280;return x/233280};
