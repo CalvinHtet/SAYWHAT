@@ -1284,9 +1284,15 @@ function statBars(){
 /* Something at every level (Cal, 2026-11-09). A level with no prize, trial, effect, new stock, tab or dungeon brings a crate:
    a wardrobe piece you do not own yet (basics and the live brands, like Weekly Warrior's prize), else a stat point. Once per
    level, so an undo and redo never pays twice. Renown ranks past level 100 use the same crate. */
-function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GATES.indexOf(L)<0&&!FX.some(function(f){return f[0]===L})&&!SHOP.some(function(x){return x[4]===L})&&!AREAS.some(function(a){return a[2]===L})&&!DNG.some(function(d){return d.lv===L})}
+/* Cal, 2026-11-09: "I also dont want any of the level up options to show anything about the shop if we have not unlocked it."
+   Brand clothes come with each drop, not by level; only interface items and permanent upgrades open at a level, and only those
+   count, once the Shop is open (the old non-brand clothes still carry levels but are not sold anywhere). */
+var SHOPLV=/^(buff|theme|frame|bg|pet|title|burst|hud|sound|scene)$/;
+function shopNewAt(L){if(typeof areaGate==="function"&&areaGate("shop"))return 0;return SHOP.filter(function(x){return x[4]===L&&SHOPLV.test(x[1])}).length}
+function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GATES.indexOf(L)<0&&!FX.some(function(f){return f[0]===L})&&!shopNewAt(L)&&!AREAS.some(function(a){return a[2]===L})&&!DNG.some(function(d){return d.lv===L})}
 function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.crates[L])return null;S.crates[L]=1;var live=[];try{live=dropState().live.map(function(x){return x.id})}catch(e){}
   var pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null,k=["str","agi","vit","int"][L%4];
+  if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
   if(pz)S.owned[pz[0]]=true;else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
@@ -1303,7 +1309,7 @@ function levelUp(lv,extra,from){
     /* Rooms open through the story (docs/STORYBOARD.md), not by level, so level-ups no longer announce room blueprints or new
        floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
     FX.filter(function(f){return f[0]===L}).forEach(function(f){cards+=fxCard(f,i++)});
-    var ns=SHOP.filter(function(x){return x[4]===L}).length; if(ns&&L>=3)cards+=stockCard(ns,i++);
+    var ns=shopNewAt(L); if(ns&&L>=3)cards+=stockCard(ns,i++);
     if(lvEmpty(L)){var cr=lvCrate(L);if(cr)cards+='<div class="reward reveal" style="animation-delay:'+(0.3+(i++)*0.45).toFixed(2)+'s"><span>'+esc(cr)+'</span></div>'}
   }
   var more=start>from+1?'<p class="note">Plus '+(start-from-1)+' earlier unlock'+(start-from-1===1?'':'s')+' waiting in The Loft.</p>':'';

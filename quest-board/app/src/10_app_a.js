@@ -644,7 +644,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. A new brand drops every Monday: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
+var AREALINE={shop:"The Shop. A new brand drops every 3 days: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
@@ -777,7 +777,7 @@ function areaCard(a,i){
   return '<div class="unl reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s"><span class="label">New area</span><div class="unlart">'+areaArt(a[0])+'</div><b>'+esc(a[1])+' unlocked</b><small>'+esc(AREALINE[a[0]]||"")+'</small></div>';
 }
 function stockCard(n,i){
-  return '<div class="unl reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s"><span class="label">Shop restocked</span><b>'+n+' new item'+(n===1?'':'s')+' on the shelves</b><small>Check the Shop tab.</small></div>';
+  return '<div class="unl reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s"><span class="label">New in the Shop</span><b>'+n+' new interface item'+(n===1?'':'s')+' or upgrade'+(n===1?'':'s')+'</b><small>Open at this level. See the Shop tab.</small></div>';
 }
 function stripHtml(){
   var rk=RANKS[rankIdx()], t=eqItem("title");
@@ -1519,7 +1519,7 @@ function brandHtml(b,d){
   var h='<section class="card panel brandhead" style="background:linear-gradient(135deg,'+b.c[0]+','+b.c[1]+' 60%,'+b.c[2]+')">'+brandLogo(b,1)+'<p class="note" style="color:#fff;opacity:.9">'+b.tag+'. Weekly drop, 15 pieces.</p></section>';
   GORDER.forEach(function(g){var items=SHOP.filter(function(x){return x[6].b===b.id&&x[1]===g[0]&&itemFits(x)});if(!items.length)return;
     h+='<section class="card panel"><h3 class="label">'+g[1]+'</h3><div class="shopgrid">'+items.map(itemHtml).join("")+'</div></section>'});
-  var nx=d.next;h+='<section class="card panel"><p class="note">'+(nx?'Next drop: <b>'+nx.name+'</b> in '+cdTxt(ptMidnight(nx.start)-d.n)+' ('+dropCadence()+', midnight Pacific).':'More brands drop every '+dropCadence().replace(/s and /,' and ').replace(/s$/,'')+'.')+'</p></section>';
+  var nx=d.next;h+='<section class="card panel"><p class="note">'+(nx?'Next drop: <b>'+nx.name+'</b> in '+cdTxt(ptMidnight(nx.start)-d.n)+' ('+dropCadence()+', midnight Pacific).':'More brands drop '+dropCadence().replace(/s and /,' and ').replace(/s$/,'')+'.')+'</p></section>';
   return h;
 }
 function vaultHtml(d){
