@@ -104,6 +104,14 @@ function mallHeld(){return MALLHOLD&&!!(window.QB_WEB&&QB_WEB.noTest)&&!styHas("
 function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];if(s&&s.id==="mall"&&mallHeld())return "The Calibur Mall is still being fitted out. It opens in a coming update.";
   var T=s&&styTriggers(s);if(T)return (s.why||"")+" "+T.map(function(x){return (x[1]?"✓ ":"")+x[2]}).join(". ")+".";
   return (s&&s.why||"Keep growing your business.")+(L&&effLvl()<L?" (level "+L+")":"")}
+/* W25 (QA, 2026-11-10): the triggers one per line, a tick on each one met */
+function styWhyHtml(room){var s=styStep(room),T=s&&!(s.id==="mall"&&mallHeld())&&styTriggers(s);if(!T)return esc(styWhy(room));
+  return esc(s.why||"")+'<span class="stytr">'+T.map(function(x){return '<span'+(x[1]?' class="ok">✓ ':'>')+esc(x[2])+'</span>'}).join("")+'</span>'}
+/* a story room that no upgrade opens (a lot on the street, or one that is given) shows its triggers in the window of the room before
+   it in STYCHAIN: Boba in the Restaurant, Lock and Key in the Dessert Parlor, the Mall in Lock and Key */
+function styNextHtml(t){var k=-1;STYCHAIN.forEach(function(c,i){if(c[1]===t)k=i});var c=k<0?null:STYCHAIN[k+1];if(!c||styAllows(c[1]))return "";
+  var room=c[1];if(Object.keys(ADDONS).some(function(rt){return (ADDONS[rt]||[]).some(function(a){return a[3]&&a[3].opens===room})}))return "";
+  return '<div class="addon next mystery stynext" aria-label="A room still to come"><span class="label">Coming next</span><b>? ? ?</b><small>'+styWhyHtml(room)+'</small><button class="btn ghost" disabled>Not yet</button></div>'}
 /* QA (v0.66): a step without its own portrait uses the same person's portrait from another step (the boba scene is Mara's: chef) */
 function styPortrait(s){var n="ui_story_"+s.id+".webp",u=window.QBART&&QBART[n];
   /* the Garden's scene is the player's own idea: their character, not a stranger's initials */
