@@ -61,8 +61,8 @@ SHOP.push([DGWEAR.id,"a_acc","Rift Mask",0,1,"Black, with a violet crack of ligh
    brands on sale, then the basics */
 var CRAWLWEAR=/^a_(top|pants|shoes|acc|hat|back|mask)$/;
 function crawlWear(){var st={};try{st=dropState()||{}}catch(e){}var ids=function(L){return (L||[]).map(function(b){return b.id})},tiers=[ids(st.vault),ids(st.live),["basics"]];
-  var ok=function(it,bs){var e=it[6]||{};return CRAWLWEAR.test(it[1])&&!e.dungeon&&bs.indexOf(e.b)>=0&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)};
-  for(var t=0;t<tiers.length;t++){var pool=SHOP.filter(function(it){return ok(it,tiers[t])});if(pool.length)return pool[Math.floor(Math.random()*pool.length)]}
+  /* through freeItem (29y_free.js), so a crawl never brings a piece the player owns */
+  for(var t=0;t<tiers.length;t++){var it=t===2?freeItem({slots:CRAWLWEAR,brands:[],basics:true}):freeItem({slots:CRAWLWEAR,brands:tiers[t]});if(it)return it}
   return null}
 /* what a dungeon still hides: its trophy pieces and shards, the ally trapped there, and the Rift Mask in the Spire */
 function crawlHidden(d){var D=dngInit(),out=[];
@@ -137,7 +137,7 @@ trophyHtml=function(){dgState();var h='',tabs='<nav class="dg-tabs" aria-label="
     return tabs+h}
   var earned=[];DGRELICS.forEach(function(R){R.tiers.forEach(function(n,i){var k=R.id+(i+1);if(S.relics[k])earned.push({id:R.id,name:R.name+" "+["I","II","III"][i],d:R.d(n),t:S.relics[k]})})});
   var total=DGRELICS.reduce(function(a,R){return a+R.tiers.length},0),bad=BADGES.filter(function(b){return S.badges&&S.badges[b[0]]});
-  h+='<section class="card panel"><h3 class="label">Relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc">'+dgRelicIcon(r.id)+'<b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
+  h+='<section class="card panel"><h3 class="label">Milestone relics &middot; '+earned.length+' found</h3>'+(earned.length?'<div class="dg-grid">'+earned.map(function(r){return '<div class="dg-pc">'+dgRelicIcon(r.id)+'<b>'+esc(r.name)+'</b><small>'+esc(r.d)+'</small></div>'}).join("")+'</div>':'<p class="note">Nothing yet. Relics appear as you earn them.</p>')
     +(total>earned.length?'<p class="note">'+(total-earned.length)+' more to discover.</p>':'')+'</section>';
   if(bad.length)h+='<section class="card panel"><h3 class="label">Milestones</h3><div class="titles">'+bad.map(function(b){return '<span class="chip" title="'+esc(b[2])+'">'+esc(b[1])+'</span>'}).join("")+'</div></section>';
   return tabs+h};

@@ -28,6 +28,31 @@
   /* the sandbox link (tools/build.py with QB_SANDBOX=1; Cal, 2026-11-08: "test all the upgrades without it overwriting my personal
      save"): the game gets a stand-in database that lives in this browser only. It returns before Firebase starts, so this build
      has no way to sign in or to reach anyone's real save. */
+  /* every proof photo carries a time stamp burnt in before the check (Cal, 2026-11-10: "the photo should all get a visible time stamp
+     so that the AI knows when it was taken ... make it my SAYMORE color scheme of neon orange or neon cyan"): bottom right, small,
+     wide capitals ("NOV 10  11:42 PM", the phone's own clock: Cal, 2026-11-10, "just print the phone's time on there and have the ai judge it based off of that"), orange with a cyan glow over a thin dark shadow so it reads
+     on dark, bright and orange photos. It stays on anything later stored or posted. qbStampText() is the text the app also sends. */
+  window.qbStampText = function (t) {
+    try {
+      var d = new Date(t == null ? Date.now() : t), o = {};
+      new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true })
+        .formatToParts(d).forEach(function (p) { o[p.type] = p.value; });
+      return (o.month + " " + o.day + "  " + o.hour + ":" + o.minute + " " + (o.dayPeriod || "")).toUpperCase().trim();
+    } catch (e) { return ""; }
+  };
+  window.qbStamp = function (c, text) {
+    if (!c || !text) return;
+    var x = c.getContext("2d"), w = c.width, h = c.height, fs = Math.max(12, Math.round(Math.min(w, h) * 0.04)), pad = Math.round(fs * 0.8);
+    x.save(); x.font = "800 " + fs + "px system-ui, -apple-system, Segoe UI, sans-serif"; x.textAlign = "right"; x.textBaseline = "alphabetic";
+    if ("letterSpacing" in x) x.letterSpacing = Math.round(fs * 0.12) + "px";
+    var X = w - pad, Y = h - pad;
+    x.shadowColor = "rgba(0,0,0,.75)"; x.shadowBlur = Math.round(fs * 0.25); x.shadowOffsetY = Math.max(1, Math.round(fs * 0.06));
+    x.lineJoin = "round"; x.lineWidth = Math.max(2, Math.round(fs * 0.16)); x.strokeStyle = "rgba(10,12,18,.85)"; x.strokeText(text, X, Y);
+    x.shadowColor = "#17d4e6"; x.shadowBlur = Math.round(fs * 0.45); x.shadowOffsetY = 0;
+    x.lineWidth = Math.max(1, Math.round(fs * 0.07)); x.strokeStyle = "#17d4e6"; x.strokeText(text, X, Y);
+    x.shadowBlur = 0; x.fillStyle = "#ff7a18"; x.fillText(text, X, Y);
+    x.restore();
+  };
   if (W.sandbox) { sandboxHost(); return; }
   if (!window.firebase) return; /* the page then runs on this device only, as it does when Claude is not there */
 
@@ -160,7 +185,7 @@
   /* ---- AI: one Cloud Function (functions/index.js) calls Claude with the owner's key; photos are shrunk on the phone first ---- */
   /* Cal, 2026-11-09: checks run in the background now, so the shrink must not freeze the game: img.decode() decodes off the main
      thread, and toBlob encodes without blocking. Quality 0.75 keeps the upload small; 1024 px still reads a clock in the photo. */
-  function shrink(file) {
+  function shrink(file, stamp) {
     return new Promise(function (ok, no) {
       var img = new Image(), url = URL.createObjectURL(file);
       var draw = function () {
@@ -168,6 +193,7 @@
         var k = Math.min(1, 1024 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement("canvas");
         c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
         c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        window.qbStamp(c, stamp || window.qbStampText());
         /* never send an empty picture: Claude would then judge the quest from the words alone */
         var give = function (s) { if (s) ok(s); else no(new Error("image")); };
         var viaUrl = function () { give(c.toDataURL("image/jpeg", 0.75).split(",")[1]); };
@@ -199,7 +225,7 @@
       opt = opt || {};
       var body = { prompt: String(prompt), tier: opt.modelTier || "" }, f = opt.images, t0 = performance.now();
       if (Array.isArray(f)) f = f[0];
-      if (f) body.image = await shrink(f);
+      if (f) body.image = await shrink(f, opt.stamp);
       var t1 = performance.now();
       var r = await post(body);
       var j = await r.json().catch(function () { return null; });

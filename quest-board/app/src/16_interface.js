@@ -84,6 +84,7 @@ function ifColors(){
   var th=eqItem("theme"),st=document.documentElement.style;if(!th)return;
   if(th[0]==="th_sky"){var c=ifSkyColors(lfLS().el);st.setProperty("--accent",c[0]);st.setProperty("--accent2",c[1])}
   if(th[0]==="th_aurora"){var h=Math.round(Date.now()/1000/2)%360;st.setProperty("--accent","hsl("+h+" 85% 68%)");st.setProperty("--accent2","hsl("+((h+55)%360)+" 85% 62%)")}
+  emColor(); /* the embers read --accent again on their next frame (30_app_b.js) */
 }
 function ifBackdrop(){
   var b=eqItem("bg"),dc=document.getElementById("deco");
@@ -163,7 +164,7 @@ function qsViewHtml(it){var sl=it[1],pv,play=/^(sound|scene|burst)$/.test(sl);
   if(/^(bg|title|hud|pet)$/.test(sl))pv=ifWith(it,ifPreview).replace('<aside class="qs-mirror if-prev">','<div class="qs-mirror if-prev qv-prev">').replace(/<div class="qs-worn">[\s\S]*<\/aside>$/,'</div>');
   else pv='<div class="qv-thumb">'+thumb(it)+'</div>';
   var rq=it[6]&&it[6].req&&!S.owned[it[6].req]?shopItem(it[6].req):null,can=S.coins>=it[3];
-  return '<div class="card box2 qs-view"><span class="label">'+(sl==="buff"?"Upgrade":"Interface")+'</span><h3>'+esc(it[2])+'</h3>'+pv
+  return '<div class="card box2 qs-view"><div class="rm-head"><span class="label">'+(sl==="buff"?"Upgrade":"Interface")+'</span>'+coinPillHtml()+'</div><h3>'+esc(it[2])+'</h3>'+pv
     +(play?'<button class="btn ghost" data-act="iftry" data-id="'+it[0]+'">Play it</button>':'')
     +'<p class="note">'+esc(it[5])+'</p><div class="row">'
     +(rq?'<button class="btn ghost" disabled>Needs '+esc(rq[2])+'</button>':can?'<button class="btn" data-act="qsvbuy" data-id="'+it[0]+'">Checkout · <i class="coin"></i>&nbsp;'+it[3]+'</button>':'<button class="btn ghost" disabled><i class="coin"></i>&nbsp;'+it[3]+' · need '+(it[3]-S.coins)+' more</button>')

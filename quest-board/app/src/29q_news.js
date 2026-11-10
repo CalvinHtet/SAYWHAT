@@ -1,26 +1,27 @@
 /* ---------- Cal's welcome note and the "New Update!" notice (Cal, 2026-11-09) ----------
-   Welcome: an (i) button at the top right of the Board opens a note from Cal to his friends; it also opens by itself once, the
-   first time a player reaches the Board.
+   Welcome: a note from Cal to his friends, now the first letter in the inbox (the envelope at the top right, 29x_inbox.js); it
+   also opens by itself once, the first time a player reaches the game.
    Update: the build writes version.json ({"appv": N}, tools/build.py). A page running an older APPV checks it when the game opens,
    when it comes back to the foreground and every 10 minutes, and offers a Refresh. After the reload the page says whether it is
    now on the new version, or that the update has not reached this phone yet. */
-var WELCOME='<div class="card box2 welcome"><span class="label">A note from Cal</span><h2>Hey, it&rsquo;s Cal &#128075;</h2>'
- +'<p>I&rsquo;m bad at finishing my to-do list. The boring stuff (laundry, dishes, emails, the gym) always slides to tomorrow. So I built SAYWHAT to make those tasks worth doing.</p>'
+/* Cal's note is now the first letter in the inbox (29x_inbox.js), with 3,000 coins to start (Cal, 2026-11-10) */
+var WELCOMEBODY='<p>I&rsquo;m bad at finishing my to-do list. The boring stuff (laundry, dishes, emails, the gym) always slides to tomorrow. So I built SAYWHAT to make those tasks worth doing.</p>'
  +'<h3 class="label">How it works</h3><ul class="wl">'
  +'<li><b>Add your tasks.</b> Type them, messy is fine, in the box at the top of the Board and each one becomes a quest.</li>'
  +'<li><b>Finish quests</b> to earn XP and coins. Prove the big ones with a photo for double rewards.</li>'
  +'<li><b>Level up</b> to unlock new places, dungeons and gear.</li>'
  +'<li><b>Spend coins</b> on your character and your Loft.</li>'
  +'<li><b>Show off</b> your character in the Town Hall and see how your friends are doing.</li>'
- +'<li><b>Challenges</b> are coming: see your friends&rsquo; wins in the Town Hall, then bet coins you can beat them this week (like more gym days). <i>Coming soon.</i></li>'
- +'</ul><p>No guilt, no pressure. Do a little every day and watch it add up. See you in town.</p>'
- +'<div class="btns"><button class="btn" data-act="mclose">Let&rsquo;s go</button></div></div>';
-function showWelcome(){if(document.querySelector("#layer .modal .welcome"))return;modal(WELCOME)}
-/* once per player, after any other window (the creator, a level-up) has closed */
+ +'<li><b>Challenge a friend</b> in the Town Hall: the most quest XP or Training XP in 1, 3 or 7 days. You both put in the same coins and the winner takes them all.</li>'
+ +'</ul><p>No guilt, no pressure. Do a little every day and watch it add up. See you in town.</p>';
+function showWelcome(){ibOpen("welcome")}
+/* once per player, after any other window (the creator, a level-up) has closed. Cal, 2026-11-10: "for the people who are already
+   playing, retrigger that message so they can get it": a save from before the inbox (S.welcomed already set) gets it once more */
 function welcomeOnce(){
-  if(!loaded||!S.created||S.welcomed)return;
+  if(!loaded)return;if(!S.created){setTimeout(welcomeOnce,5000);return}
+  var I=ibState();if(I.popped)return;
   if(document.querySelector("#layer .modal")){setTimeout(welcomeOnce,3000);return}
-  S.welcomed=1;persist();showWelcome();
+  S.welcomed=1;I.popped=1;persist();ibOpen("welcome");
 }
 
 var UPDT=0,UPDK="qbUpd";

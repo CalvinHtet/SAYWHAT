@@ -14,7 +14,7 @@ function roomCell(i){
 function baseHtml(){
   simulate();
   var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r){return s+(r&&r.pend?Math.floor(r.pend):0)},0);
-  var hud='<div class="lfhud mono"><span><i class="coin"></i>&nbsp;'+Math.floor(S.coins)+'</span>'+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
+  var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
   if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';
@@ -41,9 +41,12 @@ function roomModal(i){
   simulate();
   var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
   var cph=Math.round(coinRate(i)),stat=T.coin?cph+' coin'+(cph===1?'':'s')+' an hour, holds '+roomStore(r)+' hours':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+' an hour':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Yours to fill.');
+  /* the room's numbers (Cal, 2026-11-10: "each room should have some stats on the screen"): a Loft room's bonus out of its most, a
+     business's town efficiency, payout share and upgrades */
+  if(typeof rmStats==="function")stat=rmStats(r,i,stat);
   /* QA: the payout sentence ran off a phone inside the chip; it is its own line now */
   var payln=T.coin?'<p class="note">Your businesses can pay out '+payRoom().toLocaleString()+' more coins today.</p>':'';
-  var h='<div class="card box2 rmodal">'+'<h2 class="rm-title">'+esc(T.name)+'</h2><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
+  var h='<div class="card box2 rmodal">'+'<div class="rm-head"><h2 class="rm-title">'+esc(T.name)+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
   if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% today. Complete the Daily Quest for full speed.':'Full speed today.')+'</p>';
   if(r.t==="garden")h+=gdNote(r)+gdWaterHtml()+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
   if(false){
@@ -68,7 +71,7 @@ function roomModal(i){
     var elv=0;/* Cal: "Keep the arcade and bowling alley a secret": no hint card until the story opens them */if(e.opens&&!styAllows(e.opens)&&(e.opens==="arcade"||e.opens==="bowling"))return;if(e.opens&&!styAllows(e.opens)){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>'+esc(styWhy(e.opens))+'</small><button class="btn ghost" disabled>Not yet</button></div>');return}
     if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
     var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
-    var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):'';
+    var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):e.xp?'<em class="uptag up">+'+e.xp+'% XP</em>':'';
     avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+tag+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
   });
   /* QA (Restaurant pass): three "Needs Knock Through the Wall" cards filled the slots ahead of Knock Through itself, so nothing
@@ -197,7 +200,7 @@ function lfNewGlow(svg,fresh){
 function buildModal(i){
   closeModals();
   var lv=effLvl(), types=buildableList();if(!buildableList().length){pop("Nothing to build yet.");return}
-  var h='<div class="card box2"><span class="label">Construction</span><h2 style="font-size:30px">Build a room</h2><div class="addons">';
+  var h='<div class="card box2"><span class="label">Construction</span><div class="rm-head"><h2 style="font-size:30px">Build a room</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="addons">';
   types.forEach(function(k){var T=ROOMT[k];
     if(T.lv>lv||hasRoom(k)){return}
     h+='<div class="addon next"><div class="bpart'+(ART["room_"+k]?' post':'')+'">'+(ART["room_"+k]?'<img class="rpost" src="'+ART["room_"+k]+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div><b>'+esc(T.name)+'</b><small>'+esc(T.desc)+'</small><button class="btn" data-act="rdo" data-i="'+i+'" data-t="'+k+'"><i class="coin"></i>&nbsp;'+T.cost+'</button></div>';
@@ -320,7 +323,7 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:Math.round(x*12)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:ECON.wwCoins}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -334,9 +337,11 @@ function markActive(){
   if(weekCount()>=4&&!S.weekPaid[wk]){
     S.weekPaid[wk]=1;var wb=weekBonus();
     setTimeout(function(){
-      var live=dropState().live.map(function(x){return x.id}),pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)&&it[4]<=effLvl()+5}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null;
-      if(pz){S.owned[pz[0]]=true;persist()}
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'')+'<button class="btn big" id="wwok">Claim</button></div>');
+      var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
+      /* nothing left to give: coins instead, as the Daily Quest chest pays */
+      var pc=pz?0:((typeof ECON!=="undefined"&&ECON.chestNone)||300);
+      if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -357,8 +362,8 @@ function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   if(!E[4])return {w:"",line:"Last time: "+last.n+" sets "+(last.hit?"with every rep hit. Add a rep per set.":"done.")};
   var miss=0;for(var i=lg.length-1;i>=0&&!lg[i].hit;i--)miss++;
   var w=last.hit?last.w+E[4]:miss>=3?Math.max(E[4],Math.round(last.w*0.9/E[4])*E[4]):last.w;
-  var why=last.hit?"You hit every rep. Go up "+E[4]+" lb.":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
-  return {w:w,line:"Last: "+last.w+" lb on "+last.d.slice(5)+". "+why};
+  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
+  return {w:w,line:"Last: "+wU(last.w,"lb")+" on "+mmdd(last.d)+". "+why};
 }
 /* Demos show the start and end of a rep, drawn for your body, fading between the two.
    Every copy runs on one clock, so a screen redraw never makes them jump. */
@@ -377,6 +382,31 @@ function exStill(id){if(EX[id]&&EX[id][5])return cexTile(id,"still");return '<di
    bodyweight work), and the log keeps every set's weight (ws), so next time each box shows what that set was last time and the
    weight box starts there. Tap a done set again to undo it. */
 function fmtW(w){return String(Math.round(w*10)/10)}
+/* Cal, 2026-11-10: "put the lbs right next to the number. Make the date in this format 11/09": a weight reads "135 lbs" (other
+   units as they are: "3.5 mi", "30 min"), and every date in Training reads MM/DD */
+function uLbl(u){return u==="lb"?"lbs":u}
+function wU(w,u){return fmtW(w)+" "+uLbl(u)}
+function mmdd(d){return String(d||"").slice(5).replace("-","/")}
+/* the weight box is as wide as its number, so the unit sits right after it */
+function kgW(v){return Math.max(2,String(v==null?"":v).length)+1+"ch"}
+document.addEventListener("input",function(e){var t=e.target;if(t&&t.classList&&(t.classList.contains("kg")||t.classList.contains("ckg")))t.style.width=kgW(t.value)});
+/* the log keeps 40 sessions per exercise for its graph (it kept 12); past the newest 12 only the date and the top weight stay, so
+   each older session adds about 30 characters to the save */
+/* the logs keep 6 months for the graphs (Cal, 2026-11-10: "toggle graphs between last 7 days, and last month, last 3 months, and last
+   6 months"): every entry of the last WKFULL days as it is (and always the newest), then one entry a week, that week's best, cut to
+   its date and number, back to WKKEEP days; older ones go. S.gymlog per exercise (best = top weight) and S.sessions per plan (best =
+   the session total) both work this way. */
+var WKFULL=35,WKKEEP=182;
+function wkDayN(d){var p=String(d||"").split("-");return Math.floor(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5)}
+function wkWeekN(d){return Math.floor((wkDayN(d)+3)/7)} /* Monday-based weeks (day 0, 1970-01-01, was a Thursday) */
+function wkTrim(L,val,slim,grp){var now=wkDayN(today()),keep=[],best={};
+  L.forEach(function(x,i){if(!x||typeof x!=="object"||!x.d)return;var age=now-wkDayN(x.d);if(!(age<WKKEEP))return;
+    if(age<WKFULL||i===L.length-1){keep.push(x);return}
+    var k=(grp?grp(x)+"|":"")+wkWeekN(x.d);if(!best[k]||val(x)>val(best[k]))best[k]=x});
+  Object.keys(best).forEach(function(k){keep.push(slim(best[k]))});
+  return keep.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0})}
+function gymKeep(L){return wkTrim(L,function(x){return +x.w||0},function(x){return {d:x.d,w:x.w}})}
+function sessKeep(L){return wkTrim(L,function(x){return +x.load||0},function(x){return {d:x.d,plan:x.plan,n:x.n,load:x.load,u:x.u}},function(x){return x.plan})}
 function lastLog(id){var L=(S.gymlog&&S.gymlog[id])||[];return L[L.length-1]||null}
 function lastSetW(id,n){var l=lastLog(id);if(!l)return null;if(l.ws)return l.ws[n]>0?l.ws[n]:null;return l.w>0?l.w:null}
 /* the weight shown before the next set: what you typed, else last time's weight for that set, else the weight of the set before
@@ -385,8 +415,9 @@ function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.
   var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
-    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+fmtW(v)+" "+exU(id):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
-      +(v?(wt?'<b>'+fmtW(v)+'</b><small>'+exU(id)+'</small>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
+    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+wU(v,exU(id)):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
+      /* QA (rc-0.89): four done sets at a weight like 102.5 wrapped 3 + 1, so a long weight puts its unit on a line of its own */
+      +(v?(wt?(fmtW(v).length>=5?'<b>'+fmtW(v)+'</b><small>'+uLbl(exU(id))+'</small>':'<b>'+fmtW(v)+'<small> '+uLbl(exU(id))+'</small></b>'):'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+wU(lw,exU(id))+'</small>':''))+'</button>'}
   return h+'</div>'}
 /* tap a set: save the weight in the box into it, or undo it. Returns true when the set was saved. */
 function wkSetTap(id,n,val){var wk=S.wk,E=EX[id];wk.sets[id]=wk.sets[id]||[];
@@ -405,7 +436,7 @@ function exCard(id,inPair){
    +'<div class="exhead"><b>'+esc(E[0])+'</b><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span></div>';
   if(nt)h+='<div class="note">'+esc(nt)+'</div>';
   h+='<div class="note">'+esc(sg.line)+'</div><div class="exrow">';
-  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>';
+  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>';
   h+=setBoxes(id,'data-act="wkset"')+'</div>'+(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div></div>';
   return h;
 }
@@ -431,7 +462,7 @@ function cexBuild(id){var p=cexPlans().filter(function(x){return x.id===id})[0],
 function cexTile(id,cls){return '<div class="xd xcust'+(cls?" "+cls:"")+'" role="img" aria-label="'+esc(EX[id][0])+'"><span>'+esc(EX[id][6]||"\u{1F3C3}")+'</span></div>'}
 function cexSuggest(id){var E=EX[id],last=lastLog(id);
   if(!last||!(last.w>0))return {w:"",line:"First time. Log what you did each round, in "+E[5]+"."};
-  return {w:"",line:"Last time: "+fmtW(last.w)+" "+E[5]+" on "+last.d.slice(5)+". Beat it?"}}
+  return {w:"",line:"Last time: "+wU(last.w,E[5])+" on "+mmdd(last.d)+". Beat it?"}}
 /* sort an activity with Claude, or by keywords */
 function cexGuess(t){var s=t.toLowerCase(),r=function(n,p,u,ic,st,sets,tg){return {n:n,p:p,u:u,ic:ic,st:st,sets:sets||1,t:tg}};
   var dist=(s.match(/(\d+(?:\.\d+)?)\s*(k|km|mi|mile|miles)\b/)||[]),mins=(s.match(/(\d+)\s*(min|mins|minutes)\b/)||[]);
@@ -471,10 +502,14 @@ function trainHtml(){cexSync();
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
     h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">Gym plans</h3><button class="btn ghost csm" data-act="wkfold" aria-expanded="'+!S.gymFold+'">'+(S.gymFold?'Show':'Hide')+'</button></div>'
       +(S.gymFold?'':'<p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>')+'</section>'+cexHtml();
-    var ss=(S.sessions||[]).slice(-5).reverse();
-    if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x){var pl=planOf(x.plan);return '<div class="lrow"><span class="lv">'+esc(x.d.slice(5))+'</span><span>'+esc(pl?pl[1]:x.plan)+'</span><span class="mono note">'+x.n+' lifts</span></div>'}).join("")+'</div></section>';
+    /* Cal, 2026-11-10: "show a graph of performance on that specific workout day if we click on any workout in the recent sessions
+       section, and also a separate graph that shows progression per exercise also at the bottom. These graphs are accessible with
+       a small i icon at the right of each entry". Tapping the row or its i opens the graph. */
+    var all=S.sessions||[],ss=all.slice(-5).reverse();
+    if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x,k){var pl=planOf(x.plan),nm=pl?pl[1]:x.plan,c=/^c_/.test(x.plan);
+      return '<button type="button" class="lrow wkrow" data-act="wkinfo" data-s="'+(all.length-1-k)+'" aria-label="'+esc(nm)+' on '+mmdd(x.d)+': show the graph"><span class="lv">'+esc(mmdd(x.d))+'</span><span>'+esc(nm)+'</span><span class="mono note">'+x.n+' '+(c?(x.n===1?'activity':'activities'):(x.n===1?'lift':'lifts'))+'</span><i class="wki" aria-hidden="true">i</i></button>'}).join("")+'</div></section>';
     var prs=Object.keys(S.gymlog||{}).filter(function(k){return EX[k]&&EX[k][4]}).map(function(k){return [k,Math.max.apply(null,S.gymlog[k].map(function(x){return x.w||0}))]}).filter(function(x){return x[1]>0});
-    if(prs.length)h+='<section class="card panel"><h3 class="label">Best weights</h3><div class="lrows">'+prs.map(function(x){return '<div class="lrow"><span class="lv mono">'+fmtW(x[1])+'</span><span>'+esc(EX[x[0]][0])+'</span><span class="note">'+exU(x[0])+'</span></div>'}).join("")+'</div></section>';
+    if(prs.length)h+='<section class="card panel"><h3 class="label">Personal bests</h3><div class="lrows">'+prs.map(function(x){return '<button type="button" class="lrow wkrow wkbest" data-act="wkexinfo" data-ex="'+x[0]+'" aria-label="'+esc(EX[x[0]][0])+', best '+esc(wU(x[1],exU(x[0])))+': show the graph"><span>'+esc(EX[x[0]][0])+'</span><span class="mono">'+esc(wU(x[1],exU(x[0])))+'</span><i class="wki" aria-hidden="true">i</i></button>'}).join("")+'</div></section>';
     return h;
   }
   var pl=planOf(S.wk.plan);
@@ -488,32 +523,87 @@ function trainHtml(){cexSync();
    shows your progression over the last 7 workouts of this day." A session's total is the weight of every set logged, added up
    (reps are not logged); the graph is that total for the last 7 sessions of the same day (Push, Legs ...). */
 function fmtL(v,u){return u==="lb"?Math.round(v).toLocaleString():fmtW(v)}
-function wkSumChart(plan){
-  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7),u=(L.length&&L[L.length-1].u)||"lb";
-  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day logged. From the next one, this shows how your total moves.':'')+'</p>';
-  var W=300,H=128,pl=34,pr=14,pt=22,pb=22,mx=Math.max.apply(null,L.map(function(x){return x.load})),mn=Math.min.apply(null,L.map(function(x){return x.load}));
-  var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(L.length===1?.5:i/(L.length-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
-  var pts=L.map(function(x,i){return [X(i),Y(x.load)]}),last=pts[pts.length-1],lv=L[L.length-1].load;
-  var s='<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total across your sets, last '+L.length+' sessions: '+L.map(function(x){return x.d.slice(5)+' '+fmtL(x.load,u)+' '+u}).join(", ")+'">'
+/* a line of values over dates: L = [{d, v}] oldest first, u the unit, lab the point whose value is written above it, ring the
+   point drawn ringed (-1 for none). Up to 8 dates are written under it; more points get smaller dots. */
+function wkChart(L,u,lab,ring,what){
+  var W=300,H=128,pl=34,pr=14,pt=22,pb=22,n=L.length,vs=L.map(function(x){return x.v}),mx=Math.max.apply(null,vs),mn=Math.min.apply(null,vs);
+  var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(n===1?.5:i/(n-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
+  var pts=L.map(function(x,i){return [X(i),Y(x.v)]}),every=Math.ceil(n/8),r=n>14?3:4.5,hr=Math.min(11,(W-pl-pr)/Math.max(1,n-1)/2+2),li=pts[lab]?lab:n-1,lp=pts[li],lx=lp[0],rp=ring>=0?pts[ring]:null,
+    anchor=lx>W*.7?"end":lx<W*.3?"start":"middle";
+  return '<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(what)+': '+L.map(function(x){return mmdd(x.d)+' '+fmtL(x.v,u)+' '+uLbl(u)}).join(", ")+'">'
    +'<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" class="wkax"/>'
    +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+fmtL(hi,u)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+fmtL(lo,u)+'</text>'
    +'<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(" ")+'" class="wkln"/>'
-   +pts.map(function(p,i){return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" class="wkdot"/><title>'+L[i].d.slice(5)+': '+fmtL(L[i].load,u)+' '+u+'</title></g><text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt">'+L[i].d.slice(5)+'</text>'}).join("")
-   +'<text x="'+Math.min(W-pr,last[0]).toFixed(1)+'" y="'+(last[1]-9).toFixed(1)+'" text-anchor="end" class="wkv">'+fmtL(lv,u)+' '+u+'</text></svg>';
-  return s}
+   +pts.map(function(p,i){var on=i===ring;return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+hr.toFixed(1)+'" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(on?6:r)+'" class="wkdot'+(on?' on':'')+'"/><title>'+mmdd(L[i].d)+': '+fmtL(L[i].v,u)+' '+uLbl(u)+'</title></g>'
+     /* QA (rc-0.89): a date next to the ringed one gave way to it, so the two never overlap */
+     +(on||((n-1-i)%every===0&&!(rp&&Math.abs(p[0]-rp[0])<30))?'<text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt'+(on?' on':'')+'">'+mmdd(L[i].d)+'</text>':'')}).join("")
+   /* the value sits above the line around its point, with a dark edge, so the line never runs through it */
+   +'<text x="'+lx.toFixed(1)+'" y="'+Math.max(10,Math.min(lp[1],(pts[li-1]||lp)[1],(pts[li+1]||lp)[1])-9).toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u)+'</text></svg>'}
+/* every Training graph has a range (Cal, 2026-11-10: "40 sessions for gym graph is too much. Have the option to toggle graphs between
+   last 7 days, and last month, last 3 months, and last 6 months"): 1 month by default, kept for the session. 7 days and 1 month plot
+   each session, 3 and 6 months one point a week (that week's best). [key, button, days, by week, "in ..."] */
+var WKRANGES=[["7d","7 days",7,0,"the last 7 days"],["1m","1 month",30,0,"the last month"],["3m","3 months",91,1,"the last 3 months"],["6m","6 months",182,1,"the last 6 months"]],WKRG="1m";
+(function(){try{var r=sessionStorage.getItem("qbWkRange");if(WKRANGES.some(function(x){return x[0]===r}))WKRG=r}catch(e){}})();
+function wkRg(){return WKRANGES.filter(function(x){return x[0]===WKRG})[0]||WKRANGES[1]}
+/* the points: kind "plan" (that plan's session totals) or "ex" (an exercise's top set or round), inside the range */
+function wkSeries(kind,key){var R=wkRg(),cut=wkDayN(today())-R[2]+1,L;
+  if(kind==="plan")L=(S.sessions||[]).filter(function(x){return x&&x.plan===key&&x.load>0}).map(function(x){return {d:x.d,v:x.load}});
+  else L=((S.gymlog&&S.gymlog[key])||[]).filter(function(x){return x&&x.w>0}).map(function(x){return {d:x.d,v:x.w}});
+  L=L.filter(function(x){return x.d&&wkDayN(x.d)>=cut});
+  if(R[3]){var by={};L.forEach(function(x){var k=wkWeekN(x.d);if(!by[k]||x.v>by[k].v)by[k]=x});L=Object.keys(by).map(function(k){return by[k]}).sort(function(a,b){return a.d<b.d?-1:1})}
+  return L}
+/* a graph with its range buttons. ring: a date to ring (the tapped session, or the week it falls in) or "best" (the highest point) */
+function wkGraph(kind,key,u,ring,what){return '<div class="wkrg" data-k="'+kind+'" data-key="'+esc(key)+'" data-u="'+esc(u)+'" data-ring="'+esc(ring||"")+'" data-what="'+esc(what)+'">'+wkGraphIn(kind,key,u,ring,what)+'</div>'}
+function wkGraphIn(kind,key,u,ring,what){var R=wkRg(),L=wkSeries(kind,key),ri=-1;
+  if(ring==="best")L.forEach(function(x,i){if(ri<0||x.v>=L[ri].v)ri=i});
+  else if(ring)L.forEach(function(x,i){if(R[3]?wkWeekN(x.d)===wkWeekN(ring):x.d===ring)ri=i});
+  var tg='<div class="wkrgt" role="tablist" aria-label="Graph range">'+WKRANGES.map(function(r){var on=r[0]===R[0];return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" data-wkrg="'+r[0]+'">'+r[1]+'</button>'}).join("")+'</div>';
+  if(!L.length)return tg+'<p class="note wkempty">No sessions in '+R[4]+'.</p>';
+  return tg+wkChart(L,u,ri>=0?ri:L.length-1,ri,what+(R[3]?", best of each week":"")+", "+R[4])}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-wkrg]");if(!b)return;var r=b.dataset.wkrg;if(r===WKRG||!WKRANGES.some(function(x){return x[0]===r}))return;
+  WKRG=r;try{sessionStorage.setItem("qbWkRange",r)}catch(er){}
+  [].forEach.call(document.querySelectorAll(".wkrg"),function(g){var d=g.dataset;g.innerHTML=wkGraphIn(d.k,d.key,d.u,d.ring,d.what)})});
+function wkSumChart(plan,d){
+  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}),u=(L.length&&L[L.length-1].u)||"lb";
+  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day logged. From the next one, this shows how your total moves.':'')+'</p>';
+  return wkGraph("plan",plan,u,d||"","Total across your sets")}
 function wkSummary(o,after){var u=o.u||"lb";
   var pl=planOf(o.plan),prev=(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0});prev=prev.length>1?prev[prev.length-2]:null;
   var dl=prev?o.load-prev.load:null;
   var rows=o.rows.map(function(r){var E=EX[r.id],ch=r.top>0&&r.prev>0?r.top-r.prev:null;
-    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?fmtW(r.top)+' '+exU(r.id):r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+fmtW(ch)+' '+exU(r.id):ch<0?'&#9660; '+fmtW(ch)+' '+exU(r.id):'same')+'</span></div>'}).join("");
+    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?wU(r.top,exU(r.id)):r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+wU(ch,exU(r.id)):ch<0?'&#9660; '+wU(ch,exU(r.id)):'same')+'</span></div>'}).join("");
   var m=modal('<div class="card box2 wksum"><span class="label">Workout complete</span><h2>'+esc(pl?pl[1]:"Workout")+' day</h2>'
-    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+fmtL(o.load,u)+' '+u+'</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+fmtL(dl,u)+' '+u+'</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+fmtL(-dl,u)+' '+u+' less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
-    +(o.load>0?(function(){var k=Math.min(7,(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0}).length);return (k>1?'<span class="label">Your last '+k+' '+esc(pl?pl[1]:"")+' days</span>':'')+wkSumChart(o.plan)})():'')
+    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+fmtL(o.load,u)+' '+uLbl(u)+'</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+fmtL(dl,u)+' '+uLbl(u)+'</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+fmtL(-dl,u)+' '+uLbl(u)+' less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
+    +(o.load>0?(function(){var k=Math.min(7,(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0}).length);return (k>1?'<span class="label">Your '+esc(pl?pl[1]:"")+' days</span>':'')+wkSumChart(o.plan,today())})():'')
     +'<span class="label">Top set, against last time</span><div class="wksrows">'+rows+'</div>'
     +'<p class="note">+'+o.xp+' XP logged.</p><div class="row"><button class="btn" id="wksok">Done</button></div></div>');
   var b=m&&m.querySelector("#wksok");if(b)b.onclick=function(){m.remove();if(after)after()}}
+/* a recent session tapped: every logged session of that day (Push, Legs ... up to 12 around it), the one tapped ringed, and its
+   top sets */
+function wkSessInfo(i){var x=(S.sessions||[])[i];if(!x)return;var pl=planOf(x.plan),nm=pl?pl[1]:x.plan,u=x.u||"lb",c=/^c_/.test(x.plan);
+  /* a session older than the range on screen opens on the smallest range that holds it, ringed (QA, rc-0.89) */
+  var age=wkDayN(today())-wkDayN(x.d);if(age>=wkRg()[2]){var R=WKRANGES.filter(function(r){return age<r[2]})[0]||WKRANGES[WKRANGES.length-1];WKRG=R[0];try{sessionStorage.setItem("qbWkRange",WKRG)}catch(e){}}
+  var all=(S.sessions||[]).filter(function(s){return s.plan===x.plan&&s.load>0}),ch="";
+  if(x.load>0&&all.length>1)ch='<span class="label">Your '+esc(nm)+' days</span>'+wkGraph("plan",x.plan,u,x.d,"Total across your sets, "+nm+" days");
+  var tops=Object.keys(x.top||{}).filter(function(id){return EX[id]&&x.top[id]>0}).map(function(id){return '<div class="wksr"><b>'+esc(EX[id][0])+'</b><span class="mono">'+esc(wU(x.top[id],exU(id)))+'</span><span></span></div>'}).join("");
+  closeModals();
+  modal('<div class="card box2 wksum"><span class="label">'+esc(mmdd(x.d))+'</span><h2>'+esc(nm)+' day</h2>'
+    +(x.load>0?'<p class="note">Total across your '+(c?'rounds':'sets')+': <b class="mono">'+fmtL(x.load,u)+' '+uLbl(u)+'</b></p>':'<p class="note">'+x.n+' '+(c?(x.n===1?'activity':'activities'):(x.n===1?'lift':'lifts'))+' done, no weights logged.</p>')
+    +(ch||(x.load>0?'<p class="note">Your first '+esc(nm)+' day logged. The graph starts with the next one.</p>':''))
+    +(tops?'<span class="label">Top '+(c?'round':'set')+'</span><div class="wksrows">'+tops+'</div>':'')
+    +'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}
+/* a personal best tapped: that exercise's top set in every session the log keeps */
+function wkExInfo(id){var E=EX[id];if(!E)return;var u=exU(id),L=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return x&&x.w>0});if(!L.length)return;
+  var b=0;L.forEach(function(x,i){if(x.w>=L[b].w)b=i});var f=L[0],dl=L[L.length-1].w-f.w,what=E[5]?"Top round":"Top set";
+  closeModals();
+  modal('<div class="card box2 wksum"><span class="label">Progress</span><h2>'+esc(E[0])+'</h2>'
+    +'<p class="note">Best: <b class="mono">'+esc(wU(L[b].w,u))+'</b> on '+esc(mmdd(L[b].d))+'.'+(L.length>1?' '+(dl>0?'Up '+esc(wU(dl,u)):dl<0?'Down '+esc(wU(-dl,u)):'Level')+' since '+esc(mmdd(f.d))+'.':'')+'</p>'
+    +(L.length>1?'<span class="label">'+what+' each session</span>'+wkGraph("ex",id,u,"best",what+" each session"):'<p class="note">One session logged. The graph starts with the next one.</p>')
+    +'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>')}
 function trainAct(a,b){cexSync();
   if(a==="wkfold"){S.gymFold=!S.gymFold;persist();render();return true}
+  if(a==="wkinfo"){wkSessInfo(+b.dataset.s);return true}
+  if(a==="wkexinfo"){wkExInfo(b.dataset.ex);return true}
   if(a==="wkcxadd"){var ci=document.getElementById("cxin");if(ci&&ci.value.trim()){var tx=ci.value;ci.value="";pop("Sorting "+tx.trim().slice(0,30)+"...");cexAdd(tx)}return true}
   if(a==="wkcxdel"){if(S.cex)delete S.cex[b.dataset.id];persist();render();return true}
   if(a==="wkplan"){var bp=buildPlan(b.dataset.v);S.wk={coach:coachPick(),plan:b.dataset.v,list:bp.list,roles:bp.roles,notes:bp.notes||{},note:bp.note,setsN:bp.setsN,min:bp.min,sets:{},w:{},hit:{},t:today()};render();persist();window.scrollTo(0,0);setTimeout(function(){coachOpen(0)},60);return true}
@@ -530,9 +620,9 @@ function trainAct(a,b){cexSync();
       var ws=[];for(var i=0;i<NS;i++)ws.push(typeof st[i]==="number"?st[i]:null);
       var top=Math.max.apply(null,ws.map(function(x){return x||0})),pv=lastLog(id),prevTop=pv?(pv.ws?Math.max.apply(null,pv.ws.map(function(x){return x||0})):pv.w||0):0;
       ws.forEach(function(x){if(x&&exU(id)===cu)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
-      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:exU(id)}]).slice(-12)});
+      S.gymlog[id]=gymKeep((S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:exU(id)}]))});
     if(!done){pop("Tap the sets you finished first");return true}
-    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load*10)/10,u:cu,top:tops}]).slice(-60);S.wk=null;
+    var plan=S.wk.plan;S.sessions=sessKeep((S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load*10)/10,u:cu,top:tops}]));S.wk=null;
     /* your own plan done in full counts as a full session, however few activities it has */
     var x=econTrainXp(cust&&full>=nl?Math.max(done,ECON.trainFull):done,full);
     grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,plan);
@@ -693,7 +783,7 @@ function coachExHtml(id,pair){
   return '<div class="cex'+(pair?' cpair':'')+'">'+(pair?'<div class="cstage cstage-sm">'+exDemo(id)+'</div>':'')+'<h2>'+esc(E[0])+'</h2>'+coachForm(id)
    +'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(!pair&&role?'<span class="chip">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span>':'')+'</div>'
    +(nt?'<div class="note">'+esc(nt)+'</div>':'')+'<div class="note">'+esc(sg.line)+'</div>'
-   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+exU(id)+'</span></label>':'')
+   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>':'')
    +setBoxes(id,'data-ca="set"')+'</div>'
    +(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div>'}
 function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
@@ -762,7 +852,7 @@ function coachRoster(){
 var MYUID=null,SOC={worlds:[],posts:[],notes:{},loaded:0,busy:0,lastPub:0,lastPost:0,err:""};
 function socOn(){return !!(db&&MYUID)}
 function socToday(){return today()}
-function socAgo(t){var s=Math.max(0,(Date.now()-t)/1000);return s<60?"just now":s<3600?Math.floor(s/60)+"m ago":s<86400?Math.floor(s/3600)+"h ago":Math.floor(s/86400)+"d ago"}
+function socAgo(t){var s=Math.max(0,(Date.now()-t)/1000),n;if(s<60)return "just now";if(s<3600)return Math.floor(s/60)+" min ago";if(s<86400)return Math.floor(s/3600)+" hr ago";n=Math.floor(s/86400);return n+(n===1?" day ago":" days ago")}
 function socState(){if(!S.social||typeof S.social!=="object")S.social={};var o=S.social;if(o.d!==socToday()){o.d=socToday();o.vis=[];o.gave={}}if(!o.seen)o.seen={};if(!o.vis)o.vis=[];if(!o.gave)o.gave={};return o}
 function socWorldDoc(){
   return {name:(S.char&&S.char.name)||"Player",look:lookOf(),lv:effLvl(),streak:S.streak||0,cls:S.cls||"",
@@ -982,7 +1072,7 @@ function chPose(a,f){
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    xpc2:1,xpc3:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,xpc3:1,xpc4:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -1008,7 +1098,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
    one or two quests, the cost ramps to ECON.lvFlat by level ECON.lvRamp, then grows only ECON.lvGrow a level, so chores alone
    level a player up 1 to 2 times a day and a full day (workout, Training, bounties) 3 to 4 times, all the way up. Level 100 is
    13,905 XP. See docs/ECONOMY.md. cum2 is curve 2 and cumOld curve 1, kept only to move old saves over (merge). */
-function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat*(1+c.lvGrow*(L-c.lvRamp)))}
+function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP))}
+/* curve 3 (2026-11-09 to 2026-11-10), frozen here so a save made on it moves over at the same level and fraction (merge, xpc4) */
+var CUMT3=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT3.push(CUMT3[L]+Math.round(L<6?20+115*(L-1)/5:135*(1+.0015*(L-6))))})();
+function cum3(L){return L<=1?0:L<CUMT3.length?CUMT3[L]:CUMT3[CUMT3.length-1]+(L-CUMT3.length+1)*154}
 var CUMT=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT.push(CUMT[L]+lvNeed(L))})();
 function cum(L){return L<=1?0:L<CUMT.length?CUMT[L]:CUMT[CUMT.length-1]+(L-CUMT.length+1)*lvNeed(CUMT.length-1)}
 /* curve 2 (2026-11-05 to 2026-11-09): min(600, 50 + 6L + 0.2L^2), frozen here so retuning ECON never changes the move-over */
@@ -1051,7 +1144,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=88, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=89, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1087,7 +1180,7 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
   if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -1110,6 +1203,10 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   if(curve3){var x2=S.xp||0,L2=1;while(L2<MAXL&&x2>=cum2(L2+1))L2++;var f2=(x2-cum2(L2))/Math.max(1,cum2(L2+1)-cum2(L2)),x3=Math.round(cum(L2)+f2*(cum(L2+1)-cum(L2)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x3-x2;S.xp=x3}
   S.xpc3=1;
+  /* curve 4 (xpc4, 2026-11-10, the ramp): the same move, from curve 3 */
+  if(curve4){var x4=S.xp||0,L4=1;while(L4<MAXL&&x4>=cum3(L4+1))L4++;var f4=(x4-cum3(L4))/Math.max(1,cum3(L4+1)-cum3(L4)),x5=Math.round(cum(L4)+f4*(cum(L4+1)-cum(L4)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x5-x4;S.xp=x5}
+  S.xpc4=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}
@@ -1132,23 +1229,31 @@ function rollover(){
 }
 
 /* ---------- FX ---------- */
-var cv=null,raf=0;
+var cv=null,raf=0,emT=0,emCol="#ff3d81",emOld=1;
+/* BUILDER w-perf1 (QA W1): reading --accent every frame cost 17.5% of the main thread. applyFx (and a theme whose colors drift,
+   16_interface.js ifColors) marks the color stale and the next drawn frame reads it once. The loop draws 30 times a second and
+   asks for a frame only when it will draw: asking every frame kept the whole page redrawing 60 times a second */
+function emColor(){emOld=1}
 function embers(on){
-  if(!on){if(cv){cancelAnimationFrame(raf);cv.remove();cv=null}return}
+  if(!on){if(cv){cancelAnimationFrame(raf);clearTimeout(emT);cv.remove();cv=null}return}
   if(cv)return;
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0";
   document.body.appendChild(cv);
   var c=cv.getContext("2d");function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
   var pts=[];for(var i=0;i<46;i++)pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:1+Math.random()*2,v:.2+Math.random()*.6,a:Math.random()});
-  (function loop(){
+  var last=0;emOld=1;
+  function loop(t){
     if(!cv)return;
+    var k=last?Math.min(4,(t-last)/16.7):2;last=t; /* each step sized so the embers keep the speed they had at 60 frames a second */
+    if(emOld){emOld=0;emCol=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#ff3d81"}
     c.clearRect(0,0,cv.width,cv.height);
-    c.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#ff3d81";
-    pts.forEach(function(p){p.y-=p.v;p.x+=Math.sin((p.y+p.a*100)/40)*.3;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
+    c.fillStyle=emCol;
+    pts.forEach(function(p){p.y-=p.v*k;p.x+=Math.sin((p.y+p.a*100)/40)*.3*k;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
       c.globalAlpha=.15+.35*Math.abs(Math.sin(p.y/60+p.a*6));c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.fill()});
-    raf=requestAnimationFrame(loop);
-  })();
+    emT=setTimeout(function(){if(cv)raf=requestAnimationFrame(loop)},28);
+  }
+  raf=requestAnimationFrame(loop);
 }
 function applyFx(){
   var lv=effLvl(), ri=rankIdx();
@@ -1163,7 +1268,7 @@ function applyFx(){
   var bgi=eqItem("bg"), dc=document.getElementById("deco");
   if(bgi){if(!dc){dc=document.createElement("div");dc.id="deco";dc.setAttribute("aria-hidden","true");document.body.appendChild(dc)}dc.className="bgx "+bgi[0]}
   else if(dc)dc.remove();
-  embers(lv>=10);
+  embers(lv>=10);emColor();
   applyClass();
 }
 function ensureEl(id,on,cls){
@@ -1245,9 +1350,9 @@ function profileHtml(){
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
 function boardLine(){
   var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
-  /* past the Daily Quest, the bar runs to the next chest (29e_economy.js) */
-  var nx=typeof dqNext==="function"&&x>=gl?dqNext():null;if(nx)gl=nx[0];
-  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(gl?Math.min(100,x/gl*100):0)+'%"></i></span><span class="bl-t mono">'+(gl&&x>=gl?'Every chest open':nx?x+' / '+gl+' XP: next chest':x+' / '+gl+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+  /* the bar shows 100, then quietly 200, then fills on in gold with no number toward the hidden chest (29e_economy.js) */
+  var t=typeof dqTarget==="function"?dqTarget():gl,f=typeof dqFill==="function"?dqFill():[gl?Math.min(1,x/gl):0,0];
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar'+(t?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i>'+(t?'':'<i class="ot" style="width:'+(f[1]*100)+'%"></i>')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
 }
 function boardHtml(){
   var g=gated(), ri=rankIdx(), rk=RANKS[ri];
@@ -1319,13 +1424,20 @@ function render(){
   var pfb=document.querySelector("#layer .modal .prof-body");if(pfb)pfb.innerHTML=profileHtml();
   newIds={};
   var nt=document.getElementById("cap");
-  if(nt){ fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
+  if(nt){ if(fitK===fitKey(nt))nt.style.height=fitH;else fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
   applyFx();
   document.body.classList.toggle("shopmode",view==="shop");document.body.classList.toggle("loftmode",view==="hideout");
   if(view==="hideout"&&typeof lfMount==="function")lfMount();
   try{dropCheck()}catch(e){}
 }
-function fit(t){t.style.height="auto";t.style.height=Math.min(160,t.scrollHeight+2)+"px"}
+/* BUILDER w-perf1 (QA W1): measuring the box (scrollHeight) forces a layout, and render() did it after every redraw. It now
+   measures only when the text or the button (Add or Sorting) changed since the last fit, or the window was resized or the fonts
+   arrived since. (Not keyed on innerWidth: reading that forces a layout too.) */
+var fitK=null,fitH="";
+function fitKey(t){return t.value+(busy?"\nb":"")}
+function fit(t){t.style.height="auto";var sh=t.scrollHeight;t.style.height=Math.min(160,sh+2)+"px";fitK=sh?fitKey(t):null;fitH=t.style.height}
+addEventListener("resize",function(){fitK=null});
+if(document.fonts&&document.fonts.addEventListener)document.fonts.addEventListener("loadingdone",function(){fitK=null});
 
 function pop(txt){
   var el=document.createElement("div");el.className="pop mono";el.textContent=txt;
@@ -1351,9 +1463,11 @@ var SHOPLV=/^(buff|theme|frame|bg|pet|title|burst|hud|sound|scene)$/;
 function shopNewAt(L){if(typeof areaGate==="function"&&areaGate("shop"))return 0;return SHOP.filter(function(x){return x[4]===L&&SHOPLV.test(x[1])}).length}
 function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GATES.indexOf(L)<0&&!FX.some(function(f){return f[0]===L})&&!shopNewAt(L)&&!AREAS.some(function(a){return a[2]===L})&&!DNG.some(function(d){return d.lv===L})}
 function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.crates[L])return null;S.crates[L]=1;var live=[];try{live=dropState().live.map(function(x){return x.id})}catch(e){}
-  var pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null,k=["str","agi","vit","int"][L%4];
+  var pz=freeItem({slots:/^a_/,brands:live,basics:true}),k=["str","agi","vit","int"][L%4];
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
-  if(pz)S.owned[pz[0]]=true;else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":"+1 "+STATN[k])}
+  /* the Shop is open but you own every piece on offer: coins, as the Daily Quest chest pays */
+  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
+  if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
 function levelUp(lv,extra,from){
@@ -1544,6 +1658,11 @@ async function handleProof(file){
   proofCheck(id,file,hh);
 }
 function sbLum(file){try{return createImageBitmap(file).then(function(b){var c=document.createElement("canvas");c.width=c.height=24;var x=c.getContext("2d");x.drawImage(b,0,0,24,24);var d=x.getImageData(0,0,24,24).data,s=0;for(var i=0;i<d.length;i+=4)s+=.3*d[i]+.59*d[i+1]+.11*d[i+2];return s/(d.length/4)}).catch(function(){return 128})}catch(e){return Promise.resolve(128)}}
+/* the time stamp burnt into every proof photo (web.js qbStamp, Cal, 2026-11-10): the checker is told what it should read and fails a
+   photo whose stamp is missing or more than 30 minutes off. The phone's clock decides; there is no server clock check (Cal, 2026-11-10). */
+function stampText(){return typeof window.qbStampText==="function"?window.qbStampText():""}
+function stampAsk(t){return t?' The photo has a time stamp burnt into its bottom right corner that should read "'+t+'" (the time on the phone). Also return "stamp_ok": true if that stamp is there and within 30 minutes of that time, false if it is missing or further off.':""}
+var STAMPBAD="The time stamp on the photo is missing or wrong. Take a new photo in the game.";
 async function proofCheck(id,file,hh){
   var q=S.quests.filter(function(x){return x.id===id})[0], vis=null;
   try{
@@ -1553,13 +1672,15 @@ async function proofCheck(id,file,hh){
     if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,6000)});var lum=await sbLum(file);vis={matches:lum>35,what:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
     var lim=sample?await sample.limits().catch(function(){return null}):null;
     if(sample&&lim&&lim.images&&q){
-      vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false});
+      var stp=stampText();
+      vis=await sample.json('A person claims they just completed this task for a habit game: "'+q.name+'". Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""'+(stp?',"stamp_ok":true':'')+'} where matches = the image plausibly shows this task completed or clearly in progress (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.'+stampAsk(stp),{images:file,stamp:stp,modelTier:"quick",cache:false});
     }
   }catch(e){vis=null}
   delete proofPend[id]; pendMark();
   q=S.quests.filter(function(x){return x.id===id})[0];
   if(!q){render();return} /* the quest was removed while its photo was being checked */
   var why=!vis?"The photo checker couldn't be reached, so nothing was counted. Try again in a minute."
+    :vis.stamp_ok===false?STAMPBAD
     :!vis.matches?"It doesn't look like this quest."+(vis.note?" "+vis.note:"")
     :(vis.screen&&!isDigital(q))?"That looks like a photo of a screen. This quest needs a real photo.":"";
   if(why){render();proofVerdict(q,false,why);return}
@@ -1645,11 +1766,12 @@ async function handlePhoto(file){
       /* the same sandbox stand-in as the quest proofs (proofCheck): any photo that is not nearly black passes, never in a web or Live build */
       if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,3000)});var lum=await sbLum(file);vis={active_setting:lum>35,setting:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
       var lim=sample?await sample.limits().catch(function(){return null}):null;
-      if(sample&&lim&&lim.images){vis=await sample.json(VISION,{images:file,modelTier:"quick",cache:false})}
+      if(sample&&lim&&lim.images){var stp2=stampText();vis=await sample.json(VISION+stampAsk(stp2),{images:file,stamp:stp2,modelTier:"quick",cache:false})}
       else if(!vis)visUnavail=true;
     }catch(e){visUnavail=true}
     if(vis){
-      if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}
+      if(vis.stamp_ok===false){gl("bad",STAMPBAD);ok=false}
+      else if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}
       else if(!vis.active_setting){gl("bad","Doesn't look like you're being active"+(vis.setting?" ("+vis.setting+")":"")+". "+(vis.note||""));ok=false}
       else gl("ok","Scene: "+(vis.setting||"workout space")+(vis.note?". "+vis.note:""));
     }else if(visUnavail){

@@ -1191,7 +1191,7 @@ function lfSlotPos(i,rows,F,lockF){
 }
 function lfRoomLabel(r,i){
   var DM=lfDimOf(r.t),LOFF=(DM[0]-DM[1])*13,LY=(DM[0]+DM[1])*13+30;
-  var T=ROOMT[r.t],txt=T.coin?Math.round(coinRate(i))+"/h":T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+"/h":T.buff?"+"+(T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length)+"% XP":"";
+  var T=ROOMT[r.t],txt=T.coin?Math.round(coinRate(i))+"/h":T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+"/h":T.buff?"+"+Math.round((T.pct+addonsOf(r).reduce(function(s,a){return s+(a[3].xp||0)},0)+roomCrew(i).length)*10)/10+"% XP":"";
   var nm=T.name,w=Math.max(80,(nm.length+(txt?txt.length+3:0))*7.4+22);
   return '<g transform="translate('+LOFF+','+LY+') scale('+(1/lfRsc(r.t))+')" class="lflabel"><rect x="'+(-w/2)+'" y="-12" width="'+w+'" height="24" rx="12" fill="#14121c" stroke="rgba(255,255,255,.2)"/><text y="4.5" text-anchor="middle" class="lflbl">'+esc(nm)+(txt?' <tspan fill="#9cff8a">'+esc(txt)+'</tspan>':'')+'</text></g>';
 }
