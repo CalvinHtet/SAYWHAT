@@ -21,7 +21,7 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90.
+Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. SPLIT (Cal 15:40): v0.91 TODAY = w-unlock (unlock % table, reset + refund, hidden totals) + w-econ3 (economy) + w-floors + w-sale + nospoil fixes; v0.92 = w-shopui, w-system, w-chat2, w-colors, w-wardrobe; anything needing art waits about 52 h (Cal's Mac limit).
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
