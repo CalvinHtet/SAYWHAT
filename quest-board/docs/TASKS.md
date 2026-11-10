@@ -45,21 +45,24 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W17 | (spec below) Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
 | W18 | (spec below) Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | READY FOR QA (w-rank b43759b) |
 | W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (c4da3fe) |
-| W20 | (spec below) "The new brand of clothes drop on Monday and Wednesday of each week." | BUILDER | w-drops | READY FOR QA (98b8558) |
+| W20 | CHANGED 09:45: "change the brand drops to every Monday and Thursday at 8 AM" (Pacific; was "Monday and Wednesday"). Spec: ARCHITECT SPEC2 part 1 | BUILDER | w-drops | AMEND: 98b8558 had Mon/Wed 5 am; new commit coming, QA waits |
 | W21 | (spec below + ARCHITECT spec part A: level ramp) (spec below) Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
 | W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
 | W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
 | W24 | (spec below) Likes notify: "a small heart symbol with a number beside the character in the fashion tab just like an instagram like notification" (new likes since you last looked) | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
 | W25 | (spec below) Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
-| W26 | Daily Quest chests at 100 / 150 / 200 XP; the 200 chest pays 400 coins plus an item (mostly accessories); hidden quest moves to 300 (ARCHITECT spec part B, Cal approved) | BUILDER | w-econ | TODO |
+| W26 | CHANGED 09:45: Daily Quest chests at 100 / 200 / 300 XP paying 200 / 400 / 600 coins; the 300 chest also rolls a relic or an accessory from any brand; hidden quest at 400 (SPEC2 part 2, replaces part B) | BUILDER | w-chests | TODO |
 | W27 | Room Bonus: each Loft room gives at most +3% XP fully upgraded, a stat panel in each room (spec part C) | BUILDER | w-econ | TODO |
 | W28 | Gym Pact: two players bet on 4 active days in a week; both make it 1.5x, one makes it takes 2x, both miss lose (spec part D) | BUILDER | w-pact (after w-hall merges) | TODO |
 | W29 | LATER, not now: the Mystic Shop at level 60 (stylised clothes, room assets, a gold waving-paw cat +15% business gold), art from the Mac (spec part E) | (later) | | NOT NOW |
+| W30 | Relic tiers low / mid / high / legendary: framework, placeholder icons, art from the Mac later (SPEC2 part 3) | BUILDER | w-chests | TODO |
+| W31 | "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely start generating more income." (SPEC2 part 4) | BUILDER | w-econ | TODO |
+| W32 | Bug: "We are also not seeing the hangang splash screen for the first clothing drop" (SPEC2 part 5) | BUILDER | w-drops | TODO |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
-w-rank (on w-inbox, W17 + W18 + W24), w-training again (graph ranges), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
-w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
+w-rank, w-training again, w-drops, w-wheel, THEN (09:45) the w-drops amend (Mon/Thu 8 am Pacific + HANGANG splash, W20 W32),
+w-chests (W26 W30, before w-econ), w-econ (W21 W22 W25 W27 W31), w-colors (W14), w-photos, w-pact (W28), w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
 
 ### Specs for BUILDER (LEAD, 2026-11-10 09:20): read these before each branch
@@ -149,6 +152,9 @@ first.
 3. **Level 90 items.** A set clearly beyond any brand drop: animated or glowing pieces, full sets with a back piece. Name and
    describe them by docs/VOICE.md.
 The second accessory (level 20) needs no new art: it reuses the accessories in the game.
+4. **Relic icons (W30).** One icon per relic, 256x256, the game's painted style, no text, a rim in the tier colour (low, mid, high,
+   legendary). The relic list and names come from Cal and ARCHITECT; the game shows drawn placeholders until each
+   `ui_relic2_<id>.webp` exists.
 
 ---
 
