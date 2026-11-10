@@ -29,7 +29,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | DOING again: Cal 09:15 "40 sessions for gym graph is too much. Have the option to toggle graphs between last 7 days, and last month, last 3 months, and last 6 months" (4cb156d not to be tested) |
 | W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | TODO |
-| W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | TODO |
+| W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | FIX FIRST (S.inbox clash, see Specs), then READY FOR QA (20b4418 works otherwise) |
 | W8 | "Post pictures on the town board or chats" | BUILDER | w-photos | TODO |
 | W9 | After a photo proof is verified and paid: option to post it to the town board with a short message or none | BUILDER | w-photos | TODO |
 | W10 | Text pass: reword anything that reads as written by AI, human but professional (docs/VOICE.md; look at how Habitica words things, do better). Last, it touches every file | BUILDER | w-text | after the rest |
@@ -41,7 +41,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | READY FOR QA (d3cafea) |
 | W17 | Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | TODO |
 | W18 | Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | TODO |
-| W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | TODO |
+| W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (20b4418) |
 | W20 | "The new brand of clothes drop on Monday and Wednesday of each week." | BUILDER | w-drops | TODO |
 | W21 | Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
 | W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
@@ -53,6 +53,61 @@ Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a da
 w-rank (on w-inbox, W17 + W18 + W24), w-training again (graph ranges), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
 w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
+
+### Specs for BUILDER (LEAD, 2026-11-10 09:20): read these before each branch
+
+LEAD's queued messages reach a chat only when its turn ends, so the full specs live here. Cal's words are in the table above.
+- **w-inbox fix, first (W7/W19):** S.inbox already belongs to checkInbox (30_app_b.js:1057, the owner's quest inbox: S.inbox[itemId]=1).
+  Keep letters in their own save field (for example S.letters {read, paid, at, popped}) so the two never share an object; nothing
+  has shipped, so no migration. Also, the welcome text still says challenges are "Coming soon": they shipped in v0.88, so fix that
+  line. Then rebase or merge w-rank onto the fix.
+- **w-rank: W17, who liked.** In the character card (the big card with the Like button), next to that person's like count this
+  week, add a small arrow, folded by default. Opened, it lists who liked them this week with counts ("Sydney x2"), most first. Names
+  come from SOC.worlds.
+- **w-rank: W18, the contest.** The week runs Sunday 7 pm Pacific to Sunday 7 pm Pacific (pacWeek is Monday 00:00 today). This
+  week simply ends 5 h early, nothing already given is lost, and the week keys hold across the switch. The Rank tab says
+  "Ends Sunday 7 pm, in 2d 4h". Prizes as today (1,500 / 1,000 / 500 and the medal), paid at the new cutoff. Each week every
+  player gets a "Fashion week" letter in the inbox (INBOXGEN), styled as a special event: the top 3 looks drawn with names, like
+  counts and prizes. The first is for the week ending Sunday 2026-11-22 at 7 pm Pacific, kept in one constant. It replaces the old
+  results modal.
+- **w-rank: W24, likes notify.** Cal: "a small heart symbol with a number beside the character in the fashion tab just like an
+  instagram like notification". Next to your own character in the Fashion view, a heart bubble with the number of new likes since
+  you last looked ("♥ 3"). It clears once you have seen it (open the tab or your card). While there are unseen likes, a small dot
+  shows on the Rank tab and the Hall nav. The last-seen count is kept in the save.
+- **w-training again: W5, graph ranges.** Cal: "40 sessions for gym graph is too much. Have the option to toggle graphs between last 7
+  days, and last month, last 3 months, and last 6 months."
+  - Every Training graph (plan day, exercise progression, custom) gets a toggle: 7 days | 1 month | 3 months | 6 months. Default 1
+    month, remembered for the session. 7 days and 1 month plot each session; 3 and 6 months plot one point per week (the week's best).
+  - Storage: full entries for about the last 5 weeks, then one weekly best ({wk, w}) per exercise and per plan back to 26 weeks.
+    Drop older. This replaces the 40 cap, and S.sessions needs the same so a plan day has 6 months. Report the worst-case save size.
+  - An empty range says "No sessions in the last 7 days". QA skips 4cb156d and tests this commit.
+- **w-drops: W20.** HANGANG still drops alone when the Closet is built. After that, the next brand drops on each Monday and
+  Wednesday at the game day's start (5 am), in the same brand order for everyone. Say what happens once all 16 have dropped
+  (reruns?) and how the Shop and alerts read.
+- **w-wheel: W6.** As in LEAD's first message (that one reached you).
+- **w-econ: W21 + W22 + W25 (big).** Read docs/ECONOMY.md, then measure with tools/windows/econsim.js before and after.
+  - Cal's routine (cal): level 40 around day 14; level 100 and everything bought (every room and upgrade) around day 90, not
+    before day 80. Report regular, casual and grinder too.
+  - Passive income (businesses, the Loft per hour) is at most about 30% of a day's coins for cal at every stage. Report it week by
+    week. Include the new wheel and the 3,000 welcome coins.
+  - Rooms (W25): after the Garden, each room opens only when all three are true:
+    1. At least 3 days since the previous room opened. Record open times in the save; old saves count as long ago.
+    2. A level.
+    3. Coins earned by the previous room since it opened.
+    Keep the old story criteria where they still make sense or fold them into trigger 3. A locked room shows all three with
+    progress ("2 of 3 days", "Level 9 of 12", "1,240 of 3,000 coins from the Garden"). Prestige gates (80 / 90 / 100) stay.
+  - Existing saves: nobody loses a level, an item or an opened room. Keep each player's level and put their XP at the same fraction
+    of that level on the new curve.
+  - Gates (W22):
+    - Level 20: a second accessory slot (any owned accessory not in slot 1). The rig must draw both on both bodies in every pose.
+    - Level 40: face cosmetics (a_xface). Anyone already wearing one keeps it.
+    - Level 30, pets: no code (W23, the Mac does art and code together).
+    - Level 90: room in econPrice for the items the Mac will make.
+  - Write it up in docs/ECONOMY.md with a before and after table. QA checks it with its own runs.
+- **w-colors: W14 only** (W15 is cancelled). Each main view (Board, Hall, Training, Shop, Crawls, Wheel, Loft and the rest) gets its
+  own surface and background tint, taken from that screen's art; the Hall's comes from its town hall picture. Bought Shop themes
+  still set the accent. Body text keeps WCAG AA contrast. No new art: if a screen has none, pick a tint in code and say which.
+- **w-photos: W8 + W9.** As in LEAD's first message.
 
 ### For Cal's Mac Claude, later: visitor story beats with pictures (W12)
 
