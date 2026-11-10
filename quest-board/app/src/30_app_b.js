@@ -225,7 +225,7 @@ function baseAct(a,b,e){
   if(a==="lfz"){lfZoom(+b.dataset.d);return true}
   if(a==="lflight"){var rm=bslot(i);if(!rm)return true;rm.lit=rm.lit?0:1;delete S.lfLight;persist();var sc=b.closest(".modal"),top=sc?sc.scrollTop:0;roomModal(i);var nm=document.querySelector("#layer .modal");if(nm)nm.scrollTop=top;render();return true}
   if(a==="room"){roomModal(i);return true}
-  if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("Build the Auditorium from Construction (needs the Movie Theater).");return true}roomModal(ix);return true}
+  if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("Behind these doors: not yet.");return true}roomModal(ix);return true}
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
@@ -1874,13 +1874,13 @@ document.addEventListener("click",function(e){
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop(ar2[1]+(areaTomorrow(ar2)?" opens tomorrow":" opens at your next level-up"));return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Find the Hero's Lair to open Dungeon Crawls");return}if(ar2&&effLvl()<ar2[2]){pop((ar2[2]===nxLvl()?ar2[1]+" unlocks":"Unlocks")+" at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop("Something new"+(areaTomorrow(ar2)?" opens tomorrow":" opens at your next level-up"));return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Not open yet");return}if(ar2&&effLvl()<ar2[2]){pop("Unlocks at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
   if(a==="gotoroom"){var gi=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===b.dataset.t)gi=k});if(gi>=0)roomModal(gi);return}
   if(a==="rhelp"){roomSplash(b.dataset.t,1);return}
-  if(a==="thdoorlock"){pop("Open the Auditorium to see what is behind these doors");return}
+  if(a==="thdoorlock"){pop("Behind these doors: not yet.");return}
   if(a==="bsgo"){var bm=b.closest(".modal");if(bm)bm.remove();view="shop";shopTab=b.dataset.b;render();window.scrollTo(0,0);return}
   if(a==="simcoin"){S.coins+=10000;render();persist();pop("Test coins added");return}
   if(a==="simundo"){var ui=+b.dataset.i,ur=bslot(ui),back=0,n=0;if(!ur)return;(ADDONS[ur.t]||[]).forEach(function(u){if(ur.a[u[0]]&&!(u[3]&&u[3].opens)){delete ur.a[u[0]];back+=u[2]||0;n++}});S.coins+=back;persist();render();roomModal(ui);pop("Undid "+n+" upgrades, refunded "+back+" coins");return}

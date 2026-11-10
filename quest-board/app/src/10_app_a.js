@@ -620,8 +620,10 @@ function dngHtml(){
   h+='<div class="lrows">';
   DNG.slice(Math.max(0,cur-2),cur<0?2:cur+3).forEach(function(d){
     var locked=d.lv>lv,rec=dngRec(d),risk=lv>=rec?"Safe":lv>=rec-2?"Risky":"Dangerous",left=typeof crawlLeft==="function"?crawlLeft(d):0;
-    h+='<div class="dng'+(locked?' lock':'')+'"><b>'+d.ic+' '+esc(d.name)+'</b><small class="note"> '+esc(d.tag)+'</small>'
-     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+crawlMins(d)+' min</span><span>Loot: '+esc(d.loot)+'</span><span>'+(locked?'Locked':risk)+'</span>'+(!locked&&left?'<span>'+left+' rare left</span>':'')+'</div>'
+    /* SPEC9: a locked dungeon shows nothing but its level */
+    if(locked){h+='<div class="dng lock"><b>? ? ?</b><div class="dmeta mono"><span>Lv '+d.lv+'</span><span>Locked</span></div></div>';return}
+    h+='<div class="dng"><b>'+d.ic+' '+esc(d.name)+'</b><small class="note"> '+esc(d.tag)+'</small>'
+     +'<div class="dmeta mono"><span>Lv '+d.lv+'</span><span>'+crawlMins(d)+' min</span><span>Loot: '+esc(d.loot)+'</span><span>'+risk+'</span>'+(!locked&&left?'<span>'+left+' rare left</span>':'')+'</div>'
      +(locked?'':(D.runs.length>=dngSlots()?'<small class="note">You are already down a dungeon.</small>':D.cd.n>=dngPerDay()?'<small class="note">Done for today.</small>':'<button class="btn alt" data-act="dgo" data-id="'+d.id+'">Crawl</button>'))+'</div>'});
   h+='</div></section>';
   var got=DNPC.filter(function(n){return D.npcs[n.id]});
@@ -813,10 +815,12 @@ var NAVSHORT={away:"Crawls"};
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
+    /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
+    if(a[0]==="away"&&areaGate("away"))return "";
     var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
     /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
     var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?a[1]+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk&&a[2]!==nxLvl()?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg&&a[2]!==nxLvl()?"&nbsp;":(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?"Something new"+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg?(a[2]===nxLvl()&&!wt?"?":"&nbsp;"):(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
@@ -1550,7 +1554,7 @@ function vaultHtml(d){
   var h='<section class="card panel"><h3 class="label">Vault</h3><p class="note">Only 3 brands stay live. When a 4th drops, the oldest retires here and returns much later. Vaulted brands are unavailable until they return. Pieces you own stay in your wardrobe.</p>';
   if(!d.vault.length)h+='<p class="note">Empty for now. First retirement happens when the 4th brand drops.</p>';
   else h+='<div class="vcar">'+d.vault.map(function(b){var back=ptMidnight(b.start)+105*864e5;return '<div class="vcard" style="background:linear-gradient(135deg,'+b.c[0]+','+b.c[1]+')">'+brandLogo(b)+'<small>Returns in '+cdTxt(back-d.n)+'</small></div>'}).join("")+'</div>';
-  if(d.next)h+='<p class="note">Next release: <b>'+d.next.name+'</b> in '+cdTxt(dropStart(d.next.start)-d.n)+'.</p>';
+  if(d.next)h+='<p class="note">Next release in '+cdTxt(dropStart(d.next.start)-d.n)+'.</p>';
   return h+'</section>';
 }
 function dropCheck(){
