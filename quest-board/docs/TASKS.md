@@ -77,7 +77,7 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W49 | Chat like Discord: a round face avatar left of the name; consecutive messages under one header | BUILDER | w-chat2 | TODO (v0.91) |
 | W50 | Town Hall colours from its banner picture (Cal again; W14 first part) | BUILDER | w-colors | TODO (v0.91) |
 | W51 | Unlocks by % of the previous room (Cal 15:05, replaces SPEC8's focus rule): Bedroom 30/50/70% for Closet/Patio/Game Room; Loft 60% for the Garden; a Garden earnings goal for the Restaurant; Noir for the bar; bar 75% for Boba; Boba 60% for Dessert; Plaza 60% for the Mall; Mall 30% for the Theater; the same through the Calibur Mall | BUILDER | w-unlock (on w-econ3) | TODO (v0.91, top) |
-| W52 | One-time reset for all players: rooms and buildings reset, coins refunded at today's prices, save backed up first, an inbox letter (Cal: "initialize the loft and refund all the money they have spent") | BUILDER | w-unlock | TODO (v0.91; scope being confirmed) |
+| W52 | One-time reset for all players: rooms and buildings reset (CONFIRMED by Cal: everything in the building tab incl. the Lair; Shop purchases kept and not refunded; letter only to players who bought there), coins refunded at today's prices, save backed up first, an inbox letter (Cal: "initialize the loft and refund all the money they have spent") | BUILDER | w-unlock | TODO (v0.91) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
