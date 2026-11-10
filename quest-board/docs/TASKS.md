@@ -10,6 +10,52 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 ---
 
+## Windows team (LEAD / BUILDER / QA)
+
+The live list for the Windows laptop team (2026-11-10 on). The older sections below are history. Roles: LEAD owns `qa-local`
+(only LEAD commits there, merges after QA passes, bumps APPV, builds the zip for Cal's Mac); BUILDER codes on its own branch per
+task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/windows` and never edits game code. Never push.
+No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
+MERGED, WAITING ON CAL.
+
+Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). Next release v0.89.
+
+| # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
+|---|---|---|---|---|
+| W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | TODO |
+| W1b | Performance fixes from QA's W1 list | BUILDER | w-perf | after W1 |
+| W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | TODO |
+| W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | TODO |
+| W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | TODO |
+| W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | TODO |
+| W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | TODO |
+| W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | TODO |
+| W8 | "Post pictures on the town board or chats" | BUILDER | w-photos | TODO |
+| W9 | After a photo proof is verified and paid: option to post it to the town board with a short message or none | BUILDER | w-photos | TODO |
+| W10 | Text pass: reword anything that reads as written by AI, human but professional (docs/VOICE.md; look at how Habitica words things, do better). Last, it touches every file | BUILDER | w-text | after the rest |
+| W11 | "Print me a page of all the friend character visitors ... with their names above them" (one image, every friend in 29k_friends.js) | QA | (none, rigtest/qa) | TODO |
+| W12 | Note for Cal's Mac Claude: 5+ visitor story beats and 5 pictures, for later (below) | LEAD | qa-local (docs) | DONE |
+
+Order for BUILDER: w-social, w-training, w-wheel, w-inbox, w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
+turns READY FOR QA.
+
+### For Cal's Mac Claude, later: visitor story beats with pictures (W12)
+
+Cal, 2026-11-10: "make a note for my claude on mac once it has higgsfield connector enabled, to generate at least 5 different visitor
+story beats and 5 different pictures for them to go along with those stories. This will be for later down the line."
+- Start only when Cal says the Higgsfield connector is enabled and that using it spends no credits (Unlimited). Until then
+  CLAUDE.md's rule stands: never use the Higgsfield connector, never spend credits.
+- Story beats: at least 5 new friend visits in the style of `FVISITS` in `app/src/29k_friends.js`. Each one needs a reason that
+  fits the friend's tag and does something real that day: an XP buff on matching quests, a coin gift, a streak freeze, or watering
+  the Garden. Pairs of friends are welcome. Text follows `docs/VOICE.md`: plain, specific, no quips.
+- Pictures: one per beat, at least 5, showing the visiting friends as their in-game characters (reference:
+  `docs/friends-sheet.png`) in the room the visit names. They must not look like photos of the real people. Original designs only:
+  no logos or brand marks. Show Cal all of them side by side, labelled, before anything goes in the game.
+- Code: the visit card (`fvShow`) gets an optional picture per visit that fails softly when missing. Say what was checked on a phone
+  and what was not.
+
+---
+
 ## LEAD: board, quality of life, Shop and Training code, everything else in the app, publishing
 
 Doing:

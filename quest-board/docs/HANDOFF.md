@@ -21,6 +21,9 @@ is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up
 
 ## Status of Cal's request below
 
+For the Mac Claude, later (Cal, 2026-11-10): once the Higgsfield connector is enabled and Cal says it spends no credits, write 5+ new
+friend visit story beats and 5+ pictures to go with them. Details: "For Cal's Mac Claude, later" in `docs/TASKS.md`.
+
 Save reset (v0.86, Cal, 2026-11-09: "start over from scratch ... initalize everyone's save file"): QB_EPOCH 6. Every player starts
 at level 1 on their next load; their old save is in data/users/<id>/backup_e5. The shared collections are cleared by hand (worlds,
 board, pings, chat, chatnow, likes; docs/RELEASING.md). Rollback builds must carry QB_EPOCH 6 from now on (rollback-v0.80 does).
