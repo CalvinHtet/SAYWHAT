@@ -276,7 +276,9 @@ function qsCard(it){
     :QS_TRYSL.indexOf(it[1])>=0?(QS_TRY[it[1]]===it[0]?'<button class="qs-btn alt" data-act="qstry" data-id="'+it[0]+'">Trying on · '+price+'</button>':'<button class="qs-btn" data-act="qstry" data-id="'+it[0]+'">Try on · '+price+'</button>')
     :can?'<button class="qs-btn" data-act="buy" data-id="'+it[0]+'">'+price+'</button>'
     :'<button class="qs-btn ghost" disabled>'+price+' · need '+(it[3]-S.coins)+' more</button>';
-  return '<article class="qs-card'+(on?" on":"")+(QS_TRY[it[1]]===it[0]?" trying":"")+'" data-card="'+it[0]+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5])+'</p>'+btn+'</article>';
+  /* the second accessory (level ECON.accLv): an owned accessory that is not the first and sits elsewhere on the body */
+  if(it[1]==="a_acc"&&own&&!on&&typeof acc2Ok==="function"&&acc2Ok(it))btn+=S.eq.a_acc2===it[0]?'<button class="qs-btn ghost" data-act="unequip2">Second · Remove</button>':'<button class="qs-btn alt" data-act="equip2" data-id="'+it[0]+'">Wear as second</button>';
+  return '<article class="qs-card'+(on||S.eq.a_acc2===it[0]?" on":"")+(QS_TRY[it[1]]===it[0]?" trying":"")+'" data-card="'+it[0]+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5])+'</p>'+btn+'</article>';
 }
 var QS_GROUPS=[["a_hat","Hats"],["a_acc","Accessories"],["a_top","Tops"],["a_pants","Bottoms"],["a_shoes","Shoes"],["a_hair","Hair"],["a_hairc","Hair color"],["a_eyes","Eye color"]];
 function qsGroups(pick){
@@ -325,13 +327,13 @@ shopHtml=function(){
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
-  var h='<div class="qshop"><header class="qs-top"><div><small>A new brand every '+DROPS.every+' days, a favorite back every Wednesday</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(ptMidnight(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  var h='<div class="qshop"><header class="qs-top"><div><small>New brands Mondays and Fridays, 8 am; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(dropStart(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=d.live.filter(function(x){return x.id===shopTab})[0];qsTheme(b);
   if(b){
     h+=qsBanner(b,d);
     /* Cal: a brand back on Wednesday is here for the week only */
-    if(b.back)h+='<p class="qs-note qs-lead">Back for one week only. It leaves '+(function(){var t=ptMidnight(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
+    if(b.back)h+='<p class="qs-note qs-lead">Back for Wednesday only. It leaves '+(function(){var t=dropStart(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
   }else if(shopTab==="basics"){
     h+='<p class="qs-note qs-lead">The everyday pieces from character creation, sold one at a time.</p>';

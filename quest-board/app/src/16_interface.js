@@ -84,6 +84,7 @@ function ifColors(){
   var th=eqItem("theme"),st=document.documentElement.style;if(!th)return;
   if(th[0]==="th_sky"){var c=ifSkyColors(lfLS().el);st.setProperty("--accent",c[0]);st.setProperty("--accent2",c[1])}
   if(th[0]==="th_aurora"){var h=Math.round(Date.now()/1000/2)%360;st.setProperty("--accent","hsl("+h+" 85% 68%)");st.setProperty("--accent2","hsl("+((h+55)%360)+" 85% 62%)")}
+  emColor(); /* the embers read --accent again on their next frame (30_app_b.js) */
 }
 function ifBackdrop(){
   var b=eqItem("bg"),dc=document.getElementById("deco");

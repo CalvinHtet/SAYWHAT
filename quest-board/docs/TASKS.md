@@ -12,25 +12,28 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 ## Windows team (LEAD / BUILDER / QA)
 
+**PROTOCOL (Cal, 2026-11-10 09:25): every chat reads `.claude/team/README.md` (main folder) NOW and follows it: your block in
+`.claude/team/STATUS.md`, your to-do list in `.claude/team/todo/<ROLE>.md`, a TEAM LOOP cron. Requests come through the to-do lists.**
+
 The live list for the Windows laptop team (2026-11-10 on). The older sections below are history. Roles: LEAD owns `qa-local`
 (only LEAD commits there, merges after QA passes, bumps APPV, builds the zip for Cal's Mac); BUILDER codes on its own branch per
 task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/windows` and never edits game code. Never push.
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). Next release v0.89.
+Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). NEXT RELEASE: ONE v0.90 (Cal 10:45, no v0.89; scope confirmed 11:00) = rc-0.89 (LEAD's merge: w-rank, w-hall, w-training, w-wheel, w-drops) + w-chests + w-econ, APPV 90, QB_EPOCH 6, saves kept.
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
-| W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | DOING |
-| W1b | Performance fixes from QA's W1 list | BUILDER | w-perf | after W1 |
+| W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | DONE (on 213ea0f): docs/qa-2026-11-10/PERF.md, docs/QA.md W1 section |
+| W1b | Performance fixes from QA's W1 top 5 (todo/LEAD.md 10:55): w-perf1 for v0.90 = Aurora and embers effects, fit() only on change, no lfvar.json, blobs.js after first draw if safe; w-perf2 later = room art per room, rig frame cache, row patching, Rank stills, minify | BUILDER | w-perf1, w-perf2 | TODO |
 | W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | READY FOR QA (3fdaeec) |
-| W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | READY FOR QA (4cb156d) |
-| W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | TODO |
-| W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | TODO |
-| W8 | "Post pictures on the town board or chats" | BUILDER | w-photos | TODO |
+| W5 | Training: "put the lbs right next to the number", dates as "11/09", tap a recent session for a graph of that day, a graph of progression per exercise at the bottom, each opened by a small i icon at the right of each entry | BUILDER | w-training | READY FOR QA (1dd752d, graph ranges; 4cb156d not to be tested) |
+| W6 | Wheel: "prize pool to be much higher. Add tiny slivers in between that grant you a random cosmetic item from any clothing brand drop" | BUILDER | w-wheel | READY FOR QA (9d04ba1) |
+| W7 | Top right letter and info become a message inbox. Letter 1: the welcome letter with 3,000 coins to start. Letter 2: a roadmap (text WAITING ON CAL) | BUILDER | w-inbox | READY FOR QA (c4da3fe, the fix: S.letters) |
+| W8 | "Post pictures on the town board or chats". GROWN (SPEC5): a photo feed on the town board (verified proofs with a caption, post view, likes, comments, delete rules in firestore.rules) | BUILDER | w-photos | TODO |
 | W9 | After a photo proof is verified and paid: option to post it to the town board with a short message or none | BUILDER | w-photos | TODO |
 | W10 | Text pass: reword anything that reads as written by AI, human but professional (docs/VOICE.md; look at how Habitica words things, do better). Last, it touches every file | BUILDER | w-text | after the rest |
 | W11 | "Print me a page of all the friend character visitors ... with their names above them" (one image, every friend in 29k_friends.js) | QA | (none, rigtest/qa) | DONE (docs/friends-sheet.png, on 213ea0f) |
@@ -39,18 +42,92 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W14 | "the town board to have a color palette similar to the picture of the town hall that is on that screen ... Every menu and screen should feel slightly different" | BUILDER | w-colors | TODO |
 | W15 | UI color schemes: "at least 3 different ones at the start, and then with each job or class advancement, can add 2 more" | BUILDER | w-colors | CANCELLED (Cal: "Nevermind on the themes. I forgot there are additional themes for purchase in the shop.") |
 | W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | READY FOR QA (d3cafea) |
-| W17 | Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | TODO |
-| W18 | Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | TODO |
-| W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | TODO |
-| W20 | "The new brand of clothes drop on Monday and Wednesday of each week." | BUILDER | w-drops | TODO |
-| W21 | Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
+| W17 | (spec below) Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
+| W18 | (spec below) Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | READY FOR QA (w-rank b43759b) |
+| W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | READY FOR QA (c4da3fe) |
+| W20 | CHANGED AGAIN 09:50 (Cal via ARCHITECT): new brands every MONDAY and FRIDAY 8 am Pacific, only 2 active brands, a Wednesday vault brings one retired brand back for that day (was Mon/Wed 5 am, then Mon/Thu). Spec: SPEC2 part 1 + todo/BUILDER.md | BUILDER | w-drops | READY FOR QA (4542bab: one calendar, splash once per stint; skip 98b8558, c192f06, 341b0fc) |
+| W21 | (spec below + ARCHITECT spec part A: level ramp) (spec below) Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
 | W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
 | W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
+| W24 | (spec below) Likes notify: "a small heart symbol with a number beside the character in the fashion tab just like an instagram like notification" (new likes since you last looked) | BUILDER | w-rank | READY FOR QA (w-rank b43759b) |
+| W25 | (spec below) CHANGED 10:15 (SPEC4 part 4): only STORY rooms (Restaurant, Boba, Dessert, Lock and Key, Mall) wait, at least A DAY apart, plus a level and coins earned; other rooms as today. Was: Room openings (amends W21): no day locks today, only level and story criteria. New: "after unlocking the garden, other room upgrades should be 3 days apart if the criteria is met". Each room opens on 3 triggers: 3 days since the previous room opened, a level, and coins earned by the previous room (Restaurant: 3 days of Garden, a level, coins from the Garden). "This logic should apply to everything in a way that makes sense and it is balanced." | BUILDER | w-econ | TODO |
+| W26 | CHANGED 10:15 (SPEC4 part 2): the bar shows 100, quietly becomes 200, then fills unlabeled to a HIDDEN chest at 300 (600 coins + the roll + the old hidden-quest reward); no 400 quest. Before that, 10:05: 300-chest odds low relic 50 / accessory 33 / mid 13 / high 4 (SPEC3 part 1). Was 09:45: Daily Quest chests at 100 / 200 / 300 XP paying 200 / 400 / 600 coins; the 300 chest also rolls a relic or an accessory from any brand; hidden quest at 400 (SPEC2 part 2, replaces part B) | BUILDER | w-chests | READY FOR QA (be62935) |
+| W27 | Room Bonus: each Loft room gives at most +3% XP fully upgraded, a stat panel in each room (spec part C) | BUILDER | w-econ | TODO |
+| W28 | Gym Pact: two players bet on 4 active days in a week; both make it 1.5x, one makes it takes 2x, both miss lose (spec part D) | BUILDER | w-pact (after w-hall merges) | TODO |
+| W29 | LATER, not now: the Mystic Shop at level 60 (stylised clothes, room assets, a gold waving-paw cat +15% business gold), art from the Mac (spec part E) | (later) | | NOT NOW |
+| W30 | Relic tiers low / mid / high / legendary. RELIC LIST APPROVED 10:45 (SPEC6: 12 low, 8 mid, 6 high, 4 legendary from Rafe): framework, placeholder icons, borders bronze / silver / gold / white-purple with wings, low = household heirlooms, others fantasy/dungeon/anime/otherworld (SPEC3 part 2), art from the Mac later (SPEC2 part 3) | BUILDER | w-chests | READY FOR QA (be62935) |
+| W31 | "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely start generating more income." (SPEC2 part 4) | BUILDER | w-econ | TODO |
+| W32 | Bug: "We are also not seeing the hangang splash screen for the first clothing drop". CHANGED 10:15 (SPEC4 part 1): splash only for brands in rotation, again each time a brand returns (seen per stint) (SPEC2 part 5) | BUILDER | w-drops | READY FOR QA (4542bab) |
+| W33 | "make sure no item is gained twice": one shared helper for every free item (chests, level crates, wheel slivers, crawl finds, Weekly Warrior, story), relics too (SPEC3 part 4) | BUILDER | w-chests | READY FOR QA (be62935) |
+| W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | TODO |
+| W35 | Rafe's legendary treasure hunts at levels 27, 52, 77 and 93 (SPEC5; the first is how you meet Rafe): photo only, 3-4 picture montage, legendary relic (SPEC3 part 6) | BUILDER | w-rafe (after w-chests merges) | TODO |
+| W36 | Story side-quests: PHOTO ONLY (SPEC6); Night watch = in-bed photo timed by the server clock in the function, with the checked time stamped visibly on the photo (Cal 11:00). In v0.91+. Mara "Cook for me once", Nova "Clear out your closet", Theo "Movie night", the dogs' "Walkies" (Sable: "Night watch", bed before midnight, a clock photo; SPEC5) (SPEC4 part 5) | BUILDER | w-sidequests (after w-rafe) | TODO |
+| W37 | A visible time stamp burned into every proof photo before the AI check (bottom-right, SAYMORE orange #ff7a18 with cyan #17d4e6 glow); the AI reads it (SPEC6 part 4). v0.90 if no delay, client side only | BUILDER | w-stamp | TODO |
 
+BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
-w-rank (on w-inbox, W17 + W18), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
-w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
+w-rank, w-training again, w-drops, w-wheel, THEN (09:45) the w-drops amend (Mon/Fri 8 am Pacific, 2 active, Wednesday vault + HANGANG splash, W20 W32),
+w-chests (W26 W30, before w-econ), w-econ (W21 W22 W25 W27 W31), w-colors (W14), w-photos, w-pact (W28), w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
+
+### Specs for BUILDER (LEAD, 2026-11-10 09:20): read these before each branch
+
+LEAD's queued messages reach a chat only when its turn ends, so the full specs live here. Cal's words are in the table above.
+- **NEW 09:45 (Cal via ARCHITECT), do after w-wheel:** the last three items in `.claude/team/todo/BUILDER.md`: the w-drops amend
+  (Monday and Friday 8 am Pacific, 2 active brands, Wednesday vault, HANGANG splash bug), the new w-chests branch (100/200/300 chests, relic tiers), and income by
+  upgrade size added to w-econ. Spec: `.claude/team/ideas/2026-11-10_SPEC2_drops_chests_relics_income_splash.md`. The w-drops and
+  W26 lines below are out of date where they differ.
+- **w-inbox fix, first (W7/W19):** S.inbox already belongs to checkInbox (30_app_b.js:1057, the owner's quest inbox: S.inbox[itemId]=1).
+  Keep letters in their own save field (for example S.letters {read, paid, at, popped}) so the two never share an object; nothing
+  has shipped, so no migration. Also, the welcome text still says challenges are "Coming soon": they shipped in v0.88, so fix that
+  line. Then rebase or merge w-rank onto the fix.
+- **w-rank: W17, who liked.** In the character card (the big card with the Like button), next to that person's like count this
+  week, add a small arrow, folded by default. Opened, it lists who liked them this week with counts ("Sydney x2"), most first. Names
+  come from SOC.worlds.
+- **w-rank: W18, the contest.** The week runs Sunday 7 pm Pacific to Sunday 7 pm Pacific (pacWeek is Monday 00:00 today). This
+  week simply ends 5 h early, nothing already given is lost, and the week keys hold across the switch. The Rank tab says
+  "Ends Sunday 7 pm, in 2d 4h". Prizes as today (1,500 / 1,000 / 500 and the medal), paid at the new cutoff. Each week every
+  player gets a "Fashion week" letter in the inbox (INBOXGEN), styled as a special event: the top 3 looks drawn with names, like
+  counts and prizes. The first is for the week ending Sunday 2026-11-22 at 7 pm Pacific, kept in one constant. It replaces the old
+  results modal.
+- **w-rank: W24, likes notify.** Cal: "a small heart symbol with a number beside the character in the fashion tab just like an
+  instagram like notification". Next to your own character in the Fashion view, a heart bubble with the number of new likes since
+  you last looked ("♥ 3"). It clears once you have seen it (open the tab or your card). While there are unseen likes, a small dot
+  shows on the Rank tab and the Hall nav. The last-seen count is kept in the save.
+- **w-training again: W5, graph ranges.** Cal: "40 sessions for gym graph is too much. Have the option to toggle graphs between last 7
+  days, and last month, last 3 months, and last 6 months."
+  - Every Training graph (plan day, exercise progression, custom) gets a toggle: 7 days | 1 month | 3 months | 6 months. Default 1
+    month, remembered for the session. 7 days and 1 month plot each session; 3 and 6 months plot one point per week (the week's best).
+  - Storage: full entries for about the last 5 weeks, then one weekly best ({wk, w}) per exercise and per plan back to 26 weeks.
+    Drop older. This replaces the 40 cap, and S.sessions needs the same so a plan day has 6 months. Report the worst-case save size.
+  - An empty range says "No sessions in the last 7 days". QA skips 4cb156d and tests this commit.
+- **w-drops: W20.** HANGANG still drops alone when the Closet is built. After that, the next brand drops on each Monday and
+  Wednesday at the game day's start (5 am), in the same brand order for everyone. Say what happens once all 16 have dropped
+  (reruns?) and how the Shop and alerts read.
+- **w-wheel: W6.** As in LEAD's first message (that one reached you).
+- **w-econ: W21 + W22 + W25 (big).** Read docs/ECONOMY.md, then measure with tools/windows/econsim.js before and after.
+  - Cal's routine (cal): level 40 around day 14; level 100 and everything bought (every room and upgrade) around day 90, not
+    before day 80. Report regular, casual and grinder too.
+  - Passive income (businesses, the Loft per hour) is at most about 30% of a day's coins for cal at every stage. Report it week by
+    week. Include the new wheel and the 3,000 welcome coins.
+  - Rooms (W25): after the Garden, each room opens only when all three are true:
+    1. At least 3 days since the previous room opened. Record open times in the save; old saves count as long ago.
+    2. A level.
+    3. Coins earned by the previous room since it opened.
+    Keep the old story criteria where they still make sense or fold them into trigger 3. A locked room shows all three with
+    progress ("2 of 3 days", "Level 9 of 12", "1,240 of 3,000 coins from the Garden"). Prestige gates (80 / 90 / 100) stay.
+  - Existing saves: nobody loses a level, an item or an opened room. Keep each player's level and put their XP at the same fraction
+    of that level on the new curve.
+  - Gates (W22):
+    - Level 20: a second accessory slot (any owned accessory not in slot 1). The rig must draw both on both bodies in every pose.
+    - Level 40: face cosmetics (a_xface). Anyone already wearing one keeps it.
+    - Level 30, pets: no code (W23, the Mac does art and code together).
+    - Level 90: room in econPrice for the items the Mac will make.
+  - Write it up in docs/ECONOMY.md with a before and after table. QA checks it with its own runs.
+- **w-colors: W14 only** (W15 is cancelled). Each main view (Board, Hall, Training, Shop, Crawls, Wheel, Loft and the rest) gets its
+  own surface and background tint, taken from that screen's art; the Hall's comes from its town hall picture. Bought Shop themes
+  still set the accent. Body text keeps WCAG AA contrast. No new art: if a screen has none, pick a tint in code and say which.
+- **w-photos: W8 + W9.** As in LEAD's first message.
 
 ### For Cal's Mac Claude, later: visitor story beats with pictures (W12)
 
@@ -84,6 +161,11 @@ first.
 3. **Level 90 items.** A set clearly beyond any brand drop: animated or glowing pieces, full sets with a back piece. Name and
    describe them by docs/VOICE.md.
 The second accessory (level 20) needs no new art: it reuses the accessories in the game.
+4. **Relic icons (W30).** One icon per relic, 256x256, the game's painted style, no text, a rim in the tier colour (low, mid, high,
+   legendary). The relic list and names come from Cal and ARCHITECT; the game shows drawn placeholders until each
+   `ui_relic2_<id>.webp` exists.
+5. **Rafe's treasure hunts (W35).** Per hunt, 3-4 full-screen montage pictures (portrait, phone) with Rafe ahead and the player's first-person view (a hand reaching for a ledge, a rope, the relic), NO player character, through
+   a dangerous journey to the legendary relic, plus the relic icon. Placeholders drawn in code until then.
 
 ---
 

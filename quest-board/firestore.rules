@@ -18,15 +18,16 @@ service cloud.firestore {
     match /data/users/{uid}/{doc} { allow read, write: if mine(uid); }
 
     // the Town Hall (app/src/29t_chat.js, 29u_style.js): chat/<id> holds that player's last messages in each room, chatnow/<id>
-    // the room they have open, likes/<id> whose looks they like this week. Everyone signed in reads; only that player writes. The
-    // owner may also write or delete any chat or chatnow doc and delete any likes doc (moderation). Each doc must be the {j, t}
+    // the room they have open, likes/<id> how often they liked each look this week and today. Everyone signed in reads; only that
+    // player writes or deletes their chat and chatnow docs (Cal, 2026-11-10: "Only you can delete your own messages"); the owner
+    // may still delete any likes doc. Each doc must be the {j, t}
     // the web wrapper writes, with j capped, so nobody can fill the database.
     function small(n) {
       return request.resource.data.keys().hasOnly(["j", "t"]) && request.resource.data.j is string
         && request.resource.data.j.size() < n && request.resource.data.t is number;
     }
-    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if (mine(uid) || owner()) && small(20000); allow delete: if mine(uid) || owner(); }
-    match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if (mine(uid) || owner()) && small(2000); allow delete: if mine(uid) || owner(); }
+    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(20000); allow delete: if mine(uid); }
+    match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(2000); allow delete: if mine(uid); }
     match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
 
     // kind words for coins (app/src/29v_kudos.js): kudos/<id> holds the notes that player wrote the owner, read by them and the

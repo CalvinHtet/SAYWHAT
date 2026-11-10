@@ -61,8 +61,8 @@ SHOP.push([DGWEAR.id,"a_acc","Rift Mask",0,1,"Black, with a violet crack of ligh
    brands on sale, then the basics */
 var CRAWLWEAR=/^a_(top|pants|shoes|acc|hat|back|mask)$/;
 function crawlWear(){var st={};try{st=dropState()||{}}catch(e){}var ids=function(L){return (L||[]).map(function(b){return b.id})},tiers=[ids(st.vault),ids(st.live),["basics"]];
-  var ok=function(it,bs){var e=it[6]||{};return CRAWLWEAR.test(it[1])&&!e.dungeon&&bs.indexOf(e.b)>=0&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)};
-  for(var t=0;t<tiers.length;t++){var pool=SHOP.filter(function(it){return ok(it,tiers[t])});if(pool.length)return pool[Math.floor(Math.random()*pool.length)]}
+  /* through freeItem (29y_free.js), so a crawl never brings a piece the player owns */
+  for(var t=0;t<tiers.length;t++){var it=t===2?freeItem({slots:CRAWLWEAR,brands:[],basics:true}):freeItem({slots:CRAWLWEAR,brands:tiers[t]});if(it)return it}
   return null}
 /* what a dungeon still hides: its trophy pieces and shards, the ally trapped there, and the Rift Mask in the Spire */
 function crawlHidden(d){var D=dngInit(),out=[];

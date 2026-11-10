@@ -12,7 +12,7 @@ var INBOX=[
   {id:"welcome",from:"Cal",subj:"Welcome to SAYWHAT",body:function(){return WELCOMEBODY},coins:3000},
   {id:"roadmap",from:"Cal",subj:"Roadmap",body:""}
 ];
-var INBOXGEN=[];
+var INBOXGEN=INBOXGEN||[]; /* a file before this one may have added to it already (29u_style.js: the weekly winner) */
 function ibState(){if(!S.letters||typeof S.letters!=="object")S.letters={};var I=S.letters;["read","paid","at"].forEach(function(k){if(!I[k]||typeof I[k]!=="object")I[k]={}});return I}
 function ibBody(l){var b=typeof l.body==="function"?l.body():l.body;return b?String(b):""}
 /* every letter this player can see, newest first; a letter's day is its own d, else the day this player first got it */

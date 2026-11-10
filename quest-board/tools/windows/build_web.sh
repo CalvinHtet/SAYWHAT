@@ -31,7 +31,7 @@ cp "$APP/blobs.js" "$DIST/blobs.js"
 for n in firebase-app-compat.js firebase-auth-compat.js firebase-firestore-compat.js; do cp "$WEBDIR/vendor/$n" "$DIST/$n"; done
 cp "$WEBDIR/config.js" "$WEBDIR/web.js" "$DIST/"
 if [ "$SANDBOX" = sandbox ]; then printf '\nwindow.QB_WEB.sandbox = true;\nwindow.QB_WEB.noTest = false; /* local sandbox: Test tools on, as RELEASING.md says */\n' >> "$DIST/config.js"; fi
-cp "$APP/lfvar.json" "$DIST/lfvar.json"
+rm -f "$DIST/lfvar.json" # never loaded on the web (LFVAR_URL is unset there), so a web build no longer ships it (w-perf1, QA W1)
 
 SCRIPTS=(firebase-app-compat.js firebase-auth-compat.js firebase-firestore-compat.js config.js blobs.js qbdata.js web.js
          rig.js look.js creator.js loft_bridge.js app.js)

@@ -30,8 +30,15 @@ function brandSplash(b){var picks=brandPicks(b);
   /* Cal, 2026-11-05: the drop window carries the brand's banner art, in portrait (ui_banner_<id>_p.webp from ROOMS; until
      then the landscape banner, cropped to the window) */
   var art=window.QBART&&(QBART["ui_banner_"+b.id+"_p.webp"]||QBART["ui_banner_"+b.id+".webp"]);
-  var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">NOW ON SALE</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
+  var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">'+(b.back?'BACK FOR WEDNESDAY':'NOW ON SALE')+'</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
   return m}
-/* the newest live brand this player has not been shown yet */
-function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};var live=dropState().live,fresh=live.filter(function(b){return !S.brandSeen[b.id]});if(!fresh.length)return;
-  live.forEach(function(b){S.brandSeen[b.id]=1});persist();brandSplash(fresh[fresh.length-1])}
+/* a brand's splash, once per stint (Cal, 2026-11-10: "i only want to see the brand splash for the shops that are currently in
+   rotation ... Even the same players who have already seen that splash the first time should see it again if it comes back into
+   rotation"): only brands for sale right now (the 2 live, and the vault brand on its Wednesday), never retired ones. Seen is kept
+   per stint, brand + the day that stint began (S.brandSeen["hanga|2026-11-10"]), so a brand back in a later round or on a
+   Wednesday splashes again. Several unseen: one at a time, oldest first, the Wednesday brand last. */
+function brandStint(b){return b.id+"|"+(b.back?b.backFrom:b.start)}
+function brandFresh(){var seen=S.brandSeen||{};return dropState().live.filter(function(b){return !seen[brandStint(b)]}).sort(function(a,b){return (a.back?1:0)-(b.back?1:0)})}
+function brandCheck(){if(!S.created||areaGate("shop")||document.querySelector(".bsplash")||document.querySelector("#layer .modal"))return;if(!S.brandSeen)S.brandSeen={};
+  var fresh=brandFresh();if(!fresh.length)return;S.brandSeen[brandStint(fresh[0])]=1;persist();brandSplash(fresh[0])}
+
