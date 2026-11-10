@@ -105,16 +105,20 @@ function roomsShare(list){var n=0,tot=0;list.forEach(function(t){var L=(ADDONS[t
 function loftShare(){return roomsShare(ECON.loftCore)}
 /* coins a room has made: collected from it (r.earn, 30_app_b.js rcollect), or from its produce sales for the Garden */
 function roomEarn(t){var r=slotOf(t);return r?Math.floor(r.earn||0):0}
-/* is room t's unlock met (ECON.unlock), and its line: [what, met, text] with progress, naming only rooms the player has */
+/* is room t's unlock met (ECON.unlock), and its line: [what, met, text, bar 0-1, goal text, goal progress], naming only rooms the
+   player has. An upgrade step never shows its total (Cal: "so it remains a mystery when upgrading to see how far it will go") */
+function unlockUps(kind,met,place,n,need){return [kind,met,place+" upgrades: "+n+" bought",need?Math.min(1,n/need):1,"More "+place+" upgrades",n+" bought"]}
 function unlockMet(t){var l=unlockLine(t);return !l||l[1]}
 function unlockLine(t){var u=(ECON.unlock||{})[t];if(!u)return null;
   if(u.at){var r=slotOf(u.at);if(!r)return ["at",false,"Something else opens first"];var f=roomFill(r),need=Math.ceil(f.tot*u.pct);
-    return ["at",f.n>=need,rmName(u.at)+": "+Math.min(f.n,need)+" of "+need+" upgrades"]}
-  if(u.loft){var ls=loftShare(),nl=Math.ceil(ls[1]*u.loft);return ["loft",ls[0]>=nl,"The Loft: "+Math.min(ls[0],nl)+" of "+nl+" upgrades"]}
+    return unlockUps("at",f.n>=need,rmName(u.at),f.n,need)}
+  if(u.loft){var ls=loftShare(),nl=Math.ceil(ls[1]*u.loft);return unlockUps("loft",ls[0]>=nl,"Loft",ls[0],nl)}
   if(u.earn){if(!slotOf(u.earn))return ["earn",false,"Something else opens first"];var e=roomEarn(u.earn);
     return ["earn",e>=u.coins,rmName(u.earn)+" sales: "+Math.min(e,u.coins).toLocaleString()+" of "+u.coins.toLocaleString()+" coins"]}
   if(u.noir){if(!slotOf("restaurant"))return ["noir",false,"Something else opens first"];return ["noir",styNoir(),"Keep upgrading the Restaurant"]}
-  if(u.plaza){var ps=roomsShare(ECON.plazaAll),np=Math.ceil(ps[1]*u.plaza);return ["plaza",ps[0]>=np,"Kode Plaza: "+Math.min(ps[0],np)+" of "+np+" upgrades"]}
+  /* the Mall: every Kode Plaza room built first (econsim: with only the Garden and the Restaurant it opened before Lock and Key) */
+  if(u.plaza){if(!ECON.plazaAll.every(styHas))return ["plaza",false,"Something else opens first"];var ps=roomsShare(ECON.plazaAll),np=Math.ceil(ps[1]*u.plaza);
+    return unlockUps("plaza",ps[0]>=np,"Kode Plaza",ps[0],np)}
   return null}
 /* a story step's trigger (the Goals use it) */
 function styTrig(s){return s&&s.room?unlockLine(s.room):null}
@@ -134,7 +138,7 @@ function styWhy(room){var s=styStep(room);if(s&&s.id==="mall"&&mallHeld())return
   return "Keep growing your business."}
 /* W25 (QA, 2026-11-10): the triggers one per line, a tick on each one met */
 function styWhyHtml(room){var s=styStep(room),T=s&&s.id==="mall"&&mallHeld()?null:s?styTriggers(s):(unlockLine(room)?[unlockLine(room)]:null);if(!T||!T.length)return esc(styWhy(room));
-  return '<span class="stytr">'+T.map(function(x){return '<span'+(x[1]?' class="ok">✓ ':'>')+esc(x[2])+'</span>'}).join("")+'</span>'}
+  return '<span class="stytr">'+T.map(function(x){return '<span'+(x[1]?' class="ok">✓ ':'>')+esc(x[2])+(x[3]!=null&&!x[1]?'<i class="stybar"><i style="width:'+Math.round(x[3]*100)+'%"></i></i>':'')+'</span>'}).join("")+'</span>'}
 /* a story room that no upgrade opens (a lot on the street, or one that is given) shows its triggers at the top of the room its
    trigger happens in: the Garden in the Bedroom, Boba in Lock and Key, the Mall in the Restaurant, the Theater in the Mall ... */
 function styNextHtml(t){var o=styState(),h="";

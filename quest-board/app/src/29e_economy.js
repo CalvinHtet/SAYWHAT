@@ -350,6 +350,6 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   persist();render()});
 function rmStats(r,i,base){var T=ROOMT[r.t],L=ADDONS[r.t]||[],own=addonsOf(r).length,all=L.filter(function(a){return !(a[3]&&(a[3].retired||a[3].opens))}).length;
   if(ECON.roomBonusRooms[r.t]){var n=rbList(r.t).filter(function(a){return r.a&&r.a[a[0]]}).length,tot=rbList(r.t).length;
-    return ECON.roomBonusRooms[r.t]+" +"+rbPct(r)+"% XP on every quest ("+n+" of "+tot+" upgrades, up to +"+ECON.roomBonus+"%)"+(roomCrew(i).length?", crew +"+roomCrew(i).length+"%":"")}
-  if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, payout share "+Math.round(payShare()*100)+"%, "+own+" of "+all+" upgrades";
+    return ECON.roomBonusRooms[r.t]+" +"+rbPct(r)+"% XP on every quest ("+n+" bought, up to +"+ECON.roomBonus+"%)"+(roomCrew(i).length?", crew +"+roomCrew(i).length+"%":"")}
+  if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, payout share "+Math.round(payShare()*100)+"%, "+own+" upgrades bought";
   return base}

@@ -35,14 +35,14 @@ function rsRun(){if(!S||!S.r91p||S.reset91)return null;
   S.coins=(S.coins||0)+refund;S.spent=Math.max(0,(S.spent||0)-refund);
   S.reset91={at:Date.now(),d:today(),refund:refund,rooms:rooms,ups:ups,spent0:before.spent||0,scope:ECON.resetScope};delete S.r91p;
   persist();try{render()}catch(e){}
-  if(refund>0||rooms>0)setTimeout(function(){if(!document.querySelector("#layer .modal")&&typeof ibOpen==="function")ibOpen("reset91");else pop("Your rooms were reset and refunded: see your inbox")},1500);
+  if(refund>0)setTimeout(function(){if(!document.querySelector("#layer .modal")&&typeof ibOpen==="function")ibOpen("reset91");else pop("The Loft has been reset: see your inbox")},1500);
   return S.reset91}
 var rsMergeBase=merge;merge=function(d){var r=rsMergeBase.apply(this,arguments);try{if(S&&d&&d.created&&!S.reset91&&(+d.appv||0)<ECON.resetBefore)S.r91p=1}catch(e){}return r};
 setInterval(function(){try{if(loaded&&S&&S.created&&S.r91p&&!S.reset91)rsRun()}catch(e){}},1000);
 /* the letter (29x_inbox.js), only for a save that had something to reset */
-INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var R=S&&S.reset91;if(!R||!(R.refund>0||R.rooms>0))return [];
-  return [{id:"reset91",from:"Cal",subj:"Your rooms, rebuilt",d:R.d,
-    body:'<p>Rooms now open in a new way: each new room opens once you have upgraded enough of the rooms you already have.</p>'
-      +'<p>To make that fair for everyone, your rooms and buildings are back to an empty Bedroom, and everything you spent on them is back in your coins: <b>'+(+R.refund).toLocaleString()+' coins</b>.</p>'
-      +'<p>Your level, XP, clothes, relics, quests, Training and friends are all still here. Build it again your way.</p>'}]});
+INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var R=S&&S.reset91;if(!R||!(R.refund>0))return [];
+  /* Cal's text, approved 2026-11-10 */
+  return [{id:"reset91",from:"Cal",subj:"The Loft has been reset",d:R.d,
+    body:'<p>To balance the economy, every room and building has been reset and your coins refunded: +'+(+R.refund).toLocaleString()+' coins.</p>'
+      +'<p>Your clothes and everything from the Shop are untouched. Rooms now open in a new order as you upgrade.</p>'}]});
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbReset={run:rsRun,value:rsRoomValue,mark:function(){S.r91p=1;delete S.reset91;return 1}};
