@@ -69,6 +69,7 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W41 | Wardrobe filters: "categories for different item pieces, and also can be filtered by brand and the category of items" | BUILDER | w-wardrobe | TODO (v0.91) |
 | W42 | Shop floors (Cal "Go" 13:40): Street (Closet, Mon+Fri, 2 live), Boutique (level 30, Fridays, 2 live; VENOM ROSE, SAYMØRE, CHROME RAIN, NICE COCK), Atelier (level 70, every other Friday, 1 live; hidden until its brands exist); one Wednesday vault for the Shop; splashes only from opened floors; prices by floor; 12 brands per floor over time (Mac art) | BUILDER | w-floors (v0.91, before w-sale) | TODO |
 | W43 | Focused unlocks + building Goals log (ARCHITECT SPEC8, Cal approved): a room opens on its story trigger AND every open room in that building half upgraded (no day wait; replaces W25), Lock and Key before Boba, Goals panel with XP and coins | BUILDER | w-focus (v0.91) | TODO |
+| W44 | No spoilers (Cal: "Scrub the entire game for spoilers"): ARCHITECT SPEC9, about 25 fixes (mystery cards, help, team and relic text, Crawls tab, locked dungeons, next brand); rule in docs/VOICE.md | BUILDER | w-nospoil | TODO (top of v0.91) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
