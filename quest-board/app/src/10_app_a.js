@@ -665,7 +665,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day. Coins, and sometimes a streak freeze.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
+var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
