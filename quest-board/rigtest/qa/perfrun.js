@@ -44,7 +44,7 @@ const r1 = (x) => Math.round(x * 10) / 10;
   await sleep(3000);
   const metrics = async () => { const m = {}; (await pg.s('Performance.getMetrics')).metrics.forEach((x) => (m[x.name] = x.value)); return m; };
   const counts = () => pg.ev('JSON.stringify({ivLive:Object.keys(__qaC.iv).length,ivN:__qaC.ivN,to:__qaC.to,raf:__qaC.raf,ael:__qaC.ael,rel:__qaC.rel})').then(JSON.parse);
-  const closeModals = () => pg.ev('(function(){document.querySelectorAll("#layer .modal").forEach(function(e){e.remove()});return 1})()');
+  const closeModals = () => pg.ev('(function(){document.querySelectorAll(".dropsplash .dsx").forEach(function(b){b.click()});document.querySelectorAll("#layer .modal").forEach(function(e){e.remove()});return 1})()');
   // go to a screen: returns ms from the tap to the next frame after it drew
   const goTab = async (t) => {
     const [v, sub] = t.split(':');

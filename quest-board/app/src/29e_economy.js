@@ -108,10 +108,10 @@ var ECON={
      placed by its slot (a coat above a cap), its brand's overall level (VENOM ROSE high, KAIMANA low) and its old price against
      the brand's other pieces. designer waits for a designer brand (Cal: "could cost 3000 for a specific pair of pants or a top";
      no art yet). Pieces nobody graded keep shopK, clothesMin and clothesMax */
-  tier:{thrift:[100,250],standard:[250,500],premium:[600,1200],luxury:[1300,2200],designer:[2400,3000]},
-  tierSlot:{a_top:.55,a_pants:.45,a_shoes:.45,a_back:.7,a_acc:.3,a_hat:.3,a_mask:.25},
-  tierBrand:{rose:.25,cr:.2,nc:.15,bb:.05,sm:.05,sp:-.05,smk:-.05,oak:-.05,y2k:-.1,km:-.15,basics:-.25},
-  tierNudge:.3,
+  cloth:{thrift:[100,250],standard:[250,500],premium:[600,1200],luxury:[1300,2200],designer:[2400,3000]},
+  clothSlot:{a_top:.55,a_pants:.45,a_shoes:.45,a_back:.7,a_acc:.3,a_hat:.3,a_mask:.25},
+  clothBrand:{rose:.25,cr:.2,nc:.15,bb:.05,sm:.05,sp:-.05,smk:-.05,oak:-.05,y2k:-.1,km:-.15,basics:-.25},
+  clothNudge:.3,
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
@@ -191,7 +191,7 @@ var DECORW=/\b(art|painting|poster|mural|vases?|sconces?|plants?|planters?|flowe
 function econPhase(k){return ECON.phase[k]||1}
 /* what each upgrade is, read once from its price before the pass below re-prices it (QA: read afterwards, nearly everything
    came out "grand", so earn by size was flat) */
-var ECONKIND={},ECONSIZE={};
+var ECONKIND={};
 function econKind(k,a){if(ECONKIND[k+"|"+a[0]])return ECONKIND[k+"|"+a[0]];var e=a[3]||{},st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1,base=a[2]/st,T=ROOMT[k]||{};
   if(ECON.kindOf[a[0]])return ECON.kindOf[a[0]];if(e.opens)return "opener";if(typeof PRICE_HUGE!=="undefined"&&PRICE_HUGE[a[0]])return "grand";
   /* in a room that earns, decor is what earns nothing (29_prices.js marks it): "Neon Bar" and "Indoor Palm" earn, so they are
@@ -206,28 +206,27 @@ function econPrice(k,a,i,n){var e=a[3]||{},kind=econKind(k,a),ph=econPhase(k),st
   return Math.round(p/50)*50}
 function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
 (function(){Object.keys(ADDONS).forEach(function(k){var L=(ADDONS[k]||[]).filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});
-  L.forEach(function(a){var st=(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[k])||1;ECONKIND[k+"|"+a[0]]=econKind(k,a);
-    ECONSIZE[k+"|"+a[0]]=(typeof PRICE_HUGE!=="undefined"&&PRICE_HUGE[a[0]])||a[2]/st});
+  L.forEach(function(a){ECONKIND[k+"|"+a[0]]=econKind(k,a)});
   L.forEach(function(a,i){var e=a[3]||{};if(e.fixed)return;a[2]=econPrice(k,a,i,L.length)})});
   /* lots on the street, and the Garden's knock-through that opens the Restaurant (it keeps the Restaurant's own price) */
   ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)*econLate(k)/50)*50});
   if(ROOMT.garden)ROOMT.garden.cost=ECON.lotGarden;
   if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")*econLate("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}})();
 /* Shop prices (SHOP and GITEMS in 10_app_a.js, EXTRA_ITEMS in 15_shop.js), each item once even if it sits in two lists:
-   graded clothes by their quality tier (ECON.tier), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
+   graded clothes by their quality tier (ECON.cloth), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
    just x shopK), permanent upgrades from ECON.buff, and interface items (themes, frames, backdrops, companions, titles, tap
    effects, HUD, sounds, scenes) by the level they open */
 (function(){var seen=typeof WeakSet==="function"?new WeakSet():null,graded=[];
   [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
     (l||[]).forEach(function(it){if(!Array.isArray(it)||!(+it[3]>0)||(seen&&seen.has(it)))return;if(seen)seen.add(it);var e=it[6]||{},s=it[1];
       if(s==="buff"){it[3]=ECON.buff[it[0]]||Math.round(it[3]/50)*50;return}
-      var tr=/^a_/.test(s)&&ECON.tierSlot[s]!=null&&clothTier(it[0]);if(tr&&ECON.tier[tr]){graded.push([it,tr]);return}
+      var tr=/^a_/.test(s)&&ECON.clothSlot[s]!=null&&clothTier(it[0]);if(tr&&ECON.cloth[tr]){graded.push([it,tr]);return}
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
       it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})});
   /* each brand's average old price, so a piece its brand priced above the rest sits higher in its band */
   var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
-  graded.forEach(function(g){var it=g[0],B=ECON.tier[g[1]],b=(it[6]&&it[6].b)||"",a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
-      p=ECON.tierSlot[it[1]]+(ECON.tierBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.tierNudge*rel));
+  graded.forEach(function(g){var it=g[0],B=ECON.cloth[g[1]],b=(it[6]&&it[6].b)||"",a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
+      p=ECON.clothSlot[it[1]]+(ECON.clothBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.clothNudge*rel));
     it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
 /* ---- Room Bonus (Cal, 2026-11-10: "some assets should provide a buff but very miniscule ... a new bed would increase your
@@ -246,15 +245,19 @@ function rbPct(r){return Math.round(addonsOf(r).reduce(function(s,a){return s+((
 /* The Worldseed (a legendary relic) multiplies every Loft room's bonus */
 function rbMult(t){return ECON.roomBonusRooms[t]&&typeof r2Rb==="function"?r2Rb():1}
 /* ---- bigger upgrades earn more (Cal, 2026-11-10: "bigger upgrades should give bigger passive buffs. Such as the imax screen should
-   definitely start generating more income"): in a room that earns, each earning upgrade's share follows what it is (econKind)
-   by ECON.earnW, and the room's total stays what it was. A grand piece also earns by its size: x the square root of its size
-   (before re-pricing) over ECON.earnGrand, so the IMAX Screen (4,000) out-earns the Bigger Screen (1,500) ---- */
-ECON.earnW={decor:1,furniture:1,equipment:2,big:3,grand:5};ECON.earnGrand=1000;
-(function(){Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k];if(!T||!(T.coin||T.food))return;
-  var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens});if(L.length<2)return;
-  var tot=L.reduce(function(s,a){return s+a[3].p},0),wt=L.map(function(a){var kd=econKind(k,a),sz=ECONSIZE[k+"|"+a[0]]||0;return (ECON.earnW[kd]||1)*(kd==="grand"&&sz>ECON.earnGrand?Math.sqrt(sz/ECON.earnGrand):1)}),ws=wt.reduce(function(s,w){return s+w},0);
-  L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,old=Math.round(e.p*100);e.p=np;
-    a[4]=String(a[4]||"").replace(new RegExp(" Earns \+"+old+"% here\."),"")+" Earns +"+Math.round(np*100)+"% here."})})})();
+   definitely start generating more income"): in a room that earns, each earning upgrade's share of the room's income follows its
+   price (QA, v0.90: a pricier piece never earns less than a cheaper one; late prices scale a whole room alike, so this is the price
+   before them too), and the room's total stays what it was. In a room that does not earn coins (the Pond) the shares keep their
+   sizes but go in price order. econEarn(t) does one room; a file that sets a price later runs it again (29i_garden.js, the
+   Sprinklers). The card's "Earns +N% here." follows the share (QA, v0.90: it used to be added a second time). ---- */
+function econEarn(t){Object.keys(ADDONS).forEach(function(k){if(t&&k!==t)return;var T=ROOMT[k]||{},earns=!!(T.coin||T.food);
+  var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens&&+a[2]>0});if(L.length<2)return;
+  var tot=0,wt=L.map(function(a){tot+=a[3].p;return earns?+a[2]:a[3].p});
+  if(!earns){var mx=0;L.map(function(a,i){return i}).sort(function(x,y){return L[x][2]-L[y][2]||x-y}).forEach(function(i){if(wt[i]<mx)wt[i]=mx;mx=wt[i]})}
+  var ws=wt.reduce(function(s,w){return s+w},0);if(!(ws>0))return;
+  L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,s=String(a[4]||""),had=/Earns \+\d+% here\./.test(s);e.p=np;
+    a[4]=s.replace(/\s*Earns \+\d+% here\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here.":"")})})}
+econEarn();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
    items get ECON.l90 in econPrice when the Mac makes them; pets at 30 come with their art (W23) ---- */
 ECON.faceLv=40;ECON.accLv=20;

@@ -121,12 +121,13 @@ the Walk-in Closet 1,400, the Restaurant 5,050, the IMAX Laser Projector 10,500,
 (was 24,600).
 
 **Bigger upgrades earn more** (Cal: "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely
-start generating more income"): in a room that earns, each earning upgrade's share of the room's income follows what it is
-(`ECON.earnW`: furniture 1, equipment 2, big 3, grand 5), and the room's total stays what it was. A grand piece also
-earns by its size: its weight x the square root of its size over `ECON.earnGrand` (1,000), so the IMAX Screen (size 4,000) earns
-more than the Bigger Screen (1,500). What a piece is and its size are read from its price before the late prices (`ECONKIND`,
-`ECONSIZE`). Auditorium: IMAX Screen +61% (v0.88 +54%), IMAX Laser Projector +43%, Bigger Screen and Leather Recliners +38%,
-the rows and speakers +18%. Nightclub: the VIP Booth +10%, the Velvet Rope +3%.
+start generating more income"): in a room that earns, each earning upgrade's share of the room's income follows its price
+(`econEarn`), so a pricier piece never earns less than a cheaper one in the same room, and the room's total stays what it was.
+Late prices scale a whole room alike, so the order is the same before them. Auditorium: IMAX Screen +59% (v0.88 +54%), IMAX Laser
+Projector +30%, Back Row +26%, Bigger Screen and Leather Recliners +22%, Digital Projector +18%. Nightclub: the VIP Booth +10.5%,
+the Velvet Rope +3.9%. Garden: the Glass Conservatory +42%, the Sprinklers +23.5% (their price is set in `29i_garden.js`, which
+runs `econEarn("garden")` again). A room that doesn't earn coins (the Pond) keeps its shares in price order. What each piece is
+(`ECONKIND`, for its price) is read before the re-pricing.
 
 **Story rooms open a day apart** (Cal: "Rooms should open a day apart ... only the ones that have questlines tagged to them such
 as the restaurant, boba shop, bar, dessert parlor, strip mall. There has to be multiple triggers"): the Restaurant, Boba, Dessert,
@@ -169,10 +170,10 @@ Room upgrades have no level locks (Cal, 2026-11-05): each room shows its next 4,
 **Clothes by quality** (Cal: "A white shirt with a flower on it, should not be the same price as a sexy dress with diamond encrusted
 lacings ... higher shops with better quality clothes should be more expensive"): QA graded every Shop clothing piece from its
 icon, its line and its brand (`docs/qa-2026-11-10/CLOTHING_TIERS.md`; the table is `clothTier` in `29e_tiers.js`). Each tier has
-a band (`ECON.tier`): thrift 100 to 250, standard 250 to 500, premium 600 to 1,200, luxury 1,300 to 2,200, and designer 2,400
-to 3,000 held for a designer brand (no pieces or art yet). Inside its band a piece sits by its slot (`ECON.tierSlot`: a back
-piece highest, then a top, a bottom or shoes, a hat or accessory lowest), its brand (`ECON.tierBrand`: VENOM ROSE +0.25, CHROME
-RAIN +0.2, NICE COCK +0.15 ... KAIMANA -0.15, Basics -0.25) and its old price against its brand's other pieces (`ECON.tierNudge`,
+a band (`ECON.cloth`): thrift 100 to 250, standard 250 to 500, premium 600 to 1,200, luxury 1,300 to 2,200, and designer 2,400
+to 3,000 held for a designer brand (no pieces or art yet). Inside its band a piece sits by its slot (`ECON.clothSlot`: a back
+piece highest, then a top, a bottom or shoes, a hat or accessory lowest), its brand (`ECON.clothBrand`: VENOM ROSE +0.25, CHROME
+RAIN +0.2, NICE COCK +0.15 ... KAIMANA -0.15, Basics -0.25) and its old price against its brand's other pieces (`ECON.clothNudge`,
 at most 0.2 of the band either way). The eye styles (`et_*`) are face options and keep the old rule.
 
 | Tier | Pieces | Now | Before |

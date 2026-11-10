@@ -171,6 +171,11 @@ The second accessory (level 20) needs no new art: it reuses the accessories in t
    `ui_relic2_<id>.webp` exists.
 5. **Rafe's treasure hunts (W35).** Per hunt, 3-4 full-screen montage pictures (portrait, phone) with Rafe ahead and the player's first-person view (a hand reaching for a ledge, a rope, the relic), NO player character, through
    a dangerous journey to the legendary relic, plus the relic icon. Placeholders drawn in code until then.
+   6. **New brands for the shop floors (W42).** Cal, 2026-11-10: street levels 1-30, mid (Boutique) 30-70, luxury (Atelier) 70-100, "if
+   street has 12 brands, then mid should have 12 and luxury also should have 12". Today: 12 street, 4 mid (VENOM ROSE, SAYMØRE, CHROME RAIN,
+   NICE COCK), 0 luxury. Needed: 8 mid brands and 12 luxury brands, made the way docs/BRAND_AUTOGEN.md describes (each with a splash,
+   an icon set and every piece tested on both bodies in every pose). Luxury should clearly look a step above anything in the game today.
+   Original designs and names only, no real labels or logos. This lifts the 2026-11-07 pause on new brands for these floors.
 
 ---
 

@@ -126,15 +126,17 @@ function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
   return {live:live,vault:vault,soon:soon,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
 /* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest, counted from the latest time it left (its
    latest stint ended, or its last Wednesday back). Only a brand gone at least 14 days; with none, no vault that Wednesday (QA,
-   v0.89: "fewest returns first" brought HANGANG back after 2 days). Never a brand that drops again within 5 days.
+   v0.89: "fewest returns first" brought HANGANG back after 2 days). Never a brand that drops again within 5 days. Of those, the
+   one whose last Wednesday back is oldest (never back counts as oldest), then the one gone longest, so every brand gets its turn
+   (QA, v0.90: "gone longest" alone kept picking the brand about to drop again, and 4 brands never came back).
    Worked out Wednesday by Wednesday from cal0, so every phone agrees (QA, rc-0.89: only 8 of 16 came back, OVERPASS 5 days after
    leaving, SAYMORE back on a Wednesday and dropping that Friday). */
 dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0;if(k in DROPWED)return DROPWED[k];
   var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
-  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="",due={};
+  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="",bl="",due={};
     (m.soon||[]).forEach(function(q){if(ymdN(q.start)-x<=5)due[q.id]=1});
-    m.vault.forEach(function(b){if(due[b.id])return;var bk=back[b.id]?ymdAdd(back[b.id],1):"",since=bk>(b.left||b.start)?bk:(b.left||b.start);
-      if(x-ymdN(since)<14)return;if(!best||since<bs){best=b;bs=since}});
+    m.vault.forEach(function(b){if(due[b.id])return;var lr=back[b.id]||"",bk=lr?ymdAdd(lr,1):"",since=bk>(b.left||b.start)?bk:(b.left||b.start);
+      if(x-ymdN(since)<14)return;if(!best||lr<bl||(lr===bl&&since<bs)){best=b;bs=since;bl=lr}});
     if(best)back[best.id]=w;if(x===x1)out=best}
   return DROPWED[k]=out};
 /* Wednesday only: the vault brand, from 8 am Wednesday to 8 am Thursday Pacific */

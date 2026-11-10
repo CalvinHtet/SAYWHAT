@@ -1240,6 +1240,12 @@ var cv=null,raf=0,emT=0,emCol="#ff3d81",emOld=1;
    16_interface.js ifColors) marks the color stale and the next drawn frame reads it once. The loop draws 30 times a second and
    asks for a frame only when it will draw: asking every frame kept the whole page redrawing 60 times a second */
 function emColor(){emOld=1}
+/* QA (v0.90 perf): the embers' frames kept the other CSS effects restyling. They stop after 4 s with no touch, key, wheel or scroll
+   (the last frame stays on screen) and start again on the next one */
+var emAct=Date.now(),emIdle=false,emLoop=null;
+function emWake(){emAct=Date.now();if(emIdle&&cv&&emLoop){emIdle=false;clearTimeout(emT);raf=requestAnimationFrame(emLoop)}}
+["pointerdown","keydown","wheel","touchstart","scroll"].forEach(function(n){addEventListener(n,emWake,{passive:true,capture:true})});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)emWake()});
 function embers(on){
   if(!on){if(cv){cancelAnimationFrame(raf);clearTimeout(emT);cv.remove();cv=null}return}
   if(cv)return;
@@ -1257,8 +1263,10 @@ function embers(on){
     c.fillStyle=emCol;
     pts.forEach(function(p){p.y-=p.v*k;p.x+=Math.sin((p.y+p.a*100)/40)*.3*k;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
       c.globalAlpha=.15+.35*Math.abs(Math.sin(p.y/60+p.a*6));c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.fill()});
+    if(Date.now()-emAct>4000){emIdle=true;return}
     emT=setTimeout(function(){if(cv)raf=requestAnimationFrame(loop)},28);
   }
+  emLoop=loop;emIdle=false;emAct=Date.now();
   raf=requestAnimationFrame(loop);
 }
 function applyFx(){
