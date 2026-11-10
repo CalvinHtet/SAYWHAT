@@ -139,6 +139,6 @@ dropState=function(){var n=dropNow();dropStamp();var d=dropMine(n),bk=dropBack(n
    once nothing else is on screen and nobody is typing. brandCheck (25_splash.js) shows each brand once. */
 setInterval(function(){try{if(!loaded||!S.created||document.hidden||areaGate("shop"))return;var a=document.activeElement;
   if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;if(document.querySelector("#layer .modal,.bsplash,.dropsplash,.modal.qbsv"))return;
-  var seen=S.brandSeen||{};if(dropState().live.some(function(b){return !seen[b.id]}))brandCheck()}catch(e){}},2500);
+  if(brandFresh().length)brandCheck()}catch(e){}},2500);
 /* test hook, removed at release with window.__qb */
 window.__qbDrops={count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};
