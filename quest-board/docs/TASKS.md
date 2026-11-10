@@ -21,11 +21,11 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). Next release v0.89.
+Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and release/live-213ea0f). NEXT RELEASE: ONE v0.90 (Cal 10:45, no v0.89) = rc-0.89 (LEAD's merge: w-rank, w-hall, w-training, w-wheel, w-drops) + w-chests + w-econ, APPV 90, QB_EPOCH 6, saves kept.
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
-| W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | DOING |
+| W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | TOP 5 IN todo/LEAD.md (on 213ea0f); write-up after rc-0.89 |
 | W1b | Performance fixes from QA's W1 list | BUILDER | w-perf | after W1 |
 | W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | READY FOR QA (3fdaeec) |
@@ -55,13 +55,13 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W27 | Room Bonus: each Loft room gives at most +3% XP fully upgraded, a stat panel in each room (spec part C) | BUILDER | w-econ | TODO |
 | W28 | Gym Pact: two players bet on 4 active days in a week; both make it 1.5x, one makes it takes 2x, both miss lose (spec part D) | BUILDER | w-pact (after w-hall merges) | TODO |
 | W29 | LATER, not now: the Mystic Shop at level 60 (stylised clothes, room assets, a gold waving-paw cat +15% business gold), art from the Mac (spec part E) | (later) | | NOT NOW |
-| W30 | Relic tiers low / mid / high / legendary: framework, placeholder icons, borders bronze / silver / gold / white-purple with wings, low = household heirlooms, others fantasy/dungeon/anime/otherworld (SPEC3 part 2), art from the Mac later (SPEC2 part 3) | BUILDER | w-chests | READY FOR QA (be62935) |
+| W30 | Relic tiers low / mid / high / legendary. RELIC LIST APPROVED 10:45 (SPEC6: 12 low, 8 mid, 6 high, 4 legendary from Rafe): framework, placeholder icons, borders bronze / silver / gold / white-purple with wings, low = household heirlooms, others fantasy/dungeon/anime/otherworld (SPEC3 part 2), art from the Mac later (SPEC2 part 3) | BUILDER | w-chests | READY FOR QA (be62935) |
 | W31 | "bigger upgrades should give bigger passive buffs. Such as the imax screen should definitely start generating more income." (SPEC2 part 4) | BUILDER | w-econ | TODO |
 | W32 | Bug: "We are also not seeing the hangang splash screen for the first clothing drop". CHANGED 10:15 (SPEC4 part 1): splash only for brands in rotation, again each time a brand returns (seen per stint) (SPEC2 part 5) | BUILDER | w-drops | READY FOR QA (4542bab) |
 | W33 | "make sure no item is gained twice": one shared helper for every free item (chests, level crates, wheel slivers, crawl finds, Weekly Warrior, story), relics too (SPEC3 part 4) | BUILDER | w-chests | READY FOR QA (be62935) |
 | W34 | Clothing prices by quality: QA classifies every clothing item (thrift / standard / premium / luxury) from its art; BUILDER prices by tier (SPEC3 part 5) | QA, then BUILDER | (QA table), w-econ | TODO |
 | W35 | Rafe's legendary treasure hunts at levels 27, 52, 77 and 93 (SPEC5; the first is how you meet Rafe): photo only, 3-4 picture montage, legendary relic (SPEC3 part 6) | BUILDER | w-rafe (after w-chests merges) | TODO |
-| W36 | Story side-quests: Mara "Cook for me once", Nova "Clear out your closet", Theo "Movie night", the dogs' "Walkies" (Sable: "Night watch", bed before midnight, a clock photo; SPEC5) (SPEC4 part 5) | BUILDER | w-sidequests (after w-rafe) | TODO |
+| W36 | Story side-quests: PHOTO ONLY (SPEC6); Night watch = in-bed photo timed by the server clock in the function. Mara "Cook for me once", Nova "Clear out your closet", Theo "Movie night", the dogs' "Walkies" (Sable: "Night watch", bed before midnight, a clock photo; SPEC5) (SPEC4 part 5) | BUILDER | w-sidequests (after w-rafe) | TODO |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
