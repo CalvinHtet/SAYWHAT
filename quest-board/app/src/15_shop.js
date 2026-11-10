@@ -320,16 +320,21 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   if(a==="qsconfirm"){if(S.coins<cost){pop("Need "+(cost-S.coins)+" more coins");return}var m=b.closest(".modal");if(m)m.remove();
     tl.forEach(function(it){S.coins-=it[3];S.spent+=it[3];S.owned[it[0]]=true;S.eq[it[1]]=it[0]});QS_TRY={};try{ifSound("buy")}catch(x){}
     checkBadges();render();persist();try{burst(innerWidth/2,innerHeight/3,30)}catch(x){}pop("Bought "+(tl.length>1?tl.length+" pieces":tl[0][2])+". Wearing "+(tl.length>1?"them":"it")+" now.")}});
+/* W42: the floor on screen (the Street, the Boutique, ...). Only floors this player has show, and the switch only with two or more */
+var QSFLOOR="street";
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-qsfl]");if(!b)return;QSFLOOR=b.dataset.qsfl;window._qsSeen=0;render()});
 shopHtml=function(){
-  var d=dropState(),live=d.live.slice().reverse();
+  var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
+  var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
   var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"],["upgrades","Upgrades"],["interface","Interface"]]);
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
-  var h='<div class="qshop"><header class="qs-top"><div><small>New brands Mondays and Fridays, 8 am; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(d.next?'<small class="qs-cd">'+esc(d.next.name)+' drops in '+cdTxt(dropStart(d.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  var h='<div class="qshop"><header class="qs-top"><div><small>'+esc(FL.line||"New brands Mondays and Fridays, 8 am")+'; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(FD.next?'<small class="qs-cd">'+esc(FD.next.name)+' drops in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
+  if(FO.length>1)h+='<nav class="qs-tabs qs-floors" aria-label="Shop floors">'+FO.map(function(id){var F=flGet(id)||{name:id};return '<button class="qs-tab'+(QSFLOOR===id?" on":"")+'" data-qsfl="'+esc(id)+'">'+esc(F.name)+'</button>'}).join("")+'</nav>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
-  var b=d.live.filter(function(x){return x.id===shopTab})[0];qsTheme(b);
+  var b=(FD.live||[]).filter(function(x){return x.id===shopTab})[0];qsTheme(b);
   if(b){
     h+=qsBanner(b,d);
     /* Cal: a brand back on Wednesday is here for the week only */

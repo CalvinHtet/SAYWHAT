@@ -1472,20 +1472,20 @@ var BRANDS=[
  {id:"hanga",name:"HANGANG",tag:"Two sizes too big, on purpose",c:["#15151b","#2a2a36","#e9e2d0"],ac:"#c9ff3d",start:"2026-11-03",sub:"한강"},
  {id:"y2k",name:"DIAL-UP",tag:"Low-rise, high drama",c:["#ff4fa3","#b46bff","#6cf0ff"],ac:"#fff",start:"2026-11-09",sub:"y2k thrift"},
  {id:"over",name:"OVERPASS",tag:"Built for kickflips you will never land",c:["#141416","#3a3a40","#ff6a1a"],ac:"#ff6a1a",start:"2026-11-16",sub:"street supply"},
- {id:"rose",name:"VENOM ROSE",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
+ {id:"rose",name:"VENOM ROSE",fl:"boutique",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
  /* Cal: NICE COCK, his own brand, is drop 5; ALTITUDE moves back a week */
- {id:"nc",name:"NICE COCK",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
+ {id:"nc",name:"NICE COCK",fl:"boutique",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
  {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-12-07",sub:"mountain supply"},
  /* Cal's music project (approved 2026-11-06); the next free Monday after ALTITUDE until the launch schedule places it */
  {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#f6a5c8","#8f9bea","#c7a6f0"],ac:"#ffd84d",start:"2026-12-14",sub:"anime city-pop"},
  /* Cal's artist brand (approved 2026-11-06), palette and mark from his song covers */
- {id:"sm",name:"SAYM\u00d8RE",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
+ {id:"sm",name:"SAYM\u00d8RE",fl:"boutique",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
  /* Cal's first approved five, in BRANDS_15.md order: the next free Monday each until the launch schedule places them */
  {id:"smk",name:"SMOKE BOMB",tag:"Vanish in style",c:["#111114","#3a3d44","#ff6a1f"],ac:"#f2e6c8",start:"2026-12-28",sub:"ninja anime"},
  {id:"gp",name:"GACHA POP",tag:"Every outfit a rare drop",c:["#ffb3d1","#9fd3ff","#c9a8f5"],ac:"#ffd65a",start:"2027-01-04",sub:"MMO cash shop"},
  {id:"sp",name:"SAVE POINT",tag:"Respawn looking good",c:["#3b1e54","#6c389a","#8a8a8a"],ac:"#3daf9d",start:"2027-01-11",sub:"retro video games"},
  {id:"bb",name:"BARD & BLADE",tag:"Dressed for the side quest",c:["#4c3227","#3f5e4c","#dddee3"],ac:"#b8925a",start:"2027-01-18",sub:"high fantasy"},
- {id:"cr",name:"CHROME RAIN",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"},
+ {id:"cr",name:"CHROME RAIN",fl:"boutique",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"},
  {id:"km",name:"KAIMANA",tag:"Back when the waves were bigger",c:["#e6d7c2","#34a1a0","#fb7167"],ac:"#fb7167",start:"2027-02-01",sub:"surf club"},
  {id:"oak",name:"OAKMONT",tag:"Members only, dress code optional",c:["#f2e6cb","#26345c","#641b38"],ac:"#641b38",start:"2027-02-08",sub:"80s country-club athletic"},
  {id:"sv",name:"S\u00d8LVBERG",tag:"Never actually skied",c:["#f0f1f3","#bb2b35","#2d4066"],ac:"#bb2b35",start:"2027-02-15",sub:"apr\u00e8s-ski"}];

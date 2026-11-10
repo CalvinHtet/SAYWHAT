@@ -112,6 +112,18 @@ var ECON={
   clothSlot:{a_top:.55,a_pants:.45,a_shoes:.45,a_back:.7,a_acc:.3,a_hat:.3,a_mask:.25},
   clothBrand:{rose:.25,cr:.2,nc:.15,bb:.05,sm:.05,sp:-.05,smk:-.05,oak:-.05,y2k:-.1,km:-.15,basics:-.25},
   clothNudge:.3,
+  /* the Shop's floors (W42, Cal 2026-11-10: "Go on the shop floor plans"): the Street opens with the Closet, the Boutique at level
+     30, the Atelier at 70. A brand's floor is fl in BRANDS (10_app_a.js; none means the Street). days: its drop weekdays (0 is
+     Sunday), every: weeks between drop weeks, live: brands on sale at once, line: the Shop's header. A floor with no brands stays
+     hidden (the Atelier until its art arrives) */
+  floors:[{id:"street",name:"Street",lv:0,days:[1,5],every:1,live:2,line:"New brands Mondays and Fridays, 8 am"},
+    {id:"boutique",name:"Boutique",lv:30,days:[5],every:1,live:2,line:"A new brand every Friday, 8 am"},
+    {id:"atelier",name:"Atelier",lv:70,days:[5],every:2,live:1,line:"A new brand every other Friday, 8 am"}],
+  /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 460, Boutique about
+     600 to 1,200, Atelier about 1,300 to 3,000 */
+  clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,460],luxury:[440,460]},
+    boutique:{thrift:[600,650],standard:[600,800],premium:[800,1050],luxury:[1050,1200]},
+    atelier:{thrift:[1300,1400],standard:[1300,1800],premium:[1800,2400],luxury:[2400,3000]}},
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
@@ -216,6 +228,8 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
    graded clothes by their quality tier (ECON.cloth), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
    just x shopK), permanent upgrades from ECON.buff, and interface items (themes, frames, backdrops, companions, titles, tap
    effects, HUD, sounds, scenes) by the level they open */
+/* a brand's Shop floor (W42): fl in BRANDS, else the Street (the Basics and the creator's pieces too) */
+function brandFloor(id){var b=(typeof BRANDS!=="undefined"?BRANDS:[]).filter(function(x){return x.id===id})[0];return (b&&b.fl)||"street"}
 (function(){var seen=typeof WeakSet==="function"?new WeakSet():null,graded=[];
   [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
     (l||[]).forEach(function(it){if(!Array.isArray(it)||!(+it[3]>0)||(seen&&seen.has(it)))return;if(seen)seen.add(it);var e=it[6]||{},s=it[1];
@@ -225,7 +239,7 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
       it[3]=Math.round((ECON.uiBase+ECON.uiLv*Math.max(1,+it[4]||1))/50)*50})});
   /* each brand's average old price, so a piece its brand priced above the rest sits higher in its band */
   var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
-  graded.forEach(function(g){var it=g[0],B=ECON.cloth[g[1]],b=(it[6]&&it[6].b)||"",a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
+  graded.forEach(function(g){var it=g[0],b=(it[6]&&it[6].b)||"",fb=ECON.clothFloor[brandFloor(b)],B=(fb&&fb[g[1]])||ECON.cloth[g[1]],a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
       p=ECON.clothSlot[it[1]]+(ECON.clothBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.clothNudge*rel));
     it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
