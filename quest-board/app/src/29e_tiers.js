@@ -1,7 +1,7 @@
 /* Clothing quality tiers (QA's docs/qa-2026-11-10/CLOTHING_TIERS.md, 2026-11-10). Cal: "A white shirt with a flower on it, should
    not be the same price as a sexy dress with diamond encrusted lacings ... higher shops with better quality clothes should be more
    expensive." QA graded every Shop clothing piece from its icon, its line and its brand. 29e_economy.js prices each graded piece
-   inside its tier's band (ECON.tier). A piece added later and not graded here keeps the old rule; grade it by QA's rules in the doc.
+   inside its tier's band (ECON.cloth). A piece added later and not graded here keeps the old rule; grade it by QA's rules in the doc.
    The three eye styles (et_*) are face options, not clothes, so they are left out. */
 function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=function(t,s){s.split(" ").forEach(function(k){if(k)m[k]=t})};
   put("standard","tp_tank_f tp_leather tp_varsity tp_blazer_f tp_coat_m tp_trench ac_phones ac_hoops ac_chain ac_cross bk_katana "
