@@ -32,7 +32,7 @@ ships, or when work touches one of them. ARCHITECT's working copy: `.claude/team
 |---|---|---|---|
 | Mystic Shop: stylised high-quality clothes, special assets for rooms already built, upgrades like a gold waving-paw lucky cat (+15% business income where placed) | 60 | yes, lots | noted, not built (W29) |
 | Designer brand: very unique pieces, up to about 3,000 each | late (90?) | yes | noted; price room in ECON.tier |
-| Pets with their own outfits | 30 | yes | gate planned; art list for the Mac (TASKS W23) |
+| Pets with their own outfits | 45 (Cal: about 2-3 weeks of play) | yes | gate planned; art list for the Mac (TASKS W23) |
 | Face cosmetics (makeup, scars, detailed faces) | 40 | yes | gate coded in v0.89, no items yet |
 | Items "way cooler than the original drop" | 90 | yes | price room in ECON |
 | Stylised UI skins: borders that change the look of every menu and box (beyond today's themes) | 40-80 tiers | yes (frames) | idea |
