@@ -36,7 +36,7 @@ routine (10 chores, the gym with a photo and a Training session on weekdays) rea
 | Level up | 50 + 5 x level, paid once per level (`ECON.lvPay`) |
 | Businesses | each day at most a share of the day's quest coins: 20% with a bare town, up to 50% with every upgrade of every room a player can open, +1% a VIT point (10% at most), times the town's efficiency (0 to 150%). The rest waits in the room |
 | Dungeon Crawls, 5 a day | a random haul by how deep the dungeon is, and now and then a rare find: see below |
-| Wheel (level 6+) | about 230 a day |
+| Wheel (level 6+) | one spin a day: 300 to 5,000 coins, about 835 on average (was about 230), a streak freeze, or 2 times in 25 a piece of clothing the player does not own from any brand, dropped or not (1,000 coins once they own them all). `WHEEL` in `10_app_a.js` (Cal, 2026-11-10) |
 | Trophies | 250 each |
 | Weekly workout bonus | at least 250 XP and 3,000 coins (Cal) |
 | Training | 300 coins a full session (a plan of your own done in full counts as full) |
