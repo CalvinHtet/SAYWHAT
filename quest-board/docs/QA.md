@@ -29,6 +29,220 @@ The copies of `rigtest/browser/*.js` in the worktree also run against 8769: `sav
 What the pictures cannot show: people (the room pictures leave them out, so the dogs and guests are checked separately),
 motion, and a real phone.
 
+## Performance stress test (W1, Cal 2026-11-10: "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?"; on 213ea0f)
+
+The ranked list with fixes and expected gains is in `docs/qa-2026-11-10/PERF.md`. This section is the method and every number.
+Measure only: nothing in the game was changed.
+
+### Setup
+- Build: a clean detached worktree of qa-local 213ea0f outside the repo, `tools/windows/build_web.sh quest-board sandbox`
+  (dist-web 90 MB, app.js 1,459 KB). Port 8769 is held by Windows (PID 4, http.sys) on this laptop, so QA serves on 8810 with
+  `rigtest/qa/qserve.js`. It mimics Firebase Hosting: the Cache-Control headers from firebase.json (fingerprinted files immutable,
+  the page and sw.js no-cache) and brotli for text files. Many requests are served at once, unlike `serve.pl`.
+- Browser: headless Chrome 157 on its own port (9370), driven over CDP by `rigtest/qa/cdp.js`. Phone emulation is 390x844 at
+  DPR 3 with an iPhone user agent and touch. CPU throttling is 4x. The DevTools network presets: Fast 4G (9 Mbps x0.9, 165 ms) and
+  Slow 4G (1.6 Mbps x0.9, 562 ms). Every timing was run 3 times; the tables show medians.
+- Saves (`rigtest/qa/mkseed.js`, stored as the whole localStorage and written into a fresh profile before the first load):
+  - **new**: no save (the creator opens).
+  - **advanced**: the Test pill's Unlock everything, then every room with every upgrade (`__qbRooms.all`). 21 rooms, 381
+    upgrades, level 60, every tab open.
+  - **heavy** (`rigtest/qa/heavy.js`): advanced plus 240 quests over every cluster (80 done today), 40 custom workouts, every gym
+    exercise logged 12 times, and 60 sessions. In the sandbox database: 60 neighbours' worlds, 60 town board docs of 30 posts
+    (1,800 posts), 300 chat docs of 10 lines in each room (9,000 lines), 300 likes docs, 200 pings and 20 kind words.
+- Cold means a fresh profile (empty cache, no service worker). Warm means the app opened again later: a new tab in the same
+  profile, with the disk cache, the service worker copy and the save kept.
+  - The sandbox build never registers sw.js, because web.js returns before the registration when `QB_WEB.sandbox` is set.
+    For warm runs QA registered it by hand, then opened the app a second time so the worker copied every file. That is what a
+    Live build does on its own.
+- Noise: BUILDER's headless Chrome (port 9360) and its server (8771) ran at the same time. Machine load was 25-98% across the
+  runs, and it is logged per step in the run logs. In batch 1, some QA profiling runs overlapped the advanced tab tour, so that
+  tour was run again clean (batch 2). The clean numbers are below.
+- What headless cannot show: WebGL runs on SwiftShader (software GL), so the rig's texture uploads and pixel reads cost more
+  here than on a phone GPU. Treat the rig numbers as upper bounds. Not measured: a real iPhone (Safari/WebKit), real Firestore,
+  sign-in, two players, iOS memory limits.
+
+### Scripts (all in `rigtest/qa/`, run with `bash tools/windows/node.sh <script>`)
+| Script | What |
+|---|---|
+| `qserve.js <root> <port>` | static server like Firebase Hosting (headers, br/gzip) |
+| `cdp.js` | the CDP library (QA's own Chrome on CHROME_PORT, default 9370; fresh browser contexts) |
+| `mkseed.js` (KIND=adv\|heavy) + `heavy.js` | the saves above |
+| `perfload.js` | load timing: NET, MODE=cold\|warm\|both, RUNS, SEED, TRACE/TRACE_WARM, STUBBLOBS (the blobs.js what-if) |
+| `traceparse.js <trace>` | main-thread time by kind, per script file (parse, compile, evaluate), the longest tasks |
+| `cpuprof.js` (WHAT=load\|warmload\|tab:<view>) | V8 sampling profile: self and total time per function |
+| `perfrun.js` (PHASE=tabs\|hidden\|soak\|scroll\|tap) | per-screen runtime; NOEMBERS=1 stops only the embers loop, NOFX=1 sets reduced motion |
+| `rtsum.js <files>` | medians across runs |
+| `rigprobe.js`, `renderprobe.js` | character frames rendered per 10 s; full-screen rebuilds per screen |
+| `blobstat.js <dist-web>` | what blobs.js holds, by room |
+
+### Load (CPU 4x; medians of 3; times in ms from the tap on the link)
+"First screen" is the Board drawn (its nav button on), or the creator for a new player. "Responds" is the end of the last long
+task before 5 s with none (the TTI idea, without its network rule). TBT counts from first contentful paint to "responds".
+
+| Run | Requests | On the wire | FCP | Scripts ready | First screen | Responds | Long tasks (n / total / worst) | TBT | JS heap |
+|---|---|---|---|---|---|---|---|---|---|
+| Fast 4G, new, cold | 88 | 11.05 MB | 732 | 12,716 | 12,715 (creator) | 12,887 | 4 / 444 / 225 | 244 | 38 MB |
+| Fast 4G, new, warm | 88 (13 from the worker) | 0 | 480 | 1,243 | 1,203 | 1,384 | 6 / 692 / 250 | 397 | 38 MB |
+| Slow 4G, new, cold | 88 | 11.05 MB | 1,484 | 66,560 | 66,559 | 66,573 | 4 / 359 / 117 | 159 | 37 MB |
+| Slow 4G, new, warm | 88 | 0 | 976 | 1,471 | 1,442 | 1,562 | 4 / 425 / 174 | 225 | 38 MB |
+| Fast 4G, advanced, cold | 122 | 11.64 MB | 640 | 12,791 | 12,778 | 16,763 | 24 / 2,212 / 407 | 964 | 60 MB |
+| Fast 4G, advanced, warm | 122 (30 from the worker) | 0 | 524 | 1,632 | 1,574 | 7,631 | 44 / 4,625 / 637 | 2,376 | 51 MB |
+| Slow 4G, advanced*, cold | 122 | 11.64 MB | 1,520 | 66,911 | 66,895 | 75,947 | 28 / 2,866 / 529 | 1,466 | 58 MB |
+| Slow 4G, advanced*, warm | 122 | 0 | 1,000 | 1,864 | 1,814 | 9,074 | 44 / 5,310 / 514 | 3,110 | 63 MB |
+| Fast 4G, heavy, cold | 130 | 11.66 MB | 676 | 13,385 | 13,353 | 21,705 | 35 / 3,752 / 967 | 2,002 | 77 MB |
+| Fast 4G, heavy, warm | 130 (31 from the worker) | 0 | 444 | 1,808 | 1,748 | 26,728 | 84 / 11,370 / 927 | 7,163 | 46 MB |
+| **What-if: blobs.js empty**, Fast 4G, advanced, cold | 53 | 1.48 MB | 688 | 2,130 | **2,116** | 5,940 | 28 / 2,313 / 386 | 1,039 | 33 MB |
+| **What-if: blobs.js empty**, Slow 4G, advanced, cold | 53 | 1.48 MB | 1,544 | 7,220 | **7,197** | 15,246 | 28 / 2,935 / 611 | 1,535 | 20 MB |
+
+\* The first Slow 4G advanced runs used the first advanced save (lib.js style: every room bought, tabs not yet opened). Every
+other advanced row uses the Unlock-everything save.
+- One heavy warm run never went quiet: 751 long tasks in 4 minutes. The other two reached "responds" at 10.0 s and 26.7 s.
+- What-if: QA answered `blobs.js` with `window.__B=[]` (CDP Fetch), as if the pictures were off the critical path. The rooms
+  draw without art in that case, so it is a lower bound for "first screen". A real fix still fetches the few pictures the Board
+  itself shows.
+
+What is on the wire (dist-web, raw / brotli as served): blobs.js 14,411 / 10,408 KB; app.js 1,426 / 440 KB;
+firebase-firestore-compat 556 / 158; firebase-auth-compat 137 / 37; firebase-app-compat 31 / 10; qbdata.js 194 / 50; index.html
+168 / 44; rig.js 45 / 14; the rest about 40 KB raw. The critical path is 16.6 MB raw and 10.9 MB brotli, plus the outfit pictures
+(art/*.webp) the first screen asks for. `lfvar.json` (3,746 KB) is in dist-web but never loaded: `LFVAR_URL` is not set in a web
+build.
+
+blobs.js (`blobstat.js`) is `window.__B`: 675 pictures as base64 data URLs (657 webp, 18 jpeg), 14.07 MB as text and 10.54 MB as
+pictures, every one referenced from app.js (`LFSPR` and friends). The biggest groups are the wardrobe layers `w_` (89, 1.71 MB),
+buildings `bld` (22, 0.89 MB), `n` (48, 0.53 MB), the old pixel bodies `m`/`f` (0.85 MB), the bedrooms `bd`/`bd4` (0.98 MB), and
+every room's furniture set (0.1-0.5 MB each). The largest single picture is `shl_floor` at 299 KB. The Board needs almost none of
+them. index.html loads every script with `async=false`, so app.js does not run until blobs.js has arrived.
+
+Main thread during the load (Chrome trace, Fast 4G, advanced, `traceparse.js`):
+- Cold, after the scripts arrive: paint and composite 2.6 s, script 2.6 s (1.9 s of it microtasks: the rig's frame jobs), image
+  decode 1.2 s, style and layout 1.0 s.
+- Background-thread parsing: blobs.js 11.5 s, which is streamed while it downloads and so is not the main thread's cost;
+  app.js 0.9 s; firestore 0.6 s; qbdata 0.3 s.
+- Evaluate on the main thread: app.js 470 ms, firebase-auth 80 ms, firestore 37 ms.
+- The first long task after the scripts (515 ms) is the first render: Layout 176 ms, microtasks 151 ms, app.js 56 ms.
+- Warm (with the worker): app.js evaluate 495 ms. blobs.js evaluate 161 ms plus 139 ms to produce its code cache, on the main
+  thread: a 14 MB script costs even when it comes from the cache. 63 tasks over 50 ms, 6.1 s in total, in the first 18 s.
+
+What runs after the Board is drawn (V8 profile, warm, heavy, from the tap to 10 s after the Board; `cpuprof.js WHAT=warmload`):
+7.3 s of 12.1 s busy.
+- The rig building outfits: rig.js 1.5 s self, mostly `bindLayer` (0.74 s with its `getImageData`), `partMap`, `spread`,
+  `texImage2D`.
+- Frame encoding in loft_bridge.js: the toBlob callback, 0.9 s.
+- `render()` 0.75 s total. Inside it, `fit()` takes 0.51 s self: it reads `#cap.scrollHeight` right after `#app.innerHTML`, so
+  every render forces a full layout.
+- The embers loop 0.53 s, `persist()` JSON 0.15 s, the old pixel-character images loading (`chLoad`) and then a full
+  `render()` 0.16 s, `dropCheck()` 0.09 s per render.
+- "(program)", which is mostly paint and composite, 2.8 s.
+- `rigprobe.js` on the heavy Board: 12 character frames are rendered in the first 10 s, then none. So nothing is re-rendering
+  in a loop on the Board.
+
+### Runtime per screen (advanced save, CPU 4x, medians of 3)
+Busy is the share of wall time the main thread worked (Performance.getMetrics TaskDuration), over 8 s with nothing touched,
+measured 2 s after opening the screen. Frames are from requestAnimationFrame over the next 6 s. "room:x" is that room's own window
+(roomModal), with every upgrade bought.
+
+| Screen | Open (ms) | Busy % | Style recalcs/s | fps | Frame p95 / worst (ms) | Frames > 50 ms | JS heap (MB) | DOM nodes |
+|---|---|---|---|---|---|---|---|---|
+| Board | 34 | 23.6 | 59.6 | 60 | 16.8 / 17 | 0 | 21.4 | 709 |
+| Training | 95 | 26.3 | 60 | 60 | 16.7 / 17 | 0 | 20.7 | 505 |
+| Shop | 198 | 24.8 | 60 | 60 | 16.8 / 17 | 0 | 20.3 | 878 |
+| Crawls | 119 | 24.7 | 59.5 | 60 | 16.8 / 17 | 0 | 20.6 | 493 |
+| Hall (Posts) | 111 | 21.7 | 59.4 | 60 | 16.8 / 17 | 0 | 20.3 | 473 |
+| Hall Chat | 44 | 21.8 | 60 | 60 | 16.7 / 17 | 0 | 20.4 | 415 |
+| Hall Rank/Style (first open) | 99 | 68.7 | 42.3 | 60 | 16.7 / 17 | 0 | 30.1 | 587 |
+| The Loft (building view) | 211 | 25.3 | 49.4 | 46.8 | 33.4 / 50 | 0 | 26.4 | 1394 |
+| Restaurant window | 316 | 35.3 | 60 | 59.7 | 16.8 / 33 | 0 | 26.3 | 2532 |
+| Mall window | 103 | 31.5 | 59.9 | 60 | 16.7 / 17 | 0 | 26.6 | 1643 |
+| Relics | 64 | 22.8 | 59.9 | 60 | 16.7 / 17 | 0 | 26.7 | 490 |
+| Wheel | 35 | 20.3 | 60 | 60 | 16.7 / 17 | 0 | 26.7 | 469 |
+| Board, after the tour | 68 | 21.4 | 60 | 60 | 16.7 / 17 | 0 | 26.6 | 520 |
+
+Heavy save (clean runs):
+
+| Screen | Open (ms) | Busy % | Style recalcs/s | fps | Frame p95 / worst (ms) | Frames > 50 ms | JS heap (MB) | DOM nodes |
+|---|---|---|---|---|---|---|---|---|
+| Board | 195 | 38.7 | 59.1 | 60 | 16.8 / 17 | 0 | 30.3 | 4467 |
+| Training | 198 | 24.9 | 59.3 | 60 | 16.7 / 17 | 0 | 25.2 | 1086 |
+| Shop | 226 | 24.1 | 60 | 60 | 16.7 / 17 | 0 | 25 | 1645 |
+| Crawls | 123 | 26.3 | 58.6 | 60 | 16.7 / 17 | 0 | 26 | 548 |
+| Hall (Posts) | 304 | 34.6 | 58.2 | 59.2 | 16.8 / 50 | 1 | 28.1 | 1183 |
+| Hall Chat | 102 | 23.6 | 60 | 59.5 | 16.7 / 33 | 0 | 26.9 | 765 |
+| Hall Rank/Style (first open) | 154 | 99.2 | 16.4 | 34.7 | 83.3 / 200 | 24 | 50.3 | 1033 |
+| The Loft (building view) | 256 | 41.6 | 39.8 | 40 | 33.4 / 50 | 1 | 67.5 | 1572 |
+| Restaurant window | 485 | 44.7 | 56.2 | 53.5 | 33.3 / 83 | 2 | 41.4 | 2642 |
+| Mall window | 130 | 39.7 | 53.1 | 58.3 | 16.8 / 33 | 0 | 41.4 | 1753 |
+| Relics | 108 | 22.1 | 59.3 | 60 | 16.8 / 17 | 0 | 41.3 | 600 |
+| Wheel | 94 | 22.3 | 60 | 60 | 16.8 / 17 | 0 | 41.2 | 579 |
+| Board, after the tour | 305 | 37.2 | 59.2 | 59.7 | 16.7 / 33 | 0 | 37.1 | 4729 |
+
+How much the numbers move with the machine: the first advanced tour ran while QA's own profiling and BUILDER's runs loaded the
+laptop. The Board read 53% busy and the Restaurant window 18 fps (worst frame 433 ms), against 24% and 60 fps clean. The CPU
+slowdown stacks on top of whatever else runs. So treat a single busy% as ±10 points, and trust the A/B tests below, which switch
+one thing at a time inside one page within a minute.
+
+### Level effects (the body `fx-*` classes and the embers), A/B on the Board
+At level 60 every effect in `FX` (10_app_a.js:47) is on: 19 body classes plus the embers canvas (level 10). `perfrun.js PHASE=fxab`
+switches them inside one page: all on, the classes off, the embers stopped (its frame callback dropped), both off, then each class
+alone, 5 s idle each. Medians of 3 runs:
+
+| Effects on | Busy % advanced | Style recalcs/s | Busy % heavy | Style recalcs/s |
+|---|---|---|---|---|
+| all 19 classes + embers | 23.9 | 58 | 44.3 | 56 |
+| embers only | 17.5 | 0 | 17.6 | 0 |
+| classes only (embers stopped) | 25.1 | 60 | 41.3 | 56 |
+| **none** | **1.8** | 0 | **7.7** | 0 |
+| only fx-aurora (level 12) | **22.4** | 60 | **34.3** | 60 |
+| only fx-pulse | 4.3 | 6 | 11.5 | 6 |
+| only fx-orbs | 3.9 | 6 | 13.1 | 6 |
+| only fx-halo | 2.5 | 0 | 12.5 | 0 |
+| each of the other 15 | 1.5-2.3 | 0 | 5.3-9.9 | 0 |
+
+- **Aurora** (`body.fx-aurora .wrap::before`, level 12): a 240 px tall blurred band with `animation: hue 14s` whose keyframes
+  animate `filter: blur(80px) hue-rotate(360deg)`. A filter animation re-runs style every frame (60 recalcs a second) and
+  re-blurs the band every frame, on every screen.
+- **Embers** (`embers()`, 30_app_b.js:1136, level 10): a full-screen canvas redrawn every frame, and each frame calls
+  `getComputedStyle(document.documentElement).getPropertyValue("--accent")`, which forces a style recalc. With Aurora on, the
+  embers add little (the style is recalculated anyway). With Aurora fixed, the embers alone are 16 points.
+- On the Loft (advanced, 1 run): everything on 44.7% busy, everything off 7.2%.
+- Reduced motion (`NOFX=1`, which stops every CSS animation and the embers) gives the same picture: 2-7% busy on every screen,
+  60 fps.
+
+### Long screens, taps, leaks
+- Scrolling (heavy, a touch fling down and up, `PHASE=scroll`): 57-60 fps everywhere (Board 13,520 px tall with 4,467 nodes,
+  Training, Hall, Chat, Shop). The worst frame is 167 ms, once on the Board. Scrolling is not a problem.
+- Ticking a quest on the heavy Board (241 quests, `PHASE=tap`, 12 taps per run): from the tap to the next frame, medians
+  161, 81 and 161 ms (median 161 ms), worst 371 ms. Every tap rebuilds the whole Board (`render()` sets `#app.innerHTML`).
+  With the embers stopped, the same taps are 87, 97 and 91 ms (median 91 ms, worst 161 ms): the embers add about 70 ms to the frame after a tap on a big page.
+- Opening a screen on the heavy save: the Board 487-549 ms (advanced: 66-151 ms). In the 5-minute soak, every switch had a
+  median of 142-176 ms and a p95 of 357-562 ms.
+- 5-minute soak, switching screens every 3 s through all 8 tabs including the Loft (`PHASE=soak`; heap read after a forced GC):
+  - Advanced: heap 19.2 to 20.0 MB, DOM nodes 451 to 441, listeners 249 to 249, live intervals 25.
+  - Heavy: heap 20.2 to 22.9 MB (+2.4 MB in the first minute, then +0.3 MB over 4 minutes), nodes 4,470 to 4,458, listeners 249
+    to 269 (flat after the first minute), live intervals 25.
+  - **No leak** found. Per-avatar animation intervals (calHyd) are made and cleared as screens change.
+- Hidden (`PHASE=hidden`, advanced): Board 23.8% busy before the Loft was ever opened, 23.0% after leaving it. The Loft's loop
+  (lfLoop) stops when its screen is gone, and frame callbacks stop when the browser hides the page.
+  - Timers: 25 intervals are always live: 1 s (raid timer), 1.7 s (visit poses), 2 s (theme colours), 2.5 s (x2), 4 s (x2:
+    dqCheck, trialHonor), 5 s (missions), 15 s (x2), 20 s (x7), 30 s, 60 s (x4), 120 s and 600 s. About half skip work when
+    `document.hidden` (lfSync, socLoad, ifColors, drops, the Loft bubbles, the Crawls refresh). styCheck, dgRelicCheck, dqCheck,
+    trialHonor, fvCheck, alPaint, fshTick, missions and the 1 s and 1.7 s ones do not. They are cheap: with the embers stopped,
+    the Board idles at 2-8% busy.
+- Full rebuilds while idle (`renderprobe.js`, heavy): Board none in 45 s; Loft none in 45 s (it rebuilds only when a room's
+  pending coins change, at most every 20 s); Crawls every 30 s.
+
+### Verdict
+- Load: the 14 MB blobs.js decides the first open: 12.7-13.4 s on Fast 4G and 67 s on Slow 4G before anything but the loading
+  bar. Without it on the critical path: 2.1 s and 7.2 s (measured what-if). A returning player waits less for the first draw
+  (1.6 s) but gets slow taps for 7.6 s (advanced) to 27 s (heavy) while the rig rebuilds the outfit and the screen re-renders.
+- Idle: two level effects decide it. Aurora (level 12) costs 22 points of main thread on its own (34 on the heavy save), and the
+  embers (level 10) 16. Everything else together costs a few points. With both fixed, an idle screen goes from 24-44% busy
+  to about 2-8%.
+- First visits to screens with people: the Hall's Rank tab works the main thread at 68-99% for its first ~10 s while the rig
+  builds up to 10 outfits. The Loft and the room windows hold 40-60 fps on clean runs.
+- Big saves: each tap rebuilds the whole Board (91-161 ms per tick on 241 quests), and a heavy Board takes 0.2-0.5 s to open.
+- Fine: scrolling, memory over time (no leak), timers in the background, and stored Hall volume (the Hall draws at most 30 posts
+  and 60 chat lines a room).
+
 ## Every room against references (Cal, 2026-11-07: "check all the rooms and assets and make sure they all look nice and are positioned correctly. use references for everything"; v0.68 code, 428c8a5)
 
 How: every one of the 21 rooms fully bought in its window at 13:00 and 22:00 (`roomreview.js`, `allrooms.js`), the street and
