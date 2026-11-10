@@ -116,19 +116,27 @@ function dropStamp(){try{if(S.shopDay||!loaded||!S.created||!hasRoom("closet"))r
 /* the Shop at moment n, the same for every player: live (oldest first), retired (vault, oldest first) and the next drop. Before
    cal0 (a test clock) HANGANG is already there. */
 function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
-  var day=DROPS.cal0,m=dropCount(day,dropYmd(n)),seq=[],days=dropSlotDays(day,m+1);
-  for(var j=0;seq.length<m+2;j++){var id=dropOrderAt(j);if(id==null)break;seq.push(id)}
+  var day=DROPS.cal0,m=dropCount(day,dropYmd(n)),seq=[],days=dropSlotDays(day,m+3);
+  for(var j=0;seq.length<m+4;j++){var id=dropOrderAt(j);if(id==null)break;seq.push(id)}
   var seen={},live=[],vault=[];
-  for(var i=Math.min(m,seq.length-1);i>=0;i--){var id2=seq[i];if(seen[id2])continue;seen[id2]=1;(live.length<DROPS.live?live:vault).unshift(Object.assign({},byId[id2],{start:days[i]}))}
-  var nx=seq[m+1];
-  return {live:live,vault:vault,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
-/* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest (since its last day for sale or its last
-   Wednesday back). Worked out Wednesday by Wednesday from cal0, so every phone agrees. */
+  /* a retired brand's left: the day its latest stint ended (the drop DROPS.live slots after its own) */
+  for(var i=Math.min(m,seq.length-1);i>=0;i--){var id2=seq[i];if(seen[id2])continue;seen[id2]=1;
+    if(live.length<DROPS.live)live.unshift(Object.assign({},byId[id2],{start:days[i]}));else vault.unshift(Object.assign({},byId[id2],{start:days[i],left:days[i+DROPS.live]}))}
+  var nx=seq[m+1],soon=[m+1,m+2,m+3].filter(function(k){return seq[k]&&days[k]}).map(function(k){return {id:seq[k],start:days[k]}});
+  return {live:live,vault:vault,soon:soon,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
+/* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest, counted from the latest time it left (its
+   latest stint ended, or its last Wednesday back), the brands back the fewest times first, so all of them come back in turn. Never a brand that drops again within 5 days.
+   Worked out Wednesday by Wednesday from cal0, so every phone agrees (QA, rc-0.89: only 8 of 16 came back, OVERPASS 5 days after
+   leaving, SAYMORE back on a Wednesday and dropping that Friday). */
 dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0;if(k in DROPWED)return DROPWED[k];
-  var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
-  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="";
-    m.vault.forEach(function(b){var since=back[b.id]||b.start;if(!best||since<bs){best=b;bs=since}});
-    if(best)back[best.id]=w;if(x===x1)out=best}
+  var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},cnt={},out=null;x0+=(3-ymdWd(x0)+7)%7;
+  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="",bn=0;
+    var due={},pick=function(minOut){m.vault.forEach(function(b){if(due[b.id])return;var bk=back[b.id]?ymdAdd(back[b.id],1):"",since=bk>(b.left||b.start)?bk:(b.left||b.start),n=cnt[b.id]||0;
+        if(x-ymdN(since)<minOut)return;if(!best||n<bn||(n===bn&&since<bs)){best=b;bs=since;bn=n}})};
+    (m.soon||[]).forEach(function(q){if(ymdN(q.start)-x<=5)due[q.id]=1});
+    /* at least two weeks out of the Shop if any brand is; else the best there is */
+    pick(14);if(!best)pick(0);
+    if(best){back[best.id]=w;cnt[best.id]=(cnt[best.id]||0)+1}if(x===x1)out=best}
   return DROPWED[k]=out};
 /* Wednesday only: the vault brand, from 8 am Wednesday to 8 am Thursday Pacific */
 dropBack=function(n){var t=dropYmd(n);if(ymdWd(ymdN(t))!==3)return null;var b=dropPick(t);return b?Object.assign({},b,{back:1,backFrom:t,backUntil:ymdAdd(t,1)}):null};
