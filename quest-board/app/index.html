@@ -1405,6 +1405,26 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 /* WINDOWS (economy pass, 2026-11-09): the Daily Quest's chest tiers, filled once today's XP opens them */
 .dq-t{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:0 12px;white-space:nowrap;cursor:default}
 .dq-t.on{color:var(--accent-ink)}.dq-t b{font-size:13px}
+/* WINDOWS (Training, 2026-11-09): sets that hold their weight, superset cards, the end-of-session summary and its graph */
+.sb{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1.1}
+.sb b{font-size:15px}.sb small{font-size:10px;opacity:.75}.sb span{font-size:12px}
+.ssgrp{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:10px;border:1px solid var(--accent2);background:color-mix(in srgb,var(--accent2) 7%,transparent)}
+.ssgrp .ex{border-left:0}
+.ssh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cex.cpair{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
+.cstage-sm{display:flex;justify-content:center}.cstage-sm .xd{width:120px;height:120px}
+.wksum{text-align:left}.wksum .label{display:block;margin-top:12px}
+.wkchart{width:100%;height:auto;display:block;margin-top:6px;overflow:visible}
+.wkax{stroke:var(--line);stroke-width:1}
+.wkln{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.wkdot{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.wkhit{fill:transparent;cursor:pointer}
+.wkt{fill:var(--muted);font-size:9px;font-family:var(--font-mono)}
+.wkv{fill:var(--fg);font-size:11px;font-weight:700;font-family:var(--font-mono)}
+.wksrows{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.wksr{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line)}
+.wksr .mono{font-family:var(--font-mono)}
+.wkd{font-size:12px;color:var(--muted);min-width:64px;text-align:right}.wkd.up{color:var(--done)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

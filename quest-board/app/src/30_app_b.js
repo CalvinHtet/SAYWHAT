@@ -371,25 +371,53 @@ function exDemo(id,cls){var bd=exBody(),t=-(Date.now()%2800);
 /* exercise pictures travel in art_ex.js (a page holds at most 512 files); the plain file is the fallback */
 function exArt(n){return (window.QBART&&QBART[n])||"art/"+n}
 function exStill(id){return '<div class="xd still"><img src="'+exArt('ex_'+id+'_'+exBody()+'_b.webp')+'" alt=""></div>'}
-function exCard(id){
+/* ---------- sets that remember their weight (Cal, 2026-11-09) ----------
+   "I want the weight for each set in the training tab to be remembered for upcoming weeks ... not just a tap to turn the checkmark
+   green. But tapping would save the weight into that box for that set." A set now holds the weight it was done with (true for
+   bodyweight work), and the log keeps every set's weight (ws), so next time each box shows what that set was last time and the
+   weight box starts there. Tap a done set again to undo it. */
+function fmtW(w){return String(Math.round(w*10)/10)}
+function lastLog(id){var L=(S.gymlog&&S.gymlog[id])||[];return L[L.length-1]||null}
+function lastSetW(id,n){var l=lastLog(id);if(!l)return null;if(l.ws)return l.ws[n]>0?l.ws[n]:null;return l.w>0?l.w:null}
+/* the weight shown before the next set: what you typed, else last time's weight for that set, else the weight of the set before
+   it today, else the suggestion */
+function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.w[id]!=="")return wk.w[id];while(sets[n])n++;
+  var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
+function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
+  for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
+    h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+fmtW(v)+" pounds":", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
+      +(v?(wt?'<b>'+fmtW(v)+'</b><small>lb</small>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
+  return h+'</div>'}
+/* tap a set: save the weight in the box into it, or undo it. Returns true when the set was saved. */
+function wkSetTap(id,n,val){var wk=S.wk,E=EX[id];wk.sets[id]=wk.sets[id]||[];
+  if(wk.sets[id][n]){wk.sets[id][n]=null;return false}
+  var w=parseFloat(val);wk.sets[id][n]=E[4]&&w>0?w:true;delete wk.w[id];return true}
+/* Cal: "The supersets only show one workout per card. If it's a superset, show both workout cards on there." Exercises that are
+   done back to back (a superset or a support pair) are one step: one card in the list, one screen in the guided session. */
+function wkSteps(){var L=wkList(),R=(S.wk&&S.wk.roles)||{},out=[];
+  for(var i=0;i<L.length;i++){var r=R[L[i]]||"";if(/Superset|Support pair/.test(r)&&i+1<L.length&&R[L[i+1]]===r){out.push([L[i],L[i+1]]);i++}else out.push([L[i]])}return out}
+function wkStepOf(id){var s=wkSteps();for(var i=0;i<s.length;i++)if(s[i].indexOf(id)>=0)return i;return 0}
+function exCard(id,inPair){
   var E=EX[id],wk=S.wk,NS=(wk.setsN&&wk.setsN[id])||EX[id][2],sg=exSuggest(id),sets=(wk.sets[id]||[]),role=(wk.roles&&wk.roles[id])||"",nt=wk.notes&&wk.notes[id];
-  var val=wk.w[id]!=null&&wk.w[id]!==""?wk.w[id]:sg.w,done=sets.filter(Boolean).length>=NS;
-  var h='<div class="ex'+(done?" done":"")+(/Superset|Support pair/.test(role)?" ss":"")+'"><button class="exthumb" data-act="wkopen" data-i="'+wkList().indexOf(id)+'" aria-label="Show how to do '+esc(E[0])+'">'+exDemo(id)+'</button><div class="exbody">'
-   +(role?'<div class="exrole"><span class="label">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span></div>':'')
+  var done=sets.filter(Boolean).length>=NS;
+  var h='<div class="ex'+(done?" done":"")+'"><button class="exthumb" data-act="wkopen" data-i="'+wkStepOf(id)+'" aria-label="Show how to do '+esc(E[0])+'">'+exDemo(id)+'</button><div class="exbody">'
+   +(role&&!inPair?'<div class="exrole"><span class="label">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span></div>':'')
    +'<div class="exhead"><b>'+esc(E[0])+'</b><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span></div>';
   if(nt)h+='<div class="note">'+esc(nt)+'</div>';
   h+='<div class="note">'+esc(sg.line)+'</div><div class="exrow">';
-  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(val)+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds"><span>lb</span></label>';
-  h+='<div class="setb">';for(var i=0;i<NS;i++)h+='<button class="sb'+(sets[i]?" on":"")+'" data-act="wkset" data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!sets[i]+'">'+(sets[i]?"&#10003;":"Set "+(i+1))+'</button>';
-  h+='</div></div><button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div></div>';
+  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds for the next set"><span>lb</span></label>';
+  h+=setBoxes(id,'data-act="wkset"')+'</div><button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div></div>';
   return h;
 }
+function stepCard(st){if(st.length<2)return exCard(st[0]);var r=S.wk.roles[st[0]];
+  return '<div class="ssgrp"><div class="ssh"><span class="label">'+esc(r)+'</span><span class="note mono">'+esc(REST[r]||"")+'</span></div>'+st.map(function(id){return exCard(id,1)}).join("")+'</div>'}
 function trainHtml(){
-  var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus(),dp=DAYPLAN[new Date().getDay()];
+  var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
    +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize.</p></section>';
   if(!S.wk||!wkList().length){
-    h+='<section class="card panel"><h3 class="label">Pick today\'s workout</h3><p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan'+(p[0]===dp?" today":"")+'" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small>'+(p[0]===dp?'<span class="plantag">Scheduled today</span>':'')+'</button>'}).join("")+'</div></section>';
+    /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
+    h+='<section class="card panel"><h3 class="label">Pick today\'s workout</h3><p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div></section>';
     h+=coachRoster();
     var ss=(S.sessions||[]).slice(-5).reverse();
     if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x){var pl=planOf(x.plan);return '<div class="lrow"><span class="lv">'+esc(x.d.slice(5))+'</span><span>'+esc(pl?pl[1]:x.plan)+'</span><span class="mono note">'+x.n+' lifts</span></div>'}).join("")+'</div></section>';
@@ -399,37 +427,68 @@ function trainHtml(){
   }
   var pl=planOf(S.wk.plan);
   h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">'+esc(pl?pl[1]:"Workout")+' day &middot; ~'+(S.wk.min||estMin(wkList(),S.wk.roles||{},S.wk.setsN||{}))+' min</h3><button class="btn ghost" data-act="wkcancel">Change</button></div>'
-   +(S.wk.note?'<p class="note">'+esc(S.wk.note)+'</p>':'')+'<button class="btn big" data-act="wkcoach">Start guided session</button><div class="exlist">'+wkList().map(exCard).join("")+'</div>'
+   +(S.wk.note?'<p class="note">'+esc(S.wk.note)+'</p>':'')+'<p class="note">Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted.</p><button class="btn big" data-act="wkcoach">Start guided session</button><div class="exlist">'+wkSteps().map(stepCard).join("")+'</div>'
    +'<button class="btn big" data-act="wkdone">Finish workout</button><p class="note">Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo.</p></section>';
   return h;
 }
+/* ---------- the end of a session: what changed since last time, and the last 7 sessions of this day (Cal, 2026-11-09) ----------
+   "The end of the training session should show a summary or how much you've improved since the last workout with a graph that
+   shows your progression over the last 7 workouts of this day." A session's total is the weight of every set logged, added up
+   (reps are not logged); the graph is that total for the last 7 sessions of the same day (Push, Legs ...). */
+function wkSumChart(plan){
+  var L=(S.sessions||[]).filter(function(x){return x.plan===plan&&x.load>0}).slice(-7);
+  if(L.length<2)return '<p class="note">'+(L.length?'Your first '+esc((planOf(plan)||[0,"workout"])[1])+' day with weights. From the next one, this shows how your total moves.':'')+'</p>';
+  var W=300,H=128,pl=34,pr=14,pt=22,pb=22,mx=Math.max.apply(null,L.map(function(x){return x.load})),mn=Math.min.apply(null,L.map(function(x){return x.load}));
+  var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(L.length===1?.5:i/(L.length-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
+  var pts=L.map(function(x,i){return [X(i),Y(x.load)]}),last=pts[pts.length-1],lv=L[L.length-1].load;
+  var s='<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total weight across your sets, last '+L.length+' sessions: '+L.map(function(x){return x.d.slice(5)+' '+Math.round(x.load)+' pounds'}).join(", ")+'">'
+   +'<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" class="wkax"/>'
+   +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+Math.round(hi)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+Math.round(lo)+'</text>'
+   +'<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(" ")+'" class="wkln"/>'
+   +pts.map(function(p,i){return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" class="wkdot"/><title>'+L[i].d.slice(5)+': '+Math.round(L[i].load).toLocaleString()+' lb</title></g><text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt">'+L[i].d.slice(5)+'</text>'}).join("")
+   +'<text x="'+Math.min(W-pr,last[0]).toFixed(1)+'" y="'+(last[1]-9).toFixed(1)+'" text-anchor="end" class="wkv">'+Math.round(lv).toLocaleString()+' lb</text></svg>';
+  return s}
+function wkSummary(o,after){
+  var pl=planOf(o.plan),prev=(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0});prev=prev.length>1?prev[prev.length-2]:null;
+  var dl=prev?o.load-prev.load:null;
+  var rows=o.rows.map(function(r){var E=EX[r.id],ch=r.top>0&&r.prev>0?r.top-r.prev:null;
+    return '<div class="wksr"><b>'+esc(E[0])+'</b><span class="mono">'+(r.top>0?fmtW(r.top)+' lb':r.n+' sets')+'</span><span class="wkd'+(ch>0?' up':ch<0?' dn':'')+'">'+(ch==null?(r.top>0?(r.prev>0?'':'first time'):''):ch>0?'&#9650; +'+fmtW(ch)+' lb':ch<0?'&#9660; '+fmtW(ch)+' lb':'same')+'</span></div>'}).join("");
+  var m=modal('<div class="card box2 wksum"><span class="label">Workout complete</span><h2>'+esc(pl?pl[1]:"Workout")+' day</h2>'
+    +(o.load>0?'<p class="note">Total across your sets: <b class="mono">'+Math.round(o.load).toLocaleString()+' lb</b>'+(dl==null?'':dl>0?', <b class="wkd up">&#9650; '+Math.round(dl).toLocaleString()+' lb</b> more than your last '+esc(pl?pl[1]:"")+' day':dl<0?', '+Math.round(-dl).toLocaleString()+' lb less than your last '+esc(pl?pl[1]:"")+' day':', the same as last time')+'.</p>':'')
+    +(o.load>0?(function(){var k=Math.min(7,(S.sessions||[]).filter(function(x){return x.plan===o.plan&&x.load>0}).length);return (k>1?'<span class="label">Your last '+k+' '+esc(pl?pl[1]:"")+' days</span>':'')+wkSumChart(o.plan)})():'')
+    +'<span class="label">Top set, against last time</span><div class="wksrows">'+rows+'</div>'
+    +'<p class="note">+'+o.xp+' XP logged.</p><div class="row"><button class="btn" id="wksok">Done</button></div></div>');
+  var b=m&&m.querySelector("#wksok");if(b)b.onclick=function(){m.remove();if(after)after()}}
 function trainAct(a,b){
   if(a==="wkplan"){var bp=buildPlan(b.dataset.v);S.wk={coach:coachPick(),plan:b.dataset.v,list:bp.list,roles:bp.roles,notes:bp.notes||{},note:bp.note,setsN:bp.setsN,min:bp.min,sets:{},w:{},hit:{},t:today()};render();persist();window.scrollTo(0,0);setTimeout(function(){coachOpen(0)},60);return true}
   if(a==="wkcoach"){coachOpen(0);return true}
   if(a==="wkopen"){coachOpen(+b.dataset.i);return true}
   if(a==="wkcancel"){S.wk=null;render();persist();return true}
-  if(a==="wkset"){var id=b.dataset.ex,n=+b.dataset.n;S.wk.sets[id]=S.wk.sets[id]||[];S.wk.sets[id][n]=!S.wk.sets[id][n];
-    if(S.wk.sets[id][n]){var inp=document.querySelector('.kg[data-ex="'+id+'"]');if(inp&&inp.value!=="")S.wk.w[id]=parseFloat(inp.value)}render();persist();return true}
+  if(a==="wkset"){var id=b.dataset.ex,inp=document.querySelector('.kg[data-ex="'+id+'"]');wkSetTap(id,+b.dataset.n,inp?inp.value:"");render();persist();return true}
   if(a==="wkhit"){S.wk.hit[b.dataset.ex]=!S.wk.hit[b.dataset.ex];render();persist();return true}
   if(a==="wkdone"){
-    var done=0,full=0,t=today();if(!S.gymlog)S.gymlog={};
-    wkList().forEach(function(id){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],ns=(S.wk.sets[id]||[]).filter(Boolean).length;if(!ns)return;done++;if(ns>=NS)full++;
-      var inp=document.querySelector('.kg[data-ex="'+id+'"]'),w=inp&&inp.value!==""?parseFloat(inp.value):(S.wk.w[id]!=null&&S.wk.w[id]!==""?+S.wk.w[id]:0);
-      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:isNaN(w)?0:w,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:"lb"}]).slice(-12)});
+    var done=0,full=0,t=today(),load=0,rows=[],tops={};if(!S.gymlog)S.gymlog={};
+    wkList().forEach(function(id){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],st=(S.wk.sets[id]||[]),ns=st.filter(Boolean).length;if(!ns)return;done++;if(ns>=NS)full++;
+      var ws=[];for(var i=0;i<NS;i++)ws.push(typeof st[i]==="number"?st[i]:null);
+      var top=Math.max.apply(null,ws.map(function(x){return x||0})),pv=lastLog(id),prevTop=pv?(pv.ws?Math.max.apply(null,pv.ws.map(function(x){return x||0})):pv.w||0):0;
+      ws.forEach(function(x){if(x)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
+      S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:"lb"}]).slice(-12)});
     if(!done){pop("Tap the sets you finished first");return true}
-    S.sessions=(S.sessions||[]).concat([{d:t,plan:S.wk.plan,n:done}]).slice(-30);var cgm=coachGain(S.wk.coach,done,full);S.wk=null;
+    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load),top:tops}]).slice(-60);var cgm=coachGain(S.wk.coach,done,full);S.wk=null;
     var x=econTrainXp(done,full);
-    grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,S.sessions[S.sessions.length-1].plan);pop("Workout logged. +"+x+" XP");if(cgm)setTimeout(function(){pop(cgm)},2800);
+    grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,plan);if(cgm)setTimeout(function(){pop(cgm)},2800);
+    /* the summary first; the Workout quest's photo comes after it closes */
     var gq=S.quests.filter(function(q){return q.stat==="fitness"&&!S.done[q.id]&&/gym|workout|lift|train/i.test(q.name)})[0];
-    if(gq)setTimeout(function(){onTap(gq.id)},1200);
+    wkSummary({plan:plan,load:load,rows:rows,xp:x},gq?function(){onTap(gq.id)}:null);
     return true}
   return false;
 }
 
 /*COACH-BEGIN*/
 /* ---------- coaches ---------- */
+/* Cal, 2026-11-09: "Remove sergeant brick in the trainer. It's pointless." A save that had him gets another coach (coachById). */
+/* Cal, 2026-11-09: "Remove sergeant brick in the trainer. It's pointless." A save whose session had him gets another coach (coachById). */
 var COACHES=[
- {id:"brick",name:"Sgt. Brick",tag:"Drill sergeant",v:"drill",L:{sex:"m",skin:"#8d5a3b",hair:"#1a1426",hair_s:"buzz",eyes:"#2a2030",top:{s:"tank",c:"#4b5d3a"},bottom:{s:"cargo",c:"#3b4630"},shoes:{s:"boots",c:"#1e2029"},acc:["sunglasses"],accC:"#111"}},
  {id:"tam",name:"Coach Tam",tag:"Ex-track captain",v:"drill",L:{sex:"f",skin:"#c68a5e",hair:"#2a1a14",hair_s:"pony",eyes:"#2a2030",top:{s:"jacket",c:"#e0392c",c2:"#f6f6f8"},bottom:{s:"pants",c:"#1e2029"},shoes:{s:"sneakers",c:"#f6f6f8"},acc:["phones"],accC:"#f6f6f8"}},
  {id:"oru",name:"Master Oru",tag:"Calm sensei",v:"zen",L:{sex:"m",skin:"#e9b892",hair:"#d8d8e0",hair_s:"slick",eyes:"#2a2030",top:{s:"longsleeve",c:"#e8e4d8"},bottom:{s:"pants",c:"#2b2f4a"},shoes:{s:"sneakers",c:"#2b2f4a"},acc:[]}},
  {id:"lio",name:"Lio",tag:"Breathwork nerd",v:"zen",L:{sex:"f",skin:"#f2c9a0",hair:"#6b8f71",hair_s:"bob",eyes:"#2a2030",top:{s:"hoodie",c:"#9fc9b0"},bottom:{s:"pants",c:"#33404a"},shoes:{s:"sneakers",c:"#eef0f5"},acc:["glasses"],accC:"#22232e"}},
@@ -564,48 +623,53 @@ function coachSay(txt){
 function coachOpen(idx){
   if(!S.wk||!wkList().length)return;
   if(!S.wk.coach){S.wk.coach=coachPick();persist()}
-  CIDX=Math.max(0,Math.min(idx||0,wkList().length-1));
+  CIDX=Math.max(0,Math.min(idx||0,wkSteps().length-1));
   if(!CSCR){CSCR=document.createElement("div");CSCR.className="coachscr";document.getElementById("layer").appendChild(CSCR);
     CSCR.addEventListener("click",coachClick);CSCR.addEventListener("input",function(e){var t=e.target;if(t.classList&&t.classList.contains("ckg")){S.wk.w[t.dataset.ex]=t.value===""?"":parseFloat(t.value);persist()}});}
   coachDraw(true);
 }
-function coachDraw(newLine){
-  if(!CSCR)return;var list=wkList(),id=list[CIDX],E=EX[id],wk=S.wk,c=coachById(wk.coach),NS=(wk.setsN&&wk.setsN[id])||E[2],sets=wk.sets[id]||[],sg=exSuggest(id),role=(wk.roles&&wk.roles[id])||"",nt=wk.notes&&wk.notes[id];
-  var val=wk.w[id]!=null&&wk.w[id]!==""?wk.w[id]:sg.w,ndone=sets.filter(Boolean).length;
-  var h='<div class="cinner"><div class="ctop"><span class="label">'+esc(c.name)+' &middot; '+esc(c.tag)+'</span><span class="mono note">'+(CIDX+1)+'/'+list.length+'</span><button class="btn ghost csm" data-ca="full">See full workout</button><button class="btn ghost csm" data-ca="x" aria-label="Close">&times;</button></div>'
-   +'<div class="cbar">'+list.map(function(x,i){var d=((wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2]));return '<i class="'+(i===CIDX?"cur":d?"dn":"")+'"></i>'}).join("")+'</div>'
-   +coachFig(c,id)
-   +'<div class="cbub'+(coachArt(c)?' hasav':'')+'">'+(coachArt(c)?'<img class="cbav" src="'+coachArt(c)+'" alt="">':'')+'<b>'+esc(c.name)+'</b><span class="cbub-t"></span><button class="cmore" data-ca="more" aria-label="Another line">&#8635;</button></div>'
-   +'<div class="cex"><h2>'+esc(E[0])+'</h2>'+coachForm(id)+'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(role?'<span class="chip">'+esc(role)+'</span>':'')+'<span class="note mono">'+esc(REST[role]||"")+'</span></div>'
+/* one exercise on the coach screen; in a superset both stand on the same screen, each with its own demo, weight and sets */
+function coachExHtml(id,pair){
+  var E=EX[id],wk=S.wk,NS=(wk.setsN&&wk.setsN[id])||E[2],sg=exSuggest(id),role=(wk.roles&&wk.roles[id])||"",nt=wk.notes&&wk.notes[id];
+  return '<div class="cex'+(pair?' cpair':'')+'">'+(pair?'<div class="cstage cstage-sm">'+exDemo(id)+'</div>':'')+'<h2>'+esc(E[0])+'</h2>'+coachForm(id)
+   +'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(!pair&&role?'<span class="chip">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span>':'')+'</div>'
    +(nt?'<div class="note">'+esc(nt)+'</div>':'')+'<div class="note">'+esc(sg.line)+'</div>'
-   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(val)+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds"><span>lb</span></label>':'')
-   +'<div class="setb">'+(function(){var s="";for(var i=0;i<NS;i++)s+='<button class="sb'+(sets[i]?" on":"")+'" data-ca="set" data-n="'+i+'" aria-pressed="'+!!sets[i]+'">'+(sets[i]?"&#10003;":"Set "+(i+1))+'</button>';return s})()+'</div></div>'
-   +'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div>'
-   +'<div class="cnav"><button class="btn ghost" data-ca="prev"'+(CIDX?'':' disabled')+'>Back</button>'+(CIDX<list.length-1?'<button class="btn big" data-ca="next">Next exercise</button>':'<button class="btn big" data-ca="finish">Finish workout</button>')+'</div></div>';
+   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+' weight in pounds for the next set"><span>lb</span></label>':'')
+   +setBoxes(id,'data-ca="set"')+'</div>'
+   +'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button></div>'}
+function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
+function coachDraw(newLine){
+  if(!CSCR)return;var steps=wkSteps(),st=steps[CIDX],id=st[0],wk=S.wk,c=coachById(wk.coach),pair=st.length>1,role=(wk.roles&&wk.roles[id])||"";
+  var h='<div class="cinner"><div class="ctop"><span class="label">'+esc(c.name)+' &middot; '+esc(c.tag)+'</span><span class="mono note">'+(CIDX+1)+'/'+steps.length+'</span><button class="btn ghost csm" data-ca="full">See full workout</button><button class="btn ghost csm" data-ca="x" aria-label="Close">&times;</button></div>'
+   +'<div class="cbar">'+steps.map(function(x,i){return '<i class="'+(i===CIDX?"cur":stepDone(x)?"dn":"")+'"></i>'}).join("")+'</div>'
+   +(pair?'':coachFig(c,id))
+   +'<div class="cbub'+(coachArt(c)?' hasav':'')+'">'+(coachArt(c)?'<img class="cbav" src="'+coachArt(c)+'" alt="">':'')+'<b>'+esc(c.name)+'</b><span class="cbub-t"></span><button class="cmore" data-ca="more" aria-label="Another line">&#8635;</button></div>'
+   +(pair?'<div class="ssh"><span class="label">'+esc(role)+': both, back to back</span><span class="note mono">'+esc(REST[role]||"")+'</span></div>':'')
+   +st.map(function(x){return coachExHtml(x,pair)}).join("")
+   +'<div class="cnav"><button class="btn ghost" data-ca="prev"'+(CIDX?'':' disabled')+'>Back</button>'+(CIDX<steps.length-1?'<button class="btn big" data-ca="next">Next exercise</button>':'<button class="btn big" data-ca="finish">Finish workout</button>')+'</div></div>';
   CSCR.innerHTML=h;CSCR.scrollTop=0;
   if(newLine){if(!wk._ln)wk._ln={};if(!wk._ln[id]){wk._ln[id]=coachLine(c,id,"o");persist()}coachSay(wk._ln[id])}
 }
 function coachFull(){
   var list=wkList(),wk=S.wk,c=coachById(wk.coach);
   var h='<div class="cinner"><div class="ctop"><span class="label">Full workout &middot; '+esc(c.name)+'</span><button class="btn ghost csm" data-ca="back">Back to card</button></div><div class="lrows">'+list.map(function(x,i){var E=EX[x],NS=(wk.setsN&&wk.setsN[x])||E[2],n=(wk.sets[x]||[]).filter(Boolean).length,role=(wk.roles&&wk.roles[x])||"";
-    return '<button class="cfrow'+(n>=NS?" dn":"")+'" data-ca="go" data-i="'+i+'"><b>'+(i+1)+'. '+esc(E[0])+'</b><small>'+NS+' &times; '+esc(E[3])+(role?' &middot; '+esc(role):'')+'</small><span class="mono">'+n+'/'+NS+'</span></button>'}).join("")+'</div></div>';
+    return '<button class="cfrow'+(n>=NS?" dn":"")+'" data-ca="go" data-i="'+wkStepOf(x)+'"><b>'+(i+1)+'. '+esc(E[0])+'</b><small>'+NS+' &times; '+esc(E[3])+(role?' &middot; '+esc(role):'')+'</small><span class="mono">'+n+'/'+NS+'</span></button>'}).join("")+'</div></div>';
   CSCR.innerHTML=h;CSCR.scrollTop=0;
 }
 function coachClick(e){
-  var b=e.target.closest("[data-ca]");if(!b||!S.wk)return;var a=b.dataset.ca,list=wkList(),id=list[CIDX],c=coachById(S.wk.coach);
+  var b=e.target.closest("[data-ca]");if(!b||!S.wk)return;var a=b.dataset.ca,steps=wkSteps(),id=(steps[CIDX]||[])[0],c=coachById(S.wk.coach);
   if(a==="x"){coachClose();render();return}
   if(a==="full"){coachFull();return}
   if(a==="back"){coachDraw(false);var cl=S.wk._ln&&S.wk._ln[id];if(cl)coachSay(cl);return}
   if(a==="go"){CIDX=+b.dataset.i;coachDraw(true);return}
   if(a==="prev"){CIDX=Math.max(0,CIDX-1);coachDraw(true);return}
-  if(a==="next"){CIDX=Math.min(list.length-1,CIDX+1);coachDraw(true);return}
+  if(a==="next"){CIDX=Math.min(steps.length-1,CIDX+1);coachDraw(true);return}
   if(a==="more"){var l=coachLine(c,id,"o");S.wk._ln[id]=l;persist();coachSay(l);return}
-  if(a==="hit"){S.wk.hit[id]=!S.wk.hit[id];persist();coachDraw(false);coachSay((S.wk._ln&&S.wk._ln[id])||"");return}
-  if(a==="set"){var n=+b.dataset.n;S.wk.sets[id]=S.wk.sets[id]||[];S.wk.sets[id][n]=!S.wk.sets[id][n];
-    var inp=CSCR.querySelector(".ckg");if(S.wk.sets[id][n]&&inp&&inp.value!=="")S.wk.w[id]=parseFloat(inp.value);
-    var NS=(S.wk.setsN&&S.wk.setsN[id])||EX[id][2],dn=S.wk.sets[id].filter(Boolean).length;persist();
-    coachDraw(false);
-    if(S.wk.sets[id][n]){var kind=dn>=NS?(CIDX<list.length-1?"s":"s"):"r";var ln=dn>=NS?coachLine(c,id,"s"):coachLine(c,id,"r");S.wk._ln[id]=ln;coachSay(ln)}
+  if(a==="hit"){var hx=b.dataset.ex||id;S.wk.hit[hx]=!S.wk.hit[hx];persist();coachDraw(false);coachSay((S.wk._ln&&S.wk._ln[id])||"");return}
+  if(a==="set"){var ex=b.dataset.ex||id,inp=CSCR.querySelector('.ckg[data-ex="'+ex+'"]'),saved=wkSetTap(ex,+b.dataset.n,inp?inp.value:"");
+    var NS=(S.wk.setsN&&S.wk.setsN[ex])||EX[ex][2],dn=S.wk.sets[ex].filter(Boolean).length;persist();
+    var sy=CSCR.scrollTop;coachDraw(false);CSCR.scrollTop=sy;
+    if(saved){var ln=dn>=NS?coachLine(c,ex,"s"):coachLine(c,ex,"r");S.wk._ln[id]=ln;coachSay(ln)}
     else coachSay(S.wk._ln[id]||"");
     return}
   if(a==="finish"){var fl=coachLine(c,id,"f");coachClose();render();trainAct("wkdone",b);setTimeout(function(){pop(c.name+": "+fl)},900);return}
@@ -921,7 +985,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=86, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=87, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1128,7 +1192,7 @@ function boardHtml(){
     h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
      +'<p class="note">Your XP bar is full at level '+(g-1)+'. Pass now with a fresh photo of you being active (a workout, a run, a walk, a hike, a game, a class), or on honor by being active (50+ XP) on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b> so far.</p>'
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
-     +'<ul><li>Live camera only, and the photo must be from the last 20 minutes</li><li>Screenshots and old photos fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
+     +'<ul><li>A photo of you being active: the gym, a run, a class, a home workout</li><li>Screenshots and photos you already used fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
      +'<input class="vh" type="file" id="ph1" accept="image/jpeg" capture="environment" aria-label="Take a workout photo">'
      +(gateLines.length?'<div class="proof">'+gateLines.map(function(l){return '<div class="'+l.k+'"><span>'+(l.k==="ok"?"&#10003;":l.k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(l.t)+'</span></div>'}).join("")+'</div>':'')
@@ -1486,13 +1550,10 @@ async function handlePhoto(file){
   else{
     var dt=null;
     if(ex.dt){var m=ex.dt.match(/^(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/);if(m)dt=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6])}
-    if(!dt){gl("bad","No camera timestamp found. Screenshots and edited photos cannot pass. Take a new photo.");ok=false}
-    else{
-      var mins=(Date.now()-dt.getTime())/60000;
-      if(mins<-3){gl("bad","The photo's timestamp is in the future. Check your phone clock.");ok=false}
-      else if(mins>20){gl("bad","This photo is "+Math.round(mins)+" minutes old. It has to be from the last 20.");ok=false}
-      else gl("ok","Taken "+(mins<1?"just now":Math.round(mins)+" min ago"));
-    }
+    /* Cal, 2026-11-09: "Class advancement photo verification needs time stamp. Remove this because I wasn't able to finish the
+       quest." Phones often strip the camera time from a picked photo, so the time only shows when it is there; it never fails
+       the trial. The used-photo check and the scene check below still apply. */
+    if(dt){var mins=(Date.now()-dt.getTime())/60000;if(mins>=-3)gl("ok","Taken "+(mins<1?"just now":mins<120?Math.round(mins)+" min ago":"earlier"))}
     if(ex.lat!=null){
       if(S.gym){var ft=feetBetween(S.gym.lat,S.gym.lon,ex.lat,ex.lon);near=ft<=1000;
         gl(near?"ok":"info",near?"Location matches your gym ("+Math.round(ft)+" ft away)":"Not at your saved gym ("+(ft>5280?(ft/5280).toFixed(1)+" mi":Math.round(ft)+" ft")+" away)")}
@@ -1504,9 +1565,11 @@ async function handlePhoto(file){
     gl("info","Checking the photo");
     try{
       var sample=window.claude?await window.claude.use("sample"):null;
+      /* the same sandbox stand-in as the quest proofs (proofCheck): any photo that is not nearly black passes, never in a web or Live build */
+      if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,3000)});var lum=await sbLum(file);vis={active_setting:lum>35,setting:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
       var lim=sample?await sample.limits().catch(function(){return null}):null;
       if(sample&&lim&&lim.images){vis=await sample.json(VISION,{images:file,modelTier:"quick",cache:false})}
-      else visUnavail=true;
+      else if(!vis)visUnavail=true;
     }catch(e){visUnavail=true}
     if(vis){
       if(vis.screen){gl("bad","That looks like a screenshot or a screen. Take a real photo.");ok=false}

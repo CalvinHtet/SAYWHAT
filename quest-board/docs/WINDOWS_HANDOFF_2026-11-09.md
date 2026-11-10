@@ -54,8 +54,10 @@ travel as a git bundle zip that Cal emails to his Mac (see "Shipping" below).
    from that day, same order for everyone); (b) Upgrades and Interface move out of the Shop into "The System", a toggle
    next to "The Shop" title that appears once the Hero's Lair is built; (c) no Wardrobe tab: a Wardrobe button next to the
    character on the clothing tabs. Files: 15_shop.js, 29l_drops.js, 27_rooms.js, index.html.
-3. **Training** (not started). Cal: "I would like the option to edit the workouts to whatever we want. And get rid of
-   seargent brick." Edit any plan (remove/add/reorder exercises, sets and reps), make a custom named workout with free-text
+3. **Training** (partly done, v0.87). Done: Sgt. Brick removed; each set keeps the weight it was done with and shows last
+   time's weight per set; supersets are one card and one guided screen; a summary after Finish with the last 7 sessions of
+   that day; no "Scheduled today" border (Cal, 2026-11-09). Still to do: Cal: "I would like the option to edit the workouts to
+   whatever we want. And get rid of seargent brick." Edit any plan (remove/add/reorder exercises, sets and reps), make a custom named workout with free-text
    exercises, reset to default; remove COACHES id "brick" (30_app_b.js, ~line 431) with saves on "brick" falling back to
    another coach. Keep econTrainXp / econTrained rewards working.
 
