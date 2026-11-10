@@ -414,7 +414,8 @@ function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
     h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+wU(v,exU(id)):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
-      +(v?(wt?'<b>'+fmtW(v)+'<small> '+uLbl(exU(id))+'</small></b>':'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+fmtW(lw)+'</small>':''))+'</button>'}
+      /* QA (rc-0.89): four done sets at a weight like 102.5 wrapped 3 + 1, so a long weight puts its unit on a line of its own */
+      +(v?(wt?(fmtW(v).length>=5?'<b>'+fmtW(v)+'</b><small>'+uLbl(exU(id))+'</small>':'<b>'+fmtW(v)+'<small> '+uLbl(exU(id))+'</small></b>'):'&#10003;'):'<span>Set '+(i+1)+'</span>'+(lw!=null?'<small>last '+wU(lw,exU(id))+'</small>':''))+'</button>'}
   return h+'</div>'}
 /* tap a set: save the weight in the box into it, or undo it. Returns true when the set was saved. */
 function wkSetTap(id,n,val){var wk=S.wk,E=EX[id];wk.sets[id]=wk.sets[id]||[];
@@ -525,15 +526,17 @@ function fmtL(v,u){return u==="lb"?Math.round(v).toLocaleString():fmtW(v)}
 function wkChart(L,u,lab,ring,what){
   var W=300,H=128,pl=34,pr=14,pt=22,pb=22,n=L.length,vs=L.map(function(x){return x.v}),mx=Math.max.apply(null,vs),mn=Math.min.apply(null,vs);
   var span=Math.max(1,mx-mn),lo=Math.max(0,mn-span*.25),hi=mx+span*.15,X=function(i){return pl+(W-pl-pr)*(n===1?.5:i/(n-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo))};
-  var pts=L.map(function(x,i){return [X(i),Y(x.v)]}),every=Math.ceil(n/8),r=n>14?3:4.5,hr=Math.min(11,(W-pl-pr)/Math.max(1,n-1)/2+2),lp=pts[lab]||pts[n-1],lx=lp[0],
+  var pts=L.map(function(x,i){return [X(i),Y(x.v)]}),every=Math.ceil(n/8),r=n>14?3:4.5,hr=Math.min(11,(W-pl-pr)/Math.max(1,n-1)/2+2),li=pts[lab]?lab:n-1,lp=pts[li],lx=lp[0],rp=ring>=0?pts[ring]:null,
     anchor=lx>W*.7?"end":lx<W*.3?"start":"middle";
   return '<svg class="wkchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(what)+': '+L.map(function(x){return mmdd(x.d)+' '+fmtL(x.v,u)+' '+uLbl(u)}).join(", ")+'">'
    +'<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" class="wkax"/>'
    +'<text x="'+(pl-6)+'" y="'+(Y(hi)+4)+'" text-anchor="end" class="wkt">'+fmtL(hi,u)+'</text><text x="'+(pl-6)+'" y="'+(H-pb)+'" text-anchor="end" class="wkt">'+fmtL(lo,u)+'</text>'
    +'<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(" ")+'" class="wkln"/>'
    +pts.map(function(p,i){var on=i===ring;return '<g class="wkpt"><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+hr.toFixed(1)+'" class="wkhit"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(on?6:r)+'" class="wkdot'+(on?' on':'')+'"/><title>'+mmdd(L[i].d)+': '+fmtL(L[i].v,u)+' '+uLbl(u)+'</title></g>'
-     +((n-1-i)%every===0||on?'<text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt'+(on?' on':'')+'">'+mmdd(L[i].d)+'</text>':'')}).join("")
-   +'<text x="'+lx.toFixed(1)+'" y="'+(lp[1]-9).toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u)+'</text></svg>'}
+     /* QA (rc-0.89): a date next to the ringed one gave way to it, so the two never overlap */
+     +(on||((n-1-i)%every===0&&!(rp&&Math.abs(p[0]-rp[0])<30))?'<text x="'+p[0].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" class="wkt'+(on?' on':'')+'">'+mmdd(L[i].d)+'</text>':'')}).join("")
+   /* the value sits above the line around its point, with a dark edge, so the line never runs through it */
+   +'<text x="'+lx.toFixed(1)+'" y="'+Math.max(10,Math.min(lp[1],(pts[li-1]||lp)[1],(pts[li+1]||lp)[1])-9).toFixed(1)+'" text-anchor="'+anchor+'" class="wkv">'+fmtL(L[lab]?L[lab].v:L[n-1].v,u)+' '+uLbl(u)+'</text></svg>'}
 /* every Training graph has a range (Cal, 2026-11-10: "40 sessions for gym graph is too much. Have the option to toggle graphs between
    last 7 days, and last month, last 3 months, and last 6 months"): 1 month by default, kept for the session. 7 days and 1 month plot
    each session, 3 and 6 months one point a week (that week's best). [key, button, days, by week, "in ..."] */
@@ -576,6 +579,8 @@ function wkSummary(o,after){var u=o.u||"lb";
 /* a recent session tapped: every logged session of that day (Push, Legs ... up to 12 around it), the one tapped ringed, and its
    top sets */
 function wkSessInfo(i){var x=(S.sessions||[])[i];if(!x)return;var pl=planOf(x.plan),nm=pl?pl[1]:x.plan,u=x.u||"lb",c=/^c_/.test(x.plan);
+  /* a session older than the range on screen opens on the smallest range that holds it, ringed (QA, rc-0.89) */
+  var age=wkDayN(today())-wkDayN(x.d);if(age>=wkRg()[2]){var R=WKRANGES.filter(function(r){return age<r[2]})[0]||WKRANGES[WKRANGES.length-1];WKRG=R[0];try{sessionStorage.setItem("qbWkRange",WKRG)}catch(e){}}
   var all=(S.sessions||[]).filter(function(s){return s.plan===x.plan&&s.load>0}),ch="";
   if(x.load>0&&all.length>1)ch='<span class="label">Your '+esc(nm)+' days</span>'+wkGraph("plan",x.plan,u,x.d,"Total across your sets, "+nm+" days");
   var tops=Object.keys(x.top||{}).filter(function(id){return EX[id]&&x.top[id]>0}).map(function(id){return '<div class="wksr"><b>'+esc(EX[id][0])+'</b><span class="mono">'+esc(wU(x.top[id],exU(id)))+'</span><span></span></div>'}).join("");
