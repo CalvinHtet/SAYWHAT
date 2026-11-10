@@ -1271,6 +1271,11 @@ var LFPZ={};
  +".scrBase{animation:scrBaseHide .05s forwards}@keyframes scrBaseHide{to{opacity:0}}"/* a screen's still picture, shown only when animations are off */
  +"svg .isonew[filter],svg .isonew[clip-path]{animation:none!important}"/* the soft-shadow layer changes with every piece; it is not the new piece */
  +"@media (prefers-reduced-motion:reduce){svg .isonew:not([filter]):not([clip-path]){animation:none!important;outline:2px solid #ffd36b}}";(document.head||document.documentElement).appendChild(st)})();
+/* Cal, 2026-11-09: "When zooming into any room on the room view, it lags heavily. if we cannot zoom in without lagging, please
+   remove the zoom option". Every zoom step redraws the whole room (sprites, shadows, light, walkers) at the new size, and the
+   CSS-transform shortcut below still stutters on his phone, so room windows do not zoom: no + and -, no pinch, no double tap.
+   The room shows whole at its fitted size and a frame too short for it still drags. Set LFRZOOM true to bring zoom back. */
+var LFRZOOM=false;
 function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.dataset.z)return;svg.dataset.z=1;wrap.classList.add("rbigz");
   /* Cal (playtest): "zooming in makes the game lag a lot. If there's no clean way to fix this, don't allow us to zoom in so the
      experience is seamless". Room windows no longer zoom: no + and - buttons, no wheel or pinch; the room always shows whole at its
@@ -1291,15 +1296,17 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
     var k=(svg.clientWidth||wrap.clientWidth)/v[2];svg.style.transformOrigin="0 0";svg.style.willChange="transform";
     svg.style.transform="translate("+((c[0]-v[0])*k).toFixed(2)+"px,"+((c[1]-v[1])*k).toFixed(2)+"px) scale("+(c[2]/v[2]).toFixed(4)+")";clearTimeout(T);T=setTimeout(commit,140)};
   var zoom=function(f,fx,fy,live){var w=Math.min(base[2],Math.max(base[2]/MAX,v[2]/f)),h=w*ar;v[0]+=(v[2]-w)*fx;v[1]+=(v[3]-h)*fy;v[2]=w;v[3]=h;show(live)};
-  var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML='<button type="button" class="lfzin" aria-label="Zoom in">+</button><button type="button" class="lfzout" aria-label="Zoom out">&minus;</button>';/* the controls sit in a row under the picture, not on it: on it they covered doorways (the Boba Shop's stairs) */
+  var ctl=document.createElement("div");ctl.className="lfctl lfpzc";ctl.innerHTML=LFRZOOM?'<button type="button" class="lfzin" aria-label="Zoom in">+</button><button type="button" class="lfzout" aria-label="Zoom out">&minus;</button>':'';/* the controls sit in a row under the picture, not on it: on it they covered doorways (the Boba Shop's stairs) */
   var old=wrap.nextElementSibling;if(old&&old.classList&&old.classList.contains("lfpzc"))old.remove();wrap.parentNode.insertBefore(ctl,wrap.nextSibling);
   ctl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;if(b.classList.contains("lfzin")){e.stopPropagation();zoom(1.6,.5,.5)}else if(b.classList.contains("lfzout")){e.stopPropagation();zoom(1/1.6,.5,.5)}});
   show();
   if(wrap.dataset.room!=null&&lfLightUseful()&&(bslot(+wrap.dataset.room)||{}).t==="bedroom"){var on=(bslot(+wrap.dataset.room)||{}).lit;ctl.insertAdjacentHTML("beforeend",'<button type="button" class="lflamp'+(on?" on":"")+'" data-act="lflight" data-i="'+wrap.dataset.room+'" aria-pressed="'+(on?"true":"false")+'" aria-label="Room light"><svg viewBox="0 0 24 24" width="20" height="20" fill="'+(on?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>')}
+  if(!ctl.children.length)ctl.remove();
   var at=function(e){var r=svg.getBoundingClientRect();return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
   var P={},pinch=0,R=null;
   svg.addEventListener("pointerdown",function(e){if(T)commit();P[e.pointerId]=[e.clientX,e.clientY];try{svg.setPointerCapture(e.pointerId)}catch(_){}pinch=0;R=svg.getBoundingClientRect()});
   svg.addEventListener("pointermove",function(e){var o=P[e.pointerId];if(!o)return;var ids=Object.keys(P),r=R||svg.getBoundingClientRect();
+    if(ids.length===2&&!LFRZOOM){pinch=1;return}
     if(ids.length===2){var q=P[ids[0]===String(e.pointerId)?ids[1]:ids[0]],d0=Math.hypot(o[0]-q[0],o[1]-q[1]);P[e.pointerId]=[e.clientX,e.clientY];
       var d1=Math.hypot(e.clientX-q[0],e.clientY-q[1]);pinch=1;if(d0>8&&d1>8)zoom(d1/d0,((e.clientX+q[0])/2-r.left)/r.width,((e.clientY+q[1])/2-r.top)/r.height,true);return}
     if(pinch)return;
@@ -1310,7 +1317,7 @@ function lfPrevAttach(wrap){var svg=wrap.querySelector("svg");if(!svg||svg.datas
   var tap=null;
   var up=function(e){var o=P[e.pointerId];delete P[e.pointerId];var left=Object.keys(P).length;if(!left){if(T)commit();
       /* a double tap: 2x in where tapped, or back out to the whole room */
-      if(!pinch&&o&&e.type==="pointerup"){var now=Date.now(),f=at(e);if(tap&&now-tap.t<320&&Math.abs(e.clientX-tap.x)<30&&Math.abs(e.clientY-tap.y)<30){tap=null;if(v[2]<base[2]-.01){v=v0.slice();show()}else zoom(2,f[0],f[1])}else tap={t:now,x:e.clientX,y:e.clientY}}
+      if(LFRZOOM&&!pinch&&o&&e.type==="pointerup"){var now=Date.now(),f=at(e);if(tap&&now-tap.t<320&&Math.abs(e.clientX-tap.x)<30&&Math.abs(e.clientY-tap.y)<30){tap=null;if(v[2]<base[2]-.01){v=v0.slice();show()}else zoom(2,f[0],f[1])}else tap={t:now,x:e.clientX,y:e.clientY}}
       pinch=0}};svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
   show()}
 (function(){var go=function(){var scan=function(){var w=document.querySelectorAll(".rbig");for(var i=0;i<w.length;i++)lfPrevAttach(w[i])};new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});scan()};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();

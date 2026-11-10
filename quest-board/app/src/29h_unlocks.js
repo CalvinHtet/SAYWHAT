@@ -7,9 +7,12 @@
 /* Never made before the save has loaded: a record made at level 1 during boot would lock a high-level save's areas (LEAD
    found it on v0.50's check). Until then every area counts as seen. */
 var AREAALL={};
+/* Cal, 2026-11-09: "Make the hall open as soon as we unlock the loft. This way, we can see each other's characters right away":
+   the Hall comes with The Loft, in the same unlock (and at once for a save that already has The Loft) */
 function areaOn(){if(!loaded){AREAS.forEach(function(a){AREAALL[a[0]]=1});return AREAALL}
-  if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=effLvl();AREAS.forEach(function(a){if(a[2]<=lv)S.areaOn[a[0]]=1})}return S.areaOn}
-function areaWaiting(id){var on=areaOn(),a=AREAS.filter(function(x){return x[0]===id})[0];return !!(a&&a[2]>1&&effLvl()>=a[2]&&!on[id])}
+  if(!S.areaOn||typeof S.areaOn!=="object"){S.areaOn={};var lv=effLvl();AREAS.forEach(function(a){if(a[2]<=lv)S.areaOn[a[0]]=1})}
+  if(S.areaOn.hideout&&!S.areaOn.hall)S.areaOn.hall=1;return S.areaOn}
+function areaWaiting(id){if(id==="hall")return areaWaiting("hideout");var on=areaOn(),a=AREAS.filter(function(x){return x[0]===id})[0];return !!(a&&a[2]>1&&effLvl()>=a[2]&&!on[id])}
 /* Cal: several unlocks together is fine "but not all the time and not this early": below level 10 areas and story steps
    share one slot a day (QA's rerun: days 1, 3 and 4 still brought an area and a story step together) */
 /* QA (886b385): keyed on each unlock's own level, not the player's, so a player who leaps past 10 still gets the early
@@ -19,7 +22,7 @@ function unlockSlotFree(L){return (L||0)>=ECON.oneSlotBelow||S.unlockDay!==today
 function unlockTake(){S.unlockDay=today();if((S.testFree||0)>0)S.testFree--}
 function areaReveal(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).sort(function(x,y){return x[2]-y[2]})[0];
   if(!w||!unlockSlotFree(w[2]))return null;
-  var sl=w[2]<ECON.oneSlotBelow&&typeof styReadyLow==="function"?styReadyLow():0;if(sl&&sl<=w[2])return null;/* a story step from the same or a lower level goes first */areaOn()[w[0]]=1;S.areaDay=today();unlockTake();persist();return w}
+  var sl=w[2]<ECON.oneSlotBelow&&typeof styReadyLow==="function"?styReadyLow():0;if(sl&&sl<=w[2])return null;/* a story step from the same or a lower level goes first */areaOn()[w[0]]=1;if(w[0]==="hideout")areaOn().hall=1;S.areaDay=today();unlockTake();persist();return w}
 function areaLowestWaiting(){var w=AREAS.filter(function(a){return areaWaiting(a[0])}).map(function(a){return a[2]});return w.length?Math.min.apply(null,w):0}
 var unlAreaGateBase=areaGate;
 areaGate=function(id){return unlAreaGateBase(id)||areaWaiting(id)};

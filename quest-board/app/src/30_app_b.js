@@ -418,7 +418,6 @@ function trainHtml(){
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     h+='<section class="card panel"><h3 class="label">Pick today\'s workout</h3><p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div></section>';
-    h+=coachRoster();
     var ss=(S.sessions||[]).slice(-5).reverse();
     if(ss.length)h+='<section class="card panel"><h3 class="label">Recent sessions</h3><div class="lrows">'+ss.map(function(x){var pl=planOf(x.plan);return '<div class="lrow"><span class="lv">'+esc(x.d.slice(5))+'</span><span>'+esc(pl?pl[1]:x.plan)+'</span><span class="mono note">'+x.n+' lifts</span></div>'}).join("")+'</div></section>';
     var prs=Object.keys(S.gymlog||{}).filter(function(k){return EX[k]&&EX[k][4]}).map(function(k){return [k,Math.max.apply(null,S.gymlog[k].map(function(x){return x.w||0}))]}).filter(function(x){return x[1]>0});
@@ -474,9 +473,9 @@ function trainAct(a,b){
       ws.forEach(function(x){if(x)load+=x});if(top>0)tops[id]=top;rows.push({id:id,top:top,prev:prevTop,n:ns});
       S.gymlog[id]=(S.gymlog[id]||[]).concat([{d:t,w:top,ws:E[4]?ws:null,n:ns,hit:!!S.wk.hit[id]&&ns>=NS,u:"lb"}]).slice(-12)});
     if(!done){pop("Tap the sets you finished first");return true}
-    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load),top:tops}]).slice(-60);var cgm=coachGain(S.wk.coach,done,full);S.wk=null;
+    var plan=S.wk.plan;S.sessions=(S.sessions||[]).concat([{d:t,plan:plan,n:done,load:Math.round(load),top:tops}]).slice(-60);S.wk=null;
     var x=econTrainXp(done,full);
-    grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,plan);if(cgm)setTimeout(function(){pop(cgm)},2800);
+    grantXp(x,x>=ECON.trainXp?ECON.trainCoins:Math.max(10,Math.round(x*2)),"fitness");econTrained(x,plan);
     /* the summary first; the Workout quest's photo comes after it closes */
     var gq=S.quests.filter(function(q){return q.stat==="fitness"&&!S.done[q.id]&&/gym|workout|lift|train/i.test(q.name)})[0];
     wkSummary({plan:plan,load:load,rows:rows,xp:x},gq?function(){onTap(gq.id)}:null);
@@ -640,10 +639,12 @@ function coachExHtml(id,pair){
 function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
 function coachDraw(newLine){
   if(!CSCR)return;var steps=wkSteps(),st=steps[CIDX],id=st[0],wk=S.wk,c=coachById(wk.coach),pair=st.length>1,role=(wk.roles&&wk.roles[id])||"";
-  var h='<div class="cinner"><div class="ctop"><span class="label">'+esc(c.name)+' &middot; '+esc(c.tag)+'</span><span class="mono note">'+(CIDX+1)+'/'+steps.length+'</span><button class="btn ghost csm" data-ca="full">See full workout</button><button class="btn ghost csm" data-ca="x" aria-label="Close">&times;</button></div>'
+  /* Cal, 2026-11-09: "Remove all the coaches in the training view. it is just too much clutter." No coach name or speech bubble:
+     the guided session is the exercise, its form tips and its sets */
+  var pln=planOf(wk.plan);
+  var h='<div class="cinner"><div class="ctop"><span class="label">'+esc(pln?pln[1]+' day':'Workout')+'</span><span class="mono note">'+(CIDX+1)+'/'+steps.length+'</span><button class="btn ghost csm" data-ca="full">See full workout</button><button class="btn ghost csm" data-ca="x" aria-label="Close">&times;</button></div>'
    +'<div class="cbar">'+steps.map(function(x,i){return '<i class="'+(i===CIDX?"cur":stepDone(x)?"dn":"")+'"></i>'}).join("")+'</div>'
    +(pair?'':coachFig(c,id))
-   +'<div class="cbub'+(coachArt(c)?' hasav':'')+'">'+(coachArt(c)?'<img class="cbav" src="'+coachArt(c)+'" alt="">':'')+'<b>'+esc(c.name)+'</b><span class="cbub-t"></span><button class="cmore" data-ca="more" aria-label="Another line">&#8635;</button></div>'
    +(pair?'<div class="ssh"><span class="label">'+esc(role)+': both, back to back</span><span class="note mono">'+esc(REST[role]||"")+'</span></div>':'')
    +st.map(function(x){return coachExHtml(x,pair)}).join("")
    +'<div class="cnav"><button class="btn ghost" data-ca="prev"'+(CIDX?'':' disabled')+'>Back</button>'+(CIDX<steps.length-1?'<button class="btn big" data-ca="next">Next exercise</button>':'<button class="btn big" data-ca="finish">Finish workout</button>')+'</div></div>';
@@ -652,7 +653,7 @@ function coachDraw(newLine){
 }
 function coachFull(){
   var list=wkList(),wk=S.wk,c=coachById(wk.coach);
-  var h='<div class="cinner"><div class="ctop"><span class="label">Full workout &middot; '+esc(c.name)+'</span><button class="btn ghost csm" data-ca="back">Back to card</button></div><div class="lrows">'+list.map(function(x,i){var E=EX[x],NS=(wk.setsN&&wk.setsN[x])||E[2],n=(wk.sets[x]||[]).filter(Boolean).length,role=(wk.roles&&wk.roles[x])||"";
+  var h='<div class="cinner"><div class="ctop"><span class="label">Full workout</span><button class="btn ghost csm" data-ca="back">Back to card</button></div><div class="lrows">'+list.map(function(x,i){var E=EX[x],NS=(wk.setsN&&wk.setsN[x])||E[2],n=(wk.sets[x]||[]).filter(Boolean).length,role=(wk.roles&&wk.roles[x])||"";
     return '<button class="cfrow'+(n>=NS?" dn":"")+'" data-ca="go" data-i="'+wkStepOf(x)+'"><b>'+(i+1)+'. '+esc(E[0])+'</b><small>'+NS+' &times; '+esc(E[3])+(role?' &middot; '+esc(role):'')+'</small><span class="mono">'+n+'/'+NS+'</span></button>'}).join("")+'</div></div>';
   CSCR.innerHTML=h;CSCR.scrollTop=0;
 }
@@ -672,7 +673,7 @@ function coachClick(e){
     if(saved){var ln=dn>=NS?coachLine(c,ex,"s"):coachLine(c,ex,"r");S.wk._ln[id]=ln;coachSay(ln)}
     else coachSay(S.wk._ln[id]||"");
     return}
-  if(a==="finish"){var fl=coachLine(c,id,"f");coachClose();render();trainAct("wkdone",b);setTimeout(function(){pop(c.name+": "+fl)},900);return}
+  if(a==="finish"){coachClose();render();trainAct("wkdone",b);return}
 }
 /* coach levels and buffs */
 var CLV=[0,30,80,150,250];
