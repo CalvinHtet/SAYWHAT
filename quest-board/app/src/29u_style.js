@@ -3,10 +3,12 @@
    level, live. Fashion likes: WEEKLY contest, likes reset every Monday; top 3 of the week get a badge and coins. Most rich = total
    coins EARNED (earnedC), so spending never drops you." docs/TOWNHALL.md has the details.
    - Everyone comes from worlds/<id> (name, look, lv, earnedC, fw), live through 29n_live.js; this player's own numbers are local.
-   - Likes: likes/<id> = {wk, to:[ids], prev:{wk,to}, t}, written only by the one who likes. A like counts only in the week it was
-     given (wk, Monday 00:00 Pacific); one like per player per person per week, never yourself, and it can be taken back.
-     When the liker's first like of a new week rolls their doc over, last week's likes move to prev, so last week's final count can
-     still be read during the new week.
+   - Likes (Cal, 2026-11-10: "Change the ability to like another character to two times per day."): likes/<id> =
+     {wk, c:{<id>:n}, d, td:{<id>:n}, prev:{wk,c}, t}, written only by the one who likes. c counts this player's likes to each look
+     in the contest week wk (Monday 00:00 Pacific); every like counts. td counts today's (the game day, d, from today()), and only
+     today's can be taken back. FSHPERDAY likes a day for each other player (FSHDAYALL true makes it that many a day in total);
+     never yourself. When the liker's first like of a new week rolls their doc over, last week's counts move to prev, so last
+     week's final count can still be read during the new week. An old doc ({wk, to:[ids], prev:{wk,to}}) reads as one like each.
    - At the end of the week each winner's own phone pays itself, once: the first time it sees the closed week (5 minutes into
      Monday, for phones with slow clocks) it counts last week's likes, and if it placed 1st, 2nd or 3rd (ties share a place,
      at least one like) it adds the coins, the medal and the Best Dressed relic, and records the week in the save (S.fsh.last), so
@@ -15,6 +17,8 @@
    - At most 10 characters are drawn (the pedestal and list rows 4 to 10), all on one still frame; the Town square and the
      Neighbors list fold out at the bottom. Live updates redraw only when what is shown changed. */
 var FSHPRIZE=[1500,1000,500],FSHMODES=[["fashion","Fashion"],["rich","Most rich"],["level","Highest level"]],FSHMEDAL=["\u{1F947}","\u{1F948}","\u{1F949}"];
+/* likes a game day: FSHPERDAY for each other player; FSHDAYALL=true makes it FSHPERDAY a day in total, across everyone */
+var FSHPERDAY=2,FSHDAYALL=false;
 var FSH={mode:"fashion",likes:{},ready:0,on:0,unsub:null,poll:0,err:"",mine:null,q:null,boxH:"",nbH:"",fold:{square:false,nb:false},wk:""};
 (function(){try{var m=sessionStorage.getItem("qbStyleMode");if(m==="fashion"||m==="rich"||m==="level")FSH.mode=m;
   var f=JSON.parse(sessionStorage.getItem("qbStyleFold")||"null");if(f&&typeof f==="object")FSH.fold={square:!!f.square,nb:!!f.nb}}catch(e){}})();
@@ -91,18 +95,30 @@ function fshMedals(){var g=[0,0,0];try{var w=S.fsh&&S.fsh.won;if(w&&typeof w==="
 function fshMedalHtml(fw){var s="";(fw||[]).forEach(function(n,i){if(n>0)s+=FSHMEDAL[i]+(n>1?n:"")});return s?'<span class="fsh-md" aria-label="Fashion medals">'+s+'</span>':""}
 /* ---- likes ---- */
 function fshWkOk(s){return typeof s==="string"&&/^\d{4}-W\d{2}$/.test(s)}
+function fshDayOk(s){return typeof s==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(s)}
 function fshIds(a){var out=[],seen={};if(!Array.isArray(a))return out;a.slice(0,200).forEach(function(u){if(typeof u!=="string"||!u||u.length>128||seen[u])return;seen[u]=1;out.push(u)});return out.slice(0,60)}
-function fshLikeDoc(d){if(!d||typeof d!=="object"||Array.isArray(d))return null;var o={wk:fshWkOk(d.wk)?d.wk:"",to:fshIds(d.to),prev:null};
-  if(d.prev&&typeof d.prev==="object"&&fshWkOk(d.prev.wk))o.prev={wk:d.prev.wk,to:fshIds(d.prev.to)};return o}
+/* {<id>:n} as read: at most 60 looks, each count a whole number from 1 to cap */
+function fshCnt(o,cap){var out={},k=0;if(!o||typeof o!=="object"||Array.isArray(o))return out;
+  Object.keys(o).slice(0,200).forEach(function(u){if(k>=60||!u||u.length>128)return;var n=Math.floor(+o[u]);if(isFinite(n)&&n>0){out[u]=Math.min(n,cap);k++}});return out}
+/* a week's counts: {c} now, or an old {to:[ids]} at one like each */
+function fshWkCnt(x){if(x.c)return fshCnt(x.c,FSHPERDAY*7);var o={};fshIds(x.to).forEach(function(u){o[u]=1});return o}
+function fshLikeDoc(d){if(!d||typeof d!=="object"||Array.isArray(d))return null;
+  var o={wk:fshWkOk(d.wk)?d.wk:"",c:fshWkCnt(d),d:fshDayOk(d.d)?d.d:"",td:fshCnt(d.td,FSHPERDAY),prev:null};
+  if(d.prev&&typeof d.prev==="object"&&fshWkOk(d.prev.wk))o.prev={wk:d.prev.wk,c:fshWkCnt(d.prev)};return o}
 /* likes each player received in week wk, from every liker's doc (this week's in wk, last week's in prev); never their own */
-function fshCounts(wk){var c={};Object.keys(FSH.likes).forEach(function(from){var d=FSH.likes[from],to=d.wk===wk?d.to:(d.prev&&d.prev.wk===wk?d.prev.to:null);
-  if(to)to.forEach(function(u){if(u!==from)c[u]=(c[u]||0)+1})});return c}
-/* whom this player likes this week */
-function fshMyTo(){var o={},m=FSH.mine;if(m&&m.wk===fshWk().key)m.to.forEach(function(u){o[u]=1});return o}
+function fshCounts(wk){var c={};Object.keys(FSH.likes).forEach(function(from){var d=FSH.likes[from],x=d.wk===wk?d.c:(d.prev&&d.prev.wk===wk?d.prev.c:null);
+  if(x)Object.keys(x).forEach(function(u){if(u!==from)c[u]=(c[u]||0)+x[u]})});return c}
+/* this player's likes to each look this week, and today's */
+function fshMyTo(){var m=FSH.mine;return m&&m.wk===fshWk().key?m.c:{}}
+function fshMyDay(){var m=FSH.mine;return m&&m.d===today()?m.td:{}}
+/* likes left today for this look, and today's likes to it that can still be taken back (only while their week is open) */
+function fshLeft(uid){var td=fshMyDay(),used=FSHDAYALL?Object.keys(td).reduce(function(s,u){return s+td[u]},0):(td[uid]||0);return Math.max(0,FSHPERDAY-used)}
+function fshBackable(uid){return Math.min(fshMyDay()[uid]||0,fshMyTo()[uid]||0)}
+function fshRule(){return FSHDAYALL?"You have "+FSHPERDAY+" likes to give each day":"Like each look up to "+FSHPERDAY+" times a day"}
 function fshOnLikes(q){var L={};
   ((q&&q.docs)||[]).slice(0,300).forEach(function(s){try{var id=String(s.id||"");if(!id||id.length>128)return;var d=fshLikeDoc(s.data());if(d)L[id]=d}catch(e){}});
   /* this player's own doc: only this phone writes it, so after the first read the copy here is the truth */
-  if(!FSH.ready){FSH.mine=L[MYUID]?JSON.parse(JSON.stringify(L[MYUID])):{wk:"",to:[],prev:null};FSH.ready=1}
+  if(!FSH.ready){FSH.mine=L[MYUID]?JSON.parse(JSON.stringify(L[MYUID])):{wk:"",c:{},d:"",td:{},prev:null};FSH.ready=1}
   if(MYUID&&FSH.mine)L[MYUID]=FSH.mine;
   FSH.likes=L;FSH.err="";fshPaint();fshModalPaint();try{fshPayCheck()}catch(e){}}
 function fshStart(){if(FSH.on||!socOn()||!loaded||!S||!S.created)return;FSH.on=1;
@@ -111,20 +127,23 @@ function fshStart(){if(FSH.on||!socOn()||!loaded||!S||!S.created)return;FSH.on=1
         if(FSH.err==="unavailable"){FSH.on=0;setTimeout(fshStart,5000)}fshPaint()});if(typeof u==="function")FSH.unsub=u}
     else{var go=function(){if(!document.hidden)db.collection("likes").limit(200).get().then(fshOnLikes,function(e){FSH.err=(e&&e.code)||"error";if(FSH.err==="permission-denied")clearInterval(FSH.poll);fshPaint()})};go();FSH.poll=setInterval(go,60000)}}
   catch(e){FSH.err=String((e&&e.code)||e)}}
-/* like or take back; the whole doc is written each time, one write at a time */
-function fshLike(uid){if(!uid||!socOn())return;
+/* like, or take back one of today's likes (back); the whole doc is written each time, one write at a time */
+function fshLike(uid,back){if(!uid||!socOn())return;
   if(uid===MYUID){pop("That's you. Friends like your look here.");return}
   if(FSH.err==="permission-denied"){pop("Likes are not switched on yet");return}
   if(!FSH.ready){pop("Likes are still loading");return}
-  var wk=fshWk(),m=FSH.mine,n;
-  if(m.wk!==wk.key)n={wk:wk.key,to:[],prev:m.wk===wk.prev?{wk:m.wk,to:m.to.slice()}:(m.prev&&m.prev.wk===wk.prev?m.prev:null)};
-  else n={wk:m.wk,to:m.to.slice(),prev:m.prev};
-  var i=n.to.indexOf(uid),liked=i<0,who=fshNameOf(uid);
-  if(liked){if(n.to.length>=60){pop("That's every like you have this week");return}n.to.push(uid)}else n.to.splice(i,1);
+  var wk=fshWk(),day=today(),m=FSH.mine,who=fshNameOf(uid),n={wk:m.wk,c:Object.assign({},m.c),d:m.d,td:Object.assign({},m.td),prev:m.prev};
+  if(m.wk!==wk.key){n.wk=wk.key;n.c={};n.prev=m.wk===wk.prev?{wk:m.wk,c:Object.assign({},m.c)}:(m.prev&&m.prev.wk===wk.prev?m.prev:null)}
+  if(m.d!==day){n.d=day;n.td={}}
+  if(back){if(!fshBackable(uid)){pop("Only today's likes can be taken back");return}
+    if(!--n.c[uid])delete n.c[uid];if(!--n.td[uid])delete n.td[uid]}
+  else{if(!fshLeft(uid)){pop(FSHDAYALL?"That's your "+FSHPERDAY+" likes for today":"That's "+FSHPERDAY+" likes for "+who+" today");return}
+    if(!n.c[uid]&&Object.keys(n.c).length>=60){pop("That's as many looks as you can like this week");return}
+    n.c[uid]=(n.c[uid]||0)+1;n.td[uid]=(n.td[uid]||0)+1}
   FSH.mine=n;FSH.likes[MYUID]=n;fshPaint();fshModalPaint();
-  var doc={wk:n.wk,to:n.to.slice(),prev:n.prev,t:Date.now()},run=function(){return db.doc("likes/"+MYUID).set(doc)};
+  var left=fshLeft(uid),doc=JSON.parse(JSON.stringify({wk:n.wk,c:n.c,d:n.d,td:n.td,prev:n.prev,t:Date.now()})),run=function(){return db.doc("likes/"+MYUID).set(doc)};
   var p=(FSH.q||Promise.resolve()).then(run);FSH.q=p.catch(function(){});
-  p.then(function(){pop(liked?"You liked "+who+"'s look":"Like taken back")},function(er){FSH.mine=m;FSH.likes[MYUID]=m;fshPaint();fshModalPaint();pop("Could not like: "+((er&&er.code)||"error"))})}
+  p.then(function(){pop(back?"Like taken back":"You liked "+who+"'s look ("+left+" left today)")},function(er){FSH.mine=m;FSH.likes[MYUID]=m;fshPaint();fshModalPaint();pop("Could not like: "+((er&&er.code)||"error"))})}
 /* ---- the week's end: a winner pays itself, once per week ---- */
 function fshPayCheck(){if(!FSH.ready||FSH.err||!socOn()||!loaded||!S||!S.created||newerSeen)return;
   var wk=fshWk();if(wk.mins<5)return;
@@ -165,19 +184,19 @@ function fshList(rk,mode){var mine=mode==="fashion"?fshMyTo():{};
     return '<button type="button" class="fsh-row'+(p.me?' me':'')+'" data-act="fshview" data-u="'+esc(p.id)+'"><span class="fsh-rk">'+p.place+'</span>'
       +(i>=3&&i<10?'<span class="fsh-av">'+(p.look?nbAv(p.look,36):'<span class="calav" style="width:36px;height:36px"></span>')+'</span>':'')
       +'<span class="fsh-rn">'+esc(p.name)+(p.me?' <small>(you)</small>':'')+fshMedalHtml(p.fw)+'</span>'
-      +(mine[p.id]?'<i class="fsh-liked" aria-label="You like this look">♥</i>':'')+'<span class="fsh-rv">'+esc(fshValTxt(p,mode))+'</span></button>'}).join("")+'</div>'}
+      +(mine[p.id]?'<i class="fsh-liked" aria-label="You liked this look '+mine[p.id]+(mine[p.id]===1?' time':' times')+' this week">♥'+(mine[p.id]>1?mine[p.id]:'')+'</i>':'')+'<span class="fsh-rv">'+esc(fshValTxt(p,mode))+'</span></button>'}).join("")+'</div>'}
 function fshHead(mode){
   if(mode==="rich")return '<p class="note">Total coins earned. Spending never drops you.</p>';
   if(mode==="level")return '<p class="note">Everyone\'s level right now.</p>';
   var wk=fshWk(),left=Math.max(1,7*1440-wk.mins),dd=Math.floor(left/1440),hh=Math.floor(left%1440/60);
-  return '<p class="note">Likes this week. Tap a look to like it: one like per person, and you can take it back. Resets Monday 12 am Pacific (in '+(dd?dd+'d ':'')+hh+'h). The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
+  return '<p class="note">Likes this week. Tap a look to like it. '+fshRule()+', and every like counts. Resets Monday 12 am Pacific (in '+(dd?dd+'d ':'')+hh+'h). The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
 /* last week's top 3, read from the likes everyone gave last week */
 function fshLastWeek(){var c=fshCounts(fshWk().prev),ids=Object.keys(c).filter(function(u){return fshNameOf(u)});if(!ids.length)return "";
   ids.sort(function(a,b){return c[b]-c[a]||(a<b?-1:1)});
   var out=ids.map(function(u){return {id:u,n:c[u],p:1+ids.filter(function(v){return c[v]>c[u]}).length}}).filter(function(x){return x.p<=3}).slice(0,6);
   return '<p class="note">Last week: '+out.map(function(x){return FSHMEDAL[x.p-1]+' '+esc(fshNameOf(x.id))+' ('+x.n+')'}).join(" &middot; ")+'</p>'}
-function fshYou(mode){if(mode!=="fashion")return "";var md=fshMedalHtml(fshMedals()),n=Object.keys(fshMyTo()).length;
-  return '<div class="fsh-you"><span>You like '+n+' look'+(n===1?'':'s')+' this week</span>'+(md?'<span>Your medals: '+md+'</span>':'')+'</div>'}
+function fshYou(mode){if(mode!=="fashion")return "";var md=fshMedalHtml(fshMedals()),c=fshMyTo(),n=Object.keys(c).reduce(function(s,u){return s+c[u]},0);
+  return '<div class="fsh-you"><span>You gave '+n+' like'+(n===1?'':'s')+' this week</span>'+(md?'<span>Your medals: '+md+'</span>':'')+'</div>'}
 function fshBoxInner(){var mode=FSH.mode,rk=fshRank(mode);
   return fshHead(mode)+fshPed(rk,mode)+fshYou(mode)+fshList(rk,mode)
     +(mode==="fashion"&&FSH.err?'<p class="note">'+(FSH.err==="permission-denied"?'Likes are not switched on yet. They need a database update from Cal.':'Likes can\'t load right now ('+esc(FSH.err)+').')+'</p>':'')}
@@ -209,10 +228,14 @@ socPaint=function(){var r=fshSocPaintBase.apply(this,arguments);try{fshPaint();f
 /* tap a character: a bigger look, the like, greetings and a visit */
 function fshStats(p){var n=fshCounts(fshWk().key)[p.id]||0;
   return '<span><b>'+n+'</b> like'+(n===1?'':'s')+' this week</span><span><b>'+(p.earnedC==null?'—':p.earnedC.toLocaleString())+'</b> coins earned</span><span><b>Lv '+p.lv+'</b></span>'}
+/* the like button says how many likes are left today for this look; today's likes can be taken back */
 function fshLikeBox(p){if(p.me)return '<p class="note">Your look. Friends can like it here; likes reset every Monday.</p>';
   if(FSH.err==="permission-denied")return '<p class="note">Likes are not switched on yet.</p>';
-  var on=!!fshMyTo()[p.id];
-  return '<button type="button" class="btn big fsh-like'+(on?' on':'')+'" data-act="fshlike" data-u="'+esc(p.id)+'" aria-pressed="'+on+'">'+(on?'♥ Liked. Tap to take it back':'♡ Like this look')+'</button><p class="note">One like per person each week. Likes reset Monday 12 am Pacific.</p>'}
+  var wk=fshMyTo()[p.id]||0,left=fshLeft(p.id),back=fshBackable(p.id);
+  return '<button type="button" class="btn big fsh-like'+(wk?' on':'')+'" data-act="fshlike" data-u="'+esc(p.id)+'"'+(left?'':' disabled')+'>'
+      +(left?(wk?'♥ Like again':'♡ Like this look')+' <small>'+left+' left today</small>':'♥ No likes left today')+'</button>'
+    +(back?'<button type="button" class="btn ghost sm fsh-back" data-act="fshunlike" data-u="'+esc(p.id)+'">Take back a like</button>':'')
+    +'<p class="note">'+(wk?'You liked this look '+(wk===1?'once':wk+' times')+' this week. ':'')+fshRule()+'. You can take back today\'s likes only. Likes reset Monday 12 am Pacific.</p>'}
 function fshViewHtml(p){
   return '<div class="card box2 fsh-card"><div class="fsh-big">'+fshChar(p.look,200)+'</div><h2>'+esc(p.name)+(p.me?' <small>(you)</small>':'')+'</h2>'
     +'<div class="fsh-stats">'+fshStats(p)+'</div>'+(fshMedalHtml(p.fw)?'<div>'+fshMedalHtml(p.fw)+'</div>':'')
@@ -227,8 +250,9 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
       var tg=document.getElementById("fshtg");if(tg)tg.innerHTML=fshTg();var bx=document.getElementById("fshbox");if(bx){FSH.boxH=fshBoxInner();bx.innerHTML=FSH.boxH}else render()}return}
   if(a==="fshview"){fshView(b.dataset.u);return}
   if(a==="fshlike"){fshLike(b.dataset.u);return}
+  if(a==="fshunlike"){fshLike(b.dataset.u,1);return}
   if(a==="fshfold"){var k=b.dataset.k;if(k!=="square"&&k!=="nb")return;FSH.fold[k]=!FSH.fold[k];try{sessionStorage.setItem("qbStyleFold",JSON.stringify(FSH.fold))}catch(er){}render()}});
 /* test hook (sandbox and main only; a Live build never makes it) */
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbHall={tab:function(){return HTAB.tab},set:function(t){htabSet(t);render()},week:function(ms){return pacWeek(ms==null?Date.now():ms)},
-  chat:function(){return {room:TCH.room,ready:TCH.ready,err:TCH.err,joined:TCH.joined,nowOk:TCH.nowOk,me:TCH.me,mod:TCH.mod,seen:TCH.seen,msgs:TCHROOMS.map(function(r){return tchRoomMsgs(r[0]).length}),who:TCHROOMS.map(function(r){return tchWho(r[0])})}},
+  chat:function(){return {room:TCH.room,ready:TCH.ready,err:TCH.err,joined:TCH.joined,nowOk:TCH.nowOk,me:TCH.me,seen:TCH.seen,msgs:TCHROOMS.map(function(r){return tchRoomMsgs(r[0]).length}),who:TCHROOMS.map(function(r){return tchWho(r[0])})}},
   style:function(m){return fshRank(m||FSH.mode).map(function(p){return {id:p.id,name:p.name,v:p.v,place:p.place}})},likes:function(){return {ready:FSH.ready,err:FSH.err,mine:FSH.mine,fsh:S.fsh}},pay:function(){fshPayCheck();return S.fsh}};
