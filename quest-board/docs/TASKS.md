@@ -81,6 +81,7 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W53 | Greetings: wave, high five, poke, spank (Hug and Cheer go, no opt-out); "Visit their Loft" removed | BUILDER | w-chat2 | TODO (v0.92) |
 | W54 | Weekly Town Boss (SPEC10 part 1): HP by active players, damage from quest + Training XP, art phases on the Town Hall picture, a win chest or a light penalty; 6 pictures per boss from the Mac | BUILDER | w-boss | LATER (v0.93+) |
 | W55 | Friends visit your businesses (SPEC10 part 2): real players in their outfits with name labels, a note, small capped tips | BUILDER | w-visitors | LATER (v0.93+) |
+| W56 | Purchase sounds for everyone (Cal: "a cash or coin sound"), synthesized, with an on/off switch | BUILDER | w-sound | LOW (v0.93) |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
