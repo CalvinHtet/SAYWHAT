@@ -238,7 +238,7 @@ function fshHead(mode){
   if(mode==="rich")return '<p class="note">Total coins earned. Spending never drops you.</p>';
   if(mode==="level")return '<p class="note">Everyone\'s level right now.</p>';
   var wk=fshWk(),left=Math.max(1,7*1440-wk.mins),dd=Math.floor(left/1440),hh=Math.floor(left%1440/60);
-  return '<p class="note">Likes this week. Tap a look to like it. '+fshRule()+', and every like counts. Ends Sunday 7 pm Pacific, in '+(dd?dd+'d ':'')+hh+'h. The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
+  return '<p class="note">Likes this week. Tap a look to like it. '+fshRule()+', and every like counts. Ends Sunday 7 pm Pacific, in '+(dd?dd+'d '+hh+'h':hh?hh+'h':(left%60)+' min')+'. The top 3 win '+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+' coins and a medal.</p>'+fshLastWeek()}
 /* last week's top 3, read from the likes everyone gave last week */
 function fshLastWeek(){var c=fshCounts(fshWk().prev),ids=Object.keys(c).filter(function(u){return fshNameOf(u)});if(!ids.length)return "";
   ids.sort(function(a,b){return c[b]-c[a]||(a<b?-1:1)});
@@ -265,7 +265,9 @@ function fshFolds(){var sq=!!FSH.fold.square,nb=!!FSH.fold.nb,n=(SOC.worlds||[])
 function fshTg(){return FSHMODES.map(function(m){var on=FSH.mode===m[0];return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" data-act="fshmode" data-m="'+m[0]+'">'+m[1]+'</button>'}).join("")}
 function fshHtml(){FSH.boxH=fshBoxInner();FSH.wk=fshWk().key;
   return '<section class="card panel fsh" id="fshsec"><div class="fsh-tg" id="fshtg" role="tablist" aria-label="Rank by">'+fshTg()+'</div><div id="fshbox">'+FSH.boxH+'</div></section>'+fshFolds()}
-function fshMounted(){var k=fshWk().key;if(FSH.base==null||FSH.baseWk!==k){FSH.base=fshSeenN();FSH.baseWk=k}fshMarkSeen();fshTick()}
+function fshMounted(){var k=fshWk().key,first=FSH.base==null||FSH.baseWk!==k;if(first){FSH.base=fshSeenN();FSH.baseWk=k}fshMarkSeen();fshTick();
+  /* QA (rc-0.89): the tab was drawn before the visit's starting count was set, so the heart never showed: draw it again now */
+  if(first)fshPaint()}
 /* live: redraw only what changed */
 function fshPaint(){if(!htabShown("style"))return;var el=document.getElementById("fshbox");if(el){var h=fshBoxInner();if(h!==FSH.boxH){FSH.boxH=h;el.innerHTML=h}}
   var nb=document.getElementById("fshnb");if(nb){var h2=fshNbInner();if(h2!==FSH.nbH){FSH.nbH=h2;nb.innerHTML=h2}}}
