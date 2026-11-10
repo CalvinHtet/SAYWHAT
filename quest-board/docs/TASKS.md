@@ -26,7 +26,7 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
 | W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | TOP 5 IN todo/LEAD.md (on 213ea0f); write-up after rc-0.89 |
-| W1b | Performance fixes from QA's W1 list | BUILDER | w-perf | after W1 |
+| W1b | Performance fixes from QA's W1 top 5 (todo/LEAD.md 10:55): w-perf1 for v0.90 = Aurora and embers effects, fit() only on change, no lfvar.json, blobs.js after first draw if safe; w-perf2 later = room art per room, rig frame cache, row patching, Rank stills, minify | BUILDER | w-perf1, w-perf2 | TODO |
 | W2 | "Change the ability to like another character to two times per day." | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W3 | "Change style to Rank" (the Hall's Style tab) | BUILDER | w-social | READY FOR QA (3fdaeec) |
 | W4 | "Only you can delete your own messages." (UI and firestore.rules) | BUILDER | w-social | READY FOR QA (3fdaeec) |
