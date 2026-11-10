@@ -21,6 +21,27 @@ is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up
 
 ## Status of Cal's request below
 
+## Later: Cal's long-term roadmap (bring these up when the time is right)
+
+Cal, 2026-11-10: "Anything that is a much later update should be noted for claude to bring to attention later." Late players earn
+about 15-20k coins a day against 2-7k early (econsim, cal routine), so the late levels need things worth that money, behind level
+gates, so early players are not priced out and late players are not bored. Raise these when Cal asks "what next", when a release
+ships, or when work touches one of them. ARCHITECT's working copy: `.claude/team/ideas/LATER_ROADMAP.md` (local).
+
+| Idea | Level | Art (Cal's Mac) | Status |
+|---|---|---|---|
+| Mystic Shop: stylised high-quality clothes, special assets for rooms already built, upgrades like a gold waving-paw lucky cat (+15% business income where placed) | 60 | yes, lots | noted, not built (W29) |
+| Designer brand: very unique pieces, up to about 3,000 each | late (90?) | yes | noted; price room in ECON.tier |
+| Pets with their own outfits | 45 (Cal: about 2-3 weeks of play) | yes | gate planned; art list for the Mac (TASKS W23) |
+| Face cosmetics (makeup, scars, detailed faces) | 40 | yes | gate coded in v0.89, no items yet |
+| Items "way cooler than the original drop" | 90 | yes | price room in ECON |
+| Stylised UI skins: borders that change the look of every menu and box (beyond today's themes) | 40-80 tiers | yes (frames) | idea |
+| Apartment to mansion: overhaul the Loft into a mansion | late / prestige | yes, a lot | idea (see docs/PRESTIGE.md) |
+| More upgrades in thin rooms (Closet 7, Rooftop 10, Lair 11, VR 11: about 15 each, about 25 sprites) | - | yes | idea |
+| Load each building's art only when visited (blobs.js is about 10 MB up front today) | - | no | do BEFORE adding lots of art (QA PERF.md #1) |
+| Crews / friend groups (own Hall, chat, ranks) | - | no | before about 25 players (the Hall reads 60 players at most) |
+| Rafe's legendary hunts (27/52/77/93), story side-quests, photo feed, Gym Pact, screen colours | - | some | queued for v0.91+ (TASKS W35, W36, W8, W28, W14) |
+
 For the Mac Claude, later (Cal, 2026-11-10): once the Higgsfield connector is enabled and Cal says it spends no credits, write 5+ new
 friend visit story beats and 5+ pictures to go with them. Details: "For Cal's Mac Claude, later" in `docs/TASKS.md`.
 
