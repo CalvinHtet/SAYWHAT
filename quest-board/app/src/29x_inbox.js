@@ -3,14 +3,17 @@
    letter with 3000 coins to start off. Then the next letter is a roadmap."
    - An envelope next to the + by the coin count, on every screen, with the number of unread letters. It opens the list (sender,
      subject, date, a dot while unread); a letter opens in the same window, with a way back to the list.
-   - Letters live in INBOX: a new letter is one line. A letter with an empty body stays hidden (the roadmap until Cal has its text).
+   - Letters live in INBOX: a new letter is one line. A letter with an empty body stays hidden.
      coins: a gift the letter pays once, with a Claim button. d: the date it shows; without one, the day the player first got it.
    - INBOXGEN holds functions that return more letters made from game data (the weekly Fashion winner, W18).
    - The save keeps S.letters = {read:{id:1}, paid:{id:coins}, at:{id:date}, popped} (S.inbox is the owner's quest inbox, 30_app_b.js). Players from before the inbox get the welcome
      letter, its coins and its one-time opening too (welcomeOnce in 29q_news.js). */
 var INBOX=[
   {id:"welcome",from:"Cal",subj:"Welcome to SAYWHAT",body:function(){return WELCOMEBODY},coins:3000},
-  {id:"roadmap",from:"Cal",subj:"Roadmap",body:""}
+  /* Cal approved the text (2026-11-10). The id stays "roadmap": saves keep it in S.letters */
+  {id:"roadmap",from:"Cal",subj:"What's coming",body:'<ul class="wl"><li>More friends dropping by, with their own stories</li><li>More ways to compete</li>'
+    +'<li>A new building in town, with rooms to upgrade and explore</li><li>More brand drops, cosmetics and accessories</li><li>Pets, with outfits of their own</li>'
+    +'<li>New ways to earn coins, and new upgrades to unlock</li><li>Faster and smoother</li></ul><p>And more after that. If you have an idea, tell me in the Town Hall.</p>'}
 ];
 var INBOXGEN=INBOXGEN||[]; /* a file before this one may have added to it already (29u_style.js: the weekly winner) */
 function ibState(){if(!S.letters||typeof S.letters!=="object")S.letters={};var I=S.letters;["read","paid","at"].forEach(function(k){if(!I[k]||typeof I[k]!=="object")I[k]={}});return I}
@@ -31,7 +34,7 @@ function ibIcon(){return '<svg viewBox="0 0 24 24" width="16" height="16" aria-h
 function ibBtn(){if(!loaded||!S||!S.created)return "";var n=ibUnread();
   return '<button class="ibbtn" data-ib="list" aria-label="Inbox'+(n?', '+n+' unread':'')+'">'+ibIcon()+(n?'<i>'+n+'</i>':'')+'</button>'}
 /* the count on the envelope, redrawn in place */
-function ibPaint(){[].forEach.call(document.querySelectorAll(".ibbtn"),function(b){var tmp=document.createElement("div");tmp.innerHTML=ibBtn();if(tmp.firstElementChild)b.replaceWith(tmp.firstElementChild)})}
+function ibPaint(){[].forEach.call(document.querySelectorAll(".ibbtn"),function(b){var tmp=document.createElement("div");tmp.innerHTML=ibBtn();var nb=tmp.querySelector(".ibbtn");if(nb)b.replaceWith(nb)})}
 function ibListHtml(){var I=ibState(),L=ibAll();
   return '<div class="card box2 ibox"><span class="label">Inbox</span><h2>Letters</h2>'
     +(L.length?'<div class="iblist">'+L.map(function(l){var un=ibNew(l);
