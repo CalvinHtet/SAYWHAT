@@ -37,11 +37,19 @@ Base: qa-local 213ea0f (v0.88, APPV 88; Cal pushed it, origin/qa-local and relea
 | W12 | Note for Cal's Mac Claude: 5+ visitor story beats and 5 pictures, for later (below) | LEAD | qa-local (docs) | DONE |
 | W13 | Town board posts top and bottom: "Sydney (new) 21 min ago" on top, the text full width under it (today "HI FWENDS" wraps onto 3 lines), smaller reaction emojis under the text | BUILDER | w-hall | READY FOR QA (d3cafea) |
 | W14 | "the town board to have a color palette similar to the picture of the town hall that is on that screen ... Every menu and screen should feel slightly different" | BUILDER | w-colors | TODO |
-| W15 | UI color schemes: "at least 3 different ones at the start, and then with each job or class advancement, can add 2 more" | BUILDER | w-colors | TODO |
+| W15 | UI color schemes: "at least 3 different ones at the start, and then with each job or class advancement, can add 2 more" | BUILDER | w-colors | CANCELLED (Cal: "Nevermind on the themes. I forgot there are additional themes for purchase in the shop.") |
 | W16 | Greetings: "3 coins for each person you give a hug to and that resets every 2 hrs" (today 5 coins to both, once per pair per day) | BUILDER | w-hall | READY FOR QA (d3cafea) |
+| W17 | Rank: "a little collapsible arrow next to the likes for each person that show who liked that person", in the character card where you give likes | BUILDER | w-rank | TODO |
+| W18 | Likes contest: "The cutoff ... is Sunday night at 7 PM", and "a weekly winner to be announced in the messages as a special event starting next week" (an inbox letter each week; the first for the week ending Sun 2026-11-22 7 pm Pacific) | BUILDER | w-rank (on w-inbox) | TODO |
+| W19 | Welcome letter with 3,000 coins: "for the people who are already playing, retrigger that message so they can get it" (part of W7) | BUILDER | w-inbox | TODO |
+| W20 | "The new brand of clothes drop on Monday and Wednesday of each week." | BUILDER | w-drops | TODO |
+| W21 | Economy and levels: "I am aiming for 3 months to reach lvl 100 and unlock everything", "about 2 weeks of proper play to get to lvl 40", passive income must not override coins from tasks. Existing players keep their level | BUILDER (QA measures) | w-econ | TODO |
+| W22 | Level gates: a second accessory at level 20, face cosmetics (makeup, scars, more detailed faces) at 40, a pet with its own cosmetics and outfits at 30; "items to buy around lvl 90 that get way cooler than the original drop". Code for the gates now, art from the Mac (W23) | BUILDER | w-econ | TODO |
+| W23 | Art for Cal's Mac Claude, later this week: pets and pet outfits, face cosmetics, level 90 items (below) | LEAD (list) | qa-local (docs) | DONE |
 
-Order for BUILDER (LEAD, 2026-11-10 08:40, NEW: w-hall right after the branch you are on): w-social, w-hall, w-training, w-colors,
-w-wheel, w-inbox, w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
+Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
+w-rank (on w-inbox, W17 + W18), w-drops, w-wheel, w-econ (W21 + W22, includes the wheel and the 3,000 start), w-colors (W14 only),
+w-photos, w-perf, w-text. Order for QA: W11, W1, then each branch as it
 turns READY FOR QA.
 
 ### For Cal's Mac Claude, later: visitor story beats with pictures (W12)
@@ -58,6 +66,24 @@ story beats and 5 different pictures for them to go along with those stories. Th
   no logos or brand marks. Show Cal all of them side by side, labelled, before anything goes in the game.
 - Code: the visit card (`fvShow`) gets an optional picture per visit that fails softly when missing. Say what was checked on a phone
   and what was not.
+
+### For Cal's Mac Claude, later this week: art for the new level gates (W23)
+
+Cal, 2026-11-10: "Once you get to lvl 20, you can wear a second accessory. At lvl 40, the option to wear face cosmetics such as
+makeup, or scars, or more detailed face cosmetics unlocks. Once you get to lvl 30 you can get a pet with its own pet cosmetics and
+outfits ... I want it to have items to buy around lvl 90 that get way cooler than the original drop." And: "if you needs the ROOMS
+chat with higgsfield to generate images, then let me know and put that as a to do list task to hand off to my personal claude
+later in the week". The Windows team builds the gates and slots (W22) so this art drops in. Same rules as above: Unlimited only, no
+credits, original designs, one Higgsfield image per cosmetic holding every angle, both bodies, every pose tested, Cal approves
+first.
+1. **Pets (level 30).** A few starter pets (for example a dog, a cat, a bird) in the game's chibi style, with idle, walk and sit
+   frames in the room view. Then pet cosmetics and outfits for each: collars, a sweater, a hat, a bandana. Pluto and Chopstick
+   (Cal's dogs, painted art in the Bedroom) stay as they are.
+2. **Face cosmetics (level 40).** Makeup (liner, blush, lip colours), scars, freckles, face paint, more detailed eyes and brows.
+   The slots `a_xface` and `a_eyet` exist and hold a few items today.
+3. **Level 90 items.** A set clearly beyond any brand drop: animated or glowing pieces, full sets with a back piece. Name and
+   describe them by docs/VOICE.md.
+The second accessory (level 20) needs no new art: it reuses the accessories in the game.
 
 ---
 
