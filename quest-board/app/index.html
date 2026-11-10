@@ -1446,6 +1446,19 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .cxadd{display:flex;gap:8px;margin-top:10px}
 .cxadd input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
 .cxlist{margin-top:10px}.cxlist .lrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+/* BUILDER w-inbox (Cal, 2026-11-10): the envelope by the coin count opens the inbox; the (i) and its space at the right are gone */
+.strip{padding-right:0}
+.ibbtn{position:relative;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--fg);padding:0;display:grid;place-items:center;cursor:pointer;flex:none}
+.ibbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ibbtn i{position:absolute;top:-5px;right:-6px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ff4d5e;color:#fff;font:700 10px/16px var(--font-body,system-ui);font-style:normal;text-align:center}
+.iblist{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.ibrow{display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.ibrow span{min-width:0}.ibrow b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ibrow span small{color:var(--muted);font-size:12px}
+.ibrow .ibd{color:var(--muted);font-size:12px;white-space:nowrap}
+.ibdot{width:8px;height:8px;border-radius:50%;background:transparent}.ibrow.un .ibdot{background:var(--accent)}.ibrow.un b{font-weight:800}
+.ibback{align-self:flex-start;padding:4px 0;border:0;background:none;color:var(--accent);font:600 13px/1.2 var(--font-body,system-ui);cursor:pointer}
+.ibgot{color:var(--gold)}
+.ibox h2{font-size:30px;line-height:1.1}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
