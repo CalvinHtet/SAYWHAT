@@ -31,8 +31,8 @@ routine (10 chores, the gym with a photo and a Training session on weekdays) rea
 | Source | Amount |
 | --- | --- |
 | Quests | 6 coins an XP of the quest's **listed** XP (x2 with a photo, x2 for the daily bounty, x1.5 or x2 for a Bounties card), +0.5% a level (`ECON.coinLv`), times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, double from the 11th (Cal, 2026-11-08). Streak, combo, crit and rank bonuses are XP only (`payXp` in `30_app_b.js`: `cx`) |
-| Daily Quest chests | 150 XP finishes the Daily Quest; a chest opens at 150, 200, 250 and 300 XP of the day: 150, 150, 200 and 300 coins (`ECON.dqTiers`), x (1 + 5% a point of INT, at most +25%) |
-| Hidden quest (300 XP) | a streak freeze, or +1 INT, or 300 coins once INT is full |
+| Daily Quest chests | 100 XP finishes the Daily Quest (Cal, 2026-11-10); a chest opens at 100, 200 and 300 XP of the day: 200, 400 and 600 coins (`ECON.dqTiers`), x (1 + 5% a point of INT, at most +25%). The 300 chest also rolls `ECON.chest3`: a low relic 50%, an accessory the player does not own from any brand 33%, a mid relic 13%, a high relic 4%; never something already owned (coins instead). The town's efficiency keeps its own 150 XP mark (`ECON.effGoal`) |
+| Hidden quest (400 XP) | a streak freeze, or +1 INT, or 300 coins once INT is full (`ECON.hiddenXp`) |
 | Level up | 50 + 5 x level, paid once per level (`ECON.lvPay`) |
 | Businesses | each day at most a share of the day's quest coins: 20% with a bare town, up to 50% with every upgrade of every room a player can open, +1% a VIT point (10% at most), times the town's efficiency (0 to 150%). The rest waits in the room |
 | Dungeon Crawls, 5 a day | a random haul by how deep the dungeon is, and now and then a rare find: see below |

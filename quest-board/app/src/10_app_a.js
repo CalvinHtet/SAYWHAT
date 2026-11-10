@@ -495,9 +495,7 @@ var spinning=false;
 function wheelStart(i){var a=0;for(var k=0;k<i;k++)a+=WHEEL_DEG[k];return a}
 /* a piece of clothing from any brand in the game, dropped yet or not: the Dungeon Crawls' rules (crawlWear) without dungeon pieces and
    basics, and only what fits this body and is not owned yet */
-function wheelGift(){var ids=BRANDS.map(function(b){return b.id}),pool=SHOP.filter(function(it){var e=it[6]||{};
-    return CRAWLWEAR.test(it[1])&&!e.dungeon&&e.b!=="basics"&&ids.indexOf(e.b)>=0&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)});
-  return pool.length?pool[Math.floor(Math.random()*pool.length)]:null}
+function wheelGift(){return freeItem({slots:CRAWLWEAR,brands:"all"})}
 function wheelHtml(){
   var can=S.wheel!==today(),ci=0;
   var conic='conic-gradient('+WHEEL.map(function(w,i){var a=wheelStart(i),b=a+WHEEL_DEG[i],t=WHEEL_DEG[i]/3,g=function(c,p,q){return c+' '+p.toFixed(2)+'deg '+q.toFixed(2)+'deg'};

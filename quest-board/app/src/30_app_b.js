@@ -334,7 +334,7 @@ function markActive(){
   if(weekCount()>=4&&!S.weekPaid[wk]){
     S.weekPaid[wk]=1;var wb=weekBonus();
     setTimeout(function(){
-      var live=dropState().live.map(function(x){return x.id}),pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)&&it[4]<=effLvl()+5}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null;
+      var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
       if(pz){S.owned[pz[0]]=true;persist()}
       var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
@@ -1351,7 +1351,7 @@ var SHOPLV=/^(buff|theme|frame|bg|pet|title|burst|hud|sound|scene)$/;
 function shopNewAt(L){if(typeof areaGate==="function"&&areaGate("shop"))return 0;return SHOP.filter(function(x){return x[4]===L&&SHOPLV.test(x[1])}).length}
 function lvEmpty(L){return L>1&&!REWARDS.some(function(r){return r[0]===L})&&GATES.indexOf(L)<0&&!FX.some(function(f){return f[0]===L})&&!shopNewAt(L)&&!AREAS.some(function(a){return a[2]===L})&&!DNG.some(function(d){return d.lv===L})}
 function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.crates[L])return null;S.crates[L]=1;var live=[];try{live=dropState().live.map(function(x){return x.id})}catch(e){}
-  var pool=SHOP.filter(function(it){return /^a_/.test(it[1])&&isRigItem(it)&&(it[6].b==="basics"||live.indexOf(it[6].b)>=0)&&!S.owned[it[0]]&&itemFits(it)}),pz=pool.length?pool[Math.floor(Math.random()*pool.length)]:null,k=["str","agi","vit","int"][L%4];
+  var pz=freeItem({slots:/^a_/,brands:live,basics:true}),k=["str","agi","vit","int"][L%4];
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
   if(pz)S.owned[pz[0]]=true;else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
