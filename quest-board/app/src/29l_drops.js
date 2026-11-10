@@ -123,7 +123,8 @@ function flBrands(F){return BRANDS.filter(function(b){return brandFloor(b.id)===
 function flIsDrop(F,x,x0){return (F.days||DROPDAYS).indexOf(ymdWd(x))>=0&&(!(F.every>1)||Math.floor((x-x0)/7)%F.every===0)}
 function flOrderAt(F,ids,j){if(F.id==="street"&&DROPS.on)return dropOrderAt(j);return j<ids.length||DROPS.rerun?ids[j%ids.length]:null}
 /* the floors this player has: one with brands, at or past its level (the Street with the Closet, as the Shop itself) */
-function floorsOpen(){var L=0;try{L=effLvl()}catch(e){}return (ECON.floors||[]).filter(function(F){return flBrands(F).length&&(!(F.lv>0)||L>=F.lv)})}
+/* named shopFloors: 10_app_a.js has its own floorsOpen() (the Loft's floors), and two declarations of one name in the joined closure means the later one replaces the other */
+function shopFloors(){var L=0;try{L=effLvl()}catch(e){}return (ECON.floors||[]).filter(function(F){return flBrands(F).length&&(!(F.lv>0)||L>=F.lv)})}
 function dropFloor(n,F){var byId={},ids=flBrands(F),lv=F.live||DROPS.live;BRANDS.forEach(function(b){byId[b.id]=b});
   if(!ids.length)return {live:[],vault:[],soon:[],next:null};
   var day=DROPS.cal0,x0=ymdN(day),t=ymdN(dropYmd(n)),days=[day],m=0,seq=[];
@@ -145,7 +146,7 @@ function dropMine(n){return dropFloor(n,flGet("street")||{id:"street",days:DROPD
    Worked out Wednesday by Wednesday from cal0, so every phone agrees (QA, rc-0.89: only 8 of 16 came back, OVERPASS 5 days after
    leaving, SAYMORE back on a Wednesday and dropping that Friday). One brand for the whole Shop, from the floors this player has
    (W42). */
-dropPick=function(wd){var FO=floorsOpen(),k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0+"|"+FO.map(function(F){return F.id}).join(",");if(k in DROPWED)return DROPWED[k];
+dropPick=function(wd){var FO=shopFloors(),k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0+"|"+FO.map(function(F){return F.id}).join(",");if(k in DROPWED)return DROPWED[k];
   var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
   for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m={vault:[],soon:[]},best=null,bs="",bl="",due={};
     FO.forEach(function(F){var d=dropFloor(dropStart(w),F);m.vault=m.vault.concat(d.vault);m.soon=m.soon.concat(d.soon||[])});
@@ -157,13 +158,13 @@ dropPick=function(wd){var FO=floorsOpen(),k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+
 /* Wednesday only: the vault brand, from 8 am Wednesday to 8 am Thursday Pacific */
 dropBack=function(n){var t=dropYmd(n);if(ymdWd(ymdN(t))!==3)return null;var b=dropPick(t);return b?Object.assign({},b,{back:1,backFrom:t,backUntil:ymdAdd(t,1)}):null};
 /* the Shop now: live is every open floor's brands (and the Wednesday one); floors holds each open floor's own live, soon and next */
-dropState=function(){var n=dropNow();dropStamp();var FO=floorsOpen(),fl={},live=[],bk=dropBack(n);
+dropState=function(){var n=dropNow();dropStamp();var FO=shopFloors(),fl={},live=[],bk=dropBack(n);
   FO.forEach(function(F){var d=dropFloor(n,F);fl[F.id]=d;live=live.concat(d.live)});
   if(bk&&!live.some(function(x){return x.id===bk.id})){live=[bk].concat(live);if(fl[bk.fl])fl[bk.fl].live=[bk].concat(fl[bk.fl].live)}
   return {n:n,live:live,vault:[],next:fl.street?fl.street.next:null,back:bk,floors:fl,open:FO.map(function(F){return F.id})}};
 /* a floor opening (the Boutique at 30): one window, once, then its brands' splashes one at a time (brandCheck). A player already
    past its level gets it on their next load. S.floorSeen[id] is the day they saw it */
-function floorFresh(){var o=S.floorSeen||{};return floorsOpen().filter(function(F){return F.lv>0&&!o[F.id]})[0]||null}
+function floorFresh(){var o=S.floorSeen||{};return shopFloors().filter(function(F){return F.lv>0&&!o[F.id]})[0]||null}
 function floorSplash(F){if(!S.floorSeen||typeof S.floorSeen!=="object")S.floorSeen={};S.floorSeen[F.id]=dropYmd(dropNow());persist();
   modal('<div class="card box2 flsplash"><span class="label">The Shop</span><h2>The '+esc(F.name)+' is open</h2><p class="note">A new floor in the Shop, with brands of its own. '+esc(F.line)+'.</p><div class="btns"><button class="btn" data-flgo="'+esc(F.id)+'">Have a look</button></div></div>')}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-flgo]");if(!b)return;closeModals();QSFLOOR=b.dataset.flgo;window._qsSeen=0;
@@ -176,4 +177,4 @@ setInterval(function(){try{if(!loaded||!S.created||document.hidden||areaGate("sh
 /* brandCheck is called from more than this timer: the floor's window always goes first, then its brands */
 var flBrandBase=brandCheck;brandCheck=function(){var F=floorFresh();if(F){if(!document.querySelector("#layer .modal,.bsplash"))floorSplash(F);return}return flBrandBase.apply(this,arguments)};
 /* test hook, removed at release with window.__qb */
-window.__qbDrops={floor:function(id,t){return dropFloor(t==null?dropNow():t,flGet(id))},floors:floorsOpen,count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};
+window.__qbDrops={floor:function(id,t){return dropFloor(t==null?dropNow():t,flGet(id))},floors:shopFloors,count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};

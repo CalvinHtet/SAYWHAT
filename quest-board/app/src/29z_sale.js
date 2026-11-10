@@ -8,7 +8,7 @@
    "need N more" and the checkout all charge it; tomorrow the old price comes back. */
 function saleRand(seed){var r=dropRand("sale|"+seed);return r}
 /* the brands in this player's Shop on drop day ymd: each open floor's live ones, oldest first, then the Wednesday one */
-function saleBrands(ymd){var n=dropStart(ymd)+36e5,L=[];try{floorsOpen().forEach(function(F){dropFloor(n,F).live.forEach(function(b){if(L.indexOf(b.id)<0)L.push(b.id)})});
+function saleBrands(ymd){var n=dropStart(ymd)+36e5,L=[];try{shopFloors().forEach(function(F){dropFloor(n,F).live.forEach(function(b){if(L.indexOf(b.id)<0)L.push(b.id)})});
   var bk=dropBack(n);if(bk&&L.indexOf(bk.id)<0)L.push(bk.id)}catch(e){}return L}
 function salePlace(ymd){var L=saleBrands(ymd),k=ymdN(ymd);return L.length?L[((k%L.length)+L.length)%L.length]:null}
 /* the brand on sale on drop day ymd: the date picks a place in that day's list, moved one on if it lands on the day before's brand;
