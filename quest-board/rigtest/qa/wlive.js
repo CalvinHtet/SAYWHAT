@@ -1,6 +1,7 @@
 // Live build checks for a release candidate (LEAD 17:28): the test tools are stripped (no window.__qb* hooks, no "Testing" rows or
 // buttons), QB_EPOCH 6, APPV, version.json lists every file with its size and the sizes match, app.js compiles, and a first load has
-// no page errors. Run on the Live build (build_web.sh without "sandbox"), served on its own port.
+// no page errors. Run on the Live build (build_web.sh without "sandbox"), served on its own port. __qbLoad (the loader's timing,
+// loader.html) and __qbWeb (web.js: live, signedIn, running) are platform objects, not test hooks, and are allowed.
 //   BASE=http://127.0.0.1:8812 DIST=<that dist-web> APPV=91 CHROME_PORT=9374 bash tools/windows/node.sh rigtest/qa/wlive.js
 const fs = require('fs'), path = require('path');
 const { browser, sleep } = require('./cdp.js');
@@ -23,7 +24,7 @@ const BASE = process.env.BASE || 'http://127.0.0.1:8812', DIST = process.env.DIS
   }
   const br = await browser(); const pg = await br.page({ fresh: true });
   await pg.go(BASE + '/'); await sleep(12000);
-  const r = await pg.ev(`(function(){var hooks=Object.keys(window).filter(function(k){return /^__qb|^qbDbg$/.test(k)});var t=document.body.innerText;
+  const r = await pg.ev(`(function(){var hooks=Object.keys(window).filter(function(k){return /^__qb|^qbDbg$/.test(k)&&!/^__qb(Load|Web)$/.test(k)});var t=document.body.innerText;
     return {hooks:hooks,testing:(t.match(/Testing[^\\n]{0,40}/g)||[]).slice(0,4),qbt:!!document.getElementById('qbt'),sandbox:/SANDBOX/.test(t),boot:window.__qbBootErr||null,text:t.replace(/\\s+/g,' ').slice(0,120)}})()`);
   ok(!r.hooks.length, 'test hooks on window: ' + (r.hooks.length ? r.hooks.join(', ') : 'none'));
   ok(!r.testing.length && !r.qbt, 'no "Testing" text or test button on the first screen' + (r.testing.length ? ': ' + r.testing.join(' | ') : ''));

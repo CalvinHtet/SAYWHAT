@@ -60,6 +60,14 @@ Pictures and logs go to `OUT` (default: the temp folder's `qa-out/`).
 | `loftviews.js` | `BASES` | The Loft street and each building on several builds side by side: pictures, svg size, room count. |
 | `rc090_econsave.js` | `SRC`, `DST`, `RB` | Saves made at given levels on old builds, loaded on the new one (level, XP fraction, coins, rooms), then the rollback round trip. |
 | `perfload.js`, `perfrun.js`, `cpuprof.js` | see each file | Load time under network and CPU throttling, per-screen runtime, level effects A/B (the W1 section below). |
+| `run_rc.sh` | `<commit> [out]`, `APPV`, `REF` | The whole list for a release candidate: a clean worktree, a Live and a sandbox build, then every script below on two Chromes (about 15 minutes). Outputs in `<out>/<name>.txt`, read by hand. |
+| `wlive.js` | `BASE`, `DIST`, `APPV` | The Live build: app.js compiles, QB_EPOCH, APPV, version.json sizes, noTest, no `__qb*` test hooks on `window` (`__qbLoad` and `__qbWeb` are the platform's own), no Testing row, no SANDBOX badge, 0 page errors. |
+| `wsaveload.js` | `BASE` | Old saves load (every candidate, LEAD 2026-11-10): each seed save with its bounty state from today, yesterday, 3 days ago, junk and missing, plus a v0.91 save mid-bounty: the Board and both bounty cards, 0 page errors. |
+| `wbounty.js` | `BASE` | v0.92 bounties: pools of 200 and 100, no duplicates, each player's own order, "Another" makes no network or AI call, the 2-day window, the pay tags, an old 3-day bounty kept to its end. |
+| `wbounty_fix.js` | `BASE` | One bounty bonus per quest (the old daily x2 never stacks on a taken bounty, 20 days) and the 2-day card's days left across its window. |
+| `wui92.js` | `BASE` | v0.92 Board order shortest first with "~N min", the quest toast under the coins and envelope (3 s, fade, replaced, taps go through), the building view's "+" window and its Buy at the room card's price. |
+| `wboss.js`, `wchat2.js`, `wwardrobe.js`, `wweekly.js` | `BASE`, `OUT` | v0.92 Town Boss (spawn rule, HP, daily cap, win chest, loss fire), chat runs and greetings and online dots, Wardrobe filters, Weekly Warrior x1-x4. |
+| `wcontrast.js` | `BASES`, `OUT`, `RANKS`, `VIEWS` | Text contrast on the real pixels (WCAG AA) on every screen and rank, two builds side by side. |
 
 The `rc089_*`, `rc090_*`, `wchests_*`, `wfloors_*`, `wfocus_*` and `nospoil_*` scripts are one-off checks from the v0.89-v0.91 passes.
 They keep Windows paths for their outputs (`C:/Users/clvh/qa-wt/out`) and need `OUT` set elsewhere.
