@@ -95,14 +95,21 @@ lfNext=function(a){if(!a||!a.pvn||a.leaving||(a.leaveAt&&Date.now()>a.leaveAt))r
    own group, which the depth sort puts behind tables and chairs: there a tag under the feet was mostly hidden. It follows the
    character every frame (lfDraw) and goes with them (lfDrop, and a sweep for anything left over). */
 function pvTagId(a){return "pvt-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_")}
+/* QA/LEAD 2026-11-11: the tag read about 5 px in the room window and 2 px in the building view. Its size is now set from how big one
+   unit of the room drawing is on screen (getScreenCTM, so zooming in or out keeps it the same), for PVTAGPX px text; where that
+   would make the tag bigger than PVTAGMAX units (the building view, zoomed out) it is hidden, since it could not be read there. */
+var PVTAGPX=11,PVTAGMAX=28;
 function pvTagDraw(a){var g=document.getElementById("lfa-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_"));if(!g||!g.parentNode)return;
   var host=g.closest(".lfitems")||g.parentNode,t=document.getElementById(pvTagId(a));
   if(!t){var nm=esc(a.pvn),w=Math.max(30,Math.round(a.pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
-    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,'+(6*LFK*LFBIG+3).toFixed(1)+')"><rect x="'+(-w/2)+'" y="0" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="8.6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g>';
+    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,'+(6*LFK*LFBIG+3).toFixed(1)+')"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="0" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="8.6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
     t=tmp.firstChild}
   if(t.parentNode!==host||host.lastChild!==t)host.appendChild(t);
   var tf=g.getAttribute("transform")||"";if(t._tf!==tf){t._tf=tf;t.setAttribute("transform",tf)}
-  var op=g.parentNode===host?(a.alpha==null?1:a.alpha):0;if(t._op!==op){t._op=op;t.style.opacity=op}}
+  /* the drawn size: 8-unit text at k screen px per unit; scale the pill so the text is PVTAGPX px, never below its old size */
+  var m=null;try{m=t.getScreenCTM()}catch(e){}var k=m?Math.sqrt(m.a*m.a+m.b*m.b):0,f=k>0?Math.max(1,PVTAGPX/(8*k)):1,hide=k>0&&8*f>PVTAGMAX;
+  if(!hide&&(!t._f||Math.abs(f-t._f)/f>.05)){t._f=f;var s=t.querySelector(".pv-tag-s");if(s)s.setAttribute("transform","scale("+f.toFixed(3)+")")}
+  var op=hide?0:g.parentNode===host?(a.alpha==null?1:a.alpha):0;if(t._op!==op){t._op=op;t.style.opacity=op}}
 var pvDrawBase=lfDraw;
 lfDraw=function(a){var r=pvDrawBase.apply(this,arguments);if(a&&a.pvn)try{pvTagDraw(a)}catch(e){}return r};
 var pvDropBase=lfDrop;
