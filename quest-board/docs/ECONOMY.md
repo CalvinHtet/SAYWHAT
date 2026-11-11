@@ -125,7 +125,7 @@ there is a problem"), room by room after the rule above:
 4. Each list is in price order, cheapest first, and a piece that needs another comes right after it (`econSort`). The room window
    shows the next three and a mystery card; an upgrade that opens a room goes first. Nothing in the building tab waits for a level or a
    day (Cal: "make everything locked around money and unlocking it sequentially rather than locked by a day or level"): money, this
-   order and the room triggers pace it. Noir is bought when it comes up, like any upgrade, and the bar follows at once.
+   order and the room triggers pace it. One exception, by Cal (18:23): Noir (it opens the bar) waits for 180 dishes served (`ECON.noirServed`, about 2 an hour, so about 4 days) and its card is listed first with "Dishes served: N" and a bar; the bar follows the moment Noir is bought.
 5. No invisible upgrades: the Back Office Safe and the Root Cellar drew nothing and only held more hours, so they left the shop
    (`ECON.retire`). Owners keep them and what they do; the ids stay.
 
@@ -153,7 +153,7 @@ room (Rafe and Nova, the two team steps, keep theirs). A room whose trigger is m
 | Closet / Patio / Game Room | 30% / 50% / 70% of the Bedroom (10 / 16 / 23 of 32) |
 | Garden | 60% of the Loft's core rooms, built or not (46 of 76) |
 | Restaurant | the Garden has made 3,000 coins (produce sold and coins collected; about 3 to 4 days) |
-| Lock and Key (the bar) | the Restaurant's Noir is bought (in price order, after most of the Restaurant); it comes before Boba and Dessert |
+| Lock and Key (the bar) | the Restaurant's Noir is bought (Noir waits for 180 dishes served, about 4 days); it comes before Boba and Dessert |
 | Rooftop / Boba | 50% / 75% of Lock and Key (7 / 10 of 13) |
 | Dessert | 60% of Boba (9 of 15) |
 | Mall | every Kode Plaza room built, then 60% of their upgrades (94 of 156) |
