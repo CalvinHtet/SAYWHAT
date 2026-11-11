@@ -316,7 +316,9 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
    4. each list is in price order, cheapest first, and a piece that needs another comes right after it (at its own price).
    No invisible upgrades: the Back Office Safe and the Root Cellar drew nothing and only held more hours, so they leave the shop
    (ECON.retire); owners keep them and what they do, and the ids stay. */
-function econRules(){(ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
+function econRules(){/* Cal: Noir (it opens the bar) about 4 days after the Restaurant opens: it waits for ECON.noirServed dishes served (about 2 an hour) */
+  (ADDONS.restaurant||[]).forEach(function(a){if(a[0]==="r_noir")a[3]=Object.assign({},a[3]||{},{served:ECON.noirServed})});
+  (ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
   Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k]||{},biz=!!(T.coin||T.food),A=ADDONS[k]||[],L=A.filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});if(!L.length)return;
     var hard=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion")},bare=function(a){var e=a[3]||{};return !(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&!e.fresh&&!e.dish};
     /* a looks-only piece is cheap even if it was a big moment (the Stone Fountain) */
