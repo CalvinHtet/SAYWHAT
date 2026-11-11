@@ -46,4 +46,5 @@ function teamHtml(){var ids=teamList();if(!ids.length)return '';
     return '<div class="tm-card" style="--tac:'+t.ac+'">'+(art?'<img src="'+art+'" alt="">':'<i>'+esc(t.name[0])+'</i>')+'<b>'+esc(t.name)+'</b><small>'+esc(t.role)+'</small><span>'+esc(tmBuffTxt(t))+'</span></div>'}).join("")+'</div></section>'}
 /* class pictures: a man's and a woman's version when ROOMS has painted them (ui_class_<id>_m.webp, _f.webp) */
 function clsArt(id){var x=(S.char&&S.char.sex)==="f"?"f":"m",u=window.QBART&&QBART["ui_class_"+id+"_"+x+".webp"];return u||ART["class_"+id]}
-window.__qbTeam={join:teamJoin,list:teamList,TEAM:TEAM};
+/* a test hook (w-ui92): not on a Live build; the game reads teamList and TEAM directly (26_world.js) */
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbTeam={join:teamJoin,list:teamList,TEAM:TEAM};

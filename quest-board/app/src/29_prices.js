@@ -39,8 +39,8 @@ Object.keys(ADDONS).forEach(function(k){if(!ROOMT[k]||!(ROOMT[k].coin||ROOMT[k].
 /* ---------- test controls: a small button on every screen. Remove before release. ---------- */
 /* Testing (Cal, 2026-11-06): new characters on the test copy start at this level, trials passed. Set to 0 (or remove) at release. */
 var QB_TEST_START=0;
-function qbWeek(){window.__qbShift=(window.__qbShift||0)+7*864e5;S.testFree=7;persist();render();pop("Skipped one week");setTimeout(brandCheck,200);setTimeout(function(){try{styCheck()}catch(e){}},600)}
-function qbReset(){loaded=false;window.__qbShift=0;try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
+function qbWeek(){qbSetShift(qbShift()+7*864e5);S.testFree=7;persist();render();pop("Skipped one week");setTimeout(brandCheck,200);setTimeout(function(){try{styCheck()}catch(e){}},600)}
+function qbReset(){loaded=false;qbSetShift(0);try{localStorage.removeItem("quest-board")}catch(e){}var go=function(){location.reload()};if(db&&DOC)db.doc(DOC).delete().then(go,go);else go()}
 /* a page still open from an older version stops saving as soon as a newer version has saved, so it cannot overwrite that progress */
 function qbWatchSave(){if(!db||!DOC||!db.doc(DOC).onSnapshot)return;db.doc(DOC).onSnapshot(function(s){var d=s&&s.exists?s.data():null;if(d&&(+d.appv||0)>APPV&&!newerSeen){newerSeen=true;showUpdate(+d.appv)}})}
 function qbRestore(){if(!db||!MYUID){pop("No backup on this device");return}db.doc("data/users/"+MYUID+"/backup").get().then(function(s){if(!s.exists){pop("No backup yet");return}loaded=false;db.doc(DOC).set(s.data()).then(function(){try{localStorage.removeItem("quest-board")}catch(e){}location.reload()},function(){location.reload()})})}

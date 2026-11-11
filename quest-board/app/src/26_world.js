@@ -87,9 +87,11 @@ lfSkyline=function(rows){var Ls=lfLS(),sk=lfSkyCols(Ls),gy=LFROOF+rows*LFFP,X0=-
   var nearC=lfMix(lfMix("#4c5e84","#78485a",gd*.6),"#0a0c20",dk*.96);o+=layer(nearC,"lfw1",80,170,110,380,70);
   for(var px=X0+60;px<X1;px+=340+R()*260){var ph=120+R()*90,tc=lfMix(lfMix("#3b4a58","#5a3a3a",gd*.5),"#07081a",dk*.95);o+='<g fill="none" stroke="'+tc+'" stroke-linecap="round"><path d="M'+px.toFixed(0)+' '+gy+' Q'+(px+5).toFixed(0)+' '+(gy-ph/2).toFixed(0)+' '+(px+3).toFixed(0)+' '+(gy-ph).toFixed(0)+'" stroke-width="5"/>';[-1,-.55,0,.55,1].forEach(function(a){o+='<path d="M'+(px+3).toFixed(0)+' '+(gy-ph).toFixed(0)+' q'+(a*24).toFixed(0)+' -'+(16-Math.abs(a)*8).toFixed(0)+' '+(a*46).toFixed(0)+' '+(Math.abs(a)*16).toFixed(0)+'" stroke-width="4"/>'});o+='</g>'}
   return o};
-/* nothing on an empty lot but a small marker on the ground. Tapping it says what goes there. */
+/* nothing on an empty lot but a small marker on the ground. Tapping it says what goes there.
+   W60 (Cal, 2026-11-10): the tap opens the lot's own window (29zu_ui92.js nxTap): its picture, name, price and Buy, or only "?" and
+   what to do while it is not ready yet. It no longer names the room or a level in a toast. */
 function lotHtml(k){var T=ROOMT[k],lk=effLvl()<T.lv;
-  return '<g data-lf="'+(lk?'lock:'+esc(T.name)+':'+T.lv:'build:'+S.base.slots.length)+'" style="cursor:pointer"><rect x="-70" y="-70" width="140" height="140" fill="rgba(0,0,0,.001)"/>'+(lk?'<g opacity=".6"><circle r="20" fill="rgba(20,18,28,.7)" stroke="rgba(255,200,87,.55)" stroke-width="2"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#ffc857"/><path d="M-5 -2V-7a5 5 0 0 1 10 0V-2" fill="none" stroke="#ffc857" stroke-width="2.5"/></g>':'<g class="lfplus"><circle r="24" fill="rgba(20,18,28,.75)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><path d="M-10 0H10M0 -10V10" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></g>')+'</g>'}
+  return '<g data-lf="lot:'+k+'" style="cursor:pointer"><rect x="-70" y="-70" width="140" height="140" fill="rgba(0,0,0,.001)"/>'+(lk?'<g opacity=".6"><circle r="20" fill="rgba(20,18,28,.7)" stroke="rgba(255,200,87,.55)" stroke-width="2"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#ffc857"/><path d="M-5 -2V-7a5 5 0 0 1 10 0V-2" fill="none" stroke="#ffc857" stroke-width="2.5"/></g>':'<g class="lfplus"><circle r="24" fill="rgba(20,18,28,.75)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><path d="M-10 0H10M0 -10V10" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></g>')+'</g>'}
 /* Inside a building, its painted backdrop (bld_bg_<id>.webp, Cal approval 11) stands behind the rooms, in front of the city;
    it dims with the night like the rest of the scene. The street view is unchanged. (LEAD, with ROOMS's OK on lfWorld) */
 function bldBgArt(id){var n="bld_bg_"+id+".webp",D=QBLoft.data;return (window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
@@ -484,7 +486,8 @@ var TMHOME={mara:"restaurant",rafe:"skybar",nova:"mall",theo:"theater",sable:"la
 /* each member's signature top (painted for them; Mara keeps her chef whites) replaces the top in their look */
 var TMTOP={rafe:"tm_rafe_jacket",theo:"tm_theo_tee",nova:"tm_nova_knit",sable:"tm_sable_jacket"};
 var lfDesiredTmBase=lfDesired;
-lfDesired=function(){var out=lfDesiredTmBase(),Q=window.__qbTeam;if(!Q||!Q.list)return out;
+/* w-ui92: the team comes from 29c_team.js directly (teamList, TEAM), not from the window.__qbTeam test hook, which a Live build drops */
+lfDesired=function(){var out=lfDesiredTmBase(),Q=typeof teamList==="function"&&typeof TEAM!=="undefined"?{list:teamList,TEAM:TEAM}:null;if(!Q||!Q.list)return out;
   try{Q.list().forEach(function(id){var home=TMHOME[id],T=Q.TEAM[id];if(!home||!T)return;var i=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===home&&i<0)i=k});
     if(i<0||!LFMETA[i])return;var L=T.look||{},eq=[],D=QBLoft.data,sig=TMTOP[id]&&D.items[TMTOP[id]]?TMTOP[id]:null;Object.keys(L.equipped||{}).forEach(function(s){var e=L.equipped[s];if(e&&e.art&&!(sig&&s==="top"))eq.push(e.art)});if(sig)eq.push(sig);
     out.push({id:"tm:"+id,room:i,role:"crew",look:rsNpc(Object.assign({},RSK,{body:L.body||"m",hairStyle:L.hairStyle||"h1",hairColor:L.hairColor||"brown",eq:eq})),idle:1,wand:1,tm:id,tmc:T.ac||"#ffd27a",tmn:T.name.split(" ")[0]})})}catch(e){}

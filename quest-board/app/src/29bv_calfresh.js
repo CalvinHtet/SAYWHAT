@@ -20,7 +20,7 @@ function cfRun(){if(!cfDue())return null;var before=JSON.parse(JSON.stringify(S)
   try{if(db)db.doc(bk).get().then(function(s){if(!(s&&s.exists))return db.doc(bk).set(before)}).catch(function(){})}catch(e){}
   var n=fresh(),t=Date.now();CFKEEP.forEach(function(k){if(before[k]!=null)n[k]=before[k]});
   n.calfresh91={at:t,d:today()};n.joinedAt=t;n.reset91={at:t,d:today(),refund:0,rooms:0,ups:0,fresh:1,cal:1};
-  n.appv=APPV;n.epoch=QB_EPOCH;n.tshift=window.__qbShift||0;n.savedAt=t;n.uid=MYUID;delete S.r91p;
+  n.appv=APPV;n.epoch=QB_EPOCH;n.tshift=qbShift();n.savedAt=t;n.uid=MYUID;delete S.r91p;
   S=n;
   /* online at once: persist() keeps a save whose character isn't made yet on the device only */
   try{localStorage.setItem("quest-board",JSON.stringify(S))}catch(e){}

@@ -46,7 +46,7 @@ htabCss("qb-chat-css",
   +".tch-ndot{position:absolute;top:4px;left:18%;width:9px;height:9px;border-radius:50%;background:#ff4d5e;box-shadow:0 0 0 2px var(--surface);pointer-events:none}"
   +"body.tch-typing .nav{display:none}");
 /* real time, whatever the Test tools did to the game clock */
-function tchNow(){return Date.now()-(window.__qbShift||0)}
+function tchNow(){return Date.now()-qbShift()}
 /* one line of plain text: no control, zero-width or text-direction characters, spaces squeezed, at most n characters */
 function tchClean(s,n){s=(typeof s==="string"?s:"").slice(0,2000).replace(TCHBAD," ").replace(/\s+/g," ").trim();
   return s.slice(0,n||TCHMAX).replace(/[\ud800-\udbff]$/,"")}
