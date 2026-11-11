@@ -353,8 +353,10 @@ function btyPerm(k){var P=k===2?BTY2:BTY1,key=k+":"+btySeed()+":"+P.length;if(BT
 function btyPick(k){var b=btyState(),P=k===2?BTY2:BTY1,n=btyDay(),pm=btyPerm(k),i=(k===2?Math.floor(n/2):n)+btyNum(k===2?b.o2:b.o1);
   if(!pm.length||!isFinite(i))return null;var x=P[pm[((i%pm.length)+pm.length)%pm.length]];return x?{n:x[0],why:x[1],xp:x[2],stat:x[3],cl:x[4]}:null}
 function btyTaken(k){var key=k+":"+btyEnd(k);return S.quests.some(function(q){return q.bty&&q.bty.key===key})}
-function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),left=k===2?Math.max(1,Math.round((Date.parse(btyEnd(2)+"T23:59:59")-Date.now())/864e5)):0;
-  return '<div class="bty-card"><span class="label">'+(k===2?'2-day bounty &middot; '+left+' day'+(left>1?'s':'')+' left':'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
+/* the 2-day bounty's game days left: 2 on its first day, its last day on the second (QA: hours rounded said "1 day left" from noon) */
+function btyLeft(){return Math.max(1,Math.floor(Date.parse(btyEnd(2)+"T00:00:00Z")/864e5)-btyDay()+1)}
+function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),left=k===2?btyLeft():0;
+  return '<div class="bty-card"><span class="label">'+(k===2?'2-day bounty &middot; '+(left>1?left+' days left':'last day'):'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
     +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===2?2:1.5))+' XP</span>'+(took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'">Another</button>':''))+'</div></div>'}
 /* a bounty can never stop the Board from drawing: anything that goes wrong here shows no bounty today */
 function btyHtml(){if(!S.created)return '';var c='';try{c=btyCard(1)+btyCard(2)}catch(e){c=''}
