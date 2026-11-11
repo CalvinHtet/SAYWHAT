@@ -116,6 +116,9 @@ function unlockVia(t,d){var s=styStep(t),o=styState();if(s&&(o.offer[s.id]||(d<6
 /* the next thing to buy toward an upgrade (its own needs first), in a room the player has */
 function unlockNext(room,id){var r=slotOf(room),by={};if(!r)return null;(ADDONS[room]||[]).forEach(function(a){by[a[0]]=a});var a=by[id],n=0;
   while(a&&n++<6){var e=a[3]||{},q=by[ADDREQ[a[0]]]||by[e.also];if(q&&!(r.a&&r.a[q[0]]))a=q;else break}return a&&!(r.a&&r.a[a[0]])?a:null}
+/* the upgrade in this room that the story waits on next (the Restaurant's way to Noir, which opens the bar), so the room window
+   lists it first, even while it waits for its dishes, like an upgrade that opens a room (Cal: "make sure my dead end bug doesnt appear") */
+function styNextBuy(room){if(room!=="restaurant"||styNoir()||styHas("skybar"))return null;var a=unlockNext("restaurant","r_noir");return a?a[0]:null}
 function unlockLine(t,d){d=d||0;var u=(ECON.unlock||{})[t];if(!u)return null;
   if(u.at){var r=slotOf(u.at);if(!r)return unlockVia(u.at,d);var f=roomFill(r),need=Math.ceil(f.tot*u.pct);
     return unlockUps("at",f.n>=need,rmName(u.at),f.n,need)}
