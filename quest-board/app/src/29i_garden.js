@@ -27,4 +27,4 @@ var gdNoteBase=gdNote;gdNote=function(r){return gdNoteBase(r).replace(" Build th
    stage (ECON.sprAlso) and cost ECON.sprPrice, so watering stays a daily habit for most of the Garden's life. */
 (ADDONS.garden||[]).forEach(function(a){if(a[0]==="g_spr"){a[2]=ECON.sprPrice;a[3]=Object.assign({},a[3]||{},{also:ECON.sprAlso,fixed:1})}});
 /* the Sprinklers' price changes here, after 29e_economy.js set the shares: put the Garden back in price order */
-econEarn("garden");
+econEarn("garden");if(typeof econSort==="function")econSort();/* QA (v0.91): the Sprinklers sat ahead of the Grape Trellis */
