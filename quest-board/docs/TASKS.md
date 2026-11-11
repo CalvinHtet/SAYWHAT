@@ -21,7 +21,7 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; anything needing art waits about 52 h (Cal's Mac limit).
+Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; THEN the final MAC_HANDOFF.md and the Windows team stops (Cal 16:15: "Will continue everything through claude on mac"); anything needing art waits about 52 h (Cal's Mac limit).
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
