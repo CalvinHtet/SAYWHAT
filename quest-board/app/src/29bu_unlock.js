@@ -1,5 +1,5 @@
 /* ---------- the one-time reset (Cal, 2026-11-10: "initialize the loft and refund all the money they have spent so far") ----------
-   With the new way rooms open (ECON.unlock), a save from before APPV ECON.resetBefore gets, once, after it loads:
+   With the new way rooms open (ECON.unlock), every save that has never been reset gets, once, after it loads:
    - a backup of the whole save first: data/users/<id>/backup_v91 online and quest-board-backup-v91 on this device;
    - every room and building purchase reset: the rooms, their upgrades, the lots, decor styles, paint and hires (ECON.resetScope
      "loft" keeps the other buildings); the Bedroom is back as it starts;
@@ -7,8 +7,9 @@
    - the room story steps cleared so they open again in order (the people who joined, the goals claimed, level, XP, clothes,
      relics, quests, Training, social and the coins on hand all stay);
    - a letter in the inbox with the amount.
-   The merge marks a save from before (S.r91p); S.reset91 records what was done, so it never runs twice. A save made on this
-   version or later is never marked. */
+   The merge marks a made save with no S.reset91 (S.r91p; LEAD: keyed on "never reset", not on the version, so nothing can skip
+   it); S.reset91 records what was done, so it never runs twice. A character made on this version gets S.reset91 {fresh:1} at once,
+   so it is never reset. */
 /* what a room cost at today's prices: its upgrades (openers included), its decor styles, its paint and, for a room with a price
    (ROOMT cost) that no owned upgrade opened, the room itself. QA (v0.91): before 11-05 the Restaurant was built from a lot, not
    through the Garden's gd_rest, and old saves never got gd_rest, so a lot-built room is counted from its price. L: the slots it
@@ -40,8 +41,8 @@ function rsRun(){if(!S||!S.r91p||S.reset91)return null;
   persist();try{render()}catch(e){}
   if(refund>0)setTimeout(function(){if(!document.querySelector("#layer .modal")&&typeof ibOpen==="function")ibOpen("reset91");else pop("The Loft has been reset: see your inbox")},1500);
   return S.reset91}
-var rsMergeBase=merge;merge=function(d){var r=rsMergeBase.apply(this,arguments);try{if(S&&d&&d.created&&!S.reset91&&(+d.appv||0)<ECON.resetBefore)S.r91p=1}catch(e){}return r};
-setInterval(function(){try{if(loaded&&S&&S.created&&S.r91p&&!S.reset91)rsRun()}catch(e){}},1000);
+var rsMergeBase=merge;merge=function(d){var r=rsMergeBase.apply(this,arguments);try{if(S&&d&&S.created&&!S.reset91)S.r91p=1}catch(e){}return r};
+setInterval(function(){try{if(loaded&&S&&S.created&&!S.reset91){if(S.r91p)rsRun();else{S.reset91={at:Date.now(),d:today(),refund:0,rooms:0,ups:0,fresh:1};persist()}}}catch(e){}},1000);
 /* the letter (29x_inbox.js), only for a save that had something to reset */
 INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var R=S&&S.reset91;if(!R||!(R.refund>0))return [];
   /* Cal's text, approved 2026-11-10 */

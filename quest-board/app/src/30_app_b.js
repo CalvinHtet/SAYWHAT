@@ -6,14 +6,14 @@ function roomCell(i){
   var ws=roomCrew(i).map(function(k,j){return walkerHtml(crewLook(CREW[k].a),j+i*3)});
   if(r.t==="lounge"){ws.unshift(walkerHtml(lookOf(),99));crewUnlocked().filter(function(k){return S.base.crew[k]==null}).slice(0,3).forEach(function(k,j){ws.push(walkerHtml(crewLook(CREW[k].a),j+40))})}
   h+='<div class="walkers">'+ws.join("")+'</div>';
-  var pend=Math.floor(r.pend||0);
+  var pend=Math.min(Math.floor(r.pend||0),typeof bizLeft==="function"?bizLeft(r,i):Infinity);
   if(T.coin&&pend>=1&&(typeof payRoom!=="function"||payRoom()>=1))h+='<button class="bub" data-act="rcollect" data-i="'+i+'" aria-label="Collect '+pend+' coins"><i class="coin"></i><b class="mono">'+pend+'</b></button>';
   h+='<div class="rlabel"><b>'+esc(T.name)+'</b><span class="mono">'+(T.coin?Math.round(coinRate(i))+'/h':T.food?FOODN[T.food]+' '+(T.rate*roomMult(i)*openMult()).toFixed(1)+'/h':T.buff?'+'+baseBuffs().filter(function(x){return x.who===T.name})[0].b.pct+'% XP':'')+'</span></div>';
   return h+'</div>';
 }
 function baseHtml(){
   simulate();
-  var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r){return s+(r&&r.pend?Math.floor(r.pend):0)},0);
+  var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r,k){return s+(r&&r.pend?Math.min(Math.floor(r.pend),typeof bizLeft==="function"?bizLeft(r,k):Infinity):0)},0);/* w-econ3: what each business may still pay today */
   var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
@@ -229,7 +229,8 @@ function baseAct(a,b,e){
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
-  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got));if(n<Math.floor(r.pend||0))capped=true;r.pend-=n;r.earn=(r.earn||0)+n;got+=n}});payTake(got);
+  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false,full=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var bl=typeof bizLeft==="function"?bizLeft(r,k):Infinity,n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got),bl);if(n<Math.floor(r.pend||0)){if(n>=bl)full=true;else capped=true}r.pend-=n;r.earn=(r.earn||0)+n;if(typeof bizPaid==="function"&&n>0)bizPaid(r,n);got+=n}});payTake(got);
+    if(full&&!capped&&!got){pop(a==="rall"?"Your businesses have paid all they can today. More tomorrow.":"This business has paid all it can today. More tomorrow.");return true}
     if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
     if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
