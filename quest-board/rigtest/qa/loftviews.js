@@ -2,10 +2,11 @@
 // for each BASE, an advanced save: the street, then each building (bldgo 0..2), one picture each, plus a quick pixel hash.
 //   BASES=http://127.0.0.1:8816,http://127.0.0.1:8819,http://127.0.0.1:8815 bash tools/windows/node.sh rigtest/qa/loftviews.js
 const fs = require('fs'), crypto = require('crypto');
+const SEEDS = require('path').join(__dirname, 'seeds') + '/'; // saves in rigtest/qa/seeds (v0.88, v0.89, v0.90; test names only)
 const { browser, sleep } = require('./cdp.js');
 const BASES = (process.env.BASES || 'http://127.0.0.1:8816,http://127.0.0.1:8815').split(',');
-const OUT = process.env.OUT || 'C:/Users/clvh/qa-wt/out/loftviews'; fs.mkdirSync(OUT, { recursive: true });
-const SEED = JSON.parse(fs.readFileSync('C:/Users/clvh/qa-wt/out/seed_adv2.json', 'utf8'));
+const OUT = process.env.OUT || require('os').tmpdir() + '/qa-out/loftviews'; fs.mkdirSync(OUT, { recursive: true });
+const SEED = JSON.parse(fs.readFileSync(SEEDS + 'v88_adv.json', 'utf8'));
 (async () => {
   const br = await browser();
   for (const base of BASES) {

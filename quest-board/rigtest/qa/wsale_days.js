@@ -4,7 +4,7 @@
 //   CHROME_PORT=9373 bash tools/windows/node.sh rigtest/qa/wsale_days.js
 const fs = require('fs');
 const { browser, sleep, boot, E } = require('./wfocus_lib.js');
-const OUT = 'C:/Users/clvh/qa-wt/out/wsale'; const LOG = OUT + '/days.log'; fs.writeFileSync(LOG, '');
+const OUT = process.env.OUT || require('os').tmpdir() + '/qa-out/wsale'; fs.mkdirSync(OUT, { recursive: true }); const LOG = OUT + '/days.log'; fs.writeFileSync(LOG, '');
 const log = (s) => { console.log(s); fs.appendFileSync(LOG, s + '\n'); };
 let fails = 0; const bad = (s) => { fails++; log('  BAD ' + s); };
 const ymdAdd = (ymd, k) => new Date(Date.parse(ymd + 'T00:00:00Z') + k * 864e5).toISOString().slice(0, 10);

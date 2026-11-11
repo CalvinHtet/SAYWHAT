@@ -1,16 +1,16 @@
 // QA's small CDP library for a headless Chrome on QA's own port (9370 by default, CHROME_PORT to change). Nothing installed:
-// runs under node.sh (VS Code's Electron as Node 24, which has fetch and WebSocket).
+// runs under node.sh on Windows (VS Code's Electron as Node 24) or plain node 22+ on the Mac (both have fetch and WebSocket).
 //   const { browser } = require('./cdp.js'); const br = await browser(); const pg = await br.page({ fresh: true }); ...
 // Each page can live in its own browser context (fresh: true) so cache, storage and service workers start empty.
-const fs = require('fs'), path = require('path'), { spawn } = require('child_process');
+const fs = require('fs'), path = require('path'), os = require('os'), { spawn } = require('child_process');
 const PORT = +process.env.CHROME_PORT || 9370;
-const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+const CHROME = process.env.CHROME || (process.platform === 'darwin' ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : 'C:/Program Files/Google/Chrome/Application/chrome.exe');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Start a headless Chrome on PORT if none answers there (left running for the next script).
 async function ensureChrome() {
   try { await (await fetch(`http://127.0.0.1:${PORT}/json/version`)).json(); return; } catch (e) {}
-  const dir = path.join(process.env.TEMP || 'C:/Temp', 'qa-chrome-' + PORT);
+  const dir = path.join(process.env.TEMP || os.tmpdir(), 'qa-chrome-' + PORT);
   const ch = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${PORT}`, `--user-data-dir=${dir}`, '--no-first-run', '--no-default-browser-check',
     '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--mute-audio', '--window-size=390,844', 'about:blank'], { detached: true, stdio: 'ignore' });
   ch.unref();

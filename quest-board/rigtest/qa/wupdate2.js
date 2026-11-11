@@ -4,9 +4,10 @@
 // 3. letters: v0.90 "Ten updates in one letter" and the roadmap "What's coming" read exactly as Cal approved; a letter every 10 versions,
 //    500 coins once on opening, only the newest 2 missed letters pay.
 const fs = require('fs');
+const SEEDS = require('path').join(__dirname, 'seeds') + '/'; // saves in rigtest/qa/seeds (v0.88, v0.89, v0.90; test names only)
 const { browser, sleep } = require('./cdp.js');
 const POLISH = process.env.POLISH || 'http://127.0.0.1:8825', LETTERS = process.env.LETTERS || 'http://127.0.0.1:8826';
-const SEED = JSON.parse(fs.readFileSync('C:/Users/clvh/qa-wt/out/seed_adv2.json', 'utf8'));
+const SEED = JSON.parse(fs.readFileSync(SEEDS + 'v88_adv.json', 'utf8'));
 const V90 = ['Level scaling and economy rebalanced', 'Daily quest goals and payouts rebalanced', 'Introduced relic tiers (low, med, high, legendary)',
   'Town Hall: posts, chat, a weekly ranking and coin challenges', 'Training: your own workouts and progress graphs', 'New brand drops twice a week, with clothes priced by quality'];
 const ROAD = ['More friends dropping by, with their own stories', 'More ways to compete', 'A new building in town, with rooms to upgrade and explore',

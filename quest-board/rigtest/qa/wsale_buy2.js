@@ -3,7 +3,7 @@
 //   CHROME_PORT=9373 bash tools/windows/node.sh rigtest/qa/wsale_buy2.js
 const fs = require('fs');
 const { browser, sleep, boot, E, dumpLS } = require('./wfocus_lib.js');
-const OUT = 'C:/Users/clvh/qa-wt/out/wsale'; const LOG = OUT + '/buy2.log'; fs.writeFileSync(LOG, '');
+const OUT = process.env.OUT || require('os').tmpdir() + '/qa-out/wsale'; fs.mkdirSync(OUT, { recursive: true }); const LOG = OUT + '/buy2.log'; fs.writeFileSync(LOG, '');
 const log = (s) => { console.log(s); fs.appendFileSync(LOG, s + '\n'); };
 let fails = 0; const chk = (name, ok, d) => { if (!ok) fails++; log(`  ${ok ? 'ok  ' : 'BAD '} ${name}${d ? ': ' + d : ''}`); };
 const ymdAdd = (ymd, k) => new Date(Date.parse(ymd + 'T00:00:00Z') + k * 864e5).toISOString().slice(0, 10);

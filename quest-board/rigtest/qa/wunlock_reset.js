@@ -6,24 +6,29 @@
 // - the letter: only when there was something to reset, with the same amount; a reload runs nothing again.
 //   BASE=<new build> CASES=adv,oldrest,mid,bedonly,fresh CHROME_PORT=9374 bash tools/windows/node.sh rigtest/qa/wunlock_reset.js
 const fs = require('fs');
+const SEEDS = require('path').join(__dirname, 'seeds') + '/'; // saves in rigtest/qa/seeds (v0.88, v0.89, v0.90; test names only)
 const { browser, sleep } = require('./cdp.js');
-const BASE = process.env.BASE || 'http://127.0.0.1:8817', OUT = process.env.OUT || 'C:/Users/clvh/qa-wt/out/wunlock/';
+const BASE = process.env.BASE || 'http://127.0.0.1:8817', OUT = process.env.OUT || require('os').tmpdir() + '/qa-out/wunlock/';
 fs.mkdirSync(OUT, { recursive: true });
 const CASES = (process.env.CASES || 'adv,oldrest,mid,bedonly,fresh').split(',');
 const rd = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const canon = (v) => JSON.stringify(v, (k, x) => (x && typeof x === "object" && !Array.isArray(x) ? Object.keys(x).sort().reduce((o, q) => { o[q] = x[q]; return o; }, {}) : x)); // the same content whatever the key order
 // each case: the localStorage to start from (null = a fresh player) and what it is
 const MUT = {
-  adv: ['C:/Users/clvh/qa-wt/out/wsale/oldsave_adv.json', 'v0.90 save, level 60, every room and upgrade', null],
-  mid: ['C:/Users/clvh/qa-wt/out/wsale/oldsave_mid.json', 'v0.90 save, level 18, early Garden, Restaurant, Boba', null],
-  adv88: ['C:/Users/clvh/qa-wt/out/seed_adv2.json', 'v0.88 seed, level 60, every room', null],
+  adv: [SEEDS + 'v90_adv.json', 'v0.90 save, level 60, every room and upgrade', null],
+  mid: [SEEDS + 'v90_mid.json', 'v0.90 save, level 18, early Garden, Restaurant, Boba', null],
+  adv88: [SEEDS + 'v88_adv.json', 'v0.88 seed, level 60, every room', null],
+  // written by the shipped v0.89 (rigtest/qa/wunlock_mk89.js)
+  v89adv: [SEEDS + 'v89_adv.json', 'v0.89 save, level 60, every room', null],
+  v89mid: [SEEDS + 'v89_mid.json', 'v0.89 save, Loft + Garden + Restaurant only', null],
   // a Restaurant built from its lot before 11-05 (16e72c3 added the Garden's "Knock Through" opener): no gd_rest on the Garden
-  oldrest: ['C:/Users/clvh/qa-wt/out/wsale/oldsave_mid.json', 'mid save whose Restaurant came from the lot (pre-11-05 path, no gd_rest)', (s) => {
+  oldrest: [SEEDS + 'v90_mid.json', 'mid save whose Restaurant came from the lot (pre-11-05 path, no gd_rest)', (s) => {
     s.base.slots.forEach((r) => { if (r && r.t === 'garden' && r.a) delete r.a.gd_rest; }); }],
-  bedonly: ['C:/Users/clvh/qa-wt/out/wsale/oldsave_mid.json', 'v0.90 save with only a bare Bedroom (nothing bought)', (s) => {
+  bedonly: [SEEDS + 'v90_mid.json', 'v0.90 save with only a bare Bedroom (nothing bought)', (s) => {
     s.base.slots = s.base.slots.map((r, i) => (i === 0 ? { t: 'bedroom', a: {}, st: 0, pend: 0 } : null)); }],
   fresh: [null, 'a fresh player on the new build', null],
 };
-const KEEP_SKIP = new Set(['base', 'hired', 'coins', 'spent', 'reset91', 'r91p', 'sty', 'story', 'saved', 'ts', 'updated', 'appv', 'lastSeen', 'earnedC', 'dq', 'lastTick', 'tick']);
+const KEEP_SKIP = new Set(['base', 'hired', 'coins', 'spent', 'reset91', 'r91p', 'savedAt', 'sty', 'story', 'saved', 'ts', 'updated', 'appv', 'lastSeen', 'earnedC', 'dq', 'lastTick', 'tick']);
 const STATE = `(function(){var x=window.__qb&&window.__qb.x&&window.__qb.x();if(!x||!x.S)return null;var S=x.S;
   return {S:JSON.parse(JSON.stringify(S)),backup:localStorage.getItem('quest-board-backup-v91'),
     online:Object.keys(localStorage).filter(function(k){return /backup_v91/.test(k)}).map(function(k){return k+':'+(localStorage.getItem(k)||'').length})}})()`;
@@ -37,7 +42,10 @@ const STATE = `(function(){var x=window.__qb&&window.__qb.x&&window.__qb.x();if(
     if (file) { const d = rd(file); for (const k of ['quest-board', 'qbsbx:data/users/sandbox/state']) if (d[k] && mut) { const s = JSON.parse(d[k]); mut(s); d[k] = JSON.stringify(s); }
       await pg.ev(`(function(d){localStorage.clear();Object.keys(d).forEach(function(k){localStorage.setItem(k,d[k])});return 1})(${JSON.stringify(d)})`); }
     const seedS = file ? JSON.parse(rd(file)['quest-board']) : null; if (seedS && mut) mut(seedS);
-    await pg.go(BASE + '/'); await pg.wait('!!(window.__qb && window.__qb.x && window.__qb.x().S && document.querySelector(".nav button[data-v=board]"))', 120000);
+    await pg.go(BASE + '/');
+    if (!file) { await pg.wait('!!(window.__qb && document.querySelector("#app") && !document.querySelector("#app .boot"))', 120000); await sleep(2500);
+      await pg.ev(`(function(){var x=window.__qb.x(),S=x.S;S.created=true;S.char=window.__qb.fixChar({name:'Newbie',sex:'f'});x.persist();x.render();return 1})()`); }
+    await pg.wait('!!(window.__qb && window.__qb.x && window.__qb.x().S && document.querySelector(".nav button[data-v=board]"))', 120000);
     // the reset runs on a 1 s timer after the load; the letter opens 1.5 s later
     let st = null; for (let k = 0; k < 16; k++) { await sleep(500); st = await pg.ev(STATE); if (st && st.S.reset91) break; }
     await sleep(2500); st = await pg.ev(STATE);
@@ -53,7 +61,7 @@ const STATE = `(function(){var x=window.__qb&&window.__qb.x&&window.__qb.x();if(
         var opened={};Object.keys(A).forEach(function(k){(A[k]||[]).forEach(function(a){var m=a[3]||{};if(m.opens)opened[m.opens]=(opened[m.opens]||[]).concat([k+'.'+a[0]])})});
         var owned=function(id){var o=false;(B.base.slots||[]).forEach(function(r){if(r&&r.a&&r.a[id.split('.')[1]]&&r.t===id.split('.')[0])o=true});return o};
         (B.base.slots||[]).forEach(function(r){if(!r)return;var ups=0,n=0;(A[r.t]||[]).forEach(function(a){if(r.a&&r.a[a[0]]&&+a[2]>0){ups+=+a[2];n++}});
-          var v=V?V(r):null;sumV+=v||0;var lot=0,why='';
+          var v=V?V(r,B.base.slots):null;sumV+=v||0;var lot=0,why='';
           if(r.t!=='bedroom'&&(T[r.t]||{}).cost>0){var op=opened[r.t]||[];if(!op.some(owned)){lot=T[r.t].cost;why=op.length?'opener '+op.join('/')+' not owned':'built from its lot'}}
           var counted=v!=null&&lot>0&&v>=ups+150*(r.st||0)+lot;if(lot&&!counted)miss+=lot;
           rows.push(r.t+': '+n+' ups '+ups+(r.st?' paint '+150*r.st:'')+(lot?' lot '+lot+' ('+why+')'+(counted?' counted':' NOT COUNTED'):'')+' | game value '+v)});
@@ -64,8 +72,23 @@ const STATE = `(function(){var x=window.__qb&&window.__qb.x&&window.__qb.x();if(
       log(`  rooms after: ${(S.base.slots || []).filter(Boolean).map((r) => r.t + '(' + Object.keys(r.a || {}).length + ')').join(' ')}`);
       const changed = Object.keys(Object.assign({}, B, S)).filter((k) => !KEEP_SKIP.has(k) && JSON.stringify(B[k]) !== JSON.stringify(S[k]));
       log('  other save fields changed by the load:', changed.length ? changed.map((k) => k + (typeof B[k] === 'number' ? ` ${B[k]}->${S[k]}` : '')).join(', ') : 'none');
-      log('  backup equals the save as loaded (minus timestamps):', st.backup ? Object.keys(seedS).filter((k) => !/^(ts|saved|updated|lastSeen|appv|lastTick)$/.test(k) && JSON.stringify(seedS[k]) !== JSON.stringify(B[k])).join(', ') || 'yes' : 'no backup');
-    } else log('  coins', S.coins, 'rooms', (S.base.slots || []).filter(Boolean).map((r) => r.t).join(' '));
+      log('  backup equals the save as loaded (minus timestamps):', st.backup ? Object.keys(seedS).filter((k) => !/^(ts|saved|savedAt|updated|lastSeen|appv|lastTick)$/.test(k) && canon(seedS[k]) !== canon(B[k])).join(', ') || 'yes' : 'no backup');
+      if (st.backup && canon(seedS.base) !== canon(B.base)) {
+        const d = []; const sb = seedS.base, bb = B.base;
+        Object.keys(Object.assign({}, sb, bb)).forEach((k) => { if (k !== 'slots' && JSON.stringify(sb[k]) !== JSON.stringify(bb[k])) d.push(k + ' ' + JSON.stringify(sb[k]).slice(0, 40) + '->' + JSON.stringify(bb[k]).slice(0, 40)); });
+        (sb.slots || []).forEach((r, i) => { const q = (bb.slots || [])[i]; if (canon(r) !== canon(q)) {
+          const ks = Object.keys(Object.assign({}, r || {}, q || {})).filter((k) => JSON.stringify((r || {})[k]) !== JSON.stringify((q || {})[k]));
+          d.push(`slot ${i} ${(r || {}).t}: ` + ks.map((k) => k + ' ' + JSON.stringify((r || {})[k]).slice(0, 30) + '->' + JSON.stringify((q || {})[k]).slice(0, 30)).join(', ')); } });
+        log('   base in the backup vs the save file:', d.slice(0, 12).join(' | '));
+      }
+    } else {
+      log('  coins', S.coins, 'rooms', (S.base.slots || []).filter(Boolean).map((r) => r.t).join(' '));
+      // a player who starts on the new build buys a Bedroom upgrade, saves, and comes back: nothing may reset
+      const b = await pg.ev(`(function(){var x=window.__qb.x(),S=x.S,A=(x.ADDONS.bedroom||[]).filter(function(a){return +a[2]>0&&!(a[3]||{}).opens})[0];
+        S.coins+=A[2];S.coins-=A[2];S.spent=(S.spent||0)+A[2];S.base.slots[0].a=S.base.slots[0].a||{};S.base.slots[0].a[A[0]]=1;x.persist();
+        return {id:A[0],price:A[2],appv:(JSON.parse(localStorage.getItem('quest-board')||'{}')).appv}})()`);
+      log('  bought on the new build:', b);
+    }
     // the letter in the inbox
     const L = await pg.ev(`(async function(){var w=function(ms){return new Promise(function(o){setTimeout(o,ms)})};document.querySelectorAll('#layer .modal').forEach(function(e){e.remove()});
       var b=document.querySelector('.ibbtn');if(!b)return {err:'no envelope'};b.click();await w(700);var rows=[].map.call(document.querySelectorAll('#layer .ibrow'),function(r){return r.dataset.id});
@@ -76,7 +99,7 @@ const STATE = `(function(){var x=window.__qb&&window.__qb.x&&window.__qb.x();if(
     // reload: nothing runs twice
     const c1 = (await pg.ev('window.__qb.x().S.coins')); await pg.go(BASE + '/'); await pg.wait('!!(window.__qb && window.__qb.x && window.__qb.x().S && document.querySelector(".nav button[data-v=board]"))', 120000); await sleep(5000);
     const st2 = await pg.ev(STATE);
-    log(`  after a reload: reset91.at same ${JSON.stringify((st2.S.reset91 || {}).at) === JSON.stringify((R || {}).at)}, r91p ${!!st2.S.r91p}, coins ${c1} -> ${st2.S.coins}, rooms ${(st2.S.base.slots || []).filter(Boolean).length}`);
+    log(`  after a reload: reset91.at same ${JSON.stringify((st2.S.reset91 || {}).at) === JSON.stringify((R || {}).at)}${R ? '' : ', reset91 now ' + JSON.stringify(st2.S.reset91 || null)}, r91p ${!!st2.S.r91p}, coins ${c1} -> ${st2.S.coins}, rooms ${(st2.S.base.slots || []).filter(Boolean).length}`);
     log('  page errors', pg.errs.length, pg.errs.slice(0, 3));
     await pg.close();
   }

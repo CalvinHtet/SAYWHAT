@@ -29,6 +29,46 @@ The copies of `rigtest/browser/*.js` in the worktree also run against 8769: `sav
 What the pictures cannot show: people (the room pictures leave them out, so the dogs and guests are checked separately),
 motion, and a real phone.
 
+### Release checks (v0.89-v0.91, 2026-11-10): headless Chrome over the DevTools protocol, nothing to install
+
+These scripts need only Chrome and Node 22 or later (fetch and WebSocket built in). On Windows they run under
+`bash tools/windows/node.sh <script>` (VS Code's Electron as Node); on the Mac, plain `node <script>` from `quest-board/`.
+`rigtest/qa/cdp.js` starts a muted headless Chrome (`--mute-audio`: the game plays sounds) on `CHROME_PORT` (default 9370) and
+leaves it running for the next script. `CHROME=<path>` overrides the Chrome binary (the Mac default is
+`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`). Pages are 390x844 at DPR 3 with an iPhone user agent, each in a
+fresh browser context. Run at most 2 Chromes at once on a laptop.
+
+Test a build with the test hooks on (`window.__qb`, `__qbStory`, `__qbReset`...): the sandbox web build
+(`tools/windows/build_web.sh <quest-board> sandbox` on Windows), never the Live build, which deletes them. Serve each build on its
+own port with `node rigtest/qa/qserve.js <dist-web folder> <port>` (Firebase Hosting's cache headers and compression). Test a clean
+worktree of the commit (`git worktree add --detach`), not the shared folder.
+
+Saves for the save checks are in `rigtest/qa/seeds/` (sandbox localStorage dumps with test names only): `v88_adv` (level 60,
+every room and upgrade), `v89_adv` and `v89_mid` (written by the shipped v0.89), `v90_adv` and `v90_mid` (level 18, early Garden).
+Pictures and logs go to `OUT` (default: the temp folder's `qa-out/`).
+
+| Script | Env | What it checks |
+|---|---|---|
+| `pricesweep.js` | `BASE`, `REF`, `LOTS` | Every price a player can pay: all room upgrades, lots and openers, every Shop entry. Flags NaN, undefined, 0, negatives and fractions; lists every change against `REF`; checks the ECONOMY.md anchors (IMAX Projector, IMAX Screen, the 5 lots) and the clothing bands of `qa-2026-11-10/CLOTHING_TIERS.md`. Exit 1 on a problem. Run it on EVERY price or ECON change (a duplicate `ECON.tier` key once made 482 room upgrades NaN, shown as a free CLAIM). |
+| `rc089_smoke.js` | `BASE`, `SEED`, `OUT` | A new and an advanced player on every tab, the Hall's tabs and the inbox: a picture each, windows that open by themselves, page errors. |
+| `wunlock_reset.js` | `BASE`, `CASES` | The v0.91 one-time reset on old saves: backup on the device and online, refund = rebuy cost at today's prices (QA's own sum, including rooms built from a lot), coins + refund, nothing else in the save touched, the letter and its amount, no letter for a bare Bedroom, a reload runs nothing again, a fresh player never reset. |
+| `wunlock_order.js` | `BASE` | Each room of `ECON.unlock` (Cal's table) at its edge on a fresh level-1 save: one upgrade short closed, at the share open; then the room windows of a mid player for totals and for names of rooms not owned. |
+| `wunlock_goals.js` | `BASE`, `SEED` | The building Goals: rows, the Goals button and "Next goal", Claim pays once (again and after a reload: nothing), no spoilers, claimed goals stay claimed after the reset. |
+| `wunlock_mk89.js` | `BASE89` | Remakes `seeds/v89_*.json` from a v0.89 build. |
+| `wsale_fix.js` | `BASE` | The daily sale: a piece whose discount changes is priced again with the app open; never yesterday's brand. |
+| `wsale_days.js`, `wsale_buy2.js` | `BASE` | The sale over 21, 70 and 30 game days and a level 29 -> 30 night (clock moved with `__qbShift`); a real Checkout at the sale price and the full price back the next day. |
+| `loftviews.js` | `BASES` | The Loft street and each building on several builds side by side: pictures, svg size, room count. |
+| `rc090_econsave.js` | `SRC`, `DST`, `RB` | Saves made at given levels on old builds, loaded on the new one (level, XP fraction, coins, rooms), then the rollback round trip. |
+| `perfload.js`, `perfrun.js`, `cpuprof.js` | see each file | Load time under network and CPU throttling, per-screen runtime, level effects A/B (the W1 section below). |
+
+The `rc089_*`, `rc090_*`, `wchests_*`, `wfloors_*`, `wfocus_*` and `nospoil_*` scripts are one-off checks from the v0.89-v0.91 passes.
+They keep Windows paths for their outputs (`C:/Users/clvh/qa-wt/out`) and need `OUT` set elsewhere.
+
+Lessons from these passes:
+- A price change is checked everywhere, not only where it was made (`pricesweep.js`).
+- Times measured while other Chromes run are noise; compare A and B in the same page, interleaved.
+- A save check compares the whole save, not only the fields the change touched, and always ends with a reload.
+
 ## Performance stress test (W1, Cal 2026-11-10: "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?"; on 213ea0f)
 
 The ranked list with fixes and expected gains is in `docs/qa-2026-11-10/PERF.md`. This section is the method and every number.

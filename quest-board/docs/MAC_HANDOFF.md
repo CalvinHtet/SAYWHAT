@@ -63,6 +63,8 @@ the parts that were SUPERSEDED, so they don't get built by mistake. The long-ter
   Build regexes as literals, not from strings. Grep ECON for a key before adding one.
 - Never bump QB_EPOCH (it wipes every save). Migrate saves in code instead (e.g. the curve-4 save move, the v0.91 reset). The rollback
   branch's APPV must stay above the newest release.
+- QA on the Mac: docs/QA.md "Release checks" (Node 22+, Chrome, muted; the release scripts and their env; seed saves in
+  rigtest/qa/seeds/). Run the full set on every release candidate.
 - Timing tests: at most 2 headless Chromes, always --mute-audio. Load on the machine skews the numbers, so compare A/B in one page.
 - Text: docs/VOICE.md, including "No spoilers" (never name what the player doesn't have yet) and "letters say what changed, not how".
   Patch-notes letters come every 10 versions (500 coins). The next is v1.00.
