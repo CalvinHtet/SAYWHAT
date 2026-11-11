@@ -328,7 +328,16 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:econScaled(ECON.wwCoins,50)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:econScaled(ECON.wwCoins,50)*wwMult(),mult:wwMult()}}
+/* w-econ4 (Cal, 2026-11-10: "training tab 4 x a week coins increase for each consecutive week. on week 2, if consistent, prizes go to 2x then
+   3x then 4x then caps out at 4x"): the coins are x(1 + the Weekly Warrior weeks in a row just before this one, from S.weekPaid), at most
+   ECON.wwMax; a week without the 4 workouts starts it again at x1. The XP and the prize stay as they were. */
+function wwPrev(){var p=wkKey().split("-"),d=new Date(+p[0],+p[1]-1,+p[2]),k=0;
+  while(k<52){d.setDate(d.getDate()-7);if(!(S.weekPaid&&S.weekPaid[dstr(d)]))break;k++}return k}
+function wwMult(){return Math.min(ECON.wwMax||4,wwPrev()+1)}
+function wwLine(paid){var m=wwMult(),n=wwPrev()+1;
+  return paid?(n>1?"Week "+n+" in a row: x"+m+" coins. ":"")+"Next week x"+Math.min(ECON.wwMax||4,m+(m<(ECON.wwMax||4)?1:0))+" if you keep it up."
+    :(n>1?"Week "+n+" in a row: x"+m+" coins.":"Keep it up for x2 coins next week.")}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -346,7 +355,7 @@ function markActive(){
       /* nothing left to give: coins instead, as the Daily Quest chest pays */
       var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -358,7 +367,7 @@ function weekDots(){
 }
 function weekStrip(){
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
-  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Keep moving anyway.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div></div>'+weekDots()+'</section>';
+  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Keep moving anyway.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div><div class="note wwmul">'+esc(wwLine(paid))+'</div></div>'+weekDots()+'</section>';
 }
 function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   var E=EX[id],lg=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return !E[4]||x.w>0}),last=lg[lg.length-1];
@@ -505,7 +514,7 @@ function cexHtml(){var ps=cexPlans();
 function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
-   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize.</p></section>';
+   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize. '+esc(wwLine(paid))+'</p></section>';
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
@@ -1535,7 +1544,7 @@ function creditStreak(){
   if(CHESTS[S.streak]&&!S.chests[S.streak]){S.skUndo.chest=S.streak;S.chests[S.streak]=true;S.xp+=CHESTS[S.streak];var cc=Math.round(CHESTS[S.streak]*5);S.coins+=cc;S.earnedC+=cc;out.push("Streak chest: +"+CHESTS[S.streak]+" XP and "+cc+" coins")}
   if(S.streak%ECON.freezeEvery===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
   var wq=wqState();wq.n++;S.skUndo.wq=1;
-  if(wq.n>=ECON.wqDays&&!wq.paid){var wx=need(Math.min(effLvl(),MAXL-1)),wc=wx*6;wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
+  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=wn*6;/* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
   return out.join(" | ")||("Streak: day "+S.streak);
 }
 function uncreditStreak(){
