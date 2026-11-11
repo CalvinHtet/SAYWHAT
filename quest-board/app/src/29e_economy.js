@@ -48,6 +48,7 @@ var ECON={
      day, +22% from upgrades"). Above them all, the share of today's task coins (payRoom, the W21 cap, now shareFull flat instead of
      growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
      counts in it too */
+  noirServed:180,                                  /* dishes the Restaurant serves before Noir (29b_story.js) */
   bizDay:{garden:900,restaurant:1100,skybar:300,rooftop:300,boba:250,dessert:250,mall:400,theater:650,auditorium:600,arcade:400,
     rhythm:350,vr:350,bowling:400,karaoke:400,club:800},
   vegCoin:7,
