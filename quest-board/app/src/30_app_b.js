@@ -1496,8 +1496,8 @@ function levelUp(lv,extra,from){
     var u=unlocksFor(L); if(u)cards+=unlCard(u,i++);
     /* Rooms open through the story (docs/STORYBOARD.md), not by level, so level-ups no longer announce room blueprints or new
        floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
-    FX.filter(function(f){return f[0]===L}).forEach(function(f){cards+=fxCard(f,i++)});
-    var ns=shopNewAt(L); if(ns&&L>=3)cards+=stockCard(ns,i++);
+    /* Cal (2026-11-10, W48): a level-up shows the level, its coins, a real-life reward and only big unlocks (a new tab or room);
+       no "UI upgrade: <name>" cards and no "New in the Shop" card any more */
     if(lvEmpty(L)){var cr=lvCrate(L);if(cr)cards+='<div class="reward reveal" style="animation-delay:'+(0.3+(i++)*0.45).toFixed(2)+'s"><span>'+esc(cr)+'</span></div>'}
   }
   var more=start>from+1?'<p class="note">Plus '+(start-from-1)+' earlier unlock'+(start-from-1===1?'':'s')+' waiting in The Loft.</p>':'';

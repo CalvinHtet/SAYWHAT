@@ -864,7 +864,7 @@ function shopHtml(){
     var vis=items.filter(function(x){return x[4]<=lv}), nxt=items.filter(function(x){return x[4]>lv})[0];
     if(!vis.length&&!nxt)return;
     h+='<section class="card panel"><h3 class="label">'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")
-     +(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0;color:var(--muted)">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>';
+     +'</div></section>';/* Cal: no "Sealed, restocks at level N" (the Shop in 15_shop.js replaces this one) */
   });
   return h;
 }

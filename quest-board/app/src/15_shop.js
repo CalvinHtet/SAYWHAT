@@ -290,7 +290,8 @@ function qsLegacy(tab){
   return SLOTS.filter(function(sl){return tab.indexOf(sl[0])>=0}).map(function(sl){
     var lv=effLvl(),items=SHOP.filter(function(x){return x[1]===sl[0]&&!isRigItem(x)&&itemFits(x)}),vis=items.filter(function(x){return x[4]<=lv}),nxt=items.filter(function(x){return x[4]>lv})[0];
     if(!vis.length&&!nxt)return "";
-    return '<section class="qs-sec"><h3>'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")+(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>'}).join("");
+    /* Cal (2026-11-10): no level messages in the Shop (it was "Sealed, restocks at level N"); what opens later just appears */
+    return vis.length?'<section class="qs-sec"><h3>'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")+'</div></section>':""}).join("");
 }
 /* Each tab has its own page colour (Cal, 2026-11-05): a brand in its banner's palette, Basics and Vault the shop's cream,
    the Wardrobe the walk-in closet's champagne, Upgrades and Interface the Hero's Lair. Cards stay white; page text flips. */
@@ -327,7 +328,7 @@ shopHtml=function(){
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
   var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
-  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"],["upgrades","Upgrades"],["interface","Interface"]]);
+  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"]]).concat(typeof sysHas==="function"&&!sysHas()?[]:[["upgrades","Upgrades"],["interface","Interface"]]);/* W48: Upgrades and Interface only once the Lair's big screen is built (29sy_system.js) */
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
