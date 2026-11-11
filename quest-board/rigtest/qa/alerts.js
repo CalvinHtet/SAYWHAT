@@ -1,8 +1,8 @@
 // New-thing alerts (LEAD's 3bba5f1; Cal: "make sure it's obvious by adding an exclamation point on that tab, also allow the + icon for
 // the room in the building view"): a fresh player walks the real path at phone size. (1) An old save with everything open shows no "!" at
 // all. (2) The Garden lot opens (level 14, ROOMT.garden.lv; none before): "!" on The Loft tab and over the street lot; opening The Loft clears the tab's "!". (3) With the Garden
-// built and Mara's step open, the Restaurant opener: "!" over the building on the street, "+" inside on its spot, tapping "+" opens the
-// Garden window with "Knock Through to a Restaurant" first; building it removes the "+". (4) Tabs that unlock as the level rises get a
+// built and Mara's step open, the Restaurant opener: "!" over the building on the street, "+" inside on its spot, tapping "+" opens the new
+// room's own window (v0.92 W60: name, Buy, "See the Garden"), and "See the Garden" lists "Knock Through to a Restaurant" first; building it removes the "+". (4) Tabs that unlock as the level rises get a
 // "!" until opened. (5) A brand not yet seen gets a "!" on the Shop until it is opened. Reloads between steps keep what was seen.
 //   BASE=<server> OUT=<folder> node alerts.js
 const fs = require('fs'), path = require('path');
@@ -50,10 +50,15 @@ const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL
   const plus = await svg('#lfw .alplus'); ok('inside the building, a "+" on the new room\'s spot', plus >= 1, plus);
   const at = await p.evaluate(() => { const g = document.querySelector('#lfw .alplus .lfplus'); if (!g) return null; const r = g.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; });
   if (at) { await p.touchscreen.tap(at[0], at[1]); await p.waitForTimeout(2000); }
-  const first = await p.evaluate(() => { const m = document.querySelector('.rmodal'); if (!m) return { win: null }; const c = m.querySelector('[data-act="raddon"]'); const card = c && (c.closest('.addon, .rup, li, .row') || c.parentElement);
-    return { win: (m.querySelector('h2, h3, .rm-title') || {}).innerText, first: card ? card.innerText.replace(/\s+/g, ' ').slice(0, 80) : null }; });
+  // v0.92 W60: the "+" opens the new room's own window (29zu_ui92.js nxModal): its name, Buy, and "See the <room>" for the room that sells it
+  const first = await p.evaluate(() => { const m = document.querySelector('#layer .nxm'); if (!m) return { win: null };
+    return { win: (m.querySelector('.rm-title') || {}).innerText, buy: (m.querySelector('[data-act="nxbuy"]') || {}).innerText, see: (m.querySelector('[data-act="nxsee"]') || {}).innerText }; });
   await p.screenshot({ path: path.join(OUT, 'al_window.png') });
-  ok('tapping "+" opens the room that sells it, with the opener first', first && /knock|restaurant/i.test(String(first.first)), first);
+  ok('tapping "+" opens the new room\'s own window with its name, Buy and "See the Garden"', first && /knock|restaurant/i.test(String(first.win)) && /buy/i.test(String(first.buy)) && /see the/i.test(String(first.see)), first);
+  await p.evaluate(() => { const b = document.querySelector('#layer [data-act="nxsee"]'); if (b) b.click(); }); await p.waitForTimeout(1500);
+  const src = await p.evaluate(() => { const m = document.querySelector('.rmodal'); if (!m) return null; const c = m.querySelector('[data-act="raddon"]'); const card = c && (c.closest('.addon, .rup, li, .row') || c.parentElement);
+    return { win: (m.querySelector('h2, h3, .rm-title') || {}).innerText, first: card ? card.innerText.replace(/\s+/g, ' ').slice(0, 80) : null }; });
+  ok('..."See the Garden" opens the room that sells it, with the opener first', src && /knock|restaurant/i.test(String(src.first)), src);
   await p.evaluate(() => { document.querySelectorAll('#layer .modal').forEach((e) => e.remove()); window.__qbRooms.open('restaurant', 1); window.__qb.x().render(); }); await p.waitForTimeout(2500);
   ok('building the room removes its "+"', (await svg('#lfw .alplus')) === 0, await svg('#lfw .alplus'));
   // (4) tabs that unlock get a "!" until opened: by level (Hall, Wheel, Relics) and by a room (Shop needs the Closet, Dungeons the Lair)

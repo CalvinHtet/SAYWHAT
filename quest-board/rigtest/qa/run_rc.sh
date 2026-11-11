@@ -5,6 +5,7 @@
 #   bash rigtest/qa/run_rc.sh <commit> [out folder]      (Windows: needs tools/windows/node.sh; ports 8812 Live, 8817 sandbox)
 #   REF=<reference sandbox URL for pricesweep>  APPV=<expected APPV>  LIVEPORT/SBXPORT/CA/CB to change the ports
 #   ONLY="live sweep smoke wbounty" runs only those checks (a delta re-check)
+#   REFQB=<the last release's quest-board folder> lets dupfn.js flag only new duplicate names
 set -uo pipefail
 C=${1:?commit}; QB=$(cd "$(dirname "$0")/../.." && pwd); NODE="bash $QB/tools/windows/node.sh"; WT=${WT:-/c/Users/clvh/qa-wt}/qa-rc-$C
 OUT=${2:-${WT}-out}; mkdir -p "$OUT"; LIVEPORT=${LIVEPORT:-8812}; SBXPORT=${SBXPORT:-8817}; CA=${CA:-9374}; CB=${CB:-9375}; APPV=${APPV:-92}
@@ -39,6 +40,21 @@ run() { local name=$1 port=$2; shift 2; [ -n "${ONLY:-}" ] && [[ " $ONLY " != *"
   run wchat2 $CA env OUT="$OUT/wchat2/" timeout 280 $NODE rigtest/qa/wchat2.js
   run wwardrobe $CA env OUT="$OUT/wwardrobe/" timeout 280 $NODE rigtest/qa/wwardrobe.js
   run wweekly $CA timeout 280 $NODE rigtest/qa/wweekly.js
+  run wsound $CA timeout 280 $NODE rigtest/qa/wsound.js
+  # v0.92 re-opened (2026-11-11): side-quests, Rafe, visitors, Gym Pact, photo feed, and the duplicate-name scan
+  run dupfn $CA $NODE rigtest/qa/dupfn.js "$WT/quest-board" ${REFQB:-}
+  run wside $CA timeout 290 $NODE rigtest/qa/wside.js
+  run wrafe $CA timeout 290 $NODE rigtest/qa/wrafe.js
+  run wvisit $CA env OUT="$OUT/wvisit/" timeout 290 $NODE rigtest/qa/wvisit.js
+  run wpact $CA timeout 290 $NODE rigtest/qa/wpact.js
+  run wphotos $CA env OUT="$OUT/wphotos/" timeout 290 $NODE rigtest/qa/wphotos.js
+  run wchatpic $CA timeout 290 $NODE rigtest/qa/wchatpic.js
+  # rc-v0.92c (w-final): the level curve keeps every save's level (old = the REF build), the boss gate / greetings / streak text, Cal's fresh start window
+  run wcurve $CA env OLD=$REF NEW=$B timeout 290 $NODE rigtest/qa/wcurve.js
+  run wfinal92c $CA timeout 290 $NODE rigtest/qa/wfinal92c.js
+  run wcfuntil $CA timeout 200 $NODE rigtest/qa/wcfuntil.js
+  run wwprize $CA timeout 200 $NODE rigtest/qa/wwprize.js
+  run wduelpub $CA timeout 290 $NODE rigtest/qa/wduelpub.js
   echo "$(date +%H:%M) chain A done" >> "$OUT/progress.log"
 ) &
 (
