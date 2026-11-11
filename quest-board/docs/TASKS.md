@@ -23,6 +23,14 @@ MERGED, WAITING ON CAL.
 
 Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; THEN the final MAC_HANDOFF.md and the Windows team stops (Cal 16:15: "Will continue everything through claude on mac"); anything needing art waits about 52 h (Cal's Mac limit).
 
+**v0.91 FINAL LIST (Cal 17:30: "I want all economy based and level based decisions in 0.91. All cosmetic changes and town hall boss stuff
+to be 0.92." "Take as long as you need. As long as I can publish it before I sleep tonight"):** W51/W52 unlocks + reset; no level gates on
+story rooms, strict Garden -> Restaurant -> bar on Noir -> Boba -> Dessert, Noir ~4-6 days after the Restaurant, no dead-end locked cards;
+w-econ3 (passive steps 10/15/20/25-30%, per-business caps, payback prices, 4 price rules, r_safe, the Restaurant sign); the Wheel every 4 h;
+w-system (W48) with the level-up card rework and tiered permanent upgrades I-III (3-card cascade); w-shopui (W47, done); text spoiler fixes
+(w-nospoil3). v0.92: W49 chat, W53 greetings, W50/W14 colours, W41 wardrobe, W57, W58, W59 toast, W60 "+" window, W54 Town Boss (code with
+placeholder art).
+
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
 | W1 | "Run a stress test on the performance of this platform. Is there anywhere we can improve runtime or load time?" Baseline: load (bytes, first draw, interactive) and runtime (room view fps, idle CPU, long tasks, memory) at phone speed; ranked hot spots | QA | (none) | DONE (on 213ea0f): docs/qa-2026-11-10/PERF.md, docs/QA.md W1 section |
