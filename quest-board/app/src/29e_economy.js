@@ -48,7 +48,6 @@ var ECON={
      day, +22% from upgrades"). Above them all, the share of today's task coins (payRoom, the W21 cap, now shareFull flat instead of
      growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
      counts in it too */
-  noirServed:180,                                  /* dishes the Restaurant serves before Noir (29b_story.js) */
   bizDay:{garden:1000,restaurant:900,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
     rhythm:400,vr:400,bowling:450,karaoke:450,club:900},
   vegCoin:7,
@@ -185,8 +184,10 @@ var ECON={
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
    the Club, so the street and the story disagreed) */
-/* Cal (2026-11-10): no level on story rooms; the story and its triggers open them (a lot no longer says "unlocks at level N") */
-["garden","boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].lv=ECON.stepLv[k]||1});
+/* Cal (2026-11-10): "make everything locked around money and unlocking it sequentially rather than locked by a day or level": no level
+   on any room or lot in the building tab (a lot no longer says "unlocks at level N"); money, the list's order and the room triggers
+   (ECON.unlock) pace it. Upgrades carry no level gate either (30_app_b.js shows none; their lv only sorted lists, econSort sorts by price) */
+Object.keys(ROOMT).forEach(function(k){if(typeof ROOMCELL!=="undefined"&&ROOMCELL[k])ROOMT[k].lv=1});
 /* ---- today's effort ---- */
 function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d:t,tx:0,spent:0,paid:0,done:0,hid:0,buff:prev.hidFor===t?1:0}}return S.dq}
 function dqGoal(){return ECON.dqGoal}
@@ -316,9 +317,7 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
    4. each list is in price order, cheapest first, and a piece that needs another comes right after it (at its own price).
    No invisible upgrades: the Back Office Safe and the Root Cellar drew nothing and only held more hours, so they leave the shop
    (ECON.retire); owners keep them and what they do, and the ids stay. */
-function econRules(){/* Cal: Noir (it opens the bar) about 4 days after the Restaurant opens: it waits for ECON.noirServed dishes served (about 2 an hour) */
-  (ADDONS.restaurant||[]).forEach(function(a){if(a[0]==="r_noir")a[3]=Object.assign({},a[3]||{},{served:ECON.noirServed})});
-  (ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
+function econRules(){(ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
   Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k]||{},biz=!!(T.coin||T.food),A=ADDONS[k]||[],L=A.filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});if(!L.length)return;
     var hard=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion")},bare=function(a){var e=a[3]||{};return !(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&!e.fresh&&!e.dish};
     /* a looks-only piece is cheap even if it was a big moment (the Stone Fountain) */
