@@ -136,6 +136,8 @@ async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=
   if(!sdqOn(id)){render();return}
   if(why){render();sdqVerdict(q,false,why,url,p);return}
   if(hh){S.hashes.push(hh);S.hashes=S.hashes.slice(-300)}
+  /* the photo feed (29ph_photos.js): a passed side-quest or hunt photo can be posted from the town board, with its stamp */
+  if(typeof phRemember==="function")try{phRemember({file:file,stamp:p.txt,kind:"quest",what:q.name})}catch(e){}
   var o=sdqState(),fin=false,note="";
   if(id==="sable"){var gap=o.nw.d?ymdN(p.d)-ymdN(o.nw.d):9;o.nw={d:p.d,n:gap===1?(o.nw.n||0)+1:1,t:p.txt};fin=o.nw.n>=3;note="Night "+Math.min(3,o.nw.n)+" of 3."+(fin?"":" Tomorrow night keeps the watch going.")}
   else if(id==="dogs"){o.walk.push(today());fin=o.walk.length>=5;note="Walk "+o.walk.length+" of 5."}
