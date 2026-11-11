@@ -10,7 +10,7 @@ const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   let cases = null;
   for (const [tag, base] of [['before', process.env.BASE0], ['after', process.env.BASE]]) {
     const p = await (await b.newContext({ viewport: { width: 600, height: 800 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 140)));

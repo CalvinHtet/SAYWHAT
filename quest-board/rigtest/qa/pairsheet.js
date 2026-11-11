@@ -4,7 +4,7 @@
 const fs = require('fs'), path = require('path'), { chromium } = require('playwright');
 const [A, B, OUT, tag, names, W = 420, PER = 3, ROWS = 2] = process.argv.slice(2);
 (async () => {
-  const br = await chromium.launch(); const p = await br.newPage(); const list = names.split(','), per = +PER * +ROWS; let n = 0;
+  const br = await chromium.launch({ args: ['--mute-audio'] }); const p = await br.newPage(); const list = names.split(','), per = +PER * +ROWS; let n = 0;
   for (let i = 0; i < list.length; i += per) {
     const chunk = list.slice(i, i + per).map((k) => [k, fs.readFileSync(path.join(A, k + '.png')).toString('base64'), fs.readFileSync(path.join(B, k + '.png')).toString('base64')]);
     const d = await p.evaluate(async ([chunk, W, PER]) => {

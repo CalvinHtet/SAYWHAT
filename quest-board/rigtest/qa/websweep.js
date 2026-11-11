@@ -26,7 +26,7 @@ const pics = (p, sel) => p.evaluate(async (sel) => {
 }, sel);
 
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   for (const body of (process.env.BODIES || 'm,f').split(',')) {
     console.log('== body ' + body);
     const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });

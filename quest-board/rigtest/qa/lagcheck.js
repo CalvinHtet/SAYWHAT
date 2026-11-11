@@ -15,7 +15,7 @@ const fps = (p) => p.evaluate(async () => { let n = 0, worst = 0, over = 0, last
 // paused CSS animations in a part of the page (by computed play state, so pseudo-elements' owners count too)
 const paused = (p, sel) => p.evaluate((sel) => { let run = 0, pau = 0; const names = new Set(); document.querySelectorAll(sel).forEach((e) => { [e, ':before', ':after'].forEach((ps) => { const st = ps === e ? getComputedStyle(e) : getComputedStyle(e, ps); if (st.animationName && st.animationName !== 'none') { if (/paused/.test(st.animationPlayState)) { pau++; names.add(st.animationName.split(',')[0]); } else run++; } }); }); return { run, paused: pau, names: [...names].slice(0, 6) }; }, sel);
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   // (A)
   const res = {};
   for (const [tag, base] of [['before', process.env.BASE0], ['after', process.env.BASE]]) {

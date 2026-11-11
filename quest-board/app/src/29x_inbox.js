@@ -13,7 +13,7 @@ var INBOX=[
   /* Cal approved the text (2026-11-10). The id stays "roadmap": saves keep it in S.letters */
   {id:"roadmap",from:"Cal",subj:"What's coming",body:'<ul class="wl"><li>More friends dropping by, with their own stories</li><li>More ways to compete</li>'
     +'<li>A new building in town, with rooms to upgrade and explore</li><li>More brand drops, cosmetics and accessories</li><li>Pets, with outfits of their own</li>'
-    +'<li>New ways to earn coins, and new upgrades to unlock</li><li>Faster and smoother</li></ul><p>And more after that. If you have an idea, tell me in the Town Hall.</p>'}
+    +'<li>New ways to earn coins, and new upgrades to unlock</li><li>Faster and smoother</li></ul><p>And more after that. If you have an idea, tell me.</p>'}
 ];
 var INBOXGEN=INBOXGEN||[]; /* a file before this one may have added to it already (29u_style.js: the weekly winner) */
 function ibState(){if(!S.letters||typeof S.letters!=="object")S.letters={};var I=S.letters;["read","paid","at"].forEach(function(k){if(!I[k]||typeof I[k]!=="object")I[k]={}});return I}

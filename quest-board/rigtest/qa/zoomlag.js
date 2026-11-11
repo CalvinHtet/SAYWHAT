@@ -6,7 +6,7 @@
 const pw = require('playwright');
 const ENG = process.env.B || 'chromium', BASE = process.env.BASE || 'http://127.0.0.1:8769', ROOM = process.env.ROOM || 'restaurant', REPS = +(process.env.REPS || 3);
 (async () => {
-  const b = await pw[ENG].launch(ENG === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : {});
+  const b = await pw[ENG].launch(ENG === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] } : {});
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.QBLoft, null, { timeout: 120000 }); await p.waitForTimeout(800);
   await p.evaluate((t) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.gates = Array.from({ length: 200 }, (_, i) => i); S.xp = x.cum(60); S.base.served = 1e6;

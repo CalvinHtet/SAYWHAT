@@ -8,7 +8,7 @@ const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const BASE = process.env.BASE || 'http://127.0.0.1:8769';
 (async () => {
   for (const mobile of [false, true]) {
-    const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+    const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
     const p = await b.newPage({ viewport: mobile ? { width: 390, height: 844 } : { width: 1000, height: 900 } });
     const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
     await p.goto(BASE + '/dist/index.html'); await p.waitForTimeout(5000);

@@ -3,7 +3,7 @@
 const fs = require('fs'), { chromium } = require('playwright');
 const [out, ...ins] = process.argv.slice(2);
 (async () => {
-  const br = await chromium.launch(); const p = await br.newPage();
+  const br = await chromium.launch({ args: ['--mute-audio'] }); const p = await br.newPage();
   const data = await p.evaluate(async (L) => {
     const ims = await Promise.all(L.map((d) => new Promise((o) => { const i = new Image(); i.onload = () => o(i); i.src = 'data:image/png;base64,' + d; })));
     const c = document.createElement('canvas'); c.width = Math.max(...ims.map((i) => i.width)); c.height = ims.reduce((a, i) => a + i.height, 0);

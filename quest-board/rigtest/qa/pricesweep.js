@@ -40,20 +40,20 @@ async function grab(br, base) {
     if (tiers[id] && typeof p === 'number') { const [lo, hi] = BANDS[tiers[id]]; if (p < lo || p > hi) outBand.push(`${id} ${tiers[id]} ${p}`); } }
   shopBad.forEach((s) => P.push('shop ' + s));
   // against the reference
-  const diffs = { up: [], lot: [], shopCloth: 0, shopOther: [] };
+  const diffs = { up: [], lot: [], shopCloth: [], shopOther: [] };
   if (R) {
     for (const k of new Set([...Object.keys(N.up), ...Object.keys(R.up)])) if (N.up[k] !== R.up[k]) diffs.up.push(`${k} ${R.up[k]}->${N.up[k]}`);
     for (const k of new Set([...Object.keys(N.lot), ...Object.keys(R.lot)])) if (N.lot[k] !== R.lot[k]) diffs.lot.push(`${k} ${R.lot[k]}->${N.lot[k]}`);
-    for (const k of new Set([...Object.keys(N.shop), ...Object.keys(R.shop)])) { const a = R.shop[k], b = N.shop[k]; if (!a || !b || a[0] !== b[0]) { if (tiers[k]) diffs.shopCloth++; else diffs.shopOther.push(`${k} ${a && a[0]}->${b && b[0]}`); } }
+    for (const k of new Set([...Object.keys(N.shop), ...Object.keys(R.shop)])) { const a = R.shop[k], b = N.shop[k]; if (!a || !b || a[0] !== b[0]) { if (tiers[k]) diffs.shopCloth.push(`${k} ${a && a[0]}->${b && b[0]}`); else diffs.shopOther.push(`${k} ${a && a[0]}->${b && b[0]}`); } }
   }
   // ECONOMY.md anchors (2026-11-10)
   const g = (k) => N.up[k];
-  const anchors = { 'auditorium.au_proj2 (IMAX Laser Projector)': [g('auditorium.au_proj2'), 10500], 'auditorium.au_imax (IMAX Screen)': [g('auditorium.au_imax'), 21000] };
-  const lotsSum = ['garden', 'boba', 'theater', 'mall', 'club'].reduce((s, k) => s + (N.lot[k + '.cost'] || 0), 0); anchors['lots garden+boba+theater+mall+club'] = [lotsSum, 85400];
+  const anchors = { 'auditorium.au_proj2 (IMAX Laser Projector)': [g('auditorium.au_proj2'), +(process.env.PROJ || 9250)], 'auditorium.au_imax (IMAX Screen)': [g('auditorium.au_imax'), +(process.env.IMAX || 14250)] }; // ECONOMY.md v0.91 (c133657); v0.90: PROJ=10500 IMAX=21000
+  const lotsSum = ['garden', 'boba', 'theater', 'mall', 'club'].reduce((s, k) => s + (N.lot[k + '.cost'] || 0), 0); anchors['lots garden+boba+theater+mall+club'] = [lotsSum, +(process.env.LOTS || 57050)]; // ECONOMY.md v0.91: 57,050; v0.90 chain 86,500 (85,400 before SPEC8)
   for (const [k, [v, want]] of Object.entries(anchors)) if (v !== want) P.push(`ECONOMY.md anchor ${k}: ${v}, doc says ${want}`);
   console.log(`checked ${nUp} room upgrades, ${Object.keys(N.lot).length} lot/opener prices, ${Object.keys(N.shop).length} Shop entries (${Object.keys(tiers).length} graded clothes) on ${BASE}${R ? ' against ' + REF : ''} in ${Math.round((Date.now() - t0) / 1000)} s`);
   console.log(`anchors: ${Object.entries(anchors).map(([k, [v, w]]) => `${k} ${v}${v === w ? ' ok' : ' (doc ' + w + ')'}`).join('; ')}`);
-  if (R) console.log(`changed against the reference: upgrades ${diffs.up.length}${diffs.up.length ? ' [' + diffs.up.slice(0, 10).join('; ') + (diffs.up.length > 10 ? ' ...' : '') + ']' : ''}; lots ${diffs.lot.length}${diffs.lot.length ? ' [' + diffs.lot.slice(0, 8).join('; ') + ']' : ''}; graded clothes ${diffs.shopCloth}; other Shop entries ${diffs.shopOther.length}${diffs.shopOther.length ? ' [' + diffs.shopOther.slice(0, 10).join('; ') + ']' : ''}`);
+  if (R) console.log(`changed against the reference: upgrades ${diffs.up.length}${diffs.up.length ? ' [' + diffs.up.slice(0, 10).join('; ') + (diffs.up.length > 10 ? ' ...' : '') + ']' : ''}; lots ${diffs.lot.length}${diffs.lot.length ? ' [' + diffs.lot.slice(0, 8).join('; ') + ']' : ''}; graded clothes ${diffs.shopCloth.length}${diffs.shopCloth.length && diffs.shopCloth.length <= 12 ? ' [' + diffs.shopCloth.join('; ') + ']' : ''}; other Shop entries ${diffs.shopOther.length}${diffs.shopOther.length ? ' [' + diffs.shopOther.slice(0, 10).join('; ') + ']' : ''}`);
   console.log(`clothes outside their tier's band (CLOTHING_TIERS.md): ${outBand.length}${outBand.length ? ' [' + outBand.slice(0, 8).join('; ') + ']' : ''}`);
   console.log(`page errors: ${N.errs.length}${R ? ', reference ' + R.errs.length : ''}`);
   console.log(P.length ? `PROBLEMS ${P.length}:\n  ` + P.slice(0, 40).join('\n  ') + (P.length > 40 ? '\n  ...' : '') : 'no NaN, no undefined, no unexpected 0, no fractions: PASS');

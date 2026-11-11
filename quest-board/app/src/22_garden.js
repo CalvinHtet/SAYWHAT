@@ -40,7 +40,7 @@ var GD_UPS=[
  /* the grounds */
  ["g_x1","Clear the Back Lot",4000,{p:.3,fresh:.05,cap:2,lv:20,g:"Expansion",splash:"The garden doubled. There is room now for trees, a shed and a greenhouse."},"A much bigger garden."],
  ["g_x2","Buy the Empty Lot",15000,{p:.5,fresh:.08,cap:2,lv:32,g:"Expansion",splash:"The whole block is green now. Next up: a glass conservatory and proper grounds."},"The whole block goes green."],
- ["g_green1","Small Greenhouse",10000,{p:.4,fresh:.1,lv:29,g:"Expansion",also:"g_x1",dish:"Winter Greens",splash:"Crops under glass grow all year. The Restaurant earns more from it right away."},"Grows through every season."],
+ ["g_green1","Small Greenhouse",10000,{p:.4,fresh:.1,lv:29,g:"Expansion",also:"g_x1",dish:"Winter Greens",splash:"Crops under glass grow all year."},"Grows through every season."],
  ["g_green2","Glass Conservatory",40000,{p:.9,fresh:.25,lv:55,g:"Expansion",also:"g_x2",dish:"Chef's Garden Plate",splash:"The finest building on the block, and the best produce in the city."},"A grand glass hall of rare plants."],
  ["g_walk","Stone Walkway",5000,{p:.1,lv:28,g:"Grounds",also:"g_x1",splash:"People from the neighborhood now wander through your garden."},"A winding path. Visitors start strolling through."],
  ["g_bench2","Garden Benches",3000,{p:.08,lv:29,g:"Grounds"},"Somewhere to sit and look at it all."],
@@ -58,8 +58,25 @@ ADDONS.garden=GD_UPS;
 Object.assign(ADDREQ,{g_x2:"g_x1",g_green2:"g_green1",g_spr:"g_can",g_drip:"g_spr",g_pump:"g_drip",g_p2:"g_p1",g_p3:"g_p2",g_gard2:"g_gard",g_bench2:"g_walk",g_lant:"g_walk",g_arch:"g_walk",g_gate:"g_arch",g_fount:"g_walk",g_koi:"g_walk",g_sun:"g_walk",g_birdb:"g_walk",g_topi:"g_walk"});
 Object.assign(window.RSSUP,{g_green1:["g_green2"],g_gard:["g_gard2"]});
 Object.assign(window.RSTCH,{g_x2:1,g_green2:1,g_drip:1,g_pump:1,g_p3:1,g_gard2:1,g_bench2:1,g_lant:1,g_arch:1,g_gate:1,g_fount:1,g_koi:1,g_sun:1,g_birdb:1,g_topi:1});
+/* Cal, 2026-11-10: "no spoilers before the event triggers", and "If there is any text about any future rooms before the event
+   triggers, that is a spoiler". Until a Restaurant slot exists, Garden upgrades say what grows and what it sells for: no menu,
+   dish, soup, salad, tart, pie, wine, kitchen or dinner. The plain words are swapped in whenever the text is read (cards, the
+   Installed list, toasts, the splash), and the original lines come back the moment the Restaurant opens. Ids, prices, effects
+   and saves are untouched. A later write (econEarn's " Earns +N% here.") lands on the original line and shows with both. */
+var GD_PRE={g_let:{1:"Lettuce Rows",4:"Lettuce and carrots in long, straight rows."},
+  g_tom:{4:"Tall vines on bamboo stakes, heavy with tomatoes."},
+  g_berry:{4:"Raspberries and blueberries along the back fence."},
+  g_comp:{4:"Leaves and clippings rot down into dark soil for the beds."},
+  g_orch:{4:"Two young apple trees, staked against the wind."},
+  g_grape:{4:"A long green wall of vines, heavy with grapes by late summer."},
+  g_stand:{4:"Produce goes out to the street and sells for more."},
+  g_cellar:{4:"Cool and dark, it stores much more produce between visits."},
+  g_green2:{splash:"The finest building on the block, full of rare plants that grow all year."}};
+function gdPreText(o,k,pre){var orig=o[k],v=orig;
+  Object.defineProperty(o,k,{enumerable:true,configurable:true,get:function(){return rsRoom()?v:String(v).split(orig).join(pre)},set:function(n){v=String(n).split(pre).join(orig)}})}
+GD_UPS.forEach(function(a){var P=GD_PRE[a[0]];if(P)Object.keys(P).forEach(function(k){if(k==="splash")gdPreText(a[3],k,P[k]);else gdPreText(a,+k,P[k])})});
 
-var GDSIZE=[[12,10],[18,13],[24,16]],GDNAME=["Back Plot","Kitchen Garden","Garden Estate"];
+var GDSIZE=[[12,10],[18,13],[24,16]],GDNAME=["Back Plot","Kitchen Garden","Garden Estate"],GDNAME0=["Back Plot","Market Garden","Garden Estate"]/* GDNAME0: the stage names before the Restaurant opens (no "kitchen") */;
 function gdRoom(){var B=S&&S.base;return B&&B.slots?B.slots.filter(function(r){return r&&r.t==="garden"})[0]:null}
 function gdStage(a){return a&&a.g_x2?2:a&&a.g_x1?1:0}
 var gdDimBase=lfDimOf;
@@ -77,8 +94,10 @@ function gdUse(r){return 2+2*rsStage(r.a)}
 function gdCook(r,om,h){if(!gdRoom())return 0;var need=gdUse(r)*om*h,F=S.base.food;if(need<=0)return 0;var used=Math.min(F.veg||0,need);F.veg=(F.veg||0)-used;return gdFresh()*(used/need)}
 function gdRate(){var i=S.base.slots.indexOf(gdRoom());return i<0?0:ROOMT.garden.rate*roomMult(i)*openMult()}
 function gdPantry(){return Math.floor(S.base.food.veg||0)}
-function gdNote(r){var a=r.a||{},st=gdStage(a),nx=st===0?"g_x1":st===1?"g_x2":a.g_green2?null:"g_green2",N=nx&&GD_UPS.filter(function(u){return u[0]===nx})[0],rs=rsRoom(),d=gdDishes();
-  return '<p class="note"><b>'+GDNAME[st]+'.</b> Growing '+gdRate().toFixed(1)+' ingredients an hour. Pantry '+gdPantry()+'/'+foodCap()+'. '+(rs?'The Restaurant uses '+gdUse(rs)+' an hour and earns +'+Math.round(gdFresh()*100)+'% while it has stock.':'Build the Restaurant to put these to use.')+(N?' Next big step: '+esc(N[1])+'.':'')+'</p>'+(d.length?'<p class="note">On the Restaurant menu because of you: '+esc(d.join(", "))+'.</p>':'')}
+/* Cal, 2026-11-10: "no spoilers before the event triggers". Without a Restaurant the note says what grows and how much is
+   stored: no kitchen words, no dishes, no Restaurant bonus (those were the "something about the restaurant" after the greenhouse) */
+function gdNote(r){var a=r.a||{},st=gdStage(a),nx=st===0?"g_x1":st===1?"g_x2":a.g_green2?null:"g_green2",N=nx&&GD_UPS.filter(function(u){return u[0]===nx})[0],rs=rsRoom(),d=rs?gdDishes():[];
+  return '<p class="note"><b>'+(rs?GDNAME:GDNAME0)[st]+'.</b> Growing '+gdRate().toFixed(1)+(rs?' ingredients an hour. Pantry ':' produce an hour. Stored ')+gdPantry()+'/'+foodCap()+'.'+(rs?' The Restaurant uses '+gdUse(rs)+' an hour and earns +'+Math.round(gdFresh()*100)+'% while it has stock.':'')+(N?' Next big step: '+esc(N[1])+'.':'')+'</p>'+(d.length?'<p class="note">On the Restaurant menu because of you: '+esc(d.join(", "))+'.</p>':'')}
 /* the garden draws plain ground: fence, beds and things in rows */
 function gdS(C,k,x,y,w,d,h,o){return lfSpr(C,k,x,y,w,d,Object.assign({h:h,ctr:1},o||{}))}
 /* Cal: the beds sat at a steeper angle than the room. Each bed's top face (t back, r right, l left corner, as fractions of

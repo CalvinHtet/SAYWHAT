@@ -14,7 +14,7 @@ fs.mkdirSync(OUT, { recursive: true });
 let CASES = (process.env.CASES || 'bedroom:Desk Chair,bedroom:Memory Foam Bed,bedroom:Velvet Tufted Bed,bedroom:Bookshelf,bedroom:Floor-to-Ceiling,bedroom:Feature Walls,bedroom:Cove Lighting,lounge:Sofa,lounge:Boucle Sectional,gameroom:Couch & Console,gameroom:Cream Sectional,gameroom:Pool Table,gameroom:LED Wall Panels,gameroom:Carpet & Wall,restaurant:Walnut Dining Tables,restaurant:Marble Round Tables,restaurant:White Linen,restaurant:Brass Sconces,restaurant:Grand French Range').split(',').map((c) => c.split(':'));
 const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL ') + n + (g !== undefined ? '  ' + JSON.stringify(g).slice(0, 500) : '')); if (!c) fails.push(n); };
 (async () => {
-  const b = await pw[ENG].launch(ENG === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : {});
+  const b = await pw[ENG].launch(ENG === 'chromium' ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] } : {});
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft, null, { timeout: 120000 }); await p.waitForTimeout(1000);

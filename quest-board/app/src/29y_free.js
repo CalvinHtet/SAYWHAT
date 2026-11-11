@@ -126,9 +126,9 @@ trophyHtml=function(){var h=r2TrophyBase();if(typeof DGTAB!=="undefined"&&DGTAB!
 function chest3Roll(){var T=ECON.chest3,tot=T.reduce(function(a,x){return a+x[1]},0),r=Math.random()*tot,k=T[T.length-1][0];
   for(var i=0;i<T.length;i++){if(r<T[i][1]){k=T[i][0];break}r-=T[i][1]}
   if(k==="acc"){var it=freeItem({slots:/^a_acc$/,brands:"all"});if(it){S.owned[it[0]]=true;persist();return {kind:"wear",it:it}}
-    var c0=ECON.chestNone;S.coins+=c0;S.earnedC+=c0;persist();return {kind:"coins",n:c0,why:"every accessory"}}
+    var c0=econScaled(ECON.chestNone);S.coins+=c0;S.earnedC+=c0;persist();return {kind:"coins",n:c0,why:"every accessory"}}
   var rel=r2Pick(k);if(rel){r2Give(rel);return {kind:"relic",r:rel}}
-  var c=ECON.relicDup[k]||0;S.coins+=c;S.earnedC+=c;persist();return {kind:"coins",n:c,why:"every "+r2Tier(k)[1].toLowerCase()+" relic"}}
+  var c=econScaled(ECON.relicDup[k]||0);S.coins+=c;S.earnedC+=c;persist();return {kind:"coins",n:c,why:"every "+r2Tier(k)[1].toLowerCase()+" relic"}}
 function chest3Html(g){if(!g)return "";
   if(g.kind==="relic")return '<div class="r2 r2-'+g.r.tier+' r2-big">'+(g.r.tier==="legendary"?r2Wings():'')+'<div class="r2-frame">'+r2Icon(g.r)+'</div><small class="r2-t">'+r2Tier(g.r.tier)[2]+' relic</small><b>'+esc(g.r.name)+'</b><small>'+esc(g.r.d)+'</small><small class="r2-b">'+esc(r2BuffTxt(g.r.id))+'</small></div>';
   if(g.kind==="wear")return '<p class="dg-buff">'+esc(g.it[2])+(freeBrand(g.it)?' from '+esc(freeBrand(g.it)):'')+'. It is in your Wardrobe.</p>';

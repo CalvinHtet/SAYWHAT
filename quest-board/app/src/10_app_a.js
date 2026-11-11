@@ -194,8 +194,10 @@ function unlArt(u){
   if(u.relic)h+=relicSvg(u.lv);
   return h+'</div>';
 }
+function relicsOpen(){var a=AREAS.filter(function(x){return x[0]==="trophy"})[0];return !a||effLvl()>=a[2]}
 function unlTitle(u){
-  if(u.relic)return "Relic found";
+  /* SPEC9 follow-up: "Relic" only once the Relics tab is open */
+  if(u.relic)return relicsOpen()?"Relic found":"Something found";
   var parts=[];if(u.room)parts.push("New room");if(u.crew)parts.push("New crew member");return parts.join(" + ");
 }
 function unlBuffs(u){
@@ -505,7 +507,7 @@ function wheelHtml(){
      sits centred in its slice (QA, v0.89) */
   var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,e=((c+WHEELROT)%360+360)%360,
       t=e>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(calc(var(--wr) * -.58)) translate(-50%,-50%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(calc(var(--wr) * .58)) translate(-50%,-50%)';
-    return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
+    return '<span style="transform:'+t+'">'+esc(w[1]>0?econScaled(w[1],50).toLocaleString()+" coins":w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
@@ -517,10 +519,10 @@ function spin(){
   while(idx<WHEEL_W.length-1&&r>=WHEEL_W[idx]){r-=WHEEL_W[idx];idx++}
   var pz=WHEEL[idx]; S.wheel=today();
   if(pz[3]){var it=wheelGift();
-    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (it waits in your Wardrobe for the Closet)")}
-    else{S.coins+=WHEELALL;S.earnedC+=WHEELALL;S.wheelRes=WHEELALL.toLocaleString()+" coins (you own every piece already)"}}
-  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{S.coins+=300;S.earnedC+=300;S.wheelRes="300 coins (freeze slots were full)"}}
-  else{S.coins+=pz[1];S.earnedC+=pz[1];S.wheelRes=pz[0]}
+    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (saved for later)")}
+    else{var wa=econScaled(WHEELALL,50);S.coins+=wa;S.earnedC+=wa;S.wheelRes=wa.toLocaleString()+" coins (you own every piece already)"}}
+  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{var wf=econScaled(300,50);S.coins+=wf;S.earnedC+=wf;S.wheelRes=wf.toLocaleString()+" coins (freeze slots were full)"}}
+  else{var wc=econScaled(pz[1],50);S.coins+=wc;S.earnedC+=wc;S.wheelRes=wc.toLocaleString()+" coins"}
   persist(); spinning=true;
   /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
   var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);
@@ -610,7 +612,7 @@ function dngClaim(k,ev){
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
   var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
-  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare: a trophy, a relic shard, an ally or something to wear. Three crawls with nothing rare and the fourth always finds something.</p>'
+  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Three crawls with nothing rare and the fourth always finds something.</p>'
     +'<p class="note">Crawls today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.'+(sure?' <b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
@@ -669,7 +671,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins; now and then a trophy, a relic shard, an ally or something to wear."};
+var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
@@ -819,10 +821,13 @@ function navHtml(){
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
     if(a[0]==="away"&&areaGate("away"))return "";
-    var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
-    /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
-    var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?"Something new"+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg?(a[2]===nxLvl()&&!wt?"?":"&nbsp;"):(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    /* W47 (Cal, 2026-11-10: "there should be no locked shop tab"): no Shop tab at all until the Walk-in Closet is built */
+    if(a[0]==="shop"&&areaGate("shop"))return "";
+    var lk=lv<a[2]||areaGate(a[0]);
+    /* W47 (Cal: "? lvl 6. all locked tabs should just have a ? on it to avoid spoilers"): a locked tab is only a "?", with no name and
+       no icon of its own, and "Lv N" under it when a level opens it. Tapping it says "Locked. Keep playing." (30_app_b.js) */
+    if(lk)return '<button data-act="nav" data-v="'+a[0]+'" class="lk" aria-label="Locked'+(lv<a[2]?', level '+a[2]:'')+'"><b class="navq" aria-hidden="true">?</b><span>&nbsp;</span>'+(lv<a[2]?'<small>Lv '+a[2]+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+'" aria-label="'+a[1]+'">'+areaIcon(a[0])+'<span>'+(NAVSHORT[a[0]]||a[1])+'</span></button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
@@ -862,7 +867,7 @@ function shopHtml(){
     var vis=items.filter(function(x){return x[4]<=lv}), nxt=items.filter(function(x){return x[4]>lv})[0];
     if(!vis.length&&!nxt)return;
     h+='<section class="card panel"><h3 class="label">'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")
-     +(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0;color:var(--muted)">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>';
+     +'</div></section>';/* Cal: no "Sealed, restocks at level N" (the Shop in 15_shop.js replaces this one) */
   });
   return h;
 }

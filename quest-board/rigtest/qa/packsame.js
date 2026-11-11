@@ -4,7 +4,7 @@
 const { chromium } = require('playwright');
 (async () => {
   for (const base of process.argv.slice(2)) {
-    const b = await chromium.launch(); const p = await b.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+    const b = await chromium.launch({ args: ['--mute-audio'] }); const p = await b.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
     await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.QBART && window.__B, null, { timeout: 120000 });
     const r = await p.evaluate(async () => { const h = async (s) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))].map((x) => x.toString(16).padStart(2, '0')).join('').slice(0, 16);
       const k = Object.keys(window.QBART).sort(); let a = ''; k.forEach((x) => { a += x + '\n' + window.QBART[x] + '\n'; });

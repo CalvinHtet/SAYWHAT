@@ -5,7 +5,7 @@ const fs = require('fs'), path = require('path');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 (async () => {
   const [query, name] = [process.argv[2] || 'sheet=hats', process.argv[3] || 'matrix'];
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--mute-audio'] });
   const p = await b.newPage({ viewport: { width: 1600, height: 1200 } });
   const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200))); p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text().slice(0, 200)); });
   await p.goto(`${BASE}/rigtest/matrix.html?${query}`);

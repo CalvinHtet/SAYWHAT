@@ -21,7 +21,15 @@ task in `.claude/worktrees/<task>`; QA tests with the headless tools in `tools/w
 No art generation. Address book and logs: `.claude/team/<ROLE>.md`. Status words: TODO, DOING, READY FOR QA, QA PASS, QA FAIL,
 MERGED, WAITING ON CAL.
 
-Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90.
+Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; THEN the final MAC_HANDOFF.md and the Windows team stops (Cal 16:15: "Will continue everything through claude on mac"); anything needing art waits about 52 h (Cal's Mac limit).
+
+**v0.91 FINAL LIST (Cal 17:30: "I want all economy based and level based decisions in 0.91. All cosmetic changes and town hall boss stuff
+to be 0.92." "Take as long as you need. As long as I can publish it before I sleep tonight"):** W51/W52 unlocks + reset; no level gates on
+story rooms, strict Garden -> Restaurant -> bar on Noir -> Boba -> Dessert, Noir ~4-6 days after the Restaurant, no dead-end locked cards;
+w-econ3 (passive steps 10/15/20/25-30%, per-business caps, payback prices, 4 price rules, r_safe, the Restaurant sign); the Wheel every 4 h;
+w-system (W48) with the level-up card rework and tiered permanent upgrades I-III (3-card cascade); w-shopui (W47, done); text spoiler fixes
+(w-nospoil3). v0.92: W49 chat, W53 greetings, W50/W14 colours, W41 wardrobe, W57, W58, W59 toast, W60 "+" window, W54 Town Boss (code with
+placeholder art).
 
 | # | Task (Cal's words, 2026-11-10) | Owner | Branch | Status |
 |---|---|---|---|---|
@@ -68,8 +76,24 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W40 | Daily sale: "2 things on sale in the shop each day but for only 1 brand each day ... a different brand in rotation ... 25% or 50% off" | BUILDER | w-sale | TODO (v0.91) |
 | W41 | Wardrobe filters: "categories for different item pieces, and also can be filtered by brand and the category of items" | BUILDER | w-wardrobe | TODO (v0.91) |
 | W42 | Shop floors (Cal "Go" 13:40): Street (Closet, Mon+Fri, 2 live), Boutique (level 30, Fridays, 2 live; VENOM ROSE, SAYMØRE, CHROME RAIN, NICE COCK), Atelier (level 70, every other Friday, 1 live; hidden until its brands exist); one Wednesday vault for the Shop; splashes only from opened floors; prices by floor; 12 brands per floor over time (Mac art) | BUILDER | w-floors (v0.91, before w-sale) | TODO |
-| W43 | Focused unlocks + building Goals log (ARCHITECT SPEC8, Cal approved): a room opens on its story trigger AND every open room in that building half upgraded (no day wait; replaces W25), Lock and Key before Boba, Goals panel with XP and coins | BUILDER | w-focus (v0.91) | v0.91 #2, right after w-nospoil (Cal: economy is high priority) |
+| W43 | Focused unlocks + building Goals log (ARCHITECT SPEC8, Cal approved): a room opens on its story trigger AND every open room in that building half upgraded (no day wait; replaces W25), Lock and Key before Boba, Goals panel with XP and coins | BUILDER | w-focus (v0.91) | REPLACED by W51 (Cal 15:05: his own % table) |
 | W44 | No spoilers (Cal: "Scrub the entire game for spoilers"): ARCHITECT SPEC9, about 25 fixes (mystery cards, help, team and relic text, Crawls tab, locked dungeons, next brand); rule in docs/VOICE.md | BUILDER | w-nospoil | TODO (top of v0.91) |
+| W45 | Economy scaling (Cal): EVERYTHING BOUGHT AROUND LEVEL 90 + BALANCE: % bought tracks level / 90 at every stage, never level 100 with upgrades left (Cal 14:37); (Cal 14:35: more brands and pets coming later); "big purchases to a day's income ... only some of them"; others priced for their tier; the wheel's prize pool scales with level; "all quests and sources of income should make sense and scale a bit" | BUILDER | w-econ3 (with or after w-focus) | TODO (v0.91, high) |
+| W46 | Permanent upgrades and interface priced by payback (Cal: "Merchant seal ... 1500? That seems way too cheap for a permanent buff") | BUILDER | w-econ3 | TODO (v0.91) |
+| W47 | Shop header: Wardrobe button on top; coins, + and envelope top right; "The Shop" top left over "NEW BRANDS MON AND FRI 8 AM"; no "old favorite" text; a Wednesday vault splash; the vault starts after 6 shops in rotation | BUILDER | w-shopui | TODO (v0.91) |
+| W48 | Upgrades and Interface appear only after the Lair's big screen; a button on that screen opens those Shop tabs | BUILDER | w-system | TODO (v0.91, IN the priority cut) |
+| W49 | Chat like Discord: a round face avatar left of the name; consecutive messages under one header | BUILDER | w-chat2 | TODO (v0.91) |
+| W50 | Town Hall colours from its banner picture (Cal again; W14 first part) | BUILDER | w-colors | TODO (v0.91) |
+| W51 | Unlocks by % of the previous room (Cal 15:05, replaces SPEC8's focus rule): Bedroom 30/50/70% for Closet/Patio/Game Room; Loft 60% for the Garden; a Garden earnings goal for the Restaurant; Noir for the bar; bar 75% for Boba; Boba 60% for Dessert; Plaza 60% for the Mall; Mall 30% for the Theater; the same through the Calibur Mall | BUILDER | w-unlock (on w-econ3) | TODO (v0.91, top) |
+| W52 | One-time reset for all players: rooms and buildings reset (CONFIRMED by Cal: everything in the building tab incl. the Lair; Shop purchases kept and not refunded; letter only to players who bought there), coins refunded at today's prices, save backed up first, an inbox letter (Cal: "initialize the loft and refund all the money they have spent") | BUILDER | w-unlock | TODO (v0.91) |
+| W53 | Greetings: wave, high five, poke, spank (Hug and Cheer go, no opt-out); "Visit their Loft" removed | BUILDER | w-chat2 | TODO (v0.92) |
+| W54 | Weekly Town Boss (SPEC10 part 1): HP by active players (Cal 16:10: 800 HP per player active 3+ days in the week; no coin penalty on a loss, first boss after 5 active players; see SPEC10 "Cal's final Town Boss decisions"), damage from quest + Training XP, art phases on the Town Hall picture, a win chest or a light penalty; 6 pictures per boss from the Mac | BUILDER | w-boss | LATER (v0.93+) |
+| W55 | Friends visit your businesses (SPEC10 part 2): real players in their outfits with name labels, a note, small capped tips | BUILDER | w-visitors | LATER (v0.93+) |
+| W56 | Purchase sounds for everyone (Cal: "a cash or coin sound"), synthesized, with an on/off switch | BUILDER | w-sound | LOW (v0.93) |
+| W57 | Hall: green online dot next to other players' names, plus their streak | BUILDER | (v0.92) | TODO |
+| W58 | Board sorted shortest task first (an estimated minutes value per quest) | BUILDER | (v0.92) | TODO |
+| W59 | Quest-complete toast at the TOP under the header (safe-area aware): compact box, at most 2 short lines ("+45 XP  +270 coins" / "Streak +12%  On a roll +25%"), 3 s then a ~1 s fade, a new one replaces the open one, never covers coins or the envelope (Cal 16:35; spots: pop() 30_app_b.js ~1456, the quest line ~1605, .pop index.html ~427) | BUILDER | (v0.92) | TODO |
+| W60 | Building view: tapping the "+" for the next room opens its own window for that opening upgrade (picture or a drawn stand-in, name, price, coins, Buy, same purchase code; a "See the <room>" button keeps today's path). Not ready yet: progress lines only and "?" for the room, no name or picture. Lots the same (Cal 16:40; spec todo/LEAD.md, 20_loft.js ~1143, 26_world.js ~92) | BUILDER | (v0.92) | TODO |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
@@ -173,6 +197,8 @@ The second accessory (level 20) needs no new art: it reuses the accessories in t
    `ui_relic2_<id>.webp` exists.
 5. **Rafe's treasure hunts (W35).** Per hunt, 3-4 full-screen montage pictures (portrait, phone) with Rafe ahead and the player's first-person view (a hand reaching for a ledge, a rope, the relic), NO player character, through
    a dangerous journey to the legendary relic, plus the relic icon. Placeholders drawn in code until then.
+   7. **Town Boss (W54).** 6 pictures per boss for the Town Hall banner: full health, 75%, 50%, 25%, defeated (Sunday) and rampaging with
+   fire (Sunday). Original monsters only. Spec: .claude/team/ideas/2026-11-10_SPEC10_greetings_townboss_visitors.md.
    6. **New brands for the shop floors (W42).** Cal, 2026-11-10: street levels 1-30, mid (Boutique) 30-70, luxury (Atelier) 70-100, "if
    street has 12 brands, then mid should have 12 and luxury also should have 12". Today: 12 street, 4 mid (VENOM ROSE, SAYMØRE, CHROME RAIN,
    NICE COCK), 0 luxury. Needed: 8 mid brands and 12 luxury brands, made the way docs/BRAND_AUTOGEN.md describes (each with a splash,

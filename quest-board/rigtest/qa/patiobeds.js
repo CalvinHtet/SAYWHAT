@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', STATE = process.env.STATE || 'two', SECS = +(process.env.SECS || 150), OUT = process.env.OUT || 'qa-out';
 const PT0 = ['pt_grass', 'pt_chair1', 'pt_egg', 'pt_plant', 'pt_table', 'pt_lights', 'pt_bowl', 'pt_rug', 'pt_cart'];
 const BD = ['bd_bed2', 'bd_win2', 'bd_win3', 'bd_wt2', 'bd_dbed1', 'bd_pluto', 'bd_dbed2', 'bd_chop', 'bd_nstand', 'bd_rug'];
-(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: 1100, height: 900 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft, null, { timeout: 90000 });
   const PT = PT0.concat(STATE === 'one' ? ['pt_dbed'] : STATE === 'chop' ? ['pt_dbed2'] : STATE === 'two' ? ['pt_dbed', 'pt_dbed2'] : []);

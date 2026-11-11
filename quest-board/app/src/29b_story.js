@@ -66,7 +66,7 @@ function styHas(t){return !!t&&S.base&&S.base.slots.some(function(r){return r&&r
 function styUps(t){var r=S.base&&S.base.slots.filter(function(x){return x&&x.t===t})[0];return r?addonsOf(r).length:0}
 function styStep(room){return STORY.filter(function(s){return s.room===room})[0]}
 /* may this room be opened now (as a lot or by its upgrade)? Rooms outside the story always may. */
-function styAllows(room){var s=styStep(room);if(!s)return true;var o=styState();return !!(o.done[s.id]||o.offer[s.id]||styHas(room))}
+function styAllows(room){var s=styStep(room);if(!s)return styHas(room)||!(typeof ECON!=="undefined"&&ECON.unlock&&ECON.unlock[room])||unlockMet(room);var o=styState();return !!(o.done[s.id]||o.offer[s.id]||styHas(room))}
 /* the street's lots: the story's lots that are open and not yet built, plus anything outside the story */
 var styLotsBase=lotsOpen;
 lotsOpen=function(){var o=styState(),out=styLotsBase().filter(function(k){return !styStep(k)});
@@ -86,70 +86,81 @@ function styOpen(s){var o=styState();o.offer[s.id]=1;if(s.how==="team"){o.done[s
    least a day.") ----
    STYCHAIN: the story rooms in order, the Garden first (SPEC8: Lock and Key now before Boba). When each room opened lives in
    S.story.open; rooms a save already had count as opened long ago.
-   SPEC8 (Cal, 2026-11-10: "Instead of just waiting a day, perhaps we can lock the next rooms based off of number of upgrades ... my
-   concern is that when too many things are open, there is too much to do with not much of the previous tiers completed"): a story
-   room opens when its own trigger (its gate) is met, every room the player has in its building (the building before it, for a
-   building's first room) has at least ECON.focusMin of its upgrades, and the player is at its level (ECON.stepLv). The day wait and
-   the coins-since-the-last-room count are gone. The card lines say what to do and how far along it is, never what opens. */
+   w-unlock (Cal, 2026-11-10): a room opens on its line in ECON.unlock (a share of a room's upgrades, of the Loft or of Kode Plaza, the
+   Garden's sales, or Noir), with no level floor and no day wait; it replaced SPEC8's focus rule. The card lines say what to do and how
+   far along it is, never what opens. */
 var STYCHAIN=[["garden","garden"],["chef","restaurant"],["lockkey","skybar"],["boba","boba"],["dessert","dessert"],["mall","mall"]];
 function styOpened(){var o=styState();if(!o.open||typeof o.open!=="object"){o.open={};STYCHAIN.forEach(function(c){if(styHas(c[1]))o.open[c[1]]={d:"",c:0}})}
   STYCHAIN.forEach(function(c){if(styHas(c[1])&&!o.open[c[1]]){o.open[c[1]]={d:today(),c:Math.floor(S.earnedC||0)};persist()}});return o.open}
-/* steps whose trigger is "N upgrades in a room": [the room, N] (the same numbers as their gates below) */
-var STYUPS={dessert:["boba",4],rooftop:["skybar",6],theater:["mall",4],arcade:["auditorium",3],rhythm:["arcade",4],vr:["arcade",4],bowling:["arcade",6],karaoke:["bowling",6],club:["karaoke",6]};
-/* the room each step's trigger happens in (for the Goals list, 29bg_goals.js) */
-var STYSRC={garden:"bedroom",chef:"garden",lockkey:"restaurant",boba:"restaurant"};
+/* the room a step's trigger happens in (for the Goals list, 29bg_goals.js) */
+function unlockSrc(room){var u=(ECON.unlock||{})[room];if(!u)return null;return u.at||u.earn||(u.loft?"bedroom":u.noir?"restaurant":u.plaza?ECON.plazaAll[ECON.plazaAll.length-1]:null)}
 function rmName(t){return (ROOMT[t]||{}).name||t}
-/* "the Boba Shop", but "Lock and Key" */
-function theRoom(t){return (t==="skybar"?"":"the ")+rmName(t)}
 function slotOf(t){return S.base&&S.base.slots.filter(function(x){return x&&x.t===t})[0]}
 /* a room's fill: upgrades bought of the ones it can take (not retired, not openers, not the Trophy Room's finds) */
 function roomFill(r){var L=(ADDONS[r.t]||[]).filter(function(a){var e=a[3]||{};return !e.retired&&!e.opens&&!e.trophy}),n=L.filter(function(a){return r.a&&r.a[a[0]]}).length;
   return {n:n,tot:L.length,half:Math.ceil(L.length*ECON.focusMin)}}
-/* the building whose rooms must be half done before room t opens: its own, or the one before it for a building's first room */
-function focusBld(t){var c=ROOMCELL[t];if(!c||!S.base)return -1;
-  for(var b=c[0];b>=0;b--)if(S.base.slots.some(function(r){return r&&r.t!==t&&ROOMCELL[r.t]&&ROOMCELL[r.t][0]===b}))return b;return -1}
-/* [room, upgrades still needed] for each room of that building under half */
-function focusLack(t){var b=focusBld(t);if(b<0)return [];
-  return S.base.slots.filter(function(r){return r&&r.t!==t&&ROOMCELL[r.t]&&ROOMCELL[r.t][0]===b}).map(function(r){var f=roomFill(r);return f.tot&&f.n<f.half?[r.t,f.half-f.n]:null}).filter(Boolean)}
-function focusOk(t){return !focusLack(t).length}
-/* [bought, all] over the Loft's core rooms, built or not (the Garden's trigger) */
-function loftShare(){var n=0,tot=0;ECON.loftCore.forEach(function(t){var L=(ADDONS[t]||[]).filter(function(a){return !(a[3]&&a[3].retired)}),r=slotOf(t);tot+=L.length;
+/* [bought, all] over a set of rooms, built or not (the Loft's and Kode Plaza's shares) */
+function roomsShare(list){var n=0,tot=0;list.forEach(function(t){var L=(ADDONS[t]||[]).filter(function(a){return !(a[3]&&a[3].retired)}),r=slotOf(t);tot+=L.length;
   if(r)n+=L.filter(function(a){return r.a&&r.a[a[0]]}).length});return [n,tot]}
-/* coins collected from a room since it opened (r.earn, 30_app_b.js rcollect) */
+function loftShare(){return roomsShare(ECON.loftCore)}
+/* coins a room has made: collected from it (r.earn, 30_app_b.js rcollect), or from its produce sales for the Garden */
 function roomEarn(t){var r=slotOf(t);return r?Math.floor(r.earn||0):0}
-/* a step's own trigger as [what, met, text], or null; the text names only rooms the player has */
-function styTrig(s){var id=s.id,u=STYUPS[id];
-  if(id==="garden"){var ls=loftShare(),need=Math.ceil(ls[1]*ECON.gardenLoft);return ["story",ls[0]>=need,"Half of The Loft upgraded: "+Math.min(ls[0],need)+" of "+need]}
-  if(id==="chef"){var so=styState().sold||0;return ["story",so>=12,"Sell 12 produce: "+Math.min(so,12)+" of 12"]}
-  if(id==="lockkey")return ["story",styNoir(),"Keep upgrading the Restaurant"];
-  if(id==="boba"){var e=roomEarn("restaurant"),B=ECON.bobaEarn;return ["story",e>=B,"Earn "+B.toLocaleString()+" coins in the Restaurant: "+Math.min(e,B).toLocaleString()+" of "+B.toLocaleString()]}
-  if(u&&styHas(u[0])){var n=styUps(u[0]);return ["story",n>=u[1],u[1]+" upgrades in "+theRoom(u[0])+": "+Math.min(n,u[1])+" of "+u[1]]}
+/* is room t's unlock met (ECON.unlock), and its line: [what, met, text, bar 0-1, goal text, goal progress], naming only rooms the
+   player has. An upgrade step never shows its total (Cal: "so it remains a mystery when upgrading to see how far it will go") */
+function unlockUps(kind,met,place,n,need){return [kind,met,place+" upgrades: "+n+" bought",need?Math.min(1,n/need):1,"More "+place+" upgrades",n+" bought"]}
+function unlockMet(t){var l=unlockLine(t);return !l||l[1]}
+/* LEAD (Cal stuck at level 14 on "Something else opens first"): a room waiting on a room the player doesn't have shows that room's own
+   next step, as far back as it takes, so the line is always something to do and never names a room the player doesn't have */
+function unlockVia(t,d){var s=styStep(t),o=styState();if(s&&(o.offer[s.id]||(d<6&&unlockMet(t)&&!o.done[s.id])))return ["wait",false,o.offer[s.id]?"Something new is ready to build":"Someone wants to talk to you"];
+  var l=d<6?unlockLine(t,d+1):null;return l||["wait",false,"Keep playing"]}
+/* the next thing to buy toward an upgrade (its own needs first), in a room the player has */
+function unlockNext(room,id){var r=slotOf(room),by={};if(!r)return null;(ADDONS[room]||[]).forEach(function(a){by[a[0]]=a});var a=by[id],n=0;
+  while(a&&n++<6){var e=a[3]||{},q=by[ADDREQ[a[0]]]||by[e.also];if(q&&!(r.a&&r.a[q[0]]))a=q;else break}return a&&!(r.a&&r.a[a[0]])?a:null}
+/* the upgrade in this room that the story waits on next (the Restaurant's way to Noir, which opens the bar), so the room window
+   lists it first, even while it waits for its dishes, like an upgrade that opens a room (Cal: "make sure my dead end bug doesnt appear") */
+function styNextBuy(room){if(room!=="restaurant"||styNoir()||styHas("skybar"))return null;var a=unlockNext("restaurant","r_noir");return a?a[0]:null}
+function unlockLine(t,d){d=d||0;var u=(ECON.unlock||{})[t];if(!u)return null;
+  if(u.at){var r=slotOf(u.at);if(!r)return unlockVia(u.at,d);var f=roomFill(r),need=Math.ceil(f.tot*u.pct);
+    return unlockUps("at",f.n>=need,rmName(u.at),f.n,need)}
+  if(u.loft){var ls=loftShare(),nl=Math.ceil(ls[1]*u.loft);return unlockUps("loft",ls[0]>=nl,"Loft",ls[0],nl)}
+  if(u.earn){if(!slotOf(u.earn))return unlockVia(u.earn,d);var e=roomEarn(u.earn);
+    return ["earn",e>=u.coins,rmName(u.earn)+" sales: "+Math.min(e,u.coins).toLocaleString()+" of "+u.coins.toLocaleString()+" coins"]}
+  /* the bar: the Restaurant's Noir; the line names the next upgrade to buy toward it (Noir, or what it needs first) */
+  if(u.noir){if(!slotOf("restaurant"))return unlockVia("restaurant",d);if(styNoir())return ["noir",true,"Restaurant: Noir"];/* Noir comes up in the Restaurant's list in price order, so the line says to keep going until it, not to buy a piece the window
+       may not show yet (QA: "a player is told to buy something they can't find") */
+    return ["noir",false,"Keep upgrading the Restaurant until Noir",null,"Restaurant: reach Noir",""]}
+  /* the Mall: every Kode Plaza room built first (econsim: with only the Garden and the Restaurant it opened before Lock and Key) */
+  if(u.plaza){var miss=ECON.plazaAll.filter(function(k){return !styHas(k)})[0];if(miss)return unlockVia(miss,d);var ps=roomsShare(ECON.plazaAll),np=Math.ceil(ps[1]*u.plaza);
+    return unlockUps("plaza",ps[0]>=np,"Kode Plaza",ps[0],np)}
   return null}
-/* [what, met, text] for each trigger of a story step: its level, its own trigger, the focus rule */
-function styTriggers(s){if(!s||!s.room||s.how==="never")return null;var L=ECON.stepLv[s.id]||0,lv=effLvl(),out=[],tr=styTrig(s),fl=focusLack(s.room);
-  if(L>1)out.push(["lv",lv>=L,"Level "+Math.min(lv,L)+" of "+L]);
-  if(tr)out.push(tr);
-  if(fl.length)out.push(["focus",false,rmName(fl[0][0])+": "+fl[0][1]+" more upgrade"+(fl[0][1]>1?"s":"")+" to half"+(fl.length>1?" (and "+(fl.length-1)+" more room"+(fl.length>2?"s":"")+")":"")]);
-  else if(focusBld(s.room)>=0)out.push(["focus",true,"Every room here at least half upgraded"]);
-  return out}
-/* the focus rule, on top of each step's gate and level (styReadyLow, styCheck) */
-function styChainOk(s){return !s||!s.room||focusOk(s.room)}
+/* Cal (2026-11-10): "I want the garden, then the restaurant, and then bar as soon as the noir upgrade unlocks. Don't need to lock any of
+   these by level since they have a coin earned goal": Lock and Key goes right after the Restaurant in the story (ahead of Boba and
+   Dessert), and a save that already has Boba or Dessert but no bar gets it at once */
+(function(){var f=function(id){for(var i=0;i<STORY.length;i++)if(STORY[i].id===id)return i;return -1},i=f("lockkey"),j=f("boba");if(i>j&&j>=0){var s=STORY.splice(i,1)[0];STORY.splice(j,0,s)}})();
+/* a story step's trigger (the Goals use it) */
+function styTrig(s){return s&&s.room?unlockLine(s.room):null}
+/* [what, met, text] for each trigger of a story step: its level (the people who join keep one) and its unlock */
+function styTriggers(s){if(!s||!s.room||s.how==="never")return null;var L=ECON.stepLv[s.id]||0,lv=effLvl(),out=[],tr=unlockLine(s.room);
+  if(L>1)out.push(["lv",lv>=L,"Level "+Math.min(lv,L)+" of "+L]);if(tr)out.push(tr);return out}
+/* SPEC8's focus rule is gone (Cal replaced it with the table) */
+function styChainOk(s){return true}
+/* each story room's gate is its unlock (the Mall also waits while it is held) */
+STORY.forEach(function(s){if(!s.room||s.how==="never")return;var g0=s.gate;s.gate=function(){return ECON.unlock&&ECON.unlock[s.room]?(unlockMet(s.room)||(s.id==="lockkey"&&(styHas("boba")||styHas("dessert"))))&&(s.id!=="mall"||!mallHeld()):g0()}});
 /* the reason a room is still closed, for its locked card */
 var MALLHOLD=true;
 function mallHeld(){return MALLHOLD&&!!(window.QB_WEB&&QB_WEB.noTest)&&!styHas("mall")}
 /* SPEC9: a locked card says what to do and how far along it is, never the story's why line (it names what comes next) */
-function styWhy(room){var s=styStep(room),L=s&&ECON.stepLv[s.id];if(s&&s.id==="mall"&&mallHeld())return "Something new is waiting. It comes in a later update.";
-  var T=s&&styTriggers(s);if(T&&T.length)return T.map(function(x){return (x[1]?"✓ ":"")+x[2]}).join(". ")+".";
-  return "Keep growing your business."+(L&&effLvl()<L?" (level "+L+")":"")}
+function styWhy(room){var s=styStep(room);if(s&&s.id==="mall"&&mallHeld())return "Something new is waiting. It comes in a later update.";
+  var T=s?styTriggers(s):(unlockLine(room)?[unlockLine(room)]:null);if(T&&T.length)return T.map(function(x){return (x[1]?"✓ ":"")+x[2]}).join(". ")+".";
+  return "Keep growing your business."}
 /* W25 (QA, 2026-11-10): the triggers one per line, a tick on each one met */
-function styWhyHtml(room){var s=styStep(room),T=s&&!(s.id==="mall"&&mallHeld())&&styTriggers(s);if(!T||!T.length)return esc(styWhy(room));
-  return '<span class="stytr">'+T.map(function(x){return '<span'+(x[1]?' class="ok">✓ ':'>')+esc(x[2])+'</span>'}).join("")+'</span>'}
-/* a story room that no upgrade opens (a lot on the street, or one that is given) shows its triggers at the top of the room where its
-   trigger happens: the Garden in the Bedroom, Boba and the Mall in the Restaurant, the Theater in the Mall ... */
-var STYAT={garden:"bedroom",boba:"restaurant",mall:"restaurant"};
+function styWhyHtml(room){var s=styStep(room),T=s&&s.id==="mall"&&mallHeld()?null:s?styTriggers(s):(unlockLine(room)?[unlockLine(room)]:null);if(!T||!T.length)return esc(styWhy(room));
+  return '<span class="stytr">'+T.map(function(x){return '<span'+(x[1]?' class="ok">✓ ':'>')+esc(x[2])+(x[3]!=null&&!x[1]?'<i class="stybar"><i style="width:'+Math.round(x[3]*100)+'%"></i></i>':'')+'</span>'}).join("")+'</span>'}
+/* a story room that no upgrade opens (a lot on the street, or one that is given) shows its triggers at the top of the room its
+   trigger happens in: the Garden in the Bedroom, Boba in Lock and Key, the Mall in the Restaurant, the Theater in the Mall ... */
 function styNextHtml(t){var o=styState(),h="";
   STORY.forEach(function(s){if(!s.room||s.how==="never"||(s.how!=="lot"&&s.how!=="free")||o.done[s.id]||o.offer[s.id]||styHas(s.room))return;
-    if((STYAT[s.id]||(STYUPS[s.id]||[])[0])!==t)return;
+    if(unlockSrc(s.room)!==t)return;
     if(Object.keys(ADDONS).some(function(rt){return (ADDONS[rt]||[]).some(function(a){return a[3]&&a[3].opens===s.room})}))return;
     h+='<div class="addon next mystery stynext" aria-label="A room still to come"><span class="label">Coming next</span><b>? ? ?</b><small>'+styWhyHtml(s.room)+'</small><button class="btn ghost" disabled>Not yet</button></div>'});
   return h}
@@ -215,7 +226,8 @@ function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA:
     /* QA (2026-11-05): at most one new story step a day, so unlocks arrive along the way (Cal) */
     /* Cal, 2026-11-09: the Garden and the Restaurant (ECON.slotFree) never wait for the early one-a-day slot or an area */
     var sf=!!ECON.slotFree[s.id];
-    if((o.stepDay===today()&&!(S.testFree>0))||(!sf&&!unlockSlotFree(ECON.stepLv[s.id]||0)))break;
+    /* Cal (2026-11-10): a room whose trigger is met opens now, not days later; the one-a-day rule is for the early team steps */
+    if((!sf&&o.stepDay===today()&&!(S.testFree>0))||(!sf&&!unlockSlotFree(ECON.stepLv[s.id]||0)))break;
     /* QA (3d65b70): early unlocks go in order of their own level, so an area waiting from a lower level (the Hall at 4) goes before this step */
     var wa=typeof areaLowestWaiting==="function"?areaLowestWaiting():0;if(!sf&&wa&&wa<(ECON.stepLv[s.id]||0)&&wa<ECON.oneSlotBelow)break;
     if(s.scene){if((o.later[s.id]||0)>now)continue;o.stepDay=today();if(!sf)unlockTake();styScene(s);return}
@@ -224,7 +236,7 @@ function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA:
 setInterval(styCheck,15000);setTimeout(styCheck,4000);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=styyes],[data-act=styno],[data-act=stysell]");if(!b)return;
   var a=b.dataset.act,o=styState();
-  if(a==="stysell"){var n=Math.floor((S.base.food&&S.base.food.veg)||0);if(!n){pop("Nothing to sell yet");return}var c=n*4;S.base.food.veg-=n;o.sold+=n;S.coins+=c;S.earnedC+=c;persist();render();pop("Sold "+n+" produce: +"+c+" coins");var om=document.querySelector(".rmodal .rm-scroll");if(om)roomModal(+om.dataset.i);return}
+  if(a==="stysell"){var n=Math.floor((S.base.food&&S.base.food.veg)||0);if(!n){pop("Nothing to sell yet");return}var c=n*((typeof ECON!=="undefined"&&ECON.vegCoin)||4);S.base.food.veg-=n;/* w-econ3: counts in the day's business payout (payRoom) */if(typeof payTake==="function")payTake(c);o.sold+=n;S.coins+=c;S.earnedC+=c;var gs=slotOf("garden");if(gs)gs.earn=(gs.earn||0)+c;/* w-unlock: the Garden's sales open the Restaurant */persist();render();pop("Sold "+n+" produce: +"+c+" coins");var om=document.querySelector(".rmodal .rm-scroll");if(om)roomModal(+om.dataset.i);return}
   var s=STORY.filter(function(x){return x.id===b.dataset.v})[0];if(!s)return;var m=b.closest(".modal");if(m)m.remove();
   if(a==="styno"){o.later[s.id]=Date.now()+30*60000;persist();return}
   if(s.scene&&s.scene.team){o.team[s.scene.team]=1;try{teamJoin(s.scene.team)}catch(e){}}styOpen(s)});

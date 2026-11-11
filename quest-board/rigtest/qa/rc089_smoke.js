@@ -2,9 +2,10 @@
 // window that opens by itself. OUT pictures: smoke_<who>_<screen>.png
 //   BASE=http://127.0.0.1:8811 SEED=<file> bash tools/windows/node.sh rigtest/qa/rc089_smoke.js
 const fs = require('fs');
+const SEEDS = require('path').join(__dirname, 'seeds') + '/'; // saves in rigtest/qa/seeds (v0.88, v0.89, v0.90; test names only)
 const { browser, sleep } = require('./cdp.js');
-const BASE = process.env.BASE || 'http://127.0.0.1:8811', OUT = process.env.OUT || 'C:/Users/clvh/qa-wt/out/rc089/smoke'; fs.mkdirSync(OUT, { recursive: true });
-const SEED = process.env.SEED ? JSON.parse(fs.readFileSync(process.env.SEED, 'utf8')) : null;
+const BASE = process.env.BASE || 'http://127.0.0.1:8811', OUT = process.env.OUT || require('os').tmpdir() + '/qa-out/smoke'; fs.mkdirSync(OUT, { recursive: true });
+const SEED = JSON.parse(fs.readFileSync(process.env.SEED || SEEDS + 'v88_adv.json', 'utf8')); // the advanced player
 const TABS = ['board', 'train', 'hideout', 'shop', 'hall', 'hall:chat', 'hall:rank', 'trophy', 'wheel', 'away', 'inbox'];
 (async () => {
   const br = await browser();

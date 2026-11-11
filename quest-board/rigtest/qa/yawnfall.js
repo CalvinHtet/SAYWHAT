@@ -7,7 +7,7 @@ const OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const TOPS = (process.env.TOPS || 'sv_ski,cr_bomber,bb_cloak,kp_hoodie,o_tee,tee').split(',');
 const FR = { stretch: [0, 3, 6, 9, 12, 15, 18, 21, 23], idle: [0, 8, 16], walk: [0, 4, 8, 12] };
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   for (const [tag, base] of [['before', process.env.BASE0], ['after', process.env.BASE]]) {
     const p = await (await b.newContext({ viewport: { width: 600, height: 800 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 140)));
     await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && window.QBLoft.data, null, { timeout: 90000 }); await p.waitForTimeout(1500);

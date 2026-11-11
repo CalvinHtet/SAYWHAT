@@ -10,7 +10,7 @@ const med = (a) => a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)];
 (async () => {
   const res = [];
   for (let r = 0; r < RUNS; r++) {
-    const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+    const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
     const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
     const p = await ctx.newPage(), cdp = await ctx.newCDPSession(p);
     await cdp.send('Network.enable'); await cdp.send('Network.setCacheDisabled', { cacheDisabled: !SECOND });

@@ -4,7 +4,7 @@
 const fs = require('fs'), path = require('path'), { chromium } = require('playwright');
 const [A, B, OUT, names] = process.argv.slice(2);
 (async () => {
-  const br = await chromium.launch(); const p = await br.newPage();
+  const br = await chromium.launch({ args: ['--mute-audio'] }); const p = await br.newPage();
   for (const k of names.split(',')) {
     const d = await p.evaluate(async ([a, b]) => {
       const load = (d) => new Promise((o) => { const i = new Image(); i.onload = () => o(i); i.src = 'data:image/png;base64,' + d; });

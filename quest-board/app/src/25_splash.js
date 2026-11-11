@@ -23,14 +23,14 @@ function roomSplash(key,force){var H=ROOMHELP[key];if(!H)return;if(!S.seen)S.see
 /* a smaller one for a big upgrade */
 function upSplash(ad){return modal('<div class="card box2 rsplash"><span class="label">Congratulations</span><h2 style="font-size:28px">'+esc(ad[1])+'</h2><p class="rsp-sub">'+esc(ad[3].splash)+'</p><button class="btn big" data-act="mclose">Nice</button></div>')}
 function helpBtn(key){return ROOMHELP[key]?'<button class="btn ghost rsp-help" data-act="rhelp" data-t="'+key+'">How it works</button>':''}
-/* a new brand arrives */
+/* a new brand arrives; the Wednesday vault brand's window says the vault is open (W47, once per Wednesday: brandStint below) */
 function brandPicks(b){var pool=SHOP.filter(function(x){return x[6]&&x[6].b===b.id&&isRigItem(x)&&itemFits(x)}),out=[],seen={};
   ["a_top","a_shoes","a_pants","a_hat","a_acc"].forEach(function(sl){var it=pool.filter(function(x){return x[1]===sl&&!seen[x[0]]})[0];if(it&&out.length<4){out.push(it);seen[it[0]]=1}});return out}
 function brandSplash(b){var picks=brandPicks(b);
   /* Cal, 2026-11-05: the drop window carries the brand's banner art, in portrait (ui_banner_<id>_p.webp from ROOMS; until
      then the landscape banner, cropped to the window) */
   var art=window.QBART&&(QBART["ui_banner_"+b.id+"_p.webp"]||QBART["ui_banner_"+b.id+".webp"]);
-  var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">'+(b.back?'BACK FOR WEDNESDAY':'NOW ON SALE')+'</div>'+brandLogo(b,1)+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
+  var m=modal('<div class="card box2 bsplash'+(art?' has-art':'')+'" style="--b1:'+b.c[0]+';--b2:'+b.c[1]+';--b3:'+b.c[2]+';--ba:'+b.ac+'">'+(art?'<img class="bs-art" src="'+art+'" alt=""><i class="bs-shade" aria-hidden="true"></i>':'')+'<div class="bs-burst">'+(b.back?'THE VAULT IS OPEN':'NOW ON SALE')+'</div>'+brandLogo(b,1)+(b.back?'<p class="bs-vault">An old favorite is back today.</p>':'')+'<p class="bs-tag">'+esc(b.tag)+'</p><div class="bs-items">'+picks.map(function(it){return '<div class="bs-item"><img src="'+itemArt(it)+'" alt=""><b>'+esc(it[2])+'</b><span><i class="coin"></i>&nbsp;'+it[3]+'</span></div>'}).join("")+'</div><button class="btn big bs-go" data-act="bsgo" data-b="'+b.id+'">Go to Shop</button></div>');
   return m}
 /* a brand's splash, once per stint (Cal, 2026-11-10: "i only want to see the brand splash for the shops that are currently in
    rotation ... Even the same players who have already seen that splash the first time should see it again if it comes back into

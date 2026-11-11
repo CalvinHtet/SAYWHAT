@@ -10,7 +10,7 @@ const CAPS = JSON.parse(fs.readFileSync(path.join(QB, 'app/dbcaps.json'), 'utf8'
 const MOCK = require(path.resolve(QB, 'rigtest/lead/mockdb.js'));
 const fails = []; const ok = (n, c, g) => { console.log((c ? '  ok   ' : '  FAIL ') + n + (g !== undefined ? '  ' + JSON.stringify(g).slice(0, 300) : '')); if (!c) fails.push(n); };
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); const errs = []; const pages = [];
   const tabs = ['board', 'hall', 'shop', 'hideout', 'board', 'hall', 'train', 'board', 'hall', 'shop'];
   for (let i = 0; i < N; i++) {

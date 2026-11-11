@@ -6,7 +6,7 @@
 const fs = require('fs'), { chromium } = require('playwright');
 const [png, n, cw, ch] = process.argv.slice(2);
 (async () => {
-  const br = await chromium.launch(); const p = await br.newPage();
+  const br = await chromium.launch({ args: ['--mute-audio'] }); const p = await br.newPage();
   const rows = await p.evaluate(async ([d, n, cw, ch]) => {
     const im = await new Promise((o) => { const i = new Image(); i.onload = () => o(i); i.src = 'data:image/png;base64,' + d; });
     const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const x = c.getContext('2d'); x.drawImage(im, 0, 0);

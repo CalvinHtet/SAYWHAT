@@ -1568,6 +1568,25 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 .qs-sale-it img{width:44px;height:44px;object-fit:contain;flex:none}.qs-sale-it span{min-width:0}.qs-sale-it b{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.qs-sale-it small{font-size:12px}
 .qs-sale-it s,.qs-onsale s{color:var(--muted);opacity:.8}.qs-sale-it em{position:absolute;top:-6px;right:-4px;padding:1px 6px;border-radius:999px;background:#ff4d5e;color:#fff;font:700 10px/16px var(--font-body,system-ui);font-style:normal}
 .qs-card.qs-onsale{position:relative;box-shadow:0 0 0 2px rgba(255,77,94,.55)}.qs-salebadge{position:absolute;top:8px;left:8px;z-index:2;padding:2px 8px;border-radius:999px;background:#ff4d5e;color:#fff;font:700 11px/1.4 var(--font-body,system-ui)}
+/* BUILDER w-unlock (Cal, 2026-11-10: "don't show the number of total upgrades"): progress toward a step or a goal as a bar with no numbers */
+.stybar{display:block;height:4px;margin-top:4px;border-radius:999px;background:var(--line);overflow:hidden;font-style:normal}.stybar>i{display:block;height:100%;border-radius:inherit;background:var(--accent)}
+/* BUILDER w-system (W48): the Lair's big screen is a button to the Shop's Upgrades and Interface */
+.lrsys{cursor:pointer}.lrsys polygon{fill:rgba(88,166,255,.10);stroke:#7fd3ff;stroke-width:3;animation:lrsysP 2.4s ease-in-out infinite}.lrsys text{fill:#e8f6ff;font:800 22px/1 var(--font-display,system-ui);letter-spacing:.12em;text-anchor:middle;paint-order:stroke;stroke:#08203a;stroke-width:4px}
+.lrsys:hover polygon{fill:rgba(88,166,255,.22)}@keyframes lrsysP{0%,100%{stroke-opacity:.35}50%{stroke-opacity:1}}
+/* BUILDER w-shopui (W47, Cal 2026-11-10): the Shop's header, "The Shop" top left with the drop line under it and the coins, + and
+   envelope top right; under it the Wardrobe button with the next drop's countdown; a "!" on a floor whose new brand is not seen yet;
+   a locked nav tab is only a "?" */
+.qs-head{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t c" "w w";align-items:center;column-gap:10px;row-gap:4px;margin:6px 0 10px}
+.qs-head>h1{grid-area:t;min-width:0;white-space:nowrap;font-size:clamp(24px,6.4vw,44px)}
+.qs-head>.qs-cbar,.qs-head>.qs-coin{grid-area:c;justify-self:end}
+.qs-head>.qs-when{grid-area:w;margin:0}
+.qs-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.qshop .qs-bar .qs-cd{margin:0;text-align:right;min-width:0}
+body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
+.qs-floors .qs-tab{position:relative}
+.qs-flnew{position:absolute;top:-6px;right:-4px;width:18px;height:18px;border-radius:9px;background:#ffc857;color:#14121c;font:900 12px/18px system-ui;font-style:normal;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #14121c}
+.bs-vault{margin:10px 0 0;font-size:16px;font-weight:700}
+.nav .navq{display:block;width:22px;height:22px;font:800 20px/22px var(--font-display,system-ui);text-align:center;letter-spacing:0}
 /* BUILDER w-wardrobe (Cal, 2026-11-10): the Wardrobe's category and brand chips */
 .qs-wdf{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}.qs-wdf::-webkit-scrollbar{display:none}
 .qs-wdc{flex:none;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:600 12px/1 var(--font-body,system-ui);cursor:pointer;white-space:nowrap}

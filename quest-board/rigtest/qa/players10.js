@@ -21,7 +21,7 @@ const P = [
   ['Kai', 'm', 60, 45, 21, 1, 5, ''], ['Max', 'f', 80, 120, 21, 1, 5, 'all'], ['Lapsed', 'm', 12, 0, 4, .3, 2, 'lapsed'], ['Oldie', 'm', 25, 6, 9, .7, 3, 'old']];
 const N = P.length, uid = (i) => 'u_' + P[i][0].toLowerCase();
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }); const errs = []; const pages = []; const boot = [];
   const ready = (p) => p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && window.__qbLive, null, { timeout: 120000 });
   const clear = (p) => p.evaluate(() => document.querySelectorAll('#layer .modal,.dropsplash,.overlay').forEach((e) => e.remove()));

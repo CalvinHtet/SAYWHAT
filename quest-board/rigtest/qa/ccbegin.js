@@ -8,7 +8,7 @@ const { chromium } = require('playwright');
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', OUT = process.env.OUT || 'qa-out'; fs.mkdirSync(OUT, { recursive: true });
 const SIZES = [[320, 568], [360, 600], [375, 548], [390, 664], [430, 800], [440, 840], [740, 360], [844, 390], [932, 430], [1280, 800]];
 (async () => {
-  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   let fails = 0;
   for (const [w, h] of SIZES) {
     const phone = Math.min(w, h) < 700;

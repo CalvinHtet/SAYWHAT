@@ -85,6 +85,10 @@ DROPS.live=2;
 /* HANGANG's day: set it to the day the release with this calendar goes out, so HANGANG is alone at first for everyone */
 DROPS.cal0="2026-11-10";
 var DROPDAYS=[1,5],DROPHOUR=8;
+/* W47, the vault rule (Cal, 2026-11-10: "The vault should appear after there are 6 shops total in rotation. With the 6th shop being the
+   vault on wednesday", option (a) confirmed): no Wednesday vault until this many brands have dropped on the Street's calendar (HANGANG on
+   cal0 is the first), the same day for every player. From then on the vault brand is in the Shop every Wednesday 8 am to Thursday 8 am */
+DROPS.vaultAfter=6;
 function ymdN(ymd){var a=String(ymd).split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/864e5)}
 function ymdOfN(k){return new Date(k*864e5).toISOString().slice(0,10)}
 function ymdWd(k){return (k+4)%7} /* 0 Sunday: day 0, 1970-01-01, was a Thursday */
@@ -138,6 +142,14 @@ function dropFloor(n,F){var byId={},ids=flBrands(F),lv=F.live||DROPS.live;BRANDS
   return {live:live,vault:vault,soon:soon,next:nx?Object.assign({},byId[nx],{start:days[m+1],fl:F.id}):null}}
 /* the Street's calendar, under its old name */
 function dropMine(n){return dropFloor(n,flGet("street")||{id:"street",days:DROPDAYS,live:DROPS.live})}
+/* W47: how many brands the Street's calendar has dropped by drop day ymd, HANGANG's day counting as the first */
+function dropsSoFar(ymd){var F=flGet("street")||{days:DROPDAYS},x0=ymdN(DROPS.cal0),t=ymdN(ymd),c=1;for(var x=x0+1;x<=t;x++)if(flIsDrop(F,x,x0))c++;return c}
+/* QA's w-floors finding (the Boutique's 4 brands never came back): the vault picks only from floors with enough brands. A brand has to
+   be gone 14 days and not drop again within 5 (dropPick below), so a floor takes part only when its brands are out of the Shop at least
+   26 days between stints: (brands - live) x the days between its drops. The Street (12 brands, 2 live, 2 drops a week) is out 35 days;
+   the Boutique today (4 brands, 2 live, weekly) only 14, so it joins once it has 6 brands. A floor that does not take part still has
+   its own drops; the vault brand comes from the floors that do */
+function flVaultOk(F){var n=flBrands(F).length,lv=F.live||DROPS.live,per=7*(F.every>1?F.every:1)/((F.days||DROPDAYS).length||1);return (n-lv)*per>=26}
 /* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest, counted from the latest time it left (its
    latest stint ended, or its last Wednesday back). Only a brand gone at least 14 days; with none, no vault that Wednesday (QA,
    v0.89: "fewest returns first" brought HANGANG back after 2 days). Never a brand that drops again within 5 days. Of those, the
@@ -145,10 +157,10 @@ function dropMine(n){return dropFloor(n,flGet("street")||{id:"street",days:DROPD
    (QA, v0.90: "gone longest" alone kept picking the brand about to drop again, and 4 brands never came back).
    Worked out Wednesday by Wednesday from cal0, so every phone agrees (QA, rc-0.89: only 8 of 16 came back, OVERPASS 5 days after
    leaving, SAYMORE back on a Wednesday and dropping that Friday). One brand for the whole Shop, from the floors this player has
-   (W42). */
-dropPick=function(wd){var FO=shopFloors(),k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0+"|"+FO.map(function(F){return F.id}).join(",");if(k in DROPWED)return DROPWED[k];
+   (W42) that take part (flVaultOk), and only on Wednesdays after DROPS.vaultAfter brands have dropped (W47). */
+dropPick=function(wd){var FO=shopFloors().filter(flVaultOk),k=wd+"|"+DROPS.vaultAfter+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0+"|"+FO.map(function(F){return F.id}).join(",");if(k in DROPWED)return DROPWED[k];
   var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
-  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m={vault:[],soon:[]},best=null,bs="",bl="",due={};
+  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m={vault:[],soon:[]},best=null,bs="",bl="",due={};if(dropsSoFar(w)<DROPS.vaultAfter)continue;
     FO.forEach(function(F){var d=dropFloor(dropStart(w),F);m.vault=m.vault.concat(d.vault);m.soon=m.soon.concat(d.soon||[])});
     (m.soon||[]).forEach(function(q){if(ymdN(q.start)-x<=5)due[q.id]=1});
     m.vault.forEach(function(b){if(due[b.id])return;var lr=back[b.id]||"",bk=lr?ymdAdd(lr,1):"",since=bk>(b.left||b.start)?bk:(b.left||b.start);
