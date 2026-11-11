@@ -41,7 +41,7 @@ Then one rc-v0.92, QA's full run_rc.sh, the zip, and MAC_HANDOFF.md updated.
    a regular player without moving levels, the pets comment, and W10 the Habitica-style text pass. -> rc-v0.92c. Art (the Town Boss pictures, Rafe montages, etc.) stays
 Mac-only.
 
-**v0.92 SHIPPED 2026-11-10 ~21:30 (merge d395ae7 of rc-v0.92 24df171); all 6 branches + w-bounty (300 bounties) in. The Windows team stops here; see docs/MAC_HANDOFF.md.** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
+**v0.92 FINAL zipped 2026-11-11 ~10:30 (qa-local merge c74b50f3 of rc-v0.92d 7be4f84f): the re-open list + w-final (audit) + public challenges; see docs/MAC_HANDOFF.md 2c.** **v0.92 SHIPPED 2026-11-10 ~21:30 (merge d395ae7 of rc-v0.92 24df171); all 6 branches + w-bounty (300 bounties) in. The Windows team stops here; see docs/MAC_HANDOFF.md.** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
 1. w-chat2: W49 Discord-style chat + W53 greetings (wave, high five, poke, spank; Hug, Cheer and Visit Loft go) + W57 online dot and streak.
 2. w-colors: W50 Town Hall colours from its picture, then W14 (every screen slightly different).
 3. w-wardrobe: W41 categories + brand filters.

@@ -1,6 +1,6 @@
-# Mac handoff (from the Windows laptop team, 2026-11-10)
+# Mac handoff (from the Windows laptop team, 2026-11-10 and 11-11)
 
-FINAL (LEAD, 2026-11-10, after v0.92): the Windows team stops here; Cal continues on the Mac. Read this, then CLAUDE.md, docs/HANDOFF.md, docs/TASKS.md
+FINAL (LEAD, 2026-11-11, after the re-opened v0.92): the Windows team stops here; Cal continues on the Mac. Read this, then CLAUDE.md, docs/HANDOFF.md, docs/TASKS.md
 (section "Windows team", rows W1-W60, and the "v0.92 PLAN"), docs/ECONOMY.md and docs/VOICE.md.
 
 Cal: "After all these changes are done, this is ready to go full live. I would like a hand off document and everything saved so I can
@@ -17,7 +17,7 @@ states below are as of the v0.91 zip.
 | v0.89 | a246406 | zipped; its qa-local push did NOT reach GitHub (the rollback push did) |
 | v0.90 | 2a97a02 (release/live-2a97a02) | zipped (carries v0.89): economy v1, chests, relics, update window, letters |
 | v0.91 | eea5382 = merge 8d09598 of rc-v0.91 8693de1 + docs (release/live-eea5382) | zipped 2026-11-10 evening, QA PASS 19:25: see section 2 |
-| v0.92 | merge d395ae7 of rc-v0.92 24df171 + this handoff (the zip README names the exact tip and live branch) | zipped 2026-11-10 night, the last Windows release: see section 2b |
+| v0.92 | merge c74b50f3 of rc-v0.92d 7be4f84f + this handoff (the zip README names the exact tip and live branch) | zipped 2026-11-11 ~10:30, the last Windows release: sections 2b and 2c. It replaces the 11-10 night zip (e688961), which was never published |
 
 Rollback: branch rollback-v0.80 (v0.80 code, QB_EPOCH 6). Its APPV must stay ABOVE the newest release: 93 for v0.92 (1ea314e). Bump it with every release (v0.93 -> 94).
 A rollback shows levels on the old curve until the release is deployed again, which restores them exactly.
@@ -37,15 +37,15 @@ A rollback shows levels on the old curve until the release is deployed again, wh
   its card first with progress, Desmond the same day; story order Garden -> Restaurant -> Lock and Key -> Boba -> Dessert -> Mall;
   the Wheel every 4 hours; tiered permanent upgrades I-III (3-card cascade); level-up cards with no counts or spoilers; likes 2 a
   day in total; the Training weight box keeps the last weight; Cal's own one-time fresh start (29bv_calfresh.js, his uid only,
-  Training kept, runs only before 2026-11-14 UTC). If Cal publishes after Fri 2026-11-14, it never runs: move
-  CFUNTIL (29bv_calfresh.js line 14, Date.UTC(2026,10,14)) to a later date first.
+  Training kept, runs only before 2026-11-21 UTC since v0.92). If Cal publishes later, it never runs: move
+  CFUNTIL (29bv_calfresh.js line 14) to a later date first.
 - QA (19:25, rigtest/qa/run_rc.sh): Live checks, full pricesweep, reset on 8 saves + two devices, unlock order, Goals, no gates,
   story order, w-system, Wheel, Shop header + vault, spoiler playthrough, Training, sale, likes, fresh start. 0 page errors.
   Not tested: visuals of wall pieces, the Collect day cap on screen, a real Firestore account, phones.
 - Sims (110 days): Lock and Key 5 days after the Restaurant; level 100 on day 73 (regular) and 80 (cal), short of Cal's ~85;
   Garden-stage businesses 7-8% (target 10); single late days up to 33-34% passive (cap 30, average under). v0.92 candidates.
 
-## 2b. v0.92 (the last Windows release)
+## 2b. v0.92, first cut (2026-11-10 night; never published, all of it is in the final v0.92)
 
 - W49 Discord-style chat (round faces or initials, grouped messages), W53 greetings (wave, high five, poke, spank; Hug, Cheer and
   Visit Loft gone; old cheers still pay), W57 green online dot + streak in the Hall.
@@ -68,14 +68,38 @@ A rollback shows levels on the old curve until the release is deployed again, wh
   Not tested: the "? ? ?" not-ready lot window (code only), real phones, Safari's notch, a real Firestore account, two real phones on
   the Town Boss, a real week's turnover on Live.
 
+## 2c. v0.92, re-opened 2026-11-11 (Cal: "fold it all into 0.92", then "IM HOPING 0.92 WILL have all my requests")
+
+- A full audit of Cal's 198 requests against the code (lead-scratch/audit/requests.md on the work laptop): everything that needs no
+  new art is in v0.92.
+- W56 purchase sounds (29zs_sound.js, synthesized, an on/off switch by Wardrobe; sound packs replace them).
+- W55 friends visit businesses (29kv_visitors.js): tips 100-400, 2 a day, a note in the room, a readable name tag.
+- W28 Gym Pact (SPEC part D): stakes; a proof photo or a full Training session counts; both miss = both lose.
+- W8/W9 the photo feed (29ph_photos.js) and pictures in chat: Storage only (photos/<uid>/, storage.rules). phUrl and firestore.rules
+  picsOk() accept only this bucket's URLs (no tracking pixels).
+- W36 side-quests (29zs_side.js): photo proof only, from people you've met. Sable's Night watch uses the PHONE time stamp (Cal
+  2026-11-10 11:15: no server clock, no functions change); 3 nights open The Night Stair.
+- W35 Rafe's hunts (29zt_rafe.js) at levels 27/52/77/93, one at a time; the montage art fails softly.
+- W1b w-perf2: room art as 657 bl_ files, blobs.js 345 KB. Fast-4G cold: 11.8 -> 3.5 MB, the Board 13.3 -> 2.8 s. A room first
+  opened offline shows no furniture until it is opened online. tools/build.py was proven by a line-for-line Node port, not by
+  Python: the zip README has Mac check lines (657 bl_ files, one blobs.js of ~345 KB, 657 fingerprints) to run before every deploy.
+- W10 the text pass (about 60 lines, docs/VOICE.md). Two hidden coach lines that quoted other works were replaced. Rafe's later hunts
+  say "your door" until Lock and Key is owned.
+- Audit fixes: "Streak: N days"; the Town Boss needs 5 active players only before the first boss ever; greetings pay the GIVER 3
+  coins once per person per 2 hours (the receiver nothing); curve 5 (lvTop .2 above level 40, the save move keeps level and
+  progress): level 100 on day 85 (regular) and 90 (cal); Weekly Warrior prizes "(saved for later)" before the Closet; Cal's fresh
+  start until 2026-11-21 UTC (CFUNTIL).
+- Public challenges (29wp_duelpub.js): every accepted Gym Pact and coin-pot challenge posts in the Town Hall (start, live progress,
+  result); reactions pay no coins; declined, cancelled or forged ones never post; no rules change.
+- QA: the full run_rc PASS on rc-v0.92c d9872f04 (09:59) and the delta on rc-v0.92d 7be4f84f (10:12): old saves 41/41, pricesweep,
+  no new duplicate function names (rigtest/qa/dupfn.js), the no-spoiler playthrough, contrast 32 below AA (was 34). Not proven here:
+  the new firestore.rules and storage.rules on real Firebase, real Storage uploads, phones, CPython build.py.
+
 ## 3. Open queue, in order (TASKS.md)
 
-v0.93+ (the Mac): the Town Boss art (6 pictures per boss + the burned Town Hall and cracked frames; the code is in),
-W56 purchase sounds, W55 friends visit businesses, W35 Rafe's legendary hunts, W36 side-quests, W8/W9 photo feed, W28 Gym Pact, W1b
-w-perf2 (load room art per room; the 10 MB blobs.js), the server clock for Night watch photos (SPEC6; the phone's time stamp shipped).
-The photo feed (W8/W9) is built (branch w-photos, 29ph_photos.js) and needs Firebase STORAGE: enable it once in the console,
-then deploy storage.rules and the firestore.rules changes (`deploy --only firestore:rules,storage`, RELEASING.md). Comment deletes
-(by the comment author, the post author or Cal) are in firestore.rules.
+v0.93+ (the Mac): the art (section 4: Town Boss pictures, Rafe montages, visitor beats, pets, face cosmetics, brands, relic icons);
+Night watch's "+1 crawl a week" fallback after the hidden dungeon (not built); a per-day cap on total passive coins (single late days
+reach ~34%, the average stays under 30%); late Dungeon Crawl pay (3-7k a day, uncapped).
 
 ## 4. Art for the Mac (Higgsfield, Unlimited only, Cal approves first)
 
@@ -110,7 +134,10 @@ the parts that were SUPERSEDED, so they don't get built by mistake. The long-ter
 - Timing tests: at most 2 headless Chromes, always --mute-audio. Load on the machine skews the numbers, so compare A/B in one page.
 - Text: docs/VOICE.md, including "No spoilers" (never name what the player doesn't have yet) and "letters say what changed, not how".
   Patch-notes letters come every 10 versions (500 coins). The next is v1.00.
-- Timed photos: the photo carries the phone's time stamp (shipped). Night watch should use the server clock (v0.93, SPEC6).
+- Timed photos: the photo carries the phone's time stamp, and the AI judges it (Night watch too; Cal chose this over a server clock).
+- The app's src files share ONE closure: a function name used twice silently replaces the earlier one (sqHtml clashed with the Town
+  Square on 2026-11-11). Run rigtest/qa/dupfn.js on every branch.
+- Every deploy: run the zip README's build checks (perf2's 657 bl_ files etc.) before `firebase deploy`.
 - Before a public release: the Live build strips the Testing row and window.__qb / __qbLoft (noTest in config.js; check
   grep -c "noTest: true" = 1).
 
@@ -120,20 +147,11 @@ the parts that were SUPERSEDED, so they don't get built by mistake. The long-ter
 - Crown, Halo and Wings at Street prices, or signature pricing?
 - The Plaza wait length.
 - The roadmap letter shipped as approved (only "tell me in the Town Hall" became "tell me").
-- The Town Boss: a boss only in weeks with 5+ active players (v0.92 does this every week, not only before the first boss). OK?
-- Receiving a greeting pays +4 coins (from before v0.92). Keep it?
-- The regular player (12 tasks a day) reaches level 100 on day 79; pushing it to 85 would put Cal near 90. OK?
-- Cal's fresh start runs only before 2026-11-14 UTC (see section 2).
 - Single late days can pass 30% passive (the average stays under); a per-day total cap is possible.
 - Whether Board time estimates need Cal's own numbers (today: Claude's parse or keywords).
 
-Decided by Cal, still to build (full text in docs/specs):
-- Gym Pact: both miss -> both lose; any active session counts; photo-only.
-- Rafe's legendary hunts at levels 27/52/77/93, photo-only; the first hunt is how you meet Rafe.
-- Side-quests: photo-only.
-- Sable's "Night watch": an in-bed photo with the server clock; 3 nights open a hidden dungeon.
-
-Decided, so no longer open: Town Boss numbers (SPEC10), the first-week unlock spread (W51 %; sims open one room every 1-2 days), the
+Decided, so no longer open: the Town Boss rule (5 active players only before the first), greetings (the giver gets 3
+coins per person per 2 hours), level 100 (day 85 regular / 90 cal), the Garden at 60%, Night watch on the phone stamp, Town Boss numbers (SPEC10), the first-week unlock spread (W51 %; sims open one room every 1-2 days), the
 Garden earnings target for the Restaurant (set by the v0.91 passive-income steps).
 
 ## 8. Known issues
@@ -144,6 +162,6 @@ Garden earnings target for the Restaurant (set by the v0.91 passive-income steps
 - Two devices on one account overwrite each other's save.
 - Duel and boss scores are self-reported. Fine among friends, not cheat-proof.
 - The Hall reads at most 60 players (friend groups break before about 25).
-- First load is about 10-14 MB (W1b w-perf2).
+- First load is about 3.5 MB since v0.92 (w-perf2); a room first opened offline shows no furniture until opened online.
 - Not visually checked: wall pieces in every room (the Restaurant's floating sign was moved onto the kitchen wall in v0.91 and
   QA checked the menu boards in code, not by eye). Real phones, Safari's notch area (the top toast), a real Firestore account.
