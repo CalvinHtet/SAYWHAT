@@ -1687,6 +1687,8 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 @keyframes rfZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.rfm-f{transition:none}.rfm-f.on img,.rfm-f.on .rfm-ph{animation:none}}
 .rf-relic .r2{margin:10px auto 14px;max-width:220px}
+/* BUILDER leftover (QA 11-10 20:31): the muted labels on the Relics screen's bronze tint read 3.6:1 at ranks A and S; lifted toward the text colour */
+:root[data-view="trophy"][data-rank="A"] .label,:root[data-view="trophy"][data-rank="S"] .label{color:color-mix(in srgb,var(--muted),var(--fg) 40%)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
