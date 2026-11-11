@@ -27,8 +27,13 @@ function phHallOpen(){try{return typeof htabHallOpen==="function"&&htabHallOpen(
 function phOwner(){var W=window.QB_WEB||{};if(!MYUID||PH.notOwner)return false;return (W.owners||[]).indexOf(MYUID)>=0||!!W.sandbox}
 function phMyName(){return String((S.char&&S.char.name)||"Player").slice(0,24)}
 /* ---- other players' docs are hostile ---- */
+/* a picture address may only be this project's Storage (QA, LEAD 2026-11-11: no tracking pixels), the sandbox's JPEG data URLs, or
+   the Storage emulator when web.js runs on one; anything else draws nothing. firestore.rules (picsOk) refuses the same on write. */
+function phBucket(){var b="";try{b=(window.firebase&&firebase.apps&&firebase.apps.length&&firebase.app().options.storageBucket)||""}catch(e){}
+  return b||((window.QB_WEB&&QB_WEB.firebase)||{}).storageBucket||"saywhat-b7ae8.firebasestorage.app"}
 function phUrl(u){u=typeof u==="string"?u:"";if(u.length<4e6&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(u))return u;
-  if(u.length<2000&&/^https:\/\/[^\s"'<>()\\]+$/.test(u))return u;if(u.length<2000&&/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/[^\s"'<>()\\]*$/.test(u))return u;return ""}
+  if(u.length>=2000||/[\s"'<>()\\]/.test(u))return "";var b=phBucket(),em=window.QB_WEB&&QB_WEB.emulator,pre=["https://firebasestorage.googleapis.com/v0/b/"+b+"/o/"];
+  if(em)pre.push("http://"+em+":9199/v0/b/"+b+"/o/");return pre.some(function(p){return u.indexOf(p)===0&&u.length>p.length})?u:""}
 function phSafe(id,d){if(typeof id!=="string"||!d||typeof d!=="object")return null;var p=id.split("~");if(p.length!==2||!p[0]||!(+p[1]>0))return null;
   var th=phUrl(d.thumb),fu=phUrl(d.full)||th;if(!fu)return null;
   return {id:id,u:p[0],t:+p[1],name:fshStr(d.name,24).trim()||"Player",cap:fshStr(d.cap,PHCAP).trim(),what:fshStr(d.what,60).trim(),kind:d.kind==="photo"||d.kind==="trial"?d.kind:"quest",

@@ -26,8 +26,18 @@ service cloud.firestore {
       return request.resource.data.keys().hasOnly(["j", "t"]) && request.resource.data.j is string
         && request.resource.data.j.size() < n && request.resource.data.t is number;
     }
+    // a picture in a chat line or a photo post may only be this project's Storage (or a sandbox JPEG data URL), so nobody can plant a
+    // tracking pixel (QA, LEAD 2026-11-11). The docs are {j: "<json>"}: every "f", "th", "full" or "thumb" key in j must start with an
+    // allowed prefix (the game reads its pictures from those keys only), and j may hold no \u escape of a printable ASCII character
+    // (code points 0x20 to 0x7f), which could spell a key or a scheme past this check; JSON.stringify never writes one (emoji, accents and
+    // stripped control characters are untouched). The regexes avoid escapes where they can ([.] for a dot, [^:"]* for JSON's spaces).
+    function picsOk() {
+      return !request.resource.data.j.matches('(?s).*\\\\u00[2-7][0-9a-fA-F].*')
+        && !request.resource.data.j.replace('"(f|th|full|thumb)"[^:"]*:[^:"]*"(https://firebasestorage[.]googleapis[.]com/v0/b/saywhat-b7ae8[.]firebasestorage[.]app/o/|data:image/jpeg;base64,)', '"ok":"')
+             .matches('(?s).*"(f|th|full|thumb)"[^:"]*:[^:"]*".*');
+    }
     // chat docs: 40,000 (was 20,000) since a line may carry a picture (#130: its two Storage URLs, files under photos/<uid>/chat_*)
-    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(40000); allow delete: if mine(uid); }
+    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(40000) && picsOk(); allow delete: if mine(uid); }
     match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(2000); allow delete: if mine(uid); }
     match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
 
@@ -51,7 +61,7 @@ service cloud.firestore {
     function poster(pid) { return pid.split('~')[0]; }
     match /photos/{pid} {
       allow read: if signedIn();
-      allow create: if signedIn() && poster(pid) == request.auth.uid && small(6000);
+      allow create: if signedIn() && poster(pid) == request.auth.uid && small(6000) && picsOk();
       allow delete: if signedIn() && (poster(pid) == request.auth.uid || owner());
       match /cm/{cid} {
         allow read: if signedIn();
