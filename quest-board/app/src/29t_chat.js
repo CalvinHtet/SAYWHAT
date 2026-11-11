@@ -33,13 +33,9 @@ htabCss("qb-chat-css",
   +".tch-logw{position:relative}"
   +".tch-log{height:calc(100vh - 440px);height:calc(100dvh - 440px);min-height:230px;max-height:640px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:12px;background:rgba(0,0,0,.18);border:1px solid var(--line)}"
   +".tch-empty{margin:auto;text-align:center;max-width:260px}"
-  +".tch-m{padding:5px 9px;border-left:3px solid hsl(var(--h,200) 70% 60%);border-radius:4px 10px 10px 4px;background:rgba(255,255,255,.035)}"
-  +".tch-m:not(.cont){margin-top:6px}.tch-m:first-child{margin-top:0}.tch-m.cont{padding-top:2px}"
-  +".tch-m.me{background:rgba(255,200,87,.09)}"
   +".tch-h{display:flex;align-items:baseline;gap:8px;min-width:0}"
   +".tch-h b{font-size:13px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}"
   +".tch-h small{flex:none;font-size:11px;color:var(--muted)}"
-  +".tch-m p{margin:2px 0 0;font-size:14px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}"
   +".tch-x{margin-left:6px;padding:0 4px;border:0;background:none;color:#ff9d7a;font-size:15px;line-height:1;cursor:pointer;vertical-align:middle}"
   +".tch-new{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);padding:7px 12px;border-radius:999px;border:0;background:var(--accent);color:#fff;font:700 12px/1 var(--font-body,system-ui);box-shadow:0 6px 16px rgba(0,0,0,.4);cursor:pointer}"
   +".tch-new[hidden]{display:none}"
@@ -50,7 +46,7 @@ htabCss("qb-chat-css",
   +".tch-ndot{position:absolute;top:4px;left:18%;width:9px;height:9px;border-radius:50%;background:#ff4d5e;box-shadow:0 0 0 2px var(--surface);pointer-events:none}"
   +"body.tch-typing .nav{display:none}");
 /* real time, whatever the Test tools did to the game clock */
-function tchNow(){return Date.now()-(window.__qbShift||0)}
+function tchNow(){return Date.now()-qbShift()}
 /* one line of plain text: no control, zero-width or text-direction characters, spaces squeezed, at most n characters */
 function tchClean(s,n){s=(typeof s==="string"?s:"").slice(0,2000).replace(TCHBAD," ").replace(/\s+/g," ").trim();
   return s.slice(0,n||TCHMAX).replace(/[\ud800-\udbff]$/,"")}
@@ -159,13 +155,26 @@ function tchHue(id){var h=0;for(var i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i)
 function tchTime(t){try{var d=new Date(t),n=new Date(tchNow()),hm=d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
   if(d.toDateString()===n.toDateString())return hm;if(tchNow()-t<6*864e5)return d.toLocaleDateString([],{weekday:"short"})+" "+hm;
   return d.toLocaleDateString([],{month:"short",day:"numeric"})}catch(e){return ""}}
-function tchLogHtml(r){var ms=tchRoomMsgs(r),prev=null,h="";
+/* W49 (Cal, 2026-11-10: "show a small circular picture of their character face to the left of the name. consecutive messages should
+   not create another name and time stamp, but it should just be appended in a new line right under that same initial message. Like
+   Discord messages."): lines from one player, each within TCHRUN of the first line of their run, share one header (face, name, time);
+   each of your own lines keeps its ×. The face is cut from the look in the player's worlds/<id> doc, read through fshSafe (hostile);
+   until that doc is in, a circle in their colour with their initial. A green dot on the face while they are online (W57). */
+var TCHRUN=5*60000,TCHAV=34;
+function tchWho1(id){if(id===MYUID)return {look:fshLook(lookOf())};
+  var w=(SOC.worlds||[]).filter(function(x){return x&&x.id===id})[0];if(!w)return null;try{return fshSafe(w)}catch(e){return null}}
+function tchAv(m,w){var ini=Array.from(m.name||"?")[0]||"?";
+  return '<span class="tch-av" aria-hidden="true">'+(w&&w.look?nbAv(w.look,TCHAV):'<span class="tch-ini">'+esc(ini.toUpperCase())+'</span>')
+    +(m.id!==MYUID&&w&&plOnline(w)?'<i class="tch-on"></i>':'')+'</span>'}
+function tchLine(m,r){var me=m.id===MYUID;
+  return '<p title="'+esc(tchTime(m.t))+'">'+esc(m.x)+(me?'<button type="button" class="tch-x" data-act="tchdel" data-r="'+r+'" data-t="'+m.t+'" aria-label="Delete your message">&times;</button>':'')+'</p>'}
+function tchLogHtml(r){var ms=tchRoomMsgs(r),runs=[],h="";
   if(!ms.length)return '<p class="note tch-empty">No messages in '+esc(tchRoomName(r))+' yet. Say hi.</p>';
-  ms.forEach(function(m){var same=prev&&prev.id===m.id&&m.t-prev.t<180000,me=m.id===MYUID;
-    h+='<div class="tch-m'+(me?' me':'')+(same?' cont':'')+'" style="--h:'+tchHue(m.id)+'">'
-      +(same?'':'<div class="tch-h"><b>'+esc(me?"You":m.name)+'</b><small>'+esc(tchTime(m.t))+'</small></div>')
-      +'<p>'+esc(m.x)+(me?'<button type="button" class="tch-x" data-act="tchdel" data-r="'+r+'" data-t="'+m.t+'" aria-label="Delete your message">&times;</button>':'')+'</p></div>';
-    prev=m});
+  ms.forEach(function(m){var g=runs[runs.length-1];if(g&&g.id===m.id&&m.t-g.t<TCHRUN)g.ms.push(m);else runs.push({id:m.id,t:m.t,ms:[m]})});
+  runs.forEach(function(g){var m=g.ms[0],me=m.id===MYUID,w=tchWho1(m.id);
+    h+='<div class="tch-g'+(me?' me':'')+'" style="--h:'+tchHue(m.id)+'">'+tchAv(m,w)
+      +'<div class="tch-b"><div class="tch-h"><b>'+esc(me?"You":m.name)+'</b><small>'+esc(tchTime(m.t))+'</small></div>'
+      +g.ms.map(function(x){return tchLine(x,r)}).join("")+'</div></div>'});
   return h}
 function tchLogBody(){if(TCH.err==="permission-denied")return '<p class="note tch-empty">Chat is not switched on yet. It needs a database update from Cal.</p>';
   if(!TCH.ready)return '<p class="note tch-empty">'+(TCH.err?'Chat can\'t connect right now ('+esc(TCH.err)+').':'Opening the room…')+'</p>';
@@ -229,3 +238,6 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
       setTimeout(function(){if(TCH.armed===k)TCH.armed="";if(b.isConnected){b.classList.remove("on");b.innerHTML="&times;"}},4000);return}
     TCH.armed="";
     tchWrite(function(me){me.msgs[rr]=(me.msgs[rr]||[]).filter(function(x){return x.t!==mt})}).then(function(){pop("Message deleted")},function(er){pop("Could not delete: "+((er&&er.code)||"error"))});return}});
+/* the faces come from the neighbors' docs: when those arrive or change, the log is drawn again (only if it changed) */
+var tchSocPaintBase=socPaint;
+socPaint=function(){var r=tchSocPaintBase.apply(this,arguments);try{if(htabShown("chat"))tchPaintLog()}catch(e){}return r};

@@ -332,6 +332,8 @@ function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.
   return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-qsfl]");if(!b)return;QSFLOOR=b.dataset.qsfl;window._qsSeen=0;render()});
 shopHtml=function(){
+  /* W41: the Wardrobe's filters last while the Shop is open; opened again, they start at All (29zw_wardrobe.js) */
+  if(!document.body.classList.contains("shopmode"))wdReset();
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
   var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
@@ -359,7 +361,8 @@ shopHtml=function(){
   }else if(shopTab==="wardrobe"){
     var mine=SHOP.filter(function(x){return isRigItem(x)&&S.owned[x[0]]&&itemFits(x)});
     h+='<p class="qs-note qs-lead">Everything you own stays here, even after its brand leaves the shop.</p>';
-    h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(mine.length?qsGroups(function(x){return !!S.owned[x[0]]&&itemFits(x)}):'<p class="qs-empty">Nothing here yet. Pieces you buy will wait for you here.</p>')+'</div></div>';
+    /* W41 (Cal): category and brand chips over the rack, which is grouped by the same categories (29zw_wardrobe.js) */
+    h+=(mine.length?wdBar(mine):'')+'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(mine.length?wdRack(mine):'<p class="qs-empty">Nothing here yet. Pieces you buy will wait for you here.</p>')+'</div></div>';
   }else if(shopTab==="upgrades"){
     h+='<p class="qs-note">Permanent upgrades stack with your class and crew. Buy once, keep forever.</p>'+qsLegacy(["buff"]);
   }else{

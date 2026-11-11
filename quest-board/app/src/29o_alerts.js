@@ -53,14 +53,15 @@ render=function(){var r=alRenderBase.apply(this,arguments);try{alVisit();alPaint
 setInterval(function(){try{if(S&&S.created&&loaded)alPaint()}catch(e){}},15000);
 /* the building view: "!" over buildings (street) and "+" on the new room's spot (inside) */
 function alBang(x,y,k){return '<g class="albang" pointer-events="none" transform="translate('+x.toFixed(0)+','+y.toFixed(0)+') scale('+k+')"><g class="albob"><circle r="40" fill="#ffc857" stroke="#14121c" stroke-width="6"/><path d="M0 -22V6" stroke="#14121c" stroke-width="11" stroke-linecap="round"/><circle cy="20" r="6.5" fill="#14121c"/></g></g>'}
-function alPlus(x,y,slot,name){return '<g class="lfroom alplus" transform="translate('+x.toFixed(0)+','+y.toFixed(0)+') scale(2.2)"><g data-lf="room:'+slot+'" style="cursor:pointer"><rect x="-90" y="-90" width="180" height="180" fill="rgba(0,0,0,.001)"/><g class="lfplus"><circle r="34" fill="rgba(20,18,28,.8)" stroke="#ffc857" stroke-width="3" stroke-dasharray="7 5"/><path d="M-14 0H14M0 -14V14" stroke="#ffc857" stroke-width="5" stroke-linecap="round"/></g><rect x="-150" y="44" width="300" height="44" rx="22" fill="#14121c" stroke="#ffc857" stroke-width="2"/><text y="73" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Inter,system-ui,sans-serif">'+esc(name)+'</text></g></g>'}
+/* W60 (Cal, 2026-11-10): tapping the "+" opens that opening upgrade's own window (29zu_ui92.js nxTap), not the room it comes from */
+function alPlus(x,y,slot,name,id,room){return '<g class="lfroom alplus" transform="translate('+x.toFixed(0)+','+y.toFixed(0)+') scale(2.2)"><g data-lf="open:'+slot+':'+id+':'+room+'" style="cursor:pointer"><rect x="-90" y="-90" width="180" height="180" fill="rgba(0,0,0,.001)"/><g class="lfplus"><circle r="34" fill="rgba(20,18,28,.8)" stroke="#ffc857" stroke-width="3" stroke-dasharray="7 5"/><path d="M-14 0H14M0 -14V14" stroke="#ffc857" stroke-width="5" stroke-linecap="round"/></g><rect x="-150" y="44" width="300" height="44" rx="22" fill="#14121c" stroke="#ffc857" stroke-width="2"/><text y="73" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Inter,system-ui,sans-serif">'+esc(name)+'</text></g></g>'}
 function alWorldExtra(){var L=window.LFLAY;if(!L||!S||!S.base)return '';var o=alSeen(),rooms=alRooms(),s='',bot=LFROOF+L.rows*LFFP;
   if(LFBSEL==null){
     bldList().forEach(function(b,n){var fresh=rooms.some(function(x){return ROOMCELL[x.room][0]===b.bi&&!o.bld[x.room]});if(!fresh)return;
       var x=60+n*(BLDW+BLDGAP),top=bot-(b.f*BLDF+160);s+=alBang(x+BLDW+10,top-200,1.6)});
     var nb=bldList().length;try{streetLots().forEach(function(k,j){if(effLvl()<ROOMT[k].lv||o.bld[k])return;s+=alBang(60+(nb+j)*(BLDW+BLDGAP)+BLDW/2,bot-230,1.4)})}catch(e){}
   }else{
-    rooms.forEach(function(x){if(x.lot||ROOMCELL[x.room][0]!==LFBSEL)return;var p=cellXY(x.room,L);s+=alPlus(p.x,Math.max(LFROOF+60,p.y),x.slot,(ROOMT[x.room]||{}).name||x.room)});
+    rooms.forEach(function(x){if(x.lot||ROOMCELL[x.room][0]!==LFBSEL)return;var p=cellXY(x.room,L);s+=alPlus(p.x,Math.max(LFROOF+60,p.y),x.slot,(ROOMT[x.room]||{}).name||x.room,x.id,x.room)});
   }
   return s}
 /* the building's layout takes in the spot of a room an upgrade can open, so the view inside the building includes its "+" (lots
@@ -71,4 +72,5 @@ var alLayBase=worldLayout;
 worldLayout=function(){AL_LAY=1;try{return alLayBase.apply(this,arguments)}finally{AL_LAY=0}};
 var alWorldBase=lfWorld;
 lfWorld=function(){var w=alWorldBase.apply(this,arguments),x='';try{x=alWorldExtra()}catch(e){}/* going into a building counts as looking at its new rooms (the + stays until built) */try{if(LFBSEL!=null&&S&&S.created){var o=alSeen(),ch=0;alRooms().forEach(function(r){if(ROOMCELL[r.room][0]===LFBSEL&&!o.bld[r.room]){o.bld[r.room]=1;ch=1}});if(ch)setTimeout(persist,0)}}catch(e){}if(!x)return w;var k=w.lastIndexOf("</g>");return k<0?w+x:w.slice(0,k)+x+w.slice(k)};
-window.__qbAlerts={rooms:alRooms,openers:alOpeners,tabs:alTabs,seen:alSeen,paint:alPaint};
+/* a test hook (w-ui92): not on a Live build */
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbAlerts={rooms:alRooms,openers:alOpeners,tabs:alTabs,seen:alSeen,paint:alPaint};

@@ -226,13 +226,13 @@ function fshChar(look,H){return look?calImg(look,"still",H,"fsh-c").replace("<im
 function fshPed(rk,mode){var top=rk.filter(function(p){return mode!=="fashion"||p.v>0}).slice(0,3);
   return '<div class="fsh-ped">'+[[1,"p2",104],[0,"p1",124],[2,"p3",96]].map(function(q){var p=top[q[0]];
     return '<div class="fsh-st '+q[1]+(p?'':' empty')+'">'+(p?'<button type="button" class="fsh-fig" data-act="fshview" data-u="'+esc(p.id)+'" aria-label="'+esc(p.name)+', place '+p.place+'">'+fshChar(p.look,q[2])+(p.me&&mode==="fashion"?fshHeart():'')+'</button>'
-      +'<b class="fsh-nm">'+esc(p.me?p.name+" (you)":p.name)+'</b><small>'+esc(fshValTxt(p,mode,1))+'</small>':'<span class="fsh-open">'+(mode==="fashion"?"Open":"")+'</span>')
+      +'<b class="fsh-nm">'+esc(p.me?p.name+" (you)":p.name)+plDot(p)+'</b><small>'+esc(fshValTxt(p,mode,1))+'</small>':'<span class="fsh-open">'+(mode==="fashion"?"Open":"")+'</span>')
       +'<div class="fsh-blk"><span>'+(p?p.place:q[0]+1)+'</span></div></div>'}).join("")+'</div>'}
 function fshList(rk,mode){var mine=mode==="fashion"?fshMyTo():{};
   return '<div class="fsh-list">'+rk.slice(0,60).map(function(p,i){
     return '<button type="button" class="fsh-row'+(p.me?' me':'')+'" data-act="fshview" data-u="'+esc(p.id)+'"><span class="fsh-rk">'+p.place+'</span>'
       +(i>=3&&i<10?'<span class="fsh-av">'+(p.look?nbAv(p.look,36):'<span class="calav" style="width:36px;height:36px"></span>')+'</span>':'')
-      +'<span class="fsh-rn">'+esc(p.name)+(p.me?' <small>(you)</small>'+(mode==="fashion"&&i>=3?fshHeart():''):'')+fshMedalHtml(p.fw)+'</span>'
+      +'<span class="fsh-rn">'+esc(p.name)+plDot(p)+(p.me?' <small>(you)</small>'+(mode==="fashion"&&i>=3?fshHeart():''):'')+fshMedalHtml(p.fw)+plStreak(p)+'</span>'
       +(mine[p.id]?'<i class="fsh-liked" aria-label="You liked this look '+mine[p.id]+(mine[p.id]===1?' time':' times')+' this week">♥'+(mine[p.id]>1?mine[p.id]:'')+'</i>':'')+'<span class="fsh-rv">'+esc(fshValTxt(p,mode))+'</span></button>'}).join("")+'</div>'}
 function fshHead(mode){
   if(mode==="rich")return '<p class="note">Total coins earned. Spending never drops you.</p>';
@@ -249,17 +249,17 @@ function fshYou(mode){if(mode!=="fashion")return "";var md=fshMedalHtml(fshMedal
 function fshBoxInner(){var mode=FSH.mode,rk=fshRank(mode);
   return fshHead(mode)+fshPed(rk,mode)+fshYou(mode)+fshList(rk,mode)
     +(mode==="fashion"&&FSH.err?'<p class="note">'+(FSH.err==="permission-denied"?'Likes are not switched on yet. They need a database update from Cal.':'Likes can\'t load right now ('+esc(FSH.err)+').')+'</p>':'')}
-/* the Neighbors list (moved here from the top of the Hall): the same cards, Visit and Say hi, fed checked copies */
-function fshNbInner(){if(!socOn())return '<h3 class="label">Neighbors</h3><p class="note">Visiting other Lofts needs the cloud save. Open the game signed in.</p>';
+/* the Neighbors list (moved here from the top of the Hall): the same cards, each with Say hi (their card), fed checked copies */
+function fshNbInner(){if(!socOn())return '<h3 class="label">Neighbors</h3><p class="note">Neighbors need the cloud save. Open the game signed in.</p>';
   var o=socState(),h='<div class="row" style="justify-content:space-between"><h3 class="label">Neighbors</h3><button class="btn ghost sm" data-act="snref">Refresh</button></div>';
   if(o.vis.length)h+='<p class="note">Visited you today: '+o.vis.map(function(v){return '<b>'+esc(v.name)+'</b>'+(v.msg?' “'+esc(v.msg)+'”':'')}).join(", ")+'</p>';
   if(SOC.err)h+='<p class="note">Could not reach the neighborhood ('+esc(SOC.err)+'). Your access may be view-only.</p>';
   var ws=(SOC.worlds||[]).slice(0,60).map(function(w){try{return socWorldCard(fshSafe(w))}catch(e){return ""}}).join("");
   return h+(ws||'<p class="note">'+(SOC.loaded?'No neighbors yet. They show up here once they open the game.':'Looking for neighbors…')+'</p>')}
 function fshFolds(){var sq=!!FSH.fold.square,nb=!!FSH.fold.nb,n=(SOC.worlds||[]).length,h;
-  h='<button type="button" class="fsh-fold'+(sq?' open':'')+'" data-act="fshfold" data-k="square" aria-expanded="'+sq+'"><b>Town square</b><small>Wave, high five, cheer or hug</small></button>'+(sq?sqHtml():'');
+  h='<button type="button" class="fsh-fold'+(sq?' open':'')+'" data-act="fshfold" data-k="square" aria-expanded="'+sq+'"><b>Town square</b><small>Wave, high five, poke or spank</small></button>'+(sq?sqHtml():'');
   if(nb)FSH.nbH=fshNbInner();
-  h+='<button type="button" class="fsh-fold'+(nb?' open':'')+'" data-act="fshfold" data-k="nb" aria-expanded="'+nb+'"><b>Neighbors</b><small>'+(n?n+' in town &middot; visit their Lofts':'Visit their Lofts')+'</small></button>'
+  h+='<button type="button" class="fsh-fold'+(nb?' open':'')+'" data-act="fshfold" data-k="nb" aria-expanded="'+nb+'"><b>Neighbors</b><small>'+(n?n+' in town':'Everyone in town')+'</small></button>'
     +(nb?'<section class="card panel snpanel" id="fshnb">'+FSH.nbH+'</section>':'');
   return h}
 function fshTg(){return FSHMODES.map(function(m){var on=FSH.mode===m[0];return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" data-act="fshmode" data-m="'+m[0]+'">'+m[1]+'</button>'}).join("")}
@@ -276,10 +276,10 @@ function fshTick(){var k=fshWk().key;if(k!==FSH.wk){FSH.wk=k;try{fshPayCheck()}c
 setInterval(function(){try{fshTick()}catch(e){}},60000);
 var fshSocPaintBase=socPaint;
 socPaint=function(){var r=fshSocPaintBase.apply(this,arguments);try{fshPaint();fshModalPaint()}catch(e){}return r};
-/* tap a character: a bigger look, the like, greetings and a visit */
+/* tap a character: a bigger look, the like and the greetings */
 /* the likes count opens who gave them (W17): a small arrow, open or closed for the card on screen */
 function fshStats(p){var n=fshCounts(fshWk().key)[p.id]||0;
-  return (n?'<button type="button" class="fsh-whob" data-act="fshwho" aria-expanded="'+!!FSH.who+'"><b>'+n+'</b> like'+(n===1?'':'s')+' this week <i aria-hidden="true">'+(FSH.who?'▾':'▸')+'</i></button>':'<span><b>0</b> likes this week</span>')+'<span><b>'+(p.earnedC==null?'—':p.earnedC.toLocaleString())+'</b> coins earned</span><span><b>Lv '+p.lv+'</b></span>'}
+  return (n?'<button type="button" class="fsh-whob" data-act="fshwho" aria-expanded="'+!!FSH.who+'"><b>'+n+'</b> like'+(n===1?'':'s')+' this week <i aria-hidden="true">'+(FSH.who?'▾':'▸')+'</i></button>':'<span><b>0</b> likes this week</span>')+'<span><b>'+(p.earnedC==null?'—':p.earnedC.toLocaleString())+'</b> coins earned</span><span><b>Lv '+p.lv+'</b></span>'+(p.streak>0?'<span><b>'+p.streak+'</b>-day streak</span>':'')}
 /* this week's likers of a look, the most likes first */
 function fshWhoHtml(p){if(!FSH.who)return "";var wk=fshWk().key,out=[];
   Object.keys(FSH.likes).forEach(function(from){if(from===p.id)return;var d=FSH.likes[from],x=d.wk===wk?d.c:(d.prev&&d.prev.wk===wk?d.prev.c:null),k=x&&x[p.id];
@@ -295,11 +295,11 @@ function fshLikeBox(p){if(p.me)return '<p class="note">Your look. Friends can li
     +(back?'<button type="button" class="btn ghost sm fsh-back" data-act="fshunlike" data-u="'+esc(p.id)+'">Take back a like</button>':'')
     +'<p class="note">'+(wk?'You liked this look '+(wk===1?'once':wk+' times')+' this week. ':'')+fshRule()+'. You can take back today\'s likes only. The week closes Sunday 7 pm Pacific.</p>'}
 function fshViewHtml(p){
-  return '<div class="card box2 fsh-card"><div class="fsh-big">'+fshChar(p.look,200)+'</div><h2>'+esc(p.name)+(p.me?' <small>(you)</small>':'')+'</h2>'
+  return '<div class="card box2 fsh-card"><div class="fsh-big">'+fshChar(p.look,200)+'</div><h2>'+esc(p.name)+plDot(p)+(p.me?' <small>(you)</small>':'')+'</h2>'
     +'<div class="fsh-stats">'+fshStats(p)+'</div><div class="fsh-wholist">'+fshWhoHtml(p)+'</div>'+(fshMedalHtml(p.fw)?'<div>'+fshMedalHtml(p.fw)+'</div>':'')
     +'<div class="fsh-likebox">'+fshLikeBox(p)+'</div>'
     +(p.me?'':'<div class="sq-acts">'+Object.keys(SQK).map(function(k){return '<button type="button" class="btn" data-act="sqgo" data-u="'+esc(p.id)+'" data-k="'+k+'"><span>'+SQK[k][0]+'</span> '+SQK[k][1]+'</button>'}).join("")+'</div>'
-      +'<div class="row" style="justify-content:center"><button type="button" class="btn ghost" data-act="snvisit" data-u="'+esc(p.id)+'">Visit their Loft</button></div>')+'</div>'}
+      +'')+'</div>'}
 function fshView(uid){var p=fshFind(uid);if(!p)return;closeModals();FSH.who=0;if(p.me)fshMarkSeen();var m=modal(fshViewHtml(p));m.classList.add("fsh-modal");m.setAttribute("data-u",p.id)}
 function fshModalPaint(){var m=document.querySelector("#layer .modal.fsh-modal");if(!m)return;var p=fshFind(m.getAttribute("data-u"));if(!p)return;
   var b=m.querySelector(".fsh-likebox"),s=m.querySelector(".fsh-stats"),h=fshLikeBox(p),h2=fshStats(p);if(b&&b._h!==h){b._h=h;b.innerHTML=h}if(s&&s._h!==h2){s._h=h2;s.innerHTML=h2}

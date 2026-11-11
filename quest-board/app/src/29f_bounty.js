@@ -1,16 +1,17 @@
 /* ---------- bounties (Cal, 2026-11-05: "a rotating daily bounty or a 3 day bounty", and suggested tasks "such as
    'throw away one thing you have not used for more than 6 months'") ----------
-   Two cards on the board: today's bounty (changes at midnight) and a 3-day bounty (changes every third day). Each is a
-   chore people put off. "Take it" adds it to the board as a quest that pays 1.5x (the 3-day one 2x) and leaves when its
-   window ends. "Another" swaps it, up to three times a day: Claude suggests one from the player's own list when it can,
-   otherwise the next one in the list below. */
+   Two cards on the board: today's bounty (changes at midnight) and a 2-day bounty (changes every second day). Each is a
+   chore people put off. "Take it" adds it to the board as a quest that pays 1.5x (the 2-day one 2x) and leaves when its
+   window ends. "Another" swaps it for the next one in the player's own order, up to three times a day (the pools below,
+   written by ARCHITECT for v0.92). */
 var BTY1=[
+  /* the original 28 */
   ["Throw away one thing you have not used in six months","Pick it, bag it, out it goes.",25,"discipline","home"],
-  ["Clear the kitchen counter completely","Everything off, wipe it down, put back only what you use daily.",30,"productivity","home"],
+  ["Clear the kitchen counter completely","Everything off, wipe it down, put back the daily things.",30,"productivity","home"],
   ["Reply to the message you have been avoiding","Two sentences is enough.",25,"social","social"],
   ["Empty the car of everything that does not live there","Receipts, bottles, bags.",25,"productivity","out"],
   ["Wipe down the fridge shelves","Take out anything past its date first.",30,"productivity","home"],
-  ["Unsubscribe from five email lists","Open the last five promotions and scroll to the bottom.",20,"discipline","admin"],
+  ["Unsubscribe from five email lists","Open the last five promotions, scroll to the bottom.",20,"discipline","admin"],
   ["Take a 20-minute walk with no phone","Leave it at home.",30,"fitness","out"],
   ["Book the appointment you keep postponing","Dentist, doctor, haircut, mechanic.",25,"discipline","admin"],
   ["Clean the bathroom mirror and sink","Ten minutes.",25,"productivity","home"],
@@ -32,51 +33,346 @@ var BTY1=[
   ["Tidy your desktop and downloads folder","Files into folders, the rest in the bin.",25,"productivity","admin"],
   ["Water and wipe down every plant","Dust the leaves too.",20,"discipline","home"],
   ["Thank someone properly","A message saying exactly what they did that helped.",20,"social","social"],
-  ["Do the dishes before bed","Sink empty when you turn the lights off.",25,"discipline","reset"]
+  ["Do the dishes before bed","Sink empty when you turn the lights off.",25,"discipline","reset"],
+  /* home */
+  ["Wipe every light switch and door handle","A damp cloth and five minutes.",20,"productivity","home"],
+  ["Clean the inside of the microwave","Heat a bowl of water first, then wipe.",25,"productivity","home"],
+  ["Descale the kettle or coffee maker","Vinegar and water, then rinse twice.",25,"productivity","home"],
+  ["Dust every shelf in one room","Top shelf first, floor last.",25,"productivity","home"],
+  ["Clean the stovetop properly","Lift the grates and wipe underneath.",30,"productivity","home"],
+  ["Empty and wipe the bathroom cabinet","Bin anything expired or empty.",25,"discipline","home"],
+  ["Clean the shower glass or wash the curtain","A squeegee for glass, a hot wash for fabric.",30,"productivity","home"],
+  ["Clean the toilet, base and floor included","The floor around it too.",25,"productivity","home"],
+  ["Mop the kitchen floor","Sweep first.",30,"fitness","home"],
+  ["Wash the windows in one room","Inside only is fine.",30,"productivity","home"],
+  ["Clear and wipe the dining table","Nothing on it but what belongs there.",20,"productivity","home"],
+  ["Fold and put away every clean load","No piles left on chairs.",25,"discipline","home"],
+  ["Match every sock and bin the strays","Odd ones make good dust cloths.",20,"discipline","home"],
+  ["Clear out the fridge door","Sauces and jars past their date go.",20,"productivity","home"],
+  ["Empty the vacuum and clean its filter","Tap the filter out over the bin.",20,"productivity","home"],
+  ["Clean the oven door glass","Baking soda paste, wait, wipe.",30,"productivity","home"],
+  ["Clean the extractor fan filter","Soak it in hot soapy water.",25,"productivity","home"],
+  ["Vacuum under the sofa cushions","Lift every one.",25,"productivity","home"],
+  ["Wipe the baseboards in one room","A damp cloth along the floor line.",30,"fitness","home"],
+  ["Sort the spice rack","Oldest at the front, empties in the bin.",20,"productivity","home"],
+  ["Clear the hallway and entrance","Shoes paired, coats hung, mail sorted.",25,"productivity","home"],
+  ["Wash the throw blankets and cushion covers","Check the labels first.",25,"productivity","home"],
+  ["Sort the food storage boxes","Bin any without a lid.",25,"discipline","home"],
+  ["Defrost the freezer","Towels down, door open, food in a cool bag.",35,"productivity","home"],
+  ["Clean the dishwasher filter","Twist it out, rinse, put it back.",20,"productivity","home"],
+  ["Run the washing machine empty on hot","A cleaning cycle stops the smell.",20,"productivity","home"],
+  ["Tidy the bathroom counter","Only the daily things stay out.",20,"discipline","home"],
+  ["Dust the ceiling fan or light fittings","A pillowcase over the blade catches the dust.",25,"productivity","home"],
+  ["Put away everything on the clothes chair","You know the one.",20,"discipline","home"],
+  ["Clear the floor of one room","Everything on the floor gets a home.",25,"productivity","home"],
+  ["Wipe the kitchen cabinet fronts","Grease builds up near the stove.",25,"productivity","home"],
+  ["Clear out under the kitchen sink","Wipe the shelf and bin old sponges.",25,"productivity","home"],
+  ["Replace the light bulb that has been out","Check the old one for the right type.",25,"discipline","home"],
+  ["Tighten the loose handle or hinge","A screwdriver and five minutes.",25,"productivity","home"],
+  ["Hang the picture or shelf you never put up","Measure twice.",35,"creativity","home"],
+  ["Sort the linen cupboard","Fold, stack by set, donate the extras.",30,"productivity","home"],
+  ["Clear the shower drain","Pull out the hair, rinse with hot water.",25,"productivity","home"],
+  ["Fill a donation bag","Ten things you will not miss.",30,"discipline","home"],
+  ["Iron or steam the shirts that are waiting","Hang them straight after.",25,"productivity","home"],
+  ["Wash the pet's bed and bowls","Hot water, then dry fully.",25,"discipline","home"],
+  ["Repot the plant that has outgrown its pot","Use a bigger pot you already have.",30,"creativity","home"],
+  ["Scrub the bathroom grout","An old toothbrush along the lines.",35,"fitness","home"],
+  ["Empty and clean your bag or backpack","Receipts out, pockets emptied.",20,"productivity","home"],
+  ["Do a ten-minute reset of the whole home","Set a timer, stop when it rings.",20,"discipline","home"],
+  /* cooking and food */
+  ["Prep vegetables for the next three days","Wash, chop, box.",30,"productivity","home"],
+  ["Cook a big batch and freeze portions","Label each box with the date.",35,"productivity","home"],
+  ["Make every coffee or tea at home today","Count what you saved.",20,"discipline","home"],
+  ["Sort the mystery bags in the freezer","Label what you keep.",25,"productivity","home"],
+  ["Write a shopping list before you shop","Check the fridge first.",20,"productivity","home"],
+  ["Cook something with the oldest tin in the pantry","Build the meal around it.",25,"creativity","home"],
+  ["Cook a recipe you have never tried","Use what you already have where you can.",35,"creativity","home"],
+  ["Bake something from scratch","Bread, cookies or a simple cake.",35,"creativity","home"],
+  ["Learn one recipe by heart","Cook it without looking.",30,"creativity","home"],
+  /* admin, money and digital */
+  ["Read your bank statement line by line","Flag anything you do not recognise.",25,"discipline","admin"],
+  ["Set up one automatic payment","The bill you always pay late.",25,"discipline","admin"],
+  ["Change the passwords on two accounts","Email and bank first.",25,"productivity","admin"],
+  ["Turn on two-step login for your email","An authenticator app is safest.",25,"productivity","admin"],
+  ["Get your inbox under 50 emails","Archive, do not read.",30,"productivity","admin"],
+  ["File last month's receipts","One envelope or one folder.",20,"productivity","admin"],
+  ["Write a budget for this month","Rent, food, fun, savings.",30,"discipline","admin"],
+  ["Renew whatever expires next","ID, licence, membership.",25,"discipline","admin"],
+  ["Fill in the form you have been putting off","Start with your name and the date.",30,"discipline","admin"],
+  ["Update your address everywhere it is old","Bank, deliveries, subscriptions.",25,"productivity","admin"],
+  ["Delete apps you have not opened in a month","Press, hold, remove.",20,"discipline","admin"],
+  ["Clear the storage warning on your phone","Big videos and old downloads first.",20,"productivity","admin"],
+  ["Check your credit report","Many banks show it for free.",25,"discipline","admin"],
+  ["Move some money into savings","A small amount still counts.",25,"discipline","admin"],
+  ["Plan next week in your calendar","Block the gym and the chores first.",25,"productivity","admin"],
+  ["Pick your ten best photos of the year","Put them in one album.",25,"creativity","admin"],
+  ["Settle the smallest money you owe someone","Pay it back today.",25,"social","admin"],
+  ["Set up a password manager","Add your five main accounts.",30,"productivity","admin"],
+  ["Close the browser tabs you keep open","Bookmark the three that matter.",20,"discipline","admin"],
+  ["Unfollow ten accounts that make you feel worse","Notice how the feed changes.",20,"discipline","admin"],
+  ["Update your CV with your latest work","Add numbers where you can.",35,"productivity","admin"],
+  ["Read and sign the document you set aside","Write down your questions first.",25,"discipline","admin"],
+  ["Back up your laptop","An external drive or the cloud.",25,"productivity","admin"],
+  ["Shred one drawer of old paperwork","Keep anything you need for taxes.",25,"discipline","admin"],
+  ["Answer the email you have flagged for a week","Three lines is enough.",25,"discipline","admin"],
+  ["Cancel one free trial before it charges you","Check the renewal date.",20,"discipline","admin"],
+  /* out and about */
+  ["Check the car's tyre pressure","The right number is inside the driver's door.",25,"productivity","out"],
+  ["Top up the car's washer fluid","Check the oil while the bonnet is up.",20,"productivity","out"],
+  ["Wipe the car's dashboard and inside windows","A dry cloth for the glass.",20,"productivity","out"],
+  ["Walk to the shop instead of driving","One errand on foot.",25,"fitness","out"],
+  ["Drop off the donation bag","Today, before it moves back inside.",20,"discipline","out"],
+  ["Pick up litter on your street for ten minutes","Gloves and a bag.",25,"social","out"],
+  ["Visit a park you have never been to","Thirty minutes there is enough.",25,"fitness","out"],
+  ["Run every errand in one trip","List them, plan the route, go.",30,"productivity","out"],
+  ["Watch the sunrise or sunset outside","No phone until it is over.",25,"discipline","out"],
+  ["Take the stairs every time today","No lifts, no escalators.",25,"fitness","out"],
+  ["Walk a route you have never taken","Turn left where you would turn right.",25,"fitness","out"],
+  ["Sit outside for 15 minutes with no screen","A coffee is allowed.",20,"discipline","out"],
+  ["Clean the outside of the front door","The handle and the doorbell too.",20,"productivity","out"],
+  ["Clear the leaves or snow by the door","Ten minutes with a broom or shovel.",25,"fitness","out"],
+  ["Return something you borrowed","A book, a tool, a dish.",20,"discipline","out"],
+  ["Buy dinner from a local market or shop","One thing, fresh.",25,"social","out"],
+  ["Post the parcel or letter by the door","Today.",20,"discipline","out"],
+  /* body */
+  ["Do 50 squats today","Sets of ten across the day.",25,"fitness","body"],
+  ["Hold a plank three times","As long as you can, a minute's rest between.",20,"fitness","body"],
+  ["Do 15 minutes of yoga or mobility","Any free video works.",25,"fitness","body"],
+  ["Drink eight glasses of water today","A full bottle by lunch.",20,"discipline","body"],
+  ["Walk 8,000 steps today","A walk after dinner helps.",30,"fitness","body"],
+  ["Do 30 push-ups across the day","Knees down is fine.",25,"fitness","body"],
+  ["Go for a 20-minute run or jog","Easy pace, you can still talk.",35,"fitness","body"],
+  ["Try a workout you have never done","A video at home counts.",30,"fitness","body"],
+  ["Do a 10-minute workout before breakfast","Set the clothes out the night before.",25,"fitness","body"],
+  ["Eat a vegetable with every meal","Frozen counts.",25,"discipline","body"],
+  ["Eat a breakfast with protein","Eggs, yoghurt or beans.",20,"discipline","body"],
+  ["Skip sugary drinks for the whole day","Water, tea or coffee.",25,"discipline","body"],
+  ["Dance to five songs","Alone in the kitchen counts.",20,"fitness","body"],
+  ["Climb stairs for ten minutes","Any stairs, steady pace.",30,"fitness","body"],
+  ["Do a wall sit three times","Thirty seconds each.",20,"fitness","body"],
+  ["Walk during one phone call","Pace the room or the street.",20,"fitness","body"],
+  ["Pack a lunch instead of buying one","Leftovers count.",20,"discipline","body"],
+  ["Fix your desk posture","Screen at eye level, feet flat.",20,"productivity","body"],
+  ["Do 20 minutes of any cardio","A brisk walk, a jog, a bike, a swim.",30,"fitness","body"],
+  ["Do lunges across the living room","Three sets of ten on each leg.",25,"fitness","body"],
+  ["Eat lunch away from your screen","Ten minutes, just the food.",20,"discipline","body"],
+  /* reset: sleep, rest, mind */
+  ["Go to bed 30 minutes earlier","Phone charging outside the bedroom.",25,"discipline","reset"],
+  ["No screens in the last hour before bed","A book or music instead.",30,"discipline","reset"],
+  ["Write a page in a journal","What happened and how it felt.",20,"creativity","reset"],
+  ["Sit quietly for ten minutes","Breathe in for four, out for four.",20,"discipline","reset"],
+  ["Take a long shower or bath with no phone","Music only.",20,"discipline","reset"],
+  ["Lay out tomorrow's clothes tonight","Check the weather first.",20,"discipline","reset"],
+  ["Plan tomorrow's meals tonight","Breakfast, lunch, dinner.",20,"productivity","reset"],
+  ["Leave your phone in another room for an hour","Notice what you do instead.",25,"discipline","reset"],
+  ["Write down what is worrying you","Then one small step for each.",20,"discipline","reset"],
+  ["Clean your phone screen and case","Glasses too, if you wear them.",20,"productivity","reset"],
+  ["Make your bed as soon as you get up","Before you touch the phone.",20,"discipline","reset"],
+  ["Read for 20 minutes","Paper if you can.",25,"discipline","reset"],
+  ["Write down three good things from today","Small ones count.",20,"discipline","reset"],
+  ["Rest for 30 minutes on purpose","No guilt. Rest is the task.",20,"discipline","reset"],
+  ["Get up at the same time as yesterday","Set the alarm across the room.",25,"discipline","reset"],
+  ["Turn off notifications for one app for good","The one that pulls you in most.",20,"discipline","reset"],
+  ["Charge every device tonight","Phone, laptop, headphones.",20,"productivity","reset"],
+  ["Write down one goal for this month","Make it something you can measure.",20,"discipline","reset"],
+  ["Review your week in five lines","What worked, what did not.",20,"discipline","reset"],
+  ["Write a letter to yourself a year from now","Seal it and put a date on it.",20,"creativity","reset"],
+  /* social */
+  ["Text three friends to check in","A real question, not just hey.",20,"social","social"],
+  ["Make plans with someone for this week","Pick a day and a time.",25,"social","social"],
+  ["Cook for someone else","A simple sandwich counts.",30,"social","social"],
+  ["Write a note by hand to someone","A card or a scrap of paper.",25,"social","social"],
+  ["Ask someone how they really are","Then listen.",20,"social","social"],
+  ["Send family a photo and a memory","Something you did together.",20,"social","social"],
+  ["Give three people a specific compliment","Say exactly what you noticed.",20,"social","social"],
+  ["Help a neighbour with something small","Bins, a parcel, a lift.",25,"social","social"],
+  ["Share something useful in your group chat","A tip, a recipe, a song.",20,"social","social"],
+  ["Answer every message older than a day","Short replies are fine.",25,"social","social"],
+  ["Introduce two people who should know each other","One message to both.",25,"social","social"],
+  ["Return a favour you owe","Even a small one.",25,"social","social"],
+  ["Invite friends to a game or movie night","Send the invite today.",25,"social","social"],
+  ["Eat a meal with someone, phones away","Face down on the table.",25,"social","social"],
+  ["Write a review for a small business you like","Two honest sentences.",20,"social","social"],
+  ["Apologise for the thing you know you should","Short, and without excuses.",30,"social","social"],
+  ["Celebrate someone else's win","A message or a call.",20,"social","social"],
+  ["Ask a friend to work out with you this week","Pick the day now.",20,"social","social"],
+  ["Teach someone something you know","Ten minutes, start to finish.",25,"social","social"],
+  /* creative and learning */
+  ["Draw something for 15 minutes","Anything in the room.",25,"creativity","create"],
+  ["Write 300 words of anything","A story, a letter, a rant.",30,"creativity","create"],
+  ["Learn three words in a new language","Use each one in a sentence.",20,"creativity","create"],
+  ["Take ten photos on a walk","Look for light and shapes.",25,"creativity","create"],
+  ["Practise an instrument for 20 minutes","Slow and clean beats fast.",30,"creativity","create"],
+  ["Rearrange one corner of a room","Move one thing and see.",25,"creativity","home"],
+  ["Make a playlist for a mood","Ten songs and a good name.",20,"creativity","create"],
+  ["Watch a tutorial and try it once","Cooking, drawing, fixing, anything.",25,"creativity","create"],
+  ["Write down five ideas for a project","Bad ideas count.",20,"creativity","create"],
+  ["Fix something instead of replacing it","Sew a button, glue a handle.",30,"creativity","home"],
+  ["Edit one of your old photos or videos","Crop, colour, share.",20,"creativity","create"],
+  ["Read a chapter of a non-fiction book","Note one idea you can use.",25,"creativity","create"],
+  ["Plan a small project from start to finish","Steps, tools, a date.",25,"creativity","create"],
+  ["Make something with your hands","Clay, paper, wood or thread.",30,"creativity","create"],
+  ["Learn one new thing in 20 minutes","A lesson, an article, a how-to.",25,"creativity","create"],
+  ["Write the first verse of a song or poem","Rhyme is optional.",30,"creativity","create"]
 ];
-var BTY3=[
+var BTY2=[
+  /* the original 12, rewritten for two days */
   ["Clear out one closet","Anything not worn in a year goes to donation.",80,"discipline","home"],
   ["Deep clean the kitchen","Oven, microwave, under the sink.",80,"productivity","home"],
   ["Go through every subscription you pay for","Cancel at least one.",60,"discipline","admin"],
-  ["Plan and cook three meals at home","Shop once for all three.",70,"creativity","home"],
-  ["Walk 25,000 steps over three days","Split it however you like.",70,"fitness","out"],
+  ["Plan and cook two meals at home","Shop once for both.",60,"creativity","home"],
+  ["Walk 16,000 steps over two days","Split it however you like.",60,"fitness","out"],
   ["Clean out the garage, balcony or storage corner","Whatever space you avoid looking at.",80,"productivity","home"],
   ["Sort every cable, charger and old device","Recycle what you no longer use.",60,"discipline","home"],
   ["See a friend in person","Plan it, then actually go.",60,"social","social"],
   ["Finish and share one creative piece","Post it or send it to one person.",80,"creativity","create"],
   ["Wash the car inside and out","Vacuum the seats and the mats.",60,"productivity","out"],
   ["Get every paper and document into one folder","Scan what matters, shred what does not.",70,"discipline","admin"],
-  ["Three workouts in three days","Any kind. One a day.",80,"fitness","body"]
+  ["Two workouts in two days","Any kind. One a day.",70,"fitness","body"],
+  /* home */
+  ["Deep clean the bathroom","Tiles, grout, drain and fan.",70,"productivity","home"],
+  ["Declutter every kitchen cupboard","Keep, donate or bin.",70,"discipline","home"],
+  ["Wash every window inside the home","Half the rooms each day.",60,"productivity","home"],
+  ["Try a new layout for your bedroom","Bed, desk, lamp: move one big thing.",60,"creativity","home"],
+  ["Swap your wardrobe for the season","Pack away what is out of season.",60,"discipline","home"],
+  ["Clean behind and under the big furniture","Fridge, sofa, bed, wardrobe.",70,"fitness","home"],
+  ["Sort the bookshelf","Keep, give away or sell.",50,"discipline","home"],
+  ["Clean every lamp and lampshade","Bulbs off and cool first.",50,"productivity","home"],
+  ["Wash all the bedding in the home","Spare beds and duvets too.",50,"productivity","home"],
+  ["Organise the bathroom storage","Group by type, like with like.",50,"productivity","home"],
+  ["Touch up a scuffed wall","Use leftover paint if you have it.",70,"creativity","home"],
+  ["Clear out the shoe pile","Clean the keepers, donate the rest.",50,"discipline","home"],
+  ["Fix three small things around the home","A drip, a squeak, a wobble.",70,"productivity","home"],
+  ["Write a weekly cleaning plan and start it","One room a day, on paper.",40,"discipline","home"],
+  ["Empty and clean the fridge and freezer","Everything out, shelves washed.",60,"productivity","home"],
+  ["Sort every frame, poster and print","Hang it, store it or give it away.",40,"creativity","home"],
+  ["Get the guest space ready","Clean sheets, clear surfaces.",50,"social","home"],
+  ["Organise the tool drawer or toolbox","Like with like, broken things out.",40,"productivity","home"],
+  ["Clean the outdoor furniture","Brush, wash and cover.",50,"productivity","out"],
+  ["Sort the box of keepsakes","Keep the best, photograph the rest.",60,"discipline","home"],
+  ["Clear the spare room or box room","The floor visible by tomorrow night.",80,"productivity","home"],
+  ["Batch cook for the week ahead","Two dishes, five portions each.",70,"productivity","home"],
+  ["Clean the hallway and stairs top to bottom","Skirting, banister, carpet edges.",60,"fitness","home"],
+  ["Reorganise the pantry by type","Baking, breakfast, tins, snacks.",50,"productivity","home"],
+  ["Wash every cushion, throw and curtain","One room a day.",60,"productivity","home"],
+  ["Redecorate one shelf or corner","Use only what you already own.",50,"creativity","home"],
+  ["Cook a dish from another country","Look up how it is really made.",60,"creativity","home"],
+  ["Plan the meals for the whole week","A shopping list included.",50,"productivity","home"],
+  /* admin, money and digital */
+  ["Track every spend for two days","Write each one down, however small.",50,"discipline","admin"],
+  ["Delete the blurry and duplicate photos of the year","A few months a day.",60,"discipline","admin"],
+  ["Organise your computer files into folders","Work, home, money, photos.",60,"productivity","admin"],
+  ["Review your insurance policies","Note the renewal dates and any gaps.",50,"discipline","admin"],
+  ["Plan a trip or a day out properly","Dates, costs, bookings.",50,"productivity","admin"],
+  ["Get your inbox to zero","Archive everything older than a month.",70,"discipline","admin"],
+  ["Set up a savings goal","A name, an amount and a date.",40,"discipline","admin"],
+  ["Gather everything you need for taxes","Every form in one place.",60,"discipline","admin"],
+  ["Update the recovery info on every account","Phone number and backup email.",50,"productivity","admin"],
+  ["Apply for the thing you have been meaning to","A job, a course, a permit.",70,"discipline","admin"],
+  ["Clean up your social media","Old posts, privacy settings, follows.",50,"discipline","admin"],
+  ["Sort out the money task you dread","A refund, a claim, a phone call.",60,"discipline","admin"],
+  ["Compare one bill for a better deal","Phone, internet or insurance.",60,"discipline","admin"],
+  /* out and about */
+  ["Hike or walk somewhere new","Pack water and a snack.",70,"fitness","out"],
+  ["Spend two hours outdoors across two days","Park, beach, trail or garden.",50,"discipline","out"],
+  ["Explore your neighbourhood on foot","Streets you have never walked.",50,"fitness","out"],
+  ["Volunteer for a few hours","Ask a local group what they need.",80,"social","out"],
+  ["Book the car in for a service","Note the mileage first.",50,"discipline","out"],
+  ["Weed and tidy the garden or balcony","One bed or corner a day.",60,"fitness","out"],
+  ["Visit a museum, gallery or library","Many are free.",50,"creativity","out"],
+  ["Take a day trip by public transport","A town you have never seen.",70,"social","out"],
+  ["Walk or cycle every short trip for two days","Anything under two kilometres.",60,"fitness","out"],
+  /* body */
+  ["Run or jog twice in two days","Easy pace both times.",70,"fitness","body"],
+  ["Do 200 squats over two days","Sets of twenty.",50,"fitness","body"],
+  ["Cook every meal at home for two days","No takeaway, no delivery.",70,"discipline","body"],
+  ["Drink only water, tea or coffee for two days","No sugary drinks.",50,"discipline","body"],
+  ["Try two new workouts","A different one each day.",60,"fitness","body"],
+  ["Stretch for 15 minutes on both days","Morning or night.",40,"fitness","body"],
+  ["Learn one exercise properly","Watch, practise, film yourself.",50,"fitness","body"],
+  ["Do 100 push-ups across two days","Knees down is fine.",50,"fitness","body"],
+  ["No snacks after dinner for two nights","Brush your teeth early.",50,"discipline","body"],
+  ["Pack a healthy lunch for two days","Box them the night before.",50,"discipline","body"],
+  ["Clean and check your workout gear","Shoes, bag, bottle and mat.",40,"fitness","body"],
+  /* reset */
+  ["Go to bed by 11 two nights in a row","An alarm at 10:30 to start winding down.",60,"discipline","reset"],
+  ["Spend two mornings without your phone for an hour","Use an alarm clock instead.",60,"discipline","reset"],
+  ["Journal on both evenings","Five lines each night.",40,"creativity","reset"],
+  ["Plan your ideal week","Sleep, work, gym, people, rest.",50,"discipline","reset"],
+  ["Switch screens off after dinner, two evenings","Cards, books, a walk.",60,"discipline","reset"],
+  ["Sit quietly for ten minutes on both days","The same time each day.",40,"discipline","reset"],
+  ["Write your goals for the year","Three each for health, money and work.",50,"discipline","reset"],
+  /* social */
+  ["Host friends for food","Something simple, at your place.",80,"social","social"],
+  ["Reconnect with an old friend","A message first, then a call.",60,"social","social"],
+  ["Plan a group outing","Date, place, invites sent.",50,"social","social"],
+  ["Do something kind for two strangers","Watch for the chance.",40,"social","social"],
+  ["Write to three people who helped you","One message each.",50,"social","social"],
+  ["Help a friend with a job they dread","Moving, sorting or fixing.",70,"social","social"],
+  ["Visit a relative","Bring something small.",60,"social","social"],
+  ["Go to a class or club once","Just turn up and see.",60,"social","social"],
+  /* creative and learning */
+  ["Write a short story or poem","Draft on day one, edit on day two.",70,"creativity","create"],
+  ["Learn the first verse and chorus of a song","On any instrument, or sung.",70,"creativity","create"],
+  ["Make a photo series of ten shots","One theme, edited the same way.",60,"creativity","create"],
+  ["Draw or paint something worth framing","Small is fine.",60,"creativity","create"],
+  ["Take a beginner lesson in a new skill","One lesson each day.",60,"creativity","create"],
+  ["Build or repair something","Plan it first, then make it.",70,"creativity","create"],
+  ["Start a small side project","A name, a plan, a first step.",60,"creativity","create"],
+  ["Record a song, video or podcast episode","Rough is fine.",70,"creativity","create"],
+  ["Make a gift by hand","For the next birthday coming up.",60,"creativity","create"],
+  ["Learn 20 words in a new language","Ten a day, said out loud.",50,"creativity","create"],
+  ["Read a short book","Thirty minutes a day.",70,"creativity","create"],
+  ["Spend an afternoon on a hobby","Phone in another room.",60,"creativity","create"]
 ];
+/* the old 3-day list kept by name for the test hook; the 2-day bounties replace it */
+var BTY3=BTY2;
+/* v0.92 (Cal, 2026-11-10: "I want a wider range of 1 day and 2 day bounties. 3 days is too long. But I want a lot of them. like 300
+   different ones"): today's bounty from BTY1 (it changes each day, pays 1.5x) and a 2-day bounty from BTY2 (it changes every second day,
+   pays 2x, as the 3-day one did). Each player walks the pools in their own shuffled order (seeded by their id), so friends see different
+   bounties and nobody meets one again until the pool runs out. "Another" takes the next one in that order, up to three a day; it no
+   longer asks Claude (no API credits for bounties). A quest taken from an old 3-day bounty (bty.k 3) stays until its window ends and
+   still pays 2x; the old S.bty fields (e3, o3, ai1, ai3) are left as they are. */
 function btyDay(){return Math.floor(Date.parse(today()+"T00:00:00Z")/864e5)}
-function btyState(){var d=today(),e3=btyEnd(3),o=S.bty;if(!o||o.d!==d){var keep=o&&o.e3===e3;S.bty={d:d,rr:0,ai1:null,o1:0,e3:e3,ai3:keep?o.ai3:null,o3:keep?o.o3:0}}return S.bty}
-function btyEnd(k){var n=btyDay();return k===3?dstr(new Date((n-n%3+2)*864e5+43200000)):today()}
-function btyPick(k){var b=btyState(),P=k===3?BTY3:BTY1,n=btyDay(),i=(k===3?Math.floor(n/3)*7:n*11)+(k===3?b.o3:b.o1);
-  var ai=k===3?b.ai3:b.ai1;if(ai)return ai;var x=P[((i%P.length)+P.length)%P.length];return {n:x[0],why:x[1],xp:x[2],stat:x[3],cl:x[4]}}
-function btyTaken(k){var key=(k===3?"3:":"1:")+(k===3?btyEnd(3):today());return S.quests.some(function(q){return q.bty&&q.bty.key===key})}
-function btyCard(k){var x=btyPick(k),took=btyTaken(k),b=btyState(),left=k===3?Math.max(1,Math.round((Date.parse(btyEnd(3)+"T23:59:59")-Date.now())/864e5)):0;
-  return '<div class="bty-card"><span class="label">'+(k===3?'3-day bounty &middot; '+left+' day'+(left>1?'s':'')+' left':'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
-    +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===3?2:1.5))+' XP</span>'+(took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'"'+(BTYBUSY?' disabled':'')+'>'+(BTYBUSY===k?'Finding one':'Another')+'</button>':''))+'</div></div>'}
-function btyHtml(){if(!S.created)return '';return '<section class="card panel bty"><h3 class="label">Bounties</h3><div class="bty-grid">'+btyCard(1)+btyCard(3)+'</div></section>'}
+function btyEnd(k){var n=btyDay();return k===2?dstr(new Date((n-n%2+1)*864e5+43200000)):k===3?dstr(new Date((n-n%3+2)*864e5+43200000)):today()}
+/* QA (v0.92 blocker): a save from v0.90/v0.91 that saw the Board today still held the old shape ({d, rr, o1, e3, o3, ai1, ai3}, no
+   o2), and the 2-day card read past the end of its pool, so the Board never drew. Any state that isn't today's new shape is rebuilt,
+   keeping only today's count of "Another" taps; the old fields are dropped */
+function btyNum(v){return typeof v==="number"&&isFinite(v)&&v>=0?Math.floor(v):0}
+function btyState(){var d=today(),e2=btyEnd(2),o=S.bty;
+  if(!o||typeof o!=="object"||o.d!==d||o.e2!==e2||typeof o.o2!=="number"||typeof o.o1!=="number"){
+    var same=o&&typeof o==="object"&&o.d===d,keep=o&&typeof o==="object"&&o.e2===e2;
+    S.bty={d:d,rr:same?Math.min(3,btyNum(o.rr)):0,o1:same?btyNum(o.o1):0,e2:e2,o2:keep?btyNum(o.o2):0}}
+  return S.bty}
+/* this player's order of a pool: a seeded shuffle, the same on every device */
+var BTYPERM={};
+function btySeed(){var s=String(MYUID||(S.char&&S.char.name)||"player"),h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function btyPerm(k){var P=k===2?BTY2:BTY1,key=k+":"+btySeed()+":"+P.length;if(BTYPERM[key])return BTYPERM[key];
+  var a=P.map(function(x,i){return i}),s=btySeed()^(k*2654435761),r=function(){s=(s+0x6D2B79F5)|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296};
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return BTYPERM[key]=a}
+function btyPick(k){var b=btyState(),P=k===2?BTY2:BTY1,n=btyDay(),pm=btyPerm(k),i=(k===2?Math.floor(n/2):n)+btyNum(k===2?b.o2:b.o1);
+  if(!pm.length||!isFinite(i))return null;var x=P[pm[((i%pm.length)+pm.length)%pm.length]];return x?{n:x[0],why:x[1],xp:x[2],stat:x[3],cl:x[4]}:null}
+function btyTaken(k){var key=k+":"+btyEnd(k);return S.quests.some(function(q){return q.bty&&q.bty.key===key})}
+/* the 2-day bounty's game days left: 2 on its first day, its last day on the second (QA: hours rounded said "1 day left" from noon) */
+function btyLeft(){return Math.max(1,Math.floor(Date.parse(btyEnd(2)+"T00:00:00Z")/864e5)-btyDay()+1)}
+function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),left=k===2?btyLeft():0;
+  return '<div class="bty-card"><span class="label">'+(k===2?'2-day bounty &middot; '+(left>1?left+' days left':'last day'):'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
+    +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===2?2:1.5))+' XP</span>'+(took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'">Another</button>':''))+'</div></div>'}
+/* a bounty can never stop the Board from drawing: anything that goes wrong here shows no bounty today */
+function btyHtml(){if(!S.created)return '';var c='';try{c=btyCard(1)+btyCard(2)}catch(e){c=''}
+  return c?'<section class="card panel bty"><h3 class="label">Bounties</h3><div class="bty-grid">'+c+'</div></section>':''}
 /* bounty quests leave when their window ends, done or not (done ones leave with the day's run as usual) */
-function btyPrune(){var t=today();S.quests=S.quests.filter(function(q){return !q.bty||q.bty.end>=t||S.done[q.id]})}
+function btyPrune(){try{var t=today();S.quests=S.quests.filter(function(q){return !q||!q.bty||typeof q.bty!=="object"||!(String(q.bty.end||"")<t)||S.done[q.id]})}catch(e){}}
 var btyBoardBase=boardHtml;
 /* Cal, 2026-11-09: "Bounties should be towards the bottom", under the task categories; finished quests stay last ("Completed
    tasks can be all the way at the bottom") */
 boardHtml=function(){btyPrune();var h=btyBoardBase(),i=h.indexOf('<details class="donebox donelast"');var c=btyHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 var btyMultsBase=mults;
-mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k===3?2:1.5;r.m*=f;r.cm=(r.cm||1)*f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};/* a bounty pays its bonus in coins too */
-var BTYBUSY=0;
-async function btyAsk(k){var b=btyState(),mine=S.quests.map(function(q){return q.name}).slice(0,40).join("; ");
-  try{var sample=window.claude?await window.claude.use("sample"):null;if(!sample)return null;
-    var r=await sample.json("Suggest one household or personal chore that people often put off, for a habit game. "+(k===3?"It should take a few hours spread over three days. ":"It should take under an hour today. ")
-      +"Make it concrete and specific, like 'Throw away one thing you have not used in six months'. Do not repeat any of these tasks the player already has: "+mine
-      +". Plain words, no exclamation marks, no emoji. Return ONLY JSON: {\"n\":\"the task, under 60 characters\",\"why\":\"one short practical tip, under 60 characters\",\"stat\":\"one of creativity, discipline, fitness, productivity, social\",\"cl\":\"one of out, reset, home, body, admin, create, social\"}",{modelTier:"quick",cache:false});
-    if(!r||!r.n)return null;return {n:String(r.n).slice(0,70),why:String(r.why||"").slice(0,80),xp:k===3?70:30,stat:STATS.some(function(s){return s[0]===r.stat})?r.stat:"discipline",cl:CLUSTERS.some(function(c){return c[0]===r.cl})?r.cl:"home"}}catch(e){return null}}
-document.addEventListener("click",async function(e){var t=e.target.closest&&e.target.closest("[data-act=btytake],[data-act=btynew]");if(!t)return;var k=+t.dataset.k,b=btyState();
-  if(t.dataset.act==="btytake"){if(btyTaken(k))return;var x=btyPick(k),id="q"+(S.next++);
-    S.quests.push({id:id,name:x.n,xp:clampXp(x.xp),stat:x.stat,cl:x.cl,why:x.why,rep:"once",bty:{k:k,end:btyEnd(k),key:(k===3?"3:":"1:")+btyEnd(k)}});
+/* the 2-day bounty (and an old 3-day one) pays 2x, today's 1.5x; the bonus is paid in coins too */
+mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty&&typeof q.bty==="object"){var f=+q.bty.k>=2?2:1.5;r.m*=f;r.cm=(r.cm||1)*f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-act=btytake],[data-act=btynew]");if(!t)return;var k=+t.dataset.k===2?2:1,b=btyState();
+  if(t.dataset.act==="btytake"){if(btyTaken(k))return;var x=btyPick(k);if(!x)return;var id="q"+(S.next++);
+    S.quests.push({id:id,name:x.n,xp:clampXp(x.xp),stat:x.stat,cl:x.cl,why:x.why,rep:"once",bty:{k:k,end:btyEnd(k),key:k+":"+btyEnd(k)}});
     persist();render();pop("Bounty added to your board");return}
-  if(BTYBUSY||b.rr>=3||btyTaken(k))return;BTYBUSY=k;render();var ai=await btyAsk(k);BTYBUSY=0;b=btyState();b.rr++;
-  if(ai){if(k===3)b.ai3=ai;else b.ai1=ai}else{if(k===3){b.ai3=null;b.o3++}else{b.ai1=null;b.o1++}}persist();render()});
-window.__qbBounty={pick:btyPick,state:btyState,end:btyEnd,BTY1:BTY1,BTY3:BTY3};
+  if(b.rr>=3||btyTaken(k))return;b.rr++;if(k===2)b.o2++;else b.o1++;persist();render()});
+window.__qbBounty={pick:btyPick,state:btyState,end:btyEnd,perm:btyPerm,BTY1:BTY1,BTY2:BTY2,BTY3:BTY3};

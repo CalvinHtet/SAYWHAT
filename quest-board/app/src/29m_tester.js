@@ -63,7 +63,7 @@ function qbRooms(){document.querySelectorAll("#layer .modal").forEach(function(m
     if(q==="open")qbtOpen(t);
     if(q==="all")qbtAll(t,1);
     if(q==="none")qbtAll(t,0);
-    if(q==="time"){window.__qbShift=(window.__qbShift||0)+6*36e5;try{simulate()}catch(x){}persist();render();pop("Six hours later")}
+    if(q==="time"){qbSetShift(qbShift()+6*36e5);try{simulate()}catch(x){}persist();render();pop("Six hours later")}
     if(q==="veg"){S.base.food=S.base.food||{};S.base.food.veg=Math.min(foodCap()*10,(S.base.food.veg||0)+20);persist();render();pop("+20 produce")}
     if(q==="sold"){var o=styState();o.sold=(o.sold||0)+12;persist();try{styCheck()}catch(x){}pop(o.sold+" produce sold so far")}
     if(q==="next"){m.remove();qbtNextStep();return}

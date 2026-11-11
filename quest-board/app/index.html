@@ -1587,6 +1587,86 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .qs-flnew{position:absolute;top:-6px;right:-4px;width:18px;height:18px;border-radius:9px;background:#ffc857;color:#14121c;font:900 12px/18px system-ui;font-style:normal;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #14121c}
 .bs-vault{margin:10px 0 0;font-size:16px;font-weight:700}
 .nav .navq{display:block;width:22px;height:22px;font:800 20px/22px var(--font-display,system-ui);text-align:center;letter-spacing:0}
+/* BUILDER w-chat2 (W49 chat like Discord: a face, one header per run of lines; W57 online dot and streak by other players' names) */
+.tch-g{display:flex;align-items:flex-start;gap:10px;margin-top:10px;padding:3px 6px;border-radius:8px}
+.tch-g:first-child{margin-top:0}.tch-g.me{background:rgba(255,200,87,.06)}
+.tch-av{position:relative;flex:none;width:34px;height:34px;margin-top:2px}
+.tch-av>.calav{width:34px;height:34px}
+.tch-ini{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:hsl(var(--h,200) 45% 36%);color:#fff;font:700 15px/1 var(--font-body,system-ui)}
+.tch-on{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:#5ee08a;box-shadow:0 0 0 2px var(--surface,#16131f)}
+.tch-b{flex:1;min-width:0}
+.tch-g .tch-h b{color:hsl(var(--h,200) 70% 76%)}.tch-g.me .tch-h b{color:var(--gold,#ffc857)}
+.tch-g p{margin:2px 0 0;font-size:14px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+.pl-on{display:inline-block;flex:none;width:8px;height:8px;margin:0 2px 1px 6px;border-radius:50%;background:#5ee08a;box-shadow:0 0 0 2px rgba(94,224,138,.22);vertical-align:middle;font-style:normal}
+.pl-sk{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:rgba(255,160,60,.14);color:#ffb366;font:700 10px/1.4 var(--font-mono,monospace);white-space:nowrap;vertical-align:1px}.fsh-rn .pl-sk{color:#ffb366}
+/* BUILDER w-wardrobe (W41, Cal 2026-11-10): the Wardrobe's category and brand chips (29zw_wardrobe.js), smaller than the Shop's tabs,
+   in the same white and ink; a brand chip carries a dot in the brand's colours */
+.qs-wdf{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.qs-wdf::-webkit-scrollbar{display:none}
+.qs-wdc{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:400 17px/1 var(--font-shop,system-ui);letter-spacing:.07em;cursor:pointer;white-space:nowrap}
+.qs-wdc.on{background:var(--ink);border-color:var(--ink);color:#fff}.qs-wdc:focus-visible{outline:2px solid #2f6fed;outline-offset:2px}
+.qs-wddot{flex:none;width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.25)}.qs-wdc.on .qs-wddot{box-shadow:0 0 0 1px rgba(255,255,255,.7)}
+.qs-wdf.qs-wdcat{flex-wrap:wrap;overflow:visible}.qs-wdbr{position:relative}
+.qs-wdnone{padding:4px 2px 12px}.qs-wdnone .qs-empty{margin:8px 0 12px}.qs-wdnone .qs-btn{width:auto;padding:0 18px}
+/* BUILDER w-boss (W54): the Town Boss over the Town Hall picture; a drawn stand-in and CSS fire until the Mac paints the art */
+.bs-box{position:relative;display:flex;gap:10px;align-items:center;margin:0 0 10px;padding:10px;border-radius:14px;background:rgba(10,8,20,.72);border:1px solid rgba(255,255,255,.14);color:#fff;overflow:hidden;z-index:1}
+.bs-box .bs-mon,.bs-box .bs-art{flex:none;width:96px;height:72px;object-fit:contain}.bs-full .bs-mon,.bs-p75 .bs-mon{animation:bsBob 2.4s ease-in-out infinite}
+.bs-txt{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}.bs-txt b{font-family:var(--font-display);letter-spacing:.06em}.bs-txt small{color:#d8d4ee;font-size:12px}
+.bs-hp{height:8px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden}.bs-hp>i{display:block;height:100%;background:linear-gradient(90deg,#ff4d5e,#ffb627);border-radius:inherit}
+.bs-dead .bs-hp>i{background:#6b6f7a}.bs-flames{position:absolute;inset:auto 0 0 0;height:60%;pointer-events:none;background:radial-gradient(ellipse at 20% 100%,rgba(255,120,40,.75),transparent 60%),radial-gradient(ellipse at 60% 100%,rgba(255,60,30,.7),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(255,170,40,.7),transparent 60%);animation:bsFire 1.2s ease-in-out infinite alternate;z-index:-1}
+.bs-scorched{flex-direction:column;align-items:flex-start}
+@keyframes bsBob{50%{transform:translateY(-3px)}}@keyframes bsFire{to{opacity:.55;transform:scaleY(1.08)}}
+@media (prefers-reduced-motion:reduce){.bs-mon,.bs-flames{animation:none!important}}
+/* BUILDER w-colors (W50, W14). Cal: "The town hall right now is still the same color as the board instead of the color of the picture
+   in the town hall banner" and "Every menu and screen should feel slightly different".
+   - render() puts the screen on <html> as data-view (30_app_b.js).
+   - The Hall has its own palette, sampled from its banner picture (ui_town_board.webp): dusk sky #a5c5e2, terracotta and peach
+     #b28a6a, mauve #986f63, warm shadow #604d46, cream #d8ccce, the string lights' gold.
+   - Every other screen keeps its rank's palette with a small tint (--vt, --vk) mixed into the background, the surfaces and the lines,
+     each taken from that screen's art: Training the leather and skin of the exercise pictures (ex_*), the Loft the dusty rose of its
+     building picture (bld_bg_loft), the Crawls the jade of the treasure art (ui_tr_amulet_*), Relics the bronze of the relic art
+     (ui_relic_*), the Wheel the gold of its logo (logo_wheel). The Board keeps the rank palette as it is (the home screen the ranks
+     were drawn for), and the Shop keeps the paper and colours of the brand on show (shopmode). The profile has no art of its own
+     besides the character: a soft violet picked in code (#6b5fb0).
+   - The mix lives on <html> under other names (--v-*), and body takes it: a custom property cannot be mixed from itself.
+   - A bought theme still sets the accent: it is written inline on <html>, which beats every rule here, and no rule here sets the accent
+     below <html>. Text colours stay the rank's except in the Hall. Checked for every rank: body and muted text keep WCAG AA (4.5:1) on every surface. */
+@supports (color:color-mix(in srgb,red,blue calc(10% * 2))){
+:root[data-view]{--vt:transparent;--vk:0%;--pt:#6b5fb0;--pk:12%;
+  --v-bg:color-mix(in srgb,var(--bg),var(--vt) var(--vk));--v-surface:color-mix(in srgb,var(--surface),var(--vt) var(--vk));
+  --v-surface2:color-mix(in srgb,var(--surface2),var(--vt) calc(var(--vk)*.6));--v-line:color-mix(in srgb,var(--line),var(--vt) calc(var(--vk)*2));
+  --v-glow1:color-mix(in srgb,var(--glow1),color-mix(in srgb,var(--vt) calc(var(--vk)*1.6),transparent) calc(var(--vk)*4));
+  --v-glow2:color-mix(in srgb,var(--glow2),color-mix(in srgb,var(--vt) calc(var(--vk)*1.6),transparent) calc(var(--vk)*3));
+  --p-surface:color-mix(in srgb,var(--surface),var(--pt) var(--pk));--p-surface2:color-mix(in srgb,var(--surface2),var(--pt) var(--pk));
+  --p-line:color-mix(in srgb,var(--line),var(--pt) calc(var(--pk)*2))}
+:root[data-view="train"]{--vt:#8c5a3c;--vk:11%}
+:root[data-view="hideout"]{--vt:#b2897d;--vk:11%}
+:root[data-view="away"]{--vt:#4f9d86;--vk:12%}
+:root[data-view="trophy"]{--vt:#9a6a45;--vk:12%}
+:root[data-view="wheel"]{--vt:#c2a55a;--vk:10%}
+:root[data-view] body{--bg:var(--v-bg);--surface:var(--v-surface);--surface2:var(--v-surface2);--line:var(--v-line);--glow1:var(--v-glow1);--glow2:var(--v-glow2)}
+:root[data-view] .modal.profm{--surface:var(--p-surface);--surface2:var(--p-surface2);--line:var(--p-line)}
+}
+:root[data-view="hall"]{--bg:#17121a;--surface:#231a22;--surface2:#30232a;--line:#5c4441;--fg:#fbf1ea;--muted:#c3aca6;
+  --accent:#e8a582;--accent2:#a5c5e2;--accent-ink:#24130c;--gold:#f3c97a;
+  --glow1:rgba(165,197,226,.20);--glow2:rgba(232,165,130,.24);--shadow:rgba(232,165,130,.30);--gridc:rgba(232,165,130,.07)}
+:root[data-view="hall"] body{background:radial-gradient(70% 38% at 88% -8%,var(--glow2),transparent 70%),radial-gradient(60% 30% at -6% 4%,var(--glow1),transparent 70%),linear-gradient(180deg,#1f1d33 0,#17121a 70vh);background-repeat:no-repeat;background-attachment:fixed}
+/* BUILDER w-ui92 (v0.92) */
+/* W58: a quest's estimated time, small and grey in its line */
+.q .sub .qmin{color:var(--muted);white-space:nowrap}
+/* W59: the quest-complete box at the top, under the header (--qty, set from the header's bottom by qtPlace in 29zu_ui92.js), clear of
+   the notch; taps go through it */
+.qtoast{position:fixed;left:50%;top:max(calc(env(safe-area-inset-top,0px) + 8px),var(--qty,0px));transform:translateX(-50%);z-index:25;max-width:min(92vw,380px);padding:6px 14px 7px;border-radius:12px;background:var(--gold);color:#1a1200;font-family:var(--font-mono);text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;opacity:1;transition:opacity 1s ease;animation:qtIn .18s ease-out}
+.qtoast.out{opacity:0}
+.qtoast b{display:block;font-size:14px;font-weight:700;line-height:1.35;white-space:nowrap}.qtoast b span+span{margin-left:4px}
+.qtoast small{display:block;font-size:11.5px;font-weight:600;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.82}.qtoast small span+span{margin-left:3px}
+@keyframes qtIn{from{opacity:0;transform:translate(-50%,-6px)}}
+@media (prefers-reduced-motion:reduce){.qtoast{animation:none;transition:opacity .3s}}
+/* W60: the next room's own window from the building view */
+.nxm .rm-title{font-size:28px;line-height:1.1}
+.nxm .nxpic{height:170px;margin:8px 0 10px;border-radius:12px;overflow:hidden}
+.nxm .nxq{display:grid;place-items:center;background:radial-gradient(100% 90% at 50% 20%,#2b3a66,#14121c);color:rgba(255,255,255,.55);font:800 72px/1 var(--font-display,system-ui)}
+.nxm .nxlines{margin:0 0 12px}
+.nxm .nxbtns{display:flex;flex-direction:column;gap:8px;margin-top:12px}.nxm .nxbtns .btn{width:100%}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
