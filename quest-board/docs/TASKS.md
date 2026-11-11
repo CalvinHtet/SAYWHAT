@@ -23,7 +23,22 @@ MERGED, WAITING ON CAL.
 
 Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; THEN the final MAC_HANDOFF.md and the Windows team stops (Cal 16:15: "Will continue everything through claude on mac"); anything needing art waits about 52 h (Cal's Mac limit).
 
-**v0.91 SHIPPED 2026-11-10 19:27 (qa-local eea5382, zip on the Desktop).** **v0.92 SHIPPED 2026-11-10 ~21:30 (merge d395ae7 of rc-v0.92 24df171); all 6 branches + w-bounty (300 bounties) in. The Windows team stops here; see docs/MAC_HANDOFF.md.** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
+**v0.91 SHIPPED 2026-11-10 19:27 (qa-local eea5382, zip on the Desktop).** **v0.92 RE-OPENED 2026-11-11 06:00 (Cal: "continue working and fold it all into 0.92"):** everything left that needs no new art goes into v0.92, off
+qa-local e688961, in this order (each fails softly where Mac art is missing):
+1. w-sound: W56 purchase sounds (synthesized, an on/off switch).
+2. w-visitors: W55 friends visit your businesses (SPEC10 part 2: real players in their outfits, a one-line note in the room, tips
+   100-400 by room, 2 a day, sparse).
+3. w-pact: W28 Gym Pact (specs: SPEC_levels_daily_rooms_pact_mystic part D + Cal: both miss -> both lose; any active session counts;
+   photo-only) + firestore.rules.
+4. w-photos: W8/W9 the photo feed (SPEC5): post a verified proof with a caption, likes, comments, delete rules; needs Firebase
+   STORAGE (storage.rules + the deploy line in the README).
+5. w-side: W36 story side-quests, photo only (SPEC4/SPEC6), Sable's Night watch with the server clock in the function (a functions
+   deploy) and 3 nights -> the hidden dungeon; w-rafe: W35 Rafe's hunts at 27/52/77/93 (SPEC5, SPEC3 part 6), montage art fails soft.
+6. w-perf2: W1b room art per room, only if QA proves it safe; else it stays in the handoff.
+Then one rc-v0.92, QA's full run_rc.sh, the zip, and MAC_HANDOFF.md updated. Art (the Town Boss pictures, Rafe montages, etc.) stays
+Mac-only.
+
+**v0.92 SHIPPED 2026-11-10 ~21:30 (merge d395ae7 of rc-v0.92 24df171); all 6 branches + w-bounty (300 bounties) in. The Windows team stops here; see docs/MAC_HANDOFF.md.** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
 1. w-chat2: W49 Discord-style chat + W53 greetings (wave, high five, poke, spank; Hug, Cheer and Visit Loft go) + W57 online dot and streak.
 2. w-colors: W50 Town Hall colours from its picture, then W14 (every screen slightly different).
 3. w-wardrobe: W41 categories + brand filters.
