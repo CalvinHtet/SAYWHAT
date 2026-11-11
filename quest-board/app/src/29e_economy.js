@@ -49,9 +49,9 @@ var ECON={
      growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
      counts in it too */
   noirServed:180,                                  /* dishes the Restaurant serves before Noir (econRules) */
-  bizDay:{garden:1000,restaurant:900,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
+  bizDay:{garden:1500,restaurant:700,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
     rhythm:400,vr:400,bowling:450,karaoke:450,club:900},
-  vegCoin:7,
+  vegCoin:8,                                       /* w-econ4: Garden-stage businesses about 10% (econsim: 7-8%) */
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
      gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
      Lair upgrade (the Lair's reason now that it sends no missions), and always on the crawlPity-th crawl in a row without one */
@@ -76,6 +76,10 @@ var ECON={
   trialDays:2,                                    /* a level trial also passes on honor: active (50+ XP) on this many days */
   restDay:.25,restMax:1,                          /* rested XP: a quarter level banked per day with no quest, one level at most */
   wqDays:4,                                       /* Weekly Quest: active (50+ XP) on this many days, Monday to Sunday, pays a level */
+  /* w-econ4 (v0.92, LEAD: level 100 near day 85 for the regular and Cal's routine, by quest XP payouts, not the curve, so no one's level
+     moves): the Weekly Quest pays half a level of XP (its coins stay a level's worth). econsim: level 100 on day 73 / 80 before */
+  wqLvl:.5,
+  wwMax:4,                                        /* w-econ4: Weekly Warrior coins x the weeks in a row, at most x4 (Cal) */
   freeMiss:1,freezeEvery:5,streakKeep:.5,         /* streak: one missed day a week is free; a freeze every 5 days; short of freezes it halves */
   catchGap:8,catchPct:25,                         /* 8+ levels under the median of friends active this week: quests +25% XP */
   slotFree:{garden:1,chef:1,lockkey:1,boba:1,dessert:1,rooftop:1,mall:1,theater:1,auditorium:1,arcade:1,rhythm:1,vr:1,bowling:1,karaoke:1,club:1},                     /* story steps the one-a-day early unlock slot never holds back (Cal: Garden day 1) */
@@ -249,7 +253,7 @@ function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),t=dqTarget(),f
   return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+(t?x+' / '+t+' XP':x+' XP')+'</span></div>'
     +'<div class="dq-bar'+(dqTarget()?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i><i class="ot" style="width:'+(f[1]*100)+'%"></i></div>'
     +'<p class="note">'+(x<=0?'Finish a task to start your day. ':x<g?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':'Daily Quest done. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden chest: +10%)':'')+'.':'')+'</p>'
-    +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
+    +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays half a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
     +'<div class="dq-row">'+Object.keys(STATN).map(function(k){var ic=econArt("ui_stat_"+k+".webp");return '<span class="chip dq-st" title="'+STATD[k]+'">'+(ic?'<img src="'+ic+'" alt="">':'')+STATN[k]+' '+sp[k]+'</span>'}).join("")+'</div></section>'}
 function econArt(n){return window.QBART&&QBART[n]}
 /* each tier's chest once a day (d.tier: how many are open; a save from before the tiers had d.done for the one chest). The shown
