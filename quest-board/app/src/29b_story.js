@@ -93,7 +93,7 @@ var STYCHAIN=[["garden","garden"],["chef","restaurant"],["lockkey","skybar"],["b
 function styOpened(){var o=styState();if(!o.open||typeof o.open!=="object"){o.open={};STYCHAIN.forEach(function(c){if(styHas(c[1]))o.open[c[1]]={d:"",c:0}})}
   STYCHAIN.forEach(function(c){if(styHas(c[1])&&!o.open[c[1]]){o.open[c[1]]={d:today(),c:Math.floor(S.earnedC||0)};persist()}});return o.open}
 /* the room a step's trigger happens in (for the Goals list, 29bg_goals.js) */
-function unlockSrc(room){var u=(ECON.unlock||{})[room];if(!u)return null;return u.at||u.earn||(u.loft?"bedroom":u.noir?"restaurant":u.plaza?"restaurant":null)}
+function unlockSrc(room){var u=(ECON.unlock||{})[room];if(!u)return null;return u.at||u.earn||(u.loft?"bedroom":u.noir?"restaurant":u.plaza?ECON.plazaAll[ECON.plazaAll.length-1]:null)}
 function rmName(t){return (ROOMT[t]||{}).name||t}
 function slotOf(t){return S.base&&S.base.slots.filter(function(x){return x&&x.t===t})[0]}
 /* a room's fill: upgrades bought of the ones it can take (not retired, not openers, not the Trophy Room's finds) */

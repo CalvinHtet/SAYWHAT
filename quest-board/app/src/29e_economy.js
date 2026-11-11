@@ -317,8 +317,10 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
    (ECON.retire); owners keep them and what they do, and the ids stay. */
 function econRules(){(ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
   Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k]||{},biz=!!(T.coin||T.food),A=ADDONS[k]||[],L=A.filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});if(!L.length)return;
-    var mom=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion"||ECONKIND[k+"|"+a[0]]==="grand"||(ECON.bigMoment[k]||[]).indexOf(a[0])>=0)};
-    var looks=function(a){var e=a[3]||{};return !mom(a)&&!(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&(biz||ECONKIND[k+"|"+a[0]]==="decor")};
+    var hard=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion")},bare=function(a){var e=a[3]||{};return !(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&!e.fresh&&!e.dish};
+    /* a looks-only piece is cheap even if it was a big moment (the Stone Fountain) */
+    var mom=function(a){var e=a[3]||{};return hard(a)||!(biz&&bare(a))&&!!(ECONKIND[k+"|"+a[0]]==="grand"||(ECON.bigMoment[k]||[]).indexOf(a[0])>=0)};
+    var looks=function(a){return !mom(a)&&bare(a)&&(biz||ECONKIND[k+"|"+a[0]]==="decor")};
     var flat=Math.max(50,Math.round(ECON.tier.decor*econPhase(k)*econLate(k)/50)*50),Lk=L.filter(looks),Le=biz?L.filter(function(a){return !mom(a)&&!looks(a)&&+(a[3]||{}).p>0}):[];
     var before=0;Lk.concat(Le).forEach(function(a){before+=+a[2]});
     Lk.forEach(function(a){a[2]=flat});
@@ -421,3 +423,21 @@ function rmStats(r,i,base){var T=ROOMT[r.t],L=ADDONS[r.t]||[],own=addonsOf(r).le
     return "Earns about "+(Math.round(bd/10)*10).toLocaleString()+" coins a day"+(up>0?" (+"+up+"% from upgrades)":"")+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought"}
   if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought";
   return base}
+/* Cal (2026-11-10): upgrades have no level locks, so the Restaurant's and the Garden's "Next big step: X at level N" lose the level */
+var econRsNoteBase=rsNote;rsNote=function(){return econRsNoteBase.apply(this,arguments).replace(/ at level \d+\./g,".")};
+var econGdNoteBase=gdNote;gdNote=function(){return econGdNoteBase.apply(this,arguments).replace(/ at level \d+\./g,".")};
+/* ---- the Wheel every 4 hours (w-econ3; Cal, 2026-11-10: "i want the wheel to be able to be spun once every 4 hours") ----
+   One spin, then the next opens ECON.wheelEvery hours after it; nothing banks up while away (at most one waiting). A 4-spin day pays
+   about 1.5x the old daily wheel (~310 a spin against ~835 a day), so every prize is x wheelK, and the streak freeze and the gold
+   slivers are x wheelOdds as likely, so freezes and free clothes stay about where they were a day (a sliver about every 12 days).
+   S.wheelAt is when the last spin was; S.wheel (the day of the last spin) stays as it was. */
+ECON.wheelEvery=4;ECON.wheelK=.33;ECON.wheelOdds=.25;
+WHEEL.forEach(function(w,i){if(w[1]>0)w[1]=Math.round(w[1]*ECON.wheelK/50)*50;if(w[2]||w[3])WHEEL_W[i]*=ECON.wheelOdds});
+WHEELALL=Math.round(WHEELALL*ECON.wheelK/50)*50;
+function wheelLeft(){var t=+S.wheelAt||0;return t?Math.max(0,t+ECON.wheelEvery*36e5-Date.now()):0}
+function wheelCd(ms){var m=Math.ceil(ms/60000),h=Math.floor(m/60);return (h?h+"h ":"")+(m%60)+"m"}
+var wheelSpinBase=spin;spin=function(){if(spinning||wheelLeft()>0)return;var w0=S.wheel;S.wheel="";wheelSpinBase.apply(this,arguments);
+  if(S.wheel===today()){S.wheelAt=Date.now();persist()}else S.wheel=w0};
+var wheelHtmlBase=wheelHtml;wheelHtml=function(){var w0=S.wheel,left=wheelLeft();S.wheel=left>0?today():"";var h;try{h=wheelHtmlBase.apply(this,arguments)}finally{S.wheel=w0}
+  return h.replace("One free spin every day.","One free spin every "+ECON.wheelEvery+" hours.").replace(">Come back tomorrow<",'><span class="wheelcd">Next spin in '+wheelCd(left)+'</span><')};
+setInterval(function(){var b=document.querySelector(".wheelcd");if(!b)return;var l=wheelLeft();if(l>0)b.textContent="Next spin in "+wheelCd(l);else try{render()}catch(e){}},30000);
