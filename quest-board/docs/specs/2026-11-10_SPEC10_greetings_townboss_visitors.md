@@ -57,3 +57,16 @@ though because I wouldn't want 8 people from the game in one room or have 10 peo
   75/50/25; win -> Sunday carcass + chest letters to damage dealers only; lose -> Sunday fire + -10% business for a week; two phones
   see the same HP within seconds; old saves fine.
 - Visitors: never 2 in a room, never more than 3 a day, never more than 2 tips a day; name label shows; note on room open.
+
+## Cal's decisions on the Town Boss (2026-11-10 16:10, amends part 1)
+
+Cal: "lets start with 800 HP per active player for now. Active would mean they have used the app at least 3 times this week. Otherwise,
+don't count the HP, because it would overinflate the HP and make it hard to kill the boss. other defaults are fine."
+
+- HP = 800 x active players, fixed at the Monday 5 am spawn, with a minimum of 2 players' worth.
+- Active = opened the app on at least 3 different game days in the 7 days before the spawn. ARCHITECT reads "3 times" as 3 days,
+  because one player opens the app many times a day. Confirm with Cal if that reading is in doubt.
+- Each player's worlds doc carries the game days they played (a small 7-day list), so every phone can do the count.
+- Confirmed defaults: -10% business income for a week after a loss (the next win lifts it early); 600 damage per player per day.
+  The win chest holds about a day of quest coins, a relic roll and an accessory the player doesn't own. The top 3 get a bonus roll.
+  Players who did no damage get no chest. Friend tips are 100-400 by room, 2 a day.
