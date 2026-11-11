@@ -213,7 +213,7 @@ function lfRoomLight(C,uid,t,out){
   return res;
 }
 function lfLight(C,x,y,z,col,r,k){(C.lights=C.lights||[]).push([x,y,z,col,r,k])}
-function lfLightLabel(){var L=lfLS(),w={sun:"Clear",cloud:L.cl>.6?"Overcast":"Partly cloudy",fog:"Marine layer",rain:LFW.storm?"Storm":"Rain"}[L.wx];return (LFW.temp!=null?Math.round(LFW.temp)+"°F · ":"")+w+" · "+L.phase+" in LA"+(LFW.src==="live"?"":"")+(L.wx==="rain"?" · Garden +30%":"")}
+function lfLightLabel(){var L=lfLS(),w={sun:"Clear",cloud:L.cl>.6?"Overcast":"Partly cloudy",fog:"Marine layer",rain:LFW.storm?"Storm":"Rain"}[L.wx];return (LFW.temp!=null?Math.round(LFW.temp)+"°F · ":"")+w+" · "+L.phase+" in LA"+(LFW.src==="live"?"":"")+(L.wx==="rain"&&S&&S.base&&hasRoom("garden")?" · Garden +30%":"")}/* the Garden only once it exists (Cal: no spoilers) */
 /* ---------- LA skyline backdrop (replaces the brick facade) ---------- */
 function lfSkyline(rows){
   var L=lfLS(),sk=lfSkyCols(L),y0=LFROOF+rows*LFFP-20+26,top=-700,X0=-320,X1=LFWW+320,s='',R=lfSeed(41),uid="lfsk";
