@@ -1725,6 +1725,16 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .ph-rc{flex:0 0 auto;width:72px;height:72px;padding:0;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:#0c0b12;cursor:pointer}.ph-rc.on{border-color:var(--accent)}.ph-rc img{width:100%;height:100%;object-fit:cover;display:block}
 .ph-prev{margin:8px 0;border-radius:12px;overflow:hidden;background:#0c0b12}.ph-prev img{display:block;width:100%;max-height:42vh;object-fit:contain}
 .ph-new .ph-capin{margin-top:8px}
+/* BUILDER w-chatpic (#130): pictures in the Town Hall chat (29t_chat.js): the photo button, a line's thumbnail, the full-size view */
+.tch-in .tch-pic{flex:none;display:inline-grid;place-items:center;min-width:44px;min-height:44px;padding:0 10px}
+.tch-in .tch-pic.busy{opacity:.45;pointer-events:none}
+.tch-img{display:block;max-width:200px;margin:3px 0 1px;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0c0b12;cursor:pointer}
+.tch-img img{display:block;width:100%;height:100%;object-fit:cover}
+.tch-img:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tch-pvm .card{max-height:calc(100dvh - 24px);overflow-y:auto}
+.tch-pv .tch-h{margin:2px 40px 10px 0}
+.tch-pvimg{border-radius:12px;overflow:hidden;background:#0c0b12 center/cover no-repeat}.tch-pvimg img{display:block;width:100%;max-height:60vh;object-fit:contain;background:rgba(12,11,18,.55)}
+.tch-pvx{margin:10px 0 0;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

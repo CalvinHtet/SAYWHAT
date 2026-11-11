@@ -56,16 +56,24 @@ function tchEmpty(){return {msgs:{1:[],2:[],3:[]}}}
 /* a player's chat doc as read: anything malformed is dropped, never thrown (an old mod field is not read) */
 function tchParse(id,d){if(!d||typeof d!=="object"||Array.isArray(d))return null;var o={id:id,name:tchName(d.name),msgs:{1:[],2:[],3:[]},t:+d.t||0},m=d.msgs;
   if(m&&typeof m==="object")TCHROOMS.forEach(function(r){var a=m[r[0]];if(!Array.isArray(a))return;
-    a.slice(-TCHKEEP).forEach(function(x){if(!x||typeof x!=="object")return;var t=+x.t,s=tchClean(x.x);if(s&&isFinite(t)&&t>0)o.msgs[r[0]].push({x:s,t:t})})});
+    a.slice(-TCHKEEP).forEach(function(x){if(!x||typeof x!=="object")return;var t=+x.t,s=tchClean(x.x),im=tchImg(x.p,id);if((s||im)&&isFinite(t)&&t>0){var q={x:s,t:t};if(im)q.p=im;o.msgs[r[0]].push(q)}})});
   return o}
-function tchCopy(p){var o=tchEmpty();TCHROOMS.forEach(function(r){o.msgs[r[0]]=(p.msgs[r[0]]||[]).map(function(x){return {x:x.x,t:x.t}})});return o}
+/* #130 (Cal: pictures in chat, the part the photo feed didn't cover): a line may carry a picture, p = {f: full URL, th: thumbnail
+   URL, sp: its two files' path in Storage without ".jpg", w, h}, uploaded with the photo feed's own code (29ph_photos.js phImages and
+   the "photos" host: Firebase Storage, photos/<uid>/chat_<ms>.jpg and _t.jpg; a data URL in the sandbox). Not a proof: no check, no
+   stamp, no coins. A picture line may have no text. Read like the rest of a hostile doc: the URLs pass phUrl (https, a JPEG data URL,
+   or the local emulator), the path must be the sender's own folder, sizes are capped. */
+function tchImg(p,id){if(!p||typeof p!=="object"||Array.isArray(p)||typeof phUrl!=="function")return null;var f=phUrl(p.f),th=phUrl(p.th)||f;if(!f)return null;
+  var sp=typeof p.sp==="string"&&p.sp.indexOf("photos/"+id+"/chat_")===0&&p.sp.length<200&&/^[\w\/~.-]+$/.test(p.sp)?p.sp:"";
+  return {f:f,th:th,sp:sp,w:Math.max(0,Math.min(4096,Math.floor(+p.w)||0)),h:Math.max(0,Math.min(4096,Math.floor(+p.h)||0))}}
+function tchCopy(p){var o=tchEmpty();TCHROOMS.forEach(function(r){o.msgs[r[0]]=(p.msgs[r[0]]||[]).map(function(x){var q={x:x.x,t:x.t};if(x.p)q.p=Object.assign({},x.p);return q})});return o}
 /* this player's own doc, as this phone last wrote it */
 function tchMine(){var me=TCH.me||tchEmpty();return {id:MYUID,name:tchName((S.char&&S.char.name)||""),msgs:me.msgs,t:TCH.lastT}}
 /* one room: everyone's messages, oldest first, the newest 60 */
 function tchRoomMsgs(r){var now=tchNow(),out=[];
   Object.keys(TCH.docs).forEach(function(id){var d=TCH.docs[id];(d.msgs[r]||[]).forEach(function(m){
     if(m.t>now+600000)return;   /* dated in the future: a wrong clock, or someone pinning theirs to the bottom */
-    out.push({id:id,name:d.name,x:m.x,t:m.t,k:id+"|"+m.t})})});
+    out.push({id:id,name:d.name,x:m.x,t:m.t,k:id+"|"+m.t,p:m.p||null})})});
   out.sort(function(a,b){return a.t-b.t||(a.id<b.id?-1:a.id>b.id?1:0)});
   return out.slice(-60)}
 /* unread: per room, the newest message this phone has shown (kept on the device, not in the save) */
@@ -107,15 +115,24 @@ function tchPollStart(){if(TCH.poll)return;
     db.collection("chat").limit(200).get().then(function(q){tchOnSnap(q)},function(e){TCH.err=(e&&e.code)||"error";
       if(TCH.err==="permission-denied"){clearInterval(TCH.poll);TCH.poll=0;TCH.on=0;TCH.denyAt=Date.now()}tchUpdate()})};
   TCH.poll=setInterval(go,8000);go()}
-/* writes to this player's own chat doc, one at a time, always the whole doc as this phone holds it */
+/* writes to this player's own chat doc, one at a time, always the whole doc as this phone holds it. The doc stays under 36,000
+   characters (firestore.rules: 40,000; a picture line adds about 500); a sandbox picture's data URL counts as one character, since
+   only the stand-in database ever holds one. */
+function tchDocLen(doc){return JSON.stringify(doc).replace(/data:image\/jpeg;base64,[A-Za-z0-9+\/=]+/g,"d").length}
 function tchFit(doc){var n=0;
-  while(JSON.stringify(doc).length>18000&&n++<60){var old=null;TCHROOMS.forEach(function(r){var a=doc.msgs[r[0]];if(a.length&&(!old||a[0].t<old[0].t))old=a});if(!old)break;old.shift()}}
+  while(tchDocLen(doc)>36000&&n++<60){var old=null;TCHROOMS.forEach(function(r){var a=doc.msgs[r[0]];if(a.length&&(!old||a[0].t<old[0].t))old=a});if(!old)break;old.shift()}}
+/* the Storage paths of the pictures in this player's own lines */
+function tchPics(me){var o={};if(me&&me.msgs)TCHROOMS.forEach(function(r){(me.msgs[r[0]]||[]).forEach(function(x){if(x.p&&x.p.sp)o[x.p.sp]=1})});return o}
+/* a picture whose line left this player's doc (deleted, or pushed out by the newest 10 or the size cap) goes from Storage too, once
+   the doc is saved */
+function tchDropPics(before){var now=tchPics(TCH.me),h=typeof PH!=="undefined"&&PH.host;if(!h)return;
+  Object.keys(before).forEach(function(sp){if(now[sp])return;[sp+".jpg",sp+"_t.jpg"].forEach(function(f){try{h.del(f).catch(function(){})}catch(e){}})})}
 function tchWrite(mut){
   var run=function(){if(!socOn()||!TCH.me)return Promise.reject({code:"offline"});
-    var undo=JSON.stringify(TCH.me);mut(TCH.me);
+    var undo=JSON.stringify(TCH.me),pics=tchPics(TCH.me);mut(TCH.me);
     var t=Math.max(tchNow(),TCH.lastT+1),doc={name:tchName((S.char&&S.char.name)||""),msgs:TCH.me.msgs,t:t};tchFit(doc);
     TCH.lastT=t;TCH.docs[MYUID]=tchMine();tchUpdate();
-    return db.doc("chat/"+MYUID).set(JSON.parse(JSON.stringify(doc))).catch(function(er){
+    return db.doc("chat/"+MYUID).set(JSON.parse(JSON.stringify(doc))).then(function(){tchDropPics(pics)},function(er){
       try{TCH.me=JSON.parse(undo)}catch(e){}TCH.docs[MYUID]=tchMine();tchUpdate();throw er})};
   var p=(TCH.q||Promise.resolve()).then(run);TCH.q=p.catch(function(){});return p}
 function tchSend(){var inp=document.getElementById("tchin"),x=tchClean(inp?inp.value:TCH.draft);if(!x)return;
@@ -127,6 +144,31 @@ function tchSend(){var inp=document.getElementById("tchin"),x=tchClean(inp?inp.v
   TCH.sent.push(now);TCH.draft="";if(inp)inp.value="";tchCount();TCH.stick=1;
   tchWrite(function(me){var a=me.msgs[r]||(me.msgs[r]=[]),last=a.length?a[a.length-1].t:0;a.push({x:x,t:Math.max(tchNow(),last+1)});if(a.length>TCHKEEP)a.splice(0,a.length-TCHKEEP)})
     .catch(function(er){var i2=document.getElementById("tchin");if(!TCH.draft){TCH.draft=x;if(i2&&!i2.value)i2.value=x;tchCount()}pop("Could not send: "+((er&&er.code)||"error"))})}
+/* a picture (camera or library): made small and uploaded like a feed photo, then sent as a line, with whatever is typed in the box
+   as its words. One at a time, and the same limits as any line (1 a second, 10 a minute). If the line can't be saved, its two
+   files are taken back out of Storage. */
+function tchSendPic(file){if(!file)return;if(file.type&&!/^image\//.test(file.type)){pop("That is not a photo");return}
+  if(!socOn()||typeof phOn!=="function"||!phOn()){pop("Photos can't be sent right now");return}
+  if(!TCH.ready){pop(TCH.err==="permission-denied"?"Chat is not switched on yet":"Chat is still loading");return}
+  if(TCH.picBusy){pop("One photo at a time");return}
+  var now=tchNow(),r=TCH.room;TCH.sent=TCH.sent.filter(function(t){return now-t<60000});
+  if(TCH.sent.length&&now-TCH.sent[TCH.sent.length-1]<1000){pop("Slow down a little");return}
+  if(TCH.sent.length>=10){pop("That's 10 messages this minute. Give it a few seconds.");return}
+  var inp=document.getElementById("tchin"),x=tchClean(inp?inp.value:TCH.draft),h=PH.host,ms=Date.now(),sp="photos/"+MYUID+"/chat_"+ms,up=[];
+  TCH.picBusy=1;tchPicBtn();pop("Sending the photo");
+  phImages(file,"",!!h.local).then(function(im){
+    return h.put(sp+".jpg",im.full).then(function(fu){up.push(sp+".jpg");return h.put(sp+"_t.jpg",im.thumb).then(function(th){up.push(sp+"_t.jpg");return {f:fu,th:th,sp:sp,w:im.w,h:im.h}})})})
+  .then(function(p){TCH.sent.push(tchNow());if(x){TCH.draft="";var i2=document.getElementById("tchin");if(i2&&tchClean(i2.value)===x)i2.value="";tchCount()}TCH.stick=1;
+    return tchWrite(function(me){var a=me.msgs[r]||(me.msgs[r]=[]),last=a.length?a[a.length-1].t:0;a.push({x:x,t:Math.max(tchNow(),last+1),p:p});if(a.length>TCHKEEP)a.splice(0,a.length-TCHKEEP)})
+      .catch(function(er){if(x&&!TCH.draft){TCH.draft=x;var i3=document.getElementById("tchin");if(i3&&!i3.value)i3.value=x;tchCount()}throw er})})
+  .then(function(){TCH.picBusy=0;tchPicBtn()},function(er){TCH.picBusy=0;tchPicBtn();up.forEach(function(f){try{h.del(f).catch(function(){})}catch(e){}});
+    pop(er&&er.message==="image"?"That photo could not be read. Try another one.":"Could not send the photo: "+((er&&(er.code||er.name))||"error"))})}
+function tchPicBtn(){var b=document.getElementById("tchpicb");if(b){b.classList.toggle("busy",!!TCH.picBusy);b.setAttribute("aria-busy",TCH.picBusy?"true":"false")}}
+/* a picture full size, over the chat */
+function tchPicOpen(id,r,t){var m=tchRoomMsgs(r).filter(function(q){return q.id===id&&q.t===t&&q.p})[0];if(!m)return;
+  var nm=id===MYUID?"You":m.name,mm=modal('<div class="card box2 tch-pv"><div class="tch-h"><b>'+esc(nm)+'</b><small>'+esc(tchTime(m.t))+'</small></div>'
+    +'<div class="tch-pvimg" style="background-image:url(\''+esc(m.p.th)+'\')"><img src="'+esc(m.p.f)+'" alt="Photo from '+esc(nm)+'"></div>'+(m.x?'<p class="tch-pvx">'+esc(m.x)+'</p>':'')+'</div>');
+  mm.classList.add("tch-pvm")}
 /* presence */
 function tchHere(ch){if(!socOn())return;try{db.doc("chatnow/"+MYUID).set({name:tchName((S.char&&S.char.name)||""),ch:ch,t:tchNow()}).then(function(){TCH.nowErr=""},function(er){TCH.nowErr=(er&&er.code)||"error"})}catch(e){}}
 function tchJoin(){if(TCH.joined===TCH.room)return;TCH.joined=TCH.room;tchHere(TCH.room);clearInterval(TCH.beatT);
@@ -166,8 +208,9 @@ function tchWho1(id){if(id===MYUID)return {look:fshLook(lookOf())};
 function tchAv(m,w){var ini=Array.from(m.name||"?")[0]||"?";
   return '<span class="tch-av" aria-hidden="true">'+(w&&w.look?nbAv(w.look,TCHAV):'<span class="tch-ini">'+esc(ini.toUpperCase())+'</span>')
     +(m.id!==MYUID&&w&&plOnline(w)?'<i class="tch-on"></i>':'')+'</span>'}
-function tchLine(m,r){var me=m.id===MYUID;
-  return '<p title="'+esc(tchTime(m.t))+'">'+esc(m.x)+(me?'<button type="button" class="tch-x" data-act="tchdel" data-r="'+r+'" data-t="'+m.t+'" aria-label="Delete your message">&times;</button>':'')+'</p>'}
+function tchLine(m,r){var me=m.id===MYUID,p=m.p,pic="";
+  if(p){var w=p.w&&p.h?Math.round(Math.min(200,160*p.w/p.h)):160;pic='<button type="button" class="tch-img" data-act="tchpic" data-u="'+esc(m.id)+'" data-r="'+r+'" data-t="'+m.t+'" style="width:'+w+'px'+(p.w&&p.h?';aspect-ratio:'+p.w+'/'+p.h:'')+'" aria-label="Open the photo from '+esc(me?"you":m.name)+'"><img src="'+esc(p.th)+'" alt="" loading="lazy" decoding="async"></button>'}
+  return '<p title="'+esc(tchTime(m.t))+'"'+(p?' class="tch-pl"':'')+'>'+pic+(m.x?esc(m.x):'')+(me?'<button type="button" class="tch-x" data-act="tchdel" data-r="'+r+'" data-t="'+m.t+'" aria-label="Delete your message">&times;</button>':'')+'</p>'}
 function tchLogHtml(r){var ms=tchRoomMsgs(r),runs=[],h="";
   if(!ms.length)return '<p class="note tch-empty">No messages in '+esc(tchRoomName(r))+' yet. Say hi.</p>';
   ms.forEach(function(m){var g=runs[runs.length-1];if(g&&g.id===m.id&&m.t-g.t<TCHRUN)g.ms.push(m);else runs.push({id:m.id,t:m.t,ms:[m]})});
@@ -184,6 +227,13 @@ function tchRoomsHtml(){return TCHROOMS.map(function(r){var on=r[0]===TCH.room,n
     +'<span>'+esc(r[1])+'</span>'+(n>=0?'<small>'+n+'</small>':'')+(un?'<i class="tch-rdot"></i>':'')+'</button>'}).join("")}
 function tchWhoHtml(){if(!TCH.nowOk)return TCH.joined?'Checking who is here…':'';var w=tchWho(TCH.room);
   return w.length?'Here now: '+w.slice(0,6).map(esc).join(", ")+(w.length>6?' +'+(w.length-6):''):'Nobody here right now.'}
+/* the photo button left of the box, only where pictures can be stored (the feed's host); until the host is known, none, and the tab
+   is drawn again once it is */
+function tchPicIn(){if(typeof phOn!=="function")return "";
+  if(!phOn()){if(typeof phHostGet==="function")phHostGet().then(function(h){if(h&&htabShown("chat")&&!document.getElementById("tchpicb"))render()});return ""}
+  return '<label class="btn ghost tch-pic'+(TCH.picBusy?' busy':'')+'" id="tchpicb" for="tchfile" role="button" aria-label="Send a photo" aria-busy="'+(TCH.picBusy?'true':'false')+'">'
+    +'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></label>'
+    +'<input class="vh" type="file" id="tchfile" accept="image/*" tabindex="-1" aria-hidden="true">'}
 function tchHtml(){
   if(!socOn())return '<section class="card panel"><h3 class="label">Chat</h3><p class="note">Chat needs the cloud save. Open the game signed in.</p></section>';
   var r=TCH.room,nm=esc(tchRoomName(r));TCH.logH=tchLogBody();TCH.roomsH=tchRoomsHtml();TCH.whoH=tchWhoHtml();
@@ -191,7 +241,7 @@ function tchHtml(){
     +'<div class="tch-who"><small id="tchwho">'+TCH.whoH+'</small></div>'
     +'<div class="tch-logw"><div class="tch-log" id="tchlog" role="log" aria-live="polite" aria-label="'+nm+' messages">'+TCH.logH+'</div>'
     +'<button type="button" class="tch-new" id="tchnew" data-act="tchdown" hidden>New messages ↓</button></div>'
-    +'<div class="tch-in"><input id="tchin" type="text" maxlength="'+TCHMAX+'" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Message '+nm+'" placeholder="Message '+nm+'" value="'+esc(TCH.draft)+'"><button type="button" class="btn" data-act="tchsend">Send</button></div>'
+    +'<div class="tch-in">'+tchPicIn()+'<input id="tchin" type="text" maxlength="'+TCHMAX+'" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Message '+nm+'" placeholder="Message '+nm+'" value="'+esc(TCH.draft)+'"><button type="button" class="btn" data-act="tchsend">Send</button></div>'
     +'<div class="tch-foot"><small class="note">Everyone in town can read every room.</small><small id="tchcount" class="mono"></small></div></section>'}
 /* after a full draw of the Chat tab: back to where the player was reading (or the bottom), focus and caret kept. Coming into
    the tab, the page scrolls the tab bar to the top (it sticks there) and the room fills the screen down to the input. */
@@ -223,6 +273,7 @@ function tchDot(){var inChat=htabShown("chat")&&!document.hidden,any=false;
   if(nb){var d=nb.querySelector(".tch-ndot"),show=any&&view!=="hall";if(show&&!d){d=document.createElement("i");d.className="tch-ndot";d.setAttribute("aria-label","New chat messages");nb.appendChild(d)}else if(!show&&d)d.remove()}
   var td=document.querySelector(".htab .tch-dot");if(td)td.hidden=!(any&&!inChat)}
 document.addEventListener("input",function(e){if(e.target&&e.target.id==="tchin"){TCH.draft=e.target.value;tchCount()}});
+document.addEventListener("change",function(e){var t=e.target;if(!t||t.id!=="tchfile")return;var f=t.files&&t.files[0];t.value="";if(f)tchSendPic(f)});
 document.addEventListener("keydown",function(e){if(e.target&&e.target.id==="tchin"&&e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();tchSend()}});
 /* the nav bar steps aside while the keyboard is up */
 document.addEventListener("focusin",function(e){if(e.target&&e.target.id==="tchin")document.body.classList.add("tch-typing")});
@@ -232,6 +283,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   if(a==="tchsend"){tchSend();var i=document.getElementById("tchin");if(i)try{i.focus({preventScroll:true})}catch(er){}return}
   if(a==="tchroom"){var r=+b.dataset.r;if(r!==TCH.room&&(r===1||r===2||r===3)){TCH.room=r;TCH.stick=1;TCH.armed="";try{sessionStorage.setItem("qbChatRoom",String(r))}catch(er){}render()}return}
   if(a==="tchdown"){var lg=document.getElementById("tchlog");if(lg)lg.scrollTop=lg.scrollHeight;tchNewPill(0);return}
+  if(a==="tchpic"){tchPicOpen(String(b.dataset.u||""),+b.dataset.r,+b.dataset.t);return}
   /* your own line: the first tap turns the × into "Delete", the second (within 4 seconds) takes it out of your chat doc */
   if(a==="tchdel"){var rr=+b.dataset.r,mt=+b.dataset.t,k=rr+"|"+mt;if(!(rr===1||rr===2||rr===3)||!(mt>0))return;
     if(TCH.armed!==k){TCH.armed=k;b.classList.add("on");b.textContent="Delete";
@@ -241,3 +293,6 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* the faces come from the neighbors' docs: when those arrive or change, the log is drawn again (only if it changed) */
 var tchSocPaintBase=socPaint;
 socPaint=function(){var r=tchSocPaintBase.apply(this,arguments);try{if(htabShown("chat"))tchPaintLog()}catch(e){}return r};
+/* test hook, removed at release with window.__qb (31_release.js) */
+window.__qbChat={state:function(){return TCH},parse:tchParse,img:tchImg,sendPic:tchSendPic,open:tchPicOpen,write:tchWrite,docLen:tchDocLen,
+  put:function(id,doc){return db.doc("chat/"+id).set(doc)}};

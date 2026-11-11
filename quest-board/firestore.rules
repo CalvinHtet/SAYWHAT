@@ -26,7 +26,8 @@ service cloud.firestore {
       return request.resource.data.keys().hasOnly(["j", "t"]) && request.resource.data.j is string
         && request.resource.data.j.size() < n && request.resource.data.t is number;
     }
-    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(20000); allow delete: if mine(uid); }
+    // chat docs: 40,000 (was 20,000) since a line may carry a picture (#130: its two Storage URLs, files under photos/<uid>/chat_*)
+    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(40000); allow delete: if mine(uid); }
     match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(2000); allow delete: if mine(uid); }
     match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
 
