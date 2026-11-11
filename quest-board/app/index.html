@@ -1587,6 +1587,18 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .qs-flnew{position:absolute;top:-6px;right:-4px;width:18px;height:18px;border-radius:9px;background:#ffc857;color:#14121c;font:900 12px/18px system-ui;font-style:normal;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #14121c}
 .bs-vault{margin:10px 0 0;font-size:16px;font-weight:700}
 .nav .navq{display:block;width:22px;height:22px;font:800 20px/22px var(--font-display,system-ui);text-align:center;letter-spacing:0}
+/* BUILDER w-chat2 (W49 chat like Discord: a face, one header per run of lines; W57 online dot and streak by other players' names) */
+.tch-g{display:flex;align-items:flex-start;gap:10px;margin-top:10px;padding:3px 6px;border-radius:8px}
+.tch-g:first-child{margin-top:0}.tch-g.me{background:rgba(255,200,87,.06)}
+.tch-av{position:relative;flex:none;width:34px;height:34px;margin-top:2px}
+.tch-av>.calav{width:34px;height:34px}
+.tch-ini{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:hsl(var(--h,200) 45% 36%);color:#fff;font:700 15px/1 var(--font-body,system-ui)}
+.tch-on{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:#5ee08a;box-shadow:0 0 0 2px var(--surface,#16131f)}
+.tch-b{flex:1;min-width:0}
+.tch-g .tch-h b{color:hsl(var(--h,200) 70% 76%)}.tch-g.me .tch-h b{color:var(--gold,#ffc857)}
+.tch-g p{margin:2px 0 0;font-size:14px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+.pl-on{display:inline-block;flex:none;width:8px;height:8px;margin:0 2px 1px 6px;border-radius:50%;background:#5ee08a;box-shadow:0 0 0 2px rgba(94,224,138,.22);vertical-align:middle;font-style:normal}
+.pl-sk{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:rgba(255,160,60,.14);color:#ffb366;font:700 10px/1.4 var(--font-mono,monospace);white-space:nowrap;vertical-align:1px}.fsh-rn .pl-sk{color:#ffb366}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

@@ -921,7 +921,7 @@ function socialBuffs(){var o=socState(),n=Math.min(3,o.vis.length),g=Math.min(3,
 /* friends who said hi today walk around your lounge for half an hour */
 function socVisitors(){var o=socState(),now=Date.now();return o.vis.filter(function(v){return v.look&&now-v.t<30*60000}).map(function(v,k){return {id:"sv:"+v.from,room:0,role:"visitor",look:v.look,visitor:1,fresh:now-v.t<90000,leaveAt:v.t+30*60000,k:k+5}})}
 function socWorldCard(w){
-  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="snvisit" data-u="'+esc(w.id)+'">Visit</button></div>';
+  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+plDot(w)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="fshview" data-u="'+esc(w.id)+'">Say hi</button></div>';
 }
 function socialHtml(){
   var h='<section class="card panel snpanel" id="socnb">'+socInner()+'</section>';
@@ -929,43 +929,21 @@ function socialHtml(){
   return h;
 }
 function socInner(){
-  if(!db)return '<h3 class="label">Neighbors</h3><p class="note">Visiting other Lofts needs the cloud save. Open the shared link while signed in.</p>';
+  if(!db)return '<h3 class="label">Neighbors</h3><p class="note">Neighbors need the cloud save. Open the shared link while signed in.</p>';
   if(!MYUID)return '<h3 class="label">Neighbors</h3><p class="note">Connecting…</p>';
   var o=socState(),h='<div class="row" style="justify-content:space-between"><h3 class="label">Neighbors</h3><button class="btn ghost sm" data-act="snref">Refresh</button></div>';
   if(o.vis.length)h+='<p class="note">Visited you today: '+o.vis.map(function(v){return '<b>'+esc(v.name)+'</b>'+(v.msg?' “'+esc(v.msg)+'”':'')}).join(", ")+'</p>';
   if(SOC.err)h+='<p class="note">Could not reach the neighborhood ('+esc(SOC.err)+'). Your access may be view-only.</p>';
   h+=SOC.worlds.length?SOC.worlds.map(socWorldCard).join(""):'<p class="note">'+(SOC.loaded?'No neighbors yet. Share this page with a friend as a Contributor and they will show up here once they open it.':'Looking for neighbors…')+'</p>';
   h+='<h3 class="label" style="margin-top:16px">Town board</h3><div class="snpost"><textarea id="sntext" maxlength="280" rows="2" placeholder="Post something for everyone in the neighborhood">'+esc(SOC.draft||"")+'</textarea><button class="btn" data-act="snpost">Post</button></div>';
-  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p>'+(typeof townRxBar==="function"?townRxBar(p):'')+'</div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
+  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+(p.from!==MYUID?plDot(SOC.worlds.filter(function(w){return w&&w.id===p.from})[0]):'')+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p>'+(typeof townRxBar==="function"?townRxBar(p):'')+'</div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
   return h;
 }
 function socPaint(){var el=document.getElementById("socnb");if(el)el.innerHTML=socInner()}
-function socVisitModal(uid){
-  var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w)return;closeModals();
-  var o=socState(),done=!!o.gave[uid],rooms=(w.rooms||[]).map(function(r,i){return r?'<div class="snroom"><div class="snrp">'+lfPreview({t:r.t,a:r.a||{},st:r.st||0},400+i)+'</div><small>'+esc((ROOMT[r.t]||{}).name||r.t)+' · '+Object.keys(r.a||{}).length+' upgrades</small></div>':''}).join("");
-  var h='<div class="card box2 snvisit"><span class="label">Visiting</span><div class="row" style="gap:12px;align-items:center">'+nbAv(w.look||lookOf(),56)+'<div><h2 style="font-size:26px;margin:0">'+esc(w.name)+'’s Loft</h2><small class="mono">Lv '+(w.lv||1)+' · '+(w.crew||0)+' crew · '+(w.served||0)+' dishes served</small></div></div>'
-    +'<div class="snrooms">'+rooms+'</div>'
-    +'<div class="snhi"><input id="snmsg" maxlength="80" placeholder="Leave a note (optional)"/><button class="btn" data-act="snhi" data-u="'+esc(uid)+'">'+(done?'Update note':'Say hi')+'</button></div>'
-    +'<p class="note">Saying hi gives '+esc(w.name)+' +5% XP today and you +2% XP. You walk into their lounge for half an hour.</p>'
-    +'<div id="snnotes"></div><div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>';
-  modal(h);socLoadNotes(uid);
-}
-async function socLoadNotes(uid){
-  try{var a=await socPingsTo(uid);a.sort(function(x,y){return (y.t||0)-(x.t||0)});
-    var el=document.getElementById("snnotes");if(el)el.innerHTML=a.length?'<h3 class="label">Guest book</h3>'+a.slice(0,6).map(function(x){return '<div class="snp"><div><b>'+esc(x.fromName||"Neighbor")+'</b><small>'+socAgo(x.t||0)+'</small></div><p>'+esc(x.msg||"Said hi")+'</p></div>'}).join(""):''}catch(e){}
-}
+/* W53 (Cal, 2026-11-10: "Visiting their loft seems pointless because it looks just like ours"): the visit window, its note and its
+   guest book are gone, and nothing opens them. A visit note from a phone still on an older version is still read (socCheckPings). */
 function socialAct(a,b,e){
   if(a==="snref"){SOC.loaded=0;socLoad();return true}
-  if(a==="snvisit"){socVisitModal(b.dataset.u);return true}
-  if(a==="snhi"){var uid=b.dataset.u,w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w||!socOn())return true;
-    var inp=document.getElementById("snmsg"),msg=inp?String(inp.value||"").trim().slice(0,80):"",o=socState(),first=!o.gave[uid];
-    b.disabled=true;
-    socMine("pings",function(d){var sent=d.sent&&typeof d.sent==="object"?d.sent:{},cut=Date.now()-14*864e5;
-        Object.keys(sent).forEach(function(k){if(!sent[k]||(sent[k].t||0)<cut)delete sent[k]});
-        sent[uid]={toName:w.name,d:socToday(),t:Date.now(),msg:msg,look:lookOf()};d.sent=sent})
-      .then(function(){if(first){o.gave[uid]=1;persist()}pop(first?"Said hi to "+w.name+". +2% XP today":"Note updated");socLoadNotes(uid);b.disabled=false;b.textContent="Update note"})
-      .catch(function(er){b.disabled=false;pop("Could not send: "+((er&&er.code)||"error"))});
-    return true}
   if(a==="snpost"){var ta=document.getElementById("sntext"),tx=ta?String(ta.value||"").trim().slice(0,280):"";if(!tx||!socOn())return true;
     if(Date.now()-SOC.lastPost<15000){pop("Slow down a little");return true}SOC.lastPost=Date.now();
     var pt=Date.now(),lk=lookOf();socMine("board",function(d){var a=Array.isArray(d.posts)?d.posts:[];a.unshift({t:pt,text:tx,look:lk});d.posts=a.slice(0,10)})
