@@ -31,7 +31,7 @@ function decorHtml(i,r){
     s+='<div class="dst'+(on?' on':'')+'"><div class="dsprev"><i style="background-image:url('+lfTexUrl("f_"+q.fl)+')"></i><i style="background:'+(q.wc||'#ccc')+'"></i>'+acc+'</div><b>'+esc(q.name)+'</b>'+(on?'<span class="chip">Active</span>':un?'<button class="btn ghost" data-act="decuse" data-i="'+i+'" data-v="'+q.id+'">Use</button>':'<button class="btn" data-act="decbuy" data-i="'+i+'" data-v="'+q.id+'"><i class="coin"></i>&nbsp;'+q.cost+'</button>')+'</div>'});
   return s+'</div></details>'}
 function decorSet(i,act,v){var r=bslot(i);if(!r)return;var q=lfDecSets(r.t).filter(function(x){return x.id===v})[0];if(!q)return;
-  if(act==="decbuy"&&!lfDecUnlocked(r,q)){if(S.coins<q.cost){pop("Need "+(q.cost-S.coins)+" more coins");return}S.coins-=q.cost;S.spent+=q.cost;if(!r.du)r.du={};r.du[q.id]=1;pop(q.name+" unlocked")}
+  if(act==="decbuy"&&!lfDecUnlocked(r,q)){if(S.coins<q.cost){pop("Need "+(q.cost-S.coins)+" more coins");return}S.coins-=q.cost;S.spent+=q.cost;if(!r.du)r.du={};r.du[q.id]=1;try{qbSnd("buy")}catch(x){}pop(q.name+" unlocked")}
   if(!lfDecUnlocked(r,q))return;r.ds=q.id;render();persist();roomModal(i)}
 var LFACOL={av:1,in:0,st:0};
 var LFRMS={};
@@ -230,19 +230,19 @@ function baseAct(a,b,e){
   if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("Behind these doors: not yet.");return true}roomModal(ix);return true}
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
-    S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
+    S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();try{qbSnd("big")}catch(x){}closeModals();render();persist();roomSplash(t);return true}
   if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false,full=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var bl=typeof bizLeft==="function"?bizLeft(r,k):Infinity,n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got),bl);if(n<Math.floor(r.pend||0)){if(n>=bl)full=true;else capped=true}r.pend-=n;r.earn=(r.earn||0)+n;if(typeof bizPaid==="function"&&n>0)bizPaid(r,n);got+=n}});payTake(got);
     if(full&&!capped&&!got){pop(a==="rall"?"Your businesses have paid all they can today. More tomorrow.":"This business has paid all it can today. More tomorrow.");return true}
     if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
-    if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
+    if(got){S.coins+=got;S.earnedC+=got;try{qbSnd("coins")}catch(x){}try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
-    S.coins-=hc;S.spent+=hc;S.hired[hk]=1;render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
+    S.coins-=hc;S.spent+=hc;S.hired[hk]=1;try{qbSnd("buy")}catch(x){}render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
   if(a==="raddon"){var r=bslot(i),ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===b.dataset.id})[0];if(!ad||r.a[ad[0]])return true;
     if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].trophy&&!dgPieces()){pop("Bring home your first trophy first");return true}if(ad[3].opens&&!styAllows(ad[3].opens)){pop("Not yet. Keep growing your business");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
     if(S.coins<ad[2]){pop("Need "+(ad[2]-S.coins)+" more coins");return true}
-    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
+    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;try{qbSnd(ad[3].opens||ad[3].splash?"big":"build")}catch(x){}if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
   if(a==="decuse"||a==="decbuy"){decorSet(i,a,b.dataset.v||"");return true}
-  if(a==="rpaint"){var r2=bslot(i);if(S.coins<150){pop("Need 150 coins");return true}S.coins-=150;S.spent+=150;r2.st=((r2.st||0)+1)%4;render();persist();roomModal(i);return true}
+  if(a==="rpaint"){var r2=bslot(i);if(S.coins<150){pop("Need 150 coins");return true}S.coins-=150;S.spent+=150;r2.st=((r2.st||0)+1)%4;try{qbSnd("buy")}catch(x){}render();persist();roomModal(i);return true}
   if(a==="rassign"){var r3=bslot(i);if(roomCrew(i).length>=crewCap(r3))return true;simulate();S.base.crew[b.dataset.c]=i;render();persist();roomModal(i);pop(CREW[b.dataset.c].name+" clocked in");return true}
   if(a==="runassign"){simulate();delete S.base.crew[b.dataset.c];render();persist();roomModal(i);return true}
   return false;

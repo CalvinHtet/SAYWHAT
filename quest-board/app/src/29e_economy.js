@@ -265,7 +265,7 @@ function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),sp=sta
   var k=d.tier||0,c=dqChest(T[k][1]),hid=k>=ECON.dqShown,art=econArt("ui_dq_chest.webp"),g3=null,r="";d.tier=k+1;d.done=1;S.coins+=c;S.earnedC+=c;
   if(hid){g3=chest3Roll();d.hid=1;var tm=gameNow();tm.setDate(tm.getDate()+1);d.hidFor=dstr(tm);
     if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{var hc=econScaled(300);S.coins+=hc;S.earnedC+=hc;r="+"+hc.toLocaleString()+" coins"}}
-  persist();
+  persist();try{qbSnd("chest")}catch(x){}
   modal('<div class="card box2 dqc"><span class="label">'+(hid?'Hidden chest':k?'Bonus chest':'Daily Quest complete')+'</span>'
     +(hid&&econArt("ui_hidden_quest.webp")?'<img class="dq-hid" src="'+econArt("ui_hidden_quest.webp")+'" alt="">':art?'<img class="dg-gift" src="'+art+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>')
     +'<h3>+'+c.toLocaleString()+' coins</h3>'+(hid?'<p class="note">Nobody told you this one existed.</p>'+chest3Html(g3)+'<p class="dg-buff">'+esc(r)+'</p><p class="note">Tomorrow your quests earn 10% more XP and the town runs 10% faster.</p>':'<p class="note">'+(!k&&dqEff()>=1?'Your town runs at full speed today.':'')+'</p>')

@@ -883,11 +883,12 @@ function trophyHtml(){
   if(cl.length)h+='<section class="card panel"><h3 class="label">Rewards claimed</h3><div class="titles">'+cl.map(function(r){return '<span class="chip">'+esc(rwT(r))+'</span>'}).join("")+'</div></section>';
   return h;
 }
-function buy(id,ev){ifSound("buy");
+function buy(id,ev){
   var it=shopItem(id); if(!it||S.owned[id]||effLvl()<it[4]||!itemFits(it))return;
   if(it[6]&&it[6].req&&!S.owned[it[6].req])return;
   if(S.coins<it[3]){pop("Need "+(it[3]-S.coins)+" more coins");return}
   S.coins-=it[3];S.spent+=it[3];S.owned[id]=true;if(it[1]!=="buff")S.eq[it[1]]=id;
+  try{qbSnd("buy")}catch(x){}/* W56: after the coins are spent (it used to play first, even when the buy was refused) */
   checkBadges();render();persist();
   if(ev&&ev.clientX!=null)burst(ev.clientX,ev.clientY,22);
   pop(it[1]==="buff"?it[2]+" is now active":"Bought "+it[2]+". Equipped.");
@@ -1439,7 +1440,7 @@ function charCard(){
 /* the avatar opens the profile (Cal, 2026-11-09): the character, then everything that used to crowd the Board (profileHtml) */
 function charModal(){
   var m=modal('<div class="card box2 adv prof"><div class="prof-top"><div class="figwrap">'+calImg(lookOf(),"idle",120,"")+'</div><div><h2>'+esc((S.char&&S.char.name)||"Hunter")+'</h2><p class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+' &middot; '+S.coins+' coins</p>'
-   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button></div></div><div class="prof-body">'+profileHtml()+'</div></div>');
+   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button>'+(typeof sndBtn==="function"?sndBtn():'')+'</div></div><div class="prof-body">'+profileHtml()+'</div></div>');
   m.classList.add("profm");
   return m;
 }
