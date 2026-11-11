@@ -84,13 +84,22 @@
       collection: function (name) {
         return {
           limit: function (n) { return { get: function () { return Promise.resolve(snapC(name, n)); } }; },
+          /* the newest n by the time each doc carries (the photo feed, W8/W9): the same answer as makeDb's ordered query */
+          latest: function (n) { return { get: function () { var q = snapC(name, 0), docs = q.docs.slice().sort(function (x, y) { var a = x.data() || {}, b = y.data() || {}; return (+b.t || 0) - (+a.t || 0); }).slice(0, n); return Promise.resolve({ docs: docs, size: docs.length, empty: !docs.length }); } }; },
           get: function () { return Promise.resolve(snapC(name, 0)); },
           onSnapshot: function (next) { return listen({ col: name, tell: function () { next(snapC(name, 0)); } }); }
         };
       }
     };
     var me = { id: function () { return Promise.resolve("sandbox"); }, isOwner: function () { return Promise.resolve(true); } };
-    window.claude = { use: function (what) { return Promise.resolve(what === "db" ? db : what === "user" ? me : null); } };
+    /* the photo feed's files (W8/W9): the sandbox has no Firebase Storage, so a picture "uploads" to a data URL that the post doc
+       itself keeps (in this browser's localStorage, like everything else here) and deleting it is a no-op */
+    var sbPhotos = {
+      local: true,
+      put: function (path, blob) { return new Promise(function (ok, no) { var r = new FileReader(); r.onload = function () { ok(String(r.result)); }; r.onerror = function () { no(new Error("read")); }; r.readAsDataURL(blob); }); },
+      del: function () { return Promise.resolve(); }
+    };
+    window.claude = { use: function (what) { return Promise.resolve(what === "db" ? db : what === "user" ? me : what === "photos" ? sbPhotos : null); } };
     var badge = function () {
       var b = document.createElement("div"); b.id = "qbsandbox"; b.textContent = "SANDBOX";
       b.setAttribute("style", "position:fixed;top:calc(env(safe-area-inset-top,0px) + 2px);left:50%;transform:translateX(-50%);z-index:99998;font:800 10px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;padding:4px 10px;border-radius:999px;background:#ff5a7a;color:#14121c;pointer-events:none");
@@ -172,6 +181,8 @@
         var getN = function (n) { return live[name] ? Promise.resolve(snapQuery(live[name])) : (n ? ref.limit(n) : ref).get().then(snapQuery); };
         return {
           limit: function (n) { return { get: function () { return getN(n); } }; },
+          /* the newest n docs by their write time (every doc carries t, enc above): the photo feed's 30 newest posts (W8/W9) */
+          latest: function (n) { return { get: function () { return ref.orderBy("t", "desc").limit(n).get().then(snapQuery); } }; },
           get: function () { return getN(0); },
           onSnapshot: function (next, err) {
             return ref.onSnapshot(function (q) { live[name] = q; next(snapQuery(q)); },
@@ -236,6 +247,36 @@
     }
   };
 
+  /* ---- the photo feed's pictures (W8/W9, SPEC5): Firebase Storage, through its REST API with the player's sign-in token, so the
+     build needs no extra SDK file. A picture is stored at photos/<uid>/<name>.jpg (storage.rules: signed-in players read; only its
+     owner, or the game's owner, writes or deletes) and shown through its download URL. No storage bucket in the config: no photos,
+     and the feed stays hidden (the game asks for "photos" and gets null). */
+  var stBucket = function () { try { return firebase.app().options.storageBucket || ""; } catch (e) { return ""; } };
+  var stBase = function () { return W.emulator ? "http://" + W.emulator + ":9199" : "https://firebasestorage.googleapis.com"; };
+  var stFail = function (r, j) { var e = new Error((j && j.error && j.error.message) || "storage " + r.status); e.code = r.status === 403 ? "permission-denied" : r.status === 404 ? "not-found" : "unavailable"; return e; };
+  var photos = {
+    local: false,
+    put: function (path, blob) {
+      var b = stBucket();
+      return signedIn.then(function (u) { return u.getIdToken(); }).then(function (tok) {
+        return fetch(stBase() + "/v0/b/" + b + "/o?name=" + encodeURIComponent(path), { method: "POST", headers: { Authorization: "Firebase " + tok, "Content-Type": blob.type || "image/jpeg" }, body: blob });
+      }).then(function (r) {
+        return r.json().catch(function () { return null; }).then(function (j) {
+          if (!r.ok || !j) throw stFail(r, j);
+          var tk = String(j.downloadTokens || "").split(",")[0];
+          return stBase() + "/v0/b/" + b + "/o/" + encodeURIComponent(path) + "?alt=media" + (tk ? "&token=" + encodeURIComponent(tk) : "");
+        });
+      });
+    },
+    /* a file already gone counts as deleted */
+    del: function (path) {
+      var b = stBucket();
+      return signedIn.then(function (u) { return u.getIdToken(); }).then(function (tok) {
+        return fetch(stBase() + "/v0/b/" + b + "/o/" + encodeURIComponent(path), { method: "DELETE", headers: { Authorization: "Firebase " + tok } });
+      }).then(function (r) { if (!r.ok && r.status !== 404) throw stFail(r, null); });
+    }
+  };
+
   var owners = W.owners || [];
   window.claude = {
     use: function (what) {
@@ -244,6 +285,7 @@
         return { id: function () { return Promise.resolve(u.uid); }, isOwner: function () { return Promise.resolve(owners.indexOf(u.uid) >= 0); } };
       });
       if (what === "sample") return signedIn.then(function () { return sample; });
+      if (what === "photos") return signedIn.then(function () { return stBucket() ? photos : null; });
       return Promise.resolve(null);
     }
   };
