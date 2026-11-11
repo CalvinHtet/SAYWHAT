@@ -37,7 +37,7 @@ function rfDue(k){var h=RFHUNT[k-1],o=sdqState(),prev=k>1?o.done["hunt"+(k-1)]:"
 function rfMet(){return teamHas("rafe")}
 RFHUNT.forEach(function(h,i){var k=i+1,r=r2Of(h.relic);
   SIDEQ.splice(i,0,{id:"hunt"+k,pic:"rafe",who:"Rafe Calloway",role:"Traveling adventurer",hunt:k,added:"Rafe's hunt",
-    get at(){return k===1&&!rfMet()?"your door":"Lock and Key"},name:h.name,gate:function(){return rfDue(k)},
+    get at(){return (k===1&&!rfMet())||!styHas("skybar")?"your door":"Lock and Key"},name:h.name,gate:function(){return rfDue(k)},
     get ask(){return h.meet&&!rfMet()?h.meet:h.ask},yes:"Show him",
     snap:"A picture of you outside on a walk, or doing anything active.",
     check:"a person being active: out on a walk, a run or a hike, at the gym, playing a sport or working out. A photo of the view from a walk or hike outdoors also counts",

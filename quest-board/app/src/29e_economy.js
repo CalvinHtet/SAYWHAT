@@ -75,7 +75,7 @@ var ECON={
   /* Cal's audit (LEAD 2026-11-11, Cal: "3 months to reach lvl 100", later "not before ~day 85"): a regular player reached level 100
      on day 79. Curve 5 adds lvTop x (L - lvTopFrom)^2 above level lvTopFrom, so nothing below it changes (level 40 in about 2
      weeks, as Cal asked) and the top takes longer. Saves keep their level and progress (xpc5 in merge, from the frozen curve 4). */
-  lvTop:.2,lvTopFrom:40,
+  lvTop:.25,lvTopFrom:40,
   wwCoins:3000,                                   /* Weekly Warrior's coins, fixed (its XP follows the curve) */
   trialDays:2,                                    /* a level trial also passes on honor: active (50+ XP) on this many days */
   restDay:.25,restMax:1,                          /* rested XP: a quarter level banked per day with no quest, one level at most */
