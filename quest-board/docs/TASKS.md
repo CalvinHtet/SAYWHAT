@@ -85,6 +85,7 @@ Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need 
 | W57 | Hall: green online dot next to other players' names, plus their streak | BUILDER | (v0.92) | TODO |
 | W58 | Board sorted shortest task first (an estimated minutes value per quest) | BUILDER | (v0.92) | TODO |
 | W59 | Quest-complete toast at the TOP under the header (safe-area aware): compact box, at most 2 short lines ("+45 XP  +270 coins" / "Streak +12%  On a roll +25%"), 3 s then a ~1 s fade, a new one replaces the open one, never covers coins or the envelope (Cal 16:35; spots: pop() 30_app_b.js ~1456, the quest line ~1605, .pop index.html ~427) | BUILDER | (v0.92) | TODO |
+| W60 | Building view: tapping the "+" for the next room opens its own window for that opening upgrade (picture or a drawn stand-in, name, price, coins, Buy, same purchase code; a "See the <room>" button keeps today's path). Not ready yet: progress lines only and "?" for the room, no name or picture. Lots the same (Cal 16:40; spec todo/LEAD.md, 20_loft.js ~1143, 26_world.js ~92) | BUILDER | (v0.92) | TODO |
 
 BUILDER: READ .claude/team/README.md AND todo/BUILDER.md, AND "Specs for BUILDER" BELOW, BEFORE EACH BRANCH (w-inbox needs a fix first).
 Order for BUILDER (LEAD, 2026-11-10 09:00, NEW ORDER, the likes contest has a date): w-training (finish), w-inbox (with W19),
