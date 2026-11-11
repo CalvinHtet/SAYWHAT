@@ -5,8 +5,9 @@
    the emoji floats up, the player greeted gets a message wherever they are in the app, and a feed under the square shows who greeted whom.
    - No new database rules: players may write only their own docs, so a greeting lives in the sender's pings/<id>.emo = {<to id>:{k,t}},
      beside the visit notes, and pings is already pushed live (29n_live.js). Additive: an old doc simply has no emo.
-   - Pays SQPAY coins to each side, once per pair every SQGAP (Cal, 2026-11-10: "3 coins for each person you give a hug to and
-     that resets every 2 hrs"; it was 5 once per pair per day), so it cannot be farmed. The times live in the save (social.sqt).
+   - Pays the GIVER SQPAY coins, once per person every SQGAP (Cal, 2026-11-10: "3 coins for each person you give a hug to and
+     that resets every 2 hrs"; confirmed in his audit, LEAD 2026-11-11: the person greeted gets no coins, nothing scales with level),
+     so it cannot be farmed. The times live in the save (social.sqt).
    - The hop and the float are CSS on one still frame, so no outfit can break in a new pose.
    - Art: ui_town_square.webp replaces the plaza painted in CSS when ROOMS has one Cal approved. Until then it fails softly.
    - In the sandbox (web.js) there is nobody else, so the story's friends stand in and greet back. */
@@ -25,7 +26,9 @@ function sqSandboxOn(){return !!(window.QB_WEB&&QB_WEB.sandbox)}
 var PLONLINE=5*60000;
 function plOnline(w){var t=+(w&&w.t)||0,now=Date.now();return t>0&&now-t<PLONLINE&&t-now<PLONLINE}
 function plDot(w){return plOnline(w)?'<i class="pl-on" title="Online now" aria-label="Online now"></i>':''}
-function plStreak(w){var n=Math.floor(+(w&&w.streak)||0);return n>0&&isFinite(n)?'<small class="pl-sk">'+Math.min(n,99999)+'d streak</small>':''}
+/* Cal (#96): "Streak: 1 day", "Streak: 5 days"; the number is coerced, the doc may be hostile */
+function plStreakN(w){var n=Math.floor(+(w&&w.streak)||0);return n>0&&isFinite(n)?Math.min(n,99999):0}
+function plStreak(w){var n=plStreakN(w);return n>0?'<small class="pl-sk">Streak: '+Math.min(n,99999)+' day'+(n===1?'':'s')+'</small>':''}
 /* when each greeting last paid: sent[<to id>] and got[<from id>] in ms; a pair pays again SQGAP later (older times are dropped) */
 function sqPaid(){var o=socState(),P=o.sqt,now=Date.now();if(!P||typeof P!=="object")P=o.sqt={sent:{},got:{}};
   ["sent","got"].forEach(function(k){var m=P[k];if(!m||typeof m!=="object")m=P[k]={};Object.keys(m).forEach(function(u){if(!(now-(+m[u]||0)<SQGAP))delete m[u]})});
@@ -57,15 +60,15 @@ async function sqScan(){if(!socOn())return;var q=await db.collection("pings").li
     Object.keys(m).forEach(function(to){var e=m[to];if(!e||!sqKind(e.k)||now-(+e.t||0)>864e5)return;all.push({from:d.id,fromName:x.fromName||"Neighbor",to:to,k:e.k,t:+e.t})})});
   all.sort(function(a,b){return b.t-a.t});SQ.feed=all.slice(0,8);
   var o=socState(),seen=o.sqSeen||(o.sqSeen={}),P=sqPaid(),got=[];
-  all.forEach(function(e){if(e.to!==MYUID||(seen[e.from]||0)>=e.t)return;seen[e.from]=e.t;var pay=0;if(!(e.t-(+P.got[e.from]||0)<SQGAP)){P.got[e.from]=e.t;pay=econScaled(SQPAY,1);S.coins+=pay;S.earnedC+=pay}got.push({e:e,pay:pay})});
+  all.forEach(function(e){if(e.to!==MYUID||(seen[e.from]||0)>=e.t)return;seen[e.from]=e.t;var pay=0;/* the greeted player gets the message, no coins (Cal's audit) */got.push({e:e,pay:pay})});
   if(!got.length)return;persist();got.forEach(function(g,i){setTimeout(function(){pop(sqName(g.e.from,g.e.fromName)+" "+sqKind(g.e.k)[2]+" you "+sqKind(g.e.k)[0]+(g.pay?"  +"+g.pay+" coins":""))},i*2400)})}
 function sqSeed(){if(!sqSandboxOn()||SQ.seeded||!S.created||typeof FRIENDS==="undefined"||!(window.QBLoft&&QBLoft.data&&QBLoft.data.items))return;SQ.seeded=1;
   Object.keys(FRIENDS).slice(0,6).forEach(function(k,i){var f=FRIENDS[k];db.doc("worlds/sb_"+k).set({name:f.name,look:f.look,lv:8+i*3,streak:i*2,cls:"",rooms:[],crew:i,served:i*12,t:Date.now()-i*6*60000,appv:APPV})})}
 function sqCard(uid){if(uid===MYUID){pop("That's you. Looking good.");return}
   var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w||!w.look)return;closeModals();var paid=+sqPaid().sent[uid]||0,rooms=(w.rooms||[]).filter(Boolean).length;
-  modal('<div class="card box2 sq-card"><div class="sq-big">'+calImg(w.look,"idle",200,"")+'</div><h2>'+esc(w.name)+plDot(w)+'</h2><small class="mono">Lv '+(w.lv||1)+' · '+rooms+' room'+(rooms===1?'':'s')+' · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small>'
+  modal('<div class="card box2 sq-card"><div class="sq-big">'+calImg(w.look,"idle",200,"")+'</div><h2>'+esc(w.name)+plDot(w)+'</h2><small class="mono">Lv '+(w.lv||1)+' · '+rooms+' room'+(rooms===1?'':'s')+' · Streak: '+plStreakN(w)+' day'+(plStreakN(w)===1?'':'s')+' · '+socAgo(w.t||0)+'</small>'
     +'<div class="sq-acts">'+Object.keys(SQK).map(function(k){return '<button class="btn" data-act="sqgo" data-u="'+esc(uid)+'" data-k="'+k+'"><span>'+SQK[k][0]+'</span> '+SQK[k][1]+'</button>'}).join("")+'</div>'
-    +'<p class="note">'+(paid?'You earned '+SQPAY+' coins for greeting '+esc(w.name)+' at '+sqHm(paid)+'. Greeting them pays again from '+sqHm(paid+SQGAP)+'.':'A greeting pays you both '+SQPAY+' coins, once every 2 hours for each person.')+'</p>'
+    +'<p class="note">'+(paid?'You earned '+SQPAY+' coins for greeting '+esc(w.name)+' at '+sqHm(paid)+'. Greeting them pays again from '+sqHm(paid+SQGAP)+'.':'Greeting someone pays you '+SQPAY+' coins, once every 2 hours for each person.')+'</p>'
     +'<div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>')}
 function sqSend(uid,k){if(!socOn()||!Object.prototype.hasOwnProperty.call(SQK,k))return;var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w)return;var t=Date.now();if(t-SQ.lastSend<2500){pop("One at a time");return}SQ.lastSend=t;closeModals();
   SQ.shown[MYUID+"|"+uid+"|"+t]=1;SQ.feed.unshift({from:MYUID,fromName:(S.char&&S.char.name)||"Neighbor",to:uid,k:k,t:t});sqPaint();sqPlay(MYUID,uid,k);

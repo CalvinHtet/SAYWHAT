@@ -699,7 +699,7 @@ var CVOICE={
   f:["It is over. You may go.","Done. I am slightly proud.","Fine work. Do not tell anyone.","Go home. Eat food.","Session complete. Zero complaints.","You showed up. Weird.","Not bad at all. See you next time.","Credits. Roll them yourself."]},
  hero:{
   o:["This is where you get strong!","{n} is the next gate!","The training montage starts now!","Trust your training!","Power level rising!","Today, we surpass yesterday!","Show me your resolve!","This is the one you will remember!","The rival is yourself!","A hero never skips a set!","Gather your spirit!","This is for everyone who believed in you!","Ready? The tournament begins!","Draw upon your hidden power!","Eyes forward, hero!","Flames of will, ignite!","We have trained for this moment!","Let the training begin!","I will not lose, and neither will you!","Push past your limits!"],
-  c:["Go beyond!","Never give up!","Your power is limitless!","Believe it!","Let that spirit burn!","Surpass yourself!","Plus ultra, plus one rep!","Every rep, cleaner than the last!","The finale needs you!","Awaken your true strength!","One more. Make it count!","Your friends are watching!","Rise!","This rep decides everything!","Power comes from the heart!","I know you can do it!","Gather everything, release it all!","The bar does not stand a chance!","For honor!","Fight on!"],
+  c:["Go beyond!","Never give up!","Your power is limitless!","Hold the line!","Let that spirit burn!","Surpass yourself!","One more rep. Clean.","Every rep, cleaner than the last!","The finale needs you!","Awaken your true strength!","One more. Make it count!","Your friends are watching!","Rise!","This rep decides everything!","Power comes from the heart!","I know you can do it!","Gather everything, release it all!","The bar does not stand a chance!","For honor!","Fight on!"],
   s:["A true warrior's set!","Power up!","Your aura is blazing!","Another level cleared!","That felt like a boss fight!","Incredible resolve!","The rival is shaking!","You grew stronger just now!","Training arc approved!","One more chapter written!","That is heroic!","Your spirit never wavered!","Impressive, hero!","Stronger with every set!"],
   r:["Recover your spirit, hero.","Even heroes rest between battles.","Catch your breath. Next fight is soon.","Drink. Heal. Return.","Rest, and plan your comeback.","The next round begins shortly.","Restore your energy.","Brace for the next wave.","Quiet before the storm.","Gather power during the pause."],
   f:["Session complete. Well fought!","Another training day, conquered!","Same time next week, then!","Next episode: even stronger!","That was a champion's session!","Rest well. Tomorrow we go again!","The villains tremble.","Credits roll. Cue the theme song."]},
@@ -930,7 +930,7 @@ function socialBuffs(){var o=socState(),n=Math.min(3,o.vis.length),g=Math.min(3,
 /* friends who said hi today walk around your lounge for half an hour */
 function socVisitors(){var o=socState(),now=Date.now();return o.vis.filter(function(v){return v.look&&now-v.t<30*60000}).map(function(v,k){return {id:"sv:"+v.from,room:0,role:"visitor",look:v.look,visitor:1,fresh:now-v.t<90000,leaveAt:v.t+30*60000,k:k+5}})}
 function socWorldCard(w){
-  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+plDot(w)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="fshview" data-u="'+esc(w.id)+'">Say hi</button></div>';
+  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+plDot(w)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+'Streak: '+plStreakN(w)+' day'+(plStreakN(w)===1?'':'s')+' · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="fshview" data-u="'+esc(w.id)+'">Say hi</button></div>';
 }
 function socialHtml(){
   var h='<section class="card panel snpanel" id="socnb">'+socInner()+'</section>';
@@ -1072,7 +1072,7 @@ function chPose(a,f){
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    xpc2:1,xpc3:1,xpc4:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,xpc3:1,xpc4:1,xpc5:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -1098,7 +1098,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
    one or two quests, the cost ramps to ECON.lvFlat by level ECON.lvRamp, then grows only ECON.lvGrow a level, so chores alone
    level a player up 1 to 2 times a day and a full day (workout, Training, bounties) 3 to 4 times, all the way up. Level 100 is
    13,905 XP. See docs/ECONOMY.md. cum2 is curve 2 and cumOld curve 1, kept only to move old saves over (merge). */
-function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP))}
+function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP)+(L>c.lvTopFrom?c.lvTop*Math.pow(L-c.lvTopFrom,2):0))}
+/* curve 4 (2026-11-10 to 2026-11-11), frozen here so a save made on it moves over at the same level and fraction (merge, xpc5) */
+var CUMT4=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT4.push(CUMT4[L]+Math.round(L<6?20+115*(L-1)/5:135+.315*Math.pow(L-6,2)))})();
+function cum4(L){return L<=1?0:L<CUMT4.length?CUMT4[L]:CUMT4[CUMT4.length-1]+(L-CUMT4.length+1)*(CUMT4[CUMT4.length-1]-CUMT4[CUMT4.length-2])}
 /* curve 3 (2026-11-09 to 2026-11-10), frozen here so a save made on it moves over at the same level and fraction (merge, xpc4) */
 var CUMT3=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT3.push(CUMT3[L]+Math.round(L<6?20+115*(L-1)/5:135*(1+.0015*(L-6))))})();
 function cum3(L){return L<=1?0:L<CUMT3.length?CUMT3[L]:CUMT3[CUMT3.length-1]+(L-CUMT3.length+1)*154}
@@ -1181,7 +1184,7 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
   if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4),curve5=!!(d&&d.xpc4&&!d.xpc5);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -1208,6 +1211,10 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   if(curve4){var x4=S.xp||0,L4=1;while(L4<MAXL&&x4>=cum3(L4+1))L4++;var f4=(x4-cum3(L4))/Math.max(1,cum3(L4+1)-cum3(L4)),x5=Math.round(cum(L4)+f4*(cum(L4+1)-cum(L4)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x5-x4;S.xp=x5}
   S.xpc4=1;
+  /* curve 5 (xpc5, 2026-11-11, a longer top): the same move, from curve 4 */
+  if(curve5){var x6=S.xp||0,L6=1;while(L6<MAXL&&x6>=cum4(L6+1))L6++;var f6=(x6-cum4(L6))/Math.max(1,cum4(L6+1)-cum4(L6)),x7=Math.round(cum(L6)+f6*(cum(L6+1)-cum(L6)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x7-x6;S.xp=x7}
+  S.xpc5=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}
