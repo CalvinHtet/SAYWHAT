@@ -25,7 +25,7 @@
      Neighbors list fold out at the bottom. Live updates redraw only when what is shown changed. */
 var FSHPRIZE=[1500,1000,500],FSHMODES=[["fashion","Fashion"],["rich","Most rich"],["level","Highest level"]],FSHMEDAL=["\u{1F947}","\u{1F948}","\u{1F949}"];
 /* likes a game day: FSHPERDAY for each other player; FSHDAYALL=true makes it FSHPERDAY a day in total, across everyone */
-var FSHPERDAY=2,FSHDAYALL=false;
+var FSHPERDAY=2,FSHDAYALL=true;   /* Cal (2026-11-10): "Every player gets two likes they can give out per day. not two likes to give out to each player." */
 /* the week closes Sunday 7 pm Pacific: 5 hours before Monday 00:00; winner letters start with this week */
 var FSHCUT=5*36e5,FSHNEWS0="2026-W47";
 var FSH={mode:"fashion",likes:{},ready:0,on:0,unsub:null,poll:0,err:"",mine:null,q:null,boxH:"",nbH:"",fold:{square:false,nb:false},wk:"",who:0,base:null,baseWk:""};
