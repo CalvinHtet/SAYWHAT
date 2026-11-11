@@ -146,10 +146,10 @@ var EXTRA_ITEMS=[
  ["gx_sp_headset","a_hat","Gaming Headset",1200,1,"Purple cups, teal glow, a boom mic.",{gar:"sp_headset",b:"sp"}],
  ["gx_sp_cap","a_hat","Coin Cap",650,1,"Worn backwards, a gold coin up front.",{gar:"sp_cap",b:"sp"}],
  ["gx_sp_cart","a_acc","Cartridge Pendant",800,1,"A tiny game cartridge on a ball chain.",{gar:"sp_cart",b:"sp"}],
- ["gx_sp_shades","a_acc","Pixel Shades",600,1,"Eight bits of cool.",{gar:"sp_shades",b:"sp"}],
+ ["gx_sp_shades","a_acc","Pixel Shades",600,1,"Black pixel frames, a white glint in each lens.",{gar:"sp_shades",b:"sp"}],
  ["gx_sp_varsity","a_top","Arcade Varsity",1500,1,"Joystick patch, pixel heart on the back.",{gar:"sp_varsity",b:"sp"}],
  ["gx_sp_pad","a_top","Button Tee",850,1,"Four round buttons, no symbols.",{gar:"sp_pad",b:"sp"}],
- ["gx_sp_p2","a_top","Player 2 Ringer",900,1,"Press start to join.",{gar:"sp_p2",b:"sp"}],
+ ["gx_sp_p2","a_top","Player 2 Ringer",900,1,"White tee, purple trim, PLAYER 2 in teal.",{gar:"sp_p2",b:"sp"}],
  ["gx_sp_hpknit","a_top","Health Bar Sweater",1200,1,"Four and a half hearts left.",{gar:"sp_hpknit",b:"sp"}],
  ["gx_sp_camo","a_pants","Pixel Camo Cargo",1100,1,"Purple, grey and teal blocks.",{gar:"sp_camo",b:"sp"}],
  ["gx_sp_track","a_pants","D-Pad Track Pants",950,1,"Purple, d-pads down the stripe.",{gar:"sp_track",b:"sp"}],
@@ -364,7 +364,7 @@ shopHtml=function(){
     /* W41 (Cal): category and brand chips over the rack, which is grouped by the same categories (29zw_wardrobe.js) */
     h+=(mine.length?wdBar(mine):'')+'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(mine.length?wdRack(mine):'<p class="qs-empty">Nothing here yet. Pieces you buy will wait for you here.</p>')+'</div></div>';
   }else if(shopTab==="upgrades"){
-    h+='<p class="qs-note">Permanent upgrades stack with your class and crew. Buy once, keep forever.</p>'+qsLegacy(["buff"]);
+    h+='<p class="qs-note">Each upgrade is permanent and stacks with your other bonuses.</p>'+qsLegacy(["buff"]);
   }else{
     h+='<div class="qs-fit qs-fitif">'+ifPreview()+'<div class="qs-rack">'+qsLegacy(["theme","frame","bg","pet","title","burst","hud","sound","scene"])+'</div></div>';
   }

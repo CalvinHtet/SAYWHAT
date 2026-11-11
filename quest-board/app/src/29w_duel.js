@@ -163,7 +163,7 @@ function gpMine(c){var o=c.mine;return o&&o.fin?Math.round(+o.n||0):gpCount(c.st
 function gpBusy(except){var st=dlSt();return gpAll().filter(function(c){return c.cid!==except&&!st.done[c.cid]&&(c.st==="live"||(c.st==="ask"&&c.me==="from"))})[0]||null}
 function gpBusyTxt(c,raw){var nm=raw?c.otherName:esc(c.otherName);return c.st==="ask"?"Your Gym Pact offer to "+nm+" is still waiting. Cancel it to start another.":"You have a Gym Pact going with "+nm+". One at a time."}
 function gpWhat(c){return c.goal+" workout days in "+c.days+", "+dlFmt(c.stake)+" coins each"}
-function gpRules(){return "You both put in the stake and get "+DL.pDays+" days from the accept. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
+function gpRules(){return "You both put in the stake and have "+DL.pDays+" days once it's accepted. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
   +"prove a fitness quest with a photo: a workout, a run, a walk. Two in a day count once. Both reach the goal: each gets 1.5 times the stake. Only one does: they take both stakes. Neither does: both stakes are lost."}
 /* called from dlTick: publishes this player's days (into pub, written with the challenge scores) and settles each ended pact once */
 function gpTick(st,now,pub,msgs){var chg=0;
@@ -239,7 +239,7 @@ function dlCard(){if(!dlOn())return "";var st=dlSt(),ch=dlAll(),act=ch.filter(fu
   var pacts=[];try{pacts=gpAll().filter(function(c){return (c.st==="ask"||c.st==="live"||c.st==="over")&&!st.done[c.cid]})}catch(e){}
   var past=Object.keys(st.done).map(function(k){return st.done[k]}).filter(function(r){return r&&r.r&&r.r!=="none"}).sort(function(a,b){return b.t-a.t}).slice(0,3);
   var h='<section class="card panel dlc" id="dlcard"><div class="row" style="justify-content:space-between"><h3 class="label">Challenges</h3><button class="btn sm" data-dl="new">Challenge someone</button></div>';
-  if(!act.length&&!pacts.length)h+='<p class="note">Bet coins on who earns more quest XP or Training XP in 1, 3 or 7 days. You both put in the same stake; the winner takes the pot. A Gym Pact bets on workout days instead: you both aim for 3 to 5 in a week.</p>';
+  if(!act.length&&!pacts.length)h+='<p class="note">Bet coins on who earns more quest XP or Training XP in 1, 3 or 7 days. You both put in the same stake. The winner takes the pot. A Gym Pact bets on workout days instead: you both aim for 3 to 5 in a week.</p>';
   h+=pacts.map(gpItem).join("")+act.map(dlItem).join("");
   if(past.length)h+='<details><summary class="note">Finished</summary>'+past.map(function(r){return r.kind==="p"?gpPast(r):dlPast(r)}).join("")+'</details>';
   if(DL.err)h+='<p class="note">Could not reach the other players ('+esc(DL.err)+').</p>';
@@ -249,10 +249,10 @@ function dlNewHtml(){var f=DL.f,ws=(SOC.worlds||[]).filter(function(w){return w&
   var seg=function(k,list,lab){return '<div class="dlseg" role="radiogroup">'+list.map(function(v){var on=f[k]===v,dis=k==="stake"&&S.coins<v;
     return '<button type="button" role="radio" aria-checked="'+on+'" class="'+(on?'on':'')+'" data-dl="f" data-k="'+k+'" data-v="'+esc(String(v))+'"'+(dis?' disabled':'')+'>'+lab(v)+'</button>'}).join("")+'</div>'};
   var pk=f.kind==="p",busy=pk?gpBusy(""):null;
-  var h='<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div><p class="note">'+(pk?gpRules():'You both put in the stake. Whoever earns more in the time wins the whole pot; a tie gives both stakes back.')+' They have a day to accept.</p>';
+  var h='<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div><p class="note">'+(pk?gpRules():'You both put in the stake. Whoever earns more before it ends wins the whole pot. A tie gives both stakes back.')+' They have a day to accept.</p>';
   h+='<h4 class="label">Who</h4>'+(ws.length?seg("to",ws.slice(0,24).map(function(w){return w.id}),function(id){var w=ws.filter(function(x){return x.id===id})[0];return esc(w.name)+' <small class="note">Lv '+(+w.lv||1)+'</small>'}):'<p class="note">'+(SOC.loaded?'No one else in town yet.':'Looking for players...')+'</p>');
   h+='<h4 class="label">What</h4>'+seg("kind",["q","w","p"],function(k){return DL.kinds[k][0]+' <small class="note">'+DL.kinds[k][1]+'</small>'});
-  h+=pk?'<h4 class="label">Workout days in the '+DL.pDays+'</h4>'+seg("goal",DL.goals,function(d){return d+' days'}):'<h4 class="label">How long</h4>'+seg("days",DL.days,function(d){return d+' day'+(d>1?'s':'')});
+  h+=pk?'<h4 class="label">Workout days out of '+DL.pDays+'</h4>'+seg("goal",DL.goals,function(d){return d+' days'}):'<h4 class="label">How long</h4>'+seg("days",DL.days,function(d){return d+' day'+(d>1?'s':'')});
   h+='<h4 class="label">Stake each</h4>'+seg("stake",DL.stakes,function(s){return dlFmt(s)});
   if(busy)h+='<p class="note">'+gpBusyTxt(busy)+'</p>';
   h+='<button class="btn" data-dl="send"'+(f.to&&S.coins>=f.stake&&!busy?'':' disabled')+'>'+(pk?'Send Gym Pact':'Send challenge')+'</button>';
