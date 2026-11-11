@@ -519,7 +519,7 @@ function spin(){
   while(idx<WHEEL_W.length-1&&r>=WHEEL_W[idx]){r-=WHEEL_W[idx];idx++}
   var pz=WHEEL[idx]; S.wheel=today();
   if(pz[3]){var it=wheelGift();
-    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (it waits in your Wardrobe for the Closet)")}
+    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (saved for later)")}
     else{var wa=econScaled(WHEELALL,50);S.coins+=wa;S.earnedC+=wa;S.wheelRes=wa.toLocaleString()+" coins (you own every piece already)"}}
   else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{var wf=econScaled(300,50);S.coins+=wf;S.earnedC+=wf;S.wheelRes=wf.toLocaleString()+" coins (freeze slots were full)"}}
   else{var wc=econScaled(pz[1],50);S.coins+=wc;S.earnedC+=wc;S.wheelRes=wc.toLocaleString()+" coins"}

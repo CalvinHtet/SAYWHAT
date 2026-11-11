@@ -9,10 +9,10 @@ var WELCOMEBODY='<p>I&rsquo;m bad at finishing my to-do list. The boring stuff (
  +'<h3 class="label">How it works</h3><ul class="wl">'
  +'<li><b>Add your tasks.</b> Type them, messy is fine, in the box at the top of the Board and each one becomes a quest.</li>'
  +'<li><b>Finish quests</b> to earn XP and coins. Prove the big ones with a photo for double rewards.</li>'
- +'<li><b>Level up</b> to unlock new places, dungeons and gear.</li>'
+ +'<li><b>Level up</b> as your XP adds up. Each level pays coins.</li>'
  +'<li><b>Spend coins</b> on your character and your Loft.</li>'
- +'<li><b>Show off</b> your character in the Town Hall and see how your friends are doing.</li>'
- +'<li><b>Challenge a friend</b> in the Town Hall: the most quest XP or Training XP in 1, 3 or 7 days. You both put in the same coins and the winner takes them all.</li>'
+ +'<li><b>Work out</b> and prove it with a live photo. Four workouts in a week earn the Training bonus.</li>'
+ +'<li><b>Start with your Bedroom</b> in The Loft. Tap it to see what you can add.</li>'
  +'</ul><p>No guilt, no pressure. Do a little every day and watch it add up. See you in town.</p>';
 function showWelcome(){ibOpen("welcome")}
 /* once per player, after any other window (the creator, a level-up) has closed. Cal, 2026-11-10: "for the people who are already
