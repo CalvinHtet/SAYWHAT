@@ -242,9 +242,13 @@ BRANDS, one field per brand, none meaning the Street).
 | Atelier | level 70 | none yet, so it stays hidden | every other Friday, 8 am | 1 | 1,300 to 3,000 |
 
 Each floor's calendar starts at `DROPS.cal0` and is the same for everyone. A player sees only the floors they have opened: the Shop's
-floor switch, splashes, the Shop "!", alerts and the gifts from chests, the Wheel and crawls. The Wednesday vault is one brand for the
-whole Shop, from the floors the player has opened (the Boutique's 4 brands never qualify yet: each is live two weeks and drops again
-two weeks later, so none is gone 14 days without dropping within 5). Prices follow the floor (`ECON.clothFloor`), and QA's grade
+floor switch, splashes, the Shop "!" (cleared per floor: a floor's new brand counts as seen once that floor is open on screen), alerts
+and the gifts from chests, the Wheel and crawls. The Wednesday vault (W47, Cal) starts once `DROPS.vaultAfter` (6) brands have
+dropped on the Street's calendar (the first is Wednesday 2026-12-02 with cal0 2026-11-10); from then on one retired brand is in the
+Shop every Wednesday 8 am to Thursday 8 am, and its splash says "The vault is open" once per Wednesday. It is one brand for the whole
+Shop, from the open floors with enough brands to take part (`flVaultOk`: (brands - live) x days between drops >= 26, so a brand can
+be gone 14 days without dropping again within 5). The Street takes part; the Boutique's 4 brands do not, until it has 6. Prices follow
+the floor (`ECON.clothFloor`, the Street capped at 450), and QA's grade
 orders each piece inside its floor. Opening a floor shows "The Boutique is open" once (`S.floorSeen`), then its brands' splashes.
 Level 30 check (econsim, the cal run): a day then earns 7,000 to 10,000, of it 1,000 to 1,400 from rooms and produce and about 1,400
 from crawls, and spends 7,000 to 11,000 on room upgrades. Two Boutique pieces cost about 1,800: passive income plus crawls covers them,

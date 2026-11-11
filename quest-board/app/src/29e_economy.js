@@ -136,9 +136,9 @@ var ECON={
   floors:[{id:"street",name:"Street",lv:0,days:[1,5],every:1,live:2,line:"New brands Mondays and Fridays, 8 am"},
     {id:"boutique",name:"Boutique",lv:30,days:[5],every:1,live:2,line:"A new brand every Friday, 8 am"},
     {id:"atelier",name:"Atelier",lv:70,days:[5],every:2,live:1,line:"A new brand every other Friday, 8 am"}],
-  /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 460, Boutique about
+  /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 450, Boutique about
      600 to 1,200, Atelier about 1,300 to 3,000 */
-  clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,460],luxury:[440,460]},
+  clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,450],luxury:[440,450]},   /* w-shopui: the Street tops out at 450 (QA: the Shadow Wings were 460) */
     boutique:{thrift:[600,650],standard:[600,800],premium:[800,1050],luxury:[1050,1200]},
     atelier:{thrift:[1300,1400],standard:[1300,1800],premium:[1800,2400],luxury:[2400,3000]}},
   /* SPEC8 (Cal, 2026-11-10: "by capping the amount of features, it allows more focus in the beginning and then the next expansion

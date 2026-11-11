@@ -821,10 +821,13 @@ function navHtml(){
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
     if(a[0]==="away"&&areaGate("away"))return "";
-    var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
-    /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
-    var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?"Something new"+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg?(a[2]===nxLvl()&&!wt?"?":"&nbsp;"):(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    /* W47 (Cal, 2026-11-10: "there should be no locked shop tab"): no Shop tab at all until the Walk-in Closet is built */
+    if(a[0]==="shop"&&areaGate("shop"))return "";
+    var lk=lv<a[2]||areaGate(a[0]);
+    /* W47 (Cal: "? lvl 6. all locked tabs should just have a ? on it to avoid spoilers"): a locked tab is only a "?", with no name and
+       no icon of its own, and "Lv N" under it when a level opens it. Tapping it says "Locked. Keep playing." (30_app_b.js) */
+    if(lk)return '<button data-act="nav" data-v="'+a[0]+'" class="lk" aria-label="Locked'+(lv<a[2]?', level '+a[2]:'')+'"><b class="navq" aria-hidden="true">?</b><span>&nbsp;</span>'+(lv<a[2]?'<small>Lv '+a[2]+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+'" aria-label="'+a[1]+'">'+areaIcon(a[0])+'<span>'+(NAVSHORT[a[0]]||a[1])+'</span></button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){

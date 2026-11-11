@@ -325,6 +325,11 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
     checkBadges();render();persist();try{burst(innerWidth/2,innerHeight/3,30)}catch(x){}pop("Bought "+(tl.length>1?tl.length+" pieces":tl[0][2])+". Wearing "+(tl.length>1?"them":"it")+" now.")}});
 /* W42: the floor on screen (the Street, the Boutique, ...). Only floors this player has show, and the switch only with two or more */
 var QSFLOOR="street";
+/* W47: the line under "The Shop", per floor (Bebas shows it in capitals) */
+var QS_WHEN={street:"New brands Mon and Fri 8 am",boutique:"New brand every Fri 8 am",atelier:"New brand every other Fri 8 am"};
+/* a floor other than the one on screen with a live brand not yet looked at: its button gets a "!" (29o_alerts.js clears it per floor) */
+function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.init)return false;
+  return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-qsfl]");if(!b)return;QSFLOOR=b.dataset.qsfl;window._qsSeen=0;render()});
 shopHtml=function(){
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
@@ -334,9 +339,14 @@ shopHtml=function(){
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
-  var h='<div class="qshop"><header class="qs-top"><div><small>'+esc(FL.line||"New brands Mondays and Fridays, 8 am")+'; an old favorite back on Wednesdays</small><h1>The Shop</h1>'+(FD.next?'<small class="qs-cd">New brand in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'')+'</div><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div></header>';
-  if(FO.length>1)h+='<nav class="qs-tabs qs-floors" aria-label="Shop floors">'+FO.map(function(id){var F=flGet(id)||{name:id};return '<button class="qs-tab'+(QSFLOOR===id?" on":"")+'" data-qsfl="'+esc(id)+'">'+esc(F.name)+'</button>'}).join("")+'</nav>';
-  h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
+  /* W47 (Cal, 2026-11-10): "The Shop" top left with one line under it, the floor's drop days; the coins, + and envelope top right
+     (29x_inbox.js); then the Wardrobe button, with the countdown beside it. No line about Wednesdays: the vault brand's own window
+     says the vault is open, on the Wednesdays it is (25_splash.js) */
+  var cd=FD.next?'<small class="qs-cd">New brand in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'';
+  var h='<div class="qshop"><header class="qs-top qs-head"><h1>The Shop</h1><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div><small class="qs-when">'+esc(QS_WHEN[QSFLOOR]||FL.line||QS_WHEN.street)+'</small></header>'
+    +'<div class="qs-bar"><button class="qs-tab qs-wdb'+(shopTab==="wardrobe"?" on":"")+'" data-act="stab" data-v="wardrobe">Wardrobe</button>'+cd+'</div>';
+  if(FO.length>1)h+='<nav class="qs-tabs qs-floors" aria-label="Shop floors">'+FO.map(function(id){var F=flGet(id)||{name:id};return '<button class="qs-tab'+(QSFLOOR===id?" on":"")+'" data-qsfl="'+esc(id)+'">'+esc(F.name)+(qsFloorNew(d,id)?'<i class="qs-flnew" aria-label="New">!</i>':'')+'</button>'}).join("")+'</nav>';
+  h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.filter(function(t){return t[0]!=="wardrobe"}).map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=(FD.live||[]).filter(function(x){return x.id===shopTab})[0];qsTheme(b);
   if(b){
     h+=qsBanner(b,d);
@@ -359,7 +369,7 @@ shopHtml=function(){
   return h;
 };
 /* The wardrobe button in the room opens the same screen. */
-wardrobeModal=function(){view="shop";shopTab="wardrobe";render();window.scrollTo(0,0)};
+wardrobeModal=function(){view="shop";shopTab="wardrobe";window._qsSeen=1;render();window.scrollTo(0,0)};
 /* The brand banner at the top of the Shop (Cal, 2026-11-05: "a full stylized and classy banner"). The brand's own colours
    deepen to near black, with its logo as a faint watermark, fine pinstripes, a light sheen and a thin frame in its accent,
    the name between hairline ornaments. When banner art exists (art/app/ui_banner_<id>.webp, bundled into art_ui.js) it

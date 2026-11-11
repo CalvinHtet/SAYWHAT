@@ -1888,7 +1888,8 @@ document.addEventListener("click",function(e){
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop("Something new"+(areaTomorrow(ar2)?" opens tomorrow":" opens at your next level-up"));return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Not open yet");return}if(ar2&&effLvl()<ar2[2]){pop("Unlocks at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  /* W47: a locked tab names nothing, whatever holds it (a level, a room, the one-a-day reveal) */
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&(areaWaiting(ar2[0])||areaGate(ar2[0])||effLvl()<ar2[2])){pop("Locked. Keep playing.");return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
@@ -1905,7 +1906,7 @@ document.addEventListener("click",function(e){
   if(a==="qsdeny"){var cd=b.closest(".qs-card");if(cd){cd.classList.remove("deny");void cd.offsetWidth;cd.classList.add("deny")}return}
   if(a==="char"){charModal();return}
   if(a==="mclose"){var m2=b.closest(".modal");if(m2)m2.remove();return}
-  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(areaGate("shop")){pop("Build the Walk-in Closet in your Bedroom to open the Shop");return}view="shop";shopTab="wardrobe";render();window.scrollTo(0,0);return}
+  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(areaGate("shop")){pop("Locked. Keep playing.");return}view="shop";shopTab="wardrobe";window._qsSeen=1;render();window.scrollTo(0,0);return}
   if(a==="stab"){shopTab=b.dataset.v;render();return}
   if(a==="story")storyModal();
   if(a==="spin")spin();

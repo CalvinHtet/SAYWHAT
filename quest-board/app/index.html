@@ -1573,6 +1573,20 @@ body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.
 /* BUILDER w-system (W48): the Lair's big screen is a button to the Shop's Upgrades and Interface */
 .lrsys{cursor:pointer}.lrsys polygon{fill:rgba(88,166,255,.10);stroke:#7fd3ff;stroke-width:3;animation:lrsysP 2.4s ease-in-out infinite}.lrsys text{fill:#e8f6ff;font:800 22px/1 var(--font-display,system-ui);letter-spacing:.12em;text-anchor:middle;paint-order:stroke;stroke:#08203a;stroke-width:4px}
 .lrsys:hover polygon{fill:rgba(88,166,255,.22)}@keyframes lrsysP{0%,100%{stroke-opacity:.35}50%{stroke-opacity:1}}
+/* BUILDER w-shopui (W47, Cal 2026-11-10): the Shop's header, "The Shop" top left with the drop line under it and the coins, + and
+   envelope top right; under it the Wardrobe button with the next drop's countdown; a "!" on a floor whose new brand is not seen yet;
+   a locked nav tab is only a "?" */
+.qs-head{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t c" "w w";align-items:center;column-gap:10px;row-gap:4px;margin:6px 0 10px}
+.qs-head>h1{grid-area:t;min-width:0;white-space:nowrap;font-size:clamp(24px,6.4vw,44px)}
+.qs-head>.qs-cbar,.qs-head>.qs-coin{grid-area:c;justify-self:end}
+.qs-head>.qs-when{grid-area:w;margin:0}
+.qs-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.qshop .qs-bar .qs-cd{margin:0;text-align:right;min-width:0}
+body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
+.qs-floors .qs-tab{position:relative}
+.qs-flnew{position:absolute;top:-6px;right:-4px;width:18px;height:18px;border-radius:9px;background:#ffc857;color:#14121c;font:900 12px/18px system-ui;font-style:normal;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #14121c}
+.bs-vault{margin:10px 0 0;font-size:16px;font-weight:700}
+.nav .navq{display:block;width:22px;height:22px;font:800 20px/22px var(--font-display,system-ui);text-align:center;letter-spacing:0}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
