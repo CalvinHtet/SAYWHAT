@@ -403,8 +403,9 @@ function econEarn(t){Object.keys(ADDONS).forEach(function(k){if(t&&k!==t)return;
   var ws=wt.reduce(function(s,w){return s+w},0);if(!(ws>0))return;
   L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,s=String(a[4]||""),had=/Earns \+\d+% here\./.test(s);e.p=np;
     /* w-econ3: a business's card also says about what it adds a day, fully at full speed */
-    var day=ECON.bizDay&&ECON.bizDay[k]&&T.coin?Math.round(T.coin*np*(T.store||8)/10)*10:0;
-    a[4]=s.replace(/\s*Earns \+\d+% here[^.]*\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here"+(day>0?", about +"+day.toLocaleString()+" coins a day":"")+".":"")})})}
+    /* QA: to the coin, and "+<1" rather than no line, so even a small "+%" shows (Cal: "I dont see the number of coins you earn a day increasing") */
+    var day=ECON.bizDay&&ECON.bizDay[k]&&T.coin?T.coin*np*(T.store||8):0,dt=day>=.5?"+"+Math.round(day).toLocaleString():"+<1";
+    a[4]=s.replace(/\s*Earns \+\d+% here[^.]*\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here"+(day>0?", about "+dt+" coins a day":"")+".":"")})})}
 econEarn();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
    items get ECON.l90 in econPrice when the Mac makes them; pets at 30 come with their art (W23) ---- */
@@ -426,7 +427,7 @@ function rmStats(r,i,base){var T=ROOMT[r.t],L=ADDONS[r.t]||[],own=addonsOf(r).le
     return ECON.roomBonusRooms[r.t]+" +"+rbPct(r)+"% XP on every quest ("+n+" bought, up to +"+ECON.roomBonus+"%)"+(roomCrew(i).length?", crew +"+roomCrew(i).length+"%":"")}
   /* w-econ3: a business says what it earns a day and what its upgrades add (Cal: "+22% produce" has to show in coins) */
   if(T.coin&&ECON.bizDay[r.t]){var bd=bizDayOf(i),up=bizUpPct(r);
-    return "Earns about "+(Math.round(bd/10)*10).toLocaleString()+" coins a day"+(up>0?" (+"+up+"% from upgrades)":"")+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought"}
+    return "Earns about "+Math.round(bd).toLocaleString()+" coins a day"+(up>0?" (+"+up+"% from upgrades)":"")+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought"}
   if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought";
   return base}
 /* Cal (2026-11-10): upgrades have no level locks, so the Restaurant's and the Garden's "Next big step: X at level N" lose the level */
