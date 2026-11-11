@@ -1587,6 +1587,15 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .qs-flnew{position:absolute;top:-6px;right:-4px;width:18px;height:18px;border-radius:9px;background:#ffc857;color:#14121c;font:900 12px/18px system-ui;font-style:normal;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #14121c}
 .bs-vault{margin:10px 0 0;font-size:16px;font-weight:700}
 .nav .navq{display:block;width:22px;height:22px;font:800 20px/22px var(--font-display,system-ui);text-align:center;letter-spacing:0}
+/* BUILDER w-boss (W54): the Town Boss over the Town Hall picture; a drawn stand-in and CSS fire until the Mac paints the art */
+.bs-box{position:relative;display:flex;gap:10px;align-items:center;margin:0 0 10px;padding:10px;border-radius:14px;background:rgba(10,8,20,.72);border:1px solid rgba(255,255,255,.14);color:#fff;overflow:hidden;z-index:1}
+.bs-box .bs-mon,.bs-box .bs-art{flex:none;width:96px;height:72px;object-fit:contain}.bs-full .bs-mon,.bs-p75 .bs-mon{animation:bsBob 2.4s ease-in-out infinite}
+.bs-txt{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}.bs-txt b{font-family:var(--font-display);letter-spacing:.06em}.bs-txt small{color:#d8d4ee;font-size:12px}
+.bs-hp{height:8px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden}.bs-hp>i{display:block;height:100%;background:linear-gradient(90deg,#ff4d5e,#ffb627);border-radius:inherit}
+.bs-dead .bs-hp>i{background:#6b6f7a}.bs-flames{position:absolute;inset:auto 0 0 0;height:60%;pointer-events:none;background:radial-gradient(ellipse at 20% 100%,rgba(255,120,40,.75),transparent 60%),radial-gradient(ellipse at 60% 100%,rgba(255,60,30,.7),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(255,170,40,.7),transparent 60%);animation:bsFire 1.2s ease-in-out infinite alternate;z-index:-1}
+.bs-scorched{flex-direction:column;align-items:flex-start}
+@keyframes bsBob{50%{transform:translateY(-3px)}}@keyframes bsFire{to{opacity:.55;transform:scaleY(1.08)}}
+@media (prefers-reduced-motion:reduce){.bs-mon,.bs-flames{animation:none!important}}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
