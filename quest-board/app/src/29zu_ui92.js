@@ -14,7 +14,7 @@ var QMKW=[
 /* a minutes value to keep: a whole number from 1 to a day, else 0 */
 function qMinOk(v){v=Math.round(+v);return v>=1&&v<=1440?v:0}
 function qMinEst(q){var s=String((q&&q.name)||"").toLowerCase(),m,x=+(q&&q.xp)||25,k=0;
-  if(q&&q.bty)return q.bty.k===3?180:30;/* a bounty: under an hour today, or a few hours over three days (29f_bounty.js) */
+  if(q&&q.bty)return q.bty.k>=2?120:30;/* a bounty: under an hour today, or a few hours over two days (29f_bounty.js; an old 3-day one too) */
   if((m=s.match(/(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hour|hours)\b/)))return qMinOk(+m[1]*60)||60;
   if((m=s.match(/(\d+)\s*(?:min|mins|minute|minutes)\b/)))return qMinOk(m[1])||30;
   for(var i=0;i<QMKW.length&&!k;i++)if(QMKW[i][0].test(s))k=QMKW[i][1];
