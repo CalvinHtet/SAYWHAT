@@ -335,31 +335,41 @@ var BTY3=BTY2;
    still pays 2x; the old S.bty fields (e3, o3, ai1, ai3) are left as they are. */
 function btyDay(){return Math.floor(Date.parse(today()+"T00:00:00Z")/864e5)}
 function btyEnd(k){var n=btyDay();return k===2?dstr(new Date((n-n%2+1)*864e5+43200000)):k===3?dstr(new Date((n-n%3+2)*864e5+43200000)):today()}
-function btyState(){var d=today(),e2=btyEnd(2),o=S.bty;if(!o||o.d!==d){var keep=o&&o.e2===e2;S.bty={d:d,rr:0,o1:0,e2:e2,o2:keep?o.o2||0:0}}return S.bty}
+/* QA (v0.92 blocker): a save from v0.90/v0.91 that saw the Board today still held the old shape ({d, rr, o1, e3, o3, ai1, ai3}, no
+   o2), and the 2-day card read past the end of its pool, so the Board never drew. Any state that isn't today's new shape is rebuilt,
+   keeping only today's count of "Another" taps; the old fields are dropped */
+function btyNum(v){return typeof v==="number"&&isFinite(v)&&v>=0?Math.floor(v):0}
+function btyState(){var d=today(),e2=btyEnd(2),o=S.bty;
+  if(!o||typeof o!=="object"||o.d!==d||o.e2!==e2||typeof o.o2!=="number"||typeof o.o1!=="number"){
+    var same=o&&typeof o==="object"&&o.d===d,keep=o&&typeof o==="object"&&o.e2===e2;
+    S.bty={d:d,rr:same?Math.min(3,btyNum(o.rr)):0,o1:same?btyNum(o.o1):0,e2:e2,o2:keep?btyNum(o.o2):0}}
+  return S.bty}
 /* this player's order of a pool: a seeded shuffle, the same on every device */
 var BTYPERM={};
 function btySeed(){var s=String(MYUID||(S.char&&S.char.name)||"player"),h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function btyPerm(k){var P=k===2?BTY2:BTY1,key=k+":"+btySeed()+":"+P.length;if(BTYPERM[key])return BTYPERM[key];
   var a=P.map(function(x,i){return i}),s=btySeed()^(k*2654435761),r=function(){s=(s+0x6D2B79F5)|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296};
   for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return BTYPERM[key]=a}
-function btyPick(k){var b=btyState(),P=k===2?BTY2:BTY1,n=btyDay(),pm=btyPerm(k),i=(k===2?Math.floor(n/2):n)+(k===2?b.o2:b.o1);
-  var x=P[pm[((i%pm.length)+pm.length)%pm.length]];return {n:x[0],why:x[1],xp:x[2],stat:x[3],cl:x[4]}}
+function btyPick(k){var b=btyState(),P=k===2?BTY2:BTY1,n=btyDay(),pm=btyPerm(k),i=(k===2?Math.floor(n/2):n)+btyNum(k===2?b.o2:b.o1);
+  if(!pm.length||!isFinite(i))return null;var x=P[pm[((i%pm.length)+pm.length)%pm.length]];return x?{n:x[0],why:x[1],xp:x[2],stat:x[3],cl:x[4]}:null}
 function btyTaken(k){var key=k+":"+btyEnd(k);return S.quests.some(function(q){return q.bty&&q.bty.key===key})}
-function btyCard(k){var x=btyPick(k),took=btyTaken(k),b=btyState(),left=k===2?Math.max(1,Math.round((Date.parse(btyEnd(2)+"T23:59:59")-Date.now())/864e5)):0;
+function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),left=k===2?Math.max(1,Math.round((Date.parse(btyEnd(2)+"T23:59:59")-Date.now())/864e5)):0;
   return '<div class="bty-card"><span class="label">'+(k===2?'2-day bounty &middot; '+left+' day'+(left>1?'s':'')+' left':'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
     +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===2?2:1.5))+' XP</span>'+(took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'">Another</button>':''))+'</div></div>'}
-function btyHtml(){if(!S.created)return '';return '<section class="card panel bty"><h3 class="label">Bounties</h3><div class="bty-grid">'+btyCard(1)+btyCard(2)+'</div></section>'}
+/* a bounty can never stop the Board from drawing: anything that goes wrong here shows no bounty today */
+function btyHtml(){if(!S.created)return '';var c='';try{c=btyCard(1)+btyCard(2)}catch(e){c=''}
+  return c?'<section class="card panel bty"><h3 class="label">Bounties</h3><div class="bty-grid">'+c+'</div></section>':''}
 /* bounty quests leave when their window ends, done or not (done ones leave with the day's run as usual) */
-function btyPrune(){var t=today();S.quests=S.quests.filter(function(q){return !q.bty||q.bty.end>=t||S.done[q.id]})}
+function btyPrune(){try{var t=today();S.quests=S.quests.filter(function(q){return !q||!q.bty||typeof q.bty!=="object"||!(String(q.bty.end||"")<t)||S.done[q.id]})}catch(e){}}
 var btyBoardBase=boardHtml;
 /* Cal, 2026-11-09: "Bounties should be towards the bottom", under the task categories; finished quests stay last ("Completed
    tasks can be all the way at the bottom") */
 boardHtml=function(){btyPrune();var h=btyBoardBase(),i=h.indexOf('<details class="donebox donelast"');var c=btyHtml();return i<0?h+c:h.slice(0,i)+c+h.slice(i)};
 var btyMultsBase=mults;
 /* the 2-day bounty (and an old 3-day one) pays 2x, today's 1.5x; the bonus is paid in coins too */
-mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty){var f=q.bty.k>=2?2:1.5;r.m*=f;r.cm=(r.cm||1)*f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
+mults=function(q,o){var r=btyMultsBase(q,o);if(q&&q.bty&&typeof q.bty==="object"){var f=+q.bty.k>=2?2:1.5;r.m*=f;r.cm=(r.cm||1)*f;r.tags.push("Bounty x"+f);payXp(q,r)}return r};
 document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-act=btytake],[data-act=btynew]");if(!t)return;var k=+t.dataset.k===2?2:1,b=btyState();
-  if(t.dataset.act==="btytake"){if(btyTaken(k))return;var x=btyPick(k),id="q"+(S.next++);
+  if(t.dataset.act==="btytake"){if(btyTaken(k))return;var x=btyPick(k);if(!x)return;var id="q"+(S.next++);
     S.quests.push({id:id,name:x.n,xp:clampXp(x.xp),stat:x.stat,cl:x.cl,why:x.why,rep:"once",bty:{k:k,end:btyEnd(k),key:k+":"+btyEnd(k)}});
     persist();render();pop("Bounty added to your board");return}
   if(b.rr>=3||btyTaken(k))return;b.rr++;if(k===2)b.o2++;else b.o1++;persist();render()});
