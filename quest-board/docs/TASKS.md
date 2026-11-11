@@ -35,7 +35,10 @@ qa-local e688961, in this order (each fails softly where Mac art is missing):
 5. w-side: W36 story side-quests, photo only (SPEC4/SPEC6), Sable's Night watch with the server clock in the function (a functions
    deploy) and 3 nights -> the hidden dungeon; w-rafe: W35 Rafe's hunts at 27/52/77/93 (SPEC5, SPEC3 part 6), montage art fails soft.
 6. w-perf2: W1b room art per room, only if QA proves it safe; else it stays in the handoff.
-Then one rc-v0.92, QA's full run_rc.sh, the zip, and MAC_HANDOFF.md updated. Art (the Town Boss pictures, Rafe montages, etc.) stays
+Then one rc-v0.92, QA's full run_rc.sh, the zip, and MAC_HANDOFF.md updated.
+7. w-final (Cal's full audit 2026-11-11 07:25, 198 requests checked: lead-scratch/audit/requests.md): streak text "Streak: N days",
+   the Town Boss 5-player rule only before the first boss, Cal's fresh start until 11-21, pictures in chat, level 100 ~day 85-90 for
+   a regular player without moving levels, the pets comment, and W10 the Habitica-style text pass. -> rc-v0.92c. Art (the Town Boss pictures, Rafe montages, etc.) stays
 Mac-only.
 
 **v0.92 SHIPPED 2026-11-10 ~21:30 (merge d395ae7 of rc-v0.92 24df171); all 6 branches + w-bounty (300 bounties) in. The Windows team stops here; see docs/MAC_HANDOFF.md.** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
