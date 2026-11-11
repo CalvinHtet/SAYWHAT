@@ -161,7 +161,7 @@ room (Rafe and Nova, the two team steps, keep theirs). A room whose trigger is m
 | Auditorium, Arcade, Rhythm, VR, Bowling, Karaoke, Nightclub | 40% of the room before |
 
 No totals anywhere (Cal: "don't show the number of total upgrades. so it remains a mystery"): a locked card and its goal say
-"Bedroom upgrades: 9 bought" with a bar that has no numbers; the bar's card names the next Restaurant upgrade toward Noir. A card
+"Bedroom upgrades: 9 bought" with a bar that has no numbers; the bar's card says "Keep upgrading the Restaurant until Noir". A card
 waiting on a room the player doesn't have shows that room's own next step instead, never its name.
 
 **The one-time reset** (v0.91, Cal: "initialize the loft and refund all the money they have spent so far"): every save that has
