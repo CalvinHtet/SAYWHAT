@@ -252,3 +252,6 @@ function stySellHtml(){var n=Math.floor((S.base.food&&S.base.food.veg)||0),o=sty
   return '<div class="sty-sell"><span>'+n+' produce ready'+(o.sold?' &middot; '+o.sold+' sold so far':'')+'</span><button class="btn'+(n?'':' ghost')+'" data-act="stysell"'+(n?'':' disabled')+'>Sell for '+(n*4)+' coins</button></div>'}
 /* test hook, removed at release with window.__qb */
 window.__qbStory={check:styCheck,state:styState,steps:STORY,beats:BEATS,lots:function(){return lotsOpen()},allows:styAllows};
+/* Cal: Noir (and so the bar) about 4 to 6 days after the Restaurant opens, not the next day (econsim, with Noir listed first: day +1):
+   Noir waits until the Restaurant has served ECON.noirServed dishes (about 2 an hour, so about 4 days), and its card says so */
+(ADDONS.restaurant||[]).forEach(function(a){if(a[0]==="r_noir")a[3]=Object.assign({},a[3]||{},{served:ECON.noirServed||180})});
