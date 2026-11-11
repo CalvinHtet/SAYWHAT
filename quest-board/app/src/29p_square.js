@@ -25,7 +25,9 @@ function sqSandboxOn(){return !!(window.QB_WEB&&QB_WEB.sandbox)}
 var PLONLINE=5*60000;
 function plOnline(w){var t=+(w&&w.t)||0,now=Date.now();return t>0&&now-t<PLONLINE&&t-now<PLONLINE}
 function plDot(w){return plOnline(w)?'<i class="pl-on" title="Online now" aria-label="Online now"></i>':''}
-function plStreak(w){var n=Math.floor(+(w&&w.streak)||0);return n>0&&isFinite(n)?'<small class="pl-sk">'+Math.min(n,99999)+'d streak</small>':''}
+/* Cal (#96): "Streak: 1 day", "Streak: 5 days"; the number is coerced, the doc may be hostile */
+function plStreakN(w){var n=Math.floor(+(w&&w.streak)||0);return n>0&&isFinite(n)?Math.min(n,99999):0}
+function plStreak(w){var n=plStreakN(w);return n>0?'<small class="pl-sk">Streak: '+Math.min(n,99999)+' day'+(n===1?'':'s')+'</small>':''}
 /* when each greeting last paid: sent[<to id>] and got[<from id>] in ms; a pair pays again SQGAP later (older times are dropped) */
 function sqPaid(){var o=socState(),P=o.sqt,now=Date.now();if(!P||typeof P!=="object")P=o.sqt={sent:{},got:{}};
   ["sent","got"].forEach(function(k){var m=P[k];if(!m||typeof m!=="object")m=P[k]={};Object.keys(m).forEach(function(u){if(!(now-(+m[u]||0)<SQGAP))delete m[u]})});
@@ -63,7 +65,7 @@ function sqSeed(){if(!sqSandboxOn()||SQ.seeded||!S.created||typeof FRIENDS==="un
   Object.keys(FRIENDS).slice(0,6).forEach(function(k,i){var f=FRIENDS[k];db.doc("worlds/sb_"+k).set({name:f.name,look:f.look,lv:8+i*3,streak:i*2,cls:"",rooms:[],crew:i,served:i*12,t:Date.now()-i*6*60000,appv:APPV})})}
 function sqCard(uid){if(uid===MYUID){pop("That's you. Looking good.");return}
   var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w||!w.look)return;closeModals();var paid=+sqPaid().sent[uid]||0,rooms=(w.rooms||[]).filter(Boolean).length;
-  modal('<div class="card box2 sq-card"><div class="sq-big">'+calImg(w.look,"idle",200,"")+'</div><h2>'+esc(w.name)+plDot(w)+'</h2><small class="mono">Lv '+(w.lv||1)+' · '+rooms+' room'+(rooms===1?'':'s')+' · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small>'
+  modal('<div class="card box2 sq-card"><div class="sq-big">'+calImg(w.look,"idle",200,"")+'</div><h2>'+esc(w.name)+plDot(w)+'</h2><small class="mono">Lv '+(w.lv||1)+' · '+rooms+' room'+(rooms===1?'':'s')+' · Streak: '+plStreakN(w)+' day'+(plStreakN(w)===1?'':'s')+' · '+socAgo(w.t||0)+'</small>'
     +'<div class="sq-acts">'+Object.keys(SQK).map(function(k){return '<button class="btn" data-act="sqgo" data-u="'+esc(uid)+'" data-k="'+k+'"><span>'+SQK[k][0]+'</span> '+SQK[k][1]+'</button>'}).join("")+'</div>'
     +'<p class="note">'+(paid?'You earned '+SQPAY+' coins for greeting '+esc(w.name)+' at '+sqHm(paid)+'. Greeting them pays again from '+sqHm(paid+SQGAP)+'.':'A greeting pays you both '+SQPAY+' coins, once every 2 hours for each person.')+'</p>'
     +'<div class="row"><button class="btn ghost" data-act="mclose">Close</button></div></div>')}
