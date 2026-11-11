@@ -411,10 +411,14 @@ function gymKeep(L){return wkTrim(L,function(x){return +x.w||0},function(x){retu
 function sessKeep(L){return wkTrim(L,function(x){return +x.load||0},function(x){return {d:x.d,plan:x.plan,n:x.n,load:x.load,u:x.u}},function(x){return x.plan})}
 function lastLog(id){var L=(S.gymlog&&S.gymlog[id])||[];return L[L.length-1]||null}
 function lastSetW(id,n){var l=lastLog(id);if(!l)return null;if(l.ws)return l.ws[n]>0?l.ws[n]:null;return l.w>0?l.w:null}
-/* the weight shown before the next set: what you typed, else last time's weight for that set, else the weight of the set before
-   it today, else the suggestion */
-function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.w[id]!=="")return wk.w[id];while(sets[n])n++;
-  var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
+/* the weight shown before the next set: what you typed, else the last weight saved today, else the last weight entered last time,
+   else the suggestion. Cal, 2026-11-10: "After entering my next weight, and saving it on set 1, the entry field resets to the last
+   weight on there": last time's weight for that set came before today's, so 140 saved on set 1 put set 2 back to last week's
+   number. Each set box still shows its own "last N lbs". */
+function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],k,l=lastLog(id),ws;if(wk.w[id]!=null&&wk.w[id]!=="")return wk.w[id];
+  for(k=sets.length-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];
+  if(l&&(!l.u||l.u===exU(id))){ws=l.ws||[];for(k=ws.length-1;k>=0;k--)if(ws[k]>0)return ws[k];if(l.w>0)return l.w}
+  return exSuggest(id).w}
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
     h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+wU(v,exU(id)):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
