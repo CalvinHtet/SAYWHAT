@@ -23,6 +23,17 @@ MERGED, WAITING ON CAL.
 
 Base: qa-local a246406 = v0.89 (APPV 89), ZIPPED 2026-11-10 12:32 (Cal: "I need to publish something now"): social, inbox, Training, wheel, drops, chests and relics, the new leveling and economy, photo stamp, idle perf, coin totals. Known: W31 earn by size flat, W25 trigger card hidden (v0.90). Rollback-v0.80 = APPV 91. Next: v0.90. v0.91 TONIGHT (Cal 16:10) = W51/W52 unlock + reset, W45/W46 economy, W48 w-system, W47 Shop header + vault + locked tabs, + floors/sale/nospoil; v0.92 = W49/W53 chat, W50/W14 colours, W41 wardrobe, W57, W58 and the rest; THEN the final MAC_HANDOFF.md and the Windows team stops (Cal 16:15: "Will continue everything through claude on mac"); anything needing art waits about 52 h (Cal's Mac limit).
 
+**v0.91 SHIPPED 2026-11-10 19:27 (qa-local eea5382, zip on the Desktop).** **v0.92 PLAN (LEAD 19:30), branches off qa-local eea5382, APPV 92 (rollback to 93 at release):**
+1. w-chat2: W49 Discord-style chat + W53 greetings (wave, high five, poke, spank; Hug, Cheer and Visit Loft go) + W57 online dot and streak.
+2. w-colors: W50 Town Hall colours from its picture, then W14 (every screen slightly different).
+3. w-wardrobe: W41 categories + brand filters.
+4. w-ui92: W58 Board shortest first, W59 quest toast at the top, W60 the building-view "+" window, lfSkyline cleanup, strip
+   qbDbg / __qbTeam / __qbAlerts / __qbShift on Live.
+5. w-econ4 (small): level 100 near day 85 for regular/cal by quest XP payouts (not the curve, so no one's level moves), Garden-stage
+   businesses ~10%. econsim + pricesweep.
+6. w-boss: W54 Town Boss with placeholder art (SPEC10 + Cal's final decisions), last; if it risks the release it moves to the Mac.
+Then one rc-v0.92 for QA, the zip, and the final docs/MAC_HANDOFF.md.
+
 **v0.91 FINAL LIST (Cal 17:30: "I want all economy based and level based decisions in 0.91. All cosmetic changes and town hall boss stuff
 to be 0.92." "Take as long as you need. As long as I can publish it before I sleep tonight"):** W51/W52 unlocks + reset; no level gates on
 story rooms, strict Garden -> Restaurant -> bar on Noir -> Boba -> Dessert, Noir ~4-6 days after the Restaurant, no dead-end locked cards;
