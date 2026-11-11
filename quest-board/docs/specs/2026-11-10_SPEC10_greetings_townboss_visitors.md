@@ -18,13 +18,13 @@ boss lying there in our town hall picture, or the monster is still running rampa
 - Shown on the Town Hall picture (Hall tab): the boss over the picture, an HP bar, "N players fighting", your own damage this week.
 - Damage = real quest XP + Training XP each player earns Mon-Sat (the same numbers as the XP they get). (D) a player deals at most
   600 damage a day, so one grinder cannot solo it and everyone matters.
-- HP scales with players: (D) 1,500 HP per active player (played in the 7 days before Monday 5 am), at least 3 players' worth. A
+- HP (Cal 16:10): 800 x active players (opened the app on 3+ game days in the 7 days before Monday 5 am), at least 2 players worth. A
   regular week beats it with most people playing; tune with econsim's player types.
 - Phases: art switches at 100% / 75% / 50% / 25% HP left.
 - Win (HP 0 before Sat 11:59 pm): Sunday shows the carcass in the Town Hall for the day; every player who dealt any damage gets a
   letter with a chest (claim once): (D) coins ~ one day of their own quest coins, a relic roll (SPEC3 odds), an unowned accessory;
   the 3 biggest hitters get a second roll. Players with no damage get nothing.
-- Lose: Sunday shows the boss rampaging with the Town Hall on fire. Light punishment for everyone: (D) all businesses earn 10% less
+- Lose (Cal 16:20: NO coin penalty): visual only until the next win: Town Hall in flames, cracked UI boxes (Mac art). OLD: (D) all businesses earn 10% less
   for the next week (the town is rebuilding), shown on business panels; lifted early if the next boss falls.
 - Data: each player writes their own weekly damage into their own doc (like duel/kudos; no one writes another's); every phone sums
   them. Fine among friends, not cheat-proof (same as duels).
@@ -58,15 +58,20 @@ though because I wouldn't want 8 people from the game in one room or have 10 peo
   see the same HP within seconds; old saves fine.
 - Visitors: never 2 in a room, never more than 3 a day, never more than 2 tips a day; name label shows; note on room open.
 
-## Cal's decisions on the Town Boss (2026-11-10 16:10, amends part 1)
+## Cal's final Town Boss decisions (2026-11-10 16:10 and 16:20; these win over anything above)
 
-Cal: "lets start with 800 HP per active player for now. Active would mean they have used the app at least 3 times this week. Otherwise,
-don't count the HP, because it would overinflate the HP and make it hard to kill the boss. other defaults are fine."
+Cal: "lets start with 800 HP per active player for now. Active would mean they have used the app at least 3 times this week.
+Otherwise, don't count the HP, because it would overinflate the HP and make it hard to kill the boss. other defaults are fine."
+Cal: "Remove the 10% business penalty. The town hall just gets a new art generated for the UI such as the town in flames, the UI
+screen boxes are cracked, etc. Will tackle this later in v 0.93 during the handoff." "yes 3 days in the past week. First town boss
+goes live on the next monday after there are at least 5 players who are actively using it for 3 days in the past week."
 
-- HP = 800 x active players, fixed at the Monday 5 am spawn, with a minimum of 2 players' worth.
-- Active = opened the app on at least 3 different game days in the 7 days before the spawn. ARCHITECT reads "3 times" as 3 days,
-  because one player opens the app many times a day. Confirm with Cal if that reading is in doubt.
-- Each player's worlds doc carries the game days they played (a small 7-day list), so every phone can do the count.
-- Confirmed defaults: -10% business income for a week after a loss (the next win lifts it early); 600 damage per player per day.
-  The win chest holds about a day of quest coins, a relic roll and an accessory the player doesn't own. The top 3 get a bonus roll.
-  Players who did no damage get no chest. Friend tips are 100-400 by room, 2 a day.
+- HP = 800 x active players, fixed at the Monday 5 am spawn, with a minimum of 2 players' worth. Active = opened the app on 3 or more
+  game days in the 7 days before the spawn. Each player's worlds doc carries a small 7-day list of the days they played.
+- A loss costs NO coins. It is visual only until the next win: the Town Hall picture in flames and cracked boxes and frames on the Hall
+  screens (new art from the Mac).
+- The first boss spawns on the first Monday 5 am after the game counts at least 5 active players. Until then the game shows no boss
+  and never mentions one (no spoilers).
+- Other defaults stand: 600 damage per player per day. Win chest: about a day of quest coins, a relic roll and an accessory the
+  player doesn't own. The top 3 get a second roll. Players who did no damage get no chest. Friend tips are 100-400 by room, 2 a day.
+- Planned for v0.93, built on the Mac.
