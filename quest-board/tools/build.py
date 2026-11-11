@@ -65,7 +65,9 @@ def split(name, items, wrap):
     return names
 
 
-for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_", "logo_", "friend_")), ("art_ex.js", ("ex_",))):
+# bl_*.webp (w-perf2, W1b) are the room pictures app/blobs.js used to hold as base64; it now lists their names (app/src/01_blobs.js
+# turns each into its URL). The web build loads them as loose files, a room at a time; this build packs them again (art_bl.js).
+for pack, prefixes in (("art_rig.js", ("m_", "f_")), ("art_icon.js", ("icon_",)), ("art_ui.js", ("ui_", "logo_", "friend_")), ("art_ex.js", ("ex_",)), ("art_bl.js", ("bl_",))):
     if WEB:
         PACKS[pack] = []
         continue
@@ -106,7 +108,7 @@ with open(os.path.join(DIST, "qbdata.js"), "w", encoding="utf-8") as f:
 
 # The scripts come in through a small loader that adds them as ordinary script tags, in order, and shows how much has arrived
 # (the art is about 40 MB, so a phone on mobile data would otherwise stare at a blank page).
-SCRIPTS = [n for p in ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "blobs.js") for n in PACKS[p]] + ["qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"]
+SCRIPTS = [n for p in ("art_rig.js", "art_icon.js", "art_ui.js", "art_ex.js", "art_bl.js", "blobs.js") for n in PACKS[p]] + ["qbdata.js", "rig.js", "look.js", "creator.js", "loft_bridge.js", "app.js"]
 if WEB:
     # Firebase first, then the project's config; web.js needs qbdata.js (the art list) and must be in place before the game boots
     WEBDIR = os.path.join(ROOT, "web")

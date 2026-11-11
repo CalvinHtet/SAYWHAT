@@ -544,7 +544,7 @@ function lfNeonTxt(side,u,z,txt,col,sz){var c='<text x="0" y="'+sz+'" font-famil
   return side==="R"?lfFaceY(u,0,z,c):lfFaceX(0,u,z,c)}
 function lfDogBed(C,x,y,col,name){C.plat.push({x0:x-.5,y0:y-.4,x1:x+.5,y1:y+.4,z:5,key:x+y+.4});C.add(x+y+.4,lfBox(x-.5,y-.4,0,1,.8,5,col,{top:lfSh(col,.3)})+lfBox(x-.38,y-.3,5,.76,.6,1,lfSh(col,.5),{top:lfSh(col,.5)})+lfFaceY(x-.3,y+.4,4,'<text x="2" y="9" font-size="7" fill="rgba(255,255,255,.8)" font-family="Arial" font-weight="700">'+name+'</text>'))}
 /* ---- sprite props (generated pixel art). Falls back to the vector prop when a sprite is missing ---- */
-function lfSprUrl(k){var S=window.LFSPR&&LFSPR[k];if(!S)return null;if(S.b)return S.b;try{var b=atob(S.u.split(",")[1]),n=b.length,u=new Uint8Array(n);while(n--)u[n]=b.charCodeAt(n);S.b=URL.createObjectURL(new Blob([u],{type:"image/webp"}))}catch(e){S.b=S.u}return S.b}
+function lfSprUrl(k){var S=window.LFSPR&&LFSPR[k];if(!S)return null;if(S.b)return S.b;if(String(S.u).indexOf("data:")!==0)return S.b=S.u;/* w-perf2: a file URL is used as it is */try{var b=atob(S.u.split(",")[1]),n=b.length,u=new Uint8Array(n);while(n--)u[n]=b.charCodeAt(n);S.b=URL.createObjectURL(new Blob([u],{type:"image/webp"}))}catch(e){S.b=S.u}return S.b}
 function lfClampO(S,x,y,w,d,o){if(o.noclamp)return o;var a=lfP(x+w,y+d,0),ax=a[0]+(o.ctr?(d-w)*LF.sx/2:0)+(o.ax||0),lim=-LF.H+Math.abs(ax)/2+1,Hh=o.H||((w+d)*LF.sx*(o.sc||1)*S.h/S.w),top=a[1]+(o.dy||0)-Hh;
   if(top>=lim)return o;var v=lim-top,n=Object.assign({},o);if((o.dy||0)<0)n.dy=(o.dy||0)+v;else n.H=Math.max(24,Hh-v);return n}
 function lfSpr(C,k,x,y,w,d,o){o=o||{};var S=window.LFSPR&&LFSPR[k];if(!S)return false;o=lfClampO(S,x,y,w,d,o);
@@ -3275,7 +3275,7 @@ window.LFSP4={"bd4_bed2":{"w":300,"h":263,"d":__B[0],"n":__B[1],"bx":0.492,"bl":
 LFSP4.man_ax={"cs_0": 101.5, "cs_1": 96.8, "cs_2": 92.0, "cs_3": 121.8, "cs_4": 91.5, "lair_cs4": 91.5, "m_cs_0": 101.5, "m_cs_1": 96.8, "m_cs_2": 92.0, "m_cs_3": 121.8, "m_cs_4": 91.5, "f_cs_0": 101.5, "f_cs_1": 96.8, "f_cs_2": 92.0, "f_cs_3": 121.8, "f_cs_4": 91.5};
 
 /* ---- bedroom v4: rendered 3D-style furniture with day/night cross-fade ---- */
-function lfSp4Url(k,t){var S=window.LFSP4&&LFSP4[k];if(!S)return null;var f=t==="n"?"nb":"db";if(S[f])return S[f];var v=S[t==="n"?"n":"d"];try{var b=atob(v.split(",")[1]),n=b.length,u=new Uint8Array(n);while(n--)u[n]=b.charCodeAt(n);S[f]=URL.createObjectURL(new Blob([u],{type:"image/webp"}))}catch(e){S[f]=v}return S[f]}
+function lfSp4Url(k,t){var S=window.LFSP4&&LFSP4[k];if(!S)return null;var f=t==="n"?"nb":"db";if(S[f])return S[f];var v=S[t==="n"?"n":"d"];if(String(v).indexOf("data:")!==0)return S[f]=v;try{var b=atob(v.split(",")[1]),n=b.length,u=new Uint8Array(n);while(n--)u[n]=b.charCodeAt(n);S[f]=URL.createObjectURL(new Blob([u],{type:"image/webp"}))}catch(e){S[f]=v}return S[f]}
 function lfSpr4(C,k,x,y,w,d,o){o=o||{};var S=window.LFSP4&&LFSP4[k];if(!S)return false;
   var a=lfP(x+w,y+d,0),W=(w+d)*LF.sx*(o.sc||1),Hh=W*S.h/S.w;if(o.H){Hh=o.H;W=Hh*S.w/S.h}
   if(typeof LFREC!=="undefined"&&LFREC)lfRecBox(x,y,0,w,d,o.h||24);
