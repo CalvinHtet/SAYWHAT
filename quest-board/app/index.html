@@ -1699,6 +1699,32 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .rf-relic .r2{margin:10px auto 14px;max-width:220px}
 /* BUILDER leftover (QA 11-10 20:31): the muted labels on the Relics screen's bronze tint read 3.6:1 at ranks A and S; lifted toward the text colour */
 :root[data-view="trophy"][data-rank="A"] .label,:root[data-view="trophy"][data-rank="S"] .label{color:color-mix(in srgb,var(--muted),var(--fg) 40%)}
+/* BUILDER w-photos (W8/W9): the photo feed on the town board (29ph_photos.js): cards, the open post, the share box */
+.ph-feed .ph-top{justify-content:space-between;align-items:center}
+.ph-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.ph-card{display:flex;flex-direction:column;gap:5px;padding:0 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--fg);text-align:left;overflow:hidden;cursor:pointer;font:inherit;min-width:0}
+.ph-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ph-img{display:block;aspect-ratio:1/1;background:#0c0b12;overflow:hidden}.ph-img img{display:block;width:100%;height:100%;object-fit:cover}
+.ph-meta{display:flex;align-items:center;gap:6px;padding:0 8px;min-width:0}.ph-meta b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ph-meta small{margin-left:auto;color:var(--muted);font-size:11px;white-space:nowrap}
+.ph-cap{padding:0 8px;font-size:13px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ph-n{display:flex;align-items:center;gap:3px;padding:0 8px;color:var(--muted);font-size:12px}.ph-n .ph-gap{width:8px}.ph-heart.on{color:#ff5a7a}.ph-bub{vertical-align:-2px}
+.ph-av{display:inline-grid;place-items:center;flex:0 0 auto;border-radius:50%;overflow:hidden;background:var(--surface)}.ph-av .nbav{border-radius:50%}
+.ph-ini{font:700 11px/1 var(--font-body,system-ui);color:var(--fg)}
+.ph-modal .card{max-height:calc(100dvh - 24px);overflow-y:auto}
+.ph-vhead{display:flex;align-items:center;gap:10px;margin:2px 36px 10px 0}.ph-vhead div{display:flex;flex-direction:column}.ph-vhead small{color:var(--muted);font-size:12px}
+.ph-vimg{border-radius:12px;overflow:hidden;background:#0c0b12 center/cover no-repeat}.ph-vimg img{display:block;width:100%;max-height:62vh;object-fit:contain;background:rgba(12,11,18,.55)}
+.ph-vcap{margin:10px 0 0;font-size:15px;line-height:1.4}.ph-what{margin:4px 0 0}
+.ph-like{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}.ph-like .ph-likers{flex-basis:100%;margin:0}
+.ph-cmh{margin:14px 0 6px}.ph-cms{display:flex;flex-direction:column;gap:8px}
+.ph-cm{display:flex;gap:8px;align-items:flex-start}.ph-cm>div{flex:1;min-width:0}.ph-cm b{font-size:13px}.ph-cm small{color:var(--muted);font-size:11px}.ph-cm p{margin:2px 0 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.ph-x{flex:0 0 auto;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:18px;line-height:1;cursor:pointer}.ph-x:hover{color:var(--fg)}
+.ph-cmadd{display:flex;gap:8px;margin-top:12px}.ph-cmadd input,.ph-capin{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit}
+.ph-delrow{margin-top:14px}.ph-del{width:100%}
+.ph-share{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px;padding:10px;border:1px solid var(--line);border-radius:12px}.ph-share .note{margin:0}.ph-capin{width:100%;box-sizing:border-box}
+.ph-new .ph-recent{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}
+.ph-rc{flex:0 0 auto;width:72px;height:72px;padding:0;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:#0c0b12;cursor:pointer}.ph-rc.on{border-color:var(--accent)}.ph-rc img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-prev{margin:8px 0;border-radius:12px;overflow:hidden;background:#0c0b12}.ph-prev img{display:block;width:100%;max-height:42vh;object-fit:contain}
+.ph-new .ph-capin{margin-top:8px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

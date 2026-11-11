@@ -41,6 +41,26 @@ service cloud.firestore {
     // writes.
     match /duel/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(30000); allow delete: if mine(uid) || owner(); }
 
+    // the photo feed on the town board (app/src/29ph_photos.js, W8/W9, SPEC5): photos/<poster uid>~<ms> is one post (the picture
+    // itself is in Storage, storage.rules), photos/<post>/cm/<author uid>~<ms> one comment on it, photolk/<uid> the posts that
+    // player likes (one like per player and post). Everyone signed in reads. Only the poster creates or deletes a post (the owner may
+    // delete any). A comment is written by its author only, and deleted by its author, the post's author or the owner (Cal,
+    // 2026-11-10: "Only the person who posted it can delete their own comments. or the person who created the post can delete any
+    // comments"). Nothing is edited. The ids carry the uids because the docs are {j, t} and the rules can't read inside j.
+    function poster(pid) { return pid.split('~')[0]; }
+    match /photos/{pid} {
+      allow read: if signedIn();
+      allow create: if signedIn() && poster(pid) == request.auth.uid && small(6000);
+      allow delete: if signedIn() && (poster(pid) == request.auth.uid || owner());
+      match /cm/{cid} {
+        allow read: if signedIn();
+        allow create: if signedIn() && cid.split('~')[0] == request.auth.uid && small(2000)
+          && exists(/databases/$(database)/documents/photos/$(pid));
+        allow delete: if signedIn() && (cid.split('~')[0] == request.auth.uid || poster(pid) == request.auth.uid || owner());
+      }
+    }
+    match /photolk/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(20000); allow delete: if mine(uid) || owner(); }
+
     // the owner's inbox and the frame and speed logs the owner reads to debug phones
     match /inbox/{doc} { allow read, write: if owner(); }
     match /diag/{doc}  { allow read: if owner(); allow write: if signedIn(); }
