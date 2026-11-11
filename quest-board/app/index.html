@@ -1677,6 +1677,28 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .dlc .dlvs .gpdots i{display:block;width:12px;height:12px;border-radius:50%;background:transparent;border:1.5px solid var(--muted);overflow:visible}
 .dlc .dlvs .gpdots i.on{background:var(--accent);border-color:var(--accent)}
 .dlc .gpi .note{display:block}
+/* BUILDER w-side (W36): side-quests on the Board, the photo with its stamp, Sable's hidden dungeon */
+.sq .sq-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;margin-top:8px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.sq .sq-row>div{display:flex;flex-direction:column;gap:2px;min-width:0}.sq .sq-row small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.sq .sq-row .btn{flex:none}.sq .sq-prem{color:var(--gold)}.sq .sq-done{margin-top:8px}.sq .sq-done summary{cursor:pointer;color:var(--muted);font-size:13px}
+.sq-pick{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:14px}.sq-pick select{flex:1;min-width:0;padding:8px;border-radius:10px;background:var(--surface2);color:inherit;border:1px solid var(--line);font:inherit}
+.sq-shot{position:relative;margin:8px 0 10px;border-radius:12px;overflow:hidden;background:#0b0c12}.sq-shot img{display:block;width:100%;max-height:260px;object-fit:cover}
+.sq-stamp{position:absolute;right:10px;bottom:8px;font:800 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.12em;color:#ff7a18;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 6px #17d4e6}
+.sq-dogpic{object-fit:contain;background:var(--surface2)}
+.dng.sq-dng{border:1px solid rgba(23,212,230,.45)}
+/* BUILDER w-rafe (W35): Rafe's hunt montage, 4 full-screen pictures; a dark panel with its line until the Mac paints them */
+.rfm{position:fixed;inset:0;z-index:60;background:#05060a}
+.rfm-f{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}.rfm-f.on{opacity:1}
+.rfm-f img,.rfm-ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rfm-ph{background:radial-gradient(120% 80% at 50% 30%,hsl(var(--rfh,200) 45% 26%),hsl(var(--rfh,200) 40% 9%) 70%,#05060a)}
+.rfm-f.on img,.rfm-f.on .rfm-ph{animation:rfZoom 1.6s ease-out both}
+.rfm-f p{position:absolute;left:24px;right:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 72px);margin:0;color:#f4eee2;font:600 20px/1.35 var(--font-display,system-ui);text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.rfm-skip{position:absolute;right:16px;top:calc(env(safe-area-inset-top,0px) + 14px);padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.35);color:#fff;font:600 13px system-ui}
+@keyframes rfZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.rfm-f{transition:none}.rfm-f.on img,.rfm-f.on .rfm-ph{animation:none}}
+.rf-relic .r2{margin:10px auto 14px;max-width:220px}
+/* BUILDER leftover (QA 11-10 20:31): the muted labels on the Relics screen's bronze tint read 3.6:1 at ranks A and S; lifted toward the text colour */
+:root[data-view="trophy"][data-rank="A"] .label,:root[data-view="trophy"][data-rank="S"] .label{color:color-mix(in srgb,var(--muted),var(--fg) 40%)}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
