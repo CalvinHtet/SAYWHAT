@@ -32,7 +32,7 @@ var RFHUNT=[
     frames:["White, in every direction.","Rafe cuts steps into blue ice.","Under the glacier, a forest's roots hold up the ceiling.","The seed is warm in your hand."],
     leave:["\"That's the whole list.\"","\"If I hear of anything else, you'll be the first to know.\""]}];
 /* hunt k (1-4) is due: the level reached, its relic not owned, and the hunt before it done on an earlier day */
-function rfDue(k){var h=RFHUNT[k-1],o=sqState(),prev=k>1?o.done["hunt"+(k-1)]:"x";if(!h||effLvl()<h.lv||r2State()[h.relic])return false;
+function rfDue(k){var h=RFHUNT[k-1],o=sdqState(),prev=k>1?o.done["hunt"+(k-1)]:"x";if(!h||effLvl()<h.lv||r2State()[h.relic])return false;
   return k===1||(!!prev&&prev<today())}
 function rfMet(){return teamHas("rafe")}
 RFHUNT.forEach(function(h,i){var k=i+1,r=r2Of(h.relic);
@@ -64,6 +64,6 @@ function rfRelic(k){var h=RFHUNT[k-1],r=r2Of(h.relic);
   var m=modal('<div class="card box2 rf-relic"><span class="label">Legendary relic</span><h2>'+esc(r?r.name:"")+'</h2>'+(r?r2Card(r):'')
     +'<div class="btns"><button class="btn" data-act="rfleave" data-k="'+k+'">Continue</button></div></div>');
   try{if(typeof qbSnd==="function")qbSnd("chest")}catch(e){}return m}
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=rfleave]");if(!b)return;var k=+b.dataset.k,q=sqOf("hunt"+k),m=b.closest(".modal");if(m)m.remove();if(!q)return;
-  modal(sqCard(q,q.done,'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">'+esc(q.reward)+'</small>'))});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=rfleave]");if(!b)return;var k=+b.dataset.k,q=sdqOf("hunt"+k),m=b.closest(".modal");if(m)m.remove();if(!q)return;
+  modal(sdqCard(q,q.done,'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">'+esc(q.reward)+'</small>'))});
 if(window.__qbSide)window.__qbSide.hunt={due:rfDue,list:RFHUNT,montage:rfMontage,step:function(ms){RFSTEP=+ms||1150}};
