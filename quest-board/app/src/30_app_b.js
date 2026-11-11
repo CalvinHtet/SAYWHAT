@@ -209,7 +209,7 @@ function buildModal(i){
     if(T.lv>lv||hasRoom(k)){return}
     h+='<div class="addon next"><div class="bpart'+(ART["room_"+k]?' post':'')+'">'+(ART["room_"+k]?'<img class="rpost" src="'+ART["room_"+k]+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div><b>'+esc(T.name)+'</b><small>'+esc(T.desc)+'</small><button class="btn" data-act="rdo" data-i="'+i+'" data-t="'+k+'"><i class="coin"></i>&nbsp;'+T.cost+'</button></div>';
   });
-  if(h.indexOf('addon next')<0)h+='<p class="note">No new blueprints yet. Keep leveling.</p>';
+  if(h.indexOf('addon next')<0)h+='<p class="note">No new blueprints yet.</p>';
   h+='</div><button class="btn ghost" data-act="mclose">Close</button></div>';
   modal(h);
 }
@@ -277,7 +277,7 @@ var FOCUS={
   support:[["lateral","shoulders","Side delts make arms look bigger from the front."],["facepull","shoulders","Rear delts balance all the pressing and keep elbows healthy."],["crunch","core","Core work while shoulders recover."],["lunge","legs","A lower-body movement so the day is not upper-only."]],
   finish:["farmer","Grip, forearms and core in one move."],why:"Big compound lifts first while you are fresh, then biceps and triceps paired so one rests while the other works."},
  chest:{core:[["bench","Main lift",4],["incline","Main lift",3],["dips","Superset A"],["fly","Superset A"]],
-  support:[["facepull","shoulders","Pulling work balances the pressing."],["pushdown","triceps","Triceps already warm from pressing. Finish them."],["cablerow","back","Upper back work for posture and balance."],["lateral","shoulders","Side delts round out the upper body."]],
+  support:[["facepull","shoulders","Pulling work balances the pressing."],["pushdown","triceps","Triceps are already warm from pressing."],["cablerow","back","Upper back work for posture and balance."],["lateral","shoulders","Side delts round out the upper body."]],
   finish:["plank","Core brace for a cleaner bench next time."],why:"Heavy flat press, incline for upper chest, then dips and flies back to back. Support work pulls so the session stays balanced."},
  back:{core:[["deadlift","Main lift",3],["pulldown","Main lift",3],["cablerow","Superset A"],["hammer","Superset A"]],
   support:[["incline","chest","A press balances the pulling."],["facepull","shoulders","Rear delts and upper back together."],["backext","core","Low back endurance."],["lunge","legs","Single-leg work rounds out the day."]],
@@ -355,7 +355,7 @@ function markActive(){
       /* nothing left to give: coins instead, as the Daily Quest chest pays */
       var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+'</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -367,7 +367,7 @@ function weekDots(){
 }
 function weekStrip(){
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
-  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Keep moving anyway.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div><div class="note wwmul">'+esc(wwLine(paid))+'</div></div>'+weekDots()+'</section>';
+  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Training sessions still pay XP.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div><div class="note wwmul">'+esc(wwLine(paid))+'</div></div>'+weekDots()+'</section>';
 }
 function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   var E=EX[id],lg=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return !E[4]||x.w>0}),last=lg[lg.length-1];
@@ -376,7 +376,7 @@ function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   if(!E[4])return {w:"",line:"Last time: "+last.n+" sets "+(last.hit?"with every rep hit. Add a rep per set.":"done.")};
   var miss=0;for(var i=lg.length-1;i>=0&&!lg[i].hit;i--)miss++;
   var w=last.hit?last.w+E[4]:miss>=3?Math.max(E[4],Math.round(last.w*0.9/E[4])*E[4]):last.w;
-  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
+  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Hit every rep first.";
   return {w:w,line:"Last: "+wU(last.w,"lb")+" on "+mmdd(last.d)+". "+why};
 }
 /* Demos show the start and end of a rep, drawn for your body, fading between the two.
@@ -514,7 +514,7 @@ function cexHtml(){var ps=cexPlans();
 function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
-   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize. '+esc(wwLine(paid))+'</p></section>';
+   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random prize. '+esc(wwLine(paid))+'</p></section>';
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
@@ -713,11 +713,11 @@ var CVOICE={
 /* form cues per exercise. {n} not needed. 3 specific + group cues appended */
 var CCUE={
  bench:["Shoulder blades pinned back and down.","Lower the bar to the lower chest, then drive.","Feet planted, heels dug in."],
- incline:["Dumbbells travel in a slight arc.","Do not flare the elbows past 45 degrees.","Lower slowly, press with purpose."],
+ incline:["Dumbbells travel in a slight arc.","Do not flare the elbows past 45 degrees.","Lower slowly, then press up."],
  fly:["Slight bend in the elbows, hug a tree.","Squeeze the chest at the center.","Do not let the cables yank the shoulders forward."],
  dips:["Lean slightly forward, elbows tucked.","Descend until the shoulder hits elbow height.","Lock out at the top."],
  ohp:["Squeeze the glutes, ribs down.","Head moves through once the bar clears the face.","Bar over mid foot at lockout."],
- lateral:["Lead with the elbows, not the hands.","Stop at shoulder height.","Light weight, loud control."],
+ lateral:["Lead with the elbows, not the hands.","Stop at shoulder height.","Light weight, slow and controlled."],
  rear:["Chest toward the floor, thumbs slightly down.","Squeeze shoulder blades together.","Small, smooth, no swinging."],
  shrug:["Straight up and down, ears to shoulders.","Pause at the top for a beat.","Do not roll the shoulders."],
  cgbench:["Hands just inside shoulder width.","Elbows brush the ribs.","Triceps finish every rep."],
@@ -731,7 +731,7 @@ var CCUE={
  pulldown:["Pull the elbows to the back pockets.","Chest up to meet the bar.","Control the stretch at the top."],
  row:["Hinge, flat back, pull to the lower ribs.","Squeeze the shoulder blades.","No bouncing off the thighs."],
  cablerow:["Sit tall, pull to the navel.","Elbows close, squeeze the back.","Reach forward with control."],
- facepull:["Pull the rope to the forehead, elbows high.","Thumbs back, squeeze the rear delts.","Light weight, perfect reps."],
+ facepull:["Pull the rope to the forehead, elbows high.","Thumbs back, squeeze the rear delts.","Light weight, clean reps."],
  deadlift:["Bar over mid foot, wedge in.","Push the floor away.","Lock the hips and finish tall."],
  squat:["Brace like a punch is coming.","Knees track over the toes.","Hit depth, drive up through the whole foot."],
  rdl:["Hips back, bar glued to the legs.","Soft knees, flat back.","Feel the hamstrings load."],
@@ -975,7 +975,7 @@ function rwEditor(){
   var rows=REWARDS.map(function(r){var e=rwEd(r)||{};return '<div class="rwe" data-tier="'+rwTier(r)+'" data-lv="'+r[0]+'"><div class="rwe-h"><span class="lv">Lv '+r[0]+'</span><i class="rtier">'+rwTier(r)+'</i></div>'
     +'<input class="rwe-t" maxlength="48" aria-label="Level '+r[0]+' reward name" placeholder="'+esc(r[1])+'" value="'+esc(e.t||"")+'">'
     +'<input class="rwe-d" maxlength="100" aria-label="Level '+r[0]+' reward details" placeholder="'+esc(r[2])+'" value="'+esc(e.d||"")+'"></div>'}).join("");
-  var m=modal('<div class="card box2 rweditor"><span class="label">Your rewards</span><h2>Make them yours</h2><p class="note">Write what would actually get you moving. Leave a box empty to keep the game\'s version. This shows every prize, so it spoils the surprises.</p>'+rows
+  var m=modal('<div class="card box2 rweditor"><span class="label">Your rewards</span><h2>Edit your rewards</h2><p class="note">Write what would actually get you moving. Leave a box empty to keep the game\'s version. This shows every prize, so it spoils the surprises.</p>'+rows
     +'<div class="row"><button class="btn" id="rwesave">Save</button><button class="btn ghost" data-act="mclose">Cancel</button></div></div>');
   m.querySelector("#rwesave").onclick=function(){var o={};[].forEach.call(m.querySelectorAll(".rwe"),function(d){var t=d.querySelector(".rwe-t").value.trim().slice(0,48),x=d.querySelector(".rwe-d").value.trim().slice(0,100);if(t||x)o[d.dataset.lv]={t:t,d:x||null}});
     S.rwEdit=o;m.remove();render();persist();pop("Rewards saved")}}
@@ -1329,7 +1329,7 @@ function profileHtml(){
   var h='<section class="card hero">'+petHtml()+'<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent2)"/></linearGradient></defs>'
    +'<circle class="t" cx="60" cy="60" r="54"/><circle class="p" cx="60" cy="60" r="54" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-into/nd)).toFixed(1)+'"/></svg>'
    +'<div class="c"><small>LEVEL</small><b>'+lv+'</b></div></div><div>'
-   +'<div class="xp mono">'+S.xp+'<span>XP</span></div><div class="note mono" style="margin-top:6px">'+(maxed?"MAX LEVEL. Monarch XP keeps flowing.":g?"Bar full. Pass the gate to level up.":(nd-into)+" XP to level "+(lv+1))+'</div>'
+   +'<div class="xp mono">'+S.xp+'<span>XP</span></div><div class="note mono" style="margin-top:6px">'+(maxed?"Max level. Extra XP earns Renown ranks.":g?"Bar full. Pass the gate to level up.":(nd-into)+" XP to level "+(lv+1))+'</div>'
    +'<div class="meta"><div><span class="label">Streak</span><b class="mono">'+streakNow()+'d</b></div><div><span class="label">Freezes</span><b class="mono">'+(S.freezes||0)+'</b></div><div><span class="label">Photo proof</span><b class="mono" style="color:'+(integrity()<.5?"var(--accent)":"var(--done)")+'">'+Math.round(integrity()*100)+'%</b></div></div>'
    +'<div class="streakline">Streak bonus <b>+'+Math.round(Math.min(streakCap(),.02*streakNow())*100)+'% XP</b>'+(function(){var n=[3,7,14,30,60,100].filter(function(d){return d>streakNow()})[0];return n?'. Chest at day <b>'+n+'</b>.':'.'})()+'</div>'
    +'<div class="upg">'+unlocked+' UI upgrade'+(unlocked===1?"":"s")+' active'+(nextFx?'. Next upgrade at <b>level '+nextFx[0]+'</b>.':'.')+'</div>'
@@ -1344,7 +1344,7 @@ function profileHtml(){
   vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><span class="st">LOCKED</span></div>'});
   if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
   if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
-  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Make these rewards yours</button></section>';
+  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Edit rewards</button></section>';
 
   var ri=rankIdx();
   h+='<section class="card panel"><h3 class="label">Stats</h3>';

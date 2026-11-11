@@ -14,7 +14,7 @@ var STORY=[
      room, and the patio, or sub out one for the heros lair ... then there should be a popup that says something like you decided
      to pick up a new hobby and try gardening." Four rooms in The Loft (the Bedroom counts), then a short scene. */
   {id:"garden",room:"garden",how:"lot",why:"Build 4 rooms in The Loft and you might pick up a new hobby.",gate:function(){var ls=loftShare();return ls[0]>=Math.ceil(ls[1]*ECON.gardenLoft)},
-    scene:{who:"A new hobby",role:"The Loft",lines:["Half the Loft done, and the place finally feels like home. You decided to pick up a new hobby: gardening.","There's an empty lot right next to your building. Time to see if you have a green thumb."],yes:"Check out the lot"}},
+    scene:{who:"A new hobby",role:"The Loft",lines:["Half the Loft done, and the place finally feels like home. You decided to pick up a new hobby: gardening.","There's an empty lot right next to your building, and nobody's using it."],yes:"Check out the lot"}},
   /* Cal: "the next upgrade should be a restaurant that expands from it": Mara's yes unlocks the Garden's expansion upgrade */
   /* Cal, 2026-11-06: "The restaurant upgrade should come sooner so we have incentive to keep upgrading the garden past the main
      lot": 12 produce sold (about a day of a watered first bed), not 60 */
@@ -29,7 +29,7 @@ var STORY=[
      next event". Desmond comes once the Restaurant goes Noir (r_noir, level 28), with no earnings threshold; before, it waited for Fine
      Dining Service (r_t3, level 36) and 25,000 coins earned. */
   {id:"lockkey",room:"skybar",how:"free",why:"Once the Restaurant goes Noir, an investor starts eating there.",gate:function(){return styHas("restaurant")&&styNoir()},
-    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Charcoal walls, low light, a real kitchen. Whatever you're doing, it's working.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
+    scene:{who:"Desmond Hale",role:"Investor",lines:["I've eaten here four nights running. Charcoal walls, low light, a real kitchen. I keep asking for the same table.","Your second floor is just storage? Let me fund a speakeasy up there. Live band, singers. Lock and Key."],yes:"Open Lock and Key"}},
   {id:"rafe",room:null,how:"team",why:"Someone has become a regular at Lock and Key.",gate:function(){return styUps("skybar")>=3},
     scene:{who:"Rafe Calloway",role:"Traveling adventurer",at:"Lock and Key",lines:["A sunburnt stranger with a map tattooed on his forearm takes the stool at the end of your bar. Old Fashioned, stirred.","\"Best drink since a dockside bar off the Coral Reach. I'm in town between expeditions. Mind if I make this my spot?\""],yes:"Pour him another",team:"rafe"}},
   {id:"rooftop",room:"rooftop",how:"upgrade",why:"Lock and Key's regulars keep asking about the roof.",gate:function(){return styUps("skybar")>=6}},
@@ -38,7 +38,7 @@ var STORY=[
      Theater, Auditorium, Arcade, Bowling, Karaoke, Club) closed in a Live build (QB_WEB.noTest) until Cal approves the layout;
      the sandbox keeps it open for his review. A save that already owns the Mall keeps it. Set MALLHOLD to false to open it. */
   {id:"mall",room:"mall",how:"lot",why:"Another investor is watching how much you earn.",gate:function(){return !mallHeld()&&ECON.plazaAll.every(styHas)},
-    scene:{who:"Priya Okafor",role:"Investor",lines:["I've been watching your plaza. It works.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
+    scene:{who:"Priya Okafor",role:"Investor",lines:["I've been counting foot traffic on your plaza. Nothing else on the street comes close.","There's an empty strip mall up the street. Buy in with me and fill it one store at a time."],yes:"Buy the strip mall"}},
   {id:"nova",room:null,how:"team",why:"Someone keeps filming in your mall.",gate:function(){return styUps("mall")>=3&&styMallHas("ml_shop1")},
     scene:{who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",lines:["A girl with a ring light clipped to her phone is filming a haul outside your clothing store.","\"Are you the owner? My followers keep asking where I shop. Could I film here every week?\""],yes:"Deal. Roll the camera",team:"nova"}},
   {id:"theater",room:"theater",how:"lot",why:"Once the mall has a few stores, shoppers want a reason to stay: its empty end unit could be a movie theater.",gate:function(){return styUps("mall")>=4}},

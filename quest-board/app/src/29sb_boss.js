@@ -55,8 +55,8 @@ function bossArt(ph){var k=BOSSART[ph],u=k&&window.QBART&&QBART[k];return u?'<im
 function bossHtml(){var f=bossNow(),B=bossState();
   if(!f)return B.lost?'<div class="bs-box bs-scorched"><i class="bs-flames" aria-hidden="true"></i><b>The town is still smoking</b><small>Beat the next boss to clear it.</small></div>':'';
   var ph=bossPhase(f),pct=Math.round(100*f.left/f.hp);
-  var head=f.won?(f.dow===6?"The boss is down":"Slain!"):f.dow===6?"The boss got away":"Town Boss";
-  var line=f.won?"Everyone who hit it has a chest in their letters.":f.dow===6?"It burned the Hall. A new one comes Monday.":f.fighters+" fighting · ends Saturday night";
+  var head=f.won?(f.dow===6?"The boss is down":"Slain"):f.dow===6?"The boss got away":"Town Boss";
+  var line=f.won?"Everyone who hit it has a chest in their letters.":f.dow===6?"It burned the Hall. The next boss comes Monday.":f.fighters+" fighting · ends Saturday night";
   return '<div class="bs-box bs-'+ph+'">'+(ph==="fire"?'<i class="bs-flames" aria-hidden="true"></i>':'')+bossArt(ph)
     +'<div class="bs-txt"><b>'+esc(head)+'</b><div class="bs-hp" role="img" aria-label="'+pct+'% health left"><i style="width:'+pct+'%"></i></div>'
     +'<small>'+f.left.toLocaleString()+' / '+f.hp.toLocaleString()+' HP · '+esc(line)+'</small>'
@@ -69,7 +69,7 @@ var bossHallBase=hallHtml;hallHtml=function(){var h=bossHallBase.apply(this,argu
 INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var B=bossState(),w=B.won;if(!w||!(B.hit&&B.hit[w]>0))return [];
   var c=Math.round(econCurve(ECON.questInc,effLvl())/50)*50;
   return [{id:"boss-"+w,from:"The town",subj:"We beat the Town Boss",d:w,coins:c,
-    body:'<p>The boss fell before Saturday night. Your share of the chest is below, and a find comes with it when you claim.</p>'
+    body:'<p>The boss fell before Saturday night. Your share of the chest is below. Claim it for one more find.</p>'
       +((B.top||{})[w]?'<p>You were one of the three biggest hitters this week: you get a second find.</p>':'')}]});
 /* the result, kept in the save (the neighbors' docs move on to the next week by Monday): a lost week leaves the Hall scorched until a
    win; a won week keeps this player's part for the chest letter */

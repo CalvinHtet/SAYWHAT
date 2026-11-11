@@ -42,7 +42,7 @@ var FVISITS=[
  {id:"jina_food",who:["jina"],w:8,place:"lounge",text:"Jina took you around to try some new food spots nearby.",buff:{cl:"out",pct:15,text:"Food crawl with Jina: Outside quests +15% XP today"}},
  {id:"habibimbaps",who:["kenan","jina"],w:6,place:"restaurant",text:"Kenan and Jina cooked dinner at your place and left the leftovers.",buff:{cl:"home",pct:15,text:"Cooking night: Home quests +15% XP today"},coin:100},
  {id:"cynthia_garden",who:["cynthia"],w:8,place:"garden",need:"garden",text:"Cynthia came by with seedlings and watered the beds.",water:1,buff:{cl:"home",pct:10,text:"Cynthia's visit: Home quests +10% XP today"}},
- {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by to check in and stayed for coffee.",buff:{cl:"social",pct:15,text:"Cynthia's sunshine: People quests +15% XP today"}},
+ {id:"cynthia_sun",who:["cynthia"],w:5,place:"lounge",text:"Cynthia stopped by to check in and stayed for coffee.",buff:{cl:"social",pct:15,text:"Coffee with Cynthia: People quests +15% XP today"}},
  {id:"memo_fix",who:["memo"],w:6,place:"lounge",text:"Memo fixed the loose shelf and stayed for a game.",buff:{cl:"home",pct:15,text:"Memo's fix-it day: Home quests +15% XP today"}},
  {id:"memo_cynthia",who:["memo","cynthia"],w:7,place:"lounge",text:"Memo and Cynthia came over for dinner and brought dessert.",coin:150,buff:{cl:"social",pct:15,text:"Dinner with Memo and Cynthia: People quests +15% XP today"}},
  {id:"kris_pads",who:["kris"],w:9,place:"gym",text:"Kris came over and pushed you through a tough workout.",buff:{stat:"fitness",pct:20,text:"Training with Kris: Fitness quests +20% XP today"}},
@@ -52,7 +52,7 @@ var FVISITS=[
  {id:"nick_keys",who:["nick"],w:7,place:"lounge",text:"Nick came by and helped you sort through your paperwork.",buff:{cl:"admin",pct:20,text:"Paperwork with Nick: Admin and day-job quests +20% XP today"}},
  {id:"nick_niners",who:["nick"],w:6,place:"lounge",text:"Nick came over to watch the game. You both yelled at the TV and ate everything.",buff:{cl:"social",pct:10,text:"Game day with Nick: People quests +10% XP today"}},
  {id:"nick_alvina",who:["nick","alvina"],w:7,place:"rooftop",text:"Nick and Alvina came over to hang out on the roof and brought sparklers.",coin:150,buff:{cl:"social",pct:15,text:"Sparklers with Nick and Alvina: People quests +15% XP today"}},
- {id:"ben_routine",who:["ben"],w:7,place:"gym",text:"Ben ran you through his early morning routine. No snooze button allowed.",buff:{stat:"discipline",pct:20,text:"Ben's routine: Discipline quests +20% XP today"}},
+ {id:"ben_routine",who:["ben"],w:7,place:"gym",text:"Ben ran you through his early morning routine. You were done before sunrise.",buff:{stat:"discipline",pct:20,text:"Ben's routine: Discipline quests +20% XP today"}},
  {id:"ben_board",who:["ben"],w:6,place:"lounge",text:"Ben stopped by and helped you plan a weekend trip.",buff:{cl:"out",pct:15,text:"Trip planning with Ben: Outside quests +15% XP today"}},
  {id:"kevin_pool",who:["kevin"],w:8,place:"gameroom",text:"Kevin came over to shoot pool and ran the table twice.",coin:100},
  {id:"kevin_food",who:["kevin"],w:7,place:"restaurant",text:"Kevin showed up with a list of places to try. You made it to two and finished every plate.",buff:{cl:"out",pct:15,text:"Food run with Kevin: Outside quests +15% XP today"}},
@@ -101,7 +101,7 @@ function fvArt(w){var n="friend_"+w+".webp",D=window.QBLoft&&QBLoft.data;return 
    Each visit arrives one of four ways, never the same as the visit before: a door swings open and they step through, they
    pull up and skid to a stop, they drop in from above and land, or they pop up with a spin and confetti. Each has its own line
    at the top. A visit keeps its arrival if its card is shown again. */
-var FVARR=[["door","Knock knock"],["ride","Someone pulled up"],["drop","Look who dropped in"],["pop","Surprise!"]];
+var FVARR=[["door","Knock knock"],["ride","Someone pulled up"],["drop","Look who dropped in"],["pop","Guess who"]];
 var FVPREV=0;
 function fvArrival(v,preview){if(preview){FVPREV=(FVPREV+1)%FVARR.length;return FVARR[FVPREV]}
   var cur=S.visit&&S.visit.id===v.id&&S.visit.d===today()?S.visit:null;if(cur&&cur.arr!=null)return FVARR[cur.arr]||FVARR[0];

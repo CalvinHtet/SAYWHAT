@@ -41,7 +41,7 @@ var SIDEQ=[
     check:"a dog being walked outside: a dog on a leash, or a dog out on a walk on a street, path, park or beach",
     done:[function(){return sdqDogName()+(sdqDogName().indexOf(" and ")>0?" know":" knows")+" every tree on the block now."},"There's a box on the porch with their names on it."],reward:"An outfit for the dogs. They wear it once it's finished."},
   {id:"sable",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",name:"Night watch",need:3,gate:function(){return teamHas("sable")},
-    ask:["Your lights were on at two last night.","Bed before midnight. Three nights in a row.","Send me a picture from bed each night. The time goes on it."],yes:"Three nights",
+    ask:["Your lights were on at two last night.","Bed before midnight. Three nights in a row.","Send me a picture from bed each night. The time goes on it."],yes:"Start the watch",
     snap:"A picture of you in bed, between 8 pm and midnight. The game stamps the time on it.",
     check:"a person lying in a bed at night: a selfie or photo taken from bed, with low or night-time light. An empty bed, a couch or daylight do not count",self:1,
     done:["Three nights. Good.","Last watch I found a door under the Lair. It's not on any map.","I marked it. It's on your crawl list."],reward:"A hidden dungeon is on your Dungeon Crawls list."}];
@@ -139,7 +139,7 @@ async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=
   /* the photo feed (29ph_photos.js): a passed side-quest or hunt photo can be posted from the town board, with its stamp */
   if(typeof phRemember==="function")try{phRemember({file:file,stamp:p.txt,kind:"quest",what:q.name})}catch(e){}
   var o=sdqState(),fin=false,note="";
-  if(id==="sable"){var gap=o.nw.d?ymdN(p.d)-ymdN(o.nw.d):9;o.nw={d:p.d,n:gap===1?(o.nw.n||0)+1:1,t:p.txt};fin=o.nw.n>=3;note="Night "+Math.min(3,o.nw.n)+" of 3."+(fin?"":" Tomorrow night keeps the watch going.")}
+  if(id==="sable"){var gap=o.nw.d?ymdN(p.d)-ymdN(o.nw.d):9;o.nw={d:p.d,n:gap===1?(o.nw.n||0)+1:1,t:p.txt};fin=o.nw.n>=3;note="Night "+Math.min(3,o.nw.n)+" of 3."+(fin?"":" Send another tomorrow night.")}
   else if(id==="dogs"){o.walk.push(today());fin=o.walk.length>=5;note="Walk "+o.walk.length+" of 5."}
   else if(id==="theo"){o.mv={d:today(),w:fr.w,nm:fr.nm};note="Your picture is in. Theo needs "+(fr.nm||"your friend")+"'s tonight too.";try{socPublish(true)}catch(e){}}
   else fin=true;
@@ -176,7 +176,7 @@ function sdqOwe(){var o=sdqState();Object.keys(SDQWEAR).forEach(function(k){var 
 /* Sable's door: one more dungeon, open to anyone who finished Night watch. It goes first in DNG at level 1, so the Crawls list's
    window of 5 (dngHtml in 10_app_a.js picks it by index) shows the same dungeons as before; when the window leaves it out, it is
    added on top. It pays like the deepest dungeon open to the player, a fifth more. */
-var SDQDNG={id:"sq_night",name:"The Night Stair",lv:1,rec:1,mins:45,c:[60,150],loot:"Better than it looks",ic:"\u{1F319}",tag:"Sable found the door. Nobody else has.",sdq:1};
+var SDQDNG={id:"sq_night",name:"The Night Stair",lv:1,rec:1,mins:45,c:[60,150],loot:"Richer than your deepest crawl",ic:"\u{1F319}",tag:"Sable found the door. Nobody else has.",sdq:1};
 function sdqDngBand(){var b=null,lv=effLvl();DNG.forEach(function(d){if(d!==SDQDNG&&(!b||d.lv<=lv))b=d.c});if(b)SDQDNG.c=[Math.round(b[0]*1.2),Math.round(b[1]*1.2)]}
 function sdqDngCheck(){if(sdqState().done.sable){if(DNG.indexOf(SDQDNG)<0)DNG.unshift(SDQDNG);sdqDngBand()}}
 var sdqDngBase=dngHtml;dngHtml=function(){try{sdqDngCheck()}catch(e){}var h=sdqDngBase.apply(this,arguments);if(DNG.indexOf(SDQDNG)<0||h.indexOf('data-id="'+SDQDNG.id+'"')>=0||h.indexOf(esc(SDQDNG.name)+'</b>')>=0)return h;
