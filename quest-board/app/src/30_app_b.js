@@ -1122,7 +1122,8 @@ function effLvl(){var g=gated();return g!==null?g-1:rawLvl()}
 function rankIdx(){return TIER_RANK[Math.min(S.gates.length,9)]}
 
 /* multipliers */
-function bountyId(){var l=ordered().filter(function(q){return q.xp>=25});if(!l.length)return null;var d=today(),h=0;for(var i=0;i<d.length;i++)h=(h*31+d.charCodeAt(i))>>>0;return l[h%l.length].id}
+/* QA (v0.92): a taken bounty (q.bty) already pays its own bonus, so the daily x2 skips it (it paid x3 / x4) */
+function bountyId(){var l=ordered().filter(function(q){return q.xp>=25&&!q.bty});if(!l.length)return null;var d=today(),h=0;for(var i=0;i<d.length;i++)h=(h*31+d.charCodeAt(i))>>>0;return l[h%l.length].id}
 function mults(q,o){
   o=o||{};var m=1,cm=1,tags=[],now=Date.now(),ri=rankIdx();
   /* Cal, 2026-11-09: photos are a pure bonus. With no photo a quest pays its listed XP; a verified photo pays at least double
