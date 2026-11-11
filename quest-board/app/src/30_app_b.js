@@ -77,7 +77,7 @@ function roomModal(i){
   /* QA (Restaurant pass): three "Needs Knock Through the Wall" cards filled the slots ahead of Knock Through itself, so nothing
      could be bought. Buyable cards first, then mystery cards, then cards waiting on another upgrade; each group keeps its order. */
   /* Cal (2026-11-07): an upgrade that opens a new room goes first, so the "+" in the building view leads straight to it */
-  avail=avail.map(function(h,k){var m=/data-id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3];return {h:h,k:k,g:/ stynext/.test(h)?-2:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
+  avail=avail.map(function(h,k){var m=/data-id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3],sn=typeof styNextBuy==="function"?styNextBuy(r.t):null;return {h:h,k:k,g:/ stynext/.test(h)?-2:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:(op&&op.opens)||(m&&m[1]===sn)?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
   /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
   var more=avail.length>4;avail=avail.slice(0,4);if(avail.length===4&&avail[3].indexOf(' mystery')<0)avail[3]='<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Buy one above to reveal it</button></div>';
   /* W25 (QA): the story room that follows this one, when no upgrade opens it, shows what it waits for at the top */
