@@ -39,7 +39,18 @@ var ECON={
   relicSet:{low:1,mid:1.5,high:2},
   /* the town's efficiency keeps its own 150 XP mark (the old goal), so the lower Daily Quest goal does not raise business income */
   effGoal:150,effFirst:.25,effOver:1.5,hidden:2,  /* efficiency after the first task; cap in overtime, reached at hidden x effGoal */
-  shareBare:.20,shareFull:.50,                    /* rooms' daily payout, as a share of today's task coins */
+  shareBare:.20,shareFull:.60,                    /* the most all businesses may pay a day, as a share of today's task coins */
+  /* w-econ3 (Cal, 2026-11-10, via ARCHITECT: businesses about 10% of a day's coins when the Garden opens, 15% with the Restaurant,
+     20% with the Mall, 25 to 30% at the end, never above 30%; quests stay the large majority. And Cal: "some upgrades say +22% produce,
+     but I dont see the number of coins you earn a day increasing"): each business pays at most its own day, bizDay[room] coins fully
+     upgraded at full speed, and less with fewer upgrades: its coins an hour (set from bizDay) x its "+N%" upgrades x the hours it holds,
+     x the town's efficiency today. So every earning upgrade raises that business's day, and the room says it ("Earns about 1,240 a
+     day, +22% from upgrades"). Above them all, the share of today's task coins (payRoom, the W21 cap, now shareFull flat instead of
+     growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
+     counts in it too */
+  bizDay:{garden:900,restaurant:1100,skybar:300,rooftop:300,boba:250,dessert:250,mall:400,theater:600,auditorium:550,arcade:350,
+    rhythm:300,vr:300,bowling:350,karaoke:350,club:700},
+  vegCoin:7,
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
      gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
      Lair upgrade (the Lair's reason now that it sends no missions), and always on the crawlPity-th crawl in a row without one */
@@ -92,18 +103,20 @@ var ECON={
      29_prices.js) cost their listed weight x grandK, an upgrade that opens a room costs opener x the new room's phase, and a
      lot on the street costs lot x its phase. Set fixed:1 on an upgrade to keep its price exactly as written (fp:1 only keeps
      29_prices.js from flattening it; this pass still prices it by what it is). */
-  tier:{decor:200,furniture:325,equipment:500,big:750},
+  /* w-econ3 round 2 (econsim on w-unlock: 16% bought at level 30 against 33%, 96% at 90): every room price x0.75, the late rooms'
+     multiplier back up to 1 so the last rooms keep their weight (estimate: everything bought about level 89) */
+  tier:{decor:150,furniture:245,equipment:375,big:560},
   /* W21: later rooms cost more again, by their phase (x (1 + lateK x (phase - 1))): the Loft as before, the Restaurant about 2.1x,
      the Nightclub about 4.9x, so every upgrade lasts about three months of Cal's routine (econsim) */
   /* w-econ3 (Cal, 2026-11-10: "everything bought around lvl 90 ... reaching level 100 but having 200 upgrades left is severely
      unbalanced"): the late rooms' multiplier comes down from 1.25 so buying keeps up with levels in the second half */
-  lateK:.8,
+  lateK:1,
   kindOf:{au_proj1:"equipment"},                 /* the plain Digital Projector, so the IMAX one is the clear step up */
-  grandK:.6,opener:1400,lot:2000,lotGarden:1000,ramp:.5,
+  grandK:.45,opener:1050,lot:1500,lotGarden:750,ramp:.5,
   /* measured (econsim.js, a heavy player): about 3,700 a day in the Loft's first days, 6,000 when the Garden opens, 10,000 at
      the Restaurant, then 13,000 to 15,000 from Boba on, where it levels off; the phases follow that, a bit under it */
-  /* SPEC8: Lock and Key opens before Boba and Dessert, so it takes their place in the price phases */
-  phase:{bedroom:1,patio:1,closet:1,gameroom:1.2,lair:1.3,trophy:1.3,garden:1.3,restaurant:1.8,skybar:2.2,boba:2.3,dessert:2.5,rooftop:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
+  /* SPEC8: Lock and Key opens before Boba and Dessert, so it takes their place in the price phases; w-unlock: then the Rooftop, Boba, Dessert */
+  phase:{bedroom:1,patio:1,closet:1,gameroom:1.2,lair:1.3,trophy:1.3,garden:1.3,restaurant:1.8,skybar:2.2,rooftop:2.3,boba:2.5,dessert:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
   /* the Shop: clothes keep each brand's own spread x shopK, between clothesMin and clothesMax (Cal: "the shop is almost 1000
      for some items"); interface items cost uiBase + uiLv x the level they open at; permanent upgrades pay for themselves in
      about a week or two of quests, so each is priced by what it returns (Merchant Seal I was 500 for +10% coins forever) */
@@ -139,11 +152,12 @@ var ECON={
      produce; noir: the Restaurant's Noir upgrade; plaza: that share of all Kode Plaza upgrades, built or not. Replaces SPEC8's focus
      rule. The Mall-building numbers are mine, from econsim (Cal: "Use this same logic") */
   unlock:{closet:{at:"bedroom",pct:.3},patio:{at:"bedroom",pct:.5},gameroom:{at:"bedroom",pct:.7},garden:{loft:.6},
-    restaurant:{earn:"garden",coins:1200},skybar:{noir:1},rooftop:{at:"skybar",pct:.5},boba:{at:"skybar",pct:.75},dessert:{at:"boba",pct:.6},
+    restaurant:{earn:"garden",coins:3000},skybar:{noir:1},rooftop:{at:"skybar",pct:.5},boba:{at:"skybar",pct:.75},dessert:{at:"boba",pct:.6},
     mall:{plaza:.6},theater:{at:"mall",pct:.3},auditorium:{at:"theater",pct:.4},arcade:{at:"auditorium",pct:.4},rhythm:{at:"arcade",pct:.4},
     vr:{at:"rhythm",pct:.4},bowling:{at:"vr",pct:.4},karaoke:{at:"bowling",pct:.4},club:{at:"karaoke",pct:.4}},
   /* the one-time reset (Cal: "initialize the loft and refund all the money they have spent so far"): a save from before APPV
-     resetBefore gets its rooms and buildings reset and refunded once; resetScope "all" or "loft" (the Loft's rooms only) */
+     resetBefore gets its rooms and buildings reset and refunded once; resetScope "all" or "loft" (the Loft's rooms only). LEAD
+     (16:03): the reset is keyed on "never reset" (S.reset91), so resetBefore is only a note of the version that brought it */
   resetBefore:91,resetScope:"all",
   focusMin:.5,gardenLoft:.5,loftCore:["bedroom","closet","gameroom","patio"],bobaEarn:20000,
   /* the Mall waits for every Kode Plaza room to be built (econsim: going by only the rooms a player had, it opened on day 18, before
@@ -155,7 +169,7 @@ var ECON={
   /* w-econ3 (Cal: "im okay with keeping the big purchases to a day's income. only some of them should be that expensive"): each room's
      big moments (1 or 2) cost about bigDay of a regular player's daily income at the time that room opens (roomDay, measured with
      econsim); everything else is priced for its tier as before */
-  bigDay:1,
+  bigDay:.75,
   roomDay:{gameroom:6500,lair:11500,garden:11500,restaurant:11500,skybar:15500,rooftop:17000,boba:17000,dessert:18500,mall:18500,
     theater:19000,auditorium:19000,arcade:21000,rhythm:21000,vr:21000,bowling:21000,karaoke:21000,club:22000},
   bigMoment:{gameroom:["gm_tv80"],lair:["lr_core"],garden:["g_green2"],restaurant:["r_x2"],skybar:["sb_piano"],rooftop:["rf_pool","rf_tub"],
@@ -163,14 +177,15 @@ var ECON={
     vr:["vr_wall"],bowling:["bw_lane1"],karaoke:["ka_booth"],club:["cb_vip","cb_floor"]},
   /* w-econ3: what a regular player makes in a day at a level and how much of it is quest coins (econsim), what a permanent upgrade
      takes to pay back (payDays), and the share of a day an interface item or a non-percent upgrade costs */
-  dayInc:[[1,6000],[10,9500],[30,10500],[60,18500],[90,23000],[100,24000]],
-  questInc:[[1,3500],[10,4100],[30,4700],[60,5700],[90,5800],[100,5800]],
+  dayInc:[[1,6000],[10,10000],[30,11400],[60,21200],[90,32200],[100,32200]],
+  questInc:[[1,3500],[10,4900],[30,5700],[60,6600],[90,12200],[100,12200]],
   payDays:15,utilDay:{freeze:.5,streak:.6,away:.6},uiDay:.12,
   buff:{bf_coin1:1500,bf_coin2:3000,bf_coin3:5000,bf_xp1:800,bf_xp2:1500,bf_xp3:2500,bf_freeze:1000,bf_streak:1500,bf_away:2000},
 };
 /* a story lot's padlock on the street is its story level (ROOMT.lv said 16 for the Boba lot, 24 the Theater, 30 the Mall, 50
    the Club, so the street and the story disagreed) */
-["garden","boba","theater","mall","club"].forEach(function(k){if(ROOMT[k]&&ECON.stepLv[k])ROOMT[k].lv=ECON.stepLv[k]});
+/* Cal (2026-11-10): no level on story rooms; the story and its triggers open them (a lot no longer says "unlocks at level N") */
+["garden","boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].lv=ECON.stepLv[k]||1});
 /* ---- today's effort ---- */
 function dqState(){var t=today();if(!S.dq||S.dq.d!==t){var prev=S.dq||{};S.dq={d:t,tx:0,spent:0,paid:0,done:0,hid:0,buff:prev.hidFor===t?1:0}}return S.dq}
 function dqGoal(){return ECON.dqGoal}
@@ -188,7 +203,23 @@ function stats4(){if(!S.sp||typeof S.sp!=="object")S.sp={str:0,agi:0,vit:0,int:0
    every upgrade read 74% and the payout share never reached shareFull) */
 function upRooms(){return Object.keys(ADDONS).filter(function(k){return typeof ROOMCELL!=="undefined"&&ROOMCELL[k]&&!(typeof styStep==="function"&&(styStep(k)||{}).how==="never")})}
 function upFrac(){var own=0,all=0;upRooms().forEach(function(k){var r=S.base.slots.filter(function(x){return x&&x.t===k})[0];(ADDONS[k]||[]).forEach(function(a){if(!a[0]||(a[3]&&a[3].retired))return;all++;if(r&&r.a&&r.a[a[0]])own++})});return all?own/all:0}
-function payShare(){return ECON.shareBare+(ECON.shareFull-ECON.shareBare)*upFrac()+Math.min(ECON.vitMax,stats4().vit*ECON.vit)}
+/* w-econ3: flat, so one upgrade anywhere no longer moves it by a hair; each business has its own day (bizLeft) under it */
+function payShare(){return ECON.shareFull+Math.min(ECON.vitMax,stats4().vit*ECON.vit)}
+/* ---- each business's own day (w-econ3, Cal: an earning upgrade must visibly raise what that business pays) ----
+   bizInit sets a business's coins an hour from ECON.bizDay: fully upgraded (every "+N%" and every extra hour it holds) at full speed
+   it makes bizDay[room] in the hours it holds. It reads the room's upgrades as they are, so a file that adds one later is covered
+   (it runs again from econEarn and on the first simulate). */
+function bizInit(k){Object.keys(ECON.bizDay).forEach(function(t){if(k&&t!==k)return;var T=ROOMT[t];if(!T)return;var sp=0,cp=0;
+  (ADDONS[t]||[]).forEach(function(a){var e=a[3]||{};if(e.retired)return;sp+=+e.p||0;cp+=+e.cap||0});T.coin=Math.round(ECON.bizDay[t]/(1+sp)/((T.store||8)+cp)*1000)/1000})}
+var BIZINIT=0;function bizReady(){if(!BIZINIT){BIZINIT=1;bizInit();econSort()}}
+function bizVit(){return 1+Math.min(ECON.vitMax,stats4().vit*ECON.vit)}
+/* a business's day at full speed now, and how much its upgrades add over the bare room */
+function bizDayOf(i){bizReady();var r=bslot(i),T=r&&ROOMT[r.t];if(!T||!T.coin||!ECON.bizDay[r.t])return 0;return T.coin*roomMult(i)*roomStore(r)*bizVit()}
+function bizUpPct(r){var sp=0;addonsOf(r).forEach(function(a){sp+=+a[3].p||0});return Math.round(((1+sp)*roomStore(r)/((ROOMT[r.t]||{}).store||8)-1)*100)}
+/* what it may still pay today (the town's efficiency today, less what it paid) */
+function bizLeft(r,i){if(!r||!ECON.bizDay[r.t])return Infinity;var d=dqState().d,p=r.pd&&r.pd.d===d?r.pd.n:0;return Math.max(0,Math.floor(bizDayOf(i)*openMult()-p))}
+function bizPaid(r,n){var d=dqState().d;if(!r.pd||r.pd.d!==d)r.pd={d:d,n:0};r.pd.n+=n}
+var bizSimBase=simulate;simulate=function(){bizReady();return bizSimBase.apply(this,arguments)};
 /* the names 30_app_b.js calls: what the businesses may still pay out today, and recording what they paid */
 function payQuest(){return Object.keys(S.cdone||{}).reduce(function(a,k){return a+(S.cdone[k]||0)},0)}
 function payDay(){var d=dqState();return {d:d.d,n:d.paid}}
@@ -271,7 +302,39 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
   /* lots on the street, and the Garden's knock-through that opens the Restaurant (it keeps the Restaurant's own price) */
   ["boba","theater","mall","club"].forEach(function(k){if(ROOMT[k])ROOMT[k].cost=Math.round(ECON.lot*econPhase(k)*econLate(k)/50)*50});
   if(ROOMT.garden)ROOMT.garden.cost=ECON.lotGarden;
-  if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")*econLate("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}})();
+  if(ROOMT.restaurant){ROOMT.restaurant.cost=Math.round(ECON.opener*econPhase("restaurant")*econLate("restaurant")/50)*50;(ADDONS.garden||[]).forEach(function(a){if(a[0]==="gd_rest")a[2]=ROOMT.restaurant.cost})}
+  econRules()})();
+/* ---- Cal's price rules (w-econ3, 2026-11-10: "For small upgrades that are looks only, they should be cheaper in every room. For items
+   that increase the passive income, those can be priced higher. The order of upgrades need to make sense too. if a table is 800, but
+   plants are 1800, there is a problem here in continuity"), after the pass above, room by room:
+   1. looks only (in a business: no "+N%"; elsewhere: decor with no effect) costs the room's decor price, flat (no list ramp), and never
+      more than the room's cheapest other upgrade;
+   2. in a business, the earning upgrades share what the room's earners and looks cost before, by their "+N%" as written (what the piece
+      does, not its old price), so each pays itself back in the same number of days and the card can say its coins a day;
+   3. moments keep their price (openers, expansions, PRICE_HUGE pieces, the big moments, fixed:1);
+   4. each list is in price order, cheapest first, and a piece that needs another comes right after it (at its own price).
+   No invisible upgrades: the Back Office Safe and the Root Cellar drew nothing and only held more hours, so they leave the shop
+   (ECON.retire); owners keep them and what they do, and the ids stay. */
+function econRules(){(ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
+  Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k]||{},biz=!!(T.coin||T.food),A=ADDONS[k]||[],L=A.filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});if(!L.length)return;
+    var mom=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion"||ECONKIND[k+"|"+a[0]]==="grand"||(ECON.bigMoment[k]||[]).indexOf(a[0])>=0)};
+    var looks=function(a){var e=a[3]||{};return !mom(a)&&!(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&(biz||ECONKIND[k+"|"+a[0]]==="decor")};
+    var flat=Math.max(50,Math.round(ECON.tier.decor*econPhase(k)*econLate(k)/50)*50),Lk=L.filter(looks),Le=biz?L.filter(function(a){return !mom(a)&&!looks(a)&&+(a[3]||{}).p>0}):[];
+    var before=0;Lk.concat(Le).forEach(function(a){before+=+a[2]});
+    Lk.forEach(function(a){a[2]=flat});
+    if(Le.length){var sp=0;Le.forEach(function(a){sp+=+a[3].p});var rest=Math.max(flat*Le.length,before-flat*Lk.length);
+      Le.forEach(function(a){a[2]=Math.max(flat,Math.round(rest*a[3].p/sp/50)*50)})}
+    var minO=L.filter(function(a){return !looks(a)}).reduce(function(m,a){return Math.min(m,+a[2])},Infinity);
+    if(minO<Infinity)Lk.forEach(function(a){if(a[2]>minO)a[2]=Math.max(50,Math.floor(minO/50)*50)});
+    /* a piece that needs another keeps its own price; econSort lists it after what it needs */
+    });
+  econSort()}
+/* each list in price order, cheapest first (stable), a piece right after what it needs if that costs more, the retired ones last.
+   Runs again on the first simulate, after every file has set its prices (29i_garden.js sets the Sprinklers') */
+function econSort(){Object.keys(ADDONS).forEach(function(k){var A=ADDONS[k]||[],by={},pos={},key={};A.forEach(function(a,i){by[a[0]]=a;pos[a[0]]=i});
+  var kf=function(a,d){if(key[a[0]]!=null)return key[a[0]];var e=a[3]||{},q=by[ADDREQ[a[0]]]||by[e.also],v=+a[2]||0;if(q&&d<5&&!(q[3]&&q[3].retired))v=Math.max(v,kf(q,d+1)+.5);return key[a[0]]=v};
+  A.forEach(function(a){kf(a,0)});
+  A.sort(function(x,y){var rx=x[3]&&x[3].retired?1:0,ry=y[3]&&y[3].retired?1:0;return rx-ry||key[x[0]]-key[y[0]]||pos[x[0]]-pos[y[0]]})})}
 /* Shop prices (SHOP and GITEMS in 10_app_a.js, EXTRA_ITEMS in 15_shop.js), each item once even if it sits in two lists:
    graded clothes by their quality tier (ECON.cloth), the rest x shopK between clothesMin and clothesMax (the free-to-cheap basics
    just x shopK), permanent upgrades from ECON.buff, and interface items (themes, frames, backdrops, companions, titles, tap
@@ -325,13 +388,15 @@ function rbMult(t){return ECON.roomBonusRooms[t]&&typeof r2Rb==="function"?r2Rb(
    before them too), and the room's total stays what it was. In a room that does not earn coins (the Pond) the shares keep their
    sizes but go in price order. econEarn(t) does one room; a file that sets a price later runs it again (29i_garden.js, the
    Sprinklers). The card's "Earns +N% here." follows the share (QA, v0.90: it used to be added a second time). ---- */
-function econEarn(t){Object.keys(ADDONS).forEach(function(k){if(t&&k!==t)return;var T=ROOMT[k]||{},earns=!!(T.coin||T.food);
+function econEarn(t){Object.keys(ADDONS).forEach(function(k){if(t&&k!==t)return;var T=ROOMT[k]||{},earns=!!(T.coin||T.food);if(ECON.bizDay&&ECON.bizDay[k])bizInit(k);
   var L=(ADDONS[k]||[]).filter(function(a){var e=a[3]||{};return e.p>0&&!e.retired&&!e.opens&&+a[2]>0});if(L.length<2)return;
   var tot=0,wt=L.map(function(a){tot+=a[3].p;return earns?+a[2]:a[3].p});
   if(!earns){var mx=0;L.map(function(a,i){return i}).sort(function(x,y){return L[x][2]-L[y][2]||x-y}).forEach(function(i){if(wt[i]<mx)wt[i]=mx;mx=wt[i]})}
   var ws=wt.reduce(function(s,w){return s+w},0);if(!(ws>0))return;
   L.forEach(function(a,i){var e=a[3],np=Math.round(tot*wt[i]/ws*1000)/1000,s=String(a[4]||""),had=/Earns \+\d+% here\./.test(s);e.p=np;
-    a[4]=s.replace(/\s*Earns \+\d+% here\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here.":"")})})}
+    /* w-econ3: a business's card also says about what it adds a day, fully at full speed */
+    var day=ECON.bizDay&&ECON.bizDay[k]&&T.coin?Math.round(T.coin*np*(T.store||8)/10)*10:0;
+    a[4]=s.replace(/\s*Earns \+\d+% here[^.]*\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here"+(day>0?", about +"+day.toLocaleString()+" coins a day":"")+".":"")})})}
 econEarn();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
    items get ECON.l90 in econPrice when the Mac makes them; pets at 30 come with their art (W23) ---- */
@@ -351,5 +416,8 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function rmStats(r,i,base){var T=ROOMT[r.t],L=ADDONS[r.t]||[],own=addonsOf(r).length,all=L.filter(function(a){return !(a[3]&&(a[3].retired||a[3].opens))}).length;
   if(ECON.roomBonusRooms[r.t]){var n=rbList(r.t).filter(function(a){return r.a&&r.a[a[0]]}).length,tot=rbList(r.t).length;
     return ECON.roomBonusRooms[r.t]+" +"+rbPct(r)+"% XP on every quest ("+n+" bought, up to +"+ECON.roomBonus+"%)"+(roomCrew(i).length?", crew +"+roomCrew(i).length+"%":"")}
-  if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, payout share "+Math.round(payShare()*100)+"%, "+own+" upgrades bought";
+  /* w-econ3: a business says what it earns a day and what its upgrades add (Cal: "+22% produce" has to show in coins) */
+  if(T.coin&&ECON.bizDay[r.t]){var bd=bizDayOf(i),up=bizUpPct(r);
+    return "Earns about "+(Math.round(bd/10)*10).toLocaleString()+" coins a day"+(up>0?" (+"+up+"% from upgrades)":"")+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought"}
+  if(T.coin||T.food)return base+". Town at "+Math.round(dqEff()*100)+"% today, "+own+" upgrades bought";
   return base}
