@@ -1435,6 +1435,8 @@ function render(){
   if(nt){ if(fitK===fitKey(nt))nt.style.height=fitH;else fit(nt); if(hadFocus){nt.focus();nt.setSelectionRange(nt.value.length,nt.value.length)} }
   applyFx();
   document.body.classList.toggle("shopmode",view==="shop");document.body.classList.toggle("loftmode",view==="hideout");
+  /* W14/W50: each main screen has its own palette (index.html, BUILDER w-colors); on <html>, since applyFx rewrites the body's classes */
+  document.documentElement.setAttribute("data-view",view);
   if(view==="hideout"&&typeof lfMount==="function")lfMount();
   try{dropCheck()}catch(e){}
 }

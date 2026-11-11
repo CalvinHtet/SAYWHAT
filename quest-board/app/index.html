@@ -1616,6 +1616,40 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .bs-scorched{flex-direction:column;align-items:flex-start}
 @keyframes bsBob{50%{transform:translateY(-3px)}}@keyframes bsFire{to{opacity:.55;transform:scaleY(1.08)}}
 @media (prefers-reduced-motion:reduce){.bs-mon,.bs-flames{animation:none!important}}
+/* BUILDER w-colors (W50, W14). Cal: "The town hall right now is still the same color as the board instead of the color of the picture
+   in the town hall banner" and "Every menu and screen should feel slightly different".
+   - render() puts the screen on <html> as data-view (30_app_b.js).
+   - The Hall has its own palette, sampled from its banner picture (ui_town_board.webp): dusk sky #a5c5e2, terracotta and peach
+     #b28a6a, mauve #986f63, warm shadow #604d46, cream #d8ccce, the string lights' gold.
+   - Every other screen keeps its rank's palette with a small tint (--vt, --vk) mixed into the background, the surfaces and the lines,
+     each taken from that screen's art: Training the leather and skin of the exercise pictures (ex_*), the Loft the dusty rose of its
+     building picture (bld_bg_loft), the Crawls the jade of the treasure art (ui_tr_amulet_*), Relics the bronze of the relic art
+     (ui_relic_*), the Wheel the gold of its logo (logo_wheel). The Board keeps the rank palette as it is (the home screen the ranks
+     were drawn for), and the Shop keeps the paper and colours of the brand on show (shopmode). The profile has no art of its own
+     besides the character: a soft violet picked in code (#6b5fb0).
+   - The mix lives on <html> under other names (--v-*), and body takes it: a custom property cannot be mixed from itself.
+   - A bought theme still sets the accent: it is written inline on <html>, which beats every rule here, and no rule here sets the accent
+     below <html>. Text colours stay the rank's except in the Hall. Checked for every rank: body and muted text keep WCAG AA (4.5:1) on every surface. */
+@supports (color:color-mix(in srgb,red,blue calc(10% * 2))){
+:root[data-view]{--vt:transparent;--vk:0%;--pt:#6b5fb0;--pk:12%;
+  --v-bg:color-mix(in srgb,var(--bg),var(--vt) var(--vk));--v-surface:color-mix(in srgb,var(--surface),var(--vt) var(--vk));
+  --v-surface2:color-mix(in srgb,var(--surface2),var(--vt) calc(var(--vk)*.6));--v-line:color-mix(in srgb,var(--line),var(--vt) calc(var(--vk)*2));
+  --v-glow1:color-mix(in srgb,var(--glow1),color-mix(in srgb,var(--vt) calc(var(--vk)*1.6),transparent) calc(var(--vk)*4));
+  --v-glow2:color-mix(in srgb,var(--glow2),color-mix(in srgb,var(--vt) calc(var(--vk)*1.6),transparent) calc(var(--vk)*3));
+  --p-surface:color-mix(in srgb,var(--surface),var(--pt) var(--pk));--p-surface2:color-mix(in srgb,var(--surface2),var(--pt) var(--pk));
+  --p-line:color-mix(in srgb,var(--line),var(--pt) calc(var(--pk)*2))}
+:root[data-view="train"]{--vt:#8c5a3c;--vk:11%}
+:root[data-view="hideout"]{--vt:#b2897d;--vk:11%}
+:root[data-view="away"]{--vt:#4f9d86;--vk:12%}
+:root[data-view="trophy"]{--vt:#9a6a45;--vk:12%}
+:root[data-view="wheel"]{--vt:#c2a55a;--vk:10%}
+:root[data-view] body{--bg:var(--v-bg);--surface:var(--v-surface);--surface2:var(--v-surface2);--line:var(--v-line);--glow1:var(--v-glow1);--glow2:var(--v-glow2)}
+:root[data-view] .modal.profm{--surface:var(--p-surface);--surface2:var(--p-surface2);--line:var(--p-line)}
+}
+:root[data-view="hall"]{--bg:#17121a;--surface:#231a22;--surface2:#30232a;--line:#5c4441;--fg:#fbf1ea;--muted:#c3aca6;
+  --accent:#e8a582;--accent2:#a5c5e2;--accent-ink:#24130c;--gold:#f3c97a;
+  --glow1:rgba(165,197,226,.20);--glow2:rgba(232,165,130,.24);--shadow:rgba(232,165,130,.30);--gridc:rgba(232,165,130,.07)}
+:root[data-view="hall"] body{background:radial-gradient(70% 38% at 88% -8%,var(--glow2),transparent 70%),radial-gradient(60% 30% at -6% 4%,var(--glow1),transparent 70%),linear-gradient(180deg,#1f1d33 0,#17121a 70vh);background-repeat:no-repeat;background-attachment:fixed}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>
