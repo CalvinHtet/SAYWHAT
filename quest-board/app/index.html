@@ -1676,6 +1676,17 @@ body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#1f1b16);opacity:.85}
 .sq-stamp{position:absolute;right:10px;bottom:8px;font:800 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.12em;color:#ff7a18;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 6px #17d4e6}
 .sq-dogpic{object-fit:contain;background:var(--surface2)}
 .dng.sq-dng{border:1px solid rgba(23,212,230,.45)}
+/* BUILDER w-rafe (W35): Rafe's hunt montage, 4 full-screen pictures; a dark panel with its line until the Mac paints them */
+.rfm{position:fixed;inset:0;z-index:60;background:#05060a}
+.rfm-f{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}.rfm-f.on{opacity:1}
+.rfm-f img,.rfm-ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rfm-ph{background:radial-gradient(120% 80% at 50% 30%,hsl(var(--rfh,200) 45% 26%),hsl(var(--rfh,200) 40% 9%) 70%,#05060a)}
+.rfm-f.on img,.rfm-f.on .rfm-ph{animation:rfZoom 1.6s ease-out both}
+.rfm-f p{position:absolute;left:24px;right:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 72px);margin:0;color:#f4eee2;font:600 20px/1.35 var(--font-display,system-ui);text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.rfm-skip{position:absolute;right:16px;top:calc(env(safe-area-inset-top,0px) + 14px);padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.35);color:#fff;font:600 13px system-ui}
+@keyframes rfZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.rfm-f{transition:none}.rfm-f.on img,.rfm-f.on .rfm-ph{animation:none}}
+.rf-relic .r2{margin:10px auto 14px;max-width:220px}
 </style>
 
 <div class="wrap" id="app" aria-live="polite"></div>

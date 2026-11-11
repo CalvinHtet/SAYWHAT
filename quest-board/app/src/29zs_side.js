@@ -153,7 +153,10 @@ function sqVerdict(q,ok,msg,url,p,what){
 function sqFinish(q,url,p){var o=sqState();if(o.done[q.id])return;o.done[q.id]=today();
   if(q.id==="theo")o.prem=ymdOfN(ymdN(today())+1);
   if(q.id==="sable")sqDngCheck();
+  /* a side-quest with its own ending (Rafe's hunts, 29zt_rafe.js): give keeps the reward, fin plays the ending */
+  if(q.give)q.give();
   sqOwe();persist();render();
+  if(q.fin){q.fin(url,p);return}
   var m=modal(sqCard(q,q.done,'<button class="btn" data-act="mclose">Continue</button><small class="sty-xp">'+esc(q.reward)+'</small>'));
   if(m&&url){var c=m.querySelector(".sty-who");if(c)c.insertAdjacentHTML("afterend",sqShot(url,p))}}
 /* Theo's movie night: done when the friend named this player on the same game day */
@@ -185,7 +188,7 @@ var sqClaimBase=dngClaim;dngClaim=function(){try{sqDngCheck()}catch(e){}return s
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=sqyes],[data-act=sqno],[data-act=sqsnap]");if(!b)return;var id=b.dataset.v,q=sqOf(id),o=sqState();if(!q)return;
   var m=b.closest(".modal");
   if(b.dataset.act==="sqno"){o.later[id]=Date.now()+20*3600000;persist();if(m)m.remove();return}
-  if(b.dataset.act==="sqyes"){if(!o.on[id])o.on[id]=today();persist();if(m)m.remove();render();pop("Side-quest added to your board");return}
+  if(b.dataset.act==="sqyes"){if(!o.on[id])o.on[id]=today();persist();if(m)m.remove();render();pop((q.added||"Side-quest")+" added to your board");if(q.onYes)q.onYes();return}
   if(m)m.remove();if(proofPend["sq:"+id]){pop("Still checking that photo");return}sqAsk(id)});
 document.addEventListener("change",function(e){if(e.target&&e.target.id==="sqf1"){var f=e.target.files&&e.target.files[0];e.target.value="";sqFile(f)}});
 /* at load and now and then: a saved door, owed pieces, Theo's friend */
