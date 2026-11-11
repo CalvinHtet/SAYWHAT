@@ -16,15 +16,15 @@ var REWARDS=[
  [25,"The Hammock Protocol","One afternoon, zero tasks. The list cannot find you."],
  [30,"Side Quest: Unknown Map","A day somewhere you have never been. Bring a party member."],
  [35,"Total Recharge","Massage, soak, or a really good haircut. Phone stays in your inventory."],
- [40,"The White Whale","The bigger thing you keep talking yourself out of. Hunt it down."],
- [45,"Front Row Pass","Concert, game, comedy, theater. Go loud with someone who cares."],
+ [40,"The White Whale","The bigger thing you keep putting off. Hunt it down."],
+ [45,"Front Row Pass","Concert, game, comedy, theater. Sit close and bring someone."],
  [50,"Portal Out of Town","One night anywhere that isn't home. Pack the bag first, think later."],
  /* 55, 65, 70, 80, 85, 90 and 95: so the levels past 50 are never more than five apart (2026-11-09, drafts for Cal to reword) */
  [55,"Gear Check","Replace the one worn-out thing you use every day. Shoes, headphones, the pan with the scratched bottom."],
  [60,"The Stopped Clock","A whole day that's only yours. Sleep in. Everyone else can wait."],
- [65,"Field Trip","A day out with no errands attached. Pick a direction, not a plan."],
- [70,"Chef's Table","Dinner somewhere you would normally save for a special occasion. This is the occasion."],
- [75,"The Someday Scroll","The trip or first you keep saying someday about. Today is someday. Book it."],
+ [65,"Field Trip","A day out with no errands attached. Pick a direction and go."],
+ [70,"Chef's Table","Dinner at the place you would normally save for a special occasion."],
+ [75,"The Someday Scroll","The trip or first-time thing you keep saving for someday. Pick a date and book it."],
  [80,"Hall of Fame","Frame something from this run: a photo, a ticket, a page. Hang it where you will see it."],
  [85,"The Upgrade","Trade up one thing you use every week for the version you actually wanted."],
  [90,"First Fragment","Something old and strange for the shelf: a print, a record, a find from a market stall."],
@@ -255,7 +255,7 @@ var CLASSES={
   story:["A quiet road, a chipped rune stone, and a tune you cannot stop humming. The first town goes quiet when you play.","In the market, strangers hum your melody back to you, a little off."],
   fork:"Three roads open. One leads to grand stages, one to a quiet tower where spells are written note by note, and one to a cathedral where music heals.",specs:["songcaller","spellwright","cantor"],
   p:{bg:"#07060d",s:"#100f1c",s2:"#1a1830",line:"#2a2650",fg:"#f1f0fb",muted:"#8d89ad",a:"#ff3d81",b:"#8b5cff",ink:"#16050c"}},
- swiftblade:{name:"Swiftblade",tag:"Fast, clean, finished.",
+ swiftblade:{name:"Swiftblade",tag:"Cut through the list.",
   role:"For getting things done: projects, chores, errands. Pick this if checking boxes is your favorite feeling.",
   sig:{name:"Quick Loot",text:"Productivity quests pay 25% more coins."},
   perk:{stat:"productivity",pct:15,text:"Productivity quests +15% XP"},
@@ -560,9 +560,9 @@ var DNPC=[
  {id:"sera",d:"spire",name:"Seraphine the Spire Keeper",line:"Kept the top floor lit for a hundred years.",buff:{special:"coin",pct:6,text:"Coins +6%"}}];
 var DNG_OPEN=["You stepped in as the lights flickered on.","A cold draft pushed you down the first stairwell.","Your lantern caught something shiny almost at once.","The door shut behind you with a long creak.","You counted your steps and lost count at forty.","A distant drip kept time with your footsteps."];
 var DNG_WIN=["A loose panel gave way to a stash of coins.","You waited out a patrol and slipped past with their supplies.","A map scrawled on the wall pointed to a hidden cache.","You solved a three-switch lock on the first try.","A friendly stranger traded you a pouch for directions out.","You found a dusty chest and sprang only one small trap."];
-var DNG_END=["You climbed out with your pack heavier and your head high.","It was bright out when you surfaced.","You were home before the kettle stopped whistling.","Nobody believed the story. The coins were real.","You left a chalk arrow for whoever comes next."];
+var DNG_END=["You climbed out with a heavier pack.","It was bright out when you surfaced.","You were home before the kettle stopped whistling.","You counted the coins twice on the walk home.","You left a chalk arrow for whoever comes next."];
 var DNG_BAD=["You were a bit green for this place: a rockfall cut the path, so you dropped your pack and ran.","A trap you should have spotted at a higher level sent you tumbling. Half the loot stayed behind.","Something large woke up. You left coins on the floor and ran for the exit.","The floor gave out. You climbed back with what you could carry.","Your lantern died in a long corridor. You felt your way out and lost the bag on the stairs.","A goblin at a gate charged a toll. You paid most of what you had."];
-var DNG_BAD2=["Level up a little and this place will feel a lot kinder.","Lesson learned: bring a rope next time.","Even the best crawlers drop the pack sometimes.","Next time, bring a second lantern."];
+var DNG_BAD2=["A few more levels and this place gets easier.","Bring a rope next time.","You sat on the curb outside and counted what was left.","Next time, bring a second lantern."];
 function dngInit(){if(!S.dng||typeof S.dng!=="object")S.dng={};var D=S.dng;if(!Array.isArray(D.runs))D.runs=[];if(!D.cd)D.cd={d:"",n:0};if(!D.npcs)D.npcs={};if(!D.log)D.log=[];return D}
 function dngSlots(){return 1+(S.owned&&S.owned.bf_away?1:0)}
 function dngRand(a){return a[Math.floor(Math.random()*a.length)]}
@@ -586,8 +586,8 @@ function dngStart(id){
   var d=DNG.filter(function(q){return q.id===id})[0],D=dngInit(),t=today();
   if(!d||d.lv>effLvl()||D.runs.length>=dngSlots())return;
   if(D.cd.d!==t)D.cd={d:t,n:0};
-  if(D.cd.n>=dngPerDay()){pop(dngPerDay()+" crawls a day is plenty. Rest up.");return}
-  D.cd.n++;D.runs.push(dngRoll(d));render();persist();pop("Into "+d.name+". Go do your day!");
+  if(D.cd.n>=dngPerDay()){pop("All "+dngPerDay()+" crawls used today. More tomorrow.");return}
+  D.cd.n++;D.runs.push(dngRoll(d));render();persist();pop("Into "+d.name+". Go do your day.");
 }
 function dngClaim(k,ev){
   var D=dngInit(),r=D.runs[k];if(!r||Date.now()<r.end)return;
@@ -683,7 +683,7 @@ var SHOP=[
  ["th_sunset","theme","Sunset Drive",60,3,"Warm orange and hot pink across the board.",{a:"#ff8a3d",b:"#ff3d81"}],
  ["th_mint","theme","Mint Circuit",70,5,"Cool mint and cyan.",{a:"#4dffc3",b:"#22d3ee"}],
  ["th_ultra","theme","Ultraviolet",90,8,"Deep violet glow.",{a:"#b388ff",b:"#6c5bff"}],
- ["th_gold","theme","Gold Rush",150,12,"Everything gleams.",{a:"#ffc857",b:"#ff8a3d"}],
+ ["th_gold","theme","Gold Rush",150,12,"Gold and warm orange across the board.",{a:"#ffc857",b:"#ff8a3d"}],
  ["th_blood","theme","Blood Moon",150,18,"Crimson over black.",{a:"#ff2e4d",b:"#7a1030"}],
  ["fr_neon","frame","Neon Frame",80,4,"Your status cards get a glowing outline."],
  ["fr_circuit","frame","Circuit Frame",120,9,"A dashed tech border."],
@@ -692,11 +692,11 @@ var SHOP=[
  ["bg_rain","bg","Neon Rain",110,7,"Rain falls in your accent color."],
  ["bg_city","bg","City Skyline",160,13,"A lit skyline along the bottom."],
  ["pet_slime","pet","Pixel Slime",90,5,"A slime that bounces on your status card."],
- ["pet_fox","pet","Ember Fox",140,10,"A fox with a spark of ember."],
- ["pet_cat","pet","Void Cat",200,16,"Quiet, watchful, golden eyes."],
+ ["pet_fox","pet","Ember Fox",140,10,"An orange fox with a gold spark over one ear."],
+ ["pet_cat","pet","Void Cat",200,16,"A dark cat with gold slit eyes, outlined in your accent color."],
  ["tt_grinder","title","The Grinder",40,3,"A title under your name."],
  ["tt_owl","title","Night Owl",40,6,"For the late sessions."],
- ["tt_menace","title","Menace",75,11,"Self explanatory."],
+ ["tt_menace","title","Menace",75,11,"Shows Menace under your name."],
  ["bu_confetti","burst","Confetti Burst",100,4,"Taps burst into multicolor confetti."],
  ["bu_star","burst","Starlight Burst",130,8,"Taps burst into gold and white sparks."],
  ["bf_xp1","buff","Focus Rune I",150,2,"All quests +3% XP, forever.",{k:"xp",v:3}],
@@ -883,11 +883,12 @@ function trophyHtml(){
   if(cl.length)h+='<section class="card panel"><h3 class="label">Rewards claimed</h3><div class="titles">'+cl.map(function(r){return '<span class="chip">'+esc(rwT(r))+'</span>'}).join("")+'</div></section>';
   return h;
 }
-function buy(id,ev){ifSound("buy");
+function buy(id,ev){
   var it=shopItem(id); if(!it||S.owned[id]||effLvl()<it[4]||!itemFits(it))return;
   if(it[6]&&it[6].req&&!S.owned[it[6].req])return;
   if(S.coins<it[3]){pop("Need "+(it[3]-S.coins)+" more coins");return}
   S.coins-=it[3];S.spent+=it[3];S.owned[id]=true;if(it[1]!=="buff")S.eq[it[1]]=id;
+  try{qbSnd("buy")}catch(x){}/* W56: after the coins are spent (it used to play first, even when the buy was refused) */
   checkBadges();render();persist();
   if(ev&&ev.clientX!=null)burst(ev.clientX,ev.clientY,22);
   pop(it[1]==="buff"?it[2]+" is now active":"Bought "+it[2]+". Equipped.");
@@ -1427,7 +1428,7 @@ function ccAct(a,b,e){
       var tc=Math.round(cum(QB_TEST_START)*2.5),pl;for(pl=(S.lvPaid||1)+1;pl<=QB_TEST_START;pl++)tc+=levelPay(pl);
       S.coins=(S.coins||0)+tc;S.earnedC=(S.earnedC||0)+tc;S.lvPaid=Math.max(S.lvPaid||0,QB_TEST_START)}
     render();persist();
-    if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your first quest awaits.");setTimeout(welcomeOnce,2600)}
+    if(first){var f=document.createElement("div");f.className="flash";document.body.appendChild(f);setTimeout(function(){f.remove()},800);burst(innerWidth/2,innerHeight/3,34);pop("Welcome, "+S.char.name+". Your board is ready.");setTimeout(welcomeOnce,2600)}
     else pop("Look saved");
   }
 }
@@ -1439,7 +1440,7 @@ function charCard(){
 /* the avatar opens the profile (Cal, 2026-11-09): the character, then everything that used to crowd the Board (profileHtml) */
 function charModal(){
   var m=modal('<div class="card box2 adv prof"><div class="prof-top"><div class="figwrap">'+calImg(lookOf(),"idle",120,"")+'</div><div><h2>'+esc((S.char&&S.char.name)||"Hunter")+'</h2><p class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+' &middot; '+S.coins+' coins</p>'
-   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button></div></div><div class="prof-body">'+profileHtml()+'</div></div>');
+   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button>'+(typeof sndBtn==="function"?sndBtn():'')+'</div></div><div class="prof-body">'+profileHtml()+'</div></div>');
   m.classList.add("profm");
   return m;
 }
@@ -1635,7 +1636,7 @@ var FOODN={veg:"Veg",grain:"Grain",fish:"Fish"};
 var DISHES={salad:["Garden Salad",{veg:1},.2],omelet:["Farm Omelette",{grain:1},.2],rice:["Fried Rice",{veg:1,grain:1},.35],sushi:["Sushi Platter",{fish:1},.5],ramen:["Signature Ramen",{veg:1,grain:1,fish:1},.8]};
 /* add-ons: [id,name,cost,effect,line]  effect: p=+production, cap=+storage hours, xp=+buff pct, dish=recipe, crew=+crew slot, req=room type needed, served=dishes served needed */
 var ADDONS={
- bedroom:[["bd_bed1","Memory Foam Bed",70,{},"Upgrade: a thick memory foam mattress."],["bd_bed2","Premium LED Bed",190,{},"Upholstered headboard with a warm backlight."],["bd_chair0","Desk Chair",35,{},"Padded seat, fixed back."],["bd_chair1","Ergo Chair",85,{},"Mesh back, adjustable arms and height."],["bd_chair2","Racing Chair",160,{},"Bucket seat with a lumbar pillow."],["bd_ward1","Sleek Wardrobe",90,{},"Handleless doors, more room."],["bd_ward2","Walk-in Closet",200,{},"Knocks out the wall: a lit walk-in closet bulges out of your room, with a backlit shoe & bag wall and a marble dressing island."],["bd_lair","Hero's Lair",280,{adv:1},"A walkway out of the closet to a bare, dark hideout. Fill it with gear."],["bd_lr_rack","Server Racks",150,{},"Humming towers on the walls."],["bd_lr_desk","Supercomputer Console",320,{},"Curved command desk and a wall of live screens."],["bd_lr_trophy","Trophy Wall",170,{},"Lit shelves for your best loot."],["bd_lr_arm","Armory Wall",230,{},"Tools and gadgets, racked and ready."],["bd_lr_suit","Hero Suit Cases",300,{},"Three armor suits lit like museum pieces."],["bd_lr_holo","Holo War Table",310,{},"Plan the next quest in 3D."],["bd_desk1","Standing Desk",80,{},"An oak top on a motorised frame."],["bd_pc1","Gaming PC",140,{},"A tower with a glass side panel and lit fans."],["bd_pc2","Ultrawide Rig",320,{},"A curved ultrawide that loops your best visuals."],["bd_win2","Picture Window",110,{},"A wide black-framed window with a proper view."],["bd_win3","Floor-to-Ceiling Glass",190,{},"Knocks out the wall: three sliding glass panels."],["bd_patio","Patio Deck",260,{},"A deck behind the glass with a glass railing and planters."],["bd_swing","Egg Swing",150,{},"A rattan egg seat swinging over the deck."],["bd_pdeco","Patio Decor",110,{},"Outdoor rug, lanterns, string lights and more plants."],["bd_rug","Area Rug",20,{},"Softer floors."],["bd_plant","Fiddle Leaf",25,{},"A fiddle leaf fig in a clay pot."],["bd_nstand","Nightstand",25,{},"Oak, one drawer, a small lamp."],["bd_art1","Canvas Art",40,{},"One large abstract canvas."],["bd_art2","Gallery Prints",55,{},"Three framed prints."],["bd_art3","Anime Poster",65,{},"A framed print from your favourite series."],["bd_shelf","Bookshelf",60,{},"Five shelves of paperbacks and records."],["bd_fshelf","Figurine Shelf",75,{},"A shelf of painted figurines."],["bd_mirror","Full-length Mirror",120,{},"A floor mirror. Your outfit shows here."],["bd_clock","Wall Clock",30,{},"A plain white wall clock."],["bd_lights","LED Strips & Grass Panels",90,{},"Gradient LED cove lighting and a living grass wall."],["bd_neon","Neon Sign",120,{},"Pink neon script over the bed."]],
+ bedroom:[["bd_bed1","Memory Foam Bed",70,{},"Upgrade: a thick memory foam mattress."],["bd_bed2","Premium LED Bed",190,{},"Upholstered headboard with a warm backlight."],["bd_chair0","Desk Chair",35,{},"Padded seat, fixed back."],["bd_chair1","Ergo Chair",85,{},"Mesh back, adjustable arms and height."],["bd_chair2","Racing Chair",160,{},"Bucket seat with a lumbar pillow."],["bd_ward1","Sleek Wardrobe",90,{},"Handleless doors, more room."],["bd_ward2","Walk-in Closet",200,{},"Knocks out the wall: a lit walk-in closet bulges out of your room, with a backlit shoe & bag wall and a marble dressing island."],["bd_lair","Hero's Lair",280,{adv:1},"A walkway out of the closet to a bare, dark hideout. Fill it with gear."],["bd_lr_rack","Server Racks",150,{},"Humming towers on the walls."],["bd_lr_desk","Supercomputer Console",320,{},"Curved command desk and a wall of live screens."],["bd_lr_trophy","Trophy Wall",170,{},"Lit shelves for your best loot."],["bd_lr_arm","Armory Wall",230,{},"Tools and gadgets, racked and ready."],["bd_lr_suit","Hero Suit Cases",300,{},"Three armor suits lit like museum pieces."],["bd_lr_holo","Holo War Table",310,{},"Plan the next quest in 3D."],["bd_desk1","Standing Desk",80,{},"An oak top on a motorised frame."],["bd_pc1","Gaming PC",140,{},"A tower with a glass side panel and lit fans."],["bd_pc2","Ultrawide Rig",320,{},"A curved ultrawide monitor and a backlit keyboard."],["bd_win2","Picture Window",110,{},"A wide black-framed window with a proper view."],["bd_win3","Floor-to-Ceiling Glass",190,{},"Knocks out the wall: three sliding glass panels."],["bd_patio","Patio Deck",260,{},"A deck behind the glass with a glass railing and planters."],["bd_swing","Egg Swing",150,{},"A rattan egg seat swinging over the deck."],["bd_pdeco","Patio Decor",110,{},"Outdoor rug, lanterns, string lights and more plants."],["bd_rug","Area Rug",20,{},"Softer floors."],["bd_plant","Fiddle Leaf",25,{},"A fiddle leaf fig in a clay pot."],["bd_nstand","Nightstand",25,{},"Oak, one drawer, a small lamp."],["bd_art1","Canvas Art",40,{},"One large abstract canvas."],["bd_art2","Gallery Prints",55,{},"Three framed prints."],["bd_art3","Anime Poster",65,{},"A framed print from your favourite series."],["bd_shelf","Bookshelf",60,{},"Five shelves of paperbacks and records."],["bd_fshelf","Figurine Shelf",75,{},"A shelf of painted figurines."],["bd_mirror","Full-length Mirror",120,{},"A floor mirror. Your outfit shows here."],["bd_clock","Wall Clock",30,{},"A plain white wall clock."],["bd_lights","LED Strips & Grass Panels",90,{},"Gradient LED cove lighting and a living grass wall."],["bd_neon","Neon Sign",120,{},"Pink neon script over the bed."]],
  lounge:[["l_couch","Sofa",30,{},"A deep three-seat couch."],["l_rug","Shag Rug",20,{},"A thick wool rug."],["l_plant","Monstera",25,{},"A monstera in a woven basket."],["l_art","Wall Art Set",40,{},"A gallery wall of mixed frames."],["l_tv","Wall Screen",60,{},"A wall-mounted TV."],["l_arcade","Arcade Cabinet",90,{},"An upright cabinet with a light-up marquee."],["l_neon","Neon HOME Sign",120,{},"Pink neon script over the bed."],["l_table","Coffee Table",35,{},"Mugs and magazines."],["l_beans","Bean Bags",55,{},"Floor seating for the crew."],["l_sofa2","Lounge Chairs",80,{crew:1},"Two swivel armchairs."],["l_plant2","Corner Fern",30,{},"Fills the empty corner."],["l_cart","Side Tables",70,{},"A lamp and a drink within reach."],["l_speaker","Speaker Stacks",90,{},"Parties start here."],["l_lux1","Boucle Sectional",600,{xp:1,p:.05},"Upgrade: a cream boucle sectional."],["l_lux2","Marble Coffee & Side",800,{xp:1,p:.05},"Upgrade: marble and brass tables."],["l_lux3","Emerald Chair & Media Wall",1050,{xp:1,p:.05},"Upgrade: velvet chairs and a walnut console."],["l_lux4","Penthouse Shelf & Tree",1350,{xp:1,p:.05},"Upgrade: display shelf and a sculptural tree."]],
  bar:[["b_shelf","Back Bar Shelf",50,{p:.2},"More bottles, more orders."],["b_neon","Speakeasy Neon",70,{p:.2},"A quiet pink glow over the bar."],["b_string","String Lights",120,{p:.2},"Warm bulbs strung across the rooftop."],["b_juke","Palm Planters",100,{p:.25},"Rooftop greenery."],["b_menu","Cocktail Menu",140,{p:.3},"A chalkboard of house cocktails."],["b_taps","Bar Station",180,{cap:4},"A copper mixing station with a sink."],["b_dj","Fire Pit Lounge",260,{p:.5},"A gas fire pit ringed with stone."],["b_pool","Lounge Sofa",160,{p:.25},"Low seating for long nights."],["b_snack","Champagne Bucket",90,{m:["Wings","Fries"],tip:1},"Chilled and ready."],["b_hightop","High-Top Tables",150,{p:.15},"Two more spots to stand and sip."],["b_mixo","Mixology Course",220,{spd:.25,m:"Espresso Martini"},"A bartender who works both wells at once."],["b_lounge","Velvet Booth",260,{pat:25},"Guests settle in and wait longer."],["b_rare","Rare Whiskey Shelf",350,{m:"Rare Pour",tip:1},"Top shelf, top tips."],["b_lux1","Marble & Gold Bar",600,{xp:1,p:.05},"Upgrade: black marble and brass."],["b_lux2","Velvet Lounge Suite",800,{xp:1,p:.05},"Upgrade: emerald velvet and a gold fire table."],["b_lux3","Gold Station & Champagne Tower",1050,{xp:1,p:.05},"Upgrade: gold bar cart and a champagne tower."],["b_lux4","Skyline Terrace",1350,{xp:1,p:.05},"Upgrade: olive tree, marble bistro tables and pink-gold string lights."]],
  restaurant:[["r_tab1","Marble Tables",70,{p:.15},"Upgrade: the wood tables go marble."],["r_tab2","Fine Dining Tables",240,{p:.25,tip:1},"Upgrade: linen, crystal, velvet chairs."],["r_stl1","Leather Stools",60,{p:.1},"Upgrade: diner stools with cushions."],["r_stl2","Gold Velvet Stools",180,{p:.15},"Upgrade: gold frames, velvet seats."],["r_ctr1","Marble Counter",90,{p:.15},"Upgrade: the laminate counter goes marble."],["r_ctr2","Black Marble & Gold Counter",300,{p:.25,tip:1},"Upgrade: fluted gold and amber light."],["r_bar","Add a Bar",120,{m:["Cocktail","Draft Beer"],tip:1,p:.2},"The counter extends into a proper bar."],["r_oven","Pizza Grill & Oven",200,{m:"Pizza",p:.3},"A wood-fired oven window in the kitchen wall."],["r_booth","Booth Seating",260,{cap:4,p:.25},"Upgrade: wall tables become diner booths."],["r_booth2","Velvet Banquettes",380,{cap:4,p:.3,tip:1},"Upgrade: tufted velvet and gold trim."],["r_pend","Pendant Lights",90,{p:.15},"Warm light over the counter."],["r_chan","Crystal Chandeliers",320,{p:.25},"Upgrade: crystal over the dining floor."],["r_coffee","Coffee Machine",60,{p:.2},"A second register for the morning rush."],["r_salad","Recipe: Garden Salad",80,{dish:"salad",req:"garden"},"Needs veg from the Garden."],["r_espresso","Espresso Bar",120,{m:["Latte","Espresso"],tip:1},"An espresso machine behind the counter."],["r_dessert","Dessert Case",160,{m:["Cheesecake","Mochi"],tip:1},"A chilled dessert case by the till."],["r_train","Waiter Training",200,{spd:.25},"Another server on the floor."],["r_wine","Wine Wall",260,{m:"Wine",tip:1},"A short wine list and a rack to hold it."],["r_wine2","Glass Wine Cellar",340,{tip:1,p:.2},"Upgrade: a lit glass cellar."],["r_chef","Chef's Plaque",450,{m:"Tasting",tip:2,p:.2},"Fine dining. Bigger tips."],["r_tbl2","Back Dining Row",110,{p:.25},"More floor tables. More guests."],["r_host","Host Stand",90,{p:.15},"Someone greets the door."],["r_plants","Planters",50,{p:.1},"Greenery between tables."],["r_flora","Orchid Arrangements",110,{p:.1},"Fresh flowers, every day."],["r_mirror","Gilded Mirror",140,{p:.05},"A statement piece."],["r_omelet","Recipe: Farm Omelette",160,{dish:"omelet",req:"farm"},"Needs grain from the Farm."],["r_rice","Recipe: Fried Rice",200,{dish:"rice",req:"farm"},"Veg plus grain."],["r_sushi","Recipe: Sushi Platter",260,{dish:"sushi",req:"sky"},"Needs fish from the Sky Lounge koi pond."],["r_ramen","Recipe: Signature Ramen",400,{dish:"ramen",req:"sky"},"Veg, grain and fish on one plate."],["r_art","Wall Art",50,{p:.05},"A neon sign and menu boards."],["r_star","Gold Star Award",0,{p:1,served:300},"Earned after 300 dishes served. Doubles base income."]],

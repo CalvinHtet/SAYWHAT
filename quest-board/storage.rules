@@ -1,0 +1,15 @@
+rules_version = '2';
+// The photo feed's pictures (app/src/29ph_photos.js, W8/W9, SPEC5; web/web.js uploads them over Storage's REST API).
+// photos/<uid>/<name>.jpg: every signed-in player reads; only that player uploads (a JPEG under 1 MB) or deletes their own; the
+// owner may delete any (a post Cal removes). The owner's uid is the one in firestore.rules and web/config.js.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function owner() { return request.auth != null && request.auth.uid in ["RwoCZ8hu7GNFof5SjKzZFtlqqRH3"]; }
+    match /photos/{uid}/{name} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == uid && request.resource.size < 1024 * 1024
+        && request.resource.contentType == 'image/jpeg';
+      allow delete: if request.auth != null && (request.auth.uid == uid || owner());
+    }
+  }
+}

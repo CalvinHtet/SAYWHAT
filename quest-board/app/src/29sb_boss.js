@@ -32,11 +32,16 @@ function bossMine(){var B=bossState();return B.w===bossKey()?Object.keys(B.d).re
 /* everyone: this player plus the neighbors (SOC.worlds), as {id, name, pd, bw, bd} */
 var BOSSFAKE=null;
 function bossPlayers(){var me={id:MYUID||"me",name:(S.char&&S.char.name)||"You",pd:bossState().pd,bw:bossState().w,bd:bossMine(),me:1};
-  var o=(BOSSFAKE||((typeof SOC!=="undefined"&&SOC.worlds)||[])).map(function(w){return {id:w.id,name:w.name,pd:w.pd||[],bw:w.bw,bd:+w.bd||0}});
+  var o=(BOSSFAKE||((typeof SOC!=="undefined"&&SOC.worlds)||[])).map(function(w){return {id:w.id,name:w.name,pd:w.pd||[],bw:w.bw,bd:+w.bd||0,bf:w.bf}});
   return [me].concat(o.filter(function(w){return w.id!==me.id}))}
 function bossActive(L,m){var a=ymdOfN(m-7),b=ymdOfN(m-1);return L.filter(function(p){var s={};(p.pd||[]).forEach(function(d){if(d>=a&&d<=b)s[d]=1});return Object.keys(s).length>=ECON.bossActive}).length}
 /* this week's fight: null when no boss comes this week */
-function bossNow(){var m=bossWeek(),L=bossPlayers(),act=bossActive(L,m);if(act<ECON.bossMin)return null;
+/* Cal's audit (#104, LEAD 2026-11-11: "First town boss goes live on the next monday after there are at least 5 players"): the
+   5-player rule only holds until the first boss ever comes. After that every week has one (still at least 2 players' worth of HP).
+   "Ever" = this save saw one (S.boss.first) or any neighbor's doc says so (bf: the week their first boss came). */
+function bossEver(m){var B=bossState(),wk=bossKey(m),ok=function(x){return typeof x==="string"&&/^\d{4}-\d\d-\d\d$/.test(x)&&x<=wk};
+  return ok(B.first)||bossPlayers().some(function(p){return ok(p.bf)})}
+function bossNow(){var m=bossWeek(),L=bossPlayers(),act=bossActive(L,m);if(act<ECON.bossMin&&!bossEver(m))return null;
   var hp=ECON.bossHp*Math.max(2,act),wk=bossKey(m),hit=L.filter(function(p){return p.bw===wk&&p.bd>0}),dmg=hit.reduce(function(s,p){return s+p.bd},0);
   hit.sort(function(a,b){return b.bd-a.bd});
   return {wk:wk,hp:hp,dmg:Math.min(hp,dmg),left:Math.max(0,hp-dmg),won:dmg>=hp,dow:bossDow(),act:act,fighters:hit.length,top:hit.slice(0,3).map(function(p){return p.id}),mine:bossMine()}}
@@ -55,8 +60,8 @@ function bossArt(ph){var k=BOSSART[ph],u=k&&window.QBART&&QBART[k];return u?'<im
 function bossHtml(){var f=bossNow(),B=bossState();
   if(!f)return B.lost?'<div class="bs-box bs-scorched"><i class="bs-flames" aria-hidden="true"></i><b>The town is still smoking</b><small>Beat the next boss to clear it.</small></div>':'';
   var ph=bossPhase(f),pct=Math.round(100*f.left/f.hp);
-  var head=f.won?(f.dow===6?"The boss is down":"Slain!"):f.dow===6?"The boss got away":"Town Boss";
-  var line=f.won?"Everyone who hit it has a chest in their letters.":f.dow===6?"It burned the Hall. A new one comes Monday.":f.fighters+" fighting · ends Saturday night";
+  var head=f.won?(f.dow===6?"The boss is down":"Slain"):f.dow===6?"The boss got away":"Town Boss";
+  var line=f.won?"Everyone who hit it has a chest in their letters.":f.dow===6?"It burned the Hall. The next boss comes Monday.":f.fighters+" fighting · ends Saturday night";
   return '<div class="bs-box bs-'+ph+'">'+(ph==="fire"?'<i class="bs-flames" aria-hidden="true"></i>':'')+bossArt(ph)
     +'<div class="bs-txt"><b>'+esc(head)+'</b><div class="bs-hp" role="img" aria-label="'+pct+'% health left"><i style="width:'+pct+'%"></i></div>'
     +'<small>'+f.left.toLocaleString()+' / '+f.hp.toLocaleString()+' HP · '+esc(line)+'</small>'
@@ -69,11 +74,11 @@ var bossHallBase=hallHtml;hallHtml=function(){var h=bossHallBase.apply(this,argu
 INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var B=bossState(),w=B.won;if(!w||!(B.hit&&B.hit[w]>0))return [];
   var c=Math.round(econCurve(ECON.questInc,effLvl())/50)*50;
   return [{id:"boss-"+w,from:"The town",subj:"We beat the Town Boss",d:w,coins:c,
-    body:'<p>The boss fell before Saturday night. Your share of the chest is below, and a find comes with it when you claim.</p>'
+    body:'<p>The boss fell before Saturday night. Your share of the chest is below. Claim it for one more find.</p>'
       +((B.top||{})[w]?'<p>You were one of the three biggest hitters this week: you get a second find.</p>':'')}]});
 /* the result, kept in the save (the neighbors' docs move on to the next week by Monday): a lost week leaves the Hall scorched until a
    win; a won week keeps this player's part for the chest letter */
-function bossKeep(){var f=bossNow(),B=bossState();if(!f)return;
+function bossKeep(){var f=bossNow(),B=bossState();if(!f)return;if(!B.first){B.first=f.wk;persist()}
   if(!f.won){if(f.dow===6&&B.lost!==f.wk){B.lost=f.wk;persist()}return}
   if(B.won!==f.wk){B.won=f.wk;B.lost=null;persist()}if(!B.hit)B.hit={};if(!B.top)B.top={};
   if(B.hit[f.wk]==null&&f.mine>0){B.hit[f.wk]=f.mine;B.top[f.wk]=f.top.indexOf(MYUID||"me")>=0?1:0;persist()}}
@@ -82,7 +87,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   setTimeout(function(){var n=(B.top||{})[w]?2:1,got=[];for(var k=0;k<n;k++){try{var r=chest3Roll();got.push(r.kind==="relic"?r.r.name:r.kind==="wear"?r.it[2]:r.n.toLocaleString()+" coins")}catch(x){}}
     persist();if(got.length)pop("Chest find: "+got.join(", "))},400)});
 /* what others see: the days played and this week's damage */
-var bossWorldBase=socWorldDoc;socWorldDoc=function(){var d=bossWorldBase.apply(this,arguments);try{var B=bossState();d.pd=B.pd.slice(-10);d.bw=B.w||"";d.bd=bossMine()}catch(e){}return d};
+var bossWorldBase=socWorldDoc;socWorldDoc=function(){var d=bossWorldBase.apply(this,arguments);try{var B=bossState();d.pd=B.pd.slice(-10);d.bw=B.w||"";d.bd=bossMine();d.bf=B.first||""}catch(e){}return d};
 setInterval(function(){try{bossTick();bossKeep()}catch(e){}},5000);
 /* test hook (sandbox): fake neighbors, e.g. __qbBoss.fake([{id:"a",name:"A",pd:[...],bw:"2026-11-09",bd:900}]) */
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbBoss={now:bossNow,players:bossPlayers,tick:bossTick,keep:bossKeep,week:bossKey,dow:bossDow,

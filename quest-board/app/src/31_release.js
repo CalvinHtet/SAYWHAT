@@ -6,4 +6,4 @@
    NOT on this list because the game needs them: __qbGuest, __qbBootErr,
    __qbLoad and __qbWeb. A new test hook goes on this list. rigtest/lead/striptest.js checks a Live build. */
 (function(){if(!(window.QB_WEB&&QB_WEB.noTest))return;
-  ["__qb","__qbLoft","__qbRooms","__qbStory","__qbFriends","__qbDrops","__qbDungeon","__qbEcon","__qbBounty","__qbTown","__qbUnlock","__qbPlaza","__qbLive","__qbFreedReq","__qbKudos","__qbDuel","qbDbg","__qbTeam","__qbAlerts","__qbShift"].forEach(function(k){try{delete window[k]}catch(e){}})})();
+  ["__qb","__qbLoft","__qbRooms","__qbStory","__qbFriends","__qbDrops","__qbDungeon","__qbEcon","__qbBounty","__qbTown","__qbUnlock","__qbPlaza","__qbLive","__qbFreedReq","__qbKudos","__qbDuel","qbDbg","__qbTeam","__qbAlerts","__qbShift","__qbChat","__qbVisit","__qbSide","__qbPhotos"].forEach(function(k){try{delete window[k]}catch(e){}})})();

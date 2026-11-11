@@ -109,7 +109,7 @@ var IF_SND={
  so_synth:{wave:"sawtooth",vol:.05,gap:.075,decay:.22,cut:1800,done:[330,494,659],crit:[330,494,659,988],level:[262,330,392,523,659,784,1047],buy:[494,659]}
 };
 var IF_AC=null;
-function ifSound(kind,id){
+function ifSound(kind,id){if(S&&S.sndOff||document.hidden)return;/* W56: the profile's Sound switch silences the packs too */
   var p=id?IF_SND[id]:(eqItem("sound")&&IF_SND[eqItem("sound")[0]]);if(!p||!p[kind])return;
   try{
     IF_AC=IF_AC||new (window.AudioContext||window.webkitAudioContext)();if(IF_AC.state==="suspended")IF_AC.resume();
@@ -138,7 +138,7 @@ function ifOnLevel(){ifSound("level");var s=eqItem("scene");if(s)ifScene(s[0])}
 function ifTry(id,b){
   var it=shopItem(id);if(!it)return;var r=b.getBoundingClientRect(),x=r.left+r.width/2,y=r.top;
   if(it[1]==="burst"){IF_TRY=it;burst(x,y,22);IF_TRY=null}
-  if(it[1]==="sound")ifSound("level",id);
+  if(it[1]==="sound"){if(S.sndOff)pop("Sound is off. Turn it on in your profile.");else ifSound("level",id)}
   if(it[1]==="scene"){ifSound("level");ifScene(id)}
 }
 

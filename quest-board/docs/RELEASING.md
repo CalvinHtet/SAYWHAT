@@ -97,9 +97,14 @@ Cal's Firebase project is `saywhat-b7ae8`. The CLI runs on Cal's Mac with his lo
   lives in the browser (`sandboxHost` in `web/web.js`) and it returns before Firebase starts, so it has no way to reach a real save and
   needs no Google sign-in. It starts at level 1 with the Test tools on (Unlock everything, 500,000 coins), and the story's friends stand
   in as neighbors and greet back. Saves are per device. The link lasts 30 days from each deploy.
-- **Rules and the AI function** change rarely and are deployed by hand when they do:
-  `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,functions --project saywhat-b7ae8`. A function change goes through
-  QA like any other (functions/test.js first).
+- **Rules, Storage rules and the AI function** change rarely and are deployed by hand when they do:
+  `npx -y firebase-tools@15.35.0 deploy --only firestore:rules,storage,functions --project saywhat-b7ae8`. A function change goes
+  through QA like any other (functions/test.js first).
+- **Firebase Storage (the photo feed, W8/W9, v0.92)**: once, before the first deploy that carries the photo feed, open the Firebase
+  console > Storage > Get started for saywhat-b7ae8 (default bucket `saywhat-b7ae8.firebasestorage.app`, the one in web/config.js;
+  the project is already on Blaze for the AI function). Then deploy `storage.rules` with the line above (`--only storage` alone is
+  fine too). The game talks to Storage over its REST API from web/web.js, so there is no new SDK file. Without a bucket the feed
+  simply does not show. Pictures live at photos/<uid>/<ms>.jpg and <ms>_t.jpg (about 100 to 300 KB and 15 to 30 KB).
 - Before Live goes to friends: `QB_TEST_START` 0 and Cal's uid in `firestore.rules` and `web/config.js` as the owner. The test tools
   go by themselves on any cut with `noTest` (Cal, 2026-11-08): `app/src/31_release.js` deletes the `window.__qb*` test hooks at startup,
   and the Test pill and Testing rows are never made. Main and the sandbox keep them. A new test hook goes on that file's list; a hook the

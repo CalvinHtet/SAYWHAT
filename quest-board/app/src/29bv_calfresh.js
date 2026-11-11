@@ -11,7 +11,8 @@
    No letter. QA (v0.91): with only the device holding the new save, a reload during the creator loaded the old online save back for
    good. Now a reload finds the new save online; and should an old save turn up anyway (written offline, another device), it is wiped
    again rather than kept. The new save also carries S.reset91 {fresh:1}, so the v0.91 Loft reset never runs on it. */
-var CFKEEP=["gymlog","sessions","wk","cex","cexN","cseen","gymFold","coachHist","gym"],CFUNTIL=Date.UTC(2026,10,14);
+/* LEAD 2026-11-11: until 11-21 (was 11-14), so it still runs if Cal publishes later this week */
+var CFKEEP=["gymlog","sessions","wk","cex","cexN","cseen","gymFold","coachHist","gym"],CFUNTIL=Date.UTC(2026,10,21);
 function cfUid(){return window.__qbCfUid||((window.QB_WEB&&QB_WEB.owners)||[])[0]||null}
 function cfDue(){return !!(S&&S.created&&!S.joinedAt&&MYUID&&MYUID===cfUid()&&Date.now()<CFUNTIL&&(!(window.QB_WEB&&QB_WEB.sandbox)||window.__qbCfUid))}
 function cfRun(){if(!cfDue())return null;var before=JSON.parse(JSON.stringify(S)),bk="data/users/"+MYUID+"/backup_calfresh91";

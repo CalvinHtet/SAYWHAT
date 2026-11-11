@@ -26,7 +26,18 @@ service cloud.firestore {
       return request.resource.data.keys().hasOnly(["j", "t"]) && request.resource.data.j is string
         && request.resource.data.j.size() < n && request.resource.data.t is number;
     }
-    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(20000); allow delete: if mine(uid); }
+    // a picture in a chat line or a photo post may only be this project's Storage (or a sandbox JPEG data URL), so nobody can plant a
+    // tracking pixel (QA, LEAD 2026-11-11). The docs are {j: "<json>"}: every "f", "th", "full" or "thumb" key in j must start with an
+    // allowed prefix (the game reads its pictures from those keys only), and j may hold no \u escape of a printable ASCII character
+    // (code points 0x20 to 0x7f), which could spell a key or a scheme past this check; JSON.stringify never writes one (emoji, accents and
+    // stripped control characters are untouched). The regexes avoid escapes where they can ([.] for a dot, [^:"]* for JSON's spaces).
+    function picsOk() {
+      return !request.resource.data.j.matches('(?s).*\\\\u00[2-7][0-9a-fA-F].*')
+        && !request.resource.data.j.replace('"(f|th|full|thumb)"[^:"]*:[^:"]*"(https://firebasestorage[.]googleapis[.]com/v0/b/saywhat-b7ae8[.]firebasestorage[.]app/o/|data:image/jpeg;base64,)', '"ok":"')
+             .matches('(?s).*"(f|th|full|thumb)"[^:"]*:[^:"]*".*');
+    }
+    // chat docs: 40,000 (was 20,000) since a line may carry a picture (#130: its two Storage URLs, files under photos/<uid>/chat_*)
+    match /chat/{uid}    { allow read: if signedIn(); allow create, update: if mine(uid) && small(40000) && picsOk(); allow delete: if mine(uid); }
     match /chatnow/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(2000); allow delete: if mine(uid); }
     match /likes/{uid}   { allow read: if signedIn(); allow create, update: if mine(uid) && small(8000); allow delete: if mine(uid) || owner(); }
 
@@ -40,6 +51,26 @@ service cloud.firestore {
     // challenges sent to them and their own scores. Everyone signed in reads (both sides need the other's doc); only that player
     // writes.
     match /duel/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(30000); allow delete: if mine(uid) || owner(); }
+
+    // the photo feed on the town board (app/src/29ph_photos.js, W8/W9, SPEC5): photos/<poster uid>~<ms> is one post (the picture
+    // itself is in Storage, storage.rules), photos/<post>/cm/<author uid>~<ms> one comment on it, photolk/<uid> the posts that
+    // player likes (one like per player and post). Everyone signed in reads. Only the poster creates or deletes a post (the owner may
+    // delete any). A comment is written by its author only, and deleted by its author, the post's author or the owner (Cal,
+    // 2026-11-10: "Only the person who posted it can delete their own comments. or the person who created the post can delete any
+    // comments"). Nothing is edited. The ids carry the uids because the docs are {j, t} and the rules can't read inside j.
+    function poster(pid) { return pid.split('~')[0]; }
+    match /photos/{pid} {
+      allow read: if signedIn();
+      allow create: if signedIn() && poster(pid) == request.auth.uid && small(6000) && picsOk();
+      allow delete: if signedIn() && (poster(pid) == request.auth.uid || owner());
+      match /cm/{cid} {
+        allow read: if signedIn();
+        allow create: if signedIn() && cid.split('~')[0] == request.auth.uid && small(2000)
+          && exists(/databases/$(database)/documents/photos/$(pid));
+        allow delete: if signedIn() && (cid.split('~')[0] == request.auth.uid || poster(pid) == request.auth.uid || owner());
+      }
+    }
+    match /photolk/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(20000); allow delete: if mine(uid) || owner(); }
 
     // the owner's inbox and the frame and speed logs the owner reads to debug phones
     match /inbox/{doc} { allow read, write: if owner(); }

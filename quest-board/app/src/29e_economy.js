@@ -72,6 +72,10 @@ var ECON={
      at 80, 2,859 at 99; about 97,000 XP to level 100 (was 13,905). Measured (econsim, Cal's routine): the spec's first fit (4.04 x
      (L - 6)^1.25) put level 100 at day 65, so the top is steeper. */
   lvFirst:20,lvRamp:6,lvFlat:135,lvK:.315,lvP:2,
+  /* Cal's audit (LEAD 2026-11-11, Cal: "3 months to reach lvl 100", later "not before ~day 85"): a regular player reached level 100
+     on day 79. Curve 5 adds lvTop x (L - lvTopFrom)^2 above level lvTopFrom, so nothing below it changes (level 40 in about 2
+     weeks, as Cal asked) and the top takes longer. Saves keep their level and progress (xpc5 in merge, from the frozen curve 4). */
+  lvTop:.2,lvTopFrom:40,                          /* LEAD 2026-11-11: .2 (econsim: regular level 100 on day 85, Cal day 90) */
   wwCoins:3000,                                   /* Weekly Warrior's coins, fixed (its XP follows the curve) */
   trialDays:2,                                    /* a level trial also passes on honor: active (50+ XP) on this many days */
   restDay:.25,restMax:1,                          /* rested XP: a quarter level banked per day with no quest, one level at most */
@@ -265,7 +269,7 @@ function dqCheck(){if(!loaded||!S.created)return;var d=dqState(),x=dqXp(),sp=sta
   var k=d.tier||0,c=dqChest(T[k][1]),hid=k>=ECON.dqShown,art=econArt("ui_dq_chest.webp"),g3=null,r="";d.tier=k+1;d.done=1;S.coins+=c;S.earnedC+=c;
   if(hid){g3=chest3Roll();d.hid=1;var tm=gameNow();tm.setDate(tm.getDate()+1);d.hidFor=dstr(tm);
     if(typeof maxFreeze==="function"&&S.freezes<maxFreeze()){S.freezes++;r="A streak freeze"}else if(sp.int*ECON.int<ECON.intMax){sp.int++;r="+1 INT: "+STATD.int}else{var hc=econScaled(300);S.coins+=hc;S.earnedC+=hc;r="+"+hc.toLocaleString()+" coins"}}
-  persist();
+  persist();try{qbSnd("chest")}catch(x){}
   modal('<div class="card box2 dqc"><span class="label">'+(hid?'Hidden chest':k?'Bonus chest':'Daily Quest complete')+'</span>'
     +(hid&&econArt("ui_hidden_quest.webp")?'<img class="dq-hid" src="'+econArt("ui_hidden_quest.webp")+'" alt="">':art?'<img class="dg-gift" src="'+art+'" alt="">':'<div class="dg-gift dg-gift0">'+isoCrate()+'</div>')
     +'<h3>+'+c.toLocaleString()+' coins</h3>'+(hid?'<p class="note">Nobody told you this one existed.</p>'+chest3Html(g3)+'<p class="dg-buff">'+esc(r)+'</p><p class="note">Tomorrow your quests earn 10% more XP and the town runs 10% faster.</p>':'<p class="note">'+(!k&&dqEff()>=1?'Your town runs at full speed today.':'')+'</p>')
@@ -412,7 +416,8 @@ function econEarn(t){Object.keys(ADDONS).forEach(function(k){if(t&&k!==t)return;
     a[4]=s.replace(/\s*Earns \+\d+% here[^.]*\./g,"")+(earns||had?" Earns +"+Math.round(np*100)+"% here"+(day>0?", about "+dt+" coins a day":"")+".":"")})})}
 econEarn();
 /* ---- level gates (Cal, 2026-11-10, W22): face cosmetics at level ECON.faceLv (anyone already wearing one keeps it); level 90
-   items get ECON.l90 in econPrice when the Mac makes them; pets at 30 come with their art (W23) ---- */
+   items are priced by econPrice like the rest when the Mac makes them; pets at level 45 (Cal 11-10 13:11: "close to 2-3 weeks of
+   play") come with their art (W23) ---- */
 ECON.faceLv=40;ECON.accLv=20;
 (function(){(typeof SHOP!=="undefined"?SHOP:[]).forEach(function(it){if(it[1]==="a_xface")it[4]=Math.max(+it[4]||1,ECON.faceLv)})})();
 /* the second accessory: worn from S.eq.a_acc2 once the level is reached, never the same piece as the first, never on the same part

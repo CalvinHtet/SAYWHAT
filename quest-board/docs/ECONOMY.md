@@ -63,6 +63,7 @@ Cal's routine was measured on the final curve; the other three on the run before
 | Training | 300 coins a full session (a plan of your own done in full counts as full) |
 | Kind words for Cal (the + by the coins) | 500, 1,000 or 1,500 when Cal approves the note; one note a game day, at most 1,500 a day (`KD` in `29v_kudos.js`). Only Cal's account can approve (firestore.rules) |
 | Challenges (Town Hall, Posts) | none made: both players stake 100 to 2,500, the winner takes both, a tie or a cancelled, declined or unanswered challenge gives the stakes back (`29w_duel.js`). Coins only move between players |
+| Friends' tips (W55, v0.92) | other players visit your businesses (0 to 3 visits a day, 0.9 on average; `ECON.pvis` in `29kv_visitors.js`). At most 2 of a day's visits tip, about 0.46 tips a day: 100 x the room's price phase (`ECON.phase`), so 130 in the Garden to 380 in the Nightclub, paid by the game, never by the friend. About 40 coins a day with only the Garden, about 120 with every business: under 1% of a day |
 
 **What a day earns** (measured, `econsim.js`, coins a day without level-ups and one-off trophies): the regular player (12 tasks,
 200 listed XP) about 3,000 to 4,500 in the first days, 6,000 when the Garden opens, 9,000 to 10,000 at the Restaurant, then 11,000

@@ -31,7 +31,7 @@ function decorHtml(i,r){
     s+='<div class="dst'+(on?' on':'')+'"><div class="dsprev"><i style="background-image:url('+lfTexUrl("f_"+q.fl)+')"></i><i style="background:'+(q.wc||'#ccc')+'"></i>'+acc+'</div><b>'+esc(q.name)+'</b>'+(on?'<span class="chip">Active</span>':un?'<button class="btn ghost" data-act="decuse" data-i="'+i+'" data-v="'+q.id+'">Use</button>':'<button class="btn" data-act="decbuy" data-i="'+i+'" data-v="'+q.id+'"><i class="coin"></i>&nbsp;'+q.cost+'</button>')+'</div>'});
   return s+'</div></details>'}
 function decorSet(i,act,v){var r=bslot(i);if(!r)return;var q=lfDecSets(r.t).filter(function(x){return x.id===v})[0];if(!q)return;
-  if(act==="decbuy"&&!lfDecUnlocked(r,q)){if(S.coins<q.cost){pop("Need "+(q.cost-S.coins)+" more coins");return}S.coins-=q.cost;S.spent+=q.cost;if(!r.du)r.du={};r.du[q.id]=1;pop(q.name+" unlocked")}
+  if(act==="decbuy"&&!lfDecUnlocked(r,q)){if(S.coins<q.cost){pop("Need "+(q.cost-S.coins)+" more coins");return}S.coins-=q.cost;S.spent+=q.cost;if(!r.du)r.du={};r.du[q.id]=1;try{qbSnd("buy")}catch(x){}pop(q.name+" unlocked")}
   if(!lfDecUnlocked(r,q))return;r.ds=q.id;render();persist();roomModal(i)}
 var LFACOL={av:1,in:0,st:0};
 var LFRMS={};
@@ -209,7 +209,7 @@ function buildModal(i){
     if(T.lv>lv||hasRoom(k)){return}
     h+='<div class="addon next"><div class="bpart'+(ART["room_"+k]?' post':'')+'">'+(ART["room_"+k]?'<img class="rpost" src="'+ART["room_"+k]+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div><b>'+esc(T.name)+'</b><small>'+esc(T.desc)+'</small><button class="btn" data-act="rdo" data-i="'+i+'" data-t="'+k+'"><i class="coin"></i>&nbsp;'+T.cost+'</button></div>';
   });
-  if(h.indexOf('addon next')<0)h+='<p class="note">No new blueprints yet. Keep leveling.</p>';
+  if(h.indexOf('addon next')<0)h+='<p class="note">No new blueprints yet.</p>';
   h+='</div><button class="btn ghost" data-act="mclose">Close</button></div>';
   modal(h);
 }
@@ -230,19 +230,19 @@ function baseAct(a,b,e){
   if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("Behind these doors: not yet.");return true}roomModal(ix);return true}
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
-    S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
+    S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();try{qbSnd("big")}catch(x){}closeModals();render();persist();roomSplash(t);return true}
   if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false,full=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var bl=typeof bizLeft==="function"?bizLeft(r,k):Infinity,n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got),bl);if(n<Math.floor(r.pend||0)){if(n>=bl)full=true;else capped=true}r.pend-=n;r.earn=(r.earn||0)+n;if(typeof bizPaid==="function"&&n>0)bizPaid(r,n);got+=n}});payTake(got);
     if(full&&!capped&&!got){pop(a==="rall"?"Your businesses have paid all they can today. More tomorrow.":"This business has paid all it can today. More tomorrow.");return true}
     if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
-    if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
+    if(got){S.coins+=got;S.earnedC+=got;try{qbSnd("coins")}catch(x){}try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
-    S.coins-=hc;S.spent+=hc;S.hired[hk]=1;render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
+    S.coins-=hc;S.spent+=hc;S.hired[hk]=1;try{qbSnd("buy")}catch(x){}render();persist();burst(innerWidth/2,innerHeight/3,26);pop("Hired "+CREW[hk].name);return true}
   if(a==="raddon"){var r=bslot(i),ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===b.dataset.id})[0];if(!ad||r.a[ad[0]])return true;
     if(ad[3].req&&!hasRoom(ad[3].req))return true;if(false&&!(S.cls||(S.gates&&S.gates.length>=ad[3].adv))){pop('Needs a job advancement first');return true}if(ADDREQ[ad[0]]&&!r.a[ADDREQ[ad[0]]]){pop("Install "+addonName(r,ADDREQ[ad[0]])+" first");return true}if(ad[3].trophy&&!dgPieces()){pop("Bring home your first trophy first");return true}if(ad[3].opens&&!styAllows(ad[3].opens)){pop("Not yet. Keep growing your business");return true}if(ad[3].also&&!r.a[ad[3].also]){pop("Install "+addonName(r,ad[3].also)+" first");return true}if(ad[3].served&&S.base.served<ad[3].served)return true;
     if(S.coins<ad[2]){pop("Need "+(ad[2]-S.coins)+" more coins");return true}
-    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
+    simulate();S.coins-=ad[2];S.spent+=ad[2];r.a[ad[0]]=1;try{qbSnd(ad[3].opens||ad[3].splash?"big":"build")}catch(x){}if(ad[3].opens&&!hasRoom(ad[3].opens))S.base.slots.push({t:ad[3].opens,a:{},st:0,pend:0});DROP={i:i,id:ad[0],name:ad[1]};render();persist();roomModal(i);if(ad[3].opens&&ROOMHELP[ad[3].opens])roomSplash(ad[3].opens);else if(ad[3].splash)upSplash(ad);try{var fw=document.querySelector(".rmodal .rbig");if(fw)fw.classList.add("rflash")}catch(e){}burst(innerWidth/2,innerHeight/3,24);pop(ad[1]+" installed");return true}
   if(a==="decuse"||a==="decbuy"){decorSet(i,a,b.dataset.v||"");return true}
-  if(a==="rpaint"){var r2=bslot(i);if(S.coins<150){pop("Need 150 coins");return true}S.coins-=150;S.spent+=150;r2.st=((r2.st||0)+1)%4;render();persist();roomModal(i);return true}
+  if(a==="rpaint"){var r2=bslot(i);if(S.coins<150){pop("Need 150 coins");return true}S.coins-=150;S.spent+=150;r2.st=((r2.st||0)+1)%4;try{qbSnd("buy")}catch(x){}render();persist();roomModal(i);return true}
   if(a==="rassign"){var r3=bslot(i);if(roomCrew(i).length>=crewCap(r3))return true;simulate();S.base.crew[b.dataset.c]=i;render();persist();roomModal(i);pop(CREW[b.dataset.c].name+" clocked in");return true}
   if(a==="runassign"){simulate();delete S.base.crew[b.dataset.c];render();persist();roomModal(i);return true}
   return false;
@@ -277,7 +277,7 @@ var FOCUS={
   support:[["lateral","shoulders","Side delts make arms look bigger from the front."],["facepull","shoulders","Rear delts balance all the pressing and keep elbows healthy."],["crunch","core","Core work while shoulders recover."],["lunge","legs","A lower-body movement so the day is not upper-only."]],
   finish:["farmer","Grip, forearms and core in one move."],why:"Big compound lifts first while you are fresh, then biceps and triceps paired so one rests while the other works."},
  chest:{core:[["bench","Main lift",4],["incline","Main lift",3],["dips","Superset A"],["fly","Superset A"]],
-  support:[["facepull","shoulders","Pulling work balances the pressing."],["pushdown","triceps","Triceps already warm from pressing. Finish them."],["cablerow","back","Upper back work for posture and balance."],["lateral","shoulders","Side delts round out the upper body."]],
+  support:[["facepull","shoulders","Pulling work balances the pressing."],["pushdown","triceps","Triceps are already warm from pressing."],["cablerow","back","Upper back work for posture and balance."],["lateral","shoulders","Side delts round out the upper body."]],
   finish:["plank","Core brace for a cleaner bench next time."],why:"Heavy flat press, incline for upper chest, then dips and flies back to back. Support work pulls so the session stays balanced."},
  back:{core:[["deadlift","Main lift",3],["pulldown","Main lift",3],["cablerow","Superset A"],["hammer","Superset A"]],
   support:[["incline","chest","A press balances the pulling."],["facepull","shoulders","Rear delts and upper back together."],["backext","core","Low back endurance."],["lunge","legs","Single-leg work rounds out the day."]],
@@ -354,8 +354,9 @@ function markActive(){
       var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
       /* nothing left to give: coins instead, as the Daily Quest chest pays */
       var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
+      /* owned at once; before the Closet it waits "(saved for later)", as the Wheel's prize does (LEAD 11-11) */
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+(hasRoom("closet")?' (in your Wardrobe)':' (saved for later)')+'</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -367,7 +368,7 @@ function weekDots(){
 }
 function weekStrip(){
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
-  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Keep moving anyway.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div><div class="note wwmul">'+esc(wwLine(paid))+'</div></div>'+weekDots()+'</section>';
+  return '<section class="card wstrip" data-act="nav" data-v="train"><div><span class="label">Weekly Warrior</span><div class="note">'+(paid?'Claimed this week. Training sessions still pay XP.':n+'/4 proven workouts. Pays +'+wb.xp+' XP, +'+wb.coins+' coins and a prize')+'</div><div class="note wwmul">'+esc(wwLine(paid))+'</div></div>'+weekDots()+'</section>';
 }
 function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   var E=EX[id],lg=((S.gymlog&&S.gymlog[id])||[]).filter(function(x){return !E[4]||x.w>0}),last=lg[lg.length-1];
@@ -376,7 +377,7 @@ function exSuggest(id){if(EX[id]&&EX[id][5])return cexSuggest(id);
   if(!E[4])return {w:"",line:"Last time: "+last.n+" sets "+(last.hit?"with every rep hit. Add a rep per set.":"done.")};
   var miss=0;for(var i=lg.length-1;i>=0&&!lg[i].hit;i--)miss++;
   var w=last.hit?last.w+E[4]:miss>=3?Math.max(E[4],Math.round(last.w*0.9/E[4])*E[4]):last.w;
-  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Own every rep first.";
+  var why=last.hit?"You hit every rep. Go up "+wU(E[4],"lb")+".":miss>=3?"Three sessions stuck. Drop about 10% and build back.":"Same weight. Hit every rep first.";
   return {w:w,line:"Last: "+wU(last.w,"lb")+" on "+mmdd(last.d)+". "+why};
 }
 /* Demos show the start and end of a rep, drawn for your body, fading between the two.
@@ -514,7 +515,7 @@ function cexHtml(){var ps=cexPlans();
 function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
-   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random wardrobe prize. '+esc(wwLine(paid))+'</p></section>';
+   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random prize. '+esc(wwLine(paid))+'</p></section>';
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
@@ -699,7 +700,7 @@ var CVOICE={
   f:["It is over. You may go.","Done. I am slightly proud.","Fine work. Do not tell anyone.","Go home. Eat food.","Session complete. Zero complaints.","You showed up. Weird.","Not bad at all. See you next time.","Credits. Roll them yourself."]},
  hero:{
   o:["This is where you get strong!","{n} is the next gate!","The training montage starts now!","Trust your training!","Power level rising!","Today, we surpass yesterday!","Show me your resolve!","This is the one you will remember!","The rival is yourself!","A hero never skips a set!","Gather your spirit!","This is for everyone who believed in you!","Ready? The tournament begins!","Draw upon your hidden power!","Eyes forward, hero!","Flames of will, ignite!","We have trained for this moment!","Let the training begin!","I will not lose, and neither will you!","Push past your limits!"],
-  c:["Go beyond!","Never give up!","Your power is limitless!","Believe it!","Let that spirit burn!","Surpass yourself!","Plus ultra, plus one rep!","Every rep, cleaner than the last!","The finale needs you!","Awaken your true strength!","One more. Make it count!","Your friends are watching!","Rise!","This rep decides everything!","Power comes from the heart!","I know you can do it!","Gather everything, release it all!","The bar does not stand a chance!","For honor!","Fight on!"],
+  c:["Go beyond!","Never give up!","Your power is limitless!","Hold the line!","Let that spirit burn!","Surpass yourself!","One more rep. Clean.","Every rep, cleaner than the last!","The finale needs you!","Awaken your true strength!","One more. Make it count!","Your friends are watching!","Rise!","This rep decides everything!","Power comes from the heart!","I know you can do it!","Gather everything, release it all!","The bar does not stand a chance!","For honor!","Fight on!"],
   s:["A true warrior's set!","Power up!","Your aura is blazing!","Another level cleared!","That felt like a boss fight!","Incredible resolve!","The rival is shaking!","You grew stronger just now!","Training arc approved!","One more chapter written!","That is heroic!","Your spirit never wavered!","Impressive, hero!","Stronger with every set!"],
   r:["Recover your spirit, hero.","Even heroes rest between battles.","Catch your breath. Next fight is soon.","Drink. Heal. Return.","Rest, and plan your comeback.","The next round begins shortly.","Restore your energy.","Brace for the next wave.","Quiet before the storm.","Gather power during the pause."],
   f:["Session complete. Well fought!","Another training day, conquered!","Same time next week, then!","Next episode: even stronger!","That was a champion's session!","Rest well. Tomorrow we go again!","The villains tremble.","Credits roll. Cue the theme song."]},
@@ -713,11 +714,11 @@ var CVOICE={
 /* form cues per exercise. {n} not needed. 3 specific + group cues appended */
 var CCUE={
  bench:["Shoulder blades pinned back and down.","Lower the bar to the lower chest, then drive.","Feet planted, heels dug in."],
- incline:["Dumbbells travel in a slight arc.","Do not flare the elbows past 45 degrees.","Lower slowly, press with purpose."],
+ incline:["Dumbbells travel in a slight arc.","Do not flare the elbows past 45 degrees.","Lower slowly, then press up."],
  fly:["Slight bend in the elbows, hug a tree.","Squeeze the chest at the center.","Do not let the cables yank the shoulders forward."],
  dips:["Lean slightly forward, elbows tucked.","Descend until the shoulder hits elbow height.","Lock out at the top."],
  ohp:["Squeeze the glutes, ribs down.","Head moves through once the bar clears the face.","Bar over mid foot at lockout."],
- lateral:["Lead with the elbows, not the hands.","Stop at shoulder height.","Light weight, loud control."],
+ lateral:["Lead with the elbows, not the hands.","Stop at shoulder height.","Light weight, slow and controlled."],
  rear:["Chest toward the floor, thumbs slightly down.","Squeeze shoulder blades together.","Small, smooth, no swinging."],
  shrug:["Straight up and down, ears to shoulders.","Pause at the top for a beat.","Do not roll the shoulders."],
  cgbench:["Hands just inside shoulder width.","Elbows brush the ribs.","Triceps finish every rep."],
@@ -731,7 +732,7 @@ var CCUE={
  pulldown:["Pull the elbows to the back pockets.","Chest up to meet the bar.","Control the stretch at the top."],
  row:["Hinge, flat back, pull to the lower ribs.","Squeeze the shoulder blades.","No bouncing off the thighs."],
  cablerow:["Sit tall, pull to the navel.","Elbows close, squeeze the back.","Reach forward with control."],
- facepull:["Pull the rope to the forehead, elbows high.","Thumbs back, squeeze the rear delts.","Light weight, perfect reps."],
+ facepull:["Pull the rope to the forehead, elbows high.","Thumbs back, squeeze the rear delts.","Light weight, clean reps."],
  deadlift:["Bar over mid foot, wedge in.","Push the floor away.","Lock the hips and finish tall."],
  squat:["Brace like a punch is coming.","Knees track over the toes.","Hit depth, drive up through the whole foot."],
  rdl:["Hips back, bar glued to the legs.","Soft knees, flat back.","Feel the hamstrings load."],
@@ -930,7 +931,7 @@ function socialBuffs(){var o=socState(),n=Math.min(3,o.vis.length),g=Math.min(3,
 /* friends who said hi today walk around your lounge for half an hour */
 function socVisitors(){var o=socState(),now=Date.now();return o.vis.filter(function(v){return v.look&&now-v.t<30*60000}).map(function(v,k){return {id:"sv:"+v.from,room:0,role:"visitor",look:v.look,visitor:1,fresh:now-v.t<90000,leaveAt:v.t+30*60000,k:k+5}})}
 function socWorldCard(w){
-  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+plDot(w)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+(w.streak||0)+'-day streak · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="fshview" data-u="'+esc(w.id)+'">Say hi</button></div>';
+  return '<div class="snw"><div class="snav">'+nbAv(w.look||lookOf(),44)+'</div><div class="sni"><b>'+esc(w.name)+plDot(w)+'</b><small>Lv '+(w.lv||1)+' · '+((w.rooms||[]).filter(Boolean).length)+' rooms · '+'Streak: '+plStreakN(w)+' day'+(plStreakN(w)===1?'':'s')+' · '+socAgo(w.t||0)+'</small></div><button class="btn" data-act="fshview" data-u="'+esc(w.id)+'">Say hi</button></div>';
 }
 function socialHtml(){
   var h='<section class="card panel snpanel" id="socnb">'+socInner()+'</section>';
@@ -975,7 +976,7 @@ function rwEditor(){
   var rows=REWARDS.map(function(r){var e=rwEd(r)||{};return '<div class="rwe" data-tier="'+rwTier(r)+'" data-lv="'+r[0]+'"><div class="rwe-h"><span class="lv">Lv '+r[0]+'</span><i class="rtier">'+rwTier(r)+'</i></div>'
     +'<input class="rwe-t" maxlength="48" aria-label="Level '+r[0]+' reward name" placeholder="'+esc(r[1])+'" value="'+esc(e.t||"")+'">'
     +'<input class="rwe-d" maxlength="100" aria-label="Level '+r[0]+' reward details" placeholder="'+esc(r[2])+'" value="'+esc(e.d||"")+'"></div>'}).join("");
-  var m=modal('<div class="card box2 rweditor"><span class="label">Your rewards</span><h2>Make them yours</h2><p class="note">Write what would actually get you moving. Leave a box empty to keep the game\'s version. This shows every prize, so it spoils the surprises.</p>'+rows
+  var m=modal('<div class="card box2 rweditor"><span class="label">Your rewards</span><h2>Edit your rewards</h2><p class="note">Write what would actually get you moving. Leave a box empty to keep the game\'s version. This shows every prize, so it spoils the surprises.</p>'+rows
     +'<div class="row"><button class="btn" id="rwesave">Save</button><button class="btn ghost" data-act="mclose">Cancel</button></div></div>');
   m.querySelector("#rwesave").onclick=function(){var o={};[].forEach.call(m.querySelectorAll(".rwe"),function(d){var t=d.querySelector(".rwe-t").value.trim().slice(0,48),x=d.querySelector(".rwe-d").value.trim().slice(0,100);if(t||x)o[d.dataset.lv]={t:t,d:x||null}});
     S.rwEdit=o;m.remove();render();persist();pop("Rewards saved")}}
@@ -1072,7 +1073,7 @@ function chPose(a,f){
 function fresh(){
   return {xp:0,done:{},stats:{creativity:0,discipline:0,fitness:0,productivity:0,social:0},streak:0,lastDone:"",
     quests:DEFAULTS.map(function(d,i){return {id:"q"+i,name:d[0],xp:d[1],stat:d[2],cl:d[3],why:d[4],rep:d[5]}}),next:DEFAULTS.length,
-    xpc2:1,xpc3:1,xpc4:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
+    xpc2:1,xpc3:1,xpc4:1,xpc5:1,gates:[],claimed:{},gym:null,combo:null,raid:null,vdone:{},vxp:0,bigxp:0,total:0,vcount:0,freezes:0,chests:{},badges:{},hashes:[],dayXp:{d:"",x:0},runDate:"",cleared:0,crits:0,coins:0,earnedC:0,spent:0,k10:1,v001:1,cdone:{},owned:{},eq:{},lvPaid:1,best:0,cls:"",spec:"",oath:"",wheel:"",wheelRes:"",away:{},char:defChar(""),created:false,fx1022:true,rst2:true,base:baseFresh(),active:{},weekPaid:{},gymlog:{},sessions:[],wk:null};
 }
 var qEdit=false, S=fresh(), db=null, saveT=null, busy=false, status="", newIds={}, draft="", gateLines=[], gateBusy=false;
 
@@ -1098,7 +1099,10 @@ function doneXp(q){var d=S.done[q.id];return typeof d==="number"?d:q.xp}
    one or two quests, the cost ramps to ECON.lvFlat by level ECON.lvRamp, then grows only ECON.lvGrow a level, so chores alone
    level a player up 1 to 2 times a day and a full day (workout, Training, bounties) 3 to 4 times, all the way up. Level 100 is
    13,905 XP. See docs/ECONOMY.md. cum2 is curve 2 and cumOld curve 1, kept only to move old saves over (merge). */
-function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP))}
+function lvNeed(L){var c=ECON;return Math.round(L<c.lvRamp?c.lvFirst+(c.lvFlat-c.lvFirst)*(L-1)/(c.lvRamp-1):c.lvFlat+c.lvK*Math.pow(L-c.lvRamp,c.lvP)+(L>c.lvTopFrom?c.lvTop*Math.pow(L-c.lvTopFrom,2):0))}
+/* curve 4 (2026-11-10 to 2026-11-11), frozen here so a save made on it moves over at the same level and fraction (merge, xpc5) */
+var CUMT4=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT4.push(CUMT4[L]+Math.round(L<6?20+115*(L-1)/5:135+.315*Math.pow(L-6,2)))})();
+function cum4(L){return L<=1?0:L<CUMT4.length?CUMT4[L]:CUMT4[CUMT4.length-1]+(L-CUMT4.length+1)*(CUMT4[CUMT4.length-1]-CUMT4[CUMT4.length-2])}
 /* curve 3 (2026-11-09 to 2026-11-10), frozen here so a save made on it moves over at the same level and fraction (merge, xpc4) */
 var CUMT3=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT3.push(CUMT3[L]+Math.round(L<6?20+115*(L-1)/5:135*(1+.0015*(L-6))))})();
 function cum3(L){return L<=1?0:L<CUMT3.length?CUMT3[L]:CUMT3[CUMT3.length-1]+(L-CUMT3.length+1)*154}
@@ -1181,7 +1185,7 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   /* the areas-seen record belongs to the save: one merged in without it (another device's save, a backup) gets a new one at its own level (29h_unlocks.js) */
   if(!d.areaOn&&S)delete S.areaOn;
   if(d&&(+d.appv||0)>APPV)newerSeen=true;
-  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4);
+  var f=fresh(), needFix=!!(d&&!d.rst2&&(d.xp||0)>0), curve2=!!(d&&!d.xpc2), curve3=!!(d&&d.xpc2&&!d.xpc3),curve4=!!(d&&d.xpc3&&!d.xpc4),curve5=!!(d&&d.xpc4&&!d.xpc5);
   S=Object.assign(f,d||{});
   S.stats=Object.assign(f.stats,(d&&d.stats)||{});
   if(!Array.isArray(S.quests))S.quests=f.quests;
@@ -1208,6 +1212,10 @@ function merge(d){if(!d||d.epoch!==QB_EPOCH)return;d=JSON.parse(JSON.stringify(d
   if(curve4){var x4=S.xp||0,L4=1;while(L4<MAXL&&x4>=cum3(L4+1))L4++;var f4=(x4-cum3(L4))/Math.max(1,cum3(L4+1)-cum3(L4)),x5=Math.round(cum(L4)+f4*(cum(L4+1)-cum(L4)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x5-x4;S.xp=x5}
   S.xpc4=1;
+  /* curve 5 (xpc5, 2026-11-11, a longer top): the same move, from curve 4 */
+  if(curve5){var x6=S.xp||0,L6=1;while(L6<MAXL&&x6>=cum4(L6+1))L6++;var f6=(x6-cum4(L6))/Math.max(1,cum4(L6+1)-cum4(L6)),x7=Math.round(cum(L6)+f6*(cum(L6+1)-cum(L6)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=x7-x6;S.xp=x7}
+  S.xpc5=1;
   if(!S.wcount||typeof S.wcount!=="object")S.wcount={};if(!S.joined||typeof S.joined!=="object")S.joined={};if(!S.hired||typeof S.hired!=="object")S.hired={};if(!S.hire1){S.hire1=true;try{crewByLevel().forEach(function(k){S.joined[k]=1})}catch(e){}}
   S.quests.forEach(function(q){if(/^go to (the )?gym$/i.test(q.name)){q.name="Workout";q.xp=40;q.rep="weekly4";q.why="4 times a week, live photo proof"}});
   if(!S.quests.some(function(q){return q.rep==="weekly4"})){S.quests.push({id:"q"+(S.next++),name:"Workout",xp:40,stat:"fitness",cl:"body",why:"4 times a week, live photo proof",rep:"weekly4"})}
@@ -1329,7 +1337,7 @@ function profileHtml(){
   var h='<section class="card hero">'+petHtml()+'<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent2)"/></linearGradient></defs>'
    +'<circle class="t" cx="60" cy="60" r="54"/><circle class="p" cx="60" cy="60" r="54" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-into/nd)).toFixed(1)+'"/></svg>'
    +'<div class="c"><small>LEVEL</small><b>'+lv+'</b></div></div><div>'
-   +'<div class="xp mono">'+S.xp+'<span>XP</span></div><div class="note mono" style="margin-top:6px">'+(maxed?"MAX LEVEL. Monarch XP keeps flowing.":g?"Bar full. Pass the gate to level up.":(nd-into)+" XP to level "+(lv+1))+'</div>'
+   +'<div class="xp mono">'+S.xp+'<span>XP</span></div><div class="note mono" style="margin-top:6px">'+(maxed?"Max level. Extra XP earns Renown ranks.":g?"Bar full. Pass the gate to level up.":(nd-into)+" XP to level "+(lv+1))+'</div>'
    +'<div class="meta"><div><span class="label">Streak</span><b class="mono">'+streakNow()+'d</b></div><div><span class="label">Freezes</span><b class="mono">'+(S.freezes||0)+'</b></div><div><span class="label">Photo proof</span><b class="mono" style="color:'+(integrity()<.5?"var(--accent)":"var(--done)")+'">'+Math.round(integrity()*100)+'%</b></div></div>'
    +'<div class="streakline">Streak bonus <b>+'+Math.round(Math.min(streakCap(),.02*streakNow())*100)+'% XP</b>'+(function(){var n=[3,7,14,30,60,100].filter(function(d){return d>streakNow()})[0];return n?'. Chest at day <b>'+n+'</b>.':'.'})()+'</div>'
    +'<div class="upg">'+unlocked+' UI upgrade'+(unlocked===1?"":"s")+' active'+(nextFx?'. Next upgrade at <b>level '+nextFx[0]+'</b>.':'.')+'</div>'
@@ -1344,7 +1352,7 @@ function profileHtml(){
   vis.forEach(function(r){h+='<div class="rw'+(ART["rew_"+r[0]]&&!rwEd(r)?' hasimg':'')+'" data-tier="'+rwTier(r)+'">'+rwImg(r,1)+'<span class="lv">Lv '+r[0]+'</span><span><i class="rtier">'+rwTier(r)+'</i>'+esc(rwT(r))+'<small>'+esc(rwD(r))+'</small></span><span class="st">LOCKED</span></div>'});
   if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
   if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
-  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Make these rewards yours</button></section>';
+  h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Edit rewards</button></section>';
 
   var ri=rankIdx();
   h+='<section class="card panel"><h3 class="label">Stats</h3>';

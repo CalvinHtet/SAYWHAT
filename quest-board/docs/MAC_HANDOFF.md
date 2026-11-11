@@ -73,8 +73,9 @@ A rollback shows levels on the old curve until the release is deployed again, wh
 v0.93+ (the Mac): the Town Boss art (6 pictures per boss + the burned Town Hall and cracked frames; the code is in),
 W56 purchase sounds, W55 friends visit businesses, W35 Rafe's legendary hunts, W36 side-quests, W8/W9 photo feed, W28 Gym Pact, W1b
 w-perf2 (load room art per room; the 10 MB blobs.js), the server clock for Night watch photos (SPEC6; the phone's time stamp shipped).
-The photo feed (W8/W9) needs Firebase STORAGE, which the game does not use yet: enable it, write storage rules, and add
-`firebase deploy --only storage` to the deploy. Comment deletes (by the comment author or the post author) belong in firestore.rules.
+The photo feed (W8/W9) is built (branch w-photos, 29ph_photos.js) and needs Firebase STORAGE: enable it once in the console,
+then deploy storage.rules and the firestore.rules changes (`deploy --only firestore:rules,storage`, RELEASING.md). Comment deletes
+(by the comment author, the post author or Cal) are in firestore.rules.
 
 ## 4. Art for the Mac (Higgsfield, Unlimited only, Cal approves first)
 
