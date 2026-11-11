@@ -280,7 +280,7 @@ function qsCard(it){
   if(it[1]==="a_acc"&&own&&!on&&typeof acc2Ok==="function"&&acc2Ok(it))btn+=S.eq.a_acc2===it[0]?'<button class="qs-btn ghost" data-act="unequip2">Second · Remove</button>':'<button class="qs-btn alt" data-act="equip2" data-id="'+it[0]+'">Wear as second</button>';
   return '<article class="qs-card'+(on||S.eq.a_acc2===it[0]?" on":"")+(QS_TRY[it[1]]===it[0]?" trying":"")+'" data-card="'+it[0]+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5])+'</p>'+btn+'</article>';
 }
-var QS_GROUPS=[["a_hat","Hats"],["a_acc","Accessories"],["a_top","Tops"],["a_pants","Bottoms"],["a_shoes","Shoes"],["a_back","Back"],["a_mask","Face"],["a_xface","Face"],["a_hair","Hair"],["a_hairc","Hair color"],["a_eyes","Eye color"]];
+var QS_GROUPS=[["a_hat","Hats"],["a_acc","Accessories"],["a_top","Tops"],["a_pants","Bottoms"],["a_shoes","Shoes"],["a_hair","Hair"],["a_hairc","Hair color"],["a_eyes","Eye color"]];
 function qsGroups(pick){
   return QS_GROUPS.map(function(g){var items=SHOP.filter(function(x){return x[1]===g[0]&&isRigItem(x)&&pick(x)});
     return items.length?'<section class="qs-sec"><h3>'+g[1]+'</h3><div class="qs-grid">'+items.map(qsCard).join("")+'</div></section>':''}).join("");
@@ -332,6 +332,8 @@ function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.
   return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-qsfl]");if(!b)return;QSFLOOR=b.dataset.qsfl;window._qsSeen=0;render()});
 shopHtml=function(){
+  /* W41: the Wardrobe's filters last while the Shop is open; opened again, they start at All (29zw_wardrobe.js) */
+  if(!document.body.classList.contains("shopmode"))wdReset();
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
   var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
@@ -352,18 +354,15 @@ shopHtml=function(){
     h+=qsBanner(b,d);
     /* Cal: a brand back on Wednesday is here for the week only */
     if(b.back)h+='<p class="qs-note qs-lead">Back for Wednesday only. It leaves '+(function(){var t=dropStart(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
-    /* Cal (w-wardrobe): the categories on a brand's rack too */
-    var bl=SHOP.filter(function(x){return x[6]&&x[6].b===b.id&&isRigItem(x)}),bg=qsGroups(function(x){return x[6].b===b.id&&wdOk(x,true)});
-    h+=wdBar(bl,true)+'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(bg||'<p class="qs-empty">Nothing here yet.</p>')+'</div></div>';
+    h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
   }else if(shopTab==="basics"){
     h+='<p class="qs-note qs-lead">The everyday pieces from character creation, sold one at a time.</p>';
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b==="basics"})+'</div></div>';
   }else if(shopTab==="wardrobe"){
     var mine=SHOP.filter(function(x){return isRigItem(x)&&S.owned[x[0]]&&itemFits(x)});
     h+='<p class="qs-note qs-lead">Everything you own stays here, even after its brand leaves the shop.</p>';
-    /* Cal (w-wardrobe): filter by category and brand */
-    var wg=mine.length?qsGroups(function(x){return !!S.owned[x[0]]&&itemFits(x)&&wdOk(x)}):"";
-    h+=(mine.length?wdBar(mine):'')+'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(!mine.length?'<p class="qs-empty">Nothing here yet. Pieces you buy will wait for you here.</p>':wg||'<p class="qs-empty">Nothing here yet.</p>')+'</div></div>';
+    /* W41 (Cal): category and brand chips over the rack, which is grouped by the same categories (29zw_wardrobe.js) */
+    h+=(mine.length?wdBar(mine):'')+'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+(mine.length?wdRack(mine):'<p class="qs-empty">Nothing here yet. Pieces you buy will wait for you here.</p>')+'</div></div>';
   }else if(shopTab==="upgrades"){
     h+='<p class="qs-note">Permanent upgrades stack with your class and crew. Buy once, keep forever.</p>'+qsLegacy(["buff"]);
   }else{
