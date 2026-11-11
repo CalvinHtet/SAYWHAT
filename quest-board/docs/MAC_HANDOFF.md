@@ -13,7 +13,7 @@ provide it to my claude on mac to pick up from there."
 | v0.88 | 213ea0f | the last one on GitHub's qa-local (2026-11-10 morning) |
 | v0.89 | a246406 | zipped; its qa-local push did NOT reach GitHub (the rollback push did) |
 | v0.90 | 2a97a02 | zipped (carries v0.89): economy v1, chests, relics, update window, letters |
-| v0.91 | (fill in) | the priority release: see section 2 |
+| v0.91 | 8d09598 (merge of rc-v0.91 8693de1) | zipped 2026-11-10 evening, QA PASS 19:25: see section 2 |
 
 Rollback: branch rollback-v0.80 (v0.80 code, QB_EPOCH 6). Its APPV must stay ABOVE the newest release: 92 for v0.91 (378c509).
 A rollback shows levels on the old curve until the release is deployed again, which restores them exactly.
@@ -29,7 +29,16 @@ A rollback shows levels on the old curve until the release is deployed again, wh
   tabs show "?". Building Goals log with totals hidden (29bg_goals.js). Passive-income steps (Garden ~10%, Restaurant ~15%, Mall ~20%,
   endgame 25-30%), with the Restaurant trigger raised.
 - Rides along (QA passed): W42 shop floors (Street / Boutique 30 / Atelier 70, hidden until opened), W40 daily sale, W44 no spoilers.
-- (fill in: commits, QA results, known issues)
+- Also: no level or day gates in the building tab (money, list order and the % / coin triggers pace it); Noir after 180 dishes,
+  its card first with progress, Desmond the same day; story order Garden -> Restaurant -> Lock and Key -> Boba -> Dessert -> Mall;
+  the Wheel every 4 hours; tiered permanent upgrades I-III (3-card cascade); level-up cards with no counts or spoilers; likes 2 a
+  day in total; the Training weight box keeps the last weight; Cal's own one-time fresh start (29bv_calfresh.js, his uid only,
+  Training kept, runs only before 2026-11-14 UTC).
+- QA (19:25, rigtest/qa/run_rc.sh): Live checks, full pricesweep, reset on 8 saves + two devices, unlock order, Goals, no gates,
+  story order, w-system, Wheel, Shop header + vault, spoiler playthrough, Training, sale, likes, fresh start. 0 page errors.
+  Not tested: visuals of wall pieces, the Collect day cap on screen, a real Firestore account, phones.
+- Sims (110 days): Lock and Key 5 days after the Restaurant; level 100 on day 73 (regular) and 80 (cal), short of Cal's ~85;
+  Garden-stage businesses 7-8% (target 10); single late days up to 33-34% passive (cap 30, average under). v0.92 candidates.
 
 ## 3. Open queue, in order (TASKS.md)
 
@@ -85,6 +94,8 @@ Decided, so no longer open: Town Boss numbers (SPEC10), the first-week unlock sp
 Garden earnings target for the Restaurant (set by the v0.91 passive-income steps).
 
 ## 8. Known issues
+
+- Live still sets window.qbDbg, __qbTeam, __qbAlerts and __qbShift (QA LOW; __qb and __qbLoft are stripped as CLAUDE.md asks).
 
 - Room Bonus under about 0.5% changes nothing on a 100-XP quest, because quest XP is a whole number (QA 16:20; the perk total
   itself is exact since b543c04). The bonuses count on bigger quests and add up as rooms fill. Cal decides whether it matters.
