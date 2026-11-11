@@ -1195,37 +1195,8 @@ function lfRoomLabel(r,i){
   var nm=T.name,w=Math.max(80,(nm.length+(txt?txt.length+3:0))*7.4+22);
   return '<g transform="translate('+LOFF+','+LY+') scale('+(1/lfRsc(r.t))+')" class="lflabel"><rect x="'+(-w/2)+'" y="-12" width="'+w+'" height="24" rx="12" fill="#14121c" stroke="rgba(255,255,255,.2)"/><text y="4.5" text-anchor="middle" class="lflbl">'+esc(nm)+(txt?' <tspan fill="#9cff8a">'+esc(txt)+'</tspan>':'')+'</text></g>';
 }
-function lfSkyline(rows){
-  var y0=LFROOF+rows*LFFP,gy=y0+20,L=lfLS(),night=L.dark>.25,o='',X0=-1100,X1=LFWW+1100,top=gy-760;
-  o+='<defs><linearGradient id="lfsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+(night?"#0d1030":"#5f8fd0")+'"/><stop offset=".62" stop-color="'+(night?"#2a2352":"#a9c8ea")+'"/><stop offset="1" stop-color="'+(night?"#4a3563":"#f4dcc0")+'"/></linearGradient></defs>';
-  o+='<rect x="'+X0+'" y="'+(top-1600)+'" width="'+(X1-X0)+'" height="'+(gy-top+1600)+'" fill="url(#lfsky)"/>';
-  var far=night?"#1b1f44":"#8ea6c8",mid=night?"#141838":"#6f86ab",nr=night?"#0c0f26":"#4c5f84",win=night?"#ffd98a":"",seed=7;
-  function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
-  function win_(x,y,w,h,n){var t='';if(!night)return t;for(var q=0;q<n;q++){var wx=x+3+rnd()*(w-9),wy=y+6+rnd()*(h-14);t+='<rect x="'+wx.toFixed(1)+'" y="'+wy.toFixed(1)+'" width="3" height="4" fill="'+win+'" opacity="'+(.35+rnd()*.5).toFixed(2)+'"/>'}return t}
-  /* hills */
-  o+='<path d="M'+X0+' '+gy+' L'+X0+' '+(gy-150)+' Q-700 '+(gy-230)+' -400 '+(gy-140)+' T 100 '+(gy-120)+' T 700 '+(gy-130)+' T 1300 '+(gy-170)+' T 1800 '+(gy-120)+' T '+X1+' '+(gy-170)+' L'+X1+' '+gy+'Z" fill="'+far+'" opacity=".7"/>';
-  /* far towers */
-  var x=X0;while(x<X1){var w=26+rnd()*44,h=400+rnd()*420;o+='<rect x="'+x.toFixed(1)+'" y="'+(gy-h).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+far+'"/>';x+=w+2+rnd()*6}
-  /* landmarks (mid layer) */
-  function usb(cx){var w=62,h=780;return '<g fill="'+mid+'"><rect x="'+(cx-w/2)+'" y="'+(gy-h)+'" width="'+w+'" height="'+h+'"/><path d="M'+(cx-w/2)+' '+(gy-h)+' L'+(cx-w/2+8)+' '+(gy-h-18)+' L'+(cx+w/2-8)+' '+(gy-h-18)+' L'+(cx+w/2)+' '+(gy-h)+'Z"/><rect x="'+(cx-17)+'" y="'+(gy-h-34)+'" width="34" height="18"/><rect x="'+(cx-9)+'" y="'+(gy-h-50)+'" width="18" height="16"/></g>'+win_(cx-w/2,gy-h,w,h,26)}
-  function wg(cx){var w=54,h=840;return '<g fill="'+mid+'"><path d="M'+(cx-w/2)+' '+gy+' V'+(gy-h+30)+' L'+cx+' '+(gy-h)+' L'+(cx+w/2)+' '+(gy-h+30)+' V'+gy+'Z"/><rect x="'+(cx-2)+'" y="'+(gy-h-70)+'" width="4" height="72"/></g>'+win_(cx-w/2,gy-h,w,h,22)}
-  function gas(cx){return '<g transform="translate(0,'+gy+') scale(1,1.7) translate(0,'+(-gy)+')">'+gas_(cx)+'</g>'}
-  function gas_(cx){var w=70,h=380,t='<g fill="'+mid+'">';for(var q=0;q<4;q++){var ww=w-q*13;t+='<rect x="'+(cx-ww/2)+'" y="'+(gy-h+q*0)+'" width="'+ww+'" height="'+h+'" opacity="0"/>'}t+='<rect x="'+(cx-w/2)+'" y="'+(gy-300)+'" width="'+w+'" height="300"/><rect x="'+(cx-w/2+8)+'" y="'+(gy-340)+'" width="'+(w-16)+'" height="42"/><rect x="'+(cx-w/2+16)+'" y="'+(gy-372)+'" width="'+(w-32)+'" height="34"/><path d="M'+(cx-w/2+24)+' '+(gy-372)+' L'+cx+' '+(gy-404)+' L'+(cx+w/2-24)+' '+(gy-372)+'Z"/></g>';return t+win_(cx-w/2,gy-300,w,300,18)}
-  function aon(cx){var w=58,h=660;return '<g fill="'+mid+'"><rect x="'+(cx-w/2)+'" y="'+(gy-h)+'" width="'+w+'" height="'+h+'"/><rect x="'+(cx-w/2+6)+'" y="'+(gy-h-10)+'" width="'+(w-12)+'" height="12"/></g>'+win_(cx-w/2,gy-h,w,h,18)}
-  function bon(cx){return '<g transform="translate(0,'+gy+') scale(1,1.7) translate(0,'+(-gy)+')">'+bon_(cx)+'</g>'}
-  function bon_(cx){var t='<g fill="'+mid+'">';[[-30,300],[0,330],[30,300]].forEach(function(a){t+='<rect x="'+(cx+a[0]-13)+'" y="'+(gy-a[1])+'" width="26" height="'+a[1]+'" rx="6"/>'});return t+'<rect x="'+(cx-52)+'" y="'+(gy-60)+'" width="104" height="60"/></g>'}
-  function cap(cx){return '<g transform="translate(0,'+gy+') scale(1,1.7) translate(0,'+(-gy)+')">'+cap_(cx)+'</g>'}
-  function cap_(cx){return '<g fill="'+mid+'"><rect x="'+(cx-22)+'" y="'+(gy-130)+'" width="44" height="130"/><rect x="'+(cx-3)+'" y="'+(gy-170)+'" width="6" height="40"/></g>'}
-  o+=aon(-470)+usb(-300)+gas(-90)+usb(190)+gas(520)+wg(880)+aon(1130)+cap(1290)+bon(1420)+wg(1580)+usb(1760)+aon(1890)+gas(2050);
-  var x2=X0+30;while(x2<X1){var ww=34+rnd()*48,hh=330+rnd()*300;o+='<rect x="'+x2.toFixed(1)+'" y="'+(gy-hh).toFixed(1)+'" width="'+ww.toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+mid+'"/>'+win_(x2,gy-hh,ww,hh,Math.round(hh/16));x2+=ww+4+rnd()*10}
-  /* near strip + palms */
-  o+='<rect x="'+X0+'" y="'+(gy-34)+'" width="'+(X1-X0)+'" height="40" fill="'+nr+'"/>';
-  for(var px=X0+80;px<X1;px+=260+Math.floor(rnd()*140)){if(px>-60&&px<LFWW+60)continue;var ph=120+rnd()*50,lean=(rnd()-.5)*26;
-    o+='<g fill="'+nr+'" stroke="'+nr+'"><path d="M'+px+' '+gy+' Q'+(px+lean*.4)+' '+(gy-ph*.55)+' '+(px+lean)+' '+(gy-ph)+'" fill="none" stroke-width="5" stroke-linecap="round"/>';
-    for(var f=0;f<7;f++){var a=-Math.PI+f*(Math.PI/6),fx=px+lean+Math.cos(a)*46,fy=gy-ph+Math.sin(a)*22+10;o+='<path d="M'+(px+lean)+' '+(gy-ph)+' Q'+((px+lean+fx)/2)+' '+(gy-ph-22+Math.sin(a)*10)+' '+fx.toFixed(1)+' '+fy.toFixed(1)+'" fill="none" stroke-width="3.2" stroke-linecap="round"/>'}o+='</g>'}
-  if(night){for(var st=0;st<70;st++)o+='<circle cx="'+(X0+rnd()*(X1-X0)).toFixed(0)+'" cy="'+(top-380+rnd()*420).toFixed(0)+'" r="'+(.6+rnd()*1.1).toFixed(1)+'" fill="#fff" opacity="'+(.3+rnd()*.5).toFixed(2)+'"/>'}
-  o+='<rect x="'+X0+'" y="'+(gy+80)+'" width="'+(X1-X0)+'" height="1600" fill="'+(night?"#14152a":"#4a5068")+'"/>';
-  return '<g class="lfskyl" pointer-events="none">'+o+'</g>'}
+/* lfSkyline: the simpler skyline (day or night, no weather) that stood here was a second declaration of the same name (QA, 2026-11-10); removed in w-ui92.
+   The weather-aware one above (line 218) is the declaration; the street and building views draw 26_world.js's lfSkyline, assigned over it. */
 function lfWorld(){
   var F=floorsOpen(),B=S.base,lockF=0,rows=F+(lockF?1:0);
   var H=LFROOF+rows*LFFP+LFSTREET,s='';
@@ -1709,7 +1680,7 @@ function lfBind(c){
   function up(e){if(!P[e.pointerId])return;delete P[e.pointerId];
     if(!Object.keys(P).length){c.classList.remove("grab");
       if(!moved&&tgt){var el=tgt.closest&&!tgt.closest("[data-act=gotoroom]")&&tgt.closest("[data-lf]");if(el){var q=el.getAttribute("data-lf").split(":"),i=+q[1];
-        if(q[0]==="lock"){pop("The "+q[1]+" unlocks at level "+q[2])}else if(q[0]==="room")roomModal(i);else if(q[0]==="build"){buildModal(i)}else if(q[0]==="collect"){baseAct("rcollect",{dataset:{i:i}},e)}else if(q[0]==="closet"){wardrobeModal()}}}
+        if(q[0]==="lock"){pop("The "+q[1]+" unlocks at level "+q[2])}else if(q[0]==="open"||q[0]==="lot"){nxTap(q)}else if(q[0]==="room")roomModal(i);else if(q[0]==="build"){buildModal(i)}else if(q[0]==="collect"){baseAct("rcollect",{dataset:{i:i}},e)}else if(q[0]==="closet"){wardrobeModal()}}}
       drag=null;pinch=null;tgt=null}else if(Object.keys(P).length===1){var k=Object.keys(P)[0];drag={x:P[k][0],y:P[k][1],vx:LFV.x,vy:LFV.y};pinch=null;moved=99}}
   c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up);
   c.addEventListener("wheel",function(e){e.preventDefault();var p=pt(e);lfZoomAt(e.deltaY<0?1.12:.89,p[0],p[1])},{passive:false});

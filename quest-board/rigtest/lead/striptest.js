@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const PORT = process.env.PORT || '8766', URL = 'http://127.0.0.1:' + PORT + '/dist-web/index.html';
 const MOCK = fs.readFileSync(path.join(__dirname, 'mockfirebase.js'), 'utf8'), CFG = fs.readFileSync(path.join(__dirname, '../../dist-web/config.js'), 'utf8');
-const GONE = ['__qb', '__qbLoft', '__qbRooms', '__qbStory', '__qbFriends', '__qbDrops', '__qbDungeon', '__qbEcon', '__qbBounty', '__qbTown', '__qbUnlock', '__qbPlaza', '__qbLive', '__qbFreedReq'];
+const GONE = ['__qb', '__qbLoft', '__qbRooms', '__qbStory', '__qbFriends', '__qbDrops', '__qbDungeon', '__qbEcon', '__qbBounty', '__qbTown', '__qbUnlock', '__qbPlaza', '__qbLive', '__qbFreedReq', 'qbDbg', '__qbTeam', '__qbAlerts', '__qbShift'];
 let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok   ' : '  FAIL ') + n + (c ? '' : '  ' + JSON.stringify(i))); };
 let hooks = true; // on for setting up the save, off is the real Live config
 (async () => {
@@ -42,7 +42,7 @@ let hooks = true; // on for setting up the save, off is the real Live config
   await A.p.reload(); await A.p.waitForFunction(() => window.QBGAME && window.QBGAME.ready(), null, { timeout: 90000 }); await A.p.waitForTimeout(3500); await clear(A.p);
   const s = await stripped(A.p);
   ok('every test hook is gone', s.left.length === 0, s.left);
-  ok('the team hook the game needs is still there', s.team === 'object', s.team);
+  ok('no team hook on Live (w-ui92: the game reads the team directly)', s.team === 'undefined', s.team);
   ok('no Test button at all, for the owner either', !s.pill);
   const coins = await A.p.evaluate(() => +(document.querySelector('.coinpill').innerText.replace(/\D/g, '')));
   ok('the save came through', coins >= before - 1000, [before, coins]);
