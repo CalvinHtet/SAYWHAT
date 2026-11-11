@@ -49,8 +49,8 @@ var ECON={
      growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
      counts in it too */
   noirServed:180,                                  /* dishes the Restaurant serves before Noir (29b_story.js) */
-  bizDay:{garden:900,restaurant:1100,skybar:300,rooftop:300,boba:250,dessert:250,mall:400,theater:650,auditorium:600,arcade:400,
-    rhythm:350,vr:350,bowling:400,karaoke:400,club:800},
+  bizDay:{garden:1000,restaurant:900,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
+    rhythm:400,vr:400,bowling:450,karaoke:450,club:900},
   vegCoin:7,
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
      gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
