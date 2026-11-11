@@ -34,7 +34,7 @@ A rollback shows levels on the old curve until the release is deployed again, wh
 ## 3. Open queue, in order (TASKS.md)
 
 v0.92 (no art, the last Windows release): W49 Discord-style chat, W53 greetings (wave, high five, poke, spank; Visit Loft removed),
-W50 + W14 screen colours (Hall first), W41 wardrobe categories and brand filters, W57 online dot + streak, W58 Board shortest task first,
+W50 + W14 screen colours (Hall first), W41 wardrobe categories and brand filters, W57 online dot + streak, W58 Board shortest task first, W59 quest-complete toast at the top,
 lfSkyline duplicate cleanup. (fill in at the final: what made it into v0.92 and what did not)
 
 v0.93+ (the Mac): W54 Town Boss (SPEC10 + Cal's final decisions: no coin penalty, the first boss after 5 active players; needs art),
@@ -86,7 +86,8 @@ Garden earnings target for the Restaurant (set by the v0.91 passive-income steps
 
 ## 8. Known issues
 
-- (check at the final) The Room Bonus perk total rounds to a whole %, so a +0.1% piece pays nothing (QA 12:35), unless fixed by then.
+- Room Bonus under about 0.5% changes nothing on a 100-XP quest, because quest XP is a whole number (QA 16:20; the perk total
+  itself is exact since b543c04). The bonuses count on bigger quests and add up as rooms fill. Cal decides whether it matters.
 - Late Dungeon Crawls pay 3-7k a day with no cap (outside the 30% passive cap).
 - Two devices on one account overwrite each other's save.
 - Duel and boss scores are self-reported. Fine among friends, not cheat-proof.
