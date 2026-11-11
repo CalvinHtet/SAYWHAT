@@ -1501,13 +1501,14 @@ function levelUp(lv,extra,from){
        no "UI upgrade: <name>" cards and no "New in the Shop" card any more */
     if(lvEmpty(L)){var cr=lvCrate(L);if(cr)cards+='<div class="reward reveal" style="animation-delay:'+(0.3+(i++)*0.45).toFixed(2)+'s"><span>'+esc(cr)+'</span></div>'}
   }
-  var more=start>from+1?'<p class="note">Plus '+(start-from-1)+' earlier unlock'+(start-from-1===1?'':'s')+' waiting in The Loft.</p>':'';
-  var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv});
+  /* Cal (2026-11-10): "rework all the level up cards and prevent spoilers and no useless text": no count of what is waiting, no stat
+     bars, and a real-life reward that names a room the player does not have yet waits off this card (sysRwHeld, 29sy_system.js) */
+  var more='';
+  var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv&&!(typeof sysRwHeld==="function"&&sysRwHeld(r))});
   var m=modal('<div class="card box2">'+(ART.levelup?'<div class="rhero lvhero" style="background-image:url('+ART.levelup+')"><span class="label">Level up</span><h2>Level '+lv+'</h2></div>':'<span class="label">Level up</span><h2>Level '+lv+'</h2>')
    +(extra?'<p class="note">'+extra+'</p>':'')
    +cards+more
    +(pay?'<div class="reward reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">Level bonus: +'+pay+' coins</div>':'')+rws.map(function(r){return '<div class="reward reveal'+(ART["rew_"+r[0]]&&!rwEd(r)?' rwun':'')+'" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">'+(ART["rew_"+r[0]]&&!rwEd(r)?'<img src="'+ART["rew_"+r[0]]+'" alt="">':'')+'<span>Reward unlocked: '+esc(rwT(r))+'</span></div>'}).join("")
-   +'<div style="display:flex;flex-direction:column;gap:10px">'+statBars()+'</div>'
    +'<p class="note">Level '+(lv+1)+': ???</p><button class="btn big" id="lvok">Keep going</button></div>');
   var b=m.querySelector("#lvok");b.focus({preventScroll:true});b.onclick=function(){m.remove()};
   burst(innerWidth/2,innerHeight/3,26);

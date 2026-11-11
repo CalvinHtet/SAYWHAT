@@ -16,3 +16,20 @@ LFROOM.lair=function(C){sysLairBase(C);
       +'<text x="222" y="196" transform="rotate(-23 222 196)">UPGRADES</text></g>')}catch(e){}};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-sys]");if(!b)return;e.stopPropagation();sysOpen(b.dataset.sys==="ui"?"interface":"upgrades")});
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbSystem={has:sysHas,open:sysOpen};
+/* ---- the permanent upgrades' cascade (Cal, 2026-11-10: "I want the upgrades to already be there but in tiers. like tier 1 merchant seal.
+   Then merchant seal 2 unlocks. but at first, there should only be 3 upgrades. And once upgraded, the next tier of upgrade shows up below
+   it.") ----
+   A tiered line (Merchant Seal I-III, Focus Rune I-III: each tier's req is the one before) shows what is owned and the next tier right
+   under it. The single upgrades (SYSSINGLE, cheapest first) work the same way as one line, so the tab opens on three cards: Merchant
+   Seal I, Focus Rune I and the Frost Charm. No level shows or gates them; the price pass in 29e_economy.js prices each by payback at its
+   own level, so each tier costs clearly more than the one before. Owned ones stay listed (a save that owns a tier keeps it). */
+var SYSSINGLE=["bf_freeze","bf_streak","bf_away"];
+function sysBuffs(items){var own=function(x){return !!(S.owned&&S.owned[x[0]])},by={},out=[];items.forEach(function(x){by[x[0]]=x});
+  var heads=items.filter(function(x){return (x[6]||{}).req==null&&SYSSINGLE.indexOf(x[0])<0});
+  heads.forEach(function(h){var x=h,n=0;while(x&&n++<6){out.push(x);if(!own(x))break;x=items.filter(function(y){return (y[6]||{}).req===x[0]})[0]}});
+  for(var i=0;i<SYSSINGLE.length;i++){var s=by[SYSSINGLE[i]];if(!s)continue;out.push(s);if(!own(s))break}
+  return out}
+/* a real-life reward that names a room the player does not have yet waits off the level-up card (QA: the level-15 "Contraband
+   Sweets" names a dessert before the Dessert Parlor) */
+var SYSRWROOM={15:"dessert",70:"restaurant"};
+function sysRwHeld(r){var t=SYSRWROOM[r[0]];return !!t&&!(S.base&&S.base.slots.some(function(x){return x&&x.t===t}))}

@@ -289,6 +289,8 @@ function qsLegacy(tab){
   /* Upgrades and interface items keep their own art, on the light cards. */
   return SLOTS.filter(function(sl){return tab.indexOf(sl[0])>=0}).map(function(sl){
     var lv=effLvl(),items=SHOP.filter(function(x){return x[1]===sl[0]&&!isRigItem(x)&&itemFits(x)}),vis=items.filter(function(x){return x[4]<=lv}),nxt=items.filter(function(x){return x[4]>lv})[0];
+    /* W48 (Cal): permanent upgrades come in a cascade, not by level (29sy_system.js) */
+    if(sl[0]==="buff"&&typeof sysBuffs==="function")vis=sysBuffs(items);
     if(!vis.length&&!nxt)return "";
     /* Cal (2026-11-10): no level messages in the Shop (it was "Sealed, restocks at level N"); what opens later just appears */
     return vis.length?'<section class="qs-sec"><h3>'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")+'</div></section>':""}).join("");
