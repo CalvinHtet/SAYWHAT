@@ -42,7 +42,8 @@ function alTabs(){var o=alSeen(),t={};if(!o.init)return t;
 function alVisit(){if(!S||!S.created||!loaded)return;var o=alSeen();if(!o.init)return;var ch=0;
   if(!o.tab[view]){o.tab[view]=1;ch=1}
   if(view==="hideout")alRooms().forEach(function(x){if(!o.room[x.room]){o.room[x.room]=1;ch=1}});
-  if(view==="shop")try{dropState().live.forEach(function(b){if(!o.brand[b.id]){o.brand[b.id]=1;ch=1}})}catch(e){}
+  /* QA (w-floors): only the brands on the floor on screen count as looked at, so the Boutique's "!" stays until its floor is opened */
+  if(view==="shop")try{var ds=dropState(),fl=typeof QSFLOOR!=="undefined"&&ds.floors&&ds.floors[QSFLOOR];(fl?fl.live:ds.live).forEach(function(b){if(!o.brand[b.id]){o.brand[b.id]=1;ch=1}})}catch(e){}
   if(view==="hideout"&&typeof LFBSEL!=="undefined"&&LFBSEL!=null)alRooms().forEach(function(x){if(ROOMCELL[x.room][0]===LFBSEL&&!o.bld[x.room]){o.bld[x.room]=1;ch=1}});
   if(ch)persist()}
 function alPaint(){var t=alTabs();document.querySelectorAll(".nav button[data-v]").forEach(function(b){var on=!!t[b.dataset.v]&&b.dataset.v!==view,el=b.querySelector(".nbang");

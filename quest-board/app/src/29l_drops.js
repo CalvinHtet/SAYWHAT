@@ -85,6 +85,10 @@ DROPS.live=2;
 /* HANGANG's day: set it to the day the release with this calendar goes out, so HANGANG is alone at first for everyone */
 DROPS.cal0="2026-11-10";
 var DROPDAYS=[1,5],DROPHOUR=8;
+/* W47, the vault rule (Cal, 2026-11-10: "The vault should appear after there are 6 shops total in rotation. With the 6th shop being the
+   vault on wednesday", option (a) confirmed): no Wednesday vault until this many brands have dropped on the Street's calendar (HANGANG on
+   cal0 is the first), the same day for every player. From then on the vault brand is in the Shop every Wednesday 8 am to Thursday 8 am */
+DROPS.vaultAfter=6;
 function ymdN(ymd){var a=String(ymd).split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/864e5)}
 function ymdOfN(k){return new Date(k*864e5).toISOString().slice(0,10)}
 function ymdWd(k){return (k+4)%7} /* 0 Sunday: day 0, 1970-01-01, was a Thursday */
@@ -115,25 +119,49 @@ function dropStamp(){try{if(S.shopDay||!loaded||!S.created||!hasRoom("closet"))r
 /* this player's Shop at moment n: live (oldest first), retired (vault, oldest first) and the next drop */
 /* the Shop at moment n, the same for every player: live (oldest first), retired (vault, oldest first) and the next drop. Before
    cal0 (a test clock) HANGANG is already there. */
-function dropMine(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
-  var day=DROPS.cal0,m=dropCount(day,dropYmd(n)),seq=[],days=dropSlotDays(day,m+3);
-  for(var j=0;seq.length<m+4;j++){var id=dropOrderAt(j);if(id==null)break;seq.push(id)}
+/* W42, the Shop's floors (ECON.floors): each floor has a calendar of its own, the same for every player. Slot 0 is cal0, then
+   each of the floor's drop days; its brands (fl in BRANDS) drop in BRANDS order and start over when they run out. Every entry
+   carries fl, its floor. */
+function flGet(id){return (ECON.floors||[]).filter(function(F){return F.id===id})[0]||null}
+function flBrands(F){return BRANDS.filter(function(b){return brandFloor(b.id)===F.id}).map(function(b){return b.id})}
+function flIsDrop(F,x,x0){return (F.days||DROPDAYS).indexOf(ymdWd(x))>=0&&(!(F.every>1)||Math.floor((x-x0)/7)%F.every===0)}
+function flOrderAt(F,ids,j){if(F.id==="street"&&DROPS.on)return dropOrderAt(j);return j<ids.length||DROPS.rerun?ids[j%ids.length]:null}
+/* the floors this player has: one with brands, at or past its level (the Street with the Closet, as the Shop itself) */
+/* named shopFloors: 10_app_a.js has its own floorsOpen() (the Loft's floors), and two declarations of one name in the joined closure means the later one replaces the other */
+function shopFloors(){var L=0;try{L=effLvl()}catch(e){}return (ECON.floors||[]).filter(function(F){return flBrands(F).length&&(!(F.lv>0)||L>=F.lv)})}
+function dropFloor(n,F){var byId={},ids=flBrands(F),lv=F.live||DROPS.live;BRANDS.forEach(function(b){byId[b.id]=b});
+  if(!ids.length)return {live:[],vault:[],soon:[],next:null};
+  var day=DROPS.cal0,x0=ymdN(day),t=ymdN(dropYmd(n)),days=[day],m=0,seq=[];
+  for(var x=x0+1;days.length<m+4;x++)if(flIsDrop(F,x,x0)){days.push(ymdOfN(x));if(x<=t)m++}
+  for(var j=0;j<days.length;j++){var id=flOrderAt(F,ids,j);if(id==null)break;seq.push(id)}
   var seen={},live=[],vault=[];
-  /* a retired brand's left: the day its latest stint ended (the drop DROPS.live slots after its own) */
+  /* a retired brand's left: the day its latest stint ended (the drop live slots after its own) */
   for(var i=Math.min(m,seq.length-1);i>=0;i--){var id2=seq[i];if(seen[id2])continue;seen[id2]=1;
-    if(live.length<DROPS.live)live.unshift(Object.assign({},byId[id2],{start:days[i]}));else vault.unshift(Object.assign({},byId[id2],{start:days[i],left:days[i+DROPS.live]}))}
-  var nx=seq[m+1],soon=[m+1,m+2,m+3].filter(function(k){return seq[k]&&days[k]}).map(function(k){return {id:seq[k],start:days[k]}});
-  return {live:live,vault:vault,soon:soon,next:nx?Object.assign({},byId[nx],{start:days[m+1]}):null}}
+    if(live.length<lv)live.unshift(Object.assign({},byId[id2],{start:days[i],fl:F.id}));else vault.unshift(Object.assign({},byId[id2],{start:days[i],left:days[i+lv],fl:F.id}))}
+  var nx=seq[m+1],soon=[m+1,m+2,m+3].filter(function(k){return seq[k]&&days[k]}).map(function(k){return {id:seq[k],start:days[k],fl:F.id}});
+  return {live:live,vault:vault,soon:soon,next:nx?Object.assign({},byId[nx],{start:days[m+1],fl:F.id}):null}}
+/* the Street's calendar, under its old name */
+function dropMine(n){return dropFloor(n,flGet("street")||{id:"street",days:DROPDAYS,live:DROPS.live})}
+/* W47: how many brands the Street's calendar has dropped by drop day ymd, HANGANG's day counting as the first */
+function dropsSoFar(ymd){var F=flGet("street")||{days:DROPDAYS},x0=ymdN(DROPS.cal0),t=ymdN(ymd),c=1;for(var x=x0+1;x<=t;x++)if(flIsDrop(F,x,x0))c++;return c}
+/* QA's w-floors finding (the Boutique's 4 brands never came back): the vault picks only from floors with enough brands. A brand has to
+   be gone 14 days and not drop again within 5 (dropPick below), so a floor takes part only when its brands are out of the Shop at least
+   26 days between stints: (brands - live) x the days between its drops. The Street (12 brands, 2 live, 2 drops a week) is out 35 days;
+   the Boutique today (4 brands, 2 live, weekly) only 14, so it joins once it has 6 brands. A floor that does not take part still has
+   its own drops; the vault brand comes from the floors that do */
+function flVaultOk(F){var n=flBrands(F).length,lv=F.live||DROPS.live,per=7*(F.every>1?F.every:1)/((F.days||DROPDAYS).length||1);return (n-lv)*per>=26}
 /* the brand back on Wednesday wd: of the retired brands, the one out of the Shop longest, counted from the latest time it left (its
    latest stint ended, or its last Wednesday back). Only a brand gone at least 14 days; with none, no vault that Wednesday (QA,
    v0.89: "fewest returns first" brought HANGANG back after 2 days). Never a brand that drops again within 5 days. Of those, the
    one whose last Wednesday back is oldest (never back counts as oldest), then the one gone longest, so every brand gets its turn
    (QA, v0.90: "gone longest" alone kept picking the brand about to drop again, and 4 brands never came back).
    Worked out Wednesday by Wednesday from cal0, so every phone agrees (QA, rc-0.89: only 8 of 16 came back, OVERPASS 5 days after
-   leaving, SAYMORE back on a Wednesday and dropping that Friday). */
-dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0;if(k in DROPWED)return DROPWED[k];
+   leaving, SAYMORE back on a Wednesday and dropping that Friday). One brand for the whole Shop, from the floors this player has
+   (W42) that take part (flVaultOk), and only on Wednesdays after DROPS.vaultAfter brands have dropped (W47). */
+dropPick=function(wd){var FO=shopFloors().filter(flVaultOk),k=wd+"|"+DROPS.vaultAfter+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|"+DROPS.live+"|"+DROPS.cal0+"|"+FO.map(function(F){return F.id}).join(",");if(k in DROPWED)return DROPWED[k];
   var x0=ymdN(DROPS.cal0),x1=ymdN(wd),back={},out=null;x0+=(3-ymdWd(x0)+7)%7;
-  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m=dropMine(dropStart(w)),best=null,bs="",bl="",due={};
+  for(var x=x0;x<=x1;x+=7){var w=ymdOfN(x),m={vault:[],soon:[]},best=null,bs="",bl="",due={};if(dropsSoFar(w)<DROPS.vaultAfter)continue;
+    FO.forEach(function(F){var d=dropFloor(dropStart(w),F);m.vault=m.vault.concat(d.vault);m.soon=m.soon.concat(d.soon||[])});
     (m.soon||[]).forEach(function(q){if(ymdN(q.start)-x<=5)due[q.id]=1});
     m.vault.forEach(function(b){if(due[b.id])return;var lr=back[b.id]||"",bk=lr?ymdAdd(lr,1):"",since=bk>(b.left||b.start)?bk:(b.left||b.start);
       if(x-ymdN(since)<14)return;if(!best||lr<bl||(lr===bl&&since<bs)){best=b;bs=since;bl=lr}});
@@ -141,13 +169,24 @@ dropPick=function(wd){var k=wd+"|"+DROPS.on+"|"+DROPS.rerun+"|"+BRANDS.length+"|
   return DROPWED[k]=out};
 /* Wednesday only: the vault brand, from 8 am Wednesday to 8 am Thursday Pacific */
 dropBack=function(n){var t=dropYmd(n);if(ymdWd(ymdN(t))!==3)return null;var b=dropPick(t);return b?Object.assign({},b,{back:1,backFrom:t,backUntil:ymdAdd(t,1)}):null};
-dropState=function(){var n=dropNow();dropStamp();var d=dropMine(n),bk=dropBack(n);
-  if(bk&&!d.live.some(function(x){return x.id===bk.id}))d.live=[bk].concat(d.live);
-  return {n:n,live:d.live,vault:[],next:d.next,back:bk}};
+/* the Shop now: live is every open floor's brands (and the Wednesday one); floors holds each open floor's own live, soon and next */
+dropState=function(){var n=dropNow();dropStamp();var FO=shopFloors(),fl={},live=[],bk=dropBack(n);
+  FO.forEach(function(F){var d=dropFloor(n,F);fl[F.id]=d;live=live.concat(d.live)});
+  if(bk&&!live.some(function(x){return x.id===bk.id})){live=[bk].concat(live);if(fl[bk.fl])fl[bk.fl].live=[bk].concat(fl[bk.fl].live)}
+  return {n:n,live:live,vault:[],next:fl.street?fl.street.next:null,back:bk,floors:fl,open:FO.map(function(F){return F.id})}};
+/* a floor opening (the Boutique at 30): one window, once, then its brands' splashes one at a time (brandCheck). A player already
+   past its level gets it on their next load. S.floorSeen[id] is the day they saw it */
+function floorFresh(){var o=S.floorSeen||{};return shopFloors().filter(function(F){return F.lv>0&&!o[F.id]})[0]||null}
+function floorSplash(F){if(!S.floorSeen||typeof S.floorSeen!=="object")S.floorSeen={};S.floorSeen[F.id]=dropYmd(dropNow());persist();
+  modal('<div class="card box2 flsplash"><span class="label">The Shop</span><h2>The '+esc(F.name)+' is open</h2><p class="note">A new floor in the Shop, with brands of its own. '+esc(F.line)+'.</p><div class="btns"><button class="btn" data-flgo="'+esc(F.id)+'">Have a look</button></div></div>')}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-flgo]");if(!b)return;closeModals();QSFLOOR=b.dataset.flgo;window._qsSeen=0;
+  var nb=document.querySelector('.nav [data-v="shop"]');if(nb)nb.click();else{try{render()}catch(x){}}});
 /* The splash used to wait for the next app start or tab change: now it comes as soon as the Closet is built or a brand drops,
    once nothing else is on screen and nobody is typing. brandCheck (25_splash.js) shows each brand once. */
 setInterval(function(){try{if(!loaded||!S.created||document.hidden||areaGate("shop"))return;var a=document.activeElement;
   if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;if(document.querySelector("#layer .modal,.bsplash,.dropsplash,.modal.qbsv"))return;
-  if(brandFresh().length)brandCheck()}catch(e){}},2500);
+  if(brandFresh().length||floorFresh())brandCheck()}catch(e){}},2500);
+/* brandCheck is called from more than this timer: the floor's window always goes first, then its brands */
+var flBrandBase=brandCheck;brandCheck=function(){var F=floorFresh();if(F){if(!document.querySelector("#layer .modal,.bsplash"))floorSplash(F);return}return flBrandBase.apply(this,arguments)};
 /* test hook, removed at release with window.__qb */
-window.__qbDrops={count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};
+window.__qbDrops={floor:function(id,t){return dropFloor(t==null?dropNow():t,flGet(id))},floors:shopFloors,count:dropCount,days:dropSlotDays,ymd:function(t){return dropYmd(t==null?dropNow():t)},start:dropStart,back:dropBack,wedOf:dropWedOf,at:dropAt,cfg:DROPS,plan:dropPlan,state:function(){return dropState()},slotDate:dropSlotDate,mine:function(t){return dropMine(t==null?dropNow():t)},order:dropOrderAt};

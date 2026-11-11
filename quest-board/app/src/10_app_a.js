@@ -507,7 +507,7 @@ function wheelHtml(){
      sits centred in its slice (QA, v0.89) */
   var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,e=((c+WHEELROT)%360+360)%360,
       t=e>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(calc(var(--wr) * -.58)) translate(-50%,-50%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(calc(var(--wr) * .58)) translate(-50%,-50%)';
-    return '<span style="transform:'+t+'">'+esc(w[0])+'</span>'}).join("");
+    return '<span style="transform:'+t+'">'+esc(w[1]>0?econScaled(w[1],50).toLocaleString()+" coins":w[0])+'</span>'}).join("");
   return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
@@ -519,10 +519,10 @@ function spin(){
   while(idx<WHEEL_W.length-1&&r>=WHEEL_W[idx]){r-=WHEEL_W[idx];idx++}
   var pz=WHEEL[idx]; S.wheel=today();
   if(pz[3]){var it=wheelGift();
-    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (it waits in your Wardrobe for the Closet)")}
-    else{S.coins+=WHEELALL;S.earnedC+=WHEELALL;S.wheelRes=WHEELALL.toLocaleString()+" coins (you own every piece already)"}}
-  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{S.coins+=300;S.earnedC+=300;S.wheelRes="300 coins (freeze slots were full)"}}
-  else{S.coins+=pz[1];S.earnedC+=pz[1];S.wheelRes=pz[0]}
+    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (saved for later)")}
+    else{var wa=econScaled(WHEELALL,50);S.coins+=wa;S.earnedC+=wa;S.wheelRes=wa.toLocaleString()+" coins (you own every piece already)"}}
+  else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{var wf=econScaled(300,50);S.coins+=wf;S.earnedC+=wf;S.wheelRes=wf.toLocaleString()+" coins (freeze slots were full)"}}
+  else{var wc=econScaled(pz[1],50);S.coins+=wc;S.earnedC+=wc;S.wheelRes=wc.toLocaleString()+" coins"}
   persist(); spinning=true;
   /* land somewhere inside the segment, never on its edge (a sliver is only a few degrees wide) */
   var a0=wheelStart(idx),wd=WHEEL_DEG[idx],m=Math.min(3,wd*0.2),at=a0+m+Math.random()*(wd-2*m);
@@ -821,10 +821,13 @@ function navHtml(){
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
     /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
     if(a[0]==="away"&&areaGate("away"))return "";
-    var lk=lv<a[2]||areaGate(a[0]),wt=typeof areaWaiting==="function"&&areaWaiting(a[0]);
-    /* QA 2026-11-09: the Shop and Dungeons open with a room (areaGate), not a level, so their lock named "Lv 1" to a level 1 player */
-    var rg=lk&&!wt&&lv>=a[2]?{shop:"Closet",away:"Lair"}[a[0]]:"";
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+(lk?" lk":"")+'" aria-label="'+(wt?"Something new"+(areaTomorrow(a)?", opens tomorrow":", opens at your next level-up"):rg?a[1]+", opens with the "+(rg==="Closet"?"Walk-in Closet":"Hero's Lair"):(lk?"Locked":a[1])+(lk?", unlocks at level "+a[2]:""))+'">'+areaIcon(lk?"lock":a[0])+'<span>'+(lk&&!rg?(a[2]===nxLvl()&&!wt?"?":"&nbsp;"):(NAVSHORT[a[0]]||a[1]))+'</span>'+(lk?'<small>'+(wt?'Soon':rg?rg:'Lv '+a[2])+'</small>':'')+'</button>';
+    /* W47 (Cal, 2026-11-10: "there should be no locked shop tab"): no Shop tab at all until the Walk-in Closet is built */
+    if(a[0]==="shop"&&areaGate("shop"))return "";
+    var lk=lv<a[2]||areaGate(a[0]);
+    /* W47 (Cal: "? lvl 6. all locked tabs should just have a ? on it to avoid spoilers"): a locked tab is only a "?", with no name and
+       no icon of its own, and "Lv N" under it when a level opens it. Tapping it says "Locked. Keep playing." (30_app_b.js) */
+    if(lk)return '<button data-act="nav" data-v="'+a[0]+'" class="lk" aria-label="Locked'+(lv<a[2]?', level '+a[2]:'')+'"><b class="navq" aria-hidden="true">?</b><span>&nbsp;</span>'+(lv<a[2]?'<small>Lv '+a[2]+'</small>':'')+'</button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+'" aria-label="'+a[1]+'">'+areaIcon(a[0])+'<span>'+(NAVSHORT[a[0]]||a[1])+'</span></button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
@@ -864,7 +867,7 @@ function shopHtml(){
     var vis=items.filter(function(x){return x[4]<=lv}), nxt=items.filter(function(x){return x[4]>lv})[0];
     if(!vis.length&&!nxt)return;
     h+='<section class="card panel"><h3 class="label">'+sl[1]+'</h3><div class="shopgrid">'+vis.map(itemHtml).join("")
-     +(nxt?'<div class="item"><div class="thumb"><b style="font-size:26px;padding:0;color:var(--muted)">???</b></div><b>Sealed</b><small>Restocks at level '+nxt[4]+'</small></div>':'')+'</div></section>';
+     +'</div></section>';/* Cal: no "Sealed, restocks at level N" (the Shop in 15_shop.js replaces this one) */
   });
   return h;
 }
@@ -1478,20 +1481,20 @@ var BRANDS=[
  {id:"hanga",name:"HANGANG",tag:"Two sizes too big, on purpose",c:["#15151b","#2a2a36","#e9e2d0"],ac:"#c9ff3d",start:"2026-11-03",sub:"한강"},
  {id:"y2k",name:"DIAL-UP",tag:"Low-rise, high drama",c:["#ff4fa3","#b46bff","#6cf0ff"],ac:"#fff",start:"2026-11-09",sub:"y2k thrift"},
  {id:"over",name:"OVERPASS",tag:"Built for kickflips you will never land",c:["#141416","#3a3a40","#ff6a1a"],ac:"#ff6a1a",start:"2026-11-16",sub:"street supply"},
- {id:"rose",name:"VENOM ROSE",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
+ {id:"rose",name:"VENOM ROSE",fl:"boutique",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
  /* Cal: NICE COCK, his own brand, is drop 5; ALTITUDE moves back a week */
- {id:"nc",name:"NICE COCK",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
+ {id:"nc",name:"NICE COCK",fl:"boutique",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
  {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-12-07",sub:"mountain supply"},
  /* Cal's music project (approved 2026-11-06); the next free Monday after ALTITUDE until the launch schedule places it */
  {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#f6a5c8","#8f9bea","#c7a6f0"],ac:"#ffd84d",start:"2026-12-14",sub:"anime city-pop"},
  /* Cal's artist brand (approved 2026-11-06), palette and mark from his song covers */
- {id:"sm",name:"SAYM\u00d8RE",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
+ {id:"sm",name:"SAYM\u00d8RE",fl:"boutique",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
  /* Cal's first approved five, in BRANDS_15.md order: the next free Monday each until the launch schedule places them */
  {id:"smk",name:"SMOKE BOMB",tag:"Vanish in style",c:["#111114","#3a3d44","#ff6a1f"],ac:"#f2e6c8",start:"2026-12-28",sub:"ninja anime"},
  {id:"gp",name:"GACHA POP",tag:"Every outfit a rare drop",c:["#ffb3d1","#9fd3ff","#c9a8f5"],ac:"#ffd65a",start:"2027-01-04",sub:"MMO cash shop"},
  {id:"sp",name:"SAVE POINT",tag:"Respawn looking good",c:["#3b1e54","#6c389a","#8a8a8a"],ac:"#3daf9d",start:"2027-01-11",sub:"retro video games"},
  {id:"bb",name:"BARD & BLADE",tag:"Dressed for the side quest",c:["#4c3227","#3f5e4c","#dddee3"],ac:"#b8925a",start:"2027-01-18",sub:"high fantasy"},
- {id:"cr",name:"CHROME RAIN",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"},
+ {id:"cr",name:"CHROME RAIN",fl:"boutique",tag:"Upgrades sold separately",c:["#0b1313","#989898","#48e2e2"],ac:"#df4071",start:"2027-01-25",sub:"cyberpunk"},
  {id:"km",name:"KAIMANA",tag:"Back when the waves were bigger",c:["#e6d7c2","#34a1a0","#fb7167"],ac:"#fb7167",start:"2027-02-01",sub:"surf club"},
  {id:"oak",name:"OAKMONT",tag:"Members only, dress code optional",c:["#f2e6cb","#26345c","#641b38"],ac:"#641b38",start:"2027-02-08",sub:"80s country-club athletic"},
  {id:"sv",name:"S\u00d8LVBERG",tag:"Never actually skied",c:["#f0f1f3","#bb2b35","#2d4066"],ac:"#bb2b35",start:"2027-02-15",sub:"apr\u00e8s-ski"}];

@@ -6,18 +6,18 @@ function roomCell(i){
   var ws=roomCrew(i).map(function(k,j){return walkerHtml(crewLook(CREW[k].a),j+i*3)});
   if(r.t==="lounge"){ws.unshift(walkerHtml(lookOf(),99));crewUnlocked().filter(function(k){return S.base.crew[k]==null}).slice(0,3).forEach(function(k,j){ws.push(walkerHtml(crewLook(CREW[k].a),j+40))})}
   h+='<div class="walkers">'+ws.join("")+'</div>';
-  var pend=Math.floor(r.pend||0);
+  var pend=Math.min(Math.floor(r.pend||0),typeof bizLeft==="function"?bizLeft(r,i):Infinity);
   if(T.coin&&pend>=1&&(typeof payRoom!=="function"||payRoom()>=1))h+='<button class="bub" data-act="rcollect" data-i="'+i+'" aria-label="Collect '+pend+' coins"><i class="coin"></i><b class="mono">'+pend+'</b></button>';
   h+='<div class="rlabel"><b>'+esc(T.name)+'</b><span class="mono">'+(T.coin?Math.round(coinRate(i))+'/h':T.food?FOODN[T.food]+' '+(T.rate*roomMult(i)*openMult()).toFixed(1)+'/h':T.buff?'+'+baseBuffs().filter(function(x){return x.who===T.name})[0].b.pct+'% XP':'')+'</span></div>';
   return h+'</div>';
 }
 function baseHtml(){
   simulate();
-  var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r){return s+(r&&r.pend?Math.floor(r.pend):0)},0);
+  var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r,k){return s+(r&&r.pend?Math.min(Math.floor(r.pend),typeof bizLeft==="function"?bizLeft(r,k):Infinity):0)},0);/* w-econ3: what each business may still pay today */
   var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
-  if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';
+  if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b>'+(typeof glBtn==="function"?glBtn(LFBSEL):'')+'</div>'+(typeof glNextHtml==="function"?glNextHtml(LFBSEL):'');
   return lfHtml().replace('<div class="lfctl">',hud+'<div class="lfctl">');
 }
 var DROP=null;
@@ -70,14 +70,16 @@ function roomModal(i){
     if(e.trophy&&!dgPieces()){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>Bring home your first trophy from a dungeon crawl</small><button class="btn ghost" disabled>Not yet</button></div>');return}
     var elv=0;/* Cal: "Keep the arcade and bowling alley a secret": no hint card until the story opens them */if(e.opens&&!styAllows(e.opens)&&(e.opens==="arcade"||e.opens==="bowling"))return;if(e.opens&&!styAllows(e.opens)){avail.push('<div class="addon next mystery stynext" aria-label="A mystery upgrade"><b>? ? ?</b><small>'+styWhyHtml(e.opens)+'</small><button class="btn ghost" disabled>Not yet</button></div>');return}
     if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
-    var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Serve '+e.served+' dishes ('+Math.floor(S.base.served)+' so far)':'';
+    var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Dishes served: '+Math.floor(S.base.served):'';
     var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):e.xp?'<em class="uptag up">+'+e.xp+'% XP</em>':'';
-    avail.push('<div class="addon next">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+tag+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
+    /* Cal: a piece waiting on dishes shows how far along it is, with a bar and no total */
+    if(e.served&&S.base.served<e.served)tag+='<i class="stybar"><i style="width:'+Math.round(100*Math.min(1,S.base.served/e.served))+'%"></i></i>';
+    avail.push('<div class="addon next" data-aid="'+a[0]+'">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+tag+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
   });
   /* QA (Restaurant pass): three "Needs Knock Through the Wall" cards filled the slots ahead of Knock Through itself, so nothing
      could be bought. Buyable cards first, then mystery cards, then cards waiting on another upgrade; each group keeps its order. */
   /* Cal (2026-11-07): an upgrade that opens a new room goes first, so the "+" in the building view leads straight to it */
-  avail=avail.map(function(h,k){var m=/data-id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3];return {h:h,k:k,g:/ stynext/.test(h)?-2:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
+  avail=avail.map(function(h,k){var m=/data-a?id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3],sn=typeof styNextBuy==="function"?styNextBuy(r.t):null;return {h:h,k:k,g:/ stynext/.test(h)?-2:m&&m[1]===sn?-1:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
   /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
   var more=avail.length>4;avail=avail.slice(0,4);if(avail.length===4&&avail[3].indexOf(' mystery')<0)avail[3]='<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Buy one above to reveal it</button></div>';
   /* W25 (QA): the story room that follows this one, when no upgrade opens it, shows what it waits for at the top */
@@ -229,7 +231,8 @@ function baseAct(a,b,e){
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();closeModals();render();persist();roomSplash(t);return true}
-  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got));if(n<Math.floor(r.pend||0))capped=true;r.pend-=n;got+=n}});payTake(got);
+  if(a==="rcollect"||a==="rall"){simulate();var got=0,room=payRoom(),capped=false,full=false;S.base.slots.forEach(function(r,k){if(r&&(a==="rall"||k===i)){var bl=typeof bizLeft==="function"?bizLeft(r,k):Infinity,n=Math.min(Math.floor(r.pend||0),Math.max(0,room-got),bl);if(n<Math.floor(r.pend||0)){if(n>=bl)full=true;else capped=true}r.pend-=n;r.earn=(r.earn||0)+n;if(typeof bizPaid==="function"&&n>0)bizPaid(r,n);got+=n}});payTake(got);
+    if(full&&!capped&&!got){pop(a==="rall"?"Your businesses have paid all they can today. More tomorrow.":"This business has paid all it can today. More tomorrow.");return true}
     if(capped&&!got){pop("Your businesses have paid out today's share. Finish a quest to collect more.");return true}if(capped)setTimeout(function(){pop("That is today's share. Finish a quest to collect the rest.")},1600);
     if(got){S.coins+=got;S.earnedC+=got;try{styState().biz+=got}catch(x){}var ev=baseEvent();checkBadges();render();persist();if(e&&e.clientX!=null)burst(e.clientX,e.clientY,18);pop("+"+got+" coins");if(ev)setTimeout(function(){pop(ev)},1500)}return true}
   if(a==="rhire"){var hk=b.dataset.c,hc=CREWHIRE[hk];if(!hc||crewCandidates().indexOf(hk)<0)return true;if(S.coins<hc){pop("Need "+(hc-S.coins)+" more coins");return true}
@@ -325,7 +328,7 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:ECON.wwCoins}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
+function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:econScaled(ECON.wwCoins,50)}}/* Cal: 625 for four workouts was too little; now at least 3,000 */
 function grantXp(x,coins,stat){
   var before=effLvl(),wasGate=gated();
   S.xp+=x;if(stat)S.stats[stat]=(S.stats[stat]||0)+1;S.coins+=coins;S.earnedC+=coins;
@@ -341,7 +344,7 @@ function markActive(){
     setTimeout(function(){
       var live=dropState().live.map(function(x){return x.id}),pz=freeItem({slots:/^a_/,brands:live,basics:true,lv:effLvl()+5});
       /* nothing left to give: coins instead, as the Daily Quest chest pays */
-      var pc=pz?0:((typeof ECON!=="undefined"&&ECON.chestNone)||300);
+      var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
       var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+' (in your Wardrobe)</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
@@ -411,10 +414,14 @@ function gymKeep(L){return wkTrim(L,function(x){return +x.w||0},function(x){retu
 function sessKeep(L){return wkTrim(L,function(x){return +x.load||0},function(x){return {d:x.d,plan:x.plan,n:x.n,load:x.load,u:x.u}},function(x){return x.plan})}
 function lastLog(id){var L=(S.gymlog&&S.gymlog[id])||[];return L[L.length-1]||null}
 function lastSetW(id,n){var l=lastLog(id);if(!l)return null;if(l.ws)return l.ws[n]>0?l.ws[n]:null;return l.w>0?l.w:null}
-/* the weight shown before the next set: what you typed, else last time's weight for that set, else the weight of the set before
-   it today, else the suggestion */
-function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],n=0;if(wk.w[id]!=null&&wk.w[id]!=="")return wk.w[id];while(sets[n])n++;
-  var lw=lastSetW(id,n);if(lw!=null)return lw;for(var k=n-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];return exSuggest(id).w}
+/* the weight shown before the next set: what you typed, else the last weight saved today, else the last weight entered last time,
+   else the suggestion. Cal, 2026-11-10: "After entering my next weight, and saving it on set 1, the entry field resets to the last
+   weight on there": last time's weight for that set came before today's, so 140 saved on set 1 put set 2 back to last week's
+   number. Each set box still shows its own "last N lbs". */
+function wkNextW(id){var wk=S.wk,sets=wk.sets[id]||[],k,l=lastLog(id),ws;if(wk.w[id]!=null&&wk.w[id]!=="")return wk.w[id];
+  for(k=sets.length-1;k>=0;k--)if(typeof sets[k]==="number")return sets[k];
+  if(l&&(!l.u||l.u===exU(id))){ws=l.ws||[];for(k=ws.length-1;k>=0;k--)if(ws[k]>0)return ws[k];if(l.w>0)return l.w}
+  return exSuggest(id).w}
 function setBoxes(id,act){var E=EX[id],NS=(S.wk.setsN&&S.wk.setsN[id])||E[2],sets=S.wk.sets[id]||[],h='<div class="setb">';
   for(var i=0;i<NS;i++){var v=sets[i],lw=E[4]?lastSetW(id,i):null,wt=E[4]&&typeof v==="number";
     h+='<button class="sb'+(v?" on":"")+'" '+act+' data-ex="'+id+'" data-n="'+i+'" aria-pressed="'+!!v+'" aria-label="Set '+(i+1)+(v?(wt?", done at "+wU(v,exU(id)):", done")+". Tap to undo":E[4]?", tap to save the weight in the box":", tap when done")+'">'
@@ -1150,7 +1157,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=90, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=91, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1480,7 +1487,7 @@ function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.cr
   var pz=freeItem({slots:/^a_/,brands:live,basics:true}),k=["str","agi","vit","int"][L%4];
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
   /* the Shop is open but you own every piece on offer: coins, as the Daily Quest chest pays */
-  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
+  var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
   if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
@@ -1496,17 +1503,18 @@ function levelUp(lv,extra,from){
     var u=unlocksFor(L); if(u)cards+=unlCard(u,i++);
     /* Rooms open through the story (docs/STORYBOARD.md), not by level, so level-ups no longer announce room blueprints or new
        floors (QA: they promised the Restaurant at level 8, before the Garden, in saves where it never opens). */
-    FX.filter(function(f){return f[0]===L}).forEach(function(f){cards+=fxCard(f,i++)});
-    var ns=shopNewAt(L); if(ns&&L>=3)cards+=stockCard(ns,i++);
+    /* Cal (2026-11-10, W48): a level-up shows the level, its coins, a real-life reward and only big unlocks (a new tab or room);
+       no "UI upgrade: <name>" cards and no "New in the Shop" card any more */
     if(lvEmpty(L)){var cr=lvCrate(L);if(cr)cards+='<div class="reward reveal" style="animation-delay:'+(0.3+(i++)*0.45).toFixed(2)+'s"><span>'+esc(cr)+'</span></div>'}
   }
-  var more=start>from+1?'<p class="note">Plus '+(start-from-1)+' earlier unlock'+(start-from-1===1?'':'s')+' waiting in The Loft.</p>':'';
-  var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv});
+  /* Cal (2026-11-10): "rework all the level up cards and prevent spoilers and no useless text": no count of what is waiting, no stat
+     bars, and a real-life reward that names a room the player does not have yet waits off this card (sysRwHeld, 29sy_system.js) */
+  var more='';
+  var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv&&!(typeof sysRwHeld==="function"&&sysRwHeld(r))});
   var m=modal('<div class="card box2">'+(ART.levelup?'<div class="rhero lvhero" style="background-image:url('+ART.levelup+')"><span class="label">Level up</span><h2>Level '+lv+'</h2></div>':'<span class="label">Level up</span><h2>Level '+lv+'</h2>')
    +(extra?'<p class="note">'+extra+'</p>':'')
    +cards+more
    +(pay?'<div class="reward reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">Level bonus: +'+pay+' coins</div>':'')+rws.map(function(r){return '<div class="reward reveal'+(ART["rew_"+r[0]]&&!rwEd(r)?' rwun':'')+'" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">'+(ART["rew_"+r[0]]&&!rwEd(r)?'<img src="'+ART["rew_"+r[0]]+'" alt="">':'')+'<span>Reward unlocked: '+esc(rwT(r))+'</span></div>'}).join("")
-   +'<div style="display:flex;flex-direction:column;gap:10px">'+statBars()+'</div>'
    +'<p class="note">Level '+(lv+1)+': ???</p><button class="btn big" id="lvok">Keep going</button></div>');
   var b=m.querySelector("#lvok");b.focus({preventScroll:true});b.onclick=function(){m.remove()};
   burst(innerWidth/2,innerHeight/3,26);
@@ -1886,7 +1894,8 @@ document.addEventListener("click",function(e){
   if(a==="toggle")onTap(b.dataset.id,e);
   if(a==="prove"){var pq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(pq&&!S.done[pq.id]&&!proofPend[pq.id])askProof(pq.id)}
   if(a==="del")remove(b.dataset.id);
-  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&areaWaiting(ar2[0])){pop("Something new"+(areaTomorrow(ar2)?" opens tomorrow":" opens at your next level-up"));return}if(ar2&&areaGate(ar2[0])){pop(ar2[0]==="shop"?"Build the Walk-in Closet in your Bedroom to open the Shop":"Not open yet");return}if(ar2&&effLvl()<ar2[2]){pop("Unlocks at level "+ar2[2]);return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
+  /* W47: a locked tab names nothing, whatever holds it (a level, a room, the one-a-day reveal) */
+  if(a==="nav"){var ar2=AREAS.filter(function(x){return x[0]===b.dataset.v})[0];if(ar2&&(areaWaiting(ar2[0])||areaGate(ar2[0])||effLvl()<ar2[2])){pop("Locked. Keep playing.");return}var pm2=b.closest(".modal");if(pm2)pm2.remove();view=b.dataset.v;render();window.scrollTo(0,0);if(view==="hideout")roomSplash("loft");setTimeout(brandCheck,600)}
   /* the street and its three buildings (26_world.js); a drag that ends on a building is not a tap */
   if(a==="bldgo"){var pd=window.__lfpd;if(pd&&Math.hypot(LFV.x-pd[0],LFV.y-pd[1])>6)return;LFBSEL=+b.dataset.v;LFV.init=0;render();return}
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
@@ -1903,7 +1912,7 @@ document.addEventListener("click",function(e){
   if(a==="qsdeny"){var cd=b.closest(".qs-card");if(cd){cd.classList.remove("deny");void cd.offsetWidth;cd.classList.add("deny")}return}
   if(a==="char"){charModal();return}
   if(a==="mclose"){var m2=b.closest(".modal");if(m2)m2.remove();return}
-  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(areaGate("shop")){pop("Build the Walk-in Closet in your Bedroom to open the Shop");return}view="shop";shopTab="wardrobe";render();window.scrollTo(0,0);return}
+  if(a==="wardrobe"){var m3=b.closest(".modal");if(m3)m3.remove();if(areaGate("shop")){pop("Locked. Keep playing.");return}view="shop";shopTab="wardrobe";window._qsSeen=1;render();window.scrollTo(0,0);return}
   if(a==="stab"){shopTab=b.dataset.v;render();return}
   if(a==="story")storyModal();
   if(a==="spin")spin();
