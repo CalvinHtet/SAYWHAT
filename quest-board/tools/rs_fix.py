@@ -63,8 +63,11 @@ def load_old(key):
     code, blob = old_sprites()
     i = re.search(r'"%s":\{"w":\d+,"h":\d+,"u":__B\[(\d+)\]' % re.escape(key), code)
     n = int(i.group(1))
-    items = re.findall(r'"(data:image/[^"]+)"', blob)
-    return Image.open(io.BytesIO(base64.b64decode(items[n].split(",")[1]))).convert("RGBA")
+    # w-perf2: blobs.js lists names now (art/app/bl_*.webp); only the jpeg textures are still inline data URLs
+    item = json.loads(blob.strip()[len("window.__B="):-1])[n]
+    if not item.startswith("data:"):
+        return Image.open(os.path.join(ART, item)).convert("RGBA")
+    return Image.open(io.BytesIO(base64.b64decode(item.split(",")[1]))).convert("RGBA")
 
 
 def main(mode, names):
