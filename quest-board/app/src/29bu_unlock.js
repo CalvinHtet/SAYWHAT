@@ -9,13 +9,16 @@
    - a letter in the inbox with the amount.
    The merge marks a save from before (S.r91p); S.reset91 records what was done, so it never runs twice. A save made on this
    version or later is never marked. */
-var RESETLOTS=["garden","boba","theater","mall","club"];
-/* what a room cost at today's prices: its upgrades (openers included), its decor styles, its paint and its lot */
-function rsRoomValue(r){var v=0;
+/* what a room cost at today's prices: its upgrades (openers included), its decor styles, its paint and, for a room with a price
+   (ROOMT cost) that no owned upgrade opened, the room itself. QA (v0.91): before 11-05 the Restaurant was built from a lot, not
+   through the Garden's gd_rest, and old saves never got gd_rest, so a lot-built room is counted from its price. L: the slots it
+   was built among (the save's own by default) */
+function rsOpened(t,L){return (L||S.base.slots).some(function(r){return r&&r.a&&(ADDONS[r.t]||[]).some(function(a){return a[3]&&a[3].opens===t&&r.a[a[0]]})})}
+function rsRoomValue(r,L){var v=0;
   (ADDONS[r.t]||[]).forEach(function(a){if(r.a&&r.a[a[0]]&&+a[2]>0)v+=+a[2]});
   try{if(r.du&&typeof lfDecSets==="function")lfDecSets(r.t).forEach(function(q){if(r.du[q.id]&&q.cost)v+=q.cost})}catch(e){}
   if(r.st)v+=150*r.st;
-  if(RESETLOTS.indexOf(r.t)>=0&&ROOMT[r.t])v+=+ROOMT[r.t].cost||0;
+  if(r.t!=="bedroom"&&ROOMT[r.t]&&+ROOMT[r.t].cost>0&&!rsOpened(r.t,L))v+=+ROOMT[r.t].cost;
   return v}
 function rsInScope(r){return !!r&&(ECON.resetScope!=="loft"||!!(ROOMCELL[r.t]&&ROOMCELL[r.t][0]===0))}
 function rsRun(){if(!S||!S.r91p||S.reset91)return null;
@@ -45,4 +48,6 @@ INBOXGEN=INBOXGEN||[];INBOXGEN.push(function(){var R=S&&S.reset91;if(!R||!(R.ref
   return [{id:"reset91",from:"Cal",subj:"The Loft has been reset",d:R.d,
     body:'<p>To balance the economy, every room and building has been reset and your coins refunded: +'+(+R.refund).toLocaleString()+' coins.</p>'
       +'<p>Your clothes and everything from the Shop are untouched. Rooms now open in a new order as you upgrade.</p>'}]});
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbReset={run:rsRun,value:rsRoomValue,mark:function(){S.r91p=1;delete S.reset91;return 1}};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbReset={run:rsRun,
+  /* a room's value among L, or (after the reset) among the backed-up slots it came from */
+  value:function(r,L){var B=null;if(!L&&S.reset91){try{B=JSON.parse(localStorage.getItem("quest-board-backup-v91"))}catch(e){}}return rsRoomValue(r,L||(B&&B.base&&B.base.slots)||null)},mark:function(){S.r91p=1;delete S.reset91;return 1}};
