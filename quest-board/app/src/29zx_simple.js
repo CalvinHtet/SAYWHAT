@@ -28,6 +28,12 @@ boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")re
 function zxSkills(){try{var h=townHallBase(),a=h.indexOf('<h3 class="label">Your skills</h3>');if(a<0)return "";a=h.lastIndexOf("<section",a);var b=h.indexOf("</section>",a);return a<0||b<0?"":h.slice(a,b+10)}catch(e){return ""}}
 var zxProfBase=profileHtml;
 profileHtml=function(){var h=zxProfBase.apply(this,arguments),k=zxSkills();if(!k)return h;var i=h.indexOf('<section class="card panel"><h3 class="label">Stats</h3>');return i<0?h+k:h.slice(0,i)+k+h.slice(i)};
+/* the tip jar (Cal, 2026-11-13: "a small tip jar that fills up if people are happy"; ROOMS's art rsx_tip0/1/2, f9ecb1a): guests served
+   quickly tip more (lfTipFor in 20_loft.js), so today's tips against the room's daily cap are its happiness. Empty with no tips today,
+   half up to 60% of the cap, full past that. ROOMS draws it on each counter (Restaurant, Upstairs Bar, Boba, Dessert parlor). i: the
+   room's slot index in S.base.slots. */
+function tipJarArt(i){try{var r=S.base.slots[i];if(!r)return "rsx_tip0";var T=S.base.tipd,n=T&&T.d===today()?(+T.n[i]||0):0;if(n<=0)return "rsx_tip0";
+  var cap=lfTipCap(r,lfSvcMods(r))||1;return n/cap<.6?"rsx_tip1":"rsx_tip2"}catch(e){return "rsx_tip0"}}
 /* the coins stay in view at the top right once the page scrolls past the header (Cal: "have the coins always show on top right even when
    scrolling down"); room and upgrade windows already keep theirs in their own head */
 (function(){var el=null;function up(){try{if(!loaded||!S||!S.created){if(el)el.hidden=true;return}
