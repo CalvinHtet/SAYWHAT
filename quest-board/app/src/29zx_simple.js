@@ -40,7 +40,7 @@ profileHtml=function(){var h=zxProfBase.apply(this,arguments),k=zxSkills();if(!k
     +"#layer .modal .rm-head{position:sticky;top:0;z-index:8;background:var(--surface,#1b1411);padding-top:6px;padding-bottom:6px;margin-top:-6px}"
     +".zx-coins{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:60;box-shadow:0 6px 16px -6px rgba(0,0,0,.7)}.zx-coins[hidden]{display:none}"
     +".sq-stage.has-art{background-position:center top}"
-    +"body.qb-sync *{pointer-events:none!important}body.qb-sync::after{content:\"Syncing\";position:fixed;top:calc(env(safe-area-inset-top,0px) + 6px);left:50%;transform:translateX(-50%);z-index:99;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;padding:5px 10px;border-radius:999px;background:rgba(15,12,24,.85);color:#fff}"
+    +"html.qb-switch #app{visibility:hidden}html.qb-sync body *{pointer-events:none!important}html.qb-sync body::after{content:\"Syncing\";position:fixed;top:calc(env(safe-area-inset-top,0px) + 6px);left:50%;transform:translateX(-50%);z-index:99;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;padding:5px 10px;border-radius:999px;background:rgba(15,12,24,.85);color:#fff}"
     +".zx-wheel .note{margin:2px 0 0}"
     +".bty .chip.done{color:var(--done,#5ee08a);border-color:currentColor}";
   (document.head||document.documentElement).appendChild(st)})();

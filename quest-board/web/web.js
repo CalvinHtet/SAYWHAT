@@ -148,7 +148,10 @@
       var a = firebase.auth();
       a.getRedirectResult().catch(function (e) { signInScreen("Sign-in did not finish (" + ((e && e.code) || "error") + "). Try again."); });
       a.onAuthStateChanged(function (u) {
-        if (u) { var el = document.getElementById("qbsignin"); if (el) el.style.display = "none"; done(u); }
+        /* fast start (app/src/30_app_b.js): if someone other than the last player on this phone signed in, the last player's Board stays
+           hidden until this player's own save has loaded (QA on 9821a64: it showed for about 250 ms) */
+        if (u) { try { var lu = localStorage.getItem("qb-lastuid"); if (lu && lu !== u.uid) { document.documentElement.classList.add("qb-switch"); localStorage.removeItem("qb-lastuid"); } } catch (e) {}
+          var el = document.getElementById("qbsignin"); if (el) el.style.display = "none"; done(u); }
         else signInScreen();
       });
     });

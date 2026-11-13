@@ -1441,7 +1441,8 @@ function boardHtml(){
   return h;
 }
 function render(){
-  if(!loaded){document.getElementById("app").innerHTML='<div class="boot mono">Loading</div>';return}
+  /* QA on 9821a64: the fast start must draw, so before the boot the device copy (FAST) draws; nothing else does */
+  if(!loaded&&!(typeof FAST!=="undefined"&&FAST)){document.getElementById("app").innerHTML='<div class="boot mono">Loading</div>';return}
   if(!S.created||ccEdit){document.getElementById("app").innerHTML=introHtml();applyFx();return}
   var ar=AREAS.filter(function(x){return x[0]===view})[0];
   if(!ar||effLvl()<ar[2])view="board";
@@ -1983,14 +1984,14 @@ function saveWhich(cloud,local){
     m.innerHTML='<div class="card box2"><h3>Two saves found</h3><p class="note">This device and your online save don\'t match. Pick the one to keep playing. The other is kept as a backup.</p>'
       +'<div class="qbsv-r"><button class="qbsv-c" data-pick="local"><small>This device</small>'+line(local)+'</button><button class="qbsv-c" data-pick="cloud"><small>Online save</small>'+line(cloud)+'</button></div></div>';
     m.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-pick]");if(!b)return;var use=b.getAttribute("data-pick");m.remove();done({use:use,asked:true,keep:use==="local"?cloud:local})});
-    document.body.appendChild(m)})}
+    document.documentElement.classList.remove("qb-sync");/* QA on 9821a64: the picker must take taps */document.body.appendChild(m)})}
 document.addEventListener("pointerdown",function(){try{window.__lfpd=[LFV.x,LFV.y]}catch(e){}},true);
 /* fast start (Cal, 2026-11-13: "Launching the app after closing it lags/loads for about 5 seconds even though there's no updates"). The
    scripts are ready in a fraction of a second; the wait was Google sign-in and the online save. So the last player's own copy on this
    device draws at once, with taps paused and "Syncing" shown, and the boot below then loads the online save exactly as before (merge
    replaces the whole state) and lets go. Nothing is saved before that (persist waits for loaded), so nothing can be lost or doubled.
    Another account signing in on this phone starts from a fresh state, never from this one. */
-var FASTUID=null,FAST=null;try{FASTUID=window.QB_WEB?localStorage.getItem("qb-lastuid"):null;FAST=FASTUID?saveOnDevice(FASTUID):null;if(FAST&&FAST.created){merge(FAST);document.body.classList.add("qb-sync")}else FAST=null}catch(e){FAST=null}
+var FASTUID=null,FAST=null;try{FASTUID=window.QB_WEB?localStorage.getItem("qb-lastuid"):null;FAST=FASTUID?saveOnDevice(FASTUID):null;if(FAST&&FAST.created){merge(FAST);document.documentElement.classList.add("qb-sync")}else FAST=null}catch(e){FAST=null}
 render();try{chLoad()}catch(e){}
 (async function(){
   var migrated=false;
@@ -2014,7 +2015,7 @@ render();try{chLoad()}catch(e){}
     }else if(db&&own){var s2=await db.doc("player/state").get();if(s2.exists)merge(s2.data());else{var rw=localStorage.getItem("quest-board");if(rw)merge(JSON.parse(rw))}}
     else{window.__qbBootErr=!window.claude?"no runtime":!db?"no database":"no id";db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
   }catch(e){window.__qbBootErr=String((e&&(e.code||e.message))||e);db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}
-  loaded=true;document.body.classList.remove("qb-sync");
+  loaded=true;document.documentElement.classList.remove("qb-sync");document.documentElement.classList.remove("qb-switch");
   /* areas seen so far, from the level this save loads at (29h_unlocks.js): a new save starts with none past level 1 */
   try{areaOn()}catch(e){}
   setTimeout(brandCheck,1500);
