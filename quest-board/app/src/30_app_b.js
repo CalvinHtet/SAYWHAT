@@ -1148,7 +1148,7 @@ function mults(q,o){
    XP only; with them in the coins too, quest coins ran to 10x by level 100 and every price went stale within days. */
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
-var SAVEOK=0,SAVEERR="";function saveLbl(){if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
+var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
 var DOC="player/state", ownerView=false, APPV=93, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
