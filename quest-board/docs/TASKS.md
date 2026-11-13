@@ -46,8 +46,8 @@ ROOMS Doing:
 - (QA: Town square part DONE on f2e57f6, PASS, QA findings; the tip jar waits on LEAD wiring rsx_tip0-2.) WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
-- WAITING ON ROOMS (LEAD, sent by message): the crawl allies (DNPC pip, kit, bram, juno, neo, sera; mara is the chef) need looks (rig specs from existing items, wear-tested), roam in the Game Room (only the Loft built) and later the other built rooms; name tags above the head while walking for team, allies and visiting friends, none for random guests. Cal's words in the message.
-- WAITING ON ROOMS (LEAD, sent by message): place the tip jars with tipJarArt(i) (29zx_simple.js, 9d80dcb) on the four counters.
+- DONE by ROOMS in 39a0a71 (WAITING ON QA). WAITING ON ROOMS (LEAD, sent by message): the crawl allies (DNPC pip, kit, bram, juno, neo, sera; mara is the chef) need looks (rig specs from existing items, wear-tested), roam in the Game Room (only the Loft built) and later the other built rooms; name tags above the head while walking for team, allies and visiting friends, none for random guests. Cal's words in the message.
+- DONE by ROOMS in 693effe (WAITING ON QA). WAITING ON ROOMS (LEAD, sent by message): place the tip jars with tipJarArt(i) (29zx_simple.js, 9d80dcb) on the four counters.
 - TAKEN by ROOMS (2026-11-13). A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
   happy". Three stages (empty, half, full), one sheet, on the counter where staff stand. LEAD wires the fill to guests' happiness.
 - TAKEN by ROOMS (2026-11-13). `ui_town_square.webp` (still open from 2026-11-08), now the backdrop of the Players tab's Town square.
