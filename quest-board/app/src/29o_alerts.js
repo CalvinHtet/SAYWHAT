@@ -46,8 +46,13 @@ function alVisit(){if(!S||!S.created||!loaded)return;var o=alSeen();if(!o.init)r
   if(view==="shop")try{var ds=dropState(),fl=typeof QSFLOOR!=="undefined"&&ds.floors&&ds.floors[QSFLOOR];(fl?fl.live:ds.live).forEach(function(b){if(!o.brand[b.id]){o.brand[b.id]=1;ch=1}})}catch(e){}
   if(view==="hideout"&&typeof LFBSEL!=="undefined"&&LFBSEL!=null)alRooms().forEach(function(x){if(ROOMCELL[x.room][0]===LFBSEL&&!o.bld[x.room]){o.bld[x.room]=1;ch=1}});
   if(ch)persist()}
-function alPaint(){var t=alTabs();document.querySelectorAll(".nav button[data-v]").forEach(function(b){var on=!!t[b.dataset.v]&&b.dataset.v!==view,el=b.querySelector(".nbang");
-    if(on&&!el){el=document.createElement("i");el.className="nbang";el.setAttribute("aria-label","New");el.textContent="!";b.appendChild(el)}else if(!on&&el)el.remove()})}
+/* QA on ae3ba38 (five tabs): Training, Crawls and the Wheel left the bar, so their "!" goes on their Board tile, and on the Board tab while
+   another screen is open; Relics' goes on the profile's Relics button and on the avatar that opens the profile */
+function alMark(b,on){var el=b.querySelector(".nbang");if(on&&!el){el=document.createElement("i");el.className="nbang";el.setAttribute("aria-label","New");el.textContent="!";b.appendChild(el)}else if(!on&&el)el.remove()}
+function alPaint(){var t=alTabs(),hid=typeof NAVHIDE!=="undefined"?NAVHIDE:{};
+  document.querySelectorAll(".nav button[data-v],.zx-tile[data-v],.zx-me [data-v]").forEach(function(b){var v=b.dataset.v,on=!!t[v]&&v!==view;
+    if(v==="board"&&b.closest(".nav"))on=view!=="board"&&Object.keys(hid).some(function(k){return k!=="trophy"&&t[k]});alMark(b,on)});
+  var av=document.querySelector(".avbtn");if(av)alMark(av,!!t.trophy&&view!=="trophy")}
 var alRenderBase=render;
 render=function(){var r=alRenderBase.apply(this,arguments);try{alVisit();alPaint()}catch(e){}return r};
 setInterval(function(){try{if(S&&S.created&&loaded)alPaint()}catch(e){}},15000);
