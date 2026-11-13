@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 4211a7e): v0.95 candidate. QA PASS up to 5850751 (tabs, middle-ground start, private coin requests, swap, friends' tags); WAITING ON QA: tours + calm week (0241042) and overhaul part 2 (4211a7e: Next line, top bar shows the level, stats hidden below level 10); WAITING ON ROOMS: the Restaurant tip jar at stages 1-2 (QA's blocker). Next in the overhaul: fewer daily checklists (Weekly Warrior into the Weekly Quest, the Wheel as the Daily Quest's reward). After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
+- Now (on 4211a7e): v0.95 candidate. QA PASS up to 5850751 (tabs, middle-ground start, private coin requests, swap, friends' tags); WAITING ON QA (QA: DONE on d689703: tours PASS, overhaul part 2 PASS but one FIX, the "afford" line; QA findings): tours + calm week (0241042) and overhaul part 2 (4211a7e: Next line, top bar shows the level, stats hidden below level 10); WAITING ON ROOMS: the Restaurant tip jar at stages 1-2 (QA's blocker). Next in the overhaul: fewer daily checklists (Weekly Warrior into the Weekly Quest, the Wheel as the Daily Quest's reward). After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 0241042): v0.95 candidate WAITING ON QA (QA: everything up to 5850751 DONE, PASS except the Restaurant tip jar, QA findings; the tours 0241042 next) = five tabs + fixes, middle-ground start, private coin requests, exercise swap, friends' tags, and now guided tours + the calm first week (29zy_tour.js, tourtest.js PASS). Next in the overhaul (Cal: "Yes, start it"): hide numbers until they matter, the "what next" line, fewer daily checklists. After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 5850751): v0.95 candidate WAITING ON QA (message sent): five tabs + QA's two FIXes, middle-ground start (Loft x2, Garden at 45%), coin requests never pinned and private (rules NOT deployed until the code is live, then WAITING ON CAL to approve), exercise swap, friends' name tags above the head. Next, waiting on Cal: the simplification overhaul and the guided tutorial (plan sent to Cal).
   Was: Now (on ae3ba38): two pieces for v0.95, WAITING ON QA for the tabs (QA: DONE on 6426b2e, NOT A PASS: two FIX lines, QA findings). (1) Slower start ce5123f, QA: prices and saves safe; the Loft is ~3-4x, not 2x (econLate), and Goals coins and visit tips follow the phase: both kept, LEAD tells Cal. (2) Five tabs ae3ba38 (Cal: "Fewer tabs first"): Board, The Loft, Shop, Town, Players; Training, Crawls and the Wheel from Board tiles, Relics from the profile; tabs5.js PASS. Then: ship v0.95, and Cal's next pick from the simplification brainstorm.
@@ -43,7 +43,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA: check 0d17dbe, your second Restaurant tip jar FIX: the jar comes with the till (r_till) and stands in front of it on the counter, never on the half wall's corner. ROOMS checked till only, till at stage 1, the marble pass with till, the marble pass without till (no jar) and fully bought. In the plain style it overlaps the till's base on purpose (a jar by the register).
+- (QA: DONE on d689703, PASS, QA findings.) WAITING ON QA: check 0d17dbe, your second Restaurant tip jar FIX: the jar comes with the till (r_till) and stands in front of it on the counter, never on the half wall's corner. ROOMS checked till only, till at stage 1, the marble pass with till, the marble pass without till (no jar) and fully bought. In the plain style it overlaps the till's base on purpose (a jar by the register).
 - (QA: DONE on 5850751, NOT FIXED at stages 1 and 2, QA findings.) WAITING ON QA: check 778fd8d, your tip jar FIX (2c38bf9): the bare Restaurant draws no jar (the first kitchen's half wall stands above its counter); once the Restaurant grows past the first kitchen, the jar is on the pass as before. ROOMS checked bare (0 jars) and stages 1 and 2 (1 jar each).
 - (QA: DONE on d521820, PASS, QA findings.) WAITING ON QA: check 39a0a71 (rule 17), crawl allies roaming (LEAD's request): with allies rescued and only the Loft built, all of them walk the Game Room with name tags; with businesses built, each ally is in one room a day and only there; tags above the head for team and allies, none for random guests; their looks in rooms (wear-tested in all 22 poses by ROOMS). ROOMS checked in headless Chromium, not by eye: the story and sale popups covered the screenshots.
 - (QA: DONE on 28c52ee, PASS but one FIX for ROOMS: the bare Restaurant's jar, QA findings.) WAITING ON QA: check 693effe (rule 17), the tip jars placed (LEAD's request): in the Restaurant, Lock and Key, Boba and Dessert, the jar on the counter empty on a new day, half after a few served, full near the cap; clear of other pieces in every stage (rule 20). ROOMS checked all three fills in all four rooms (and the Restaurant's three stages) with tips set directly, not by serving guests.
@@ -65,10 +65,30 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 97106ab): v0.95 checked up to 5850751 (below): all pass but the Restaurant tip jar. Next: LEAD's guided tours 0241042.
-  15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on d689703): the v0.95 candidate checked end to end (below): one FIX left, LEAD's "afford" line. 15-minute loop running (Cal
+  confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, the v0.95 candidate at d689703 (everything since v0.94): one FIX left (the next line). Release checks on d689703: wlive PASS, pricesweep
+  0 problems (only the 85 Loft upgrades changed), dupfn no new duplicates, old saves 41/41, smoke, 0 page errors.
+- PASS, LEAD's guided tours and calm week 0241042 (on d689703's code, plain and sandbox builds): LEAD's tourtest.js all pass on QA's
+  clean build. QA's own (`rigtest/qa/tourqa.js`, `shots/qa/tour/`): the welcome letter first, never a tour on top of it; the welcome tour's
+  4 cards all on screen at 390 and 360; at level 2 The Loft, Town and Players run one at a time in that order (the Loft's own welcome
+  window pauses the tour, as it should); Skip on Town marks it done and it does not come back; 5 seed saves: no tour, calm false, the
+  Daily Quest, bounties and Training tile all still there. 0 page errors. NOTE, LEAD: the ring and card keep 4-8 px from the top, not
+  env(safe-area-inset-top); every step scrolls its target to the middle first, so it should stay clear of the notch, but not checked on a phone.
+- PASS, ROOMS's Restaurant tip jar by the till 0d17dbe: the jar comes and goes with r_till (bare, stage 1 and 2 without the till: none;
+  till alone, with stage 1, stage 2 and fully bought: one jar in front of the till on its counter, never alone on the half wall's corner).
+  `shots/qa/v95/m_till.png`.
+- PASS but one FIX, LEAD's overhaul part 2 4211a7e (`rigtest/qa/nextline.js`, `shots/qa/v95/next/`): at 390 and 360 the Next line reads
+  right for a day-1 player with no tasks, with tasks, a trial waiting, a Daily Quest to fill; it names the Daily Quest only when its card is
+  there; the top bar shows "N XP to level N+1" (or "Bar full: pass the trial"); STR/AGI/VIT/INT hidden below level 10, shown at 14; no
+  sideways scroll; 0 page errors.
+- FIX, LEAD (`29zx_simple.js` zxCheapest): "You can afford a Loft upgrade" is worked out from the cheapest unbought upgrade in any room,
+  not from what the windows offer. With every room 80% bought, the cheapest unbought is the Restaurant's r_d7 (500), which no window
+  offers a Buy button for; the cheapest real Buy button is 650 (Garden). With 500-649 coins the line says "afford" and nothing can be
+  bought. It also says "Loft" for Garden and Restaurant pieces, and Open goes to the Loft view, not the room. Use the windows' own list
+  (half-bought and Bedroom-only saves were right).
 - QA, the v0.95 candidate up to 5850751 against v0.94 bf9430e (clean sandbox, Live and plain builds). PASS, every item:
   (1) tabs: tile icons 28 px (a new player's Training tile 324x94, mid tiles 103x113 at 390, 143x94 at 360), "!" on the Wheel and Crawls
   tiles and for Relics, all ways back and Board lit (`rigtest/qa/tabs5qa.js`, `shots/qa/v95/m_tabs.png`); (2) middle-ground start: no
