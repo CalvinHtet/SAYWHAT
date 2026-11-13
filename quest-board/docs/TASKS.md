@@ -26,7 +26,7 @@ LEAD Doing:
 - DONE 2026-11-13 (Cal: "Yes, deploy rules"): firestore.rules deployed (chat, likes, photos, challenges; the "permission denied").
 - WAITING ON CAL: (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
   cannot work); (3) approve pushing qa-local to GitHub; (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
-- WAITING ON QA: check 1feee32 (rule 17) on a clean copy of qa-local: the weight box on an iPhone-sized page (type 135, a comma
+- (QA: DONE on 1feee32, PASS for Live, QA findings below.) WAITING ON QA: check 1feee32 (rule 17) on a clean copy of qa-local: the weight box on an iPhone-sized page (type 135, a comma
   decimal), a bounty finished then "Clear completed" (still Completed), the day turning over with the app open, the Hall (banner on
   top, Posts and Chat only), the Players tab (likes, leaderboard, Town square, neighbors all still live), the Board's Daily Quest and
   Wheel cards, the profile (skills, no rewards), the photo window's Cancel, level-ups with no "???", a crawl with no rare guarantee,
@@ -43,6 +43,33 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   rooms: 26_world.js line 487 `TMTOP` gives Rafe, Theo, Nova and Sable their own painted tops (tm_*_jacket/tee/knit, both bodies,
   yawn included), and Mara wears npc_chef and npc_hat. Build the roamers from TEAM[id].look with `TMTOP[id]` as the top, the way
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
+
+QA Doing:
+- Now (on 144868a, game files = 1feee32): batch 1 checked, PASS for Live (below). No loop running: this chat was told by Cal on 11-08
+  "no /loop or cron", so QA restarts the 15-minute checks only once Cal confirms it to QA directly. Next: whatever is WAITING ON QA.
+
+QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, LEAD's batch 1, 1feee32, on clean copies of qa-local (a sandbox build with Test tools on and a Live build), headless Chrome at
+  390x844 and 360x740. PASS for Live: every item LEAD listed works, 0 page errors. Scripts `rigtest/qa/b1items.js`, `b1square.js`;
+  pictures and logs `shots/qa/b1/`. Each item: weight box is a text box with the decimal keyboard, 135 and 102.5 fully shown, "12,5"
+  saved as 12.5; a finished bounty says Completed and still does after "Clear completed"; the Hall is the banner, then Posts and Chat;
+  Players has the looks, likes, Most rich / Highest level, Town square (tapping Justin opens Wave / High five / Poke / Spank) and
+  Neighbors; the Board has the Daily Quest card under the progress line and a Wheel card that opens the Wheel (no Wheel tab); the
+  version line sits top left; the profile has Your skills and no rewards; the photo window's Cancel closes it; a level-up card says
+  "Level 13, Level bonus" with no "???"; the crawl card promises no sure find (crawlPity 0); the coins float top right only once
+  scrolled, hide under a window, and cover nothing fixed; the nav fits at 360. Release checks: Live build (wlive) PASS; pricesweep 0
+  changes against v0.92 6bead6a; dupfn no new duplicates; old saves 41 of 41; Training weight, bounties, wui92 and smoke pass; wside
+  25 ok after its Town square step moved to the Players tab (QA's script, updated). Not run: the rest of run_rc (reset, two devices,
+  boss, chat, photos, pact...), a real phone (the iPhone decimal keyboard and a comma locale), a photo post that hangs 25 s, real Firebase.
+- FIX before a Mac sandbox deploy, LEAD (`tools/build.py` line ~119): QB_SANDBOX=1 adds only `sandbox = true`, not `noTest = false`, so
+  the Mac's sandbox build has no Test tools and no test hooks (the Windows build_web.sh added both, and RELEASING.md says Test tools
+  on). Live builds are not affected. QA added the line by hand to its copy to test.
+- NOTE, LEAD and Cal (Cal's "daily quest meter still increasing on day 2"): v0.92 6bead6a already turned the day over with the app
+  open (its own 60 s timer and on coming back): the same test, clock moved a day, no reload, resets the meter on both v0.92 and
+  1feee32. So the new dayTurn is harmless but likely not the cause. Most likely the 5 am day start (LEAD's question 4 to Cal): before
+  5 am it is still yesterday. Not reproduced here.
+- NOTE, LEAD (Cal's call): the Board's progress line says "0 / 100 XP today" right above the Daily Quest card's "0 / 100 XP", the
+  same number twice. `shots/qa/b1/items/board_390.png`.
 
 ## Windows team (LEAD / BUILDER / QA)
 
