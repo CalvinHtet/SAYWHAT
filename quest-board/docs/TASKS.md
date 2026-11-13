@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (since 2026-11-13: Auditorium projector back views)
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -34,7 +34,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- Now (on f9ecb1a): Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
+- Now (on e3144af): WAITING ON CAL (sent 2026-11-13): the Auditorium projectors from behind, `thx_proj2b` / `thx_proj1b` (the Windows request of 2026-11-09), painted and checked in the room (lens toward the screen, beam from the lens), NOT committed until he approves. Earlier: Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
 - (QA: Town square part DONE on f2e57f6, PASS, QA findings; the tip jar waits on LEAD wiring rsx_tip0-2.) WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
