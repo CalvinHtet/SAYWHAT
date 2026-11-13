@@ -77,10 +77,10 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   Dungeon Crawls and the Wheel open from their tiles with "< Board", the Board tab stays lit, and "< Board" goes back; Relics opens from
   the profile (the window closes, Board lit); a new player gets only the Training tile. 0 page errors. `rigtest/qa/tabs5qa.js`,
   pictures `shots/qa/tabs/` (`m_tabs.png` side by side).
-- FIX, LEAD (`29zx_simple.js` .zx-tile: the icon has no size): each tile's icon stretches to the tile's width. A new player's one
+- DONE by LEAD in 5850751. FIX, LEAD (`29zx_simple.js` .zx-tile: the icon has no size): each tile's icon stretches to the tile's width. A new player's one
   Training tile is 324x376 at 390 (a dumbbell filling the screen, the task box pushed down); a mid player's tiles are 103x174 at 390
   and wrap two plus one at 360 with icons ~100 px wide. Give `.zx-tile svg` a fixed size (about 28 px). `board_new_390.png`, `board_mid_360.png`.
-- FIX, LEAD (`29o_alerts.js` alPaint only marks `.nav button[data-v]`): Cal's question, does the player still notice the news? No. With
+- DONE by LEAD in 5850751. FIX, LEAD (`29o_alerts.js` alPaint only marks `.nav button[data-v]`): Cal's question, does the player still notice the news? No. With
   the Wheel, Crawls and Relics newly open and not yet visited, alTabs() lists trophy, wheel and away, but nothing on screen shows a "!"
   (0 on the page): the tiles have no marker and Relics hides in the profile. Paint the "!" on the tile (and the profile's Relics button,
   or the avatar) too.
@@ -100,12 +100,12 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   on day 3 there is still something to buy (earns 5-6.5k a day, cheapest upgrades 1,050-1,100). Not run: the long sim ("everything
   bought" day): rule 17 keeps 90-day runs for when Cal asks. Not confirmed: a "Next goal" line for a day-3 player (none on the Board or
   the Loft in either build).
-- FIX or confirm, LEAD with Cal (`29e_economy.js` econPrice and econLate): the Loft's prices are about 4x, not "about twice": a price is
+- DONE by LEAD in 6426b2e (Cal: "find a middle ground": the Loft is now x2). FIX or confirm, LEAD with Cal (`29e_economy.js` econPrice and econLate): the Loft's prices are about 4x, not "about twice": a price is
   tier x phase x econLate, and econLate grows with the phase too. Bedroom 12,800 -> 50,300 coins for the room, Patio 4,650 -> 18,400,
   Closet 4,450 -> 15,950 (each piece 3.7-4.4x); Game Room 15,850 -> 38,350 and Lair 18,200 -> 36,150 (about 3x). LEAD's econsim pace
   matches QA's, so the pace is what it says; the words to Cal ("about twice") are not. A player halfway through the Loft pays the new
   price for the rest.
-- FIX or confirm, LEAD (`29bg_goals.js` glCoins, `29kv_visitors.js` tips): ECON.phase also sets the building Goals' coin rewards and the
+- CONFIRMED by LEAD (kept: rewards stay in proportion to prices). FIX or confirm, LEAD (`29bg_goals.js` glCoins, `29kv_visitors.js` tips): ECON.phase also sets the building Goals' coin rewards and the
   friends' visit tips, so in the five Loft rooms those now pay twice as much as in v0.94 (from code; not measured). Intended?
 - PASS, the fast start on 5256c2b (LEAD's answer to the pill FIX, sent by message): no pill; the version line reads "v0.93 · syncing…" while
   the device copy shows, nothing overlaps, then the normal line once loaded. The whole `rigtest/qa/faststart.js` passes (Board at 0.40 s,
