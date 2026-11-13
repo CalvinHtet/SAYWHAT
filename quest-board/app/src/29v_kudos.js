@@ -32,7 +32,9 @@ htabCss("qb-kudos-css",
 /* ---- reading: Cal's answers (everyone), and the notes themselves (the writer reads theirs, Cal reads all) ---- */
 async function kdLoad(){if(!kdOn()||KD.busy)return;KD.busy=1;
   try{
-    var oq=await db.collection("kudosok").limit(200).get(),ok={},pins=[];
+    /* only Cal reads every answer (his queue); a player reads only their own (firestore.rules, Cal 2026-11-13: no pins, private) */
+    var ok={},pins=[],oq=kdOwner()?await db.collection("kudosok").limit(200).get():null;
+    if(!oq){var od=await db.doc("kudosok/"+MYUID).get();oq={docs:od.exists?[od]:[]}}
     (oq.docs||[]).forEach(function(d){var x=d.data(),it=(x&&x.items)||{};ok[d.id]=it;
       Object.keys(it).forEach(function(k){var a=it[k];if(a&&a.ok&&a.text)pins.push({from:d.id,id:k,name:a.name||x.name||"Someone",text:a.text,c:+a.c||0,t:+a.t||0})})});
     pins.sort(function(a,b){return b.t-a.t});KD.ok=ok;KD.pins=pins.slice(0,20);
@@ -108,7 +110,10 @@ function kdPinsHtml(){if(!KD.pins.length)return "";var p=KD.pins,f=p.slice(0,3),
   var one=function(x){return '<div class="kdn"><q>'+esc(x.text)+'</q><small class="note">'+esc(x.name)+' &middot; approved by Cal</small></div>'};
   return '<section class="card panel kdpin"><h3 class="label">&#128204; Pinned by Cal</h3>'+f.map(one).join("")+(r.length?'<details><summary class="note">'+r.length+' more</summary>'+r.map(one).join("")+'</details>':'')+'</section>'}
 var kdPostsBase=htabPosts;
-htabPosts=function(){var h="";try{h=kdPinsHtml()}catch(e){}return h+kdPostsBase.apply(this,arguments)};
+/* Cal, 2026-11-13: "make sure none of the personal messages sent to me to request coins get pinned to the town hall. Remove any messages
+   currently there": the notes are no longer pinned anywhere (kdPinsHtml stays for nothing). The approvals in kudosok are kept, because
+   each writer's game reads its own to pay what Cal approved; firestore.rules lets only the writer and Cal read them. */
+htabPosts=function(){return kdPostsBase.apply(this,arguments)};
 /* answers are read a few seconds after the save is in, then every 3 minutes while the game is open */
 (function kdBoot(){setTimeout(function(){if(kdOn()&&!document.hidden)kdLoad();kdBoot()},KD.boot++?180000:4000)})();
 window.__qbKudos={st:KD,load:kdLoad,pay:kdPay,send:kdSend,answer:kdAnswer,open:kdOpen,guest:function(v){KD.guest=v?1:0;KD.mine=null;KD.all=[];KD.done=[]}};

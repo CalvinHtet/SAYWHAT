@@ -126,10 +126,10 @@ var ECON={
      the Restaurant, then 13,000 to 15,000 from Boba on, where it levels off; the phases follow that, a bit under it */
   /* SPEC8: Lock and Key opens before Boba and Dessert, so it takes their place in the price phases; w-unlock: then the Rooftop, Boba, Dessert */
   /* Cal, 2026-11-13: "Yes slow it down" (econsim: 15 upgrades a day for days 1-5, a new room every day or two; his girlfriend found it
-     "too complicated"). Only the Loft's rooms (the first days) about twice the price; the Garden on keeps its price, so the mid-game pace is unchanged (econsim: raising those too halved the upgrades owned by day 20). Owned upgrades and
+     "too complicated"). Only the Loft's rooms (the first days) twice the price (Cal, after QA showed phase 2 was ~4x: "find a middle ground"; a price goes with phase x econLate, about phase squared, so x2 is phase x1.41); the Garden on keeps its price, so the mid-game pace is unchanged (econsim: raising those too halved the upgrades owned by day 20). Owned upgrades and
      coins are untouched; only what is not bought yet costs more. Was: bedroom 1, patio 1, closet 1, gameroom 1.2, lair 1.3, trophy 1.3,
      the rest unchanged */
-  phase:{bedroom:2,patio:2,closet:2,gameroom:2.1,lair:2.2,trophy:2.2,garden:1.3,restaurant:1.8,skybar:2.2,rooftop:2.3,boba:2.5,dessert:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
+  phase:{bedroom:1.41,patio:1.41,closet:1.41,gameroom:1.7,lair:1.84,trophy:1.84,garden:1.3,restaurant:1.8,skybar:2.2,rooftop:2.3,boba:2.5,dessert:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
   /* the Shop: clothes keep each brand's own spread x shopK, between clothesMin and clothesMax (Cal: "the shop is almost 1000
      for some items"); interface items cost uiBase + uiLv x the level they open at; permanent upgrades pay for themselves in
      about a week or two of quests, so each is priced by what it returns (Merchant Seal I was 500 for +10% coins forever) */
@@ -164,7 +164,7 @@ var ECON={
      finds don't count); loft: that share of all the Loft's core upgrades, built or not; earn: coins the Garden has made selling
      produce; noir: the Restaurant's Noir upgrade; plaza: that share of all Kode Plaza upgrades, built or not. Replaces SPEC8's focus
      rule. The Mall-building numbers are mine, from econsim (Cal: "Use this same logic") */
-  unlock:{closet:{at:"bedroom",pct:.3},patio:{at:"bedroom",pct:.5},gameroom:{at:"bedroom",pct:.7},garden:{loft:.35}/* Cal 2026-11-13 slower start: the Loft costs twice as much, so the Garden opens at 35% of it (was 60%: econsim put the Garden at day 11) */,
+  unlock:{closet:{at:"bedroom",pct:.3},patio:{at:"bedroom",pct:.5},gameroom:{at:"bedroom",pct:.7},garden:{loft:.45}/* Cal 2026-11-13 slower start: the Loft costs twice as much, so the Garden opens at 45% of it (was 60%) */,
     restaurant:{earn:"garden",coins:3000},skybar:{noir:1},rooftop:{at:"skybar",pct:.5},boba:{at:"skybar",pct:.75},dessert:{at:"boba",pct:.6},
     mall:{plaza:.6},theater:{at:"mall",pct:.3},auditorium:{at:"theater",pct:.4},arcade:{at:"auditorium",pct:.4},rhythm:{at:"arcade",pct:.4},
     vr:{at:"rhythm",pct:.4},bowling:{at:"vr",pct:.4},karaoke:{at:"bowling",pct:.4},club:{at:"karaoke",pct:.4}},
