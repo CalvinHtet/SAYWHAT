@@ -612,7 +612,7 @@ function dngClaim(k,ev){
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
   var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
-  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Three crawls with nothing rare and the fourth always finds something.</p>'
+  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare.</p>'
     +'<p class="note">Crawls today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.'+(sure?' <b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
@@ -670,7 +670,7 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["players","Players",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
 var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
@@ -808,7 +808,7 @@ function stockCard(n,i){
 }
 function stripHtml(){
   var rk=RANKS[rankIdx()], t=eqItem("title");
-  return '<div class="strip"><div class="who"><button class="avbtn" data-act="char" aria-label="Your character">'+'<span class="calfull">'+calImg(lookOf(),"idle",86,"")+'</span>'+'</button><div><span class="brand">'+(ART.logo_board?'<img class="blogo" src="'+ART.logo_board+'" alt="">':'<i></i>')+esc((S.char&&S.char.name)||"Quest Board")+'</span>'+'<div class="ttl">'+(t?'<span class="ttlx '+t[0]+'">'+esc(ifTitle(t))+'</span> &middot; ':'')+'v0.'+APPV+' &middot; <span id="savest">'+saveLbl()+'</span></div></div></div><span class="right"><span class="coinpill" aria-label="'+S.coins+' coins"><i class="coin"></i>'+S.coins+'</span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+'<span class="rankpill">'+(ART["rank_"+rk.l]?'<img class="rkimg" src="'+ART["rank_"+rk.l]+'" alt="Rank '+rk.l+'">':'<b>'+rk.l+'</b>')+''+esc(tierName(S.gates.length))+'</span></span>'+'</div>';
+  return '<div class="vline mono">v0.'+APPV+' &middot; <span id="savest">'+saveLbl()+'</span></div><div class="strip"><div class="who"><button class="avbtn" data-act="char" aria-label="Your character">'+'<span class="calfull">'+calImg(lookOf(),"idle",86,"")+'</span>'+'</button><div><span class="brand">'+(ART.logo_board?'<img class="blogo" src="'+ART.logo_board+'" alt="">':'<i></i>')+esc((S.char&&S.char.name)||"Quest Board")+'</span>'+(t?'<div class="ttl"><span class="ttlx '+t[0]+'">'+esc(ifTitle(t))+'</span></div>':'')+'</div></div><span class="right"><span class="coinpill" aria-label="'+S.coins+' coins"><i class="coin"></i>'+S.coins+'</span>'+(typeof kdBtn==="function"?kdBtn():'')+(typeof ibBtn==="function"?ibBtn():'')+'<span class="rankpill">'+(ART["rank_"+rk.l]?'<img class="rkimg" src="'+ART["rank_"+rk.l]+'" alt="Rank '+rk.l+'">':'<b>'+rk.l+'</b>')+''+esc(tierName(S.gates.length))+'</span></span>'+'</div>';
 }
 function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]<m)m=a[2]});return m}
 /* QA 2026-11-09: below level 10 one area opens per day (29h_unlocks.js), so once today's is used a waiting area opens tomorrow,
@@ -819,6 +819,8 @@ var NAVSHORT={away:"Crawls"};
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
+    /* Cal, 2026-11-13: "I don't think the wheel should get its own tab": it opens from a card on the Board */
+    if(a[0]==="wheel")return "";
     /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
     if(a[0]==="away"&&areaGate("away"))return "";
     /* W47 (Cal, 2026-11-10: "there should be no locked shop tab"): no Shop tab at all until the Walk-in Closet is built */

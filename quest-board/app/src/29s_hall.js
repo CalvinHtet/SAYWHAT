@@ -11,12 +11,12 @@
    after every draw of the Posts tab. If the feed draws the Town board itself (its HTML holds id="socnb", or it sets
    HALL_POSTS_HAS_BOARD = true), the old board is not added under it. */
 /* the third tab is labelled Rank (Cal, 2026-11-10: "Change style to Rank"); its id stays "style" for kept sessions */
-var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"],["style","Rank"]],booted:0};
-(function(){try{var t=sessionStorage.getItem("qbHallTab");if(t==="posts"||t==="chat"||t==="style")HTAB.tab=t}catch(e){}})();
+var HTAB={tab:"posts",tabs:[["posts","Posts"],["chat","Chat"]],booted:0};
+(function(){try{var t=sessionStorage.getItem("qbHallTab");if(t==="posts"||t==="chat")HTAB.tab=t}catch(e){}})();
 /* the Hall's own CSS goes in from here (as 10_app_a.js and 22_garden.js do), so index.html never clashes with other branches */
 function htabCss(id,css){if(document.getElementById(id))return;var st=document.createElement("style");st.id=id;st.textContent=css;(document.head||document.documentElement).appendChild(st)}
 htabCss("qb-hall-css",
-  ".htab{position:sticky;top:0;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 20px -12px rgba(0,0,0,.7)}"
+  ".htab{position:sticky;top:0;z-index:6;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 20px -12px rgba(0,0,0,.7)}"
   +".htab button{position:relative;min-height:40px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:700 13px/1 var(--font-body,system-ui);letter-spacing:.04em;cursor:pointer}"
   +".htab button.on{background:var(--surface2);color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent)}"
   +".htab button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}"
@@ -32,8 +32,10 @@ function htabPosts(){var ph="";
   if(typeof hallPostsHtml==="function"){try{ph=String(hallPostsHtml()||"")}catch(e){ph='<section class="card panel"><p class="note">Posts could not load right now.</p></section>'}}
   var own=ph.indexOf('id="socnb"')>=0||(typeof HALL_POSTS_HAS_BOARD!=="undefined"&&!!HALL_POSTS_HAS_BOARD),h=ph;
   if(!own){var bd=window.QBART&&QBART["ui_town_board.webp"];
-    h+='<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3><p class="note">Post your look and a short message for everyone in town.</p></section>'+socialHtml()}
-  return h+townHallBase()}
+    h+=socialHtml()}
+  return h}
+/* the Town Hall's banner, at the very top of the Hall (Cal, 2026-11-13: "on the top of the page, not in the middle") */
+function hallBanner(){var bd=window.QBART&&QBART["ui_town_board.webp"];return '<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3><p class="note">Posts and chat with everyone in town.</p></section>'}
 /* the Neighbors list moved to Style, so the board's panel (#socnb) keeps the meter and the Town board only. If its markup ever
    changes so the cut cannot be found, the whole panel shows, as before. */
 var htabInnerBase=socInner;
@@ -44,7 +46,7 @@ socInner=function(){var h=htabInnerBase.apply(this,arguments),a=h.indexOf('<h3 c
 var htabOldHall=hallHtml;
 hallHtml=function(){htabOpen();var t=HTAB.tab,b;
   try{b=t==="chat"?tchHtml():t==="style"?fshHtml():htabPosts()}catch(e){b='<section class="card panel"><p class="note">This tab could not load ('+esc(String((e&&e.message)||e).slice(0,80))+').</p></section>'}
-  return htabBar()+b};
+  return hallBanner()+htabBar()+b};
 /* opening the Hall: neighbors re-read when stale, this player's world published, the live parts started */
 function htabOpen(){setTimeout(function(){try{if(socOn()&&(!SOC.loaded||Date.now()-SOC.loaded>60000))socLoad();socPublish()}catch(e){}
   try{sqSeed()}catch(e){}try{tchStart(1)}catch(e){}try{fshStart()}catch(e){}},50)}
@@ -57,7 +59,7 @@ render=function(){var a=document.activeElement,k={};
   var r=htabRenderBase.apply(this,arguments);
   try{htabAfter(k)}catch(e){}
   return r};
-function htabShown(t){return view==="hall"&&HTAB.tab===t&&loaded&&S&&S.created&&!ccEdit&&!!document.querySelector(".htab")}
+function htabShown(t){if(t==="style")return view==="players"&&loaded&&S&&S.created&&!ccEdit&&!!document.getElementById("fshbox");return view==="hall"&&HTAB.tab===t&&loaded&&S&&S.created&&!ccEdit&&!!document.querySelector(".htab")}
 function htabAfter(k){
   if(htabShown("chat"))tchMounted(k);else TCH.shown=0;
   if(htabShown("style"))fshMounted();else FSH.base=null;

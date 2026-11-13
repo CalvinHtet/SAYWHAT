@@ -55,7 +55,7 @@ var ECON={
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
      gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
      Lair upgrade (the Lair's reason now that it sends no missions), and always on the crawlPity-th crawl in a row without one */
-  crawlRare:.12,crawlLair:.005,crawlPity:4,
+  crawlRare:.12,crawlLair:.005,crawlPity:0,
   /* quest coins grow this much a level (was 1%). Quest coins are paid on the listed XP (x2 for a photo or the bounty), not on
      streak, combo, crit and rank XP bonuses, which stay XP only: with all of them, coins ran to 10x by level 100 (QA, 2026-11-09) */
   coinLv:.005,
@@ -283,7 +283,7 @@ setInterval(trialHonor,4000);
 var econSocBase=socialBuffs;socialBuffs=function(){var o=econSocBase();if(dqState().buff)o.push({who:"Hidden quest",b:{special:"all",pct:10,text:"All quests +10% XP today"}});return o};
 /* the Daily Quest lives in the profile now, right under the level card (Cal, 2026-11-09: a simpler Board) */
 var econProfBase=profileHtml;
-profileHtml=function(){var h=econProfBase(),i=h.indexOf('<section class="card wstrip"');var c=dqHtml();return i<0?c+h:h.slice(0,i)+c+h.slice(i)};
+/* Cal, 2026-11-13: it moved to the Board, right under the progress line (29zx_simple.js) */
 /* ---- prices: what a thing is x when you reach it (ECON.tier, phase, ramp, grandK, opener, lot; QA, 2026-11-09) ----
    The older layers (x10 and the early curve in 10_app_a.js, priceFlat and ROOMSTEP in 29_prices.js) now only say what a thing
    is: a small piece, a normal one, a big one, or a moment (PRICE_HUGE). This pass sets every room price. */

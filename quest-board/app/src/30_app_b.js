@@ -403,7 +403,7 @@ function uLbl(u){return u==="lb"?"lbs":u}
 function wU(w,u){return fmtW(w)+" "+uLbl(u)}
 function mmdd(d){return String(d||"").slice(5).replace("-","/")}
 /* the weight box is as wide as its number, so the unit sits right after it */
-function kgW(v){return Math.max(2,String(v==null?"":v).length)+1+"ch"}
+function kgW(v){return Math.max(4,String(v==null?"":v).length)+1+"ch"}
 document.addEventListener("input",function(e){var t=e.target;if(t&&t.classList&&(t.classList.contains("kg")||t.classList.contains("ckg")))t.style.width=kgW(t.value)});
 /* the log keeps 40 sessions per exercise for its graph (it kept 12); past the newest 12 only the date and the top weight stay, so
    each older session adds about 30 characters to the save */
@@ -455,7 +455,7 @@ function exCard(id,inPair){
    +'<div class="exhead"><b>'+esc(E[0])+'</b><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span></div>';
   if(nt)h+='<div class="note">'+esc(nt)+'</div>';
   h+='<div class="note">'+esc(sg.line)+'</div><div class="exrow">';
-  if(E[4])h+='<label class="kgw"><input class="kg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>';
+  if(E[4])h+='<label class="kgw"><input class="kg" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>';
   h+=setBoxes(id,'data-act="wkset"')+'</div>'+(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-act="wkhit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div></div>';
   return h;
 }
@@ -797,7 +797,7 @@ function coachOpen(idx){
   if(!S.wk.coach){S.wk.coach=coachPick();persist()}
   CIDX=Math.max(0,Math.min(idx||0,wkSteps().length-1));
   if(!CSCR){CSCR=document.createElement("div");CSCR.className="coachscr";document.getElementById("layer").appendChild(CSCR);
-    CSCR.addEventListener("click",coachClick);CSCR.addEventListener("input",function(e){var t=e.target;if(t.classList&&t.classList.contains("ckg")){S.wk.w[t.dataset.ex]=t.value===""?"":parseFloat(t.value);persist()}});}
+    CSCR.addEventListener("click",coachClick);CSCR.addEventListener("input",function(e){var t=e.target;if(t.classList&&t.classList.contains("ckg")){var kv=parseFloat(String(t.value).replace(",","."));S.wk.w[t.dataset.ex]=isNaN(kv)?"":kv;persist()}});}
   coachDraw(true);
 }
 /* one exercise on the coach screen; in a superset both stand on the same screen, each with its own demo, weight and sets */
@@ -806,7 +806,7 @@ function coachExHtml(id,pair){
   return '<div class="cex'+(pair?' cpair':'')+'">'+(pair?'<div class="cstage cstage-sm">'+exDemo(id)+'</div>':'')+'<h2>'+esc(E[0])+'</h2>'+coachForm(id)
    +'<div class="row" style="gap:8px;flex-wrap:wrap"><span class="chip xp">'+NS+' &times; '+esc(E[3])+'</span>'+(!pair&&role?'<span class="chip">'+esc(role)+'</span><span class="note mono">'+esc(REST[role]||"")+'</span>':'')+'</div>'
    +(nt?'<div class="note">'+esc(nt)+'</div>':'')+'<div class="note">'+esc(sg.line)+'</div>'
-   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="number" inputmode="decimal" step="'+(E[5]?E[4]:E[4]<5?2.5:5)+'" min="0" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>':'')
+   +'<div class="exrow">'+(E[4]?'<label class="kgw"><input class="ckg" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" data-ex="'+id+'" value="'+esc(wkNextW(id))+'" style="width:'+kgW(wkNextW(id))+'" placeholder="0" aria-label="'+esc(E[0])+(E[5]?' in '+E[5]:' weight in pounds')+' for the next set"><span>'+uLbl(exU(id))+'</span></label>':'')
    +setBoxes(id,'data-ca="set"')+'</div>'
    +(E[5]?'':'<button class="hitb'+(wk.hit[id]?" on":"")+'" data-ca="hit" data-ex="'+id+'" aria-pressed="'+!!wk.hit[id]+'">'+(wk.hit[id]?"&#10003; ":"")+'Hit the top of the rep range on every set</button>')+'</div>'}
 function stepDone(st){var wk=S.wk;return st.every(function(x){return (wk.sets[x]||[]).filter(Boolean).length>=((wk.setsN&&wk.setsN[x])||EX[x][2])})}
@@ -1238,6 +1238,12 @@ function rollover(){
   var keep=[];S.quests.forEach(function(q){if(q.rep==="once"&&S.done[q.id]){S.cleared++}else keep.push(q)});
   S.quests=keep;S.done={};S.vdone={};S.cdone={};S.rdone={};S.raid=null;S.combo=null;S.runDate=t;return true;
 }
+/* Cal, 2026-11-13: "The daily quest meter should reset everyday ... I'm on day 2 and it is still increasing": the day only turned over
+   on a reload, so an app left open (or in the background on a phone) kept yesterday's quests and meter. Now it checks every minute and
+   whenever the app comes back, never while a window is open or someone is typing. */
+function dayTurn(){try{if(!loaded||!S||!S.created||document.querySelector("#layer .modal"))return;var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(rollover()){persist();render()}}catch(e){}}
+setInterval(function(){if(!document.hidden)dayTurn()},60000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)dayTurn()});
 
 /* ---------- FX ---------- */
 var cv=null,raf=0,emT=0,emCol="#ff3d81",emOld=1;
@@ -1344,7 +1350,8 @@ function profileHtml(){
    +'</div></section>';
   h+=weekStrip()+classBanner();
 
-  /* rewards: unlocked-unclaimed, next two locked, then a mystery row */
+  /* rewards: gone from the profile (Cal, 2026-11-13); the block stays switched off so saves keep S.claimed */
+  if(false){
   var ready=REWARDS.filter(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
   var locked=REWARDS.filter(function(r){return r[0]>lv}), vis=locked.slice(0,2), hid=locked.length-vis.length, nClaimed=Object.keys(S.claimed).length;
   h+='<section class="card panel"><h3 class="label">Rewards</h3><div class="ladder">';
@@ -1353,6 +1360,7 @@ function profileHtml(){
   if(hid>0)h+='<div class="rw mystery"><span class="lv">???</span><span>'+hid+' more reward'+(hid===1?"":"s")+' hidden<small>You find out when you get there.</small></span><span class="st">SEALED</span></div>';
   if(!ready.length&&!vis.length&&!hid)h+='<div class="note">Every reward claimed.</div>';
   h+='</div>'+(nClaimed?'<div class="note mono">'+nClaimed+' reward'+(nClaimed===1?"":"s")+' claimed</div>':'')+'<button class="btn ghost rwedit" data-act="rwedit">Edit rewards</button></section>';
+  }
 
   var ri=rankIdx();
   h+='<section class="card panel"><h3 class="label">Stats</h3>';
@@ -1368,7 +1376,7 @@ function profileHtml(){
 }
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
 function boardLine(){
-  var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=REWARDS.some(function(r){return r[0]<=lv&&!S.claimed[r[0]]});
+  var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=false;
   /* the bar shows 100, then quietly 200, then fills on in gold with no number toward the hidden chest (29e_economy.js) */
   var t=typeof dqTarget==="function"?dqTarget():gl,f=typeof dqFill==="function"?dqFill():[gl?Math.min(1,x/gl):0,0];
   return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar'+(t?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i>'+(t?'':'<i class="ot" style="width:'+(f[1]*100)+'%"></i>')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
@@ -1513,12 +1521,12 @@ function levelUp(lv,extra,from){
   /* Cal (2026-11-10): "rework all the level up cards and prevent spoilers and no useless text": no count of what is waiting, no stat
      bars, and a real-life reward that names a room the player does not have yet waits off this card (sysRwHeld, 29sy_system.js) */
   var more='';
-  var rws=REWARDS.filter(function(r){return r[0]>from&&r[0]<=lv&&!(typeof sysRwHeld==="function"&&sysRwHeld(r))});
+  var rws=[];/* Cal, 2026-11-13: real-life rewards are gone ("requires too much honesty system and input") */
   var m=modal('<div class="card box2">'+(ART.levelup?'<div class="rhero lvhero" style="background-image:url('+ART.levelup+')"><span class="label">Level up</span><h2>Level '+lv+'</h2></div>':'<span class="label">Level up</span><h2>Level '+lv+'</h2>')
    +(extra?'<p class="note">'+extra+'</p>':'')
    +cards+more
    +(pay?'<div class="reward reveal" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">Level bonus: +'+pay+' coins</div>':'')+rws.map(function(r){return '<div class="reward reveal'+(ART["rew_"+r[0]]&&!rwEd(r)?' rwun':'')+'" style="animation-delay:'+(0.3+i*0.45).toFixed(2)+'s">'+(ART["rew_"+r[0]]&&!rwEd(r)?'<img src="'+ART["rew_"+r[0]]+'" alt="">':'')+'<span>Reward unlocked: '+esc(rwT(r))+'</span></div>'}).join("")
-   +'<p class="note">Level '+(lv+1)+': ???</p><button class="btn big" id="lvok">Keep going</button></div>');
+   +'<button class="btn big" id="lvok">Keep going</button></div>');
   var b=m.querySelector("#lvok");b.focus({preventScroll:true});b.onclick=function(){m.remove()};
   burst(innerWidth/2,innerHeight/3,26);
 }
@@ -1943,7 +1951,7 @@ document.addEventListener("change",function(e){
   if(t.id==="ph1"){var f=t.files&&t.files[0];t.value="";handlePhoto(f)}
   if(t.id==="pf1"){var f2=t.files&&t.files[0];t.value="";handleProof(f2)}
 });
-document.addEventListener("input",function(e){if(e.target.classList&&e.target.classList.contains("kg")&&S.wk){var v=parseFloat(e.target.value);S.wk.w[e.target.dataset.ex]=isNaN(v)?"":v;persist()}if(e.target.id==="cap"){draft=e.target.value;fit(e.target)}if(e.target.id==="ccname"&&cc){cc.name=e.target.value;var hh=document.querySelector(".ccinfo h2");if(hh)hh.textContent=cc.name||"Hunter"}});
+document.addEventListener("input",function(e){if(e.target.classList&&e.target.classList.contains("kg")&&S.wk){var v=parseFloat(String(e.target.value).replace(",","."));S.wk.w[e.target.dataset.ex]=isNaN(v)?"":v;persist()}if(e.target.id==="cap"){draft=e.target.value;fit(e.target)}if(e.target.id==="ccname"&&cc){cc.name=e.target.value;var hh=document.querySelector(".ccinfo h2");if(hh)hh.textContent=cc.name||"Hunter"}});
 document.addEventListener("keydown",function(e){
   if(e.target.id==="cap"&&e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitCap()}
   if(e.target.id==="ccname"&&e.key==="Enter"&&ccStage==="name"&&!ccEdit){e.preventDefault();var bn=document.querySelector('[data-act="ccnext"]');if(bn)bn.click()}

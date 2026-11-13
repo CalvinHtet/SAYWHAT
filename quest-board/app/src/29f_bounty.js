@@ -355,9 +355,13 @@ function btyPick(k){var b=btyState(),P=k===2?BTY2:BTY1,n=btyDay(),pm=btyPerm(k),
 function btyTaken(k){var key=k+":"+btyEnd(k);return S.quests.some(function(q){return q.bty&&q.bty.key===key})}
 /* the 2-day bounty's game days left: 2 on its first day, its last day on the second (QA: hours rounded said "1 day left" from noon) */
 function btyLeft(){return Math.max(1,Math.floor(Date.parse(btyEnd(2)+"T00:00:00Z")/864e5)-btyDay()+1)}
-function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),left=k===2?btyLeft():0;
+/* done (Cal, 2026-11-13): the bounty's quest is checked today, or was before Clear completed or the day took it off the board */
+function btyFin(k){var key=k+":"+btyEnd(k),F=S.btyFin&&typeof S.btyFin==="object"?S.btyFin:(S.btyFin={}),q=S.quests.filter(function(x){return x&&x.bty&&x.bty.key===key})[0];
+  Object.keys(F).forEach(function(z){if(String(z.split(":")[1]||"")<today())delete F[z]});
+  if(q){if(S.done&&S.done[q.id])F[key]=1;else delete F[key]}return !!F[key]}
+function btyCard(k){var x=btyPick(k);if(!x)return '';var took=btyTaken(k),b=btyState(),fin=btyFin(k),left=k===2?btyLeft():0;
   return '<div class="bty-card"><span class="label">'+(k===2?'2-day bounty &middot; '+(left>1?left+' days left':'last day'):'Today\'s bounty')+'</span><b>'+esc(x.n)+'</b><small>'+esc(x.why)+'</small>'
-    +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===2?2:1.5))+' XP</span>'+(took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'">Another</button>':''))+'</div></div>'}
+    +'<div class="bty-row"><span class="chip xp">+'+Math.round(x.xp*(k===2?2:1.5))+' XP</span>'+(fin?'<span class="chip done">Completed</span>':took?'<span class="chip">On your board</span>':'<button class="btn" data-act="btytake" data-k="'+k+'">Take it</button>'+(b.rr<3?'<button class="btn ghost" data-act="btynew" data-k="'+k+'">Another</button>':''))+'</div></div>'}
 /* a bounty can never stop the Board from drawing: anything that goes wrong here shows no bounty today */
 function btyHtml(){if(!S.created)return '';var c='';try{c=btyCard(1)+btyCard(2)}catch(e){c=''}
   return c?'<section class="card panel bty"><h3 class="label">Bounties</h3><div class="bty-grid">'+c+'</div></section>':''}

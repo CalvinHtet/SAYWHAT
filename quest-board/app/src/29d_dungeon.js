@@ -74,7 +74,7 @@ function crawlHidden(d){var D=dngInit(),out=[];
 function crawlLeft(d){return crawlHidden(d).length}
 /* the chance a crawl brings a rare find: ECON.crawlRare, the trophy perks and STR (dgBuff("gift")), and every Hero's Lair upgrade */
 function crawlChance(){var lair=S.base&&S.base.slots.filter(function(r){return r&&r.t==="lair"})[0];return ECON.crawlRare+dgBuff("gift")+(lair?addonsOf(lair).length*ECON.crawlLair:0)}
-function crawlFind(d,r){var D=dngInit(),sure=(D.dry||0)>=ECON.crawlPity-1,g;
+function crawlFind(d,r){var D=dngInit(),sure=ECON.crawlPity>0&&(D.dry||0)>=ECON.crawlPity-1,g;
   /* a crawl from before the merge that had already spotted the trapped ally brings them home */
   var old=r&&r.npc&&DNPC.filter(function(n){return n.id===r.npc&&!D.npcs[n.id]})[0];
   if(old)g={kind:"ally",id:old.id};

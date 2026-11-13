@@ -158,7 +158,9 @@ function phNewHtml(){var sel=PH.sel,rec=PH.recent.filter(function(r){return !r.p
     +(sel?'<div class="ph-prev"><img src="'+esc(sel.k?phRecUrl(sel):sel.url)+'" alt="The photo you picked"></div>':'')
     +'<input class="ph-capin" id="phcap" type="text" maxlength="'+PHCAP+'" placeholder="Add a caption (optional)" aria-label="Caption">'
     +(sel&&sel.kind==="quest"&&sel.what?'<p class="note">Everyone in town sees the photo with "'+esc(sel.what)+'".</p>':'<p class="note">Everyone in town sees the photo.</p>')
-    +'<div class="btns"><button class="btn" data-act="phsend"'+(sel?'':' disabled')+'>Post</button></div></div>'}
+    +'<div class="btns"><button class="btn ghost" data-act="mclose">Cancel</button><button class="btn" data-act="phsend"'+(sel?'':' disabled')+'>Post</button></div></div>'}
+/* Cal, 2026-11-13: pressing Post did nothing and there was no way out. A post that has not finished in 25 s gives the button back */
+function phTimed(p){return Promise.race([Promise.resolve(p),new Promise(function(r){setTimeout(function(){r("slow")},25000)})]).then(function(v){if(v==="slow"){pop("Posting photos is not working right now. Try again later.");return false}return v},function(){return false})}
 function phNew(){if(!phOn())return;closeModals();if(PH.sel&&!PH.sel.k&&PH.sel.url){try{URL.revokeObjectURL(PH.sel.url)}catch(e){}}PH.sel=PH.recent.filter(function(r){return !r.posted})[0]||null;var m=modal(phNewHtml());m.classList.add("ph-modal")}
 function phNewPaint(){var v=document.querySelector("#layer .ph-new");if(!v)return;var c=document.getElementById("phcap"),cap=c?c.value:"";v.outerHTML=phNewHtml();var c2=document.getElementById("phcap");if(c2)c2.value=cap}
 /* ---- the checks: a passed photo is remembered, and the quest's result window offers it ---- */
@@ -183,9 +185,9 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   if(a==="phdel"){b.disabled=true;phDelete(pid);return}
   if(a==="phpick"){var r=phRec(b.dataset.k);if(r){if(PH.sel&&!PH.sel.k&&PH.sel.url){try{URL.revokeObjectURL(PH.sel.url)}catch(e2){}}PH.sel=r;phNewPaint()}return}
   if(a==="phsend"){var c=document.getElementById("phcap"),src=PH.sel;if(!src)return;b.disabled=true;b.textContent="Posting…";
-    phPublish(src,c?c.value:"").then(function(ok){if(ok){if(!src.k&&src.url){try{URL.revokeObjectURL(src.url)}catch(e3){}}PH.sel=null;closeModals();phLoad(true)}else{b.disabled=false;b.textContent="Post"}});return}
+    phTimed(phPublish(src,c?c.value:"")).then(function(ok){if(ok){if(!src.k&&src.url){try{URL.revokeObjectURL(src.url)}catch(e3){}}PH.sel=null;closeModals();phLoad(true)}else{b.disabled=false;b.textContent="Post"}});return}
   if(a==="phshare"){var r2=phRec(b.dataset.k),box=b.closest(".ph-share"),ci=box&&box.querySelector(".ph-capin");if(!r2||r2.posted)return;b.disabled=true;b.textContent="Posting…";
-    phPublish(r2,ci?ci.value:"").then(function(ok){if(!box||!box.isConnected)return;if(ok)box.innerHTML='<p class="note ph-done">Posted to the town board.</p>';else{b.disabled=false;b.textContent="Post to the town board"}});return}});
+    phTimed(phPublish(r2,ci?ci.value:"")).then(function(ok){if(!box||!box.isConnected)return;if(ok)box.innerHTML='<p class="note ph-done">Posted to the town board.</p>';else{b.disabled=false;b.textContent="Post to the town board"}});return}});
 document.addEventListener("change",function(e){var t=e.target;if(!t||t.id!=="phfile")return;var f=t.files&&t.files[0];t.value="";if(!f)return;
   if(f.type&&!/^image\//.test(f.type)){pop("That is not a photo");return}
   if(PH.sel&&!PH.sel.k&&PH.sel.url){try{URL.revokeObjectURL(PH.sel.url)}catch(e){}}PH.sel={file:f,kind:"photo",what:"",url:URL.createObjectURL(f)};phNewPaint()});
