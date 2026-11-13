@@ -42,7 +42,7 @@ LEAD Doing:
 
 ROOMS Doing:
 - WAITING ON QA: check 778fd8d, your tip jar FIX (2c38bf9): the bare Restaurant draws no jar (the first kitchen's half wall stands above its counter); once the Restaurant grows past the first kitchen, the jar is on the pass as before. ROOMS checked bare (0 jars) and stages 1 and 2 (1 jar each).
-- WAITING ON QA: check 39a0a71 (rule 17), crawl allies roaming (LEAD's request): with allies rescued and only the Loft built, all of them walk the Game Room with name tags; with businesses built, each ally is in one room a day and only there; tags above the head for team and allies, none for random guests; their looks in rooms (wear-tested in all 22 poses by ROOMS). ROOMS checked in headless Chromium, not by eye: the story and sale popups covered the screenshots.
+- (QA: DONE on d521820, PASS, QA findings.) WAITING ON QA: check 39a0a71 (rule 17), crawl allies roaming (LEAD's request): with allies rescued and only the Loft built, all of them walk the Game Room with name tags; with businesses built, each ally is in one room a day and only there; tags above the head for team and allies, none for random guests; their looks in rooms (wear-tested in all 22 poses by ROOMS). ROOMS checked in headless Chromium, not by eye: the story and sale popups covered the screenshots.
 - (QA: DONE on 28c52ee, PASS but one FIX for ROOMS: the bare Restaurant's jar, QA findings.) WAITING ON QA: check 693effe (rule 17), the tip jars placed (LEAD's request): in the Restaurant, Lock and Key, Boba and Dessert, the jar on the counter empty on a new day, half after a few served, full near the cap; clear of other pieces in every stage (rule 20). ROOMS checked all three fills in all four rooms (and the Restaurant's three stages) with tips set directly, not by serving guests.
 - Now (on e3144af): WAITING ON CAL (sent 2026-11-13): the Auditorium projectors from behind, `thx_proj2b` / `thx_proj1b` (the Windows request of 2026-11-09), painted and checked in the room (lens toward the screen, beam from the lens), NOT committed until he approves. Earlier: Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
 - (QA: Town square part DONE on f2e57f6, PASS, QA findings; the tip jar waits on LEAD wiring rsx_tip0-2.) WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
@@ -66,6 +66,12 @@ QA Doing:
   if LEAD asks. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS's crawl allies 39a0a71, clean build of d521820, all six rescued. Only the Loft built: all six in the Game Room, once each,
+  each with a name tag. Every room built: each ally in exactly one room today (pip Restaurant, sera Lock and Key, kit Karaoke, bram and
+  juno Rhythm, neo Theater) and somewhere else the next day (Upstairs Bar, Garden, Arcade, VR, Auditorium); tags on all six; no tag
+  on anyone else (no random guest). They are wanderers (wand), so the staff count (lfRoomCrew) ignores them: they never staff a room.
+  0 page errors. `rigtest/qa/allies.js`. Not checked by eye: their looks (the welcome letter covered the shots; ROOMS wear-tested all
+  22 poses).
 - QA, LEAD's five tabs ae3ba38 on a clean sandbox of 6426b2e, at 390 and 360, a mid player (level 14, a class, the Lair) and a new one.
   NOT A PASS yet. Works: the bar is Board, The Loft, (Shop once the Closet is built), Town, Players, no sideways scroll; Training,
   Dungeon Crawls and the Wheel open from their tiles with "< Board", the Board tab stays lit, and "< Board" goes back; Relics opens from
