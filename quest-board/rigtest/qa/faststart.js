@@ -10,6 +10,7 @@ const MOCK = fs.readFileSync(path.join(__dirname, '../lead/mockfirebase.js'), 'u
   'get: function () { window.__mfbReads++; var v = read(); var ms = /\\/state$/.test(p) ? (window.__mockGetDelay || 0) : 0; return new Promise(function (ok) { setTimeout(function () { ok(dsnap(p, v === undefined ? read() : read())); }, ms); }); }');
 if (!/__mockGetDelay/.test(MOCK)) throw new Error('mock patch did not apply');
 const SEED = JSON.parse(JSON.parse(fs.readFileSync(path.join(__dirname, 'seeds/v90_adv.json'), 'utf8'))['quest-board']);
+SEED.cls = 'vanguard'; // the seed has 6 gates and no class: Class Awakening would open on load and take the taps (LEAD, 0699c97)
 let fails = 0; const ok = (n, c, g) => { if (!c) fails++; console.log((c ? 'ok   ' : 'BAD  ') + n + (g !== undefined ? '  ' + JSON.stringify(g).slice(0, 500) : '')); };
 const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { uid }, over || {});
 (async () => {
@@ -23,7 +24,7 @@ const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { ui
   // open as uid, watching every 50 ms: the name on screen, Syncing, loaded
   const open = async (c, uid, watchMs = 9000, extra) => { const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
     await p.addInitScript(([u, d]) => { window.__mockUid = u; window.__mockSignedIn = 1; window.__mockGetDelay = d; window.__qaLog = []; const t0 = performance.now();
-      const tick = () => { try { const a = document.querySelector('#app'); const strip = a && a.querySelector('.strip .brand'); window.__qaLog.push({ t: Math.round(performance.now() - t0), name: strip ? strip.innerText.trim() : '', sync: document.body && document.body.classList.contains('qb-sync'), ready: !!(window.QBGAME && window.QBGAME.ready()), signin: !!(document.querySelector('#qbsignin') && getComputedStyle(document.querySelector('#qbsignin')).display !== 'none'), creator: !!document.querySelector('[data-act="ccnext"],#ccname'), picker: !!document.querySelector('.qbsv') }); } catch (e) {} if (performance.now() - t0 < 12000) setTimeout(tick, 50); };
+      const tick = () => { try { const a = document.querySelector('#app'); const strip = a && a.querySelector('.strip .brand'); const vis = !!a && getComputedStyle(a).visibility !== 'hidden' && getComputedStyle(a).display !== 'none'; window.__qaLog.push({ t: Math.round(performance.now() - t0), name: strip && vis ? strip.innerText.trim() : '', hiddenName: strip && !vis ? strip.innerText.trim() : '', sync: document.documentElement.classList.contains('qb-sync'), ready: !!(window.QBGAME && window.QBGAME.ready()), signin: !!(document.querySelector('#qbsignin') && getComputedStyle(document.querySelector('#qbsignin')).display !== 'none'), creator: !!document.querySelector('[data-act="ccnext"],#ccname'), picker: !!document.querySelector('.qbsv') }); } catch (e) {} if (performance.now() - t0 < 12000) setTimeout(tick, 50); };
       document.addEventListener('DOMContentLoaded', tick); }, [uid, GETMS]);
     await p.goto(URL); await p.waitForTimeout(watchMs); if (extra) await extra(p); return { p, errs, log: await p.evaluate(() => window.__qaLog) }; };
   const first = (log, f) => { const e = log.find(f); return e ? e.t : null; };
@@ -36,14 +37,14 @@ const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { ui
   { const c = await ctxNew(); const A0 = save('ana', { char: Object.assign({}, SEED.char, { name: 'AnaQA' }) }); await seed(c, { 'quest-board': JSON.stringify(A0), 'qb-lastuid': 'ana', '__mfb:data/users/ana/state': cloud(A0), '__mfbAuth:ana': '1' });
     const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
     await p.addInitScript((d) => { window.__mockUid = 'ana'; window.__mockSignedIn = 1; window.__mockGetDelay = d; }, GETMS); const t0 = Date.now(); await p.goto(URL);
-    await p.waitForFunction(() => { const s = document.querySelector('#app .strip .brand'); return s && /anaqa/i.test(s.innerText); }, null, { timeout: 30000 }); const tBoard = Date.now() - t0;
-    const st1 = await p.evaluate(() => ({ sync: document.body.classList.contains('qb-sync'), ready: window.QBGAME.ready(), view: (document.querySelector('.nav button.on') || {}).dataset }));
+    await p.waitForFunction(() => { const a = document.querySelector('#app'), s = a && a.querySelector('.strip .brand'); return s && /anaqa/i.test(s.innerText) && getComputedStyle(a).visibility !== 'hidden'; }, null, { timeout: 30000 }); const tBoard = Date.now() - t0; const w0 = await p.evaluate(() => window.__mfbWrites || 0);
+    const st1 = await p.evaluate(() => ({ sync: document.documentElement.classList.contains('qb-sync'), ready: window.QBGAME.ready(), view: (document.querySelector('.nav button.on') || {}).dataset }));
     await p.screenshot({ path: OUT + 'A_syncing.png' });
     // a real tap on the Training tab while syncing
     const bt = await p.$('.nav button[data-v="train"]'); const bb = bt && await bt.boundingBox(); if (bb) await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(400);
     const afterTap = await p.evaluate(() => (document.querySelector('.nav button.on') || { dataset: {} }).dataset.v);
-    await p.waitForFunction(() => window.QBGAME.ready(), null, { timeout: 30000 }); const tReady = Date.now() - t0; await p.waitForTimeout(500);
-    const st2 = await p.evaluate(() => ({ sync: document.body.classList.contains('qb-sync') }));
+    const wPre = await p.evaluate(() => window.__mfbWrites || 0); await p.waitForFunction(() => window.QBGAME.ready(), null, { timeout: 30000 }); const tReady = Date.now() - t0; await p.waitForTimeout(500); await p.evaluate(() => document.querySelectorAll('#layer .modal,.dropsplash').forEach((m) => m.remove()));
+    const st2 = await p.evaluate(() => ({ sync: document.documentElement.classList.contains('qb-sync') }));
     if (bb) await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(800); const afterTap2 = await p.evaluate(() => (document.querySelector('.nav button.on') || { dataset: {} }).dataset.v);
     ok('A: the Board draws from the device before the online save arrives', tBoard < tReady - 1500 && st1.sync && !st1.ready, { boardMs: tBoard, readyMs: tReady, st1 });
     ok('A: a tap while Syncing does nothing; after it, taps work', afterTap === 'board' && !st2.sync && afterTap2 === 'train', { afterTap, st2, afterTap2 });
@@ -53,6 +54,7 @@ const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { ui
       reads.push(await p.evaluate(() => { const loc = JSON.parse(localStorage.getItem('quest-board')); const cl = JSON.parse(JSON.parse(localStorage.getItem('__mfb:data/users/ana/state')).j); return { loc, cl, live: window.__qb.x().S }; })); }
     const same = reads.every((r) => JSON.stringify(keyOf(r.loc)) === JSON.stringify(k0) && JSON.stringify(keyOf(r.cl)) === JSON.stringify(k0) && JSON.stringify(keyOf(r.live)) === JSON.stringify(k0));
     ok('A: the save is unchanged after 3 reopens (device, online and in play)', same, same ? k0 : { want: k0, got: reads.map((r) => [keyOf(r.loc), keyOf(r.cl)]) });
+    ok('A: nothing written to the database while Syncing', w0 === 0 && wPre === 0, { atBoard: w0, beforeReady: wPre });
     ok('A: no page errors', errs.length === 0, errs); await c.close(); }
 
   // B: a second account (ben) on the same browser, ana last played here
@@ -60,21 +62,21 @@ const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { ui
     const r = await open(c, 'ben', 9000); await r.p.screenshot({ path: OUT + 'B_ben.png' });
     const saw = r.log.filter((e) => /anaqa/i.test(e.name)); const end = r.log[r.log.length - 1];
     const benCloud = await r.p.evaluate(() => localStorage.getItem('__mfb:data/users/ben/state'));
-    ok('B: ben never sees AnaQA\'s Board (sampled every 50 ms)', saw.length === 0, { shownFor: saw.length ? [saw[0].t, saw[saw.length - 1].t] : 0, end });
+    const hid = r.log.filter((e) => /anaqa/i.test(e.hiddenName)); ok('B: ben never sees AnaQA\'s Board (sampled every 50 ms, #app visible)', saw.length === 0, { shownFor: saw.length ? [saw[0].t, saw[saw.length - 1].t] : 0, inPageButHidden: hid.length ? [hid[0].t, hid[hid.length - 1].t] : 0, end });
     ok('B: ben ends on his own start (creator), nothing of ana written to ben', end.creator && (!benCloud || !/anaqa/i.test(benCloud)), { end, benCloud: benCloud && benCloud.slice(0, 80) });
     ok('B: no page errors', r.errs.length === 0, r.errs); await c.close(); }
 
   // C: a brand-new player on a fresh browser
   { const c = await ctxNew(); await seed(c, {}); const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
     await p.addInitScript((d) => { window.__mockUid = 'cat'; window.__mockGetDelay = d; }, GETMS); await p.goto(URL);
-    await p.waitForSelector('#qbsigninbtn', { timeout: 60000 }); const sync0 = await p.evaluate(() => document.body.classList.contains('qb-sync')); await p.click('#qbsigninbtn');
-    await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 60000 }); const sync1 = await p.evaluate(() => document.body.classList.contains('qb-sync'));
+    await p.waitForSelector('#qbsigninbtn', { timeout: 60000 }); const sync0 = await p.evaluate(() => document.documentElement.classList.contains('qb-sync')); await p.click('#qbsigninbtn');
+    await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 60000 }); const sync1 = await p.evaluate(() => document.documentElement.classList.contains('qb-sync'));
     ok('C: a new player gets sign-in then the creator, never Syncing', !sync0 && !sync1, { sync0, sync1 }); ok('C: no page errors', errs.length === 0, errs); await c.close(); }
 
   // D: a newer save from another device online; this device has an older copy with a key the newer one lacks
   { const c = await ctxNew(); const now = Date.now(); const L = save('ana', { coins: 1111, savedAt: now - 3600e3, qaOnlyOnDevice: 1, char: Object.assign({}, SEED.char, { name: 'AnaQA' }) }); const C2 = save('ana', { coins: 9999, xp: SEED.xp + 500, savedAt: now - 60e3, char: Object.assign({}, SEED.char, { name: 'AnaQA' }) });
     await seed(c, { 'quest-board': JSON.stringify(L), 'qb-lastuid': 'ana', '__mfb:data/users/ana/state': cloud(C2), '__mfbAuth:ana': '1' });
-    const r = await open(c, 'ana', 9000); const S = await r.p.evaluate(() => { const s = window.__qb.x().S; return { coins: s.coins, xp: s.xp, only: s.qaOnlyOnDevice, ready: window.QBGAME.ready(), sync: document.body.classList.contains('qb-sync') }; });
+    const r = await open(c, 'ana', 9000); const S = await r.p.evaluate(() => { const s = window.__qb.x().S; return { coins: s.coins, xp: s.xp, only: s.qaOnlyOnDevice, ready: window.QBGAME.ready(), sync: document.documentElement.classList.contains('qb-sync') }; });
     await r.p.waitForTimeout(1200); const loc = await r.p.evaluate(() => { const s = JSON.parse(localStorage.getItem('quest-board') || 'null'); return s && { coins: s.coins, only: s.qaOnlyOnDevice }; });
     ok('D: the newer online save wins (coins 9999), nothing of the device copy left', S.ready && !S.sync && S.coins === 9999 && S.xp === SEED.xp + 500 && S.only === undefined, { S, loc });
     ok('D: no page errors', r.errs.length === 0, r.errs); await c.close(); }
@@ -84,10 +86,10 @@ const save = (uid, over) => Object.assign(JSON.parse(JSON.stringify(SEED)), { ui
     await seed(c, { 'quest-board': JSON.stringify(L), 'qb-lastuid': 'ana', '__mfb:data/users/ana/state': cloud(C2), '__mfbAuth:ana': '1' });
     // saveOnDevice needs created/xp: fine. FAST needs created: the seed has it.
     const r = await open(c, 'ana', 7000); const pk = await r.p.$('.qbsv [data-pick="cloud"]');
-    const before = await r.p.evaluate(() => ({ picker: !!document.querySelector('.qbsv'), sync: document.body.classList.contains('qb-sync'), pe: document.querySelector('.qbsv [data-pick]') ? getComputedStyle(document.querySelector('.qbsv [data-pick]')).pointerEvents : null }));
+    const before = await r.p.evaluate(() => ({ picker: !!document.querySelector('.qbsv'), sync: document.documentElement.classList.contains('qb-sync'), pe: document.querySelector('.qbsv [data-pick]') ? getComputedStyle(document.querySelector('.qbsv [data-pick]')).pointerEvents : null }));
     await r.p.screenshot({ path: OUT + 'E_picker.png' });
     if (pk) { const bb = await pk.boundingBox(); await r.p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await r.p.waitForTimeout(1500); }
-    const after = await r.p.evaluate(() => ({ picker: !!document.querySelector('.qbsv'), ready: window.QBGAME.ready(), sync: document.body.classList.contains('qb-sync'), coins: window.__qb.x().S.coins }));
+    const after = await r.p.evaluate(() => ({ picker: !!document.querySelector('.qbsv'), ready: window.QBGAME.ready(), sync: document.documentElement.classList.contains('qb-sync'), coins: window.__qb.x().S.coins }));
     ok('E: "Two saves found" can be answered with a tap', !before.picker || (!after.picker && after.ready && after.coins === 3333), { before, after }); await c.close(); }
   console.log(fails ? 'FAILED ' + fails : 'PASS'); await b.close();
 })().catch((e) => { console.error(e); process.exit(1); });
