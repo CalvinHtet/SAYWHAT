@@ -54,10 +54,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 67dcb12): the Syncing pill rechecked, PASS with one small FIX (below). 15-minute loop running (Cal confirmed to QA,
-  2026-11-13). Next: the pill's spot once LEAD moves it; the tip jar once it is wired.
+- Now (on 5256c2b): the fast start passes, nothing open on it (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+  Next: LEAD's early room prices (pricesweep) when sent; the tip jar once it is wired in a room.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, the fast start on 5256c2b (LEAD's answer to the pill FIX, sent by message): no pill; the version line reads "v0.93 · syncing…" while
+  the device copy shows, nothing overlaps, then the normal line once loaded. The whole `rigtest/qa/faststart.js` passes (Board at 0.40 s,
+  save at 3.3 s, no writes while syncing, save unchanged over 3 reopens, second account, new player, newer save and "Two saves found" all
+  pass, 0 page errors). Both earlier FIX lines and the small one are done. Left for Cal only: the character's box is empty until the sync
+  ends. `shots/qa/fast4/A_syncing.png`. Not checked: a real phone with real Google sign-in.
 - QA, the Syncing pill recheck on 67dcb12, clean web build, the stand-in Firebase with the save read slowed to 3 s: the background orb is
   back and the pill is a centred dark pill; the whole fast start test passes again (Board at 0.42 s, save at 3.3 s, no writes while
   syncing, save unchanged over 3 reopens, B to E pass, 0 page errors). `shots/qa/fast3/A_syncing.png`.
