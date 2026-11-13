@@ -54,10 +54,17 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0699c97): the fast start rechecked, behaviour PASS, one visible FIX (below). 15-minute loop running (Cal confirmed to QA,
-  2026-11-13). Next: the Syncing pill once LEAD fixes it; the tip jar once it is wired.
+- Now (on 67dcb12): the Syncing pill rechecked, PASS with one small FIX (below). 15-minute loop running (Cal confirmed to QA,
+  2026-11-13). Next: the pill's spot once LEAD moves it; the tip jar once it is wired.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, the Syncing pill recheck on 67dcb12, clean web build, the stand-in Firebase with the save read slowed to 3 s: the background orb is
+  back and the pill is a centred dark pill; the whole fast start test passes again (Board at 0.42 s, save at 3.3 s, no writes while
+  syncing, save unchanged over 3 reopens, B to E pass, 0 page errors). `shots/qa/fast3/A_syncing.png`.
+- FIX (small), LEAD (`29zx_simple.js` the pill's top, or `.vline`): the pill sits on the version line and covers part of "this device
+  only" for the whole sync. Put it below the line, or give the line room. NOTE for Cal: during those 3 s the line reads "this device
+  only" (the online save has not answered yet), which can read as "not saving online"; and the character's box is empty until the sync
+  ends. Same picture.
 - QA, the fast start recheck on 0699c97 (LEAD's fixes for e53c273), clean web build, the stand-in Firebase with the save read slowed to 3 s.
   Behaviour PASS: the Board draws at 0.33 s from the device copy with Syncing on (online save at 3.2 s); a tap during Syncing does nothing,
   after it taps work; nothing is written to the database while Syncing; the save is unchanged after 3 reopens; a second account never
