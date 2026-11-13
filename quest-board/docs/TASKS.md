@@ -58,10 +58,24 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 5256c2b): the fast start passes, nothing open on it (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
-  Next: LEAD's early room prices (pricesweep) when sent; the tip jar once it is wired in a room.
+- Now (on 28c52ee): the slower start ce5123f checked (below), two things for LEAD and Cal. Next: the tip jars 693effe. 15-minute loop running
+  (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, LEAD's slower start ce5123f against v0.94 bf9430e (clean sandboxes). Safe: no NaN, 0 or fractional price anywhere; only the five Loft
+  rooms' upgrades changed (85 of them), nothing in the Garden on, no lot, no Shop entry; v0.94 saves with 47 and 87 Loft upgrades owned
+  load on ce5123f with every upgrade still owned and coins, XP, earned and spent unchanged (4 seeds, `rigtest/qa/slowsave.js`); 0 page
+  errors. Pace, QA's own 6-day sim of Cal's day: bought per day 6,5,4,4,5,3 (v0.94: 16,11,14,16,13,10), the Garden on day 6 (was 4);
+  on day 3 there is still something to buy (earns 5-6.5k a day, cheapest upgrades 1,050-1,100). Not run: the long sim ("everything
+  bought" day): rule 17 keeps 90-day runs for when Cal asks. Not confirmed: a "Next goal" line for a day-3 player (none on the Board or
+  the Loft in either build).
+- FIX or confirm, LEAD with Cal (`29e_economy.js` econPrice and econLate): the Loft's prices are about 4x, not "about twice": a price is
+  tier x phase x econLate, and econLate grows with the phase too. Bedroom 12,800 -> 50,300 coins for the room, Patio 4,650 -> 18,400,
+  Closet 4,450 -> 15,950 (each piece 3.7-4.4x); Game Room 15,850 -> 38,350 and Lair 18,200 -> 36,150 (about 3x). LEAD's econsim pace
+  matches QA's, so the pace is what it says; the words to Cal ("about twice") are not. A player halfway through the Loft pays the new
+  price for the rest.
+- FIX or confirm, LEAD (`29bg_goals.js` glCoins, `29kv_visitors.js` tips): ECON.phase also sets the building Goals' coin rewards and the
+  friends' visit tips, so in the five Loft rooms those now pay twice as much as in v0.94 (from code; not measured). Intended?
 - PASS, the fast start on 5256c2b (LEAD's answer to the pill FIX, sent by message): no pill; the version line reads "v0.93 · syncing…" while
   the device copy shows, nothing overlaps, then the normal line once loaded. The whole `rigtest/qa/faststart.js` passes (Board at 0.40 s,
   save at 3.3 s, no writes while syncing, save unchanged over 3 reopens, second account, new player, newer save and "Two saves found" all
