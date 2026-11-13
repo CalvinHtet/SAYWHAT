@@ -45,8 +45,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 144868a, game files = 1feee32): batch 1 checked, PASS for Live (below). No loop running: this chat was told by Cal on 11-08
-  "no /loop or cron", so QA restarts the 15-minute checks only once Cal confirms it to QA directly. Next: whatever is WAITING ON QA.
+- Now (on 6ec9c23, game files = 1feee32): batch 1 checked, PASS for Live (below). 15-minute loop running (Cal confirmed to QA,
+  2026-11-13): each check reads this section and does what is WAITING ON QA. Next: whatever is WAITING ON QA.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
 - QA, LEAD's batch 1, 1feee32, on clean copies of qa-local (a sandbox build with Test tools on and a Live build), headless Chrome at
