@@ -670,7 +670,7 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Hall",2],["players","Players",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Town",2],["players","Players",2],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
 var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
@@ -816,11 +816,13 @@ function nxLvl(){var lv=effLvl(),m=99;AREAS.forEach(function(a){if(lv<a[2]&&a[2]
 function areaTomorrow(a){return typeof unlockSlotFree==="function"&&!unlockSlotFree(a[2])}
 /* a tab whose name is too long for the bar ("Dungeon Crawls" ran off the button at 390 px) shows a short label there */
 var NAVSHORT={away:"Crawls"};
+var NAVHIDE={train:1,trophy:1,wheel:1,away:1};
 function navHtml(){
   var lv=effLvl();
   return '<nav class="nav"><div class="bar">'+AREAS.map(function(a){
-    /* Cal, 2026-11-13: "I don't think the wheel should get its own tab": it opens from a card on the Board */
-    if(a[0]==="wheel")return "";
+    /* Cal, 2026-11-13: "There are also too many tabs on the bottom" ("Fewer tabs first"): Training, Relics, Dungeon Crawls and the Wheel open
+       from the Board and the profile (29zx_simple.js), so the bar is Board, The Loft, Shop, Town and Players */
+    if(NAVHIDE[a[0]])return "";
     /* SPEC9: a tab whose key is a secret (the Crawls, opened by the Lair) is not drawn at all until it opens */
     if(a[0]==="away"&&areaGate("away"))return "";
     /* W47 (Cal, 2026-11-10: "there should be no locked shop tab"): no Shop tab at all until the Walk-in Closet is built */
@@ -829,7 +831,7 @@ function navHtml(){
     /* W47 (Cal: "? lvl 6. all locked tabs should just have a ? on it to avoid spoilers"): a locked tab is only a "?", with no name and
        no icon of its own, and "Lv N" under it when a level opens it. Tapping it says "Locked. Keep playing." (30_app_b.js) */
     if(lk)return '<button data-act="nav" data-v="'+a[0]+'" class="lk" aria-label="Locked'+(lv<a[2]?', level '+a[2]:'')+'"><b class="navq" aria-hidden="true">?</b><span>&nbsp;</span>'+(lv<a[2]?'<small>Lv '+a[2]+'</small>':'')+'</button>';
-    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]?"on":"")+'" aria-label="'+a[1]+'">'+areaIcon(a[0])+'<span>'+(NAVSHORT[a[0]]||a[1])+'</span></button>';
+    return '<button data-act="nav" data-v="'+a[0]+'" class="'+(view===a[0]||(a[0]==="board"&&NAVHIDE[view])?"on":"")+'" aria-label="'+a[1]+'">'+areaIcon(a[0])+'<span>'+(NAVSHORT[a[0]]||a[1])+'</span></button>';
   }).join("")+'</div></nav>';
 }
 function thumb(it){
