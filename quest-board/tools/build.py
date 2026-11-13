@@ -118,7 +118,7 @@ if WEB:
         shutil.copy(os.path.join(WEBDIR, name), os.path.join(DIST, name))
     if os.environ.get("QB_SANDBOX"):  # the sandbox link: saves stay in this browser, Test tools on (docs/RELEASING.md)
         with open(os.path.join(DIST, "config.js"), "a", encoding="utf-8") as f:
-            f.write("\nwindow.QB_WEB.sandbox = true;\n")
+            f.write("\nwindow.QB_WEB.sandbox = true;\nwindow.QB_WEB.noTest = false;\n")  # QA 096f419: config.js carries noTest since v0.92
     # lfvar.json is never loaded on the web (LFVAR_URL is unset there), so a web build no longer ships it; one left by an older build goes
     if os.path.exists(os.path.join(DIST, "lfvar.json")):
         os.remove(os.path.join(DIST, "lfvar.json"))
