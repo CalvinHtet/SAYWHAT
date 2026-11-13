@@ -39,6 +39,7 @@ profileHtml=function(){var h=zxProfBase.apply(this,arguments),k=zxSkills();if(!k
     /* the window's head (title, coins) stays at the top of the window while its list scrolls */
     +"#layer .modal .rm-head{position:sticky;top:0;z-index:8;background:var(--surface,#1b1411);padding-top:6px;padding-bottom:6px;margin-top:-6px}"
     +".zx-coins{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:60;box-shadow:0 6px 16px -6px rgba(0,0,0,.7)}.zx-coins[hidden]{display:none}"
+    +".sq-stage.has-art{background-position:center top}"
     +".zx-wheel .note{margin:2px 0 0}"
     +".bty .chip.done{color:var(--done,#5ee08a);border-color:currentColor}";
   (document.head||document.documentElement).appendChild(st)})();

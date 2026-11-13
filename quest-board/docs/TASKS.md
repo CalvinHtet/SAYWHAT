@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: ROOMS (since 2026-11-13: Auditorium projector back views)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -66,7 +66,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   changes against v0.92 6bead6a; dupfn no new duplicates; old saves 41 of 41; Training weight, bounties, wui92 and smoke pass; wside
   25 ok after its Town square step moved to the Players tab (QA's script, updated). Not run: the rest of run_rc (reset, two devices,
   boss, chat, photos, pact...), a real phone (the iPhone decimal keyboard and a comma locale), a photo post that hangs 25 s, real Firebase.
-- FIX before a Mac sandbox deploy, LEAD (`tools/build.py` line ~119): QB_SANDBOX=1 adds only `sandbox = true`, not `noTest = false`, so
+- DONE by LEAD in 6ec9c23. FIX before a Mac sandbox deploy, LEAD (`tools/build.py` line ~119): QB_SANDBOX=1 adds only `sandbox = true`, not `noTest = false`, so
   the Mac's sandbox build has no Test tools and no test hooks (the Windows build_web.sh added both, and RELEASING.md says Test tools
   on). Live builds are not affected. QA added the line by hand to its copy to test.
 - NOTE, LEAD and Cal (Cal's "daily quest meter still increasing on day 2"): v0.92 6bead6a already turned the day over with the app
@@ -747,14 +747,14 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
   errors (`shots/v61/plazasign_gardenonly.png`). Check with ROOMS's 9189946.
 Art and room code requests (LEAD asks, ROOMS does):
-- WAITING ON ROOMS (Windows session asks for Cal, 2026-11-09: "The imax projector in the theater is still facing to the left"):
+- TAKEN by ROOMS (2026-11-13). WAITING ON ROOMS (Windows session asks for Cal, 2026-11-09: "The imax projector in the theater is still facing to the left"):
   a back view of both Auditorium projectors, `art/app/thx_proj2b.webp` (IMAX Laser Projector) and `thx_proj1b.webp` (Digital
   Projector). The screen is on the back-left wall (x = 0) and the projector stands on the back landing at the right, so its lens
   must point up and left, away from the camera: we see the back panel and the side, the lens barrel pointing into the room.
   Same style, size and stand as `thx_proj2.webp` / `thx_proj1.webp` (today's art only faces front-left; mirrored it faces the
   camera, so no code fix is possible). Pack them into LFSPR as `thx_proj2b` / `thx_proj1b`: `23_theater.js` already draws the
   "b" key when it exists and falls back to today's sprite, so nothing else changes. Check the beam still meets the lens.
-- WAITING ON ROOMS (LEAD asks, no rush, after Victor, Rooftop and Mall): `art/app/ui_town_square.webp`, the backdrop of the Town Square at the top of the Hall (29p_square.js picks it up by name; until then a plaza painted in CSS shows, so nothing is broken). An open town plaza seen straight on, in the game's painted style, no people, no text, no logos. About 1024x1130, horizon in the top third, the lower two thirds clear open paving because up to eleven characters stand on it. Show Cal first.
+- DONE by ROOMS in f9ecb1a (Cal approved). WAITING ON ROOMS (LEAD asks, no rush, after Victor, Rooftop and Mall): `art/app/ui_town_square.webp`, the backdrop of the Town Square at the top of the Hall (29p_square.js picks it up by name; until then a plaza painted in CSS shows, so nothing is broken). An open town plaza seen straight on, in the game's painted style, no people, no text, no logos. About 1024x1130, horizon in the top third, the lower two thirds clear open paving because up to eleven characters stand on it. Show Cal first.
 - DONE by LEAD in be8e92c (ROOMS: "please add it yourself"). WAITING ON ROOMS (LEAD asks): add `"skirt": true` to `v_tulle` and `h_pleat` in `data/items.json` (or say LEAD may). The rig
   side is in 1bbe47f: a pants item with `skirt` binds every point to both thighs evenly and draws with the hips, so mid-stride the
   hem swings as one piece instead of splitting like culottes (QA's b58bf48). `src/look.js` reads the flag from QBDATA.items,
