@@ -41,7 +41,7 @@ LEAD Doing:
 
 ROOMS Doing:
 - WAITING ON QA: check 39a0a71 (rule 17), crawl allies roaming (LEAD's request): with allies rescued and only the Loft built, all of them walk the Game Room with name tags; with businesses built, each ally is in one room a day and only there; tags above the head for team and allies, none for random guests; their looks in rooms (wear-tested in all 22 poses by ROOMS). ROOMS checked in headless Chromium, not by eye: the story and sale popups covered the screenshots.
-- WAITING ON QA: check 693effe (rule 17), the tip jars placed (LEAD's request): in the Restaurant, Lock and Key, Boba and Dessert, the jar on the counter empty on a new day, half after a few served, full near the cap; clear of other pieces in every stage (rule 20). ROOMS checked all three fills in all four rooms (and the Restaurant's three stages) with tips set directly, not by serving guests.
+- (QA: DONE on 28c52ee, PASS but one FIX for ROOMS: the bare Restaurant's jar, QA findings.) WAITING ON QA: check 693effe (rule 17), the tip jars placed (LEAD's request): in the Restaurant, Lock and Key, Boba and Dessert, the jar on the counter empty on a new day, half after a few served, full near the cap; clear of other pieces in every stage (rule 20). ROOMS checked all three fills in all four rooms (and the Restaurant's three stages) with tips set directly, not by serving guests.
 - Now (on e3144af): WAITING ON CAL (sent 2026-11-13): the Auditorium projectors from behind, `thx_proj2b` / `thx_proj1b` (the Windows request of 2026-11-09), painted and checked in the room (lens toward the screen, beam from the lens), NOT committed until he approves. Earlier: Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
 - (QA: Town square part DONE on f2e57f6, PASS, QA findings; the tip jar waits on LEAD wiring rsx_tip0-2.) WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
 
@@ -60,10 +60,19 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 28c52ee): the slower start ce5123f checked (below), two things for LEAD and Cal. Next: the tip jars 693effe. 15-minute loop running
-  (Cal confirmed to QA, 2026-11-13).
+- Now (on 28c52ee): the tip jars checked (below). Next: LEAD's five tabs ae3ba38. 15-minute loop running (Cal confirmed to QA,
+  2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, the tip jars 693effe on a clean build of 28c52ee: Restaurant, Lock and Key, Boba and Dessert, each with only its counter bought and
+  fully bought, at 0 tips, a few and the cap: 24 of 24 draw exactly one jar with the right fill (empty, half, full; tipJarArt's 60% line).
+  By eye, close-ups: Lock and Key, Boba and Dessert sit on their counters in both stages, clear of the pieces around them (Boba's full
+  room puts the pearl cooker behind the jar, in front of it by depth, not clipped); the full Restaurant's jar sits on the pass by the
+  till. `rigtest/qa/tipjar.js`, `shots/qa/tip/`. Not seen: real guests paying tips (in headless Chrome the building view's people stay
+  idle; the tips code is the old lfTipFor, the jar only reads its count), and the Restaurant's middle stages. 0 page errors.
+- FIX, ROOMS (`26_world.js` tipJar for the Restaurant at the pass, Wi-.62): with the Restaurant bare (the early kitchen behind its half
+  wall), the jar sits on the top corner of the kitchen's half wall, over the stove's pot, with no counter under it. Draw it only once the
+  pass is there, or put it on the early kitchen's counter. `shots/qa/tip/restaurant_bare_0.png`.
 - QA, LEAD's slower start ce5123f against v0.94 bf9430e (clean sandboxes). Safe: no NaN, 0 or fractional price anywhere; only the five Loft
   rooms' upgrades changed (85 of them), nothing in the Garden on, no lot, no Shop entry; v0.94 saves with 47 and 87 Loft upgrades owned
   load on ce5123f with every upgrade still owned and coins, XP, earned and spent unchanged (4 seeds, `rigtest/qa/slowsave.js`); 0 page
