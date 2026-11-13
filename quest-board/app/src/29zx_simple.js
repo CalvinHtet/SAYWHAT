@@ -27,7 +27,17 @@ var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","S
 function zxHub(){var t=ZXHUB.filter(function(x){return zxOpen(x[0])});if(!t.length)return "";
   return '<section class="card panel zx-hub"><div class="zx-tiles">'+t.map(function(x){return '<button class="zx-tile" data-act="nav" data-v="'+x[0]+'">'+areaIcon(x[0])+'<b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join("")+'</div></section>'}
 var zxLineBase=boardLine;
-boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")return h;var c="";try{c=typeof dqHtml==="function"?dqHtml():""}catch(e){c=""}return h+c+zxHub()};
+/* the one "what next" line (Cal approved the overhaul, 2026-11-13: one clear thing to do, so nobody has to work out the screen): the trial if it
+   waits, tasks if there are none, an upgrade they can afford, what is left of the Daily Quest, else the quests left */
+function zxCheapest(){var m=0;try{S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){var e=a[3]||{};if(e.retired||e.opens||e.trophy||!(a[2]>0)||(r.a&&r.a[a[0]]))return;var pre=ADDREQ[a[0]];if(pre&&!(r.a&&r.a[pre]))return;if(!m||a[2]<m)m=a[2]})})}catch(e){}return m}
+function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]}),g=gated(),ch=zxOpen("hideout")?zxCheapest():0,dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),x=dqOn&&typeof dqXp==="function"?dqXp():0,gl=dqOn&&typeof dqGoal==="function"?dqGoal():0;
+  if(g!==null)tx="Your level trial is waiting below. Pass it to keep levelling.";
+  else if(!open.length)tx="Add today's tasks in the box below. Every one pays XP and coins.";
+  else if(ch&&S.coins>=ch){tx="You can afford a Loft upgrade.";act="hideout"}
+  else if(gl&&x<gl)tx=(gl-x)+" XP of tasks to go on today's Daily Quest.";
+  else tx=open.length+" quest"+(open.length===1?"":"s")+" left on your list today."}catch(e){return ""}
+  return act?'<button type="button" class="zx-next" data-act="nav" data-v="'+act+'"><span class="label">Next</span><span>'+esc(tx)+'</span><b>Open &rsaquo;</b></button>':'<div class="zx-next"><span class="label">Next</span><span>'+esc(tx)+'</span></div>'}
+boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")return h;var c="";try{c=typeof dqHtml==="function"?dqHtml():""}catch(e){c=""}return h+zxNext()+c+zxHub()};
 /* the profile: the class's skills (from the old Class Hall) above the Stats */
 function zxSkills(){try{var h=townHallBase(),a=h.indexOf('<h3 class="label">Your skills</h3>');if(a<0)return "";a=h.lastIndexOf("<section",a);var b=h.indexOf("</section>",a);return a<0||b<0?"":h.slice(a,b+10)}catch(e){return ""}}
 var zxProfBase=profileHtml;
@@ -88,6 +98,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.
     +"#layer .modal .rm-head{position:sticky;top:0;z-index:8;background:var(--surface,#1b1411);padding-top:6px;padding-bottom:6px;margin-top:-6px}"
     +".zx-coins{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:60;box-shadow:0 6px 16px -6px rgba(0,0,0,.7)}.zx-coins[hidden]{display:none}"
     +".exswap{margin-left:auto;margin-right:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 11px/1 var(--font-body,system-ui);cursor:pointer}.zx-own{display:flex;gap:8px;margin:10px 0}.zx-own input{flex:1;min-width:0;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:inherit;padding:10px}.zx-orig{margin:0 0 10px}.zx-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:46vh;overflow:auto;margin-bottom:10px}.zx-pick{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface2,transparent);color:var(--fg);text-align:left;cursor:pointer}.zx-pick small{opacity:.65;text-transform:capitalize}.xd-own{display:grid;place-items:center;color:var(--accent)}.xd-own svg{width:46%;height:46%}"
+    +".zx-next{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;margin:8px 0 12px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;text-align:left}.zx-next .label{flex:none}.zx-next span:nth-child(2){flex:1;font-size:14px;line-height:1.3}.zx-next b{flex:none;color:var(--accent);font-size:13px}button.zx-next{cursor:pointer}"
     +".sq-stage.has-art{background-position:center top}"
     +"html.qb-switch #app{visibility:hidden}html.qb-sync body *{pointer-events:none!important}"
     +".zx-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}.zx-tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:12px;border:1px solid var(--line);background:var(--surface2,transparent);color:var(--fg);cursor:pointer;text-align:center}.zx-tile{position:relative}.zx-tile svg{width:28px;height:28px;flex:none}.zx-me .btn,.avbtn{position:relative}.zx-tile b{font-size:13px}.zx-tile small{font-size:11px;opacity:.7;line-height:1.2}"

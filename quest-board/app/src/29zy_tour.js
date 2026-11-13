@@ -98,9 +98,9 @@ var calmHubBase=zxHub;
 zxHub=function(){var h=calmHubBase.apply(this,arguments);if(calmOn()&&calmDay()<4)h=h.replace(/<button class="zx-tile" data-act="nav" data-v="train">[\s\S]*?<\/button>/,"").replace('<section class="card panel zx-hub"><div class="zx-tiles"></div></section>',"");return h};
 var calmDqBase=dqHtml;
 dqHtml=function(){if(calmOn()&&calmDay()<2)return "";return calmDqBase.apply(this,arguments)};
-/* the stats (STR, AGI, VIT, INT) stay out of sight on a calm save until level 10 */
+/* the stats (STR, AGI, VIT, INT) stay out of sight until level 10, for everyone (Cal approved: hide the numbers until they matter) */
 var calmRenderBase=render;
-render=function(){var r=calmRenderBase.apply(this,arguments);try{document.documentElement.classList.toggle("qb-calm-stats",calmOn()&&effLvl()<10)}catch(e){}return r};
+render=function(){var r=calmRenderBase.apply(this,arguments);try{document.documentElement.classList.toggle("qb-calm-stats",effLvl()<10)}catch(e){}return r};
 /* the profile: Replay tutorial */
 var tourProfBase=profileHtml;
 profileHtml=function(){var h=tourProfBase.apply(this,arguments);var b='<button type="button" class="btn ghost" data-act="tourreplay">Replay tutorial</button>';

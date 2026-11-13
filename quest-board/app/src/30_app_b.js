@@ -1376,10 +1376,11 @@ function profileHtml(){
 }
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
 function boardLine(){
-  var x=typeof dqXp==="function"?dqXp():0, gl=typeof dqGoal==="function"?dqGoal():0, lv=effLvl(), rw=false;
-  /* the bar shows 100, then quietly 200, then fills on in gold with no number toward the hidden chest (29e_economy.js) */
-  var t=typeof dqTarget==="function"?dqTarget():gl,f=typeof dqFill==="function"?dqFill():[gl?Math.min(1,x/gl):0,0];
-  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar'+(t?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i>'+(t?'':'<i class="ot" style="width:'+(f[1]*100)+'%"></i>')+'</span><span class="bl-t mono">'+(t?x+' / '+t+' XP today':x+' XP today')+'</span>'+(rw?'<span class="bl-rw">Reward ready</span>':'')+'</button>';
+  /* QA (2026-11-13): the line said "0 / 100 XP today" right above the Daily Quest card's "0 / 100 XP". The card keeps today's number; this
+     line shows the level (Cal: "Place the daily quest meter ... underneath the exp bar") */
+  var lv=effLvl(),g=gated(),nd=need(Math.min(lv,MAXL-1)),maxed=(lv>=MAXL&&!g),into=(maxed||g!==null)?nd:S.xp-cum(lv),f=nd?Math.max(0,Math.min(1,into/nd)):1;
+  var tx=g!==null?"Bar full: pass the trial":maxed?"Max level":Math.max(0,nd-into)+" XP to level "+(lv+1);
+  return '<button class="bline" data-act="char" aria-label="Your progress: open your profile"><span class="bl-lv">Lv '+lv+'</span><span class="bl-bar"><i style="width:'+(f*100).toFixed(1)+'%"></i></span><span class="bl-t mono">'+tx+'</span></button>';
 }
 function boardHtml(){
   var g=gated(), ri=rankIdx(), rk=RANKS[ri];
