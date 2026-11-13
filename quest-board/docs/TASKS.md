@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free. WAITING ON CAL (since 2026-11-13): Higgsfield is signed out in Chrome; sign in, then ROOMS paints the tip jar and Town Square
+CHROME: free
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -31,6 +31,9 @@ LEAD Doing:
   top, Posts and Chat only), the Players tab (likes, leaderboard, Town square, neighbors all still live), the Board's Daily Quest and
   Wheel cards, the profile (skills, no rewards), the photo window's Cancel, level-ups with no "???", a crawl with no rare guarantee,
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
+
+ROOMS Doing:
+- Now (on 144868a): WAITING ON CAL (sent 2026-11-13): tip jar `rsx_tip0/1/2` (empty, half, full; cut with rs_art into art/app and rsart.json) and `ui_town_square.webp`, painted and in the working folder, NOT committed until he approves; please leave them alone. Then commit and a WAITING ON QA line. LEAD: the stage crops the clock tower's top; `.sq-stage.has-art{background-position:center top}` would keep it.
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
 - TAKEN by ROOMS (2026-11-13). A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
