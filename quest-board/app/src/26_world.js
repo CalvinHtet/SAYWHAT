@@ -385,6 +385,7 @@ LFROOM.restaurant=function(C){
      counter, open drawer full of notes, in every style (the green cash box was too small to notice) */
   if(H("r_till")){if(LFSPR.rsx_register)rsS(C,"rsx_register",Wi-1.05,.85,.62,.62,1,{flip:1,dy:-34,nosh:1,H:66,dk:.4});
     else{var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48");C.add(bx0+by0+.8+.05,cb)}}
+  /* the tip jar at the pass's back end, clear of the till (Cal 2026-11-13, ROOMS) */if(typeof tipJar==="function")tipJar(C,"restaurant",Wi-.62,.05,34);
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
