@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 0241042): v0.95 candidate WAITING ON QA = five tabs + fixes, middle-ground start, private coin requests, exercise swap, friends' tags, and now guided tours + the calm first week (29zy_tour.js, tourtest.js PASS). Next in the overhaul (Cal: "Yes, start it"): hide numbers until they matter, the "what next" line, fewer daily checklists. After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
+- Now (on 0241042): v0.95 candidate WAITING ON QA (QA: everything up to 5850751 DONE, PASS except the Restaurant tip jar, QA findings; the tours 0241042 next) = five tabs + fixes, middle-ground start, private coin requests, exercise swap, friends' tags, and now guided tours + the calm first week (29zy_tour.js, tourtest.js PASS). Next in the overhaul (Cal: "Yes, start it"): hide numbers until they matter, the "what next" line, fewer daily checklists. After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 5850751): v0.95 candidate WAITING ON QA (message sent): five tabs + QA's two FIXes, middle-ground start (Loft x2, Garden at 45%), coin requests never pinned and private (rules NOT deployed until the code is live, then WAITING ON CAL to approve), exercise swap, friends' name tags above the head. Next, waiting on Cal: the simplification overhaul and the guided tutorial (plan sent to Cal).
   Was: Now (on ae3ba38): two pieces for v0.95, WAITING ON QA for the tabs (QA: DONE on 6426b2e, NOT A PASS: two FIX lines, QA findings). (1) Slower start ce5123f, QA: prices and saves safe; the Loft is ~3-4x, not 2x (econLate), and Goals coins and visit tips follow the phase: both kept, LEAD tells Cal. (2) Five tabs ae3ba38 (Cal: "Fewer tabs first"): Board, The Loft, Shop, Town, Players; Training, Crawls and the Wheel from Board tiles, Relics from the profile; tabs5.js PASS. Then: ship v0.95, and Cal's next pick from the simplification brainstorm.
   Was: Now (on bf9430e): v0.94 LIVE on Live and Test = the fast start (QA PASS on 5256c2b) + tipJarArt (unused until ROOMS places the jars), APPV 94, 3027/3027 files identical, wlive PASS; rollback at APPV 95 (ac60965). Slowing the start (Cal: "Yes slow it down"): tuning ECON.phase (Loft rooms x2) and the Garden trigger with econsim, uncommitted until the numbers hold, then WAITING ON QA with pricesweep. Tip jars: tipJarArt in 29zx, placement requested from ROOMS.
@@ -42,7 +42,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA: check 778fd8d, your tip jar FIX (2c38bf9): the bare Restaurant draws no jar (the first kitchen's half wall stands above its counter); once the Restaurant grows past the first kitchen, the jar is on the pass as before. ROOMS checked bare (0 jars) and stages 1 and 2 (1 jar each).
+- (QA: DONE on 5850751, NOT FIXED at stages 1 and 2, QA findings.) WAITING ON QA: check 778fd8d, your tip jar FIX (2c38bf9): the bare Restaurant draws no jar (the first kitchen's half wall stands above its counter); once the Restaurant grows past the first kitchen, the jar is on the pass as before. ROOMS checked bare (0 jars) and stages 1 and 2 (1 jar each).
 - (QA: DONE on d521820, PASS, QA findings.) WAITING ON QA: check 39a0a71 (rule 17), crawl allies roaming (LEAD's request): with allies rescued and only the Loft built, all of them walk the Game Room with name tags; with businesses built, each ally is in one room a day and only there; tags above the head for team and allies, none for random guests; their looks in rooms (wear-tested in all 22 poses by ROOMS). ROOMS checked in headless Chromium, not by eye: the story and sale popups covered the screenshots.
 - (QA: DONE on 28c52ee, PASS but one FIX for ROOMS: the bare Restaurant's jar, QA findings.) WAITING ON QA: check 693effe (rule 17), the tip jars placed (LEAD's request): in the Restaurant, Lock and Key, Boba and Dessert, the jar on the counter empty on a new day, half after a few served, full near the cap; clear of other pieces in every stage (rule 20). ROOMS checked all three fills in all four rooms (and the Restaurant's three stages) with tips set directly, not by serving guests.
 - Now (on e3144af): WAITING ON CAL (sent 2026-11-13): the Auditorium projectors from behind, `thx_proj2b` / `thx_proj1b` (the Windows request of 2026-11-09), painted and checked in the room (lens toward the screen, beam from the lens), NOT committed until he approves. Earlier: Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
@@ -63,10 +63,23 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6426b2e): the five tabs checked, not a pass yet (below). Next: the crawl allies 39a0a71 and LEAD's middle-ground start 6426b2e
-  if LEAD asks. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 97106ab): v0.95 checked up to 5850751 (below): all pass but the Restaurant tip jar. Next: LEAD's guided tours 0241042.
+  15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, the v0.95 candidate up to 5850751 against v0.94 bf9430e (clean sandbox, Live and plain builds). PASS, every item:
+  (1) tabs: tile icons 28 px (a new player's Training tile 324x94, mid tiles 103x113 at 390, 143x94 at 360), "!" on the Wheel and Crawls
+  tiles and for Relics, all ways back and Board lit (`rigtest/qa/tabs5qa.js`, `shots/qa/v95/m_tabs.png`); (2) middle-ground start: no
+  bad price, only the 85 Loft upgrades changed, now about 2x for Bedroom, Closet and Patio, 1.7x Game Room, 1.5x Lair; saves with 47 and
+  87 Loft upgrades load unchanged (slowsave.js); (3) coin requests: a player (guest path) reads only kudosok/<own id>, is paid the
+  approved 500 once, also after a reload, never another player's; nothing pinned in the Town Hall; the owner still reads every answer
+  (`rigtest/qa/kudos95.js`); (4) exercise swap: LEAD's swaptest.js all pass on QA's clean build, by eye fine (`m_swap.png`), the weight
+  box still keeps the last weight (wtrainw.js, now opening Training from its tile); (5) friends' tags above the head (wvisit.js PASS,
+  `wvisit/roomwin_tag.png`). Release checks: wlive PASS, pricesweep 0 problems, dupfn no new duplicates, old saves 41/41, wui92, smoke,
+  0 page errors. Not deployed or tested: the new firestore.rules (Cal's deploy, after this code is live).
+- FIX, ROOMS (`26_world.js` the Restaurant's tipJar, 778fd8d's `st>0`): not fixed. At stage 1 (r_x1) and 2 (r_x2) with the pass not yet
+  bought, the jar still sits on the top corner of the kitchen's half wall over the stove's pot; only the fully bought room has it on the
+  pass. The jar has to follow the pass piece, not the stage. `shots/qa/v95/m_rest.png` (stage 1, 2, full).
 - PASS, ROOMS's crawl allies 39a0a71, clean build of d521820, all six rescued. Only the Loft built: all six in the Game Room, once each,
   each with a name tag. Every room built: each ally in exactly one room today (pip Restaurant, sera Lock and Key, kit Karaoke, bram and
   juno Rhythm, neo Theater) and somewhere else the next day (Upstairs Bar, Garden, Arcade, VR, Auditorium); tags on all six; no tag

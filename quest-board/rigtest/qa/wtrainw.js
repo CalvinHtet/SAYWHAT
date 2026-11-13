@@ -22,7 +22,7 @@ const log = (...a) => console.log(a.map((v) => (typeof v === 'string' ? v : JSON
   await pg.ev(`(function(){var x=window.__qb.x(),S=x.S;S.created=true;S.welcomed=1;S.char=window.__qb.fixChar({name:'Lift',sex:'m'});x.persist();x.render();return 1})()`); await ready();
   // the plan, then the first weighted exercise of the session (the plan button tapped; clicked if the tap didn't take)
   const openPlan = async () => {
-    await pg.ev('(function(){var b=document.querySelector(".nav button[data-v=train]");b&&b.click();return 1})()'); await sleep(1200);
+    await pg.ev('(function(){var b=document.querySelector(".nav button[data-v=train]")||document.querySelector(".zx-tile[data-v=train]");b&&b.click();return 1})()'); await sleep(1200);
     for (let k = 0; k < 6; k++) {
       if (await pg.ev('!!document.querySelector(".exlist input.kg")')) break;
       if (k === 0) await tap(`button.plan[data-act=wkplan][data-v="${PLAN}"]`); else await pg.ev(`(function(){var b=document.querySelector('button.plan[data-act=wkplan][data-v="${PLAN}"]');b&&b.click();return 1})()`);
@@ -41,7 +41,7 @@ const log = (...a) => console.log(a.map((v) => (typeof v === 'string' ? v : JSON
   await type(id, W2); await pg.ev(`(function(){var b=document.querySelectorAll('.exlist .setb button.sb[data-ex="${id}"]')[1];b.click();return 1})()`); await sleep(600);
   const b2 = await box(id); log('2. typed ' + W2 + ', saved set 2 ->', b2, b2.box === W2 ? 'OK' : 'FAIL (want ' + W2 + ')');
   await pg.shot(OUT + 'session_sets12.png');
-  await sleep(2500); await pg.go(BASE + '/'); await ready(); await pg.ev('(function(){var b=document.querySelector(".nav button[data-v=train]");b&&b.click();return 1})()'); await sleep(1500);
+  await sleep(2500); await pg.go(BASE + '/'); await ready(); await pg.ev('(function(){var b=document.querySelector(".nav button[data-v=train]")||document.querySelector(".zx-tile[data-v=train]");b&&b.click();return 1})()'); await sleep(1500);
   await pg.ev('(function(){var x=document.querySelector(\'[data-ca="x"]\');if(x)x.click();return 1})()'); await sleep(500);
   const b3 = await box(id); log('3. after a reload mid-session ->', b3, b3.box === W2 ? 'OK' : 'FAIL (want ' + W2 + ')');
   // finish the workout, then the next session the next day
