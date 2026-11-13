@@ -21,8 +21,8 @@ LEAD Doing:
 - Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
   Hall tabs; the economy check: 42 upgrades on day 2), then batch 3 (a guided tutorial; the progression review), then team members and
   friends roaming with name tags, tip jars.
-- WAITING ON CAL: (1) approve deploying firestore.rules (the v0.92 rules for chat, likes, photos, challenges were never deployed: that is
-  the "permission denied" on posting); (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
+- DONE 2026-11-13 (Cal: "Yes, deploy rules"): firestore.rules deployed (chat, likes, photos, challenges; the "permission denied").
+- WAITING ON CAL: (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
   cannot work); (3) approve pushing qa-local to GitHub; (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
 - WAITING ON QA: check 1feee32 (rule 17) on a clean copy of qa-local: the weight box on an iPhone-sized page (type 135, a comma
   decimal), a bounty finished then "Clear completed" (still Completed), the day turning over with the app open, the Hall (banner on
