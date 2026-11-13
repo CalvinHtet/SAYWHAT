@@ -493,8 +493,25 @@ lfDesired=function(){var out=lfDesiredTmBase(),Q=typeof teamList==="function"&&t
     if(i<0||!LFMETA[i])return;var L=T.look||{},eq=[],D=QBLoft.data,sig=TMTOP[id]&&D.items[TMTOP[id]]?TMTOP[id]:null;Object.keys(L.equipped||{}).forEach(function(s){var e=L.equipped[s];if(e&&e.art&&!(sig&&s==="top"))eq.push(e.art)});if(sig)eq.push(sig);
     out.push({id:"tm:"+id,room:i,role:"crew",look:rsNpc(Object.assign({},RSK,{body:L.body||"m",hairStyle:L.hairStyle||"h1",hairColor:L.hairColor||"brown",eq:eq})),idle:1,wand:1,tm:id,tmc:T.ac||"#ffd27a",tmn:T.name.split(" ")[0]})})}catch(e){}
   return out};
+/* The crawl allies (DNPC in 10_app_a.js; Cal 2026-11-13: "their own character sprite ... seen roaming around the town", with their name
+   above their head). Each rescued ally has a look from existing items that suits the role. They hang out in the Game Room while only the
+   Loft is built, then in any built business too: one room a day each, picked from the day so they move around. Mara is the chef already. */
+var ALLOOK={
+  pip:{n:"Pip",c:"#ffb066",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["npc_chef","o_bandana","h_cargo","h_boots"]}},
+  kit:{n:"Kit",c:"#ffd36b",spec:{body:"f",skin:"s3",hairStyle:"h3",hairColor:"auburn",top:"tee",topColor:"grey",bottom:"joggers",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["al_vest","sv_goggles","sm_cargo","sm_boots"]}},
+  bram:{n:"Bram",c:"#c9a24a",spec:{body:"m",skin:"s1",hairStyle:"h1",hairColor:"blonde",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["h_cardi","h_news","km_round","h_trous","h_derby"]}},
+  juno:{n:"Juno",c:"#7fe9ff",spec:{body:"f",skin:"s4",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["o_flannel","al_goggle","al_cargo","al_hiker"]}},
+  neo:{n:"Neo",c:"#ff4fa3",spec:{body:"m",skin:"s3",hairStyle:"h3",hairColor:"black",top:"tee",topColor:"black",bottom:"joggers",bottomColor:"black",shoe:"sneakers",shoeColor:"white",eq:["cr_bomber","kp_phones","cr_visor","cr_cargo","cr_lightup"]}},
+  sera:{n:"Seraphine",c:"#d4a8ff",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"blonde",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"white",shoe:"sneakers",shoeColor:"white",eq:["bb_cloak","bb_circlet","bb_crystal","bb_skirt","bb_slipper"]}}};
+function allyRooms(){var biz=[],game=[];S.base.slots.forEach(function(r,k){if(!r)return;if(typeof ROOMSTEP!=="undefined"&&ROOMSTEP[r.t])biz.push(k);else if(r.t==="gameroom")game.push(k)});return game.concat(biz)}
+var lfDesiredAlBase=lfDesired;
+lfDesired=function(){var out=lfDesiredAlBase();try{if(typeof dngInit!=="function"||typeof DNPC==="undefined")return out;var got=dngInit().npcs||{},R=allyRooms();if(!R.length)return out;
+  var day=typeof today==="function"?today():"";DNPC.forEach(function(n,j){var L=ALLOOK[n.id];if(!L||!got[n.id])return;
+    var h=0,key=n.id+day;for(var c=0;c<key.length;c++)h=(h*31+key.charCodeAt(c))>>>0;
+    var ri=R[h%R.length];if(!LFMETA[ri])return;/* only in the building that holds today's room */out.push({id:"al:"+n.id,room:ri,role:"crew",look:rsNpc(L.spec),idle:1,wand:1,tm:n.id,tmc:L.c,tmn:L.n,noring:1})})}catch(e){}
+  return out};
 var lfAgentGTmBase=lfAgentG;
 lfAgentG=function(a){var g=lfAgentGTmBase(a);if(!a.tm)return g;
-  var ring='<ellipse rx="'+(15*LFBIG*LFK).toFixed(1)+'" ry="'+(6.5*LFBIG*LFK).toFixed(1)+'" fill="none" stroke="'+a.tmc+'" stroke-width="2" opacity=".9"/>',
-    y=(-170*LFSC-6).toFixed(1),tag='<g class="lftm" transform="translate(0,'+y+')"><rect x="-22" y="-9" width="44" height="12" rx="6" fill="rgba(10,10,20,.78)" stroke="'+a.tmc+'" stroke-width="1"/><text x="0" y=".6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+esc(a.tmn)+'</text></g>';
+  var ring=a.noring?'':'<ellipse rx="'+(15*LFBIG*LFK).toFixed(1)+'" ry="'+(6.5*LFBIG*LFK).toFixed(1)+'" fill="none" stroke="'+a.tmc+'" stroke-width="2" opacity=".9"/>',
+    y=(-170*LFSC-6).toFixed(1),tw=Math.max(44,String(a.tmn||'').length*5.4+12),tag='<g class="lftm" transform="translate(0,'+y+')"><rect x="'+(-tw/2).toFixed(1)+'" y="-9" width="'+tw.toFixed(1)+'" height="12" rx="6" fill="rgba(10,10,20,.78)" stroke="'+a.tmc+'" stroke-width="1"/><text x="0" y=".6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+esc(a.tmn)+'</text></g>';
   return g.replace('<g class="lfs">',ring+'<g class="lfs">').replace(/<\/g>$/,tag+'</g>')};
