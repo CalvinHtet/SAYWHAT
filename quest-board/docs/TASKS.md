@@ -116,7 +116,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
 - QA, the Syncing pill recheck on 67dcb12, clean web build, the stand-in Firebase with the save read slowed to 3 s: the background orb is
   back and the pill is a centred dark pill; the whole fast start test passes again (Board at 0.42 s, save at 3.3 s, no writes while
   syncing, save unchanged over 3 reopens, B to E pass, 0 page errors). `shots/qa/fast3/A_syncing.png`.
-- FIX (small), LEAD (`29zx_simple.js` the pill's top, or `.vline`): the pill sits on the version line and covers part of "this device
+- DONE by LEAD in 5256c2b. FIX (small), LEAD (`29zx_simple.js` the pill's top, or `.vline`): the pill sits on the version line and covers part of "this device
   only" for the whole sync. Put it below the line, or give the line room. NOTE for Cal: during those 3 s the line reads "this device
   only" (the online save has not answered yet), which can read as "not saving online"; and the character's box is empty until the sync
   ends. Same picture.
@@ -126,7 +126,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   sees the first player's Board (not even hidden in the page); a new player never gets Syncing; a newer online save wins; "Two saves
   found" now takes the tap and loads the chosen save. 0 page errors. Both FIX lines of e53c273 are fixed. `rigtest/qa/faststart.js`
   (updated: Syncing on <html>, the Board counted only while #app is visible, the seed given a class), pictures `shots/qa/fast2/`.
-- FIX, LEAD (`29zx_simple.js`: `html.qb-sync body::after{content:"Syncing"...}`): body::after is already the background orb (`index.html:389`,
+- DONE by LEAD in 67dcb12. FIX, LEAD (`29zx_simple.js`: `html.qb-sync body::after{content:"Syncing"...}`): body::after is already the background orb (`index.html:389`,
   a 46vmax circle with the drift animation). The Syncing rule takes it over: for the whole sync a big dark disc covers the top of the
   screen and "Syncing" sits unstyled at the left over the version line, on every reopen. Use its own element (or html::after) for the
   pill. `shots/qa/fast2/A_syncing.png`.
