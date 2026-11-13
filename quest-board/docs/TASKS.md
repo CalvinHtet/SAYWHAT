@@ -33,7 +33,8 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- Now (on 144868a): WAITING ON CAL (sent 2026-11-13): tip jar `rsx_tip0/1/2` (empty, half, full; cut with rs_art into art/app and rsart.json) and `ui_town_square.webp`, painted and in the working folder, NOT committed until he approves; please leave them alone. Then commit and a WAITING ON QA line. LEAD: the stage crops the clock tower's top; `.sq-stage.has-art{background-position:center top}` would keep it.
+- Now (on f9ecb1a): Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
+- WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
 - TAKEN by ROOMS (2026-11-13). A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
