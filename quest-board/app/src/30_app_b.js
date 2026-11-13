@@ -1985,6 +1985,12 @@ function saveWhich(cloud,local){
     m.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-pick]");if(!b)return;var use=b.getAttribute("data-pick");m.remove();done({use:use,asked:true,keep:use==="local"?cloud:local})});
     document.body.appendChild(m)})}
 document.addEventListener("pointerdown",function(){try{window.__lfpd=[LFV.x,LFV.y]}catch(e){}},true);
+/* fast start (Cal, 2026-11-13: "Launching the app after closing it lags/loads for about 5 seconds even though there's no updates"). The
+   scripts are ready in a fraction of a second; the wait was Google sign-in and the online save. So the last player's own copy on this
+   device draws at once, with taps paused and "Syncing" shown, and the boot below then loads the online save exactly as before (merge
+   replaces the whole state) and lets go. Nothing is saved before that (persist waits for loaded), so nothing can be lost or doubled.
+   Another account signing in on this phone starts from a fresh state, never from this one. */
+var FASTUID=null,FAST=null;try{FASTUID=window.QB_WEB?localStorage.getItem("qb-lastuid"):null;FAST=FASTUID?saveOnDevice(FASTUID):null;if(FAST&&FAST.created){merge(FAST);document.body.classList.add("qb-sync")}else FAST=null}catch(e){FAST=null}
 render();try{chLoad()}catch(e){}
 (async function(){
   var migrated=false;
@@ -1992,7 +1998,8 @@ render();try{chLoad()}catch(e){}
     db=window.claude?await window.claude.use("db"):null;
     var usr=null; try{usr=window.claude?await window.claude.use("user"):null}catch(e){}
     var uid=null, own=true; if(usr){try{uid=await usr.id();own=await usr.isOwner()}catch(e){}}
-    MYUID=uid||null;if(own)document.body.classList.add("qb-own");if(usr&&!own){window.__qbGuest=1;document.body.classList.add("qb-guest");var qt=document.getElementById("qbt");if(qt)qt.remove()}
+    MYUID=uid||null;try{if(uid)localStorage.setItem("qb-lastuid",uid)}catch(e){}if(FAST&&uid!==FASTUID){S=fresh();FAST=null}
+    if(own)document.body.classList.add("qb-own");if(usr&&!own){window.__qbGuest=1;document.body.classList.add("qb-guest");var qt=document.getElementById("qbt");if(qt)qt.remove()}
     /* every save, the owner's too, lives in a private per-person path */
     if(db&&uid){
       DOC="data/users/"+uid+"/state";
@@ -2007,7 +2014,7 @@ render();try{chLoad()}catch(e){}
     }else if(db&&own){var s2=await db.doc("player/state").get();if(s2.exists)merge(s2.data());else{var rw=localStorage.getItem("quest-board");if(rw)merge(JSON.parse(rw))}}
     else{window.__qbBootErr=!window.claude?"no runtime":!db?"no database":"no id";db=null;var raw=localStorage.getItem("quest-board");if(raw)merge(JSON.parse(raw))}
   }catch(e){window.__qbBootErr=String((e&&(e.code||e.message))||e);db=null;try{var raw2=localStorage.getItem("quest-board");if(raw2)merge(JSON.parse(raw2))}catch(e2){}}
-  loaded=true;
+  loaded=true;document.body.classList.remove("qb-sync");
   /* areas seen so far, from the level this save loads at (29h_unlocks.js): a new save starts with none past level 1 */
   try{areaOn()}catch(e){}
   setTimeout(brandCheck,1500);
