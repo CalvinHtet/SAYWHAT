@@ -20,7 +20,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 LEAD Doing:
 - Now (on 9821a64): batch 2. Loft and Hall lag: NOT reproduced on the Mac. Full save + QA's heavy seed (60 neighbours, 1,800 posts, 9,000 chat lines), 390x844: tab switches 40-120 ms, Hall, Players and Loft 60 fps, in WebKit and in Chromium with the CPU 4x slower (rigtest/lead/lagmap.js, lagheavy.js). So it is the phone itself or live pushes from other players (the sandbox has none). Asking Cal to let LEAD read his phone's own speed log (diag/perf, owner only). Next: the economy check (42 upgrades by day 2), then the tip jars.
   Was: Now (on 9821a64): batch 2 started. Launch lag: measured, the scripts are ready in ~0.2 s on a reopen (CPU slowed 4x); the wait is Google sign-in plus the online save. 9821a64 draws the Board at once from this device's own copy (taps paused, "Syncing" pill) and then loads the online save as before. f2e57f6: Town square art keeps the clock tower's top. Next: Loft and Hall lag, the economy check, then the tip jars.
-- WAITING ON QA: check 9821a64 (rule 17) on a web build with real seeds and a slow database: a returning player sees their Board before the online save arrives; taps do nothing until it does ("Syncing" pill), then work; the save is unchanged after several reopens; a second account signing in on the same browser never sees the first player's Board; a brand-new player is unaffected; a save changed on another device wins as before (saveWhich). LEAD could not seed a finished character on the web build by hand (something reset S.created), so this has only been reasoned through, not run.
+- (QA: DONE on 9821a64, NOT A PASS, QA findings: two FIX lines.) WAITING ON QA: check 9821a64 (rule 17) on a web build with real seeds and a slow database: a returning player sees their Board before the online save arrives; taps do nothing until it does ("Syncing" pill), then work; the save is unchanged after several reopens; a second account signing in on the same browser never sees the first player's Board; a brand-new player is unaffected; a save changed on another device wins as before (saveWhich). LEAD could not seed a finished character on the web build by hand (something reset S.created), so this has only been reasoned through, not run.
   Was: Now (on 6ec9c23): v0.93 LIVE on Live and Test = batch 1 (QA PASS 096f419), APPV 93, QB_EPOCH 6, 3023/3023 files identical on both; rollback-v0.80 moved to APPV 94 (b3d82bc, local). build.py's sandbox now adds noTest=false (QA's find). Next: batch 2 (launch lag, Loft and Hall lag, the economy check), then wire ROOMS's tip jars (f9ecb1a) and the Town square CSS ROOMS suggested.
   Was: Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
   Hall tabs; the economy check: 42 upgrades on day 2), then batch 3 (a guided tutorial; the progression review), then team members and
@@ -53,10 +53,23 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f2e57f6): the Town square backdrop checked, PASS (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13): each check
-  reads this section and does what is WAITING ON QA. Next: the tip jar once LEAD wires it.
+- Now (on 9821a64): LEAD's fast start checked, NOT a pass (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13): each check
+  reads this section and does what is WAITING ON QA. Next: the fast start again once LEAD fixes it; the tip jar once it is wired.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, LEAD's fast start 9821a64 on a clean web build (the real web boot on LEAD's stand-in Firebase, rigtest/lead/mockfirebase.js, with
+  the save read slowed to 3 s; seed v90_adv brought to the current save first). NOT A PASS: it does not show the Board early, and it adds
+  a hard lock. `rigtest/qa/faststart.js`, pictures `shots/qa/fast/`. Passes: the save is unchanged after 3 reopens (device, online, in
+  play); a second account on the same browser never sees the first player's Board and starts at the creator with nothing of the first
+  written to it; a new player gets sign-in then the creator, never Syncing; a newer online save from another device wins, and a key that
+  only the device copy had is gone. Not run: a real phone and real Google sign-in.
+- FIX, LEAD (`30_app_b.js`, render(): `if(!loaded)` draws "Loading"): the early render() runs while loaded is still false, so it draws the
+  Loading screen, not the Board. A returning player sees "Loading" for the whole save read, exactly as before (Board at 3.2 s with a 3 s
+  read), and no Syncing pill either. Cal's 5 seconds are unchanged. `shots/qa/fast/A_at1800ms.png`.
+- FIX, LEAD (`29zx_simple.js` qb-sync, `30_app_b.js` saveWhich): when the device copy and the online save differ and one has no savedAt,
+  "Two saves found" opens while body.qb-sync still turns off every tap (pointer-events none, the picker's buttons too). A real tap does
+  nothing and the game never finishes loading: stuck for good. Drop qb-sync before the picker opens, or exempt .qbsv.
+  `shots/qa/fast/E_picker.png`. Rare (saves without savedAt), but there is no way out.
 - PASS, ROOMS's Town square backdrop (f9ecb1a + f2e57f6), clean sandbox of f2e57f6, Players tab at 390 and 360: ui_town_square.webp
   loads at 1024x1270 behind the stage (cover, centred), the clock tower and its face show, all 11 spots stand on the plaza (the sandbox
   has 6 stand-ins, so QA copied a figure into the 4 empty spots, in the page only), no page errors. `rigtest/qa/sqart.js`,
