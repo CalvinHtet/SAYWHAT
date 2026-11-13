@@ -71,13 +71,14 @@ function tourDraw(scroll){var st=tourStep();if(!st)return;var e=tourVis(st.sel);
   TOUR.miss=0;if(scroll){try{e.scrollIntoView({block:"center",behavior:"instant"})}catch(x){e.scrollIntoView()}}
   var r=tourEl(),T=TOURS.filter(function(x){return x.id===TOUR.id})[0];r.style.visibility="visible";
   var b=e.getBoundingClientRect(),pad=6,ring=r.querySelector(".tour-ring"),bub=r.querySelector(".tour-bub"),vw=innerWidth,vh=innerHeight;
-  var big=b.height>vh*.6;/* a whole screen: ring its top part only */var top=Math.max(4,b.top-pad),h=big?Math.min(vh*.35,b.height):b.height+pad*2;
+  /* below the phone's notch (QA: it kept 4-8 px from the very top) */var sat=parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--qbsat"))||0;
+  var big=b.height>vh*.6;/* a whole screen: ring its top part only */var top=Math.max(4+sat,b.top-pad),h=big?Math.min(vh*.35,b.height):b.height+pad*2;
   ring.style.left=Math.max(4,b.left-pad)+"px";ring.style.top=top+"px";ring.style.width=Math.min(vw-8,b.width+pad*2)+"px";ring.style.height=h+"px";
   r.querySelector(".tour-t").textContent=st.t;r.querySelector(".tour-x").textContent=st.x;
   r.querySelector(".tour-n").textContent=T.steps.length>1?(TOUR.i+1)+" / "+T.steps.length:"";
   var nb=r.querySelector('[data-tour="next"]');nb.style.display=st.tap?"none":"";nb.textContent=TOUR.i===T.steps.length-1?"Got it":"Next";
   var bw=Math.min(320,vw-24);bub.style.width=bw+"px";var cx=Math.min(vw-bw/2-12,Math.max(bw/2+12,b.left+b.width/2));bub.style.left=(cx-bw/2)+"px";
-  var bh=bub.offsetHeight||120,below=top+h+14+bh<vh-8||top<bh+30;bub.style.top=(below?top+h+14:Math.max(8,top-14-bh))+"px";
+  var bh=bub.offsetHeight||120,below=top+h+14+bh<vh-8||top<bh+30;bub.style.top=(below?top+h+14:Math.max(8+sat,top-14-bh))+"px";
   bub.classList.toggle("up",!below);var arw=bub.querySelector(".tour-arw");arw.style.left=Math.max(14,Math.min(bw-28,b.left+b.width/2-(cx-bw/2)-8))+"px"}
 function tourTick(){try{tourInit();if(!loaded||!S||!S.created||ccEdit)return;
     if(TOUR.id){var st=tourStep();if(!st)return tourEnd();if(document.querySelector("#layer .modal")&&!st.modal){var r0=document.getElementById("qbtour");if(r0)r0.style.visibility="hidden";return}tourDraw(0);return}
@@ -106,7 +107,7 @@ var tourProfBase=profileHtml;
 profileHtml=function(){var h=tourProfBase.apply(this,arguments);var b='<button type="button" class="btn ghost" data-act="tourreplay">Replay tutorial</button>';
   return h.indexOf('<div class="zx-me">')>=0?h.replace('<div class="zx-me">','<div class="zx-me">'+b):'<div class="zx-me">'+b+'</div>'+h};
 (function(){if(document.getElementById("qb-tour-css"))return;var st=document.createElement("style");st.id="qb-tour-css";
-  st.textContent="#qbtour{position:fixed;inset:0;z-index:99990;pointer-events:none}"
+  st.textContent=":root{--qbsat:env(safe-area-inset-top,0px)}#qbtour{position:fixed;inset:0;z-index:99990;pointer-events:none}"
     +"#qbtour .tour-ring{position:fixed;border-radius:14px;border:2px solid var(--accent,#ffc857);box-shadow:0 0 0 200vmax rgba(8,6,16,.62);transition:all .25s ease;animation:tourpulse 1.6s ease-in-out infinite}"
     +"@keyframes tourpulse{0%,100%{outline:0 solid transparent}50%{outline:6px solid color-mix(in srgb,var(--accent,#ffc857) 35%,transparent)}}"
     +"#qbtour .tour-bub{position:fixed;pointer-events:auto;background:var(--surface,#1b1411);color:var(--fg,#fff);border:1px solid var(--accent,#ffc857);border-radius:14px;padding:14px 14px 10px;box-shadow:0 14px 34px -10px rgba(0,0,0,.8);transition:top .25s ease,left .25s ease}"

@@ -35,27 +35,9 @@ function decorSet(i,act,v){var r=bslot(i);if(!r)return;var q=lfDecSets(r.t).filt
   if(!lfDecUnlocked(r,q))return;r.ds=q.id;render();persist();roomModal(i)}
 var LFACOL={av:1,in:0,st:0};
 var LFRMS={};
-function roomModal(i){
-  var osc=document.querySelector(".rmodal .rm-scroll");if(osc&&osc.dataset.i===String(i))LFRMS[i]=osc.scrollTop;else if(!osc)LFRMS[i]=0;
-  closeModals();
-  simulate();
-  var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
-  var cph=Math.round(coinRate(i)),stat=T.coin?cph+' coin'+(cph===1?'':'s')+' an hour, holds '+roomStore(r)+' hours':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+' an hour':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Yours to fill.');
-  /* the room's numbers (Cal, 2026-11-10: "each room should have some stats on the screen"): a Loft room's bonus out of its most, a
-     business's town efficiency, payout share and upgrades */
-  if(typeof rmStats==="function")stat=rmStats(r,i,stat);
-  /* QA: the payout sentence ran off a phone inside the chip; it is its own line now */
-  var payln=T.coin?'<p class="note">Your businesses can pay out '+payRoom().toLocaleString()+' more coins today.</p>':'';
-  var h='<div class="card box2 rmodal">'+'<div class="rm-head"><h2 class="rm-title">'+esc(T.name)+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
-  if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% today. Complete the Daily Quest for full speed.':'Full speed today.')+'</p>';
-  if(r.t==="garden")h+=gdNote(r)+gdWaterHtml()+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
-  if(false){
-    var rc=roomCrew(i), free=crewUnlocked().filter(function(k){return S.base.crew[k]==null});
-    h+='<span class="label">Crew '+rc.length+'/'+crewCap(r)+'</span><div class="crewpick">'+rc.map(function(k){return '<button class="cpk on" data-act="runassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>'+esc(CREW[k].name)+'</small></button>'}).join("")
-      +(rc.length<crewCap(r)?free.map(function(k){return '<button class="cpk" data-act="rassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>+ '+esc(CREW[k].name)+'</small></button>'}).join(""):'')
-      +(!rc.length&&!free.length?'<span class="note">No free crew. Hire specialists on the Loft tab, or wait for neighbours to move in on their own.</span>':'')+'</div>';
-  }
-  h+=decorHtml(i,r)+'<details class="acol" data-k="av"'+(LFACOL.av?' open':'')+'><summary>@@AV@@</summary><div class="addons">';
+/* the upgrades a room's window offers, in the window's order and rules (QA on the Next line, 2026-11-13: anything that names an upgrade
+   must use exactly this list). roomModal draws from it; zxNext (29zx_simple.js) reads its Buy buttons. */
+function roomAvail(i,r,T,list){
   var inst=[],avail=[],lockd=[];
   lfMigA(r);var TSUP={gm_lux1:[],r_tab1:['r_tab2'],r_stl1:['r_stl2'],r_ctr1:['r_ctr2'],r_booth:['r_booth2'],r_pend:['r_chan'],r_wine:['r_wine2'],bd_bed1:['bd_bed2'],bd_chair0:['bd_chair1','bd_chair2'],bd_chair1:['bd_chair2'],bd_ward1:['bd_ward2'],bd_pc1:['bd_pc2'],bd_win2:['bd_win3']},TCH={au_lux1:1,au_lux2:1,au_lux3:1,au_lux4:1,au_imax:1,au_recline:1,au_rows:1,t_bar:1,l_lux1:1,l_lux2:1,l_lux3:1,l_lux4:1,y_lux1:1,y_lux2:1,y_lux3:1,y_lux4:1,b_lux1:1,b_lux2:1,b_lux3:1,b_lux4:1,lb_lux1:1,lb_lux2:1,lb_lux3:1,lb_lux4:1,t_lux1:1,t_lux2:1,t_lux3:1,t_lux4:1,d_lux1:1,d_lux2:1,d_lux3:1,d_lux4:1,c_lux1:1,c_lux2:1,c_lux3:1,c_lux4:1,sp_lux1:1,sp_lux2:1,sp_lux3:1,sp_lux4:1,gm_lux1:1,gm_lux2:1,gm_lux3:1,gm_lux4:1,gm_lux5:1,r_tab2:1,r_stl2:1,r_ctr2:1,r_booth2:1,r_chan:1,r_wine2:1,bd_bed2:1,bd_chair1:1,bd_chair2:1,bd_ward2:1,bd_pc1:1,bd_pc2:1,bd_win3:1,bd_patio:1,bd_swing:1,bd_pdeco:1,bd_neon:1,bd_fshelf:1};
   Object.assign(TSUP,window.RSSUP||{});Object.assign(TCH,window.RSTCH||{});
@@ -82,6 +64,29 @@ function roomModal(i){
   avail=avail.map(function(h,k){var m=/data-a?id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3],sn=typeof styNextBuy==="function"?styNextBuy(r.t):null;return {h:h,k:k,g:/ stynext/.test(h)?-2:m&&m[1]===sn?-1:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
   /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
   var more=avail.length>4;avail=avail.slice(0,4);if(avail.length===4&&avail[3].indexOf(' mystery')<0)avail[3]='<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Buy one above to reveal it</button></div>';
+  return {inst:inst,avail:avail,lockd:lockd,more:more}}
+function roomModal(i){
+  var osc=document.querySelector(".rmodal .rm-scroll");if(osc&&osc.dataset.i===String(i))LFRMS[i]=osc.scrollTop;else if(!osc)LFRMS[i]=0;
+  closeModals();
+  simulate();
+  var r=bslot(i); if(!r)return; var T=ROOMT[r.t], list=ADDONS[r.t]||[], own=addonsOf(r);
+  var cph=Math.round(coinRate(i)),stat=T.coin?cph+' coin'+(cph===1?'':'s')+' an hour, holds '+roomStore(r)+' hours':T.food?(T.rate*roomMult(i)*openMult()).toFixed(1)+' '+FOODN[T.food].toLowerCase()+' an hour':T.buff?baseBuffs().filter(function(x){return x.who===T.name})[0].b.text:(T.note||'Yours to fill.');
+  /* the room's numbers (Cal, 2026-11-10: "each room should have some stats on the screen"): a Loft room's bonus out of its most, a
+     business's town efficiency, payout share and upgrades */
+  if(typeof rmStats==="function")stat=rmStats(r,i,stat);
+  /* QA: the payout sentence ran off a phone inside the chip; it is its own line now */
+  var payln=T.coin?'<p class="note">Your businesses can pay out '+payRoom().toLocaleString()+' more coins today.</p>':'';
+  var h='<div class="card box2 rmodal">'+'<div class="rm-head"><h2 class="rm-title">'+esc(T.name)+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div><div class="rbig" id="rbigw" data-room="'+i+'" style="background:linear-gradient(180deg,'+lfSkyCols()[0]+','+lfSkyCols()[1]+')">'+lfPreview(r,90+i)+rmArrows(r)+'</div><div class="rm-scroll" data-i="'+i+'"><p class="note">'+esc(T.desc)+'</p><div class="chip xp" style="align-self:flex-start;white-space:normal;max-width:100%">'+esc(stat)+'</div>'+payln;
+  if(r.t==="restaurant")h+=rsNote(r)+'<p class="note">Menu: '+esc(SVC.restaurant.menu(r).join(", "))+'. '+(openMult()<1?'The kitchen runs at '+Math.round(openMult()*100)+'% today. Complete the Daily Quest for full speed.':'Full speed today.')+'</p>';
+  if(r.t==="garden")h+=gdNote(r)+gdWaterHtml()+stySellHtml();if(r.t==="theater")h+=thNote(r);h+=helpBtn(r.t);
+  if(false){
+    var rc=roomCrew(i), free=crewUnlocked().filter(function(k){return S.base.crew[k]==null});
+    h+='<span class="label">Crew '+rc.length+'/'+crewCap(r)+'</span><div class="crewpick">'+rc.map(function(k){return '<button class="cpk on" data-act="runassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>'+esc(CREW[k].name)+'</small></button>'}).join("")
+      +(rc.length<crewCap(r)?free.map(function(k){return '<button class="cpk" data-act="rassign" data-c="'+k+'" data-i="'+i+'">'+crewSvg(CREW[k].a,36)+'<small>+ '+esc(CREW[k].name)+'</small></button>'}).join(""):'')
+      +(!rc.length&&!free.length?'<span class="note">No free crew. Hire specialists on the Loft tab, or wait for neighbours to move in on their own.</span>':'')+'</div>';
+  }
+  h+=decorHtml(i,r)+'<details class="acol" data-k="av"'+(LFACOL.av?' open':'')+'><summary>@@AV@@</summary><div class="addons">';
+  var RA=roomAvail(i,r,T,list),inst=RA.inst,avail=RA.avail,lockd=RA.lockd,more=RA.more;
   /* W25 (QA): the story room that follows this one, when no upgrade opens it, shows what it waits for at the top */
   var sn=typeof styNextHtml==="function"?styNextHtml(r.t):"";if(sn)avail.unshift(sn);
   h=h.replace("@@AV@@",avail.length?"Next upgrades":lockd.length?"Next upgrades: install the ones before them first":"All upgrades installed");

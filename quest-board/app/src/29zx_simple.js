@@ -29,14 +29,18 @@ function zxHub(){var t=ZXHUB.filter(function(x){return zxOpen(x[0])});if(!t.leng
 var zxLineBase=boardLine;
 /* the one "what next" line (Cal approved the overhaul, 2026-11-13: one clear thing to do, so nobody has to work out the screen): the trial if it
    waits, tasks if there are none, an upgrade they can afford, what is left of the Daily Quest, else the quests left */
-function zxCheapest(){var m=0;try{S.base.slots.forEach(function(r){if(!r)return;(ADDONS[r.t]||[]).forEach(function(a){var e=a[3]||{};if(e.retired||e.opens||e.trophy||!(a[2]>0)||(r.a&&r.a[a[0]]))return;var pre=ADDREQ[a[0]];if(pre&&!(r.a&&r.a[pre]))return;if(!m||a[2]<m)m=a[2]})})}catch(e){}return m}
-function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]}),g=gated(),ch=zxOpen("hideout")?zxCheapest():0,dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),x=dqOn&&typeof dqXp==="function"?dqXp():0,gl=dqOn&&typeof dqGoal==="function"?dqGoal():0;
+/* an upgrade a room window really offers with a Buy button and that the coins cover, the cheapest first (QA: from the windows' own list,
+   roomAvail in 30_app_b.js, never the cheapest unbought piece anywhere) */
+function zxAfford(){var best=null;try{S.base.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t],list=ADDONS[r.t]||[];if(!T)return;var A=roomAvail(i,r,T,list);
+  A.avail.forEach(function(h){if(h.indexOf('data-act="raddon"')<0||/data-act="raddon"[^>]*disabled/.test(h))return;var m=/data-aid="([^"]+)"/.exec(h),a=m&&list.filter(function(x){return x[0]===m[1]})[0];
+    if(a&&a[2]>0&&a[2]<=S.coins&&(!best||a[2]<best.p))best={i:i,p:a[2],room:(T.name||rmName(r.t))}})})}catch(e){}return best}
+function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]}),g=gated(),af=zxOpen("hideout")?zxAfford():null,dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),x=dqOn&&typeof dqXp==="function"?dqXp():0,gl=dqOn&&typeof dqGoal==="function"?dqGoal():0;
   if(g!==null)tx="Your level trial is waiting below. Pass it to keep levelling.";
   else if(!open.length)tx="Add today's tasks in the box below. Every one pays XP and coins.";
-  else if(ch&&S.coins>=ch){tx="You can afford a Loft upgrade.";act="hideout"}
+  else if(af){tx="You can afford an upgrade in the "+af.room+".";act="room:"+af.i}
   else if(gl&&x<gl)tx=(gl-x)+" XP of tasks to go on today's Daily Quest.";
   else tx=open.length+" quest"+(open.length===1?"":"s")+" left on your list today."}catch(e){return ""}
-  return act?'<button type="button" class="zx-next" data-act="nav" data-v="'+act+'"><span class="label">Next</span><span>'+esc(tx)+'</span><b>Open &rsaquo;</b></button>':'<div class="zx-next"><span class="label">Next</span><span>'+esc(tx)+'</span></div>'}
+  return act?'<button type="button" class="zx-next" data-act="zxroom" data-i="'+act.slice(5)+'"><span class="label">Next</span><span>'+esc(tx)+'</span><b>Open &rsaquo;</b></button>':'<div class="zx-next"><span class="label">Next</span><span>'+esc(tx)+'</span></div>'}
 boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")return h;var c="";try{c=typeof dqHtml==="function"?dqHtml():""}catch(e){c=""}return h+zxNext()+c+zxHub()};
 /* the profile: the class's skills (from the old Class Hall) above the Stats */
 function zxSkills(){try{var h=townHallBase(),a=h.indexOf('<h3 class="label">Your skills</h3>');if(a<0)return "";a=h.lastIndexOf("<section",a);var b=h.indexOf("</section>",a);return a<0||b<0?"":h.slice(a,b+10)}catch(e){return ""}}
@@ -86,6 +90,7 @@ function zxOwnAdd(from,name){name=String(name||"").trim().slice(0,40);var slug="
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=wkswap],[data-act=wkswapto],[data-act=wkswapown]");if(!b)return;var a=b.dataset.act;
   if(a==="wkswap")zxSwapModal(b.dataset.ex);else if(a==="wkswapto")zxSwapDo(b.dataset.ex,b.dataset.to);else{var i=document.getElementById("zxown");zxOwnAdd(b.dataset.ex,i&&i.value)}});
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.id==="zxown"){e.preventDefault();var b=document.querySelector("[data-act=wkswapown]");if(b)b.click()}});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=zxroom]");if(!b)return;roomModal(+b.dataset.i)});
 /* the coins stay in view at the top right once the page scrolls past the header (Cal: "have the coins always show on top right even when
    scrolling down"); room and upgrade windows already keep theirs in their own head */
 (function(){var el=null;function up(){try{if(!loaded||!S||!S.created){if(el)el.hidden=true;return}
