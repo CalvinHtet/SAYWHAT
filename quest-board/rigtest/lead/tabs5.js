@@ -15,15 +15,15 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
   const s0 = await state();
   ok('the bar: Board, The Loft, Shop, Town, Players', JSON.stringify(s0.nav) === JSON.stringify(['board', 'hideout', 'shop', 'hall', 'players']), s0.nav);
   ok('the Town tab is named Town', await p.evaluate(() => /Town/.test((document.querySelector('.nav button[data-v="hall"]') || { getAttribute: () => '' }).getAttribute('aria-label') || '')));
-  ok('Board tiles: Training, Dungeon Crawls, Wheel', JSON.stringify(s0.tiles) === JSON.stringify(['train', 'away', 'wheel']), s0.tiles);
+  ok('Board tiles: Training, Dungeon Crawls; the Wheel as a row when a spin is ready', JSON.stringify(s0.tiles) === JSON.stringify(['train', 'away']) && await p.evaluate(() => !!document.querySelector('.zx-spin')), s0.tiles);
   if (OUT) await p.screenshot({ path: OUT + '/tabs5_board.png', fullPage: true });
   for (const v of ['train', 'away', 'wheel']) {
-    await click('.zx-tile[data-v="' + v + '"]');
+    await click(v === 'wheel' ? '.zx-spin' : '.zx-tile[data-v="' + v + '"]');
     const s = await state(); const cur = await p.evaluate(() => document.querySelector('.zx-back') ? document.querySelector('.zx-back').innerText : '');
     ok(v + ': opens from its tile, Board stays lit, a way back', s.on === 'board' && s.back && /Board/.test(cur), s);
     if (OUT && v === 'train') await p.screenshot({ path: OUT + '/tabs5_train.png' });
     await click('.zx-back'); const s2 = await state();
-    ok(v + ': back goes to the Board', s2.on === 'board' && !s2.back && s2.tiles.length === 3, s2);
+    ok(v + ': back goes to the Board', s2.on === 'board' && !s2.back && s2.tiles.length === 2, s2);
   }
   await clear(); await p.evaluate(() => document.querySelector('.bline').click()); await p.waitForTimeout(1500);
   const rel = await p.evaluate(() => !!document.querySelector('#layer .modal [data-act="nav"][data-v="trophy"]'));

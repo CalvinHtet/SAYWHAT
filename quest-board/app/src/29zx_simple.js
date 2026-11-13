@@ -23,7 +23,11 @@ areaWaiting=function(id){return plWaitBase(id==="players"?"hall":id)};
 /* the Board: the Daily Quest card under the progress line, then one row of tiles for what left the tab bar (Cal, "Fewer tabs first"):
    Training, Dungeon Crawls and the Wheel, each once it is open. They use the tab bar's own "nav" tap (30_app_b.js), so a locked one says so. */
 function zxOpen(k){try{var a=AREAS.filter(function(x){return x[0]===k})[0];return !!a&&effLvl()>=a[2]&&!areaGate(k)&&!!areaOn()[k]}catch(e){return false}}
-var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","Send your team"],["wheel","Wheel","A free spin every few hours"]];
+var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","Send your team"]];
+/* fewer things to check (Cal approved the overhaul, 2026-11-13): the Wheel has no tile; when a free spin is ready, a row under the Daily
+   Quest says so. The 2-day bounty leaves the Board, so a day has the Daily Quest and one bounty. Rewards and their timing are unchanged. */
+function zxSpin(){try{if(!zxOpen("wheel")||(typeof wheelLeft==="function"&&wheelLeft()>0))return "";return '<button type="button" class="zx-next zx-spin" data-act="nav" data-v="wheel"><span class="label">Wheel</span><span>Your free spin is ready.</span><b>Spin &rsaquo;</b></button>'}catch(e){return ""}}
+var zxBtyCard=btyCard;btyCard=function(k){return k===2?"":zxBtyCard.apply(this,arguments)};
 function zxHub(){var t=ZXHUB.filter(function(x){return zxOpen(x[0])});if(!t.length)return "";
   return '<section class="card panel zx-hub"><div class="zx-tiles">'+t.map(function(x){return '<button class="zx-tile" data-act="nav" data-v="'+x[0]+'">'+areaIcon(x[0])+'<b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join("")+'</div></section>'}
 var zxLineBase=boardLine;
@@ -41,7 +45,7 @@ function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q
   else if(gl&&x<gl)tx=(gl-x)+" XP of tasks to go on today's Daily Quest.";
   else tx=open.length+" quest"+(open.length===1?"":"s")+" left on your list today."}catch(e){return ""}
   return act?'<button type="button" class="zx-next" data-act="zxroom" data-i="'+act.slice(5)+'"><span class="label">Next</span><span>'+esc(tx)+'</span><b>Open &rsaquo;</b></button>':'<div class="zx-next"><span class="label">Next</span><span>'+esc(tx)+'</span></div>'}
-boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")return h;var c="";try{c=typeof dqHtml==="function"?dqHtml():""}catch(e){c=""}return h+zxNext()+c+zxHub()};
+boardLine=function(){var h=zxLineBase.apply(this,arguments);if(view!=="board")return h;var c="";try{c=typeof dqHtml==="function"?dqHtml():""}catch(e){c=""}return h+zxNext()+c+zxSpin()+zxHub()};
 /* the profile: the class's skills (from the old Class Hall) above the Stats */
 function zxSkills(){try{var h=townHallBase(),a=h.indexOf('<h3 class="label">Your skills</h3>');if(a<0)return "";a=h.lastIndexOf("<section",a);var b=h.indexOf("</section>",a);return a<0||b<0?"":h.slice(a,b+10)}catch(e){return ""}}
 var zxProfBase=profileHtml;

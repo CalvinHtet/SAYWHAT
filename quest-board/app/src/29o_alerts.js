@@ -50,7 +50,7 @@ function alVisit(){if(!S||!S.created||!loaded)return;var o=alSeen();if(!o.init)r
    another screen is open; Relics' goes on the profile's Relics button and on the avatar that opens the profile */
 function alMark(b,on){var el=b.querySelector(".nbang");if(on&&!el){el=document.createElement("i");el.className="nbang";el.setAttribute("aria-label","New");el.textContent="!";b.appendChild(el)}else if(!on&&el)el.remove()}
 function alPaint(){var t=alTabs(),hid=typeof NAVHIDE!=="undefined"?NAVHIDE:{};
-  document.querySelectorAll(".nav button[data-v],.zx-tile[data-v],.zx-me [data-v]").forEach(function(b){var v=b.dataset.v,on=!!t[v]&&v!==view;
+  document.querySelectorAll(".nav button[data-v],.zx-tile[data-v],.zx-me [data-v],.zx-spin[data-v]").forEach(function(b){var v=b.dataset.v,on=!!t[v]&&v!==view;
     if(v==="board"&&b.closest(".nav"))on=view!=="board"&&Object.keys(hid).some(function(k){return k!=="trophy"&&t[k]});alMark(b,on)});
   var av=document.querySelector(".avbtn");if(av)alMark(av,!!t.trophy&&view!=="trophy")}
 var alRenderBase=render;
