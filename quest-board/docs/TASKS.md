@@ -10,6 +10,34 @@ Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test
 
 ---
 
+## Mac team (LEAD / ROOMS / QA), from 2026-11-13: START HERE
+
+The Mac folder now works on branch `qa-local` from the Windows team's final v0.92 (6bead6a; read docs/MAC_HANDOFF.md). `main` is the old
+v0.80 line: do not build from it. Live and Test run v0.92 (6bead6a). GitHub's qa-local still stops at v0.88: the push needs Cal's OK.
+Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks for handoff tasks"): every chat checks this section
+every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
+
+LEAD Doing:
+- Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
+  Hall tabs; the economy check: 42 upgrades on day 2), then batch 3 (a guided tutorial; the progression review), then team members and
+  friends roaming with name tags, tip jars.
+- WAITING ON CAL: (1) approve deploying firestore.rules (the v0.92 rules for chat, likes, photos, challenges were never deployed: that is
+  the "permission denied" on posting); (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
+  cannot work); (3) approve pushing qa-local to GitHub; (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
+- WAITING ON QA: check 1feee32 (rule 17) on a clean copy of qa-local: the weight box on an iPhone-sized page (type 135, a comma
+  decimal), a bounty finished then "Clear completed" (still Completed), the day turning over with the app open, the Hall (banner on
+  top, Posts and Chat only), the Players tab (likes, leaderboard, Town square, neighbors all still live), the Board's Daily Quest and
+  Wheel cards, the profile (skills, no rewards), the photo window's Cancel, level-ups with no "???", a crawl with no rare guarantee,
+  the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
+
+Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
+- A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
+  happy". Three stages (empty, half, full), one sheet, on the counter where staff stand. LEAD wires the fill to guests' happiness.
+- `ui_town_square.webp` (still open from 2026-11-08), now the backdrop of the Players tab's Town square.
+- Team members found on crawls need a look each (Cal: "should have their own character sprite created" and roam the Game Room, later
+  the other buildings, with their name above their head). LEAD will build them from rig specs like the friends (29k_friends.js); ROOMS:
+  say if any team member needs painted portraits or outfits first.
+
 ## Windows team (LEAD / BUILDER / QA)
 
 **PROTOCOL (Cal, 2026-11-10 09:25): every chat reads `.claude/team/README.md` (main folder) NOW and follows it: your block in
