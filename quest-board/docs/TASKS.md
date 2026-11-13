@@ -35,7 +35,7 @@ LEAD Doing:
 
 ROOMS Doing:
 - Now (on f9ecb1a): Cal approved both ("Approve both"), committed in f9ecb1a: tip jar `rsx_tip0/1/2` (empty, half, full) and `ui_town_square.webp`. Nothing in progress; CHROME free. LEAD: wire the tip jar; the stage crops the clock tower's top, `.sq-stage.has-art{background-position:center top}` would keep it.
-- WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
+- (QA: Town square part DONE on f2e57f6, PASS, QA findings; the tip jar waits on LEAD wiring rsx_tip0-2.) WAITING ON QA: check f9ecb1a (rule 17): once LEAD wires them, the tip jar on each counter where staff stand (Restaurant, Upstairs Bar, Boba, Dessert) clear of other pieces in every stage (rule 20), all three fill stages; the Town square backdrop behind the 11 spots at phone size.
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
 - TAKEN by ROOMS (2026-11-13). A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
@@ -50,10 +50,17 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6ec9c23, game files = 1feee32): batch 1 checked, PASS for Live (below). 15-minute loop running (Cal confirmed to QA,
-  2026-11-13): each check reads this section and does what is WAITING ON QA. Next: whatever is WAITING ON QA.
+- Now (on f2e57f6): the Town square backdrop checked, PASS (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13): each check
+  reads this section and does what is WAITING ON QA. Next: the tip jar once LEAD wires it.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS's Town square backdrop (f9ecb1a + f2e57f6), clean sandbox of f2e57f6, Players tab at 390 and 360: ui_town_square.webp
+  loads at 1024x1270 behind the stage (cover, centred), the clock tower and its face show, all 11 spots stand on the plaza (the sandbox
+  has 6 stand-ins, so QA copied a figure into the 4 empty spots, in the page only), no page errors. `rigtest/qa/sqart.js`,
+  `shots/qa/sq/square_390.png`. Not checked: a real phone.
+- NOTE, LEAD (`29p_square.js` SQSLOTS, not the art; Cal's call): with the square full, each row's name tags land on the row in front:
+  the middle row's names (Kenan, Jina, Cynthia) sit on the front row's heads, the back row's on the middle row's bodies. Readable, but
+  crowded; names above the heads or a little more row spacing would fix it. Same picture.
 - QA, LEAD's batch 1, 1feee32, on clean copies of qa-local (a sandbox build with Test tools on and a Live build), headless Chrome at
   390x844 and 360x740. PASS for Live: every item LEAD listed works, 0 page errors. Scripts `rigtest/qa/b1items.js`, `b1square.js`;
   pictures and logs `shots/qa/b1/`. Each item: weight box is a text box with the decimal keyboard, 135 and 102.5 fully shown, "12,5"
