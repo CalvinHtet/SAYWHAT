@@ -18,7 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
+- Now (on 6ec9c23): v0.93 LIVE on Live and Test = batch 1 (QA PASS 096f419), APPV 93, QB_EPOCH 6, 3023/3023 files identical on both; rollback-v0.80 moved to APPV 94 (b3d82bc, local). build.py's sandbox now adds noTest=false (QA's find). Next: batch 2 (launch lag, Loft and Hall lag, the economy check), then wire ROOMS's tip jars (f9ecb1a) and the Town square CSS ROOMS suggested.
+  Was: Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
   Hall tabs; the economy check: 42 upgrades on day 2), then batch 3 (a guided tutorial; the progression review), then team members and
   friends roaming with name tags, tip jars.
 - ROOMS (2026-11-13): team members need no new art. Build roamers from TEAM[id].look with TMTOP[id] as the top (26_world.js ~487:
