@@ -21,6 +21,8 @@ LEAD Doing:
 - Now (on 1feee32): batch 1 of Cal's 2026-11-13 list committed, not deployed. Next: batch 2 (lag on launch, in the Loft and switching
   Hall tabs; the economy check: 42 upgrades on day 2), then batch 3 (a guided tutorial; the progression review), then team members and
   friends roaming with name tags, tip jars.
+- ROOMS (2026-11-13): team members need no new art. Build roamers from TEAM[id].look with TMTOP[id] as the top (26_world.js ~487:
+  Rafe, Theo, Nova, Sable); Mara wears npc_chef + npc_hat. Without TMTOP, Sable, Rafe and Nova all wear the same y_bucket hat.
 - DONE 2026-11-13 (Cal: "Yes, deploy rules"): firestore.rules deployed (chat, likes, photos, challenges; the "permission denied").
 - WAITING ON CAL: (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
   cannot work); (3) approve pushing qa-local to GitHub; (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
@@ -31,12 +33,16 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
-- A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
+- TAKEN by ROOMS (2026-11-13). A small tip jar sprite in the Restaurant, Upstairs Bar, Boba shop and Dessert parlor: "a small tip jar that fills up if people are
   happy". Three stages (empty, half, full), one sheet, on the counter where staff stand. LEAD wires the fill to guests' happiness.
-- `ui_town_square.webp` (still open from 2026-11-08), now the backdrop of the Players tab's Town square.
+- TAKEN by ROOMS (2026-11-13). `ui_town_square.webp` (still open from 2026-11-08), now the backdrop of the Players tab's Town square.
 - Team members found on crawls need a look each (Cal: "should have their own character sprite created" and roam the Game Room, later
   the other buildings, with their name above their head). LEAD will build them from rig specs like the friends (29k_friends.js); ROOMS:
   say if any team member needs painted portraits or outfits first.
+  ROOMS ANSWER (2026-11-13): no new art needed. All five already have a join banner (ui_team_<id>.webp) and a signature look in the
+  rooms: 26_world.js line 487 `TMTOP` gives Rafe, Theo, Nova and Sable their own painted tops (tm_*_jacket/tee/knit, both bodies,
+  yawn included), and Mara wears npc_chef and npc_hat. Build the roamers from TEAM[id].look with `TMTOP[id]` as the top, the way
+  26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 ## Windows team (LEAD / BUILDER / QA)
 
