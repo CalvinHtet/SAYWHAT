@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on ae3ba38): two pieces for v0.95, WAITING ON QA for the tabs. (1) Slower start ce5123f, QA: prices and saves safe; the Loft is ~3-4x, not 2x (econLate), and Goals coins and visit tips follow the phase: both kept, LEAD tells Cal. (2) Five tabs ae3ba38 (Cal: "Fewer tabs first"): Board, The Loft, Shop, Town, Players; Training, Crawls and the Wheel from Board tiles, Relics from the profile; tabs5.js PASS. Then: ship v0.95, and Cal's next pick from the simplification brainstorm.
+- Now (on ae3ba38): two pieces for v0.95, WAITING ON QA for the tabs (QA: DONE on 6426b2e, NOT A PASS: two FIX lines, QA findings). (1) Slower start ce5123f, QA: prices and saves safe; the Loft is ~3-4x, not 2x (econLate), and Goals coins and visit tips follow the phase: both kept, LEAD tells Cal. (2) Five tabs ae3ba38 (Cal: "Fewer tabs first"): Board, The Loft, Shop, Town, Players; Training, Crawls and the Wheel from Board tiles, Relics from the profile; tabs5.js PASS. Then: ship v0.95, and Cal's next pick from the simplification brainstorm.
   Was: Now (on bf9430e): v0.94 LIVE on Live and Test = the fast start (QA PASS on 5256c2b) + tipJarArt (unused until ROOMS places the jars), APPV 94, 3027/3027 files identical, wlive PASS; rollback at APPV 95 (ac60965). Slowing the start (Cal: "Yes slow it down"): tuning ECON.phase (Loft rooms x2) and the Garden trigger with econsim, uncommitted until the numbers hold, then WAITING ON QA with pricesweep. Tip jars: tipJarArt in 29zx, placement requested from ROOMS.
   Was: Now (on 67dcb12): batch 2. Fast start: QA behaviour PASS on 0699c97; its pill FIX done in 67dcb12, WAITING ON QA (QA: DONE on 67dcb12, PASS with one small FIX: the pill covers the version line, QA findings). Economy check (Cal: "42 upgrades on day 2 ... make sure this is intended"): econsim cal, 20 days, current code: upgrades bought a day 15/12/14/16/14 on days 1-5, 9-11 on days 6-11, then 2-7 from day 12; prices 200-650 rising to 2,000-8,650; income 4,000 rising to 10,000-18,000. So it bends as intended (ECONOMY.md: every upgrade around day 94). WAITING ON CAL: whether the first days should be slower (ties to his girlfriend's "too complicated"). Lag on the phone still WAITING ON CAL (read diag/perf). Next: tip jars, then batch 3.
   Was: Now (on 0699c97): batch 2. Fast start fixed after QA (0699c97). Loft and Hall lag: NOT reproduced on the Mac. Full save + QA's heavy seed (60 neighbours, 1,800 posts, 9,000 chat lines), 390x844: tab switches 40-120 ms, Hall, Players and Loft 60 fps, in WebKit and in Chromium with the CPU 4x slower (rigtest/lead/lagmap.js, lagheavy.js). So it is the phone itself or live pushes from other players (the sandbox has none). Asking Cal to let LEAD read his phone's own speed log (diag/perf, owner only). Next: the economy check (42 upgrades by day 2), then the tip jars.
@@ -60,10 +60,22 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 28c52ee): the tip jars checked (below). Next: LEAD's five tabs ae3ba38. 15-minute loop running (Cal confirmed to QA,
-  2026-11-13).
+- Now (on 6426b2e): the five tabs checked, not a pass yet (below). Next: the crawl allies 39a0a71 and LEAD's middle-ground start 6426b2e
+  if LEAD asks. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, LEAD's five tabs ae3ba38 on a clean sandbox of 6426b2e, at 390 and 360, a mid player (level 14, a class, the Lair) and a new one.
+  NOT A PASS yet. Works: the bar is Board, The Loft, (Shop once the Closet is built), Town, Players, no sideways scroll; Training,
+  Dungeon Crawls and the Wheel open from their tiles with "< Board", the Board tab stays lit, and "< Board" goes back; Relics opens from
+  the profile (the window closes, Board lit); a new player gets only the Training tile. 0 page errors. `rigtest/qa/tabs5qa.js`,
+  pictures `shots/qa/tabs/` (`m_tabs.png` side by side).
+- FIX, LEAD (`29zx_simple.js` .zx-tile: the icon has no size): each tile's icon stretches to the tile's width. A new player's one
+  Training tile is 324x376 at 390 (a dumbbell filling the screen, the task box pushed down); a mid player's tiles are 103x174 at 390
+  and wrap two plus one at 360 with icons ~100 px wide. Give `.zx-tile svg` a fixed size (about 28 px). `board_new_390.png`, `board_mid_360.png`.
+- FIX, LEAD (`29o_alerts.js` alPaint only marks `.nav button[data-v]`): Cal's question, does the player still notice the news? No. With
+  the Wheel, Crawls and Relics newly open and not yet visited, alTabs() lists trophy, wheel and away, but nothing on screen shows a "!"
+  (0 on the page): the tiles have no marker and Relics hides in the profile. Paint the "!" on the tile (and the profile's Relics button,
+  or the avatar) too.
 - QA, the tip jars 693effe on a clean build of 28c52ee: Restaurant, Lock and Key, Boba and Dessert, each with only its counter bought and
   fully bought, at 0 tips, a few and the cap: 24 of 24 draw exactly one jar with the right fill (empty, half, full; tipJarArt's 60% line).
   By eye, close-ups: Lock and Key, Boba and Dessert sit on their counters in both stages, clear of the pieces around them (Boba's full
