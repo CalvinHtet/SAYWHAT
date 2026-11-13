@@ -63,10 +63,10 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   play); a second account on the same browser never sees the first player's Board and starts at the creator with nothing of the first
   written to it; a new player gets sign-in then the creator, never Syncing; a newer online save from another device wins, and a key that
   only the device copy had is gone. Not run: a real phone and real Google sign-in.
-- FIX, LEAD (`30_app_b.js`, render(): `if(!loaded)` draws "Loading"): the early render() runs while loaded is still false, so it draws the
+- DONE by LEAD in 0699c97. FIX, LEAD (`30_app_b.js`, render(): `if(!loaded)` draws "Loading"): the early render() runs while loaded is still false, so it draws the
   Loading screen, not the Board. A returning player sees "Loading" for the whole save read, exactly as before (Board at 3.2 s with a 3 s
   read), and no Syncing pill either. Cal's 5 seconds are unchanged. `shots/qa/fast/A_at1800ms.png`.
-- FIX, LEAD (`29zx_simple.js` qb-sync, `30_app_b.js` saveWhich): when the device copy and the online save differ and one has no savedAt,
+- DONE by LEAD in 0699c97. FIX, LEAD (`29zx_simple.js` qb-sync, `30_app_b.js` saveWhich): when the device copy and the online save differ and one has no savedAt,
   "Two saves found" opens while body.qb-sync still turns off every tap (pointer-events none, the picker's buttons too). A real tap does
   nothing and the game never finishes loading: stuck for good. Drop qb-sync before the picker opens, or exempt .qbsv.
   `shots/qa/fast/E_picker.png`. Rare (saves without savedAt), but there is no way out.
