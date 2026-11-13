@@ -1,0 +1,22 @@
+// LEAD's 09c30da moved the room window's offer list into roomAvail(): every room's window, at 0, 50, 80 and 100% bought, must show the same
+// cards (names, prices, Buy enabled or not, the locked "? ? ?") on the new build as on the one before. And the Next line's Open opens the room it names.
+//   NEW=<sandbox> OLD=<sandbox> CHROME_PORT=9375 node roomoffer.js
+const { browser, sleep } = require('./cdp.js'); const NEW = process.env.NEW || 'http://127.0.0.1:8817', OLD = process.env.OLD || 'http://127.0.0.1:8818';
+const ROOMS = ['bedroom', 'closet', 'patio', 'gameroom', 'lair', 'garden', 'restaurant', 'skybar', 'rooftop', 'boba', 'dessert', 'speakeasy', 'theater', 'auditorium', 'mall', 'bowling', 'karaoke', 'arcade', 'rhythm', 'vr', 'club'];
+const grab = async (br, base) => { const pg = await br.page({ fresh: true }); await pg.go(base + '/'); await pg.wait('!!(window.__qb && document.querySelector("#app") && !document.querySelector("#app .boot"))', 120000); await sleep(1500); const out = {};
+  for (const frac of [0, 0.5, 0.8, 1]) { out[frac] = await pg.ev(`(async function(){var w=function(ms){return new Promise(function(o){setTimeout(o,ms)})},x=window.__qb.x(),S=x.S;S.created=true;S.welcomed=1;S.char=window.__qb.fixChar({name:'Qa',sex:'m'});S.xp=x.cum(40);S.gates=Array.from({length:200},function(_,i){return i});S.calm=false;S.tours={};S.coins=20000;S.areaOn=null;
+      S.base.slots=${JSON.stringify(ROOMS)}.map(function(t){var L=(x.ADDONS[t]||[]).filter(function(u){return !(u[3]&&(u[3].retired||u[3].opens))}),n=Math.floor(L.length*${frac}),a={};L.slice(0,n).forEach(function(u){a[u[0]]=1});return {t:t,a:a,st:0,pend:0}});x.persist();x.render();var o={};
+      for(var k=0;k<S.base.slots.length;k++){document.querySelectorAll('#layer .modal,.dropsplash').forEach(function(m){m.remove()});window.__qb.roomModal(k);await w(120);var m=document.querySelector('.rmodal');if(!m){o[S.base.slots[k].t]='NO WINDOW';continue}
+        o[S.base.slots[k].t]=[].map.call(m.querySelectorAll('.addon'),function(e){var b=e.querySelector('[data-act=raddon]');return (b?b.dataset.id+(b.disabled?'(off)':''):'')+'|'+e.innerText.replace(/\\s+/g,' ').slice(0,60)}).join(' ; ')}
+      document.querySelectorAll('#layer .modal').forEach(function(m){m.remove()});return o})()`); }
+  return { pg, out }; };
+(async () => { const br = await browser(); const A = await grab(br, OLD), B = await grab(br, NEW); let diff = 0, cards = 0;
+  for (const f of Object.keys(A.out)) for (const r of ROOMS) { cards += (B.out[f][r] || '').split(' ; ').length; if (A.out[f][r] !== B.out[f][r]) { diff++; console.log(`DIFF ${Math.round(f * 100)}% ${r}\n  old: ${(A.out[f][r] || '').slice(0, 300)}\n  new: ${(B.out[f][r] || '').slice(0, 300)}`); } }
+  console.log((diff ? 'BAD  ' : 'ok   ') + `room windows at 0/50/80/100%: ${ROOMS.length * 4} windows, ${cards} cards, ${diff} different between the builds`);
+  // the Next line's Open (80% bought, coins for the Garden's 650)
+  const pg = B.pg; const r = await pg.ev(`(async function(){var w=function(ms){return new Promise(function(o){setTimeout(o,ms)})},x=window.__qb.x(),S=x.S;S.base.slots=${JSON.stringify(ROOMS)}.map(function(t){var L=(x.ADDONS[t]||[]).filter(function(u){return !(u[3]&&(u[3].retired||u[3].opens))}),n=Math.floor(L.length*.8),a={};L.slice(0,n).forEach(function(u){a[u[0]]=1});return {t:t,a:a,st:0,pend:0}});
+      S.coins=650;S.quests=[{id:'q1',t:'Dishes',xp:20,c:5,cl:'chores',rep:'once'}];x.persist();x.render();document.querySelectorAll('#layer .modal,.dropsplash').forEach(function(m){m.remove()});document.querySelector('.nav button[data-v=board]').click();await w(600);
+      var n=document.querySelector('.zx-next');var t=n&&n.innerText.replace(/\\s+/g,' ');if(n)n.click();await w(1500);var m=document.querySelector('.rmodal');var h=m&&(m.querySelector('h2,h3')||{}).innerText;
+      var bt=m&&[].slice.call(m.querySelectorAll('[data-act=raddon]')).find(function(b){return !b.disabled});var c0=S.coins;if(bt)bt.click();await w(600);return {line:t,window:h,bought:!!bt,coins:[c0,S.coins]}})()`);
+  console.log((/Garden/i.test(r.window || '') && r.bought && r.coins[1] < r.coins[0] ? 'ok   ' : 'BAD  ') + 'Next line Open goes to the room it names and the upgrade buys  ' + JSON.stringify(r));
+  console.log('page errors new', JSON.stringify(B.pg.errs || []), 'old', JSON.stringify(A.pg.errs || [])); process.exit(0); })().catch((e) => { console.error(e); process.exit(1); });

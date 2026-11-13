@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 09c30da): v0.95 = QA PASS on d689703 except its Next line FIX, fixed in 09c30da (roomAvail shared with the room window; nextline.js, roomfit, tourtest, tabs5, swaptest pass), WAITING ON QA recheck, then LEAD ships v0.95. Next: fewer daily checklists. After v0.95 is live: WAITING ON CAL for the kudosok rules deploy.
+- Now (on 09c30da): v0.95 = QA PASS on d689703 except its Next line FIX, fixed in 09c30da (roomAvail shared with the room window; nextline.js, roomfit, tourtest, tabs5, swaptest pass), (QA: DONE on b7d9dff, PASS, v0.95 can ship; QA findings) WAITING ON QA recheck, then LEAD ships v0.95. Next: fewer daily checklists. After v0.95 is live: WAITING ON CAL for the kudosok rules deploy.
   Was: Now (on 4211a7e): v0.95 candidate. QA PASS up to 5850751 (tabs, middle-ground start, private coin requests, swap, friends' tags); WAITING ON QA (QA: DONE on d689703: tours PASS, overhaul part 2 PASS but one FIX, the "afford" line; QA findings): tours + calm week (0241042) and overhaul part 2 (4211a7e: Next line, top bar shows the level, stats hidden below level 10); WAITING ON ROOMS: the Restaurant tip jar at stages 1-2 (QA's blocker). Next in the overhaul: fewer daily checklists (Weekly Warrior into the Weekly Quest, the Wheel as the Daily Quest's reward). After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 0241042): v0.95 candidate WAITING ON QA (QA: everything up to 5850751 DONE, PASS except the Restaurant tip jar, QA findings; the tours 0241042 next) = five tabs + fixes, middle-ground start, private coin requests, exercise swap, friends' tags, and now guided tours + the calm first week (29zy_tour.js, tourtest.js PASS). Next in the overhaul (Cal: "Yes, start it"): hide numbers until they matter, the "what next" line, fewer daily checklists. After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 5850751): v0.95 candidate WAITING ON QA (message sent): five tabs + QA's two FIXes, middle-ground start (Loft x2, Garden at 45%), coin requests never pinned and private (rules NOT deployed until the code is live, then WAITING ON CAL to approve), exercise swap, friends' name tags above the head. Next, waiting on Cal: the simplification overhaul and the guided tutorial (plan sent to Cal).
@@ -66,10 +66,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on d689703): the v0.95 candidate checked end to end (below): one FIX left, LEAD's "afford" line. 15-minute loop running (Cal
-  confirmed to QA, 2026-11-13).
+- Now (on b7d9dff): v0.95 PASS, nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v0.95 at b7d9dff (LEAD's Next line FIX 09c30da), clean sandbox and plain builds. The 80%-bought case: 500-649 coins no longer
+  says "afford"; at 650 "You can afford an upgrade in the Garden", and with every room open it named the Speakeasy, whose window opened
+  from the line and bought (650 -> 150). nextline.js PASS at 390 and 360 (4 seeds exact at 300 vs 250). The moved offer list
+  (roomAvail): every room's window at 0, 50, 80 and 100% bought shows the same 1,047 cards, Buy states and "? ? ?" cards as on bd3cc5e
+  (84 windows, 0 different, `rigtest/qa/roomoffer.js`); stuckscan: all 21 rooms bought to the end through their windows, 0 stuck.
+  0 page errors. With the d689703 checks above, nothing open from QA: v0.95 can ship. Not checked: the tour's notch spacing on a phone.
 - QA, the v0.95 candidate at d689703 (everything since v0.94): one FIX left (the next line). Release checks on d689703: wlive PASS, pricesweep
   0 problems (only the 85 Loft upgrades changed), dupfn no new duplicates, old saves 41/41, smoke, 0 page errors.
 - PASS, LEAD's guided tours and calm week 0241042 (on d689703's code, plain and sandbox builds): LEAD's tourtest.js all pass on QA's
@@ -85,7 +90,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   right for a day-1 player with no tasks, with tasks, a trial waiting, a Daily Quest to fill; it names the Daily Quest only when its card is
   there; the top bar shows "N XP to level N+1" (or "Bar full: pass the trial"); STR/AGI/VIT/INT hidden below level 10, shown at 14; no
   sideways scroll; 0 page errors.
-- FIX, LEAD (`29zx_simple.js` zxCheapest): "You can afford a Loft upgrade" is worked out from the cheapest unbought upgrade in any room,
+- DONE by LEAD in 09c30da. FIX, LEAD (`29zx_simple.js` zxCheapest): "You can afford a Loft upgrade" is worked out from the cheapest unbought upgrade in any room,
   not from what the windows offer. With every room 80% bought, the cheapest unbought is the Restaurant's r_d7 (500), which no window
   offers a Buy button for; the cheapest real Buy button is 650 (Garden). With 500-649 coins the line says "afford" and nothing can be
   bought. It also says "Loft" for Garden and Restaurant pieces, and Open goes to the Loft view, not the room. Use the windows' own list
