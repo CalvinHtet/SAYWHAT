@@ -1087,7 +1087,8 @@ function dstr(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0
 /* Cal, 2026-11-09: daily quests come back "at 5 am each day". The game's day starts at DAYSTART for everything that runs by the
    day (daily quests, the Daily Quest and its chests, the streak, crawls, the wheel), so a task done at 1 am still counts for the
    evening before. gameNow() is the clock moved back by that many hours. */
-var DAYSTART=5;
+/* Cal, 2026-11-13: "day starts at midnight" (was 5 am since v0.87) */
+var DAYSTART=0;
 function gameNow(){return new Date(Date.now()-DAYSTART*36e5)}
 function today(){return dstr(gameNow())}
 function yest(){var d=gameNow();d.setDate(d.getDate()-1);return dstr(d)}
@@ -1430,7 +1431,7 @@ function boardHtml(){
        +'<span class="box" aria-hidden="true">&#10003;</span><span><span class="name">'+esc(q.name)+'</span>'+'<span class="sub"><span class="qmin">'+qMinTxt(qMin(q))+'</span> &middot; '+(q.why?esc(q.why)+' &middot; ':'')+(q.rep==="daily"?'Daily':q.rep==="weekly4"?'This week '+weekCount()+'/4':'One-off')+(d&&S.vdone[q.id]?' &middot; <span class="vtag">verified</span>':'')+(proofPend[q.id]?' &middot; <span class="vtag pend">checking photo&hellip;</span>':'')+'</span></span>'
        +'<span class="tags">'+(bid===q.id&&!d?'<span class="chip mult">x2</span>':'')+'<span class="dot" style="background:var(--s-'+q.stat+')" title="'+esc(statName(q.stat))+'"></span><span class="chip xp'+(q.xp>=50?" big":"")+'">'+(d?doneXp(q):q.xp)+'</span></span></button>'
        /* Cal, 2026-11-09: "a toggle for keeping the tasks reoccurring ... turn it on daily and it resets at 5 am each day" */
-       +(q.rep==="daily"||q.rep==="once"?'<button class="qrep'+(q.rep==="daily"?' on':'')+'" data-act="qrep" data-id="'+q.id+'" aria-pressed="'+(q.rep==="daily")+'" aria-label="'+esc(q.name)+': '+(q.rep==="daily"?'daily, comes back every morning at 5 am. Tap to make it a one-off':'one-off. Tap to make it come back every morning at 5 am')+'"><span aria-hidden="true">&#8635;</span><small>Daily</small></button>':'')
+       +(q.rep==="daily"||q.rep==="once"?'<button class="qrep'+(q.rep==="daily"?' on':'')+'" data-act="qrep" data-id="'+q.id+'" aria-pressed="'+(q.rep==="daily")+'" aria-label="'+esc(q.name)+': '+(q.rep==="daily"?'daily, comes back every day at midnight. Tap to make it a one-off':'one-off. Tap to make it come back every day at midnight')+'"><span aria-hidden="true">&#8635;</span><small>Daily</small></button>':'')
        +(qEdit?'<button class="x del" data-act="del" data-id="'+q.id+'" aria-label="Remove '+esc(q.name)+'">&times;</button>':'')+'</div>';
   };
   var cats=CLUSTERS.filter(function(c){return open.some(function(q){return q.cl===c[0]})});
@@ -1902,7 +1903,7 @@ document.addEventListener("click",function(e){
   var a=b.dataset.act;
   if(a==="welcome"){showWelcome();return}
   if(a==="qedit"){qEdit=!qEdit;render();return}
-  if(a==="qrep"){var rq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(rq&&(rq.rep==="daily"||rq.rep==="once")){rq.rep=rq.rep==="daily"?"once":"daily";persist();render();pop(rq.rep==="daily"?"Daily: back every morning at 5 am":"One-off: gone once it's done")}return}
+  if(a==="qrep"){var rq=S.quests.filter(function(x){return x.id===b.dataset.id})[0];if(rq&&(rq.rep==="daily"||rq.rep==="once")){rq.rep=rq.rep==="daily"?"once":"daily";persist();render();pop(rq.rep==="daily"?"Daily: back every day at midnight":"One-off: gone once it's done")}return}
   /* clear the finished quests: one-offs go for good (their XP and coins stay), daily ones hide until the 5 am reset */
   if(a==="qclear"){var t0=today(),n0=0;if(!S.qhide||S.qhide.d!==t0)S.qhide={d:t0,ids:{}};
     S.quests=S.quests.filter(function(q){if(!S.done[q.id]||!visQ(q))return true;n0++;if(q.rep==="once"){S.cleared=(S.cleared||0)+1;return false}S.qhide.ids[q.id]=1;return true});

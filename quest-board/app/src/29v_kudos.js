@@ -87,7 +87,7 @@ function kdHtml(){var h;
   else{var k=kdSt(),mine=((KD.mine&&KD.mine.items)||[]).slice().reverse(),ans=KD.ok[MYUID]||{},td=kdToday();
     h='<h3>Kind words for coins</h3><p class="note">Write Cal something genuinely nice about him, or make him laugh. He reads every note. If he approves yours, it is pinned in the Town Hall and up to '+kdFmt(KD.max)+' coins land in your account. One note a day.</p>';
     if(!KD.mine)h+='<p class="note">'+(KD.err?'Could not reach Cal right now ('+esc(KD.err)+').':'Loading...')+'</p>';
-    else if(td)h+='<p class="note"><b>'+(ans[td.id]?'Cal answered today\'s note.':'Today\'s note is with Cal.')+'</b> Write another after 5 am.</p>';
+    else if(td)h+='<p class="note"><b>'+(ans[td.id]?'Cal answered today\'s note.':'Today\'s note is with Cal.')+'</b> Write another tomorrow.</p>';
     else h+='<textarea id="kdin" maxlength="280" placeholder="Cal, you are the reason..." aria-label="Your note to Cal"></textarea><div class="kdrow"><small class="note" id="kdcnt">0 / 280</small><button class="btn" data-kd="send">Send to Cal</button></div>';
     if(mine.length)h+='<h4 class="label" style="margin-top:14px">Your notes</h4>'+mine.map(function(n){var a=ans[n.id],p=k.paid[n.id];
       return kdNote({d:n.d,text:n.text},a?(a.ok?'<small class="kdok">Approved and pinned, +'+kdFmt(p!=null?p:a.c)+' coins</small>':'<small class="kdno">Not this time</small>'):'<small class="note">Waiting for Cal</small>')}).join("")}

@@ -27,6 +27,8 @@ var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","S
 /* fewer things to check (Cal approved the overhaul, 2026-11-13): the Wheel has no tile; when a free spin is ready, a row under the Daily
    Quest says so. The 2-day bounty leaves the Board, so a day has the Daily Quest and one bounty. Rewards and their timing are unchanged. */
 function zxSpin(){try{if(!zxOpen("wheel")||(typeof wheelLeft==="function"&&wheelLeft()>0))return "";return '<button type="button" class="zx-next zx-spin" data-act="nav" data-v="wheel"><span class="label">Wheel</span><span>Your free spin is ready.</span><b>Spin &rsaquo;</b></button>'}catch(e){return ""}}
+/* QA (v0.96 note): a spin that comes ready while the Board sits open shows at once, not on the next redraw */
+setInterval(function(){try{if(!loaded||!S||!S.created||view!=="board"||document.hidden||document.querySelector("#layer .modal"))return;var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(zxSpin()&&!document.querySelector(".zx-spin"))render()}catch(e){}},30000);
 var zxBtyCard=btyCard;btyCard=function(k){return k===2?"":zxBtyCard.apply(this,arguments)};
 function zxHub(){var t=ZXHUB.filter(function(x){return zxOpen(x[0])});if(!t.length)return "";
   return '<section class="card panel zx-hub"><div class="zx-tiles">'+t.map(function(x){return '<button class="zx-tile" data-act="nav" data-v="'+x[0]+'">'+areaIcon(x[0])+'<b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join("")+'</div></section>'}
