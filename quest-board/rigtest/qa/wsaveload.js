@@ -27,7 +27,7 @@ const BTY = {
     for (let i = 0; i < 40 && !ok; i++) { await sleep(500); ok = await pg.ev('!!(document.querySelector(".nav button[data-v=board]") && !document.querySelector("#app .boot"))'); }
     await sleep(1500);
     const r = await pg.ev('(function(){var c=document.querySelectorAll(".bty-card").length;var q=window.__qb.x().S.quests.filter(function(q){return q.bty}).map(function(q){return q.bty.k+":"+q.bty.end});return {cards:c,btyQuests:q,bty:JSON.stringify(window.__qb.x().S.bty)}})()').catch(() => ({ cards: -1 }));
-    n++; const fine = ok && !pg.errs.length && r.cards === 2; if (!fine) bad++;
+    n++; const fine = ok && !pg.errs.length && r.cards >= 1; // v0.96 (995eb4b): the Board shows one bounty card (the 2-day card left the Board) if (!fine) bad++;
     log(`${fine ? 'ok ' : 'BAD'} ${file.padEnd(13)} ${label.padEnd(16)} Board ${ok ? 'up' : 'STUCK'}, bounty cards ${r.cards}${r.btyQuests && r.btyQuests.length ? ', bounty quests ' + r.btyQuests.join(' ') : ''}, page errors ${pg.errs.length}${pg.errs.length ? ' ' + pg.errs[0].slice(0, 120) : ''}`);
     await pg.close();
   };

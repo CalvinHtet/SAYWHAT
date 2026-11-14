@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 3e40ab6): v0.96 live. v0.97 candidate WAITING ON QA: the day starts at midnight (Cal), the owner's speed log keeps 40 samples and samples The Loft, Town and Players and tab taps (Cal let LEAD read it: only 1 sample there, Training 30 fps, 22 animations, from v0.92), the spin row shows when ready. Next: once v0.97 is live and Cal has played on his phone, read diag/perf again for the Loft and Hall lag. WAITING ON CAL: Storage (later, he said), the GitHub push.
+- Now (on 3e40ab6): v0.96 live. v0.97 candidate WAITING ON QA (QA: DONE on ba8010f, PASS but one FIX or Cal's OK: the night-owl streak at the switch; QA findings): the day starts at midnight (Cal), the owner's speed log keeps 40 samples and samples The Loft, Town and Players and tab taps (Cal let LEAD read it: only 1 sample there, Training 30 fps, 22 animations, from v0.92), the spin row shows when ready. Next: once v0.97 is live and Cal has played on his phone, read diag/perf again for the Loft and Hall lag. WAITING ON CAL: Storage (later, he said), the GitHub push.
   Was: Now (on b010f63): v0.96 LIVE on Live and Test = b010f63 (a591705, QA PASS, + APPV 96): the Wheel as a row when a spin is ready, one bounty on the Board; wlive PASS, 3027/3027 identical on both; rollback at APPV 97 (d05763f). Open, minor: QA's note that the spin row shows on the next redraw if the 4 hours end while the Board sits open. WAITING ON CAL: Storage on, the GitHub push, 5 am or midnight, the phone speed log.
   Was: Now (on 995eb4b): v0.95 LIVE on Live and Test = release/v0.95 3086c59 (b7d9dff, QA PASS, + APPV 95), wlive PASS, 3027/3027 files identical on both; rollback at APPV 96 (b528078). qa-local is at APPV 95. WAITING ON QA (QA: DONE on a591705, PASS, QA findings): overhaul part 3 (995eb4b: the Wheel as a row when a spin is ready, one bounty on the Board). DONE 2026-11-13 (Cal: "Yes, deploy it"): firestore.rules deployed, kudosok readable by its writer and Cal only.
   Was: Now (on 09c30da): v0.95 = QA PASS on d689703 except its Next line FIX, fixed in 09c30da (roomAvail shared with the room window; nextline.js, roomfit, tourtest, tabs5, swaptest pass), (QA: DONE on b7d9dff, PASS, v0.95 can ship; QA findings) WAITING ON QA recheck, then LEAD ships v0.95. Next: fewer daily checklists. After v0.95 is live: WAITING ON CAL for the kudosok rules deploy.
@@ -69,9 +69,21 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on a591705): overhaul part 3 checked, PASS (below); nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on ba8010f): v0.97 checked (below): one FIX or Cal's OK left, the night-owl streak. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, the v0.97 candidate ba8010f against v0.96 b010f63 (clean sandboxes). PASS: the day turns at midnight (at 00:01 on 11-21 the day,
+  the done quests and the Daily Quest are on 11-21; v0.96 waits for 05:00), `rigtest/qa/daystart.js`; the speed log: a guest writes
+  nothing to qb-perf, the owner keeps tap and change samples (a "stay" sample lands about 35-38 s in, after its 5 s measurement; QA's
+  36 s wait was just short); the spin row: comes ready while the Board sits open and shows within 30 s with no tap, not while a window
+  is open (`rigtest/qa/perflog.js`). Release checks: old saves 41/41 (wsaveload.js now expects one bounty card, since v0.96), pricesweep
+  0 changes, dupfn no new duplicates, 0 page errors.
+- FIX or Cal's OK, LEAD (`30_app_b.js` DAYSTART 0, creditStreak's dayDiff): a night owl loses a day once, at the switch. A play at
+  01:00 on 11-20 under the 5 am rule was stored as 11-19. Played again at 03:00 on 11-21: v0.96 calls that 11-20 (1 day, streak on);
+  v0.97 calls it 11-21 (2 days), so it counts as a missed day: it uses the weekly rest day or a freeze, and with neither the streak
+  drops to floor(streak x streakKeep)+1. Next play 09:00 on 11-20 is fine on both. Measured: each build's day at those times; the
+  streak result is from the code (QA's onTap in the page did not credit the streak). A one-time fix: on the first load after the
+  change, if the save's last play was between 00:00 and 05:00, move lastDone on a day.
 - PASS, LEAD's overhaul part 3 995eb4b (for the version after v0.95; the live v0.95 3086c59 is b7d9dff + APPV, which QA passed, without
   it), clean sandbox of a591705 at 390 and 360: with a spin ready, "Wheel · Your free spin is ready · Spin" sits under the Daily Quest,
   no Wheel tile, one bounty card on the Board, and the Wheel's tour rings the row; after a spin the row is gone; 3h59 later still gone,
