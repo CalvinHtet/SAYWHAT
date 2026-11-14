@@ -28,13 +28,19 @@ var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","S
    Quest says so. The 2-day bounty leaves the Board, so a day has the Daily Quest and one bounty. Rewards and their timing are unchanged. */
 function zxSpin(){try{if(!zxOpen("wheel")||(typeof wheelLeft==="function"&&wheelLeft()>0))return "";return '<button type="button" class="zx-next zx-spin" data-act="nav" data-v="wheel"><span class="label">Wheel</span><span>Your free spin is ready.</span><b>Spin &rsaquo;</b></button>'}catch(e){return ""}}
 /* the move to a midnight day (QA on v0.97): a play between midnight and 5 am under the old rule was stored as the day before, so the next
-   night's play would look like a missed day and cost a rest day, a freeze or the streak. Once, on the first load of this version: if the last
-   save was between 00:00 and 05:00 and lastDone is that save's old-rule day, lastDone moves to its real date. A wrong guess only keeps a streak. */
+   play would look like a missed day and cost a rest day, a freeze or the streak. There is no time of the last quest, only of the last save,
+   and a save at 01:00 can come from an evening player who only opened the app. So nothing moves at load (QA on d03aa26: that cost the evening
+   player a day). Once, on the first load of this version: if the last save was between 00:00 and 05:00 and lastDone is that save's old-rule
+   day, it is remembered (S.mid1). At the first streak credit after that, a gap of 2 days from that lastDone counts as 1. Any other gap, or a
+   later credit, is as before. A wrong guess only forgives one day, once. */
 /* the save's own time, caught as it loads (the boot saves again before the first draw, which would overwrite savedAt) */
 var ZXSA0=0,zxMergeBase=merge;merge=function(d){try{ZXSA0=d&&+d.savedAt||0}catch(e){}return zxMergeBase.apply(this,arguments)};
 function zxMidnightOnce(){try{if(!loaded||!S||!S.created||S.mid0)return;S.mid0=1;var sa=ZXSA0;if(sa){var d=new Date(sa);
-  if(d.getHours()<5){var old=dstr(new Date(sa-5*36e5)),nw=dstr(d);if(S.lastDone===old)S.lastDone=nw}}persist()}catch(e){}}
+  if(d.getHours()<5&&S.lastDone===dstr(new Date(sa-5*36e5)))S.mid1={d:S.lastDone}}persist()}catch(e){}}
 var zxMidRender=render;render=function(){zxMidnightOnce();return zxMidRender.apply(this,arguments)};
+var zxMidCredit=creditStreak;creditStreak=function(){var m=S.mid1,t=today();
+  if(m&&S.lastDone!==t){delete S.mid1;try{if(S.lastDone===m.d&&dayDiff(m.d,t)===2){var y=t.split("-");S.lastDone=dstr(new Date(+y[0],+y[1]-1,+y[2]-1))}}catch(e){}}
+  return zxMidCredit.apply(this,arguments)};
 /* QA (v0.96 note): a spin that comes ready while the Board sits open shows at once, not on the next redraw */
 setInterval(function(){try{if(!loaded||!S||!S.created||view!=="board"||document.hidden||document.querySelector("#layer .modal"))return;var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(zxSpin()&&!document.querySelector(".zx-spin"))render()}catch(e){}},30000);
 var zxBtyCard=btyCard;btyCard=function(k){return k===2?"":zxBtyCard.apply(this,arguments)};
