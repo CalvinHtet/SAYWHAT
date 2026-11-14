@@ -62,6 +62,7 @@ LEAD Doing:
 
 ROOMS Doing:
 - TAKEN by ROOMS: QA's room-placement sweep for Cal (9204eb5, rigtest/qa/review_rooms_1114.md): chandeliers, floating pieces, wrong-wall pieces, off-floor, blocked doors, clipping, realism, crowding, guest spots. Fixing room by room, worst first; each fix goes to QA as WAITING ON QA.
+- (QA: DONE on 96f45cb, PASS except two, QA findings) WAITING ON QA: room sweep fixes so far, by eye at 1860 px fully bought, default style, 13:00 (bigrooms.js) and auditall.js: 16a9ebf (Restaurant chandeliers over tables on cords, two in the full room; Theater lobby chandeliers up on cords, one moved off the kiosk; Patio light strings tied to corner posts), 0809117 (Boba cooker on a steel stand; Closet Lair rod painted out; Rhythm mirror/equalizer flips and bench inside; VR globe flip and flight pod inside; Game Room hex panels drawn on the left wall plane), 96f45cb (Theater standee off the entrance; Patio telescope and bar cart clear). Not checked: other styles, earlier stages, night. Still to do: Dessert sundae (art edit), Bedroom desk/door, Garden door/bed and lamp/pond, Mall escalator, Rooftop DJ/pool, Speakeasy booth/piano and back bar, Bowling, Karaoke, Auditorium, Lair pieces, crowding, guest spots.
 - (QA: DONE on 9f6c17c, PASS, QA findings) WAITING ON QA: check b416f33, QA's old note (Mara's chef hat covered her eyes): npc_hat is lifted (m 175, f 115) with no hair trim. ROOMS checked Mara in all 34 poses (with LEAD's six animations) and the hat on h1, h2, h3 for both bodies: eyes clear, no scalp gap. Every NPC chef wears it, so a look at the Restaurant's cooks too.
 - (DONE by LEAD in a995106.) READY for LEAD (Cal approved Kenan, e7e6b70): in 29k_friends.js set kenan's spec to body m, skin s2, hairStyle "fr_kenan_hair", hairColor black, top tee white, shoe sneakers black, eq ["fr_kenan_jacket","fr_kenan_pants"] (drop h_shades, h_tech, h_boots: no sunglasses now). fr_kenan_hair is not in hairStyles on purpose, like Victor's.
 - (QA: DONE on 5d726d6, PASS; QA findings) WAITING ON QA: check e7e6b70 with LEAD's wiring a995106 (LEAD wear-tested the spec on the rig in all 22 poses): Kenan's visit card portraits (three) and his look in rooms (wear-tested in 22 poses by ROOMS; the stretch has no yawn picture now and falls back).
@@ -94,9 +95,19 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 10daa03): v1.02 live as 10daa03; QA checked it is the passed bd74f15 + 83feea0 (9b3563e, same patch) + APPV only. Nothing open from LEAD. Waiting on ROOMS's room-sweep fixes (16a9ebf lights committed, not yet asked for, not checked). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 96f45cb): ROOMS's room-sweep fixes 16a9ebf, 0809117, 96f45cb checked: PASS except two (Theater's second chandelier, a Patio guest spot). More ROOMS fixes coming tonight; loop stays on until ROOMS is done (ROOMS asked). v1.02 live as 10daa03.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- ROOMS sweep fixes 16a9ebf + 0809117 + 96f45cb (clean plain build of 96f45cb; bigrooms.js and auditall.js on the 8 rooms; pictures
+  `shots/qa/rooms1115/big_<room>.jpg`). PASS: Restaurant chandeliers on cords over the round booth table and a square table; Theater's
+  first chandelier on a cord over the recliners, the rocket standee off the doormat; Patio strings tied to five posts, telescope off
+  the railing, bar cart off the planter; Boba burner on a steel stand; Closet rod gone; Rhythm mirror on the left wall plane,
+  equalizer on the right, bench inside the floor; VR globe poster on the left wall plane, flight pod inside the floor (tight against
+  the gyro chair's headset stand, no overlap); Game Room hex lights on the left wall plane. Audit: Rhythm and VR no longer outside.
+  FIX 1: Theater lobby, the second chandelier (over the carpet by the stanchions, ~770,830) still hangs at stanchion/waist height,
+  and its cord ends in mid-air at ~770,620 well below the wall top (the first one's cord reaches ~790,240). Raise it and run the cord
+  up like the first. FIX 2: Patio, a new guest spot inside furniture ("stand-in cust:cust" in auditall.js; before only the chair
+  spot), likely where the bar cart or telescope moved. Not checked: other styles, earlier stages, night, people. Owner: ROOMS.
 - PASS, v1.02 = bd74f15 + 83feea0 only (cherry-picked onto bd74f15 in a clean worktree: one file, 29zx_simple.js; sandbox build):
   the toast FIX holds. toastpos.js: "First step done: +50 coins" sits at 653-714 above the tab bar (726-812) at 375x812, 581-642
   above 654-740 at 360x740, 685-746 above 758-844 at 390x844; the exit fade still runs; no page errors. Everything else as on bd74f15
