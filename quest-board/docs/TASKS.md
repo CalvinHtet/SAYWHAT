@@ -95,9 +95,27 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8093dcb): ALTITUDE wear-check (ROOMS 7c5664e + LEAD 8093dcb) DONE, NOT A PASS: one FIX for ROOMS, the anorak's see-through panels (QA findings); the other 14 pieces PASS. Recheck the anorak when ROOMS sends it; then v1.03's exact release commit from LEAD. 15-minute loop off (Cal). v1.02 live as 10daa03.
+- Now (on e53c2af + a9def76): v1.03 release/v1.03 e53c2af PASS, can ship; ROOMS's anorak FIX a9def76 PASS (QA findings). If LEAD folds the anorak into v1.03 (a9def76 + 8d5add0 + off the cut list), QA checks that small delta on the new commit (altcut.js EXPECT_ANORAK=1). 15-minute loop off (Cal). v1.02 live as 10daa03.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.03 = release/v1.03 e53c2af (LEAD), can ship as it is:
+  - Composition: app/src, data, tools and art/app match qa-local db36053 except APPV 103. The 9 room-sweep cherry-picks, 7c5664e,
+    8093dcb and db36053 are all in; the sweep and the 14 ALTITUDE pieces were already QA PASS.
+  - db36053 (the anorak off sale) on a clean plain build, female character, clock on Fri Nov 20 (`rigtest/qa/altcut.js`):
+    - ALTITUDE is live, and the Shop lists every other piece.
+    - The anorak is not for sale; an owner still sees theirs.
+    - The free-item pool and the Shop groups both go through itemFits, so the cut holds there too.
+  - LEAD's cutpieces.js PASS on it (OVERPASS cuts, owners keep, KODE PINK held). The version line reads v1.03. No page errors.
+  - Seen and fine: a woman's Shop shows the men-only Half-Zip and Cargo Shorts as cards with the deny button. That's the Shop's
+    usual design for the other body's pieces, not new.
+  - Not checked: an iPhone, a real purchase, Live.
+- PASS, ROOMS a9def76 (the anorak FIX; clean plain build; `shots/qa/altitude/FIXED_anorak_*`):
+  - All 5 files are solid: no see-through panels, and each back is one piece (it was 3). The icon is solid on grey.
+  - Worn on the female body in all 35 poses (brandwear.js, 0 failed to draw, no page errors), and close up in 13: the lilac panels,
+    a whole hood from behind, and a straight hem over the shorts, with no specks in sitBack or type1.
+  - Nit, no fix needed: the lilac panels are flat fills without shading beside the painted green sleeves, and the big icon has a
+    few scratchy lines at the hood. Hard to see at room size.
+  - Not checked: the m files on a body (the anorak is women only, and Rafe's rooms look uses his signature jacket).
 - FIX (ROOMS, art), ALTITUDE wear-check on a clean plain build of 8093dcb (7c5664e art + LEAD's names): the Color-Block Anorak
   (gx_al_anorak, women only) has its white panels knocked out with the background. In f_al_anorak_front/back, m_al_anorak_front/back and
   icon_al_anorak the middle of the jacket is see-through: only lilac flecks and outlines are left, and the back of the hood is in
