@@ -356,7 +356,8 @@ var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{v
 /* QA's review (2026-11-14): after "Claim 3,000 coins" the letter stayed open on "3,000 coins claimed" and the player had to find the X;
    it closes itself a moment after the coins land. And the reward toasts sat on the tab bar: they show above it. */
 var zxIbClaim=ibClaim;ibClaim=function(){var r=zxIbClaim.apply(this,arguments);setTimeout(function(){try{if(document.querySelector("#layer .modal .ibgot"))closeModals()}catch(e){}},1500);return r};
-(function(){var st=document.createElement("style");st.textContent=".pop{bottom:calc(98px + env(safe-area-inset-bottom,0px))}";(document.head||document.documentElement).appendChild(st)})();
+(function(){var st=document.createElement("style");/* QA (v1.02): the page's own .pop rule sits in a later <style> in <body> and won; !important wins wherever it sits */
+  st.textContent=".pop{bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}";(document.head||document.documentElement).appendChild(st)})();
 /* Goals: "Claim all" (Cal picked it from LEAD's brainstorm, 2026-11-14; QA saw saves sitting on "20 goals ready to claim"). With two or
    more goals ready, the Goals window has one button that pays them all at once: their coins and XP in one grant, one toast. */
 var zxGlHtml=glHtml;glHtml=function(bi){var h=zxGlHtml.apply(this,arguments);try{var n=glReady(bi);if(n>=2)h=h.replace('<div class="gllist">','<div class="btns" style="margin:4px 0 10px"><button class="btn" data-gl="claimall" data-b="'+bi+'">Claim all ('+n+')</button></div><div class="gllist">')}catch(e){}return h};
