@@ -229,6 +229,9 @@ DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv","nc"
    rolls), while anyone who owns one keeps wearing it. Every place that offers a piece asks itemFits, and so does the wardrobe for owned
    ones, so a cut piece "fits" only its owner. The rest of the cut list follows as ROOMS sends it. */
 var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak"];
+/* ALTITUDE's Color-Block Anorak waits on ROOMS's art fix (QA 0adc7e4: the white panels went with the background), so it stays off sale
+   the same way until the fixed files land; then this line goes */
+ZXCUT.push("gx_al_anorak");
 SHOP.forEach(function(it){if(it&&it[6]&&ZXCUT.indexOf(it[0])>=0)it[6].cut=1});
 var zxFits=itemFits;itemFits=function(it){if(it&&it[6]&&it[6].cut&&!(S&&S.owned&&S.owned[it[0]]))return false;return zxFits.apply(this,arguments)};
 /* the brand racks pick by brand only (15_shop.js qsGroups), so they get the same rule */
