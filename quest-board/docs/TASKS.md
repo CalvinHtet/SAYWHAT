@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 8c3f8dc): v1.00 live (8c3ecec). v1.01 candidate WAITING ON QA, must ship before Mon Nov 16 8 am PT (the first held drop): the Daily Quest counts effort 689d212 (Cal: hits the hidden goal daily); challenge wagers typed or real money a0a7292 (Cal); brands held from the drops while redone 5fa8be7 + KODE PINK and the first audit cuts off sale 8c3f8dc (Cal approved ROOMS's audit). Next (Cal: work overnight): QA's experience review fixes (the first tour step, Bedroom order, level-2 pile-up, first-steps oddities, DQ in week one), then brainstorm 5/6/1. Later or maybe (Cal): an idle monster-fighting game. WAITING ON CAL: Storage (later), the GitHub push.
+- Now (on 8c3f8dc): v1.00 live (8c3ecec). v1.01 candidate (QA: DONE on 4c6317b, NOT A PASS yet: two small FIX lines, the rest PASS; QA findings) WAITING ON QA, must ship before Mon Nov 16 8 am PT (the first held drop): the Daily Quest counts effort 689d212 (Cal: hits the hidden goal daily); challenge wagers typed or real money a0a7292 (Cal); brands held from the drops while redone 5fa8be7 + KODE PINK and the first audit cuts off sale 8c3f8dc (Cal approved ROOMS's audit). Next (Cal: work overnight): QA's experience review fixes (the first tour step, Bedroom order, level-2 pile-up, first-steps oddities, DQ in week one), then brainstorm 5/6/1. Later or maybe (Cal): an idle monster-fighting game. WAITING ON CAL: Storage (later), the GitHub push.
   Was: Now (on 8c3ecec): v1.00 LIVE on Live and Test = 8c3ecec (the code of 2a3257e, QA PASS, APPV 100; 8c3ecec adds only QA's TASKS line): first steps on the Board (Cal: "Add a first-steps list"; b3f7e4d + 5ded710 + 86002df), the chef hat off the eyes (b416f33), the version reads v1.00 (2a3257e). wlive PASS, 3031/3031 files identical on both; rollback at APPV 101 (a213ba8). Next: Cal's speed log on v1.00. TAKEN, waiting on ROOMS: the Boutique's 10 brands. WAITING ON CAL: Storage (later), the GitHub push.
 - (TAKEN by LEAD, waiting on Cal's answers to ROOMS's streetwear audit.) ROOMS's audit (9 brands redone, cuts in 4): once Cal approves, LEAD updates the 15_shop.js rows (names, lines) and BRANDS themes, ids kept; friends' and allies' looks change with the art. Asked Cal: (a) may LEAD read players' saves (S.owned) to see which pieces anyone owns; (b) hold the redo brands back in the drop order? ALTITUDE drops Mon Nov 16 8 am PT.
   Was: Now (on 2a3257e): v0.99 live (bfb412b). v1.00 cut: 28e1ff9 (APPV 100; QA PASS on 719f77e: first steps b3f7e4d + 5ded710 + 86002df, the chef hat b416f33) + 2a3257e, the version label (it would have read "v0.100"; now pnVer: "v1.00"), WAITING ON QA (a small check) (QA: DONE on 0c5fc49, PASS, QA findings), then LEAD ships v1.00. Rollback at APPV 101 (a213ba8). TAKEN, waiting on ROOMS: the Boutique's 10 brands. WAITING ON CAL: Storage (later), the GitHub push; Cal's next speed log.
@@ -91,9 +91,32 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8f517af): Cal's experience review DONE (review, not pass/fail): rigtest/qa/review_experience.md, ranked list in QA findings. v1.00 live as 8c3ecec (app = the passed 0c5fc49). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 4c6317b): v1.01 checked, NOT A PASS yet: two small FIX lines for LEAD (the DQ after Clear completed, the real-money pact rules text); wagers, drops held, cuts PASS. Recheck when fixed. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- FIX, v1.01 Daily Quest 689d212: "Clear completed" puts bonus XP back in the bar. Cleared one-offs leave S.quests but stay in S.done,
+  so zxDqParts finds no quest, counts the XP as paid (bonuses in), and weights it at that size. Seen: ticks of 5, 10, 25 (daily) and
+  40 (paid 50) give 76; after Clear completed the bar reads 86. That is Cal's exact habit (many small one-offs, then clear), so the
+  rebalance leaks. Remember what each tick counted (e.g. S.dq keeps {id: counted} when ticked) and use that when the quest is gone.
+  `rigtest/qa/dqeffort.js` (sandbox). Also: window.__qbEcon.xp still points at the old dqXp (90 where the bar says 76); test hook
+  only, the game's own calls use the new one. Owner: LEAD.
+- FIX, v1.01 wagers a0a7292: a real-money Gym Pact shows the coin rules. Justin's "$25 each" pact reads "You both put in the stake ...
+  Both reach the goal: each gets 1.5 times the stake. Only one does: they take both stakes. Neither does: both stakes are lost", but
+  in dollars the game says "you both made it. Nobody owes anything". gpRules() needs a money version (and the same on the send form).
+  Copy only. `rigtest/qa/wpactcash.js`. Owner: LEAD.
+- PASS, v1.01 wagers a0a7292 (sandbox of 4c6317b, stand-in Justin): LEAD's wager.js PASS; QA's new wpactcash.js PASS: a $15 pact holds
+  no coins, 4 days vs 1 says "Justin owes you $15", 1 vs 4 says "You owe Justin $15", coins unchanged, nothing settles twice after a
+  reload; his $25 pact and $10 challenge are acceptable with 0 coins and hold nothing. QA's wpact.js updated (the day starts at
+  midnight: 11:30 pm counts for its day; the calm week off so Training opens; the new stake message): PASS, all 19 lines. Not checked:
+  a phone; a v1.00 phone receiving a $ challenge (it would read "0 coins each" until it updates).
+- PASS, v1.01 drops 5fa8be7 + 8c3f8dc (plain builds of 8c3ecec and 4c6317b, LEAD's dropshuffle.js on both): the slots before Nov 16
+  are identical; no held brand (gp sp bb km oak alt sv nc kp) drops from Nov 16; no brand drops while live. From Nov 16 only four
+  brands are left and they cycle in a fixed order: OVERPASS, SMOKE BOMB, HANGANG, DIAL-UP, OVERPASS ... every 2 weeks, so the drops
+  are not a surprise until holds lift (Cal FYI, not a bug). No Wednesday vault. Cut pieces: LEAD's cutpieces.js PASS (OVERPASS's
+  kept pieces on sale Tue Nov 17, the three cut ones not, an owner keeps theirs, KODE PINK not on sale); chests and crawl rolls use
+  freePool, which asks itemFits, so cut pieces are out of them too. Note: held brands' pieces can still roll in chests (holds are for
+  drops only), and the not-yet-cut pieces of ALTITUDE, SOLVBERG and NICE COCK can too until ROOMS sends the rest of the cut list.
+  Owner: LEAD (FYI).
 - REVIEW for Cal (via LEAD, 2026-11-14): how a new player feels, a week-2 player, the community. Full text: `rigtest/qa/review_experience.md`;
   pictures `shots/qa/newplayer/`. Sandbox of 8f517af (= live v1.00 code) at 375x812, played by hand, days 1-4 by the clock; L18/L60 seeds.
   Short answer: day 1 and the calm week are calm and well paced; level 2 (after 2 tasks) piles ~9 windows and tours and 4 toasts into
