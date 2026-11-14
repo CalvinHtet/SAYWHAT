@@ -41,6 +41,26 @@ var zxMidRender=render;render=function(){zxMidnightOnce();return zxMidRender.app
 var zxMidCredit=creditStreak;creditStreak=function(){var m=S.mid1,t=today();
   if(m&&S.lastDone!==t){delete S.mid1;try{if(S.lastDone===m.d&&dayDiff(m.d,t)===2){var y=t.split("-");S.lastDone=dstr(new Date(+y[0],+y[1]-1,+y[2]-1))}}catch(e){}}
   return zxMidCredit.apply(this,arguments)};
+/* The Loft lag (Cal's phone, v0.97 speed log: The Loft at 22 fps, 3 fps with the Bedroom open, 4,700 and 7,700 elements). The Patio's
+   skyline (patioSky, ROOMS's 27_rooms.js) is ~1,900 live SVG shapes, one per lit window, drawn in the Patio, the Rooftop and through
+   the Bedroom's door, under animated pieces, so the phone repaints them on every frame. It is the same picture until the light
+   changes, so it is drawn once into a bitmap and shown as one <image>. The first draw stays live until the bitmap is ready (a frame
+   or two), then swaps in place. If the bitmap cannot be made, the picture stays live, as before. */
+var ZXSKY={},ZXSKYK=[];
+function zxHash(s){var h=5381,i=s.length;while(i)h=(h*33)^s.charCodeAt(--i);return (h>>>0).toString(36)}
+function zxSkyImg(c){return '<image class="zxsky" href="'+c.u+'" x="'+c.x+'" y="'+c.y+'" width="'+c.w+'" height="'+c.h+'" preserveAspectRatio="none" pointer-events="none"/>'}
+function zxSkyMake(k,bg,x,y,w,h){var c=ZXSKY[k]={x:x,y:y,w:w,h:h,u:""};ZXSKYK.push(k);
+  while(ZXSKYK.length>8){var o=ZXSKY[ZXSKYK.shift()];if(o&&o.u&&o.b)try{URL.revokeObjectURL(o.u)}catch(e){}}
+  var sc=Math.min(2.5,2400/Math.max(w,h)),W=Math.max(1,Math.round(w*sc)),H=Math.max(1,Math.round(h*sc)),im=new Image();
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="'+x+' '+y+' '+w+' '+h+'" preserveAspectRatio="none">'+bg+'</svg>';
+  var swap=function(){document.querySelectorAll('g[data-zxsky="'+k+'"]').forEach(function(g){try{g.innerHTML=zxSkyImg(c);g.removeAttribute("data-zxsky")}catch(e){}})};
+  im.onload=function(){try{var cv=document.createElement("canvas");cv.width=W;cv.height=H;cv.getContext("2d").drawImage(im,0,0,W,H);
+    cv.toBlob(function(b){if(!b)return;c.u=URL.createObjectURL(b);c.b=1;swap()},"image/png")}catch(e){}};
+  im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
+var zxPatioSky=patioSky;patioSky=function(C){zxPatioSky(C);try{var bg=C.bg,m=/^<clipPath id="ptClip"><rect x="(-?[\d.]+)" y="(-?[\d.]+)" width="([\d.]+)" height="([\d.]+)"/.exec(bg||"");
+  if(!m||typeof document==="undefined"||!document.createElement("canvas").toBlob)return;var k=bg.length.toString(36)+zxHash(bg),c=ZXSKY[k];
+  if(c&&c.u){C.bg=zxSkyImg(c);return}
+  C.bg='<g data-zxsky="'+k+'">'+bg+'</g>';if(!c)zxSkyMake(k,bg,+m[1],+m[2],+m[3],+m[4])}catch(e){}};
 /* QA (v0.96 note): a spin that comes ready while the Board sits open shows at once, not on the next redraw */
 setInterval(function(){try{if(!loaded||!S||!S.created||view!=="board"||document.hidden||document.querySelector("#layer .modal"))return;var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(zxSpin()&&!document.querySelector(".zx-spin"))render()}catch(e){}},30000);
 var zxBtyCard=btyCard;btyCard=function(k){return k===2?"":zxBtyCard.apply(this,arguments)};
@@ -119,6 +139,14 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   window.addEventListener("scroll",up,{passive:true});setInterval(up,1500)})();
 (function(){if(document.getElementById("qb-zx-css"))return;var st=document.createElement("style");st.id="qb-zx-css";
   st.textContent=".vline{font-size:11px;line-height:1.2;opacity:.72;text-align:left;padding:2px 2px 6px;letter-spacing:.02em}"
+    /* The Loft lag: the door glow on the floor (.prtG, 26_world.js) pulsed its opacity, and any change inside a room's picture makes
+       Safari repaint the whole picture. In the Bedroom window (WebKit on a Mac) that was 19 fps; still, 55. It glows steadily now,
+       at the middle of its old pulse. */
+    +".prtG{animation:none!important;opacity:.6}"
+    /* the same for the room screens' moving parts (24_screens.js: the TV game's hills, coins, jump and stars, scrolling text, the
+       equaliser): they ticked 6-7 times a second each, every tick a repaint of the room. They stand still as with reduced motion;
+       the screens still change page every 4 seconds (.scrS). Bedroom window in WebKit: 50 to 60 fps. */
+    +".scrT,.scrU,.scrL,.scrL2,.scrJ,.scrE,.scrB{animation:none!important}.scrB{opacity:.6}"
     /* the window's head (title, coins) stays at the top of the window while its list scrolls */
     +"#layer .modal .rm-head{position:sticky;top:0;z-index:8;background:var(--surface,#1b1411);padding-top:6px;padding-bottom:6px;margin-top:-6px}"
     +".zx-coins{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:60;box-shadow:0 6px 16px -6px rgba(0,0,0,.7)}.zx-coins[hidden]{display:none}"
@@ -130,3 +158,9 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
     +".zx-back{display:inline-flex;align-items:center;gap:4px;margin:4px 0 10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:700 13px/1 var(--font-body,system-ui);cursor:pointer}.zx-me{display:flex;gap:8px;margin:0 0 12px}"
     +".bty .chip.done{color:var(--done,#5ee08a);border-color:currentColor}";
   (document.head||document.documentElement).appendChild(st)})();
+/* Town's first open took 2.8 s on Cal's phone (v0.97 speed log), the Players tab 1.7 s, later opens about 0.1 s; a Mac never shows it.
+   The owner's speed log now says how long building a tab's page took when it was over 150 ms, so the next log tells the page's code
+   apart from the drawing and the art after it ("tap" is the whole wait, "build" this part). */
+var ZXVB={},zxViewHtml=viewHtml;viewHtml=function(v){var t0=performance.now(),h=zxViewHtml.apply(this,arguments),ms=performance.now()-t0;
+  var n=ZXVB[v]=(ZXVB[v]||0)+1;/* the first three builds of each tab, so a slow Loft cannot push the rest out of the 40-line log */
+  if(ms>150&&n<=3)try{if(!db||!ownerView||window.__qbGuest)return h;QBPL.push({why:"build",v:v,n:n,ms:Math.round(ms),t:Date.now()});qbPerfSave()}catch(e){}return h};
