@@ -1856,7 +1856,9 @@ function guess(t){
   else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}
   else if(/dish|laundry|clean|vacuum|trash|sweep|tidy|organi[sz]e|assemble|put together|groom/.test(s)){r.stat="productivity";r.cl="home";r.xp=/clean|laundry|assemble|put together/.test(s)?25:10}
   else if(/call|text|dinner|friend|date|party|hang|visit|birthday/.test(s)){r.stat="social";r.cl="social";r.xp=25}
-  else if(/unload|groceries|errand|mail|gas|feed|pick up/.test(s)){r.stat="productivity";r.cl="out";r.xp=10}
+  /* QA's review (2026-11-14): "Reply to emails" matched "mail" below and was filed under Outside run; desk work is admin */
+  else if(/e-?mails?|inbox|\brepl(y|ies)\b|slack|invoices?|paperwork|\bforms?\b/.test(s)){r.stat="productivity";r.cl="admin";r.xp=10}
+  else if(/unload|groceries|errand|\bmail\b|gas|feed|pick up/.test(s)){r.stat="productivity";r.cl="out";r.xp=10}
   if(/finish|build|platform|app|launch|submit|ship|migrate|tax|taxes/.test(s)&&r.xp<50)r.xp=50;
   if(t.length<22&&r.xp>10&&/^(post|send|reply|pay|book|buy|check)\b/.test(s))r.xp=10;
   return {name:t,xp:r.xp,stat:r.stat,cl:r.cl,why:"Quick offline estimate",rep:/daily|every day|feed|walk|teeth|shower|bed\b|gym|dishes/.test(s)?"daily":"once"};
