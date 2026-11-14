@@ -14,7 +14,7 @@ FRIENDS={
  justin:{name:"Justin",tag:"Always has a song stuck in his head",spec:{body:"m",skin:"s2",hairStyle:"h3",hairColor:"black",top:"tee",topColor:"white",eq:["h_chain","h_trous","h_derby"]}},
  vega:{name:"Vega",tag:"Keeps you on track",spec:{body:"m",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["fr_vega_tee","o_lock","h_cargo","fr_vega_kicks"]}},
  logan:{name:"Logan",tag:"Gym buddy",spec:{body:"m",skin:"s1",hairStyle:"h3",hairColor:"brown",bottom:"joggers",bottomColor:"black",eq:["fr_logan_bomber","h_sneak"]}},
- kenan:{name:"Kenan",tag:"Night owl",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"white",eq:["fr_kenan_jacket","h_shades","h_tech","h_boots"]}},
+ kenan:{name:"Kenan",tag:"Night owl",spec:{body:"m",skin:"s2",hairStyle:"fr_kenan_hair",hairColor:"black",top:"tee",topColor:"white",shoe:"sneakers",shoeColor:"black",eq:["fr_kenan_jacket","fr_kenan_pants"]}},
  jina:{name:"Jina",tag:"Always knows the best food spots",spec:{body:"f",skin:"s1",hairStyle:"h1",hairColor:"black",eq:["h_knit","fr_jina_skirt","h_loafer"]}},
  cynthia:{name:"Cynthia",tag:"Brightens every room",spec:{body:"f",skin:"s3",hairStyle:"h1",hairColor:"black",eq:["v_rose","h_denim","fr_cynthia_kicks"]}},
  memo:{name:"Memo",tag:"Can fix anything",spec:{body:"m",skin:"s3",hairStyle:"h2",hairColor:"black",eq:["o_flannel","h_denim","h_sneak"]}},
