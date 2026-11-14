@@ -27,6 +27,14 @@ var ZXHUB=[["train","Training","Workouts and plans"],["away","Dungeon Crawls","S
 /* fewer things to check (Cal approved the overhaul, 2026-11-13): the Wheel has no tile; when a free spin is ready, a row under the Daily
    Quest says so. The 2-day bounty leaves the Board, so a day has the Daily Quest and one bounty. Rewards and their timing are unchanged. */
 function zxSpin(){try{if(!zxOpen("wheel")||(typeof wheelLeft==="function"&&wheelLeft()>0))return "";return '<button type="button" class="zx-next zx-spin" data-act="nav" data-v="wheel"><span class="label">Wheel</span><span>Your free spin is ready.</span><b>Spin &rsaquo;</b></button>'}catch(e){return ""}}
+/* the move to a midnight day (QA on v0.97): a play between midnight and 5 am under the old rule was stored as the day before, so the next
+   night's play would look like a missed day and cost a rest day, a freeze or the streak. Once, on the first load of this version: if the last
+   save was between 00:00 and 05:00 and lastDone is that save's old-rule day, lastDone moves to its real date. A wrong guess only keeps a streak. */
+/* the save's own time, caught as it loads (the boot saves again before the first draw, which would overwrite savedAt) */
+var ZXSA0=0,zxMergeBase=merge;merge=function(d){try{ZXSA0=d&&+d.savedAt||0}catch(e){}return zxMergeBase.apply(this,arguments)};
+function zxMidnightOnce(){try{if(!loaded||!S||!S.created||S.mid0)return;S.mid0=1;var sa=ZXSA0;if(sa){var d=new Date(sa);
+  if(d.getHours()<5){var old=dstr(new Date(sa-5*36e5)),nw=dstr(d);if(S.lastDone===old)S.lastDone=nw}}persist()}catch(e){}}
+var zxMidRender=render;render=function(){zxMidnightOnce();return zxMidRender.apply(this,arguments)};
 /* QA (v0.96 note): a spin that comes ready while the Board sits open shows at once, not on the next redraw */
 setInterval(function(){try{if(!loaded||!S||!S.created||view!=="board"||document.hidden||document.querySelector("#layer .modal"))return;var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(zxSpin()&&!document.querySelector(".zx-spin"))render()}catch(e){}},30000);
 var zxBtyCard=btyCard;btyCard=function(k){return k===2?"":zxBtyCard.apply(this,arguments)};
