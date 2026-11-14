@@ -218,7 +218,8 @@ LFROOM.garden=function(C){
     if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
     if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:3.0,/* rule 20: off the hive, a lantern between them */st===2?12.2:9.65,1.7,1.3,36,{H:78});
-    if(H("g_shed"))gdS(C,"gdx_shed",st===2?zx+3.7:Rx,st===2?4.8:8.4,1.6,1.3,50,{H:92});
+    /* QA room sweep (rooms-never-cluttered): in the full garden the big glasshouse holds the tools, so the shed is superseded there */
+    if(H("g_shed")&&!(st===2&&H("g_green2")))gdS(C,"gdx_shed",st===2?zx+3.7:Rx,st===2?4.8:8.4,1.6,1.3,50,{H:92});
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
     if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:14.3,E?7.8:8.6,.9,.8,40,{H:70});
     /* grow lamps stand at the back of the first beds, over the soil (QA: alone on the lawn they read as screens) */
