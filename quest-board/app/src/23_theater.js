@@ -142,7 +142,7 @@ LFROOM.theater=function(C){
   /* the chandeliers hang out of view: only their warm light shows (the sprites stood at floor height mid-room) */
   /* QA audit: the chandeliers were light only, so nothing showed by day. Now the brass fixture hangs over each pool of light */
   /* QA room sweep 2026-11-14: they hung at knee height in the walkway; now up near the top of the walls */
-  if(wing&&H("t_chand"))[[7,6.0],[12.4,11.8]].forEach(function(p){C.add(p[0]+p[1]-7.9,lfBox(p[0]-.025,p[1]-.025,203,.05,.05,90,"#2a2420",{l:"#3a3028",r:"#1e1814",top:"#3a3028"}));lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-205,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
+  if(wing&&H("t_chand"))[[7,6.0,205],[12.4,11.8,265]].forEach(function(p){C.add(p[0]+p[1]-7.9,lfBox(p[0]-.025,p[1]-.025,p[2]-2,.05,.05,p[2]===205?92:140,"#2a2420",{l:"#3a3028",r:"#1e1814",top:"#3a3028"}));lfSpr(C,"rdx_chand",p[0]-.5,p[1]-.5,1.0,1.0,{h:1,dy:-p[2],nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],90,"#ffd890",3,.5)});
   if(H("t_wl2")||lux4)lfLight(C,W*.45,D*.4,70,"#ffcf8a",3,.3);
   lfDoorAt(C,W);
   lfWander(C,[[W-2.2,D*.5+.4,-1],[3,4.2,1],[6,4.2,-1]]);

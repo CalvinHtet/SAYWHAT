@@ -3339,12 +3339,13 @@ LFROOM.bedroom=function(C){
   var dk=H("bd_pc2")?"bd4_pc2":H("bd_pc1")?"bd4_pc1":H("bd_desk1")?"bd4_desk1":"bd4_desk0";
   var PCt=H("bd_pc1")||H("bd_pc2");
   var LH=PCt?17:0;
+  /* QA room sweep 2026-11-14: the desk ran into the patio door frame; the whole desk group sits half a tile further from the door */
   if(PCt){var _R=LFREC;LFREC=null;var mt="#262a33",lg=function(lx){return lfBox(lx,.15,0,.16,1.5,2.4,mt,{l:"#2f343f",r:"#1a1d24",top:"#3a404d"})+lfBox(lx+.01,.58,2.4,.14,.14,LH-2.4,mt,{l:"#303642",r:"#1a1d24",top:"#3a404d"})};
-    C._lb=[5.7,.05,8.2,1.35];C.add(5.7+2.5+.05+1.3-.6,'<g>'+lg(5.95)+lg(7.85)+lfBox(6.05,.62,LH-3.2,1.9,.1,2.6,mt,{l:"#2c313b",r:"#1a1d24",top:"#343a46"})+'</g>');LFREC=_R}
-  var LD=QBLoft.data.loft,DK=LD.desks[dk];lfSpr4(C,dk,5.7,.05,2.5,1.3,{h:30,dk:.2,fit:1,flip:DK.flip,dy:-LH});scrPc(C,dk,5.7,.05,2.5,1.3,{h:30,dk:.2,fit:1,flip:DK.flip,dy:-LH});/* each desk's art decides its own mirroring so the screen faces into the room */
-  if(H("bd_pc2"))lfLight(C,7.0,1.0,52,"#58d6ff",2.1,.6);else if(H("bd_pc1"))lfLight(C,7.0,1.0,44,"#58d6ff",1.9,.55);
+    C._lb=[5.2,.05,7.7,1.35];C.add(5.2+2.5+.05+1.3-.6,'<g>'+lg(5.45)+lg(7.35)+lfBox(5.55,.62,LH-3.2,1.9,.1,2.6,mt,{l:"#2c313b",r:"#1a1d24",top:"#343a46"})+'</g>');LFREC=_R}
+  var LD=QBLoft.data.loft,DK=LD.desks[dk];lfSpr4(C,dk,5.2,.05,2.5,1.3,{h:30,dk:.2,fit:1,flip:DK.flip,dy:-LH});scrPc(C,dk,5.2,.05,2.5,1.3,{h:30,dk:.2,fit:1,flip:DK.flip,dy:-LH});/* each desk's art decides its own mirroring so the screen faces into the room */
+  if(H("bd_pc2"))lfLight(C,6.5,1.0,52,"#58d6ff",2.1,.6);else if(H("bd_pc1"))lfLight(C,6.5,1.0,44,"#58d6ff",1.9,.55);
   var ck=H("bd_chair2")?"bd_chair2":H("bd_chair1")?"bd_chair1":H("bd_chair0")?"bd_chair0":null;
-  var CX=DK.seatX,CY=LD.seatY;
+  var CX=DK.seatX-.5,CY=LD.seatY;
   /* The seat lines up with this desk's screen, so whoever sits here faces it. */
   if(ck){lfChairDyn(C,ck,CX,CY);C.s("sit",CX,CY,1,"type",[10,25],{dk:2,tag:"pc",lift:1,exit:[CX+.1,CY+1.05]})}
   else C.s("work",CX,CY-.25,1,"work",[10,25],{tag:"deskstand",fxwall:1});
