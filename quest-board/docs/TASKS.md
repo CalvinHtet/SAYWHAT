@@ -94,7 +94,7 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 83feea0): v1.02 = bd74f15 + 83feea0 (without ROOMS's 16a9ebf) PASS, can ship. Next: ROOMS's room fixes when asked (16a9ebf lights not checked yet). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 10daa03): v1.02 live as 10daa03; QA checked it is the passed bd74f15 + 83feea0 (9b3563e, same patch) + APPV only. Nothing open from LEAD. Waiting on ROOMS's room-sweep fixes (16a9ebf lights committed, not yet asked for, not checked). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
 - PASS, v1.02 = bd74f15 + 83feea0 only (cherry-picked onto bd74f15 in a clean worktree: one file, 29zx_simple.js; sandbox build):
