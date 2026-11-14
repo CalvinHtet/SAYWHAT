@@ -147,6 +147,9 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
        equaliser): they ticked 6-7 times a second each, every tick a repaint of the room. They stand still as with reduced motion;
        the screens still change page every 4 seconds (.scrS). Bedroom window in WebKit: 50 to 60 fps. */
     +".scrT,.scrU,.scrL,.scrL2,.scrJ,.scrE,.scrB{animation:none!important}.scrB{opacity:.6}"
+    /* Cal ("Yes, keep it smooth"): the Club's light beams (.cbb, 27b_skins.js) pulsed the same way, the Club's whole cost (WebKit 37 to
+       60 fps); they shine steadily at their drawn strength */
+    +".cbb{animation:none!important;opacity:.16}"
     /* the window's head (title, coins) stays at the top of the window while its list scrolls */
     +"#layer .modal .rm-head{position:sticky;top:0;z-index:8;background:var(--surface,#1b1411);padding-top:6px;padding-bottom:6px;margin-top:-6px}"
     +".zx-coins{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:60;box-shadow:0 6px 16px -6px rgba(0,0,0,.7)}.zx-coins[hidden]{display:none}"
