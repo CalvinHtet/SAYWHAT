@@ -222,7 +222,7 @@ LFROOM.garden=function(C){
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
     if(H("g_pump"))gdS(C,"gdx_pump",E?Rx+.1:14.3,E?7.8:8.6,.9,.8,40,{H:70});
     /* grow lamps stand at the back of the first beds, over the soil (QA: alone on the lawn they read as screens) */
-    if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[i];
+    if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[st===2&&kt&&i===3&&spots[4]?4:i];/* QA room sweep: the bed beside the back door's aisle has no lamp bar, so nothing crosses the doorway */
       gdGrowLight(C,p[0],p[1],3.4,1.6);
       lfLight(C,p[0]+1.7,p[1]+.8,60,"#d68aff",2.6,.5)});
     if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
