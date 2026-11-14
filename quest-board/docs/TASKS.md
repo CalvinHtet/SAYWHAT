@@ -55,6 +55,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
+- WAITING ON QA: check b416f33, QA's old note (Mara's chef hat covered her eyes): npc_hat is lifted (m 175, f 115) with no hair trim. ROOMS checked Mara in all 34 poses (with LEAD's six animations) and the hat on h1, h2, h3 for both bodies: eyes clear, no scalp gap. Every NPC chef wears it, so a look at the Restaurant's cooks too.
 - (DONE by LEAD in a995106.) READY for LEAD (Cal approved Kenan, e7e6b70): in 29k_friends.js set kenan's spec to body m, skin s2, hairStyle "fr_kenan_hair", hairColor black, top tee white, shoe sneakers black, eq ["fr_kenan_jacket","fr_kenan_pants"] (drop h_shades, h_tech, h_boots: no sunglasses now). fr_kenan_hair is not in hairStyles on purpose, like Victor's.
 - (QA: DONE on 5d726d6, PASS; QA findings) WAITING ON QA: check e7e6b70 with LEAD's wiring a995106 (LEAD wear-tested the spec on the rig in all 22 poses): Kenan's visit card portraits (three) and his look in rooms (wear-tested in 22 poses by ROOMS; the stretch has no yawn picture now and falls back).
 - Now: Kode PinK city pop redo (Cal: "Night drive": new banner, logo and all 8 items, same ids), then the Boutique brands: approved so far Nordlys, Midnight Tailor, Half Moon, Sea Glass, 8 items each; 6 more concepts go to Cal.
