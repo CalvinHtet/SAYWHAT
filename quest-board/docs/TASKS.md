@@ -89,7 +89,7 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0c5fc49): the v1.00 version label (2a3257e) PASS; nothing open from QA, v1.00 can ship. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 8c3ecec): v1.00 live as 8c3ecec; QA checked that its app and tools match the passed 0c5fc49 (only TASKS and QA shots differ). Nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
 - PASS, LEAD's version label 2a3257e (clean sandbox build of 0c5fc49, a real seed save, version.json faked to 101 and 110):
