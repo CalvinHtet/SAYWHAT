@@ -184,7 +184,10 @@ function gpMine(c){var o=c.mine;return o&&o.fin?Math.round(+o.n||0):gpCount(c.st
 function gpBusy(except){var st=dlSt();return gpAll().filter(function(c){return c.cid!==except&&!st.done[c.cid]&&(c.st==="live"||(c.st==="ask"&&c.me==="from"))})[0]||null}
 function gpBusyTxt(c,raw){var nm=raw?c.otherName:esc(c.otherName);return c.st==="ask"?"Your Gym Pact offer to "+nm+" is still waiting. Cancel it to start another.":"You have a Gym Pact going with "+nm+". One at a time."}
 function gpWhat(c){return c.goal+" workout days in "+c.days+", "+dlEach(c)}
-function gpRules(){return "You both put in the stake and have "+DL.pDays+" days once it's accepted. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
+/* QA (v1.01): a real-money pact showed the coin rules ("1.5 times the stake"); c (a pact, or the form) with cash gets the money rules */
+function gpRules(c){var m=c&&c.wt==="$"?"the amount":c&&dlCash(c)?dlMoney(dlCash(c)):"";if(m)return "You both have "+DL.pDays+" days once it's accepted. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
+  +"prove a fitness quest with a photo: a workout, a run, a walk. Two in a day count once. Only one of you makes the goal: the other owes them "+m+". Both make it, or neither: nobody owes anything. The app never moves money.";
+  return "You both put in the stake and have "+DL.pDays+" days once it's accepted. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
   +"prove a fitness quest with a photo: a workout, a run, a walk. Two in a day count once. Both reach the goal: each gets 1.5 times the stake. Only one does: they take both stakes. Neither does: both stakes are lost."}
 /* called from dlTick: publishes this player's days (into pub, written with the challenge scores) and settles each ended pact once */
 function gpTick(st,now,pub,msgs){var chg=0;
@@ -233,7 +236,7 @@ async function gpCancel(cid){var c=gpFind(cid);if(!c||c.me!=="from"||c.st!=="ask
 function gpDots(n,goal){var h='<span class="gpdots" aria-hidden="true">';for(var i=0;i<goal;i++)h+='<i'+(i<n?' class="on"':'')+'></i>';return h+'</span>'}
 function gpItem(c){var h='<div class="dli gpi">';
   if(c.st==="ask"&&c.me==="to"){var busy=gpBusy(c.cid),poor=S.coins<c.stake;
-    h+='<p><b>'+esc(c.otherName)+'</b> asks you to a Gym Pact: '+gpWhat(c)+'.</p><p class="note">'+gpRules()+'</p><div class="dlgo"><button class="btn sm" data-dl="pacc" data-c="'+esc(c.cid)+'"'+(poor||busy?' disabled':'')+'>'+(c.stake?'Accept, put in '+dlFmt(c.stake):'Accept')+'</button><button class="btn ghost sm" data-dl="pdec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(busy?gpBusyTxt(busy)+' ':poor?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>'}
+    h+='<p><b>'+esc(c.otherName)+'</b> asks you to a Gym Pact: '+gpWhat(c)+'.</p><p class="note">'+gpRules(c)+'</p><div class="dlgo"><button class="btn sm" data-dl="pacc" data-c="'+esc(c.cid)+'"'+(poor||busy?' disabled':'')+'>'+(c.stake?'Accept, put in '+dlFmt(c.stake):'Accept')+'</button><button class="btn ghost sm" data-dl="pdec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(busy?gpBusyTxt(busy)+' ':poor?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>'}
   else if(c.st==="ask")h+='<p>Waiting for <b>'+esc(c.otherName)+'</b> to accept a Gym Pact: '+gpWhat(c)+'.</p><div class="dlgo"><button class="btn ghost sm" data-dl="pcan" data-c="'+esc(c.cid)+'">Cancel</button></div><small class="note">'+(c.stake?'Your '+dlFmt(c.stake)+' coins are in. ':'')+dlLeft(c.t+DL.ask-Date.now())+' left to accept.</small>';
   else{var my=gpMine(c),on=c.opp?Math.round(+c.opp.n||0):0,row=function(nm,n){return '<span>'+nm+'</span>'+gpDots(n,c.goal)+'<span class="mono">'+Math.min(n,c.goal)+'/'+c.goal+'</span>'};
     h+='<p>'+(c.st==="live"?'':'<b>Ended.</b> ')+'Gym Pact with <b>'+esc(c.otherName)+'</b>, '+dlEach(c)+'</p>'
@@ -270,7 +273,7 @@ function dlNewHtml(){var f=DL.f,ws=(SOC.worlds||[]).filter(function(w){return w&
   var seg=function(k,list,lab){return '<div class="dlseg" role="radiogroup">'+list.map(function(v){var on=f[k]===v,dis=k==="stake"&&S.coins<v;
     return '<button type="button" role="radio" aria-checked="'+on+'" class="'+(on?'on':'')+'" data-dl="f" data-k="'+k+'" data-v="'+esc(String(v))+'"'+(dis?' disabled':'')+'>'+lab(v)+'</button>'}).join("")+'</div>'};
   var pk=f.kind==="p",busy=pk?gpBusy(""):null;
-  var h='<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div><p class="note">'+(pk?gpRules():'You both put in the stake. Whoever earns more before it ends wins the whole pot. A tie gives both stakes back.')+' They have a day to accept.</p>';
+  var h='<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div><p class="note">'+(pk?gpRules(f.wt==="$"?{wt:"$"}:null):f.wt==="$"?'Whoever earns more before it ends is owed the amount by the other. A tie: nobody owes anything.':'You both put in the stake. Whoever earns more before it ends wins the whole pot. A tie gives both stakes back.')+' They have a day to accept.</p>';
   h+='<h4 class="label">Who</h4>'+(ws.length?seg("to",ws.slice(0,24).map(function(w){return w.id}),function(id){var w=ws.filter(function(x){return x.id===id})[0];return esc(w.name)+' <small class="note">Lv '+(+w.lv||1)+'</small>'}):'<p class="note">'+(SOC.loaded?'No one else in town yet.':'Looking for players...')+'</p>');
   h+='<h4 class="label">What</h4>'+seg("kind",["q","w","p"],function(k){return DL.kinds[k][0]+' <small class="note">'+DL.kinds[k][1]+'</small>'});
   h+=pk?'<h4 class="label">Workout days out of '+DL.pDays+'</h4>'+seg("goal",DL.goals,function(d){return d+' days'}):'<h4 class="label">How long</h4>'+seg("days",DL.days,function(d){return d+' day'+(d>1?'s':'')});
