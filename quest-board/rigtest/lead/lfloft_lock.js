@@ -29,6 +29,8 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
   ok(W + ' inside Home: a drag, the wheel and the zoom button leave the view and the picture alone', h1.tf === h0.tf && h1.writes === 0, { h0: h0.tf, h1 });
   await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove())); 
   const opened = await p.evaluate(() => { const g = document.querySelector('#lfsvg .lfroom[data-i]'); if (!g) return 'no room'; const r = g.getBoundingClientRect(); const el = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2); const t = el && el.closest('[data-lf]'); return t ? t.getAttribute('data-lf') : 'nothing'; });
+  /* QA (ab9a35d): a new-brand window (.bsplash, .dropsplash) can open on its own and take the tap: clear it first */
+  await p.evaluate(() => document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove())); await p.waitForTimeout(150);
   /* QA: aim at furniture, not the room group's box (it holds sky), nor .lfitems as a whole (people's masks stretch it): the biggest piece */
   const tgt = await p.evaluate(() => { const g = document.querySelector('#lfsvg .lfroom[data-i] [data-lf^="room:"]'), it = g.querySelector('.lfitems') || g, R = g.getBoundingClientRect(); let best = null, ba = 0;
     [...it.children].filter((e) => !/^lfa/.test(e.id || '') && !e.querySelector('mask')).forEach((e) => { const r = e.getBoundingClientRect(), a = r.width * r.height; if (a > ba && r.width < R.width && r.height < R.height) { ba = a; best = r; } });
