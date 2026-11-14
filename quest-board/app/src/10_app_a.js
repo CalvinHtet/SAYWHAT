@@ -1489,7 +1489,7 @@ var BRANDS=[
  {id:"rose",name:"VENOM ROSE",fl:"boutique",tag:"Soft velvet, sharper tongue",c:["#160a12","#3a0f24","#d81b60"],ac:"#ff4f8a",start:"2026-11-23",sub:"dark glam"},
  /* Cal: NICE COCK, his own brand, is drop 5; ALTITUDE moves back a week */
  {id:"nc",name:"NICE COCK",fl:"boutique",tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
- {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#12303a","#2c6e6e","#d7f0ff"],ac:"#8ef0ff",start:"2026-12-07",sub:"mountain supply"},
+ {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#1c1f1a","#4f5a32","#ff6a1a"],ac:"#c8ccc4",start:"2026-12-07",sub:"gorpcore utility"},
  /* Cal's music project (approved 2026-11-06); the next free Monday after ALTITUDE until the launch schedule places it */
  {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#f6a5c8","#8f9bea","#c7a6f0"],ac:"#ffd84d",start:"2026-12-14",sub:"anime city-pop"},
  /* Cal's artist brand (approved 2026-11-06), palette and mark from his song covers */

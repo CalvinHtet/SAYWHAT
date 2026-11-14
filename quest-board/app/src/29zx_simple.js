@@ -219,7 +219,10 @@ DROPS.shuf0="2026-11-16";
    BARD & BLADE, KAIMANA and OAKMONT get new names and pieces; ALTITUDE, SOLVBERG and NICE COCK lose most of theirs). Each hold has a
    start and, once the new art is in, an end date: a slot dated inside it skips those brands, so lifting a hold never changes a drop
    that already happened. */
-DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","alt","sv","nc"]},
+DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv","nc"]},
+  /* ALTITUDE's gorpcore repaint is in (Cal approved, ROOMS 7c5664e). Its hold ends the day it began, so no slot ever skipped it; if this
+     ships after a held drop has already happened, move "until" to the release day so that drop stays the same on every phone */
+  {from:"2026-11-16",until:"2026-11-16",ids:["alt"]},
   /* KODE PINK's repaint (Night drive) waits on Cal's approval; the repo still has the old art (ROOMS, 2026-11-14) */
   {from:"2026-11-16",until:"",ids:["kp"]}];
 /* Pieces cut in the audit (Cal approved, with his keeps): off sale everywhere (the Shop, brand pages and splashes, sales, chest and crawl
