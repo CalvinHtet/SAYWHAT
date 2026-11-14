@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 995eb4b): v0.95 LIVE on Live and Test = release/v0.95 3086c59 (b7d9dff, QA PASS, + APPV 95), wlive PASS, 3027/3027 files identical on both; rollback at APPV 96 (b528078). qa-local is at APPV 95. WAITING ON QA: overhaul part 3 (995eb4b: the Wheel as a row when a spin is ready, one bounty on the Board). DONE 2026-11-13 (Cal: "Yes, deploy it"): firestore.rules deployed, kudosok readable by its writer and Cal only.
+- Now (on 995eb4b): v0.95 LIVE on Live and Test = release/v0.95 3086c59 (b7d9dff, QA PASS, + APPV 95), wlive PASS, 3027/3027 files identical on both; rollback at APPV 96 (b528078). qa-local is at APPV 95. WAITING ON QA (QA: DONE on a591705, PASS, QA findings): overhaul part 3 (995eb4b: the Wheel as a row when a spin is ready, one bounty on the Board). DONE 2026-11-13 (Cal: "Yes, deploy it"): firestore.rules deployed, kudosok readable by its writer and Cal only.
   Was: Now (on 09c30da): v0.95 = QA PASS on d689703 except its Next line FIX, fixed in 09c30da (roomAvail shared with the room window; nextline.js, roomfit, tourtest, tabs5, swaptest pass), (QA: DONE on b7d9dff, PASS, v0.95 can ship; QA findings) WAITING ON QA recheck, then LEAD ships v0.95. Next: fewer daily checklists. After v0.95 is live: WAITING ON CAL for the kudosok rules deploy.
   Was: Now (on 4211a7e): v0.95 candidate. QA PASS up to 5850751 (tabs, middle-ground start, private coin requests, swap, friends' tags); WAITING ON QA (QA: DONE on d689703: tours PASS, overhaul part 2 PASS but one FIX, the "afford" line; QA findings): tours + calm week (0241042) and overhaul part 2 (4211a7e: Next line, top bar shows the level, stats hidden below level 10); WAITING ON ROOMS: the Restaurant tip jar at stages 1-2 (QA's blocker). Next in the overhaul: fewer daily checklists (Weekly Warrior into the Weekly Quest, the Wheel as the Daily Quest's reward). After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
   Was: Now (on 0241042): v0.95 candidate WAITING ON QA (QA: everything up to 5850751 DONE, PASS except the Restaurant tip jar, QA findings; the tours 0241042 next) = five tabs + fixes, middle-ground start, private coin requests, exercise swap, friends' tags, and now guided tours + the calm first week (29zy_tour.js, tourtest.js PASS). Next in the overhaul (Cal: "Yes, start it"): hide numbers until they matter, the "what next" line, fewer daily checklists. After v0.95 is live: WAITING ON CAL to approve deploying the kudosok rules.
@@ -67,9 +67,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on b7d9dff): v0.95 PASS, nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on a591705): overhaul part 3 checked, PASS (below); nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD's overhaul part 3 995eb4b (for the version after v0.95; the live v0.95 3086c59 is b7d9dff + APPV, which QA passed, without
+  it), clean sandbox of a591705 at 390 and 360: with a spin ready, "Wheel · Your free spin is ready · Spin" sits under the Daily Quest,
+  no Wheel tile, one bounty card on the Board, and the Wheel's tour rings the row; after a spin the row is gone; 3h59 later still gone,
+  4h01 later back. A 2-day bounty taken on v0.95 stays on the quest list on the new build and pays exactly the same when done (+88 XP,
+  +1,506 coins on both). 0 page errors. `rigtest/qa/spinrow.js`, `shots/qa/m_spin.png`. NOTE, LEAD: when the 4 hours run out while
+  the Board sits open, the row only appears with the next redraw (a tap, a tab). Not checked: the row's "!" for a newly opened Wheel.
 - PASS, v0.95 at b7d9dff (LEAD's Next line FIX 09c30da), clean sandbox and plain builds. The 80%-bought case: 500-649 coins no longer
   says "afford"; at 650 "You can afford an upgrade in the Garden", and with every room open it named the Speakeasy, whose window opened
   from the line and bought (650 -> 150). nextline.js PASS at 390 and 360 (4 seeds exact at 300 vs 250). The moved offer list
