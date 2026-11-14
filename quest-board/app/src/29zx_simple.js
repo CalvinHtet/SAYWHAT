@@ -217,7 +217,17 @@ DROPS.shuf0="2026-11-16";
    BARD & BLADE, KAIMANA and OAKMONT get new names and pieces; ALTITUDE, SOLVBERG and NICE COCK lose most of theirs). Each hold has a
    start and, once the new art is in, an end date: a slot dated inside it skips those brands, so lifting a hold never changes a drop
    that already happened. */
-DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","alt","sv","nc"]}];
+DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","alt","sv","nc"]},
+  /* KODE PINK's repaint (Night drive) waits on Cal's approval; the repo still has the old art (ROOMS, 2026-11-14) */
+  {from:"2026-11-16",until:"",ids:["kp"]}];
+/* Pieces cut in the audit (Cal approved, with his keeps): off sale everywhere (the Shop, brand pages and splashes, sales, chest and crawl
+   rolls), while anyone who owns one keeps wearing it. Every place that offers a piece asks itemFits, and so does the wardrobe for owned
+   ones, so a cut piece "fits" only its owner. The rest of the cut list follows as ROOMS sends it. */
+var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak"];
+SHOP.forEach(function(it){if(it&&it[6]&&ZXCUT.indexOf(it[0])>=0)it[6].cut=1});
+var zxFits=itemFits;itemFits=function(it){if(it&&it[6]&&it[6].cut&&!(S&&S.owned&&S.owned[it[0]]))return false;return zxFits.apply(this,arguments)};
+/* the brand racks pick by brand only (15_shop.js qsGroups), so they get the same rule */
+var zxQsGroups=qsGroups;qsGroups=function(pick){return zxQsGroups.call(this,function(x){if(x&&x[6]&&x[6].cut&&!(S&&S.owned&&S.owned[x[0]]))return false;return pick(x)})};
 function zxHeld(id,ymd){return (DROPS.hold||[]).some(function(h){return h.ids.indexOf(id)>=0&&ymd>=h.from&&(!h.until||ymd<h.until)})}
 var ZXSH={};
 function zxShufJ0(F){var x0=ymdN(DROPS.cal0),t=ymdN(DROPS.shuf0),j=1;for(var x=x0+1;x<t;x++)if(flIsDrop(F,x,x0))j++;return Math.max(1,j)}
