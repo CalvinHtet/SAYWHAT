@@ -178,7 +178,7 @@ var zxLoop=lfLoop;lfLoop=function(ts){var t0=performance.now();try{return zxLoop
    Inside a building the view is fixed: it is fitted once (lfInitView, every room in sight, as it always opened) and stays there; a drag,
    a pinch, the wheel or the zoom buttons change nothing, and the picture is not rewritten while a finger moves (every pan/zoom frame
    repainted the whole building on a phone). It refits when the screen changes size. The street view still pans and zooms. */
-var ZXFIT=null,ZXFITTING=0,ZXAPK="";
+var ZXFIT=null,ZXFITTING=0,ZXAPK="",ZXAPE=null;
 /* "so the rooms fill the whole screen all together": the fit is the box around this building's built rooms (and its open lots), not
    the whole building plot (1,800 wide, which left the rooms small at the bottom), scaled into the space between the top buttons and the
    tab bar. Rooms draw a little past their cells, mostly to the right, so the box has a margin. */
@@ -189,7 +189,7 @@ function zxFitB(c){try{var L=window.LFLAY;if(!c||!L||!L.b||!L.b[LFBSEL])return f
   try{var gb=LFROOF+L.rows*LFFP;lotsOpen().forEach(function(k){if(!ROOMCELL[k]||ROOMCELL[k][0]!==LFBSEL)return;var p=cellXY(k,L);n++;
     x0=Math.min(x0,p.x-70);x1=Math.max(x1,p.x+70);y0=Math.min(y0,gb-104);y1=Math.max(y1,gb+36)})}catch(e){}
   if(!n)return false;var wr=c.getBoundingClientRect(),cw=c.clientWidth,top=0,bot=c.clientHeight;
-  c.querySelectorAll(".lfhud,.lfbtop,.glnext,.lfwxb").forEach(function(e){var r=e.getBoundingClientRect();if(r.height&&r.bottom-wr.top<c.clientHeight*.45)top=Math.max(top,r.bottom-wr.top)});
+  c.querySelectorAll(".lfhud,.lfbtop,.glnext,.lfwxb").forEach(function(e){var r=e.getBoundingClientRect();if(r.height&&r.top-wr.top<c.clientHeight*.5)top=Math.max(top,r.bottom-wr.top)});
   var nv=document.querySelector(".nav");if(nv){var nr=nv.getBoundingClientRect();if(nr.height&&nr.top>wr.top+c.clientHeight*.5)bot=Math.min(bot,nr.top-wr.top)}
   var hn=c.querySelector(".lfhint");if(hn){var hr=hn.getBoundingClientRect();if(hr.height&&hr.top>wr.top+c.clientHeight*.5)bot=Math.min(bot,hr.top-wr.top)}
   top+=10;bot-=6;var w=x1-x0,h=y1-y0;x0-=w*.03;x1+=w*.08;y0-=h*.04;y1+=h*.02;
@@ -201,7 +201,9 @@ var zxApplyLock=lfApplyNow;lfApplyNow=function(){var c=document.getElementById("
   if(c&&c.hasAttribute("data-zxlock")!==inB){if(inB)c.setAttribute("data-zxlock","1");else c.removeAttribute("data-zxlock")}
   if(inB&&c&&!ZXFITTING){if(!ZXFIT||ZXFIT.b!==LFBSEL||ZXFIT.w!==c.clientWidth||Math.abs(ZXFIT.h-c.clientHeight)>=60){LFV.init=0;lfInitView(c);return}
     LFV.x=ZXFIT.x;LFV.y=ZXFIT.y;LFV.s=ZXFIT.s}
-  var k=LFBSEL+":"+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+","+LFV.s.toFixed(3);if(inB&&k===ZXAPK&&!ZXFITTING)return;ZXAPK=k;
+  /* skip only when nothing changed on the same picture: a redraw makes a new #lfw, which must get the view (QA on bf09ce0: Kode Plaza
+     redrawn after its fit kept the new picture's default framing, a close-up nowhere near its rooms) */
+  var we=document.getElementById("lfw"),k=LFBSEL+":"+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+","+LFV.s.toFixed(3);if(inB&&k===ZXAPK&&we===ZXAPE&&!ZXFITTING)return;ZXAPK=k;ZXAPE=we;
   return zxApplyLock.apply(this,arguments)};
 (function(){var st=document.createElement("style");st.textContent="#lfwrap[data-zxlock] .lfctl [data-act=lfz]{display:none}#lfwrap[data-zxlock]{cursor:default}#lfwrap[data-zxlock] .lfhint{font-size:0}#lfwrap[data-zxlock] .lfhint::after{content:\"Tap a room\";font-size:10px}";(document.head||document.documentElement).appendChild(st)})();
 /* Cal (via ROOMS, 2026-11-14): "randomize the brand drops so it is not sequential. I want to be surprised by what brands are coming on
