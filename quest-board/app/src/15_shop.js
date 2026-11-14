@@ -64,7 +64,7 @@ var EXTRA_ITEMS=[
  ["gx_al_cargo","a_pants","Tech Cargo Pants",1200,1,"Black, strapped pockets, orange buckle.",{gar:"al_cargo",b:"alt"}],
  ["gx_al_tight","a_pants","Trail Shorts & Tights",1100,1,"Olive shorts, black tights, orange cord.",{gar:"al_tight",b:"alt",fo:1}],
  ["gx_al_short","a_pants","Cargo Shorts",900,1,"Stone canvas, black webbing belt.",{gar:"al_short",b:"alt",mo:1}],
- ["gx_al_hiker","a_shoes","Trail Runners",1500,1,"Black mesh, blaze orange laces.",{gar:"al_hiker",b:"alt"}],
+ ["gx_al_hiker","a_shoes","Trail Hikers",1500,1,"Black mesh, blaze orange laces.",{gar:"al_hiker",b:"alt"}],
  ["gx_al_sandal","a_shoes","Hike Sandals & Socks",850,1,"Black straps, grey wool socks.",{gar:"al_sandal",b:"alt"}],
  ["gx_nc_jog_black","a_pants","Signature Jogger, Black",1500,1,"Heavyweight fleece, white wordmark.",{gar:"nc_jog_black",b:"nc"}],
  ["gx_nc_jog_ash","a_pants","Signature Jogger, Ash",1500,1,"Heather grey, navy wordmark.",{gar:"nc_jog_ash",b:"nc"}],
