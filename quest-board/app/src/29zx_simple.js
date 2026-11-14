@@ -255,7 +255,14 @@ var ZXFS=[
     /* only a real upgrade of that room counts (QA on b3f7e4d: the Loft writes bookkeeping keys like __m35 into every Bedroom) */
     done:function(){return (S.base&&S.base.slots||[]).some(function(r){if(!r||!r.a)return false;var ids={};(ADDONS[r.t]||[]).forEach(function(u){ids[u[0]]=1});
       return Object.keys(r.a).some(function(k){return r.a[k]&&k.indexOf("__")!==0&&ids[k]})})},
-    show:[{sel:'.nav button[data-v="hideout"]',t:"Your first upgrade",x:"Open The Loft: tap here.",tap:1},{sel:"#lfwrap",t:"Tap the Bedroom",x:"Tap your Bedroom, then Buy on any upgrade your coins cover."}]},
+    /* QA (21f7188): the Loft tab can open on the street, where no Bedroom is: the steps follow the player, each skipped once they
+       are past it (the tab, then their home building, then the Bedroom, then a Buy their coins cover, in the room's window) */
+    show:function(){var H=(ROOMCELL.bedroom||[0])[0],bi=-1;(S.base&&S.base.slots||[]).forEach(function(r,k){if(r&&r.t==="bedroom"&&bi<0)bi=k});
+      var win=function(){return !!document.querySelector("#layer .rmodal")};
+      return [{sel:'.nav button[data-v="hideout"]',t:"Your first upgrade",x:"Open The Loft: tap here.",tap:1,skip:function(){return view==="hideout"||win()}},
+        {sel:'[data-act="bldgo"][data-v="'+H+'"]',t:"Tap your home",x:"Your rooms are inside. Tap the building.",tap:1,skip:function(){return (view==="hideout"&&LFBSEL===H)||win()}},
+        {sel:'#lfsvg .lfroom[data-i="'+bi+'"] .lfitems',t:"Tap the Bedroom",x:"Tap your Bedroom to see its upgrades.",tap:1,skip:win},
+        {sel:'#layer .rmodal [data-act="raddon"]:not([disabled])',t:"Buy one",x:"Tap Buy on an upgrade your coins cover. Each makes the room nicer.",modal:1,tap:1}]}},
   {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
     done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
   {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Friday.",open:function(){return tourAreaOpen("shop")},
@@ -286,7 +293,13 @@ setInterval(function(){try{if(!S||S.fsall)return;var before=JSON.stringify(S.fsd
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=zxfsshow]");if(!b)return;e.preventDefault();
   /* a tour already running (a feature's own) gives way: the player asked for this one */
   var st=ZXFS.filter(function(x){return x.id===b.dataset.k})[0];if(!st)return;if(TOUR.id)tourEnd();var id="fs_"+st.id+"_"+Date.now();
-  TOURS.push({id:id,ready:function(){return false},steps:st.show.map(function(s){return Object.assign({},s)})});TOUR.id=id;TOUR.i=0;TOUR.miss=0;TOUR.t=Date.now();tourDraw(1)});
+  var steps=(typeof st.show==="function"?st.show():st.show).map(function(s){return Object.assign({},s)});
+  TOURS.push({id:id,ready:function(){return false},steps:steps});TOUR.id=id;TOUR.i=0;TOUR.miss=0;TOUR.t=Date.now();zxFsSkip();tourDraw(1)});
+/* a first-steps tour moves past any step the player is already beyond (skip()), without waiting on the tour's own timeout */
+function zxFsSkip(){try{for(var n=0;n<6&&TOUR.id&&String(TOUR.id).indexOf("fs_")===0;n++){var s=tourStep();if(!(s&&s.skip&&s.skip()))break;tourNext()}
+  /* and its ring comes back as soon as a window in the way closes (the Loft's own first-visit window), not on the tours' 1.2 s tick */
+  if(TOUR.id&&String(TOUR.id).indexOf("fs_")===0){var st=tourStep(),r=document.getElementById("qbtour");if(st&&(st.modal||!document.querySelector("#layer .modal"))&&(!r||r.style.visibility==="hidden"))tourDraw(0)}}catch(e){}}
+setInterval(zxFsSkip,400);
 (function(){var st=document.createElement("style");st.textContent=".zx-fs{padding:12px 14px}.zx-fs-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}.zx-fs-h span{font-size:11px;opacity:.7}"
   +".zx-fs ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}.zx-fs li{display:flex;align-items:center;gap:10px;min-height:30px}"
   +".zx-fs li i{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:12px}"

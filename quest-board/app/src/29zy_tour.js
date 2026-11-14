@@ -89,7 +89,8 @@ setInterval(tourTick,1200);window.addEventListener("resize",function(){if(TOUR.i
 document.addEventListener("click",function(e){var tb=e.target.closest&&e.target.closest("[data-tour]");
   if(tb){e.preventDefault();e.stopPropagation();if(tb.dataset.tour==="skip")tourEnd();else tourNext();return}
   if(e.target.closest&&e.target.closest("[data-act=tourreplay]")){S.tours={};if(calmOn())S.tours={};persist();closeModals();pop("The tutorial starts again as you go");return}
-  if(!TOUR.id)return;var st=tourStep();if(!st||!st.tap)return;var t=tourVis(st.sel);if(t&&(t===e.target||t.contains(e.target)))setTimeout(tourNext,500)},true);
+  if(!TOUR.id)return;var st=tourStep();if(!st||!st.tap)return;var t=tourVis(st.sel);/* move on from the step that was tapped, unless something already moved the tour on (the first-steps tours skip a step the player is past) */
+  if(t&&(t===e.target||t.contains(e.target))){var at=TOUR.i,id=TOUR.id;setTimeout(function(){if(TOUR.id===id&&TOUR.i===at)tourNext()},500)}},true);
 var tourRenderBase=render;
 render=function(){var r=tourRenderBase.apply(this,arguments);if(TOUR.id)setTimeout(function(){tourDraw(0)},60);return r};
 /* ---- the calm first week ---- */
