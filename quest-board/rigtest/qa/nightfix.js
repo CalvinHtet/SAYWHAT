@@ -26,9 +26,9 @@ const run = async (br, base, local, cloud) => { const pg = await br.page({ fresh
   ];
   for (const [lab, s] of cases) { const n = await run(br, NEW, s, s), o = await run(br, OLD, s, s);
     console.log(`${lab}\n   v0.97: load last ${n.load.last} (mid0 ${n.load.mid0}) -> quest: streak ${n.quest.streak}, rest day used ${n.quest.restDayUsed}; reload: last ${n.reload.last}, streak ${n.reload.streak}\n   v0.96: load last ${o.load.last} -> quest: streak ${o.quest.streak}, rest day used ${o.quest.restDayUsed}`);
-    if (/^1/.test(lab)) ok('1: the night owl keeps the streak without using the rest day, as on v0.96', n.load.last === '2026-11-20' && n.quest.streak === 11 && !n.quest.restDayUsed && o.quest.streak === 11, { n, o });
+    if (/^1/.test(lab)) ok('1: the night owl keeps the streak without using the rest day, as on v0.96', n.quest.streak === 11 && !n.quest.restDayUsed && o.quest.streak === 11 /* take 2 (95dac60): nothing moves at load; judged by the quest */, { n, o });
     if (/^2/.test(lab)) ok('2: the evening player still gets +1 for the 11-20 quest, as on v0.96', n.quest.streak === o.quest.streak, { v097: n.quest, v096: o.quest, load: n.load });
-    if (/^3/.test(lab)) ok('3: a 21:00 save is left as it was', n.load.last === '2026-11-19' && n.quest.streak === o.quest.streak, { n: n.load, q: n.quest });
+    if (/^3/.test(lab)) ok('3: a 21:00 save is left as it was', n.load.last === '2026-11-19' && !n.load.mid1 && n.quest.streak === o.quest.streak, { n: n.load, q: n.quest });
     ok(`${lab}: a second load moves nothing and keeps the streak`, n.reload.last === n.quest.last && n.reload.streak === n.quest.streak && n.reload.mid0 === 1, n.reload);
     ok(`${lab}: no page errors`, !n.errs.length && !o.errs.length, [n.errs, o.errs]); }
   // 4: this phone's night copy vs another device's newer save
