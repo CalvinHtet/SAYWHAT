@@ -214,7 +214,8 @@ LFROOM.auditorium=function(C){rsArtReady();
   lfTbox(C,DX,0,W-DX,D,0,DZ,H("au_lux2")?"#2e2e3a":"#2a2430",H("au_lux2")?"#4a4a5e":"#43394c");
   lfTbox(C,DX,1.75,.2,D-1.85,DZ,15,"#1a1520","#d8b45a");
   for(var ly=2.1;ly<D-.2;ly+=.75)C.add(DX+ly+.25,'<circle cx="'+lfP(DX-.02,ly,DZ+5)[0].toFixed(1)+'" cy="'+lfP(DX-.02,ly,DZ+5)[1].toFixed(1)+'" r="1.8" fill="#ffd27a"/><circle cx="'+lfP(DX-.02,ly,DZ+5)[0].toFixed(1)+'" cy="'+lfP(DX-.02,ly,DZ+5)[1].toFixed(1)+'" r="5" fill="#ffd27a" opacity=".22"/>');
-  C.walls.push(lfFaceY(W-1.5,0,DZ+66,'<rect width="30" height="13" rx="2" fill="#0c3a1c" stroke="#3dff7a" stroke-width="1"/><text x="15" y="9.6" font-size="8" font-weight="700" fill="#8dffae" text-anchor="middle" font-family="sans-serif">EXIT</text>'));C.plat.push({x0:DX,y0:0,x1:W,y1:D,z:DZ,key:DX+.01});
+  /* QA room sweep: the EXIT sign sat behind the rear speaker tower (W-1.6); a tile further along the wall */
+  C.walls.push(lfFaceY(W-3.7,0,DZ+66,'<rect width="30" height="13" rx="2" fill="#0c3a1c" stroke="#3dff7a" stroke-width="1"/><text x="15" y="9.6" font-size="8" font-weight="700" fill="#8dffae" text-anchor="middle" font-family="sans-serif">EXIT</text>'));C.plat.push({x0:DX,y0:0,x1:W,y1:D,z:DZ,key:DX+.01});
   var steps=Math.ceil((DX-3.6)/.6);for(var j=0;j<steps;j++){var sz=DZ*(j+1)/steps;lfTbox(C,3.6+.6*j,.2,.6,1.4,0,sz,carpS,carpT);if(H("au_aisle")){lfTbox(C,3.6+.6*j,1.5,.6,.1,sz-1,2.2,"#6cc0ff","#c8ecff");if(j%2===0)lfLight(C,3.9+.6*j,1.6,sz+4,"#6cc0ff",1.1,.35)}/* QA audit: thicker lit step edges with a soft glow */C.plat.push({x0:3.6+.6*j,y0:.2,x1:3.6+.6*(j+1),y1:1.6,z:sz,key:3.6+.6*(j+1)+.01})}
   /* screen */
   var sw=big?D-2.4:scr2?D-3.4:6.0,sh=big?HH-56:scr2?150:92,y0=(D+sw)/2,z0=big?20:30;
