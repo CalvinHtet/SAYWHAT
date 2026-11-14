@@ -363,3 +363,7 @@ var zxGlHtml=glHtml;glHtml=function(bi){var h=zxGlHtml.apply(this,arguments);try
 function zxGlClaimAll(bi){var st=glState(),c=0,x=0,n=0;glList(bi).forEach(function(g){if(!g.met||g.got||st[g.id])return;st[g.id]=Date.now();c+=g.c;x+=g.xp;n++});
   if(!n)return;grantXp(x,c,null);try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}pop(n+" goals: +"+c.toLocaleString()+" coins, +"+x+" XP");glOpen(bi)}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-gl="claimall"]');if(!b)return;e.stopPropagation();zxGlClaimAll(+b.dataset.b)},true);
+/* QA's room sweep (2026-11-14, Cal asked for it): the Lair's big-screen button read "UPGRADES" in the theme's display serif, like a label
+   left on the art. It reads as the screen's own text now (monospace, pale cyan, a dark edge), and its frame glows steadily: a pulse inside
+   a room's picture repaints the whole room on a phone (Cal: "keep it smooth"). */
+(function(){var st=document.createElement("style");st.textContent=".lrsys polygon{animation:none!important;stroke-opacity:.8}.lrsys text{font:700 15px/1 var(--font-mono,ui-monospace,Menlo,monospace)!important;fill:#bff1ff!important;letter-spacing:.24em!important;stroke:#04182c!important;stroke-width:3px!important}";(document.head||document.documentElement).appendChild(st)})();
