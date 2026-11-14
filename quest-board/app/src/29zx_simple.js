@@ -357,3 +357,9 @@ var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{v
    it closes itself a moment after the coins land. And the reward toasts sat on the tab bar: they show above it. */
 var zxIbClaim=ibClaim;ibClaim=function(){var r=zxIbClaim.apply(this,arguments);setTimeout(function(){try{if(document.querySelector("#layer .modal .ibgot"))closeModals()}catch(e){}},1500);return r};
 (function(){var st=document.createElement("style");st.textContent=".pop{bottom:calc(98px + env(safe-area-inset-bottom,0px))}";(document.head||document.documentElement).appendChild(st)})();
+/* Goals: "Claim all" (Cal picked it from LEAD's brainstorm, 2026-11-14; QA saw saves sitting on "20 goals ready to claim"). With two or
+   more goals ready, the Goals window has one button that pays them all at once: their coins and XP in one grant, one toast. */
+var zxGlHtml=glHtml;glHtml=function(bi){var h=zxGlHtml.apply(this,arguments);try{var n=glReady(bi);if(n>=2)h=h.replace('<div class="gllist">','<div class="btns" style="margin:4px 0 10px"><button class="btn" data-gl="claimall" data-b="'+bi+'">Claim all ('+n+')</button></div><div class="gllist">')}catch(e){}return h};
+function zxGlClaimAll(bi){var st=glState(),c=0,x=0,n=0;glList(bi).forEach(function(g){if(!g.met||g.got||st[g.id])return;st[g.id]=Date.now();c+=g.c;x+=g.xp;n++});
+  if(!n)return;grantXp(x,c,null);try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}pop(n+" goals: +"+c.toLocaleString()+" coins, +"+x+" XP");glOpen(bi)}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-gl="claimall"]');if(!b)return;e.stopPropagation();zxGlClaimAll(+b.dataset.b)},true);
