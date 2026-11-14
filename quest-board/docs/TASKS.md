@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on d03aa26): v0.96 live. v0.97 candidate = ba8010f (QA PASS) + d03aa26, the night-owl FIX: on the first load after the switch, a last play between 00:00 and 05:00 keeps its real date, so the streak holds (S.mid0 once; LEAD's test: 01:00 moved, 21:00 kept; nextline, tourtest, tabs5, swaptest, roomfit PASS). WAITING ON QA: recheck d03aa26, then LEAD ships v0.97 (the day starts at midnight, the fuller speed log, the spin row when ready). Next: once v0.97 is live and Cal has played on his phone, read diag/perf for the Loft and Hall lag. WAITING ON CAL: Storage (later), the GitHub push.
+- Now (on d03aa26): v0.96 live. v0.97 candidate = ba8010f (QA PASS) + d03aa26, the night-owl FIX: on the first load after the switch, a last play between 00:00 and 05:00 keeps its real date, so the streak holds (S.mid0 once; LEAD's test: 01:00 moved, 21:00 kept; nextline, tourtest, tabs5, swaptest, roomfit PASS). (QA: DONE on 0e98007, NOT A PASS yet: case 2 below, QA findings) WAITING ON QA: recheck d03aa26, then LEAD ships v0.97 (the day starts at midnight, the fuller speed log, the spin row when ready). Next: once v0.97 is live and Cal has played on his phone, read diag/perf for the Loft and Hall lag. WAITING ON CAL: Storage (later), the GitHub push.
   Was: Now (on 3e40ab6): v0.96 live. v0.97 candidate WAITING ON QA (QA: DONE on ba8010f, PASS but one FIX or Cal's OK: the night-owl streak at the switch; QA findings): the day starts at midnight (Cal), the owner's speed log keeps 40 samples and samples The Loft, Town and Players and tab taps (Cal let LEAD read it: only 1 sample there, Training 30 fps, 22 animations, from v0.92), the spin row shows when ready. Next: once v0.97 is live and Cal has played on his phone, read diag/perf again for the Loft and Hall lag. WAITING ON CAL: Storage (later, he said), the GitHub push.
   Was: Now (on b010f63): v0.96 LIVE on Live and Test = b010f63 (a591705, QA PASS, + APPV 96): the Wheel as a row when a spin is ready, one bounty on the Board; wlive PASS, 3027/3027 identical on both; rollback at APPV 97 (d05763f). Open, minor: QA's note that the spin row shows on the next redraw if the 4 hours end while the Board sits open. WAITING ON CAL: Storage on, the GitHub push, 5 am or midnight, the phone speed log.
   Was: Now (on 995eb4b): v0.95 LIVE on Live and Test = release/v0.95 3086c59 (b7d9dff, QA PASS, + APPV 95), wlive PASS, 3027/3027 files identical on both; rollback at APPV 96 (b528078). qa-local is at APPV 95. WAITING ON QA (QA: DONE on a591705, PASS, QA findings): overhaul part 3 (995eb4b: the Wheel as a row when a spin is ready, one bounty on the Board). DONE 2026-11-13 (Cal: "Yes, deploy it"): firestore.rules deployed, kudosok readable by its writer and Cal only.
@@ -70,9 +70,18 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on ba8010f): v0.97 checked (below): one FIX or Cal's OK left, the night-owl streak. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 0e98007): the night-owl fix rechecked, not a pass yet (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA, LEAD's night-owl fix d03aa26 on a clean sandbox of 0e98007 against v0.96, saves written as the 5 am rule wrote them, loaded with the
+  clock set, then one quest ticked (`rigtest/qa/nightfix.js`). Passes: (1) the night owl (quest 01:00 on 11-20, next 03:00 on 11-21):
+  lastDone moves to 11-20, streak 10 -> 11, no rest day used; (3) a 21:00 save is left as it was; (4) another device's newer save wins
+  through saveWhich and is not touched; a second load moves nothing (mid0); old saves 41/41; dupfn no new duplicates; 0 page errors.
+- FIX, LEAD (`29zx_simple.js` zxMidnightOnce): case (2) loses a +1. It reads the time of the last save, not of the last quest. An
+  evening player who did a quest at 23:00 on 11-19 and opened the app at 01:00 on 11-20 (any save then: the app saves on its own)
+  gets lastDone moved to 11-20, so their quest at 10:00 on 11-20 earns no streak day: 10 stays 10, where v0.96 gives 11 (not a reset;
+  one day short, chests a day late). Suggestion: leave lastDone alone at load and, once, at the first streak credit after the switch,
+  count a gap of 2 as 1 when that save was written between 00:00 and 05:00. Then the night owl and the evening player both come out right.
 - QA, the v0.97 candidate ba8010f against v0.96 b010f63 (clean sandboxes). PASS: the day turns at midnight (at 00:01 on 11-21 the day,
   the done quests and the Daily Quest are on 11-21; v0.96 waits for 05:00), `rigtest/qa/daystart.js`; the speed log: a guest writes
   nothing to qb-perf, the owner keeps tap and change samples (a "stay" sample lands about 35-38 s in, after its 5 s measurement; QA's
