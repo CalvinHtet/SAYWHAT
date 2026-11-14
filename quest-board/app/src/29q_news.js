@@ -48,12 +48,12 @@ function updOffer(v){clearTimeout(UPDWAIT);if(document.querySelector("#layer .mo
 function showUpdate(v,still){
   if(document.querySelector("#layer .modal .upd"))return;
   modal('<div class="card box2 upd"><span class="label">Update</span><h2>New update available</h2>'
-   +'<p class="note">Version <b>v0.'+v+'</b> is ready. You&rsquo;re on v0.'+APPV+'.</p>'
+   +'<p class="note">Version <b>'+pnVer(v)+'</b> is ready. You&rsquo;re on '+pnVer(APPV)+'.</p>'
    +(still?'<p class="note">The update hasn&rsquo;t reached this phone yet. Give it a minute and tap Refresh again.</p>':'<p class="note">Your progress is saved.</p>')
    +'<div class="btns"><button class="btn" data-upd="now" data-v="'+v+'">Refresh</button><button class="btn ghost" data-upd="later" data-v="'+v+'">Later</button></div></div>');
 }
 /* the green "!" by the envelope while an update waits (ibBtn draws it, so it is wherever the envelope is) */
-function updBtn(){return UPDLATER>APPV?'<button class="updbtn" data-upd="open" aria-label="Update v0.'+UPDLATER+' is ready">!</button>':''}
+function updBtn(){return UPDLATER>APPV?'<button class="updbtn" data-upd="open" aria-label="Update '+pnVer(UPDLATER)+' is ready">!</button>':''}
 var updIbBase=ibBtn;ibBtn=function(){return updIbBase()?updBtn()+updIbBase():""};
 function updPaint(){try{render()}catch(e){}}
 function updLater(v){UPDLATER=Math.max(UPDLATER,v);closeModals();updPaint()}
@@ -106,7 +106,7 @@ function updAfterReload(){
   var want=0;try{want=+sessionStorage.getItem(UPDK)||0}catch(e){}
   if(!want)return;
   if(APPV>=want){try{sessionStorage.removeItem(UPDK)}catch(e){}
-    modal('<div class="card box2 upd"><span class="label">Update</span><h2>You&rsquo;re up to date</h2><p class="note">Now on <b>v0.'+APPV+'</b>.</p><div class="btns"><button class="btn" data-act="mclose">Nice</button></div></div>')}
+    modal('<div class="card box2 upd"><span class="label">Update</span><h2>You&rsquo;re up to date</h2><p class="note">Now on <b>'+pnVer(APPV)+'</b>.</p><div class="btns"><button class="btn" data-act="mclose">Nice</button></div></div>')}
   else showUpdate(want,true);
 }
 
