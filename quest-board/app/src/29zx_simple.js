@@ -237,3 +237,57 @@ var zxRS0=lfRigState0;lfRigState0=function(a){var r=zxRS0.apply(this,arguments);
     var now=performance.now(),st=a._zxe||(a._zxe={t:now-zxAgH(a)%9000,n:zxAgH(a)%ZXEMO.length});
     if(now-st.t>=9000){st.t=now;st.n=(st.n+1)%ZXEMO.length}else if(now-st.t>3200)return r;
     var em=ZXEMO[st.n];return {ch:r.ch,clip:em,f:QBLoft.clipFrame(em,now)}}catch(e){return r}};
+/* ---------- First steps (Cal, 2026-11-14: "Add a first-steps list") ----------
+   His girlfriend found the game "too complicated"; the tours explain each feature once, but nothing said what to do next. A short card on
+   the Board, above the task box: the first things to do, each ticked off by itself when it is done, +50 coins each, and a "Show me" on
+   the next one that rings where to tap (the tour ring). Only steps whose feature is open show; a step for something still locked shows
+   up once it opens. When every step is done the card is gone for good, with a last +100.
+   A save from before this (S.fsd unset): what it has already done counts as done, without coins, so a long-time player sees only what
+   is new to them, or no card at all. S.fsd {id:1} and S.fsall are new save fields; merge() keeps unknown fields. */
+var ZXFS=[
+  {id:"add",t:"Add today's tasks",x:"Type what you need to do, messy is fine, then tap Add.",open:function(){return true},
+    done:function(){return (+S.total||0)>0||(S.quests||[]).some(function(q){return q&&q.rep!=="weekly4"&&!q.bty})},show:[{sel:"#cap",t:"Add today's tasks",x:"Type what you need to do today, messy is fine, then tap Add."}]},
+  {id:"tick",t:"Finish one and tick it",x:"Did it in real life? Tap it. XP and coins.",open:function(){return true},
+    done:function(){return (+S.total||0)>0},show:[{sel:".q .qmain",t:"Tick it off",x:"Done it for real? Tap the quest to tick it. That pays XP and coins."}]},
+  {id:"loft",t:"Open The Loft",x:"Your own place, built with your coins.",open:function(){return tourAreaOpen("hideout")},
+    done:function(){return !!(S.fsd&&S.fsd.loftSeen)},show:[{sel:'.nav button[data-v="hideout"]',t:"Open The Loft",x:"Tap here.",tap:1}]},
+  {id:"buy",t:"Buy your first upgrade",x:"Tap the Bedroom and pick one you can afford.",open:function(){return tourAreaOpen("hideout")},
+    done:function(){return (S.base&&S.base.slots||[]).some(function(r){return r&&r.a&&Object.keys(r.a).length>0})},
+    show:[{sel:'.nav button[data-v="hideout"]',t:"Your first upgrade",x:"Open The Loft: tap here.",tap:1},{sel:"#lfwrap",t:"Tap the Bedroom",x:"Tap your Bedroom, then Buy on any upgrade your coins cover."}]},
+  {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
+    done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
+  {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Friday.",open:function(){return tourAreaOpen("shop")},
+    done:function(){return !!S.owned&&Object.keys(S.owned).some(function(k){return S.owned[k]})},show:[{sel:'.nav button[data-v="shop"]',t:"The Shop",x:"Tap here, then buy a piece you like.",tap:1}]}
+];
+function zxFsCheck(){try{if(!loaded||!S||!S.created||S.fsall)return;try{tourInit()}catch(e){}if(S.calm===undefined)return;
+    /* fresh: a character made on the calm-week version (S.calm is an object), whose every step pays; else a save from before */
+    var fresh=typeof S.calm==="object"&&!!S.calm,first=!S.fsd||typeof S.fsd!=="object";if(first)S.fsd={};var d=S.fsd,got=0,ch=first,pay=fresh||!first;
+    /* a save from before has been to the areas it has open (tourInit counts them as toured too) */
+    if(first&&!fresh){if(tourAreaOpen("hideout"))d.loftSeen=1;if(tourAreaOpen("hall"))d.townSeen=1}
+    if(view==="hideout"&&!d.loftSeen){d.loftSeen=1;ch=1}if(view==="hall"&&!d.townSeen){d.townSeen=1;ch=1}
+    ZXFS.forEach(function(st){if(d[st.id])return;var ok=false;try{ok=st.done()}catch(e){}if(!ok)return;d[st.id]=1;ch=1;if(pay)got+=50});
+    /* what a save from before had already done is not listed again (it still counts): no wall of ticked lines for a long-time player */
+    if(first&&!fresh){d.pre={};ZXFS.forEach(function(st){if(d[st.id])d.pre[st.id]=1})}
+    var all=ZXFS.every(function(st){return d[st.id]});if(all&&!S.fsall){S.fsall=1;if(pay)got+=100;ch=1}
+    if(got){S.coins+=got;S.earnedC=(S.earnedC||0)+got;d.coins=(d.coins||0)+got;setTimeout(function(){try{pop(all?"First steps done! +"+got+" coins":"First step done: +"+got+" coins")}catch(e){}},900)}
+    if(ch)persist()}catch(e){}}
+function zxFsHtml(){try{if(!S||!S.created||S.fsall||!S.fsd)return "";var d=S.fsd,list=ZXFS.filter(function(st){return d[st.id]||st.open()}),todo=list.filter(function(st){return !d[st.id]});
+    if(!todo.length)return "";var nx=todo[0],n=list.length-todo.length,pre=d.pre||{},shown=list.filter(function(st){return !pre[st.id]});
+    return '<section class="card zx-fs"><div class="zx-fs-h"><b>First steps</b><span class="mono">'+n+' of '+list.length+' &middot; +50 coins each</span></div><ol>'
+      +shown.map(function(st){var ok=!!d[st.id];return '<li class="'+(ok?"ok":st===nx?"nx":"")+'"><i aria-hidden="true">'+(ok?"&#10003;":"")+'</i><span><b>'+esc(st.t)+'</b>'+(st===nx?'<small>'+esc(st.x)+'</small>':'')+'</span>'
+        +(st===nx?'<button type="button" class="btn sm" data-act="zxfsshow" data-k="'+st.id+'">Show me</button>':'')+'</li>'}).join("")+'</ol></section>'}catch(e){return ""}}
+var zxFsBoardLine=boardLine;boardLine=function(){var h=zxFsBoardLine.apply(this,arguments);return h+zxFsHtml()};
+var zxFsRender=render;render=function(){zxFsCheck();return zxFsRender.apply(this,arguments)};
+/* a tick or a purchase does not always redraw the Board at once: check every few seconds too (cheap: a few field reads) */
+setInterval(function(){try{if(!S||S.fsall)return;var before=JSON.stringify(S.fsd||{});zxFsCheck();if(view==="board"&&JSON.stringify(S.fsd||{})!==before)render()}catch(e){}},3000);
+/* "Show me": the tour ring, as a one-off tour of the step's targets (it ends on its own; the step stays until it is really done) */
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=zxfsshow]");if(!b)return;e.preventDefault();
+  /* a tour already running (a feature's own) gives way: the player asked for this one */
+  var st=ZXFS.filter(function(x){return x.id===b.dataset.k})[0];if(!st)return;if(TOUR.id)tourEnd();var id="fs_"+st.id+"_"+Date.now();
+  TOURS.push({id:id,ready:function(){return false},steps:st.show.map(function(s){return Object.assign({},s)})});TOUR.id=id;TOUR.i=0;TOUR.miss=0;TOUR.t=Date.now();tourDraw(1)});
+(function(){var st=document.createElement("style");st.textContent=".zx-fs{padding:12px 14px}.zx-fs-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}.zx-fs-h span{font-size:11px;opacity:.7}"
+  +".zx-fs ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}.zx-fs li{display:flex;align-items:center;gap:10px;min-height:30px}"
+  +".zx-fs li i{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:12px}"
+  +".zx-fs li.ok i{background:var(--done,#5ee08a);border-color:var(--done,#5ee08a);color:#10241a}.zx-fs li.ok b{opacity:.55;text-decoration:line-through}"
+  +".zx-fs li span{flex:1;display:flex;flex-direction:column;min-width:0}.zx-fs li small{opacity:.75;font-size:12px;line-height:1.3}.zx-fs li.nx b{color:var(--accent,inherit)}.zx-fs .btn.sm{flex:none}";
+  (document.head||document.documentElement).appendChild(st)})();
