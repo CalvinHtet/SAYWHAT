@@ -389,7 +389,7 @@ LFROOM.restaurant=function(C){
   lfPrep(C,"pass",Wi-1.0,kd-.5);
   /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
-  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.75,y=.2+tj*(td+.05)+o;/* Cal: "facing left but unclear why they are there": they face the counter now */lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1,flip:1});
+  if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.68/* QA room sweep: .07 closer, so the stool seats read as at the counter (were .65 off it) */,y=.2+tj*(td+.05)+o;/* Cal: "facing left but unclear why they are there": they face the counter now */lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1,flip:1});
     var n0=C.st.length;C.s("sit",x,y,1,"eat",[10,20],{tag:"diner",lift:1,sz:10,wx:x-1.1,wy:y,tb:[x+.9,y]});lfConvert(C,n0,"sit",{uact:"eat",lbl:"S",grp:"s"})});
   /* booths down the window wall, tables on the rest of the floor with room to walk between them */
   /* Cal, 2026-11-05: the red crescent booth sits in the back-left corner, open toward the room; the window booths move down
@@ -401,7 +401,8 @@ LFROOM.restaurant=function(C){
   var cres0=H("r_more2")&&st>1&&LFSPR.rdx_curve;
   /* p[2]: a 2-top. The full floor's middle row is 2-tops so chairs in neighbouring rows never touch (LEAD/QA 121dc00) */
   ([[[2.6,2.9],[5.0,6.0]],[[5.7,2.4],[5.7,5.9],[9.4,7.2]],[[5.7,2.4],[9.8,2.4],[cres0?7.4:5.7,cres0?5.9:6.2,1],[9.8,6.3,1],[13.3,7.2]]])[st].forEach(function(p){rsDinner(C,p[0],p[1],"T",p[2])});
-  if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
+  /* QA room sweep (rooms-never-cluttered): with the crescent booth in, the full floor gets one more table, not two */
+  if(H("r_more1")&&st>0)({1:[[5.7,9.5],[9.4,10.4]],2:cres0?[[7.75,10.2]]:[[5.7,10.2],[9.8,10.2]]})[st].forEach(function(p){rsDinner(C,p[0],p[1],"T")});
   /* Cal: the crescent opens toward the room, straight down the picture (rdx_curve2 is drawn symmetric for the corner) */
   if(crescent){var cvx=.3,cvy=.25,cw=3.5,cv2=!!LFSPR.rdx_curve2;lfSpr(C,cv2?"rdx_curve2":"rdx_curve",cvx,cvy,cw,cv2?cw:3.3,{h:30,dk:2.4,ctr:1});
     /* its guests sort after its tall back and before the round table in front of them */
