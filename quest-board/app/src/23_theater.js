@@ -129,7 +129,8 @@ LFROOM.theater=function(C){
   /* two sofas in an L in the back-left corner under the trailer screen (QA design review) */
   if(H("t_sofa")){var sk=H("t_sofa2")?"thL_sofa":"th_sofa";lfSpr(C,sk,.2,.5,1.2,2.4,{h:30,H:58});lfSpr(C,sk,1.6,.2,1.6,1.1,{h:30,H:58,flip:1})}
   /* the standee by the entrance mat, where people walk in and take the picture */
-  if(H("t_standee"))lfSpr(C,"thx_standee",W-1.9,6.7,.8,.5,{h:30,ctr:1,H:84});
+  /* QA room sweep 2026-11-14: it stood on the entrance by the mat; now on the tiles beside the way in */
+  if(H("t_standee"))lfSpr(C,"thx_standee",W-1.9,8.0,.8,.5,{h:30,ctr:1,H:84});
   /* the bins by the concession; the poster stand stays out of the picture (it hid the liquor wall and had no poster) */
   if(H("t_bins"))lfSpr(C,lux4?"loL_bins":"lo_bins",3.4,5.2,.8,.8,{h:26,ctr:1,H:52});
   /* the wing: the bar */
