@@ -225,3 +225,15 @@ function zxShufOrd(F,ids,upto){var n=ids.length,lv=F.live||DROPS.live,k=F.id+"|"
   return ord[upto]}
 var zxFlOrder=flOrderAt;flOrderAt=function(F,ids,j){try{if(!ids||!ids.length||(F.id==="street"&&DROPS.on)||ids.length<2)return zxFlOrder.apply(this,arguments);
   if(j<zxShufJ0(F))return zxFlOrder.apply(this,arguments);if(!DROPS.rerun&&j>=ids.length)return null;return zxShufOrd(F,ids,j)}catch(e){return zxFlOrder.apply(this,arguments)}};
+/* Cal (via ROOMS, 2026-11-14): "generate additional animations for all the visiting characters in the game. I want every visitor to
+   have 6 different animations." Six two-key clips in data/poses.json (bone rotations, no new art): wave, laugh, dance, chat, cheer
+   and clap ("phone" would need a phone painted; clap stands in). Visitors (role visitor: friends, player visits, social visits; and
+   crew with a team tag: team members tm: and rescued allies al:) play the next of their six (3.2 s) when they stand still, at most one every 9 s, starting at a point set by their id, so over a visit they go through all six. Business staff and guests, your character and the dogs are unchanged. Zoomed out, lfRigState still shows a
+   single frame of it (one picture per outfit and animation, as it does for breathing). */
+var ZXEMO=["wave","laugh","dance","chat","cheer","clap"];
+function zxAgH(a){return dropHash(String(a.id||""))}
+var zxRS0=lfRigState0;lfRigState0=function(a){var r=zxRS0.apply(this,arguments);
+  try{if(!r||r.clip!=="idle"||!(a.role==="visitor"||(a.role==="crew"&&a.tm))||a.leaving||a.alpha<1||!QBLoft.clips||!QBLoft.clips.wave)return r;
+    var now=performance.now(),st=a._zxe||(a._zxe={t:now-zxAgH(a)%9000,n:zxAgH(a)%ZXEMO.length});
+    if(now-st.t>=9000){st.t=now;st.n=(st.n+1)%ZXEMO.length}else if(now-st.t>3200)return r;
+    var em=ZXEMO[st.n];return {ch:r.ch,clip:em,f:QBLoft.clipFrame(em,now)}}catch(e){return r}};

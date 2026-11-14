@@ -1,0 +1,17 @@
+// Six visitor animations in play (Cal via ROOMS, 2026-11-14), Chromium with WebGL, plain build on PORT 8779 by default: Mara (team)
+// in the Kode Plaza building view for 90 s with popups cleared; prints each person's clips. Mara shows the six in turn when she stands; staff (rs:, gd:) and guests (g:) never.
+const pw = require('playwright'); const OUT = process.argv[2];
+(async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
+  const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 140)));
+  await p.goto('http://127.0.0.1:8779/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && window.__qbRooms && window.__qbTeam, null, { timeout: 120000 }); await p.waitForTimeout(1000);
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(30); S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; S.areaOn = { board: 1, hideout: 1 }; x.render(); ['garden', 'restaurant'].forEach((t) => window.__qbRooms.all(t, 1)); window.__qbTeam.join('mara'); x.persist(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); });
+  await p.evaluate(() => document.querySelector('.nav button[data-v="hideout"]').click()); await p.waitForTimeout(2000);
+  await p.evaluate(() => { const bs = [...document.querySelectorAll('[data-act="bldgo"]')]; const g = bs[bs.length - 1]; window.__lfpd = null; g.dispatchEvent(new MouseEvent('click', { bubbles: true })); }); await p.waitForTimeout(4000);
+  const who = await p.evaluate(() => Object.keys(window.LFA).map((k) => k + '(' + window.LFA[k].role + (window.LFA[k].tm ? ',tm' : '') + ')').join(' '));
+  console.log('people:', who); console.log('raw', JSON.stringify(await p.evaluate(() => ['tm:mara', 'rs:r_s1', 'g:2:0'].map((k) => { const a = window.LFA[k]; return a ? [k, a._k, a.mode, a._off, a.alpha, a.look && a.look.npc, !!(a.look && a.look.rig)] : [k, 'none']; }))));
+  await p.evaluate(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash,#qbtour').forEach((m) => m.remove())); await p.waitForTimeout(1500); const seen = {}; const t0 = Date.now();
+  while (Date.now() - t0 < 90000) { const r = await p.evaluate(() => { document.querySelectorAll('#layer .modal,.dropsplash,.bsplash,#qbtour').forEach((m) => m.remove()); const o = {}; Object.keys(window.LFA).forEach((k) => { const a = window.LFA[k]; const m = /(walkBack|sitBack|idle|walk|stretch|sit|type|back|wave|laugh|dance|chat|cheer|clap|h)(\d*)$/.exec(a._k || ''); o[k] = { k: m ? m[1] + '0' : '', mode: a.mode }; }); return o; });
+    Object.keys(r).forEach((id) => { const c = (r[id].k || '').replace(/\d+$/, ''); if (!c) return; (seen[id] = seen[id] || {})[c] = (seen[id][c] || 0) + 1; }); await p.waitForTimeout(250); }
+  Object.keys(seen).forEach((id) => console.log(id.padEnd(16), JSON.stringify(seen[id])));
+  if (OUT) await p.screenshot({ path: OUT + '/emote_plaza.png' });
+  console.log('errors', JSON.stringify(errs.slice(0, 3))); await b.close(); })();
