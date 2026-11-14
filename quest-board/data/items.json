@@ -1255,6 +1255,10 @@
   "wide": true,
   "friendOnly": 1
  },
+ "fr_kenan_pants": {
+  "slot": "pants",
+  "friendOnly": 1
+ },
  "fr_kenan_jacket": {
   "slot": "top",
   "neutral": true,
