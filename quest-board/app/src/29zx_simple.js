@@ -306,3 +306,18 @@ setInterval(zxFsSkip,400);
   +".zx-fs li.ok i{background:var(--done,#5ee08a);border-color:var(--done,#5ee08a);color:#10241a}.zx-fs li.ok b{opacity:.55;text-decoration:line-through}"
   +".zx-fs li span{flex:1;display:flex;flex-direction:column;min-width:0}.zx-fs li small{opacity:.75;font-size:12px;line-height:1.3}.zx-fs li.nx b{color:var(--accent,inherit)}.zx-fs .btn.sm{flex:none}";
   (document.head||document.documentElement).appendChild(st)})();
+/* ---------- the Daily Quest counts effort (Cal, 2026-11-14) ----------
+   Cal: "I am filling my daily quest meter really fast because I post a LOT on my to do list. Such as washing dishes, sending an email,
+   helping someone at work, even trivial things like taking out the trash or making the bed or eating breakfast. I am consistently hitting
+   the secret hidden daily quest goal. Maybe there needs to be rebalancing for this?" His 100 / 200 / 300 marks stay. What fills the bar
+   changes: each task's own XP (its effort score, 5 for under five minutes up to 100 for a day), not the XP after bonuses (rested, combos,
+   crits, class, relics still pay in full toward your level and coins), and quick tasks count part of it (ECON.dqW: 5 XP counts 60%,
+   10 XP 80%, 25 and up in full; training as before). A heavy day of 30 small tasks lands near the 200 chest; the hidden chest takes
+   real effort (a workout, a big task). The town's efficiency reads the same number. */
+ECON.dqW={5:.6,10:.8};
+function zxDqW(b){var W=ECON.dqW||{},k=Object.keys(W).map(Number).sort(function(a,c){return a-c});for(var i=0;i<k.length;i++)if(b<=k[i])return W[k[i]];return 1}
+/* XP toward the Daily Quest for each quest done today: [counted, as paid] */
+function zxDqParts(){var Q={},raw=0,cnt=0;(S.quests||[]).forEach(function(q){if(q)Q[q.id]=q});
+  Object.keys(S.done||{}).forEach(function(k){var v=+S.done[k]||0;if(!v)return;var q=Q[k],b=q&&+q.xp>0?Math.min(v,+q.xp):v;raw+=v;cnt+=b*zxDqW(b)});return [cnt,raw]}
+dqXp=function(){return Math.round(zxDqParts()[0])+(dqState().tx||0)};
+var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{var p=zxDqParts();if(h&&p[1]>p[0]+.5)h=h.replace('<div class="dq-row">','<p class="note dq-eff">Quick tasks and bonus XP count a little less here; bigger tasks and workouts fill it fastest.</p><div class="dq-row">')}catch(e){}return h};
