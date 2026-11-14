@@ -27,7 +27,19 @@
      pout:{<cid>:{to,toName,stake,goal,days,t,cancel}}, pans:{<cid>:{acc,t}}, psc:{<cid>:{n,fin,t}} (n = that player's active days).
      Held stakes, results and seen notices share S.duel.held / done / seen with the challenges (results carry kind "p"). */
 var DL={kinds:{q:["Productivity","quest XP"],w:["Fitness","Training XP"],p:["Gym Pact","workout days"]},days:[1,3,7],stakes:[100,250,500,1000,2500],goals:[3,4,5],pDays:7,pTrain:true,docs:{},busy:0,t:0,boot:0,err:"",
-  ask:24*36e5,grace:36*36e5,maxOut:3,f:{to:"",kind:"q",days:3,stake:250,goal:4}};
+  ask:24*36e5,grace:36*36e5,maxOut:3,f:{to:"",kind:"q",days:3,stake:250,goal:4,wt:"c",cash:""},maxCoins:1e6,maxCash:10000};
+/* Cal, 2026-11-14: "can we change the wager amount to any number we enter rather than a fixed option amount? Can we also have an option
+   to set your own wager? Such as betting actual money where we just enter a dollar amount and then we can keep each other accountable
+   offline?" The stake is any whole number of coins the player has (typed), or, as "Real money", a dollar amount the app only records:
+   no coins move, and at the end it says who owes whom. The app never moves money; the players settle it themselves. A challenge doc
+   carries cash (dollars, two decimals) beside stake (coins, 0 for a real-money one). The old fixed stakes (DL.stakes) are not checked. */
+function dlCash(c){var v=Math.round((+(c&&c.cash)||0)*100)/100;return v>0&&v<=DL.maxCash?v:0}
+function dlMoney(v){return "$"+(v%1?v.toFixed(2):String(v))}
+/* "250 coins each" or "$20 each" */
+function dlEach(c){var m=dlCash(c);return m?dlMoney(m)+" each":dlFmt(c.stake)+" coins each"}
+/* the form's stake: [coins, dollars] when it can be sent, else null */
+function dlStakeOf(f){if(f.wt==="$"){var m=Math.round((+String(f.cash).replace(/[^0-9.]/g,"")||0)*100)/100;return m>0&&m<=DL.maxCash?[0,m]:null}
+  var n=Math.floor(+f.stake||0);return n>=1&&n<=DL.maxCoins&&n<=S.coins?[n,0]:null}
 function dlOn(){return typeof socOn==="function"&&socOn()&&loaded&&S&&S.created}
 function dlSt(){if(!S.duel||typeof S.duel!=="object")S.duel={};var d=S.duel;["held","done","seen"].forEach(function(k){if(!d[k]||typeof d[k]!=="object")d[k]={}});return d}
 function dlLog(){if(!S.dlog||typeof S.dlog!=="object")S.dlog={};var g=S.dlog;if(!g.q||typeof g.q!=="object")g.q={};if(!Array.isArray(g.w))g.w=[];if(!Array.isArray(g.a))g.a=[];return g}
@@ -40,6 +52,7 @@ htabCss("qb-duel-css",
   +".dlc .dlvs i{display:block;height:8px;border-radius:999px;background:var(--surface2);overflow:hidden}.dlc .dlvs i b{display:block;height:100%;background:var(--accent)}"
   +".dlc .dlvs i.o b{background:var(--muted)}.dlc .dlvs span.mono{text-align:right}"
   +".dlc .dlwin{color:var(--good,#5fe3a1)}.dlc .dllose{color:var(--muted)}"
+  +".dlm .dlamt{display:flex;align-items:center;gap:8px;margin:6px 0 10px}.dlm .dlamt input{flex:0 1 140px;min-width:0;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}.dlm .dlamt .mono{font-size:18px}"
   +".dlm .dlseg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}.dlm .dlseg button{flex:1 1 auto;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);font:600 14px/1 var(--font-body,system-ui);cursor:pointer;padding:0 10px}"
   +".dlm .dlseg button.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}.dlm .dlseg button:disabled{opacity:.4;cursor:default}"
   +".dlm .dlseg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}");
@@ -68,7 +81,7 @@ function dlScore(kind,a,b){var g=dlLog(),n=0;
 function dlAll(){var out=[],me=MYUID,now=Date.now();
   Object.keys(DL.docs).forEach(function(from){var d=DL.docs[from]||{},o=d.out||{};
     Object.keys(o).forEach(function(cid){var c=o[cid];if(!c||!c.to||(from!==me&&c.to!==me))return;var td=DL.docs[c.to]||{};
-      var ch={cid:cid,from:from,to:c.to,kind:c.kind==="w"?"w":"q",stake:Math.max(0,Math.round(+c.stake||0)),days:Math.max(1,Math.min(7,+c.days||1)),t:+c.t||0,cancel:!!c.cancel,
+      var ch={cid:cid,from:from,to:c.to,kind:c.kind==="w"?"w":"q",stake:Math.max(0,Math.min(DL.maxCoins,Math.round(+c.stake||0))),cash:dlCash(c),days:Math.max(1,Math.min(7,+c.days||1)),t:+c.t||0,cancel:!!c.cancel,
         ans:(td.ans||{})[cid]||null,scF:(d.sc||{})[cid]||null,scT:(td.sc||{})[cid]||null};
       ch.me=from===me?"from":"to";ch.other=ch.me==="from"?c.to:from;ch.otherName=ch.me==="from"?(td.name||c.toName||"Someone"):(d.name||"Someone");
       ch.opp=ch.me==="from"?ch.scT:ch.scF;
@@ -90,7 +103,7 @@ async function dlLoad(){if(!dlOn()||DL.busy)return;DL.busy=1;
   DL.busy=0;dlPaint()}
 /* a new challenge to this player pops once */
 function dlNotice(){var st=dlSt(),n=0;dlAll().forEach(function(c){if(c.me!=="to"||c.st!=="ask"||st.seen[c.cid])return;st.seen[c.cid]=1;n++;
-  pop(c.otherName+" challenged you: "+DL.kinds[c.kind][1]+", "+dlFmt(c.stake)+" coins each. See the Town Hall.")});
+  pop(c.otherName+" challenged you: "+DL.kinds[c.kind][1]+", "+dlEach(c)+". See the Town Hall.")});
   try{gpAll().forEach(function(c){if(c.me!=="to"||c.st!=="ask"||st.seen[c.cid])return;st.seen[c.cid]=1;n++;
     pop(c.otherName+" asked you to a Gym Pact: "+gpWhat(c)+". See the Town Hall.")})}catch(e){}
   if(n)persist()}
@@ -104,30 +117,38 @@ function dlTick(){if(!dlOn()||!DL.t)return;var st=dlSt(),sc=(DL.docs[MYUID]||{})
       r={r:"back",c:held,why:c.st}}
     else if(c.st==="over"&&((c.opp&&c.opp.fin)||now>c.end+DL.grace)){var my=dlScore(c.kind,c.start,c.end),on=c.opp?Math.round(+c.opp.n||0):0;
       r={r:my>on?"won":my<on?"lost":"tie",my:my,on:on,c:my>on?2*c.stake:my===on?c.stake:0}}
-    if(!r)return;r.name=c.otherName;r.kind=c.kind;r.stake=c.stake;r.t=now;st.done[c.cid]=r;delete st.held[c.cid];
+    if(!r)return;r.name=c.otherName;r.kind=c.kind;r.stake=c.stake;r.cash=c.cash;r.t=now;st.done[c.cid]=r;delete st.held[c.cid];
     if(r.c){S.coins+=r.c;paid+=r.c;if(r.r==="won")S.earnedC+=c.stake}
+    if(r.cash){msgs.push(dlCashLine(r,0));return}
     msgs.push(r.r==="won"?"You beat "+r.name+", "+dlFmt(r.my)+" to "+dlFmt(r.on)+": +"+dlFmt(r.c)+" coins":r.r==="lost"?r.name+" won the challenge, "+dlFmt(r.on)+" to "+dlFmt(r.my):r.r==="tie"?"A tie with "+r.name+": your "+dlFmt(r.c)+" coins are back"
       :"Challenge with "+r.name+" "+(r.why==="cancel"?"cancelled":r.why==="declined"?"declined":"not answered")+": "+dlFmt(r.c)+" coins back")});
   var ppub={};try{gpTick(st,now,ppub,msgs)}catch(e){}
   if(Object.keys(pub).length||Object.keys(ppub).length)dlWrite(function(d){Object.keys(pub).forEach(function(k){d.sc[k]=pub[k]});Object.keys(ppub).forEach(function(k){d.psc[k]=ppub[k]})}).catch(function(){});
   if(msgs.length){persist();render();msgs.forEach(function(m,i){setTimeout(function(){pop(m)},i*1900)})}}
 
+/* a real-money result: who owes whom (the app moves no money) */
+function dlCashLine(r,h){var nm=h?'<b>'+esc(r.name)+'</b>':r.name,m=dlMoney(r.cash),k=DL.kinds[r.kind]||DL.kinds.q;
+  if(r.kind==="p")return r.r==="won"?"Gym Pact with "+nm+": you made it, they didn't. "+nm+" owes you "+m:r.r==="lost"?"Gym Pact with "+nm+": they made it, you didn't. You owe "+nm+" "+m
+    :r.r==="both"?"Gym Pact with "+nm+": you both made it. Nobody owes anything":r.r==="miss"?"Gym Pact with "+nm+": neither of you made it. Nobody collects"
+    :"Gym Pact with "+nm+" "+(r.why==="cancel"?"cancelled":r.why==="declined"?"declined":"not answered");
+  return r.r==="won"?"You beat "+nm+" at "+k[1]+", "+dlFmt(r.my)+" to "+dlFmt(r.on)+". "+nm+" owes you "+m:r.r==="lost"?nm+" won at "+k[1]+", "+dlFmt(r.on)+" to "+dlFmt(r.my)+". You owe "+nm+" "+m
+    :r.r==="tie"?"A tie with "+nm+" at "+k[1]+". Nobody owes anything":"Challenge with "+nm+" "+(r.why==="cancel"?"cancelled":r.why==="declined"?"declined":"not answered")}
 /* ---- actions ---- */
 function dlCid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
 async function dlSend(){if(DL.f.kind==="p")return gpSend();var f=DL.f,w=(SOC.worlds||[]).filter(function(x){return x.id===f.to})[0],st=dlSt(),ch=dlAll();
   if(!w){pop("Pick who to challenge");return}
-  if(!(DL.stakes.indexOf(f.stake)>=0)||!(DL.days.indexOf(f.days)>=0)||!DL.kinds[f.kind])return;
-  if(S.coins<f.stake){pop("You need "+dlFmt(f.stake)+" coins for that stake");return}
+  var sk=dlStakeOf(f);if(!sk){pop(f.wt==="$"?"Enter a dollar amount":"Enter a stake of 1 to "+dlFmt(S.coins)+" coins");return}
+  if(!(DL.days.indexOf(f.days)>=0)||!DL.kinds[f.kind])return;
   if(ch.filter(function(c){return c.me==="from"&&c.st==="ask"}).length>=DL.maxOut){pop("Three challenges are already waiting for an answer");return}
   if(ch.some(function(c){return c.other===w.id&&(c.st==="ask"||c.st==="live")})){pop("You already have a challenge going with "+w.name);return}
-  var cid=dlCid();S.coins-=f.stake;st.held[cid]=f.stake;persist();render();closeModals();
-  try{await dlWrite(function(d){d.out[cid]={to:w.id,toName:w.name,kind:f.kind,stake:f.stake,days:f.days,t:Date.now()}});pop("Challenge sent to "+w.name)}
-  catch(e){delete st.held[cid];S.coins+=f.stake;persist();render();pop("Could not send ("+((e&&e.code)||"error")+"). Your coins are back.")}
+  var cid=dlCid(),n=sk[0];S.coins-=n;if(n)st.held[cid]=n;persist();render();closeModals();
+  try{await dlWrite(function(d){var o={to:w.id,toName:w.name,kind:f.kind,stake:n,days:f.days,t:Date.now()};if(sk[1])o.cash=sk[1];d.out[cid]=o});pop("Challenge sent to "+w.name)}
+  catch(e){delete st.held[cid];S.coins+=n;persist();render();pop("Could not send ("+((e&&e.code)||"error")+")."+(n?" Your coins are back.":""))}
   dlPaint()}
 function dlFind(cid){return dlAll().filter(function(c){return c.cid===cid})[0]||null}
 async function dlAccept(cid){var c=dlFind(cid),st=dlSt();if(!c||c.me!=="to"||c.st!=="ask"||st.held[cid])return;
   if(S.coins<c.stake){pop("You need "+dlFmt(c.stake)+" coins to accept");return}
-  S.coins-=c.stake;st.held[cid]=c.stake;persist();render();
+  S.coins-=c.stake;if(c.stake)st.held[cid]=c.stake;persist();render();
   try{await dlWrite(function(d){d.ans[cid]={acc:true,t:Date.now()}});pop("Challenge on. "+dlLeft(c.days*864e5)+" to go.")}
   catch(e){delete st.held[cid];S.coins+=c.stake;persist();render();pop("Could not accept ("+((e&&e.code)||"error")+"). Your coins are back.")}
   dlTick();dlPaint()}
@@ -148,8 +169,8 @@ function gpD(n){return n+" day"+(n===1?"":"s")}
 function gpAll(){var out=[],me=MYUID,now=Date.now();
   Object.keys(DL.docs).forEach(function(from){var d=DL.docs[from]||{},o=d.pout||{};
     Object.keys(o).forEach(function(cid){var c=o[cid];if(!c||!c.to||(from!==me&&c.to!==me))return;
-      var stake=Math.round(+c.stake||0),goal=Math.round(+c.goal||0);if(DL.stakes.indexOf(stake)<0||DL.goals.indexOf(goal)<0)return;
-      var td=DL.docs[c.to]||{},ch={cid:cid,from:from,to:c.to,kind:"p",stake:stake,goal:goal,days:DL.pDays,t:+c.t||0,cancel:!!c.cancel,
+      var stake=Math.max(0,Math.min(DL.maxCoins,Math.round(+c.stake||0))),goal=Math.round(+c.goal||0);if(DL.goals.indexOf(goal)<0)return;
+      var td=DL.docs[c.to]||{},ch={cid:cid,from:from,to:c.to,kind:"p",stake:stake,cash:dlCash(c),goal:goal,days:DL.pDays,t:+c.t||0,cancel:!!c.cancel,
         ans:(td.pans||{})[cid]||null,scF:(d.psc||{})[cid]||null,scT:(td.psc||{})[cid]||null};
       ch.me=from===me?"from":"to";ch.other=ch.me==="from"?c.to:from;ch.otherName=ch.me==="from"?(td.name||c.toName||"Someone"):(d.name||"Someone");
       ch.opp=ch.me==="from"?ch.scT:ch.scF;ch.mine=ch.me==="from"?ch.scF:ch.scT;
@@ -162,7 +183,7 @@ function gpMine(c){var o=c.mine;return o&&o.fin?Math.round(+o.n||0):gpCount(c.st
 /* one pact at a time: another one running, or this player's own offer still waiting */
 function gpBusy(except){var st=dlSt();return gpAll().filter(function(c){return c.cid!==except&&!st.done[c.cid]&&(c.st==="live"||(c.st==="ask"&&c.me==="from"))})[0]||null}
 function gpBusyTxt(c,raw){var nm=raw?c.otherName:esc(c.otherName);return c.st==="ask"?"Your Gym Pact offer to "+nm+" is still waiting. Cancel it to start another.":"You have a Gym Pact going with "+nm+". One at a time."}
-function gpWhat(c){return c.goal+" workout days in "+c.days+", "+dlFmt(c.stake)+" coins each"}
+function gpWhat(c){return c.goal+" workout days in "+c.days+", "+dlEach(c)}
 function gpRules(){return "You both put in the stake and have "+DL.pDays+" days once it's accepted. A day counts when you "+(DL.pTrain?"finish a full Training session or ":"")
   +"prove a fitness quest with a photo: a workout, a run, a walk. Two in a day count once. Both reach the goal: each gets 1.5 times the stake. Only one does: they take both stakes. Neither does: both stakes are lost."}
 /* called from dlTick: publishes this player's days (into pub, written with the challenge scores) and settles each ended pact once */
@@ -172,12 +193,12 @@ function gpTick(st,now,pub,msgs){var chg=0;
       if(!(o&&o.fin)&&(!o||o.n!==my||c.st==="over"))pub[c.cid]={n:my,fin:c.st==="over",t:now}}
     if(st.done[c.cid])return;var held=+st.held[c.cid]||0,r=null;
     if(c.st==="cancel"||c.st==="expired"||c.st==="declined"){if(!held){st.done[c.cid]={r:"none",kind:"p",t:now};chg=1;return}r={r:"back",c:held,why:c.st}}
-    else if(c.st==="over"&&((c.opp&&c.opp.fin)||now>c.end+DL.grace)){if(!held){st.done[c.cid]={r:"none",kind:"p",t:now};chg=1;return}
+    else if(c.st==="over"&&((c.opp&&c.opp.fin)||now>c.end+DL.grace)){if(!held&&!c.cash){st.done[c.cid]={r:"none",kind:"p",t:now};chg=1;return}
       var on=c.opp?Math.round(+c.opp.n||0):0,mk=my>=c.goal,ok=on>=c.goal;
       r={r:mk&&ok?"both":mk?"won":ok?"lost":"miss",my:my,on:on,goal:c.goal,c:mk?(ok?Math.round(1.5*c.stake):2*c.stake):0}}
-    if(!r)return;r.name=c.otherName;r.kind="p";r.stake=c.stake;r.t=now;st.done[c.cid]=r;delete st.held[c.cid];chg=1;
+    if(!r)return;r.name=c.otherName;r.kind="p";r.stake=c.stake;r.cash=c.cash;r.t=now;st.done[c.cid]=r;delete st.held[c.cid];chg=1;
     if(r.c){S.coins+=r.c;if(r.r==="both"||r.r==="won")S.earnedC+=r.c-c.stake}
-    msgs.push(gpLine(r,0))});
+    msgs.push(r.cash?dlCashLine(r,0):gpLine(r,0))});
   if(chg&&!msgs.length)persist()}
 function gpLine(r,h){var nm=h?'<b>'+esc(r.name)+'</b>':r.name;
   return r.r==="both"?"Gym Pact with "+nm+": you both made it, "+r.my+" and "+r.on+" days. +"+dlFmt(r.c)+" coins"
@@ -187,19 +208,19 @@ function gpLine(r,h){var nm=h?'<b>'+esc(r.name)+'</b>':r.name;
     :"Gym Pact with "+nm+" "+(r.why==="cancel"?"cancelled":r.why==="declined"?"declined":"not answered")+": "+dlFmt(r.c)+" coins back"}
 async function gpSend(){var f=DL.f,w=(SOC.worlds||[]).filter(function(x){return x.id===f.to})[0],st=dlSt();
   if(!w){pop("Pick who to challenge");return}
-  if(DL.stakes.indexOf(f.stake)<0||DL.goals.indexOf(f.goal)<0)return;
+  var sk=dlStakeOf(f);if(!sk){pop(f.wt==="$"?"Enter a dollar amount":"Enter a stake of 1 to "+dlFmt(S.coins)+" coins");return}
+  if(DL.goals.indexOf(f.goal)<0)return;
   if(!DL.t){pop("Still reaching the other players. Try again in a moment.");dlPaint();return}
-  if(S.coins<f.stake){pop("You need "+dlFmt(f.stake)+" coins for that stake");return}
   var busy=gpBusy("");if(busy){pop(gpBusyTxt(busy,1));dlPaint();return}
-  var cid=dlCid();S.coins-=f.stake;st.held[cid]=f.stake;persist();render();closeModals();
-  try{await dlWrite(function(d){d.pout[cid]={to:w.id,toName:w.name,stake:f.stake,goal:f.goal,days:DL.pDays,t:Date.now()}});pop("Gym Pact sent to "+w.name)}
-  catch(e){delete st.held[cid];S.coins+=f.stake;persist();render();pop("Could not send ("+((e&&e.code)||"error")+"). Your coins are back.")}
+  var cid=dlCid(),n=sk[0];S.coins-=n;if(n)st.held[cid]=n;persist();render();closeModals();
+  try{await dlWrite(function(d){var o={to:w.id,toName:w.name,stake:n,goal:f.goal,days:DL.pDays,t:Date.now()};if(sk[1])o.cash=sk[1];d.pout[cid]=o});pop("Gym Pact sent to "+w.name)}
+  catch(e){delete st.held[cid];S.coins+=n;persist();render();pop("Could not send ("+((e&&e.code)||"error")+")."+(n?" Your coins are back.":""))}
   dlPaint()}
 function gpFind(cid){return gpAll().filter(function(c){return c.cid===cid})[0]||null}
 async function gpAccept(cid){var c=gpFind(cid),st=dlSt();if(!c||c.me!=="to"||c.st!=="ask"||st.held[cid])return;
   if(S.coins<c.stake){pop("You need "+dlFmt(c.stake)+" coins to accept");return}
   var busy=gpBusy(cid);if(busy){pop(gpBusyTxt(busy,1));dlPaint();return}
-  S.coins-=c.stake;st.held[cid]=c.stake;persist();render();
+  S.coins-=c.stake;if(c.stake)st.held[cid]=c.stake;persist();render();
   try{await dlWrite(function(d){d.pans[cid]={acc:true,t:Date.now()}});pop("Gym Pact on: "+c.goal+" workout days in the next "+c.days+".")}
   catch(e){delete st.held[cid];S.coins+=c.stake;persist();render();pop("Could not accept ("+((e&&e.code)||"error")+"). Your coins are back.")}
   dlTick();dlPaint()}
@@ -212,26 +233,26 @@ async function gpCancel(cid){var c=gpFind(cid);if(!c||c.me!=="from"||c.st!=="ask
 function gpDots(n,goal){var h='<span class="gpdots" aria-hidden="true">';for(var i=0;i<goal;i++)h+='<i'+(i<n?' class="on"':'')+'></i>';return h+'</span>'}
 function gpItem(c){var h='<div class="dli gpi">';
   if(c.st==="ask"&&c.me==="to"){var busy=gpBusy(c.cid),poor=S.coins<c.stake;
-    h+='<p><b>'+esc(c.otherName)+'</b> asks you to a Gym Pact: '+gpWhat(c)+'.</p><p class="note">'+gpRules()+'</p><div class="dlgo"><button class="btn sm" data-dl="pacc" data-c="'+esc(c.cid)+'"'+(poor||busy?' disabled':'')+'>Accept, put in '+dlFmt(c.stake)+'</button><button class="btn ghost sm" data-dl="pdec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(busy?gpBusyTxt(busy)+' ':poor?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>'}
-  else if(c.st==="ask")h+='<p>Waiting for <b>'+esc(c.otherName)+'</b> to accept a Gym Pact: '+gpWhat(c)+'.</p><div class="dlgo"><button class="btn ghost sm" data-dl="pcan" data-c="'+esc(c.cid)+'">Cancel</button></div><small class="note">Your '+dlFmt(c.stake)+' coins are in. '+dlLeft(c.t+DL.ask-Date.now())+' left to accept.</small>';
+    h+='<p><b>'+esc(c.otherName)+'</b> asks you to a Gym Pact: '+gpWhat(c)+'.</p><p class="note">'+gpRules()+'</p><div class="dlgo"><button class="btn sm" data-dl="pacc" data-c="'+esc(c.cid)+'"'+(poor||busy?' disabled':'')+'>'+(c.stake?'Accept, put in '+dlFmt(c.stake):'Accept')+'</button><button class="btn ghost sm" data-dl="pdec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(busy?gpBusyTxt(busy)+' ':poor?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>'}
+  else if(c.st==="ask")h+='<p>Waiting for <b>'+esc(c.otherName)+'</b> to accept a Gym Pact: '+gpWhat(c)+'.</p><div class="dlgo"><button class="btn ghost sm" data-dl="pcan" data-c="'+esc(c.cid)+'">Cancel</button></div><small class="note">'+(c.stake?'Your '+dlFmt(c.stake)+' coins are in. ':'')+dlLeft(c.t+DL.ask-Date.now())+' left to accept.</small>';
   else{var my=gpMine(c),on=c.opp?Math.round(+c.opp.n||0):0,row=function(nm,n){return '<span>'+nm+'</span>'+gpDots(n,c.goal)+'<span class="mono">'+Math.min(n,c.goal)+'/'+c.goal+'</span>'};
-    h+='<p>'+(c.st==="live"?'':'<b>Ended.</b> ')+'Gym Pact with <b>'+esc(c.otherName)+'</b>, '+dlFmt(c.stake)+' coins each</p>'
+    h+='<p>'+(c.st==="live"?'':'<b>Ended.</b> ')+'Gym Pact with <b>'+esc(c.otherName)+'</b>, '+dlEach(c)+'</p>'
       +'<div class="dlvs">'+row('You',my)+row(esc(c.otherName),on)+'</div>'
       +'<small class="note">'+(c.st==="live"?dlLeft(c.end-Date.now())+' left'+(c.opp?' &middot; '+esc(c.otherName)+'\'s days as of '+socAgo(+c.opp.t||0):''):'Waiting for '+esc(c.otherName)+'\'s final count (at most '+dlLeft(c.end+DL.grace-Date.now())+')')+'</small>'}
   return h+'</div>'}
-function gpPast(r){return '<div class="dli"><p class="'+(r.r==="both"||r.r==="won"?'dlwin':r.r==="lost"||r.r==="miss"?'dllose':'')+'">'+gpLine(r,1)+'</p></div>'}
+function gpPast(r){return '<div class="dli"><p class="'+(r.r==="both"||r.r==="won"?'dlwin':r.r==="lost"||r.r==="miss"?'dllose':'')+'">'+(r.cash?dlCashLine(r,1):gpLine(r,1))+'</p></div>'}
 
 /* ---- drawing ---- */
-function dlWhat(c){return 'most '+DL.kinds[c.kind][1]+' in '+c.days+' day'+(c.days>1?'s':'')+', '+dlFmt(c.stake)+' coins each'}
+function dlWhat(c){return 'most '+DL.kinds[c.kind][1]+' in '+c.days+' day'+(c.days>1?'s':'')+', '+dlEach(c)+(dlCash(c)?' (between you, the app moves no money)':'')}
 function dlItem(c){var h='<div class="dli">';
-  if(c.st==="ask"&&c.me==="to")h+='<p><b>'+esc(c.otherName)+'</b> challenges you: '+dlWhat(c)+'. The winner takes '+dlFmt(2*c.stake)+'.</p><div class="dlgo"><button class="btn sm" data-dl="acc" data-c="'+esc(c.cid)+'"'+(S.coins<c.stake?' disabled':'')+'>Accept, put in '+dlFmt(c.stake)+'</button><button class="btn ghost sm" data-dl="dec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(S.coins<c.stake?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>';
-  else if(c.st==="ask")h+='<p>Waiting for <b>'+esc(c.otherName)+'</b> to accept: '+dlWhat(c)+'.</p><div class="dlgo"><button class="btn ghost sm" data-dl="can" data-c="'+esc(c.cid)+'">Cancel</button></div><small class="note">Your '+dlFmt(c.stake)+' coins are in the pot. '+dlLeft(c.t+DL.ask-Date.now())+' left to accept.</small>';
+  if(c.st==="ask"&&c.me==="to")h+='<p><b>'+esc(c.otherName)+'</b> challenges you: '+dlWhat(c)+'. '+(dlCash(c)?'The loser owes the winner '+dlMoney(dlCash(c))+'.':'The winner takes '+dlFmt(2*c.stake)+'.')+'</p><div class="dlgo"><button class="btn sm" data-dl="acc" data-c="'+esc(c.cid)+'"'+(S.coins<c.stake?' disabled':'')+'>'+(c.stake?'Accept, put in '+dlFmt(c.stake):'Accept')+'</button><button class="btn ghost sm" data-dl="dec" data-c="'+esc(c.cid)+'">Decline</button></div><small class="note">'+(S.coins<c.stake?'You need '+dlFmt(c.stake)+' coins. ':'')+dlLeft(c.t+DL.ask-Date.now())+' to answer</small>';
+  else if(c.st==="ask")h+='<p>Waiting for <b>'+esc(c.otherName)+'</b> to accept: '+dlWhat(c)+'.</p><div class="dlgo"><button class="btn ghost sm" data-dl="can" data-c="'+esc(c.cid)+'">Cancel</button></div><small class="note">'+(c.stake?'Your '+dlFmt(c.stake)+' coins are in the pot. ':'')+dlLeft(c.t+DL.ask-Date.now())+' left to accept.</small>';
   else{var my=dlScore(c.kind,c.start,Math.min(Date.now(),c.end)),on=c.opp?Math.round(+c.opp.n||0):0,mx=Math.max(1,my,on);
-    h+='<p>'+(c.st==="live"?'':'<b>Ended.</b> ')+DL.kinds[c.kind][1].replace(/^\w/,function(x){return x.toUpperCase()})+' against <b>'+esc(c.otherName)+'</b>, pot '+dlFmt(2*c.stake)+'</p>'
+    h+='<p>'+(c.st==="live"?'':'<b>Ended.</b> ')+DL.kinds[c.kind][1].replace(/^\w/,function(x){return x.toUpperCase()})+' against <b>'+esc(c.otherName)+'</b>, '+(dlCash(c)?dlMoney(dlCash(c))+' on it':'pot '+dlFmt(2*c.stake))+'</p>'
       +'<div class="dlvs"><span>You</span><i><b style="width:'+(my/mx*100)+'%"></b></i><span class="mono">'+dlFmt(my)+'</span><span>'+esc(c.otherName)+'</span><i class="o"><b style="width:'+(on/mx*100)+'%"></b></i><span class="mono">'+dlFmt(on)+'</span></div>'
       +'<small class="note">'+(c.st==="live"?dlLeft(c.end-Date.now())+' left'+(c.opp?' &middot; '+esc(c.otherName)+'\'s score as of '+socAgo(+c.opp.t||0):''):'Waiting for '+esc(c.otherName)+'\'s final score (at most '+dlLeft(c.end+DL.grace-Date.now())+')')+'</small>'}
   return h+'</div>'}
-function dlPast(r){var k=DL.kinds[r.kind]||DL.kinds.q;
+function dlPast(r){var k=DL.kinds[r.kind]||DL.kinds.q;if(r.cash)return '<div class="dli"><p class="'+(r.r==="won"?'dlwin':r.r==="lost"?'dllose':'')+'">'+dlCashLine(r,1)+'</p></div>';
   return '<div class="dli"><p class="'+(r.r==="won"?'dlwin':r.r==="lost"?'dllose':'')+'">'+(r.r==="won"?'You beat <b>'+esc(r.name)+'</b> at '+k[1]+', '+dlFmt(r.my)+' to '+dlFmt(r.on)+': +'+dlFmt(r.c)+' coins'
     :r.r==="lost"?'<b>'+esc(r.name)+'</b> won at '+k[1]+', '+dlFmt(r.on)+' to '+dlFmt(r.my):r.r==="tie"?'A tie with <b>'+esc(r.name)+'</b> at '+k[1]+' ('+dlFmt(r.my)+'): stakes back'
     :'Challenge with <b>'+esc(r.name)+'</b> '+(r.why==="cancel"?'cancelled':r.why==="declined"?'declined':'not answered')+': '+dlFmt(r.c)+' coins back')+'</p></div>'}
@@ -239,7 +260,7 @@ function dlCard(){if(!dlOn())return "";var st=dlSt(),ch=dlAll(),act=ch.filter(fu
   var pacts=[];try{pacts=gpAll().filter(function(c){return (c.st==="ask"||c.st==="live"||c.st==="over")&&!st.done[c.cid]})}catch(e){}
   var past=Object.keys(st.done).map(function(k){return st.done[k]}).filter(function(r){return r&&r.r&&r.r!=="none"}).sort(function(a,b){return b.t-a.t}).slice(0,3);
   var h='<section class="card panel dlc" id="dlcard"><div class="row" style="justify-content:space-between"><h3 class="label">Challenges</h3><button class="btn sm" data-dl="new">Challenge someone</button></div>';
-  if(!act.length&&!pacts.length)h+='<p class="note">Bet coins on who earns more quest XP or Training XP in 1, 3 or 7 days. You both put in the same stake. The winner takes the pot. A Gym Pact bets on workout days instead: you both aim for 3 to 5 in a week.</p>';
+  if(!act.length&&!pacts.length)h+='<p class="note">Bet coins, or real money you settle yourselves, on who earns more quest XP or Training XP in 1, 3 or 7 days. You both put in the same stake. The winner takes the pot. A Gym Pact bets on workout days instead: you both aim for 3 to 5 in a week.</p>';
   h+=pacts.map(gpItem).join("")+act.map(dlItem).join("");
   if(past.length)h+='<details><summary class="note">Finished</summary>'+past.map(function(r){return r.kind==="p"?gpPast(r):dlPast(r)}).join("")+'</details>';
   if(DL.err)h+='<p class="note">Could not reach the other players ('+esc(DL.err)+').</p>';
@@ -253,16 +274,19 @@ function dlNewHtml(){var f=DL.f,ws=(SOC.worlds||[]).filter(function(w){return w&
   h+='<h4 class="label">Who</h4>'+(ws.length?seg("to",ws.slice(0,24).map(function(w){return w.id}),function(id){var w=ws.filter(function(x){return x.id===id})[0];return esc(w.name)+' <small class="note">Lv '+(+w.lv||1)+'</small>'}):'<p class="note">'+(SOC.loaded?'No one else in town yet.':'Looking for players...')+'</p>');
   h+='<h4 class="label">What</h4>'+seg("kind",["q","w","p"],function(k){return DL.kinds[k][0]+' <small class="note">'+DL.kinds[k][1]+'</small>'});
   h+=pk?'<h4 class="label">Workout days out of '+DL.pDays+'</h4>'+seg("goal",DL.goals,function(d){return d+' days'}):'<h4 class="label">How long</h4>'+seg("days",DL.days,function(d){return d+' day'+(d>1?'s':'')});
-  h+='<h4 class="label">Stake each</h4>'+seg("stake",DL.stakes,function(s){return dlFmt(s)});
+  h+='<h4 class="label">Wager each</h4>'+seg("wt",["c","$"],function(k){return k==="c"?'Coins':'Real money'});
+  h+=f.wt==="$"?'<div class="dlamt"><span class="mono">$</span><input id="dlcash" class="field" type="text" inputmode="decimal" autocomplete="off" placeholder="20" value="'+esc(String(f.cash||""))+'" aria-label="Dollars each"></div>'
+      +'<p class="note">The app keeps score and says who owes whom at the end. It never moves money: you settle it yourselves.</p>'
+    :'<div class="dlamt"><input id="dlstake" class="field" type="text" inputmode="numeric" autocomplete="off" value="'+esc(String(f.stake||""))+'" aria-label="Coins each"><span class="note">coins &middot; you have '+dlFmt(S.coins)+'</span></div>';
   if(busy)h+='<p class="note">'+gpBusyTxt(busy)+'</p>';
-  h+='<button class="btn" data-dl="send"'+(f.to&&S.coins>=f.stake&&!busy?'':' disabled')+'>'+(pk?'Send Gym Pact':'Send challenge')+'</button>';
+  h+='<button class="btn" data-dl="send"'+(f.to&&dlStakeOf(f)&&!busy?'':' disabled')+'>'+(pk?'Send Gym Pact':'Send challenge')+'</button>';
   return h+'</div>'}
-function dlNew(){closeModals();if(S.coins<DL.f.stake)DL.f.stake=DL.stakes[0];var m=modal(dlNewHtml());m.classList.add("dlmm");if(!SOC.loaded&&typeof socLoad==="function")socLoad().then(dlPaint)}
+function dlNew(){closeModals();if(DL.f.wt!=="$"&&S.coins<DL.f.stake)DL.f.stake=Math.min(DL.f.stake,Math.max(1,Math.floor(S.coins)));var m=modal(dlNewHtml());m.classList.add("dlmm");if(!SOC.loaded&&typeof socLoad==="function")socLoad().then(dlPaint)}
 function dlPaint(){var c=document.getElementById("dlcard");if(c){var t=document.createElement("div");t.innerHTML=dlCard();if(t.firstElementChild)c.replaceWith(t.firstElementChild)}
   var m=document.querySelector("#layer .dlmm .dlm");if(m){var x=m.querySelector(".mx"),t2=document.createElement("div");t2.innerHTML=dlNewHtml();var nm=t2.firstElementChild;if(x)nm.insertBefore(x,nm.firstChild);m.replaceWith(nm)}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-dl]");if(!b||b.disabled)return;var a=b.dataset.dl,cid=b.dataset.c;
   if(a==="new")dlNew();
-  else if(a==="f"){var k=b.dataset.k,v=b.dataset.v;DL.f[k]=k==="days"||k==="stake"||k==="goal"?+v:v;dlPaint()}
+  else if(a==="f"){var k=b.dataset.k,v=b.dataset.v;DL.f[k]=k==="days"||k==="stake"||k==="goal"?+v:v;dlPaint();var fi=document.getElementById(k==="wt"?(v==="$"?"dlcash":"dlstake"):"");if(fi)fi.focus()}
   else if(a==="send"){b.disabled=true;dlSend()}
   else if(a==="acc"){b.disabled=true;dlAccept(cid)}
   else if(a==="dec"){b.disabled=true;dlDecline(cid)}
@@ -270,6 +294,9 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   else if(a==="pacc"){b.disabled=true;gpAccept(cid)}
   else if(a==="pdec"){b.disabled=true;gpDecline(cid)}
   else if(a==="pcan"){b.disabled=true;gpCancel(cid)}});
+document.addEventListener("input",function(e){var t=e.target;if(!t||(t.id!=="dlstake"&&t.id!=="dlcash"))return;
+  if(t.id==="dlstake"){var d=t.value.replace(/[^0-9]/g,"");if(d!==t.value)t.value=d;DL.f.stake=+d||0}else DL.f.cash=t.value.replace(/[^0-9.]/g,"").slice(0,8);
+  var sb=document.querySelector('#layer .dlm [data-dl="send"]');if(sb)sb.disabled=!(DL.f.to&&dlStakeOf(DL.f)&&!(DL.f.kind==="p"&&gpBusy("")))});
 /* at the top of the Town Hall's Posts tab */
 var dlPostsBase=htabPosts;
 htabPosts=function(){var h="";try{h=dlCard()}catch(e){}return h+dlPostsBase.apply(this,arguments)};

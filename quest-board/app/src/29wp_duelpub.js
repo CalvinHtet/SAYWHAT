@@ -19,8 +19,9 @@ function dlpAll(){var out=[],now=Date.now(),docs=DL.docs||{};
     [["out","ans","sc",0],["pout","pans","psc",1]].forEach(function(K){var o=d[K[0]];if(!o||typeof o!=="object")return;
       Object.keys(o).forEach(function(cid){var c=o[cid];if(!c||typeof c!=="object"||c.cancel||typeof c.to!=="string"||!c.to||c.to===from)return;
         var td=docs[c.to];if(!td||typeof td!=="object")return;var a=(td[K[1]]||{})[cid];if(!a||typeof a!=="object"||a.acc!==true)return;
-        var stake=Math.round(+c.stake||0);if(DL.stakes.indexOf(stake)<0)return;
-        var p={cid:cid,from:from,to:c.to,pact:!!K[3],stake:stake,nf:dlpName(d.name),nt:dlpName(td.name||c.toName)};
+        /* any whole stake now (Cal, 2026-11-14: typed amounts), or a real-money one (stake 0, cash): its amount stays between the two */
+        var stake=Math.round(+c.stake||0);if(!(stake>=0&&stake<=DL.maxCoins))return;
+        var p={cid:cid,from:from,to:c.to,pact:!!K[3],stake:stake,cash:dlCash(c),nf:dlpName(d.name),nt:dlpName(td.name||c.toName)};
         if(p.pact){p.goal=Math.round(+c.goal||0);if(DL.goals.indexOf(p.goal)<0)return;p.days=DL.pDays;p.kind="p"}
         else{p.kind=c.kind==="w"?"w":"q";p.days=Math.max(1,Math.min(7,Math.round(+c.days||1)))}
         p.start=+a.t||+c.t||0;if(!(p.start>0)||p.start>now+6e4||p.start<now-(DLPDAYS+p.days)*864e5)return;
@@ -30,6 +31,8 @@ function dlpAll(){var out=[],now=Date.now(),docs=DL.docs||{};
   return out}
 function dlpMine(p){return p.from===MYUID||p.to===MYUID}
 function dlpStart(p){var a='<b>'+esc(p.nf)+'</b>',b='<b>'+esc(p.nt)+'</b>';
+  if(p.cash)return p.pact?a+' and '+b+' started a Gym Pact: '+p.goal+' workout days in '+p.days+', with a side bet between them.'
+    :a+' challenged '+b+': most '+DL.kinds[p.kind][1]+' in '+p.days+' day'+(p.days>1?'s':'')+', with a side bet between them.';
   return p.pact?a+' and '+b+' started a Gym Pact: '+p.goal+' workout days in '+p.days+', '+dlFmt(p.stake)+' coins each.'
     :a+' challenged '+b+': '+dlWhat(p)+'.'}
 function dlpLive(p){var h='<div class="dlvs">';
@@ -39,10 +42,13 @@ function dlpLive(p){var h='<div class="dlvs">';
 function dlpState(p){return p.live?dlLeft(p.end-Date.now())+' left':p.fin?'Finished':'Ended, waiting for the final counts'}
 function dlpResult(p){var a='<b>'+esc(p.nf)+'</b>',b='<b>'+esc(p.nt)+'</b>';
   if(p.pact){var ma=p.af>=p.goal,mb=p.at>=p.goal;
+    if(p.cash)return ma&&mb?'Gym Pact done: '+a+' and '+b+' both made it, '+p.af+' and '+p.at+' days.':ma||mb?'Gym Pact done: '+(ma?a:b)+' made it with '+gpD(ma?p.af:p.at)+', '+(ma?b:a)+' had '+(ma?p.at:p.af)+'. '+(ma?a:b)+' wins the side bet.'
+      :'Gym Pact done: neither '+a+' nor '+b+' made it ('+p.af+' and '+p.at+' days).';
     return ma&&mb?'Gym Pact done: '+a+' and '+b+' both made it, '+p.af+' and '+p.at+' days. Each gets 1.5 times the stake back.'
       :ma||mb?'Gym Pact done: '+(ma?a:b)+' made it with '+gpD(ma?p.af:p.at)+', '+(ma?b:a)+' had '+(ma?p.at:p.af)+'. '+(ma?a:b)+' takes both stakes.'
       :'Gym Pact done: neither '+a+' nor '+b+' made it ('+p.af+' and '+p.at+' days). Both stakes are gone.'}
   var k=DL.kinds[p.kind][1];
+  if(p.cash)return p.af===p.at?'A tie between '+a+' and '+b+' at '+dlFmt(p.af)+' '+k+'.':(p.af>p.at?a:b)+' beat '+(p.af>p.at?b:a)+' at '+k+', '+dlFmt(Math.max(p.af,p.at))+' to '+dlFmt(Math.min(p.af,p.at))+', and wins the side bet.';
   return p.af===p.at?'A tie between '+a+' and '+b+' at '+dlFmt(p.af)+' '+k+'. Both stakes back.'
     :(p.af>p.at?a:b)+' beat '+(p.af>p.at?b:a)+' at '+k+', '+dlFmt(Math.max(p.af,p.at))+' to '+dlFmt(Math.min(p.af,p.at))+', and takes the pot of '+dlFmt(2*p.stake)+'.'}
 /* the posts: a start post per challenge and a result post once it is settled, each with the reactions */
