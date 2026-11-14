@@ -90,9 +90,33 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8c3ecec): v1.00 live as 8c3ecec; QA checked that its app and tools match the passed 0c5fc49 (only TASKS and QA shots differ). Nothing open from QA. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 8f517af): Cal's experience review DONE (review, not pass/fail): rigtest/qa/review_experience.md, ranked list in QA findings. v1.00 live as 8c3ecec (app = the passed 0c5fc49). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- REVIEW for Cal (via LEAD, 2026-11-14): how a new player feels, a week-2 player, the community. Full text: `rigtest/qa/review_experience.md`;
+  pictures `shots/qa/newplayer/`. Sandbox of 8f517af (= live v1.00 code) at 375x812, played by hand, days 1-4 by the clock; L18/L60 seeds.
+  Short answer: day 1 and the calm week are calm and well paced; level 2 (after 2 tasks) piles ~9 windows and tours and 4 toasts into
+  5 minutes; the first purchase screen says "Not yet" before the buyable items; gamer words a non-gamer skips; community does not pull
+  people back (Town starts empty, no way to see anyone's place, the player card is a like and 4 emotes). Fix first, in order:
+  1. The Board tour's "Do it, then tick it" rings the only quest, the 1 h live-photo Workout, before the player has added tasks: ring their
+     own task, or start with a 5-minute one. `04_tour_points_at_workout.jpg`. Owner: LEAD.
+  2. Bedroom window: "COMING NEXT ? ? ? Not yet" is the first card, the three 300-coin buys are below the fold; "+0.05% XP" means nothing.
+     `09_bedroom_coming_next_first.jpg`. Owner: LEAD.
+  3. Level 2 opens The Loft, Town and Players at once; "You unlocked The Loft! Tap here" rings a "?" tab. Spread them (a level or a day
+     each, like the calm week). `08_loft_unlock_points_at_question_mark.jpg`. Owner: LEAD.
+  4. Plain words at first contact: "hunter / gates / class / evolve", "Awakened", "Perks +25%", "Rested +0%", Class Awakening. Owner:
+     LEAD (copy), Cal (tone).
+  5. Community pull (Cal picks, LEAD builds): automatic Town posts for level-ups, rooms, workout weeks and verified photos with one-tap
+     reactions; a read-only look at a friend's Loft (now that styles differ); a shared duo goal for two players; "while you were away"
+     for likes, emotes, challenges.
+  6. Daily Quest for new players: 100 XP is out of reach with 3 ordinary tasks under 689d212's counting (~45); scale it in week one.
+     Owner: LEAD (already on the DQ).
+  7. Small: "Buy something to wear" ticked on a brand-new character; Claim does not close the letter; First steps on L18/L60 saves; four
+     "!" badges at once; toasts over the tab bar; offline sorter put "reply to emails" under Outside run (live scorer not checked).
+     Owner: LEAD.
+  8. "Poke or spank" on every player card: Cal's call for players outside the couple.
+  Not checked: real sign-in, live AI scorer, camera, iPhone Safari, real posts/chat, challenges and kudos in action, notifications,
+  a real week-2 save with a full list (the seeds have 1 quest).
 - PASS, LEAD's version label 2a3257e (clean sandbox build of 0c5fc49, a real seed save, version.json faked to 101 and 110):
   the top line reads "v1.00 · saved", the notice "Version v1.01 is ready. You're on v1.00." (and v1.10 for 110), after Later the
   "!" button reads "Update v1.01 is ready"; no "v0.1xx" text on the page or in src/, no page errors. `shots/qa/ver_101.png`,
