@@ -15,11 +15,13 @@ viewHtml=function(v){if(v==="players")return playersHtml();var h=plViewBase.appl
 function playersHtml(){try{htabOpen()}catch(e){}var b;try{b=fshHtml()}catch(e){b='<section class="card panel"><p class="note">Players could not load right now.</p></section>'}return b}
 var plIconBase=areaIcon;
 areaIcon=function(k){if(k==="players")return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/></svg>';return plIconBase.apply(this,arguments)};
-/* Players opens exactly when the Hall does, never as a separate unlock */
+/* Players opens after the Hall, never before it. QA's review (2026-11-14): level 2 opened The Loft, Town and Players at once (three tours
+   in five minutes), so Players is its own unlock again, at level 3 (AREAS), one unlock a day below level 10 (29h_unlocks.js). Saves that
+   have it keep it: the old rule wrote players into S.areaOn with the Hall. */
 var plOnBase=areaOn;
-areaOn=function(){var o=plOnBase.apply(this,arguments);try{if(o&&typeof o==="object"){if(o.hall)o.players=1;else delete o.players}}catch(e){}return o};
+areaOn=function(){var o=plOnBase.apply(this,arguments);try{if(o&&typeof o==="object"&&!o.hall)delete o.players}catch(e){}return o};
 var plWaitBase=areaWaiting;
-areaWaiting=function(id){return plWaitBase(id==="players"?"hall":id)};
+areaWaiting=function(id){if(id==="players"&&!areaOn().hall)return false;return plWaitBase(id)};
 /* the Board: the Daily Quest card under the progress line, then one row of tiles for what left the tab bar (Cal, "Fewer tabs first"):
    Training, Dungeon Crawls and the Wheel, each once it is open. They use the tab bar's own "nav" tap (30_app_b.js), so a locked one says so. */
 function zxOpen(k){try{var a=AREAS.filter(function(x){return x[0]===k})[0];return !!a&&effLvl()>=a[2]&&!areaGate(k)&&!!areaOn()[k]}catch(e){return false}}
@@ -287,13 +289,16 @@ var ZXFS=[
   {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
     done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
   {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Friday.",open:function(){return tourAreaOpen("shop")},
-    done:function(){return !!S.owned&&Object.keys(S.owned).some(function(k){return S.owned[k]})},show:[{sel:'.nav button[data-v="shop"]',t:"The Shop",x:"Tap here, then buy a piece you like.",tap:1}]}
+    /* QA's review: a new character owns the creator's basics, which ticked this at once; only a brand's piece counts */
+    done:function(){return !!S.owned&&SHOP.some(function(it){var b=it&&it[6]&&it[6].b;return b&&b!=="basics"&&S.owned[it[0]]})},show:[{sel:'.nav button[data-v="shop"]',t:"The Shop",x:"Tap here, then buy a piece you like.",tap:1}]}
 ];
 function zxFsCheck(){try{if(!loaded||!S||!S.created||S.fsall)return;try{tourInit()}catch(e){}if(S.calm===undefined)return;
     /* fresh: a character made on the calm-week version (S.calm is an object), whose every step pays; else a save from before */
     var fresh=typeof S.calm==="object"&&!!S.calm,first=!S.fsd||typeof S.fsd!=="object";if(first)S.fsd={};var d=S.fsd,got=0,ch=first,pay=fresh||!first;
     /* a save from before has been to the areas it has open (tourInit counts them as toured too) */
     if(first&&!fresh){if(tourAreaOpen("hideout"))d.loftSeen=1;if(tourAreaOpen("hall"))d.townSeen=1}
+    /* QA's review: level-18 and level-60 saves got a beginners' card; a save from before at level 15 or more is past first steps */
+    if(first&&!fresh&&effLvl()>=15){S.fsall=1;persist();return}
     if(view==="hideout"&&!d.loftSeen){d.loftSeen=1;ch=1}if(view==="hall"&&!d.townSeen){d.townSeen=1;ch=1}
     ZXFS.forEach(function(st){if(d[st.id])return;var ok=false;try{ok=st.done()}catch(e){}if(!ok)return;d[st.id]=1;ch=1;if(pay)got+=50});
     /* what a save from before had already done is not listed again (it still counts): no wall of ticked lines for a long-time player */
@@ -336,9 +341,14 @@ setInterval(zxFsSkip,400);
    10 XP 80%, 25 and up in full; training as before). A heavy day of 30 small tasks lands near the 200 chest; the hidden chest takes
    real effort (a workout, a big task). The town's efficiency reads the same number. */
 ECON.dqW={5:.6,10:.8};
-function zxDqW(b){var W=ECON.dqW||{},k=Object.keys(W).map(Number).sort(function(a,c){return a-c});for(var i=0;i<k.length;i++)if(b<=k[i])return W[k[i]];return 1}
+function zxDqW(b){/* QA's review: a new player's 3 ordinary tasks made 45 of 100; in the first week (the calm week) every task counts in full */
+  try{if(calmOn()&&calmDay()<=7)return 1}catch(e){}var W=ECON.dqW||{},k=Object.keys(W).map(Number).sort(function(a,c){return a-c});for(var i=0;i<k.length;i++)if(b<=k[i])return W[k[i]];return 1}
 /* XP toward the Daily Quest for each quest done today: [counted, as paid] */
 function zxDqParts(){var Q={},raw=0,cnt=0;(S.quests||[]).forEach(function(q){if(q)Q[q.id]=q});
   Object.keys(S.done||{}).forEach(function(k){var v=+S.done[k]||0;if(!v)return;var q=Q[k],b=q&&+q.xp>0?Math.min(v,+q.xp):v;raw+=v;cnt+=b*zxDqW(b)});return [cnt,raw]}
 dqXp=function(){return Math.round(zxDqParts()[0])+(dqState().tx||0)};
 var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{var p=zxDqParts();if(h&&p[1]>p[0]+.5)h=h.replace('<div class="dq-row">','<p class="note dq-eff">Quick tasks and bonus XP count a little less here; bigger tasks and workouts fill it fastest.</p><div class="dq-row">')}catch(e){}return h};
+/* QA's review (2026-11-14): after "Claim 3,000 coins" the letter stayed open on "3,000 coins claimed" and the player had to find the X;
+   it closes itself a moment after the coins land. And the reward toasts sat on the tab bar: they show above it. */
+var zxIbClaim=ibClaim;ibClaim=function(){var r=zxIbClaim.apply(this,arguments);setTimeout(function(){try{if(document.querySelector("#layer .modal .ibgot"))closeModals()}catch(e){}},1500);return r};
+(function(){var st=document.createElement("style");st.textContent=".pop{bottom:calc(98px + env(safe-area-inset-bottom,0px))}";(document.head||document.documentElement).appendChild(st)})();

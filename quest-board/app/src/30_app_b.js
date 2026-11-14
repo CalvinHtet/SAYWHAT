@@ -61,7 +61,9 @@ function roomAvail(i,r,T,list){
   /* QA (Restaurant pass): three "Needs Knock Through the Wall" cards filled the slots ahead of Knock Through itself, so nothing
      could be bought. Buyable cards first, then mystery cards, then cards waiting on another upgrade; each group keeps its order. */
   /* Cal (2026-11-07): an upgrade that opens a new room goes first, so the "+" in the building view leads straight to it */
-  avail=avail.map(function(h,k){var m=/data-a?id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3],sn=typeof styNextBuy==="function"?styNextBuy(r.t):null;return {h:h,k:k,g:/ stynext/.test(h)?-2:m&&m[1]===sn?-1:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
+  avail=avail.map(function(h,k){var m=/data-a?id="([^"]+)"/.exec(h),op=m&&(list.filter(function(a){return a[0]===m[1]})[0]||[])[3],sn=typeof styNextBuy==="function"?styNextBuy(r.t):null;/* QA's review (2026-11-14): a "Coming next ? ? ? Not yet" card (a mystery stynext) went first and pushed the buys below the fold: it
+     goes last; a story room you can open still goes first */
+    return {h:h,k:k,g:/ stynext/.test(h)?(/ mystery/.test(h)?3:-2):m&&m[1]===sn?-1:/ mystery/.test(h)?1:/<button class="btn ghost" disabled>/.test(h)?2:op&&op.opens?-1:0}}).sort(function(x,y){return x.g-y.g||x.k-y.k}).map(function(x){return x.h});
   /* Cal: only the next 5 at any time, in unlock order, so there is always something new to find. */
   var more=avail.length>4;avail=avail.slice(0,4);if(avail.length===4&&avail[3].indexOf(' mystery')<0)avail[3]='<div class="addon next mystery" aria-label="A mystery upgrade"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Buy one above to reveal it</button></div>';
   return {inst:inst,avail:avail,lockd:lockd,more:more}}
@@ -88,7 +90,7 @@ function roomModal(i){
   h+=decorHtml(i,r)+'<details class="acol" data-k="av"'+(LFACOL.av?' open':'')+'><summary>@@AV@@</summary><div class="addons">';
   var RA=roomAvail(i,r,T,list),inst=RA.inst,avail=RA.avail,lockd=RA.lockd,more=RA.more;
   /* W25 (QA): the story room that follows this one, when no upgrade opens it, shows what it waits for at the top */
-  var sn=typeof styNextHtml==="function"?styNextHtml(r.t):"";if(sn)avail.unshift(sn);
+  var sn=typeof styNextHtml==="function"?styNextHtml(r.t):"";if(sn){if(/ mystery/.test(sn))avail.push(sn);else avail.unshift(sn)}/* QA's review: "Not yet" goes after what you can buy */
   h=h.replace("@@AV@@",avail.length?"Next upgrades":lockd.length?"Next upgrades: install the ones before them first":"All upgrades installed");
   h+=avail.join("")+(more?'<p class="note addmore">More appear as you install these.</p>':'')+'</div></details>'+(inst.length?'<details class="acol" data-k="in"'+(LFACOL.in?' open':'')+'><summary>Installed ('+inst.length+')</summary><div class="addons">'+inst.join("")+'</div></details>':'');
   /* owner-only testing link (hidden from guests like the Shop's Testing row; remove both before release): refunds this
