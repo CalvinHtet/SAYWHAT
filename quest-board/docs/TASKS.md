@@ -62,7 +62,7 @@ ROOMS Doing:
 
 Cal's next list (2026-11-13, to ROOMS; ROOMS took the art and split the code):
 - (TAKEN by LEAD, queued after the building-view fix.) For LEAD (Cal: "generate additional animations for all the visiting characters in the game. I want every visitor to have 6 different animations"): today's clips are idle, walk, stretch, sit, type, sleep (+ back views). Visitors (friends, team, allies, player visits) need 6 each, e.g. wave, laugh, dance, phone, cheer, chat. Poses are bone rotations in data/poses.json and rig.js (LEAD's files): no art unless a prop is needed (a phone): ROOMS paints any prop on request.
-- (DONE by LEAD in 148dc12, WAITING ON QA.) For LEAD (Cal: "randomize the brand drops so it is not sequential. i want to be surprised by what brands are coming on what day"): dropState() in 10_app_a.js releases BRANDS in list order by start date; the order should be shuffled (a fixed per-save or per-week seed, so a reload never reshuffles), and the countdown should not name the next brand.
+- (DONE by LEAD in 148dc12, (QA: DONE on f2b872c, PASS; move shuf0 if v0.99 ships after Mon 8 am; QA findings) WAITING ON QA.) For LEAD (Cal: "randomize the brand drops so it is not sequential. i want to be surprised by what brands are coming on what day"): dropState() in 10_app_a.js releases BRANDS in list order by start date; the order should be shuffled (a fixed per-save or per-week seed, so a reload never reshuffles), and the countdown should not name the next brand.
 - For LEAD, later (Cal: "create the mid tier shop that unlocks later and create 10 more brands that are for those shops only"): the Boutique floor (29e_economy.js, level 30) has no brands yet. ROOMS paints 10 boutique-only brands once Cal approves the concepts; LEAD wires them with floor:"boutique".
 - TAKEN by ROOMS: redo Kenan's outfit (Cal: "that is not what he looks like", waiting on his description), Kode PinK redone (Cal: "too bubbly. Make it more city pop but actually cool and more sleek"), the 10 boutique brands' art. WAITING ON CAL: Kenan's look, the Kode PinK scope, the 10 brand concepts.
 
@@ -81,9 +81,17 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7aa8637): the fixed building view bf09ce0 checked, NOT a pass (below). Next: the shuffled brand drops 148dc12. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on f2b872c): the brand shuffle 148dc12 PASS; the fixed building view bf09ce0 waits on LEAD's Kode Plaza fix (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD's shuffled brand drops 148dc12, clean builds of f2b872c and v0.98 c579e83. LEAD's dropshuffle.js on both (80 drop days): the
+  two drops before shuf0 match v0.98 (HANGANG 11-10, DIAL-UP 11-13); from 11-16 the order is new (alt, sp, sv, bb, kp, gp, km, oak, smk,
+  over, ...); 6 full rounds, each with all 12 brands once; no brand back while still live; no back-to-back repeats; the Wednesday vault
+  still picks (its picks follow the new order). In the Shop the surprise holds: on Sunday night "New brand in 11h 59m" names nothing,
+  and on Monday 09:00 PT ALTITUDE is on sale (v0.98: OVERPASS). 0 page errors.
+- NOTE, LEAD and Cal (shuf0): if v0.99 ships after Monday 11-16 08:00 Pacific, players will have seen OVERPASS drop on v0.98, and v0.99 then
+  shows ALTITUDE in that same slot (OVERPASS leaves the live list). With the building view blocked, that is likely: move shuf0 to the
+  first drop day after v0.99 ships, as LEAD offered.
 - QA, LEAD's fixed building view bf09ce0, clean plain build of 7aa8637 against v0.98 c579e83, WebKit. NOT A PASS: Kode Plaza (below).
   Works: the Loft and the third building fit and are locked at 390x844, 375x667 and 360x740 with every room's furniture on screen, under
   the top buttons and above the tab bar, and every room opens on a tap (Loft 5/5, building 2 9/9); a zoomed or dragged street does not
