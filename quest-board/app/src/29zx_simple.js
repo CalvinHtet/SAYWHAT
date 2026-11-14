@@ -344,9 +344,14 @@ ECON.dqW={5:.6,10:.8};
 function zxDqW(b){/* QA's review: a new player's 3 ordinary tasks made 45 of 100; in the first week (the calm week) every task counts in full */
   try{if(calmOn()&&calmDay()<=7)return 1}catch(e){}var W=ECON.dqW||{},k=Object.keys(W).map(Number).sort(function(a,c){return a-c});for(var i=0;i<k.length;i++)if(b<=k[i])return W[k[i]];return 1}
 /* XP toward the Daily Quest for each quest done today: [counted, as paid] */
-function zxDqParts(){var Q={},raw=0,cnt=0;(S.quests||[]).forEach(function(q){if(q)Q[q.id]=q});
-  Object.keys(S.done||{}).forEach(function(k){var v=+S.done[k]||0;if(!v)return;var q=Q[k],b=q&&+q.xp>0?Math.min(v,+q.xp):v;raw+=v;cnt+=b*zxDqW(b)});return [cnt,raw]}
+/* QA (v1.01): "Clear completed" takes finished one-offs off the list while they stay in S.done, and the bar then counted them as paid
+   (bonuses in). What each finished quest counts is remembered for the day (S.dq.cnt) while it is on the list, and used once it is gone. */
+function zxDqParts(){var Q={},raw=0,cnt=0,d=dqState();if(!d.cnt||typeof d.cnt!=="object")d.cnt={};(S.quests||[]).forEach(function(q){if(q)Q[q.id]=q});
+  Object.keys(S.done||{}).forEach(function(k){var v=+S.done[k]||0;if(!v)return;var q=Q[k],c;raw+=v;
+    if(q){var b=+q.xp>0?Math.min(v,+q.xp):v;c=b*zxDqW(b);d.cnt[k]=c}else c=d.cnt[k]!=null?+d.cnt[k]:v*zxDqW(v);cnt+=c});
+  Object.keys(d.cnt).forEach(function(k){if(!(S.done||{})[k])delete d.cnt[k]});return [cnt,raw]}
 dqXp=function(){return Math.round(zxDqParts()[0])+(dqState().tx||0)};
+try{if(window.__qbEcon)window.__qbEcon.xp=dqXp}catch(e){}/* QA: the test hook still read the old count */
 var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{var p=zxDqParts();if(h&&p[1]>p[0]+.5)h=h.replace('<div class="dq-row">','<p class="note dq-eff">Quick tasks and bonus XP count a little less here; bigger tasks and workouts fill it fastest.</p><div class="dq-row">')}catch(e){}return h};
 /* QA's review (2026-11-14): after "Claim 3,000 coins" the letter stayed open on "3,000 coins claimed" and the player had to find the X;
    it closes itself a moment after the coins land. And the reward toasts sat on the tab bar: they show above it. */
