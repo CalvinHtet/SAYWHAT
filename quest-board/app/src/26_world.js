@@ -410,7 +410,12 @@ LFROOM.restaurant=function(C){
   lfWander(C,[[Wi-3,1.6,-1],[Wi*.6,D*.72,1],[Wi-1.6,D*.62,-1]]);
   /* light */
   /* QA audit: Brass Chandeliers drew only in the biggest room (in the smaller ones buying them just took the bulb away) */
-  if(H("r_l2"))(st===2?[[5.7,6.2],[9.8,6.2],[9.8,10.2]]:st===1?[[4.6,5.4],[8.8,5.4]]:[[3.8,4.4]]).forEach(function(p){lfSpr(C,"rdx_chand",p[0]-.7,p[1]-.7,1.4,1.4,{h:1,dy:-118,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)/* re-audit 2026-11-07: 0.2% by day, now 1.4 tiles and a little lower */});
+  /* QA room sweep 2026-11-14 (Cal: nothing hanging in the air improperly): each chandelier hangs over a table's centre, high above
+     the diners' heads, not at chair height or over the booth divider; two in the full room (rooms-never-cluttered) */
+  if(H("r_l2"))(st===2?[[H("r_more2")&&LFSPR.rdx_curve?7.4:5.7,5.9],[9.8,6.3]]:st===1?[[5.7,5.9],[9.4,7.2]]:[[5.0,6.0]]).forEach(function(p){
+    /* the cord up to the ceiling line, so it reads as hanging over its table and not floating */
+    C.add(p[0]+p[1]-7.9,lfBox(p[0]-.025,p[1]-.025,158,.05,.05,110,"#2a2420",{l:"#3a3028",r:"#1e1814",top:"#3a3028"}));
+    lfSpr(C,"rdx_chand",p[0]-.7,p[1]-.7,1.4,1.4,{h:1,dy:-150,nosh:1,dk:-8,nob:1,ctr:1});lfLight(C,p[0],p[1],70,"#ffb46a",3,.7)});
   /* re-audit 2026-11-07 (0.45%): in the first room one sconce only swapped the bulb; two now, the second at the front of the left wall */
   if(H("r_l1"))(st===0?[6.1,7.3]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}

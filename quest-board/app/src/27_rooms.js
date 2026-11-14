@@ -180,7 +180,8 @@ function ptTurf(C){var S0=window.LFSPR&&LFSPR.ptx_turf;if(!S0)return false;var U
 /* String lights strung overhead (Cal: no more light tower): posts along the back rail, strands zigzagging across the
    patio to the building wall above the door edge, warm bulbs that glow more as it gets dark. */
 function ptStrings(C){var W=C.W,D=C.D,L=lfLS(),dk=Math.max(0,Math.min(1,L.dark||0)),ho=(.4+dk*.55).toFixed(2),id="ptsl"+(C.chu||0),
-  posts=[[.25,.25],[W/2,.25],[W-.25,.25]],tops=posts.map(function(q){return [q[0],q[1],118]}),hang=[[W*.25,D,128],[W*.75,D,128]],
+  /* QA room sweep 2026-11-14: the front ends hung in mid-air (the building wall is cut away), so they get posts on the front rail */
+  posts=[[.25,.25],[W/2,.25],[W-.25,.25],[.25,D-.25],[W-.25,D-.25]],tops=posts.map(function(q){return [q[0],q[1],118]}),hang=[tops[3],tops[4]],tops=tops.slice(0,3),
   pairs=[[tops[0],hang[0]],[hang[0],tops[1]],[tops[1],hang[1]],[hang[1],tops[2]]],wire="",bulbs="",halo="";
   posts.forEach(function(q){C.add(q[0]+q[1]+.3,lfBox(q[0]-.06,q[1]-.06,0,.12,.12,120,"#2b2a30",{l:"#3a3940",r:"#1c1b20",top:"#4a4950"}))});
   pairs.forEach(function(pr){var a=lfP(pr[0][0],pr[0][1],pr[0][2]),b=lfP(pr[1][0],pr[1][1],pr[1][2]),mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2+26;
