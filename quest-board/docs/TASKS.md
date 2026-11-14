@@ -87,9 +87,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 21f7188): first steps rechecked: the marker FIX passes, Show me for the upgrade step needs one FIX (below). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 719f77e): first steps (Show me fix 86002df) PASS; with the chef hat, nothing open from QA for v1.00. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD's Show me fix 86002df for "Buy your first upgrade" (clean sandbox and plain builds of 719f77e, `rigtest/qa/firstbuy.js`, its
+  checks reordered as LEAD asked): followed like a player, the rings go Open The Loft > Tap your home > Tap the Bedroom > Buy one, and the
+  tap on Buy bought the rug: the step ticked and paid +50. With only 10 coins: the same rings into the Bedroom, nothing bought, the step
+  stays open, the ring does not stay stuck. The tour change in 29zy_tour.js: tourqa.js passes again (the letter first, the welcome tour's
+  cards on screen at 390 and 360, The Loft, Town and Players one at a time, Skip sticks, 5 seed saves no tour). 0 page errors. With the
+  chef hat (b416f33), nothing open from QA for v1.00. Not checked: a phone.
 - PASS, LEAD's first-steps fix 5ded710 (clean sandbox of 21f7188, `rigtest/qa/firstbuy.js`): two level-ups put __m35 in a new player's
   Bedroom with nothing bought, and "Buy your first upgrade" stays open (no coins); a real purchase (the Bedroom rug, 300) ticks it and
   pays +50. 0 page errors.
