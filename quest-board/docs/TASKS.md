@@ -96,9 +96,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f72a55f): v1.03 = release/v1.03 f72a55f PASS, can ship (e53c2af + the anorak fix + Trail Hikers; QA findings). Next: verify Live once LEAD ships (passed commit + APPV only). 15-minute loop off (Cal). v1.02 live as 10daa03.
+- Now (on f72a55f): v1.03 LIVE as f72a55f, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.03 live (LEAD: Live and Test at f72a55f, version.txt f72a55f, wlive PASS, 3021/3021 identical):
+  - release/v1.03 is f72a55f itself, the commit QA passed (APPV 103 already in it).
+  - The file count adds up: from 10daa03 to f72a55f, art/app has exactly 10 deletions (ALTITUDE's f/m *_yawn for anorak, fleece,
+    henley, shell and vest) and 59 changes. Kode PinK's 8 yawn files are still in the release; their deletion is only ROOMS's
+    uncommitted work. A clean web build of f72a55f has 3,020 files, plus the deploy's version.txt = 3,021.
+  - Not opened on a phone by QA.
 - PASS, v1.03 = release/v1.03 f72a55f (LEAD), can ship; it replaces e53c2af:
   - The diff against e53c2af is exactly 5c23aa9, 849cd70 and f72a55f: 15_shop.js renames "Trail Runners" to "Trail Hikers", and
     29zx_simple.js drops the anorak from the cut list. The 5 anorak webps are byte-identical to a9def76, which QA passed.
