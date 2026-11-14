@@ -5,7 +5,7 @@ const fs = require('fs'), path = require('path'); const pw = require('playwright
 const BASE = process.env.BASE || 'http://127.0.0.1:8769', OUT = process.env.OUT || 'qa-out/bld/'; fs.mkdirSync(OUT, { recursive: true });
 const ORDER = ['bedroom', 'closet', 'lair', 'patio', 'gameroom', 'restaurant', 'skybar', 'rooftop', 'boba', 'dessert', 'speakeasy', 'garden', 'theater', 'auditorium', 'mall', 'bowling', 'karaoke', 'arcade', 'rhythm', 'vr', 'club', 'trophy'];
 let bad = 0;
-(async () => { for (const [w, h] of [[390, 844], [375, 667], [360, 740], [844, 390]]) {
+(async () => { for (const [w, h] of (process.env.SIZES ? JSON.parse(process.env.SIZES) : [[390, 844], [375, 667], [360, 740], [844, 390]])) {
   const b = await pw.webkit.launch(); const p = await (await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.goto(BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft, null, { timeout: 120000 }); await p.waitForTimeout(1000);
   await p.evaluate((order) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(60); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, trophy: 1, wheel: 1 }; S.areaOn = null; S.coins = 1e6;
@@ -23,8 +23,8 @@ let bad = 0;
     // tap the middle of each room's furniture area and see which window opens
     let tapped = 0, wrong = [];
     for (const q of r.rooms) { await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove())); await p.waitForTimeout(200);
-      const cx = Math.min(w - 2, Math.max(2, (q.it[0] + q.it[2]) / 2)), cy = Math.min(r.bot - 4, Math.max(r.top + 4, (q.it[1] + q.it[3]) / 2)); await p.mouse.click(cx, cy); await p.waitForTimeout(900);
-      const t = await p.evaluate(() => (document.querySelector('#layer .rmodal .rm-title') || {}).textContent || ''); if (t) tapped++; else wrong.push(q.i); }
+      const cx = Math.min(w - 2, Math.max(2, (q.it[0] + q.it[2]) / 2)), cy = Math.min(r.bot - 4, Math.max(r.top + 4, (q.it[1] + q.it[3]) / 2)); const hit = await p.evaluate(([x, y]) => { const e = document.elementFromPoint(x, y); const t = e && e.closest('[data-lf]'); return t ? 'room:' + t.getAttribute('data-lf') : (e ? (e.tagName + '.' + ((e.className && e.className.baseVal != null) ? e.className.baseVal : e.className)).slice(0, 50) : 'none'); }, [cx, cy]); await p.mouse.click(cx, cy); await p.waitForTimeout(900);
+      const t = await p.evaluate(() => (document.querySelector('#layer .rmodal .rm-title') || {}).textContent || ''); if (t) tapped++; else wrong.push(q.i + '=' + hit); }
     await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove())); await p.waitForTimeout(300);
     await p.screenshot({ path: path.join(OUT, `b${k}_${w}x${h}.png`) });
     const fine = r.lock && !r.out.length && r.n > 0 && tapped === r.n; if (!fine) bad++;
