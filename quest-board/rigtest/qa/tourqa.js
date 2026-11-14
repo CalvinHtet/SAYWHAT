@@ -30,7 +30,8 @@ const TOURQ = `(function(){var r=document.getElementById('qbtour');if(!r||r.styl
         await sleep(1400); }
       const after = await E('var t=window.__qb.x().S.tours||{};return {hideout:t.hideout,hall:t.hall,players:t.players}');
       console.log('     level 2, the tours in the order shown: ' + seq.join(' > '));
-      ok('level 2: The Loft first, then Town (skipped), then Players, one at a time; Skip marks Town as done', /Loft/.test(seq[0] || '') && seq.some((t) => /Town/.test(t)) && seq.some((t) => /players/i.test(t)) && after.hall === 1 && after.players === 1, { seq, after });
+      /* v1.02 (QA's review): level 2 runs only The Loft's tour that day; Town's waits a day, Players opens at level 3 */
+      ok('level 2: only The Loft tour today (Town waits a day, Players at level 3)', /Loft/.test(seq[0] || '') && !seq.some((t) => /Town/.test(t)) && !seq.some((t) => /players/i.test(t)) && after.hideout === 1, { seq, after });
       await sleep(4000); const again = await pg.ev(TOURQ); ok('a skipped tour does not come back', !again || !/Town/.test(again.t), again && again.t);
     }
     ok(`${w}: no page errors`, !(pg.errs || []).length, pg.errs); await pg.close(); }
