@@ -204,3 +204,22 @@ var zxApplyLock=lfApplyNow;lfApplyNow=function(){var c=document.getElementById("
   var k=LFBSEL+":"+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+","+LFV.s.toFixed(3);if(inB&&k===ZXAPK&&!ZXFITTING)return;ZXAPK=k;
   return zxApplyLock.apply(this,arguments)};
 (function(){var st=document.createElement("style");st.textContent="#lfwrap[data-zxlock] .lfctl [data-act=lfz]{display:none}#lfwrap[data-zxlock]{cursor:default}#lfwrap[data-zxlock] .lfhint{font-size:0}#lfwrap[data-zxlock] .lfhint::after{content:\"Tap a room\";font-size:10px}";(document.head||document.documentElement).appendChild(st)})();
+/* Cal (via ROOMS, 2026-11-14): "randomize the brand drops so it is not sequential. I want to be surprised by what brands are coming on
+   what day." Each Shop floor's calendar (29l_drops.js) took its brands in BRANDS order. The calendar is the same for every player and
+   has run since DROPS.cal0, so the drops before DROPS.shuf0 stay as they were (they already happened, and players saw them). From
+   shuf0 on, each floor takes the brands it has not dropped yet this round in a shuffled order, then every later round in a new
+   shuffled order: one fixed seed in the code, so every phone gets the same surprise and a reload never reshuffles. A brand never
+   drops again while it is still live (the rule dropPlan used). The Shop never names the next brand ("New brand in ..."). */
+DROPS.shuf0="2026-11-16";
+var ZXSH={};
+function zxShufJ0(F){var x0=ymdN(DROPS.cal0),t=ymdN(DROPS.shuf0),j=1;for(var x=x0+1;x<t;x++)if(flIsDrop(F,x,x0))j++;return Math.max(1,j)}
+function zxShufOrd(F,ids,upto){var n=ids.length,lv=F.live||DROPS.live,k=F.id+"|"+ids.join(",")+"|"+lv+"|"+DROPS.shuf0+"|"+DROPS.seed,c=ZXSH[k];
+  if(!c){var j0=zxShufJ0(F),ord=[];for(var j=0;j<j0;j++)ord.push(ids[j%n]);c=ZXSH[k]={ord:ord}}
+  var ord=c.ord,key=function(r){return function(a,b){return dropHash(DROPS.seed+"|shuf|"+F.id+"|"+r+"|"+a)-dropHash(DROPS.seed+"|shuf|"+F.id+"|"+r+"|"+b)}};
+  while(ord.length<=upto){var at=ord.length,r=Math.floor(at/n),from=r*n,done={};for(var q=from;q<at;q++)done[ord[q]]=1;
+    var pool=ids.filter(function(id){return !done[id]}).sort(key(r)),last={};ord.forEach(function(id,i){last[id]=i});
+    var ok=pool.filter(function(id){return last[id]==null||at-last[id]>lv})[0];
+    if(!ok)ok=pool.slice().sort(function(x,y){return last[x]-last[y]})[0];ord.push(ok)}
+  return ord[upto]}
+var zxFlOrder=flOrderAt;flOrderAt=function(F,ids,j){try{if(!ids||!ids.length||(F.id==="street"&&DROPS.on)||ids.length<2)return zxFlOrder.apply(this,arguments);
+  if(j<zxShufJ0(F))return zxFlOrder.apply(this,arguments);if(!DROPS.rerun&&j>=ids.length)return null;return zxShufOrd(F,ids,j)}catch(e){return zxFlOrder.apply(this,arguments)}};
