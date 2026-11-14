@@ -33,8 +33,11 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
     const c3 = await card(p); ok('level 3: Open The Loft, the first upgrade and Visit Town join the card', c3 && c3.items.join('|') === "+Add today's tasks|+Finish one and tick it|>Open The Loft|-Buy your first upgrade|-Visit Town", c3);
     const s3 = await S(p);
     await p.evaluate(() => document.querySelector('.nav button[data-v="hideout"]').click()); await wait(p, 2000); await clear(p);
+    /* QA (b3f7e4d): the Loft's own bookkeeping keys in a room (__m35) are not a purchase */
+    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; const r = S.base.slots.find((q) => q && q.t === 'bedroom'); r.a = Object.assign({}, r.a, { __m35: 1 }); x.persist(); }); await wait(p); await clear(p);
+    const s3b = await S(p); ok('a bookkeeping key in the Bedroom does not tick "Buy your first upgrade"', !s3b.fsd.buy && s3b.coins === s3.coins + 50, { s3: s3.coins, s3b });
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; const r = S.base.slots.find((q) => q && q.t === 'bedroom'); r.a = Object.assign({}, r.a, { bd_rug: 1 }); x.persist(); }); await wait(p); await clear(p);
-    const s4 = await S(p); ok('opening The Loft and buying an upgrade pay 50 each', s4.fsd.loft === 1 && s4.fsd.buy === 1 && s4.coins === s3.coins + 100, { s3: s3.coins, s4 });
+    const s4 = await S(p); ok('opening The Loft and buying a real upgrade pay 50 each', s4.fsd.loft === 1 && s4.fsd.buy === 1 && s4.coins === s3.coins + 100, { s3: s3.coins, s4 });
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = Math.max(S.xp, x.cum(12)); S.areaOn = Object.assign({}, S.areaOn, { hall: 1, shop: 1 }); window.__qbRooms.open('closet', 1); document.querySelector('.nav button[data-v="board"]').click(); }); await wait(p, 1500); await clear(p);
     const c5 = await card(p); ok('the Closet built opens the Shop: its step joins', c5 && /Visit Town/.test(c5.items.join('|')) && /Buy something to wear/.test(c5.items.join('|')), c5);
     const s5 = await S(p);

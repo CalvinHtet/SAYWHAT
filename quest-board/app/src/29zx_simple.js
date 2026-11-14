@@ -252,7 +252,9 @@ var ZXFS=[
   {id:"loft",t:"Open The Loft",x:"Your own place, built with your coins.",open:function(){return tourAreaOpen("hideout")},
     done:function(){return !!(S.fsd&&S.fsd.loftSeen)},show:[{sel:'.nav button[data-v="hideout"]',t:"Open The Loft",x:"Tap here.",tap:1}]},
   {id:"buy",t:"Buy your first upgrade",x:"Tap the Bedroom and pick one you can afford.",open:function(){return tourAreaOpen("hideout")},
-    done:function(){return (S.base&&S.base.slots||[]).some(function(r){return r&&r.a&&Object.keys(r.a).length>0})},
+    /* only a real upgrade of that room counts (QA on b3f7e4d: the Loft writes bookkeeping keys like __m35 into every Bedroom) */
+    done:function(){return (S.base&&S.base.slots||[]).some(function(r){if(!r||!r.a)return false;var ids={};(ADDONS[r.t]||[]).forEach(function(u){ids[u[0]]=1});
+      return Object.keys(r.a).some(function(k){return r.a[k]&&k.indexOf("__")!==0&&ids[k]})})},
     show:[{sel:'.nav button[data-v="hideout"]',t:"Your first upgrade",x:"Open The Loft: tap here.",tap:1},{sel:"#lfwrap",t:"Tap the Bedroom",x:"Tap your Bedroom, then Buy on any upgrade your coins cover."}]},
   {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
     done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
