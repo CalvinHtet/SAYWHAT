@@ -167,3 +167,40 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 var ZXVB={},zxViewHtml=viewHtml;viewHtml=function(v){var t0=performance.now(),h=zxViewHtml.apply(this,arguments),ms=performance.now()-t0;
   var n=ZXVB[v]=(ZXVB[v]||0)+1;/* the first three builds of each tab, so a slow Loft cannot push the rest out of the 40-line log */
   if(ms>150&&n<=3)try{if(!db||!ownerView||window.__qbGuest)return h;QBPL.push({why:"build",v:v,n:n,ms:Math.round(ms),t:Date.now()});qbPerfSave()}catch(e){}return h};
+/* The Loft on Cal's phone after v0.98: the building view still near 25 fps (2,900 elements, people walking), while a Mac holds 60 with
+   everything on. Two suspects the Mac cannot tell apart: pan/zoom rewrites the whole picture's transform on every drag frame, and the
+   people redraw 15 times a second over the rooms. The owner's speed log counts both in each 5 s sample (29_prices.js), so the next
+   log says which one to fix. Nothing on screen changes. */
+var zxApplyNow=lfApplyNow;lfApplyNow=function(){QBPX.pan++;return zxApplyNow.apply(this,arguments)};
+var zxLoop=lfLoop;lfLoop=function(ts){var t0=performance.now();try{return zxLoop.apply(this,arguments)}finally{QBPX.js+=performance.now()-t0;QBPX.runs++}};
+/* Cal (2026-11-14): "the room view with all the different rooms is the laggiest. Can we just make that room not zoomable? Just position
+   the screen so the rooms fill the whole screen all together. The characters move around in the multiple room view just fine."
+   Inside a building the view is fixed: it is fitted once (lfInitView, every room in sight, as it always opened) and stays there; a drag,
+   a pinch, the wheel or the zoom buttons change nothing, and the picture is not rewritten while a finger moves (every pan/zoom frame
+   repainted the whole building on a phone). It refits when the screen changes size. The street view still pans and zooms. */
+var ZXFIT=null,ZXFITTING=0,ZXAPK="";
+/* "so the rooms fill the whole screen all together": the fit is the box around this building's built rooms (and its open lots), not
+   the whole building plot (1,800 wide, which left the rooms small at the bottom), scaled into the space between the top buttons and the
+   tab bar. Rooms draw a little past their cells, mostly to the right, so the box has a margin. */
+function zxFitB(c){try{var L=window.LFLAY;if(!c||!L||!L.b||!L.b[LFBSEL])return false;var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,n=0,add=function(t){var q=cellRect(t,L);n++;
+    x0=Math.min(x0,q.x);y0=Math.min(y0,q.y);x1=Math.max(x1,q.x+LFCELLW);y1=Math.max(y1,q.y+LFFP)};
+  S.base.slots.forEach(function(r){if(r&&ROOMCELL[r.t]&&ROOMCELL[r.t][0]===LFBSEL)add(r.t)});
+  /* an open lot is drawn on the street under its cell (26_world.js: a 140 box at the street line), not in the cell */
+  try{var gb=LFROOF+L.rows*LFFP;lotsOpen().forEach(function(k){if(!ROOMCELL[k]||ROOMCELL[k][0]!==LFBSEL)return;var p=cellXY(k,L);n++;
+    x0=Math.min(x0,p.x-70);x1=Math.max(x1,p.x+70);y0=Math.min(y0,gb-104);y1=Math.max(y1,gb+36)})}catch(e){}
+  if(!n)return false;var wr=c.getBoundingClientRect(),cw=c.clientWidth,top=0,bot=c.clientHeight;
+  c.querySelectorAll(".lfhud,.lfbtop,.glnext,.lfwxb").forEach(function(e){var r=e.getBoundingClientRect();if(r.height&&r.bottom-wr.top<c.clientHeight*.45)top=Math.max(top,r.bottom-wr.top)});
+  var nv=document.querySelector(".nav");if(nv){var nr=nv.getBoundingClientRect();if(nr.height&&nr.top>wr.top+c.clientHeight*.5)bot=Math.min(bot,nr.top-wr.top)}
+  var hn=c.querySelector(".lfhint");if(hn){var hr=hn.getBoundingClientRect();if(hr.height&&hr.top>wr.top+c.clientHeight*.5)bot=Math.min(bot,hr.top-wr.top)}
+  top+=10;bot-=6;var w=x1-x0,h=y1-y0;x0-=w*.03;x1+=w*.08;y0-=h*.04;y1+=h*.02;
+  var sc=Math.min(1.4,(cw-16)/(x1-x0),(bot-top)/(y1-y0));if(!(sc>0))return false;
+  LFV.s=LFV.s0=sc;LFV.x=cw/2-(x0+x1)/2*sc;LFV.y=(top+bot)/2-(y0+y1)/2*sc;LFV.init=1;return true}catch(e){return false}}
+var zxInitView=lfInitView;lfInitView=function(c){ZXFITTING=1;try{var r=zxInitView.apply(this,arguments);if(LFBSEL!=null&&zxFitB(c))lfApplyNow();return r}finally{ZXFITTING=0;
+  if(LFBSEL!=null&&c)ZXFIT={b:LFBSEL,x:LFV.x,y:LFV.y,s:LFV.s,w:c.clientWidth,h:c.clientHeight}}};
+var zxApplyLock=lfApplyNow;lfApplyNow=function(){var c=document.getElementById("lfwrap"),inB=LFBSEL!=null;
+  if(c&&c.hasAttribute("data-zxlock")!==inB){if(inB)c.setAttribute("data-zxlock","1");else c.removeAttribute("data-zxlock")}
+  if(inB&&c&&!ZXFITTING){if(!ZXFIT||ZXFIT.b!==LFBSEL||ZXFIT.w!==c.clientWidth||Math.abs(ZXFIT.h-c.clientHeight)>=60){LFV.init=0;lfInitView(c);return}
+    LFV.x=ZXFIT.x;LFV.y=ZXFIT.y;LFV.s=ZXFIT.s}
+  var k=LFBSEL+":"+LFV.x.toFixed(1)+","+LFV.y.toFixed(1)+","+LFV.s.toFixed(3);if(inB&&k===ZXAPK&&!ZXFITTING)return;ZXAPK=k;
+  return zxApplyLock.apply(this,arguments)};
+(function(){var st=document.createElement("style");st.textContent="#lfwrap[data-zxlock] .lfctl [data-act=lfz]{display:none}#lfwrap[data-zxlock]{cursor:default}#lfwrap[data-zxlock] .lfhint{font-size:0}#lfwrap[data-zxlock] .lfhint::after{content:\"Tap a room\";font-size:10px}";(document.head||document.documentElement).appendChild(st)})();

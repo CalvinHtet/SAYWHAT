@@ -51,15 +51,18 @@ setTimeout(function(){try{qbWatchSave()}catch(e){}if(window.__qbGuest||(window.Q
    the phone log (qbFrame) at release. */
 /* Cal, 2026-11-13 ("Read my phone's speed log"): the log only held this visit, so each opening wiped the last; it now keeps the last 40
    samples on this phone, samples every 30 s while The Loft, Town or Players is open, and times each tab tap to the next frame (tap) */
+var QBPX={pan:0,js:0,runs:0};
 var QBPL=(function(){try{var a=JSON.parse(localStorage.getItem("qb-perf")||"[]");return Array.isArray(a)?a.slice(-40):[]}catch(e){return []}})(),QBPT=0,QBPK="",QBPB=0,QBPS=0;
 function qbPerfSave(){try{QBPL=QBPL.slice(-40);localStorage.setItem("qb-perf",JSON.stringify(QBPL))}catch(e){}clearTimeout(QBPT);QBPT=setTimeout(function(){try{if(!db||!ownerView||window.__qbGuest)return;db.doc("diag/perf").set({appv:APPV,ua:navigator.userAgent,dpr:devicePixelRatio,w:innerWidth,h:innerHeight,cores:navigator.hardwareConcurrency||0,mem:navigator.deviceMemory||0,photo:JSON.stringify(window.__qbPhotoT||null),log:JSON.stringify(QBPL)}).catch(function(){})}catch(e){}},1500)}
 document.addEventListener("click",function(e){try{if(!db||!ownerView||window.__qbGuest)return;var b=e.target.closest&&e.target.closest("[data-act=nav],[data-act=htab]");if(!b)return;var t0=performance.now(),to=b.dataset.v||("hall/"+(b.dataset.t||""));
   requestAnimationFrame(function(){requestAnimationFrame(function(){QBPL.push({why:"tap",to:to,ms:Math.round(performance.now()-t0),t:Date.now()});qbPerfSave()})})}catch(x){}},true);
 function qbPerf(why){try{if(QBPB||window.__qbGuest||!db||!ownerView||document.hidden)return;QBPB=1;
-  var t0=performance.now(),last=t0,n=0,worst=0,slow=0,long=0,po=null;
+  var t0=performance.now(),last=t0,n=0,worst=0,slow=0,long=0,po=null;QBPX.pan=0;QBPX.js=0;QBPX.runs=0;
   try{po=new PerformanceObserver(function(l){long+=l.getEntries().length});po.observe({entryTypes:["longtask"]})}catch(e){}
   var done=function(){QBPB=0;if(po)po.disconnect();var an=0;try{an=document.getAnimations().filter(function(a){return a.playState==="running"}).length}catch(e){}
-    QBPL.push({why:why,tab:view,win:!!document.querySelector("#layer .modal"),room:((document.querySelector("#layer .rmodal .rm-title")||{}).textContent||""),fps:+(n/5).toFixed(1),worst:Math.round(worst),slow:slow,long:long,anim:an,nodes:document.getElementsByTagName("*").length,img:document.images.length,t:Date.now()});QBPS=Date.now();qbPerfSave()};
+    QBPL.push({why:why,tab:view,win:!!document.querySelector("#layer .modal"),room:((document.querySelector("#layer .rmodal .rm-title")||{}).textContent||""),fps:+(n/5).toFixed(1),worst:Math.round(worst),slow:slow,long:long,anim:an,nodes:document.getElementsByTagName("*").length,img:document.images.length,
+      /* v0.99: the Loft's own work in those 5 s: pan/zoom redraws (pan), ms of script in the people loop (js, over lr runs), people on screen (ag) */
+      pan:QBPX.pan,js:Math.round(QBPX.js),lr:QBPX.runs,ag:(function(){try{var L=window.LFA||{};return Object.keys(L).filter(function(k){return !L[k]._off}).length}catch(e){return -1}})(),t:Date.now()});QBPS=Date.now();qbPerfSave()};
   var f=function(t){n++;var d=t-last;last=t;if(d>worst)worst=d;if(d>50)slow++;if(t-t0<5000)requestAnimationFrame(f);else done()};
   requestAnimationFrame(f)}catch(e){QBPB=0}}
 setInterval(function(){if(!loaded)return;var k=view+"|"+!!document.querySelector("#layer .modal");if(k!==QBPK){QBPK=k;qbPerf("change")}else if(/^(hideout|hall|players)$/.test(view)&&Date.now()-QBPS>30000)qbPerf("stay")},2500);
