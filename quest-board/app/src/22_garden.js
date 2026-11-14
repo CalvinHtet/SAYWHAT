@@ -173,7 +173,8 @@ LFROOM.garden=function(C){
   if(window.LFSPR&&LFSPR[gk]){C.shellK=gk;C.noOut=1;var sv=LFSHELLK;LFSHELLK=gk;try{C.walls.push(lfShellPart(C.chu,"walls"))}finally{LFSHELLK=sv}}
   else{for(var fx=.2;fx<W-.4;fx+=1.7)lfSpr(C,"w_gfence",fx,.08,1.6,.1,{flip:1,h:1,H:50,ctr:1,nosh:1,dk:99});
     for(var fy=.2;fy<D-.4;fy+=1.7)lfSpr(C,"w_gfence",.05,fy,.1,1.6,{h:1,H:50,ctr:1,nosh:1,dk:99})}
-  if(kt)lfDoorL(C,1.15,2.65,96,"#ffd27a",!!(window.LFSPR&&LFSPR[gk]));
+  /* QA room sweep 2026-11-14: the door opened straight onto the first bed; it now opens onto the aisle between the first two rows of beds (y 3.0-4.6) */
+  if(kt)lfDoorL(C,3.05,4.55,96,"#ffd27a",!!(window.LFSPR&&LFSPR[gk]));
   /* beds, with a walkable lane all round each one */
   var cols=[2,2,3][st],rows=[3,3,4][st],spots=[];
   for(var ry=0;ry<rows;ry++)for(var cx=0;cx<cols;cx++){if(!(st===2&&H("g_koi")&&cx===2&&ry===3))spots.push([BX[cx],BY[ry]])}
@@ -199,7 +200,7 @@ LFROOM.garden=function(C){
      in front, and the low wheelbarrow takes its old place */
   tool("g_wheel","gdx_wheel",TY[1],1.4,1.0,16);tool("g_comp","gdx_comp",TY[2],st===0?1.0:1.2,st===0?.95:1.1,24);if(st===0){if(H("g_barrel"))gdS(C,"gdx_barrel",.05,3.75,.75,.75,28,{H:56})/* rule 20: the Back Plot's tool column has no room for it; under the wall tap instead */}else tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_bench","gdx_bench",TY[4],1.4,1.0,26);
   /* the Back Plot's gate corner is the produce stand's */
-  if(H("g_scare"))gdS(C,"gd_scare",st===1?5.05:.3,st===0?8.3:st===1?3.45:6.0,/* rule 20: in the Kitchen Garden the hanging pots painted on the left wall run its whole front, so there it guards the crossing between the four back beds */.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
+  if(H("g_scare"))gdS(C,"gd_scare",st===1?5.05:.3,st===0?8.3:st===1?3.45:6.9,/* QA room sweep: clear of the moved back door *//* rule 20: in the Kitchen Garden the hanging pots painted on the left wall run its whole front, so there it guards the crossing between the four back beds */.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
@@ -233,7 +234,7 @@ LFROOM.garden=function(C){
         gdFountain(C,fc[0],fc[1]);
         [[-2.3,.6,1],[.5,-2.3,1],[2.0,-.9,-1],[-1.1,2.1,1],[1.3,2.0,-1]].forEach(function(o){C.s("look",fc[0]+o[0],fc[1]+o[1],o[2],"look",[6,12],{tag:"admire"})})}
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
-      if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
+      if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */if(st===2&&H("g_koi")&&lx>10.9&&lx<15.1)return;/* QA room sweep: nor inside the koi pond */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
       if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
