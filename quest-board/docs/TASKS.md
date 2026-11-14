@@ -92,9 +92,28 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 54b7517): v1.01 = release/v1.01 54b7517 PASS, can ship. Next: Cal's room-placement sweep (in progress, shots/qa/rooms1114/), then LEAD's v1.02 5eeb623. 15-minute loop running (Cal confirmed to QA, 2026-11-13).
+- Now (on 4c6317b): Cal's room-placement sweep DONE (21 rooms, findings for ROOMS: rigtest/qa/review_rooms_1114.md); v1.01 live as fc3f4de (= the passed 54b7517 + APPV). Next: v1.02 (5eeb623, 1b4efc5, e651938). 15-minute loop running (Cal confirmed to QA, 2026-11-13).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- ROOMS SWEEP for Cal (2026-11-14, via LEAD): every room fully bought, default style, 13:00, plain build of 4c6317b (live rooms).
+  Full list with positions: `rigtest/qa/review_rooms_1114.md`; pictures `shots/qa/rooms1114/big_<room>.jpg`; `auditall.js`. Owner: ROOMS.
+  1. Chandeliers hanging at chair/knee height, not over a table: Restaurant (2 of 3), Theater lobby (both). Patio light string ends
+     in mid-air on the left.
+  2. Floating with nothing under: Boba's gas burner and wok (flames above the wok); Dessert's sundae glass between the machines;
+     Closet's glowing rod across the hidden-stair arch.
+  3. Wall pieces at the other wall's angle (they stick out): Rhythm's mirror panels and equalizer display (swapped), VR's globe
+     poster, Game Room's left-wall hex lights.
+  4. Off the floor edge: Rhythm's bench, VR's flight pod (audit OUTSIDE too).
+  5. Doors/paths blocked: Bedroom desk into the patio door; Garden back door onto a raised bed; Mall escalator ends in the wall under
+     the balcony; Theater rocket standee on the entrance.
+  6. Clips: Rooftop DJ booth into the pool corner; Garden lamp post inside the koi pond; Speakeasy booth into the piano; Patio
+     telescope through the railing, bar cart into the planter.
+  7. Not like the real room: Bowling seats face the trophy wall (backs to the lanes), ball return away from the lanes; Karaoke front
+     booth faces out of the room; Auditorium projector aims at the corner, EXIT sign behind a speaker; Speakeasy bar has no back bar;
+     Lair "UPGRADES" serif text over the screen, outlined pieces clash with the painted room.
+  8. Crowded fully bought: Restaurant dining floor (8 tables, booths, chairs nearly touching); Garden front-right corner.
+  9. Audit: Restaurant 4 diner seats on air, Patio a chair spot inside furniture.
+  Looked right: Sky Bar, Arcade, Nightclub. Not checked: other styles, earlier stages, night, people in the rooms.
 - PASS, v1.01 release/v1.01 54b7517 (= 4c6317b + bae643f + 54b7517, only 29zx_simple.js and 29w_duel.js; clean sandbox build):
   both FIX lines fixed. dqeffort.js: 76 before and after Clear completed, 76 after a reload too, the hook reads 76. wpactcash.js PASS,
   his $25 pact now reads "Only one of you makes the goal: the other owes them $25. Both make it, or neither: nobody owes anything.
