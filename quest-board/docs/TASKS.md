@@ -95,9 +95,20 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on e53c2af + a9def76): v1.03 release/v1.03 e53c2af PASS, can ship; ROOMS's anorak FIX a9def76 PASS (QA findings). If LEAD folds the anorak into v1.03 (a9def76 + 8d5add0 + off the cut list), QA checks that small delta on the new commit (altcut.js EXPECT_ANORAK=1). 15-minute loop off (Cal). v1.02 live as 10daa03.
+- Now (on f72a55f): v1.03 = release/v1.03 f72a55f PASS, can ship (e53c2af + the anorak fix + Trail Hikers; QA findings). Next: verify Live once LEAD ships (passed commit + APPV only). 15-minute loop off (Cal). v1.02 live as 10daa03.
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.03 = release/v1.03 f72a55f (LEAD), can ship; it replaces e53c2af:
+  - The diff against e53c2af is exactly 5c23aa9, 849cd70 and f72a55f: 15_shop.js renames "Trail Runners" to "Trail Hikers", and
+    29zx_simple.js drops the anorak from the cut list. The 5 anorak webps are byte-identical to a9def76, which QA passed.
+  - Game files match qa-local bf7b4a4 except APPV 103.
+  - On a clean plain build, female character, Fri Nov 20 (altcut.js EXPECT_ANORAK=1):
+    - ALTITUDE is live, and all of its pieces are listed.
+    - The anorak is on sale, on its card and in the sale row.
+    - "Trail Hikers" shows; "Trail Runners" is nowhere.
+    - The version line reads v1.03.
+  - LEAD's cutpieces.js still PASS. No page errors.
+  - Not checked: an iPhone, a real purchase, Live (checked after shipping).
 - PASS, v1.03 = release/v1.03 e53c2af (LEAD), can ship as it is:
   - Composition: app/src, data, tools and art/app match qa-local db36053 except APPV 103. The 9 room-sweep cherry-picks, 7c5664e,
     8093dcb and db36053 are all in; the sweep and the 14 ALTITUDE pieces were already QA PASS.
