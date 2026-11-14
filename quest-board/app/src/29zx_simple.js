@@ -213,15 +213,26 @@ var zxApplyLock=lfApplyNow;lfApplyNow=function(){var c=document.getElementById("
    shuffled order: one fixed seed in the code, so every phone gets the same surprise and a reload never reshuffles. A brand never
    drops again while it is still live (the rule dropPlan used). The Shop never names the next brand ("New brand in ..."). */
 DROPS.shuf0="2026-11-16";
+/* Brands held back from the drops while their art is redone (Cal approved ROOMS's streetwear audit, 2026-11-14: GACHA POP, SAVE POINT,
+   BARD & BLADE, KAIMANA and OAKMONT get new names and pieces; ALTITUDE, SOLVBERG and NICE COCK lose most of theirs). Each hold has a
+   start and, once the new art is in, an end date: a slot dated inside it skips those brands, so lifting a hold never changes a drop
+   that already happened. */
+DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","alt","sv","nc"]}];
+function zxHeld(id,ymd){return (DROPS.hold||[]).some(function(h){return h.ids.indexOf(id)>=0&&ymd>=h.from&&(!h.until||ymd<h.until)})}
 var ZXSH={};
 function zxShufJ0(F){var x0=ymdN(DROPS.cal0),t=ymdN(DROPS.shuf0),j=1;for(var x=x0+1;x<t;x++)if(flIsDrop(F,x,x0))j++;return Math.max(1,j)}
-function zxShufOrd(F,ids,upto){var n=ids.length,lv=F.live||DROPS.live,k=F.id+"|"+ids.join(",")+"|"+lv+"|"+DROPS.shuf0+"|"+DROPS.seed,c=ZXSH[k];
-  if(!c){var j0=zxShufJ0(F),ord=[];for(var j=0;j<j0;j++)ord.push(ids[j%n]);c=ZXSH[k]={ord:ord}}
-  var ord=c.ord,key=function(r){return function(a,b){return dropHash(DROPS.seed+"|shuf|"+F.id+"|"+r+"|"+a)-dropHash(DROPS.seed+"|shuf|"+F.id+"|"+r+"|"+b)}};
-  while(ord.length<=upto){var at=ord.length,r=Math.floor(at/n),from=r*n,done={};for(var q=from;q<at;q++)done[ord[q]]=1;
-    var pool=ids.filter(function(id){return !done[id]}).sort(key(r)),last={};ord.forEach(function(id,i){last[id]=i});
-    var ok=pool.filter(function(id){return last[id]==null||at-last[id]>lv})[0];
-    if(!ok)ok=pool.slice().sort(function(x,y){return last[x]-last[y]})[0];ord.push(ok)}
+/* the floor's drop days: slot 0 is cal0, then each of its drop days (as dropFloor counts them) */
+function zxSlotDays(F,n){var x0=ymdN(DROPS.cal0),out=[DROPS.cal0];for(var x=x0+1;out.length<=n&&x<x0+4000;x++)if(flIsDrop(F,x,x0))out.push(ymdOfN(x));return out}
+/* slot by slot from shuf0: the brand gone longest without dropping, never one still live or held that day; brands never dropped first,
+   in a fixed-seed order (the same on every phone, never reshuffled), so it stays a surprise and every brand gets its turn */
+function zxShufOrd(F,ids,upto){var lv=F.live||DROPS.live,k=F.id+"|"+ids.join(",")+"|"+lv+"|"+DROPS.shuf0+"|"+DROPS.seed+"|"+JSON.stringify(DROPS.hold||[]),c=ZXSH[k];
+  if(!c){var j0=zxShufJ0(F),ord=[];for(var j=0;j<j0;j++)ord.push(ids[j%ids.length]);c=ZXSH[k]={ord:ord,days:[]}}
+  var ord=c.ord;if(c.days.length<=upto+1)c.days=zxSlotDays(F,upto+40);
+  var key=function(id){return dropHash(DROPS.seed+"|shuf|"+F.id+"|"+id)};
+  while(ord.length<=upto){var at=ord.length,day=c.days[at]||"9999",last={};ord.forEach(function(id,i){last[id]=i});
+    var free=ids.filter(function(id){return !zxHeld(id,day)}),ok=free.filter(function(id){return last[id]==null||at-last[id]>lv});
+    if(!ok.length)ok=free.length?free:ids;
+    ok.sort(function(x,y){var lx=last[x]==null?-1:last[x],ly=last[y]==null?-1:last[y];return lx-ly||key(x)-key(y)});ord.push(ok[0])}
   return ord[upto]}
 var zxFlOrder=flOrderAt;flOrderAt=function(F,ids,j){try{if(!ids||!ids.length||(F.id==="street"&&DROPS.on)||ids.length<2)return zxFlOrder.apply(this,arguments);
   if(j<zxShufJ0(F))return zxFlOrder.apply(this,arguments);if(!DROPS.rerun&&j>=ids.length)return null;return zxShufOrd(F,ids,j)}catch(e){return zxFlOrder.apply(this,arguments)}};
