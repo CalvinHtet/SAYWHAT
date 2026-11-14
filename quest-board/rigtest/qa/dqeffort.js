@@ -22,4 +22,8 @@ let bad = 0; const ok = (n, c, g) => { if (!c) bad++; console.log((c ? 'ok   ' :
   await p.evaluate(() => { const b = document.querySelector('[data-act=qclear]'); if (b) b.click(); }); await p.waitForTimeout(1500);
   await p.evaluate(() => window.__qb.x().render()); await p.waitForTimeout(300); const after = await p.evaluate(() => { const S = window.__qb.x().S; return { quests: S.quests.map((q) => q.id), done: Object.keys(S.done), dq: +((document.querySelector('.card.dq .mono')||{}).textContent||'').split('/')[0].trim(), hook: window.__qbEcon.xp() }; });
   ok(`"Clear completed" leaves the bar where it was (${rows[3].dq})`, after.dq === rows[3].dq, after);
+  // a reload after the clear: the bar reads the same (what each tick counted is saved)
+  await p.reload(); await p.waitForFunction(() => window.__qb && window.__qb.x && document.querySelector('.card.dq .mono'), null, { timeout: 120000 }); await p.waitForTimeout(1500);
+  const re = await p.evaluate(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); window.__qb.x().render(); return +((document.querySelector('.card.dq .mono') || {}).textContent || '').split('/')[0].trim(); });
+  ok(`after a reload the bar still reads ${rows[3].dq}`, re === rows[3].dq, re);
   ok('no page errors', !errs.length, errs); console.log(bad ? 'FAILED ' + bad : 'PASS', '(boss day ' + boss + ')'); await b.close(); })();
