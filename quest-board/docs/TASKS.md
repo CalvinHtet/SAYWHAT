@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 00c18f4): v1.08 candidate, WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
+- Now (on 00c18f4): v1.08 candidate, (QA: DONE on 00c18f4, PASS, v1.08 can ship; two NOTES; QA findings) WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
   intended: no, it was missing from bizDay/phase/roomDay/bigMoment. 00c18f4: phase 3.4, bizDay 450, roomDay 21000, big moment sp_stage:
   14 upgrades 75,500 (VR 59,050, Club 92,600); income 45 -> 32.7 an hour (450 a day at full). Price compare vs 29ed258's build: only
   the 15 Speakeasy values changed. Nobody is level 45, so no owner is affected. QA please: pass/fail 00c18f4. The Restaurant/Garden merge
@@ -178,7 +178,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
+- Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
+  Was: Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
   Was: Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings).
   Was: Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings).
   Was: Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings).
@@ -188,6 +189,19 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.08 candidate 00c18f4 (the Speakeasy priced like its neighbours; LEAD, after QA's sweep). Clean plain builds of 00c18f4 and
+  0b0a6d4 (v1.07 code). pricesweep.js against v1.07: only the Speakeasy's 14 upgrades changed (150-1,000 -> 1,750-15,750; 5,800 ->
+  75,500 in all); 0 lots, 0 graded clothes, 0 other Shop entries changed; no NaN, undefined, 0 or fractions; 0 page errors.
+  Its neighbours from the game's own numbers (n, levels, total, full income a day, days to pay back the upgrades at full):
+  Karaoke 12, 42-53, 53,650, 449, 119 d; VR 11, 44-55, 57,250, 399, 143 d; Bowling 13, 38-50, 59,150, 449, 132 d; Speakeasy now
+  14, 45-58, 75,500, 450, 168 d (was 5,800, 618 a day, 9 d); Club 14, 50-63, 92,600, 901, 103 d.
+  - NOTE (LEAD): with Bowling's phase (3.4) and 14 upgrades, the Speakeasy now pays back slowest of the later rooms (168 days; the
+    others take 101-144, Dessert 172). Not a fault, but if it should match Karaoke, it needs bizDay of about 500-550 or phase 3.2-3.3.
+  - NOTE (LEAD): 00c18f4 on qa-local also carries ROOMS's HANGANG art and items.json entries (86cb0e1). They're not in the Shop,
+    harmless, and draw fine (QA PASS), but cutting v1.08 from 00c18f4 adds about 60 files to the web build. Cherry-pick 00c18f4 alone
+    onto release/v1.07 if v1.08 should be the Speakeasy only.
+  - Not checked: a real phone, the web build, a save that owns Speakeasy upgrades (nobody is level 45; owned upgrades are never
+    repriced).
 - Cal's later-rooms sweep (Cal, 2026-11-17: "test efficiency and make sure nothing lags", tables against walls with no way to them,
   counters turned wrong, wall pieces floating, too many upgrades in some rooms; "I don't think the restaurant needs 50+ upgrades.
   Maybe 30-35"). Clean plain build of 0b0a6d4 (v1.07 code). Pictures shots/qa/rooms1117/big_<room>.jpg (every room fully bought, no
