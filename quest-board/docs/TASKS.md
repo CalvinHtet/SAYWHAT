@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free
+CHROME: ROOMS (2026-11-17, painting HANGANG's 15 new pieces on Higgsfield)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 0ea9b2a): v1.06 candidate, URGENT, WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
+- Now (on 0ea9b2a): v1.06 candidate, URGENT, (QA: DONE on 0ea9b2a, PASS, v1.06 can ship; one NOTE for LEAD, the brand tabs no longer fit a phone; QA findings) WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
   Wednesday is separate from the 3. Right now it should be hangang, dial up, and overpass." 0ea9b2a: Street live 3 (29e_economy.js);
   a retired brand rests at least 2 drops (29zz_ncstreet.js gap = live + max(1, half the brands not live)), as with 3 live the old gap
   brought DIAL-UP back 4 days after it left. Today: HANGANG, DIAL-UP, OVERPASS; Fri 11-20 NICE COCK drops, HANGANG retires. Only 6
@@ -159,12 +159,31 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings).
   Was: Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS.
   Was: Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73.
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.06 candidate 0ea9b2a (3 Street brands live, Wednesday vault extra; Cal 11-17). Clean plain builds of 0ea9b2a and v1.05 fea3674:
+  - Drops (dropcal.js, 2026-11-09 to 2027-04-30): Boutique and Atelier identical to v1.05; every Street drop is the same up to and including
+    11-16. From 11-16 the Street always has 3 live: 11-17 HANGANG, DIAL-UP, OVERPASS; Fri 11-20 NICE COCK drops, HANGANG retires. Over
+    the 49 Street drops: never 2 or 4 live, no brand drops while live, every retired brand rests at least 2 drops (a week); after 11-20
+    each of the 6 brands drops 7-8 times, in a varied order.
+  - Wednesday vault (__qbDrops.back, every Wednesday 11-18 to 03-31): v1.06 fills 12-23 SMOKE BOMB and 02-03 ALTITUDE, both off the Street
+    that day, so 4 brands show. Correction to LEAD's line: v1.05 did fill it, on 02-03, 02-17 and 02-24. Either way the vault is empty on
+    most Wednesdays (18 of 20) until more Street brands have art; for Cal to know, not a fault.
+  - Phone (390x844, level 12 and 31): the Street tabs on 11-17, 11-20, 12-23 and 02-03 are the brands above (the vault one marked ↺);
+    page errors 0. Splashes (S.brandSeen empty): 3 on 11-17 and 11-20 (NICE COCK's included), 4 on 12-23 with the vault last. v1.05 shows 2.
+    A player who saw HANGANG's 11-10 splash does not see it again today.
+  - Prices: pricesweep.js against v1.05: 0 changes (533 upgrades, 31 lots, 399 Shop rows), no NaN; the 48 out-of-band clothes as before.
+  - NOTE for LEAD (not a blocker, owner LEAD): the brand tab row no longer fits a phone. It scrolls sideways (overflow-x auto) with no
+    cue. At 375 and 390 wide, BASICS is cut from today on. On vault Wednesdays (first 12-23) the vault tab reads "↺ SMO" and BASICS is
+    off-screen, even at 430 wide. v1.05 fit at every width. Fix before 12-23: wrap the row, shrink the tabs, or add a scroll cue.
+    Pictures shots/qa/v106/street_lv12_20261120.jpg, street_lv12_20261223.jpg (the dark layer and Loft tip there come from QA's test save).
+  - Not checked: a real phone; whether "Go to Shop" on the vault splash scrolls the tab row to the vault tab; the web build (plain build
+    only); owners (that code did not change); Street drops after 2027-04-30.
 - PASS, v1.05 live (LEAD: Live and Test at fea3674 on release/v1.05, wlive PASS, 3013/3013 identical):
   - fea3674 against the passed b10ca52: the only shipped file that differs is app/src/30_app_b.js, and only its APPV line (100 -> 105).
   - Art against release/v1.04: only NICE COCK's files, 48 changed and the 8 old yawn layers removed. A clean web build of fea3674 has
@@ -1380,7 +1399,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): HANGANG's 15 posted for Cal's OK on the direction; DIAL-UP and OVERPASS drafted too (shots/pending_art/new240/drafts.md). No art until Cal OKs. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); now painting HANGANG, then DIAL-UP, then OVERPASS (shots/pending_art/new240/drafts.md). (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own
