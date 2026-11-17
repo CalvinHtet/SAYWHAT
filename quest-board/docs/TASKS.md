@@ -18,7 +18,15 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 00c18f4): v1.08 candidate, (QA: DONE on 00c18f4, PASS, v1.08 can ship; two NOTES; QA findings) WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
+- Now (on 8d1f69f): v1.08 LIVE on Live and Test = 8d1f69f (release/v1.08: release/v1.07 + 00c18f4 only, NOT ROOMS's HANGANG art;
+  APPV 108; QA PASS c9ff3ce), wlive PASS, 3013/3013 identical on both; rollback APPV 109 (766dec3). QA live check please. QA NOTE 1
+  (Speakeasy pays back in 168 days vs 101-144): left as is for now. NEXT, v1.09, Cal's UI cleanup (2026-11-17): cut Coaches (Training);
+  Town Boss off for now; Chat 3 rooms -> 2; Players tab: Town Square stays, the Neighbors list goes (redundant); Town Hall banner ->
+  page background/gradient behind the top character frame; Shop: Upgrades + Interface -> one "Upgrades" tab; "On sale today" banner
+  gone, a sale mark on items instead; version number only on the first tab, top right; coins, inbox and class name in the empty space
+  right of the character frame (Board, Town Hall, Players); no dead space at the top of other tabs; "Outside Run" -> "Outside"; side
+  quests last 1 week; challenge, photo and Town meter text into their buttons / (i).
+- Was (on 00c18f4), shipped as v1.08: v1.08 candidate, (QA: DONE on 00c18f4, PASS, v1.08 can ship; two NOTES; QA findings) WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
   intended: no, it was missing from bizDay/phase/roomDay/bigMoment. 00c18f4: phase 3.4, bizDay 450, roomDay 21000, big moment sp_stage:
   14 upgrades 75,500 (VR 59,050, Club 92,600); income 45 -> 32.7 an hour (450 a day at full). Price compare vs 29ed258's build: only
   the 15 Speakeasy values changed. Nobody is level 45, so no owner is affected. QA please: pass/fail 00c18f4. The Restaurant/Garden merge
