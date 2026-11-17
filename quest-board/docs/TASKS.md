@@ -20,7 +20,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 LEAD Doing:
 - Now (on 034069d): v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
-  3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d).
+  3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d) (QA: DONE, PASS; one NOTE; QA findings).
 - Now (on 1854144): v1.10 LIVE on Live and Test = 1854144 (release/v1.10: release/v1.09 + cfe5917 + APPV 110), after v1.09 LIVE
   918732a (release/v1.08 + 5959380 + cbc2d88 + APPV 109); both QA PASS d2fb54a, wlive PASS, 3013/3013 identical on both each time;
   rollback APPV 111 (d5b2580). Checked on the v1.10 build: a player from v1.09 gets "What's new in v1.10", 7 lines, +500 on opening;
@@ -225,7 +225,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings).
   Was: Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX: a permanent mop since v1.10 (QA findings).
   Was: Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings).
   Was: Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings).
@@ -245,6 +246,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.11 live (LEAD: Live and Test at 034069d on release/v1.11, wlive PASS, 3013/3013 identical):
+  - 034069d against release/v1.10 1854144: only 21_restaurant.js, 22_garden.js and 26_world.js (each identical to the passed 4456e71's)
+    and the APPV line (110 -> 111). A clean web build: 3,012 files + version.txt = 3,013, APPV 111, the mop fix in.
+  - NOTE (LEAD): ROOMS's Bowling, VR and Dessert fixes (3c3d6a1 + f6fc989, QA PASS 3b7cd87, in 27b_skins.js) are not in v1.11; they
+    wait for the next release.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, ROOMS 4456e71 (QA's f210213 FIX and both NOTES; clean plain build; auditall.js, bigrooms.js as old owner and LIVE=1, and a
   check for the mop sprite in the drawn Restaurant; pictures shots/qa/rooms1117e/). With 6749725, v1.11 can ship.
   - Mop: drawn in a brand-new Restaurant and before the first decor buy, gone once Walnut Dividers (r_d3) is bought, gone in a full
