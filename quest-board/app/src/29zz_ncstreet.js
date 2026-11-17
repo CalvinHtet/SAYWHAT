@@ -19,8 +19,9 @@ function d2Ord(F,ids,upto){var lv=F.live||DROPS.live,k=F.id+"|"+ids.join(",")+"|
   var ord=c.ord;
   while(ord.length<=upto){var at=ord.length,day=c.days[at]||"9999",last={};ord.forEach(function(id,i){if(id!=null)last[id]=i});
     var pin=(DROPS.pin||[]).filter(function(p){return p.fl===F.id&&p.day===day&&ids.indexOf(p.id)>=0})[0];
-    /* a brand rests at least half the floor's brands' worth of drops (and never while live), so it cannot leave and come straight back */
-    var fr=ids.filter(function(id){return !zxHeld(id,day)}),gap=Math.max(lv,Math.floor(fr.length/2)),pick,
+    /* a brand is live for lv drops, then rests: at least 2 drops (Street: a week), more when the floor has more brands, so it cannot
+       leave on Monday and come back on Friday (with 3 live, Cal 2026-11-17, the old gap of max(lv, half) did exactly that) */
+    var fr=ids.filter(function(id){return !zxHeld(id,day)}),gap=lv+Math.max(1,Math.floor((fr.length-lv)/2)),pick,
       cool=function(g){return function(id){return last[id]==null||at-last[id]>g}};
     if(pin)pick=pin.id;
     else{var el=c.bag.filter(function(id){return fr.indexOf(id)>=0&&cool(gap)(id)});

@@ -1,7 +1,7 @@
 // NICE COCK's 10 repainted pieces (ROOMS bcd8f73, Cal approved the comfort redo 2026-11-17) on the plain build. NICE COCK moved to the
 // Street and drops there Fri 11-20 (Cal, 2026-11-17; 29zz_ncstreet.js). A level-12 player (Street only), clock Fri Nov 20 10 am: NICE COCK
-// is live on the Street with OVERPASS and its splash shows; every piece has ROOMS's name and line inside its grade's Street band
-// (standard 250-440, premium 440-450); the Shop lists all 10; art loads; no old names. The day before (Thu 11-19), no NICE COCK on the Street.
+// is live on the Street with DIAL-UP and OVERPASS (3 live, Cal 2026-11-17) and its splash shows; every piece has ROOMS's name and line inside its grade's Street band
+// (standard 250-440, premium 440-450); the Shop lists all 10; art loads; no old names. The day before (Thu 11-19), HANGANG, DIAL-UP and OVERPASS, no NICE COCK.
 //   PORT=<plain build server> NODE_PATH=<playwright's parent> node rigtest/lead/ncrows.js
 const { chromium } = require('playwright');
 let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
@@ -19,10 +19,10 @@ const OLD = ['Sweatband', 'Rooster Pendant', 'Sport Shades', 'Heavyweight Hoodie
     const rows = {}; Object.keys(WANT).forEach((k) => { const it = x.SHOP.find((q) => q[0] === 'gx_nc_' + k); rows[k] = it ? { n: it[2], p: it[3], line: it[5] } : null; });
     document.querySelector('.nav button[data-v="shop"]').click(); let splash = ''; for (let i = 0; i < 5; i++) { await new Promise((o) => setTimeout(o, 1500)); const bs = [...document.querySelectorAll('.bsplash')].map((m) => m.innerText.split('\n').filter(Boolean).slice(1, 3).join(' ')); splash += bs.join(' | ') + ' | '; document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); } document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); x.render(); await new Promise((o) => setTimeout(o, 800));
     return { live, rows, splash, text: document.getElementById('app').innerText }; }, [WANT, DAY]);
-  const t = await shop(19); ok(t.live.join() === 'y2k,over' && !/NICE COCK/.test(t.text), 'Thu Nov 19: the Street is DIAL-UP and OVERPASS, no NICE COCK ' + JSON.stringify(t.live));
+  const t = await shop(19); ok(t.live.join() === 'hanga,y2k,over' && !/NICE COCK/.test(t.text) && ['HANGANG', 'DIAL-UP', 'OVERPASS'].every((n) => t.text.includes(n)), 'Thu Nov 19: the Street shows HANGANG, DIAL-UP and OVERPASS (3 live, Cal 11-17), no NICE COCK ' + JSON.stringify(t.live));
   await p.reload(); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbDrops, null, { timeout: 90000 }); await p.waitForTimeout(800);
   const r = await shop(20);
-  ok(r.live.join() === 'over,nc', 'Fri Nov 20: the Street is OVERPASS and NICE COCK ' + JSON.stringify(r.live));
+  ok(r.live.join() === 'y2k,over,nc', 'Fri Nov 20: the Street is DIAL-UP, OVERPASS and NICE COCK (HANGANG retires) ' + JSON.stringify(r.live));
   ok(/NICE COCK/i.test(r.splash), 'Fri Nov 20: the NICE COCK splash shows (the splashes in turn) ' + JSON.stringify(r.splash.slice(0, 120)));
   const band = { standard: [250, 440], premium: [440, 450] };
   for (const k of Object.keys(WANT)) { const w = WANT[k], g = r.rows[k]; if (k === 'band') { await p.evaluate(() => { document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); window.__qb.x().render(); }); await p.waitForTimeout(800); r.text = await p.evaluate(() => document.getElementById('app').innerText); }
