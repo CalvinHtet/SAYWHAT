@@ -19,7 +19,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 
 LEAD Doing:
 - Now (on 8d1f69f): v1.08 LIVE on Live and Test = 8d1f69f (release/v1.08: release/v1.07 + 00c18f4 only, NOT ROOMS's HANGANG art;
-  APPV 108; QA PASS c9ff3ce), wlive PASS, 3013/3013 identical on both; rollback APPV 109 (766dec3). QA live check please. QA NOTE 1
+  APPV 108; QA PASS c9ff3ce), wlive PASS, 3013/3013 identical on both; rollback APPV 109 (766dec3). QA live check please (8d1f69f) (QA: DONE, PASS; QA findings). QA NOTE 1
   (Speakeasy pays back in 168 days vs 101-144): left as is for now. NEXT, v1.09, Cal's UI cleanup (2026-11-17): cut Coaches (Training);
   Town Boss off for now; Chat 3 rooms -> 2; Players tab: Town Square stays, the Neighbors list goes (redundant); Town Hall banner ->
   page background/gradient behind the top character frame; Shop: Upgrades + Interface -> one "Upgrades" tab; "On sale today" banner
@@ -186,7 +186,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
+- Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings). Nothing open from QA; v1.09 (Cal's UI cleanup) next from LEAD. 15-minute loop off (Cal).
+  Was: Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
   Was: Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
   Was: Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings).
   Was: Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings).
@@ -197,6 +198,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.08 live (LEAD: Live and Test at 8d1f69f on release/v1.08, wlive PASS, 3013/3013 identical):
+  - 8d1f69f against release/v1.07 c546e9c: in app, data, art and tools only 29e_economy.js (identical to the passed 00c18f4's) and
+    30_app_b.js's APPV line (107 -> 108). No art: HANGANG did not ship, as LEAD meant.
+  - A clean web build of 8d1f69f has 3,012 files, APPV 108, speakeasy:450, no h_ files; + version.txt = 3,013.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, v1.08 candidate 00c18f4 (the Speakeasy priced like its neighbours; LEAD, after QA's sweep). Clean plain builds of 00c18f4 and
   0b0a6d4 (v1.07 code). pricesweep.js against v1.07: only the Speakeasy's 14 upgrades changed (150-1,000 -> 1,750-15,750; 5,800 ->
   75,500 in all); 0 lots, 0 graded clothes, 0 other Shop entries changed; no NaN, undefined, 0 or fractions; 0 page errors.
