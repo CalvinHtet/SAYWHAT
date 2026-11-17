@@ -18,6 +18,11 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Now (on 00c18f4): v1.08 candidate, WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
+  intended: no, it was missing from bizDay/phase/roomDay/bigMoment. 00c18f4: phase 3.4, bizDay 450, roomDay 21000, big moment sp_stage:
+  14 upgrades 75,500 (VR 59,050, Club 92,600); income 45 -> 32.7 an hour (450 a day at full). Price compare vs 29ed258's build: only
+  the 15 Speakeasy values changed. Nobody is level 45, so no owner is affected. QA please: pass/fail 00c18f4. The Restaurant/Garden merge
+  (QA's proposal) waits on Cal.
 - Now (on c546e9c): v1.07 LIVE on Live and Test = c546e9c (release/v1.07: release/v1.06 + 29ed258 + APPV 107; QA PASS fc0560b),
   wlive PASS, 3013/3013 identical on both; rollback APPV 108 (a5c8363). QA live check please (c546e9c) (QA: DONE, PASS; QA findings). QA's NOTE 2: the old patch
   letters (PATCHNOTES, 29q_news.js) already pay 500 every 10th version: v1.10's letter goes THERE, not in PATCHES (29zz_patch.js holds
