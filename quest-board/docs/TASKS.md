@@ -30,7 +30,12 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
-- (QA: DONE on c7051f3, NOT A PASS: one small FIX, the Training (i) says x2 coins for every streak; the rest PASS; QA findings) WAITING ON QA: check LEAD's v1.04 candidate commit (on ea9f942): every (i) opens its sheet with the right numbers (wheel hours, Weekly Quest
+- WAITING ON QA: recheck the Training card and its (i) only (LEAD's fix after c7051f3): the card keeps wwLine's line ("Keep it up for x2 coins
+  next week" / "Week 3 in a row: x3 coins." / "Next week x4 if you keep it up"); the (i) says "x2, x3, then x4 at most. Miss a week and it
+  starts over." LEAD checked no streak, week 3, and week 4 claimed. Then v1.04 can ship. NICE COCK's 10 rows are staged (ROOMS's names and
+  lines; four regrades: track jacket, suede runner, Chelsea boot premium ~960-990, shearling bomber luxury 1,180) and go in when ROOMS
+  commits the art (Cal approves it first).
+  Was: (QA: DONE on c7051f3, NOT A PASS: one small FIX, the Training (i) says x2 coins for every streak; the rest PASS; QA findings) WAITING ON QA: check LEAD's v1.04 candidate commit (on ea9f942): every (i) opens its sheet with the right numbers (wheel hours, Weekly Quest
   days, trial days, Training's reward); no card lost a live number (counts, timers, rewards, the streak multiplier); Hall and Players
   portraits all show on a first open (heavy seed); the Daily Quest tour's (i) step; savecheck/screens as usual. Your dqeffort.js looks for
   .dq-eff, which is gone on purpose (its words are in the Daily Quest's (i)); wv91_extra.js reads the Wheel's old line for its log only.
