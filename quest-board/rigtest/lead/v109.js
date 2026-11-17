@@ -18,7 +18,11 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779), SHOTS = process.e
     const head = () => p.evaluate(() => { const st = document.querySelector('.strip'), fr = st && st.querySelector('.avbtn'), col = st && st.querySelector('.v9col'), coin = col && col.querySelector('.coinpill'), rk = col && col.querySelector('.rankpill');
       const R = (e) => e && e.getBoundingClientRect(); const f = R(fr), c = R(coin), k = R(rk);
       return { v: !!document.querySelector('.vline'), beside: !!(f && c && k && c.left >= f.right && k.left >= f.right && c.top < f.bottom && k.bottom <= f.bottom + 30), over: [...document.querySelectorAll('.strip *')].some((e) => e.getBoundingClientRect().right > innerWidth + 1), sw: document.documentElement.scrollWidth }; });
+    await p.evaluate(() => { const S = window.__qb.x().S; S.char.name = 'Christopher'; window.__qb.x().render(); });
     await go('board'); let h = await head();
+    const vo = await p.evaluate(() => { const v = document.querySelector('.vline'), n = document.querySelector('.strip .brand'); if (!v || !n) return { miss: 1 }; const a = v.getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(n); const c = r.getBoundingClientRect();
+      return { hit: !(a.right <= c.left || c.right <= a.left || a.bottom <= c.top || c.bottom <= a.top) }; });
+    ok(!vo.miss && !vo.hit, `${w}: the version line clears an 11-letter name ` + JSON.stringify(vo));
     ok(h.v && h.beside && !h.over && h.sw <= w, `${w}: Board has the version; coins and class beside the frame; nothing past the edge ${JSON.stringify(h)}`);
     if (SHOTS) await p.screenshot({ path: `${SHOTS}/v109_board_${w}.png`, clip: { x: 0, y: 0, width: w, height: 300 } });
     for (const v of ['hall', 'players', 'train']) { await go(v); h = await head(); ok(!h.v && h.beside && !h.over, `${w}: ${v} has no version line; header beside the frame ${JSON.stringify(h)}`); }
@@ -40,9 +44,14 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779), SHOTS = process.e
       // side quests: taken 8 days ago lapses; taken 2 days ago shows 5 days left
       await go('board');
       const sq = await p.evaluate(async () => { const S = window.__qb.x().S, d = (k) => { const t = new Date(Date.now() - k * 864e5); return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0'); };
-        S.side = { on: { mara: d(8), nova: d(2) }, done: {}, later: {}, walk: [], nw: {} }; window.__qb.x().render(); await new Promise((o) => setTimeout(o, 600));
+        S.side = { on: { mara: d(8), nova: d(2) }, done: {}, later: {}, walk: [], nw: {}, wk0: d(30) }; window.__qb.x().render(); await new Promise((o) => setTimeout(o, 600));
         const txt = document.getElementById('app').innerText; return { mara: !!S.side.on.mara, later: S.side.later.mara > Date.now(), nova: !!S.side.on.nova, left: /5 days left/.test(txt) }; });
       ok(!sq.mara && sq.later && sq.nova && sq.left, 'side quests: 8 days old lapses (asked again in a week), 2 days old shows 5 days left ' + JSON.stringify(sq));
+      // QA (v1.09): a quest taken before the update counts its week from the update's first load (wk0), so 20 days old is not dropped
+      const sq2 = await p.evaluate(async () => { const S = window.__qb.x().S, d = (k) => { const t = new Date(Date.now() - k * 864e5); return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0'); };
+        S.side = { on: { dogs: d(20) }, done: {}, later: {}, walk: [d(20), d(19)], nw: {} }; window.__qb.x().render(); await new Promise((o) => setTimeout(o, 600));
+        return { on: !!S.side.on.dogs, walks: S.side.walk.length, wk0: !!S.side.wk0, left: /7 days left/.test(document.getElementById('app').innerText) }; });
+      ok(sq2.on && sq2.walks === 2 && sq2.wk0 && sq2.left, 'a side quest from before the update keeps its progress and gets 7 days from now ' + JSON.stringify(sq2));
     }
     ok(!errs.length, `${w}: no page errors ` + JSON.stringify(errs.slice(0, 3)));
     await p.context().close(); }
