@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.13 LIVE on Live and Test = 7eb084f (release/v1.13: release/v1.12 + ff44edc, fff49a2, 777411d, c1c8c12, 9eb7f13, 15954e6, b43ebf8 + APPV 113; QA PASS 6b254cd + 1e450c6); wlive PASS, 3024/3024 identical on both. Rollback = rollback-v0.80 629a870 (APPV 114). 26_world.js differs from ff44edc only by 62774ce's comment. QA: live check on 7eb084f please.
+- v1.13 LIVE on Live and Test = 7eb084f (release/v1.13: release/v1.12 + ff44edc, fff49a2, 777411d, c1c8c12, 9eb7f13, 15954e6, b43ebf8 + APPV 113; QA PASS 6b254cd + 1e450c6); wlive PASS, 3024/3024 identical on both. Rollback = rollback-v0.80 629a870 (APPV 114). 26_world.js differs from ff44edc only by 62774ce's comment. QA: live check on 7eb084f please. (QA: DONE, PASS; QA findings)
 - Economy pass (after the +15s), from QA 1e450c6: Lock and Key now pays back slowest (197 days, was 152); give each coming +15 room's gate an n (Boba +15 next holds back Dessert; then Theater, Auditorium, Arcade, Rhythm); the Mall plaza slip; the Speakeasy.
 - (QA: DONE on 777411d, PASS; QA findings) FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
 - (QA: DONE on 9eb7f13, PASS; two NOTES, the Wheel's prize time and the freeze tip's wording; QA findings) FOR QA (9eb7f13): Cal's two notes. The Wheel closes back to the Board about 5 s after a spin (its Board row was already hidden until the next spin); a one-time Board tip when a player first holds a streak freeze (used for them, no button), and the earn line says so. rigtest/lead/v112.js PASS (Wheel, tip, a missed day covered by a freeze through a real quest).
@@ -231,7 +231,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings). Nothing open from QA.
+- Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings). Nothing open from QA.
+  Was: Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings).
   Was: Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings).
   Was: Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings).
   Was: Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings).
@@ -259,6 +260,14 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.13 live (LEAD: Live and Test at 7eb084f on release/v1.13, wlive PASS, 3024/3024 identical):
+  - 7eb084f against release/v1.12 6f15fd9: app/data/art change only in the passed work and the APPV line (112 -> 113).
+    - Byte-identical to QA's passed b43ebf8 (which carries all seven passed commits): 20_loft.js, 27_rooms.js, 29b_story.js,
+      29e_economy.js, 29zz_v112.js, rsart.json and the 11 new Lock and Key art files.
+    - 26_world.js differs from b43ebf8 only in a comment ("Menu Boards" for r_d3); the code is the same.
+    - 27b_skins.js is unchanged from v1.12, so the Club DJ post (added in fff49a2, reverted in c1c8c12) is not in.
+  - A clean web build: 3,023 files + version.txt = 3,024, APPV 113, with the new sbx_ art in.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, LEAD b43ebf8 (Lock and Key +15 priced) and 15954e6 (QA's 9eb7f13 notes). v1.13 as planned can be cut. Clean builds of
   b43ebf8 (it carries 15954e6) and of v1.12 (6f15fd9) as the reference, served by QA.
   - rigtest/lead/skybar15.js against QA's own v1.12: PASS.
