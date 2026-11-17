@@ -18,7 +18,13 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
+- Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
+  63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
+  after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
+  at APPV 105 (567b50a). WAITING ON QA: the live check. Next: NICE COCK's 10 rows (staged, scratchpad nc_rows.py) once Cal approves ROOMS's
+  art and ROOMS commits it; then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
+  level pacing, ROOMS's NICE COCK and HANGANG approvals.
+  Was: Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
   ... Review the rest of the game and find where we can cut the fat. Also check the lag time and speed when changing tabs."
   (1) Cut the fat: every card's rules moved into an (i) beside its title (29zz_lean.js qbI/QBINFO; Daily Quest, level trial, Training, Gym
   plans, own workouts, workout day, Crawls, Rescued allies, Wheel, Likes, Coaches, Vault; the Hall banner line cut). Text per screen (fat.js,
