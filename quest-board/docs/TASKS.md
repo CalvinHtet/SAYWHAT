@@ -26,6 +26,12 @@ LEAD Doing:
   gone, a sale mark on items instead; version number only on the first tab, top right; coins, inbox and class name in the empty space
   right of the character frame (Board, Town Hall, Players); no dead space at the top of other tabs; "Outside Run" -> "Outside"; side
   quests last 1 week; challenge, photo and Town meter text into their buttons / (i).
+  THEN, rooms (Cal, 2026-11-17): "a middle ground of 30-35 upgrades per room for every room. Except the loft and patio. Those rooms
+  look nice." and "I want the balancing of the coins and level progression to make sense later on with these new upgrade changes."
+  Plan: Restaurant 58 and Garden 40 -> 30-35 by merging (QA's list, be9bc20; saves owning half a pair get the merged piece, nothing
+  paid twice); Theater 33 stays; every other room (Game Room 21, the 10-15 rooms) up to 30-35, mostly as tiers of pieces already there
+  (supersede, so no room gets crowded: rooms-never-cluttered) = new art from ROOMS, room by room, in story order; then LEAD re-runs the
+  economy (prices from ECON, level pacing, econsim) and QA checks it.
 - Was (on 00c18f4), shipped as v1.08: v1.08 candidate, (QA: DONE on 00c18f4, PASS, v1.08 can ship; two NOTES; QA findings) WAITING ON QA. QA's later-rooms sweep (be9bc20) asked if the Speakeasy's 5,800 total was
   intended: no, it was missing from bizDay/phase/roomDay/bigMoment. 00c18f4: phase 3.4, bizDay 450, roomDay 21000, big moment sp_stage:
   14 upgrades 75,500 (VR 59,050, Club 92,600); income 45 -> 32.7 an hour (450 a day at full). Price compare vs 29ed258's build: only
