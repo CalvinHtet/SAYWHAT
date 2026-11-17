@@ -18,8 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (b43ebf8): Lock and Key +15 priced. 15 new in the room's tiers; ECON.unlock n pins the Rooftop at 7, Boba at 10, the Mall at 79 (v1.12's counts; 14/21/88 without it); bizDay skybar 250 -> 360 (old 13 earn 256, was 250; empty 133, was 136). rigtest/lead/skybar15.js PASS against v1.12. Not run: econsim.
-- FOR QA (15954e6): your 9eb7f13 notes: the Wheel closes at 6.6 s (3 s on the prize); the freeze tip gives the whole rule (your wording). v112.js PASS.
+- (QA: DONE on b43ebf8, PASS; two NOTES for the economy pass; QA findings) FOR QA (b43ebf8): Lock and Key +15 priced. 15 new in the room's tiers; ECON.unlock n pins the Rooftop at 7, Boba at 10, the Mall at 79 (v1.12's counts; 14/21/88 without it); bizDay skybar 250 -> 360 (old 13 earn 256, was 250; empty 133, was 136). rigtest/lead/skybar15.js PASS against v1.12. Not run: econsim.
+- (QA: DONE on 15954e6, PASS; QA findings) FOR QA (15954e6): your 9eb7f13 notes: the Wheel closes at 6.6 s (3 s on the prize); the freeze tip gives the whole rule (your wording). v112.js PASS.
 - Next: v1.13 = release/v1.12 + Lock and Key (fff49a2, c1c8c12, b43ebf8) + crew posts (ff44edc, 777411d) + Cal's notes (9eb7f13, 15954e6), once QA passes b43ebf8 and 15954e6.
 - (QA: DONE on 777411d, PASS; QA findings) FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
 - (QA: DONE on 9eb7f13, PASS; two NOTES, the Wheel's prize time and the freeze tip's wording; QA findings) FOR QA (9eb7f13): Cal's two notes. The Wheel closes back to the Board about 5 s after a spin (its Board row was already hidden until the next spin); a one-time Board tip when a player first holds a streak freeze (used for them, no button), and the earn line says so. rigtest/lead/v112.js PASS (Wheel, tip, a missed day covered by a freeze through a real quest).
@@ -232,7 +232,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings). Nothing open from QA.
+- Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings). Nothing open from QA.
+  Was: Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings).
   Was: Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings).
   Was: Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings).
   Was: Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings).
@@ -259,6 +260,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD b43ebf8 (Lock and Key +15 priced) and 15954e6 (QA's 9eb7f13 notes). v1.13 as planned can be cut. Clean builds of
+  b43ebf8 (it carries 15954e6) and of v1.12 (6f15fd9) as the reference, served by QA.
+  - rigtest/lead/skybar15.js against QA's own v1.12: PASS.
+    - 28 on sale, the 15 new at 1,100 / 2,250 / 4,450, old prices unchanged.
+    - A day's income: all 28 earn 360, the old 13 earn 256 (v1.12: 250), an empty room 133 (v1.12: 136).
+    - Through the story gates: the Rooftop opens at 7, Boba at 10, the same as v1.12.
+  - Mall, computed in the page: plazaAll counts 131 pieces in v1.12 and 146 now. The Mall needs 79 in both: v1.12's 60%, now the
+    fixed n.
+  - unlockMet goes through unlockLine, so n reaches every gate. Without n the gate uses the share as before.
+  - 15954e6:
+    - The Wheel closes at 6.6 s (3 s on the prize). The toast is gone at 5.3 s, but the prize stays on the Wheel until it closes.
+    - The freeze tip is QA's wording, matching streakGap.
+    - v112.js: 12 of 12 ok, PASS.
+  - NOTE (LEAD, for the economy pass; Cal's call): Lock and Key is now the slowest room to pay back. Total price over a full
+    day's income (bizDay) is 197 days (v1.12: 152). The next slowest is Dessert at 172, then Speakeasy at 168, and the rest
+    are 16 to 150.
+    - The new 15 cost 32,800 for +104 a day (256 to 360), about 315 days.
+    - Every room's +15 will drift the same way unless the economy pass sets it. QA's econsim check comes then.
+  - NOTE (LEAD): each coming +15 pushes back the room it gates unless that gate gets an n like this one.
+    - Next up, Boba's +15 would hold back Dessert (at boba .6).
+    - After that: Theater (at mall .3), Auditorium (at theater .4), Arcade, Rhythm and so on.
+  - Not checked: econsim (it needs the 8765 sandbox and the 9350 Chrome), and a phone.
 - PASS, ROOMS c1c8c12 (QA's two FIXes on fff49a2). Lock and Key +15 = fff49a2 + c1c8c12 can ship. Clean build of c1c8c12 (it
   carries LEAD's 777411d and 9eb7f13).
   - Club: cb_dj is plain RSK again, and the dj spot is {tag:"dj",onspot:1}. crewreg.js ROOM=club OWN=cb_floor,cb_dj: "No crew
