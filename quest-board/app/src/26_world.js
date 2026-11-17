@@ -421,7 +421,7 @@ LFROOM.restaurant=function(C){
   if(H("r_l1"))(st===0?[6.1,7.3]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
-  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with the Menu Boards, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
+  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with r_d3, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
   /* superseded: once the Sculptural Vases stand at the front, the potted tree goes (one piece there, not two) */
   if(H("r_d1")&&!(H("r_d8")&&st>1))lfSpr(C,"rdx_olive",crescent&&H("r_b1")?14.4:.3,D-1.3,1,1,{h:40,ctr:1});/* the booths fill the left wall then */
   /* QA audit (WEAK): Sculptural Vases drew the olive tree; it has its own art now, black ceramic and dry branches */

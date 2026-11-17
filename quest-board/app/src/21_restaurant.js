@@ -180,7 +180,7 @@ LFROOM.restaurant=function(C){
   else if(H("r_l1"))[0,1,2].forEach(function(i){var x=cx0+cl*(.2+.3*i);lfSpr(C,["rs_pend1","rs_pend2","rs_pend3"][i],x,cy+.7,.2,.2,{h:1,H:[84,92,88][i],dy:-70,nosh:1,dk:-5});lfLight(C,x,cy+.9,70,"#ffc968",2.3,.45)});
   else{var bx=Wi*.42,by=D*.55;rsS(C,"rsx_bulb",bx,by,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6});lfLight(C,bx,by,80,"#ffe2a8",2.6,.4)}
   /* odds and ends */
-  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with the Menu Boards, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
+  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with r_d3, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
   if(H("r_d1")){lfSpr(C,"bd_plant",.3,D-1.2,.8,.8,{h:40,H:78});lfSpr(C,"bd_plant",Wi-1.3,.3,.8,.8,{h:40,H:78})}
   if(H("r_cool"))rsS(C,"rsx_cooler",Wi-2.5,.2,1.1,.9,50,{flip:1});
   if(H("r_d5")&&!H("r_d6"))lfSpr(C,"rs_wine",.05,1.0,.1,.1,{h:1,H:60,dy:-30,nosh:1});
