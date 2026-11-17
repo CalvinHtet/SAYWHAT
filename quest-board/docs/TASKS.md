@@ -31,6 +31,7 @@ LEAD Doing:
   is good". Loft rooms unchanged; Restaurant 58 -> 40 and Garden 40 -> 35 by REMOVING (QA ranks them; owners refunded); +15 each for
   Lock and Key, Rooftop, Boba, Dessert, Speakeasy, Auditorium, Mall, Bowling, Karaoke, Arcade, Rhythm, VR, Club (195 sprites). Then
   LEAD's economy pass.
+  ORDER (Cal, 2026-11-17, "Alternate them"): ROOMS alternates a brand and a room: DIAL-UP, Lock and Key +15, OVERPASS, Boba +15, ...
 - Now (on 8d1f69f): v1.08 LIVE on Live and Test = 8d1f69f (release/v1.08: release/v1.07 + 00c18f4 only, NOT ROOMS's HANGANG art;
   APPV 108; QA PASS c9ff3ce), wlive PASS, 3013/3013 identical on both; rollback APPV 109 (766dec3). QA live check please (8d1f69f) (QA: DONE, PASS; QA findings). QA NOTE 1
   (Speakeasy pays back in 168 days vs 101-144): left as is for now. NEXT, v1.09, Cal's UI cleanup (2026-11-17): cut Coaches (Training);
