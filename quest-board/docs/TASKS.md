@@ -173,7 +173,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
+  Was: Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings).
   Was: Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings).
   Was: Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings).
   Was: Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings).
@@ -182,6 +183,55 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- Cal's later-rooms sweep (Cal, 2026-11-17: "test efficiency and make sure nothing lags", tables against walls with no way to them,
+  counters turned wrong, wall pieces floating, too many upgrades in some rooms; "I don't think the restaurant needs 50+ upgrades.
+  Maybe 30-35"). Clean plain build of 0b0a6d4 (v1.07 code). Pictures shots/qa/rooms1117/big_<room>.jpg (every room fully bought, no
+  people, 13:00) and z_*.jpg crops.
+  - LAG: PASS. fpsroom.js, every upgrade owned, CPU slowed 4x, 3 runs of 5 s per room window, all 21 rooms: 57 to 60 fps everywhere.
+    The worst single frames are the Lair (117 ms), Speakeasy (100 ms, the most elements at 1,169) and Mall (100 ms); every other room
+    is at 67 ms or less. 0 page errors. Not measured: the building view with every room open, a real phone (headless Chrome is not an
+    iPhone; Cal's speed log is the real test).
+  - PLACEMENT, FIX for ROOMS (each seen on the big picture; auditall.js flagged only the known rug/stage overlaps):
+    1. Bowling: the orange seat row stands on the left lane's approach, legs on the lane end, so that lane cannot be bowled; and one
+       ball return sits loose on the carpet, attached to neither lane (z_bowling_seats.jpg). Move the seats behind the approaches and
+       put the return between the lanes. The seats facing the pins still need back-view art (known, Cal's Chrome).
+    2. VR: the blue egg pod stands right against the front of the lobby sofa; nobody can sit there (z_vr_sofa.jpg).
+    3. Restaurant patio: the pergola's roof hides its bistro table, so two chairs face each other under the beams with nothing
+       between them (auditall: rsx_iron+rsx_pergola overlap 4; z_rest_patio.jpg).
+    4. Restaurant kitchen: the prep table, bread rack and dish pit stand loose in the middle of the kitchen floor instead of on the
+       wall line, and the lit display case sits on the kitchen side facing the patio, not the diners (z_rest_counter.jpg). This is the
+       "counter that makes no sense" kind Cal means.
+    5. Dessert: the macaron tower stands right behind the marble prep counter, where the baker would stand (z_dessert_counter.jpg).
+    6. Garden: the purple grow-lamp bars ride on near-invisible posts and sit off the back edge of their beds, so they read as bars
+       floating over the grass (z_garden_lamps.jpg). The front-right corner is the most crowded spot in the game (fountain, arch, gate,
+       coop, beehives, solar panel, pump, logs, potting bench, barrels, compost, hose).
+    Known and still open, waiting on art from Cal's Chrome: the Karaoke corner booth faces away from the stage (z_karaoke_booth.jpg), the
+    Auditorium projector points away from the screen, and the Speakeasy has bare flat brick, a placeholder-looking floor and no back
+    bar (the only room that looks unfinished).
+    Read right, no fix: Lock and Key, Rooftop, Boba, Theater (its second chandelier now hangs over the recliners), Mall, Arcade,
+    Rhythm, Nightclub, Game Room. Early rooms (Bedroom, Closet, Lair, Patio) were drawn but not reviewed: not in Cal's ask.
+  - UPGRADE COUNTS (live, not retired, not room openers): Restaurant 58, Garden 40, Theater 33, Bedroom 32, Game Room 21, Boba 15,
+    Lock and Key 13, Dessert 14, Speakeasy 14, Auditorium 14, Nightclub 14, Arcade 13, Bowling 13, Patio 13, Rhythm 12, Karaoke 12,
+    VR 11, Lair 10, Rooftop 10, Mall 10, Closet 6. QA's proposal for LEAD and Cal (Cal's call):
+    - Restaurant 58 -> about 35, by merging small steps into bigger ones, not by deleting looks. Each merge keeps the summed price and
+      income, so the room's total and the economy curve stay the same with fewer, bigger buys. Decor 14 -> 6: Open Sign + Neon Sign +
+      Chef's Neon; Potted Plants + Sculptural Vases; Shelves & Pictures + Oil Painting; Brass Sconces + Brass Chandeliers; Walnut
+      Dividers into Leather Booths; Drinks Cooler into Backlit Wine Wall. Menu 7 -> 4: Digital Menu Screen into Grand Menu Board;
+      Pasta Night + Seasonal Menu; Wood-Fired Pizza into Wood-Fired Oven. Kitchen 11 -> 6: Drip Coffee + Espresso Bar; Prep Table +
+      Dish Station; Flat-Top + Fryer & Sinks; Bakery Rack into Gas Range or Fridge; Seating 6 -> 4: Walnut Tables + Second Row; Marble
+      Round + White Linen. Counter and Staff: Host Lectern + Host Desk + Hire a Host -> one. Patio 8 -> 5: Sidewalk Patio + Bistro
+      Sets; Planters + Pergola (which also fixes find 3); Heaters + Umbrellas.
+    - Garden 40 -> about 30: its 10 Grounds pieces at 250 each -> 4 (Walkway + Benches + Lantern Posts; Sundial + Bird Bath +
+      Topiary; Koi Pond + Fountain; Rose Archway + Gate), plus Scarecrow + Wheelbarrow and Hose + Rain Barrels. That also thins the
+      crowded corner.
+    - Theater 33 and Bedroom 32 are inside Cal's 30-35. Leave them.
+    - The low end (Lair, Rooftop, Mall at 10; VR 11): bring the later rooms to about 15-20, adding 3 to 6 pieces where the floor is
+      empty (the Mall's left half, the Rooftop's front deck), never crowding (rooms-never-cluttered). That needs new art from Cal's
+      Chrome, so it is ROOMS's list and Cal's OK.
+    - LEAD: a save that owns some parts of a merged pair must get the merged piece, with nothing paid twice and no refund lost. And
+      the Speakeasy's 14 upgrades cost 5,800 in total (Dessert next door: 43,050; Lock and Key 38,050) for levels 45-58: check whether
+      that is meant.
+  Owners: placement ROOMS; counts and merges LEAD with Cal's OK; new pieces for the small rooms ROOMS (art) and Cal.
 - PASS, ROOMS 86cb0e1: HANGANG's 15 new pieces (clean plain build; the draft rows from rows_draft.json pushed into SHOP, ROOMS's
   newwear.js = brandwear.js plus that). Both bodies, all 35 poses, 18 outfits each (3 all-HANGANG, 15 each piece mixed with other
   brands, three hairstyles): 0 not drawn, 0 page errors, no missing icons. A closer look at 3x on idle, stretch, sitFront, sitBack,
