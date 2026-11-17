@@ -231,10 +231,8 @@ DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv"]},
 /* Pieces cut in the audit (Cal approved, with his keeps): off sale everywhere (the Shop, brand pages and splashes, sales, chest and crawl
    rolls), while anyone who owns one keeps wearing it. Every place that offers a piece asks itemFits, and so does the wardrobe for owned
    ones, so a cut piece "fits" only its owner. The rest of the cut list follows as ROOMS sends it. */
-var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak",
-  /* NICE COCK's 10 pieces ROOMS is repainting (same ids): off sale until the new art is in, so the live brand shows Cal's 6 keeps and
-     never the old pictures (anyone who owns one keeps it). LEAD takes these 10 off this list when ROOMS sends the art and its shop text. */
-  "gx_nc_band","gx_nc_pendant","gx_nc_shades","gx_nc_hoodie","gx_nc_tee","gx_nc_tank","gx_nc_qzip","gx_nc_court","gx_nc_knit","gx_nc_slide"];
+var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak"];
+/* NICE COCK's 10 repainted pieces (ROOMS, Cal approved) are back on sale with their new names and art */
 SHOP.forEach(function(it){if(it&&it[6]&&ZXCUT.indexOf(it[0])>=0)it[6].cut=1});
 var zxFits=itemFits;itemFits=function(it){if(it&&it[6]&&it[6].cut&&!(S&&S.owned&&S.owned[it[0]]))return false;return zxFits.apply(this,arguments)};
 /* the brand racks pick by brand only (15_shop.js qsGroups), so they get the same rule */

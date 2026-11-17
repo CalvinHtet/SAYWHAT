@@ -35,8 +35,10 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
     +"gx_sp_shades gx_sp_pad gx_sp_p2 gx_sp_denim gx_sp_flag gx_km_bucket gx_km_visor gx_km_shell gx_km_boat "
     +"gx_km_linen gx_km_cutoff gx_km_slides gx_km_deck gx_km_sandal gx_oak_headband gx_oak_visor gx_oak_wrist "
     +"gx_oak_shorts gx_oak_court gx_oak_tube gx_sv_scarf gx_sv_mitten gx_sv_leggings");
+  /* NICE COCK repaint (ROOMS, Cal approved, bcd8f73): the waffle zip (tank), sherpa zip (qzip), suede runner (knit) and shearling
+     clogs (slide) are premium (below); the dad cap (band) and lounge tee stay standard: later lists win */
   put("premium","ac_halo bk_wings gx_h_varsity gx_v_lace gx_v_biker gx_v_blazer gx_v_leather gx_v_tulle gx_v_flare gx_v_boot "
-    +"gx_v_heel gx_nc_jog_black gx_nc_jog_ash gx_nc_jog_slate gx_nc_pendant gx_nc_hoodie gx_nc_court gx_kp_varsity "
+    +"gx_v_heel gx_nc_jog_black gx_nc_jog_ash gx_nc_jog_slate gx_nc_pendant gx_nc_hoodie gx_nc_court gx_nc_tank gx_nc_qzip gx_nc_knit gx_nc_slide gx_kp_varsity "
     +"gx_kp_bomber gx_sm_halomask gx_sm_halo gx_sm_hoodie gx_sm_vest gx_gp_wings gx_gp_blazer gx_gp_glitter "
     +"gx_sp_varsity gx_bb_doublet gx_bb_leather gx_cr_visor gx_cr_mohawk gx_cr_arm gx_cr_bomber gx_cr_mesh gx_cr_vest "
     +"gx_cr_platform");
