@@ -19,7 +19,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 
 LEAD Doing:
 - Now (on c546e9c): v1.07 LIVE on Live and Test = c546e9c (release/v1.07: release/v1.06 + 29ed258 + APPV 107; QA PASS fc0560b),
-  wlive PASS, 3013/3013 identical on both; rollback APPV 108 (a5c8363). QA live check please (c546e9c). QA's NOTE 2: the old patch
+  wlive PASS, 3013/3013 identical on both; rollback APPV 108 (a5c8363). QA live check please (c546e9c) (QA: DONE, PASS; QA findings). QA's NOTE 2: the old patch
   letters (PATCHNOTES, 29q_news.js) already pay 500 every 10th version: v1.10's letter goes THERE, not in PATCHES (29zz_patch.js holds
   only the one-off Update 1.06), so only one system sends it. The letter keeps the name "Update 1.06" (Cal's words).
 - Was (on 29ed258): v1.07 candidate, shipped.
@@ -173,7 +173,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings).
   Was: Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings).
   Was: Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings).
   Was: Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS.
@@ -181,6 +182,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.07 live (LEAD: Live and Test at c546e9c on release/v1.07, wlive PASS, 3013/3013 identical):
+  - c546e9c against the passed 29ed258: in app, data, art and tools only 30_app_b.js's APPV line differs (100 -> 107). Against
+    release/v1.06 826b773: only the new 29zz_patch.js and the APPV line; no art changed.
+  - A clean web build of c546e9c has 3,012 files with APPV 107, the patch106 letter and the tab-wrap rule, + version.txt = 3,013.
+  - LEAD's answers on the 29ed258 NOTES: the v1.10 letter goes in PATCHNOTES only, the name stays "Update 1.06" (Cal's words), and NOTE 1
+    is accepted. Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, v1.07 candidate 29ed258 (the Update 1.06 letter with 500 coins, Cal 11-17; the Shop's section tabs wrap, QA's v1.06 NOTE).
   Clean plain builds of 29ed258 and v1.06 826b773. The only code change is the new 29zz_patch.js (30_app_b.js: APPV back to qa-local's 100).
   - Tabs: every brand tab, the vault tab and BASICS are fully on screen at 360, 375, 390 and 430 wide, on 11-20 and 12-23. The row wraps
