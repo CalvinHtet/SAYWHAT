@@ -21,8 +21,9 @@ LEAD Doing:
 - Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
   63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
   after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
-  at APPV 105 (567b50a). WAITING ON QA: the live check. Next: NICE COCK's 10 rows (staged, scratchpad nc_rows.py) once Cal approves ROOMS's
-  art and ROOMS commits it; then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
+  at APPV 105 (567b50a). QA live check DONE (513ad75). HOLD (ROOMS, 2026-11-17): Cal approved NICE COCK's set, then asked for 6 pieces
+  redone as luxury comfort wear (band, pendant, tee, tank, qzip, slide); nc_rows.py NOT applied. LEAD rewrites it from ROOMS's list (hash,
+  10 names/prices/lines, grades) once the redo is committed; aim v1.05 before Thu 11-26. Then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
   level pacing, ROOMS's NICE COCK and HANGANG approvals.
   Was: Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
   ... Review the rest of the game and find where we can cut the fat. Also check the lag time and speed when changing tabs."
