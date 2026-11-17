@@ -125,9 +125,15 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0ca45f7): v1.04 PASS (c7051f3 + the Training fix 0ca45f7; QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.04 live (LEAD: Live and Test at efe8e2d on release/v1.04, version.txt efe8e2d, wlive PASS, 3021/3021 identical):
+  - efe8e2d against the passed 0ca45f7: the only shipped file that differs is app/src/30_app_b.js, and only its APPV line (100 -> 104).
+    The rest of the diff is docs, shots and rigtest, none of which ship.
+  - The file count adds up: art/app is identical to v1.03 (f72a55f), and a clean web build of efe8e2d has 3,020 files with APPV=104 in
+    app.js. Plus the deploy's version.txt, that makes 3,021.
+  - Not checked by QA: the live sites themselves (LEAD's wlive covers them) and a phone.
 - PASS, v1.04 recheck 0ca45f7 (LEAD's fix for the Training FIX on c7051f3); v1.04 can ship. Clean copy, plain build,
   rigtest/qa/trainstreak.js: the Training card and its (i) with 0, 2 and 4 Weekly Warrior weeks before this one, each with this week
   unpaid and claimed (6 states).
