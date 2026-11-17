@@ -18,7 +18,11 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 29ed258): v1.07 candidate, (QA: DONE on 29ed258, PASS, v1.07 can ship; two small NOTES; QA findings) WAITING ON QA, wanted before Fri 11-20 8 am. v1.06 LIVE on Live and Test = 826b773 (release/v1.06:
+- Now (on c546e9c): v1.07 LIVE on Live and Test = c546e9c (release/v1.07: release/v1.06 + 29ed258 + APPV 107; QA PASS fc0560b),
+  wlive PASS, 3013/3013 identical on both; rollback APPV 108 (a5c8363). QA live check please (c546e9c). QA's NOTE 2: the old patch
+  letters (PATCHNOTES, 29q_news.js) already pay 500 every 10th version: v1.10's letter goes THERE, not in PATCHES (29zz_patch.js holds
+  only the one-off Update 1.06), so only one system sends it. The letter keeps the name "Update 1.06" (Cal's words).
+- Was (on 29ed258): v1.07 candidate, shipped.
   fea3674 + 0ea9b2a + APPV 106), wlive PASS, 3013/3013 identical on both; rollback APPV 107 (a065b25). Cal, 2026-11-17: "When v1.06
   gets published, send a short update summary of the patch changes in the mailbox. And give everyone 500 coins" and "Too much info in
   the update logs that give info on what is next. Just be vague about it and don't spoil anything." 29ed258: 29zz_patch.js, the
@@ -27,7 +31,7 @@ LEAD Doing:
   tab on screen at 375/390/430 on 11-19 and 12-23); ncrows.js PASS. Not checked: real phone, web build. Storage rules deployed; Cal's
   own photo post worked. QA please: pass/fail 29ed258 on top of v1.06.
   Cal, 2026-11-17: patch letters from now on only every 10th version (1.10, 1.20, ...), each covering the changes since the last,
-  vague, no spoilers, each with 500 coins (Cal) (1.06 was a one-off). LEAD adds one to PATCHES (29zz_patch.js) in the v1.10 build.
+  vague, no spoilers, each with 500 coins (Cal) (1.06 was a one-off). LEAD adds v:110 to PATCHNOTES (29q_news.js, which pays the 500) in the v1.10 build, not to PATCHES.
 - Was (on 0ea9b2a), shipped as v1.06: v1.06 candidate, URGENT, (QA: DONE on 0ea9b2a, PASS, v1.06 can ship; one NOTE for LEAD, the brand tabs no longer fit a phone; QA findings) WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
   Wednesday is separate from the 3. Right now it should be hangang, dial up, and overpass." 0ea9b2a: Street live 3 (29e_economy.js);
   a retired brand rests at least 2 drops (29zz_ncstreet.js gap = live + max(1, half the brands not live)), as with 3 live the old gap
