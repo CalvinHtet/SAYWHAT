@@ -508,7 +508,7 @@ function wheelHtml(){
   var labels=WHEEL.map(function(w,i){if(w[3])return '';var c=wheelStart(i)+WHEEL_DEG[i]/2,e=((c+WHEELROT)%360+360)%360,
       t=e>180?'rotate('+(c+90).toFixed(2)+'deg) translateX(calc(var(--wr) * -.58)) translate(-50%,-50%)':'rotate('+(c-90).toFixed(2)+'deg) translateX(calc(var(--wr) * .58)) translate(-50%,-50%)';
     return '<span style="transform:'+t+'">'+esc(w[1]>0?econScaled(w[1],50).toLocaleString()+" coins":w[0])+'</span>'}).join("");
-  return '<section class="card panel"><h3 class="label">Lucky wheel</h3><p class="note">One free spin every day. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game.</p>'
+  return '<section class="card panel"><h3 class="label lbi">Lucky wheel'+qbI("wheel")+'</h3>'
    +'<div class="wheelwrap"><div class="pointer"></div><div class="wheel" id="wheel" style="background:'+conic+(WHEELROT?';transform:rotate('+WHEELROT.toFixed(2)+'deg)':'')+'">'+labels+'</div></div>'
    +'<button class="btn big" data-act="spin"'+(can&&!spinning?'':' disabled')+'>'+(can?"Spin":"Come back tomorrow")+'</button>'
    +(S.wheelRes?'<p class="note" style="text-align:center">Last result: <b>'+esc(S.wheelRes)+'</b></p>':'')+'</section>';
@@ -612,8 +612,8 @@ function dngClaim(k,ev){
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
   var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
-  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label">Dungeon Crawls</h3><p class="note">Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare.</p>'
-    +'<p class="note">Crawls today: <b>'+D.cd.n+'/'+dngPerDay()+'</b>. Quest effort now: <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>.'+(sure?' <b>Your next crawl finds something rare.</b>':'')+'</p>';
+  var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label lbi">Dungeon Crawls'+qbI("crawl")+'</h3>'
+    +'<p class="note">Crawls today <b>'+D.cd.n+'/'+dngPerDay()+'</b> &middot; Quest effort <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>'+(sure?'<br><b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
     h+='<div class="dng run"><b>'+d.ic+' '+esc(d.name)+'</b>'+(done?'<small class="note"> You made it back.</small><button class="btn" data-act="dclaim" data-k="'+k+'">Return</button>':'<small class="note"> back in '+mins+' min</small><div class="dbar"><i style="width:'+pct+'%"></i></div>')+'</div>'});
@@ -631,7 +631,7 @@ function dngHtml(){
      +(locked?'':(D.runs.length>=dngSlots()?'<small class="note">You are already down a dungeon.</small>':D.cd.n>=dngPerDay()?'<small class="note">Done for today.</small>':'<button class="btn alt" data-act="dgo" data-id="'+d.id+'">Crawl</button>'))+'</div>'});
   h+='</div></section>';
   var got=DNPC.filter(function(n){return D.npcs[n.id]});
-  h+='<section class="card panel"><h3 class="label">Rescued allies</h3>'+(got.length?'<div class="lrows">'+got.map(function(n){return '<div class="dng"><b>'+esc(n.name)+'</b><small class="note"> '+esc(n.line)+'</small><span class="chip mult">'+esc(n.buff.text)+'</span></div>'}).join("")+'</div>':'<p class="note">Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good.</p>')+'</section>';
+  h+='<section class="card panel"><h3 class="label lbi">Rescued allies'+qbI("allies")+'</h3>'+(got.length?'<div class="lrows">'+got.map(function(n){return '<div class="dng"><b>'+esc(n.name)+'</b><small class="note"> '+esc(n.line)+'</small><span class="chip mult">'+esc(n.buff.text)+'</span></div>'}).join("")+'</div>':'<p class="note">None rescued yet.</p>')+'</section>';
   return h;
 }
 
@@ -1360,7 +1360,10 @@ var CALPOSE={idle:["m_idle"],walk:["m_w1","m_w2","m_w3","m_w2"],stretch:["m_stre
 function calImg(L,pose,H,cls){return '<img class="calp '+(cls||"")+'" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-pose="'+(pose||"idle")+'" data-h="'+H+'" data-look="'+esc(JSON.stringify(L))+'">'}
 function calHyd(img){if(img.dataset.hy||!window.QBLoft)return;img.dataset.hy=1;
   var L=JSON.parse(img.dataset.look),ch=L.rig,H=+img.dataset.h,clip=img.dataset.pose==="walk"?"walk":img.dataset.pose==="stretch"?"stretch":"idle",D=QBLoft.data.loft;
-  if(!ch)return;QBLoft.warm(ch,clip);img.style.width=(H*D.frame[0]/D.standPx).toFixed(1)+"px";img.style.height=(H*D.frame[1]/D.standPx).toFixed(1)+"px";
+  /* Cal, 2026-11-16 ("a little slow here and there"; his phone: the Hall's first open 1.1 s): a "still" portrait needs one frame, but
+     warm() queued the whole idle clip for every neighbor (about 12 renders each, never dropped), so the Hall and Players paid for ~120
+     renders on the first open. It now asks for frame 0 only (frameOrNear below). */
+  if(!ch)return;if(img.dataset.pose!=="still")QBLoft.warm(ch,clip);img.style.width=(H*D.frame[0]/D.standPx).toFixed(1)+"px";img.style.height=(H*D.frame[1]/D.standPx).toFixed(1)+"px";
   /* "still": one idle frame, no timer (neighbors in the Hall: ten of them animating would cost for nothing) */
   if(img.dataset.pose==="still"){var tries=0,one=function(){if(!img.isConnected)return;var u=QBLoft.frameOrNear(ch,"idle",0);if(u){img.src=u;return}if(++tries<40)setTimeout(one,250)};one();return}
   var f=0,t=setInterval(function(){if(!img.isConnected){clearInterval(t);return}var c=QBLoft.clips[clip],u=QBLoft.frameOrNear(ch,clip,f);if(u&&img.src!==u)img.src=u;f=(f+QBLoft.step(clip))%c.frames},1000/QBLoft.clips[clip].fps*QBLoft.step(clip))}
@@ -1563,7 +1566,7 @@ function brandHtml(b,d){
   return h;
 }
 function vaultHtml(d){
-  var h='<section class="card panel"><h3 class="label">Vault</h3><p class="note">Only 3 brands stay live. When a 4th drops, the oldest retires here and returns much later. Vaulted brands are unavailable until they return. Pieces you own stay in your wardrobe.</p>';
+  var h='<section class="card panel"><h3 class="label lbi">Vault'+qbI("vault")+'</h3>';
   if(!d.vault.length)h+='<p class="note">Empty for now. First retirement happens when the 4th brand drops.</p>';
   else h+='<div class="vcar">'+d.vault.map(function(b){var back=ptMidnight(b.start)+105*864e5;return '<div class="vcard" style="background:linear-gradient(135deg,'+b.c[0]+','+b.c[1]+')">'+brandLogo(b)+'<small>Returns in '+cdTxt(back-d.n)+'</small></div>'}).join("")+'</div>';
   if(d.next)h+='<p class="note">Next release in '+cdTxt(dropStart(d.next.start)-d.n)+'.</p>';

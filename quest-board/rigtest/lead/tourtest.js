@@ -29,6 +29,10 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
     const dq = await waitTour(p, /Daily Quest/);
     ok('day 2: the Daily Quest card, with its tour', dq && /Daily Quest/.test(dq.t) && await p.evaluate(() => !!document.querySelector('.card.dq')), dq);
     await next(p); await p.waitForTimeout(500);
+    /* Cal, 2026-11-16 (cut the fat): the Daily Quest tour's second step rings the card's (i) */
+    const ii = await tour(p); const ring = await p.evaluate(() => { const r = document.querySelector('#qbtour .tour-ring'); if (!r) return null; const g = r.getBoundingClientRect(), b = document.querySelector('.card.dq .qbi'); if (!b) return 'no (i)'; const q = b.getBoundingClientRect(); return Math.abs((g.x + g.width / 2) - (q.x + q.width / 2)) < 6 && Math.abs((g.y + g.height / 2) - (q.y + q.height / 2)) < 6; });
+    ok('day 2: the tour then rings the Daily Quest\'s (i)', ii && ii.t === 'How it works' && ring === true, { ii, ring });
+    if (ii) { await next(p); await p.waitForTimeout(500); }
     await p.evaluate(() => { const S = window.__qb.x().S; S.calm.days.unshift('2000-01-02', '2000-01-03'); window.__qb.x().render(); });
     const bt = await waitTour(p, /Bounties/); if (bt) { await next(p); await p.waitForTimeout(500); }
     ok('day 3: bounties, with their tour', bt && /Bounties/.test(bt.t), bt);

@@ -35,7 +35,7 @@ function htabPosts(){var ph="";
     h+=socialHtml()}
   return h}
 /* the Town Hall's banner, at the very top of the Hall (Cal, 2026-11-13: "on the top of the page, not in the middle") */
-function hallBanner(){var bd=window.QBART&&QBART["ui_town_board.webp"];return '<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3><p class="note">Posts and chat with everyone in town.</p></section>'}
+function hallBanner(){var bd=window.QBART&&QBART["ui_town_board.webp"];return '<section class="card panel tw-hall'+(bd?' has-art':'')+'">'+(bd?'<i class="tw-bg" style="background-image:url('+bd+')" aria-hidden="true"></i>':'')+'<h3 class="label">Town hall</h3></section>'}
 /* the Neighbors list moved to Style, so the board's panel (#socnb) keeps the meter and the Town board only. If its markup ever
    changes so the cut cannot be found, the whole panel shows, as before. */
 var htabInnerBase=socInner;

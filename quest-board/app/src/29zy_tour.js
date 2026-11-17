@@ -41,7 +41,9 @@ var TOURS=[
     {sel:".bline",t:"Your level",x:"XP fills this bar. Each new level pays coins, and now and then opens something new. We'll show you each one."},
     {sel:".coinpill",t:"Your coins",x:"Coins build your home and buy clothes, once those open. For now, finish a few tasks."}]},
   {id:"dq",ready:function(){return view==="board"&&tourVis(".card.dq")},steps:[
-    {sel:".card.dq",t:"New: the Daily Quest",x:"A goal for today. Fill the bar with your tasks and a chest opens with a reward. It starts fresh every morning."}]},
+    {sel:".card.dq",t:"New: the Daily Quest",x:"A goal for today. Fill the bar with your tasks and a chest opens with a reward. It starts fresh every morning."},
+    /* Cal, 2026-11-16 (cut the fat): the rules left the screens for an (i) on each card; the first tour that has one shows it */
+    {sel:".card.dq .qbi",t:"How it works",x:"Tap the i on any card to read its rules. The screens keep just your numbers."}]},
   {id:"bty",ready:function(){return view==="board"&&tourVis(".bty")},steps:[
     {sel:".bty",t:"New: Bounties",x:"A fresh real-life challenge every day. Take it and it joins your quests, for extra XP."}]},
   {id:"train",ready:function(){return view==="board"&&tourVis('.zx-tile[data-v="train"]')},steps:[

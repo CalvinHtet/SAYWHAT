@@ -258,10 +258,10 @@ function dqHidden(){var T=ECON.dqTiers;return T[T.length-1][0]}
 /* [main fill, overtime fill]: toward the shown goal, then past it toward the hidden chest */
 function dqFill(){var x=dqXp(),t=dqTarget(),top=ECON.dqTiers[ECON.dqShown-1][0];return t?[Math.min(1,x/t),0]:[1,Math.min(1,Math.max(0,(x-top)/(dqHidden()-top)))]}
 function dqHtml(){if(!S.created)return '';var x=dqXp(),g=dqGoal(),t=dqTarget(),f=dqFill(),e=dqEff(),sp=stats4(),d=dqState();
-  return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label">Daily Quest</h3><span class="mono">'+(t?x+' / '+t+' XP':x+' XP')+'</span></div>'
+  /* Cal, 2026-11-16 (cut the fat): numbers only here; the rules are behind the (i) (29zz_lean.js) */
+  return '<section class="card panel dq"><div class="row" style="justify-content:space-between"><h3 class="label lbi">Daily Quest'+(typeof qbI==="function"?qbI("dq"):"")+'</h3><span class="mono">'+(t?x+' / '+t+' XP':x+' XP')+'</span></div>'
     +'<div class="dq-bar'+(dqTarget()?'':' dq-past')+'"><i style="width:'+(f[0]*100)+'%"></i><i class="ot" style="width:'+(f[1]*100)+'%"></i></div>'
-    +'<p class="note">'+(x<=0?'Finish a task to start your day. ':x<g?'<b>'+(g-x)+' XP left</b> to finish today\'s Daily Quest. ':'Daily Quest done. ')+(x>0?'Town running at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (yesterday\'s hidden chest: +10%)':'')+'.':'')+'</p>'
-    +'<p class="note">Weekly Quest: <b>'+wqState().n+' of '+ECON.wqDays+'</b> active days'+(wqState().paid?', done for this week.':', pays half a level of XP.')+(S.rest&&S.rest.x>0?' Rested: <b>'+S.rest.x+' XP</b>, quests pay double until it runs out.':'')+'</p>'
+    +'<p class="note">'+(x>=g?'Done. ':'')+(x>0?'Town at <b>'+Math.round(e*100)+'%</b>'+(d.buff?' (+10% chest)':'')+' · ':'')+'Weekly Quest <b>'+wqState().n+'/'+ECON.wqDays+'</b>'+(wqState().paid?' done':'')+(S.rest&&S.rest.x>0?' · Rested <b>'+S.rest.x+' XP</b>':'')+'</p>'
     +'<div class="dq-row">'+Object.keys(STATN).map(function(k){var ic=econArt("ui_stat_"+k+".webp");return '<span class="chip dq-st" title="'+STATD[k]+'">'+(ic?'<img src="'+ic+'" alt="">':'')+STATN[k]+' '+sp[k]+'</span>'}).join("")+'</div></section>'}
 function econArt(n){return window.QBART&&QBART[n]}
 /* each tier's chest once a day (d.tier: how many are open; a save from before the tiers had d.done for the one chest). The shown

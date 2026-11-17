@@ -1,13 +1,14 @@
 // QA's experience review fixes (2026-11-14) on the plain build: the welcome tour's tick step rings Add (no own task) or the player's own
 // task, never the Workout; the Town tour waits for a day after The Loft's; Players opens at level 3; the Bedroom window lists buys before a
-// "Coming next ? ? ? Not yet"; claiming the welcome letter closes it.   PORT=<plain build server> NODE_PATH=<playwright's parent> node rigtest/lead/review102.js
+// "Coming next ? ? ? Not yet"; claiming the welcome letter closes it. (2026-11-16: a passing toast is looked through: the ring is checked,
+// not whatever toast floats over it for 2 s.)   PORT=<plain build server> NODE_PATH=<playwright's parent> node rigtest/lead/review102.js
 const { chromium } = require('playwright');
 let bad = 0; const ok = (c, s, i) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s + (c ? '' : '  ' + JSON.stringify(i))); };
 (async () => { const b = await chromium.launch({ args: ['--mute-audio'] });
   const page = async () => { const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); p.errs = []; p.on('pageerror', (e) => p.errs.push(e.message.slice(0, 150)));
     await p.goto('http://127.0.0.1:' + (process.env.PORT || 8779) + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && window.__qbRooms, null, { timeout: 90000 }); await p.waitForTimeout(800); return p; };
   const clear = (p) => p.evaluate(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()));
-  const tour = (p) => p.evaluate(() => { const r = document.getElementById('qbtour'); if (!r || r.style.visibility === 'hidden') return null; const g = r.querySelector('.tour-ring').getBoundingClientRect(); const e = document.elementFromPoint(g.x + g.width / 2, g.y + g.height / 2); return { t: r.querySelector('.tour-t').textContent, at: e ? (e.id || e.className || e.tagName) + (e.closest('[data-id]') ? ' ' + e.closest('[data-id]').dataset.id : '') : '' }; });
+  const tour = (p) => p.evaluate(() => { const r = document.getElementById('qbtour'); if (!r || r.style.visibility === 'hidden') return null; const g = r.querySelector('.tour-ring').getBoundingClientRect(); const pp = [...document.querySelectorAll('.pop')]; pp.forEach((x) => { x.dataset.pe = x.style.pointerEvents; x.style.visibility = 'hidden'; }); const e = document.elementFromPoint(g.x + g.width / 2, g.y + g.height / 2); pp.forEach((x) => { x.style.visibility = ''; }); return { t: r.querySelector('.tour-t').textContent, at: e ? (e.id || e.className || e.tagName) + (e.closest('[data-id]') ? ' ' + e.closest('[data-id]').dataset.id : '') : '' }; });
   // 1) the welcome tour's tick step
   { const p = await page();
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'New', sex: 'f' }); delete S.calm; delete S.tours; S.quests = S.quests.filter((q) => q.rep === 'weekly4'); x.render(); });

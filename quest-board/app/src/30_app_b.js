@@ -515,19 +515,19 @@ async function cexAdd(text){text=String(text||"").trim().slice(0,60);if(!text)re
   pop(c.n+" added to "+c.p+(o?"":" (sorted by keywords)"))}
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.id==="cxin"){e.preventDefault();var b=document.querySelector("[data-act=wkcxadd]");if(b)b.click()}});
 function cexHtml(){var ps=cexPlans();
-  return '<section class="card panel"><h3 class="label">Your own workouts</h3><p class="note">No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym.</p>'
+  return '<section class="card panel"><h3 class="label lbi">Your own workouts'+qbI("own")+'</h3>'
     +(ps.length?'<div class="plans">'+ps.map(function(p){var bp=cexBuild(p.id);return '<button class="plan" data-act="wkplan" data-v="'+p.id+'">'+exStill(p.ex[0])+'<b>'+esc(p.name)+'</b><small>'+p.ex.map(function(x){return esc(S.cex[x].n)}).join(", ")+' &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>':'')
     +'<div class="cxadd"><input id="cxin" type="text" maxlength="60" placeholder="Run 5k, 30 min walk, yoga..." aria-label="Add your own workout"><button class="btn" data-act="wkcxadd">Add</button></div>'
     +(ps.length?'<details class="cxlist"><summary class="note">Your activities ('+Object.keys(S.cex).length+')</summary>'+Object.keys(S.cex).map(function(id){var c=S.cex[id];return '<div class="lrow"><span>'+esc(c.ic)+' '+esc(c.n)+'</span><span class="note">'+esc(c.p)+' &middot; '+c.sets+' &times; '+esc(c.t)+'</span><button class="x del" data-act="wkcxdel" data-id="'+id+'" aria-label="Remove '+esc(c.n)+'">&times;</button></div>'}).join("")+'</details>':'')+'</section>'}
 function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
-  var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label">Training</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
-   +'<p class="note">Each Workout quest proven with a live photo counts once per day. Hit 4 in a week (Monday to Sunday) for <b style="color:var(--gold)">+'+wb.xp+' XP and +'+wb.coins+' coins</b> plus a random prize. '+esc(wwLine(paid))+'</p></section>';
+  var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label lbi">Training'+qbI("train")+'</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
+   +(paid?(wwPrev()>0?'<p class="note">Week '+(wwPrev()+1)+' in a row: x'+wwMult()+' coins</p>':''):'<p class="note">4 proven workouts: <b style="color:var(--gold)">+'+wb.xp+' XP, +'+wb.coins+' coins</b>'+(wwPrev()>0?' (x'+wwMult()+' streak)':'')+'</p>')+'</section>';/* Cal 2026-11-16: the rules are behind the (i) */
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
-    h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">Gym plans</h3><button class="btn ghost csm" data-act="wkfold" aria-expanded="'+!S.gymFold+'">'+(S.gymFold?'Show':'Hide')+'</button></div>'
-      +(S.gymFold?'':'<p class="note">Every session is balanced across the body and capped at about an hour, using supersets to save time. Pick a body part and the plan builds around it.</p><div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>')+'</section>'+cexHtml();
+    h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label lbi">Gym plans'+qbI("gym")+'</h3><button class="btn ghost csm" data-act="wkfold" aria-expanded="'+!S.gymFold+'">'+(S.gymFold?'Show':'Hide')+'</button></div>'
+      +(S.gymFold?'':'<div class="plans">'+PLANS.map(function(p){var bp=buildPlan(p[0]);return '<button class="plan" data-act="wkplan" data-v="'+p[0]+'">'+exStill(EXPLAN[p[0]])+'<b>'+esc(p[1])+'</b><small>'+bp.list.length+' exercises &middot; ~'+bp.min+' min</small></button>'}).join("")+'</div>')+'</section>'+cexHtml();
     /* Cal, 2026-11-10: "show a graph of performance on that specific workout day if we click on any workout in the recent sessions
        section, and also a separate graph that shows progression per exercise also at the bottom. These graphs are accessible with
        a small i icon at the right of each entry". Tapping the row or its i opens the graph. */
@@ -539,9 +539,9 @@ function trainHtml(){cexSync();
     return h;
   }
   var pl=planOf(S.wk.plan);
-  h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">'+esc(pl?pl[1]:"Workout")+' day &middot; ~'+(S.wk.min||estMin(wkList(),S.wk.roles||{},S.wk.setsN||{}))+' min</h3><button class="btn ghost" data-act="wkcancel">Change</button></div>'
-   +(S.wk.note?'<p class="note">'+esc(S.wk.note)+'</p>':'')+'<p class="note">Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted.</p><button class="btn big" data-act="wkcoach">Start guided session</button><div class="exlist">'+wkSteps().map(stepCard).join("")+'</div>'
-   +'<button class="btn big" data-act="wkdone">Finish workout</button><p class="note">Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo.</p></section>';
+  h+='<section class="card panel"><div class="row" style="justify-content:space-between"><h3 class="label">'+esc(pl?pl[1]:"Workout")+' day &middot; ~'+(S.wk.min||estMin(wkList(),S.wk.roles||{},S.wk.setsN||{}))+' min'+qbI("wk")+'</h3><button class="btn ghost" data-act="wkcancel">Change</button></div>'
+   +(S.wk.note?'<p class="note">'+esc(S.wk.note)+'</p>':'')+'<button class="btn big" data-act="wkcoach">Start guided session</button><div class="exlist">'+wkSteps().map(stepCard).join("")+'</div>'
+   +'<button class="btn big" data-act="wkdone">Finish workout</button></section>';
   return h;
 }
 /* ---------- the end of a session: what changed since last time, and the last 7 sessions of this day (Cal, 2026-11-09) ----------
@@ -869,7 +869,7 @@ function coachGain(id,done,full){
 }
 function coachRoster(){
   if(!coachesOn())return "";
-  var h='<section class="card panel"><h3 class="label">Coaches</h3><p class="note">A new coach runs each session. Every session earns that coach XP. Higher levels boost your quests, and top coaches show up in your Gym.</p><div class="croster">';
+  var h='<section class="card panel"><h3 class="label lbi">Coaches'+qbI("coach")+'</h3><div class="croster">';
   COACHES.forEach(function(c){
     var x=coachXp(c.id),l=coachLv(c.id),met=x>0,nxt=CLV[l]!=null?CLV[l]:null,lo=CLV[l-1]||0,pc=nxt==null?100:Math.round((x-lo)/(nxt-lo)*100);
     h+='<div class="ccard'+(met?"":" lock")+'">'+(coachArt(c)?'<img class="crav'+(met?'':' sil')+'" src="'+coachArt(c)+'" alt="">':pxImg(c.L,"bust",40,40,"crew"))+'<div><b>'+esc(met?c.name:"???")+'</b><small>'+(met?"Lv "+l+" &middot; "+esc(coachBuff(c).text):"Not met yet")+'</small><div class="track"><div class="fill" style="width:'+(met?pc:0)+'%;background-color:var(--accent)"></div></div></div></div>';
@@ -1398,10 +1398,9 @@ function boardHtml(){
 
   if(g){
     var nr=RANKS[Math.min(ri+1,5)], stored=Math.max(0,S.xp-cum(g));
-    h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label">Job advancement trial</span><h2>'+esc(gateTitle())+'</h2>'
-     +'<p class="note">Your XP bar is full at level '+(g-1)+'. Pass now with a fresh photo of you being active (a workout, a run, a walk, a hike, a game, a class), or on honor by being active (50+ XP) on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b> so far.</p>'
+    h+='<section class="card gate">'+(ART["rank_"+nr.l]?'<img class="gateem" src="'+ART["rank_"+nr.l]+'" alt="">':'')+'<span class="label lbi">Job advancement trial'+qbI("trial")+'</span><h2>'+esc(gateTitle())+'</h2>'
+     +'<p class="note">Pass with a photo of you being active, or be active on '+ECON.trialDays+' days: <b>'+(S.trialN||0)+' of '+ECON.trialDays+'</b>.</p>'/* Cal 2026-11-16: the rules are behind the (i) */
      +'<div class="stored"><span>Stored XP, released when you pass</span><b class="mono">+'+stored+'</b></div>'
-     +'<ul><li>A photo of you being active: the gym, a run, a class, a home workout</li><li>Screenshots and photos you already used fail</li><li>Claude checks the scene'+(S.gym?'; a photo at your saved gym also passes on location alone':'; a pass at a gym saves its location')+'</li><li>The photo is not saved anywhere</li></ul>'
      +'<div class="btns"><label class="btn" for="ph1"'+(gateBusy?' aria-disabled="true"':'')+'>Open camera</label></div>'
      +'<input class="vh" type="file" id="ph1" accept="image/jpeg" capture="environment" aria-label="Take a workout photo">'
      +(gateLines.length?'<div class="proof">'+gateLines.map(function(l){return '<div class="'+l.k+'"><span>'+(l.k==="ok"?"&#10003;":l.k==="bad"?"&#10007;":"&bull;")+'</span><span>'+esc(l.t)+'</span></div>'}).join("")+'</div>':'')
