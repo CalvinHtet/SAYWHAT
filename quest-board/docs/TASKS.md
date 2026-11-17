@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9.
+- v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9. (QA: DONE, PASS; QA findings)
 - Now (on dff8d50): crew posts for ROOMS's Lock and Key staff (20_loft.js lfPostSpot, 26_world.js staff {post, wand}); not committed yet. A stand-in posted person sits on its spot and holds it; a stand-in walker got stuck mid-walk, finding out why.
 - Done: v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
@@ -227,7 +227,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings). Nothing open from QA.
+- Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings). Nothing open from QA.
+  Was: Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings).
   Was: Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
   Was: Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings).
   Was: Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings).
@@ -250,6 +251,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.12 live (LEAD: Live and Test at 6f15fd9 on release/v1.12, wlive PASS, 3013/3013 identical):
+  - 6f15fd9 against release/v1.11 034069d: app/data/art/tools change only in 15_shop.js, 29e_tiers.js and 27b_skins.js, and the APPV
+    line (111 -> 112). Each of those three files is byte-identical to the passed commit's (c15c239, c15c239, f6fc989), so the passed
+    HANGANG/DIAL-UP rows and the Bowling/VR/Dessert fixes are what shipped. No art changed: the new pieces' art was already live in v1.11.
+    rigtest only: new240rows.js now carries the rows itself (af9cea1; QA's note 3).
+  - A clean web build: 3,012 files + version.txt = 3,013, APPV 112.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, LEAD c15c239 (HANGANG's and DIAL-UP's 15 new pieces each in the Shop). Clean worktree, plain build. Pictures:
   shots/qa/new240shop/ (both brands' icon sheets).
   - Grades checked against CLOTHING_TIERS.md's rules:
