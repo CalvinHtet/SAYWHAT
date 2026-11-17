@@ -1217,6 +1217,16 @@ Ready to publish (ROOMS adds lines here: `READY TO PUBLISH: <what>, look at: <wh
   `shots/plazasign.js`: Garden only, the sign at y 210 (was 105), just over the trees; with the Restaurant, back at 105; no page
   errors (`shots/v61/plazasign_gardenonly.png`). Check with ROOMS's 9189946.
 Art and room code requests (LEAD asks, ROOMS does):
+- TAKEN by ROOMS (2026-11-16): HANGANG's 15 posted for Cal's OK on the direction; DIAL-UP and OVERPASS drafted too (shots/pending_art/new240/drafts.md). No art until Cal OKs. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+  of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
+  3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
+  Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own
+  palette, sub and tag (e.g. BARD & BLADE = fantasy-flavoured streetwear, not a costume), no filler basics, no repeats of what the brand
+  already sells, no copyrighted logos or characters. One Higgsfield image per cosmetic holding every angle, Unlimited only, singles queued
+  (~3 pending). Wear-test as usual (every pose, both bodies), then QA's wear-check per brand. Work brand by brand in drop order
+  (HANGANG, DIAL-UP, OVERPASS first) and send each brand to LEAD as READY with ids, names, one-line descriptions and the price tier
+  ROOMS suggests; LEAD adds the 15_shop.js rows (or ROOMS's one-line EXTRA_ITEMS rule) and checks prices with ECONOMY.md.
+  Before starting, post one brand's 15 names + one line each for Cal's OK on the direction (approvals pile up: keep working meanwhile).
 - TAKEN by ROOMS (2026-11-13). WAITING ON ROOMS (Windows session asks for Cal, 2026-11-09: "The imax projector in the theater is still facing to the left"):
   a back view of both Auditorium projectors, `art/app/thx_proj2b.webp` (IMAX Laser Projector) and `thx_proj1b.webp` (Digital
   Projector). The screen is on the back-left wall (x = 0) and the projector stands on the back landing at the right, so its lens
