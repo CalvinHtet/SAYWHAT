@@ -26,6 +26,8 @@ LEAD Doing:
   before 11-17; and QA's tab NOTE: the Shop's section tab row wraps. patch106.js PASS (letter, 500 once, a 11-18 joiner gets none, every
   tab on screen at 375/390/430 on 11-19 and 12-23); ncrows.js PASS. Not checked: real phone, web build. Storage rules deployed; Cal's
   own photo post worked. QA please: pass/fail 29ed258 on top of v1.06.
+  Cal, 2026-11-17: patch letters from now on only every 10th version (1.10, 1.20, ...), each covering the changes since the last,
+  vague, no spoilers (1.06 was a one-off). LEAD adds one to PATCHES (29zz_patch.js) in the v1.10 build.
 - Was (on 0ea9b2a), shipped as v1.06: v1.06 candidate, URGENT, (QA: DONE on 0ea9b2a, PASS, v1.06 can ship; one NOTE for LEAD, the brand tabs no longer fit a phone; QA findings) WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
   Wednesday is separate from the 3. Right now it should be hangang, dial up, and overpass." 0ea9b2a: Street live 3 (29e_economy.js);
   a retired brand rests at least 2 drops (29zz_ncstreet.js gap = live + max(1, half the brands not live)), as with 3 live the old gap
