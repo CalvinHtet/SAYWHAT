@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (c15c239): HANGANG's and DIAL-UP's 15 new pieces each in the Shop (Cal: "Ok on all", via ROOMS). Please check my grades (29e_tiers.js new240 block: thrift h_oval h_barrel y_rimless y_phone; premium y_visor y_moto y_patent; rest standard) and the Shop at 375/390. My checks: rigtest/lead/new240rows.js 181 PASS (names, lines, Street bands 120-450, both tabs, art), brandwear h and y 0 not drawn, 0 page errors. Note: a man's DIAL-UP tab shows the women-only Denim Cargo Maxi, as it always shows the Plaid Mini Skirt. HANGANG leaves the Street Fri 11-20, so this wants to ship by Thursday.
+- (QA: DONE on c15c239, PASS, can ship with the Bowling/VR/Dessert fixes; three NOTES; QA findings) FOR QA (c15c239): HANGANG's and DIAL-UP's 15 new pieces each in the Shop (Cal: "Ok on all", via ROOMS). Please check my grades (29e_tiers.js new240 block: thrift h_oval h_barrel y_rimless y_phone; premium y_visor y_moto y_patent; rest standard) and the Shop at 375/390. My checks: rigtest/lead/new240rows.js 181 PASS (names, lines, Street bands 120-450, both tabs, art), brandwear h and y 0 not drawn, 0 page errors. Note: a man's DIAL-UP tab shows the women-only Denim Cargo Maxi, as it always shows the Plaid Mini Skirt. HANGANG leaves the Street Fri 11-20, so this wants to ship by Thursday.
 - Next: crew posts and a seated crew pose in 20_loft.js for ROOMS's Lock and Key staff (singer, pianist, server).
 - Queued for the next release: ROOMS's Bowling/VR/Dessert fixes 3c3d6a1 + f6fc989 (QA PASS 3b7cd87).
 - Now (on 034069d): v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
@@ -228,7 +228,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings). Nothing open from QA.
+  Was: Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
   Was: Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings).
   Was: Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings).
   Was: Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX: a permanent mop since v1.10 (QA findings).
@@ -250,6 +251,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD c15c239 (HANGANG's and DIAL-UP's 15 new pieces each in the Shop). Clean worktree, plain build. Pictures:
+  shots/qa/new240shop/ (both brands' icon sheets).
+  - Grades checked against CLOTHING_TIERS.md's rules:
+    - thrift: novelty shades (h_oval, y_rimless), faded denim (h_barrel), the plastic phone lanyard.
+    - premium: leather (y_moto), patent leather (y_patent), holographic (y_visor; CHROME RAIN's visor is premium too).
+    - standard: the rest. Faux fur and chrome chains are standard, matching the shearling and chain precedents.
+  - Art: no art/app file differs from ROOMS's passed 35f3080 (86cb0e1's h_wrap is the passed repaint). Every new id has front, back
+    and icon (front only for the two shades).
+  - rigtest/lead/new240rows.js on QA's build: 181 ok, PASS.
+  - brandwear.js h and y, every pose (35):
+    - HANGANG: 40 outfits on each body; DIAL-UP: 35 men's, 36 women's.
+    - 0 not drawn, 0 icons missing, 0 page errors.
+  - Shop, Wed 11-18 at 10 am, level 12, man and woman, at 390 and 375:
+    - Street tabs over, y2k, hanga and basics. Each brand tab lists all 15 new names.
+    - Every new card's icon loads once scrolled into view: DIAL-UP 33, HANGANG 36.
+    - No sideways scroll on any tab, 0 page errors.
+    - A man sees the Denim Cargo Maxi with its women's mark and a locked price button (330), the same as the Plaid Mini Skirt.
+  - NOTE (LEAD, a call, no change asked): the Leather Chest Sling (gx_h_sling) is leather, and the rules' letter says leather is
+    premium. QA agrees with standard: a small pouch, like HANGANG's leather derby and loafer (standard).
+  - NOTE (LEAD): on the Street, premium is capped at 440-450 (clothFloor), so the Moto Jacket (450) costs about the same as the dearest
+    standard pieces. This comes from the Street cap, not this commit.
+  - NOTE (LEAD): new240rows.js reads shots/pending_art/new240/*/rows_draft.json, which are not committed. A clean copy can't run it
+    (QA copied them in). Commit the two files or put the rows in the script.
+  - Not checked: a real phone, the cut release with the Bowling/VR/Dessert fixes (QA's live check covers it), and the main
+    checkout's uncommitted changes (20_loft.js, 26_world.js, KODE PINK art), which are not in c15c239.
 - REVIEW 2, ROOMS's revised Lock and Key plan (13 + 15 = 28; Bookcase Door, Doorman and Posters cut; Menu Mirror, Single Malt Cabinet,
   Champagne High-Tops in; Big Band now a Brass Stage Rail; lamps kept, Absinthe dropped). OK to paint the wall pieces and the rug.
   - CORRECTION from QA: no room pins a person to a spot. Theater's thPeople only makes the people, and onspot (Club) only stops a spot
