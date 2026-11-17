@@ -337,7 +337,14 @@ function econLate(k){return 1+ECON.lateK*(econPhase(k)-1)}
 function econRules(){/* Cal (18:23): "4-5 days with the dish count sounds just fine": Noir (it opens the bar) waits for ECON.noirServed dishes
      served (about 2 an hour, so about 4 days after the Restaurant opens); its card shows the count with a bar */
   (ADDONS.restaurant||[]).forEach(function(a){if(a[0]==="r_noir")a[3]=Object.assign({},a[3]||{},{served:ECON.noirServed})});
-  (ECON.retire=ECON.retire||["r_safe","g_cellar"]).forEach(function(id){Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1})})})});
+  /* Cal, 2026-11-17: "Restaurant can go down to 40 (keep the most visually appealing upgrades but can remove the small unnoticeable
+     ones), Garden can go down to 35". QA ranked every upgrade by what it shows in the built room (rigtest/qa/upgradeshow.js, findings
+     8ae2680 + 4c56320); these 18 and 5 leave the shop the same way. Owners keep them (the room still draws them, ids stay), but their
+     "+N%" and hours go to 0: bizInit sets the rooms' coins an hour from the upgrades still sold, so a full room still pays its bizDay
+     and an owner is not paid twice for the same day. */
+  ECON.cut=ECON.cut||["r_cf1","r_d2","r_d4","r_scr","r_cool","r_hd1","r_p4","r_m3","r_m5","r_m4","r_sign","r_l1","r_d1","r_chef","r_s2","r_s3","r_cf2","r_m2",
+    "g_sun","g_birdb","g_topi","g_shed","g_wheel"];
+  (ECON.retire=ECON.retire||["r_safe","g_cellar"]).concat(ECON.cut).forEach(function(id){var cut=ECON.cut.indexOf(id)>=0;Object.keys(ADDONS).forEach(function(k){(ADDONS[k]||[]).forEach(function(a){if(a[0]===id)a[3]=Object.assign({},a[3]||{},{retired:1},cut?{p:0,cap:0}:{})})})});
   Object.keys(ADDONS).forEach(function(k){var T=ROOMT[k]||{},biz=!!(T.coin||T.food),A=ADDONS[k]||[],L=A.filter(function(a){return a[2]&&!(a[3]&&a[3].retired)});if(!L.length)return;
     var hard=function(a){var e=a[3]||{};return !!(e.fixed||e.opens||e.g==="Expansion")},bare=function(a){var e=a[3]||{};return !(+e.p>0)&&!e.xp&&!e.cap&&!e.shelf&&!e.fresh&&!e.dish};
     /* a looks-only piece is cheap even if it was a big moment (the Stone Fountain) */
