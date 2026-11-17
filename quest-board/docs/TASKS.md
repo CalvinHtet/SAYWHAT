@@ -229,7 +229,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings). Nothing open from QA.
+- Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings). Next: LEAD's 777411d and 9eb7f13.
+  Was: Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings).
   Was: Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings).
   Was: Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings).
   Was: Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
@@ -254,6 +255,45 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, ROOMS fff49a2 (Lock and Key +15, Club DJ post). Clean worktrees of fff49a2 and its parent 8ff1307, plain builds.
+  Pictures: shots/qa/lockkey15/. Scripts: rigtest/qa/bigrooms.js (LIVE=1 and old owner), auditall.js, crewreg.js (new OWN= for a
+  partial buy), postlook.js (new: the posted staff in play).
+  - FIX (ROOMS; QA's own bad suggestion): the Club with the DJ Booth but no Neon Bar now shows "No crew here" and nobody takes
+    orders.
+    - crewreg.js ROOM=club OWN=cb_floor,cb_dj: "No crew here" in 60 of 60 samples on fff49a2, 0 of 60 on 8ff1307.
+    - A posted person never serves or counts as crew (ff44edc), and the DJ Booth comes before the Neon Bar in the Club's list.
+    - Take {post:"dj"} back off cb_dj, and post:1 off the dj spot.
+  - FIX (ROOMS): a guest at the piano's right guest spot (7.4,6.0, spread to about 7.58,6.68) stands straight up-screen of the seated
+    pianist. Their heads stack and the guest's body hides behind him (piano_guest_behind_pianist.jpg).
+    - The spot is 1.0 from the bench in room units, so it passes QA's 0.6 rule. But on screen the iso view lines the two up.
+      QA's 0.6 rule was too loose for spots behind a seated person. LEAD's 777411d (0.5) won't catch it either.
+    - Move that guest spot to the piano's tail, or drop it while the pianist is hired.
+  - NOTE (ROOMS, older than this commit): the piano's other guest spot (6.0,7.2) puts guests inside the raised lid
+    (piano_guests_in_lid.jpg). With a pianist the piano is the room's focus, so it shows more now.
+  - NOTE (LEAD/ROOMS): wand:1 does nothing in the room window. The window's copy of every person gets wand:0 (20_loft.js:1740),
+    so the Cocktail Server is one more roaming crew member who can serve orders, which suits her. The building view is a still
+    picture.
+  - PASS, the rest:
+    - Count: 28 live plus Open the Roof. The window says "29 upgrades bought. Fully upgraded"; Installed (21) lists the shown
+      pieces after the 8 replaced ones.
+    - req chain: high2 needs high1, Champagne High-Tops needs high2. The old owner's full room draws three tables, not six.
+    - Full room, new player (LIVE=1) and old owner, about 1860 px: identical, with nothing replaced drawn twice.
+      - Key Wall, Gilt Menu Mirror and Keyhole Neon all clear the painted sconces.
+      - The Rare Bottle Wall's crest stops short of the sconce at its right.
+      - The rug lies flat under the lounge table.
+      - The tiers sit in their old footprints, and the lamps sit on the bar's clear middle (the second lamp stands in front of
+        the shakers, fine).
+      - Busy but not cluttered.
+    - auditall skybar: 14 pieces, 18 spots, one flag "spots stand-in work:bench" (on purpose: the bench is part of the piano
+      sprite). 0 page errors.
+    - In play, 25 s at 21:00, 4 staff and 5 guests:
+      - The singer holds the mic (0.00 off, dancing) and the pianist the bench (0.00 off, seated, back to the room). Nobody else
+        comes within 0.6 of either post.
+      - The singer stands on the stage behind the mic, both on the Friday Band stage and on the bare Jazz Corner (a partial buy:
+        Jazz Corner and singer, no band).
+      - The bartender and the server roam.
+  - Not checked: a phone, every buy order (only full, old owner and the Jazz Corner one), the spotlights at other hours, and
+    LEAD's 777411d on top (checked next).
 - PASS, LEAD ff44edc (crew posts, 20_loft.js and 26_world.js). Clean worktrees of ff44edc and its parent, plain builds.
   - Code: staff without a third field get post:null and wand:0. Every changed check (lfFree, lfNext, lfSvcStaffOn, "No crew
     here") then works as before, and no existing spot uses a post field.
@@ -1824,7 +1864,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). WAITING ON QA: check fff49a2, Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. Next: OVERPASS. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). (QA: DONE on fff49a2, NOT A PASS yet: two small FIXes, the Club DJ's post and the piano guest spot behind the pianist; the rest PASS; QA findings) WAITING ON QA: check fff49a2, Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. Next: OVERPASS. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own

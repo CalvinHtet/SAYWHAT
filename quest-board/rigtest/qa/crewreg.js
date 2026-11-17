@@ -2,12 +2,14 @@
 // 0.5 s. Per crew member: samples present, share busy at a spot (mode "do"), places visited (0.5 grid), the longest time standing
 // still while not at a spot (stuck), and whether the room shows "No crew here". Run on the build before and after, compare.
 // Only the open window's people (ids pv:...) move; the building view is a still picture.
-//   ROOM=restaurant BLD=1 BASE=<server> node rigtest/qa/crewreg.js
+// OWN=id,id owns only those upgrades in the room (a partial buy) instead of everything live.
+//   ROOM=restaurant BLD=1 [OWN=cb_floor,cb_dj] BASE=<server> node rigtest/qa/crewreg.js
 const { open } = require('./lib.js');
 (async () => {
   const { b, p, errs } = await open({ width: 440, height: 840, owned: 'all' });
-  await p.evaluate((v) => { window.BLDI = v[0]; window.ROOMN = v[1]; }, [+(process.env.BLD || 1), process.env.ROOM || 'restaurant']);
+  await p.evaluate((v) => { window.BLDI = v[0]; window.ROOMN = v[1]; window.OWNL = v[2]; }, [+(process.env.BLD || 1), process.env.ROOM || 'restaurant', process.env.OWN ? process.env.OWN.split(',') : null]);
   const i = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; const k = S.base.slots.findIndex((s) => s && s.t === window.ROOMN); const r = S.base.slots[k];
+    if (window.OWNL) { r.a = {}; window.OWNL.forEach((id) => { r.a[id] = 1; }); return k; }
     x.ADDONS[window.ROOMN].forEach((u) => { if (u[3] && (u[3].retired || u[3].opens)) return; r.a[u[0]] = 1; }); return k; });
   await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.areaOn = null; S.gates = [5, 10, 20, 30, 40]; S.xp = Math.max(S.xp, x.cum(45)); x.render(); document.querySelectorAll('.dropsplash,.overlay,#layer .modal').forEach((e) => e.remove()); document.querySelector('.nav button[data-v="hideout"]').click(); });
   await p.waitForTimeout(3500);
