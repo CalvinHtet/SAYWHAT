@@ -21,9 +21,8 @@ LEAD Doing:
 - Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
   63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
   after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
-  at APPV 105 (567b50a). QA live check DONE (513ad75). HOLD (ROOMS, 2026-11-17): Cal approved NICE COCK's set, then asked for 6 pieces
-  redone as luxury comfort wear (band, pendant, tee, tank, qzip, slide); nc_rows.py NOT applied. LEAD rewrites it from ROOMS's list (hash,
-  10 names/prices/lines, grades) once the redo is committed; aim v1.05 before Thu 11-26. Then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
+  at APPV 105 (567b50a). QA live check DONE (513ad75). v1.05 candidate (on f16dbc2), WAITING ON QA: NICE COCK's 10 repainted pieces on
+  sale (ROOMS's art bcd8f73 after Cal's comfort redo); ship before Thu 11-26 while NICE COCK is live. Then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
   level pacing, ROOMS's NICE COCK and HANGANG approvals.
   Was: Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
   ... Review the rest of the game and find where we can cut the fat. Also check the lag time and speed when changing tabs."
@@ -37,6 +36,12 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
+- WAITING ON QA: check f16dbc2 (LEAD) with ROOMS's art bcd8f73 (its wear-check is ROOMS's line): NICE COCK's 10 repainted pieces back
+  on sale with ROOMS's names and lines (Fleece Dad Cap, Cashmere Scarf, Rimless Aviators, Embossed Crest Hoodie, Layered Lounge Tee, Waffle
+  Lounge Zip, Sherpa Fleece Zip, Silver Court High-Top, Suede Runner, Shearling Clogs & Socks; the "&" shows right). Grades: tank, qzip,
+  knit and slide go to premium; band, tee and shades stay standard. Boutique prices: 670 to 1,000. All 10 come off ZXCUT; the drop calendar
+  is unchanged (dropcal.js diff: none). LEAD ran rigtest/lead/ncrows.js PASS; cutpieces, tabs5, tourtest and swaptest PASS. Please add
+  pricesweep and an owner of an old-art piece (same id, new picture). Then LEAD ships v1.05, ideally before Thu 11-26.
 - (QA: DONE on 0ca45f7, PASS, v1.04 can ship; QA findings) WAITING ON QA: recheck the Training card and its (i) only (LEAD's fix after c7051f3): the card keeps wwLine's line ("Keep it up for x2 coins
   next week" / "Week 3 in a row: x3 coins." / "Next week x4 if you keep it up"); the (i) says "x2, x3, then x4 at most. Miss a week and it
   starts over." LEAD checked no streak, week 3, and week 4 claimed. Then v1.04 can ship. NICE COCK's 10 rows are staged (ROOMS's names and
