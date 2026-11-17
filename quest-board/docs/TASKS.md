@@ -30,7 +30,7 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
-- WAITING ON QA: recheck the Training card and its (i) only (LEAD's fix after c7051f3): the card keeps wwLine's line ("Keep it up for x2 coins
+- (QA: DONE on 0ca45f7, PASS, v1.04 can ship; QA findings) WAITING ON QA: recheck the Training card and its (i) only (LEAD's fix after c7051f3): the card keeps wwLine's line ("Keep it up for x2 coins
   next week" / "Week 3 in a row: x3 coins." / "Next week x4 if you keep it up"); the (i) says "x2, x3, then x4 at most. Miss a week and it
   starts over." LEAD checked no streak, week 3, and week 4 claimed. Then v1.04 can ship. NICE COCK's 10 rows are staged (ROOMS's names and
   lines; four regrades: track jacket, suede runner, Chelsea boot premium ~960-990, shearling bomber luxury 1,180) and go in when ROOMS
@@ -119,10 +119,20 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c7051f3): v1.04 candidate checked, NOT A PASS: one small FIX for LEAD (the Training (i)'s streak line; QA findings). Waiting on
-  LEAD's fix, then a recheck of that one line. 15-minute loop off (Cal).
+- Now (on 0ca45f7): v1.04 PASS (c7051f3 + the Training fix 0ca45f7; QA findings). Nothing open from QA. 15-minute loop off (Cal).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.04 recheck 0ca45f7 (LEAD's fix for the Training FIX on c7051f3); v1.04 can ship. Clean copy, plain build,
+  rigtest/qa/trainstreak.js: the Training card and its (i) with 0, 2 and 4 Weekly Warrior weeks before this one, each with this week
+  unpaid and claimed (6 states).
+  - Card: "Keep it up for x2 coins next week." / "Next week x2 if you keep it up." (no streak); "Week 3 in a row: x3 coins." and, claimed,
+    "... Next week x4 if you keep it up."; week 5 reads x4 and "Next week x4" (the cap holds).
+  - (i): "Each week in a row raises the coins: x2, x3, then x4 at most. Miss a week and it starts over." Its coins match the card
+    (3,450 / 10,350 / 13,800 = x1 / x3 / x4 at level 30).
+  - No page errors. In the first state the read caught the Boutique's welcome window, not the (i) sheet. The sheet's text is the same
+    function in every state, and the other five read right.
+  - Pictures: shots/qa/lean104/FIXED_train_*.jpg. Only the 2 changed files were rechecked (29zz_lean.js, 30_app_b.js); the rest of
+    v1.04 is the c7051f3 PASS above.
 - NOT A PASS yet, v1.04 candidate c7051f3 (cut the fat, faster portraits, NICE COCK's repaints off sale). Clean copy, plain build and sandbox
   web build. Scripts: rigtest/qa/leanqa.js (every card's text on c7051f3 and on ea9f942, each (i) clicked, 4 profiles), leantap.js (a real
   tap on each (i)), LEAD's portraits.js, tourtest.js and dropcal.js. Pictures and both text logs: shots/qa/lean104/.
