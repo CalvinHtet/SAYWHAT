@@ -18,7 +18,14 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on fef3cda): v1.05 LIVE on Live and Test = fea3674 on branch release/v1.05 (release/v1.04 + ROOMS's NICE COCK art 297c848 +
+- Now (on 0ea9b2a): v1.06 candidate, URGENT, WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
+  Wednesday is separate from the 3. Right now it should be hangang, dial up, and overpass." 0ea9b2a: Street live 3 (29e_economy.js);
+  a retired brand rests at least 2 drops (29zz_ncstreet.js gap = live + max(1, half the brands not live)), as with 3 live the old gap
+  brought DIAL-UP back 4 days after it left. Today: HANGANG, DIAL-UP, OVERPASS; Fri 11-20 NICE COCK drops, HANGANG retires. Only 6
+  Street brands have art, so they cycle every 3 weeks and the Wednesday brand (14 days gone) shows only 12-23 and 02-03 to February.
+  Drops before 11-16 unchanged (dropcal vs 8779). ncrows.js PASS (PORT=). Not checked: the Shop with 3 cards by eye on a phone.
+  QA please: pass/fail on 0ea9b2a only (on top of v1.05); LEAD ships v1.06 before Friday 8 am.
+- Was (on fef3cda): v1.05 LIVE on Live and Test = fea3674 on branch release/v1.05 (release/v1.04 + ROOMS's NICE COCK art 297c848 +
   bcd8f73, LEAD's f16dbc2 + b10ca52, APPV 105; QA PASS bcb5a39 + fef3cda; code identical to b10ca52 but APPV): NICE COCK's 10 redone
   pieces, NICE COCK on the Street as its Fri 11-20 drop, every drop random after. wlive PASS, 3013/3013 files identical on both; rollback
   at APPV 106 (bbd33a8). QA live check DONE (3992acb, PASS). QA's NOTES for Cal: NICE COCK sells at Street prices (310-450) from now (anyone
