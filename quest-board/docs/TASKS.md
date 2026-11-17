@@ -32,7 +32,7 @@ LEAD Doing:
   Town Hall picture behind the header, no banner, Challenges and Town meter text behind (i), chat Room 3 gone, 0 page errors; ncrows and
   patch106 PASS. Also fixed: the Wheel row's "new" mark floated to the page's top right corner. Choices LEAD made, Cal may correct:
   Neighbors list cut (Town square stays, Players lists everyone); the Town Hall picture only on the Town Hall tab; the side quest
-  can be offered again a week after it lapses. Not checked: a real phone. QA please: pass/fail 5959380.
+  can be offered again a week after it lapses. Not checked: a real phone. QA please: pass/fail 5959380 (QA: DONE on 5959380, NOT A PASS yet: one small FIX, the Board's version line over the name at 360; the rest PASS; four NOTES; QA findings).
   ROOMS, Cal's FINAL rule (via QA, replaces 30-35): "Game room is okay. Add 15 more upgrades to everything else. Restaurant can go
   down to 40 (keep the most visually appealing upgrades but can remove the small unnoticeable ones), Garden can go down to 35, theater
   is good". Loft rooms unchanged; Restaurant 58 -> 40 and Garden 40 -> 35 by REMOVING (QA ranks them; owners refunded); +15 each for
@@ -213,7 +213,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings); next: v1.09 candidate 5959380. 15-minute loop off (Cal).
+- Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings). Next: cfe5917 (cuts + v1.10 letter), ROOMS 35f3080 (DIAL-UP) and 3c3d6a1 (room fixes). 15-minute loop off (Cal).
+  Was: Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings).
   Was: Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings).
   Was: Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
   Was: Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
@@ -226,6 +227,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- v1.09 candidate 5959380 (Cal's cleanup), NOT A PASS yet: one small FIX; the rest PASS. Clean plain builds of 5959380 and v1.08
+  8d1f69f. Pictures shots/qa/v109/.
+  - PASS: LEAD's v109.js (all ok at 360/390/430: version only on the Board, header beside the frame, no Coaches, Town square without
+    Neighbors, "Outside", no sale strip and the badge on the sale brand's cards, one Upgrades tab with upgrades + Interface, side
+    quests lapse at 7 days and show days left; 0 page errors). pricesweep against v1.08: 0 price changes, no NaN.
+  - PASS: the Town Hall picture shows under the header with all 7 themes and all 5 page backgrounds (#deco is fixed at z 0 but does
+    not cover it; hall_looks.jpg; new rigtest/qa/v109look.js). The header with the longest class ("Adept Swiftblade"), a long name,
+    the longest title and 1,234,567 coins: nothing past the edge, no piece over another, the pill not cut, on all five tabs at 360/390.
+  - Chat Room 3 (code read): 29t_chat.js restores a saved Room 3 from sessionStorage at load, then 29zz_v109.js (after it) sets it
+    back to Room 1, and only two room buttons are drawn, so nobody can sit in Room 3 on v1.09. Players still on an old version can
+    talk in Room 3 until they update; nobody on v1.09 sees it.
+  - Coaches (code read): coach bonuses are earned in Training, never bought (no coins lost), and only with the old Lounge room
+    (coachesOn), so few if any saves lose a bonus.
+  - FIX (LEAD): on the Board at 360 wide, the version line (now absolute at the top right) sits on the name row and overlaps the
+    name: an 11-letter name with "v1.09 · saved 12:34", and even "Cal" when the label reads "NOT SAVING (...)" (text ranges measured;
+    header360_long.jpg). Clear at 390 and 430. Give the version its own small line above the header, or keep room for it beside the name.
+  - NOTE (LEAD): the save label went from a line on every tab to faint 10 px text (opacity .6) on the Board only, so a "NOT SAVING"
+    warning can now be missed. Suggest showing it in full, on any tab, while SAVEERR is set.
+  - NOTE (Cal): side quests taken more than 7 days before a player first opens v1.09 lapse at once on that load, their progress
+    (walks, photos) reset. To spare players already halfway through, count the week from the first v1.09 load for quests already on.
+  - NOTE (LEAD, small): the Town Hall picture is 358 wide at 390 (inside .wrap; the 100vw rule does not reach). On the Weather and
+    Skyline backgrounds its side edges show as straight lines, so it reads as a box, not the page background. And the class pill's
+    text has weak contrast on the sky with the Sunset, Blood and Gold themes.
+  - NOTE: Town Boss off, Neighbors cut, Room 3 gone and the picture only on the Town Hall are LEAD's choices for Cal to confirm.
+  - Not checked: the web build on the mock cloud (LEAD's cloudshots), a real phone, night, other skin tones.
 - Restaurant and Garden cut lists for LEAD (Cal, 2026-11-17: "Restaurant can go down to 40 (keep the most visually appealing
   upgrades but can remove the small unnoticeable ones), Garden can go down to 35"). New rigtest/qa/upgradeshow.js on a clean plain build
   of 7c10733 draws each room fully bought, then once without each upgrade ("full": share of the 1000x760 picture that changes), and
