@@ -19,7 +19,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 
 LEAD Doing:
 - v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9. (QA: DONE, PASS; QA findings)
-- Now (on dff8d50): crew posts for ROOMS's Lock and Key staff (20_loft.js lfPostSpot, 26_world.js staff {post, wand}); not committed yet. A stand-in posted person sits on its spot and holds it; a stand-in walker got stuck mid-walk, finding out why.
+- FOR QA (ff44edc): crew posts for ROOMS's Lock and Key staff. A staff entry [id, look, {post:"tag"}] keeps that person on the spot tagged "tag" (act "sit" sits); {wand:1} walks the room; post:1 on a spot keeps others off; a posted person never serves. rigtest/lead/crewpost.js PASS (stand-ins, 40 s in the open window). No room uses it yet, so nothing on screen changes until ROOMS wires it.
 - Done: v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
   3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d) (QA: DONE, PASS; one NOTE; QA findings).
