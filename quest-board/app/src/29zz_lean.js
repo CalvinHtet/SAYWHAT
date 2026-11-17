@@ -18,7 +18,9 @@ var QBINFO={
     "The photo is not saved anywhere."]}],
   train:["Training",function(){var wb={xp:"",coins:""};try{wb=weekBonus()}catch(e){}return [
     "Each Workout quest you prove with a live photo counts once a day.",
-    "4 in a week (Monday to Sunday) pays +"+wb.xp+" XP and +"+wb.coins+" coins plus a random prize. Keep it up week after week for x2 coins."]}],
+    "4 in a week (Monday to Sunday) pays +"+wb.xp+" XP and +"+wb.coins+" coins plus a random prize.",
+    /* QA (c7051f3): the streak goes x2, x3 and so on up to wwMax, and the coins above already include this week's */
+    "Each week in a row raises the coins: "+(function(){var m=(ECON&&ECON.wwMax)||4,o=[];for(var i=2;i<=m;i++)o.push("x"+i);return o.length>1?o.slice(0,-1).join(", ")+", then "+o[o.length-1]+" at most":o.join("")})()+". Miss a week and it starts over."]}],
   gym:["Gym plans",["Every session is balanced across the body and capped at about an hour, with supersets to save time. Pick a body part and the plan builds around it.",
     "Tap Swap on any exercise to change it for good in that plan."]],
   own:["Your own workouts",["No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym."]],

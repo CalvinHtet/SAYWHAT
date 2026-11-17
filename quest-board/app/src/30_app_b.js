@@ -522,7 +522,7 @@ function cexHtml(){var ps=cexPlans();
 function trainHtml(){cexSync();
   var n=weekCount(),paid=S.weekPaid&&S.weekPaid[wkKey()],wb=weekBonus();
   var h='<section class="card panel trhead"><div class="row" style="justify-content:space-between"><h3 class="label lbi">Training'+qbI("train")+'</h3><span class="chip '+(paid?"":"xp")+'">'+(paid?"Weekly bonus claimed":n+"/4 this week")+'</span></div>'+weekDots()
-   +(paid?(wwPrev()>0?'<p class="note">Week '+(wwPrev()+1)+' in a row: x'+wwMult()+' coins</p>':''):'<p class="note">4 proven workouts: <b style="color:var(--gold)">+'+wb.xp+' XP, +'+wb.coins+' coins</b>'+(wwPrev()>0?' (x'+wwMult()+' streak)':'')+'</p>')+'</section>';/* Cal 2026-11-16: the rules are behind the (i) */
+   +(paid?'':'<p class="note">4 proven workouts: <b style="color:var(--gold)">+'+wb.xp+' XP, +'+wb.coins+' coins</b></p>')+'<p class="note">'+esc(wwLine(paid))+'</p></section>';/* QA (c7051f3): the next-week multiplier stays on the card *//* Cal 2026-11-16: the rules are behind the (i) */
   if(!S.wk||!wkList().length){
     /* Cal, 2026-11-09: "Remove the scheduled today workout border. I might do different things on different days" */
     /* Cal: "If people don't have access to the gym, they can collapse the gym workout plans and add their own" */
