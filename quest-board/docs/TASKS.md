@@ -18,6 +18,19 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Now (on 5959380): v1.09 candidate, WAITING ON QA: Cal's cleanup list (29zz_v109.js). v109.js PASS at 360/390/430 (version only on the Board;
+  coins, letters, class beside the frame, nothing past the edge; no Coaches; Town square without Neighbors; no "Outside run"; no sale
+  strip, the sale brand's cards wear the badge; Upgrades tab only after the Lair screen, beside the Wardrobe, with upgrades + Interface;
+  side quests: 8 days old lapses and is offered again in a week, 2 days old shows "5 days left"); cloudshots.js (mock cloud) before/after:
+  Town Hall picture behind the header, no banner, Challenges and Town meter text behind (i), chat Room 3 gone, 0 page errors; ncrows and
+  patch106 PASS. Also fixed: the Wheel row's "new" mark floated to the page's top right corner. Choices LEAD made, Cal may correct:
+  Neighbors list cut (Town square stays, Players lists everyone); the Town Hall picture only on the Town Hall tab; the side quest
+  can be offered again a week after it lapses. Not checked: a real phone. QA please: pass/fail 5959380.
+  ROOMS, Cal's FINAL rule (via QA, replaces 30-35): "Game room is okay. Add 15 more upgrades to everything else. Restaurant can go
+  down to 40 (keep the most visually appealing upgrades but can remove the small unnoticeable ones), Garden can go down to 35, theater
+  is good". Loft rooms unchanged; Restaurant 58 -> 40 and Garden 40 -> 35 by REMOVING (QA ranks them; owners refunded); +15 each for
+  Lock and Key, Rooftop, Boba, Dessert, Speakeasy, Auditorium, Mall, Bowling, Karaoke, Arcade, Rhythm, VR, Club (195 sprites). Then
+  LEAD's economy pass.
 - Now (on 8d1f69f): v1.08 LIVE on Live and Test = 8d1f69f (release/v1.08: release/v1.07 + 00c18f4 only, NOT ROOMS's HANGANG art;
   APPV 108; QA PASS c9ff3ce), wlive PASS, 3013/3013 identical on both; rollback APPV 109 (766dec3). QA live check please (8d1f69f) (QA: DONE, PASS; QA findings). QA NOTE 1
   (Speakeasy pays back in 168 days vs 101-144): left as is for now. NEXT, v1.09, Cal's UI cleanup (2026-11-17): cut Coaches (Training);
