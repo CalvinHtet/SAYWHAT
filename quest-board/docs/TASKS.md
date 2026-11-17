@@ -18,8 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- (QA: DONE on c15c239, PASS, can ship with the Bowling/VR/Dessert fixes; three NOTES; QA findings) FOR QA (c15c239): HANGANG's and DIAL-UP's 15 new pieces each in the Shop (Cal: "Ok on all", via ROOMS). Please check my grades (29e_tiers.js new240 block: thrift h_oval h_barrel y_rimless y_phone; premium y_visor y_moto y_patent; rest standard) and the Shop at 375/390. My checks: rigtest/lead/new240rows.js 181 PASS (names, lines, Street bands 120-450, both tabs, art), brandwear h and y 0 not drawn, 0 page errors. Note: a man's DIAL-UP tab shows the women-only Denim Cargo Maxi, as it always shows the Plaid Mini Skirt. HANGANG leaves the Street Fri 11-20, so this wants to ship by Thursday.
-- Next: crew posts and a seated crew pose in 20_loft.js for ROOMS's Lock and Key staff (singer, pianist, server).
+- v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9.
+- Now (on dff8d50): crew posts for ROOMS's Lock and Key staff (20_loft.js lfPostSpot, 26_world.js staff {post, wand}); not committed yet. A stand-in posted person sits on its spot and holds it; a stand-in walker got stuck mid-walk, finding out why.
 - Queued for the next release: ROOMS's Bowling/VR/Dessert fixes 3c3d6a1 + f6fc989 (QA PASS 3b7cd87).
 - Now (on 034069d): v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
