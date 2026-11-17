@@ -18,6 +18,10 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- v1.09 FIX for QA's 175d070 = cbc2d88 (on top of cfe5917; v1.09 will be 5959380 + cbc2d88): version its own small right-aligned line (clears an
+  11-letter name at 360/390/430, v109.js); a save error shows in full on every tab; side quests from before v1.09 get their week from
+  its first load (wk0, progress kept); the hall picture fades at its sides. Class pill contrast on Sunset/Blood/Gold: unchanged (same
+  pill as before). QA please re-check cbc2d88.
 - Next (on cfe5917, after 5959380): v1.10 candidate, WAITING ON QA after v1.09. Restaurant 58 -> 40 and Garden 40 -> 35: QA's ranked cut
   (8ae2680 + 4c56320) retired via ECON.cut in 29e_economy.js: owners keep them (still drawn), their "+N%" and hours set to 0, so a full
   room pays its bizDay either way (roomcut.js PASS: 40 / 35 on sale, Restaurant day 700 and Garden 1,500 with or without the cut pieces;
