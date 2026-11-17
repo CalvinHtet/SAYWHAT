@@ -146,7 +146,9 @@ var ECON={
      30, the Atelier at 70. A brand's floor is fl in BRANDS (10_app_a.js; none means the Street). days: its drop weekdays (0 is
      Sunday), every: weeks between drop weeks, live: brands on sale at once, line: the Shop's header. A floor with no brands stays
      hidden (the Atelier until its art arrives) */
-  floors:[{id:"street",name:"Street",lv:0,days:[1,5],every:1,live:2,line:"New brands Mondays and Fridays, 8 am"},
+  /* Cal, 2026-11-17: "There should be 3 brands at all times. The vault on Wednesday is separate from the 3. Right now it should be
+     hangang, dial up, and overpass." The Street keeps 3 live (was 2); a 4th drop retires the oldest; the Wednesday brand is extra */
+  floors:[{id:"street",name:"Street",lv:0,days:[1,5],every:1,live:3,line:"New brands Mondays and Fridays, 8 am"},
     {id:"boutique",name:"Boutique",lv:30,days:[5],every:1,live:2,line:"A new brand every Friday, 8 am"},
     {id:"atelier",name:"Atelier",lv:70,days:[5],every:2,live:1,line:"A new brand every other Friday, 8 am"}],
   /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 450, Boutique about
