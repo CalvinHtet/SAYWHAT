@@ -21,7 +21,7 @@ LEAD Doing:
 - Now (on fef3cda): v1.05 LIVE on Live and Test = fea3674 on branch release/v1.05 (release/v1.04 + ROOMS's NICE COCK art 297c848 +
   bcd8f73, LEAD's f16dbc2 + b10ca52, APPV 105; QA PASS bcb5a39 + fef3cda; code identical to b10ca52 but APPV): NICE COCK's 10 redone
   pieces, NICE COCK on the Street as its Fri 11-20 drop, every drop random after. wlive PASS, 3013/3013 files identical on both; rollback
-  at APPV 106 (bbd33a8). WAITING ON QA: the live check. QA's NOTES for Cal: NICE COCK sells at Street prices (310-450) from now (anyone
+  at APPV 106 (bbd33a8). QA live check DONE (3992acb, PASS). QA's NOTES for Cal: NICE COCK sells at Street prices (310-450) from now (anyone
   who bought since 11-13 paid Boutique prices); the Boutique's 3 brands only take turns. Next: Cal's next speed log on v1.04+. Cal,
   2026-11-17: week-one Daily Quest goal kept, level pacing kept, GitHub push DONE. WAITING ON CAL: switching on Storage (steps sent; LEAD
   deploys storage.rules after), HANGANG's 15 (ROOMS's drafts.md shown to him).
