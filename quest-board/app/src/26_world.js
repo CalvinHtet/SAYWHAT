@@ -253,7 +253,8 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
     if(e.fx)e.fx(C)})}
 function roomFloor(C,f){var U=LF.U,W=C.W,D=C.D;var g='<rect width="'+U*(W-.08)+'" height="'+U*(D-.08)+'" fill="'+f[0]+'"/>';if(f[1]){var st=f[2]||1;for(var k=st;k<W;k+=st)g+='<path d="M'+U*k+' 0V'+U*D+'" stroke="'+f[1]+'" stroke-width="1"/>';for(var j=st;j<D;j+=st)g+='<path d="M0 '+U*j+'H'+U*W+'" stroke="'+f[1]+'" stroke-width="1"/>'}C.decals.push(lfFloorG(.04,.04,g))}
 function genPeople(r,i,C,out){var d=ROOMDEF[r.t];if(!d)return;var a=r.a||{},seats=C.st.filter(function(s){return s.cust}).length;
-  (d.staff||[]).forEach(function(q,j){if(!q[0]||a[q[0]])out.push({id:"st:"+r.t+j,room:i,role:"crew",look:rsNpc(q[1]),ix:j})});
+  /* a staff entry's third field: {post:"tag"} keeps them at that spot (20_loft.js lfPostSpot), {wand:1} makes them walk the room */
+  (d.staff||[]).forEach(function(q,j){if(!q[0]||a[q[0]]){var o=q[2]||{};out.push({id:"st:"+r.t+j,room:i,role:"crew",look:rsNpc(q[1]),ix:j,post:o.post||null,wand:o.wand?1:0})}});
   /* d.visitors: a room only these people visit (the Game Room's friends). Nobody else comes in, and with an empty list nobody does. */
   if(d.visitors){var vs=d.visitors.filter(function(v){return v&&v.look});for(var v=0;v<Math.min(seats,vs.length);v++)out.push({id:"g:"+i+":"+v,room:i,role:"guest",gi:v,vis:vs[v].id});return}
   var n=d.guests===0?0:Math.min(seats,lfGuestN((d.guests||2)+Math.floor(addonsOf(r).length/3)));for(var g=0;g<n;g++)out.push({id:"g:"+i+":"+g,room:i,role:"guest",gi:g})}

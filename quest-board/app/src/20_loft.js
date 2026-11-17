@@ -1376,7 +1376,7 @@ function lfSync(){
   want.forEach(function(w){ids[w.id]=1;var a=LFA[w.id];
     if(a&&a.room!==w.room){delete LFA[w.id];a=null}
     if(!a){a=LFA[w.id]=Object.assign({wspawn:LFSYNCED,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},w);lfPlace(a)}
-    else{Object.assign(a,{look:w.look||a.look,ix:w.ix,leaveAt:w.leaveAt});}
+    else{Object.assign(a,{look:w.look||a.look,ix:w.ix,leaveAt:w.leaveAt,post:w.post});}
   });
   LFSYNCED=1;
   Object.keys(LFA).forEach(function(k){var a=LFA[k];if(ids[k]||a.leaving||a.pv||a.npc)return;
@@ -1390,13 +1390,20 @@ function lfPlace(a){
   if(a.role==="dog"&&a.bed&&!a.visitor){a.x=a.bed[0];a.y=a.bed[1];a.mode="do";a.act="sleep";a.t=lfRand(8,30);a.sleep=1;return}
   if(a.role==="guest"){a.alpha=0;a.mode="idle";a.t=lfRand(.5,6)*(a.gi+1);a.look=lfGuestLook(a);return}
   if(a.wand&&a.wspawn){var dd=C.door;a.alpha=0;a.fade=1;a.mode="idle";a.t=.2;if(dd){a.x=dd.x;a.y=dd.y+.3;return}}
+  var po=a.role==="crew"&&lfPostSpot(C,a);if(po){po.s.by=a.id;a.si=po.i;a.last=po.i;a.x=po.s.x;a.y=po.s.y;lfArrive(a,po.s);return}
   var s=lfPick(C.st.filter(function(s){return s.kind==="wander"||s.kind==="look"}));
   if(s){var sp=lfFreeNear(C,s.x+lfRand(-.3,.3),s.y+lfRand(-.3,.3),2)}else{var sp=lfRandFree(C)}
   a.x=sp[0];a.y=sp[1];
   a.t=lfRand(.2,2.5);a.mode="idle";
 }
 /* ---- choosing what to do ---- */
-function lfFree(C,a,pred){return C.st.map(function(s,i){return {s:s,i:i}}).filter(function(o){return (o.s.by==null||o.s.by===a.id)&&pred(o.s)})}
+/* a spot with post:1 belongs to the crew member whose post is its tag (lfPostSpot); nobody else takes it */
+function lfFree(C,a,pred){return C.st.map(function(s,i){return {s:s,i:i}}).filter(function(o){return (o.s.by==null||o.s.by===a.id)&&(!o.s.post||a.post===o.s.tag)&&pred(o.s)})}
+/* crew posts (LEAD for ROOMS, Lock and Key staff, 2026-11-17): a staff entry [id, look, {post:"mic"}] makes that person go back to the
+   spot tagged "mic" every time instead of picking at random. The spot does the rest: its act ("sit" sits, facewall:1 sits facing the
+   wall, "dance", "wave", "work" ...), its fx (which way they face), its dur. Give the spot onspot:1 if it is behind a piece and post:1
+   so no one else takes it. A posted person does not serve orders. With the spot not built yet, they behave like any crew. */
+function lfPostSpot(C,a){if(!a.post)return null;for(var i=0;i<C.st.length;i++){var s=C.st[i];if(s.tag===a.post&&(s.by==null||s.by===a.id))return {s:s,i:i}}return null}
 function lfRelease(C,a){if(C&&a.si>=0&&C.st[a.si]&&C.st[a.si].by===a.id)C.st[a.si].by=null;a.si=-1}
 function lfSeatish(s){return !!s&&(s.cust||s.lift||s.onspot||s.kind==="dogbed"||s.kind==="door"||/^(sit|eat|read|type)$/.test(s.act||""))}
 function lfGo(a,x,y,o){
@@ -1417,7 +1424,8 @@ function lfNext(a){
   if(R==="guest")return lfGuestNext(a,C,r);
   if(a.leaving){var d=lfDoorOf(C);lfGo(a,d.x,d.y+.3,"leave");a.speed=1.1;return}
   if(a.visitor&&a.leaveAt&&Date.now()>a.leaveAt){a.leaving=1;return lfNext(a)}
-  if(R==="crew"&&lfSvcWork(a,C,r))return;
+  if(R==="crew"&&a.post){var po=lfPostSpot(C,a);if(po){a.si=po.i;po.s.by=a.id;a.last=po.i;a.speed=1;a.stretch=0;lfGo(a,po.s.x,po.s.y,po.s);return}}
+  if(R==="crew"&&!a.post&&lfSvcWork(a,C,r))return;
   var cand=lfFree(C,a,function(s){return !s.cust&&!s.plot&&s.kind!=="door"&&!(s.tag==="deck"&&(lfBlockedAt(C,8.75,.75)||lfBlockedAt(C,8.75,1.3)))&&(R==="me"||R==="visitor"||true)});
   // roles prefer their trade
   if(R==="crew"&&r.t!=="lounge"&&!a.wand){var jobs=cand.filter(function(o){return o.s.kind==="work"||o.s.kind==="play"||o.s.kind==="run"||o.s.kind==="fish"||o.s.kind==="water"||o.s.kind==="smell"||o.s.kind==="browse"});
@@ -1810,7 +1818,7 @@ function lfSvcMods(r){var o={tip:0,spd:0,pat:0,m:[],p:0};
 function lfMenuFor(def,r,C,s,mods){var base=s&&s.menu?s.menu:(typeof def.menu==="function"?def.menu(r,C):def.menu||["Order"]);
   if(!s||s.mx!==false)base=base.concat(mods.m.filter(function(x){return !def.mfor||def.mfor(x,s)}));return base}
 function lfRoomCrew(a){var o=[];Object.keys(LFA).forEach(function(k){var b=LFA[k];if(b.room===a.room&&b.role==="crew"&&b.alpha>0&&!b.leaving&&!b.wand)o.push(b)});return o}
-function lfSvcStaffOn(a,r){var def=SVC[r.t];if(!def)return false;var cr=lfRoomCrew(a),mi=def.staffIx?def.staffIx(cr.length):0;return cr.some(function(b){return (b.ix||0)>=mi})}
+function lfSvcStaffOn(a,r){var def=SVC[r.t];if(!def)return false;var cr=lfRoomCrew(a),mi=def.staffIx?def.staffIx(cr.length):0;return cr.some(function(b){return !b.post&&(b.ix||0)>=mi})}/* a posted performer (lfPostSpot) never serves */
 function lfGuestAt(s){var k=Object.keys(LFA);for(var i=0;i<k.length;i++){var g=LFA[k[i]];if(g.role==="guest"&&g.st===s&&g.alpha>0)return g}return null}
 function lfLive(a){return !a.pv}
 function lfPersistSoon(){var t=Date.now();if(t-LFPERS>15000){LFPERS=t;try{persist()}catch(e){}}}
@@ -1972,7 +1980,7 @@ function lfPanelHtml(C,r,i){
     h+='<div class="obh"><b>'+esc(def.boardName||"Order board")+'</b><span>'+q+' in queue</span></div>';
     if(def.head)h+='<div class="obr"><span>'+esc(def.head(C))+'</span></div>';
     h+=o.length?o.map(function(x){return '<div class="obr"><span>'+esc(def.unit||"Table")+' '+x.t+'</span><span>'+esc(x.dish)+'</span><em style="color:'+["#ffd27a","#7ad0ff","#8cf0a8"][x.st]+'">'+esc((def.verbs||["Waiting","In progress","Enjoying"])[x.st])+'</em></div>'}).join(""):'<div class="obr"><span>'+esc(def.quiet||"All quiet")+'</span></div>';
-    var staff=Object.keys(LFA).some(function(k){var b=LFA[k];return b.room===C.key&&b.role==="crew"&&!b.wand});
+    var staff=Object.keys(LFA).some(function(k){var b=LFA[k];return b.room===C.key&&b.role==="crew"&&!b.wand&&!b.post});
     if(!staff)h+='<div class="obr obw"><span>'+(r&&r.t==="restaurant"?"No staff yet. Guests help themselves until you hire a cook.":"No crew here. Customers will not order until you assign crew.")+'</span></div>';
     var menu=lfMenuFor(def,r,C,null,mods);
     h+='<div class="obh obs"><b>Menu</b><span>'+menu.length+' items</span></div><div class="obm">'+menu.map(function(x){return '<span>'+esc(x)+'</span>'}).join("")+'</div>';
