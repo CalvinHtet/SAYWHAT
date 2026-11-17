@@ -222,7 +222,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings). Open with ROOMS: Bowling's FIX (3c3d6a1). 15-minute loop off (Cal).
+- Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings).
   Was: Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings).
   Was: Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings).
   Was: Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings).
@@ -239,6 +240,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS f6fc989: the Bowling fix for QA's d65ec13 (clean plain build; auditall.js and bigrooms.js on bowling;
+  shots/qa/rooms1117c/big_bowling.jpg). The seat row has its original facing again (toward the pins), parallel to the pin end, on the
+  open carpet behind the approaches, clear of the console, ball return and snack table. The snack stand is inside the floor (no OUTSIDE).
+  auditall: only the harmless lane/towel DEPTH line and a stand-touch spot; 0 page errors. With VR and Dessert (d65ec13), ROOMS's room
+  fixes 3c3d6a1 + f6fc989 all PASS and can ship. The Restaurant and Garden fixes 3, 4 and 6 wait on the new counts (ROOMS held them).
 - PASS, v1.09 and v1.10 live (LEAD: 918732a and 1854144, wlive PASS, 3013/3013 identical each time):
   - 918732a against release/v1.08 8d1f69f: in app, data, art and tools only the new 29zz_v109.js (identical to the passed cbc2d88's)
     and the APPV line (108 -> 109).
