@@ -239,7 +239,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   - Garden 40 -> 35, cut these 5: Sundial, Bird Bath and Clipped Topiary (0 full, 0 alone: nothing drawn now), Tool Shed (0: the
     conservatory replaces it), Wheelbarrow (0.17%, the smallest visible piece). Option: cut Hire a Gardener (+15%, nothing drawn)
     instead of the Wheelbarrow, but then Head Gardener has no step before it.
-  - For LEAD's build: the 18 + 5 carry +1.29 and +0.10 of their rooms' "+N%" income. Fold it into the kept steps, or bizInit simply
+  - For LEAD's build: the 18 + 5 carry +1.12 and +0.14 of their rooms' "+N%" income. Fold it into the kept steps, or bizInit simply
     recomputes coins an hour from bizDay (each room's day stays the same at full), so only the per-step income grows. Owners of a
     cut piece get the refund Cal agreed; check that nothing "also"-chained hangs on a cut id (Espresso Bar has also/menu;
     Wood-Fired Pizza needs the oven's chain).
