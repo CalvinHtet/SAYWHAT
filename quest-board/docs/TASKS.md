@@ -21,14 +21,14 @@ LEAD Doing:
 - v1.09 FIX for QA's 175d070 = cbc2d88 (on top of cfe5917; v1.09 will be 5959380 + cbc2d88): version its own small right-aligned line (clears an
   11-letter name at 360/390/430, v109.js); a save error shows in full on every tab; side quests from before v1.09 get their week from
   its first load (wk0, progress kept); the hall picture fades at its sides. Class pill contrast on Sunset/Blood/Gold: unchanged (same
-  pill as before). QA please re-check cbc2d88.
+  pill as before). QA please re-check cbc2d88 (QA: DONE on 5959380 + cbc2d88, PASS, v1.09 can ship; QA findings).
 - Next (on cfe5917, after 5959380): v1.10 candidate, WAITING ON QA after v1.09. Restaurant 58 -> 40 and Garden 40 -> 35: QA's ranked cut
   (8ae2680 + 4c56320) retired via ECON.cut in 29e_economy.js: owners keep them (still drawn), their "+N%" and hours set to 0, so a full
   room pays its bizDay either way (roomcut.js PASS: 40 / 35 on sale, Restaurant day 700 and Garden 1,500 with or without the cut pieces;
   kept prices down at most 10%, Restaurant total 85,900 -> 68,250, Garden 38,950 -> 36,500, until the economy pass). Hire a Host needed
   Host Lectern: both cut. Also the v1.10 letter: PATCHNOTES v:110 in 29q_news.js (500 coins, no spoilers), shows only at APPV 110.
   QA please check: a save whose next room waits on a share of Restaurant/Garden upgrades (roomFill no longer counts cut pieces
-  bought), and the letter's wording.
+  bought), and the letter's wording. (QA: DONE on cfe5917, PASS; one NOTE, the Mall's plaza share; QA findings)
 - Now (on 5959380): v1.09 candidate, WAITING ON QA: Cal's cleanup list (29zz_v109.js). v109.js PASS at 360/390/430 (version only on the Board;
   coins, letters, class beside the frame, nothing past the edge; no Coaches; Town square without Neighbors; no "Outside run"; no sale
   strip, the sale brand's cards wear the badge; Upgrades tab only after the Lair screen, beside the Wardrobe, with upgrades + Interface;
@@ -217,7 +217,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings). Next: cfe5917 (cuts + v1.10 letter), ROOMS 35f3080 (DIAL-UP) and 3c3d6a1 (room fixes). 15-minute loop off (Cal).
+- Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings). Next: ROOMS 35f3080 (DIAL-UP) and 3c3d6a1 (room fixes). 15-minute loop off (Cal).
+  Was: Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings).
   Was: Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings).
   Was: Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings).
   Was: Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
@@ -231,6 +232,25 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.09 = 5959380 + cbc2d88 (LEAD's fix for QA's 175d070; built as v1.09 will ship: 5959380 with cbc2d88 cherry-picked, plain).
+  - The version is its own line above the header: text ranges clear the name for "Cal", "Maximiliana" and "Maximiliana-Rose", with
+    "saved 12:34" and "NOT SAVING (...)", at 360, 390 and 430 (fix_header360_long.jpg). LEAD's updated v109.js: 28 ok, PASS.
+  - The Town Hall picture fades at its sides: no straight edges on Weather or Skyline (fix_hall_looks.jpg); 0 page errors.
+  - Side quests taken before v1.09 count their week from its first load (S.side.wk0; code read, LEAD's test covers it).
+  - Not checked: the red "NOT SAVING" line itself (SAVEERR cannot be set from outside on the plain build), the web build, a phone.
+- PASS, v1.10 candidate cfe5917 (Restaurant 40, Garden 35 from QA's cut lists; the v1.10 patch letter). Clean plain builds of cfe5917
+  and 5959380.
+  - LEAD's roomcut.js PASS on QA's build: 40 and 35 on sale, the 23 cut ones retired with no "+N%" or hours, a full room pays 700 /
+    1,500 a day with or without the cut pieces owned. pricesweep: 54 upgrades changed, all in the Restaurant (41) and Garden (17):
+    the cut ones retired, kept ones at most 8% cheaper (Hire a Cook 1,250 -> 1,150); live totals Restaurant 91,000 -> 73,350 and
+    Garden 42,350 -> 39,900 (with openers); 0 lots or Shop rows changed; no NaN; 0 page errors.
+  - Unlock gates: only the Mall reads Restaurant/Garden shares (plaza: 60% of all Garden, Restaurant, Lock and Key, Rooftop, Boba and
+    Dessert upgrades; total 150 -> 127, need 90 -> 77). For a player who bought each plaza room in level-then-price order up to a
+    share, the new count is 0-3 pieces further from the Mall: exactly at the old 60% now needs 3 more, 55% needs 9 (was 7), 40% needs 28
+    (was 30). Nobody already holding the Mall is affected.
+  - NOTE (LEAD): set plaza to .58 (needs 74 of 127) and the 60% player is exactly where they were; or leave it, a 3-piece slip.
+  - The letter (PATCHNOTES v:110, shows at APPV 110): 7 vague lines, no brands, days, prices or anything coming. "Coaches and the
+    Town Boss are resting for now" hints they come back; Cal's call. Not seen drawn (APPV 110 only).
 - v1.09 candidate 5959380 (Cal's cleanup), NOT A PASS yet: one small FIX; the rest PASS. Clean plain builds of 5959380 and v1.08
   8d1f69f. Pictures shots/qa/v109/.
   - PASS: LEAD's v109.js (all ok at 360/390/430: version only on the Board, header beside the frame, no Coaches, Town square without
