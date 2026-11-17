@@ -18,6 +18,13 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Next (on cfe5917, after 5959380): v1.10 candidate, WAITING ON QA after v1.09. Restaurant 58 -> 40 and Garden 40 -> 35: QA's ranked cut
+  (8ae2680 + 4c56320) retired via ECON.cut in 29e_economy.js: owners keep them (still drawn), their "+N%" and hours set to 0, so a full
+  room pays its bizDay either way (roomcut.js PASS: 40 / 35 on sale, Restaurant day 700 and Garden 1,500 with or without the cut pieces;
+  kept prices down at most 10%, Restaurant total 85,900 -> 68,250, Garden 38,950 -> 36,500, until the economy pass). Hire a Host needed
+  Host Lectern: both cut. Also the v1.10 letter: PATCHNOTES v:110 in 29q_news.js (500 coins, no spoilers), shows only at APPV 110.
+  QA please check: a save whose next room waits on a share of Restaurant/Garden upgrades (roomFill no longer counts cut pieces
+  bought), and the letter's wording.
 - Now (on 5959380): v1.09 candidate, WAITING ON QA: Cal's cleanup list (29zz_v109.js). v109.js PASS at 360/390/430 (version only on the Board;
   coins, letters, class beside the frame, nothing past the edge; no Coaches; Town square without Neighbors; no "Outside run"; no sale
   strip, the sale brand's cards wear the badge; Upgrades tab only after the Lair screen, beside the Wardrobe, with upgrades + Interface;
