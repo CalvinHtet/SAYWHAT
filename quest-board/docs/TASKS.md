@@ -30,7 +30,7 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
-- WAITING ON QA: check LEAD's v1.04 candidate commit (on ea9f942): every (i) opens its sheet with the right numbers (wheel hours, Weekly Quest
+- (QA: DONE on c7051f3, NOT A PASS: one small FIX, the Training (i) says x2 coins for every streak; the rest PASS; QA findings) WAITING ON QA: check LEAD's v1.04 candidate commit (on ea9f942): every (i) opens its sheet with the right numbers (wheel hours, Weekly Quest
   days, trial days, Training's reward); no card lost a live number (counts, timers, rewards, the streak multiplier); Hall and Players
   portraits all show on a first open (heavy seed); the Daily Quest tour's (i) step; savecheck/screens as usual. Your dqeffort.js looks for
   .dq-eff, which is gone on purpose (its words are in the Daily Quest's (i)); wv91_extra.js reads the Wheel's old line for its log only.
@@ -114,9 +114,39 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f72a55f): v1.03 LIVE as f72a55f, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on c7051f3): v1.04 candidate checked, NOT A PASS: one small FIX for LEAD (the Training (i)'s streak line; QA findings). Waiting on
+  LEAD's fix, then a recheck of that one line. 15-minute loop off (Cal).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, v1.04 candidate c7051f3 (cut the fat, faster portraits, NICE COCK's repaints off sale). Clean copy, plain build and sandbox
+  web build. Scripts: rigtest/qa/leanqa.js (every card's text on c7051f3 and on ea9f942, each (i) clicked, 4 profiles), leantap.js (a real
+  tap on each (i)), LEAD's portraits.js, tourtest.js and dropcal.js. Pictures and both text logs: shots/qa/lean104/.
+  - FIX (LEAD, 29zz_lean.js QBINFO.train): the Training (i) always says "Keep it up week after week for x2 coins". The streak goes x2,
+    x3, then x4 at most (wwMult, ECON.wwMax 4). The same sheet already quotes the multiplied coins, so in week 3 it reads "+11700 coins
+    ... for x2 coins". Before this commit the card said it right (wwLine): "Keep it up for x2 coins next week" or "Next week x4 if you
+    keep it up". Both lines are gone from the card; the claimed card now shows only "Week 3 in a row: x3 coins". Suggested: the (i)
+    says "Each week in a row raises the coins: x2, x3, then x4", and the card keeps wwLine's next-week multiplier (one short line).
+    sheet_train.jpg, late_paid_train.jpg against OLD_late_paid_train.jpg.
+  - PASS:
+    - Every reachable (i) opens its sheet with the right numbers on a real tap: Daily Quest (4 days, 60%/80%, +10%), level trial
+      (2 days), Training (XP and coins from weekBonus), Gym plans, own workouts, workout day, Crawls, Rescued allies, the Wheel
+      (4 hours, the cooldown still reads "Next spin in 3h 0m"), Likes (2 a day, 1,500/1,000/500). Got it closes each one, and nothing
+      under the button reacts.
+    - Live numbers, compared line by line with ea9f942: Daily Quest XP / goal, Town %, Weekly Quest n/4, Rested XP; trial n of 2 and
+      stored XP; Training n/4, reward and the (xN streak) chip; crawls n/5 and quest effort; the Likes countdown. Only the rules text
+      and "XP left" went (the bar shows 60 / 100 beside it). The trial's "full at level 4" went too, but the level bar above says
+      "Lv 4, Bar full: pass the trial".
+    - The Daily Quest tour's second step rings the (i) (tourtest ALL PASS on c7051f3).
+    - Portraits on a first open with the heavy save (60 neighbours, WebKit, 390x844 at 3x): Players 8 of 8, Hall 31 of 31; the Hall
+      made 1 rig picture (LEAD: 12 before), 59 fps; no page errors.
+    - NICE COCK: the Boutique page shows exactly the 6 keeps (cap, beanie, 3 joggers, short); the 10 repaint ids are cut; an owner of
+      the cut hoodie still sees it (Equip) on the brand page and in the Wardrobe. dropcal.js against ea9f942: every slot the same to
+      12-04 and the Street the same to 2027-01-31; from 12-11 the Boutique order shifts (NICE COCK back on 12-11), as LEAD said.
+    - Save check: the Nov 13 heavy save opens at level 60, no "Two saves", no page errors. Coins +1,500 and one upgrade are added on
+      load, and ea9f942 does exactly the same, so this commit is not the cause.
+  - Not checked: the Vault and Coaches (i). No screen draws those cards (coachRoster() has no caller, and the new Shop has no Vault
+    tab), so the change there is harmless. Also not checked: dqeffort.js and wv91_extra.js (expected to differ), a phone, and the
+    Loft's 6-second warm-up timing.
 - PASS, v1.03 live (LEAD: Live and Test at f72a55f, version.txt f72a55f, wlive PASS, 3021/3021 identical):
   - release/v1.03 is f72a55f itself, the commit QA passed (APPV 103 already in it).
   - The file count adds up: from 10daa03 to f72a55f, art/app has exactly 10 deletions (ALTITUDE's f/m *_yawn for anorak, fleece,

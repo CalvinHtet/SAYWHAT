@@ -1,0 +1,127 @@
+== mid {"lvl":4,"gated":5}
+  [board] Daily Questi  (i):dq
+      DAILY QUEST i 0 / 100 XP Weekly Quest 0/4 · Rested 120 XP
+      (i) dq 20x20: ✕ HOW IT WORKS Daily Quest Ticking tasks fills the bar. Each chest you pass opens, and one more chest is hidden past the last. Quick tasks count a little less here (a 5 XP task counts 60%, a 10 XP task 80%); bigger tasks and workouts fill it fastest. Bonus XP from combos, crits, rested days and your class still goes to your level and coins, only not to this bar. In your first week every task counts in full. Your town runs at the bar's speed: the fuller it is, the more your rooms earn today. The hidden chest adds 10% tomorrow. Weekly Quest: be active (50+ XP) on 4 days, Monday to Sunday, for half a level of XP. Rested: after time away, quests pay double until the rested XP runs out. GOT IT
+  [board] Job advancement triali  (i):trial
+      JOB ADVANCEMENT TRIAL i Class awakening trial Pass with a photo of you being active, or be active on 2 days: 1 of 2. Stored XP, released when you pass +939 OPEN CAMERA
+      (i) trial 20x20 COVERED: ✕ HOW IT WORKS Level trial Your XP keeps counting while the bar is full and is released when you pass. Pass with a fresh photo of you being active: the gym, a run, a walk, a hike, a game, a class, a home workout. Or pass on honor by being active (50+ XP) on 2 days. Screenshots and photos you already used fail. Claude checks the scene; a pass at a gym saves its location. The photo is not saved anywhere. GOT IT
+  [train] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +250 XP, +9150 coins (x3 streak)
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +250 XP and +9150 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train] Gym plansi  (i):gym
+      GYM PLANS i Hide Push 7 exercises · ~51 min Pull 7 exercises · ~47 min Legs 8 exercises · ~57 min Full body + abs 7 exercises · ~52 min Arms 9 exercises · ~52 min Chest 7 exercises · ~45 min Back 7 exercises · ~43 min Shoulders 7 exercises · ~43 min Core 6 exercises · ~34 min
+      (i) gym 20x20: ✕ HOW IT WORKS Gym plans Every session is balanced across the body and capped at about an hour, with supersets to save time. Pick a body part and the plan builds around it. Tap Swap on any exercise to change it for good in that plan. GOT IT
+  [train] Your own workoutsi  (i):own
+      YOUR OWN WORKOUTS i ADD
+      (i) own 20x20 COVERED: ✕ HOW IT WORKS Your own workouts No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym. GOT IT
+  [train_day] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +250 XP, +9150 coins (x3 streak)
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +250 XP and +9150 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train_day] Push day · ~51 mini  (i):wk
+      PUSH DAY · ~51 MINi Change START GUIDED SESSION MAIN LIFT Rest 2 min Barbell Bench Press Swap 4 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Set 4 Hit the top of the rep range on every set MAIN LIFT Rest 2 min Incline Dumbbell Press Swap 3 × 8-10 First time. Pick a weight you can move for 10 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set STRENGTH Rest 2 min Overhead Press Swap 3 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set SUPERSET A Back to bac
+      (i) wk 20x20: ✕ HOW IT WORKS Logging a workout Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted. Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo. GOT IT
+  [wheel] not open
+  [away] Dungeon Crawlsi  (i):crawl
+      DUNGEON CRAWLS i Crawls today 0/5 · Quest effort 50% Your next crawl finds something rare. 🍄 Mossy Cellar Damp stairs and glowing mushrooms. Lv 1 30 min Loot: Pocket change Safe 3 rare left CRAWL ? ? ? Lv 10 Locked ? ? ? Lv 16 Locked
+      (i) crawl 20x20: ✕ HOW IT WORKS Dungeon Crawls Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Quest effort: the fuller your Daily Quest, the better the loot. GOT IT
+  [away] Rescued alliesi  (i):allies
+      RESCUED ALLIES i None rescued yet.
+      (i) allies 20x20 COVERED: ✕ HOW IT WORKS Rescued allies Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good. GOT IT
+  [players]   (i):likes
+      Fashion Most rich Highest level Likes this week · ends in 5d 20h i Open 2 Open 1 Open 3 You gave 0 likes this week 1 Cal (you) 0 ♥
+      (i) likes 20x20: ✕ HOW IT WORKS Likes Tap a look to like it. You have 2 likes to give each day. Every like counts. The week ends Sunday 7 pm Pacific. The top 3 win 1,500 / 1,000 / 500 coins and a medal. GOT IT
+  [vault] no tab
+  errors 0 []
+== late {"lvl":60,"gated":null}
+  [board] Daily Questi  (i):dq
+      DAILY QUEST i 0 / 100 XP Weekly Quest 0/4 STR 0 AGI 0 VIT 0 INT 0
+      (i) dq 20x20: ✕ HOW IT WORKS Daily Quest Ticking tasks fills the bar. Each chest you pass opens, and one more chest is hidden past the last. Quick tasks count a little less here (a 5 XP task counts 60%, a 10 XP task 80%); bigger tasks and workouts fill it fastest. Bonus XP from combos, crits, rested days and your class still goes to your level and coins, only not to this bar. In your first week every task counts in full. Your town runs at the bar's speed: the fuller it is, the more your rooms earn today. The hidden chest adds 10% tomorrow. Weekly Quest: be active (50+ XP) on 4 days, Monday to Sunday, for half a level of XP. Rested: after time away, quests pay double until the rested XP runs out. GOT IT
+  [train] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +1361 XP, +11700 coins (x3 streak)
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +11700 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train] Gym plansi  (i):gym
+      GYM PLANS i Hide Push 7 exercises · ~51 min Pull 7 exercises · ~47 min Legs 8 exercises · ~57 min Full body + abs 7 exercises · ~52 min Arms 9 exercises · ~52 min Chest 7 exercises · ~45 min Back 7 exercises · ~43 min Shoulders 7 exercises · ~43 min Core 6 exercises · ~34 min
+      (i) gym 20x20: ✕ HOW IT WORKS Gym plans Every session is balanced across the body and capped at about an hour, with supersets to save time. Pick a body part and the plan builds around it. Tap Swap on any exercise to change it for good in that plan. GOT IT
+  [train] Your own workoutsi  (i):own
+      YOUR OWN WORKOUTS i ADD
+      (i) own 20x20 COVERED: ✕ HOW IT WORKS Your own workouts No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym. GOT IT
+  [train_day] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +1361 XP, +11700 coins (x3 streak)
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +11700 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train_day] Push day · ~51 mini  (i):wk
+      PUSH DAY · ~51 MINi Change START GUIDED SESSION MAIN LIFT Rest 2 min Barbell Bench Press Swap 4 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Set 4 Hit the top of the rep range on every set MAIN LIFT Rest 2 min Incline Dumbbell Press Swap 3 × 8-10 First time. Pick a weight you can move for 10 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set STRENGTH Rest 2 min Overhead Press Swap 3 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set SUPERSET A Back to bac
+      (i) wk 20x20: ✕ HOW IT WORKS Logging a workout Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted. Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo. GOT IT
+  [wheel] not open
+  [away] Dungeon Crawlsi  (i):crawl
+      DUNGEON CRAWLS i Crawls today 0/5 · Quest effort 50% Your next crawl finds something rare. 💎 Crystal Mines The walls hum when you walk past. Lv 32 60 min Loot: Very rich Safe 3 rare left CRAWL 🕹 Sunken Arcade Cabinets glow under a foot of water. Lv 42 60 min Loot: A hoard Safe 3 rare left CRAWL 🗼 Obsidian Spire The last floor is always one more floor. Lv 55 60 min Loot: Legendary Safe 4 rare left CRAWL
+      (i) crawl 20x20: ✕ HOW IT WORKS Dungeon Crawls Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Quest effort: the fuller your Daily Quest, the better the loot. GOT IT
+  [away] Rescued alliesi  (i):allies
+      RESCUED ALLIES i None rescued yet.
+      (i) allies 20x20 COVERED: ✕ HOW IT WORKS Rescued allies Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good. GOT IT
+  [players]   (i):likes
+      Fashion Most rich Highest level Likes this week · ends in 5d 20h i Open 2 Open 1 Open 3 You gave 0 likes this week 1 Cal (you) 0 ♥
+      (i) likes 20x20: ✕ HOW IT WORKS Likes Tap a look to like it. You have 2 likes to give each day. Every like counts. The week ends Sunday 7 pm Pacific. The top 3 win 1,500 / 1,000 / 500 coins and a medal. GOT IT
+  [vault] no tab
+  errors 0 []
+== late_paid {"lvl":60,"gated":null}
+  [board] Daily Questi  (i):dq
+      DAILY QUEST i 0 / 100 XP Weekly Quest 0/4 STR 0 AGI 0 VIT 0 INT 0
+      (i) dq 20x20: ✕ HOW IT WORKS Daily Quest Ticking tasks fills the bar. Each chest you pass opens, and one more chest is hidden past the last. Quick tasks count a little less here (a 5 XP task counts 60%, a 10 XP task 80%); bigger tasks and workouts fill it fastest. Bonus XP from combos, crits, rested days and your class still goes to your level and coins, only not to this bar. In your first week every task counts in full. Your town runs at the bar's speed: the fuller it is, the more your rooms earn today. The hidden chest adds 10% tomorrow. Weekly Quest: be active (50+ XP) on 4 days, Monday to Sunday, for half a level of XP. Rested: after time away, quests pay double until the rested XP runs out. GOT IT
+  [train] Trainingi  (i):train
+      TRAINING i Weekly bonus claimed M T W T F S S Week 3 in a row: x3 coins
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +11700 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train] Gym plansi  (i):gym
+      GYM PLANS i Hide Push 7 exercises · ~51 min Pull 7 exercises · ~47 min Legs 8 exercises · ~57 min Full body + abs 7 exercises · ~52 min Arms 9 exercises · ~52 min Chest 7 exercises · ~45 min Back 7 exercises · ~43 min Shoulders 7 exercises · ~43 min Core 6 exercises · ~34 min
+      (i) gym 20x20: ✕ HOW IT WORKS Gym plans Every session is balanced across the body and capped at about an hour, with supersets to save time. Pick a body part and the plan builds around it. Tap Swap on any exercise to change it for good in that plan. GOT IT
+  [train] Your own workoutsi  (i):own
+      YOUR OWN WORKOUTS i ADD
+      (i) own 20x20 COVERED: ✕ HOW IT WORKS Your own workouts No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym. GOT IT
+  [train_day] Trainingi  (i):train
+      TRAINING i Weekly bonus claimed M T W T F S S Week 3 in a row: x3 coins
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +11700 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train_day] Push day · ~51 mini  (i):wk
+      PUSH DAY · ~51 MINi Change START GUIDED SESSION MAIN LIFT Rest 2 min Barbell Bench Press Swap 4 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Set 4 Hit the top of the rep range on every set MAIN LIFT Rest 2 min Incline Dumbbell Press Swap 3 × 8-10 First time. Pick a weight you can move for 10 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set STRENGTH Rest 2 min Overhead Press Swap 3 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set SUPERSET A Back to bac
+      (i) wk 20x20: ✕ HOW IT WORKS Logging a workout Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted. Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo. GOT IT
+  [wheel] not open
+  [away] Dungeon Crawlsi  (i):crawl
+      DUNGEON CRAWLS i Crawls today 0/5 · Quest effort 50% Your next crawl finds something rare. 💎 Crystal Mines The walls hum when you walk past. Lv 32 60 min Loot: Very rich Safe 3 rare left CRAWL 🕹 Sunken Arcade Cabinets glow under a foot of water. Lv 42 60 min Loot: A hoard Safe 3 rare left CRAWL 🗼 Obsidian Spire The last floor is always one more floor. Lv 55 60 min Loot: Legendary Safe 4 rare left CRAWL
+      (i) crawl 20x20: ✕ HOW IT WORKS Dungeon Crawls Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Quest effort: the fuller your Daily Quest, the better the loot. GOT IT
+  [away] Rescued alliesi  (i):allies
+      RESCUED ALLIES i None rescued yet.
+      (i) allies 20x20 COVERED: ✕ HOW IT WORKS Rescued allies Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good. GOT IT
+  [players]   (i):likes
+      Fashion Most rich Highest level Likes this week · ends in 5d 20h i Open 2 Open 1 Open 3 You gave 0 likes this week 1 Cal (you) 0 ♥
+      (i) likes 20x20: ✕ HOW IT WORKS Likes Tap a look to like it. You have 2 likes to give each day. Every like counts. The week ends Sunday 7 pm Pacific. The top 3 win 1,500 / 1,000 / 500 coins and a medal. GOT IT
+  [vault] no tab
+  errors 0 []
+== fresh_week {"lvl":60,"gated":null}
+  [board] Daily Questi  (i):dq
+      DAILY QUEST i 0 / 100 XP Weekly Quest 0/4 STR 0 AGI 0 VIT 0 INT 0
+      (i) dq 20x20: ✕ HOW IT WORKS Daily Quest Ticking tasks fills the bar. Each chest you pass opens, and one more chest is hidden past the last. Quick tasks count a little less here (a 5 XP task counts 60%, a 10 XP task 80%); bigger tasks and workouts fill it fastest. Bonus XP from combos, crits, rested days and your class still goes to your level and coins, only not to this bar. In your first week every task counts in full. Your town runs at the bar's speed: the fuller it is, the more your rooms earn today. The hidden chest adds 10% tomorrow. Weekly Quest: be active (50+ XP) on 4 days, Monday to Sunday, for half a level of XP. Rested: after time away, quests pay double until the rested XP runs out. GOT IT
+  [train] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +1361 XP, +3900 coins
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +3900 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train] Gym plansi  (i):gym
+      GYM PLANS i Hide Push 7 exercises · ~51 min Pull 7 exercises · ~47 min Legs 8 exercises · ~57 min Full body + abs 7 exercises · ~52 min Arms 9 exercises · ~52 min Chest 7 exercises · ~45 min Back 7 exercises · ~43 min Shoulders 7 exercises · ~43 min Core 6 exercises · ~34 min
+      (i) gym 20x20: ✕ HOW IT WORKS Gym plans Every session is balanced across the body and capped at about an hour, with supersets to save time. Pick a body part and the plan builds around it. Tap Swap on any exercise to change it for good in that plan. GOT IT
+  [train] Your own workoutsi  (i):own
+      YOUR OWN WORKOUTS i ADD
+      (i) own 20x20 COVERED: ✕ HOW IT WORKS Your own workouts No gym? Add what you do instead: a run, a walk, a bike ride, yoga, a sport. It goes into a plan of its own and keeps the same log as the gym. GOT IT
+  [train_day] Trainingi  (i):train
+      TRAINING i 0/4 this week M T W T F S S 4 proven workouts: +1361 XP, +3900 coins
+      (i) train 20x20: ✕ HOW IT WORKS Training Each Workout quest you prove with a live photo counts once a day. 4 in a week (Monday to Sunday) pays +1361 XP and +3900 coins plus a random prize. Keep it up week after week for x2 coins. GOT IT
+  [train_day] Push day · ~51 mini  (i):wk
+      PUSH DAY · ~51 MINi Change START GUIDED SESSION MAIN LIFT Rest 2 min Barbell Bench Press Swap 4 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Set 4 Hit the top of the rep range on every set MAIN LIFT Rest 2 min Incline Dumbbell Press Swap 3 × 8-10 First time. Pick a weight you can move for 10 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set STRENGTH Rest 2 min Overhead Press Swap 3 × 6-8 First time. Pick a weight you can move for 8 clean reps. lbs Set 1 Set 2 Set 3 Hit the top of the rep range on every set SUPERSET A Back to bac
+      (i) wk 20x20: ✕ HOW IT WORKS Logging a workout Set the weight, then tap the set you just did: it keeps that weight, and next time it shows what you lifted. Logging pays a little XP and saves your weights. The big reward is the Workout quest: prove it with a live photo. GOT IT
+  [wheel] not open
+  [away] Dungeon Crawlsi  (i):crawl
+      DUNGEON CRAWLS i Crawls today 0/5 · Quest effort 50% Your next crawl finds something rare. 💎 Crystal Mines The walls hum when you walk past. Lv 32 60 min Loot: Very rich Safe 3 rare left CRAWL 🕹 Sunken Arcade Cabinets glow under a foot of water. Lv 42 60 min Loot: A hoard Safe 3 rare left CRAWL 🗼 Obsidian Spire The last floor is always one more floor. Lv 55 60 min Loot: Legendary Safe 4 rare left CRAWL
+      (i) crawl 20x20: ✕ HOW IT WORKS Dungeon Crawls Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up. Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare. Quest effort: the fuller your Daily Quest, the better the loot. GOT IT
+  [away] Rescued alliesi  (i):allies
+      RESCUED ALLIES i None rescued yet.
+      (i) allies 20x20 COVERED: ✕ HOW IT WORKS Rescued allies Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good. GOT IT
+  [players]   (i):likes
+      Fashion Most rich Highest level Likes this week · ends in 5d 20h i Open 2 Open 1 Open 3 You gave 0 likes this week 1 Cal (you) 0 ♥
+      (i) likes 20x20: ✕ HOW IT WORKS Likes Tap a look to like it. You have 2 likes to give each day. Every like counts. The week ends Sunday 7 pm Pacific. The top 3 win 1,500 / 1,000 / 500 coins and a medal. GOT IT
+  [vault] no tab
+  errors 0 []
