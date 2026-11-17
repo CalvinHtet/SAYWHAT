@@ -124,7 +124,17 @@ var PATCHNOTES=[
     "Introduced relic tiers (low, med, high, legendary)",
     "Town Hall: posts, chat, a weekly ranking and coin challenges",
     "Training: your own workouts and progress graphs",
-    "New brand drops twice a week, with clothes priced by quality"]}
+    "New brand drops twice a week, with clothes priced by quality"]},
+  /* Cal, 2026-11-17: a letter every 10th version, 500 coins, vague, no spoilers ("Too much info in the update logs that give info on what
+     is next"). What changed since Update 1.06's letter (29zz_patch.js): v1.07 to v1.10 */
+  {v:110,lines:[
+    "Cleaner screens: less text, and the explanations sit behind the small (i) buttons",
+    "Your coins, letters and class sit right next to your character",
+    "The Town Hall has a new look",
+    "The Shop has its own Upgrades tab",
+    "Side quests now last a week",
+    "The Restaurant and the Garden have fewer, better upgrades",
+    "Coaches and the Town Boss are resting for now"]}
 ];
 var PNCOINS=500,PNPAID=2,PNEVERY=10;
 /* 90 -> "v0.90", 100 -> "v1.00" */
