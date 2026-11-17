@@ -43,4 +43,11 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
     +"gx_sp_varsity gx_bb_doublet gx_bb_leather gx_cr_visor gx_cr_mohawk gx_cr_arm gx_cr_bomber gx_cr_mesh gx_cr_vest "
     +"gx_cr_platform");
   put("luxury","ac_crown gx_v_thorn gx_v_corset gx_bb_circlet gx_cr_trench");
+  /* new240 HANGANG and DIAL-UP (LEAD, 2026-11-17, by QA's rules above, QA to check): faded denim, novelty shades and the plastic phone
+     lanyard are thrift; the holo visor (holographic), the leather moto jacket and the patent platforms are premium; the rest standard */
+  put("standard","gx_h_pbucket gx_h_bala gx_h_longbill gx_h_sling gx_h_phones gx_h_padcoat gx_h_layer gx_h_rugby gx_h_balloon gx_h_wrap "
+    +"gx_h_mule gx_h_puffboot gx_h_court gx_y_race gx_y_furtrap gx_y_chains gx_y_mesh gx_y_furden gx_y_patch gx_y_pcamo gx_y_maxi gx_y_bubble "
+    +"gx_y_furmule");
+  put("thrift","gx_h_oval gx_h_barrel gx_y_rimless gx_y_phone");
+  put("premium","gx_y_visor gx_y_moto gx_y_patent");
   }return m[id]||null}
