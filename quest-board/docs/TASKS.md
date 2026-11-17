@@ -21,11 +21,12 @@ LEAD Doing:
 - Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
   63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
   after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
-  at APPV 105 (567b50a). QA live check DONE (513ad75). v1.05 candidate (on f16dbc2), WAITING ON QA: NICE COCK's 10 repainted pieces on
-  sale (ROOMS's art bcd8f73 after Cal's comfort redo); ship before Thu 11-26 while NICE COCK is live. Then Cal's next speed log on v1.04. Cal, 2026-11-17: week-one Daily Quest
+  at APPV 105 (567b50a). QA live check DONE (513ad75). v1.05 candidate = f16dbc2 (QA PASS) + b10ca52, WAITING ON QA:
+  NICE COCK moves to the Street and is its drop on Fri 11-20, then every drop random (Cal). MUST SHIP before Fri 11-20 8 am PT. Then Cal's next speed log on v1.04. Cal, 2026-11-17: week-one Daily Quest
   goal "felt okay" (kept); level pacing kept ("I am the anomaly ... it should be fine"); GitHub push approved and DONE (qa-local
   213ea0f..807955f on origin). WAITING ON CAL: switching on Storage (steps sent to him; LEAD deploys storage.rules after), HANGANG's 15
-  (ROOMS's drafts.md shown to him), and which NICE COCK move he meant ("push nicecock to earlier": re-drop Fri 11-20, CHROME RAIN a week later?).
+  (ROOMS's drafts.md shown to him),. NICE COCK answered (Cal, 2026-11-17: "I want NICE COCK to drop on Friday. And then randomize all
+  the other drops afterwards"; he is under level 30, Street only): b10ca52.
   Was: Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
   ... Review the rest of the game and find where we can cut the fat. Also check the lag time and speed when changing tabs."
   (1) Cut the fat: every card's rules moved into an (i) beside its title (29zz_lean.js qbI/QBINFO; Daily Quest, level trial, Training, Gym
@@ -38,6 +39,14 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
+- WAITING ON QA, URGENT (v1.05 must be live before Fri 11-20 8 am PT): check b10ca52 (LEAD). Cal: "Right now, the shop is overpass. I
+  want NICE COCK to drop on Friday. And then randomize all the other drops afterwards." He is under level 30, so NICE COCK moves to the
+  Street (BRANDS fl "street"; its pieces now 310 to 450 on the Street's scale) and is pinned as the Street's Fri 11-20 drop (live
+  OVERPASS + NICE COCK, its splash shows). From 11-20 every floor drops a fresh fixed-seed shuffle per round (29zz_ncstreet.js): never
+  while live, a rest of at least half the floor's brands. Every drop before 11-20 is unchanged (dropcal 11-09..11-19 identical). From
+  11-20 the Boutique shows only its own 3 brands (SAYMORE alone that first week). LEAD: ncrows.js PASS (11-19, 11-20, splash, prices),
+  cutpieces, tabs5, tourtest, swaptest PASS, dropshuffle liveBad 0, the Wednesday vault as before (none until Feb). Please also cover:
+  pricesweep, a level-30+ player on 11-17 (Boutique still VENOM ROSE + NICE COCK) and on 11-20, and an owner of a NICE COCK piece.
 - (QA: DONE on f16dbc2, PASS, v1.05 can ship; QA findings) WAITING ON QA: check f16dbc2 (LEAD) with ROOMS's art bcd8f73 (its wear-check is ROOMS's line): NICE COCK's 10 repainted pieces back
   on sale with ROOMS's names and lines (Fleece Dad Cap, Cashmere Scarf, Rimless Aviators, Embossed Crest Hoodie, Layered Lounge Tee, Waffle
   Lounge Zip, Sherpa Fleece Zip, Silver Court High-Top, Suede Runner, Shearling Clogs & Socks; the "&" shows right). Grades: tank, qzip,
