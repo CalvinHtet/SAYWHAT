@@ -219,7 +219,10 @@ DROPS.shuf0="2026-11-16";
    BARD & BLADE, KAIMANA and OAKMONT get new names and pieces; ALTITUDE, SOLVBERG and NICE COCK lose most of theirs). Each hold has a
    start and, once the new art is in, an end date: a slot dated inside it skips those brands, so lifting a hold never changes a drop
    that already happened. */
-DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv","nc"]},
+DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv"]},
+  /* Cal (via ROOMS, 2026-11-16): "ship NICE COCK on friday". NICE COCK has been live on the Boutique since Fri 11-13 (it dropped before
+     the hold began) and stays live to Thu 11-26; its hold ends 11-20, so later Boutique slots may pick it again once its new art is in */
+  {from:"2026-11-16",until:"2026-11-20",ids:["nc"]},
   /* ALTITUDE's gorpcore repaint is in (Cal approved, ROOMS 7c5664e). Its hold ends the day it began, so no slot ever skipped it; if this
      ships after a held drop has already happened, move "until" to the release day so that drop stays the same on every phone */
   {from:"2026-11-16",until:"2026-11-16",ids:["alt"]},
@@ -228,7 +231,10 @@ DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv","nc"
 /* Pieces cut in the audit (Cal approved, with his keeps): off sale everywhere (the Shop, brand pages and splashes, sales, chest and crawl
    rolls), while anyone who owns one keeps wearing it. Every place that offers a piece asks itemFits, and so does the wardrobe for owned
    ones, so a cut piece "fits" only its owner. The rest of the cut list follows as ROOMS sends it. */
-var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak"];
+var ZXCUT=["gx_o_beanie","gx_o_camp","gx_o_slides","gx_smk_vest","gx_smk_cloak",
+  /* NICE COCK's 10 pieces ROOMS is repainting (same ids): off sale until the new art is in, so the live brand shows Cal's 6 keeps and
+     never the old pictures (anyone who owns one keeps it). LEAD takes these 10 off this list when ROOMS sends the art and its shop text. */
+  "gx_nc_band","gx_nc_pendant","gx_nc_shades","gx_nc_hoodie","gx_nc_tee","gx_nc_tank","gx_nc_qzip","gx_nc_court","gx_nc_knit","gx_nc_slide"];
 SHOP.forEach(function(it){if(it&&it[6]&&ZXCUT.indexOf(it[0])>=0)it[6].cut=1});
 var zxFits=itemFits;itemFits=function(it){if(it&&it[6]&&it[6].cut&&!(S&&S.owned&&S.owned[it[0]]))return false;return zxFits.apply(this,arguments)};
 /* the brand racks pick by brand only (15_shop.js qsGroups), so they get the same rule */
@@ -355,7 +361,7 @@ function zxDqParts(){var Q={},raw=0,cnt=0,d=dqState();if(!d.cnt||typeof d.cnt!==
   Object.keys(d.cnt).forEach(function(k){if(!(S.done||{})[k])delete d.cnt[k]});return [cnt,raw]}
 dqXp=function(){return Math.round(zxDqParts()[0])+(dqState().tx||0)};
 try{if(window.__qbEcon)window.__qbEcon.xp=dqXp}catch(e){}/* QA: the test hook still read the old count */
-var zxDqHtml=dqHtml;dqHtml=function(){var h=zxDqHtml.apply(this,arguments);try{var p=zxDqParts();if(h&&p[1]>p[0]+.5)h=h.replace('<div class="dq-row">','<p class="note dq-eff">Quick tasks and bonus XP count a little less here; bigger tasks and workouts fill it fastest.</p><div class="dq-row">')}catch(e){}return h};
+/* (the "Quick tasks and bonus XP count a little less here" line moved into the Daily Quest's (i), Cal 2026-11-16: 29zz_lean.js) */
 /* QA's review (2026-11-14): after "Claim 3,000 coins" the letter stayed open on "3,000 coins claimed" and the player had to find the X;
    it closes itself a moment after the coins land. And the reward toasts sat on the tab bar: they show above it. */
 var zxIbClaim=ibClaim;ibClaim=function(){var r=zxIbClaim.apply(this,arguments);setTimeout(function(){try{if(document.querySelector("#layer .modal .ibgot"))closeModals()}catch(e){}},1500);return r};

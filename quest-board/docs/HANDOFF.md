@@ -21,6 +21,13 @@ is one row per item; `?sheet=onepose&pose=stretchUp&arts=a,b%2Bc` lines items up
 
 ## Status of Cal's request below
 
+- 2026-11-16, LEAD (Cal: cut the text clutter, check tab speed): every card's rules moved into an (i) next to its title
+  (`app/src/29zz_lean.js`, `qbI(key)` / `QBINFO`); the screens keep only their numbers. Daily Quest, level trial, Training, Gym plans,
+  your own workouts, a workout day, Crawls, Rescued allies, the Wheel, Likes, Coaches, the Vault, the Town hall banner. The Daily Quest
+  tour points at its (i). Speed: Hall/Players portraits render one still frame (`calHyd`), your own Loft frames warm 6 s after load
+  (`qbWarmMe`); The Loft's building view is ROOMS's (request in TASKS). Tests: `rigtest/lead/fat.js` (text and pictures per screen),
+  `tabspeed.js` (WebKit tab times), `portraits.js` (pictures made on a first open, heavy seed).
+
 ## Later: Cal's long-term roadmap (bring these up when the time is right)
 
 Cal, 2026-11-10: "Anything that is a much later update should be noted for claude to bring to attention later." Late players earn
