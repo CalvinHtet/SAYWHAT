@@ -120,7 +120,7 @@ function unlockNext(room,id){var r=slotOf(room),by={};if(!r)return null;(ADDONS[
    lists it first, even while it waits for its dishes, like an upgrade that opens a room (Cal: "make sure my dead end bug doesnt appear") */
 function styNextBuy(room){if(room!=="restaurant"||styNoir()||styHas("skybar"))return null;var a=unlockNext("restaurant","r_noir");return a?a[0]:null}
 function unlockLine(t,d){d=d||0;var u=(ECON.unlock||{})[t];if(!u)return null;
-  if(u.at){var r=slotOf(u.at);if(!r)return unlockVia(u.at,d);var f=roomFill(r),need=Math.ceil(f.tot*u.pct);
+  if(u.at){var r=slotOf(u.at);if(!r)return unlockVia(u.at,d);var f=roomFill(r),need=u.n!=null?Math.min(u.n,f.tot):Math.ceil(f.tot*u.pct);/* n: a fixed count, so a room's +15 does not push the next room back (LEAD, 2026-11-17) */
     return unlockUps("at",f.n>=need,rmName(u.at),f.n,need)}
   if(u.loft){var ls=loftShare(),nl=Math.ceil(ls[1]*u.loft);return unlockUps("loft",ls[0]>=nl,"Loft",ls[0],nl)}
   if(u.earn){if(!slotOf(u.earn))return unlockVia(u.earn,d);var e=roomEarn(u.earn);
@@ -130,7 +130,7 @@ function unlockLine(t,d){d=d||0;var u=(ECON.unlock||{})[t];if(!u)return null;
        may not show yet (QA: "a player is told to buy something they can't find") */
     return ["noir",false,"Keep upgrading the Restaurant until Noir",null,"Restaurant: reach Noir",""]}
   /* the Mall: every Kode Plaza room built first (econsim: with only the Garden and the Restaurant it opened before Lock and Key) */
-  if(u.plaza){var miss=ECON.plazaAll.filter(function(k){return !styHas(k)})[0];if(miss)return unlockVia(miss,d);var ps=roomsShare(ECON.plazaAll),np=Math.ceil(ps[1]*u.plaza);
+  if(u.plaza){var miss=ECON.plazaAll.filter(function(k){return !styHas(k)})[0];if(miss)return unlockVia(miss,d);var ps=roomsShare(ECON.plazaAll),np=u.n!=null?Math.min(u.n,ps[1]):Math.ceil(ps[1]*u.plaza);
     return unlockUps("plaza",ps[0]>=np,"Kode Plaza",ps[0],np)}
   return null}
 /* Cal (2026-11-10): "I want the garden, then the restaurant, and then bar as soon as the noir upgrade unlocks. Don't need to lock any of

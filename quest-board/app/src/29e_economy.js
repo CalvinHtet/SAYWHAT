@@ -51,7 +51,7 @@ var ECON={
   noirServed:180,                                  /* dishes the Restaurant serves before Noir (econRules) */
   /* QA's later-rooms sweep (2026-11-17): the Speakeasy (level 45) was missing from bizDay, phase, roomDay and bigMoment, so its
      14 upgrades cost 5,800 in all against Dessert's 43,050. It now sits between VR (44) and the Club (50) */
-  bizDay:{garden:1500,restaurant:700,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
+  bizDay:{garden:1500,restaurant:700,skybar:360/* 250 with 13 upgrades; with 28 a room of the old 13 would drop to 178 a day, so 360 keeps it at about 250 and pays the new 15 on top (LEAD, 2026-11-17) */,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
     rhythm:400,vr:400,speakeasy:450,bowling:450,karaoke:450,club:900},
   vegCoin:8,                                       /* w-econ4: Garden-stage businesses about 10% (econsim: 7-8%) */
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
@@ -168,9 +168,12 @@ var ECON={
      finds don't count); loft: that share of all the Loft's core upgrades, built or not; earn: coins the Garden has made selling
      produce; noir: the Restaurant's Noir upgrade; plaza: that share of all Kode Plaza upgrades, built or not. Replaces SPEC8's focus
      rule. The Mall-building numbers are mine, from econsim (Cal: "Use this same logic") */
+  /* n (LEAD, 2026-11-17, Lock and Key +15): a fixed number of upgrades instead of the share, so a room growing by 15 (Cal 11-17: "Add 15
+     more upgrades to everything else") does not hold the next room back: Rooftop 7 and Boba 10 of Lock and Key's, the Mall 79 of Kode
+     Plaza's, the counts v1.12 asked. The economy pass after the +15s sets these on purpose */
   unlock:{closet:{at:"bedroom",pct:.3},patio:{at:"bedroom",pct:.5},gameroom:{at:"bedroom",pct:.7},garden:{loft:.45}/* Cal 2026-11-13 slower start: the Loft costs twice as much, so the Garden opens at 45% of it (was 60%) */,
-    restaurant:{earn:"garden",coins:3000},skybar:{noir:1},rooftop:{at:"skybar",pct:.5},boba:{at:"skybar",pct:.75},dessert:{at:"boba",pct:.6},
-    mall:{plaza:.6},theater:{at:"mall",pct:.3},auditorium:{at:"theater",pct:.4},arcade:{at:"auditorium",pct:.4},rhythm:{at:"arcade",pct:.4},
+    restaurant:{earn:"garden",coins:3000},skybar:{noir:1},rooftop:{at:"skybar",pct:.5,n:7},boba:{at:"skybar",pct:.75,n:10},dessert:{at:"boba",pct:.6},
+    mall:{plaza:.6,n:79},theater:{at:"mall",pct:.3},auditorium:{at:"theater",pct:.4},arcade:{at:"auditorium",pct:.4},rhythm:{at:"arcade",pct:.4},
     vr:{at:"rhythm",pct:.4},bowling:{at:"vr",pct:.4},karaoke:{at:"bowling",pct:.4},club:{at:"karaoke",pct:.4}},
   /* the one-time reset (Cal: "initialize the loft and refund all the money they have spent so far"): a save from before APPV
      resetBefore gets its rooms and buildings reset and refunded once; resetScope "all" or "loft" (the Loft's rooms only). LEAD
