@@ -108,8 +108,8 @@ var GDFIT={gdx_seed:{t:[.33,.03],r:[.99,.66],l:[.01,.37],rim:.03},gdx_raised:{t:
   gd_berry:{t:[.53,.08],r:[.995,.47],l:[.005,.33],rim:.26,w:2.2}};
 /* a grow light along a bed, drawn on the room's own grid: two thin posts, an LED bar down the middle, a violet wash */
 /* QA sweep 11-17: at 62 high on hairline posts the bar read as floating behind the bed; lower, on solid posts with feet on the bed ends */function gdGrowLight(C,x,y,w,d){var m=y+d/2,z=40,P=function(a,b,c){return lfPt(lfP(a,b,c))},x0=x+.2,x1=x+w-.2,
-    s='<polygon points="'+[lfP(x0,y+.2,18),lfP(x1,y+.2,18),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.16)"/>'
-    +'<polygon points="'+[lfP(x0,m,z-2),lfP(x1,m,z-2),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.12)"/>';
+    s='<polygon points="'+[lfP(x0,y+.2,18),lfP(x1,y+.2,18),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.06)"/>'
+    +'<polygon points="'+[lfP(x0,m,z-2),lfP(x1,m,z-2),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.04)"/>';
   [x0,x1].forEach(function(px){s+='<path d="M'+P(px,m-.18,10)+' L'+P(px,m+.18,10)+'" stroke="#26232e" stroke-width="3.2" stroke-linecap="round"/><path d="M'+P(px,m,10)+' L'+P(px,m,z)+'" stroke="#3b3746" stroke-width="3.6"/><path d="M'+P(px,m,10)+' L'+P(px,m,z)+'" stroke="#6b6577" stroke-width="1.2"/>'});
   s+='<path d="M'+P(x0-.1,m,z)+' L'+P(x1+.1,m,z)+'" stroke="#26232e" stroke-width="4.2" stroke-linecap="round"/><path d="M'+P(x0,m,z-2.4)+' L'+P(x1,m,z-2.4)+'" stroke="#f4b8ff" stroke-width="1.8" stroke-linecap="round"/>';
   C.add(x+w+y+d+.05,'<g pointer-events="none">'+s+'</g>')}
@@ -214,10 +214,10 @@ LFROOM.garden=function(C){
     else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
     if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.5,4.8,1.1,1.1,70,{H:120})}
     if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx,E?6.8:6.6,3.6,1.0,50,{H:96});
-    var hx=st===2?Rx:zx,hy=st===2?10.6:8.6;
+    /* QA f210213: the Estate's front-right corner was the most crowded spot; hive and coop take the open lawn left of the fountain */var hx=st===2?8.9:zx,hy=st===2?10.35:8.6;
     if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
-    if(H("g_coop"))gdS(C,"gdx_coop",st===2?Rx:3.0,/* rule 20: off the hive, a lantern between them */st===2?12.2:9.65,1.7,1.3,36,{H:78});
+    if(H("g_coop"))gdS(C,"gdx_coop",st===2?14.9:3.0,/* rule 20: off the hive, a lantern between them */st===2?9.8:9.65,1.7,1.3,36,{H:78});
     /* QA room sweep (rooms-never-cluttered): in the full garden the big glasshouse holds the tools, so the shed is superseded there */
     if(H("g_shed")&&!(st===2&&H("g_green2")))gdS(C,"gdx_shed",st===2?zx+3.7:Rx,st===2?4.8:8.4,1.6,1.3,50,{H:92});
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
@@ -225,7 +225,7 @@ LFROOM.garden=function(C){
     /* grow lamps stand at the back of the first beds, over the soil (QA: alone on the lawn they read as screens) */
     if(H("g_lamp"))beds.slice(0,4).forEach(function(k,i){var p=spots[st===2&&kt&&i===3&&spots[4]?4:i];/* QA room sweep: the bed beside the back door's aisle has no lamp bar, so nothing crosses the doorway */
       gdGrowLight(C,p[0],p[1],3.4,1.6);
-      lfLight(C,p[0]+1.7,p[1]+.8,60,"#d68aff",2.6,.5)});
+      lfLight(C,p[0]+1.7,p[1]+.8,60,"#d68aff",2.6,.32)/* QA f210213: a lighter glow, the plants keep their colour */});
     if(H("g_walk")){var py=D-1.9,R=lfSeed(11),stones=function(x0,x1,y0,y1){var pl='';for(var sx=x0;sx<x1-.1;sx+=.62)for(var sy=y0;sy<y1-.1;sy+=.62){var c=["#b9b0a2","#a79f92","#c4bcae","#ad9e8c"][Math.floor(R()*4)];pl+=lfPoly([lfP(sx+.03,sy+.03,0),lfP(sx+.58,sy+.03,0),lfP(sx+.58,sy+.58,0),lfP(sx+.03,sy+.58,0)],c,"rgba(50,40,30,.45)",.7)}return pl};
       C.decals.push(stones(.4,W-.2,py,py+1.25));
       lfWander(C,[[W*.25,py+.6,1],[W*.55,py+.6,-1],[W*.8,py+.6,1]]);
