@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 29ed258): v1.07 candidate, WAITING ON QA, wanted before Fri 11-20 8 am. v1.06 LIVE on Live and Test = 826b773 (release/v1.06:
+- Now (on 29ed258): v1.07 candidate, (QA: DONE on 29ed258, PASS, v1.07 can ship; two small NOTES; QA findings) WAITING ON QA, wanted before Fri 11-20 8 am. v1.06 LIVE on Live and Test = 826b773 (release/v1.06:
   fea3674 + 0ea9b2a + APPV 106), wlive PASS, 3013/3013 identical on both; rollback APPV 107 (a065b25). Cal, 2026-11-17: "When v1.06
   gets published, send a short update summary of the patch changes in the mailbox. And give everyone 500 coins" and "Too much info in
   the update logs that give info on what is next. Just be vague about it and don't spoil anything." 29ed258: 29zz_patch.js, the
@@ -169,13 +169,33 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 29ed258): v1.07 candidate 29ed258 PASS (Update 1.06 letter, Shop tabs wrap), two small NOTES (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 0ea9b2a): v1.06 candidate 0ea9b2a PASS (3 Street brands), one NOTE for LEAD (QA findings).
   Was: Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings).
   Was: Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS.
   Was: Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73.
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.07 candidate 29ed258 (the Update 1.06 letter with 500 coins, Cal 11-17; the Shop's section tabs wrap, QA's v1.06 NOTE).
+  Clean plain builds of 29ed258 and v1.06 826b773. The only code change is the new 29zz_patch.js (30_app_b.js: APPV back to qa-local's 100).
+  - Tabs: every brand tab, the vault tab and BASICS are fully on screen at 360, 375, 390 and 430 wide, on 11-20 and 12-23. The row wraps
+    to 2 rows below 430, and to 1 row at 430 on a 3-brand day. Level 31 at 360: the Street/Boutique floor tabs stay on 1 row. Nothing
+    overlaps, no sideways page scroll, 0 page errors. Pictures shots/qa/v106b/street_w*.jpg.
+  - The letter, at 375 wide: an old player (welcome 11-10, or 11-03) on 11-17 and 11-19, and a player who joined 11-17, each get
+    "Update 1.06" unread. 4 clicks on Claim pay +500 once; after a reload the next day it stays paid with no Claim button. A player who
+    joined 11-18 gets none. Pictures shots/qa/v106b/letter_*.jpg.
+  - Spoilers: none. It names no brand, day, Vault or anything coming. The photo line is true only because Storage went on today (LEAD's
+    line: Cal's own post worked). QA did not test a cloud photo post.
+  - Two devices (code read, not run: the plain build has no cloud, and Test is Cal's real game): a load takes one whole save, local or
+    cloud (merge() replaces S, 30_app_b.js), never adds two together. So a claim on a second device can only replace the first, never add
+    a second 500. The worst case is the usual last-write-wins on everything else, as with the welcome letter's 3,000 since v0.89.
+  - NOTE (LEAD): a save with no S.letters record (a player who has not opened the app since the inbox came in) dates its welcome to
+    the day it opens, so from 11-18 on it gets no Update letter. That player still gets the welcome letter's 3,000 coins. Probably fine.
+  - NOTE (LEAD): this build ships as v1.07, but the letter is "Update 1.06" and lists the tab fix, which is a 1.07 change. Rename it to
+    "Update 1.07" if the version label should match. Also, 29q_news.js still has the old PATCHNOTES letters (every 10th version, 500
+    coins). When the v1.10 letter goes in PATCHES, make sure only one of the two systems sends it.
+  - Not checked: a real phone, the web build, a real two-device cloud claim, a cloud photo post.
 - PASS, v1.06 candidate 0ea9b2a (3 Street brands live, Wednesday vault extra; Cal 11-17). Clean plain builds of 0ea9b2a and v1.05 fea3674:
   - Drops (dropcal.js, 2026-11-09 to 2027-04-30): Boutique and Atelier identical to v1.05; every Street drop is the same up to and including
     11-16. From 11-16 the Street always has 3 live: 11-17 HANGANG, DIAL-UP, OVERPASS; Fri 11-20 NICE COCK drops, HANGANG retires. Over
