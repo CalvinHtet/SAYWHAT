@@ -18,7 +18,15 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 0ea9b2a): v1.06 candidate, URGENT, (QA: DONE on 0ea9b2a, PASS, v1.06 can ship; one NOTE for LEAD, the brand tabs no longer fit a phone; QA findings) WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
+- Now (on 29ed258): v1.07 candidate, WAITING ON QA, wanted before Fri 11-20 8 am. v1.06 LIVE on Live and Test = 826b773 (release/v1.06:
+  fea3674 + 0ea9b2a + APPV 106), wlive PASS, 3013/3013 identical on both; rollback APPV 107 (a065b25). Cal, 2026-11-17: "When v1.06
+  gets published, send a short update summary of the patch changes in the mailbox. And give everyone 500 coins" and "Too much info in
+  the update logs that give info on what is next. Just be vague about it and don't spoil anything." 29ed258: 29zz_patch.js, the
+  "Update 1.06" letter from Cal (no brands, days or Vault) with Claim 500 coins, only for players whose welcome letter is dated on or
+  before 11-17; and QA's tab NOTE: the Shop's section tab row wraps. patch106.js PASS (letter, 500 once, a 11-18 joiner gets none, every
+  tab on screen at 375/390/430 on 11-19 and 12-23); ncrows.js PASS. Not checked: real phone, web build. Storage rules deployed; Cal's
+  own photo post worked. QA please: pass/fail 29ed258 on top of v1.06.
+- Was (on 0ea9b2a), shipped as v1.06: v1.06 candidate, URGENT, (QA: DONE on 0ea9b2a, PASS, v1.06 can ship; one NOTE for LEAD, the brand tabs no longer fit a phone; QA findings) WAITING ON QA. Cal, 2026-11-17: "There should be 3 brands at all times. The vault on
   Wednesday is separate from the 3. Right now it should be hangang, dial up, and overpass." 0ea9b2a: Street live 3 (29e_economy.js);
   a retired brand rests at least 2 drops (29zz_ncstreet.js gap = live + max(1, half the brands not live)), as with 3 live the old gap
   brought DIAL-UP back 4 days after it left. Today: HANGANG, DIAL-UP, OVERPASS; Fri 11-20 NICE COCK drops, HANGANG retires. Only 6
