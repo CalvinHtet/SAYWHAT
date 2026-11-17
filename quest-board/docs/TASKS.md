@@ -226,7 +226,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 7418204): design review of ROOMS's Lock and Key +15 plan DONE, before paint (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings).
   Was: Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings).
   Was: Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX: a permanent mop since v1.10 (QA findings).
   Was: Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings).
@@ -247,6 +248,36 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- REVIEW (before paint), ROOMS's Lock and Key +15 plan (shots/pending_art/rooms1117/lockkey_plus15.md + lockkey_now.png, code on
+  7418204). Read against the picture and 27_rooms.js:206-213; nothing drawn. Owner: ROOMS, with LEAD for the staff code.
+  - FIX (plan): Lock and Key has 13 live upgrades, not 15 (16 rows: 2 retired, sb_chester and sb_trolley, and Open the Roof). +15 makes 28.
+  - FIX: the Bookcase Door goes. The Speakeasy's whole hook is the hidden bookcase door from the Dessert Parlor (27b_skins.js:137,
+    27_rooms.js:274); a second one in the room next door kills that reveal. It is also floor furniture, and the only wall beside the stair
+    doorway is a narrow strip between the oyster cart and its painted sconce, and the corner.
+  - FIX: the staff need code, not just no art. Crew are not pinned: each picks a random work/play spot (20_loft.js:1423; only staff 0 in
+    the Restaurant or Bar is pinned), so the pianist will tend the bar and the bartender will take the mic. Each one needs its own spot,
+    pinned the Theater's way (23_theater.js:175) or onspot like the Club's DJ (27b_skins.js:200). The pianist sits at the bench facing the
+    keys, with no sit pose for crew yet. The singer stands on a raised stage (feet must sit on it). The server walks (Garden g_walk,
+    wand:1). People: 5 guests at most (lfGuestN) + bartender + 4 staff + player = 11 in 14x10. That is fine if every one has a fixed
+    place; with all four wandering it will read as crowded.
+  - NOTE: drop the Doorman, not a fourth musician. Nothing in the room says "door" except the stairs (the way in is Downstairs, front
+    left), and a doorman there stands in front of a painted doorway (rule 20). Q1: four staff, five crew, are OK once pinned.
+  - NOTE, theme: Big Band, Singer, Gig Posters and Spotlights are four more jazz steps, and jazz is the Speakeasy's ("live jazz if you book
+    the band"). Lock and Key's own lane is in the picture: keys, marble, brass, champagne, oysters, cocktails. Swap the posters for
+    something on that lane (a gilt cocktail-menu mirror, a wall of members' key lockers, flat on the wall).
+  - NOTE, the stage is already full at 2.3x2.2 (drums, bass, mic). Sax and trumpet stands plus a singer at the mic will crowd it. Either
+    make Big Band a slightly bigger stage (it has room toward the front right) or keep the instruments as they are and make the tier a
+    lit stage lip/brass rail.
+  - NOTE, the bar top is busy (bottles, shakers, glasses, the tip jar at 5.7,2.35). Two lamps plus an Absinthe Fountain is too much. Pick
+    one, on the clear middle stretch. No hanging pendants: with no ceiling they float (Cal's complaint).
+  - NOTE, wall pieces vs the four painted sconces (skw_t1; they can't move): the Rare Bottle Wall tier must not widen past the back bar's
+    art (a sconce sits at its right edge). The Keyhole Neon fits the gap between the two right-hand back-wall sconces, above the
+    high-tops, only if it stays inside it. The Key Wall goes above the sofa without touching the front-left sconce. Name the wall
+    position of each piece in the plan.
+  - OK: Persian Rug (a decal, clear of the humidor and piano), Swivel Stools (same spots and sit spots, still facing the bar),
+    Champagne Tower (keep the cart's use spot 9.61,1.55; clears the sconce above), Stage Spotlights (light only).
+  - After paint, QA checks: the live count, the full room for a new player (LIVE=1) and an old owner, use sides, overlaps against the
+    sconces, every staff member in their spot.
 - PASS, v1.11 live (LEAD: Live and Test at 034069d on release/v1.11, wlive PASS, 3013/3013 identical):
   - 034069d against release/v1.10 1854144: only 21_restaurant.js, 22_garden.js and 26_world.js (each identical to the passed 4456e71's)
     and the APPV line (110 -> 111). A clean web build: 3,012 files + version.txt = 3,013, APPV 111, the mop fix in.
