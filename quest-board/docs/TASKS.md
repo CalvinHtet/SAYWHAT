@@ -22,8 +22,10 @@ LEAD Doing:
   63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
   after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
   at APPV 105 (567b50a). QA live check DONE (513ad75). v1.05 candidate (on f16dbc2), WAITING ON QA: NICE COCK's 10 repainted pieces on
-  sale (ROOMS's art bcd8f73 after Cal's comfort redo); ship before Thu 11-26 while NICE COCK is live. Then Cal's next speed log on v1.04. WAITING ON CAL: the GitHub push, Storage, the week-one Daily Quest goal,
-  level pacing, ROOMS's NICE COCK and HANGANG approvals.
+  sale (ROOMS's art bcd8f73 after Cal's comfort redo); ship before Thu 11-26 while NICE COCK is live. Then Cal's next speed log on v1.04. Cal, 2026-11-17: week-one Daily Quest
+  goal "felt okay" (kept); level pacing kept ("I am the anomaly ... it should be fine"); GitHub push approved and DONE (qa-local
+  213ea0f..807955f on origin). WAITING ON CAL: switching on Storage (steps sent to him; LEAD deploys storage.rules after), HANGANG's 15
+  (ROOMS's drafts.md shown to him), and which NICE COCK move he meant ("push nicecock to earlier": re-drop Fri 11-20, CHROME RAIN a week later?).
   Was: Now (on ea9f942 + LEAD's commit below): v1.04 candidate, WAITING ON QA. Cal, 2026-11-16: "Some text on the app is just a lot of clutter
   ... Review the rest of the game and find where we can cut the fat. Also check the lag time and speed when changing tabs."
   (1) Cut the fat: every card's rules moved into an (i) beside its title (29zz_lean.js qbI/QBINFO; Daily Quest, level trial, Training, Gym
@@ -88,7 +90,7 @@ LEAD Doing:
   Rafe, Theo, Nova, Sable); Mara wears npc_chef + npc_hat. Without TMTOP, Sable, Rafe and Nova all wear the same y_bucket hat.
 - DONE 2026-11-13 (Cal: "Yes, deploy rules"): firestore.rules deployed (chat, likes, photos, challenges; the "permission denied").
 - WAITING ON CAL: (2) switch on Firebase Storage in the console (the photo bucket does not exist, so photo posts
-  cannot work); (3) approve pushing qa-local to GitHub; (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
+  cannot work); (3) approve pushing qa-local to GitHub (DONE 2026-11-17, Cal: "Yes push to github"); (4) the day starts at 5 am (DAYSTART, v0.87): keep it, or midnight as he wrote.
 - (QA: DONE on 1feee32, PASS for Live, QA findings below.) WAITING ON QA: check 1feee32 (rule 17) on a clean copy of qa-local: the weight box on an iPhone-sized page (type 135, a comma
   decimal), a bounty finished then "Clear completed" (still Completed), the day turning over with the app open, the Hall (banner on
   top, Posts and Chat only), the Players tab (likes, leaderboard, Town square, neighbors all still live), the Board's Daily Quest and
