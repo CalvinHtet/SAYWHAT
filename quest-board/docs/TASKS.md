@@ -18,6 +18,9 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Now (on 034069d): v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
+  c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
+  3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d).
 - Now (on 1854144): v1.10 LIVE on Live and Test = 1854144 (release/v1.10: release/v1.09 + cfe5917 + APPV 110), after v1.09 LIVE
   918732a (release/v1.08 + 5959380 + cbc2d88 + APPV 109); both QA PASS d2fb54a, wlive PASS, 3013/3013 identical on both each time;
   rollback APPV 111 (d5b2580). Checked on the v1.10 build: a player from v1.09 gets "What's new in v1.10", 7 lines, +500 on opening;
