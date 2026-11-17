@@ -206,7 +206,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings). Nothing open from QA; v1.09 (Cal's UI cleanup) next from LEAD. 15-minute loop off (Cal).
+- Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings); next: v1.09 candidate 5959380. 15-minute loop off (Cal).
+  Was: Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings).
   Was: Now (on 00c18f4): v1.08 candidate PASS (Speakeasy priced like its neighbours), two NOTES (QA findings).
   Was: Now (on 0b0a6d4 = v1.07 code): Cal's later-rooms sweep DONE (lag, placement, upgrade counts; QA findings); HANGANG 86cb0e1 PASS. Fixes go to ROOMS, upgrade counts to LEAD and Cal. 15-minute loop off (Cal).
   Was: Now (on c546e9c): v1.07 LIVE as c546e9c, verified (QA findings).
@@ -218,6 +219,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- Restaurant and Garden cut lists for LEAD (Cal, 2026-11-17: "Restaurant can go down to 40 (keep the most visually appealing
+  upgrades but can remove the small unnoticeable ones), Garden can go down to 35"). New rigtest/qa/upgradeshow.js on a clean plain build
+  of 7c10733 draws each room fully bought, then once without each upgrade ("full": share of the 1000x760 picture that changes), and
+  adds each upgrade alone to a room holding only its expansions ("alone", so a lower tier that a later one covers still counts). Full
+  ranking: shots/qa/upgradeshow/rank.txt and *_rank.json; pictures restaurant_full.jpg and garden_full.jpg. 0 page errors.
+  - Restaurant 58 -> 40, cut these 18 (QA's pick; the expansions, tables, booths, kitchen line, counters, chandeliers, wine wall,
+    patio and fire pit all stay):
+    - Draw nothing at all (0 full, 0 alone): Drip Coffee, Shelves & Pictures, Neon Sign.
+    - Lower tiers a later piece covers (0 at full build): Digital Menu Screen (-> Grand Menu Board), Drinks Cooler (-> Backlit Wine
+      Wall), Host Lectern (-> Host Desk), Patio Heaters.
+    - Menus that draw nothing alone: Pasta Night, Seasonal Menu, Wood-Fired Pizza.
+    - Smallest decor, under 0.2% of the picture: Open Sign, Brass Sconces, Potted Plants, Chef's Neon.
+    - Staff with nothing drawn: Hire a Waiter, Hire a Host.
+    - Barely there: Espresso Bar (0.12% alone, mostly covered), Burger Menu (0.06% alone).
+    - Kept on purpose though small: Breakfast Menu (the first step, level 8); Hire a Cook and Hire a Head Chef, Tasting Menu (the
+      late income steps); Bigger Till (a cap, not decor); the tier steps Walnut Tables (2.6% alone), Marble Round Tables (3.3%),
+      Gas Range, Marble Counter & Stools.
+  - Garden 40 -> 35, cut these 5: Sundial, Bird Bath and Clipped Topiary (0 full, 0 alone: nothing drawn now), Tool Shed (0: the
+    conservatory replaces it), Wheelbarrow (0.17%, the smallest visible piece). Option: cut Hire a Gardener (+15%, nothing drawn)
+    instead of the Wheelbarrow, but then Head Gardener has no step before it.
+  - For LEAD's build: the 18 + 5 carry +1.29 and +0.10 of their rooms' "+N%" income. Fold it into the kept steps, or bizInit simply
+    recomputes coins an hour from bizDay (each room's day stays the same at full), so only the per-step income grows. Owners of a
+    cut piece get the refund Cal agreed; check that nothing "also"-chained hangs on a cut id (Espresso Bar has also/menu;
+    Wood-Fired Pizza needs the oven's chain).
+  - Not checked: night lighting, other room styles (Noir draws over the base look), people in the room.
 - PASS, v1.08 live (LEAD: Live and Test at 8d1f69f on release/v1.08, wlive PASS, 3013/3013 identical):
   - 8d1f69f against release/v1.07 c546e9c: in app, data, art and tools only 29e_economy.js (identical to the passed 00c18f4's) and
     30_app_b.js's APPV line (107 -> 108). No art: HANGANG did not ship, as LEAD meant.

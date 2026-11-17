@@ -1,0 +1,101 @@
+== restaurant: 58 upgrades, most to least visible (share of the 1000x760 picture that changes without it)
+ 1  42.64% alone  42.64%  r_x2       Take Over Next Door        Expansion lv 13  8650 +83.3%  box 9,127,990,759
+ 2  26.74% alone  26.74%  r_noir     Noir                       Expansion lv 14  3650 +35.2%  box 9,162,987,758
+ 3   7.14% alone   7.14%  r_patio    Sidewalk Patio             Patio     lv 20  2900 +27.9%  box 19,467,845,759
+ 4   6.49% alone   2.71%  r_more2    Curved Corner Booth        Seating   lv 26  1850 +17.8%  box 94,181,470,574
+ 5   4.29% alone   3.30%  r_t3       White Linen Service        Seating   lv 36  2200 +21.2%  box 242,324,616,574
+ 6   1.84% alone   1.93%  r_p5       Pergola & String Lights    Patio     lv 32   500 +0.0%  box 546,605,708,759
+ 7   1.40% alone   3.15%  r_b1       Leather Booths             Seating   lv 14  1250 +12.0%  box 111,293,332,469
+ 8   1.34% alone   0.50%  r_k4       Flat-Top Grill             Kitchen   lv 13  1250 +12.0%  box 538,300,973,620
+ 9   1.32% alone   1.26%  r_p7       Fire Pit Lounge            Patio     lv 40  3100 +29.9%  box 431,536,704,711
+10   1.28% alone   1.65%  r_p1       Bistro Patio Sets          Patio     lv 20   600 +5.8%  box 571,545,762,693
+11   1.22% alone   0.41%  r_k8       Grand French Range         Kitchen   lv 44  5600 +53.9%  box 538,300,973,613
+12   1.09% alone   0.50%  r_k2       Steel Prep Table           Kitchen   lv  9   600 +5.8%  box 684,459,871,620
+13   1.05% alone   1.10%  r_more1    Second Row of Tables       Seating   lv 10  1000 +9.6%  box 242,447,371,548
+14   1.05% alone   0.51%  r_k7       Wood-Fired Oven            Kitchen   lv 28  3100 +29.9%  box 331,178,973,758
+15   0.95% alone   1.55%  r_d3       Walnut Dividers            Decor     lv 11   500 +0.0%  box 216,307,366,468
+16   0.92% alone   0.45%  r_k5       Fryer & Sinks              Kitchen   lv 16  1250 +12.0%  box 594,333,973,620
+17   0.90% alone   0.27%  r_d8       Sculptural Vases           Decor     lv 33   500 +0.0%  box 131,178,924,758
+18   0.83% alone   0.80%  r_bigmenu  Grand Menu Board           Menu      lv 22  1250 +12.0%  box 528,270,650,393
+19   0.75% alone   0.36%  r_k9       Dish Station               Kitchen   lv 20   750 +7.2%  box 331,178,924,758
+20   0.70% alone   0.31%  r_k6       Bakery Rack                Kitchen   lv 19   750 +7.2%  box 538,300,871,620
+21   0.60% alone   0.31%  r_d7       Oil Painting               Decor     lv 34   500 +0.0%  box 331,178,924,758
+22   0.46% alone   0.19%  r_star     Star Plaque                Decor     lv 60   500 +0.0%  box 325,175,924,758
+23   0.44% alone   0.66%  r_p3       Planters & Olive Trees     Patio     lv 22   500 +0.0%  box 610,541,835,684
+24   0.41% alone   0.00%  r_m4       Wood-Fired Pizza           Menu      lv 29  1250 +12.0%  box 331,178,924,758
+25   0.41% alone   0.41%  r_d5       Backlit Wine Wall          Decor     lv 22   500 +0.0%  box 637,374,703,471
+26   0.38% alone   0.49%  r_p6       Charcoal Grill Station     Patio     lv 30  1250 +12.0%  box 594,343,805,672
+27   0.31% alone   0.12%  r_cf2      Espresso Bar               Kitchen   lv 15  1250 +12.0%  box 538,300,871,620
+28   0.27% alone   0.36%  r_k3       Commercial Fridge          Kitchen   lv 11   750 +7.2%  box 788,463,837,541
+29   0.27% alone   0.26%  r_l2       Brass Chandeliers          Decor     lv 36   500 +0.0%  box 372,201,487,364
+30   0.26% alone   0.55%  r_c2       Black Marble Counter       Counter   lv 34  3750 +36.1%  box 643,353,756,536
+31   0.22% alone   1.33%  r_p2       Market Umbrellas           Patio     lv 24  1000 +9.6%  box 577,660,674,751
+32   0.21% alone   0.22%  r_till     Bigger Till                Money     lv 10   850 +0.0%  box 692,409,745,463
+33   0.18% alone   0.17%  r_hd2      Host Desk                  Counter   lv 23   750 +7.2%  box 510,535,551,595
+34   0.17% alone   0.17%  r_chef     Chef's Neon                Decor     lv 24   500 +0.0%  box 881,428,915,483
+35   0.17% alone   0.06%  r_m1       Breakfast Menu             Menu      lv  8   500 +4.8%  box 538,300,854,442
+36   0.16% alone   0.06%  r_m2       Burger Menu                Menu      lv 10   750 +7.2%  box 538,300,880,455
+37   0.15% alone   0.33%  r_d1       Potted Plants              Decor     lv  9   500 +0.0%  box 38,420,82,473
+38   0.12% alone   0.15%  r_sign     Open Sign                  Decor     lv  8   500 +0.0%  box 513,674,546,720
+39   0.11% alone   0.00%  r_m6       Tasting Menu               Menu      lv 50  5600 +53.9%  box 538,300,640,379
+40   0.11% alone   0.00%  r_m3       Pasta Night                Menu      lv 17  1000 +9.6%  box 538,300,640,379
+41   0.11% alone   0.00%  r_m5       Seasonal Menu              Menu      lv 37  1600 +15.4%  box 538,300,640,379
+42   0.10% alone   0.12%  r_l1       Brass Sconces              Decor     lv 10   500 +0.0%  box 124,257,318,374
+43   0.07% alone   0.07%  r_s1       Hire a Cook                Staff     lv  9  1250 +12.0%  box 789,383,826,434
+44   0.00% alone   0.00%  r_cf1      Drip Coffee                Kitchen   lv  8   500 +4.8%
+45   0.00% alone   0.00%  r_d2       Shelves & Pictures         Decor     lv  9   500 +0.0%
+46   0.00% alone   0.00%  r_d4       Neon Sign                  Decor     lv 14   500 +0.0%
+47   0.00% alone   0.27%  r_k1       Gas Range                  Kitchen   lv  8   750 +7.2%
+48   0.00% alone   0.56%  r_scr      Digital Menu Screen        Decor     lv 15   750 +7.2%
+49   0.00% alone   2.61%  r_t1       Walnut Dining Tables       Seating   lv  8  1000 +9.6%
+50   0.00% alone   0.00%  r_s2       Hire a Waiter              Staff     lv 12  1600 +15.4%
+51   0.00% alone   3.31%  r_t2       Marble Round Tables        Seating   lv 18  1600 +15.4%
+52   0.00% alone   0.00%  r_x1       Knock Through the Wall     Expansion lv 12  2200 +21.2%
+53   0.00% alone   0.22%  r_cool     Drinks Cooler              Decor     lv 12   600 +5.8%
+54   0.00% alone   0.28%  r_c1       Marble Counter & Stools    Counter   lv 12  1250 +12.0%
+55   0.00% alone   0.15%  r_hd1      Host Lectern               Counter   lv 13   500 +4.8%
+56   0.00% alone   0.00%  r_s3       Hire a Host                Staff     lv 22  1250 +12.0%
+57   0.00% alone   0.31%  r_p4       Patio Heaters              Patio     lv 27   600 +5.8%
+58   0.00% alone   0.00%  r_s4       Hire a Head Chef           Staff     lv 42  5000 +48.2%
+== garden: 40 upgrades, most to least visible (share of the 1000x760 picture that changes without it)
+ 1  46.59% alone  46.59%  g_x2       Buy the Empty Lot          Expansion lv 32  1900 +23.7%  box 8,118,991,759
+ 2   5.88% alone   1.81%  g_walk     Stone Walkway              Grounds   lv 28   250 +0.0%  box 46,419,688,759
+ 3   4.06% alone   0.86%  g_p1       Raised Bed                 Plots     lv 14   800 +10.0%  box 205,323,722,549
+ 4   2.65% alone   0.76%  g_let      Salad Rows                 Plots     lv 15   650 +8.1%  box 280,276,653,549
+ 5   2.18% alone   2.18%  g_green2   Glass Conservatory         Expansion lv 55  8650 +107.9%  box 150,359,928,706
+ 6   2.05% alone   0.00%  g_fount    Stone Fountain             Grounds   lv 44   250 +0.0%  box 238,500,688,717
+ 7   1.90% alone   2.53%  g_p3       Full Rows                  Plots     lv 34  2000 +25.0%  box 150,359,928,706
+ 8   1.89% alone   0.75%  g_tom      Tomato Stakes              Plots     lv 16   650 +8.1%  box 280,323,653,549
+ 9   1.68% alone   1.63%  g_p2       More Plots                 Plots     lv 21  1200 +15.0%  box 200,370,462,527
+10   1.52% alone   0.68%  g_herb     Herb Planters              Plots     lv 17   400 +5.0%  box 280,323,653,549
+11   0.94% alone   1.04%  g_orch     Apple Trees                Orchard   lv 28   800 +10.0%  box 647,468,760,599
+12   0.83% alone   0.00%  g_arch     Rose Archway               Grounds   lv 32   250 +0.0%  box 419,570,508,691
+13   0.82% alone   0.00%  g_koi      Koi Pond                   Grounds   lv 40   250 +0.0%  box 357,525,502,628
+14   0.75% alone   0.62%  g_berry    Berry Patch                Plots     lv 23   650 +8.1%  box 518,453,653,549
+15   0.64% alone   0.68%  g_grape    Grape Trellis              Orchard   lv 33  1050 +13.1%  box 603,536,724,630
+16   0.55% alone   0.53%  g_lamp     Grow Lamps                 Tools     lv 30  1400 +17.5%  box 150,276,928,706
+17   0.55% alone   0.12%  g_drip     Drip Irrigation            Water     lv 26  1200 +15.0%  box 150,343,928,706
+18   0.43% alone   0.06%  g_spr      Sprinklers                 Water     lv 16  2000 +25.0%  box 150,350,928,706
+19   0.42% alone   0.00%  g_bench2   Garden Benches             Grounds   lv 29   250 +0.0%  box 149,517,366,648
+20   0.42% alone   0.22%  g_pump     Solar Water Pump           Water     lv 38  1600 +20.0%  box 150,359,928,706
+21   0.38% alone   0.39%  g_stand    Farm Stand                 Tools     lv 21   800 +10.0%  box 81,407,139,495
+22   0.35% alone   0.00%  g_gate     Iron Garden Gate           Grounds   lv 38   250 +0.0%  box 582,681,655,759
+23   0.34% alone   0.40%  g_bench    Potting Bench              Tools     lv 15   400 +5.0%  box 769,596,829,668
+24   0.34% alone   0.22%  g_mush     Mushroom Logs              Orchard   lv 36   650 +8.1%  box 150,359,928,706
+25   0.33% alone   0.45%  g_coop     Chicken Coop               Orchard   lv 30   800 +10.0%  box 611,671,689,744
+26   0.28% alone   0.00%  g_lant     Lantern Posts              Grounds   lv 34   250 +0.0%  box 128,419,309,578
+27   0.27% alone   0.36%  g_comp     Compost Bins               Tools     lv 18   650 +8.1%  box 836,573,891,633
+28   0.25% alone   0.26%  g_bee      Beehive                    Orchard   lv 25   800 +10.0%  box 666,661,719,715
+29   0.24% alone   0.26%  g_scare    Scarecrow                  Tools     lv 14   250 +3.1%  box 212,304,277,376
+30   0.22% alone   0.00%  g_gard2    Head Gardener              Tools     lv 42  2000 +25.0%  box 150,359,928,706
+31   0.19% alone   0.25%  g_can      Hose & Watering Can        Water     lv 14   400 +5.0%  box 387,289,953,597
+32   0.17% alone   0.30%  g_barrel   Rain Barrels               Water     lv 19   400 +5.0%  box 801,581,846,642
+33   0.17% alone   0.26%  g_wheel    Wheelbarrow                Tools     lv 17   300 +3.7%  box 871,551,923,618
+34   0.00% alone   0.00%  g_x1       Clear the Back Lot         Expansion lv 20   900 +11.2%
+35   0.00% alone   0.00%  g_shed     Tool Shed                  Tools     lv 24   800 +10.0%
+36   0.00% alone   0.00%  g_sun      Sundial                    Grounds   lv 30   250 +0.0%
+37   0.00% alone   0.00%  g_birdb    Bird Bath                  Grounds   lv 31   250 +0.0%
+38   0.00% alone   0.00%  g_topi     Clipped Topiary            Grounds   lv 33   250 +0.0%
+39   0.00% alone   0.00%  g_green1   Small Greenhouse           Expansion lv 29  1150 +14.3%
+40   0.00% alone   0.00%  g_gard     Hire a Gardener            Tools     lv 20  1200 +15.0%
+page errors 0 []

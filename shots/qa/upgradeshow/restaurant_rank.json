@@ -1,0 +1,855 @@
+[
+ {
+  "id": "r_x2",
+  "name": "Take Over Next Door",
+  "price": 8650,
+  "g": "Expansion",
+  "lv": 13,
+  "p": 0.833,
+  "share": 0.42638157894736844,
+  "box": [
+   9,
+   127,
+   990,
+   759
+  ],
+  "alone": 0.42638157894736844
+ },
+ {
+  "id": "r_noir",
+  "name": "Noir",
+  "price": 3650,
+  "g": "Expansion",
+  "lv": 14,
+  "p": 0.352,
+  "share": 0.26737105263157895,
+  "box": [
+   9,
+   162,
+   987,
+   758
+  ],
+  "alone": 0.26737105263157895
+ },
+ {
+  "id": "r_patio",
+  "name": "Sidewalk Patio",
+  "price": 2900,
+  "g": "Patio",
+  "lv": 20,
+  "p": 0.279,
+  "share": 0.07138947368421053,
+  "box": [
+   19,
+   467,
+   845,
+   759
+  ],
+  "alone": 0.07138947368421053
+ },
+ {
+  "id": "r_more2",
+  "name": "Curved Corner Booth",
+  "price": 1850,
+  "g": "Seating",
+  "lv": 26,
+  "p": 0.178,
+  "share": 0.06489210526315789,
+  "box": [
+   94,
+   181,
+   470,
+   574
+  ],
+  "alone": 0.027132894736842106
+ },
+ {
+  "id": "r_t3",
+  "name": "White Linen Service",
+  "price": 2200,
+  "g": "Seating",
+  "lv": 36,
+  "p": 0.212,
+  "share": 0.04287236842105263,
+  "box": [
+   242,
+   324,
+   616,
+   574
+  ],
+  "alone": 0.0329578947368421
+ },
+ {
+  "id": "r_p5",
+  "name": "Pergola & String Lights",
+  "price": 500,
+  "g": "Patio",
+  "lv": 32,
+  "p": 0,
+  "share": 0.01840263157894737,
+  "box": [
+   546,
+   605,
+   708,
+   759
+  ],
+  "alone": 0.01930921052631579
+ },
+ {
+  "id": "r_b1",
+  "name": "Leather Booths",
+  "price": 1250,
+  "g": "Seating",
+  "lv": 14,
+  "p": 0.12,
+  "share": 0.013993421052631579,
+  "box": [
+   111,
+   293,
+   332,
+   469
+  ],
+  "alone": 0.03148684210526316
+ },
+ {
+  "id": "r_k4",
+  "name": "Flat-Top Grill",
+  "price": 1250,
+  "g": "Kitchen",
+  "lv": 13,
+  "p": 0.12,
+  "share": 0.013402631578947369,
+  "box": [
+   538,
+   300,
+   973,
+   620
+  ],
+  "alone": 0.004998684210526316
+ },
+ {
+  "id": "r_p7",
+  "name": "Fire Pit Lounge",
+  "price": 3100,
+  "g": "Patio",
+  "lv": 40,
+  "p": 0.299,
+  "share": 0.013247368421052631,
+  "box": [
+   431,
+   536,
+   704,
+   711
+  ],
+  "alone": 0.012589473684210527
+ },
+ {
+  "id": "r_p1",
+  "name": "Bistro Patio Sets",
+  "price": 600,
+  "g": "Patio",
+  "lv": 20,
+  "p": 0.058,
+  "share": 0.012768421052631578,
+  "box": [
+   571,
+   545,
+   762,
+   693
+  ],
+  "alone": 0.016480263157894737
+ },
+ {
+  "id": "r_k8",
+  "name": "Grand French Range",
+  "price": 5600,
+  "g": "Kitchen",
+  "lv": 44,
+  "p": 0.539,
+  "share": 0.012172368421052631,
+  "box": [
+   538,
+   300,
+   973,
+   613
+  ],
+  "alone": 0.00415
+ },
+ {
+  "id": "r_k2",
+  "name": "Steel Prep Table",
+  "price": 600,
+  "g": "Kitchen",
+  "lv": 9,
+  "p": 0.058,
+  "share": 0.01093421052631579,
+  "box": [
+   684,
+   459,
+   871,
+   620
+  ],
+  "alone": 0.004957894736842106
+ },
+ {
+  "id": "r_more1",
+  "name": "Second Row of Tables",
+  "price": 1000,
+  "g": "Seating",
+  "lv": 10,
+  "p": 0.096,
+  "share": 0.010505263157894736,
+  "box": [
+   242,
+   447,
+   371,
+   548
+  ],
+  "alone": 0.011006578947368421
+ },
+ {
+  "id": "r_k7",
+  "name": "Wood-Fired Oven",
+  "price": 3100,
+  "g": "Kitchen",
+  "lv": 28,
+  "p": 0.299,
+  "share": 0.010468421052631578,
+  "box": [
+   331,
+   178,
+   973,
+   758
+  ],
+  "alone": 0.0051184210526315785
+ },
+ {
+  "id": "r_d3",
+  "name": "Walnut Dividers",
+  "price": 500,
+  "g": "Decor",
+  "lv": 11,
+  "p": 0,
+  "share": 0.009546052631578948,
+  "box": [
+   216,
+   307,
+   366,
+   468
+  ],
+  "alone": 0.01554342105263158
+ },
+ {
+  "id": "r_k5",
+  "name": "Fryer & Sinks",
+  "price": 1250,
+  "g": "Kitchen",
+  "lv": 16,
+  "p": 0.12,
+  "share": 0.009210526315789473,
+  "box": [
+   594,
+   333,
+   973,
+   620
+  ],
+  "alone": 0.004464473684210526
+ },
+ {
+  "id": "r_d8",
+  "name": "Sculptural Vases",
+  "price": 500,
+  "g": "Decor",
+  "lv": 33,
+  "p": 0,
+  "share": 0.008977631578947369,
+  "box": [
+   131,
+   178,
+   924,
+   758
+  ],
+  "alone": 0.0026894736842105263
+ },
+ {
+  "id": "r_bigmenu",
+  "name": "Grand Menu Board",
+  "price": 1250,
+  "g": "Menu",
+  "lv": 22,
+  "p": 0.12,
+  "share": 0.008282894736842105,
+  "box": [
+   528,
+   270,
+   650,
+   393
+  ],
+  "alone": 0.008048684210526316
+ },
+ {
+  "id": "r_k9",
+  "name": "Dish Station",
+  "price": 750,
+  "g": "Kitchen",
+  "lv": 20,
+  "p": 0.072,
+  "share": 0.007452631578947369,
+  "box": [
+   331,
+   178,
+   924,
+   758
+  ],
+  "alone": 0.0035657894736842105
+ },
+ {
+  "id": "r_k6",
+  "name": "Bakery Rack",
+  "price": 750,
+  "g": "Kitchen",
+  "lv": 19,
+  "p": 0.072,
+  "share": 0.007022368421052631,
+  "box": [
+   538,
+   300,
+   871,
+   620
+  ],
+  "alone": 0.003069736842105263
+ },
+ {
+  "id": "r_d7",
+  "name": "Oil Painting",
+  "price": 500,
+  "g": "Decor",
+  "lv": 34,
+  "p": 0,
+  "share": 0.005989473684210526,
+  "box": [
+   331,
+   178,
+   924,
+   758
+  ],
+  "alone": 0.0031039473684210525
+ },
+ {
+  "id": "r_star",
+  "name": "Star Plaque",
+  "price": 500,
+  "g": "Decor",
+  "lv": 60,
+  "p": 0,
+  "share": 0.004632894736842105,
+  "box": [
+   325,
+   175,
+   924,
+   758
+  ],
+  "alone": 0.0018618421052631578
+ },
+ {
+  "id": "r_p3",
+  "name": "Planters & Olive Trees",
+  "price": 500,
+  "g": "Patio",
+  "lv": 22,
+  "p": 0,
+  "share": 0.004425,
+  "box": [
+   610,
+   541,
+   835,
+   684
+  ],
+  "alone": 0.006578947368421052
+ },
+ {
+  "id": "r_m4",
+  "name": "Wood-Fired Pizza",
+  "price": 1250,
+  "g": "Menu",
+  "lv": 29,
+  "p": 0.12,
+  "share": 0.0041447368421052636,
+  "box": [
+   331,
+   178,
+   924,
+   758
+  ],
+  "alone": 0
+ },
+ {
+  "id": "r_d5",
+  "name": "Backlit Wine Wall",
+  "price": 500,
+  "g": "Decor",
+  "lv": 22,
+  "p": 0,
+  "share": 0.004123684210526316,
+  "box": [
+   637,
+   374,
+   703,
+   471
+  ],
+  "alone": 0.0041223684210526315
+ },
+ {
+  "id": "r_p6",
+  "name": "Charcoal Grill Station",
+  "price": 1250,
+  "g": "Patio",
+  "lv": 30,
+  "p": 0.12,
+  "share": 0.003807894736842105,
+  "box": [
+   594,
+   343,
+   805,
+   672
+  ],
+  "alone": 0.004936842105263158
+ },
+ {
+  "id": "r_cf2",
+  "name": "Espresso Bar",
+  "price": 1250,
+  "g": "Kitchen",
+  "lv": 15,
+  "p": 0.12,
+  "share": 0.003082894736842105,
+  "box": [
+   538,
+   300,
+   871,
+   620
+  ],
+  "alone": 0.0012328947368421053
+ },
+ {
+  "id": "r_k3",
+  "name": "Commercial Fridge",
+  "price": 750,
+  "g": "Kitchen",
+  "lv": 11,
+  "p": 0.072,
+  "share": 0.0027473684210526316,
+  "box": [
+   788,
+   463,
+   837,
+   541
+  ],
+  "alone": 0.003568421052631579
+ },
+ {
+  "id": "r_l2",
+  "name": "Brass Chandeliers",
+  "price": 500,
+  "g": "Decor",
+  "lv": 36,
+  "p": 0,
+  "share": 0.002706578947368421,
+  "box": [
+   372,
+   201,
+   487,
+   364
+  ],
+  "alone": 0.002593421052631579
+ },
+ {
+  "id": "r_c2",
+  "name": "Black Marble Counter",
+  "price": 3750,
+  "g": "Counter",
+  "lv": 34,
+  "p": 0.361,
+  "share": 0.0026171052631578946,
+  "box": [
+   643,
+   353,
+   756,
+   536
+  ],
+  "alone": 0.005480263157894737
+ },
+ {
+  "id": "r_p2",
+  "name": "Market Umbrellas",
+  "price": 1000,
+  "g": "Patio",
+  "lv": 24,
+  "p": 0.096,
+  "share": 0.002217105263157895,
+  "box": [
+   577,
+   660,
+   674,
+   751
+  ],
+  "alone": 0.013286842105263158
+ },
+ {
+  "id": "r_till",
+  "name": "Bigger Till",
+  "price": 850,
+  "g": "Money",
+  "lv": 10,
+  "p": 0,
+  "share": 0.0020592105263157897,
+  "box": [
+   692,
+   409,
+   745,
+   463
+  ],
+  "alone": 0.002205263157894737
+ },
+ {
+  "id": "r_hd2",
+  "name": "Host Desk",
+  "price": 750,
+  "g": "Counter",
+  "lv": 23,
+  "p": 0.072,
+  "share": 0.0017578947368421052,
+  "box": [
+   510,
+   535,
+   551,
+   595
+  ],
+  "alone": 0.0016763157894736842
+ },
+ {
+  "id": "r_chef",
+  "name": "Chef's Neon",
+  "price": 500,
+  "g": "Decor",
+  "lv": 24,
+  "p": 0,
+  "share": 0.0017486842105263157,
+  "box": [
+   881,
+   428,
+   915,
+   483
+  ],
+  "alone": 0.0017486842105263157
+ },
+ {
+  "id": "r_m1",
+  "name": "Breakfast Menu",
+  "price": 500,
+  "g": "Menu",
+  "lv": 8,
+  "p": 0.048,
+  "share": 0.0016802631578947368,
+  "box": [
+   538,
+   300,
+   854,
+   442
+  ],
+  "alone": 0.0005986842105263158
+ },
+ {
+  "id": "r_m2",
+  "name": "Burger Menu",
+  "price": 750,
+  "g": "Menu",
+  "lv": 10,
+  "p": 0.072,
+  "share": 0.001644736842105263,
+  "box": [
+   538,
+   300,
+   880,
+   455
+  ],
+  "alone": 0.0005618421052631579
+ },
+ {
+  "id": "r_d1",
+  "name": "Potted Plants",
+  "price": 500,
+  "g": "Decor",
+  "lv": 9,
+  "p": 0,
+  "share": 0.0015039473684210526,
+  "box": [
+   38,
+   420,
+   82,
+   473
+  ],
+  "alone": 0.0033328947368421054
+ },
+ {
+  "id": "r_sign",
+  "name": "Open Sign",
+  "price": 500,
+  "g": "Decor",
+  "lv": 8,
+  "p": 0,
+  "share": 0.0011960526315789473,
+  "box": [
+   513,
+   674,
+   546,
+   720
+  ],
+  "alone": 0.0014723684210526315
+ },
+ {
+  "id": "r_m6",
+  "name": "Tasting Menu",
+  "price": 5600,
+  "g": "Menu",
+  "lv": 50,
+  "p": 0.539,
+  "share": 0.0011092105263157896,
+  "box": [
+   538,
+   300,
+   640,
+   379
+  ],
+  "alone": 0
+ },
+ {
+  "id": "r_m3",
+  "name": "Pasta Night",
+  "price": 1000,
+  "g": "Menu",
+  "lv": 17,
+  "p": 0.096,
+  "share": 0.001080263157894737,
+  "box": [
+   538,
+   300,
+   640,
+   379
+  ],
+  "alone": 0
+ },
+ {
+  "id": "r_m5",
+  "name": "Seasonal Menu",
+  "price": 1600,
+  "g": "Menu",
+  "lv": 37,
+  "p": 0.154,
+  "share": 0.0010657894736842105,
+  "box": [
+   538,
+   300,
+   640,
+   379
+  ],
+  "alone": 0
+ },
+ {
+  "id": "r_l1",
+  "name": "Brass Sconces",
+  "price": 500,
+  "g": "Decor",
+  "lv": 10,
+  "p": 0,
+  "share": 0.0010342105263157894,
+  "box": [
+   124,
+   257,
+   318,
+   374
+  ],
+  "alone": 0.0011644736842105264
+ },
+ {
+  "id": "r_s1",
+  "name": "Hire a Cook",
+  "price": 1250,
+  "g": "Staff",
+  "lv": 9,
+  "p": 0.12,
+  "share": 0.0007368421052631579,
+  "box": [
+   789,
+   383,
+   826,
+   434
+  ],
+  "alone": 0.0007368421052631579
+ },
+ {
+  "id": "r_cf1",
+  "name": "Drip Coffee",
+  "price": 500,
+  "g": "Kitchen",
+  "lv": 8,
+  "p": 0.048,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_d2",
+  "name": "Shelves & Pictures",
+  "price": 500,
+  "g": "Decor",
+  "lv": 9,
+  "p": 0,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_d4",
+  "name": "Neon Sign",
+  "price": 500,
+  "g": "Decor",
+  "lv": 14,
+  "p": 0,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_k1",
+  "name": "Gas Range",
+  "price": 750,
+  "g": "Kitchen",
+  "lv": 8,
+  "p": 0.072,
+  "share": 0,
+  "box": null,
+  "alone": 0.002706578947368421
+ },
+ {
+  "id": "r_scr",
+  "name": "Digital Menu Screen",
+  "price": 750,
+  "g": "Decor",
+  "lv": 15,
+  "p": 0.072,
+  "share": 0,
+  "box": null,
+  "alone": 0.005563157894736842
+ },
+ {
+  "id": "r_t1",
+  "name": "Walnut Dining Tables",
+  "price": 1000,
+  "g": "Seating",
+  "lv": 8,
+  "p": 0.096,
+  "share": 0,
+  "box": null,
+  "alone": 0.02607763157894737
+ },
+ {
+  "id": "r_s2",
+  "name": "Hire a Waiter",
+  "price": 1600,
+  "g": "Staff",
+  "lv": 12,
+  "p": 0.154,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_t2",
+  "name": "Marble Round Tables",
+  "price": 1600,
+  "g": "Seating",
+  "lv": 18,
+  "p": 0.154,
+  "share": 0,
+  "box": null,
+  "alone": 0.03308157894736842
+ },
+ {
+  "id": "r_x1",
+  "name": "Knock Through the Wall",
+  "price": 2200,
+  "g": "Expansion",
+  "lv": 12,
+  "p": 0.212,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_cool",
+  "name": "Drinks Cooler",
+  "price": 600,
+  "g": "Decor",
+  "lv": 12,
+  "p": 0.058,
+  "share": 0,
+  "box": null,
+  "alone": 0.0022460526315789472
+ },
+ {
+  "id": "r_c1",
+  "name": "Marble Counter & Stools",
+  "price": 1250,
+  "g": "Counter",
+  "lv": 12,
+  "p": 0.12,
+  "share": 0,
+  "box": null,
+  "alone": 0.0028342105263157893
+ },
+ {
+  "id": "r_hd1",
+  "name": "Host Lectern",
+  "price": 500,
+  "g": "Counter",
+  "lv": 13,
+  "p": 0.048,
+  "share": 0,
+  "box": null,
+  "alone": 0.0015
+ },
+ {
+  "id": "r_s3",
+  "name": "Hire a Host",
+  "price": 1250,
+  "g": "Staff",
+  "lv": 22,
+  "p": 0.12,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "r_p4",
+  "name": "Patio Heaters",
+  "price": 600,
+  "g": "Patio",
+  "lv": 27,
+  "p": 0.058,
+  "share": 0,
+  "box": null,
+  "alone": 0.003142105263157895
+ },
+ {
+  "id": "r_s4",
+  "name": "Hire a Head Chef",
+  "price": 5000,
+  "g": "Staff",
+  "lv": 42,
+  "p": 0.482,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ }
+]

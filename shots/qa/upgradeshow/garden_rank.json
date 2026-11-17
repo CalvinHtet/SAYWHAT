@@ -1,0 +1,607 @@
+[
+ {
+  "id": "g_x2",
+  "name": "Buy the Empty Lot",
+  "price": 1900,
+  "g": "Expansion",
+  "lv": 32,
+  "p": 0.237,
+  "share": 0.46585394736842106,
+  "box": [
+   8,
+   118,
+   991,
+   759
+  ],
+  "alone": 0.46585394736842106
+ },
+ {
+  "id": "g_walk",
+  "name": "Stone Walkway",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 28,
+  "p": 0,
+  "share": 0.05882105263157895,
+  "box": [
+   46,
+   419,
+   688,
+   759
+  ],
+  "alone": 0.018075
+ },
+ {
+  "id": "g_p1",
+  "name": "Raised Bed",
+  "price": 800,
+  "g": "Plots",
+  "lv": 14,
+  "p": 0.1,
+  "share": 0.040611842105263155,
+  "box": [
+   205,
+   323,
+   722,
+   549
+  ],
+  "alone": 0.008567105263157895
+ },
+ {
+  "id": "g_let",
+  "name": "Salad Rows",
+  "price": 650,
+  "g": "Plots",
+  "lv": 15,
+  "p": 0.081,
+  "share": 0.026539473684210526,
+  "box": [
+   280,
+   276,
+   653,
+   549
+  ],
+  "alone": 0.007573684210526316
+ },
+ {
+  "id": "g_green2",
+  "name": "Glass Conservatory",
+  "price": 8650,
+  "g": "Expansion",
+  "lv": 55,
+  "p": 1.079,
+  "share": 0.021842105263157895,
+  "box": [
+   150,
+   359,
+   928,
+   706
+  ],
+  "alone": 0.021842105263157895
+ },
+ {
+  "id": "g_fount",
+  "name": "Stone Fountain",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 44,
+  "p": 0,
+  "share": 0.020473684210526314,
+  "box": [
+   238,
+   500,
+   688,
+   717
+  ],
+  "alone": 0.00002368421052631579
+ },
+ {
+  "id": "g_p3",
+  "name": "Full Rows",
+  "price": 2000,
+  "g": "Plots",
+  "lv": 34,
+  "p": 0.25,
+  "share": 0.01899078947368421,
+  "box": [
+   150,
+   359,
+   928,
+   706
+  ],
+  "alone": 0.025347368421052632
+ },
+ {
+  "id": "g_tom",
+  "name": "Tomato Stakes",
+  "price": 650,
+  "g": "Plots",
+  "lv": 16,
+  "p": 0.081,
+  "share": 0.018918421052631577,
+  "box": [
+   280,
+   323,
+   653,
+   549
+  ],
+  "alone": 0.0074921052631578946
+ },
+ {
+  "id": "g_p2",
+  "name": "More Plots",
+  "price": 1200,
+  "g": "Plots",
+  "lv": 21,
+  "p": 0.15,
+  "share": 0.01682105263157895,
+  "box": [
+   200,
+   370,
+   462,
+   527
+  ],
+  "alone": 0.016255263157894738
+ },
+ {
+  "id": "g_herb",
+  "name": "Herb Planters",
+  "price": 400,
+  "g": "Plots",
+  "lv": 17,
+  "p": 0.05,
+  "share": 0.015214473684210526,
+  "box": [
+   280,
+   323,
+   653,
+   549
+  ],
+  "alone": 0.006793421052631579
+ },
+ {
+  "id": "g_orch",
+  "name": "Apple Trees",
+  "price": 800,
+  "g": "Orchard",
+  "lv": 28,
+  "p": 0.1,
+  "share": 0.0094,
+  "box": [
+   647,
+   468,
+   760,
+   599
+  ],
+  "alone": 0.010428947368421053
+ },
+ {
+  "id": "g_arch",
+  "name": "Rose Archway",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 32,
+  "p": 0,
+  "share": 0.008253947368421053,
+  "box": [
+   419,
+   570,
+   508,
+   691
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_koi",
+  "name": "Koi Pond",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 40,
+  "p": 0,
+  "share": 0.008163157894736843,
+  "box": [
+   357,
+   525,
+   502,
+   628
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_berry",
+  "name": "Berry Patch",
+  "price": 650,
+  "g": "Plots",
+  "lv": 23,
+  "p": 0.081,
+  "share": 0.007475,
+  "box": [
+   518,
+   453,
+   653,
+   549
+  ],
+  "alone": 0.006244736842105263
+ },
+ {
+  "id": "g_grape",
+  "name": "Grape Trellis",
+  "price": 1050,
+  "g": "Orchard",
+  "lv": 33,
+  "p": 0.131,
+  "share": 0.006378947368421053,
+  "box": [
+   603,
+   536,
+   724,
+   630
+  ],
+  "alone": 0.006842105263157895
+ },
+ {
+  "id": "g_lamp",
+  "name": "Grow Lamps",
+  "price": 1400,
+  "g": "Tools",
+  "lv": 30,
+  "p": 0.175,
+  "share": 0.005525,
+  "box": [
+   150,
+   276,
+   928,
+   706
+  ],
+  "alone": 0.005331578947368421
+ },
+ {
+  "id": "g_drip",
+  "name": "Drip Irrigation",
+  "price": 1200,
+  "g": "Water",
+  "lv": 26,
+  "p": 0.15,
+  "share": 0.005451315789473684,
+  "box": [
+   150,
+   343,
+   928,
+   706
+  ],
+  "alone": 0.0011671052631578947
+ },
+ {
+  "id": "g_spr",
+  "name": "Sprinklers",
+  "price": 2000,
+  "g": "Water",
+  "lv": 16,
+  "p": 0.25,
+  "share": 0.004268421052631579,
+  "box": [
+   150,
+   350,
+   928,
+   706
+  ],
+  "alone": 0.0005539473684210526
+ },
+ {
+  "id": "g_bench2",
+  "name": "Garden Benches",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 29,
+  "p": 0,
+  "share": 0.0042,
+  "box": [
+   149,
+   517,
+   366,
+   648
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_pump",
+  "name": "Solar Water Pump",
+  "price": 1600,
+  "g": "Water",
+  "lv": 38,
+  "p": 0.2,
+  "share": 0.004181578947368421,
+  "box": [
+   150,
+   359,
+   928,
+   706
+  ],
+  "alone": 0.0021644736842105264
+ },
+ {
+  "id": "g_stand",
+  "name": "Farm Stand",
+  "price": 800,
+  "g": "Tools",
+  "lv": 21,
+  "p": 0.1,
+  "share": 0.0037789473684210527,
+  "box": [
+   81,
+   407,
+   139,
+   495
+  ],
+  "alone": 0.003898684210526316
+ },
+ {
+  "id": "g_gate",
+  "name": "Iron Garden Gate",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 38,
+  "p": 0,
+  "share": 0.0035276315789473686,
+  "box": [
+   582,
+   681,
+   655,
+   759
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_bench",
+  "name": "Potting Bench",
+  "price": 400,
+  "g": "Tools",
+  "lv": 15,
+  "p": 0.05,
+  "share": 0.0034210526315789475,
+  "box": [
+   769,
+   596,
+   829,
+   668
+  ],
+  "alone": 0.004003947368421052
+ },
+ {
+  "id": "g_mush",
+  "name": "Mushroom Logs",
+  "price": 650,
+  "g": "Orchard",
+  "lv": 36,
+  "p": 0.081,
+  "share": 0.0034026315789473685,
+  "box": [
+   150,
+   359,
+   928,
+   706
+  ],
+  "alone": 0.002238157894736842
+ },
+ {
+  "id": "g_coop",
+  "name": "Chicken Coop",
+  "price": 800,
+  "g": "Orchard",
+  "lv": 30,
+  "p": 0.1,
+  "share": 0.003261842105263158,
+  "box": [
+   611,
+   671,
+   689,
+   744
+  ],
+  "alone": 0.004519736842105263
+ },
+ {
+  "id": "g_lant",
+  "name": "Lantern Posts",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 34,
+  "p": 0,
+  "share": 0.002836842105263158,
+  "box": [
+   128,
+   419,
+   309,
+   578
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_comp",
+  "name": "Compost Bins",
+  "price": 650,
+  "g": "Tools",
+  "lv": 18,
+  "p": 0.081,
+  "share": 0.0027236842105263157,
+  "box": [
+   836,
+   573,
+   891,
+   633
+  ],
+  "alone": 0.003575
+ },
+ {
+  "id": "g_bee",
+  "name": "Beehive",
+  "price": 800,
+  "g": "Orchard",
+  "lv": 25,
+  "p": 0.1,
+  "share": 0.002543421052631579,
+  "box": [
+   666,
+   661,
+   719,
+   715
+  ],
+  "alone": 0.0026460526315789474
+ },
+ {
+  "id": "g_scare",
+  "name": "Scarecrow",
+  "price": 250,
+  "g": "Tools",
+  "lv": 14,
+  "p": 0.031,
+  "share": 0.002398684210526316,
+  "box": [
+   212,
+   304,
+   277,
+   376
+  ],
+  "alone": 0.002639473684210526
+ },
+ {
+  "id": "g_gard2",
+  "name": "Head Gardener",
+  "price": 2000,
+  "g": "Tools",
+  "lv": 42,
+  "p": 0.25,
+  "share": 0.002168421052631579,
+  "box": [
+   150,
+   359,
+   928,
+   706
+  ],
+  "alone": 0
+ },
+ {
+  "id": "g_can",
+  "name": "Hose & Watering Can",
+  "price": 400,
+  "g": "Water",
+  "lv": 14,
+  "p": 0.05,
+  "share": 0.00195,
+  "box": [
+   387,
+   289,
+   953,
+   597
+  ],
+  "alone": 0.0025144736842105265
+ },
+ {
+  "id": "g_barrel",
+  "name": "Rain Barrels",
+  "price": 400,
+  "g": "Water",
+  "lv": 19,
+  "p": 0.05,
+  "share": 0.001731578947368421,
+  "box": [
+   801,
+   581,
+   846,
+   642
+  ],
+  "alone": 0.0030289473684210525
+ },
+ {
+  "id": "g_wheel",
+  "name": "Wheelbarrow",
+  "price": 300,
+  "g": "Tools",
+  "lv": 17,
+  "p": 0.037,
+  "share": 0.0017026315789473684,
+  "box": [
+   871,
+   551,
+   923,
+   618
+  ],
+  "alone": 0.0025578947368421054
+ },
+ {
+  "id": "g_x1",
+  "name": "Clear the Back Lot",
+  "price": 900,
+  "g": "Expansion",
+  "lv": 20,
+  "p": 0.112,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_shed",
+  "name": "Tool Shed",
+  "price": 800,
+  "g": "Tools",
+  "lv": 24,
+  "p": 0.1,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_sun",
+  "name": "Sundial",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 30,
+  "p": 0,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_birdb",
+  "name": "Bird Bath",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 31,
+  "p": 0,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_topi",
+  "name": "Clipped Topiary",
+  "price": 250,
+  "g": "Grounds",
+  "lv": 33,
+  "p": 0,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_green1",
+  "name": "Small Greenhouse",
+  "price": 1150,
+  "g": "Expansion",
+  "lv": 29,
+  "p": 0.143,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ },
+ {
+  "id": "g_gard",
+  "name": "Hire a Gardener",
+  "price": 1200,
+  "g": "Tools",
+  "lv": 20,
+  "p": 0.15,
+  "share": 0,
+  "box": null,
+  "alone": 0
+ }
+]
