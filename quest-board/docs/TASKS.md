@@ -222,7 +222,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX for ROOMS/LEAD: a permanent mop in every new Restaurant since v1.10 (QA findings). 15-minute loop off (Cal).
+- Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX: a permanent mop since v1.10 (QA findings).
   Was: Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings).
   Was: Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings).
   Was: Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings).
@@ -241,6 +242,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS 4456e71 (QA's f210213 FIX and both NOTES; clean plain build; auditall.js, bigrooms.js as old owner and LIVE=1, and a
+  check for the mop sprite in the drawn Restaurant; pictures shots/qa/rooms1117e/). With 6749725, v1.11 can ship.
+  - Mop: drawn in a brand-new Restaurant and before the first decor buy, gone once Walnut Dividers (r_d3) is bought, gone in a full
+    Restaurant for a new player (live only) and for an old owner. (ROOMS's code comment calls r_d3 "Menu Boards"; it is Walnut
+    Dividers, a kept 500-coin decor step at level 11. Harmless.)
+  - Grow lamps: the beds under them keep their green.
+  - Garden corner: beehives behind the koi pond and the coop between pond and fountain, on the open lawn, clear of the spray, the
+    beds and the path; the gate corner holds only gate, logs, solar panel, pump and potting bench. No longer crowded.
+  - auditall: Garden clean, Restaurant only the known lines; 0 page errors.
 - ROOMS 6749725: fixes 3, 4 and 6 from be9bc20 against the 40/35 rooms (clean plain build; auditall.js; bigrooms.js twice: as an old
   owner with every piece incl. the retired ones, and with the new LIVE=1 switch as a new player with only what is on sale; pictures
   shots/qa/rooms1117d/big_{restaurant,garden}{,_live}.jpg and z_*.jpg).
