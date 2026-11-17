@@ -149,11 +149,17 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS (NICE COCK on the Street Fri 11-20, random drops after; QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on fea3674): v1.05 LIVE as fea3674, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS.
   Was: Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73.
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.05 live (LEAD: Live and Test at fea3674 on release/v1.05, wlive PASS, 3013/3013 identical):
+  - fea3674 against the passed b10ca52: the only shipped file that differs is app/src/30_app_b.js, and only its APPV line (100 -> 105).
+  - Art against release/v1.04: only NICE COCK's files, 48 changed and the 8 old yawn layers removed. A clean web build of fea3674 has
+    3,012 files with APPV 105, + version.txt = 3,013 (v1.04's 3,020 less the 8 yawn layers).
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, b10ca52 (LEAD; NICE COCK on the Street Fri 11-20, then random drops; Cal): clean copies of b10ca52 and f16dbc2, plain builds.
   v1.05 = f16dbc2 + b10ca52 can ship.
   - Drops (rigtest/lead/dropcal.js 11-09 to 2027-04-30 on both builds): every row before 11-20 identical. Fri 11-20: the Street drops
