@@ -18,8 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
-- FOR QA (9eb7f13): Cal's two notes. The Wheel closes back to the Board about 5 s after a spin (its Board row was already hidden until the next spin); a one-time Board tip when a player first holds a streak freeze (used for them, no button), and the earn line says so. rigtest/lead/v112.js PASS (Wheel, tip, a missed day covered by a freeze through a real quest).
+- (QA: DONE on 777411d, PASS; QA findings) FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
+- (QA: DONE on 9eb7f13, PASS; two NOTES, the Wheel's prize time and the freeze tip's wording; QA findings) FOR QA (9eb7f13): Cal's two notes. The Wheel closes back to the Board about 5 s after a spin (its Board row was already hidden until the next spin); a one-time Board tip when a player first holds a streak freeze (used for them, no button), and the earn line says so. rigtest/lead/v112.js PASS (Wheel, tip, a missed day covered by a freeze through a real quest).
 - v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9. (QA: DONE, PASS; QA findings)
 - (QA: DONE on ff44edc, PASS; one NOTE for the Lock and Key wiring; QA findings) FOR QA (ff44edc): crew posts for ROOMS's Lock and Key staff. A staff entry [id, look, {post:"tag"}] keeps that person on the spot tagged "tag" (act "sit" sits); {wand:1} walks the room; post:1 on a spot keeps others off; a posted person never serves. rigtest/lead/crewpost.js PASS (stand-ins, 40 s in the open window). No room uses it yet, so nothing on screen changes until ROOMS wires it.
 - Done: v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
@@ -229,7 +229,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings). Next: LEAD's 777411d and 9eb7f13.
+- Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings). Nothing open from QA.
+  Was: Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings).
   Was: Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings).
   Was: Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings).
   Was: Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings).
@@ -255,6 +256,39 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS c1c8c12 (QA's two FIXes on fff49a2). Lock and Key +15 = fff49a2 + c1c8c12 can ship. Clean build of c1c8c12 (it
+  carries LEAD's 777411d and 9eb7f13).
+  - Club: cb_dj is plain RSK again, and the dj spot is {tag:"dj",onspot:1}. crewreg.js ROOM=club OWN=cb_floor,cb_dj: "No crew
+    here" in 0 of 60 samples (60 of 60 on fff49a2). The DJ works.
+  - Piano: both guest spots moved to the piano's tail on open floor (spread to 7.0,9.6 and 5.78,9.08), and guests use them (14 and 79
+    samples of 100). In play, nobody stands up-screen of the pianist or inside the lid. The guest at the tail stands clear of the
+    piano, facing it (fixed_piano_spots.jpg).
+  - postlook.js: both posts still held (0.00 off), and nobody else within 0.6 of either post. 0 page errors.
+  - Not checked: a phone, and buy orders other than full.
+- PASS, LEAD 777411d (lfFree skips any spot within 0.5 of a held post; QA's ff44edc NOTE).
+  - crewpost.js (60 s) on QA's clean build of 9eb7f13: PASS.
+  - crewreg.js, six fully bought rooms, 777411d (in 9eb7f13) against fff49a2:
+    - Every crew member present 60 of 60, nobody stuck over 0.5 s, never "No crew here", no page errors, on both builds.
+    - Lock and Key's singer and pianist hold their posts (100% busy, 1 place) on both. The Club's DJ was still posted in both
+      (fff49a2's), so its 100% is that.
+  - Caveat: 0.5 is a distance in room units. It would not have caught the piano spot stacked up-screen of the pianist (1.0 away);
+    ROOMS fixed that one by hand (c1c8c12).
+- PASS with two NOTES, LEAD 9eb7f13 (Cal's two notes: the Wheel closes to the Board; streak freezes explained).
+  - rigtest/lead/v112.js on QA's clean build: PASS.
+    - Wheel: the row, the spin, the prize, back to the Board with no Wheel row, the prize paid.
+    - Freezes: no tip with 0, the tip with 1, Got it ends it.
+    - Two missed days use the rest day and a freeze (streak 8 to 9, freezes 1 to 0), and day 5 earns one with the new line.
+  - Code: spin() lands at 3.6 s and the wrapper closes at 5.2 s, only if still on the Wheel and not spinning. creditStreak's
+    wrapper only rewrites the earn line. The freeze tour sits last in TOURS, so it waits behind any other unseen tour.
+  - NOTE (LEAD, Cal's call): the prize gets about 1.6 s on the Wheel. Its pop toast (pop()) fades at 1.2 s and is gone at 1.7 s,
+    about when the Wheel closes, and the Board then has no Wheel row.
+    - So a long prize, such as "Faux Fur Trapper from DIAL-UP (in your Wardrobe)", is on screen for about 1.6 s in all.
+    - QA would give it about 3 s (close at about 6.6 s), or keep the toast up longer for Wheel prizes.
+  - NOTE (LEAD): the tip says "if you miss a day, one is used for you". creditStreak spends the week's free rest day first, and
+    spends nothing (the streak drops) when the gap is longer than the rest day plus the freezes held.
+    - Suggested: "If you miss a day, your weekly rest day covers it first, then a freeze is used for you the next time you finish
+      a quest. Miss more days than that covers and the streak drops."
+  - Not checked: a phone, and how the Wheel's timing feels in hand (QA read it from code and LEAD's test).
 - NOT A PASS yet, ROOMS fff49a2 (Lock and Key +15, Club DJ post). Clean worktrees of fff49a2 and its parent 8ff1307, plain builds.
   Pictures: shots/qa/lockkey15/. Scripts: rigtest/qa/bigrooms.js (LIVE=1 and old owner), auditall.js, crewreg.js (new OWN= for a
   partial buy), postlook.js (new: the posted staff in play).
@@ -1864,7 +1898,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). (QA: DONE on fff49a2, NOT A PASS yet: two small FIXes, the Club DJ's post and the piano guest spot behind the pianist; the rest PASS; QA findings) WAITING ON QA: check fff49a2, Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. Next: OVERPASS. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). (QA: DONE on fff49a2, NOT A PASS yet: two small FIXes; QA findings) (QA: DONE on fff49a2 + c1c8c12, PASS, Lock and Key +15 can ship; QA findings) WAITING ON QA: check fff49a2, Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. Next: OVERPASS. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own
