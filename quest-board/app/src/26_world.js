@@ -362,7 +362,7 @@ LFROOM.restaurant=function(C){
   if(H("r_star")){var sty=1.0;/* rule 20 (Cal: "the star plaque is touching the window") */lfSpr(C,"rs_star",.05,sty,.1,.1,{h:1,H:84,dy:-80,nosh:1});lfLight(C,.35,sty+.05,96,"#ffd890",1.6,.55)}/* QA audit: bigger and lower, readable on a phone; re-audit 2026-11-07 (0.21%): bigger again, with a warm picture light so it reads on the dark wall */
   /* Cal: "the painting is being covered by the booth": smaller and higher, above the booth backs */if(H("r_d7")&&st>0)lfSpr(C,"rdx_art",1.3,.05,1.6,.05,{h:1,flip:1,dy:-74,nosh:1,nob:1});
   /* appliances along the back of the wing, an island in front of them */
-  var isl=[0,2.0,2.5][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.08;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.14;return at};
+  /* QA sweep 11-17: the island read as loose pieces mid-floor; one tight run closer to the cook line (the back line is full) */var isl=[0,1.9,2.2][st],bx=Wi+.35,ix=Wi+.5,back=function(k,w,d,h){rsS(C,k,bx,.15,w,d,h,{flip:1});var at=bx+w/2;bx+=w+.08;return at},front=function(k,w,d,h){rsS(C,k,ix,isl,w,d,h,{flip:1});var at=ix+w/2;ix+=w+.02;return at};
   /* re-audit 2026-11-07 (0.37%): the Grand French Range's art is square, but it was drawn in the old range's footprint behind the pot rack; wider now (1.5, gaps .08: QA b296529, at 1.7 the full row pushed the pizza oven past the right wall) */
   var cookAt=H("r_k8")?back("rsx_grand",1.5,1.05,34):back(H("r_k1")?"rsx_range":"rsx_hotplate",1.3,1.0,30);C.s("work",cookAt,1.5,-1,"work",[8,16],{tag:"cook"});
   back(H("r_k3")?"rsx_fridge":"rsx_minifridge",1.1,.9,50);
@@ -372,7 +372,7 @@ LFROOM.restaurant=function(C){
     if(H("r_k6"))front("rsx_bake",.9,.8,50);if(H("r_k9")&&st>1)front("rsx_dish",1.6,.9,30)}
   else{var pz=H("r_k2")?back("rsx_prep",1.8,.95,30):bx+.8;C.s("work",pz,1.5,-1,"work",[6,10],{tag:"prep"})}
   /* QA (Cal's use check): at the island's far end it half blocked the pizza oven; it takes the next island spot instead */
-  if(H("r_cf2")&&st>0)rsS(C,"rs_coffee",st>1&&H("r_k7")?Math.min(ix,Wt-3.2):Wt-1.7,isl,1.3,.9,26,{flip:1});/* QA: the drip machine stood on a stool; it sits on the counter now, where the diners pour */
+  /* QA sweep 11-17: in the kitchen it faced the patio; now the end of the bar on the dining side, facing the diners like the pass */if(H("r_cf2")&&st>0)lfSpr(C,"rs_coffee",Wi-1.1,.2+[1,2,2][st]*1.85,.95,1.3,{h:26,ctr:1,flip:0});/* QA: the drip machine stood on a stool; it sits on the counter now, where the diners pour */
   /* the pass is on the dining room side of that wall: food comes over it, and the good seats face it */
   var fine=H("r_c2")&&st>1,tiles=[1,2,2][st],td=1.8;
   /* QA: the till faces the diners across the counter, not the kitchen */
@@ -448,7 +448,7 @@ LFROOM.restaurant=function(C){
     /* Cal: no room crowded. The front of the deck holds two pieces with air between them: the fire pit on the left and, on
        the right, the umbrella table, which moves under the pergola as a plain table once the pergola is up */
     if(H("r_p2")&&!H("r_p5"))[[px+6.0,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
-    if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+5.65,D-2.75,"P");
+    if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+6.45,D-2.75,"P");
     /* a low rail between the deck and the dining room, open at the front door */
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
     /* QA: out on the deck between the two bistro sets, not across the kitchen half wall */
@@ -456,7 +456,7 @@ LFROOM.restaurant=function(C){
     /* QA (Cal's use check): the smoker faced a bistro chair; it stands in the corner by the olive tree */
     if(H("r_p6"))rsS(C,"rsx_bbq",Wt-3.0,kd+.25,1.7,1.0,28,{flip:1});
     /* QA: a little wider and centred on its table, so the posts stand clear of the chairs */
-    if(H("r_p5")){rsS(C,"rsx_pergola",px+5.22,D-3.18,2.85,2.85,90,{dk:-4});lfLight(C,px+6.65,D-1.75,90,"#ffd890",3,.5)}
+    /* QA sweep 11-17: centred on the table its roof hid the table top (two chairs facing nothing); it stands a step back, so the table sits under its front edge and shows */if(H("r_p5")){rsS(C,"rsx_pergola",px+4.85,D-3.6,2.85,2.85,90,{dk:-4});lfLight(C,px+6.3,D-2.15,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */
     if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+.6,D-3.1,2.8,2.8,24,{});lfLight(C,px+2.0,D-1.7,50,"#ff9a3a",2.4,.55)/* clear of the deck rail (QA) */}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
   }

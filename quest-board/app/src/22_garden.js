@@ -107,12 +107,12 @@ var GDFIT={gdx_seed:{t:[.33,.03],r:[.99,.66],l:[.01,.37],rim:.03},gdx_raised:{t:
   gd_bed1:{t:[.33,.12],r:[.995,.55],l:[.005,.35],rim:.22},gd_bed2:{t:[.33,.03],r:[.995,.48],l:[.005,.26],rim:.26},
   gd_berry:{t:[.53,.08],r:[.995,.47],l:[.005,.33],rim:.26,w:2.2}};
 /* a grow light along a bed, drawn on the room's own grid: two thin posts, an LED bar down the middle, a violet wash */
-function gdGrowLight(C,x,y,w,d){var m=y+d/2,z=62,P=function(a,b,c){return lfPt(lfP(a,b,c))},x0=x+.25,x1=x+w-.25,
+/* QA sweep 11-17: at 62 high on hairline posts the bar read as floating behind the bed; lower, on solid posts with feet on the bed ends */function gdGrowLight(C,x,y,w,d){var m=y+d/2,z=40,P=function(a,b,c){return lfPt(lfP(a,b,c))},x0=x+.2,x1=x+w-.2,
     s='<polygon points="'+[lfP(x0,y+.2,18),lfP(x1,y+.2,18),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.16)"/>'
     +'<polygon points="'+[lfP(x0,m,z-2),lfP(x1,m,z-2),lfP(x1,y+d-.2,18),lfP(x0,y+d-.2,18)].map(lfPt).join(" ")+'" fill="rgba(214,138,255,.12)"/>';
-  [x0,x1].forEach(function(px){s+='<path d="M'+P(px,m,0)+' L'+P(px,m,z)+'" stroke="#26232e" stroke-width="2.2"/>'});
+  [x0,x1].forEach(function(px){s+='<path d="M'+P(px,m-.18,10)+' L'+P(px,m+.18,10)+'" stroke="#26232e" stroke-width="3.2" stroke-linecap="round"/><path d="M'+P(px,m,10)+' L'+P(px,m,z)+'" stroke="#3b3746" stroke-width="3.6"/><path d="M'+P(px,m,10)+' L'+P(px,m,z)+'" stroke="#6b6577" stroke-width="1.2"/>'});
   s+='<path d="M'+P(x0-.1,m,z)+' L'+P(x1+.1,m,z)+'" stroke="#26232e" stroke-width="4.2" stroke-linecap="round"/><path d="M'+P(x0,m,z-2.4)+' L'+P(x1,m,z-2.4)+'" stroke="#f4b8ff" stroke-width="1.8" stroke-linecap="round"/>';
-  C.add(x+w+y+d-.05,'<g pointer-events="none">'+s+'</g>')}
+  C.add(x+w+y+d+.05,'<g pointer-events="none">'+s+'</g>')}
 function gdFit(C,k,x,y,w,d,dk){var S=window.LFSPR&&LFSPR[k],F=GDFIT[k];if(!S||!F)return gdS(C,k,x,y,w,d,16,{flip:1});
   if(F.w){x+=(w-F.w)/2;w=F.w}
   var T=[F.t[0]*S.w,F.t[1]*S.h],u1=F.r[0]*S.w-T[0],v1=F.r[1]*S.h-T[1],u2=F.l[0]*S.w-T[0],v2=F.l[1]*S.h-T[1],det=u1*v2-u2*v1,
