@@ -1398,7 +1398,10 @@ function lfPlace(a){
 }
 /* ---- choosing what to do ---- */
 /* a spot with post:1 belongs to the crew member whose post is its tag (lfPostSpot); nobody else takes it */
-function lfFree(C,a,pred){return C.st.map(function(s,i){return {s:s,i:i}}).filter(function(o){return (o.s.by==null||o.s.by===a.id)&&(!o.s.post||a.post===o.s.tag)&&pred(o.s)})}
+/* QA (ff44edc): nor any other spot within half a tile of a post someone holds (a wander spot under the pianist's bench had the walker
+   stand on them, rule 20) */
+function lfFree(C,a,pred){var held=C.st.filter(function(s){return s.post&&s.by!=null&&s.by!==a.id});
+  return C.st.map(function(s,i){return {s:s,i:i}}).filter(function(o){return (o.s.by==null||o.s.by===a.id)&&(!o.s.post||a.post===o.s.tag)&&!held.some(function(h){return h!==o.s&&Math.hypot(h.x-o.s.x,h.y-o.s.y)<.5})&&pred(o.s)})}
 /* crew posts (LEAD for ROOMS, Lock and Key staff, 2026-11-17): a staff entry [id, look, {post:"mic"}] makes that person go back to the
    spot tagged "mic" every time instead of picking at random. The spot does the rest: its act ("sit" sits, facewall:1 sits facing the
    wall, "dance", "wave", "work" ...), its fx (which way they face), its dur. Give the spot onspot:1 if it is behind a piece and post:1

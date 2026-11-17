@@ -27,14 +27,18 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
   ok(!set.none, 'Lock and Key\'s staff are in the room ' + JSON.stringify(set));
   const back = await p.evaluate((pid) => { const a = window.__qbLoft().A[pid], sp = window.__sp; return a && sp ? Math.hypot(a.x - sp.x, a.y - sp.y) : 99; }, set.pid);
   ok(back <= 0.3, 'they are on their spot once the window opens, off by ' + back.toFixed(2));
-  const log = []; for (let t = 0; t < 40; t++) { log.push(await p.evaluate(([pid, wid]) => { const A = window.__qbLoft().A, a = A[pid], w = A[wid], sp = window.__sp;
-      return { has: !!a, d: a ? Math.hypot(a.x - sp.x, a.y - sp.y) : 99, mode: a && a.mode, act: a && a.act, by: sp.by, wx: w ? Math.round(w.x * 2) / 2 : null, wy: w ? Math.round(w.y * 2) / 2 : null, wm: w && w.mode, tm: a ? Math.round(a.t * 10) : null, wr: w ? [w.x.toFixed(2), w.y.toFixed(2), w.tx && w.tx.toFixed(2), w.ty && w.ty.toFixed(2), w.alpha, w.leaving] : null }; }, [set.pid, set.wid])); await p.waitForTimeout(1000); }
+  const log = []; for (let t = 0; t < 120; t++) { log.push(await p.evaluate(([pid, wid]) => { const A = window.__qbLoft().A, a = A[pid], w = A[wid], sp = window.__sp;
+      return { has: !!a, d: a ? Math.hypot(a.x - sp.x, a.y - sp.y) : 99, mode: a && a.mode, act: a && a.act, by: sp.by, wx: w ? Math.round(w.x * 2) / 2 : null, wy: w ? Math.round(w.y * 2) / 2 : null, wm: w && w.mode, tm: a ? Math.round(a.t * 10) : null, ww: a && w ? Math.hypot(a.x - w.x, a.y - w.y) : 99, wr: w ? [w.x.toFixed(2), w.y.toFixed(2), w.tx && w.tx.toFixed(2), w.ty && w.ty.toFixed(2), w.alpha, w.leaving] : null }; }, [set.pid, set.wid])); await p.waitForTimeout(500); }
   const posted = log.filter((q) => q.has);
-  ok(posted.length === 40, `the posted person is there (${posted.length}/40 samples)`);
+  ok(posted.length === 120, `the posted person is there (${posted.length}/120 samples over 60 s)`);
   ok(posted.every((q) => q.d <= 0.3), 'they stay on their spot the whole time (max ' + Math.max(...posted.map((q) => q.d)).toFixed(2) + ')');
   ok(posted.filter((q) => q.mode === 'do' && q.act === 'sit').length >= posted.length * 0.9, 'they sit there ' + JSON.stringify(posted.slice(0, 3)));
   ok(log.every((q) => q.by == null || q.by === set.pid), 'nobody else holds the spot ' + JSON.stringify([...new Set(log.map((q) => q.by))]));
   const places = new Set(log.filter((q) => q.wx != null).map((q) => q.wx + ',' + q.wy)); ok(places.size >= 3 && log.some((q) => q.wm === 'walk'), `the walker walks (${places.size} places)` + (places.size < 3 ? JSON.stringify(log.filter((q, i) => i % 5 === 0).map((q) => q.wr)) : ''));
+  /* QA (ff44edc): a wander spot sat under the post and the walker stopped on the seated person. Now no one stops within 0.6 of them;
+     walking past can come closer for a moment, as anyone passing anyone does, but never on top (0.3) */
+  const stop = log.filter((q) => q.ww < 0.6 && q.wm !== 'walk'), close = Math.min(...log.map((q) => q.ww));
+  ok(!stop.length && close >= 0.3, `the walker never stops on or beside the seated person (${stop.length} stopped inside 0.6; closest pass ${close.toFixed(2)})`);
   ok(new Set(log.map((q) => q.tm)).size > 3, 'the room is running (the clock of the posted person\'s sit goes down and restarts)');
   const panel = await p.evaluate(() => { const r = window.__qbLoft(); const t = document.querySelector('[data-act="lfroom"],[data-room]'); return document.body.innerText; });
   ok(!/No crew here/.test(panel), 'no "No crew here" note');
