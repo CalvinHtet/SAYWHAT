@@ -49,8 +49,10 @@ var ECON={
      growing with every upgrade in the game) is the most all businesses together may pay, and produce sold (vegCoin each, was 4)
      counts in it too */
   noirServed:180,                                  /* dishes the Restaurant serves before Noir (econRules) */
+  /* QA's later-rooms sweep (2026-11-17): the Speakeasy (level 45) was missing from bizDay, phase, roomDay and bigMoment, so its
+     14 upgrades cost 5,800 in all against Dessert's 43,050. It now sits between VR (44) and the Club (50) */
   bizDay:{garden:1500,restaurant:700,skybar:250,rooftop:300,boba:250,dessert:250,mall:400,theater:700,auditorium:650,arcade:450,
-    rhythm:400,vr:400,bowling:450,karaoke:450,club:900},
+    rhythm:400,vr:400,speakeasy:450,bowling:450,karaoke:450,club:900},
   vegCoin:8,                                       /* w-econ4: Garden-stage businesses about 10% (econsim: 7-8%) */
   /* Cal, 2026-11-09: "Merge dungeons and missions ... Dungeon Crawls will be the new name ... these items are rare, with success
      gauranteed by the 4th crawl": a crawl brings a rare find this often (crawlFind in 29d_dungeon.js), plus 1% for every Hero's
@@ -129,7 +131,7 @@ var ECON={
      "too complicated"). Only the Loft's rooms (the first days) twice the price (Cal, after QA showed phase 2 was ~4x: "find a middle ground"; a price goes with phase x econLate, about phase squared, so x2 is phase x1.41); the Garden on keeps its price, so the mid-game pace is unchanged (econsim: raising those too halved the upgrades owned by day 20). Owned upgrades and
      coins are untouched; only what is not bought yet costs more. Was: bedroom 1, patio 1, closet 1, gameroom 1.2, lair 1.3, trophy 1.3,
      the rest unchanged */
-  phase:{bedroom:1.41,patio:1.41,closet:1.41,gameroom:1.7,lair:1.84,trophy:1.84,garden:1.3,restaurant:1.8,skybar:2.2,rooftop:2.3,boba:2.5,dessert:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,bowling:3.4,karaoke:3.5,club:3.8},
+  phase:{bedroom:1.41,patio:1.41,closet:1.41,gameroom:1.7,lair:1.84,trophy:1.84,garden:1.3,restaurant:1.8,skybar:2.2,rooftop:2.3,boba:2.5,dessert:2.7,mall:2.8,theater:3,auditorium:3,arcade:3.2,rhythm:3.3,vr:3.3,speakeasy:3.4,bowling:3.4,karaoke:3.5,club:3.8},
   /* the Shop: clothes keep each brand's own spread x shopK, between clothesMin and clothesMax (Cal: "the shop is almost 1000
      for some items"); interface items cost uiBase + uiLv x the level they open at; permanent upgrades pay for themselves in
      about a week or two of quests, so each is priced by what it returns (Merchant Seal I was 500 for +10% coins forever) */
@@ -186,10 +188,10 @@ var ECON={
      econsim); everything else is priced for its tier as before */
   bigDay:.75,
   roomDay:{gameroom:6500,lair:11500,garden:11500,restaurant:11500,skybar:15500,rooftop:17000,boba:17000,dessert:18500,mall:18500,
-    theater:19000,auditorium:19000,arcade:21000,rhythm:21000,vr:21000,bowling:21000,karaoke:21000,club:22000},
+    theater:19000,auditorium:19000,arcade:21000,rhythm:21000,vr:21000,speakeasy:21000,bowling:21000,karaoke:21000,club:22000},
   bigMoment:{gameroom:["gm_tv80"],lair:["lr_core"],garden:["g_green2"],restaurant:["r_x2"],skybar:["sb_piano"],rooftop:["rf_pool","rf_tub"],
     boba:["bo_shake"],dessert:["de_soft"],mall:["ml_esc"],theater:["t_wing"],auditorium:["au_imax","au_proj2"],rhythm:["rh_lights"],
-    vr:["vr_wall"],bowling:["bw_lane1"],karaoke:["ka_booth"],club:["cb_vip","cb_floor"]},
+    vr:["vr_wall"],speakeasy:["sp_stage"],bowling:["bw_lane1"],karaoke:["ka_booth"],club:["cb_vip","cb_floor"]},
   /* w-econ3: what a regular player makes in a day at a level and how much of it is quest coins (econsim), what a permanent upgrade
      takes to pay back (payDays), and the share of a day an interface item or a non-percent upgrade costs */
   dayInc:[[1,6000],[10,10000],[30,11400],[60,21200],[90,32200],[100,32200]],
