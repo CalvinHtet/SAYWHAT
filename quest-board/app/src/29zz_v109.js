@@ -37,7 +37,10 @@ var v9Strip=stripHtml;
 stripHtml=function(){var h=v9Strip.apply(this,arguments);
   try{var d=document.createElement("div");d.innerHTML=h;var vl=d.querySelector(".vline"),st=d.querySelector(".strip"),who=st&&st.querySelector(".who"),col=who&&who.children[1],rt=st&&st.querySelector(".right");
     if(col&&rt){col.classList.add("v9col");col.appendChild(rt)}
-    if(vl){if(view==="board")vl.classList.add("v9ver");else vl.parentNode.removeChild(vl)}
+    /* QA (v1.09): absolute, it ran into a long name at 360 wide; it is its own small line now, right-aligned. A save problem always
+       shows, on every tab, in full (QA: a faint 10 px "NOT SAVING" on one tab is easy to miss) */
+    var err=false;try{err=!!SAVEERR}catch(x){}
+    if(vl){if(err)vl.classList.add("v9ver","v9err");else if(view==="board")vl.classList.add("v9ver");else vl.parentNode.removeChild(vl)}
     h=d.innerHTML}catch(e){}
   /* the Town Hall's picture, behind the header and fading into the page (an element of the page: the body's classes are rewritten on
      every draw, applyFx) */
@@ -62,7 +65,9 @@ CLUSTERS.forEach(function(c){if(c[0]==="out")c[1]="Outside"});try{R2CLN.out="Out
 /* side quests last a week from the day they were taken; then they lapse (their progress with them) and can be offered again a week
    later. The Board card says how many days are left. */
 var SDQDAYS=7;
-function sdqLeft(id){var o=sdqState(),a=o.on[id];if(!a||o.done[id])return null;return SDQDAYS-(ymdN(today())-ymdN(a))}
+/* QA (v1.09): a quest taken before this update gets its week from the day the update first ran (S.side.wk0), not from when it was
+   taken, so nobody's walks or nights vanish on the first load */
+function sdqLeft(id){var o=sdqState(),a=o.on[id];if(!a||o.done[id])return null;if(!o.wk0){o.wk0=today();persist()}if(o.wk0>a)a=o.wk0;return SDQDAYS-(ymdN(today())-ymdN(a))}
 function sdqExpire(){var o=sdqState(),ch=0;Object.keys(o.on).forEach(function(id){if(o.done[id])return;var l=sdqLeft(id);if(l==null||l>0)return;
     delete o.on[id];o.later[id]=Date.now()+7*864e5;if(id==="dogs")o.walk=[];if(id==="sable")o.nw={};if(id==="theo")delete o.mv;ch=1});
   if(ch)persist();return ch}
@@ -90,9 +95,10 @@ var v9Ph=phInner;phInner=function(){return v9Ph.apply(this,arguments).replace('N
     +".v9col .right{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-start}"
     +".v9col .rankpill{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}"
     /* the version: a small line in the Board's top right corner, not a row of its own */
-    +".wrap{position:relative}.vline.v9ver{position:absolute;top:0;right:0;padding:0;margin:0;font-size:10px;opacity:.6;text-align:right;z-index:2;pointer-events:none}"
+    +".vline.v9ver{padding:0;margin:0 0 -8px;font-size:10px;line-height:12px;opacity:.6;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+    +".vline.v9err{opacity:1;font-size:12px;line-height:14px;margin:0 0 -4px;color:var(--bad,#ff6b6b)}"
     /* the Town Hall: its picture behind the top of the page, fading into the background */
-    +".v9hallbg{position:absolute;top:-24px;left:50%;width:100vw;max-width:900px;transform:translateX(-50%);height:480px;z-index:-1;pointer-events:none;background-size:100% 100%,cover;background-position:center top;background-repeat:no-repeat}"
+    +".v9hallbg{position:absolute;top:-24px;left:50%;width:100vw;max-width:900px;transform:translateX(-50%);height:480px;z-index:-1;pointer-events:none;background-size:100% 100%,cover;background-position:center top;background-repeat:no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}"
     /* the Wheel row's "new" mark sat in the page's top right corner (its row was not its anchor) */
     +".zx-next{position:relative}"
     +".qs-uplab{margin:18px 0 8px}";
