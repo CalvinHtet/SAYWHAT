@@ -217,7 +217,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings). Next: ROOMS 35f3080 (DIAL-UP) and 3c3d6a1 (room fixes). 15-minute loop off (Cal).
+- Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings). Nothing else open. 15-minute loop off (Cal).
+  Was: Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings).
   Was: Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings).
   Was: Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings).
   Was: Now (on 8d1f69f): v1.08 LIVE as 8d1f69f, verified (QA findings).
@@ -232,6 +233,24 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS 35f3080: DIAL-UP's 15 new pieces and the repainted h_wrap (on the clean plain build of cfe5917, which holds 35f3080 with
+  no art changed after it; draft rows from shots/pending_art/new240/dialup/rows_draft.json pushed into SHOP with newwear.js). Both
+  bodies, all 35 poses: men 18 outfits, women 20, 0 not drawn, 0 page errors, no missing icons. At 3x on 10 key poses
+  (shots/qa/dialup/big/big_{m,f}_0-6.jpg) every piece sits right front and back. The visor shows hair above its band; the rimless
+  shades are front only; the trapper's ear flaps and the fur-collar jacket read; the Denim Cargo Maxi reads as a long denim skirt
+  (women only); the camo cargos, patchwork jeans, platform boots and bubble runners read. QA's h_wrap note is fixed: a grey wrap
+  skirt with a lime tie over black trousers, clear on both bodies. The visor's edge specks don't show at game size. The wave1/dance1
+  sleeve streak is the rig's usual look. Not checked: other skin tones, night, the Shop rows (LEAD's step).
+- ROOMS 3c3d6a1, room fixes from QA's sweep (on the clean plain build of cfe5917, which holds it; bigrooms.js and auditall.js on
+  bowling, vr, dessert; shots/qa/rooms1117b/).
+  - PASS, VR: the egg pod is in the back-right corner, clear of the sofa; the sofa and water cooler have room.
+  - PASS, Dessert: the macaron tower stands on the customer floor; the baker's side of the counter is free.
+  - FIX, Bowling (ROOMS): (1) the seat row now runs alongside the lanes and faces the right-hand wall (ball rack and trophy shelf),
+    side-on to the lanes (z_bowling_seats.jpg). Before the change, the row ran parallel to the pin end and faced the pins, which was
+    right; it just stood on lane 1's foot. Keep that facing, row parallel to the pin end, and move it back onto the open carpet behind
+    the approaches. The current art works that way, so no back-view art is needed. (2) auditall: OUTSIDE bwx_snack. The snack
+    stand's front-left corner hangs past the floor's front edge (z_bowling_snack.jpg); nudge it in. The ball return now sits at lane
+    2's foot between the lanes: fine. The DEPTH "bwx_lane over bwx_towel" line ROOMS asked about shows nothing wrong on the picture.
 - PASS, v1.09 = 5959380 + cbc2d88 (LEAD's fix for QA's 175d070; built as v1.09 will ship: 5959380 with cbc2d88 cherry-picked, plain).
   - The version is its own line above the header: text ranges clear the name for "Cal", "Maximiliana" and "Maximiliana-Rose", with
     "saved 12:34" and "NOT SAVING (...)", at 360, 390 and 430 (fix_header360_long.jpg). LEAD's updated v109.js: 28 ok, PASS.
@@ -1637,7 +1656,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Then Cal's OK on both brands, then READY for LEAD. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Then Cal's OK on both brands, then READY for LEAD. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own

@@ -1,0 +1,258 @@
+[
+ {
+  "id": "gx_y_visor",
+  "type": "a_hat",
+  "name": "Holo Sun Visor",
+  "price": 900,
+  "desc": "Iridescent brim, black band.",
+  "gar": "y_visor",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_race",
+  "type": "a_hat",
+  "name": "Racing Patch Cap",
+  "price": 850,
+  "desc": "Black twill, coral and cyan racing patches.",
+  "gar": "y_race",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_furtrap",
+  "type": "a_hat",
+  "name": "Faux Fur Trapper",
+  "price": 950,
+  "desc": "Shaggy black fur, cyan satin lining.",
+  "gar": "y_furtrap",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_rimless",
+  "type": "a_acc",
+  "name": "Rimless Gradient Shades",
+  "price": 750,
+  "desc": "Cyan to clear, thin silver bridge.",
+  "gar": "y_rimless",
+  "mo": false,
+  "fo": false,
+  "slot": "glasses",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": true
+  }
+ },
+ {
+  "id": "gx_y_phone",
+  "type": "a_acc",
+  "name": "Flip Phone Lanyard",
+  "price": 700,
+  "desc": "Chrome flip phone on a beaded strap.",
+  "gar": "y_phone",
+  "mo": false,
+  "fo": false,
+  "slot": "neck",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_chains",
+  "type": "a_acc",
+  "name": "Layered Chrome Chains",
+  "price": 850,
+  "desc": "Ball chain over a chunky curb.",
+  "gar": "y_chains",
+  "mo": false,
+  "fo": false,
+  "slot": "neck",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_moto",
+  "type": "a_top",
+  "name": "Racing Moto Jacket",
+  "price": 1800,
+  "desc": "Black leather, coral panels, patches.",
+  "gar": "y_moto",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_mesh",
+  "type": "a_top",
+  "name": "Mesh Layer Top",
+  "price": 1200,
+  "desc": "Cyan mesh long sleeve under a black tank.",
+  "gar": "y_mesh",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_furden",
+  "type": "a_top",
+  "name": "Fur-Collar Denim Jacket",
+  "price": 1600,
+  "desc": "Cropped dark denim over a white tee, cream fur collar.",
+  "gar": "y_furden",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_patch",
+  "type": "a_pants",
+  "name": "Patchwork Wide Jeans",
+  "price": 1350,
+  "desc": "Mixed washes, low rise.",
+  "gar": "y_patch",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_pcamo",
+  "type": "a_pants",
+  "name": "Coral Camo Cargos",
+  "price": 1250,
+  "desc": "Low-rise, coral and grey camo.",
+  "gar": "y_pcamo",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_maxi",
+  "type": "a_pants",
+  "name": "Denim Cargo Maxi",
+  "price": 1300,
+  "desc": "Long dark denim, cargo pockets, a slit.",
+  "gar": "y_maxi",
+  "mo": false,
+  "fo": true,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": true,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_patent",
+  "type": "a_shoes",
+  "name": "Patent Platform Boots",
+  "price": 1650,
+  "desc": "Black patent, coral platform sole.",
+  "gar": "y_patent",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_bubble",
+  "type": "a_shoes",
+  "name": "Bubble Sole Runners",
+  "price": 1500,
+  "desc": "Pearl white, cyan bubble heel.",
+  "gar": "y_bubble",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_y_furmule",
+  "type": "a_shoes",
+  "name": "Suede Fur Mules",
+  "price": 1300,
+  "desc": "Ice blue suede, cream faux fur lining.",
+  "gar": "y_furmule",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_wrap",
+  "type": "a_pants",
+  "name": "Wrap Skirt over Trousers",
+  "price": 1300,
+  "desc": "Grey wrap skirt with a lime tie over black wide pants.",
+  "gar": "h_wrap",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ }
+]
