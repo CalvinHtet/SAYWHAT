@@ -21,7 +21,7 @@ LEAD Doing:
 - Now (on 1854144): v1.10 LIVE on Live and Test = 1854144 (release/v1.10: release/v1.09 + cfe5917 + APPV 110), after v1.09 LIVE
   918732a (release/v1.08 + 5959380 + cbc2d88 + APPV 109); both QA PASS d2fb54a, wlive PASS, 3013/3013 identical on both each time;
   rollback APPV 111 (d5b2580). Checked on the v1.10 build: a player from v1.09 gets "What's new in v1.10", 7 lines, +500 on opening;
-  a player who starts on v1.10 does not. QA live check please (918732a and 1854144). QA's Mall note (plaza 60%: a 0-3 piece slip):
+  a player who starts on v1.10 does not. QA live check please (918732a and 1854144) (QA: DONE, both PASS; QA findings). QA's Mall note (plaza 60%: a 0-3 piece slip):
   left as is. Next: Cal's speed log, ROOMS's DIAL-UP rows, the +15 rooms as they pass, then the economy pass.
 - v1.09 FIX for QA's 175d070 = cbc2d88 (on top of cfe5917; v1.09 will be 5959380 + cbc2d88): version its own small right-aligned line (clears an
   11-letter name at 360/390/430, v109.js); a save error shows in full on every tab; side quests from before v1.09 get their week from
@@ -222,7 +222,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings). Nothing else open. 15-minute loop off (Cal).
+- Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings). Open with ROOMS: Bowling's FIX (3c3d6a1). 15-minute loop off (Cal).
+  Was: Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings).
   Was: Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings).
   Was: Now (on 5959380): v1.09 NOT A PASS yet (one FIX: version over the name at 360; QA findings).
   Was: Now (on 7c10733): Restaurant/Garden cut lists for LEAD DONE (QA findings).
@@ -238,6 +239,14 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.09 and v1.10 live (LEAD: 918732a and 1854144, wlive PASS, 3013/3013 identical each time):
+  - 918732a against release/v1.08 8d1f69f: in app, data, art and tools only the new 29zz_v109.js (identical to the passed cbc2d88's)
+    and the APPV line (108 -> 109).
+  - 1854144 against 918732a: only 29e_economy.js and 29q_news.js (both identical to the passed cfe5917's) and APPV (109 -> 110).
+    ROOMS's 3c3d6a1 room changes and the DIAL-UP art did not ship (right: Bowling still has a FIX).
+  - Clean web builds: both 3,012 files (+ version.txt = 3,013), APPV 109 / 110; v1.10 has the cut list and the v1.10 letter, v1.09
+    neither; no y_ art in either.
+  - Not checked by QA: the live sites themselves (LEAD's wlive, LEAD's letter check), a phone.
 - PASS, ROOMS 35f3080: DIAL-UP's 15 new pieces and the repainted h_wrap (on the clean plain build of cfe5917, which holds 35f3080 with
   no art changed after it; draft rows from shots/pending_art/new240/dialup/rows_draft.json pushed into SHOP with newwear.js). Both
   bodies, all 35 poses: men 18 outfits, women 20, 0 not drawn, 0 page errors, no missing icons. At 3x on 10 key poses
