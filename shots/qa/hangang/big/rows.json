@@ -1,0 +1,242 @@
+[
+ {
+  "id": "gx_h_pbucket",
+  "type": "a_hat",
+  "name": "Padded Nylon Bucket",
+  "price": 900,
+  "desc": "Quilted black nylon, toggle cord.",
+  "gar": "h_pbucket",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_bala",
+  "type": "a_hat",
+  "name": "Rib Knit Hood",
+  "price": 850,
+  "desc": "Cream rib knit, open face.",
+  "gar": "h_bala",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_longbill",
+  "type": "a_hat",
+  "name": "Long-Bill Washed Cap",
+  "price": 850,
+  "desc": "Pigment charcoal, lime underbrim.",
+  "gar": "h_longbill",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_sling",
+  "type": "a_acc",
+  "name": "Leather Chest Sling",
+  "price": 900,
+  "desc": "Black leather pouch worn high across the chest.",
+  "gar": "h_sling",
+  "mo": false,
+  "fo": false,
+  "slot": "neck",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_phones",
+  "type": "a_acc",
+  "name": "Cream Headphones",
+  "price": 950,
+  "desc": "Over-ear, worn round the neck.",
+  "gar": "h_phones",
+  "mo": false,
+  "fo": false,
+  "slot": "neck",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_oval",
+  "type": "a_acc",
+  "name": "Lime Oval Shades",
+  "price": 750,
+  "desc": "Narrow black frames, lime lenses.",
+  "gar": "h_oval",
+  "mo": false,
+  "fo": false,
+  "slot": "glasses",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": true
+  }
+ },
+ {
+  "id": "gx_h_padcoat",
+  "type": "a_top",
+  "name": "Long Padded Coat",
+  "price": 1800,
+  "desc": "Black, mid-thigh, cream drawcords.",
+  "gar": "h_padcoat",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_layer",
+  "type": "a_top",
+  "name": "Hoodie & Liner Vest",
+  "price": 1500,
+  "desc": "Grey hoodie under a black quilted vest.",
+  "gar": "h_layer",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_rugby",
+  "type": "a_top",
+  "name": "Half-Zip Rugby Knit",
+  "price": 1350,
+  "desc": "Charcoal knit, cream collar, lime tipping.",
+  "gar": "h_rugby",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_balloon",
+  "type": "a_pants",
+  "name": "Balloon Sweatpants",
+  "price": 1150,
+  "desc": "Heather grey, pintucked, cinched ankles.",
+  "gar": "h_balloon",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_barrel",
+  "type": "a_pants",
+  "name": "Washed Black Wide Jeans",
+  "price": 1300,
+  "desc": "Faded black, wide leg, stacked hem.",
+  "gar": "h_barrel",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_wrap",
+  "type": "a_pants",
+  "name": "Wrap Skirt over Trousers",
+  "price": 1300,
+  "desc": "Charcoal wrap skirt layered on wide pants.",
+  "gar": "h_wrap",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_mule",
+  "type": "a_shoes",
+  "name": "Mesh Sneaker Mules",
+  "price": 1300,
+  "desc": "Cream mesh, chunky sole, open back.",
+  "gar": "h_mule",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_puffboot",
+  "type": "a_shoes",
+  "name": "Quilted Puffer Boots",
+  "price": 1500,
+  "desc": "Black ankle boots, lime pull tab.",
+  "gar": "h_puffboot",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_h_court",
+  "type": "a_shoes",
+  "name": "Retro Court Trainers",
+  "price": 1400,
+  "desc": "Cream leather, gum sole, lime heel tab.",
+  "gar": "h_court",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ }
+]

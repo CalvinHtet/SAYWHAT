@@ -182,6 +182,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS 86cb0e1: HANGANG's 15 new pieces (clean plain build; the draft rows from rows_draft.json pushed into SHOP, ROOMS's
+  newwear.js = brandwear.js plus that). Both bodies, all 35 poses, 18 outfits each (3 all-HANGANG, 15 each piece mixed with other
+  brands, three hairstyles): 0 not drawn, 0 page errors, no missing icons. A closer look at 3x on idle, stretch, sitFront, sitBack,
+  type1, sleep, rearStand, backwalk2, wave1 and dance1: every piece sits right front and back. The hood hides all hair and its knot
+  reads from behind. The sling goes under tops, the oval shades show only from the front, the cap bill reads in back views, and the
+  coat's quilting and the boots' quilting read. The wave1/dance1 sleeve streak is the rig's usual look (as with ALTITUDE). Pictures
+  shots/qa/hangang/q_{m,f}_*.jpg (all poses) and big/big_{m,f}_0-5.jpg.
+  - NOTE for ROOMS / Cal: h_wrap ("Wrap Skirt over Trousers") reads as plain dark trousers at game size on both bodies. Under any
+    normal-length top only a faint fold shows at the hip (big/wrap_f.jpg, wrap_m.jpg). A buyer will not see a skirt. Suggest a
+    contrast hem or tie, or a name that matches what shows. Cal's call; not a wear fault.
+  - Not checked: other skin tones, night lighting, the pieces' Shop rows and prices (not in the Shop yet; LEAD's step).
 - PASS, v1.07 live (LEAD: Live and Test at c546e9c on release/v1.07, wlive PASS, 3013/3013 identical):
   - c546e9c against the passed 29ed258: in app, data, art and tools only 30_app_b.js's APPV line differs (100 -> 107). Against
     release/v1.06 826b773: only the new 29zz_patch.js and the APPV line; no art changed.
@@ -1440,7 +1451,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 painted and committed in 86cb0e1 (art, icons, items.json; not in the Shop yet), wear-tested on both bodies in all 35 poses (0 not drawn, 0 page errors; sheet shots/pending_art/new240/hangang/hangang_approval.png, draft rows rows_draft.json). WAITING ON QA: wear-check HANGANG's 15 at 86cb0e1 (rule 17; rows to inject are in rows_draft.json, they are not in the Shop). Then Cal's OK, then READY for LEAD. Now painting DIAL-UP, then OVERPASS (shots/pending_art/new240/drafts.md). (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 painted and committed in 86cb0e1 (art, icons, items.json; not in the Shop yet), wear-tested on both bodies in all 35 poses (0 not drawn, 0 page errors; sheet shots/pending_art/new240/hangang/hangang_approval.png, draft rows rows_draft.json). (QA: DONE on 86cb0e1, PASS; one NOTE, the wrap skirt reads as trousers; QA findings) WAITING ON QA: wear-check HANGANG's 15 at 86cb0e1 (rule 17; rows to inject are in rows_draft.json, they are not in the Shop). Then Cal's OK, then READY for LEAD. Now painting DIAL-UP, then OVERPASS (shots/pending_art/new240/drafts.md). (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own
