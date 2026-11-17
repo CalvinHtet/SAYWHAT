@@ -222,7 +222,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX for ROOMS/LEAD: a permanent mop in every new Restaurant since v1.10 (QA findings). 15-minute loop off (Cal).
+  Was: Now (on f6fc989): Bowling fix PASS; the room fixes (3c3d6a1 + f6fc989) are all PASS (QA findings).
   Was: Now (on 1854144): v1.09 918732a and v1.10 1854144 LIVE, verified (QA findings).
   Was: Now (on cfe5917): DIAL-UP 35f3080 PASS; room fixes 3c3d6a1: VR and Dessert PASS, Bowling one FIX (QA findings).
   Was: Now (on cbc2d88): v1.09 = 5959380 + cbc2d88 PASS; v1.10 cuts cfe5917 PASS (QA findings).
@@ -240,6 +241,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- ROOMS 6749725: fixes 3, 4 and 6 from be9bc20 against the 40/35 rooms (clean plain build; auditall.js; bigrooms.js twice: as an old
+  owner with every piece incl. the retired ones, and with the new LIVE=1 switch as a new player with only what is on sale; pictures
+  shots/qa/rooms1117d/big_{restaurant,garden}{,_live}.jpg and z_*.jpg).
+  - PASS, 3 Restaurant patio: the bistro table shows under the pergola's front beam in both views; the set is clear of the fire pit
+    and the back sets (auditall's rsx_iron+rsx_pergola 2.5 is the table under the roof, as meant).
+  - PASS, 4 Restaurant kitchen: the prep table, bread rack and dish pit form one tight island near the cook line; the Espresso Bar
+    case ends the bar on the dining side, facing the diners (old owners only; it is cut, so new players never have it).
+  - PASS, 6 Garden: the grow lamps stand in their beds on solid posts over the plants; nothing floats.
+  - ROOMS's question (r_cf2 still drawn): expected. bigrooms.js owned every id incl. retired ones, which is an old owner's room, and
+    owners keep cut pieces by LEAD's design. LIVE=1 now draws a new player's room (rigtest/qa/bigrooms.js).
+  - FIX (ROOMS, room code; LIVE since v1.10 1854144): 26_world.js:424 and 21_restaurant.js:183 draw a mop and bucket in the
+    Restaurant's front-left corner while Potted Plants (r_d1) is not owned, as the room's "before" look. r_d1 is cut, so every new
+    player's fully built Restaurant keeps a mop forever (z_rest_mop.jpg; not in the owner view). Tie the mop to a kept piece (e.g.
+    the Sculptural Vases or the first decor step) or drop it. No other cut id is read with "!H(...)"; everything else drawn from a
+    cut id is the cut piece itself.
+  - NOTE (small, for Cal/LEAD): with Chef's Neon and Hire a Host cut, a full Restaurant draws one fewer guest (guests() counts r_chef)
+    and nobody stands at the host desk (r_s3's spot).
+  - NOTE (ROOMS): each grow lamp lays a purple film over its bed, so those plants look dull next to the bright beds without lamps
+    (z_garden_lamps.jpg). A lighter glow would keep them green.
+  - NOTE (ROOMS, rooms-never-cluttered): the Garden's front-right corner still reads crowded: fountain, gate, coop, beehives, solar
+    panel, pump, logs, potting bench, barrel, compost and hose in one corner, while the lawn left of the fountain is empty. Move the
+    coop and beehives onto that lawn.
 - PASS, ROOMS f6fc989: the Bowling fix for QA's d65ec13 (clean plain build; auditall.js and bigrooms.js on bowling;
   shots/qa/rooms1117c/big_bowling.jpg). The seat row has its original facing again (toward the pins), parallel to the pin end, on the
   open carpet behind the approaches, clear of the console, ball return and snack table. The snack stand is inside the floor (no OUTSIDE).
