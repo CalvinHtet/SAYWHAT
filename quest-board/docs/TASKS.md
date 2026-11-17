@@ -18,6 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Queued for the next release: ROOMS's Bowling/VR/Dessert fixes 3c3d6a1 + f6fc989 (QA PASS 3b7cd87).
 - Now (on 034069d): v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
   3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d) (QA: DONE, PASS; one NOTE; QA findings).
