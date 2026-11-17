@@ -39,7 +39,7 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
-- WAITING ON QA, URGENT (v1.05 must be live before Fri 11-20 8 am PT): check b10ca52 (LEAD). Cal: "Right now, the shop is overpass. I
+- (QA: DONE on b10ca52, PASS, v1.05 = f16dbc2 + b10ca52 can ship; two NOTES for Cal/LEAD; QA findings) WAITING ON QA, URGENT (v1.05 must be live before Fri 11-20 8 am PT): check b10ca52 (LEAD). Cal: "Right now, the shop is overpass. I
   want NICE COCK to drop on Friday. And then randomize all the other drops afterwards." He is under level 30, so NICE COCK moves to the
   Street (BRANDS fl "street"; its pieces now 310 to 450 on the Street's scale) and is pinned as the Street's Fri 11-20 drop (live
   OVERPASS + NICE COCK, its splash shows). From 11-20 every floor drops a fresh fixed-seed shuffle per round (29zz_ncstreet.js): never
@@ -142,10 +142,30 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73 (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on b10ca52): v1.05 = f16dbc2 + b10ca52 PASS (NICE COCK on the Street Fri 11-20, random drops after; QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73.
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, b10ca52 (LEAD; NICE COCK on the Street Fri 11-20, then random drops; Cal): clean copies of b10ca52 and f16dbc2, plain builds.
+  v1.05 = f16dbc2 + b10ca52 can ship.
+  - Drops (rigtest/lead/dropcal.js 11-09 to 2027-04-30 on both builds): every row before 11-20 identical. Fri 11-20: the Street drops
+    NICE COCK (live OVERPASS + NICE COCK), the Boutique shows SAYMORE alone; the Atelier unchanged (empty). Through April no brand drops
+    while it is live (Street 49 drops, Boutique 25); a Street brand rests at least 4 drops (6 brands), each about 8 times. Same calendar
+    on a second fresh load.
+  - Players (rigtest/qa/ncstreet.js, level 31 and level 12, owner of 4 NICE COCK pieces worn or not, Tue 11-17 and Fri 11-20, 8 runs,
+    0 page errors): 11-17 level 31: the Street is DIAL-UP + OVERPASS, the Boutique NICE COCK + VENOM ROSE; level 12: no NICE COCK.
+    11-20: NICE COCK is on the Street for both, gone from the Boutique (SAYMORE only). Owners keep wearing all 4 at every level and date,
+    and the rack shows them Equipped. On opening the Shop on 11-20 both levels get the OVERPASS and NICE COCK splashes (a level-31 save
+    must have seen the floors first; splashes announce Street drops only, the same in f16dbc2).
+  - Prices: pricesweep against f16dbc2: no NaN, undefined, 0 or fractions, upgrades and lots unchanged, 0 page errors; only NICE COCK's
+    16 rows change, all now 310 to 450 (LEAD's ncrows.js PASS on b10ca52 too). The 11-20 sale row shows them discounted (340, 230).
+  - NOTE (Cal/LEAD, no fix asked): (1) the Street prices start the moment v1.05 ships, so 11-17 to 11-19 NICE COCK still sells on the
+    Boutique at 310-450, and anyone who bought since 11-13 paid the Boutique's 670-1,000. 8 of the 16 pieces sit at the 450 cap, so
+    the grades set in f16dbc2 barely differ now. (2) The Boutique has 3 brands with 2 live, so its "random" order is a fixed turn:
+    SAYMORE, CHROME RAIN, VENOM ROSE, again and again. Only the Street is really shuffled.
+  - Not checked by QA: cutpieces, tabs5, tourtest, swaptest, dropshuffle and the Wednesday vault (LEAD ran them PASS); a phone; Safari.
+  - Pictures and calendars: shots/qa/nc1120/.
 - PASS, v1.05 candidate f16dbc2 (LEAD) on ROOMS's NICE COCK art bcd8f73, both on a clean copy; plain build. v1.05 can ship.
   - Art (ROOMS's line, bcd8f73): brandwear.js BRAND=nc, both bodies, all 35 poses, 20 outfits each (the brand alone across the 3 hairstyles,
     and every piece mixed with other brands' pieces): 0 not drawn, 0 page errors, no icon missing. A closer look at 3x on idle, stretch,
