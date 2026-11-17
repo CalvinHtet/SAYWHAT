@@ -18,7 +18,14 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
+- Now (on fef3cda): v1.05 LIVE on Live and Test = fea3674 on branch release/v1.05 (release/v1.04 + ROOMS's NICE COCK art 297c848 +
+  bcd8f73, LEAD's f16dbc2 + b10ca52, APPV 105; QA PASS bcb5a39 + fef3cda; code identical to b10ca52 but APPV): NICE COCK's 10 redone
+  pieces, NICE COCK on the Street as its Fri 11-20 drop, every drop random after. wlive PASS, 3013/3013 files identical on both; rollback
+  at APPV 106 (bbd33a8). WAITING ON QA: the live check. QA's NOTES for Cal: NICE COCK sells at Street prices (310-450) from now (anyone
+  who bought since 11-13 paid Boutique prices); the Boutique's 3 brands only take turns. Next: Cal's next speed log on v1.04+. Cal,
+  2026-11-17: week-one Daily Quest goal kept, level pacing kept, GitHub push DONE. WAITING ON CAL: switching on Storage (steps sent; LEAD
+  deploys storage.rules after), HANGANG's 15 (ROOMS's drafts.md shown to him).
+  Was: Now (on 63fa5f3): v1.04 LIVE on Live and Test = efe8e2d on branch release/v1.04 (release/v1.03 + c7051f3 + 0ca45f7 + APPV 104; QA PASS
   63fa5f3; code identical to 0ca45f7 but APPV): card rules behind an (i), Hall/Players portraits one still frame, your Loft frames warmed
   after load, NICE COCK's 10 repaints off sale (live on the Boutique to Thu 11-26). wlive PASS, 3021/3021 files identical on both; rollback
   at APPV 105 (567b50a). QA live check DONE (513ad75). v1.05 candidate = f16dbc2 (QA PASS) + b10ca52, WAITING ON QA:
