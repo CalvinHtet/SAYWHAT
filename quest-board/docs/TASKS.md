@@ -38,7 +38,7 @@ LEAD Doing:
   11-20 Boutique slot is CHROME RAIN. Its hold now ends 11-20 (back in the rotation from 12-11; dropcal.js: every slot to 12-04 identical
   to v1.03, Street identical to 2027-01-31); its 10 repaint ids are off sale (ZXCUT) until ROOMS's art lands. WAITING ON CAL: keep that, or
   make NICE COCK drop again on 11-20 (pushes CHROME RAIN and the Boutique order back a week).
-- WAITING ON QA: check f16dbc2 (LEAD) with ROOMS's art bcd8f73 (its wear-check is ROOMS's line): NICE COCK's 10 repainted pieces back
+- (QA: DONE on f16dbc2, PASS, v1.05 can ship; QA findings) WAITING ON QA: check f16dbc2 (LEAD) with ROOMS's art bcd8f73 (its wear-check is ROOMS's line): NICE COCK's 10 repainted pieces back
   on sale with ROOMS's names and lines (Fleece Dad Cap, Cashmere Scarf, Rimless Aviators, Embossed Crest Hoodie, Layered Lounge Tee, Waffle
   Lounge Zip, Sherpa Fleece Zip, Silver Court High-Top, Suede Runner, Shearling Clogs & Socks; the "&" shows right). Grades: tank, qzip,
   knit and slide go to premium; band, tee and shades stay standard. Boutique prices: 670 to 1,000. All 10 come off ZXCUT; the drop calendar
@@ -103,7 +103,7 @@ ROOMS Doing:
 - (QA: DONE on 9f6c17c, PASS, QA findings) WAITING ON QA: check b416f33, QA's old note (Mara's chef hat covered her eyes): npc_hat is lifted (m 175, f 115) with no hair trim. ROOMS checked Mara in all 34 poses (with LEAD's six animations) and the hat on h1, h2, h3 for both bodies: eyes clear, no scalp gap. Every NPC chef wears it, so a look at the Restaurant's cooks too.
 - (DONE by LEAD in a995106.) READY for LEAD (Cal approved Kenan, e7e6b70): in 29k_friends.js set kenan's spec to body m, skin s2, hairStyle "fr_kenan_hair", hairColor black, top tee white, shoe sneakers black, eq ["fr_kenan_jacket","fr_kenan_pants"] (drop h_shades, h_tech, h_boots: no sunglasses now). fr_kenan_hair is not in hairStyles on purpose, like Victor's.
 - (QA: DONE on 5d726d6, PASS; QA findings) WAITING ON QA: check e7e6b70 with LEAD's wiring a995106 (LEAD wear-tested the spec on the rig in all 22 poses): Kenan's visit card portraits (three) and his look in rooms (wear-tested in 22 poses by ROOMS; the stretch has no yawn picture now and falls back).
-- Now (2026-11-16, Cal: "ship NICE COCK on friday"): NICE COCK's 10 cut pieces repainted as luxury streetwear (same ids: band, pendant, shades, hoodie, tee, tank, qzip, court, knit, slide), wear-tested on both bodies in all 35 poses (brandwear.js, 0 not drawn, 0 page errors); Cal approved 297c848, then (2026-11-17) asked six to be redone as luxury comfort wear: band, pendant, tee, tank, qzip, slide repainted (dad cap, cashmere scarf, layered lounge tee, waffle lounge zip, sherpa fleece zip, shearling clogs), wear-tested both bodies all 35 poses; Cal APPROVED, committed in bcd8f73 (on top of 297c848). WAITING ON QA: wear-check NICE COCK's 10 at bcd8f73 (rule 17). READY for LEAD: names, lines and grades sent by message. CHROME free.
+- Now (2026-11-16, Cal: "ship NICE COCK on friday"): NICE COCK's 10 cut pieces repainted as luxury streetwear (same ids: band, pendant, shades, hoodie, tee, tank, qzip, court, knit, slide), wear-tested on both bodies in all 35 poses (brandwear.js, 0 not drawn, 0 page errors); Cal approved 297c848, then (2026-11-17) asked six to be redone as luxury comfort wear: band, pendant, tee, tank, qzip, slide repainted (dad cap, cashmere scarf, layered lounge tee, waffle lounge zip, sherpa fleece zip, shearling clogs), wear-tested both bodies all 35 poses; Cal APPROVED, committed in bcd8f73 (on top of 297c848). (QA: DONE on bcd8f73, PASS; QA findings) WAITING ON QA: wear-check NICE COCK's 10 at bcd8f73 (rule 17). READY for LEAD: names, lines and grades sent by message. CHROME free.
 - Now: Kode PinK city pop redo (Cal: "Night drive"): banner, logo and all 15 items repainted (same ids), wear-tested on both bodies in all 34 poses; waiting on Cal's approval, not committed. PAUSED for Cal: the Boutique brands (Nordlys: 7 of 8 pieces, banner and logo painted, not committed). Cal 2026-11-14: "recheck the assets for all the stuff in the game, except if people have already bought them, and remove anything that is too overly cute ... aimed towards 30 year olds and every piece ... streetwear themed". Cal approved the audit with his own keeps: 121 pieces to repaint (ids in shots/pending_art/audit/cutlist.json). GACHA POP, SAVE POINT, BARD & BLADE, KAIMANA and OAKMONT become new streetwear brands (WAITING ON CAL: which 5 concepts); the other brands keep their names with streetwear replacements. The Boutique becomes luxury streetwear under the same 8 names (Cal: "Luxury streetwear"). LEAD: hold the redo brands out of drops is Cal's call (ALTITUDE drops Mon Nov 16). ALTITUDE DONE: Cal approved, 7c5664e + anorak FIX a9def76 (QA PASS), live in v1.03 (f72a55f). Was: ROOMS now: ALTITUDE's 12 replacements as bold gorpcore streetwear, same ids (mask, chest rig, sherpa half-zip, storm shell, utility vest, mock-neck done; anorak, climbing pants, layered tights on Higgsfield; then long shorts, trail boots, mules). LEAD holds ALTITUDE and KODE PINK (8c3f8dc); after QA's room-placement sweep (Cal's goodnight note), ROOMS fixes what QA finds, not committed. nl_* entries added to data/items.json, not committed.
 - (QA: DONE on d689703, PASS, QA findings.) WAITING ON QA: check 0d17dbe, your second Restaurant tip jar FIX: the jar comes with the till (r_till) and stands in front of it on the counter, never on the half wall's corner. ROOMS checked till only, till at stage 1, the marble pass with till, the marble pass without till (no jar) and fully bought. In the plain style it overlaps the till's base on purpose (a jar by the register).
 - (QA: DONE on 5850751, NOT FIXED at stages 1 and 2, QA findings.) WAITING ON QA: check 778fd8d, your tip jar FIX (2c38bf9): the bare Restaurant draws no jar (the first kitchen's half wall stands above its counter); once the Restaurant grows past the first kitchen, the jar is on the pass as before. ROOMS checked bare (0 jars) and stages 1 and 2 (1 jar each).
@@ -133,9 +133,29 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on f16dbc2): v1.05 candidate f16dbc2 PASS, with ROOMS's NICE COCK art bcd8f73 (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+  Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.05 candidate f16dbc2 (LEAD) on ROOMS's NICE COCK art bcd8f73, both on a clean copy; plain build. v1.05 can ship.
+  - Art (ROOMS's line, bcd8f73): brandwear.js BRAND=nc, both bodies, all 35 poses, 20 outfits each (the brand alone across the 3 hairstyles,
+    and every piece mixed with other brands' pieces): 0 not drawn, 0 page errors, no icon missing. A closer look at 3x on idle, stretch,
+    sitFront, sitBack, type1, sleep, rearStand, backwalk2, wave1 and dance1. The dad cap's new hair clip holds: hair shows through its back
+    opening and nothing pokes through the crown, short and long hair. The scarf's tail reads right from behind, over long hair too. The
+    stretch (painted yawn) falls back to arms down on the 4 redone tops with their yawn layers deleted; no tearing. Shades front-only as before.
+  - Known look, not a fault: the tee's charcoal under-sleeve shows dark at the raised arm in the sitBack and type1 back views (ROOMS
+    said so). In wave1 the raised sleeve streaks on these tops, but ALTITUDE (passed) does the same: the rig, not this art.
+  - Shop (f16dbc2): LEAD's ncrows.js PASS: the 10 named, priced 670 to 1,000 in their grade's band, on the Boutique, art loads, old names gone.
+    pricesweep against bcd8f73: no NaN, undefined, 0 or fractions; upgrades and lots unchanged; 0 page errors. 13 clothes change price:
+    9 of the repainted pieces (the tee stays 730; tank, qzip, knit and slide go up 230 to 260 with premium), and NICE COCK's 4 keeps drop 10 coins each (joggers 970 to 960, short 710
+    to 700), as do the scarf, aviators, hoodie and court (~10 less). NOTE (LEAD, no fix needed unless unintended): it looks like the brand's
+    price scaling shifting with the new base prices; owners paid already, nothing to refund.
+  - Owners (rigtest/qa/ncowner.js): a player who owns all 10 under the old art and wears cap, scarf, tee, clogs and slate joggers: the rack
+    shows Equipped or Equip with no price, the wardrobe shows all 10 new names and no old ones, the avatar wears the new art (the cap with
+    its clip), and it all holds after a reload. A non-owner sees all 16 pieces with Try on and a price. "Shearling Clogs & Socks" shows its
+    "&" right. 0 page errors.
+  - Not checked by QA: cutpieces, tabs5, tourtest, swaptest and dropcal (LEAD ran them PASS); a phone; Safari; the pieces in a room.
+  - Pictures: shots/qa/nc1117/ (wear_m, wear_f, icons, big/ close-ups, nc_rack_owner, nc_wardrobe_owner).
 - PASS, v1.04 live (LEAD: Live and Test at efe8e2d on release/v1.04, version.txt efe8e2d, wlive PASS, 3021/3021 identical):
   - efe8e2d against the passed 0ca45f7: the only shipped file that differs is app/src/30_app_b.js, and only its APPV line (100 -> 104).
     The rest of the diff is docs, shots and rigtest, none of which ship.

@@ -1,0 +1,258 @@
+[
+ {
+  "id": "gx_nc_jog_black",
+  "type": "a_pants",
+  "name": "Signature Jogger, Black",
+  "price": 970,
+  "desc": "Heavyweight fleece, white wordmark.",
+  "gar": "nc_jog_black",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_jog_ash",
+  "type": "a_pants",
+  "name": "Signature Jogger, Ash",
+  "price": 970,
+  "desc": "Heather grey, navy wordmark.",
+  "gar": "nc_jog_ash",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_jog_slate",
+  "type": "a_pants",
+  "name": "Signature Jogger, Slate",
+  "price": 970,
+  "desc": "Mid grey, cuffs that stack.",
+  "gar": "nc_jog_slate",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_short",
+  "type": "a_pants",
+  "name": "Training Short",
+  "price": 710,
+  "desc": "Seven inches, wordmark on the leg.",
+  "gar": "nc_short",
+  "mo": false,
+  "fo": false,
+  "slot": "pants",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_cap",
+  "type": "a_hat",
+  "name": "Wordmark Cap",
+  "price": 670,
+  "desc": "Black six-panel. nicecock.",
+  "gar": "nc_cap",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_beanie",
+  "type": "a_hat",
+  "name": "Rooster Beanie",
+  "price": 670,
+  "desc": "Ash rib knit, woven rooster.",
+  "gar": "nc_beanie",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_band",
+  "type": "a_hat",
+  "name": "Sweatband",
+  "price": 660,
+  "desc": "White terry, says it on the front.",
+  "gar": "nc_band",
+  "mo": false,
+  "fo": false,
+  "slot": "hat",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_pendant",
+  "type": "a_acc",
+  "name": "Rooster Pendant",
+  "price": 910,
+  "desc": "Silver rooster, fine box chain.",
+  "gar": "nc_pendant",
+  "mo": false,
+  "fo": false,
+  "slot": "neck",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_shades",
+  "type": "a_acc",
+  "name": "Sport Shades",
+  "price": 680,
+  "desc": "Smoked wraparound lens.",
+  "gar": "nc_shades",
+  "mo": false,
+  "fo": false,
+  "slot": "glasses",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": true
+  }
+ },
+ {
+  "id": "gx_nc_hoodie",
+  "type": "a_top",
+  "name": "Heavyweight Hoodie",
+  "price": 1010,
+  "desc": "Navy, white tee hem underneath.",
+  "gar": "nc_hoodie",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_tee",
+  "type": "a_top",
+  "name": "Boxy Tee",
+  "price": 730,
+  "desc": "Bone white, rooster on the back.",
+  "gar": "nc_tee",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_tank",
+  "type": "a_top",
+  "name": "Seamless Gym Tank",
+  "price": 730,
+  "desc": "Slate rib knit.",
+  "gar": "nc_tank",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_qzip",
+  "type": "a_top",
+  "name": "Performance Quarter-Zip",
+  "price": 750,
+  "desc": "Black, rooster on the sleeve.",
+  "gar": "nc_qzip",
+  "mo": false,
+  "fo": false,
+  "slot": "top",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_court",
+  "type": "a_shoes",
+  "name": "Court High-Top",
+  "price": 980,
+  "desc": "White leather, ash suede.",
+  "gar": "nc_court",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_knit",
+  "type": "a_shoes",
+  "name": "Knit Trainer",
+  "price": 730,
+  "desc": "Black sock-knit runner.",
+  "gar": "nc_knit",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ },
+ {
+  "id": "gx_nc_slide",
+  "type": "a_shoes",
+  "name": "Pool Slide",
+  "price": 700,
+  "desc": "Debossed rooster.",
+  "gar": "nc_slide",
+  "mo": false,
+  "fo": false,
+  "slot": "shoes",
+  "item": {
+   "maleOnly": false,
+   "femaleOnly": false,
+   "frontOnly": false
+  }
+ }
+]
