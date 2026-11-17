@@ -226,7 +226,7 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7418204): design review of ROOMS's Lock and Key +15 plan DONE, before paint (QA findings). Nothing open from QA. 15-minute loop off (Cal).
+- Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
   Was: Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings).
   Was: Now (on 4456e71): the mop FIX and both Garden NOTES PASS; v1.11 = 6749725 + 4456e71 can ship (QA findings).
   Was: Now (on 6749725): ROOMS's Restaurant/Garden fixes PASS with two NOTES; FIX: a permanent mop since v1.10 (QA findings).
@@ -248,6 +248,18 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- REVIEW 2, ROOMS's revised Lock and Key plan (13 + 15 = 28; Bookcase Door, Doorman and Posters cut; Menu Mirror, Single Malt Cabinet,
+  Champagne High-Tops in; Big Band now a Brass Stage Rail; lamps kept, Absinthe dropped). OK to paint the wall pieces and the rug.
+  - CORRECTION from QA: no room pins a person to a spot. Theater's thPeople only makes the people, and onspot (Club) only stops a spot
+    behind a piece being moved. Crew choose spots at random (20_loft.js:1423-1426). LEAD (owner): a person-to-spot binding (e.g. a post
+    tag on the person matched to the spot's tag) plus the seated crew pose for the pianist. wand:1 is not passed through d.staff, so the
+    walking server needs a people hook like the Garden's (22_garden.js:261).
+  - FIX (ROOMS): Champagne High-Tops. sup can hide both sb_high1 and sb_high2 under one new id (RSSUP), but req holds one prerequisite
+    (ADDREQ[new]=old, 26_world.js:206). Chain it: req sb_high2 <- sb_high1 (not there today) and the tier <- sb_high2. Otherwise the
+    tier draws three tables for a player who owns one. The tier's art and cust spots cover all three tables.
+  - NOTE (ROOMS): Menu Mirror at back wall x 0.3-1.4 sits behind the bar's left end (bar x 0.7, y 2.0) and next to the back bar
+    (x 1.6). Check the bar top doesn't hide most of it. Key Wall y 4.4-6.3 clears the humidor (ends y 3.65) and the y 6.9 sconce;
+    keep it above the sofa back. Bar Lamps go on the clear middle of the bar, away from the tip jar (5.7, 2.35).
 - REVIEW (before paint), ROOMS's Lock and Key +15 plan (shots/pending_art/rooms1117/lockkey_plus15.md + lockkey_now.png, code on
   7418204). Read against the picture and 27_rooms.js:206-213; nothing drawn. Owner: ROOMS, with LEAD for the staff code.
   - FIX (plan): Lock and Key has 13 live upgrades, not 15 (16 rows: 2 retired, sb_chester and sb_trolley, and Open the Roof). +15 makes 28.
