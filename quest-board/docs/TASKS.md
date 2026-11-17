@@ -19,7 +19,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 
 LEAD Doing:
 - v1.12 LIVE on Live and Test = 6f15fd9 (release/v1.12: release/v1.11 + ROOMS 3c3d6a1 + f6fc989 Bowling/VR/Dessert (QA PASS 3b7cd87) + c15c239 HANGANG and DIAL-UP new pieces + dff8d50 (QA PASS d2a0460, note 3 done) + APPV 112); wlive PASS, 3013/3013 identical on both. Rollback = rollback-v0.80 f833f67 (APPV 113). QA: please run the live check on 6f15fd9. (QA: DONE, PASS; QA findings)
-- FOR QA (ff44edc): crew posts for ROOMS's Lock and Key staff. A staff entry [id, look, {post:"tag"}] keeps that person on the spot tagged "tag" (act "sit" sits); {wand:1} walks the room; post:1 on a spot keeps others off; a posted person never serves. rigtest/lead/crewpost.js PASS (stand-ins, 40 s in the open window). No room uses it yet, so nothing on screen changes until ROOMS wires it.
+- (QA: DONE on ff44edc, PASS; one NOTE for the Lock and Key wiring; QA findings) FOR QA (ff44edc): crew posts for ROOMS's Lock and Key staff. A staff entry [id, look, {post:"tag"}] keeps that person on the spot tagged "tag" (act "sit" sits); {wand:1} walks the room; post:1 on a spot keeps others off; a posted person never serves. rigtest/lead/crewpost.js PASS (stand-ins, 40 s in the open window). No room uses it yet, so nothing on screen changes until ROOMS wires it.
 - Done: v1.11 LIVE on Live and Test = 034069d (release/v1.11: release/v1.10 + ROOMS's 6749725 + 4456e71 + APPV 111; QA PASS
   c97c089: no mop in a new player's full Restaurant (QA f210213, from the v1.10 cut of r_d1), lamps, Garden corner), wlive PASS,
   3013/3013 identical on both; rollback APPV 112 (f1afcc6). QA live check please (034069d) (QA: DONE, PASS; one NOTE; QA findings).
@@ -227,7 +227,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings). Nothing open from QA.
+- Now (on ff44edc): LEAD's crew posts PASS, no regression in six rooms (QA findings). Nothing open from QA.
+  Was: Now (on 6f15fd9): v1.12 LIVE as 6f15fd9, verified (QA findings).
   Was: Now (on c15c239): HANGANG and DIAL-UP new pieces in the Shop PASS (QA findings).
   Was: Now (on 4f115ed): Lock and Key +15 plan reviewed twice; ROOMS paints the wall pieces and rug (QA findings). Nothing open from QA. 15-minute loop off (Cal).
   Was: Now (on 034069d): v1.11 LIVE as 034069d, verified (QA findings).
@@ -251,6 +252,29 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD ff44edc (crew posts, 20_loft.js and 26_world.js). Clean worktrees of ff44edc and its parent, plain builds.
+  - Code: staff without a third field get post:null and wand:0. Every changed check (lfFree, lfNext, lfSvcStaffOn, "No crew
+    here") then works as before, and no existing spot uses a post field.
+  - rigtest/lead/crewpost.js on QA's build: PASS. The posted person is on the spot when the window opens and stays there all
+    40 samples (0.00 off), sitting. Nobody else holds the spot, the walker covers 15 places, no page errors.
+  - Regression, rigtest/qa/crewreg.js (new; a fully bought room's window open 30 s, crew sampled every 0.5 s), before against
+    after:
+    - Rooms: Restaurant (4 crew), Garden (7), Lock and Key (1), Theater (4), Bowling (2), Club (2).
+    - Every crew member is present in 60 of 60 samples on both builds, nobody stuck over 1 s, never "No crew here", no page errors.
+    - Busy shares move a lot from run to run on both builds; crew pick spots at random. Restaurant r_s1: 98/28/78% before,
+      20/58/53% after.
+    - Club: one of the two crew camps at the decks in every run on both builds. Which one is random: the DJ in 5 of 7 runs
+      before, 2 of 7 after. The code path for staff without a post did not change, so this is noise, not a regression.
+  - NOTE (ROOMS, with LEAD; check when Lock and Key wires its staff): a post spot must not share its place with another spot.
+    - In crewpost.js the stand-in post at 7,5 sits on an existing wander spot at 7,5. Over 60 s the walker walked onto the
+      seated person 23 times (min 0.00), inside 0.6 for 4 s; rule 20.
+    - lfFree keeps others off the post spot itself, not off a different spot in the same place.
+    - The pianist's bench sits by the piano's guest spots (6.0,7.2 and 7.4,6.0), and the singer's mic by the stage's (10.85,9.1).
+      Keep every post at least 0.6 from other spots.
+    - Or LEAD: have lfFree skip any spot within 0.5 of a held post spot.
+  - NOTE (ROOMS, optional): the Club's DJ isn't pinned today. In some runs the bartender works the decks and the DJ roams.
+    {post:"dj"} on cb_dj would fix it.
+  - Not checked: sit height on a real bench (ROOMS, by eye), a phone, and rooms other than these six.
 - PASS, v1.12 live (LEAD: Live and Test at 6f15fd9 on release/v1.12, wlive PASS, 3013/3013 identical):
   - 6f15fd9 against release/v1.11 034069d: app/data/art/tools change only in 15_shop.js, 29e_tiers.js and 27b_skins.js, and the APPV
     line (111 -> 112). Each of those three files is byte-identical to the passed commit's (c15c239, c15c239, f6fc989), so the passed
