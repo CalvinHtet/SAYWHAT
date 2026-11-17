@@ -18,6 +18,11 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- Now (on 1854144): v1.10 LIVE on Live and Test = 1854144 (release/v1.10: release/v1.09 + cfe5917 + APPV 110), after v1.09 LIVE
+  918732a (release/v1.08 + 5959380 + cbc2d88 + APPV 109); both QA PASS d2fb54a, wlive PASS, 3013/3013 identical on both each time;
+  rollback APPV 111 (d5b2580). Checked on the v1.10 build: a player from v1.09 gets "What's new in v1.10", 7 lines, +500 on opening;
+  a player who starts on v1.10 does not. QA live check please (918732a and 1854144). QA's Mall note (plaza 60%: a 0-3 piece slip):
+  left as is. Next: Cal's speed log, ROOMS's DIAL-UP rows, the +15 rooms as they pass, then the economy pass.
 - v1.09 FIX for QA's 175d070 = cbc2d88 (on top of cfe5917; v1.09 will be 5959380 + cbc2d88): version its own small right-aligned line (clears an
   11-letter name at 360/390/430, v109.js); a save error shows in full on every tab; side quests from before v1.09 get their week from
   its first load (wk0, progress kept); the hall picture fades at its sides. Class pill contrast on Sunset/Blood/Gold: unchanged (same
