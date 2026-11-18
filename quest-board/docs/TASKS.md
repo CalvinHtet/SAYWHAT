@@ -269,7 +269,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8e6eecf): KODE PINK repaint (art PASS, text FIX) and GILDED design review (QA findings). Nothing open from QA.
+- Now (on 022a2f8): KODE PINK text PASS (waits on LEAD's wiring), GILDED re-review PASS (QA findings). Nothing open from QA.
+  Was: Now (on 8e6eecf): KODE PINK repaint (art PASS, text FIX) and GILDED design review (QA findings).
   Was: Now (on 7e61089): v1.23 live check PASS (QA findings).
   Was: Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings).
   Was: Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings).
@@ -330,6 +331,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS (text), KODE PINK's new Shop names and lines, shots/pending_art/kodepink/final/shop_text.md (022a2f8), checked against the 15
+  repainted icons (shots/qa/kp52/kp_icons_vs_text.png). Every line matches its icon's colours and details, and no new name is already
+  used by another row. NOTE (ROOMS, small): "Night Wide-Leg Cargo" sits next to another brand's existing "Night Cargo"; "Charcoal
+  Wide-Leg Cargo" would avoid the near-twin. Still to do: LEAD wires the text into 15_shop.js, and QA checks that commit before the hold
+  lifts (owner: LEAD).
+- PASS (cleared to paint), GILDED re-review, shots/pending_art/brands1118/gilded.md (022a2f8) (owner: ROOMS):
+  - Both FIXes are done. The chain collar and medallion are gone (now a brocade neck scarf); the ornament is invented leaf filigree, with
+    no faces, no Greek key and no print tile; the logo is a filigree frame around one sapphire. The hoodie's frogging is now an
+    off-centre zip, so it no longer copies REGIMENT.
+  - Both NOTES are done. The slippers became brocade pointed loafers (no longer v_slipper's twin); velvet is only on the beret now; the
+    crown is wide enough to read.
+  - The scarf (ivory-gold brocade, fringed) differs from the Cashmere and Chunky Knit scarves.
+  - NOTE (paint time): black quilted leather with gold is another house's signature, when the quilting is a diamond grid with gold
+    hardware. Paint the cap with channel (straight-line) quilting, or keep the diamonds small and the gold only as the leaf embroidery,
+    with no chain and no interlocking anything.
+  - Paint gates: the bustier through barecheck (bare), the mules through heelcheck (tiptoe), and the wreath's noClip checked over all
+    three hair styles.
 - PASS on the art, with one FIX before the hold lifts: KODE PINK "Night drive" repaint 52dda64, on a clean build of it (owner: ROOMS writes the
   new text, LEAD wires it and lifts the hold).
   - The commit changes only KODE PINK files: the banner, the logo, the 15 pieces' art and icons, the four kp yawn pictures (removed), and
