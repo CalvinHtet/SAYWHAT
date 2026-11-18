@@ -304,6 +304,8 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   - NOTE (Cal's call, via LEAD): the clawback takes the refund back, down to 0 coins. A player who spent v1.18's refund ends at 0
     (case B). Pieces that were worn come back to the Wardrobe but not onto the character. If Cal would rather nobody loses coins
     over his own reversal, drop the clawback; it is at most 2,800 coins a player.
+    Cal, 2026-11-17: "no one has purchased smoke bomb yet so its fine". So the clawback touches no real player and v1.19 ships as
+    it is.
   - Not checked: a phone, and a real two-device merge (simulated with saves put back in local storage).
 - PASS, v1.18 live (LEAD: Live and Test at c12783d, wlive PASS, 3256/3256 identical):
   - c12783d against release/v1.17 48fab96 changes three files. 29zz_v117.js is byte-identical to aec19d9's. 26_world.js changes
