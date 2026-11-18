@@ -211,7 +211,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (wear-test, rule 17): VENOM ROSE's sexy set, a10a097 + 353080a (Cal 2026-11-17: "Push the envelope a little", then "Paint it"). 15 new pieces, art and items.json only (no Shop rows yet): bunny ears, pillbox hat, captain's cap (both), briar pipe (men), lace mask (both), body chain, robe (men), slip dress, corset bodysuit, silk pajamas (men), fishnets, velvet mini, stilettos, lace-up knee boots, smoking slippers (men). Rows draft (brand "rose", mo/fo set): shots/pending_art/new240/rose/rows_draft.json; sheets in that folder (rose_approval.png, wear_m.png, wear_f.png). ROOMS checked: both bodies, all 35 poses, 22 outfits (all-brand and mixed with other brands), 0 not drawn, 0 page errors; close-ups at idle, sitBack, type1, walk2. Known: the body chain's back reads as a pale patch on her back at room size (softened to 60%); the pajama icon looks like shorts (long on the body); the veil was painted without lace, so it is now "Velvet Pillbox Hat"; garters dropped (Higgsfield's NSFW filter, not worked around), the mini replaces them. Not checked: the Shop cards in the app, night lighting. Original designs: no Playboy logo, collar, cuffs or tail, no Hefner name or likeness. Then Cal approves, then LEAD wires the rows. CHROME free.
+- (QA: DONE on 353080a, NOT A PASS yet: two small FIXes, the body chain's back and two icons; two NOTES for Cal; QA findings) WAITING ON QA (wear-test, rule 17): VENOM ROSE's sexy set, a10a097 + 353080a (Cal 2026-11-17: "Push the envelope a little", then "Paint it"). 15 new pieces, art and items.json only (no Shop rows yet): bunny ears, pillbox hat, captain's cap (both), briar pipe (men), lace mask (both), body chain, robe (men), slip dress, corset bodysuit, silk pajamas (men), fishnets, velvet mini, stilettos, lace-up knee boots, smoking slippers (men). Rows draft (brand "rose", mo/fo set): shots/pending_art/new240/rose/rows_draft.json; sheets in that folder (rose_approval.png, wear_m.png, wear_f.png). ROOMS checked: both bodies, all 35 poses, 22 outfits (all-brand and mixed with other brands), 0 not drawn, 0 page errors; close-ups at idle, sitBack, type1, walk2. Known: the body chain's back reads as a pale patch on her back at room size (softened to 60%); the pajama icon looks like shorts (long on the body); the veil was painted without lace, so it is now "Velvet Pillbox Hat"; garters dropped (Higgsfield's NSFW filter, not worked around), the mini replaces them. Not checked: the Shop cards in the app, night lighting. Original designs: no Playboy logo, collar, cuffs or tail, no Hefner name or likeness. Then Cal approves, then LEAD wires the rows. CHROME free.
 - TAKEN by ROOMS: QA's room-placement sweep for Cal (9204eb5, rigtest/qa/review_rooms_1114.md): chandeliers, floating pieces, wrong-wall pieces, off-floor, blocked doors, clipping, realism, crowding, guest spots. Fixing room by room, worst first; each fix goes to QA as WAITING ON QA.
 - (QA: DONE on 96f45cb, PASS except two, QA findings) (QA: DONE on 152e874, both fixed; one new FIX, the Bedroom drawn smaller; QA findings) (QA: DONE on 25a23a9, PASS; QA findings) (QA: DONE on fdecc73, PASS; QA findings) (QA: DONE on 8a99e00, PASS, Bowling seats for Cal to judge; QA findings) WAITING ON QA: room sweep fixes so far, by eye at 1860 px fully bought, default style, 13:00 (bigrooms.js) and auditall.js: 16a9ebf (Restaurant chandeliers over tables on cords, two in the full room; Theater lobby chandeliers up on cords, one moved off the kiosk; Patio light strings tied to corner posts), 0809117 (Boba cooker on a steel stand; Closet Lair rod painted out; Rhythm mirror/equalizer flips and bench inside; VR globe flip and flight pod inside; Game Room hex panels drawn on the left wall plane), 96f45cb (Theater standee off the entrance; Patio telescope and bar cart clear). (QA: DONE on 96f45cb, PASS but FIX 1 Theater second chandelier, FIX 2 Patio cust spot.) (QA: DONE on 152e874, PASS but one FIX, the Bedroom drawn 20% smaller.) (QA: DONE on 25a23a9, PASS.) (QA: DONE on fdecc73, PASS.) (QA: DONE on 8a99e00, PASS; the Bowling seat row goes to Cal.) Was WAITING ON QA: f65b082 (Bowling seats alongside the lanes facing them, ball return and console at the lane ends; Auditorium EXIT out from behind the speaker), 6b69666 (Restaurant: one front table instead of two with the crescent booth; counter stools .07 closer, no seats on air), 8a99e00 (Tool Shed superseded by the Glass Conservatory in the full garden). Art still open (needs Higgsfield): Dessert sundae inside the Bingsu art, a painted Speakeasy back bar, a back-view Karaoke booth, the Lair's outlined pieces; the Auditorium projector aim waits on Cal's OK of the projector back views. Not checked: other styles, earlier stages, night. Still to do: Dessert sundae (art edit), Bedroom desk/door, Garden door/bed and lamp/pond, Mall escalator, Rooftop DJ/pool, Speakeasy booth/piano and back bar, Bowling, Karaoke, Auditorium, Lair pieces, crowding, guest spots.
 - (QA: DONE on 9f6c17c, PASS, QA findings) WAITING ON QA: check b416f33, QA's old note (Mara's chef hat covered her eyes): npc_hat is lifted (m 175, f 115) with no hair trim. ROOMS checked Mara in all 34 poses (with LEAD's six animations) and the hat on h1, h2, h3 for both bodies: eyes clear, no scalp gap. Every NPC chef wears it, so a look at the Restaurant's cooks too.
@@ -247,7 +247,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 78926d8): v1.19 LIVE as 78926d8, verified (QA findings). Nothing open from QA.
+- Now (on 353080a): VENOM ROSE's sexy set wear-check: NOT A PASS yet, two small FIXes for ROOMS (QA findings).
+  Was: Now (on 78926d8): v1.19 LIVE as 78926d8, verified (QA findings).
   Was: Now (on 205d8df): v1.19 = release/v1.18 + 205d8df PASS, can ship (QA findings).
   Was: Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings).
   Was: Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings).
@@ -291,6 +292,26 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, ROOMS a10a097 + 353080a (VENOM ROSE's 15-piece sexy set, art and items.json only). Clean worktree of 353080a,
+  plain build; ROOMS's rows_draft.json loaded into the page's Shop for the test. Pictures: shots/qa/rose15/.
+  - Every pose (35), both bodies: 8 men's and 14 women's outfits (all-brand and mixed). 0 not drawn, 0 icons missing, 0 page
+    errors. The men-only and women-only flags match items.json. The mask and pipe are front only.
+  - FIX (ROOMS): the Crystal Body Chain from behind (sitBack, rearStand, backwalk2) is still a pale grey patch with a bow across the
+    shoulder blades, even at 60%. It reads as a white collar or shawl, not a chain (bodychain_back.jpg).
+    - Make it frontOnly (no back art, the chain drapes the front only), or thin the back to a few fine strands.
+  - FIX (ROOMS, icons only): the Silk Pajama Pants icon reads as shorts (the pants are full length on the body). The Velvet Mini
+    Skirt icon still has white keyed-out notches along its right edge (icons.jpg).
+  - NOTE (Cal's call): Fishnet Tights take the pants slot, so with a top that ends at the hip (a bomber, a tee) they are the only
+    bottom: net legs and a dark high waistband, no skirt (fishnet_with_short_top.jpg). Not nude, but it is the boldest look in the
+    set. It is fine with the slip dress and the bodysuit.
+  - NOTE (Cal's call): the Briar Pipe is a tobacco pipe with a wisp of smoke (men only). The Smoking Robe opens to a bare chest.
+    Both fit "push the envelope", but they are Cal's to approve.
+  - PASS, the rest: Satin Bunny Ears, Velvet Pillbox Hat (the renamed veil), Velvet Captain's Cap, Lace Masquerade Mask, Lace Slip
+    Dress, Satin Corset Bodysuit, Velvet Mini Skirt (on the body), Patent Stilettos, Lace-Up Knee Boots, Velvet Smoking Slippers,
+    Silk Pajama Pants (on the body).
+    - All draw cleanly, alone and mixed with other brands. No logos or real brands.
+    - Dropping the garters (Higgsfield's filter) is fine; the mini skirt replaces them.
+  - Not checked: a phone, night lighting, and the Shop cards (no rows yet).
 - PASS, v1.19 live (LEAD: Live and Test at 78926d8, wlive PASS, 3256/3256 identical):
   - 78926d8 against release/v1.18 c12783d: only 29zz_v117.js (byte-identical to 205d8df's, the build QA tested) and the APPV line
     (118 -> 119). 26_world.js is untouched, so Pip has no bandana. No art or data change.
