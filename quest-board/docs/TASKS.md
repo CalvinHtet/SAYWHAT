@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (d51ef4c): Cal: "Remove the 'you can afford an upgrade in the garden' ... remove clutter from the board view", then "remove the next goal as well. it is redundant with the goals button". The Board's Next line no longer names an upgrade (falls through to the Daily Quest / quests left); inside a building no pill under its name (glNextHtml returns ""), the Goals button with its count stays. afford.js PASS at 360/390/430. Not checked: tours that might point at the old pills (none found by grep), a phone. v1.21 = release/v1.20 + d51ef4c.
+- (QA: DONE on release/v1.20 + d51ef4c, PASS, v1.21 can ship; QA findings) FOR QA (d51ef4c): Cal: "Remove the 'you can afford an upgrade in the garden' ... remove clutter from the board view", then "remove the next goal as well. it is redundant with the goals button". The Board's Next line no longer names an upgrade (falls through to the Daily Quest / quests left); inside a building no pill under its name (glNextHtml returns ""), the Goals button with its count stays. afford.js PASS at 360/390/430. Not checked: tours that might point at the old pills (none found by grep), a phone. v1.21 = release/v1.20 + d51ef4c.
 - v1.20 LIVE on Live and Test = 6ba0729 (release/v1.20: VENOM ROSE's 15 + ROOMS's art + the v1.20 letter + APPV 120; QA PASS 8f08e5e); artcheck 0 gaps, wlive PASS, 3325/3325 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 4cca559 (APPV 121). Both branches pushed. QA: live check please. Borderline five still wait on Cal. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.20 6ba0729, PASS, v1.20 can ship; QA findings) FOR QA: v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + ROOMS's a10a097, 353080a, 242f620, d808aca (drafts.md left out; 468c3fa is drafts only) + 1a653a7 + bc90d6c + APPV 120). Build that branch, not qa-local (the letter needs APPV 120).
   1a653a7: VENOM ROSE's 15 rows (Cal: "Approve all"; your 39bc5d1) after gx_v_heel. Grades: bunny ears, pipe, fishnets standard; body chain, corset bodysuit, lace slip dress luxury; the other nine premium (velvet, silk, patent, leather, the lace mask). Boutique prices 690-1,190. VENOM ROSE first goes live on the Boutique 11-23 (the test finds it live 12-04).
@@ -253,7 +253,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings). Nothing open from QA.
+- Now (on 6ba0729): Cal's full sweep DONE (rooms, every clothing piece's fit, Shop counts), no FIX; d51ef4c PASS (QA findings). Nothing open from QA.
+  Was: Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings).
   Was: Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings).
   Was: Now (on d808aca): VENOM ROSE's sexy set wear-check PASS (QA findings).
   Was: Now (on 242f620): VENOM ROSE recheck: both FIXes PASS; one more small FIX (QA findings).
@@ -302,6 +303,42 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD d51ef4c (Cal: no "you can afford an upgrade" on the Board, no "Next goal" pill in the buildings). QA built v1.21 as
+  planned (release/v1.20 + d51ef4c, applied without committing).
+  - rigtest/lead/afford.js: PASS at 360, 390 and 430. The Next line names no upgrade, buildings show no pill, and Street, the name
+    and Goals stay with Goals opening the list. 0 page errors.
+  - Code: glNextHtml is only called under a building's name; the pill's "N goals ready to claim" now lives on the Goals button's
+    count. zxAfford is left unused. .glnext is only measured for layout.
+- SWEEP (Cal, 2026-11-18: rooms, every clothing piece's fit, how many items per shop) on live v1.20 (6ba0729), clean build.
+  Pictures and lists: shots/qa/sweep1118/.
+  - Rooms, all 21, fully bought for a new player (bigrooms.js LIVE=1, about 1860 px), plus auditall.js:
+    - No FIX: nothing floats, faces a wall, blocks a door or clips a window. Every room passed before (be9bc20, the room fix
+      checks, Lock and Key and Boba this week) and still matches.
+    - The audit's flags are the known, intended ones: rugs under furniture, the Bedroom's stacked shelves, Restaurant booths over
+      tables, Speakeasy's band on its stage, tiny Club speaker/laser edges, Rooftop's bar beside a palm. 0 page errors.
+    - NOTE (ROOMS, minor): the Dessert Parlor's tiered cupcake stand stands on its own base on the floor in front of the counter
+      (dessert_cupcake_stand.jpg). It reads as a floor display next to the macaron tower; a raise or a move to the counter only if
+      Cal wants.
+  - Clothing, rigtest/qa/fitsweep.js (new): every Shop row not cut or gone (402), worn alone over the default look on each body it
+    fits, in idle, rearStand, sitFront and walk2.
+    - 0 not drawn. The automatic out-of-silhouette check flags only the Briar Pipe and GACHA POP's Little Angel Wings, which
+      stick out by design. No top, bottom or shoe sits more than 20% outside.
+    - By eye (14 sheets, fit/s*.jpg): all 353 brand and Basics pieces sit on the body in every pose on both bodies (hats on
+      heads, shoes on feet, skirts and dresses at the waist). Nothing floats or gaps. No FIX.
+    - NOTE (LEAD, cleanup only): 49 old pre-rig rows are still in SHOP: hr_/dy_/ey_/et_ hair, dye and eyes; tp_/pt_/sh_
+      tops, bottoms and shoes; ac_ accessories incl. Halo and Crown; bk_ Katana, Cape and Shadow Wings.
+      - lookOf() applies them only to the old pixel avatar, not the rig, so equipped they change nothing on the character.
+      - They show in no Shop tab and in no Wardrobe (checked with an owner), and nothing grants them, so no player sees them.
+      - Safe to delete when convenient.
+  - On sale per shop (Shop rows not cut, gone or crawl-only), by category (hats / accessories / tops / bottoms / shoes):
+    - Street, 13 brands, 231 pieces: HANGANG 6/6/8/8/8 (36); DIAL-UP 6/6/7/7/7 (33); OVERPASS 2/6/9/7/5 (29); SMOKE BOMB 2/3/2/3/3
+      (13); ALTITUDE 2/3/5/3/2, KODE PINK, GACHA POP, SAVE POINT, BARD & BLADE, KAIMANA, OAKMONT, SOLVBERG 3/2/4/3/3 (15 each).
+      Floor totals 39/38/59/49/46.
+    - Boutique, 4 brands, 76 pieces: VENOM ROSE 5/6/8/6/5 (30); NICE COCK 3/2/4/4/3 (16); SAYMORE 3/2/4/3/3 (15); CHROME RAIN
+      2/3/4/3/3 (15). Floor totals 13/13/20/16/14.
+    - Basics tab, 41 pieces: 9 tops, 9 bottoms, 9 shoes, 6 hairstyles, 4 hair dyes, 4 eye colours.
+    - Live today (Wed 11-18): Street HANGANG, DIAL-UP, OVERPASS (98 pieces) + Basics (41); Boutique VENOM ROSE, NICE COCK (46).
+  - Not checked: a phone, rooms at night, and outfits combining several brands (each brand's wear-check covered mixes).
 - PASS, v1.20 live (LEAD: Live and Test at 6ba0729, wlive PASS, 3325/3325 identical):
   - Live is 6ba0729, the exact release/v1.20 commit QA passed (8f08e5e), and release/v1.20 still points there. No new commit to
     compare.

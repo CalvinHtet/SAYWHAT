@@ -1,0 +1,402 @@
+FLAG gx_v_pipe              a_acc    rose     max out  88%  not drawn 0  {"m:idle":88,"m:rearStand":0,"m:sitFront":88,"m:walk2":88}  Briar Pipe
+FLAG gx_gp_wings            a_acc    gp       max out  80%  not drawn 0  {"m:idle":80,"m:rearStand":71,"m:sitFront":80,"m:walk2":80,"f:idle":42,"f:rearStand":67,"f:sitFront":40,"f:walk2":44}  Little Angel Wings
+ok   gx_sm_halo             a_hat    sm       max out  54%  not drawn 0  {"m:idle":54,"m:rearStand":52,"m:sitFront":54,"m:walk2":54,"f:idle":50,"f:rearStand":53,"f:sitFront":50,"f:walk2":50}  Neon Halo
+ok   gx_v_bunny             a_hat    rose     max out  36%  not drawn 0  {"f:idle":34,"f:rearStand":36,"f:sitFront":34,"f:walk2":34}  Satin Bunny Ears
+ok   gx_sm_phones           a_acc    sm       max out  32%  not drawn 0  {"m:idle":18,"m:rearStand":32,"m:sitFront":19,"m:walk2":18,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  DJ Headphones
+ok   gx_sv_mitten           a_acc    sv       max out  32%  not drawn 0  {"m:idle":25,"m:rearStand":26,"m:sitFront":32,"m:walk2":28,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Snowflake Mittens
+ok   gx_bb_wizard           a_hat    bb       max out  30%  not drawn 0  {"m:idle":30,"m:rearStand":24,"m:sitFront":30,"m:walk2":30,"f:idle":21,"f:rearStand":15,"f:sitFront":20,"f:walk2":21}  Wizard Hat
+ok   gx_gp_bow              a_hat    gp       max out  28%  not drawn 0  {"m:idle":28,"m:rearStand":26,"m:sitFront":28,"m:walk2":28,"f:idle":25,"f:rearStand":25,"f:sitFront":25,"f:walk2":25}  Satin Bow
+ok   bs_hair_f_h3           a_hair   basics   max out  28%  not drawn 0  {"f:idle":28,"f:rearStand":10,"f:sitFront":27,"f:walk2":28}  Ponytail Cut
+ok   gx_sm_halomask         a_hat    sm       max out  25%  not drawn 0  {"m:idle":8,"m:rearStand":19,"m:sitFront":8,"m:walk2":8,"f:idle":8,"f:rearStand":25,"f:sitFront":8,"f:walk2":8}  Halo Mask
+ok   gx_smk_tape            a_acc    smk      max out  25%  not drawn 0  {"m:idle":9,"m:rearStand":11,"m:sitFront":25,"m:walk2":10,"f:idle":1,"f:rearStand":1,"f:sitFront":22,"f:walk2":4}  Wrap Tape Set
+ok   gx_y_furtrap           a_hat    y2k      max out  24%  not drawn 0  {"m:idle":23,"m:rearStand":19,"m:sitFront":24,"m:walk2":23,"f:idle":0,"f:rearStand":1,"f:sitFront":0,"f:walk2":0}  Faux Fur Trapper
+ok   gx_h_phones            a_acc    hanga    max out  23%  not drawn 0  {"m:idle":17,"m:rearStand":23,"m:sitFront":18,"m:walk2":16,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cream Headphones
+ok   gx_h_pleat             a_pants  hanga    max out  20%  not drawn 0  {"f:idle":15,"f:rearStand":20,"f:sitFront":5,"f:walk2":15}  Long Pleated Skirt
+ok   gx_y_visor             a_hat    y2k      max out  19%  not drawn 0  {"m:idle":3,"m:rearStand":13,"m:sitFront":3,"m:walk2":3,"f:idle":4,"f:rearStand":19,"f:sitFront":4,"f:walk2":4}  Holo Sun Visor
+ok   gx_smk_wrap            a_hat    smk      max out  19%  not drawn 0  {"m:idle":19,"m:rearStand":1,"m:sitFront":19,"m:walk2":19,"f:idle":16,"f:rearStand":0,"f:sitFront":16,"f:walk2":15}  Spiky Headwrap
+ok   gx_y_truck             a_hat    y2k      max out  18%  not drawn 0  {"m:idle":18,"m:rearStand":18,"m:sitFront":18,"m:walk2":17,"f:idle":4,"f:rearStand":8,"f:sitFront":4,"f:walk2":4}  Pink Rhinestone Trucker
+ok   gx_cr_hood             a_hat    cr       max out  18%  not drawn 0  {"m:idle":17,"m:rearStand":13,"m:sitFront":18,"m:walk2":17,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Glow-Rim Hood
+ok   gx_sm_runner           a_shoes  sm       max out  17%  not drawn 0  {"m:idle":15,"m:rearStand":17,"m:sitFront":7,"m:walk2":14,"f:idle":14,"f:rearStand":15,"f:sitFront":10,"f:walk2":12}  Flare Runners
+ok   gx_cr_platform         a_shoes  cr       max out  17%  not drawn 0  {"m:idle":10,"m:rearStand":17,"m:sitFront":3,"m:walk2":9,"f:idle":9,"f:rearStand":3,"f:sitFront":7,"f:walk2":9}  Platform Buckle Boots
+ok   gx_sp_headset          a_hat    sp       max out  16%  not drawn 0  {"m:idle":6,"m:rearStand":16,"m:sitFront":6,"m:walk2":7,"f:idle":0,"f:rearStand":3,"f:sitFront":0,"f:walk2":0}  Gaming Headset
+ok   gx_smk_hakama          a_pants  smk      max out  15%  not drawn 0  {"m:idle":14,"m:rearStand":13,"m:sitFront":14,"m:walk2":15,"f:idle":13,"f:rearStand":15,"f:sitFront":4,"f:walk2":13}  Wide Hakama
+ok   gx_gp_cathood          a_hat    gp       max out  14%  not drawn 0  {"m:idle":14,"m:rearStand":11,"m:sitFront":14,"m:walk2":14,"f:idle":11,"f:rearStand":8,"f:sitFront":11,"f:walk2":11}  Cat-Ear Hood
+ok   gx_bb_mantle           a_hat    bb       max out  14%  not drawn 0  {"m:idle":13,"m:rearStand":8,"m:sitFront":14,"m:walk2":12,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ranger Hood
+ok   gx_km_visor            a_hat    km       max out  14%  not drawn 0  {"m:idle":3,"m:rearStand":9,"m:sitFront":3,"m:walk2":3,"f:idle":4,"f:rearStand":14,"f:sitFront":4,"f:walk2":4}  Coral Sun Visor
+ok   gx_nc_court            a_shoes  nc       max out  13%  not drawn 0  {"m:idle":13,"m:rearStand":5,"m:sitFront":7,"m:walk2":13,"f:idle":12,"f:rearStand":5,"f:sitFront":9,"f:walk2":10}  Silver Court High-Top
+ok   gx_km_straw            a_hat    km       max out  13%  not drawn 0  {"m:idle":13,"m:rearStand":10,"m:sitFront":13,"m:walk2":13,"f:idle":8,"f:rearStand":7,"f:sitFront":7,"f:walk2":7}  Straw Sun Hat
+ok   gx_v_tulle             a_pants  rose     max out  12%  not drawn 0  {"f:idle":12,"f:rearStand":11,"f:sitFront":3,"f:walk2":12}  Black Tulle Skirt
+ok   gx_kp_phones           a_hat    kp       max out  12%  not drawn 0  {"m:idle":11,"m:rearStand":12,"m:sitFront":11,"m:walk2":10,"f:idle":0,"f:rearStand":5,"f:sitFront":0,"f:walk2":0}  Pastel Headphones
+ok   gx_kp_runner           a_shoes  kp       max out  12%  not drawn 0  {"m:idle":12,"m:rearStand":9,"m:sitFront":9,"m:walk2":12,"f:idle":10,"f:rearStand":1,"f:sitFront":9,"f:walk2":10}  Pastel Runners
+ok   gx_smk_band            a_hat    smk      max out  12%  not drawn 0  {"m:idle":12,"m:rearStand":0,"m:sitFront":12,"m:walk2":12,"f:idle":10,"f:rearStand":0,"f:sitFront":10,"f:walk2":10}  Stitched Headband
+ok   gx_sv_trapper          a_hat    sv       max out  12%  not drawn 0  {"m:idle":12,"m:rearStand":10,"m:sitFront":12,"m:walk2":11,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Trapper Hat
+ok   gx_h_derby             a_shoes  hanga    max out  11%  not drawn 0  {"m:idle":11,"m:rearStand":3,"m:sitFront":6,"m:walk2":10}  Chunky Derby Shoes
+ok   gx_h_pbucket           a_hat    hanga    max out  11%  not drawn 0  {"m:idle":10,"m:rearStand":11,"m:sitFront":10,"m:walk2":10,"f:idle":8,"f:rearStand":6,"f:sitFront":7,"f:walk2":8}  Padded Nylon Bucket
+ok   gx_v_captain           a_hat    rose     max out  11%  not drawn 0  {"m:idle":5,"m:rearStand":11,"m:sitFront":5,"m:walk2":5,"f:idle":7,"f:rearStand":11,"f:sitFront":7,"f:walk2":7}  Velvet Captain's Cap
+ok   gx_oak_watch           a_acc    oak      max out  11%  not drawn 0  {"m:idle":2,"m:rearStand":2,"m:sitFront":11,"m:walk2":4,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Retro Sport Watch
+ok   gx_v_veil              a_hat    rose     max out  10%  not drawn 0  {"f:idle":7,"f:rearStand":10,"f:sitFront":6,"f:walk2":7}  Velvet Pillbox Hat
+ok   gx_al_flap             a_hat    alt      max out  10%  not drawn 0  {"m:idle":9,"m:rearStand":10,"m:sitFront":9,"m:walk2":9,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Earflap Cap
+ok   gx_nc_slide            a_shoes  nc       max out  10%  not drawn 0  {"m:idle":5,"m:rearStand":10,"m:sitFront":3,"m:walk2":5,"f:idle":1,"f:rearStand":9,"f:sitFront":1,"f:walk2":1}  Shearling Clogs & Socks
+ok   gx_gp_bunny            a_hat    gp       max out  10%  not drawn 0  {"m:idle":10,"m:rearStand":7,"m:sitFront":10,"m:walk2":10,"f:idle":8,"f:rearStand":6,"f:sitFront":8,"f:walk2":8}  Bunny Beanie
+ok   gx_h_balloon           a_pants  hanga    max out   9%  not drawn 0  {"m:idle":9,"m:rearStand":9,"m:sitFront":7,"m:walk2":9,"f:idle":5,"f:rearStand":5,"f:sitFront":0,"f:walk2":5}  Balloon Sweatpants
+ok   gx_y_maxi              a_pants  y2k      max out   9%  not drawn 0  {"f:idle":6,"f:rearStand":9,"f:sitFront":2,"f:walk2":7}  Denim Cargo Maxi
+ok   gx_o_reflect           a_hat    over     max out   9%  not drawn 0  {"m:idle":9,"m:rearStand":9,"m:sitFront":9,"m:walk2":9,"f:idle":6,"f:rearStand":5,"f:sitFront":6,"f:walk2":6}  Reflective Bucket
+ok   gx_o_snap              a_pants  over     max out   9%  not drawn 0  {"m:idle":4,"m:rearStand":5,"m:sitFront":4,"m:walk2":4,"f:idle":6,"f:rearStand":9,"f:sitFront":5,"f:walk2":7}  Snap Track Pants
+ok   gx_al_bucket           a_hat    alt      max out   9%  not drawn 0  {"m:idle":8,"m:rearStand":9,"m:sitFront":8,"m:walk2":8,"f:idle":6,"f:rearStand":5,"f:sitFront":6,"f:walk2":6}  Hiking Bucket Hat
+ok   gx_oak_visor           a_hat    oak      max out   9%  not drawn 0  {"m:idle":3,"m:rearStand":5,"m:sitFront":3,"m:walk2":3,"f:idle":4,"f:rearStand":9,"f:sitFront":3,"f:walk2":4}  Tennis Visor
+ok   gx_sv_pom              a_hat    sv       max out   9%  not drawn 0  {"m:idle":8,"m:rearStand":2,"m:sitFront":8,"m:walk2":8,"f:idle":9,"f:rearStand":3,"f:sitFront":9,"f:walk2":9}  Pom-Pom Beanie
+ok   gx_h_snap              a_hat    hanga    max out   8%  not drawn 0  {"m:idle":8,"m:rearStand":6,"m:sitFront":8,"m:walk2":8,"f:idle":3,"f:rearStand":2,"f:sitFront":3,"f:walk2":3}  Flat-brim Snapback
+ok   gx_y_velcap            a_hat    y2k      max out   8%  not drawn 0  {"m:idle":2,"m:rearStand":6,"m:sitFront":2,"m:walk2":2,"f:idle":4,"f:rearStand":8,"f:sitFront":4,"f:walk2":4}  Velour Newsboy Cap
+ok   gx_y_plat              a_shoes  y2k      max out   8%  not drawn 0  {"m:idle":8,"m:rearStand":2,"m:sitFront":3,"m:walk2":7,"f:idle":4,"f:rearStand":1,"f:sitFront":3,"f:walk2":4}  Platform Sneakers
+ok   gx_h_beret             a_hat    hanga    max out   7%  not drawn 0  {"m:idle":6,"m:rearStand":7,"m:sitFront":6,"m:walk2":6,"f:idle":5,"f:rearStand":6,"f:sitFront":5,"f:walk2":5}  Wool Beret
+ok   gx_h_longbill          a_hat    hanga    max out   7%  not drawn 0  {"m:idle":7,"m:rearStand":5,"m:sitFront":7,"m:walk2":7,"f:idle":6,"f:rearStand":6,"f:sitFront":6,"f:walk2":6}  Long-Bill Washed Cap
+ok   gx_h_wrap              a_pants  hanga    max out   7%  not drawn 0  {"m:idle":7,"m:rearStand":6,"m:sitFront":6,"m:walk2":6,"f:idle":4,"f:rearStand":4,"f:sitFront":0,"f:walk2":3}  Wrap Skirt over Trousers
+ok   gx_o_para              a_pants  over     max out   7%  not drawn 0  {"m:idle":3,"m:rearStand":5,"m:sitFront":3,"m:walk2":3,"f:idle":3,"f:rearStand":7,"f:sitFront":1,"f:walk2":4}  Parachute Pants
+ok   gx_o_rigg              a_shoes  over     max out   7%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":7,"f:rearStand":6,"f:sitFront":5,"f:walk2":6}  Trail Runners
+ok   gx_v_boot              a_shoes  rose     max out   7%  not drawn 0  {"m:idle":7,"m:rearStand":6,"m:sitFront":2,"m:walk2":5,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Platform Combat Boots
+ok   gx_sp_runner           a_shoes  sp       max out   7%  not drawn 0  {"m:idle":3,"m:rearStand":2,"m:sitFront":2,"m:walk2":3,"f:idle":7,"f:rearStand":7,"f:sitFront":5,"f:walk2":6}  Retro Runners
+ok   gx_y_bucket            a_hat    y2k      max out   6%  not drawn 0  {"m:idle":6,"m:rearStand":5,"m:sitFront":6,"m:walk2":6,"f:idle":1,"f:rearStand":1,"f:sitFront":1,"f:walk2":1}  Denim Bucket Hat
+ok   gx_h_mule              a_shoes  hanga    max out   6%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":1,"m:walk2":2,"f:idle":6,"f:rearStand":0,"f:sitFront":5,"f:walk2":6}  Mesh Sneaker Mules
+ok   gx_y_furmule           a_shoes  y2k      max out   6%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":0,"m:walk2":1,"f:idle":6,"f:rearStand":1,"f:sitFront":5,"f:walk2":6}  Suede Fur Mules
+ok   gx_kp_bucket           a_hat    kp       max out   6%  not drawn 0  {"m:idle":6,"m:rearStand":5,"m:sitFront":6,"m:walk2":6,"f:idle":1,"f:rearStand":1,"f:sitFront":1,"f:walk2":1}  Cassette Bucket Hat
+ok   gx_gp_bear             a_top    gp       max out   6%  not drawn 0  {"m:idle":6,"m:rearStand":2,"m:sitFront":5,"m:walk2":6,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Bear Onesie Top
+ok   gx_sp_beanie           a_hat    sp       max out   6%  not drawn 0  {"m:idle":6,"m:rearStand":1,"m:sitFront":5,"m:walk2":5,"f:idle":5,"f:rearStand":1,"f:sitFront":5,"f:walk2":5}  Pixel Heart Beanie
+ok   gx_km_bucket           a_hat    km       max out   6%  not drawn 0  {"m:idle":6,"m:rearStand":5,"m:sitFront":6,"m:walk2":6,"f:idle":1,"f:rearStand":1,"f:sitFront":1,"f:walk2":1}  Faded Bucket Hat
+ok   gx_h_court             a_shoes  hanga    max out   5%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":2,"f:idle":5,"f:rearStand":0,"f:sitFront":4,"f:walk2":4}  Retro Court Trainers
+ok   gx_y_race              a_hat    y2k      max out   5%  not drawn 0  {"m:idle":5,"m:rearStand":4,"m:sitFront":5,"m:walk2":4,"f:idle":3,"f:rearStand":2,"f:sitFront":3,"f:walk2":3}  Racing Patch Cap
+ok   gx_al_buff             a_acc    alt      max out   5%  not drawn 0  {"m:idle":4,"m:rearStand":0,"m:sitFront":4,"m:walk2":5,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Vented Face Mask
+ok   gx_gp_slipper          a_shoes  gp       max out   5%  not drawn 0  {"m:idle":1,"m:rearStand":3,"m:sitFront":0,"m:walk2":1,"f:idle":3,"f:rearStand":5,"f:sitFront":1,"f:walk2":2}  Fluffy Slipper Boots
+ok   gx_sp_cap              a_hat    sp       max out   5%  not drawn 0  {"m:idle":5,"m:rearStand":5,"m:sitFront":5,"m:walk2":5,"f:idle":3,"f:rearStand":3,"f:sitFront":3,"f:walk2":3}  Coin Cap
+ok   gx_bb_cloak            a_top    bb       max out   5%  not drawn 0  {"m:idle":3,"m:rearStand":2,"m:sitFront":3,"m:walk2":3,"f:idle":1,"f:rearStand":5,"f:sitFront":1,"f:walk2":1}  Travel Cloak
+ok   gx_sv_scarf            a_acc    sv       max out   5%  not drawn 0  {"m:idle":2,"m:rearStand":5,"m:sitFront":2,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Chunky Knit Scarf
+ok   bs_hair_m_h3           a_hair   basics   max out   5%  not drawn 0  {"m:idle":3,"m:rearStand":5,"m:sitFront":3,"m:walk2":3}  Curtains Cut
+ok   gx_h_news              a_hat    hanga    max out   4%  not drawn 0  {"m:idle":0,"m:rearStand":1,"m:sitFront":0,"m:walk2":0,"f:idle":4,"f:rearStand":3,"f:sitFront":4,"f:walk2":4}  Newsboy Cap
+ok   gx_h_hoodie            a_top    hanga    max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":1,"m:sitFront":4,"m:walk2":4,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Oversized Cream Hoodie
+ok   gx_h_sneak             a_shoes  hanga    max out   4%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":4,"f:rearStand":0,"f:sitFront":3,"f:walk2":4}  Chunky Sneakers
+ok   gx_h_barrel            a_pants  hanga    max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":2,"m:sitFront":4,"m:walk2":4,"f:idle":3,"f:rearStand":3,"f:sitFront":2,"f:walk2":3}  Washed Black Wide Jeans
+ok   gx_y_furden            a_top    y2k      max out   4%  not drawn 0  {"m:idle":3,"m:rearStand":3,"m:sitFront":4,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Fur-Collar Denim Jacket
+ok   gx_y_patch             a_pants  y2k      max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":2,"m:sitFront":3,"m:walk2":4,"f:idle":3,"f:rearStand":4,"f:sitFront":2,"f:walk2":3}  Patchwork Wide Jeans
+ok   gx_y_bubble            a_shoes  y2k      max out   4%  not drawn 0  {"m:idle":2,"m:rearStand":2,"m:sitFront":1,"m:walk2":1,"f:idle":4,"f:rearStand":1,"f:sitFront":3,"f:walk2":3}  Bubble Sole Runners
+ok   gx_o_camo              a_pants  over     max out   4%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":2,"m:walk2":2,"f:idle":3,"f:rearStand":4,"f:sitFront":2,"f:walk2":3}  Urban Camo Cargos
+ok   gx_o_suede             a_shoes  over     max out   4%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":4,"f:rearStand":0,"f:sitFront":3,"f:walk2":3}  Suede Low Skaters
+ok   gx_o_slipon            a_shoes  over     max out   4%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":4,"f:rearStand":0,"f:sitFront":3,"f:walk2":3}  Knit Slip-On Trainers
+ok   gx_nc_cap              a_hat    nc       max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":2,"m:sitFront":4,"m:walk2":4,"f:idle":1,"f:rearStand":2,"f:sitFront":1,"f:walk2":1}  Wordmark Cap
+ok   gx_nc_band             a_hat    nc       max out   4%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":2,"m:walk2":2,"f:idle":1,"f:rearStand":4,"f:sitFront":1,"f:walk2":1}  Fleece Dad Cap
+ok   gx_kp_cargo            a_pants  kp       max out   4%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":2,"m:walk2":2,"f:idle":3,"f:rearStand":4,"f:sitFront":2,"f:walk2":3}  Wide-Leg Cargo
+ok   gx_gp_mary             a_shoes  gp       max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":4,"m:sitFront":0,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Platform Mary Janes
+ok   gx_sp_shades           a_acc    sp       max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":0,"m:sitFront":4,"m:walk2":4,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Pixel Shades
+ok   gx_bb_slipper          a_shoes  bb       max out   4%  not drawn 0  {"m:idle":4,"m:rearStand":2,"m:sitFront":3,"m:walk2":4,"f:idle":4,"f:rearStand":3,"f:sitFront":4,"f:walk2":4}  Moonsilver Slippers
+ok   gx_bb_hobnail          a_shoes  bb       max out   4%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":4,"f:rearStand":2,"f:sitFront":2,"f:walk2":2}  Hobnail Boots
+ok   gx_oak_suede           a_shoes  oak      max out   4%  not drawn 0  {"m:idle":2,"m:rearStand":0,"m:sitFront":2,"m:walk2":2,"f:idle":4,"f:rearStand":4,"f:sitFront":3,"f:walk2":3}  Suede Runners
+ok   gx_sv_puffer           a_shoes  sv       max out   4%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":0,"m:walk2":1,"f:idle":3,"f:rearStand":4,"f:sitFront":2,"f:walk2":3}  Puffer Snow Boots
+ok   bs_hoodie_white        a_top    basics   max out   4%  not drawn 0  {"m:idle":3,"m:rearStand":1,"m:sitFront":4,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Hoodie
+ok   bs_hair_f_h2           a_hair   basics   max out   4%  not drawn 0  {"f:idle":4,"f:rearStand":1,"f:sitFront":3,"f:walk2":3}  Bob Cut
+ok   gx_h_denim             a_pants  hanga    max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":2,"m:sitFront":3,"m:walk2":3,"f:idle":3,"f:rearStand":3,"f:sitFront":2,"f:walk2":3}  Wide-leg Washed Denim
+ok   gx_h_bala              a_hat    hanga    max out   3%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":3,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rib Knit Hood
+ok   gx_h_layer             a_top    hanga    max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":1,"m:sitFront":3,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Hoodie & Liner Vest
+ok   gx_o_gaiter            a_acc    over     max out   3%  not drawn 0  {"m:idle":2,"m:rearStand":0,"m:sitFront":3,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Tech Gaiter
+ok   gx_o_shorts            a_pants  over     max out   3%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":2,"m:walk2":2}  Mesh Ball Shorts
+ok   gx_o_5panel            a_hat    over     max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":2,"m:sitFront":3,"m:walk2":3,"f:idle":2,"f:rearStand":2,"f:sitFront":2,"f:walk2":2}  Five-Panel Skate Cap
+ok   gx_o_bridge            a_top    over     max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":1,"m:sitFront":3,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Bridge Graphic Hoodie
+ok   gx_v_lace              a_hat    rose     max out   3%  not drawn 0  {"f:idle":3,"f:rearStand":0,"f:sitFront":2,"f:walk2":2}  Lace Headband
+ok   gx_al_hiker            a_shoes  alt      max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":2,"m:sitFront":1,"m:walk2":3,"f:idle":2,"f:rearStand":3,"f:sitFront":2,"f:walk2":2}  Trail Hikers
+ok   gx_nc_knit             a_shoes  nc       max out   3%  not drawn 0  {"m:idle":1,"m:rearStand":3,"m:sitFront":1,"m:walk2":1,"f:idle":2,"f:rearStand":2,"f:sitFront":2,"f:walk2":2}  Suede Runner
+ok   gx_kp_bag              a_acc    kp       max out   3%  not drawn 0  {"m:idle":0,"m:rearStand":3,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Mixtape Crossbody
+ok   gx_gp_glitter          a_shoes  gp       max out   3%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":3,"f:rearStand":2,"f:sitFront":1,"f:walk2":2}  Light-Up Glitter Kicks
+ok   gx_bb_doublet          a_top    bb       max out   3%  not drawn 0  {"m:idle":2,"m:rearStand":3,"m:sitFront":1,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Bard's Doublet
+ok   gx_bb_skirt            a_pants  bb       max out   3%  not drawn 0  {"f:idle":3,"f:rearStand":0,"f:sitFront":1,"f:walk2":2}  Tool-Belt Skirt
+ok   gx_oak_cap             a_hat    oak      max out   3%  not drawn 0  {"m:idle":2,"m:rearStand":2,"m:sitFront":2,"m:walk2":2,"f:idle":1,"f:rearStand":3,"f:sitFront":1,"f:walk2":1}  Sweatband Cap
+ok   bs_hair_m_h2           a_hair   basics   max out   3%  not drawn 0  {"m:idle":1,"m:rearStand":3,"m:sitFront":1,"m:walk2":1}  Crop Cut
+ok   gx_dg_riftmask         a_acc    dungeon  max out   3%  not drawn 0  {"m:idle":3,"m:rearStand":0,"m:sitFront":3,"m:walk2":3,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rift Mask
+ok   gx_h_trous             a_pants  hanga    max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":2,"m:sitFront":1,"m:walk2":2,"f:idle":1,"f:rearStand":2,"f:sitFront":1,"f:walk2":1}  Pleated Wide Trousers
+ok   gx_y_skate             a_shoes  y2k      max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":0,"m:sitFront":1,"m:walk2":2,"f:idle":2,"f:rearStand":0,"f:sitFront":1,"f:walk2":1}  Chunky Skate Shoes
+ok   gx_y_pcamo             a_pants  y2k      max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":0,"m:walk2":1,"f:idle":1,"f:rearStand":2,"f:sitFront":1,"f:walk2":1}  Coral Camo Cargos
+ok   gx_o_dknee             a_pants  over     max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":2,"f:rearStand":2,"f:sitFront":1,"f:walk2":2}  Double-Knee Carpenters
+ok   gx_v_cap               a_hat    rose     max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":1,"f:rearStand":2,"f:sitFront":1,"f:walk2":1}  Leather Dad Cap
+ok   gx_v_flare             a_pants  rose     max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":2,"m:walk2":2,"f:idle":2,"f:rearStand":2,"f:sitFront":2,"f:walk2":2}  Velvet Flares
+ok   gx_v_robe              a_top    rose     max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":2,"m:sitFront":1,"m:walk2":1}  Velvet Smoking Robe
+ok   gx_v_pajama            a_pants  rose     max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":2,"m:sitFront":1,"m:walk2":1}  Silk Pajama Pants
+ok   gx_al_shell            a_top    alt      max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":2,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Silver Storm Shell
+ok   gx_nc_beanie           a_hat    nc       max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":2,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rooster Beanie
+ok   gx_nc_hoodie           a_top    nc       max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":2,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Embossed Crest Hoodie
+ok   gx_kp_hoodie           a_top    kp       max out   2%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":2,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cloud Hoodie
+ok   gx_smk_runner          a_shoes  smk      max out   2%  not drawn 0  {"m:idle":0,"m:rearStand":2,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Wrapped Runners
+ok   gx_sp_flame            a_shoes  sp       max out   2%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":2,"f:sitFront":0,"f:walk2":0}  Pixel Flame High-Tops
+ok   gx_oak_wrist           a_acc    oak      max out   2%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":2,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Terry Wristbands
+ok   gx_oak_court           a_shoes  oak      max out   2%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":2,"f:rearStand":0,"f:sitFront":1,"f:walk2":1}  Canvas Court Shoes
+ok   bs_hoodie_grey         a_top    basics   max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":1,"m:sitFront":2,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Hoodie
+ok   bs_hoodie_black        a_top    basics   max out   2%  not drawn 0  {"m:idle":2,"m:rearStand":0,"m:sitFront":2,"m:walk2":2,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Hoodie
+ok   gx_h_varsity           a_top    hanga    max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Oversized Varsity Jacket
+ok   gx_h_cargo             a_pants  hanga    max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":1,"f:sitFront":0,"f:walk2":0}  Baggy Cargo Pants
+ok   gx_y_flare             a_pants  y2k      max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":1,"f:rearStand":0,"f:sitFront":0,"f:walk2":1}  Low-rise Flare Jeans
+ok   gx_y_runner            a_shoes  y2k      max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1}  Retro Runners
+ok   gx_h_padcoat           a_top    hanga    max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Long Padded Coat
+ok   gx_h_rugby             a_top    hanga    max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Half-Zip Rugby Knit
+ok   gx_y_rimless           a_acc    y2k      max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rimless Gradient Shades
+ok   gx_y_patent            a_shoes  y2k      max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":1,"f:sitFront":0,"f:walk2":0}  Patent Platform Boots
+ok   gx_o_puffer            a_top    over     max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cropped Puffer
+ok   gx_o_thermal           a_top    over     max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Layered Thermal Tee
+ok   gx_o_cshort            a_pants  over     max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1}  Carpenter Jorts
+ok   gx_v_thigh             a_shoes  rose     max out   1%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":1}  Lace-Up Knee Boots
+ok   gx_al_fleece           a_top    alt      max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Sherpa Pullover
+ok   gx_al_cargo            a_pants  alt      max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":1}  Tech Cargo Pants
+ok   gx_al_sandal           a_shoes  alt      max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":1,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Hike Sandals & Socks
+ok   gx_nc_pendant          a_acc    nc       max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":1,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cashmere Scarf
+ok   gx_nc_qzip             a_top    nc       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Sherpa Fleece Zip
+ok   gx_kp_skirt            a_pants  kp       max out   1%  not drawn 0  {"f:idle":1,"f:rearStand":0,"f:sitFront":0,"f:walk2":1}  Chorus Pleated Skirt
+ok   gx_sm_hoodie           a_top    sm       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Signature Neon Hoodie
+ok   gx_smk_pouch           a_acc    smk      max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Scroll Pouch
+ok   gx_gp_star             a_top    gp       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Star Hoodie
+ok   gx_gp_shorts           a_pants  gp       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Bubble Shorts
+ok   gx_bb_breeches         a_pants  bb       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Tucked Breeches
+ok   gx_cr_mohawk           a_hat    cr       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":1,"f:rearStand":1,"f:sitFront":1,"f:walk2":1}  Mohawk Helmet
+ok   gx_cr_trench           a_top    cr       max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":1,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Holo Trench
+ok   gx_cr_vest             a_top    cr       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Street Armour Vest
+ok   gx_km_crochet          a_top    km       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":0,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crochet Cardigan
+ok   gx_km_slides           a_shoes  km       max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":1,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Woven Slides
+ok   gx_km_sandal           a_shoes  km       max out   1%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":1,"f:rearStand":0,"f:sitFront":0,"f:walk2":1}  Sport Sandals
+ok   gx_sv_ski              a_top    sv       max out   1%  not drawn 0  {"m:idle":1,"m:rearStand":0,"m:sitFront":1,"m:walk2":1,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Color-Block Ski Jacket
+ok   hr_wolf                a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Wolf Cut
+ok   hr_under               a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Undercut
+ok   hr_twin                a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Twin Tails
+ok   hr_buns                a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Space Buns
+ok   dy_honey               a_hairc           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Honey Blonde
+ok   dy_silver              a_hairc           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Silver Dye
+ok   dy_crimson             a_hairc           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crimson Dye
+ok   dy_blue                a_hairc           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Electric Blue Dye
+ok   dy_violet              a_hairc           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Violet Dye
+ok   ey_ember               a_eyes            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ember Gaze
+ok   ey_frost               a_eyes            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Frost Gaze
+ok   ey_mon                 a_eyes            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Monarch Gaze
+ok   tp_tank_f              a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Satin Tank
+ok   tp_tee_m               a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Graphic Tee
+ok   tp_leather             a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leather Jacket
+ok   tp_cream               a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cream Hoodie
+ok   tp_cardi_f             a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Soft Cardigan
+ok   tp_cardi_m             a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Red Cardigan
+ok   tp_varsity             a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Varsity Jacket
+ok   tp_blazer_f            a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Camel Blazer
+ok   tp_coat_m              a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Charcoal Overcoat
+ok   tp_trench              a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Trench Coat
+ok   pt_cargo               a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cargo Pants
+ok   pt_skirt               a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Pleated Skirt
+ok   pt_shorts              a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Denim Shorts
+ok   pt_jog_f               a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Joggers
+ok   pt_wide                a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Wide Trousers
+ok   sh_white               a_shoes           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Kicks
+ok   sh_flats               a_shoes           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ballet Flats
+ok   sh_boots               a_shoes           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Combat Boots
+ok   sh_red                 a_shoes           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Red Hi-Tops
+ok   ac_glasses             a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Round Glasses
+ok   ac_phones              a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Studio Headphones
+ok   ac_hoops               a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Gold Hoops
+ok   ac_shades              a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shades
+ok   ac_bow                 a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Silk Bow
+ok   ac_chain               a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Silver Chain
+ok   ac_flower              a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Hair Flower
+ok   ac_cross               a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Chain and Cross
+ok   ac_halo                a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Halo
+ok   ac_crown               a_acc             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crown
+ok   bk_katana              a_back            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Katana
+ok   bk_cape                a_back            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cape
+ok   bk_wings               a_back            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shadow Wings
+ok   hr_fade                a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Fade
+ok   hr_slick               a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Slick Back
+ok   hr_buzz                a_hair            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Buzz Cut
+ok   et_happy               a_eyet            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Happy Eyes
+ok   et_dot                 a_eyet            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Dot Eyes
+ok   et_tired               a_eyet            max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Tired Eyes
+ok   tp_button              a_top             max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Button-Up
+ok   sh_loafers             a_shoes           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Loafers
+ok   pt_jeans               a_pants           max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Jeans
+ok   gx_h_mask              a_acc    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Airport Face Mask
+ok   gx_h_shades            a_acc    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Slim Tinted Shades
+ok   gx_h_cardi             a_top    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Oatmeal Knit Cardigan
+ok   gx_h_boots             a_shoes  hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lug-sole Combat Boots
+ok   gx_h_high              a_shoes  hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Canvas High-tops
+ok   gx_y_bfly              a_acc    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Butterfly Shades
+ok   gx_y_pend              a_acc    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rhinestone Star Pendant
+ok   gx_y_baby              a_top    y2k      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Butterfly Baby Tee
+ok   gx_y_vjkt              a_top    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Velour Track Jacket
+ok   gx_y_ring              a_top    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Retro Ringer Tee
+ok   gx_y_track             a_pants  y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Velour Track Pants
+ok   gx_y_mary              a_shoes  y2k      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Platform Mary-Janes
+ok   gx_h_chain             a_acc    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Silver Curb Chain
+ok   gx_h_coach             a_top    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Nylon Coach Jacket
+ok   gx_h_knit              a_top    hanga    max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cropped Cable Cardigan
+ok   gx_h_tech              a_pants  hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Tapered Tech Trousers
+ok   gx_h_loafer            a_shoes  hanga    max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Platform Loafers
+ok   gx_y_choker            a_acc    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Star Choker
+ok   gx_y_flame             a_top    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Flame Bowling Shirt
+ok   gx_y_skirt             a_pants  y2k      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Plaid Mini Skirt
+ok   gx_y_jorts             a_pants  y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Baggy Jorts
+ok   gx_h_sling             a_acc    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leather Chest Sling
+ok   gx_h_oval              a_acc    hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lime Oval Shades
+ok   gx_h_puffboot          a_shoes  hanga    max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Quilted Puffer Boots
+ok   gx_y_phone             a_acc    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Flip Phone Lanyard
+ok   gx_y_chains            a_acc    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Layered Chrome Chains
+ok   gx_y_moto              a_top    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Racing Moto Jacket
+ok   gx_y_mesh              a_top    y2k      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Mesh Layer Top
+ok   gx_o_wrap              a_acc    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shield Shades
+ok   gx_o_lock              a_acc    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Padlock Chain
+ok   gx_o_tee               a_top    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Spray Paint Boxy Tee
+ok   gx_o_flannel           a_top    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Plaid Overshirt
+ok   gx_o_wind              a_top    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Color-Block Windbreaker
+ok   gx_o_crop              a_top    over     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cropped Zip Hoodie
+ok   gx_o_work              a_top    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Canvas Chore Jacket
+ok   gx_o_skirt             a_pants  over     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cargo Mini Skirt
+ok   gx_o_hoop              a_shoes  over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Retro High-Top Hoops
+ok   gx_o_tool              a_acc    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Skate Tool Lanyard
+ok   gx_o_rect              a_acc    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Smoke Rectangle Shades
+ok   gx_o_tags              a_acc    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ball-Chain Dog Tags
+ok   gx_o_liner             a_top    over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Quilted Liner Jacket
+ok   gx_o_moc               a_shoes  over     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Moc-Toe Work Boots
+ok   gx_v_choke             a_acc    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Spiked Choker
+ok   gx_v_shade             a_acc    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Tiny Oval Shades
+ok   gx_v_thorn             a_acc    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Thorn Chain
+ok   gx_v_corset            a_top    rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lace Corset Top
+ok   gx_v_biker             a_top    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leather Biker Jacket
+ok   gx_v_mesh              a_top    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Sheer Mesh Top
+ok   gx_v_rose              a_top    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rose Print Tee
+ok   gx_v_blazer            a_top    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Wine Velvet Blazer
+ok   gx_v_leather           a_pants  rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leather Pants
+ok   gx_v_heel              a_shoes  rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Strappy Heeled Boots
+ok   gx_v_mask              a_acc    rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lace Masquerade Mask
+ok   gx_v_bodychain         a_acc    rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crystal Body Chain
+ok   gx_v_slip              a_top    rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lace Slip Dress
+ok   gx_v_bodysuit          a_top    rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Satin Corset Bodysuit
+ok   gx_v_fishnet           a_pants  rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Fishnet Tights
+ok   gx_v_mini              a_pants  rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Velvet Mini Skirt
+ok   gx_v_stiletto          a_shoes  rose     max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Patent Stilettos
+ok   gx_v_slipper           a_shoes  rose     max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Velvet Smoking Slippers
+ok   gx_al_goggle           a_acc    alt      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Glacier Goggles
+ok   gx_al_carab            a_acc    alt      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Chest Rig Bag
+ok   gx_al_vest             a_top    alt      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Utility Vest
+ok   gx_al_henley           a_top    alt      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Grid Fleece Half-Zip
+ok   gx_al_anorak           a_top    alt      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Color-Block Anorak
+ok   gx_al_tight            a_pants  alt      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Trail Shorts & Tights
+ok   gx_al_short            a_pants  alt      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Cargo Shorts
+ok   gx_nc_jog_black        a_pants  nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Signature Jogger, Black
+ok   gx_nc_jog_ash          a_pants  nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Signature Jogger, Ash
+ok   gx_nc_jog_slate        a_pants  nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Signature Jogger, Slate
+ok   gx_nc_short            a_pants  nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Training Short
+ok   gx_nc_shades           a_acc    nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rimless Aviators
+ok   gx_nc_tee              a_top    nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Layered Lounge Tee
+ok   gx_nc_tank             a_top    nc       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Waffle Lounge Zip
+ok   gx_kp_clips            a_hat    kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Star Clips
+ok   gx_kp_pendant          a_acc    kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crescent Pendant
+ok   gx_kp_varsity          a_top    kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Script Varsity Jacket
+ok   gx_kp_sailor           a_top    kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Sailor Blouse
+ok   gx_kp_bomber           a_top    kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Starfall Bomber
+ok   gx_kp_track            a_pants  kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Runner Track Pants
+ok   gx_kp_loafer           a_shoes  kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Plum Loafers
+ok   gx_kp_slipon           a_shoes  kp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cloud Slip-Ons
+ok   gx_sm_beanie           a_hat    sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ø Beanie
+ok   gx_sm_pendant          a_acc    sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ø Pendant
+ok   gx_sm_track            a_top    sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Glow Track Jacket
+ok   gx_sm_tee              a_top    sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  GO OFF Tee
+ok   gx_sm_vest             a_top    sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Rig Vest
+ok   gx_sm_cargo            a_pants  sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Flare Cargo
+ok   gx_sm_nightcargo       a_pants  sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Night Cargo
+ok   gx_sm_shorts           a_pants  sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Bass Shorts
+ok   gx_sm_hightop          a_shoes  sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Glow-Sole High-Tops
+ok   gx_sm_boots            a_shoes  sm       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Neon-Lace Boots
+ok   gx_smk_cowl            a_acc    smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Half-Face Cowl
+ok   gx_smk_jacket          a_top    smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  High-Collar Zip Jacket
+ok   gx_smk_mesh            a_top    smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Mesh Wrap Top
+ok   gx_smk_cargo           a_pants  smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Wrapped Cargo
+ok   gx_smk_shorts          a_pants  smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shorts over Fishnet
+ok   gx_smk_sandal          a_shoes  smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shinobi Sandals
+ok   gx_smk_tabi            a_shoes  smk      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Split-Toe Tabi Boots
+ok   gx_gp_hearts           a_acc    gp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Heart Shades
+ok   gx_gp_blazer           a_top    gp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Candy School Blazer
+ok   gx_gp_sailor           a_top    gp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Frilled Sailor Blouse
+ok   gx_gp_skirt            a_pants  gp       max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Star Pleated Skirt
+ok   gx_gp_overall          a_pants  gp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Pastel Overalls
+ok   gx_sp_cart             a_acc    sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cartridge Pendant
+ok   gx_sp_varsity          a_top    sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Arcade Varsity
+ok   gx_sp_pad              a_top    sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Button Tee
+ok   gx_sp_p2               a_top    sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Player 2 Ringer
+ok   gx_sp_hpknit           a_top    sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Health Bar Sweater
+ok   gx_sp_camo             a_pants  sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Pixel Camo Cargo
+ok   gx_sp_track            a_pants  sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  D-Pad Track Pants
+ok   gx_sp_denim            a_pants  sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Sticker Denim Shorts
+ok   gx_sp_flag             a_shoes  sp       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Checkpoint Sneakers
+ok   gx_bb_circlet          a_hat    bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leaf Circlet
+ok   gx_bb_bracers          a_acc    bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Leather Bracers
+ok   gx_bb_crystal          a_acc    bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Crystal on a Cord
+ok   gx_bb_tunic            a_top    bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Adventurer's Tunic
+ok   gx_bb_gambeson         a_top    bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Quilted Gambeson
+ok   gx_bb_leather          a_pants  bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Laced Leather Trousers
+ok   gx_bb_cuffboot         a_shoes  bb       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cuffed Boots
+ok   gx_cr_visor            a_acc    cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  LED Visor
+ok   gx_cr_arm              a_acc    cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Chrome Arm Sleeve
+ok   gx_cr_shades           a_acc    cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Mirror Shades
+ok   gx_cr_bomber           a_top    cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Glow-Seam Bomber
+ok   gx_cr_mesh             a_top    cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Mesh Harness Top
+ok   gx_cr_cargo            a_pants  cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Neon Piped Cargo
+ok   gx_cr_skirt            a_pants  cr       max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Techno Panel Skirt
+ok   gx_cr_knee             a_pants  cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Armoured Knee Joggers
+ok   gx_cr_lightup          a_shoes  cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Light-Up Sneakers
+ok   gx_cr_combat           a_shoes  cr       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Chrome-Toe Combat Boots
+ok   gx_km_shell            a_acc    km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shell Necklace
+ok   gx_km_round            a_acc    km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Round Tinted Shades
+ok   gx_km_camp             a_top    km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Hibiscus Camp Shirt
+ok   gx_km_boat             a_top    km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Striped Boat-Neck Tee
+ok   gx_km_rash             a_top    km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Zip Rash Guard
+ok   gx_km_board            a_pants  km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Board Shorts
+ok   gx_km_linen            a_pants  km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Linen Drawstring Pants
+ok   gx_km_cutoff           a_pants  km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cut-Off Shorts
+ok   gx_km_deck             a_shoes  km       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Canvas Deck Shoes
+ok   gx_oak_headband        a_hat    oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Terry Headband
+ok   gx_oak_track           a_top    oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Club Track Jacket
+ok   gx_oak_polo            a_top    oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Terry Polo
+ok   gx_oak_crop            a_top    oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cropped Club Sweatshirt
+ok   gx_oak_vest            a_top    oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Cable-Knit Tennis Vest
+ok   gx_oak_trackpant       a_pants  oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Club Track Pants
+ok   gx_oak_skirt           a_pants  oak      max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Pleated Tennis Skirt
+ok   gx_oak_shorts          a_pants  oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Retro Running Shorts
+ok   gx_oak_tube            a_shoes  oak      max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Tube Socks and Trainers
+ok   gx_sv_goggles          a_hat    sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ski Goggles
+ok   gx_sv_nordic           a_top    sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Nordic Sweater
+ok   gx_sv_quilt            a_top    sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Quilted Vest
+ok   gx_sv_fleece           a_top    sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Half-Zip Fleece
+ok   gx_sv_snow             a_pants  sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Puffy Snow Pants
+ok   gx_sv_leggings         a_pants  sv       max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Ski Leggings
+ok   gx_sv_cord             a_pants  sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Lodge Cords
+ok   gx_sv_apres            a_shoes  sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Après Boots
+ok   gx_sv_shearling        a_shoes  sv       max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Shearling Slippers
+ok   bs_tee_white           a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Tee
+ok   bs_tee_grey            a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Tee
+ok   bs_tee_black           a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Tee
+ok   bs_bomber_white        a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Bomber
+ok   bs_bomber_grey         a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Bomber
+ok   bs_bomber_black        a_top    basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Bomber
+ok   bs_joggers_white       a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Joggers
+ok   bs_joggers_grey        a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Joggers
+ok   bs_joggers_black       a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Joggers
+ok   bs_jeans_white         a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Jeans
+ok   bs_jeans_grey          a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Jeans
+ok   bs_jeans_black         a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Jeans
+ok   bs_shorts_white        a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Shorts
+ok   bs_shorts_grey         a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Shorts
+ok   bs_shorts_black        a_pants  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Shorts
+ok   bs_sneakers_white      a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Sneakers
+ok   bs_sneakers_grey       a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Sneakers
+ok   bs_sneakers_black      a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Sneakers
+ok   bs_boots_white         a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Boots
+ok   bs_boots_grey          a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Boots
+ok   bs_boots_black         a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Boots
+ok   bs_flipflops_white     a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  White Flip-flops
+ok   bs_flipflops_grey      a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Grey Flip-flops
+ok   bs_flipflops_black     a_shoes  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Flip-flops
+ok   bs_hair_m_h1           a_hair   basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0}  Tousled Cut
+ok   bs_hair_f_h1           a_hair   basics   max out   0%  not drawn 0  {"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Long Cut
+ok   bs_dye_black           a_hairc  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Black Dye
+ok   bs_dye_brown           a_hairc  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Brown Dye
+ok   bs_dye_blonde          a_hairc  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Blonde Dye
+ok   bs_dye_auburn          a_hairc  basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Auburn Dye
+ok   bs_eye_brown           a_eyes   basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Brown Eyes
+ok   bs_eye_hazel           a_eyes   basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Hazel Eyes
+ok   bs_eye_blue            a_eyes   basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Blue Eyes
+ok   bs_eye_green           a_eyes   basics   max out   0%  not drawn 0  {"m:idle":0,"m:rearStand":0,"m:sitFront":0,"m:walk2":0,"f:idle":0,"f:rearStand":0,"f:sitFront":0,"f:walk2":0}  Green Eyes
