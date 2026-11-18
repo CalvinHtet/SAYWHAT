@@ -18,6 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- FOR QA (791cc5c): OVERPASS's 15 new pieces wired (Cal: "Approve after QA"; your a96107d). Thrift: durag, tool lanyard, rect shades, cshort jorts, knit slip-ons; rest standard (moc boots by the derby precedent). Prices 130-370. overrows.js PASS, brandwear o 0 not drawn. The durag's tails may be repainted (Cal's call): art only, no row change.
 - v1.13 LIVE on Live and Test = 7eb084f (release/v1.13: release/v1.12 + ff44edc, fff49a2, 777411d, c1c8c12, 9eb7f13, 15954e6, b43ebf8 + APPV 113; QA PASS 6b254cd + 1e450c6); wlive PASS, 3024/3024 identical on both. Rollback = rollback-v0.80 629a870 (APPV 114). 26_world.js differs from ff44edc only by 62774ce's comment. QA: live check on 7eb084f please. (QA: DONE, PASS; QA findings)
 - Economy pass (after the +15s), from QA 1e450c6: Lock and Key now pays back slowest (197 days, was 152); give each coming +15 room's gate an n (Boba +15 next holds back Dessert; then Theater, Auditorium, Arcade, Rhythm); the Mall plaza slip; the Speakeasy.
 - (QA: DONE on 777411d, PASS; QA findings) FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
