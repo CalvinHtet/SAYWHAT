@@ -1,0 +1,15 @@
+oc_cap v_cap
+oc_felt km_straw
+oc_roll h_sling
+oc_palette nc_pendant
+oc_gloves gd_cuffs
+oc_denim o_work
+oc_coat gd_frock
+oc_smock gd_shirt
+oc_halter v_bralette
+oc_trouser kp_cargo
+oc_jean h_denim
+oc_skirt gd_skirt
+oc_boot h_boots
+oc_derby h_derby
+oc_sling gd_mule

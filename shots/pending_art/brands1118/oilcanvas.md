@@ -31,8 +31,8 @@ paint-brand labels on the tubes or rolls. All brushwork is invented, loose and a
 | oc_trouser | pants | Splattered Wide Trousers | Cream wide-leg linen, pleated waist, cadmium and indigo splatter, a palette knife clipped to a belt loop. | both | wide |
 | oc_jean | pants | Gesso-Dipped Jeans | Raw indigo straight jeans dipped in cream gesso to the knee, cadmium drips below, copper rivets. | both | |
 | oc_skirt | pants | Brushstroke Wrap Skirt | Cream canvas wrap midi, one sweeping indigo brushstroke round the hem, a side slit, a brass stretcher-pin closure. | women | skirt |
-| oc_hightop | shoes | Brushstroke High-Tops | Cream canvas high-tops painted with cadmium and cobalt strokes, paint-dipped toe caps, indigo laces. | both | |
-| oc_derby | shoes | Splatter Suede Derbies | Indigo suede derbies, cream splatter, cadmium-red laces, a thick crepe sole. | both | |
+| oc_boot | shoes | Gesso Studio Boots | Cream canvas lace-up studio boots crusted with gesso, cadmium flecks, indigo laces, a chunky cream sole. | both | |
+| oc_derby | shoes | Splatter Suede Derbies | Indigo suede derbies, cream splatter, cadmium-red laces, a cream stitched welt. | both | |
 | oc_sling | shoes | Brushstroke Slingbacks | Cream slingback heels, one cadmium brushstroke over the toe, an indigo heel and strap. | women | heel (tiptoe) |
 
 Counts: 2 hats, 3 accessories, 4 tops, 3 bottoms, 3 shoes = 15. Grades as GILDED (Boutique 950-1,900; coat and denim
@@ -40,7 +40,11 @@ jacket luxury). Brand key "oc".
 Logo: a small stretched-canvas square, three palette-knife smears on it (indigo, cream, cadmium), no letters.
 Banner: a primed canvas wall above a splattered drop cloth, a few cadmium handprints, no text.
 
-Questions for QA:
+QA a5 review (2026-11-18): PASS, four NOTES applied: high-tops became studio boots (6th high-top otherwise); the brush
+roll's handles big enough to read; the denim sunburst is loose strokes, no centre figure; the coat's hem straight and clear
+of the hands; the palette pendant large. Hats: nothing below the band, the brush points up and back.
+
+Questions for QA (answered):
 1. The felt hat's tucked brush and the cap's brim: hat-fringe risk (GILDED's beret read as bangs). I would paint both with
    nothing hanging below the band, and test with hatcheck under every hair.
 2. The brush roll sling crosses the chest: neck slot with chain mode `2 0.5`, like the body chain. Fine, or arms?
