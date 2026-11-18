@@ -797,7 +797,9 @@
               if (t.loose && (tooLong(p[0], p[1], 1) || tooLong(p[1], p[2], 1.42) || tooLong(p[2], p[0], 1))) continue;
               // rig.solidStretch: solid fabric too has a limit, much further out. With an arm raised (wave, cheer) a few solid cells
               // between the sleeve and the body were pulled into long thin streaks hanging from the arm (QA 824cd53, Cal on GILDED).
-              if (rig.solidStretch && !t.loose) {
+              // Only there: arms-up poses, sleeve layers (rig.solidSlots, default top and arms). Everywhere it cut holes through the
+              // waist, the hair and the trousers in dance2 and dance1, which stretch those cells on purpose (QA 2d2c911).
+              if (rig.solidStretch && !t.loose && pose.armsUp && (rig.solidSlots || ["top", "arms"]).includes(s.id)) {
                 const far = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * rig.solidStretch * rig.meshStep * k;
                 if (far(p[0], p[1], 1) || far(p[1], p[2], 1.42) || far(p[2], p[0], 1)) continue;
               }
