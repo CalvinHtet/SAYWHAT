@@ -31,7 +31,7 @@ const live = (p, days) => p.evaluate((days) => days.map(([y, m, d]) => { const t
   ok(!f.some((o) => (o.street + ',' + o.boutique).split(',').includes('cr')), 'CHROME RAIN never drops from 11-19 (Cal: "Not a fan of chrome rain")');
   ok(f.some((o) => o.street.split(',').includes('sv')) && f.some((o) => o.street.split(',').includes('alt')), 'SØLVBERG and ALTITUDE drop on the Street (Cal: "I like altitude and solvberg")');
   ok(!f.some((o) => /\b(gp|sp|bb|km|oak)\b/.test(o.street + ',' + o.boutique)), 'GACHA POP, SAVE POINT, BARD & BLADE, KAIMANA and OAKMONT never drop while held for their redo');
-  ok(f.every((o) => o.boutique.split(',').every((id) => !id || ['rose', 'sm'].includes(id))), 'the Boutique shows only VENOM ROSE and SAYMØRE ' + [...new Set(f.map((o) => o.boutique))].join(' | '));
+  ok(f.every((o) => o.boutique.split(',').every((id) => !id || ['rose', 'sm', 'gd'].includes(id))), 'the Boutique shows only VENOM ROSE, SAYMØRE and (v1.25) GILDED ' + [...new Set(f.map((o) => o.boutique))].join(' | '));
   /* (itemFits is not on the test hook: what is offered is read from the Shop's own cards below) */
   // the Shop: the line, the Stylist, basics off sale, owners keep, a new player's originals
   const shop = await P.evaluate(async () => { const x = window.__qb.x(), S = x.S; const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(2026, 10, 19, 10, 0).getTime() - real;
@@ -57,14 +57,17 @@ const live = (p, days) => p.evaluate((days) => days.map(([y, m, d]) => { const t
   ok(!shop.offered.length, 'no plain basic clothes on any Shop tab ' + JSON.stringify(shop.offered.slice(0, 5)));
   ok(!shop.ov.tool && !shop.ov.lockNon && shop.ov.lockOwner && shop.ov.tags, 'OVERPASS: no skate tool; the padlock chain only for its owner; the dog tags on sale ' + JSON.stringify(shop.ov));
   // Mon 11-23, VENOM ROSE and SAYMØRE live on the Boutique: Cal's seven VENOM ROSE pieces and the GO OFF Tee off sale
-  const bq = await P.evaluate(async () => { const x = window.__qb.x(), S = x.S; const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(2026, 10, 23, 10, 0).getTime() - real; S.owned = {}; x.render();
-    const clear = () => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); await new Promise((o) => setTimeout(o, 800)); clear();
-    const fl = document.querySelector('[data-qsfl="boutique"]'); if (fl) { fl.click(); await new Promise((o) => setTimeout(o, 900)); clear(); }
-    const cards = async (v) => { const t = document.querySelector('[data-act="stab"][data-v="' + v + '"]'); if (!t) return null; t.click(); await new Promise((o) => setTimeout(o, 800)); clear(); return [...document.querySelectorAll('.qs-rack [data-card]')].map((e) => e.dataset.card); };
-    const rose = (await cards('rose')) || [], sm = (await cards('sm')) || [];
-    return { fl: !!fl, rose: rose.length, roseCut: ['gx_v_cap', 'gx_v_leather', 'gx_v_tulle', 'gx_v_shade', 'gx_v_rose', 'gx_v_mesh', 'gx_v_biker'].filter((i) => rose.includes(i)), sm: sm.length, tee: sm.includes('gx_sm_tee') }; });
-  ok(bq.rose === 30 && !bq.roseCut.length, 'VENOM ROSE: 30 on sale (23, then Cal 11-18 replacements: 6 new, the harness removed, and the tiptoe stilettos), none of the seven Cal removed ' + JSON.stringify(bq));
-  ok(bq.sm === 15 && !bq.tee, 'SAYMØRE: 15 on sale (14 and the grille bomber), no GO OFF Tee ' + JSON.stringify(bq));
+  // each Boutique brand on a day it is live (from v1.25 GILDED takes a turn, so they are not always live together)
+  const tabOn = (br) => P.evaluate(async (br) => { const x = window.__qb.x(), S = x.S; let day = null;
+      for (let d = 0; d < 120 && !day; d++) { const t = new Date(2026, 10, 19 + d, 10, 0).getTime(), f = window.__qbDrops.floor('boutique', t); if (f && (f.live || []).some((q) => q.id === br)) day = t; }
+      const real = Date.now() - (window.__qbShift || 0); window.__qbShift = (day || Date.now()) - real; S.owned = {}; x.render();
+      const clear = () => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); await new Promise((o) => setTimeout(o, 800)); clear();
+      const fl = document.querySelector('[data-qsfl="boutique"]'); if (fl) { fl.click(); await new Promise((o) => setTimeout(o, 900)); clear(); }
+      const t = document.querySelector('[data-act="stab"][data-v="' + br + '"]'); if (!t) return { day: day && new Date(day).toDateString(), cards: [] }; t.click(); await new Promise((o) => setTimeout(o, 800)); clear();
+      return { day: day && new Date(day).toDateString(), cards: [...document.querySelectorAll('.qs-rack [data-card]')].map((e) => e.dataset.card) }; }, br);
+  const rose = await tabOn('rose'), sm = await tabOn('sm'), roseCut = ['gx_v_cap', 'gx_v_leather', 'gx_v_tulle', 'gx_v_shade', 'gx_v_rose', 'gx_v_mesh', 'gx_v_biker'].filter((i) => rose.cards.includes(i));
+  ok(rose.cards.length === 30 && !roseCut.length, `VENOM ROSE (${rose.day}): 30 on sale (23, then Cal 11-18 replacements: 6 new, the harness removed, and the tiptoe stilettos), none of the seven Cal removed ` + JSON.stringify({ n: rose.cards.length, roseCut }));
+  ok(sm.cards.length === 15 && !sm.cards.includes('gx_sm_tee'), `SAYMØRE (${sm.day}): 15 on sale (14 and the grille bomber), no GO OFF Tee ` + sm.cards.length);
   ok(shop.ward.includes('bs_tee_black'), 'an owner\'s basic tee is still in their Wardrobe ' + JSON.stringify(shop.ward));
   const fresh = await P.evaluate(() => { const x = window.__qb.x(), S = x.S; S.owned = {}; S.eq = {}; S.char = window.__qb.fixChar({ name: 'New', sex: 'f' }); x.qsGrantOriginals ? x.qsGrantOriginals() : null; x.render(); return Object.keys(S.owned).filter((k) => /^bs_/.test(k)); });
   ok(fresh.filter((k) => /^bs_(tee|hoodie|bomber|joggers|jeans|shorts|sneakers|boots|flipflops)_/.test(k)).length >= 3, 'a new player owns their creator top, bottom and shoes ' + JSON.stringify(fresh));
