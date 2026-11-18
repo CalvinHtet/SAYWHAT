@@ -262,7 +262,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c13edd3): v1.22 = release/v1.21 + c13edd3 (Mon/Thu drops, the Stylist, holds, cuts) PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 0c5bc0b): design review of ROOMS's 11-18 art drafts DONE, before paint (QA findings); v1.22 c13edd3 PASS. Nothing open from QA.
+  Was: Now (on c13edd3): v1.22 = release/v1.21 + c13edd3 PASS, can ship (QA findings).
   Was: Now (on 8103458): v1.21 LIVE as 8103458, verified (QA findings).
   Was: Now (on 6ba0729): Cal's full sweep DONE, no FIX; d51ef4c PASS (QA findings).
   Was: Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings).
@@ -314,6 +315,38 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- REVIEW (before paint), ROOMS's drafts for Cal's 11-18 art list (shots/pending_art/new1118/drafts.md, 0c5bc0b). Read against Cal's
+  rules (nothing plain, no cultural dress, no real logos, revealing but never explicit). Owner: ROOMS, with LEAD for the bare base.
+  - Section 0, the bare female base: the right fix, with a QA gate. Every `bare` top must pass a coverage test before it ships.
+    - QA renders the bare base with the top in all 35 poses (including stretchUp, sleep and dance) and checks that no bare-base
+      skin shows in the chest area.
+    - A pose where the top slides would leave her drawn topless; QA holds any piece that fails.
+  - FIX (plan): her base also has grey shorts. Three planned openings would show them:
+    - the slip dress's side slit;
+    - the Velvet Flares' thigh-high slits;
+    - possibly the vinyl shorts' laced sides.
+    - Paint skin inside those openings in the item art, or keep slits below the shorts line. Do not extend `bare` to the hips.
+  - FIX (plan): duplicates.
+    - OVERPASS's Orange Mirror Goggles repeat ALTITUDE's Glacier Goggles and SØLVBERG's Ski Goggles.
+    - The Ripstop Sling Bag is close to HANGANG's Leather Chest Sling and KODE PINK's Mixtape Crossbody.
+    - Pick two accessories nobody else has and that fit skate: e.g. grip-tape wrist guards (wrist slot, like OAKMONT's
+      wristbands) and a reflective-tape ear cuff, or a spray-cap ring set.
+  - FIX (plan): SAYMØRE's Ø Moto Jersey drifts from its bass-culture lane. It would be the third racing top, with DIAL-UP's Racing
+    Moto Jacket and PIT LANE's whole line.
+    - Give SAYMØRE a sound-system piece instead, e.g. a speaker-grille bomber with perforated panels, cyan EQ-bar embroidery and
+      the orange Ø badge.
+  - NOTE (ROOMS): MIRRORBALL's sequin halter (her) also needs `bare`; list it with section 1's.
+  - NOTE (ROOMS): REGIMENT has no real insignia, flags, rank badges or medals; invented crests only. HALCYON's feathers go on a cape
+    or collar, never as a headdress (that reads as cultural).
+  - PASS, the rest:
+    - Section 1's seven lines each name two or more details.
+    - The harness (fashion, no collar or leash ring) and the bralette (lingerie as outerwear) are fine as Cal's borderline calls,
+      once the coverage gate passes.
+    - The silk shirt and the open blazer on his already-bare base are fine.
+    - STAGE DIVE, PIT LANE, DRY DOCK, BACK ROW, GILDED and OIL & CANVAS are distinct lanes, nothing plain, no cultural dress. The
+      band and sponsor marks are invented and wordless.
+    - Atelier lanes: fine to show Cal as rough.
+  - After paint, QA does the usual wear-check per brand, plus the coverage test for every `bare` top and every slit.
 - PASS with one NOTE, v1.22 as planned: release/v1.21 (8103458) + c13edd3 (Cal 11-18: Mon/Thu drops from 11-19, Basics becomes the
   Stylist, SØLVBERG's hold ends, CHROME RAIN held, ten pieces cut with owners keeping them). QA built exactly that (all 10 files
   applied cleanly, not committed) and served its own v1.21 as the reference.
