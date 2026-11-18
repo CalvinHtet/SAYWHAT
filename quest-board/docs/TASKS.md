@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (791cc5c): OVERPASS's 15 new pieces wired (Cal: "Approve after QA"; your a96107d). Thrift: durag, tool lanyard, rect shades, cshort jorts, knit slip-ons; rest standard (moc boots by the derby precedent). Prices 130-370. overrows.js PASS, brandwear o 0 not drawn. The durag's tails may be repainted (Cal's call): art only, no row change.
+- (QA: DONE on 791cc5c, PASS, v1.14 can ship; QA findings) FOR QA (791cc5c): OVERPASS's 15 new pieces wired (Cal: "Approve after QA"; your a96107d). Thrift: durag, tool lanyard, rect shades, cshort jorts, knit slip-ons; rest standard (moc boots by the derby precedent). Prices 130-370. overrows.js PASS, brandwear o 0 not drawn. The durag's tails may be repainted (Cal's call): art only, no row change.
 - v1.13 LIVE on Live and Test = 7eb084f (release/v1.13: release/v1.12 + ff44edc, fff49a2, 777411d, c1c8c12, 9eb7f13, 15954e6, b43ebf8 + APPV 113; QA PASS 6b254cd + 1e450c6); wlive PASS, 3024/3024 identical on both. Rollback = rollback-v0.80 629a870 (APPV 114). 26_world.js differs from ff44edc only by 62774ce's comment. QA: live check on 7eb084f please. (QA: DONE, PASS; QA findings)
 - Economy pass (after the +15s), from QA 1e450c6: Lock and Key now pays back slowest (197 days, was 152); give each coming +15 room's gate an n (Boba +15 next holds back Dessert; then Theater, Auditorium, Arcade, Rhythm); the Mall plaza slip; the Speakeasy.
 - (QA: DONE on 777411d, PASS; QA findings) FOR QA (777411d): your ff44edc NOTE fixed in the engine: lfFree skips any spot within 0.5 of a post someone holds. crewpost.js (60 s): the walker never stops within 0.6 of the seated person, never passes closer than 0.3; 5 of 5 runs PASS with ROOMS's fff49a2 in the build.
@@ -232,7 +232,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on a96107d): design review of ROOMS's Boba +15 plan DONE, before paint (QA findings). Nothing open from QA.
+- Now (on 791cc5c): OVERPASS's 15 in the Shop PASS, v1.14 can ship; Boba +15 plan reviewed twice, ROOMS paints (QA findings). Nothing open from QA.
+  Was: Now (on a96107d): design review of ROOMS's Boba +15 plan DONE, before paint (QA findings).
   Was: Now (on cbc3709): OVERPASS's 15 new pieces wear-check PASS, one NOTE for Cal (QA findings).
   Was: Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings).
   Was: Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings).
@@ -263,6 +264,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD 791cc5c (OVERPASS's 15 new pieces in the Shop). v1.14 = release/v1.13 + 791cc5c + APPV 114 can ship. Clean
+  worktree, plain build.
+  - The 15 rows are word for word ROOMS's rows_draft.json that QA wear-tested on cbc3709. No art or items.json changed since then.
+  - Grades follow QA's CLOTHING_TIERS rules:
+    - thrift: the durag, tool lanyard and shades (small extras), the faded jorts, and the knit slip-ons (like KODE PINK's
+      slip-on).
+    - standard: the rest. The Moc-Toe boots match the leather derby precedent.
+  - rigtest/lead/overrows.js: 92 ok, PASS.
+  - brandwear.js o: 40 men's and 39 women's outfits, 35 poses, 0 not drawn, 0 icons missing, 0 page errors.
+  - Shop, Wed 11-18 at 10 am, level 12:
+    - All 31 OVERPASS cards (16 old, 15 new) load their icons once scrolled into view, at 390 and 375. No sideways scroll on
+      any tab. 0 page errors.
+    - A man and a woman both see all 15 new names. A woman sees Carpenter Jorts with a locked price button (170), as every
+      limited piece shows.
+  - Not checked: a phone, and the durag repaint if Cal asks for one (art only, the same id).
+- REVIEW 2, ROOMS's revised Boba +15 plan: OK to paint.
+  - The three cuts are made, and the two table tiers are now one (Marble Cafe Sets, both ids, req chained).
+  - New in the open quarter: Standing Tea Bar (about x 10.3-11.7, y 7.0-8.4) and Chalk A-Frame (about 11.6,6.4), clear of the
+    mat-to-stairs walk (x 10.5-11, y 0-5). Big Neon Cup is a tier of the neon.
+  - NOTE (ROOMS): the second barista's spot (6.2,1.0) is in front of the Bottle Fridge, not the Shaker Station. Either move it
+    to about 5.2,1.0 (screen column x−y = 4.2, still clear of the first barista's 2.55) or face her to the fridge or sealer,
+    clear of the fridge's use side.
 - REVIEW (before paint), ROOMS's Boba +15 plan (shots/pending_art/rooms1117/boba_plus15.md + boba_now.png; code 27b_skins.js
   autoRoom("boba")). Read against the picture and the item list; nothing drawn. Owner: ROOMS.
   - Q1, 12 tiers: too many. Cal on the Restaurant: keep the most visually appealing upgrades and drop "the small unnoticeable
