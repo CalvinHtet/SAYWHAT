@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA, two commits for v1.25:
+- (QA: DONE on release/v1.24 + 8b8d4a0 + the recipe = 651fbfe, NOT A PASS: 8b8d4a0 missing from the recipe; the new rig opens a hole at the waist in dance2 and specks the trousers; rows, emotes PASS; QA findings) FOR QA, two commits for v1.25:
   (1) b559d09 your character's emotes + a smoother rig (Cal 11-18 "yes to all"): data/poses.json thinking / side stretch / eased wave (the Loft's stretch clip is the side stretch now, no painted yawn); 29zz_v125.js plays them in turn every 25-45 s when your character stands in a room (frames drawn ahead; "..." bubble for thinking); data/rig.json fineSlots body/top/arms + meshStepFine 12 + solidStretch 4 (rig.js: solid fabric pulled past 4 cells is dropped; removes the streaks under raised arms, your 824cd53, and GILDED's). This changes how EVERY top/arm piece draws in every pose: please run the full wear-test of all brands, both bodies, 35 poses, against release/v1.24, looking for holes and streaks. Mine: emotes.js, heels, replrows, tabs6, v112 PASS; brandwear h/v/kp in wave/cheer/dance/walk/sit/sleep 0 not drawn and by eye like v1.23. Speed (headless): first draw of an outfit +10-25%, new frames ~2x; a phone check is still owed.
   (2) a604760 GILDED wired (ROOMS 3a10edf, fa1864a, cb01321, 581c6cd): brand gd on the Boutique, 15 rows, grades (7 luxury, 8 premium), held to Mon 11-23 (first drop that day). gdrows.js PASS; floors122 updated (each Boutique brand on its own live day). ROOMS is showing Cal the painted brand; it ships only if he does not veto.
   (3) 651fbfe KODE PINK detail pass lines (ROOMS 368507e art, QA passed; 1a64fc3 slip-ons line): the five pieces' new lines, same ids/names/prices; kprows.js updated, PASS.
@@ -279,7 +279,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 368507e): KODE PINK detail pass PASS (QA findings). Next: v1.25 (b559d09 rig, a604760 GILDED rows).
+- Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
+  Was: Now (on 368507e): KODE PINK detail pass PASS (QA findings).
   Was: Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings).
   Was: Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings).
   Was: Now (on fa1864a): GILDED painted, NOT A PASS yet (two FIXes for ROOMS; QA findings).
@@ -347,6 +348,25 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS, v1.25 candidate (LEAD's recipe: release/v1.24 + b559d09 + ROOMS 3a10edf, fa1864a, cb01321, 581c6cd + a604760 + 368507e +
+  651fbfe). Two FIXes for LEAD; the rows, emotes and GILDED wiring pass. Pictures: shots/qa/v125/.
+  - FIX 1 (LEAD), the recipe misses 8b8d4a0. rig.js's fineSlots/meshStepFine code is in 8b8d4a0 ("off until rig.json sets it"), which
+    is on qa-local but not in release/v1.24. Built to the recipe, the candidate's rig.js differs from qa-local, and rig.json's fineSlots
+    would do nothing. QA built release/v1.24 + 8b8d4a0 + the recipe instead (file patches of app/data/art/src/tools): all 111 changed
+    files are identical to qa-local at 651fbfe. artcheck: 0 gaps of 340. Everything below is on that build.
+  - FIX 2 (LEAD), the new rig makes holes even in the default outfit (new rigtest/qa/rigdiff.js: the same look and pose drawn by
+    v1.24's rig and the candidate's, pixels lost and gained):
+    - dance2, both bodies, no Shop piece worn: a hole opens through the torso at the waist beside the bent arm, with the background
+      showing through. Her hair is cut there too (default_f_dance2_new.jpg vs default_f_dance2_v124.jpg). v1.24 had only a small notch
+      there. With the default outfit, 1,364 px are lost on her and 1,077 on him (HI 3).
+    - White specks on the black default trousers in dance1, dance2 and the raised-arm poses, new in this rig.
+    - The same hole is in every KODE PINK top in dance2: bomber, varsity, hoodie, palm shirt; 140-166 px at HI 1 (kp_bomber_m_dance2.jpg,
+      kp_sailor_f_dance2.jpg).
+    - The intended part works: the streaks under raised arms (wave, cheer, stretchUp) are gone (red in default_m_armsup_old_new_diff.jpg).
+  - Not run yet: rigdiff over every brand. Its timing is ~0.27 s per frame pair, so all 340 pieces x 2 bodies x 35 poses is about
+    100 minutes. The default look already fails, so QA runs it on the fix. The six new emote poses (thinkA-C, sideUp/L/R) have no v1.24
+    counterpart; they get an eye check on the fix.
+  - Passes on this build: LEAD's gdrows.js (REF v1.24), kprows.js (the detail-pass lines), emotes.js. 0 page errors.
 - PASS, KODE PINK detail pass 368507e (kp_bomber, kp_slipon, kp_cargo, kp_loafer, kp_track repainted; art only). Clean build of it.
   - Only the 25 art files of those five pieces change. artcheck: 0 gaps of 325. brandwear kp, all 41 poses (v1.25's rig is in this
     build): him 18 outfits, her 19, 0 not drawn, 0 icons missing, 0 page errors. fitsweep kp: 15 pieces, 0 flagged.
