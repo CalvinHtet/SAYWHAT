@@ -134,7 +134,16 @@ var PATCHNOTES=[
     "The Shop has its own Upgrades tab",
     "Side quests now last a week",
     "The Restaurant and the Garden have fewer, better upgrades",
-    "Coaches and the Town Boss are resting for now"]}
+    "Coaches and the Town Boss are resting for now"]},
+  /* v1.11 to v1.20, same rules: vague, no brand or room names, nothing still to come */
+  {v:120,lines:[
+    "Training is back in the tab bar",
+    "The Wheel tidies itself away after a spin",
+    "Streak freezes are used for you when you miss a day, and the tips now say so",
+    "Quick desk tasks pay a little less XP, but still count in full toward your streak",
+    "Some rooms have more to build, and some crews keep to their posts",
+    "New pieces in the Shop, and a few retired ones paid back",
+    "Fixes in several rooms"]}
 ];
 var PNCOINS=500,PNPAID=2,PNEVERY=10;
 /* 90 -> "v0.90", 100 -> "v1.00" */
