@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA: v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + ROOMS's a10a097, 353080a, 242f620, d808aca (drafts.md left out; 468c3fa is drafts only) + 1a653a7 + bc90d6c + APPV 120). Build that branch, not qa-local (the letter needs APPV 120).
+- (QA: DONE on release/v1.20 6ba0729, PASS, v1.20 can ship; QA findings) FOR QA: v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + ROOMS's a10a097, 353080a, 242f620, d808aca (drafts.md left out; 468c3fa is drafts only) + 1a653a7 + bc90d6c + APPV 120). Build that branch, not qa-local (the letter needs APPV 120).
   1a653a7: VENOM ROSE's 15 rows (Cal: "Approve all"; your 39bc5d1) after gx_v_heel. Grades: bunny ears, pipe, fishnets standard; body chain, corset bodysuit, lace slip dress luxury; the other nine premium (velvet, silk, patent, leather, the lace mask). Boutique prices 690-1,190. VENOM ROSE first goes live on the Boutique 11-23 (the test finds it live 12-04).
   bc90d6c: the v1.20 letter (29q_news.js v:120): 7 vague lines, no brand or room names, 500 coins. Please check the wording for spoilers.
   Checked on the release build: roserows.js PASS (names, lines, bands, art, on both bodies' rose tab); letter120.js PASS (from v1.19: 1 letter, +500 once; from v1.09: two, +1,000; new on v1.20: none); artcheck 315 garments 0 gaps. brandwear v on qa-local: 0 not drawn, 22 m / 31 f outfits x 35 poses, looked over by eye at sheet size only. Not checked: the Shop cards by eye, a close look at each pose.
@@ -251,7 +251,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on d808aca): VENOM ROSE's sexy set wear-check PASS (a10a097 + 353080a + 242f620 + d808aca); two NOTES go to Cal with ROOMS's approval post (QA findings). Nothing open from QA.
+- Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on d808aca): VENOM ROSE's sexy set wear-check PASS (QA findings).
   Was: Now (on 242f620): VENOM ROSE recheck: both FIXes PASS; one more small FIX (QA findings).
   Was: Now (on 353080a): VENOM ROSE's sexy set wear-check: NOT A PASS yet, two small FIXes for ROOMS (QA findings).
   Was: Now (on 78926d8): v1.19 LIVE as 78926d8, verified (QA findings).
@@ -298,6 +299,35 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + VENOM ROSE's art a10a097/353080a/242f620/d808aca + rows
+  1a653a7 + the v1.20 letter bc90d6c + APPV 120). QA built the release branch itself. Pictures: shots/qa/v120/.
+  - Contents against the passed commits:
+    - All 70 art/app and data files (items.json included) are byte-identical to ROOMS's passed d808aca. The chain's back art,
+      added and removed after v1.19, is not in.
+    - 15_shop.js and 29e_tiers.js make the same change as 1a653a7.
+    - The only other app files are 29q_news.js (the letter) and the APPV line.
+  - Rows: all 15 match ROOMS's rows_draft.json word for word (name, line, fo/mo).
+  - Grades follow QA's CLOTHING_TIERS rules.
+    - standard: bunny ears, pipe, fishnets.
+    - luxury: crystal body chain (jewellery set with stones), corset bodysuit (corsetry), lace slip dress (Cal's "sexy dress").
+    - premium: the other nine (velvet, silk, patent, leather, the lace mask like the Lace Headband).
+    - Boutique prices: standard 690-740, premium 910-1,040, luxury 1,120-1,190.
+  - Letter: 7 lines with no brand, room, date or anything still to come (patch-letter rules); no spoilers.
+  - Tests on the release build:
+    - artcheck.py: 315 Shop garments, 0 gaps.
+    - roserows.js: 90 ok, PASS.
+    - letter120.js: PASS. A player gets v1.20's letter and 500 coins once; a pre-v1.10 player gets v1.10's and v1.20's; a new
+      player gets none.
+    - brandwear.js v: 22 men's and 31 women's outfits (the whole brand), 35 poses, 0 not drawn, 0 icons missing, 0 page errors.
+  - Shop on the release build: VENOM ROSE is live on the Boutique today. At 390 and 375, for a woman and a man:
+    - All 15 new names show, and all 30 rose cards load their icons when scrolled into view.
+    - No sideways scroll, 0 page errors.
+    - Men-only pieces show a locked price to a woman and women-only pieces to a man (5 and 13 locked).
+    - By eye: the slip dress and bodysuit cards (women's mark, Try on, 1,190 and 1,180; the bodysuit's line reads "mesh yoke to
+      the neck").
+  - Cal's look calls on the set (fishnets under a short top; the pipe and the robe's bare chest) were for his approval post.
+    Rows were wired after "Ok", per LEAD.
+  - Not checked: a phone, night lighting.
 - PASS, ROOMS d808aca (the bodysuit fix). VENOM ROSE's sexy set (a10a097 + 353080a + 242f620 + d808aca) passes the wear-check and
   can go to Cal. Clean worktree, plain build, rows draft loaded.
   - Only the bodysuit's 5 art files changed. Every pose, both bodies: 8 men's and 14 women's outfits, 0 not drawn, 0 icons missing,
