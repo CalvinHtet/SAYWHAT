@@ -240,7 +240,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (design review, no paint yet): OIL & CANVAS draft, shots/pending_art/brands1118/oilcanvas.md (15 pieces, brand key "oc", indigo/cream/cadmium, studio lane apart from OVERPASS's spray tee and chore jacket, no beret; halter bare, slingbacks heel; 3 questions for QA). Then REGIMENT, then the five Street brands; Stylist face art (LEAD's 2a0a7e3 split is in). Done and live in v1.25: GILDED, KODE PINK detail pass. CHROME free.
+- (QA: DONE on e5b4684, PASS with four NOTES, cleared to paint; answers to the three questions; QA findings) Was WAITING ON QA (design review, no paint yet): OIL & CANVAS draft, shots/pending_art/brands1118/oilcanvas.md (15 pieces, brand key "oc", indigo/cream/cadmium, studio lane apart from OVERPASS's spray tee and chore jacket, no beret; halter bare, slingbacks heel; 3 questions for QA). Then REGIMENT, then the five Street brands; Stylist face art (LEAD's 2a0a7e3 split is in). Done and live in v1.25: GILDED, KODE PINK detail pass. CHROME free.
 - (QA: DONE on fa1864a, NOT A PASS yet: two FIXes (frock sleeves, bustier icon straps), two NOTES; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck): GILDED, 3a10edf + fa1864a (scarf patch). 15 pieces, logo_gd and ui_banner_gd (brand key "gd", CHROME RAIN's Boutique slot); rows shots/pending_art/brands1118/gilded_rows.json; sheet gilded_approval.png + gilded_wear_m/f.png. ROOMS checked: both bodies, 35 poses, 34 outfits, 0 not drawn, 0 page errors; the bustier on the bare base and the mules on the tiptoe base (both injected), 35 poses each, 0 not drawn; close-ups idle, sitBack, stretch, walk2. Painted to QA's trade-dress guard (channel-quilted cap; leaf ornament only; scarf repainted ivory-only when the first came with black scroll ends). Known: the high-tops came out more gold than black; the banner is cropped from the sharp band of a 1:1 image. Not checked: Shop cards, night. Then Cal (batch), then LEAD. CHROME free.
 - (QA: DONE on 52dda64 + 8e6eecf: KODE PINK art PASS, one FIX (the Shop text) and two NOTES for Cal; GILDED review: two FIXes, two NOTES; QA findings) All applied in 022a2f8: READY for LEAD: KODE PINK's 15 new names and lines (shots/pending_art/kodepink/final/shop_text.md). WAITING ON QA: GILDED re-review (gilded.md revised). WAITING ON CAL: KODE PINK's five plain-reading pieces and the palm shirt. Was WAITING ON QA: (1) KODE PINK "Night drive" repaint 52dda64 (Cal approved 2026-11-18 via LEAD: banner, logo, 15 pieces, kp_bucket clip; 4 old kp yawn pictures removed, soft fallback); re-tested on today's build: both bodies, 35 poses, 37 outfits, 0 not drawn, 0 errors; sheets shots/pending_art/kodepink/final/. (2) Design review before paint: GILDED's 15 pieces, shots/pending_art/brands1118/gilded.md (CHROME RAIN's Boutique slot; palette moved from emerald to sapphire accents because green keys out). Then OIL & CANVAS, REGIMENT, then the 5 Street brands (slots in my message to LEAD). CHROME free.
 - Cal APPROVED (2026-11-18, "Approve all"); QA PASS 2be9bec. Was WAITING ON QA: Cal 2026-11-18 "remove the strappy chest harness. Add fishnet or lace leggings if you dont have that already. Add sexy heels. However, the character needs to look like they are wearing heels with a tippy toe stance. If this is too hard, forget it". Harness removed 3aed3af (LEAD 9ea3dd2). Fishnets: v_fishnet already live. Heels: 7f30c13 her tiptoe bases f_base_heel_front/back + f_base_bare_heel_front/back (legs unchanged, ankles unchanged, feet from a Higgsfield tiptoe edit; no _yawn yet, LEAD's fallback draws today's); 1d16b66 Ankle-Strap Stilettos v_sandal {heel: 72} (72 layer px = 36 app px below today's sole), row in shots/pending_art/new1118/rows/rows_draft.json. Icons for the stilettos and bralette redrawn cleanly in 24ee3c9. ROOMS checked with the tiptoe base injected (no lift yet): both bodies, 35 poses, 0 not drawn, 0 page errors; close-ups idle, sitBack, walk2, sleep. Not checked: LEAD's real lift, the feet touching the floor, the yawn. Also 7f30c13 smoother bralette icon (QA note). Waiting on Cal's OK too. CHROME free.
@@ -282,7 +282,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6a0272c): v1.25 live check PASS (QA findings). Nothing open from QA.
+- Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings). Nothing open from QA.
+  Was: Now (on 6a0272c): v1.25 live check PASS (QA findings).
   Was: Now (on 6a0272c): v1.25 PASS, can ship (QA findings).
   Was: Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
   Was: Now (on 368507e): KODE PINK detail pass PASS (QA findings).
@@ -353,6 +354,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with NOTES (cleared to paint), OIL & CANVAS design review, shots/pending_art/brands1118/oilcanvas.md (e5b4684) (owner: ROOMS).
+  - Pass:
+    - Nothing plain: every line names two or more details.
+    - Original, with a clear trade-dress guard: no famous paintings, letters or paint brands.
+    - No cultural dress: the smock and the felt hat are studio wear, not costume.
+    - The keying-safe palette is right. The counts (2/3/4/3/3 = 15) fit the Boutique.
+    - The lane is distinct from OVERPASS's spray tee and chore jacket and from Y2K's patchwork jeans. No beret is right.
+    - The halter goes through barecheck as `bare`, the slingbacks through heelcheck, and both hats through hatcheck.
+  - NOTE (overlap): the Brushstroke High-Tops would be the Shop's 6th high-top (OVERPASS Retro High-Top Hoops, NICE COCK Silver Court,
+    SAYMØRE Glow-Sole, SAVE POINT Pixel Flame, GILDED Gilt-Cap). Either make them unmistakably painted (whole-shoe brushwork, not trim),
+    or swap the silhouette, e.g. gesso-crusted canvas lace-up studio boots or paint-flecked canvas mules.
+  - NOTE (overlap, small): the Brush Roll Sling is the Shop's fourth cross-body piece (HANGANG Leather Chest Sling, KODE PINK Patent
+    Mini Crossbody, the Ripstop Sling). The brush roll keeps it distinct; just make the handles read at chibi size. The Hand-Painted
+    Denim Jacket sits near Y2K's Fur-Collar Denim Jacket; the painted back keeps it apart. Keep the "sunburst" loose brushstrokes, not
+    radiating rays from a centre figure (the guard's "radiant figures").
+  - NOTE (rig): the Patchwork Studio Coat is long like GILDED's frock coat, whose flared hem beside the hands got pulled by the hand
+    bones in raised-arm poses (QA 7de6883). Keep the coat's hem straight and clear of the hands below the elbow, as ROOMS's frock fix did.
+  - NOTE (size): the Palette Pendant is small; at chibi size give the palette and its dabs enough size that it does not read as a plain cord.
+  - Answers to ROOMS's three questions:
+    1. The hats: yes, nothing hanging below the band. The felt hat's brush should point up and back, out of the face. hatcheck over
+       h1-h3 on both bodies after paint (and from behind: GILDED's beret first showed bangs, then a bald band).
+    2. The brush roll in the neck slot with chain mode `2 0.5`, like the body chain: fine. It shares the neck slot with the Palette
+       Pendant, so one excludes the other; that is acceptable within a brand.
+    3. His side: the open-chest smock is enough. VENOM ROSE already has his open blazer and unbuttoned silk shirt; a third bare-chest
+       piece would repeat it. The halter covers her side.
 - PASS, v1.25 live check (LEAD: live on Live and Test at 6a0272c, the build QA passed in f7f5dbe).
   - release/v1.25 and its origin copy are both 6a0272c. rollback-v0.80 and its origin copy are both cd5a4ef (APPV 125 -> 126, its only
     change).
