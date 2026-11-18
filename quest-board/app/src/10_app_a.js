@@ -1494,7 +1494,7 @@ var BRANDS=[
  {id:"nc",name:"NICE COCK",fl:"street",/* was the Boutique; on the Street from Thu 11-19 (Cal, 2026-11-17; Thursday since v1.22), 29zz_ncstreet.js */tag:"Something to crow about",c:["#111214","#3b3f46","#c9ccd2"],ac:"#f2efe8",start:"2026-11-30",sub:"luxury leisurewear"},
  {id:"alt",name:"ALTITUDE",tag:"Trail gear that never sees a trail",c:["#1c1f1a","#4f5a32","#ff6a1a"],ac:"#c8ccc4",start:"2026-12-07",sub:"gorpcore utility"},
  /* Cal's music project (approved 2026-11-06); the next free Monday after ALTITUDE until the launch schedule places it */
- {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#f6a5c8","#8f9bea","#c7a6f0"],ac:"#ffd84d",start:"2026-12-14",sub:"anime city-pop"},
+ {id:"kp",name:"KODE PINK",tag:"One in the pink, two in the\u2026 other one",c:["#0b1238","#1f2f78","#ff4fa3"],ac:"#ff9a6a",start:"2026-12-14",sub:"city-pop night drive"},/* v1.24: the "Night drive" repaint's colours (its banner: navy and indigo night, a pink-to-coral sunset); were the pastels */
  /* Cal's artist brand (approved 2026-11-06), palette and mark from his song covers */
  {id:"sm",name:"SAYM\u00d8RE",fl:"boutique",tag:"Trust the motion",c:["#08090c","#101319","#ff7a18"],ac:"#17d4e6",start:"2026-12-21",sub:"bass culture"},
  /* Cal's first approved five, in BRANDS_15.md order: the next free Monday each until the launch schedule places them */
