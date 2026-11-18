@@ -43,6 +43,7 @@ const band = { thrift: [110, 250], standard: [250, 440], premium: [440, 450] };
       if (sex === 'm') { ok(g && g.n === w[2] && g.line === w[5] && g.slot === w[1] && g.item && g.p >= band[gr][0] && g.p <= band[gr][1], `${id}: ${g && g.n} ${g && g.p} coins (${gr} ${band[gr].join('-')}) "${g && g.line}"`);
         for (const f of ['f_' + w[6].gar + '_front', 'icon_' + w[6].gar].concat(g && g.front ? [] : ['f_' + w[6].gar + '_back'])) { const s = await p.request.get(base + '/art/app/' + f + '.webp'); ok(s.status() === 200, `  ${f} ${s.status()}`); } }
       /* a women-only piece is on a man's tab too, like DIAL-UP's Plaid Mini Skirt always was (the Shop shows the whole brand) */
+      /* v1.22: the skate tool is off sale (Cal: "swap out the metal chain and the skate tool") */ if (id === 'gx_o_tool' || id === 'gx_o_durag') { ok(!(r.text[br] || '').includes(w[2]), `  ${w[2]} off sale (durag: v1.18, gone; skate tool: v1.22)`); continue; }
       const listed = !!(r.text[br] && r.text[br].includes(w[2])); ok(listed, `  ${sex === 'm' ? 'a man' : 'a woman'}'s ${br} tab lists ${w[2]}${w[6].mo ? ' (men only, shown like the Shop shows every limited piece)' : fo ? ' (women only)' : ''}`); }
     ok(!errs.length, sex + ': no page errors ' + JSON.stringify(errs.slice(0, 3)));
     await p.context().close(); }

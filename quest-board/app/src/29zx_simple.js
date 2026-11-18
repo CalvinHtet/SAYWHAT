@@ -220,10 +220,16 @@ DROPS.shuf0="2026-11-16";
    BARD & BLADE, KAIMANA and OAKMONT get new names and pieces; ALTITUDE, SOLVBERG and NICE COCK lose most of theirs). Each hold has a
    start and, once the new art is in, an end date: a slot dated inside it skips those brands, so lifting a hold never changes a drop
    that already happened. */
-DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak","sv"]},
+DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak"]},
+  /* v1.22, Cal (2026-11-18, looking at every brand's pieces): "I like altitude and solvberg. Redo everything else." SØLVBERG stays as it is,
+     so its hold ends the day v1.22's changes start (no slot before it changes); the other five stay held for their redo */
+  {from:"2026-11-16",until:"2026-11-19",ids:["sv"]},
+  /* v1.22, Cal (2026-11-18): "Not a fan of chrome rain. Create a different brand". CHROME RAIN never dropped; it is held from the day v1.22's
+     changes start while ROOMS makes the brand that replaces it */
+  {from:"2026-11-19",until:"",ids:["cr"]},
   /* Cal (via ROOMS, 2026-11-16): "ship NICE COCK on friday". NICE COCK has been live on the Boutique since Fri 11-13 (it dropped before
      the hold began) and stays live to Thu 11-26; its hold ends 11-20, so later Boutique slots may pick it again once its new art is in */
-  {from:"2026-11-16",until:"2026-11-20",ids:["nc"]},
+  {from:"2026-11-16",until:"2026-11-19",ids:["nc"]},/* v1.22: until 11-19, its drop day now */
   /* ALTITUDE's gorpcore repaint is in (Cal approved, ROOMS 7c5664e). Its hold ends the day it began, so no slot ever skipped it; if this
      ships after a held drop has already happened, move "until" to the release day so that drop stays the same on every phone */
   {from:"2026-11-16",until:"2026-11-16",ids:["alt"]},
@@ -296,7 +302,7 @@ var ZXFS=[
         {sel:'#layer .rmodal [data-act="raddon"]:not([disabled])',t:"Buy one",x:"Tap Buy on an upgrade your coins cover. Each makes the room nicer.",modal:1,tap:1}]}},
   {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
     done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
-  {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Friday.",open:function(){return tourAreaOpen("shop")},
+  {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Thursday.",open:function(){return tourAreaOpen("shop")},
     /* QA's review: a new character owns the creator's basics, which ticked this at once; only a brand's piece counts */
     done:function(){return !!S.owned&&SHOP.some(function(it){var b=it&&it[6]&&it[6].b;return b&&b!=="basics"&&S.owned[it[0]]})},show:[{sel:'.nav button[data-v="shop"]',t:"The Shop",x:"Tap here, then buy a piece you like.",tap:1}]}
 ];

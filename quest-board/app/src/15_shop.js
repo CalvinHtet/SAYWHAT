@@ -389,7 +389,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* W42: the floor on screen (the Street, the Boutique, ...). Only floors this player has show, and the switch only with two or more */
 var QSFLOOR="street";
 /* W47: the line under "The Shop", per floor (Bebas shows it in capitals) */
-var QS_WHEN={street:"New brands Mon and Fri 8 am",boutique:"New brand every Fri 8 am",atelier:"New brand every other Fri 8 am"};
+var QS_WHEN={street:"New brands Mon and Thu 8 am",boutique:"New brands Mon and Thu 8 am",atelier:"New brands every other Mon and Thu 8 am"};
 /* a floor other than the one on screen with a live brand not yet looked at: its button gets a "!" (29o_alerts.js clears it per floor) */
 function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.init)return false;
   return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}
@@ -400,7 +400,7 @@ shopHtml=function(){
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
   var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
-  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Basics"],["wardrobe","Wardrobe"]]).concat(typeof sysHas==="function"&&!sysHas()?[]:[["upgrades","Upgrades"],["interface","Interface"]]);/* W48: Upgrades and Interface only once the Lair's big screen is built (29sy_system.js) */
+  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Stylist"],["wardrobe","Wardrobe"]]).concat(typeof sysHas==="function"&&!sysHas()?[]:[["upgrades","Upgrades"],["interface","Interface"]]);/* W48: Upgrades and Interface only once the Lair's big screen is built (29sy_system.js) */
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
@@ -419,8 +419,10 @@ shopHtml=function(){
     if(b.back)h+='<p class="qs-note qs-lead">Back for Wednesday only. It leaves '+(function(){var t=dropStart(b.backUntil)-d.n;return t>0?'in '+cdTxt(t):'today'})()+'.</p>';
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b===b.id})+'</div></div>';
   }else if(shopTab==="basics"){
-    h+='<p class="qs-note qs-lead">The everyday pieces from character creation, sold one at a time.</p>';
-    h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b==="basics"})+'</div></div>';
+    /* v1.22, the Stylist (Cal, 2026-11-18: "Lets remove the Basics from the street. Replace it with something else for new hairstyles, eye
+       shapes, mouth, like a stylist department"): haircuts, dyes and eye colours; the plain clothes are off sale (29zz_v122.js) */
+    h+='<p class="qs-note qs-lead">A new cut, a new colour, new eyes.</p>';
+    h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b==="basics"&&STYLIST[x[1]]})+'</div></div>';
   }else if(shopTab==="wardrobe"){
     var mine=SHOP.filter(function(x){return isRigItem(x)&&S.owned[x[0]]&&itemFits(x)});
     h+='<p class="qs-note qs-lead">Everything you own stays here, even after its brand leaves the shop.</p>';
