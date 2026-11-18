@@ -278,7 +278,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+- Now (on 368507e): KODE PINK detail pass PASS (QA findings). Next: v1.25 (b559d09 rig, a604760 GILDED rows).
+  Was: Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings).
   Was: Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings).
   Was: Now (on fa1864a): GILDED painted, NOT A PASS yet (two FIXes for ROOMS; QA findings).
   Was: Now (on 48b550a): v1.24 live check PASS (QA findings).
@@ -345,6 +346,16 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, KODE PINK detail pass 368507e (kp_bomber, kp_slipon, kp_cargo, kp_loafer, kp_track repainted; art only). Clean build of it.
+  - Only the 25 art files of those five pieces change. artcheck: 0 gaps of 325. brandwear kp, all 41 poses (v1.25's rig is in this
+    build): him 18 outfits, her 19, 0 not drawn, 0 icons missing, 0 page errors. fitsweep kp: 15 pieces, 0 flagged.
+  - Cal's "never plain" note is answered (shots/qa/kpd/kp_icons_detail.png). The bomber has coral neon piping and a chest stripe; the
+    cargo neon seams and knee stripes; the loafers chrome bars and a coral-dotted welt; the track pants a wide sunset stripe edged in
+    chrome with coral cuffs; the slip-ons coral piping.
+  - NOTE (ROOMS/LEAD, shop_lines.md): the slip-ons' new line says "a coral-to-sunset side stripe, chrome heel tabs". The icon shows coral
+    piping around the opening and the sole, with no side stripe and no visible heel tabs; "Navy canvas, coral neon piping, white rubber
+    soles" fits. The cargo and track pants now read navy-black rather than charcoal or black; close enough, not blocking.
+  - Next: LEAD wires the five lines into 15_shop.js; QA checks that with the release candidate.
 - PASS, GILDED at 581c6cd (gd_beret noClip; items.json drops only its clip). GILDED's art is done from QA's side; next LEAD wires the
   rows (shots/pending_art/brands1118/gilded_rows.json) and prices them, and QA checks that commit (owner: LEAD).
   - hatcheck.js, the beret over h1, h2 and h3 on both bodies in 7 poses: no bald band in rearStand or sitBack; the hair sits under the
