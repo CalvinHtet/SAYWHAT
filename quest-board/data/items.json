@@ -1707,6 +1707,6 @@
  "v_sandal": {
   "slot": "shoes",
   "femaleOnly": true,
-  "heel": 72
+  "heel": true
  }
 }
