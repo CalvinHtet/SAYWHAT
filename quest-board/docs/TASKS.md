@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (205d8df): Cal (via ROOMS): "The ninja ones are cool." Arrived after v1.18 shipped, so v1.19 undoes the SMOKE BOMB half: V17GONE is only the durag and bandana; the 12 are back on sale; no hold, its own subtitle; v17Back gives a v1.18-refunded owner the pieces back and takes the refund back (not below 0), once. gone.js PASS. v1.19 = release/v1.18 + 205d8df.
+- (QA: DONE on release/v1.18 + 205d8df, PASS, v1.19 can ship; one NOTE for Cal; QA findings) FOR QA (205d8df): Cal (via ROOMS): "The ninja ones are cool." Arrived after v1.18 shipped, so v1.19 undoes the SMOKE BOMB half: V17GONE is only the durag and bandana; the 12 are back on sale; no hold, its own subtitle; v17Back gives a v1.18-refunded owner the pieces back and takes the refund back (not below 0), once. gone.js PASS. v1.19 = release/v1.18 + 205d8df.
 - v1.18 LIVE on Live and Test = c12783d (release/v1.17 + aec19d9 + APPV 118; QA PASS 989b71c); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 ea1b732 (APPV 119). QA: live check please. Borderline five wait on Cal via ROOMS. (QA: DONE, PASS; QA findings)
 - v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.17 + aec19d9, PASS, v1.18 can ship; QA findings) FOR QA (aec19d9): Cal's "get rid of" order (via ROOMS). 29zz_v117.js: V17GONE (14 pieces) off sale everywhere and not worn or owned by anyone; owners refunded each piece's price once (S.goneRef, every 5 s while loaded); SMOKE BOMB held from 11-17 (DROPS.hold) and sub "techwear"; Pip's bandana off (26_world.js). gone.js PASS. Not checked by me: the refund across a cloud merge, Pip in every pose, the subtitle on screen. Borderline pieces (gp_sailor, gp_blazer, km_camp, km_shell, cr_mohawk's name) wait on Cal via ROOMS. v1.18 = release/v1.17 + aec19d9.
@@ -245,7 +245,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings). Nothing open from QA.
+- Now (on 205d8df): v1.19 = release/v1.18 + 205d8df (SMOKE BOMB's ninja pieces back) PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings).
   Was: Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings).
   Was: Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings).
   Was: Now (on b148138): v1.17 = release/v1.16 + b148138 PASS, can ship (QA findings).
@@ -287,6 +288,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with one NOTE, v1.19 as planned: release/v1.18 (c12783d) + 205d8df (Cal: "The ninja ones are cool": SMOKE BOMB's 12 back, the
+  durag and bandana stay gone). QA built exactly that (applied without committing) and tested that build.
+  - artcheck.py: 300 Shop garments, 0 gaps. 26_world.js is untouched, so Pip still has no bandana.
+  - rigtest/lead/gone.js: PASS.
+  - rigtest/qa/goneback.js (new), save round trips loaded from local storage (as a cloud merge replaces the whole save): PASS.
+    - A v1.18-refunded save with 10,000 coins: the 12 come back to S.owned, -2,800 (the refund), one pop "12 SMOKE BOMB pieces are
+      back in your Wardrobe (-2,800 coins, the refund)". The durag and bandana stay refunded and out. A reload repeats nothing.
+    - The same with 500 coins: the 12 come back and coins stop at 0.
+    - A stale pre-v1.18 save (owns all 14, no goneRef): only the durag and bandana are refunded (+280), the 12 stay owned, and the
+      worn hakama stays on.
+    - SMOKE BOMB's rows are as before v1.18: only the audit's vest and cloak are cut. Its subtitle is "ninja anime" again (the
+      override is gone). It drops again: first in 10 days, 51 floor-days in 120.
+    - 0 page errors.
+  - NOTE (Cal's call, via LEAD): the clawback takes the refund back, down to 0 coins. A player who spent v1.18's refund ends at 0
+    (case B). Pieces that were worn come back to the Wardrobe but not onto the character. If Cal would rather nobody loses coins
+    over his own reversal, drop the clawback; it is at most 2,800 coins a player.
+  - Not checked: a phone, and a real two-device merge (simulated with saves put back in local storage).
 - PASS, v1.18 live (LEAD: Live and Test at c12783d, wlive PASS, 3256/3256 identical):
   - c12783d against release/v1.17 48fab96 changes three files. 29zz_v117.js is byte-identical to aec19d9's. 26_world.js changes
     only Pip's line, the same as aec19d9's (no o_bandana anywhere in it). Then the APPV line (117 -> 118). No art or data change.
