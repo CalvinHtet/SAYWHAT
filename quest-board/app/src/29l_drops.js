@@ -32,7 +32,7 @@ function dropPlan(rounds){var ids=BRANDS.map(function(b){return b.id}),fx=DROPS.
     row.forEach(function(id,k){out.push({id:id,slot:r*n+k,start:dropSlotDate(r*n+k)})})}
   return out}
 /* one brand every DROPS.every days per player (dropMine below), so the cadence reads in days */
-function dropCadence(){return "Mondays and Fridays at 8 am Pacific"}
+function dropCadence(){return "Mondays and Thursdays at 8 am Pacific"}
 /* the Shop at any moment n, for both modes: live (newest first-dropped last), the retired ones, and the next drop */
 function dropAt(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
   if(!DROPS.on){var rel=BRANDS.filter(function(b){return ptMidnight(b.start)<=n});return {live:rel.slice(-3),vault:rel.slice(0,Math.max(0,rel.length-3)),next:BRANDS.filter(function(b){return ptMidnight(b.start)>n})[0]||null}}
@@ -124,7 +124,9 @@ function dropStamp(){try{if(S.shopDay||!loaded||!S.created||!hasRoom("closet"))r
    carries fl, its floor. */
 function flGet(id){return (ECON.floors||[]).filter(function(F){return F.id===id})[0]||null}
 function flBrands(F){return BRANDS.filter(function(b){return brandFloor(b.id)===F.id}).map(function(b){return b.id})}
-function flIsDrop(F,x,x0){return (F.days||DROPDAYS).indexOf(ymdWd(x))>=0&&(!(F.every>1)||Math.floor((x-x0)/7)%F.every===0)}
+/* v1.22: a floor's drop days changed on FLDAYS1 (Mon/Fri to Mon/Thu, Cal 2026-11-18); a day before it uses the floor's old days0 */
+var FLDAYS1=ymdN("2026-11-19");
+function flIsDrop(F,x,x0){return ((x<FLDAYS1&&F.days0)||F.days||DROPDAYS).indexOf(ymdWd(x))>=0&&(!(F.every>1)||Math.floor((x-x0)/7)%F.every===0)}
 function flOrderAt(F,ids,j){if(F.id==="street"&&DROPS.on)return dropOrderAt(j);return j<ids.length||DROPS.rerun?ids[j%ids.length]:null}
 /* the floors this player has: one with brands, at or past its level (the Street with the Closet, as the Shop itself) */
 /* named shopFloors: 10_app_a.js has its own floorsOpen() (the Loft's floors), and two declarations of one name in the joined closure means the later one replaces the other */

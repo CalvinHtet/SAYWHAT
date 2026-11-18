@@ -5,8 +5,10 @@
    From that day (DROPS.shuf1) every floor's drops are random: each round is a fresh fixed-seed shuffle of the floor's brands (the same
    on every phone, never reshuffled by a reload), a brand never drops again while it is still live, and held brands wait their turn.
    Every drop before shuf1 stays exactly as it was: those slots are worked out with the old floors (D2OLDFL) and the old order. */
-DROPS.shuf1="2026-11-20";
-DROPS.pin=[{fl:"street",day:"2026-11-20",id:"nc"}];
+/* v1.22 (Cal, 2026-11-18): drops move to Monday and Thursday from 11-19, so there is no Friday drop: NICE COCK's drop and the shuffle start
+   move to Thu 11-19 */
+DROPS.shuf1="2026-11-19";
+DROPS.pin=[{fl:"street",day:"2026-11-19",id:"nc"}];
 var D2OLDFL={nc:"boutique"};
 function d2OldIds(F){return BRANDS.filter(function(b){return (D2OLDFL[b.id]||brandFloor(b.id))===F.id}).map(function(b){return b.id})}
 var D2J={},D2={};
