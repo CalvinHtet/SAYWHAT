@@ -273,7 +273,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings). Nothing open from QA.
+- Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+  Was: Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings).
   Was: Now (on fa1864a): GILDED painted, NOT A PASS yet (two FIXes for ROOMS; QA findings).
   Was: Now (on 48b550a): v1.24 live check PASS (QA findings).
   Was: Now (on f0cccd0): v1.24 candidate (KODE PINK) PASS (QA findings).
@@ -339,6 +340,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, GILDED at 581c6cd (gd_beret noClip; items.json drops only its clip). GILDED's art is done from QA's side; next LEAD wires the
+  rows (shots/pending_art/brands1118/gilded_rows.json) and prices them, and QA checks that commit (owner: LEAD).
+  - hatcheck.js, the beret over h1, h2 and h3 on both bodies in 7 poses: no bald band in rearStand or sitBack; the hair sits under the
+    beret with nothing poking through its crown; her h3 ponytail shows behind it; the front is unchanged (shots/qa/gd3/).
+  - newwear gd on this build, 35 poses: him 15 outfits, her 19, 0 not drawn, 0 page errors. Everything else stands from cb01321 (frock,
+    bustier, mules, crown, cap, skirt name).
 - NOT A PASS yet, GILDED recheck at cb01321 (ROOMS's fixes for 7de6883). Two of three are fixed; the new beret has a bald band. Clean
   build, draft rows injected. Pictures: shots/qa/gd2/.
   - Reruns: newwear gd 35 poses, him 15 outfits and her 19, 0 not drawn, 0 page errors. fitsweep 15 pieces, 0 flagged. barecheck: the
