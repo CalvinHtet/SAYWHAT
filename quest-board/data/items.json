@@ -1703,5 +1703,10 @@
   "slot": "top",
   "femaleOnly": true,
   "bare": true
+ },
+ "v_sandal": {
+  "slot": "shoes",
+  "femaleOnly": true,
+  "heel": 72
  }
 }
