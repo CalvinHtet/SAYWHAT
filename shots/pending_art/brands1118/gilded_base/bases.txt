@@ -1,0 +1,15 @@
+gd_cap v_cap
+gd_beret h_beret
+gd_wreath v_lace
+gd_scarf nc_pendant
+gd_cuffs oak_wrist
+gd_bomber cr_bomber
+gd_shirt v_blazer
+gd_frock sm_hoodie
+gd_bustier v_corset
+gd_jogger nc_jog_ash
+gd_cargo sm_cargo
+gd_skirt kp_skirt
+gd_loafer kp_loafer
+gd_hightop sm_hightop
+gd_mule heel_template
