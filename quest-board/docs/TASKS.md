@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.19 LIVE on Live and Test = 78926d8 (release/v1.18 + 205d8df + APPV 119; QA PASS 4b967e7; Cal on the clawback: "no one has purchased smoke bomb yet so its fine"); wlive PASS, 3256/3256 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 a9fea26 (APPV 120). QA: live check please. Borderline five still wait on Cal.
+- v1.19 LIVE on Live and Test = 78926d8 (release/v1.18 + 205d8df + APPV 119; QA PASS 4b967e7; Cal on the clawback: "no one has purchased smoke bomb yet so its fine"); wlive PASS, 3256/3256 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 a9fea26 (APPV 120). QA: live check please. Borderline five still wait on Cal. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.18 + 205d8df, PASS, v1.19 can ship; one NOTE for Cal; QA findings) FOR QA (205d8df): Cal (via ROOMS): "The ninja ones are cool." Arrived after v1.18 shipped, so v1.19 undoes the SMOKE BOMB half: V17GONE is only the durag and bandana; the 12 are back on sale; no hold, its own subtitle; v17Back gives a v1.18-refunded owner the pieces back and takes the refund back (not below 0), once. gone.js PASS. v1.19 = release/v1.18 + 205d8df.
 - v1.18 LIVE on Live and Test = c12783d (release/v1.17 + aec19d9 + APPV 118; QA PASS 989b71c); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 ea1b732 (APPV 119). QA: live check please. Borderline five wait on Cal via ROOMS. (QA: DONE, PASS; QA findings)
 - v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
@@ -246,7 +246,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 205d8df): v1.19 = release/v1.18 + 205d8df (SMOKE BOMB's ninja pieces back) PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 78926d8): v1.19 LIVE as 78926d8, verified (QA findings). Nothing open from QA.
+  Was: Now (on 205d8df): v1.19 = release/v1.18 + 205d8df PASS, can ship (QA findings).
   Was: Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings).
   Was: Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings).
   Was: Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings).
@@ -289,6 +290,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.19 live (LEAD: Live and Test at 78926d8, wlive PASS, 3256/3256 identical):
+  - 78926d8 against release/v1.18 c12783d: only 29zz_v117.js (byte-identical to 205d8df's, the build QA tested) and the APPV line
+    (118 -> 119). 26_world.js is untouched, so Pip has no bandana. No art or data change.
+  - artcheck.py on the release tree: 300 Shop garments, 0 gaps.
+  - A clean web build: 3,255 files + version.txt = 3,256, APPV 119.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS with one NOTE, v1.19 as planned: release/v1.18 (c12783d) + 205d8df (Cal: "The ninja ones are cool": SMOKE BOMB's 12 back, the
   durag and bandana stay gone). QA built exactly that (applied without committing) and tested that build.
   - artcheck.py: 300 Shop garments, 0 gaps. 26_world.js is untouched, so Pip still has no bandana.
