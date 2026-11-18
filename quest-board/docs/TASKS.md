@@ -18,6 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please.
+- Now: Cal's "get rid of" order (via ROOMS): the 14 pieces in 29zz_v117.js (gone for everyone, owners refunded), SMOKE BOMB held, Pip's bandana off. Testing; not committed yet.
 - (QA: DONE on release/v1.16 + b148138, PASS, v1.17 can ship; QA findings) FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
 - v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please. (QA: DONE, PASS; QA findings)
 - v1.15 LIVE on Live and Test = 0859d5b (release/v1.15: release/v1.14 + b3917b8 Training tab + ad44305 quick admin XP + APPV 115; QA PASS b8499fa); artcheck 0 gaps, wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 9aeff58 (APPV 116). QA: live check please. (QA: DONE, PASS; QA findings)
