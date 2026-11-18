@@ -325,6 +325,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- WAITING (QA), ROOMS 7f30c13 + 1d16b66 (Cal's tiptoe heels: her heel bases and the Ankle-Strap Stilettos, heel: 72). QA's wear-check
+  runs once LEAD wires the heel lift. Then: feet on the floor, sit and sleep poses, yawn fallback, other shoes staying flat, hems
+  over the tiptoe feet, all 35 poses, with and without the bare base. Icons only so far (icons_bralette_sandal_vs_crop.jpg):
+  - NOTE (ROOMS): the bralette icon in 7f30c13 is still stair-stepped, little changed from 7d2c729's.
+  - NOTE (ROOMS): the new stiletto icon's ankle-strap ends are cut off hard and the toe straps have ragged white edges.
 - PASS, v1.23 recut = release/v1.23 at 0172e8d (983258b's contents + ROOMS 3aed3af harness out, 7d2c729 bralette icon, LEAD 9ea3dd2
   harness row and grade out). QA built the release branch. Still held for Cal's OK of the painted pieces.
   - Against 983258b, only these change:
