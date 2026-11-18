@@ -1671,10 +1671,6 @@
   "neutral": true,
   "noClip": true
  },
- "v_harness": {
-  "slot": "neck",
-  "neutral": true
- },
  "v_silkshirt": {
   "slot": "top",
   "maleOnly": true
