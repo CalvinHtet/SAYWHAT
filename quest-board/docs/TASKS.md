@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate now: release/v1.23 at 7e61089 = 00cc1c0 + ROOMS's 24ee3c9 (stiletto and bralette icons) + d7ca804 (v_sandal heel: true; heels.js PASS); identical to qa-local, artcheck 0 gaps of 325; QA: please recheck 7e61089. Before that, 00cc1c0 = 0172e8d (QA PASS b3d9a67) + ROOMS's tiptoe heels 7f30c13, 1d16b66 + my b3dba9d (look.js picks base[_bare][_heel]; NO lift: ROOMS's feet already reach the floor, the heel tip ends where Mary Janes do; optional heelLift for later; rig.js lifts standing poses only; gx_v_sandal premium; heels.js PASS; brandwear v 0 not drawn; artcheck 0 gaps of 325; QA: please recheck 00cc1c0). Was: 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him). (QA: DONE on 0172e8d, PASS; QA findings)
+- (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate now: release/v1.23 at 7e61089 = 00cc1c0 + ROOMS's 24ee3c9 (stiletto and bralette icons) + d7ca804 (v_sandal heel: true; heels.js PASS); identical to qa-local, artcheck 0 gaps of 325; QA: please recheck 7e61089 (QA: DONE, PASS, still held for Cal; QA findings). Before that, 00cc1c0 = 0172e8d (QA PASS b3d9a67) + ROOMS's tiptoe heels 7f30c13, 1d16b66 + my b3dba9d (look.js picks base[_bare][_heel]; NO lift: ROOMS's feet already reach the floor, the heel tip ends where Mary Janes do; optional heelLift for later; rig.js lifts standing poses only; gx_v_sandal premium; heels.js PASS; brandwear v 0 not drawn; artcheck 0 gaps of 325; QA: please recheck 00cc1c0; QA: DONE, PASS, folded into 7e61089's findings). Was: 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him). (QA: DONE on 0172e8d, PASS; QA findings)
 - Emotes (Cal 11-18): preview on one outfit sent (d19473c, 9749fcc: rigtest/lead/emoteprev.js); Cal saw sleeves tear; waiting on his pick (engine fixes: finer mesh near joints + hide the arm under sleeves, then a full wear-test).
 - v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split). (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
@@ -267,7 +267,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings). Nothing open from QA.
+- Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings). Nothing open from QA.
+  Was: Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings).
   Was: Now (on 983258b): v1.23 candidate PASS (QA findings).
   Was: Now (on 141ff29): Cal's 11-18 pieces PASS (QA findings).
   Was: Now (on 4edfa01): Cal's 11-18 pieces wear-check: bare coverage gate PASS; three small FIXes for ROOMS (QA findings).
@@ -325,11 +326,22 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
-- WAITING (QA), ROOMS 7f30c13 + 1d16b66 (Cal's tiptoe heels: her heel bases and the Ankle-Strap Stilettos, heel: 72). QA's wear-check
-  runs once LEAD wires the heel lift. Then: feet on the floor, sit and sleep poses, yawn fallback, other shoes staying flat, hems
-  over the tiptoe feet, all 35 poses, with and without the bare base. Icons only so far (icons_bralette_sandal_vs_crop.jpg):
-  - NOTE (ROOMS): the bralette icon in 7f30c13 is still stair-stepped, little changed from 7d2c729's.
-  - NOTE (ROOMS): the new stiletto icon's ankle-strap ends are cut off hard and the toe straps have ragged white edges.
+- PASS, v1.23 candidate = release/v1.23 at 7e61089 (00cc1c0 + ROOMS 24ee3c9 icons + d7ca804 v_sandal heel: true). QA built the release
+  branch. Still HELD for Cal's OK of the painted pieces (owner: ROOMS asks Cal; LEAD ships only after his yes).
+  - Against 00cc1c0 only three files change: icon_v_bralette.webp, icon_v_sandal.webp, and items.json ("heel": 72 -> true). All three are
+    byte-identical to qa-local. artcheck.py: 325 Shop garments, 0 gaps. A clean web build: 3,378 files + version.txt = 3,379.
+  - LEAD's heels.js PASS on this build (PORT=8825; with no PORT it hits whatever is on its default port and reported 9 fails there).
+  - QA's new rigtest/qa/heelcheck.js, all 35 poses, 0 page errors:
+    - Base picked: stilettos -> f_base_heel; stilettos + bralette -> f_base_bare_heel; flat Patent Stilettos -> f_base; flat + bralette
+      -> f_base_bare; default sneakers -> f_base; his body with the stilettos asked -> m_base (they are women-only). All correct.
+    - Floor contact (lowest drawn pixel, tiptoe stilettos vs flat stilettos, HI 1.6): within 4 px in 32 poses. NOTE (ROOMS, minor, not
+      blocking): backwalk1/3/4 sit 5-8 px lower at HI 1.6 (about 3-5 px at game size), inside the spread the other shoes already have
+      across the back-walk frames. Not visible at room scale.
+    - Hems (shots/qa/heel123/heel_hems.jpg): flares, vinyl trousers, the long pleated skirt and mini + bralette over the tiptoe feet in
+      idle, walk2, stretchUp, rearStand, sitFront, sleep and dance1: no gaps, no feet poking through hems, no grey tank under the bralette.
+  - Icons (shots/qa/heel123/icons_bralette_sandal_crop.jpg): both of QA's notes on 7f30c13 are fixed in 24ee3c9. The bralette is smooth
+    now, matching the crop top; the stilettos' ankle straps close and the toe straps have clean edges.
+  - Not checked: the heels on a phone, and in a live room with crew walking (rig renders only).
 - PASS, v1.23 recut = release/v1.23 at 0172e8d (983258b's contents + ROOMS 3aed3af harness out, 7d2c729 bralette icon, LEAD 9ea3dd2
   harness row and grade out). QA built the release branch. Still held for Cal's OK of the painted pieces.
   - Against 983258b, only these change:
