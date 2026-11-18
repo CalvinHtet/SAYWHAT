@@ -73,6 +73,17 @@
     const bare = !!meta("top").bare, heel = !!meta("shoes").heel, heelLift = +meta("shoes").heelLift || 0;
     const pick = [bare && heel && "base_bare_heel", bare && "base_bare", heel && "base_heel"].filter((a) => a && has(a))[0];
     if (pick) layers.body = views(b, pick);
+    // The Stylist's eye shapes and mouths (Cal 11-18: "new hairstyles, eye shapes, mouth"; the layer format agreed with ROOMS):
+    // choice.eyeShape (default e0) and choice.mouth (default m0) draw <b>_eyes_<id> (brows and eyes), <b>_eyes_<id>c (eyes closed, for
+    // blinks, sleep and laughs), <b>_iris_<id> (the tinted eye colour mask) and <b>_mouth_<id> (mouth and the nose dot; rig slot
+    // "mouth", under the face). Only when all of them exist; otherwise today's single painted face (which has the mouth in it).
+    const eid = c.eyeShape || "e0", mid = c.mouth || "m0";
+    if (has(`eyes_${eid}`) && has(`eyes_${eid}c`) && has(`mouth_${mid}`)) {
+      layers.face = frontOnly(b, `eyes_${eid}`);
+      layers.faceClosed = frontOnly(b, `eyes_${eid}c`);
+      layers.iris = { ...frontOnly(b, has(`iris_${eid}`) ? `iris_${eid}` : "iris"), tint: layers.iris.tint };
+      layers.mouth = frontOnly(b, `mouth_${mid}`);
+    }
     const lift = pick && /_heel$/.test(pick) ? heelLift : 0;
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {

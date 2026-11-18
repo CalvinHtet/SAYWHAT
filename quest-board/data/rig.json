@@ -270,6 +270,12 @@
    ]
   },
   {
+   "id": "mouth",
+   "bones": [
+    "head"
+   ]
+  },
+  {
    "id": "face",
    "bones": [
     "head"
