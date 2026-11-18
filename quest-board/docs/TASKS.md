@@ -231,7 +231,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on cbc3709): OVERPASS's 15 new pieces wear-check PASS, one NOTE for Cal (QA findings). Nothing open from QA.
+- Now (on a96107d): design review of ROOMS's Boba +15 plan DONE, before paint (QA findings). Nothing open from QA.
+  Was: Now (on cbc3709): OVERPASS's 15 new pieces wear-check PASS, one NOTE for Cal (QA findings).
   Was: Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings).
   Was: Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings).
   Was: Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings).
@@ -261,6 +262,34 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- REVIEW (before paint), ROOMS's Boba +15 plan (shots/pending_art/rooms1117/boba_plus15.md + boba_now.png; code 27b_skins.js
+  autoRoom("boba")). Read against the picture and the item list; nothing drawn. Owner: ROOMS.
+  - Q1, 12 tiers: too many. Cal on the Restaurant: keep the most visually appealing upgrades and drop "the small unnoticeable
+    ones". Several of these tiers are exactly that at room size.
+    - Brass Tea Urns: the same urns, recoloured.
+    - Pickup Call Light: a tiny box on a shelf.
+    - Marble Second Table: a second copy of the first table's tier.
+    - Trailing Pothos: a small plant change.
+    - Cut three: urns, call light, and one table tier. Do both tables as one tier the way Champagne High-Tops did (sup both
+      ids, chained req). Spend the three slots on things a player sees.
+  - The floor is not full. Every piece sits at x <= 9.1 and y <= 6.75, so the front-right quarter (about x 8.5-12, y 3-9, by the
+    doormat) is open, and in boba_now.png it reads as the empty part of the room.
+    - One modest piece there would add more than three reskins, keeping the path from the door mat to the stairs clear. For
+      example, a standing window ledge or bar along the right wall with two stools, or a pastel pickup and queue stand.
+    - Also room for one more wall piece: the right half of the back wall past the prints, or the right wall beside the stairs
+      door.
+  - Q2, a second barista: OK for 12x9. Guests cap at 3 here (guests:3), so that is at most 6 people.
+    - But Boba has one work spot (3.8,1.25, behind the counter). Crew are not pinned, so a second barista with no spot of her own
+      just wanders the floor like a guest.
+    - Give her her own work spot at the shaker/sealer station (about 5.2,1.0) or the pickup shelf, and keep it out of line
+      up-screen of the first (the Lock and Key piano lesson: two spots 1.0 apart in room units can stack on screen).
+  - NOTE: the Pearl Cooker's steam already reaches up over the Menu Screen's lower edge in boba_now.png. Twin Pearl Cookers sits
+    under the Light Box Menu, so keep the pots and steam below the menu's bottom edge (rule 20). Check both tiers together.
+  - OK as planned: Window Decals (flat on the glass, no real words), Terrazzo Counter, Velvet Window Booth, Light Box Menu, Twin
+    Pearl Cookers, Cup Sealer Station (same 1.3 x 0.8 footprint, no growth), Glass Door Fridge, Tea Canister Wall, Afternoon
+    Sun (light only).
+  - After paint, QA checks: the live count, the full room (new player and old owner), use sides, overlaps (menu and cookers),
+    and the second barista in her spot.
 - PASS with one NOTE, ROOMS cbc3709 (OVERPASS's 15 new pieces, art and items.json only; not in the Shop). Clean worktree, plain
   build. ROOMS's rows_draft.json was loaded into the page's Shop for the test (QA's newwear script, as for HANGANG and DIAL-UP).
   Pictures: shots/qa/overpass15/.
