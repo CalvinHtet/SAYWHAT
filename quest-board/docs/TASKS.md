@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please.
+- v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
 - Now: Cal's "get rid of" order (via ROOMS): the 14 pieces in 29zz_v117.js (gone for everyone, owners refunded), SMOKE BOMB held, Pip's bandana off. Testing; not committed yet.
 - (QA: DONE on release/v1.16 + b148138, PASS, v1.17 can ship; QA findings) FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
 - v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please. (QA: DONE, PASS; QA findings)
@@ -243,7 +243,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on b148138): v1.17 = release/v1.16 + b148138 (quick admin counts in full for the streak) PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings). Next from LEAD: Cal's removal order (14 pieces, SMOKE BOMB held, Pip's bandana).
+  Was: Now (on b148138): v1.17 = release/v1.16 + b148138 PASS, can ship (QA findings).
   Was: Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings).
   Was: Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings).
   Was: Now (on 0859d5b): v1.15 LIVE as 0859d5b, verified (QA findings).
@@ -282,6 +283,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.17 live (LEAD: Live and Test at 48fab96, wlive PASS, 3256/3256 identical):
+  - 48fab96 against release/v1.16 505c7f0: only 29zz_v115.js (byte-identical to b148138's, the build QA tested) and the APPV line
+    (116 -> 117). No art or data change.
+  - artcheck.py on the release tree: 300 Shop garments, 0 gaps.
+  - A clean web build: 3,255 files + version.txt = 3,256, APPV 117.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, v1.17 as planned: release/v1.16 (505c7f0) + b148138 (Cal: "Yes, count in full"). QA built exactly that (applied without
   committing on a release/v1.16 worktree) and tested that build.
   - Code: every quest completion goes through toggle (the one mults commit call, 30_app_b.js:1623), including the honor-to-verified
