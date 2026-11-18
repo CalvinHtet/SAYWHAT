@@ -6,7 +6,8 @@
 const { chromium } = require('playwright');
 let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
 const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
-// ROOMS's rows (shots/pending_art/new240/rose/rows_draft.json, not committed), copied here so a clean checkout can run this
+// ROOMS's rows (shots/pending_art/new240/rose/rows_draft.json, not committed), copied here so a clean checkout can run this; the slip
+// dress's and bodysuit's lines are their 11-18 repaint lines (ROOMS cefab81, 4edfa01)
 const ROWS = [
   ["gx_v_bunny", "a_hat", "Satin Bunny Ears", 850, 1, "Black satin ears on a thin headband.", {"gar": "v_bunny", "b": "rose", "fo": 1}],
   ["gx_v_veil", "a_hat", "Velvet Pillbox Hat", 900, 1, "A tiny oxblood pillbox, pearl hat pin.", {"gar": "v_veil", "b": "rose", "fo": 1}],
@@ -15,8 +16,8 @@ const ROWS = [
   ["gx_v_mask", "a_acc", "Lace Masquerade Mask", 800, 1, "Black lace around the eyes, silver edge.", {"gar": "v_mask", "b": "rose"}],
   ["gx_v_bodychain", "a_acc", "Crystal Body Chain", 950, 1, "Fine silver strands draped over the chest.", {"gar": "v_bodychain", "b": "rose", "fo": 1}],
   ["gx_v_robe", "a_top", "Velvet Smoking Robe", 1800, 1, "Oxblood velvet, black satin lapels, tied loose.", {"gar": "v_robe", "b": "rose", "mo": 1}],
-  ["gx_v_slip", "a_top", "Lace Slip Dress", 1600, 1, "Black satin, lace trim, thin straps, mid-thigh.", {"gar": "v_slip", "b": "rose", "fo": 1}],
-  ["gx_v_bodysuit", "a_top", "Satin Corset Bodysuit", 1500, 1, "Black satin corset, mesh yoke to the neck.", {"gar": "v_bodysuit", "b": "rose", "fo": 1}],
+  ["gx_v_slip", "a_top", "Lace Slip Dress", 1600, 1, "Black satin, deep V, a bow and a short side slit.", {"gar": "v_slip", "b": "rose", "fo": 1}],
+  ["gx_v_bodysuit", "a_top", "Satin Corset Bodysuit", 1500, 1, "Strapless black satin, boned, laced back.", {"gar": "v_bodysuit", "b": "rose", "fo": 1}],
   ["gx_v_pajama", "a_pants", "Silk Pajama Pants", 1150, 1, "Oxblood silk, black piping.", {"gar": "v_pajama", "b": "rose", "mo": 1}],
   ["gx_v_fishnet", "a_pants", "Fishnet Tights", 1100, 1, "Black diamond net, high waist.", {"gar": "v_fishnet", "b": "rose", "fo": 1}],
   ["gx_v_mini", "a_pants", "Velvet Mini Skirt", 1200, 1, "Oxblood velvet, high waist, very short.", {"gar": "v_mini", "b": "rose", "fo": 1}],
