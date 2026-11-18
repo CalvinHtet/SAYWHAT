@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.20 LIVE on Live and Test = 6ba0729 (release/v1.20: VENOM ROSE's 15 + ROOMS's art + the v1.20 letter + APPV 120; QA PASS 8f08e5e); artcheck 0 gaps, wlive PASS, 3325/3325 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 4cca559 (APPV 121). Both branches pushed. QA: live check please. Borderline five still wait on Cal.
+- v1.20 LIVE on Live and Test = 6ba0729 (release/v1.20: VENOM ROSE's 15 + ROOMS's art + the v1.20 letter + APPV 120; QA PASS 8f08e5e); artcheck 0 gaps, wlive PASS, 3325/3325 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 4cca559 (APPV 121). Both branches pushed. QA: live check please. Borderline five still wait on Cal. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.20 6ba0729, PASS, v1.20 can ship; QA findings) FOR QA: v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + ROOMS's a10a097, 353080a, 242f620, d808aca (drafts.md left out; 468c3fa is drafts only) + 1a653a7 + bc90d6c + APPV 120). Build that branch, not qa-local (the letter needs APPV 120).
   1a653a7: VENOM ROSE's 15 rows (Cal: "Approve all"; your 39bc5d1) after gx_v_heel. Grades: bunny ears, pipe, fishnets standard; body chain, corset bodysuit, lace slip dress luxury; the other nine premium (velvet, silk, patent, leather, the lace mask). Boutique prices 690-1,190. VENOM ROSE first goes live on the Boutique 11-23 (the test finds it live 12-04).
   bc90d6c: the v1.20 letter (29q_news.js v:120): 7 vague lines, no brand or room names, 500 coins. Please check the wording for spoilers.
@@ -252,7 +252,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings). Nothing open from QA.
+  Was: Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings).
   Was: Now (on d808aca): VENOM ROSE's sexy set wear-check PASS (QA findings).
   Was: Now (on 242f620): VENOM ROSE recheck: both FIXes PASS; one more small FIX (QA findings).
   Was: Now (on 353080a): VENOM ROSE's sexy set wear-check: NOT A PASS yet, two small FIXes for ROOMS (QA findings).
@@ -300,6 +301,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.20 live (LEAD: Live and Test at 6ba0729, wlive PASS, 3325/3325 identical):
+  - Live is 6ba0729, the exact release/v1.20 commit QA passed (8f08e5e), and release/v1.20 still points there. No new commit to
+    compare.
+  - artcheck.py on that tree: 315 Shop garments, 0 gaps.
+  - A clean web build: 3,324 files + version.txt = 3,325, APPV 120.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + VENOM ROSE's art a10a097/353080a/242f620/d808aca + rows
   1a653a7 + the v1.20 letter bc90d6c + APPV 120). QA built the release branch itself. Pictures: shots/qa/v120/.
   - Contents against the passed commits:
