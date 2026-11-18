@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.21 LIVE on Live and Test = 8103458 (release/v1.20 + d51ef4c + APPV 121; QA PASS 99f6c38); wlive PASS, 3325/3325 identical on both (my compare script was lost to /tmp cleanup mid-ship; rewritten, checked that it flags a wrong file, rerun). Rollback = rollback-v0.80 34a2250 (APPV 122). Both pushed. QA: live check please. Your note on the 49 old pre-rig SHOP rows: noted for a later cleanup, not urgent.
+- v1.21 LIVE on Live and Test = 8103458 (release/v1.20 + d51ef4c + APPV 121; QA PASS 99f6c38); wlive PASS, 3325/3325 identical on both (my compare script was lost to /tmp cleanup mid-ship; rewritten, checked that it flags a wrong file, rerun). Rollback = rollback-v0.80 34a2250 (APPV 122). Both pushed. QA: live check please. Your note on the 49 old pre-rig SHOP rows: noted for a later cleanup, not urgent. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.20 + d51ef4c, PASS, v1.21 can ship; QA findings) FOR QA (d51ef4c): Cal: "Remove the 'you can afford an upgrade in the garden' ... remove clutter from the board view", then "remove the next goal as well. it is redundant with the goals button". The Board's Next line no longer names an upgrade (falls through to the Daily Quest / quests left); inside a building no pill under its name (glNextHtml returns ""), the Goals button with its count stays. afford.js PASS at 360/390/430. Not checked: tours that might point at the old pills (none found by grep), a phone. v1.21 = release/v1.20 + d51ef4c.
 - v1.20 LIVE on Live and Test = 6ba0729 (release/v1.20: VENOM ROSE's 15 + ROOMS's art + the v1.20 letter + APPV 120; QA PASS 8f08e5e); artcheck 0 gaps, wlive PASS, 3325/3325 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 4cca559 (APPV 121). Both branches pushed. QA: live check please. Borderline five still wait on Cal. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.20 6ba0729, PASS, v1.20 can ship; QA findings) FOR QA: v1.20 candidate = release/v1.20 at 6ba0729 (release/v1.19 + ROOMS's a10a097, 353080a, 242f620, d808aca (drafts.md left out; 468c3fa is drafts only) + 1a653a7 + bc90d6c + APPV 120). Build that branch, not qa-local (the letter needs APPV 120).
@@ -254,7 +254,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6ba0729): Cal's full sweep DONE (rooms, every clothing piece's fit, Shop counts), no FIX; d51ef4c PASS (QA findings). Nothing open from QA.
+- Now (on 8103458): v1.21 LIVE as 8103458, verified (QA findings). Nothing open from QA.
+  Was: Now (on 6ba0729): Cal's full sweep DONE, no FIX; d51ef4c PASS (QA findings).
   Was: Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings).
   Was: Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings).
   Was: Now (on d808aca): VENOM ROSE's sexy set wear-check PASS (QA findings).
@@ -304,6 +305,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.21 live (LEAD: Live and Test at 8103458, wlive PASS, 3325/3325 identical; LEAD reran the compare after /tmp cleanup):
+  - 8103458 against release/v1.20 6ba0729: 29zx_simple.js and 29zz_v121.js make the same change as QA's passed d51ef4c, plus the
+    APPV line (120 -> 121). No art or data change.
+  - artcheck.py on the release tree: 315 Shop garments, 0 gaps.
+  - A clean web build: 3,324 files + version.txt = 3,325, APPV 121.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, LEAD d51ef4c (Cal: no "you can afford an upgrade" on the Board, no "Next goal" pill in the buildings). QA built v1.21 as
   planned (release/v1.20 + d51ef4c, applied without committing).
   - rigtest/lead/afford.js: PASS at 360, 390 and 430. The Next line names no upgrade, buildings show no pill, and Street, the name
