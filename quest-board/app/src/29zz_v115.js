@@ -18,6 +18,16 @@ TOURS.forEach(function(T){if(T.id!=="train")return;T.ready=function(){return vie
    gets a little bit less XP because that is annoying but easy to complete". A desk task (cluster admin: day job, accounts, paperwork,
    messages) scored 10 XP or less pays 75% of its XP. Bigger desk work, every other kind of task, bounties and coins are unchanged. */
 var QUICKADMIN=.75;
-var v15Mults=mults;mults=function(q,o){var r=v15Mults.apply(this,arguments);
-  try{if(q&&q.cl==="admin"&&(+q.xp||0)<=10&&!q.bty&&q.rep!=="weekly4"&&q.id!==bountyId()){r.m*=QUICKADMIN;r.tags.push("Quick admin x"+QUICKADMIN);payXp(q,r)}}catch(e){}
+var v15Mults=mults,v15Cut=null;mults=function(q,o){var r=v15Mults.apply(this,arguments);
+  try{if(q&&q.cl==="admin"&&(+q.xp||0)<=10&&!q.bty&&q.rep!=="weekly4"&&q.id!==bountyId()){var full=r.xp;r.m*=QUICKADMIN;r.tags.push("Quick admin x"+QUICKADMIN);payXp(q,r);
+    if(o&&o.commit)v15Cut={id:q.id,x:Math.max(0,full-r.xp)}}}catch(e){}
   return r};
+/* v1.17, Cal: "Yes, count in full" (asked: should quick admin still count in full toward your streak and the Weekly Quest?). The XP it
+   pays stays 75%, but the day's active count (S.dayXp, 50 XP makes the day count for the streak and the Weekly Quest) gets the full
+   amount: what the cut took is added back there (S.qaDay {id: XP}), and taken off again if the quest is unticked. */
+var v15Toggle=toggle;toggle=function(id){var was=!!(S.done&&S.done[id]);v15Cut=null;var r=v15Toggle.apply(this,arguments);
+  try{var now=!!(S.done&&S.done[id]),t=today();if(!S.qaDay||typeof S.qaDay!=="object"||S.qaDay.d!==t)S.qaDay={d:t};
+    if(!was&&now&&v15Cut&&v15Cut.id===id&&v15Cut.x>0&&S.dayXp&&S.dayXp.d===t){S.qaDay[id]=v15Cut.x;S.dayXp.x+=v15Cut.x;
+      if(S.dayXp.x>=50){var note=creditStreak();if(note)setTimeout(function(){if(/Streak chest/.test(note)&&ART.chest)chestModal(note);else pop(note)},1800)}persist()}
+    else if(was&&!now&&S.qaDay[id]){if(S.dayXp&&S.dayXp.d===t){S.dayXp.x=Math.max(0,S.dayXp.x-S.qaDay[id]);if(S.dayXp.x<50)uncreditStreak()}delete S.qaDay[id];persist()}}catch(e){}
+  v15Cut=null;return r};

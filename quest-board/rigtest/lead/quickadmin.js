@@ -1,7 +1,8 @@
 // Quick admin pays a little less (Cal, 2026-11-17: "small tasks like sending emails or repetitive admin work gets a little bit less XP"),
 // on the plain build: a desk task (cluster admin) of 5 or 10 XP pays 75% of the XP a same-sized home task pays, with a "Quick admin"
 // tag; an admin task of 25 XP, home, social and fitness tasks pay as before; coins are the same either way; the day's bounty is not cut;
-// and through the Board, "Send the emails" (scored admin 10 offline) earns 75% of "Wash the dishes" (home 10).
+// and through the Board, "Send the emails" (scored admin 10 offline) earns 75% of "Wash the dishes" (home 10). v1.17: it still counts
+// in full toward the day's 50 XP that makes the streak and the Weekly Quest count, and unticking takes that back off.
 //   PORT=<plain build server> NODE_PATH=<playwright's parent> node rigtest/lead/quickadmin.js
 const { chromium } = require('playwright');
 let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
@@ -27,5 +28,18 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
     return out; });
   const e = board['Send the emails'], d = board['Wash the dishes'];
   ok(e && d && e.cl === 'admin' && e.xp === 10 && d.xp === 10 && near(e.got, Math.round(d.got * .75)), 'on the Board: emails earn 75% of the dishes ' + JSON.stringify(board));
+  // v1.17 (Cal: "Yes, count in full"): the XP paid stays 75%, but the day's active count (50 XP: streak, Weekly Quest) gets the full XP;
+  // unticking takes it off again
+  const day = await p.evaluate(async () => { const x = window.__qb.x(), S = x.S, y = new Date(Date.now() - 864e5), ys = y.getFullYear() + '-' + String(y.getMonth() + 1).padStart(2, '0') + '-' + String(y.getDate()).padStart(2, '0');
+    S.streak = 5; S.lastDone = ys; S.dayXp = { d: '', x: 0 }; S.qaDay = null; S.combo = null; const full = x.mults({ id: 'hz', name: 'hz', cl: 'home', xp: 10, stat: 'productivity', rep: 'once' }, {}).hx;
+    const ids = []; for (let i = 0; i < 7; i++) { const id = 'qa' + i; S.quests.push({ id, name: 'Reply to ticket ' + i, cl: 'admin', xp: 10, stat: 'productivity', rep: 'once' }); ids.push(id); }
+    const log = []; for (const id of ids) { S.combo = null; const x0 = S.xp; x.toggle(id); log.push({ paid: S.xp - x0, day: S.dayXp.x, streak: S.streak }); await new Promise((o) => setTimeout(o, 50)); }
+    const before = { day: S.dayXp.x, streak: S.streak }; for (const id of ids.slice(2)) x.toggle(id); const after = { day: S.dayXp.x, streak: S.streak, lastDone: S.lastDone === ys ? 'yesterday' : S.lastDone };
+    return { full, log, before, after }; });
+  const need = Math.ceil(50 / day.full), credAt = day.log.findIndex((l) => l.streak === 6) + 1;
+  ok(day.log.every((l) => l.paid < day.full) && day.log.every((l, i) => Math.abs(l.day - (i + 1) * day.full) <= i + 1), `quick admin still pays less (${day.log[0].paid} vs ${day.full}) but counts in full toward the day: ` + JSON.stringify(day.log.map((l) => l.day)));
+  ok(credAt === need, `the streak counts the day at the ${need}th quick task (full XP ${day.full} each), not later: credited at ${credAt}`);
+  ok(day.after.day === day.before.day - 5 * day.full || Math.abs(day.after.day - 2 * day.full) <= 2, `unticking 5 takes their full XP off the day: ${day.before.day} -> ${day.after.day}`);
+  ok(day.after.streak === 5 && day.after.lastDone === 'yesterday', 'and the day no longer counts: streak back to 5 ' + JSON.stringify(day.after));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3)));
   await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
