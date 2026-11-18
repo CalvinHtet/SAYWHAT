@@ -16,6 +16,9 @@
  ],
  "anchorPad": 38,
  "meshStep": 24,
+ "fineSlots": ["body", "top", "arms"],
+ "meshStepFine": 12,
+ "solidStretch": 4,
  "blend": 70,
  "rootJoint": "pelvis",
  "bones": {
