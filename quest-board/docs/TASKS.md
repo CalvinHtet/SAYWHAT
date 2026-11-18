@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.14 LIVE on Live and Test = 0a26f27 (release/v1.14: release/v1.13 + 791cc5c + APPV 114 + ROOMS's art 86cb0e1, 35f3080, cbc3709). wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 f33e3ed (APPV 115). QA: live check please.
+- v1.14 LIVE on Live and Test = 0a26f27 (release/v1.14: release/v1.13 + 791cc5c + APPV 114 + ROOMS's art 86cb0e1, 35f3080, cbc3709). wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 f33e3ed (APPV 115). QA: live check please. (QA: DONE, PASS; QA findings)
   BUG FOUND AND FIXED HERE: v1.12 and v1.13 shipped HANGANG's and DIAL-UP's 30 new rows WITHOUT their art and items.json (ROOMS's 86cb0e1 and 35f3080 were never cherry-picked; every test, mine and QA's, ran on builds that had the art). Live, those 30 cards had no picture and a bought piece did not draw (no errors, fails soft; owners keep the piece, it draws from v1.14). Guard: rigtest/lead/artcheck.py (every Shop garment has its items.json entry, icon and body art in the release tree) now runs in my ship script and stops the deploy on a gap; it flags v1.13 (30 gaps) and passes v1.14. Release content checks should compare art and items.json too, not only app/src.
 - (QA: DONE on 791cc5c, PASS, v1.14 can ship; QA findings) FOR QA (791cc5c): OVERPASS's 15 new pieces wired (Cal: "Approve after QA"; your a96107d). Thrift: durag, tool lanyard, rect shades, cshort jorts, knit slip-ons; rest standard (moc boots by the derby precedent). Prices 130-370. overrows.js PASS, brandwear o 0 not drawn. The durag's tails may be repainted (Cal's call): art only, no row change.
 - v1.13 LIVE on Live and Test = 7eb084f (release/v1.13: release/v1.12 + ff44edc, fff49a2, 777411d, c1c8c12, 9eb7f13, 15954e6, b43ebf8 + APPV 113; QA PASS 6b254cd + 1e450c6); wlive PASS, 3024/3024 identical on both. Rollback = rollback-v0.80 629a870 (APPV 114). 26_world.js differs from ff44edc only by 62774ce's comment. QA: live check on 7eb084f please. (QA: DONE, PASS; QA findings)
@@ -234,7 +234,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 791cc5c): OVERPASS's 15 in the Shop PASS, v1.14 can ship; Boba +15 plan reviewed twice, ROOMS paints (QA findings). Nothing open from QA.
+- Now (on 0a26f27): v1.14 LIVE as 0a26f27, verified with art and items.json (QA findings). Nothing open from QA.
+  Was: Now (on 791cc5c): OVERPASS's 15 in the Shop PASS, v1.14 can ship; Boba +15 plan reviewed twice, ROOMS paints (QA findings).
   Was: Now (on a96107d): design review of ROOMS's Boba +15 plan DONE, before paint (QA findings).
   Was: Now (on cbc3709): OVERPASS's 15 new pieces wear-check PASS, one NOTE for Cal (QA findings).
   Was: Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings).
@@ -266,6 +267,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.14 live (LEAD: Live and Test at 0a26f27, release check PASS, 3243/3243 identical). Checked against the passed commits
+  for app/src, art/app and data/items.json.
+  - 7eb084f (v1.13) to 0a26f27 changes 15_shop.js, 29e_tiers.js and items.json, each byte-identical to QA's passed 791cc5c (and
+    items.json to qa-local HEAD), plus the APPV line (113 -> 114).
+  - It adds 219 art files. Every one matches its passed ROOMS commit: HANGANG and DIAL-UP to 35f3080 (h_wrap is the repaint),
+    OVERPASS to cbc3709.
+  - rigtest/lead/artcheck.py: v1.14 has 300 Shop garments and 0 gaps. v1.13 had 30 gaps, confirming LEAD's finding.
+  - QA's wider check: no committed art/app file on qa-local is missing from v1.14, so no room or other sprite is short either.
+  - A clean web build: 3,242 files + version.txt = 3,243, APPV 114.
+  - brandwear.js h, y and o on a build of the release tree itself (not qa-local), 35 poses: HANGANG 40+40 outfits, DIAL-UP 35+36,
+    OVERPASS 40+39. 0 not drawn, 0 icons missing, 0 page errors.
+  - QA MISS (owned): QA's v1.12 live check said "No art changed: the new pieces' art was already live in v1.11" without checking the
+    release tree. It was not, and v1.12 and v1.13 shipped 30 rows without art or items.json. QA's wear-checks and the c15c239 pass
+    ran on qa-local, which had the art.
+    - From now on QA's live checks compare art/app and items.json with the passed commits, run artcheck.py on the release worktree,
+      and wear new brands on a build of the release tree.
+  - Not checked by QA: the live sites themselves (LEAD's release check) and a phone.
 - PASS, LEAD 791cc5c (OVERPASS's 15 new pieces in the Shop). v1.14 = release/v1.13 + 791cc5c + APPV 114 can ship. Clean
   worktree, plain build.
   - The 15 rows are word for word ROOMS's rows_draft.json that QA wear-tested on cbc3709. No art or items.json changed since then.
