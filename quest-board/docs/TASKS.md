@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
+- (QA: DONE on release/v1.16 + b148138, PASS, v1.17 can ship; QA findings) FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
 - v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please. (QA: DONE, PASS; QA findings)
 - v1.15 LIVE on Live and Test = 0859d5b (release/v1.15: release/v1.14 + b3917b8 Training tab + ad44305 quick admin XP + APPV 115; QA PASS b8499fa); artcheck 0 gaps, wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 9aeff58 (APPV 116). QA: live check please. (QA: DONE, PASS; QA findings)
   Cal to hear (QA's NOTE): quick admin also counts 25% less toward the 50 XP active day (streak, Weekly Quest), about 7 ten-XP emails instead of 5 on a day of only those; counting base XP there instead is a one-line change if he wants streaks untouched.
@@ -241,7 +241,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings). Nothing open from QA.
+- Now (on b148138): v1.17 = release/v1.16 + b148138 (quick admin counts in full for the streak) PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings).
   Was: Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings).
   Was: Now (on 0859d5b): v1.15 LIVE as 0859d5b, verified (QA findings).
   Was: Now (on ad44305): v1.15 = release/v1.14 + b3917b8 (Training tab) + ad44305 (quick admin) PASS, can ship (QA findings).
@@ -279,6 +280,24 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.17 as planned: release/v1.16 (505c7f0) + b148138 (Cal: "Yes, count in full"). QA built exactly that (applied without
+  committing on a release/v1.16 worktree) and tested that build.
+  - Code: every quest completion goes through toggle (the one mults commit call, 30_app_b.js:1623), including the honor-to-verified
+    swap (untick then tick). So the add-back covers every path.
+    - creditStreak returns null once the day is counted, so a second call cannot double-count.
+    - The base untick checks the day before the add-back comes off, so it can never uncount too early. The wrapper then takes the
+      add-back off and uncounts if the day drops under 50.
+  - rigtest/lead/quickadmin.js: PASS (9 paid against 12 full, the day counts at the 5th quick task, unticking 5 takes 84 to 24
+    and the streak back to 5).
+  - rigtest/qa/qadaymix.js (new, a mixed day): PASS.
+    - 3 quick admin + 1 home task count 48, so nothing is credited. A 4th admin takes it to 60: streak 6, Weekly Quest day 1.
+    - Unticking the home task undoes both; ticking it again counts once more, not twice.
+    - A 25 XP admin task adds no add-back.
+    - After a page reload S.qaDay is still there, and unticking an admin task takes its full XP off.
+    - 0 page errors.
+  - v112.js and tabs6.js still PASS.
+  - NOTE (as LEAD says): the Daily Quest's effort still counts the 75% XP. Cal only asked about the streak and the Weekly Quest.
+  - Not checked: a phone, and two devices ticking the same day (merge keeps one whole save, so S.qaDay travels with dayXp).
 - PASS, v1.16 live (LEAD: Live and Test at 505c7f0, wlive PASS, 3256/3256 identical):
   - 505c7f0 against release/v1.15 0859d5b: 16 changed app, art and data files, all byte-identical to their passed commit (c5bc0c7,
     and ddc1d10 for 29e_economy.js), plus the APPV line (115 -> 116).
