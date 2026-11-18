@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
+- (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
   - Drops Monday/Thursday on every floor from Thu 11-19, Wednesday vault unchanged (ECON.floors days/days0, flIsDrop by date: no earlier slot moves). NICE COCK's pinned Street drop moves Fri 11-20 -> Thu 11-19 (pin, shuf1, its hold). Shop line, tours and AREALINE say Mondays and Thursdays.
   - Basics -> the Stylist ("Off sale, owners keep"): the tab sells haircuts, dyes, eye colours (14); the plain basic clothes are cut; qsGrantOriginals still gives a new player their creator clothes (it used itemFits, which a cut piece fails).
   - Holds: SØLVBERG's ends 11-19 (Cal: "I like altitude and solvberg. Redo everything else."); GP, SP, BB, KM, OAK stay held; CHROME RAIN held from 11-19 (Cal: "Not a fan of chrome rain. Create a different brand"; it never dropped, stays on the Boutique, held).
@@ -262,7 +262,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8103458): v1.21 LIVE as 8103458, verified (QA findings). Nothing open from QA.
+- Now (on c13edd3): v1.22 = release/v1.21 + c13edd3 (Mon/Thu drops, the Stylist, holds, cuts) PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on 8103458): v1.21 LIVE as 8103458, verified (QA findings).
   Was: Now (on 6ba0729): Cal's full sweep DONE, no FIX; d51ef4c PASS (QA findings).
   Was: Now (on 6ba0729): v1.20 LIVE as 6ba0729, verified (QA findings).
   Was: Now (on 6ba0729): v1.20 candidate (release/v1.20) PASS, can ship (QA findings).
@@ -313,6 +314,34 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with one NOTE, v1.22 as planned: release/v1.21 (8103458) + c13edd3 (Cal 11-18: Mon/Thu drops from 11-19, Basics becomes the
+  Stylist, SØLVBERG's hold ends, CHROME RAIN held, ten pieces cut with owners keeping them). QA built exactly that (all 10 files
+  applied cleanly, not committed) and served its own v1.21 as the reference.
+  - artcheck.py: 315 Shop garments, 0 gaps (no art change).
+  - rigtest/lead/floors122.js (REF = QA's v1.21): PASS.
+    - Every floor is as in v1.21 through 11-18.
+    - NICE COCK is live on the Street Thu 11-19. Fri 11-20 has no drop.
+    - The Street and the Boutique change only on Mondays and Thursdays.
+    - CHROME RAIN and the five held brands never drop; SØLVBERG and ALTITUDE do.
+    - Shop text says Mondays and Thursdays. There is a Stylist tab and no Basics tab.
+    - The Stylist sells 14 pieces (haircuts, dyes, eye colours) and no plain clothes.
+    - OVERPASS has no skate tool and shows the chain only to its owner. VENOM ROSE has 23 on sale, none of the seven. SAYMØRE
+      has 14, no GO OFF Tee.
+    - An owner keeps their basic tee. A new player owns their creator top, bottom and shoes.
+  - overrows.js (updated): PASS.
+  - QA's own checks on the same build:
+    - The Street switches at exactly 8:00 Thu 11-19 (7:59 HANGANG, DIAL-UP, OVERPASS; 8:00 NICE COCK, OVERPASS, DIAL-UP).
+    - The Wednesday vault code (D.back) is byte-identical and still fires only on Wednesdays (next 12-23 in both builds).
+    - Crawl finds (400 rolls, 116 distinct pieces) never give a cut piece or a plain basic.
+    - An owner still wears the cut Leather Dad Cap, Biker Jacket and Leather Pants.
+    - On-screen "Friday" text: only Lock and Key's flavour line "Fridays look like a record cover" is left.
+  - NOTE (Cal): with no Friday drop, Thursday 8 am now does what Friday did.
+    - HANGANG leaves the Street Thu 11-19, a day earlier than "HANGANG leaves Friday".
+    - VENOM ROSE (its 15 new pieces went live in v1.20) leaves the Boutique Thu 11-19 and comes back Mon 11-23. The Boutique shows
+      SAYMØRE alone Thursday to Sunday.
+    - v1.21 already had VENOM ROSE leaving Friday and not back until 12-4, so v1.22 brings it back sooner.
+    - With 7 Street brands in rotation and two drops a week, each brand comes back about every two weeks (HANGANG back Mon 11-30).
+  - Not checked: a phone, and the real 8 am switchover on the live site (checked in the build with the clock moved).
 - PASS, v1.21 live (LEAD: Live and Test at 8103458, wlive PASS, 3325/3325 identical; LEAD reran the compare after /tmp cleanup):
   - 8103458 against release/v1.20 6ba0729: 29zx_simple.js and 29zz_v121.js make the same change as QA's passed d51ef4c, plus the
     APPV line (120 -> 121). No art or data change.
