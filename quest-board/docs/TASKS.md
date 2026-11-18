@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.23 LIVE on Live and Test = 7e61089 (Cal via ROOMS: "Approve all"; QA PASS 2be9bec): the 11-18 pieces, the bare base, the harness cut, the tiptoe Ankle-Strap Stilettos, clean icons. wlive PASS, 3380/3380 identical on both. Rollback = rollback-v0.80 0f66501 (APPV 124). Both pushed. QA: live check please (and your count said 3,379; mine 3,380, please reconcile).
+- v1.23 LIVE on Live and Test = 7e61089 (Cal via ROOMS: "Approve all"; QA PASS 2be9bec): the 11-18 pieces, the bare base, the harness cut, the tiptoe Ankle-Strap Stilettos, clean icons. wlive PASS, 3380/3380 identical on both. Rollback = rollback-v0.80 0f66501 (APPV 124). Both pushed. QA: live check please (and your count said 3,379; mine 3,380, please reconcile). (QA: DONE, PASS; QA findings)
 - (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate now: release/v1.23 at 7e61089 = 00cc1c0 + ROOMS's 24ee3c9 (stiletto and bralette icons) + d7ca804 (v_sandal heel: true; heels.js PASS); identical to qa-local, artcheck 0 gaps of 325; QA: please recheck 7e61089 (QA: DONE, PASS, still held for Cal; QA findings). Before that, 00cc1c0 = 0172e8d (QA PASS b3d9a67) + ROOMS's tiptoe heels 7f30c13, 1d16b66 + my b3dba9d (look.js picks base[_bare][_heel]; NO lift: ROOMS's feet already reach the floor, the heel tip ends where Mary Janes do; optional heelLift for later; rig.js lifts standing poses only; gx_v_sandal premium; heels.js PASS; brandwear v 0 not drawn; artcheck 0 gaps of 325; QA: please recheck 00cc1c0; QA: DONE, PASS, folded into 7e61089's findings). Was: 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him). (QA: DONE on 0172e8d, PASS; QA findings)
 - Emotes (Cal 11-18): preview on one outfit sent (d19473c, 9749fcc: rigtest/lead/emoteprev.js); Cal saw sleeves tear; waiting on his pick (engine fixes: finer mesh near joints + hide the arm under sleeves, then a full wear-test).
 - v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split). (QA: DONE, PASS; QA findings)
@@ -268,7 +268,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings). Nothing open from QA.
+- Now (on 7e61089): v1.23 live check PASS (QA findings). Nothing open from QA.
+  Was: Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings).
   Was: Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings).
   Was: Now (on 983258b): v1.23 candidate PASS (QA findings).
   Was: Now (on 141ff29): Cal's 11-18 pieces PASS (QA findings).
@@ -327,10 +328,20 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.23 live check (LEAD: live on Live and Test at 7e61089, Cal "Approve all").
+  - release/v1.23 and origin/release/v1.23 are both 7e61089, the exact build QA passed in 2be9bec. Against release/v1.22 (b3030e6), 84 app,
+    data and art files change, all checked in QA's 983258b, 0172e8d and 7e61089 passes. A clean web build of 7e61089 has APPV 123 and
+    artcheck finds 0 gaps of 325.
+  - rollback-v0.80 and its origin copy are both 0f66501, APPV 123 -> 124, above v1.23.
+  - File count: LEAD's 3,380 is right. QA miscounted. A clean web build of 7e61089 has 3,379 files plus version.txt = 3,380, and so did
+    00cc1c0 (00cc1c0 adds 9 art files to 0172e8d's 3,370). QA wrote the raw 3,379 as the total in both of those passes. 0172e8d's
+    "3,370 + version.txt = 3,371" was correct.
+  - The wear checks on the release tree (heelcheck.js, heels.js, barecheck, brandwear) were already run on this exact build or its
+    identical predecessors. Not rerun: a playthrough on the live site itself (wlive's byte compare covers the files).
 - PASS, v1.23 candidate = release/v1.23 at 7e61089 (00cc1c0 + ROOMS 24ee3c9 icons + d7ca804 v_sandal heel: true). QA built the release
   branch. Still HELD for Cal's OK of the painted pieces (owner: ROOMS asks Cal; LEAD ships only after his yes).
   - Against 00cc1c0 only three files change: icon_v_bralette.webp, icon_v_sandal.webp, and items.json ("heel": 72 -> true). All three are
-    byte-identical to qa-local. artcheck.py: 325 Shop garments, 0 gaps. A clean web build: 3,378 files + version.txt = 3,379.
+    byte-identical to qa-local. artcheck.py: 325 Shop garments, 0 gaps. A clean web build: 3,379 files + version.txt = 3,380 (corrected in the live check below).
   - LEAD's heels.js PASS on this build (PORT=8825; with no PORT it hits whatever is on its default port and reported 9 fails there).
   - QA's new rigtest/qa/heelcheck.js, all 35 poses, 0 page errors:
     - Base picked: stilettos -> f_base_heel; stilettos + bralette -> f_base_bare_heel; flat Patent Stilettos -> f_base; flat + bralette
