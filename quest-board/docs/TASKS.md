@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (f0cccd0, with ROOMS's 52dda64): KODE PINK "Night drive" Shop text wired (15 names/lines from shop_text.md incl. 8f0f192's Charcoal Wide-Leg Cargo; same ids, slots, prices), BRANDS colours from the new banner (navy/indigo/pink-to-coral; sub "city-pop night drive"), DROPS.hold kp until 2026-11-23 (first drop day after this ships; move it if v1.24 ships after Mon 8 am). kprows.js PASS vs release/v1.23 (floors identical through 11-22; first KODE PINK drop Thu 12-17; tab lists 15). v1.24 = release/v1.23 + 52dda64 + f0cccd0. Cal still to answer QA's two notes (five plain pieces, palm shirt).
+- (QA: DONE on release/v1.23 + 52dda64 + f0cccd0, PASS, v1.24 can ship; QA findings) FOR QA (f0cccd0, with ROOMS's 52dda64): KODE PINK "Night drive" Shop text wired (15 names/lines from shop_text.md incl. 8f0f192's Charcoal Wide-Leg Cargo; same ids, slots, prices), BRANDS colours from the new banner (navy/indigo/pink-to-coral; sub "city-pop night drive"), DROPS.hold kp until 2026-11-23 (first drop day after this ships; move it if v1.24 ships after Mon 8 am). kprows.js PASS vs release/v1.23 (floors identical through 11-22; first KODE PINK drop Thu 12-17; tab lists 15). v1.24 = release/v1.23 + 52dda64 + f0cccd0. Cal still to answer QA's two notes (five plain pieces, palm shirt).
 - Emotes: the finer mesh option is in rig.js (8b8d4a0, off until rig.json sets fineSlots/meshStepFine); before/after sent to Cal; waiting on his go.
 - v1.23 LIVE on Live and Test = 7e61089 (Cal via ROOMS: "Approve all"; QA PASS 2be9bec): the 11-18 pieces, the bare base, the harness cut, the tiptoe Ankle-Strap Stilettos, clean icons. wlive PASS, 3380/3380 identical on both. Rollback = rollback-v0.80 0f66501 (APPV 124). Both pushed. QA: live check please (and your count said 3,379; mine 3,380, please reconcile). (QA: DONE, PASS; QA findings)
 - (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate now: release/v1.23 at 7e61089 = 00cc1c0 + ROOMS's 24ee3c9 (stiletto and bralette icons) + d7ca804 (v_sandal heel: true; heels.js PASS); identical to qa-local, artcheck 0 gaps of 325; QA: please recheck 7e61089 (QA: DONE, PASS, still held for Cal; QA findings). Before that, 00cc1c0 = 0172e8d (QA PASS b3d9a67) + ROOMS's tiptoe heels 7f30c13, 1d16b66 + my b3dba9d (look.js picks base[_bare][_heel]; NO lift: ROOMS's feet already reach the floor, the heel tip ends where Mary Janes do; optional heelLift for later; rig.js lifts standing poses only; gx_v_sandal premium; heels.js PASS; brandwear v 0 not drawn; artcheck 0 gaps of 325; QA: please recheck 00cc1c0; QA: DONE, PASS, folded into 7e61089's findings). Was: 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him). (QA: DONE on 0172e8d, PASS; QA findings)
@@ -271,7 +271,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 022a2f8): KODE PINK text PASS (waits on LEAD's wiring), GILDED re-review PASS (QA findings). Nothing open from QA.
+- Now (on f0cccd0): v1.24 candidate (KODE PINK) PASS (QA findings). Nothing open from QA.
+  Was: Now (on 022a2f8): KODE PINK text PASS (waits on LEAD's wiring), GILDED re-review PASS (QA findings).
   Was: Now (on 8e6eecf): KODE PINK repaint (art PASS, text FIX) and GILDED design review (QA findings).
   Was: Now (on 7e61089): v1.23 live check PASS (QA findings).
   Was: Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings).
@@ -333,6 +334,19 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.24 candidate = release/v1.23 + 52dda64 + f0cccd0 (KODE PINK "Night drive": art, Shop text, colours, the hold ends Mon
+  11-23). QA built the exact candidate (cherry-picked onto release/v1.23, not committed) and served it beside a clean v1.23 build.
+  - The candidate's app, data, art and src files are identical to f0cccd0's. The 8 removed kp yawn files (4 tops x his/hers) are gone in
+    both. artcheck: 0 gaps of 325. Web build: 3,371 files + version.txt = 3,372 (v1.23's 3,379 minus the 8 yawns). It still says APPV 123,
+    so the bump to 124 comes at ship.
+  - The 15 names and lines in 15_shop.js match shots/pending_art/kodepink/final/shop_text.md word for word (Charcoal Wide-Leg Cargo
+    included). The ids, slots and prices are unchanged from v1.23 (scripted compare). BRANDS kp: new colours, sub "city-pop night drive".
+    DROPS.hold: from 11-16, until 11-23.
+  - LEAD's kprows.js, PORT=candidate, REF=v1.23: PASS. Every floor 11-10 .. 11-22 is as in v1.23. KODE PINK is first live Thu 12-17 (not
+    before 11-23), and its tab lists all 15 that day. 0 page errors.
+  - The art wear check (52dda64, above) stands: the text change touches no art.
+  - Not checked: the tab's new navy-and-pink colours on screen (text contrast on the banner), and a phone. If v1.24 ships after Mon
+    11-23 8 am, the hold date must move (LEAD).
 - PASS (text), KODE PINK's new Shop names and lines, shots/pending_art/kodepink/final/shop_text.md (022a2f8), checked against the 15
   repainted icons (shots/qa/kp52/kp_icons_vs_text.png). Every line matches its icon's colours and details, and no new name is already
   used by another row. NOTE (ROOMS, small): "Night Wide-Leg Cargo" sits next to another brand's existing "Night Cargo"; "Charcoal
