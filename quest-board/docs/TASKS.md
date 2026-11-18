@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate RECUT: release/v1.23 at 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him).
+- (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. Candidate RECUT: release/v1.23 at 0172e8d (983258b, which QA passed, + ROOMS's 7d2c729 bralette icon + 3aed3af harness out + 9ea3dd2 its row and grade out; Cal: "remove the strappy chest harness"); app/data/src/art identical to qa-local, artcheck 0 gaps of 324; QA: please recheck this exact build. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him). (QA: DONE on 0172e8d, PASS; QA findings)
 - Emotes (Cal 11-18): preview on one outfit sent (d19473c, 9749fcc: rigtest/lead/emoteprev.js); Cal saw sleeves tear; waiting on his pick (engine fixes: finer mesh near joints + hide the arm under sleeves, then a full wear-test).
 - v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split). (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
@@ -266,7 +266,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 983258b): v1.23 candidate (release/v1.23) PASS, waiting on Cal's OK of the painted pieces (QA findings). Nothing open from QA.
+- Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings). Nothing open from QA.
+  Was: Now (on 983258b): v1.23 candidate PASS (QA findings).
   Was: Now (on 141ff29): Cal's 11-18 pieces PASS (QA findings).
   Was: Now (on 4edfa01): Cal's 11-18 pieces wear-check: bare coverage gate PASS; three small FIXes for ROOMS (QA findings).
   Was: Now (on b3030e6): v1.22 LIVE as b3030e6, verified (QA findings).
@@ -323,6 +324,21 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.23 recut = release/v1.23 at 0172e8d (983258b's contents + ROOMS 3aed3af harness out, 7d2c729 bralette icon, LEAD 9ea3dd2
+  harness row and grade out). QA built the release branch. Still held for Cal's OK of the painted pieces.
+  - Against 983258b, only these change:
+    - The Strappy Chest Harness's row (15_shop.js), grade (29e_tiers.js), items.json entry and five art files are gone.
+    - icon_v_bralette.webp is new.
+    - Everything left is byte-identical to qa-local, where the harness files are gone too.
+    - "harness" remains only in the VR room's furniture text, which is unrelated.
+    - The harness never shipped, so no player owns it.
+  - artcheck.py: 324 Shop garments, 0 gaps. A clean web build: 3,370 files + version.txt = 3,371.
+  - brandwear.js v, 35 poses: 26 men's and 38 women's outfits, 0 not drawn, 0 icons missing, 0 page errors (VENOM ROSE 29 on sale).
+  - The bare-top art and look.js are unchanged from 983258b, so barecheck's PASS there stands.
+  - NOTE (ROOMS, minor, not blocking): the rebuilt bralette icon has one clean V and both straps but is still visibly pixelated
+    (stair-stepped edges) beside the smooth crop-top and corset icons (bralette_icon_vs_others.jpg). It reads at card size; a
+    smoother redraw when convenient.
+  - Not checked: a phone, the Shop cards on screen.
 - PASS, v1.23 candidate = release/v1.23 at 983258b (release/v1.22 + dff4465, cefab81, 4edfa01, 141ff29, 8c49646 + APPV 123). QA built
   the release branch itself. It ships only with Cal's explicit OK of the painted pieces (ROOMS asking).
   - Contents: all 78 art/app, data and src files (items.json, src/look.js, 76 art) are byte-identical to QA's passed 141ff29.
