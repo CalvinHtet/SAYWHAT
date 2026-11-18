@@ -124,6 +124,8 @@ var EXTRA_ITEMS=[
  ["gx_v_hotpants","a_pants","Vinyl Lace-Up Shorts",1250,1,"High-waisted glossy black vinyl, silver-eyelet sides.",{gar:"v_hotpants",b:"rose",fo:1}],
  ["gx_v_bralette","a_top","Lace Bralette Set",1400,1,"Black lace, oxblood satin trim, thin straps.",{gar:"v_bralette",b:"rose",fo:1}],
  ["gx_v_crop","a_top","Keyhole Crop Top",1300,1,"Skin-tight black long sleeves, keyhole with a silver ring.",{gar:"v_crop",b:"rose",fo:1}],
+ /* Cal 11-18: "Add sexy heels ... with a tippy toe stance" (ROOMS 7f30c13, 1d16b66: worn on her tiptoe base, lifted; look.js, rig.js) */
+ ["gx_v_sandal","a_shoes","Ankle-Strap Stilettos",1600,1,"Black patent stilettos, oxblood straps, silver buckles. Worn on tiptoe.",{gar:"v_sandal",b:"rose",fo:1}],
  ["gx_al_bucket","a_hat","Hiking Bucket Hat",750,1,"Sage with a chin cord.",{gar:"al_bucket",b:"alt"}],
  ["gx_al_flap","a_hat","Earflap Cap",850,1,"Fleece lined, orange trim.",{gar:"al_flap",b:"alt"}],
  ["gx_al_goggle","a_acc","Glacier Goggles",950,1,"Round lenses, leather sides.",{gar:"al_goggle",b:"alt"}],

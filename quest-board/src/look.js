@@ -63,17 +63,23 @@
     // over the bare base: her base has a painted grey tank that would show under it; <b>_base_bare_* paints that tank as skin (shorts
     // kept; the top always covers the chest, QA's coverage gate). The yawn picture follows by name (<b>_base_bare_yawn). His base is
     // already bare and has no such file, so nothing changes for him; a missing file keeps today's base.
-    const topArt = c.equipped && c.equipped.top && c.equipped.top.art, topMeta = (topArt && G && G.items && G.items[topArt]) || {};
-    if (topMeta.bare) {
-      const bareArt = `${b}_base_bare_front.webp`;
-      if ((QA && QA[bareArt]) || (G && G.arthash && G.arthash[bareArt])) layers.body = views(b, "base_bare");
-    }
+    // Heels (items.json "heel", ROOMS 1d16b66; Cal 11-18: "the character needs to look like they are wearing heels with a tippy toe
+    // stance"): her base with the feet pointed down from the ankle (<b>_base_heel_*). ROOMS painted those feet reaching today's floor
+    // line, so no lift is needed (measured: the heel tip ends where flat soles do; rigtest/lead/heels.js). A shoe whose tiptoe feet end
+    // higher can set "heelLift" (canvas px): standing poses then lift the whole figure by it (rig.js render, look.lift). With a bare top
+    // too, the base that has both; when a file is missing: bare first (the tank must never show), then heel, then today's base.
+    const meta = (slot) => { const a = c.equipped && c.equipped[slot] && c.equipped[slot].art; return (a && G && G.items && G.items[a]) || {}; };
+    const has = (art) => { const f = `${b}_${art}_front.webp`; return !!((QA && QA[f]) || (G && G.arthash && G.arthash[f])); };
+    const bare = !!meta("top").bare, heel = !!meta("shoes").heel, heelLift = +meta("shoes").heelLift || 0;
+    const pick = [bare && heel && "base_bare_heel", bare && "base_bare", heel && "base_heel"].filter((a) => a && has(a))[0];
+    if (pick) layers.body = views(b, pick);
+    const lift = pick && /_heel$/.test(pick) ? heelLift : 0;
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {
       layers.shoes = layers.shoesOver;
       delete layers.shoesOver;
     }
-    return { body: b, skin, layers };
+    return lift ? { body: b, skin, layers, lift } : { body: b, skin, layers };
   }
 
   global.QBLook = { build };
