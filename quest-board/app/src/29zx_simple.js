@@ -70,16 +70,17 @@ function zxHub(){var t=ZXHUB.filter(function(x){return zxOpen(x[0])});if(!t.leng
   return '<section class="card panel zx-hub"><div class="zx-tiles">'+t.map(function(x){return '<button class="zx-tile" data-act="nav" data-v="'+x[0]+'">'+areaIcon(x[0])+'<b>'+x[1]+'</b><small>'+x[2]+'</small></button>'}).join("")+'</div></section>'}
 var zxLineBase=boardLine;
 /* the one "what next" line (Cal approved the overhaul, 2026-11-13: one clear thing to do, so nobody has to work out the screen): the trial if it
-   waits, tasks if there are none, an upgrade they can afford, what is left of the Daily Quest, else the quests left */
+   waits, tasks if there are none, what is left of the Daily Quest, else the quests left */
 /* an upgrade a room window really offers with a Buy button and that the coins cover, the cheapest first (QA: from the windows' own list,
    roomAvail in 30_app_b.js, never the cheapest unbought piece anywhere) */
 function zxAfford(){var best=null;try{S.base.slots.forEach(function(r,i){if(!r)return;var T=ROOMT[r.t],list=ADDONS[r.t]||[];if(!T)return;var A=roomAvail(i,r,T,list);
   A.avail.forEach(function(h){if(h.indexOf('data-act="raddon"')<0||/data-act="raddon"[^>]*disabled/.test(h))return;var m=/data-aid="([^"]+)"/.exec(h),a=m&&list.filter(function(x){return x[0]===m[1]})[0];
     if(a&&a[2]>0&&a[2]<=S.coins&&(!best||a[2]<best.p))best={i:i,p:a[2],room:(T.name||rmName(r.t))}})})}catch(e){}return best}
-function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]}),g=gated(),af=zxOpen("hideout")?zxAfford():null,dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),x=dqOn&&typeof dqXp==="function"?dqXp():0,gl=dqOn&&typeof dqGoal==="function"?dqGoal():0;
+function zxNext(){var tx="",act="";try{var open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]}),g=gated(),dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),x=dqOn&&typeof dqXp==="function"?dqXp():0,gl=dqOn&&typeof dqGoal==="function"?dqGoal():0;
   if(g!==null)tx="Your level trial is waiting below. Pass it to keep levelling.";
   else if(!open.length)tx="Add today's tasks in the box below. Every one pays XP and coins.";
-  else if(af){tx="You can afford an upgrade in the "+af.room+".";act="room:"+af.i}
+  /* Cal, 2026-11-18: "Remove the 'you can afford an upgrade in the garden'. Just add it as a small next step inside the building view but
+     remove clutter from the board view": the Board no longer says it; then (same day) not in the buildings either (29zz_v121.js) */
   else if(gl&&x<gl)tx=(gl-x)+" XP of tasks to go on today's Daily Quest.";
   else tx=open.length+" quest"+(open.length===1?"":"s")+" left on your list today."}catch(e){return ""}
   return act?'<button type="button" class="zx-next" data-act="zxroom" data-i="'+act.slice(5)+'"><span class="label">Next</span><span>'+esc(tx)+'</span><b>Open &rsaquo;</b></button>':'<div class="zx-next"><span class="label">Next</span><span>'+esc(tx)+'</span></div>'}
