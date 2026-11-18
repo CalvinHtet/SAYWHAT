@@ -247,7 +247,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 353080a): VENOM ROSE's sexy set wear-check: NOT A PASS yet, two small FIXes for ROOMS (QA findings).
+- Now (on 242f620): VENOM ROSE recheck: both FIXes PASS; one more small FIX (the bodysuit shows the base tank) (QA findings).
+  Was: Now (on 353080a): VENOM ROSE's sexy set wear-check: NOT A PASS yet, two small FIXes for ROOMS (QA findings).
   Was: Now (on 78926d8): v1.19 LIVE as 78926d8, verified (QA findings).
   Was: Now (on 205d8df): v1.19 = release/v1.18 + 205d8df PASS, can ship (QA findings).
   Was: Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings).
@@ -292,6 +293,19 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, ROOMS 242f620 (QA's 6699373 FIXes on VENOM ROSE's sexy set). Clean worktree, plain build, rows draft loaded.
+  - Every pose, both bodies: 8 men's and 14 women's outfits, 0 not drawn, 0 icons missing, 0 page errors.
+  - FIX 1 done: the Crystal Body Chain is frontOnly with no back art. The bow-shaped patch is gone from behind.
+  - FIX 2 done: the Silk Pajama Pants icon shows full-length legs, and the Velvet Mini Skirt icon and its four layers have a clean,
+    closed outline (icons_fixed.jpg).
+  - FIX (ROOMS), what is left of the pale patch: the strapless Satin Corset Bodysuit stops below the base tank, so the pale grey
+    tank shows above it. From behind it is grey across the shoulders; in front, at the neckline under the chain
+    (bodysuit_tank_showing.jpg). It reads as a grey tank worn under the corset.
+    - The existing Lace Corset Top is painted up to the neck with straps, so nothing shows (lace_corset_for_comparison.jpg).
+    - Paint the bodysuit to cover the tank's area: thin black straps or a halter and a higher back. Or Cal accepts it as is.
+    - QA MISS (owned): in 6699373 QA put the whole pale patch down to the chain. Part of it was this tank.
+  - Cal's two notes (fishnets under a short top; pipe and bare chest) stand. ROOMS takes them to Cal with the approval post.
+  - Not checked: a phone, night lighting, and the Shop cards (no rows yet).
 - NOT A PASS yet, ROOMS a10a097 + 353080a (VENOM ROSE's 15-piece sexy set, art and items.json only). Clean worktree of 353080a,
   plain build; ROOMS's rows_draft.json loaded into the page's Shop for the test. Pictures: shots/qa/rose15/.
   - Every pose (35), both bodies: 8 men's and 14 women's outfits (all-brand and mixed). 0 not drawn, 0 icons missing, 0 page
