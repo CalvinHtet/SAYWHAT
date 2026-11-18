@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.25 LIVE on Live and Test = 6a0272c (QA PASS, every Shop row x both bodies x 35 poses vs v1.24): your character's emotes, the side stretch, the rig fixes (finer mesh on tops/arms, arms-up stretch cap), GILDED (first drop Mon 11-23), KODE PINK's detail pass. wlive PASS; 3449/3449 identical on both (the ship run's Test read failed on 1,935 files over the long upload, a rerun matched all). Rollback = rollback-v0.80 cd5a4ef (APPV 126). Both pushed. QA: live check please. Owed: Cal's phone check of first-emote lag.
+- v1.25 LIVE on Live and Test = 6a0272c (QA PASS, every Shop row x both bodies x 35 poses vs v1.24): your character's emotes, the side stretch, the rig fixes (finer mesh on tops/arms, arms-up stretch cap), GILDED (first drop Mon 11-23), KODE PINK's detail pass. wlive PASS; 3449/3449 identical on both (the ship run's Test read failed on 1,935 files over the long upload, a rerun matched all). Rollback = rollback-v0.80 cd5a4ef (APPV 126). Both pushed. QA: live check please. Owed: Cal's phone check of first-emote lag. (QA: DONE, PASS; QA findings)
 - Also on qa-local, not released: 2a0a7e3 the Stylist eyes/mouth split (no change until ROOMS's art); f2eda97 docs/PET_SHOP.md (4 questions for Cal).
 - (QA: DONE on release/v1.24 + 8b8d4a0 + the recipe = 651fbfe, NOT A PASS: 8b8d4a0 missing from the recipe; the new rig opens a hole at the waist in dance2 and specks the trousers; rows, emotes PASS; QA findings) FOR QA, two commits for v1.25:
   (1) b559d09 your character's emotes + a smoother rig (Cal 11-18 "yes to all"): data/poses.json thinking / side stretch / eased wave (the Loft's stretch clip is the side stretch now, no painted yawn); 29zz_v125.js plays them in turn every 25-45 s when your character stands in a room (frames drawn ahead; "..." bubble for thinking); data/rig.json fineSlots body/top/arms + meshStepFine 12 + solidStretch 4 (rig.js: solid fabric pulled past 4 cells is dropped; removes the streaks under raised arms, your 824cd53, and GILDED's). This changes how EVERY top/arm piece draws in every pose: please run the full wear-test of all brands, both bodies, 35 poses, against release/v1.24, looking for holes and streaks. Mine: emotes.js, heels, replrows, tabs6, v112 PASS; brandwear h/v/kp in wave/cheer/dance/walk/sit/sleep 0 not drawn and by eye like v1.23. Speed (headless): first draw of an outfit +10-25%, new frames ~2x; a phone check is still owed.
@@ -282,7 +282,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 6a0272c): v1.25 PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 6a0272c): v1.25 live check PASS (QA findings). Nothing open from QA.
+  Was: Now (on 6a0272c): v1.25 PASS, can ship (QA findings).
   Was: Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
   Was: Now (on 368507e): KODE PINK detail pass PASS (QA findings).
   Was: Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings).
@@ -352,6 +353,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.25 live check (LEAD: live on Live and Test at 6a0272c, the build QA passed in f7f5dbe).
+  - release/v1.25 and its origin copy are both 6a0272c. rollback-v0.80 and its origin copy are both cd5a4ef (APPV 125 -> 126, its only
+    change).
+  - A clean web build of 6a0272c: APPV 125, 3,448 files + version.txt = 3,449 (LEAD's count), artcheck 0 gaps of 340.
+  - LEAD's ship run had a failed Test read (1,935 files) during the long upload; LEAD's clean rerun matched every file. Not checked by
+    QA: the live site played by hand. 2a0a7e3 (the Stylist eyes/mouth split) is on qa-local only, not released, and not checked yet.
 - PASS, v1.25 = release/v1.25 at 6a0272c (release/v1.24 + 8b8d4a0 + b559d09 + ROOMS's 4 GILDED + a604760 + 368507e + 651fbfe + 6100e8f +
   APPV 125). v1.25 can ship. Cal approved GILDED via ROOMS. Pictures: shots/qa/v125b/.
   - The exact build: against release/v1.24, all 112 changed app/data/art/src/tools files are identical to qa-local's 6100e8f, except
