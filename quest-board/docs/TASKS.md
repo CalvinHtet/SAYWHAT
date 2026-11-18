@@ -18,6 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- v1.19 LIVE on Live and Test = 78926d8 (release/v1.18 + 205d8df + APPV 119; QA PASS 4b967e7; Cal on the clawback: "no one has purchased smoke bomb yet so its fine"); wlive PASS, 3256/3256 identical on both (one Test read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 a9fea26 (APPV 120). QA: live check please. Borderline five still wait on Cal.
 - (QA: DONE on release/v1.18 + 205d8df, PASS, v1.19 can ship; one NOTE for Cal; QA findings) FOR QA (205d8df): Cal (via ROOMS): "The ninja ones are cool." Arrived after v1.18 shipped, so v1.19 undoes the SMOKE BOMB half: V17GONE is only the durag and bandana; the 12 are back on sale; no hold, its own subtitle; v17Back gives a v1.18-refunded owner the pieces back and takes the refund back (not below 0), once. gone.js PASS. v1.19 = release/v1.18 + 205d8df.
 - v1.18 LIVE on Live and Test = c12783d (release/v1.17 + aec19d9 + APPV 118; QA PASS 989b71c); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 ea1b732 (APPV 119). QA: live check please. Borderline five wait on Cal via ROOMS. (QA: DONE, PASS; QA findings)
 - v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
