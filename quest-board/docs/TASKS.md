@@ -229,7 +229,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA: (1) KODE PINK "Night drive" repaint 52dda64 (Cal approved 2026-11-18 via LEAD: banner, logo, 15 pieces, kp_bucket clip; 4 old kp yawn pictures removed, soft fallback); re-tested on today's build: both bodies, 35 poses, 37 outfits, 0 not drawn, 0 errors; sheets shots/pending_art/kodepink/final/. (2) Design review before paint: GILDED's 15 pieces, shots/pending_art/brands1118/gilded.md (CHROME RAIN's Boutique slot; palette moved from emerald to sapphire accents because green keys out). Then OIL & CANVAS, REGIMENT, then the 5 Street brands (slots in my message to LEAD). CHROME free.
+- (QA: DONE on 52dda64 + 8e6eecf: KODE PINK art PASS, one FIX (the Shop text) and two NOTES for Cal; GILDED review: two FIXes, two NOTES; QA findings) Was WAITING ON QA: (1) KODE PINK "Night drive" repaint 52dda64 (Cal approved 2026-11-18 via LEAD: banner, logo, 15 pieces, kp_bucket clip; 4 old kp yawn pictures removed, soft fallback); re-tested on today's build: both bodies, 35 poses, 37 outfits, 0 not drawn, 0 errors; sheets shots/pending_art/kodepink/final/. (2) Design review before paint: GILDED's 15 pieces, shots/pending_art/brands1118/gilded.md (CHROME RAIN's Boutique slot; palette moved from emerald to sapphire accents because green keys out). Then OIL & CANVAS, REGIMENT, then the 5 Street brands (slots in my message to LEAD). CHROME free.
 - Cal APPROVED (2026-11-18, "Approve all"); QA PASS 2be9bec. Was WAITING ON QA: Cal 2026-11-18 "remove the strappy chest harness. Add fishnet or lace leggings if you dont have that already. Add sexy heels. However, the character needs to look like they are wearing heels with a tippy toe stance. If this is too hard, forget it". Harness removed 3aed3af (LEAD 9ea3dd2). Fishnets: v_fishnet already live. Heels: 7f30c13 her tiptoe bases f_base_heel_front/back + f_base_bare_heel_front/back (legs unchanged, ankles unchanged, feet from a Higgsfield tiptoe edit; no _yawn yet, LEAD's fallback draws today's); 1d16b66 Ankle-Strap Stilettos v_sandal {heel: 72} (72 layer px = 36 app px below today's sole), row in shots/pending_art/new1118/rows/rows_draft.json. Icons for the stilettos and bralette redrawn cleanly in 24ee3c9. ROOMS checked with the tiptoe base injected (no lift yet): both bodies, 35 poses, 0 not drawn, 0 page errors; close-ups idle, sitBack, walk2, sleep. Not checked: LEAD's real lift, the feet touching the floor, the yawn. Also 7f30c13 smoother bralette icon (QA note). Waiting on Cal's OK too. CHROME free.
 - (QA: DONE on 4edfa01, NOT A PASS yet: the horns' clip and two icons; the bare gate PASS; QA findings) (QA: DONE on 141ff29, PASS, 38a4822; bralette icon redone in the next commit.) Was WAITING ON QA: recheck 141ff29 (v_horns noClip, no bald scalp; icon_o_resp rebuilt from the uncut layer with its straps; icon_v_bralette mirrored around the cleavage with both straps). Cal APPROVED (2026-11-18, "Approve all", v1.23 set incl. the tiptoe stilettos; QA PASS 2be9bec). Was WAITING ON CAL: approve the painted pieces (he saw the drafts and set the skin line; LEAD holds v1.23 for his OK; art commits dff4465, cefab81, 4edfa01, 141ff29). Was WAITING ON QA: Cal's 11-18 pieces (Cal on the drafts: "i am okay with showing some skin as long as it is not nude"). Commits: dff4465 (her bare base f_base_bare_front/back/yawn: the tank painted as skin, shorts kept), cefab81 (art + items.json), 4edfa01 (bodysuit strapless). VENOM ROSE new: v_horns, v_harness (neck), v_silkshirt (men), v_vinyl, v_hotpants, v_bralette, v_crop; repainted (same ids, owners keep): v_corset strapless, v_slip deep V + side slit (a cross charm the AI added was painted out), v_bodysuit strapless, v_flare slit from the knee, v_blazer worn open (men). OVERPASS: o_guards (arms), o_resp (mask, front only). SAYMØRE: sm_grille. `bare: true` on v_bralette, v_crop, v_corset, v_slip, v_bodysuit (LEAD wires look.js). Rows: shots/pending_art/new1118/rows/rows_draft.json (10 new rows) + repaint_lines.md (5 new shop lines). Sheets: shots/pending_art/new1118/approval_1118.png, wear_<brand>_<m|f>.png. ROOMS checked: both bodies, 35 poses, every brand, 0 not drawn, 0 page errors; the five bare tops over the bare base (injected into QBART until LEAD wires the flag) cover the chest in all 35 poses by eye at sheet size; close-ups at idle, sitBack, stretchUp, walk2. Not checked: the real `bare` wiring (LEAD), night lighting, Shop cards. Known: the bare base keeps faint neckline traces under the tops; red pieces were keyed with a stricter magenta rule (flatbody_red) after the first pass ate oxblood. Still to paint (after Cal picks brands): 5 Street + 3 Boutique brands; MIRRORBALL's halter is a bare top. Stylist art waits on nothing now (LEAD agreed the layers). CHROME free.
 - TAKEN by ROOMS (2026-11-18, LEAD's message of Cal's 11-18 art decisions, code c13edd3): drafts in shots/pending_art/new1118/drafts.md. (QA: DONE on 0c5bc0b, three FIXes and two NOTES, all applied in the drafts: OVERPASS now wrist guards and a respirator, SAYMØRE a speaker-grille bomber, slits kept below the shorts' line; QA findings ca2fc3e.) WAITING ON CAL: approve the drafts. Was WAITING ON QA: VENOM ROSE's 7 replacements and the push-further repaints, OVERPASS's 2 accessories, SAYMØRE's Ø Moto Jersey, 5 Street brand concepts (STAGE DIVE, PIT LANE, MIRRORBALL, DRY DOCK, BACK ROW in the held slots), 3 Boutique concepts (GILDED in CHROME RAIN's slot, OIL & CANVAS, REGIMENT), Atelier lanes. WAITING ON LEAD: a `bare` top flag and a second female base (her base has a painted grey tank that shows under any crop top or bralette); the Stylist's face layer format before any eye or mouth art. Cal's new rule: nothing plain (memory never-plain-pieces). Then Cal, then paint. CHROME free.
@@ -269,7 +269,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7e61089): v1.23 live check PASS (QA findings). Nothing open from QA.
+- Now (on 8e6eecf): KODE PINK repaint (art PASS, text FIX) and GILDED design review (QA findings). Nothing open from QA.
+  Was: Now (on 7e61089): v1.23 live check PASS (QA findings).
   Was: Now (on 7e61089): v1.23 candidate (tiptoe heels, clean icons) PASS, held for Cal's OK (QA findings).
   Was: Now (on 0172e8d): v1.23 recut (release/v1.23, harness out) PASS, held for Cal's OK (QA findings).
   Was: Now (on 983258b): v1.23 candidate PASS (QA findings).
@@ -329,6 +330,46 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS on the art, with one FIX before the hold lifts: KODE PINK "Night drive" repaint 52dda64, on a clean build of it (owner: ROOMS writes the
+  new text, LEAD wires it and lifts the hold).
+  - The commit changes only KODE PINK files: the banner, the logo, the 15 pieces' art and icons, the four kp yawn pictures (removed), and
+    items.json (kp_bucket's front and back clip only). artcheck: 0 gaps of 325.
+  - brandwear.js kp, both bodies, all 35 poses, all-brand and mixed outfits: 0 not drawn, 0 page errors. fitsweep.js kp: 15 pieces, 0
+    flagged. The headphones and runners stick out 11-12% on him, as headphones and shoes do.
+  - By eye (shots/qa/kp52/): the hats sit right over all three hair styles. In stretch, the four tops whose yawn pictures were removed
+    keep the arms down with the yawn face; stretchUp raises the arms with whole sleeves, nothing torn. The bomber's back patch shows on
+    rearStand.
+  - FIX (ROOMS + LEAD): all 15 Shop names and lines in 15_shop.js still describe the old pastel art (kp_icons_vs_text.png). For example:
+    the bucket hat is "Bubblegum pink" but painted black; the headphones are "Lilac cups" but black and silver; the "Star Clips" are "two
+    yellow stars" but are pink bars; the pendant is a "gold moon on a black cord" but silver on a chain. The varsity says "pink body, cream
+    sleeves", the sailor blouse "powder blue, navy-striped collar" (it is a navy palm-print camp shirt), the hoodie "lilac clouds", the
+    skirt "cream", the cargo "bubblegum pink", the runners "purple suede", the loafers "glossy plum" and the slip-ons "white canvas, cloud
+    print". Several names no longer fit either (Pastel Headphones, Star Clips, Sailor Blouse, Cloud Hoodie, Pastel Runners, Plum Loafers,
+    Cloud Slip-Ons). ALTITUDE's repaint shipped with its text in the same release (8093dcb); this needs the same.
+  - NOTE for Cal (his 11-18 rule, "never create something this plain"): five pieces read plain at card size. The Starfall Bomber is a
+    plain black leather jacket (only its back patch has detail). The Cloud Slip-Ons are plain navy, the Wide-Leg Cargo plain grey, the
+    Plum Loafers plain black loafers, and the Runner Track Pants one stripe. The brand is now mostly black and navy with little pink left.
+    Cal approved the repaint (ROOMS, via LEAD), so this is his call, not a block.
+  - NOTE for Cal (borderline, no cultural dress): the Sailor Blouse is now a palm-tree print camp shirt, which reads as a Hawaiian shirt.
+    KAIMANA's slot was dropped for that look. Palm trees are city-pop, not national dress, so it is fine by the rule, but he should see it.
+- REVIEW (before paint), GILDED's 15 pieces, shots/pending_art/brands1118/gilded.md (owner: ROOMS):
+  - Pass: nothing plain on paper (every line names two or more details). There is no dragon, phoenix or cloud brocade, and no national
+    garment; baroque, laurel, jabot and frock coat are European fashion ornament, not costume. Moving from emerald to sapphire is right
+    for the green screen. The counts (3/2/4/3/3 = 15) fit the Boutique. The bustier goes through barecheck as a `bare` top, and the mules
+    through heelcheck on the tiptoe base.
+  - FIX (trade dress): black + antique gold + baroque scroll + chain collar + a framed medallion is one well-known fashion house's whole
+    look. Keep the scrollwork as invented leaf and filigree. No faces or heads in any medallion or crest (the collar's medallion is a
+    sapphire, keep it that). No Greek-key borders, and no repeating "baroque print" tile across the bomber; make it brocade texture, not
+    a print. The logo: a laurel crown over a frame is fine, but never a standalone laurel-wreath roundel (a sportswear trademark).
+  - FIX (overlap with REGIMENT, one of the 8 approved brands): the Frock-Coat Hoodie's "gold braid frogging across the chest" is REGIMENT's
+    signature (officer jacket with braided frogging). Give the hoodie another closure, e.g. gilt chain toggles or brocade lapels.
+  - NOTE (overlap with VENOM ROSE): the Crest Velvet Slippers are VENOM ROSE's Velvet Smoking Slippers (v_slipper) in black and gold.
+    Make them brocade or gilt-leather slippers, or a different shoe (gilt-buckle loafers). The velvet shirt is fine beside the open Wine
+    Velvet Blazer (a different garment). Velvet also appears six times inside GILDED (cap, beret, shirt, cargo, slippers, the skirt's
+    waistband), so vary it: leather cap, satin or jacquard cargo.
+  - NOTE: the Brocade Bustier sits close to VENOM ROSE's Lace Corset Top (boned, `bare`); its brocade and chain straps keep it apart.
+    Keep it brocade-led, not lace-led. The Gold Laurel Wreath is thin; at chibi size it may read as a plain gold line, so give the leaves
+    some size and the berries contrast.
 - PASS, v1.23 live check (LEAD: live on Live and Test at 7e61089, Cal "Approve all").
   - release/v1.23 and origin/release/v1.23 are both 7e61089, the exact build QA passed in 2be9bec. Against release/v1.22 (b3030e6), 84 app,
     data and art files change, all checked in QA's 983258b, 0172e8d and 7e61089 passes. A clean web build of 7e61089 has APPV 123 and
