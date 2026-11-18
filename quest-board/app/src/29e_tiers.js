@@ -50,4 +50,8 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
     +"gx_y_furmule");
   put("thrift","gx_h_oval gx_h_barrel gx_y_rimless gx_y_phone");
   put("premium","gx_y_visor gx_y_moto gx_y_patent");
+  /* new240 OVERPASS (LEAD, 2026-11-17): the durag, tool lanyard and plain shades are small extras, the faded jorts and knit slip-ons
+     thrift like their kin; the moc-toe boots stay standard like HANGANG's leather derby; the rest standard */
+  put("thrift","gx_o_durag gx_o_tool gx_o_rect gx_o_cshort gx_o_slipon");
+  put("standard","gx_o_5panel gx_o_reflect gx_o_tags gx_o_bridge gx_o_liner gx_o_thermal gx_o_dknee gx_o_snap gx_o_suede gx_o_moc");
   }return m[id]||null}
