@@ -63,8 +63,8 @@ const live = (p, days) => p.evaluate((days) => days.map(([y, m, d]) => { const t
     const cards = async (v) => { const t = document.querySelector('[data-act="stab"][data-v="' + v + '"]'); if (!t) return null; t.click(); await new Promise((o) => setTimeout(o, 800)); clear(); return [...document.querySelectorAll('.qs-rack [data-card]')].map((e) => e.dataset.card); };
     const rose = (await cards('rose')) || [], sm = (await cards('sm')) || [];
     return { fl: !!fl, rose: rose.length, roseCut: ['gx_v_cap', 'gx_v_leather', 'gx_v_tulle', 'gx_v_shade', 'gx_v_rose', 'gx_v_mesh', 'gx_v_biker'].filter((i) => rose.includes(i)), sm: sm.length, tee: sm.includes('gx_sm_tee') }; });
-  ok(bq.rose === 23 && !bq.roseCut.length, 'VENOM ROSE: 23 on sale, none of the seven Cal removed ' + JSON.stringify(bq));
-  ok(bq.sm === 14 && !bq.tee, 'SAYMØRE: 14 on sale, no GO OFF Tee ' + JSON.stringify(bq));
+  ok(bq.rose === 30 && !bq.roseCut.length, 'VENOM ROSE: 30 on sale (23, then Cal 11-18 replacements: 7 new), none of the seven Cal removed ' + JSON.stringify(bq));
+  ok(bq.sm === 15 && !bq.tee, 'SAYMØRE: 15 on sale (14 and the grille bomber), no GO OFF Tee ' + JSON.stringify(bq));
   ok(shop.ward.includes('bs_tee_black'), 'an owner\'s basic tee is still in their Wardrobe ' + JSON.stringify(shop.ward));
   const fresh = await P.evaluate(() => { const x = window.__qb.x(), S = x.S; S.owned = {}; S.eq = {}; S.char = window.__qb.fixChar({ name: 'New', sex: 'f' }); x.qsGrantOriginals ? x.qsGrantOriginals() : null; x.render(); return Object.keys(S.owned).filter((k) => /^bs_/.test(k)); });
   ok(fresh.filter((k) => /^bs_(tee|hoodie|bomber|joggers|jeans|shorts|sneakers|boots|flipflops)_/.test(k)).length >= 3, 'a new player owns their creator top, bottom and shoes ' + JSON.stringify(fresh));

@@ -59,6 +59,15 @@
     const R = (global.QBDATA && global.QBDATA.rig) || {}, hatArt = c.equipped && c.equipped.hat && c.equipped.hat.art;
     if (hatArt && (R.faceCover || []).indexOf(hatArt) >= 0) { delete layers.glasses; delete layers.mask; }
     if (hatArt && layers.hat && (R.keepAsleep || []).indexOf(hatArt) >= 0) layers.hat.keepAsleep = true;
+    // A revealing top (items.json "bare", ROOMS dff4465; Cal 11-18: "lingerie, a sexy crop top ... seductive and revealing") is worn
+    // over the bare base: her base has a painted grey tank that would show under it; <b>_base_bare_* paints that tank as skin (shorts
+    // kept; the top always covers the chest, QA's coverage gate). The yawn picture follows by name (<b>_base_bare_yawn). His base is
+    // already bare and has no such file, so nothing changes for him; a missing file keeps today's base.
+    const topArt = c.equipped && c.equipped.top && c.equipped.top.art, topMeta = (topArt && G && G.items && G.items[topArt]) || {};
+    if (topMeta.bare) {
+      const bareArt = `${b}_base_bare_front.webp`;
+      if ((QA && QA[bareArt]) || (G && G.arthash && G.arthash[bareArt])) layers.body = views(b, "base_bare");
+    }
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {
       layers.shoes = layers.shoesOver;
