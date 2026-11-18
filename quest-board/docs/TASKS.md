@@ -19,7 +19,7 @@ every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK
 
 LEAD Doing:
 - v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
-- FOR QA (aec19d9): Cal's "get rid of" order (via ROOMS). 29zz_v117.js: V17GONE (14 pieces) off sale everywhere and not worn or owned by anyone; owners refunded each piece's price once (S.goneRef, every 5 s while loaded); SMOKE BOMB held from 11-17 (DROPS.hold) and sub "techwear"; Pip's bandana off (26_world.js). gone.js PASS. Not checked by me: the refund across a cloud merge, Pip in every pose, the subtitle on screen. Borderline pieces (gp_sailor, gp_blazer, km_camp, km_shell, cr_mohawk's name) wait on Cal via ROOMS. v1.18 = release/v1.17 + aec19d9.
+- (QA: DONE on release/v1.17 + aec19d9, PASS, v1.18 can ship; QA findings) FOR QA (aec19d9): Cal's "get rid of" order (via ROOMS). 29zz_v117.js: V17GONE (14 pieces) off sale everywhere and not worn or owned by anyone; owners refunded each piece's price once (S.goneRef, every 5 s while loaded); SMOKE BOMB held from 11-17 (DROPS.hold) and sub "techwear"; Pip's bandana off (26_world.js). gone.js PASS. Not checked by me: the refund across a cloud merge, Pip in every pose, the subtitle on screen. Borderline pieces (gp_sailor, gp_blazer, km_camp, km_shell, cr_mohawk's name) wait on Cal via ROOMS. v1.18 = release/v1.17 + aec19d9.
 - (QA: DONE on release/v1.16 + b148138, PASS, v1.17 can ship; QA findings) FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
 - v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please. (QA: DONE, PASS; QA findings)
 - v1.15 LIVE on Live and Test = 0859d5b (release/v1.15: release/v1.14 + b3917b8 Training tab + ad44305 quick admin XP + APPV 115; QA PASS b8499fa); artcheck 0 gaps, wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 9aeff58 (APPV 116). QA: live check please. (QA: DONE, PASS; QA findings)
@@ -243,7 +243,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings). Next from LEAD: Cal's removal order (14 pieces, SMOKE BOMB held, Pip's bandana).
+- Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings).
   Was: Now (on b148138): v1.17 = release/v1.16 + b148138 PASS, can ship (QA findings).
   Was: Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings).
   Was: Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings).
@@ -283,6 +284,24 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.18 as planned: release/v1.17 (48fab96) + aec19d9 (Cal's removal order: 14 pieces gone with refunds, SMOKE BOMB held, Pip's
+  bandana off). QA built exactly that (applied without committing; 26_world.js merges to only the Pip line) and tested that build.
+  - artcheck.py: 300 Shop garments, 0 gaps. The 14 keep their art and items.json, unused.
+  - rigtest/lead/gone.js: PASS.
+  - Code: every gift path picks through freePool, which checks itemFits, so gone pieces are never given. That covers the Wheel,
+    chest3, crawl finds and the free accessory. No NPC, friend, guest or letter names any of the 14 (Pip was the only one).
+  - rigtest/qa/gonecheck.js (new): PASS.
+    - An owner of all 14, wearing gone pieces in five slots, gets one refund: +3,080 (the 14 prices), with one pop "Retired 14
+      pieces from the Shop: +3,080 coins back". All 14 leave S.owned and S.eq, and S.goneRef holds 14.
+    - SMOKE BOMB's jacket, vest and cloak and an OVERPASS cap stay owned.
+    - Reload: no second refund.
+    - A stale pre-refund save put back (as a cloud merge replaces the whole save) is refunded once by itself, not again.
+    - The owner after the refund (both bodies) and Pip before and after, all 35 poses: 0 not drawn. Pip now shows his own hair, the
+      chef's coat, cargos and boots (shots/qa/gone/pip_and_owner_all_poses.jpg).
+    - SMOKE BOMB is live on no floor (Street, Boutique, Atelier) and never in the vault for 120 days.
+  - SMOKE BOMB in the Shop: no brand tab. An owner of its jacket and vest still sees them in the Wardrobe under SMOKE BOMB, with no
+    "ninja" text anywhere. Its only piece still on sale is the jacket (vest and cloak were cut by the earlier audit).
+  - Not checked: a phone, and a real two-device cloud merge (simulated by putting the stale save back).
 - PASS, v1.17 live (LEAD: Live and Test at 48fab96, wlive PASS, 3256/3256 identical):
   - 48fab96 against release/v1.16 505c7f0: only 29zz_v115.js (byte-identical to b148138's, the build QA tested) and the APPV line
     (116 -> 117). No art or data change.
