@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free (ROOMS done with GILDED fixes, 2026-11-18)
+CHROME: ROOMS (2026-11-18, KODE PINK five-piece detail pass)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -273,7 +273,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on fa1864a): GILDED painted, NOT A PASS yet (two FIXes for ROOMS; QA findings). Nothing open from QA.
+- Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings). Nothing open from QA.
+  Was: Now (on fa1864a): GILDED painted, NOT A PASS yet (two FIXes for ROOMS; QA findings).
   Was: Now (on 48b550a): v1.24 live check PASS (QA findings).
   Was: Now (on f0cccd0): v1.24 candidate (KODE PINK) PASS (QA findings).
   Was: Now (on 022a2f8): KODE PINK text PASS (waits on LEAD's wiring), GILDED re-review PASS (QA findings).
@@ -338,6 +339,22 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, GILDED recheck at cb01321 (ROOMS's fixes for 7de6883). Two of three are fixed; the new beret has a bald band. Clean
+  build, draft rows injected. Pictures: shots/qa/gd2/.
+  - Reruns: newwear gd 35 poses, him 15 outfits and her 19, 0 not drawn, 0 page errors. fitsweep 15 pieces, 0 flagged. barecheck: the
+    bustier covers the bust in all 35 (same counts as before). heelcheck with the mules: same as before. hatcheck: the crown is still
+    clean.
+  - FIXED: the Frock-Coat Hoodie. No more shards past the hands in stretchUp, wave, cheer or dance. A thin underarm wisp is left in
+    wave and cheer, but the bomber and silk shirt have the same, and so do live KODE PINK and VENOM ROSE tops
+    (armsup_live_kodepink.jpg, armsup_live_venomrose.jpg). It is the rig's, not this piece's. NOTE (LEAD, not blocking): those wisps
+    show on many tops when an arm goes up; 8b8d4a0's rig.fineSlots may be worth trying on the top slot.
+  - FIXED: the bustier's straps are gold now, on the icon and worn. Faint pink specks are left in the icon's chain links at 4x zoom,
+    invisible at card size.
+  - FIXED: the skirt is renamed "Brocade Box-Pleat Skirt".
+  - FIX (ROOMS): the repainted beret shows a bald band. From behind (rearStand, sitBack), a band of bare scalp shows between the beret's
+    lower edge and the hair, on all three hairstyles on both bodies (beret_bald_back.jpg, hat_beret.jpg). The old fringe used to cover it.
+    Lower the beret's back edge, or loosen its hat clip in items.json, as the horns needed in 141ff29. The front is fine: the braid band
+    sits high, and no fringe looks like bangs now.
 - NOT A PASS yet, GILDED painted, 3a10edf + fa1864a (rows not wired: shots/pending_art/brands1118/gilded_rows.json injected). QA built a
   clean copy of fa1864a. Two FIXes for ROOMS; the rest passes. Pictures: shots/qa/gd/.
   - Passes:
