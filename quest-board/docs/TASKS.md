@@ -18,6 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
+- v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split).
 - (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
   - Drops Monday/Thursday on every floor from Thu 11-19, Wednesday vault unchanged (ECON.floors days/days0, flIsDrop by date: no earlier slot moves). NICE COCK's pinned Street drop moves Fri 11-20 -> Thu 11-19 (pin, shuf1, its hold). Shop line, tours and AREALINE say Mondays and Thursdays.
   - Basics -> the Stylist ("Off sale, owners keep"): the tab sells haircuts, dyes, eye colours (14); the plain basic clothes are cut; qsGrantOriginals still gives a new player their creator clothes (it used itemFits, which a cut piece fails).
