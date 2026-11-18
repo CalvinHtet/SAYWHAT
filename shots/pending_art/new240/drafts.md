@@ -72,7 +72,7 @@ Price tiers follow each brand's newer rows: hats 800-950, accessories 650-950, t
 | v_bodychain | acc | Crystal Body Chain | Fine silver strands draped over the chest. | 950 | women |
 | v_robe | top | Velvet Smoking Robe | Oxblood velvet, black satin lapels, tied loose. | 1800 | men |
 | v_slip | top | Lace Slip Dress | Black satin, lace trim, thin straps, mid-thigh. | 1600 | women |
-| v_bodysuit | top | Satin Corset Bodysuit | Strapless black satin, boned and laced at the back. | 1500 | women |
+| v_bodysuit | top | Satin Corset Bodysuit | Black satin corset, mesh yoke to the neck. | 1500 | women |
 | v_pajama | pants | Silk Pajama Pants | Oxblood silk, black piping. | 1150 | men |
 | v_fishnet | pants | Fishnet Tights | Black diamond net, high waist. | 1100 | women |
 | v_mini | pants | Velvet Mini Skirt | Deep oxblood velvet, high waist, very short. | 1200 | women |
