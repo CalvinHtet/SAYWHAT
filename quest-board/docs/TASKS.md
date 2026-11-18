@@ -231,7 +231,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings). Nothing open from QA.
+- Now (on cbc3709): OVERPASS's 15 new pieces wear-check PASS, one NOTE for Cal (QA findings). Nothing open from QA.
+  Was: Now (on 7eb084f): v1.13 LIVE as 7eb084f, verified (QA findings).
   Was: Now (on b43ebf8): Lock and Key prices b43ebf8 and Wheel/freeze 15954e6 PASS; v1.13 can be cut (QA findings).
   Was: Now (on c1c8c12): Lock and Key +15 (fff49a2 + c1c8c12) PASS; LEAD's 777411d PASS; 9eb7f13 PASS with two NOTES (QA findings).
   Was: Now (on fff49a2): Lock and Key +15 NOT A PASS yet, two small FIXes for ROOMS (QA findings).
@@ -260,6 +261,27 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with one NOTE, ROOMS cbc3709 (OVERPASS's 15 new pieces, art and items.json only; not in the Shop). Clean worktree, plain
+  build. ROOMS's rows_draft.json was loaded into the page's Shop for the test (QA's newwear script, as for HANGANG and DIAL-UP).
+  Pictures: shots/qa/overpass15/.
+  - Every pose (35), both bodies: 18 men's and 17 women's outfits. 0 not drawn, 0 icons missing, 0 page errors.
+  - Items: Carpenter Jorts are men only (mo and maleOnly), and women's outfits leave them out. Smoke Rectangle Shades are
+    front only (hidden from behind).
+  - Close look at 2.4x in idle, walk2, sitBack, rearStand, backwalk2 and dance1, all-brand and mixed outfits:
+    - Five-Panel Cap: its orange tab sits on the cap's back edge, attached; the outline is whole.
+    - Shades: the smoke lenses read solid, front only.
+    - Reflective Bucket, Quilted Liner and Bridge Hoodie (print visible) are fine.
+    - The lanyard shows over the hoodie and the KODE PINK sailor top. The dog tags show over the thermal and over GACHA POP's
+      sailor bow (tags_on_sailor.jpg).
+    - Double-Knee Carpenters and Snap Track Pants are full length on the body (their icons only look short). The boots and both
+      sneakers are fine.
+  - NOTE (Cal's call, through ROOMS): the Satin Durag's tails hang to mid-back and are shoulder-wide, so from behind they cover
+    the whole back of the top (durag_back.jpg). In front, one tail hangs beside the arm to the waist.
+    - The knot reads, so it is a durag, but narrower or shorter tails would read less like long hair. Keep or repaint is Cal's
+      call. It is drawn correctly in every pose.
+  - For LEAD's grading later, by QA's CLOTHING_TIERS rules: the durag (a small cloth extra), the rectangle shades and the faded
+    black jorts lean thrift. The leather Moc-Toe boots are standard by the leather derby and loafer precedent.
+  - Not checked: a phone, and the Shop rows (not wired yet).
 - PASS, v1.13 live (LEAD: Live and Test at 7eb084f on release/v1.13, wlive PASS, 3024/3024 identical):
   - 7eb084f against release/v1.12 6f15fd9: app/data/art change only in the passed work and the APPV line (112 -> 113).
     - Byte-identical to QA's passed b43ebf8 (which carries all seven passed commits): 20_loft.js, 27_rooms.js, 29b_story.js,
@@ -1932,7 +1954,7 @@ Art and room code requests (LEAD asks, ROOMS does):
   person, which queues back, walkBack, walk, idle and a sleeper for every bed: in the building view (LFV.s < .4, figures a few px tall) could it
   warm idle + walk only and leave the rest to first use? (2) Anything in the building view's 1,000-2,900 elements that could be one bitmap like
   the Patio sky (static facades, skyline)? Measure on WebKit at 3x before/after (rigtest/lead/tabspeed.js times every tab, LEAD's).
-- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). (QA: DONE on fff49a2, NOT A PASS yet: two small FIXes; QA findings) (QA: DONE on fff49a2 + c1c8c12, PASS, Lock and Key +15 can ship; QA findings) (QA: PASS on fff49a2 + c1c8c12, 6b254cd) READY for LEAD (prices, ECON, ship): Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. WAITING ON QA: wear-check OVERPASS's 15 in cbc3709 (art, icons, items.json; not in the Shop), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/overpass/: overpass_approval.png, wear_m/f.png, rows_draft.json). Cal OK'd it (2026-11-17, "Approve after QA"): on QA's PASS it is READY for LEAD, rows in overpass/rows_draft.json. Next: Boba's +15. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
+- TAKEN by ROOMS (2026-11-16): Cal approved the drafts (2026-11-17, via LEAD: "i approve whatever you need. Have rooms start painting"); HANGANG's 15 in 86cb0e1: QA PASS (f24e93d); its wrap skirt repainted per QA's note in 35f3080. DIAL-UP's 15 in 35f3080 (art, icons, items.json; not in the Shop yet), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/dialup/: dialup_approval.png, rows_draft.json). (QA: DONE on 35f3080, PASS; QA findings) WAITING ON QA: wear-check DIAL-UP and the new h_wrap at 35f3080 (rule 17). Cal OK'd both (2026-11-17, "Ok on all"). READY for LEAD: wire HANGANG and DIAL-UP from shots/pending_art/new240/hangang/rows_draft.json and dialup/rows_draft.json (15 each; h_wrap's row is in hangang's). (QA: DONE on fff49a2, NOT A PASS yet: two small FIXes; QA findings) (QA: DONE on fff49a2 + c1c8c12, PASS, Lock and Key +15 can ship; QA findings) (QA: PASS on fff49a2 + c1c8c12, 6b254cd) READY for LEAD (prices, ECON, ship): Lock and Key's +15 (13 -> 28, plan shots/pending_art/rooms1117/lockkey_plus15.md, QA 4f115ed/69a02b2/8ff1307): Key Wall, Gilt Menu Mirror (moved to the left wall, y 0.35-1.45, clear of the bar), Keyhole Neon, Persian Rug (flat on the grid), tiers Oxblood Swivel Stools, Rare Bottle Wall, Champagne Tower, Single Malt Cabinet, Brass Stage Rail, Champagne High-Tops (both high-tops; req chained), Bar Lamps, Stage Spotlights, singer (mic post, stage plat 14), pianist (bench post, sitBack), walking server; Club DJ posted (cb_dj). ROOMS checked: new player and old owner renders, people at 10 s (posts held), auditall (one flag: work:bench inside the piano footprint, on purpose), 0 page errors. Not checked: phone size, every buy order (only fully bought). Renders: rooms1117/lockkey_plus15_full.jpg, _people.jpg. Prices and ECON are LEAD's. (QA: DONE on cbc3709, PASS; one NOTE for Cal, the durag's tails; QA findings) WAITING ON QA: wear-check OVERPASS's 15 in cbc3709 (art, icons, items.json; not in the Shop), wear-tested both bodies, 35 poses, 0 not drawn, 0 page errors (shots/pending_art/new240/overpass/: overpass_approval.png, wear_m/f.png, rows_draft.json). Cal OK'd it (2026-11-17, "Approve after QA"): on QA's PASS it is READY for LEAD, rows in overpass/rows_draft.json. Next: Boba's +15. Cal's order (2026-11-17, "Alternate them"): next Lock and Key's +15 room upgrades, then OVERPASS, then Boba's +15. (Cal, 2026-11-16, to LEAD: "i want it to generate even more clothing assets for the shops that already exist. 3 more
   of each item for each shop. Remember to make it streetwear and no throwaway and random clothes that no one would bother buying"):
   3 new hats, 3 accessories, 3 tops, 3 pants and 3 shoes for each of the 16 brands in BRANDS (HANGANG through SØLVBERG) = 240 pieces.
   Not a new brand, so rule 19 does not block it. Each piece real streetwear someone would actually buy and wear: in the brand's own
