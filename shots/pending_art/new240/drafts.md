@@ -1,5 +1,7 @@
 # 240 new pieces: drafts (ROOMS, 2026-11-16)
 
+Cal 2026-11-17: no durags, African, "ghetto Mexican" or national dress (o_durag and o_bandana cut). The ninja pieces stay ("The ninja ones are cool"). Sexy pieces pushed further for adults ("Push the envelope a little"); original designs only, no Playboy or Hefner trademarks or likeness.
+
 Price tiers follow each brand's newer rows: hats 800-950, accessories 650-950, tops 1200-1800, bottoms 1100-1450, shoes 1300-1650.
 
 ## HANGANG (oversized Seoul street, black / charcoal / cream, lime accent)
@@ -58,3 +60,24 @@ Price tiers follow each brand's newer rows: hats 800-950, accessories 650-950, t
 | o_suede | shoes | Suede Low Skaters | Grey suede, orange laces, padded tongue. | 1400 |
 | o_moc | shoes | Moc-Toe Work Boots | Black leather, orange laces. | 1600 |
 | o_slipon | shoes | Mesh Slip-On Trainers | Black knit, orange heel pull. | 1300 |
+
+## VENOM ROSE (goth lace, black / wine / silver), the sexy set (Cal 2026-11-17: "Sexy dress, a lace, for the guys, add a hugh heffner type robe and pipe, for the girls, a sexy playboy bunny sort of thing")
+| id | slot | name | line | tier | body |
+|---|---|---|---|---|---|
+| v_bunny | hat | Satin Bunny Ears | Black satin ears on a thin headband. | 850 | women |
+| v_veil | hat | Velvet Pillbox Hat | A tiny oxblood pillbox, pearl hat pin. (Painted without the lace veil.) | 900 | women |
+| v_captain | hat | Velvet Captain's Cap | Oxblood velvet, a black patent brim. | 850 | both |
+| v_pipe | acc | Briar Pipe | Curved dark wood, a wisp of smoke. | 750 | men |
+| v_mask | acc | Lace Masquerade Mask | Black lace around the eyes, silver edge. | 800 | both |
+| v_bodychain | acc | Crystal Body Chain | Fine silver strands draped over the chest. | 950 | women |
+| v_robe | top | Velvet Smoking Robe | Oxblood velvet, black satin lapels, tied loose. | 1800 | men |
+| v_slip | top | Lace Slip Dress | Black satin, lace trim, thin straps, mid-thigh. | 1600 | women |
+| v_bodysuit | top | Satin Corset Bodysuit | Strapless black satin, boned and laced at the back. | 1500 | women |
+| v_pajama | pants | Silk Pajama Pants | Oxblood silk, black piping. | 1150 | men |
+| v_fishnet | pants | Fishnet Tights | Black diamond net, high waist. | 1100 | women |
+| v_mini | pants | Velvet Mini Skirt | Deep oxblood velvet, high waist, very short. | 1200 | women |
+| v_stiletto | shoes | Patent Stilettos | Oxblood patent, needle heels. | 1500 | women |
+| v_thigh | shoes | Lace-Up Knee Boots | Black leather laced to the knee, block heel. | 1650 | women |
+| v_slipper | shoes | Velvet Smoking Slippers | Oxblood velvet, black soles. | 1300 | men |
+
+Notes: the bunny look is ears + corset bodysuit + fishnets + stilettos, with no rabbit logo, bow-tie collar, cuffs or tail (those are Playboy's trademark). The robe look is robe + pajama pants + slippers + pipe + captain's cap, with no name or likeness. The pipe is a face item drawn at the mouth (glasses slot, front only). Nothing see-through to bare skin except the lace edges, fishnets and the robe's open chest. The garter stockings were dropped: Higgsfield's NSFW filter blocked them, and rewording a prompt to get past that filter is not done; the velvet mini skirt replaces them.
