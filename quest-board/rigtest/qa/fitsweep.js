@@ -4,13 +4,14 @@
 // silhouette (the same look without the piece, grown by 4 px). High out% on a top, bottom or shoes points at a garment that floats or
 // sits off the body; hats and backs sit outside by nature, so their bar is higher. Writes fit_list.txt (sorted) and contact sheets
 // fit_sheet_N.png (one block per piece: m and f, four poses).
-//   BASE=<server> OUT=<folder> [BRANDS=v,o] [HI=1] node rigtest/qa/fitsweep.js
+//   BASE=<server> OUT=<folder> [BRANDS=v,o] [HI=1] [NEWROWS=<rows.json>: draft Shop rows not wired yet] node rigtest/qa/fitsweep.js
 const pw = require('playwright'), fs = require('fs');
 const POSES = ['idle', 'rearStand', 'sitFront', 'walk2'], HI = +process.env.HI || 1, OUT = process.env.OUT || 'qa-out/fit';
 (async () => { fs.mkdirSync(OUT, { recursive: true });
   const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: 1200, height: 900 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto(process.env.BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data && window.QBDATA && window.QBRig && window.QBLook, null, { timeout: 120000 }); await p.waitForTimeout(1500);
+  if (process.env.NEWROWS) { const NEW = JSON.parse(fs.readFileSync(process.env.NEWROWS, 'utf8')); await p.evaluate((NEW) => { const x = window.__qb.x(); NEW.forEach((r) => { if (!x.SHOP.find((q) => q[0] === r[0])) x.SHOP.push(r); }); }, NEW); }
   const r = await p.evaluate(async ([POSES, HI, BR]) => { const Q = window.QBDATA, x = window.__qb.x(), S = x.S, I = QBLoft.data.items; const { clips, ...poses } = Q.poses;
     const rig = await QBRig.create({ rig: Object.assign({}, Q.rig, { frame: [Q.loft.frame[0] * HI, Q.loft.frame[1] * HI], frameScale: Q.loft.frameScale * HI, anchorPad: Q.loft.anchorPad * HI, frameCache: 4 }), bodies: Q.bodies, poses, clips,
       assetUrl: (a) => (window.QBART && QBART[a]) || Q.loft.artBase + a + (Q.arthash && Q.arthash[a] ? '?h=' + Q.arthash[a] : '') });
