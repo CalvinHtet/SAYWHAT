@@ -233,8 +233,10 @@ DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak"]},
   /* ALTITUDE's gorpcore repaint is in (Cal approved, ROOMS 7c5664e). Its hold ends the day it began, so no slot ever skipped it; if this
      ships after a held drop has already happened, move "until" to the release day so that drop stays the same on every phone */
   {from:"2026-11-16",until:"2026-11-16",ids:["alt"]},
-  /* KODE PINK's repaint (Night drive) waits on Cal's approval; the repo still has the old art (ROOMS, 2026-11-14) */
-  {from:"2026-11-16",until:"",ids:["kp"]}];
+  /* KODE PINK's repaint (Night drive) waits on Cal's approval; the repo still has the old art (ROOMS, 2026-11-14). v1.24: approved
+     (Cal 11-18, "approve all"), art in (ROOMS 52dda64), names and lines in 15_shop.js: the hold ends Mon 11-23, the first drop day
+     after this ships (Thu 11-19 is NICE COCK's pinned drop), so no drop that already happened moves; if it ships later, move it */
+  {from:"2026-11-16",until:"2026-11-23",ids:["kp"]}];
 /* Pieces cut in the audit (Cal approved, with his keeps): off sale everywhere (the Shop, brand pages and splashes, sales, chest and crawl
    rolls), while anyone who owns one keeps wearing it. Every place that offers a piece asks itemFits, and so does the wardrobe for owned
    ones, so a cut piece "fits" only its owner. The rest of the cut list follows as ROOMS sends it. */
