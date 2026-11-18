@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.18 LIVE on Live and Test = c12783d (release/v1.17 + aec19d9 + APPV 118; QA PASS 989b71c); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 ea1b732 (APPV 119). QA: live check please. Borderline five wait on Cal via ROOMS.
+- v1.18 LIVE on Live and Test = c12783d (release/v1.17 + aec19d9 + APPV 118; QA PASS 989b71c); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 ea1b732 (APPV 119). QA: live check please. Borderline five wait on Cal via ROOMS. (QA: DONE, PASS; QA findings)
 - v1.17 LIVE on Live and Test = 48fab96 (release/v1.16 + b148138 + APPV 117; QA PASS ef61767); wlive PASS, 3256/3256 identical on both. Rollback = rollback-v0.80 24ada95 (APPV 118). QA: live check please. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.17 + aec19d9, PASS, v1.18 can ship; QA findings) FOR QA (aec19d9): Cal's "get rid of" order (via ROOMS). 29zz_v117.js: V17GONE (14 pieces) off sale everywhere and not worn or owned by anyone; owners refunded each piece's price once (S.goneRef, every 5 s while loaded); SMOKE BOMB held from 11-17 (DROPS.hold) and sub "techwear"; Pip's bandana off (26_world.js). gone.js PASS. Not checked by me: the refund across a cloud merge, Pip in every pose, the subtitle on screen. Borderline pieces (gp_sailor, gp_blazer, km_camp, km_shell, cr_mohawk's name) wait on Cal via ROOMS. v1.18 = release/v1.17 + aec19d9.
 - (QA: DONE on release/v1.16 + b148138, PASS, v1.17 can ship; QA findings) FOR QA (b148138): Cal: "Yes, count in full" (quick admin toward the streak/Weekly Quest day). XP paid stays 75%; the cut is added back to S.dayXp (S.qaDay per quest, removed on untick; creditStreak/uncreditStreak as in toggle). quickadmin.js PASS. v1.17 = release/v1.16 + b148138.
@@ -244,7 +244,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings). Nothing open from QA.
+- Now (on c12783d): v1.18 LIVE as c12783d, verified (QA findings). Nothing open from QA.
+  Was: Now (on aec19d9): v1.18 = release/v1.17 + aec19d9 (Cal's removal order) PASS, can ship (QA findings).
   Was: Now (on 48fab96): v1.17 LIVE as 48fab96, verified (QA findings).
   Was: Now (on b148138): v1.17 = release/v1.16 + b148138 PASS, can ship (QA findings).
   Was: Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings).
@@ -285,6 +286,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.18 live (LEAD: Live and Test at c12783d, wlive PASS, 3256/3256 identical):
+  - c12783d against release/v1.17 48fab96 changes three files. 29zz_v117.js is byte-identical to aec19d9's. 26_world.js changes
+    only Pip's line, the same as aec19d9's (no o_bandana anywhere in it). Then the APPV line (117 -> 118). No art or data change.
+  - artcheck.py on the release tree: 300 Shop garments, 0 gaps.
+  - A clean web build: 3,255 files + version.txt = 3,256, APPV 118.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, v1.18 as planned: release/v1.17 (48fab96) + aec19d9 (Cal's removal order: 14 pieces gone with refunds, SMOKE BOMB held, Pip's
   bandana off). QA built exactly that (applied without committing; 26_world.js merges to only the Pip line) and tested that build.
   - artcheck.py: 300 Shop garments, 0 gaps. The 14 keep their art and items.json, unused.
