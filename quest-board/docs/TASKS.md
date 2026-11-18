@@ -326,8 +326,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
     - By eye: the slip dress and bodysuit cards (women's mark, Try on, 1,190 and 1,180; the bodysuit's line reads "mesh yoke to
       the neck").
   - Cal's look calls on the set (fishnets under a short top; the pipe and the robe's bare chest) were for his approval post.
-    LEAD's FOR QA does not say Cal approved the set. Confirm his OK before shipping v1.20. QA's PASS covers the build, not his
-    approval.
+    Cal approved the set ("Approve all", LEAD's TASKS line for 1a653a7).
   - Not checked: a phone, night lighting.
 - PASS, ROOMS d808aca (the bodysuit fix). VENOM ROSE's sexy set (a10a097 + 353080a + 242f620 + d808aca) passes the wear-check and
   can go to Cal. Clean worktree, plain build, rows draft loaded.
