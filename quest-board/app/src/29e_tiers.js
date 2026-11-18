@@ -54,4 +54,10 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
      thrift like their kin; the moc-toe boots stay standard like HANGANG's leather derby; the rest standard */
   put("thrift","gx_o_durag gx_o_tool gx_o_rect gx_o_cshort gx_o_slipon");
   put("standard","gx_o_5panel gx_o_reflect gx_o_tags gx_o_bridge gx_o_liner gx_o_thermal gx_o_dknee gx_o_snap gx_o_suede gx_o_moc");
+  /* new240 VENOM ROSE sexy set (LEAD, 2026-11-17, by QA's rules; QA to check): velvet, silk, patent and leather pieces premium like the
+     brand's others; the lace mask premium like the Lace Headband; the crystal body chain (jewellery set with stones), the corset bodysuit
+     (lace corsetry) and the lace slip dress (Cal's "sexy dress" example) luxury; the bunny ears, the pipe and the fishnets standard */
+  put("standard","gx_v_bunny gx_v_pipe gx_v_fishnet");
+  put("premium","gx_v_veil gx_v_captain gx_v_mask gx_v_robe gx_v_pajama gx_v_mini gx_v_stiletto gx_v_thigh gx_v_slipper");
+  put("luxury","gx_v_bodychain gx_v_bodysuit gx_v_slip");
   }return m[id]||null}
