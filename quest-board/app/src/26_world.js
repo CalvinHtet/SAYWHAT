@@ -504,7 +504,7 @@ lfDesired=function(){var out=lfDesiredTmBase(),Q=typeof teamList==="function"&&t
    above their head). Each rescued ally has a look from existing items that suits the role. They hang out in the Game Room while only the
    Loft is built, then in any built business too: one room a day each, picked from the day so they move around. Mara is the chef already. */
 var ALLOOK={
-  pip:{n:"Pip",c:"#ffb066",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["npc_chef","o_bandana","h_cargo","h_boots"]}},
+  pip:{n:"Pip",c:"#ffb066",spec:{body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["npc_chef","h_cargo","h_boots"]}},/* Cal 2026-11-17 (via ROOMS): no bandana (V17GONE, 29zz_v117.js) */
   kit:{n:"Kit",c:"#ffd36b",spec:{body:"f",skin:"s3",hairStyle:"h3",hairColor:"auburn",top:"tee",topColor:"grey",bottom:"joggers",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["al_vest","sv_goggles","sm_cargo","sm_boots"]}},
   bram:{n:"Bram",c:"#c9a24a",spec:{body:"m",skin:"s1",hairStyle:"h1",hairColor:"blonde",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"grey",shoe:"sneakers",shoeColor:"black",eq:["h_cardi","h_news","km_round","h_trous","h_derby"]}},
   juno:{n:"Juno",c:"#7fe9ff",spec:{body:"f",skin:"s4",hairStyle:"h2",hairColor:"black",top:"tee",topColor:"black",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:["o_flannel","al_goggle","al_cargo","al_hiker"]}},
