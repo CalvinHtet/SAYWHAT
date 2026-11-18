@@ -10,7 +10,7 @@
 ["gx_gd_bustier", "a_top", "Brocade Bustier", 1700, 1, "Ivory-and-gold brocade, boned, black lace edge, chain straps.", {"gar": "gd_bustier", "b": "gd", "fo": 1}],
 ["gx_gd_jogger", "a_pants", "Jacquard Joggers", 1500, 1, "Black jacquard with a gold leaf weave, gilt piping, ivory cuffs.", {"gar": "gd_jogger", "b": "gd"}],
 ["gx_gd_cargo", "a_pants", "Gilt-Pocket Twill Cargos", 1450, 1, "Black twill, gold leaf on every flap, gilt snaps.", {"gar": "gd_cargo", "b": "gd"}],
-["gx_gd_skirt", "a_pants", "Brocade Box-Pleat Midi", 1500, 1, "Ivory-and-gold brocade, deep pleats, a gilt clasp.", {"gar": "gd_skirt", "b": "gd", "fo": 1}],
+["gx_gd_skirt", "a_pants", "Brocade Box-Pleat Skirt", 1500, 1, "Ivory-and-gold brocade, knee length, deep pleats, a gilt clasp.", {"gar": "gd_skirt", "b": "gd", "fo": 1}],
 ["gx_gd_loafer", "a_shoes", "Brocade Pointed Loafers", 1600, 1, "Ivory-and-gold brocade, black patent toes, a gilt bar.", {"gar": "gd_loafer", "b": "gd"}],
 ["gx_gd_hightop", "a_shoes", "Gilt-Cap High-Tops", 1700, 1, "Black leather, sculpted gold toe caps, gold laces.", {"gar": "gd_hightop", "b": "gd"}],
 ["gx_gd_mule", "a_shoes", "Sculpted-Heel Mules", 1700, 1, "Black satin, a sculpted gold stiletto, worn on tiptoe.", {"gar": "gd_mule", "b": "gd", "fo": 1}]
