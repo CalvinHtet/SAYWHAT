@@ -1621,6 +1621,7 @@
  },
  "v_bodychain": {
   "slot": "neck",
+  "frontOnly": true,
   "femaleOnly": true
  },
  "v_robe": {
