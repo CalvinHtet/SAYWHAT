@@ -1,5 +1,5 @@
 // KODE PINK "Night drive" in the Shop (Cal 11-13: "Make it more city pop but actually cool and more sleek"; approved 11-18; ROOMS 52dda64;
-// text shots/pending_art/kodepink/final/shop_text.md, copied below): on the plain build (PORT) against the last release (REF):
+// text shots/pending_art/kodepink/final/shop_text.md, with the detail pass's five lines from kodepink/detail/shop_lines.md (ROOMS 368507e), copied below): on the plain build (PORT) against the last release (REF):
 //  - every floor 11-10 .. 11-22 is as in the last release (lifting the hold moves no drop that already happened)
 //  - KODE PINK never drops before Mon 11-23 and does drop on the Street within 16 weeks after
 //  - all 15 rows have the new names and lines, same ids, slots and prices as the last release; its tab, on a day it is live, lists all 15
@@ -17,13 +17,13 @@ const TEXT = {
   gx_kp_varsity: ["Midnight Varsity", "Black body, navy sleeves, sunset-stripe trims."],
   gx_kp_sailor: ["Night Palm Shirt", "Navy camp-collar shirt, coral palm print."],
   gx_kp_hoodie: ["Sunset Stripe Hoodie", "Black hoodie, a pink-to-coral stripe down each sleeve."],
-  gx_kp_bomber: ["Gloss Leather Bomber", "Black glossy leather, silver zip, ribbed hem."],
-  gx_kp_track: ["Sunset Track Pants", "Black, one pink-to-coral side stripe, cropped."],
+  gx_kp_bomber: ["Gloss Leather Bomber", "Black gloss leather, coral neon piping, a sunset chest stripe."],
+  gx_kp_track: ["Sunset Track Pants", "Black, a wide sunset side stripe edged in chrome, coral cuffs."],
   gx_kp_skirt: ["Navy Pleated Skirt", "Deep navy knife pleats, a silver-buckle belt."],
-  gx_kp_cargo: ["Charcoal Wide-Leg Cargo", "Charcoal wide legs, deep side pockets."],
+  gx_kp_cargo: ["Charcoal Wide-Leg Cargo", "Charcoal wide legs, coral neon seams, sunset knee stripes."],
   gx_kp_runner: ["Chrome Night Runners", "Black mesh, silver-blue chrome panels."],
-  gx_kp_loafer: ["Patent Penny Loafers", "Glossy navy patent, white socks."],
-  gx_kp_slipon: ["Navy Canvas Slip-Ons", "Navy canvas, white rubber soles."] };
+  gx_kp_loafer: ["Patent Penny Loafers", "Navy patent, chrome bars, a coral-stitched welt, white socks."],
+  gx_kp_slipon: ["Navy Canvas Slip-Ons", "Navy canvas, coral neon piping, white rubber soles."] };
 const page = async (b, url) => { const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); p.errs = []; p.on('pageerror', (e) => p.errs.push(e.message.slice(0, 150)));
   await p.goto(url + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbDrops, null, { timeout: 90000 }); await p.waitForTimeout(800); return p; };
 const live = (p, from, n) => p.evaluate(([from, n]) => { const o = []; for (let d = 0; d < n; d++) { const t = new Date(2026, 10, from + d, 10, 0).getTime(), r = {};
