@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free (ROOMS done painting Cal's 11-18 pieces, 2026-11-18)
+CHROME: ROOMS (2026-11-18, trying tiptoe feet for heels, Cal's ask)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -266,7 +266,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 141ff29): Cal's 11-18 pieces PASS: bare gate on LEAD's real wiring (8c49646), ROOMS's three FIXes (141ff29) (QA findings). Nothing open from QA.
+- Now (on 983258b): v1.23 candidate (release/v1.23) PASS, waiting on Cal's OK of the painted pieces (QA findings). Nothing open from QA.
+  Was: Now (on 141ff29): Cal's 11-18 pieces PASS (QA findings).
   Was: Now (on 4edfa01): Cal's 11-18 pieces wear-check: bare coverage gate PASS; three small FIXes for ROOMS (QA findings).
   Was: Now (on b3030e6): v1.22 LIVE as b3030e6, verified (QA findings).
   Was: Now (on 0c5bc0b): design review of ROOMS's 11-18 art drafts DONE; v1.22 c13edd3 PASS (QA findings).
@@ -322,6 +323,16 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.23 candidate = release/v1.23 at 983258b (release/v1.22 + dff4465, cefab81, 4edfa01, 141ff29, 8c49646 + APPV 123). QA built
+  the release branch itself. It ships only with Cal's explicit OK of the painted pieces (ROOMS asking).
+  - Contents: all 78 art/app, data and src files (items.json, src/look.js, 76 art) are byte-identical to QA's passed 141ff29.
+    15_shop.js and 29e_tiers.js make the same change as 8c49646. The only other app change is the APPV line (122 -> 123).
+  - artcheck.py: 325 Shop garments, 0 gaps. A clean web build: 3,375 files + version.txt = 3,376.
+  - barecheck.js MODE=real on this build: the five bare tops give the same numbers as on 8c49646 (bust covered in all 35 poses).
+    The control (OVERPASS liner) differs by 0.
+  - brandwear.js v/o/sm, 35 poses: VENOM ROSE 27+39, OVERPASS 42+41, SAYMØRE 21+21 outfits. 0 not drawn, 0 icons missing, 0 page
+    errors.
+  - Not checked: a phone, the Shop cards on screen, and the live sites (the live check after it ships).
 - PASS, LEAD 8c49646 (the bare wiring in look.js, Cal's 11-18 rows and grades) and ROOMS 141ff29 (QA d974ba5's three FIXes). Cal's 11-18
   pieces can ship as LEAD plans: v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 + 8c49646, together. Clean builds of
   8c49646 and 141ff29. Pictures: shots/qa/art1118/.
