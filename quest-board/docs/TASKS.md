@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him).
+- (QA: DONE on 8c49646 + 141ff29, PASS; v1.23 as planned can be cut; QA findings) FOR QA (8c49646, with ROOMS's dff4465, cefab81, 4edfa01): Cal's 11-18 replacements wired. src/look.js: a top with items.json bare is drawn over <b>_base_bare_* when that file exists (her five; his body unchanged). 15_shop.js: 10 new rows (VENOM ROSE 7, OVERPASS 2, SAYMØRE 1) and the 5 repaint lines; grades in 29e_tiers.js (bralette luxury, guards and respirator standard, the rest premium; Boutique 920-1,180, Street 290). replrows.js PASS (each brand on a live day; the bare base under exactly the five), brandwear v/o/sm 0 not drawn, artcheck 0 gaps (325), roserows/floors122 updated for the new lines and counts. Close look at six poses: no tank under any bare top. Please rerun barecheck.js on this wiring. Ships as one release with ROOMS's three fixes (horns clip, two icons): v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 (ROOMS's fixes) + 8c49646. HELD for Cal's explicit approval of the painted pieces (ROOMS: he saw the drafts, "i am okay with showing some skin as long as it is not nude", but has not approved the finished sheet; ROOMS is asking him).
 - Emotes (Cal 11-18): preview on one outfit sent (d19473c, 9749fcc: rigtest/lead/emoteprev.js); Cal saw sleeves tear; waiting on his pick (engine fixes: finer mesh near joints + hide the arm under sleeves, then a full wear-test).
 - v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split). (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
@@ -266,7 +266,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 4edfa01): Cal's 11-18 pieces wear-check: bare coverage gate PASS; NOT A PASS yet on three small FIXes for ROOMS (QA findings).
+- Now (on 141ff29): Cal's 11-18 pieces PASS: bare gate on LEAD's real wiring (8c49646), ROOMS's three FIXes (141ff29) (QA findings). Nothing open from QA.
+  Was: Now (on 4edfa01): Cal's 11-18 pieces wear-check: bare coverage gate PASS; three small FIXes for ROOMS (QA findings).
   Was: Now (on b3030e6): v1.22 LIVE as b3030e6, verified (QA findings).
   Was: Now (on 0c5bc0b): design review of ROOMS's 11-18 art drafts DONE; v1.22 c13edd3 PASS (QA findings).
   Was: Now (on c13edd3): v1.22 = release/v1.21 + c13edd3 PASS, can ship (QA findings).
@@ -321,6 +322,32 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, LEAD 8c49646 (the bare wiring in look.js, Cal's 11-18 rows and grades) and ROOMS 141ff29 (QA d974ba5's three FIXes). Cal's 11-18
+  pieces can ship as LEAD plans: v1.23 = release/v1.22 + dff4465 + cefab81 + 4edfa01 + 141ff29 + 8c49646, together. Clean builds of
+  8c49646 and 141ff29. Pictures: shots/qa/art1118/.
+  - Bare gate on the real wiring, barecheck.js MODE=real: PASS.
+    - B is the game's own render. A is the same with her tank base forced back.
+    - The five bare tops (bralette, keyhole crop, corset, slip, bodysuit) differ pose for pose by exactly the same pixels as with
+      QA's hand swap: the bust is covered in all 35 poses.
+    - Control: three ordinary tops (OVERPASS liner, HANGANG padded coat, SAYMØRE grille bomber) differ by 0 pixels in all 35
+      poses, so only `bare` tops get the bare base.
+    - His base has no bare file, so nothing changes for him. 0 page errors.
+  - Horns FIX done: v_horns is noClip.
+    - Hair stays whole under the horns on both bodies, front, back, sitting, walking and arms up, with her ponytail (h3), long hair
+      (h1) and his cut (h2) (horns_fixed*.jpg).
+    - Cal saw the bald scalp too (2026-11-18); this is that fix.
+  - Icons: the Spray Respirator's strap arc is whole.
+    - NOTE (ROOMS, minor): the Lace Bralette Set icon now has both cups and strap stubs, but it is visibly blockier (upscaled)
+      than the other icons and the stubs end in hard cuts. It still reads at Shop-card size; a clean repaint when convenient.
+  - Rows: all 10 match ROOMS's rows_draft.json (name, line, fo/mo; the Ø is the same character written \u00d8). The five repaint
+    lines match repaint_lines.md.
+  - Grades by QA's rules:
+    - luxury: the lace bralette (lace lingerie, like the corset).
+    - premium: horns, harness, silk shirt, vinyls and keyhole crop (velvet, leather, silk, vinyl), and the grille bomber
+      (SAYMØRE's statement piece).
+    - standard: the wrist guards and respirator.
+  - brandwear v (whole brand, 3 poses): 27 + 39 outfits, 0 not drawn.
+  - Not checked: the exact v1.23 candidate (QA checks it when LEAD cuts it), the Shop cards on screen, a phone.
 - NOT A PASS yet, ROOMS dff4465 + cefab81 + 4edfa01 (Cal's 11-18 pieces: her bare base, 10 new pieces, 5 repaints). Clean worktree
   of 4edfa01, plain build; ROOMS's rows_draft.json loaded for the new pieces. Pictures: shots/qa/art1118/.
   - Bare coverage gate, rigtest/qa/barecheck.js (new): PASS.

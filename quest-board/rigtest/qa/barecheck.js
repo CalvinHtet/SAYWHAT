@@ -3,19 +3,21 @@
 // For each bare top, worn with a skirt, in every pose: render on the normal base (A) and on the bare base (B). Pixels where A and B
 // differ are exactly where her base shows through the top. The sheet shows B with those pixels tinted red; a red mark over the chest
 // on a front-facing pose is a fail. Also logs per pose how many pixels differ in the upper half of the torso band.
+// MODE=real: once the game wires `bare` itself (look.js, LEAD 8c49646), B is the game's own render and A the same with the tank base
+// forced back (f_base_bare_* -> f_base_*); run a few ordinary tops too as a control (they must show 0 differing pixels).
 // NEWROWS=<rows_draft.json> adds draft Shop rows first (pieces not wired yet); without it an unknown top silently draws the default tee.
 //   BASE=<server> OUT=<folder> [TOPS=gx_v_bralette,...] [NEWROWS=...] [HI=2] node rigtest/qa/barecheck.js
-const pw = require('playwright'), fs = require('fs');
+const pw = require('playwright'), fs = require('fs'), REAL = process.env.MODE === 'real';
 const TOPS = (process.env.TOPS || 'gx_v_bralette,gx_v_crop,gx_v_corset,gx_v_slip,gx_v_bodysuit').split(','), HI = +process.env.HI || 2, OUT = process.env.OUT || 'qa-out/bare';
 (async () => { fs.mkdirSync(OUT, { recursive: true });
   const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const p = await (await b.newContext({ viewport: { width: 1200, height: 900 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto(process.env.BASE + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data && window.QBDATA && window.QBRig && window.QBLook, null, { timeout: 120000 }); await p.waitForTimeout(1500);
   if (process.env.NEWROWS) { const NEW = JSON.parse(fs.readFileSync(process.env.NEWROWS, 'utf8')); await p.evaluate((NEW) => { const x = window.__qb.x(); NEW.forEach((r) => { if (!x.SHOP.find((q) => q[0] === r[0])) x.SHOP.push(r); }); }, NEW); }
-  const r = await p.evaluate(async ([TOPS, HI]) => { const Q = window.QBDATA, x = window.__qb.x(), S = x.S, I = QBLoft.data.items; const { clips, ...poses } = Q.poses, names = Object.keys(poses);
+  const r = await p.evaluate(async ([TOPS, HI, REAL]) => { const Q = window.QBDATA, x = window.__qb.x(), S = x.S, I = QBLoft.data.items; const { clips, ...poses } = Q.poses, names = Object.keys(poses);
     const url = (a) => (window.QBART && QBART[a]) || Q.loft.artBase + a + (Q.arthash && Q.arthash[a] ? '?h=' + Q.arthash[a] : '');
     const mk = (bare) => QBRig.create({ rig: Object.assign({}, Q.rig, { frame: [Q.loft.frame[0] * HI, Q.loft.frame[1] * HI], frameScale: Q.loft.frameScale * HI, anchorPad: Q.loft.anchorPad * HI, frameCache: 4 }), bodies: Q.bodies, poses, clips,
-      assetUrl: (a) => url(bare && /^f_base_(front|back|yawn)/.test(a) ? a.replace('f_base_', 'f_base_bare_') : a) });
+      assetUrl: (a) => url(REAL ? (!bare && /^f_base_bare_/.test(a) ? a.replace('f_base_bare_', 'f_base_') : a) : (bare && /^f_base_(front|back|yawn)/.test(a) ? a.replace('f_base_', 'f_base_bare_') : a)) });
     const rigN = await mk(false), rigB = await mk(true); let swapped = 0; try { const im = new Image(); await new Promise((o) => { im.onload = o; im.onerror = o; im.src = url('f_base_bare_front.webp'); }); swapped = im.naturalWidth; } catch (e) {}
     S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'f' }); S.char.rig = Object.assign({}, QBLoft.data.creator.defaults, { body: 'f', hairStyle: 'h2', hairColor: 'brown' }); S.owned = {};
     const toD = (c) => { const cc = document.createElement('canvas'); cc.width = c.width; cc.height = c.height; const g = cc.getContext('2d'); g.drawImage(c, 0, 0); return { cc, d: g.getImageData(0, 0, c.width, c.height) }; };
@@ -31,7 +33,7 @@ const TOPS = (process.env.TOPS || 'gx_v_bralette,gx_v_crop,gx_v_corset,gx_v_slip
         B.cc.getContext('2d').putImageData(B.d, 0, 0); g.drawImage(B.cc, X, Y, cw, ch); g.fillStyle = '#fff'; g.font = '10px sans-serif'; g.fillText(ps.slice(0, 10) + ' c' + chest, X + 2, Y + ch + 10);
         logs[top].push(ps + ':' + chest + '/' + diff); }
       sheets.push({ top, png: cv.toDataURL('image/png') }); }
-    return { sheets, logs, swapped }; }, [TOPS, HI]);
+    return { sheets, logs, swapped }; }, [TOPS, HI, REAL]);
   r.sheets.forEach((s) => fs.writeFileSync(`${OUT}/bare_${s.top.replace(/^gx_/, '')}.png`, Buffer.from(s.png.split(',')[1], 'base64')));
   console.log('bare base loaded:', r.swapped ? 'yes (' + r.swapped + ' px wide)' : 'NO');
   Object.keys(r.logs).forEach((t) => console.log(t + ' (pose:chest-band px / all px differing): ' + r.logs[t].join(' ')));
