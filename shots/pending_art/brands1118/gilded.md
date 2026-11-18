@@ -26,7 +26,7 @@ logo is never a standalone laurel roundel. Velvet appears once (the beret).
 | gd_bustier | top | Brocade Bustier | Ivory-and-gold brocade bustier, boned, black lace edging, thin gold chain straps. | women | bare |
 | gd_jogger | pants | Jacquard Joggers | Black jacquard with tonal gold leaf weave, gilt piping down each side, ivory ankle cuffs. | both | |
 | gd_cargo | pants | Gilt-Pocket Twill Cargos | Black twill cargos, gold leaf embroidery on every pocket flap, gilt snaps. | both | |
-| gd_skirt | pants | Brocade Box-Pleat Midi | Ivory-and-gold brocade midi, deep box pleats, a black waistband with a gilt clasp. | women | skirt |
+| gd_skirt | pants | Brocade Box-Pleat Skirt | Ivory-and-gold brocade, knee length, deep box pleats, a black waistband with a gilt clasp. | women | skirt |
 | gd_loafer | shoes | Brocade Pointed Loafers | Ivory-and-gold brocade uppers, black patent toes, a slim gilt bar. | both | |
 | gd_hightop | shoes | Gilt-Cap High-Tops | Black leather high-tops, antique-gold sculpted toe caps, gold laces, ivory soles. | both | |
 | gd_mule | shoes | Sculpted-Heel Mules | Black satin mules with a sculpted antique-gold heel and a sapphire on the strap. | women | heel (tiptoe) |
