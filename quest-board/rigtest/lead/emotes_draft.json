@@ -1,0 +1,307 @@
+{
+ "poses": {
+  "thinkA": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": 1
+    },
+    "spine": {
+     "r": -1
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": -10
+    },
+    "faN": {
+     "r": -125
+    },
+    "hnN": {
+     "r": -15
+    },
+    "uaF": {
+     "r": 8
+    },
+    "faF": {
+     "r": 80
+    },
+    "hnF": {
+     "r": 10
+    },
+    "head": {
+     "r": 7
+    }
+   }
+  },
+  "thinkB": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": 1
+    },
+    "spine": {
+     "r": -1
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": -10
+    },
+    "faN": {
+     "r": -125
+    },
+    "hnN": {
+     "r": -15
+    },
+    "uaF": {
+     "r": 8
+    },
+    "faF": {
+     "r": 80
+    },
+    "hnF": {
+     "r": 10
+    },
+    "head": {
+     "r": 10
+    },
+    "ftF": {
+     "r": -28
+    }
+   }
+  },
+  "thinkC": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": 1
+    },
+    "spine": {
+     "r": -1
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": -10
+    },
+    "faN": {
+     "r": -125
+    },
+    "hnN": {
+     "r": -15
+    },
+    "uaF": {
+     "r": 8
+    },
+    "faF": {
+     "r": 80
+    },
+    "hnF": {
+     "r": 10
+    },
+    "head": {
+     "r": 4
+    },
+    "ftF": {
+     "r": -28
+    }
+   }
+  },
+  "sideUp": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": 1
+    },
+    "spine": {
+     "r": -1,
+     "l": 1.03
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": 25
+    },
+    "faN": {
+     "r": -95
+    },
+    "hnN": {
+     "r": -20
+    },
+    "uaF": {
+     "r": -25
+    },
+    "faF": {
+     "r": 95
+    },
+    "hnF": {
+     "r": 20
+    },
+    "head": {
+     "r": -4
+    }
+   },
+   "swap": {
+    "face": "faceClosed",
+    "iris": null
+   }
+  },
+  "sideL": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": 6
+    },
+    "spine": {
+     "r": -20,
+     "l": 1.02
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": 25
+    },
+    "faN": {
+     "r": -95
+    },
+    "hnN": {
+     "r": -20
+    },
+    "uaF": {
+     "r": -25
+    },
+    "faF": {
+     "r": 95
+    },
+    "hnF": {
+     "r": 20
+    },
+    "head": {
+     "r": -12
+    }
+   },
+   "swap": {
+    "face": "faceClosed",
+    "iris": null
+   }
+  },
+  "sideR": {
+   "view": "front",
+   "ground": true,
+   "bones": {
+    "pelvis": {
+     "r": -6
+    },
+    "spine": {
+     "r": 20,
+     "l": 1.02
+    },
+    "thN": {
+     "r": 1
+    },
+    "thF": {
+     "r": -1
+    },
+    "uaN": {
+     "r": 25
+    },
+    "faN": {
+     "r": -95
+    },
+    "hnN": {
+     "r": -20
+    },
+    "uaF": {
+     "r": -25
+    },
+    "faF": {
+     "r": 95
+    },
+    "hnF": {
+     "r": 20
+    },
+    "head": {
+     "r": 12
+    }
+   },
+   "swap": {
+    "face": "faceClosed",
+    "iris": null
+   }
+  }
+ },
+ "clips": {
+  "think": {
+   "keys": [
+    "idle",
+    "thinkA",
+    "thinkB",
+    "thinkA",
+    "thinkC",
+    "thinkA",
+    "thinkB",
+    "thinkA",
+    "idle"
+   ],
+   "frames": 48,
+   "fps": 12,
+   "loop": false
+  },
+  "stretchSide": {
+   "keys": [
+    "idle",
+    "sideUp",
+    "sideL",
+    "sideL",
+    "sideUp",
+    "sideR",
+    "sideR",
+    "sideUp",
+    "idle"
+   ],
+   "frames": 60,
+   "fps": 12,
+   "loop": false
+  },
+  "waveP": {
+   "keys": [
+    "idle",
+    "wave1",
+    "wave2",
+    "wave1",
+    "wave2",
+    "wave1",
+    "idle"
+   ],
+   "frames": 40,
+   "fps": 12,
+   "loop": false
+  }
+ }
+}
