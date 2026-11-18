@@ -18,8 +18,8 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- FOR QA (b3917b8): Cal: "I want the training tab to still be on the bottom as a new tab". Training back in the bar after Board (6 tabs); its Board tile goes; calm days 1-3 still hide it; its tour rings the tab. tabs6.js PASS at 360/390/430. Proposed: ship it alone as v1.15 (release/v1.14 + b3917b8) while Boba waits on ROOMS's fixes; Boba becomes v1.16.
-- FOR QA (ad44305): Cal chose: "small tasks like sending emails or repetitive admin work gets a little bit less XP". Admin-cluster quests of 10 XP or less pay 75% XP (tag "Quick admin x0.75"); 25+ admin, other clusters, bounties and coins unchanged. quickadmin.js PASS. Same file as the Training tab (29zz_v115.js), so v1.15 = release/v1.14 + b3917b8 + ad44305.
+- (QA: DONE on release/v1.14 + b3917b8 + ad44305, PASS; QA findings) FOR QA (b3917b8): Cal: "I want the training tab to still be on the bottom as a new tab". Training back in the bar after Board (6 tabs); its Board tile goes; calm days 1-3 still hide it; its tour rings the tab. tabs6.js PASS at 360/390/430. Proposed: ship it alone as v1.15 (release/v1.14 + b3917b8) while Boba waits on ROOMS's fixes; Boba becomes v1.16.
+- (QA: DONE on release/v1.14 + b3917b8 + ad44305, PASS; one NOTE for Cal; QA findings) FOR QA (ad44305): Cal chose: "small tasks like sending emails or repetitive admin work gets a little bit less XP". Admin-cluster quests of 10 XP or less pay 75% XP (tag "Quick admin x0.75"); 25+ admin, other clusters, bounties and coins unchanged. quickadmin.js PASS. Same file as the Training tab (29zz_v115.js), so v1.15 = release/v1.14 + b3917b8 + ad44305.
 - (QA: DONE on ddc1d10, PASS; v1.15 waits on ROOMS's two small FIXes to 44bb4e3; QA findings) FOR QA (ddc1d10, with ROOMS's 44bb4e3): Boba +15 economy. Dessert n:9 (v1.14's count; 18 without), bizDay boba 360 (old 15 earn 258, was 250; empty 162, was 166). Old prices drop 5-9% (ramp), never up. New rigtest/lead/roomplus.js (any grown room vs the last release): ROOM=boba PASS vs v1.14. Ships as v1.15 = release/v1.14 + 44bb4e3 + ddc1d10 after both pass; artcheck runs in the ship script.
 - v1.14 LIVE on Live and Test = 0a26f27 (release/v1.14: release/v1.13 + 791cc5c + APPV 114 + ROOMS's art 86cb0e1, 35f3080, cbc3709). wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 f33e3ed (APPV 115). QA: live check please. (QA: DONE, PASS; QA findings)
   BUG FOUND AND FIXED HERE: v1.12 and v1.13 shipped HANGANG's and DIAL-UP's 30 new rows WITHOUT their art and items.json (ROOMS's 86cb0e1 and 35f3080 were never cherry-picked; every test, mine and QA's, ran on builds that had the art). Live, those 30 cards had no picture and a bought piece did not draw (no errors, fails soft; owners keep the piece, it draws from v1.14). Guard: rigtest/lead/artcheck.py (every Shop garment has its items.json entry, icon and body art in the release tree) now runs in my ship script and stops the deploy on a gap; it flags v1.13 (30 gaps) and passes v1.14. Release content checks should compare art and items.json too, not only app/src.
@@ -237,7 +237,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on ddc1d10): Boba +15 44bb4e3 NOT A PASS yet (two small FIXes for ROOMS); its economy ddc1d10 PASS (QA findings).
+- Now (on ad44305): v1.15 = release/v1.14 + b3917b8 (Training tab) + ad44305 (quick admin) PASS, can ship; Boba 44bb4e3 waits on ROOMS (QA findings).
+  Was: Now (on ddc1d10): Boba +15 44bb4e3 NOT A PASS yet (two small FIXes for ROOMS); its economy ddc1d10 PASS (QA findings).
   Was: Now (on 0a26f27): v1.14 LIVE as 0a26f27, verified with art and items.json (QA findings).
   Was: Now (on 791cc5c): OVERPASS's 15 in the Shop PASS, v1.14 can ship; Boba +15 plan reviewed twice, ROOMS paints (QA findings).
   Was: Now (on a96107d): design review of ROOMS's Boba +15 plan DONE, before paint (QA findings).
@@ -271,6 +272,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.15 as LEAD plans it: release/v1.14 (0a26f27) + b3917b8 (Training tab) + ad44305 (quick admin). QA built exactly that
+  (both applied without committing on a release/v1.14 worktree; 29zz_v115.js identical to ad44305's) and tested that build.
+  - artcheck.py: 300 Shop garments, 0 gaps.
+  - b3917b8:
+    - rigtest/lead/tabs6.js PASS. At 360, 390 and 430 the bar is Board, Training, The Loft, Shop, Town, Players, all inside and
+      uncut. The tab opens Training and lights up, with no "< Board" link. The Board has no Training tile and keeps Dungeon
+      Crawls'.
+    - Calm week: no tab on day 2, the tab on day 4, and the tour rings it.
+    - Picture: shots/qa/v115/nav360_training.jpg.
+    - Code: Training's "!" now goes on its own tab (alPaint reads NAVHIDE live), not the Board.
+    - Training is level 1 and areaOn gives it to everyone from level 1, so nobody sees a locked "?" Training tab.
+  - ad44305:
+    - rigtest/lead/quickadmin.js PASS. Admin 10 pays 8 against home 10 at 11; admin 5 pays 4 against 6; admin 25 is uncut.
+      Social and fitness are unchanged, coins are the same, and bounties are not cut. On the Board, "Send the emails" pays 8 and
+      "Wash the dishes" 11.
+    - v112.js still PASS.
+  - NOTE (Cal's call, via LEAD): the streak's and the Weekly Quest's active day is 50 XP of paid XP (dayXp += mu.xp,
+    30_app_b.js:1631), and the Daily Quest's effort is the XP earned.
+    - So a day of only quick admin now needs about a third more tasks to count, for example about 7 ten-XP emails instead of 5.
+      That fits "a little less XP" but touches streaks too.
+    - If Cal wants streaks unaffected, count base XP toward dayXp.
+  - Not checked: a phone, and how much it slows Cal's real leveling (it depends on how many quick admin tasks he logs).
 - NOT A PASS yet, ROOMS 44bb4e3 (Boba +15). Clean worktree, plain build. Pictures: shots/qa/boba15/. Scripts: bigrooms.js (LIVE=1
   and old owner), auditall.js, crewreg.js, and postlook.js adapted to Boba.
   - FIX (ROOMS): Boba's guests never sit; they stand at the tables too. So the Standing Tea Bar's two places become stand spots
