@@ -7,5 +7,6 @@
 ["gx_o_resp", "a_acc", "Spray Respirator", 700, 1, "Matte black half mask, orange filter caps, reflective strip.", {"gar": "o_resp", "b": "over"}],
 ["gx_sm_grille", "a_top", "Speaker-Grille Bomber", 1600, 1, "Grille-mesh panels, cyan EQ bars up the back, orange Ø badge.", {"gar": "sm_grille", "b": "sm"}],
 ["gx_v_bralette", "a_top", "Lace Bralette Set", 1400, 1, "Black lace, oxblood satin trim, thin straps.", {"gar": "v_bralette", "b": "rose", "fo": 1}],
-["gx_v_crop", "a_top", "Keyhole Crop Top", 1300, 1, "Skin-tight black long sleeves, keyhole with a silver ring.", {"gar": "v_crop", "b": "rose", "fo": 1}]
+["gx_v_crop", "a_top", "Keyhole Crop Top", 1300, 1, "Skin-tight black long sleeves, keyhole with a silver ring.", {"gar": "v_crop", "b": "rose", "fo": 1}],
+["gx_v_sandal", "a_shoes", "Ankle-Strap Stilettos", 1600, 1, "Black patent stilettos, oxblood straps, silver buckles. Worn on tiptoe.", {"gar": "v_sandal", "b": "rose", "fo": 1}]
 ]
