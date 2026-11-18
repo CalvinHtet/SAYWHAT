@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split).
+- v1.22 LIVE on Live and Test = b3030e6 (release/v1.21 + c13edd3 + APPV 122; QA PASS 208993e), before Thursday's 8 am switch; wlive PASS, 3325/3325 identical on both. Rollback = rollback-v0.80 304dd6d (APPV 123). Both pushed. QA: live check please. Next for me: ROOMS's two rig questions (bare top flag, the Stylist's eyes/mouth split). (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.21 + c13edd3, PASS, v1.22 can ship; one NOTE for Cal; QA findings) FOR QA, TODAY please (c13edd3): v1.22 Shop changes from Cal (11-18). The new drop days start Thu 11-19 8 am, so it should ship before then. v1.22 = release/v1.21 + c13edd3.
   - Drops Monday/Thursday on every floor from Thu 11-19, Wednesday vault unchanged (ECON.floors days/days0, flIsDrop by date: no earlier slot moves). NICE COCK's pinned Street drop moves Fri 11-20 -> Thu 11-19 (pin, shuf1, its hold). Shop line, tours and AREALINE say Mondays and Thursdays.
   - Basics -> the Stylist ("Off sale, owners keep"): the tab sells haircuts, dyes, eye colours (14); the plain basic clothes are cut; qsGrantOriginals still gives a new player their creator clothes (it used itemFits, which a cut piece fails).
@@ -263,7 +263,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0c5bc0b): design review of ROOMS's 11-18 art drafts DONE, before paint (QA findings); v1.22 c13edd3 PASS. Nothing open from QA.
+- Now (on b3030e6): v1.22 LIVE as b3030e6, verified (QA findings). Nothing open from QA.
+  Was: Now (on 0c5bc0b): design review of ROOMS's 11-18 art drafts DONE; v1.22 c13edd3 PASS (QA findings).
   Was: Now (on c13edd3): v1.22 = release/v1.21 + c13edd3 PASS, can ship (QA findings).
   Was: Now (on 8103458): v1.21 LIVE as 8103458, verified (QA findings).
   Was: Now (on 6ba0729): Cal's full sweep DONE, no FIX; d51ef4c PASS (QA findings).
@@ -316,6 +317,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.22 live (LEAD: Live and Test at b3030e6, wlive PASS, 3325/3325 identical), ahead of Thu 11-19 8 am:
+  - b3030e6 against release/v1.21 8103458: the 8 changed app files each make the same change as QA's passed c13edd3, plus the APPV
+    line (121 -> 122). No art or data change.
+  - artcheck.py on the release tree: 315 Shop garments, 0 gaps.
+  - A clean web build: 3,324 files + version.txt = 3,325, APPV 122.
+  - Not checked by QA: the live sites themselves (LEAD's wlive), a phone, and the real 8 am switch on Live (QA checked it in the
+    candidate build with the clock moved).
 - REVIEW (before paint), ROOMS's drafts for Cal's 11-18 art list (shots/pending_art/new1118/drafts.md, 0c5bc0b). Read against Cal's
   rules (nothing plain, no cultural dress, no real logos, revealing but never explicit). Owner: ROOMS, with LEAD for the bare base.
   - Section 0, the bare female base: the right fix, with a QA gate. Every `bare` top must pass a coverage test before it ships.
