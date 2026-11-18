@@ -795,6 +795,12 @@
               // Solid fabric may stretch freely; loose triangles past the limit are skipped.
               const tooLong = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.loose * rig.maxStretch * rig.meshStep * k;
               if (t.loose && (tooLong(p[0], p[1], 1) || tooLong(p[1], p[2], 1.42) || tooLong(p[2], p[0], 1))) continue;
+              // rig.solidStretch: solid fabric too has a limit, much further out. With an arm raised (wave, cheer) a few solid cells
+              // between the sleeve and the body were pulled into long thin streaks hanging from the arm (QA 824cd53, Cal on GILDED).
+              if (rig.solidStretch && !t.loose) {
+                const far = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * rig.solidStretch * rig.meshStep * k;
+                if (far(p[0], p[1], 1) || far(p[1], p[2], 1.42) || far(p[2], p[0], 1)) continue;
+              }
               if (t.cap) {
                 const far = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.cap * rig.meshStep * k;
                 if (far(p[0], p[1], 1) || far(p[1], p[2], 1.42) || far(p[2], p[0], 1)) continue;
