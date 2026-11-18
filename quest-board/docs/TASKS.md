@@ -239,7 +239,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 0859d5b): v1.15 LIVE as 0859d5b, verified (QA findings). Boba 44bb4e3 waits on ROOMS's two small FIXes.
+- Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on 0859d5b): v1.15 LIVE as 0859d5b, verified (QA findings).
   Was: Now (on ad44305): v1.15 = release/v1.14 + b3917b8 (Training tab) + ad44305 (quick admin) PASS, can ship (QA findings).
   Was: Now (on ddc1d10): Boba +15 44bb4e3 NOT A PASS yet (two small FIXes for ROOMS); its economy ddc1d10 PASS (QA findings).
   Was: Now (on 0a26f27): v1.14 LIVE as 0a26f27, verified with art and items.json (QA findings).
@@ -275,6 +276,21 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ROOMS c5bc0c7 (QA's a6d31d8 FIXes on Boba +15). v1.16 = release/v1.15 (0859d5b) + 44bb4e3 + ddc1d10 + c5bc0c7 can ship.
+  QA built exactly that: all three applied cleanly without committing on a release/v1.15 worktree. 27b_skins.js, 29e_economy.js,
+  rsart.json, bbx_bar and bbx_pearl2 are byte-identical to c5bc0c7's.
+  - artcheck.py on that tree: 300 Shop garments, 0 gaps.
+  - roomplus.js ROOM=boba against QA's own v1.15 build: PASS (30 on sale; income 360 / 258 / 162; Dessert at 9; payback 208 days).
+  - FIX 1 done: the Standing Tea Bar has no stools now. Its two stand spots (room 10.93,7.68 and 11.53,7.68) are at its open front,
+    and guests stand there facing it (fixed_tea_bar_people.jpg). It stands clear of the table's stool and the mat
+    (fixed_front_corner.jpg).
+  - FIX 2 done: the second table's guest spot is on its free back side (room 8.6,5.31). Nobody is wedged against the bar.
+  - NOTE done: both pearl pot handles point away from the urns, and nothing lies over the urns (fixed_pots.jpg).
+  - rigtest/qa/bobapeople.js (new), 70 s in play: guests used all three spots (92, 89 and 67 half-second samples). The posted
+    barista stayed on her post all 140 samples. 0 page errors.
+  - NOTE (ROOMS, minor, Cal's eye): the two bar spots are 0.6 apart at the same depth, so two guests there partly overlap on
+    screen. It reads as two friends at the bar. Spacing them about 0.9 apart would separate them.
+  - Not checked: a phone, and buy orders other than full.
 - PASS, v1.15 live (LEAD: Live and Test at 0859d5b, wlive PASS, 3243/3243 identical):
   - 0859d5b against release/v1.14 0a26f27: only 29zz_v115.js (byte-identical to ad44305's, which QA tested in the exact v1.15 build)
     and the APPV line (114 -> 115). No art/app or data change.
