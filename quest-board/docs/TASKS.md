@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please.
+- v1.16 LIVE on Live and Test = 505c7f0 (release/v1.16: release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 + APPV 116; QA PASS 42813c7); artcheck 0 gaps, wlive PASS, 3256/3256 identical on both (one Live read failed in the ship run, a rerun matched all). Rollback = rollback-v0.80 1e57a12 (APPV 117). QA: live check please. (QA: DONE, PASS; QA findings)
 - v1.15 LIVE on Live and Test = 0859d5b (release/v1.15: release/v1.14 + b3917b8 Training tab + ad44305 quick admin XP + APPV 115; QA PASS b8499fa); artcheck 0 gaps, wlive PASS, 3243/3243 identical on both. Rollback = rollback-v0.80 9aeff58 (APPV 116). QA: live check please. (QA: DONE, PASS; QA findings)
   Cal to hear (QA's NOTE): quick admin also counts 25% less toward the 50 XP active day (streak, Weekly Quest), about 7 ten-XP emails instead of 5 on a day of only those; counting base XP there instead is a one-line change if he wants streaks untouched.
 - (QA: DONE on release/v1.14 + b3917b8 + ad44305, PASS; QA findings) FOR QA (b3917b8): Cal: "I want the training tab to still be on the bottom as a new tab". Training back in the bar after Board (6 tabs); its Board tile goes; calm days 1-3 still hide it; its tour rings the tab. tabs6.js PASS at 360/390/430. Proposed: ship it alone as v1.15 (release/v1.14 + b3917b8) while Boba waits on ROOMS's fixes; Boba becomes v1.16.
@@ -240,7 +240,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings). Nothing open from QA.
+- Now (on 505c7f0): v1.16 LIVE as 505c7f0, verified (QA findings). Nothing open from QA.
+  Was: Now (on c5bc0c7): v1.16 candidate = release/v1.15 + 44bb4e3 + ddc1d10 + c5bc0c7 PASS, can ship (QA findings).
   Was: Now (on 0859d5b): v1.15 LIVE as 0859d5b, verified (QA findings).
   Was: Now (on ad44305): v1.15 = release/v1.14 + b3917b8 (Training tab) + ad44305 (quick admin) PASS, can ship (QA findings).
   Was: Now (on ddc1d10): Boba +15 44bb4e3 NOT A PASS yet (two small FIXes for ROOMS); its economy ddc1d10 PASS (QA findings).
@@ -277,6 +278,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.16 live (LEAD: Live and Test at 505c7f0, wlive PASS, 3256/3256 identical):
+  - 505c7f0 against release/v1.15 0859d5b: 16 changed app, art and data files, all byte-identical to their passed commit (c5bc0c7,
+    and ddc1d10 for 29e_economy.js), plus the APPV line (115 -> 116).
+  - artcheck.py on the release tree: 300 Shop garments, 0 gaps.
+  - A clean web build: 3,255 files + version.txt = 3,256, APPV 116.
+  - Not checked by QA: the live sites themselves (LEAD's wlive) and a phone.
 - PASS, ROOMS c5bc0c7 (QA's a6d31d8 FIXes on Boba +15). v1.16 = release/v1.15 (0859d5b) + 44bb4e3 + ddc1d10 + c5bc0c7 can ship.
   QA built exactly that: all three applied cleanly without committing on a release/v1.15 worktree. 27b_skins.js, 29e_economy.js,
   rsart.json, bbx_bar and bbx_pearl2 are byte-identical to c5bc0c7's.
