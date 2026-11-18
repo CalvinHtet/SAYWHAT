@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.24 LIVE on Live and Test = 48b550a (release/v1.23 + 52dda64 + f0cccd0 + APPV 124; QA PASS 1a8b89d): KODE PINK "Night drive" (art, text, colours; drops from Mon 11-23, first Thu 12-17). wlive PASS, 3372/3372 identical on both. Rollback = rollback-v0.80 a2f45f1 (APPV 125). Both pushed. QA: live check please.
+- v1.24 LIVE on Live and Test = 48b550a (release/v1.23 + 52dda64 + f0cccd0 + APPV 124; QA PASS 1a8b89d): KODE PINK "Night drive" (art, text, colours; drops from Mon 11-23, first Thu 12-17). wlive PASS, 3372/3372 identical on both. Rollback = rollback-v0.80 a2f45f1 (APPV 125). Both pushed. QA: live check please. (QA: DONE, PASS; QA findings)
 - (QA: DONE on release/v1.23 + 52dda64 + f0cccd0, PASS, v1.24 can ship; QA findings) FOR QA (f0cccd0, with ROOMS's 52dda64): KODE PINK "Night drive" Shop text wired (15 names/lines from shop_text.md incl. 8f0f192's Charcoal Wide-Leg Cargo; same ids, slots, prices), BRANDS colours from the new banner (navy/indigo/pink-to-coral; sub "city-pop night drive"), DROPS.hold kp until 2026-11-23 (first drop day after this ships; move it if v1.24 ships after Mon 8 am). kprows.js PASS vs release/v1.23 (floors identical through 11-22; first KODE PINK drop Thu 12-17; tab lists 15). v1.24 = release/v1.23 + 52dda64 + f0cccd0. Cal still to answer QA's two notes (five plain pieces, palm shirt).
 - Emotes: the finer mesh option is in rig.js (8b8d4a0, off until rig.json sets fineSlots/meshStepFine); before/after sent to Cal; waiting on his go.
 - v1.23 LIVE on Live and Test = 7e61089 (Cal via ROOMS: "Approve all"; QA PASS 2be9bec): the 11-18 pieces, the bare base, the harness cut, the tiptoe Ankle-Strap Stilettos, clean icons. wlive PASS, 3380/3380 identical on both. Rollback = rollback-v0.80 0f66501 (APPV 124). Both pushed. QA: live check please (and your count said 3,379; mine 3,380, please reconcile). (QA: DONE, PASS; QA findings)
@@ -272,7 +272,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f0cccd0): v1.24 candidate (KODE PINK) PASS (QA findings). Nothing open from QA.
+- Now (on 48b550a): v1.24 live check PASS (QA findings). Nothing open from QA.
+  Was: Now (on f0cccd0): v1.24 candidate (KODE PINK) PASS (QA findings).
   Was: Now (on 022a2f8): KODE PINK text PASS (waits on LEAD's wiring), GILDED re-review PASS (QA findings).
   Was: Now (on 8e6eecf): KODE PINK repaint (art PASS, text FIX) and GILDED design review (QA findings).
   Was: Now (on 7e61089): v1.23 live check PASS (QA findings).
@@ -335,6 +336,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.24 live check (LEAD: live on Live and Test at 48b550a).
+  - release/v1.24 and its origin copy are both 48b550a = release/v1.23 + KODE PINK's two commits + APPV 124. Against v1.23 (7e61089), every
+    changed app, data, art and src file is identical to f0cccd0, the build QA passed, except 30_app_b.js, whose only difference is the
+    APPV line (124).
+  - rollback-v0.80 and its origin copy are both a2f45f1, APPV 124 -> 125.
+  - A clean web build of 48b550a: APPV 124, 3,371 files + version.txt = 3,372 (LEAD's count), artcheck 0 gaps of 325.
+  - It shipped before Mon 11-23, so KODE PINK's hold date stands. Not checked: the live site played by hand (wlive covers the files).
 - PASS, v1.24 candidate = release/v1.23 + 52dda64 + f0cccd0 (KODE PINK "Night drive": art, Shop text, colours, the hold ends Mon
   11-23). QA built the exact candidate (cherry-picked onto release/v1.23, not committed) and served it beside a clean v1.23 build.
   - The candidate's app, data, art and src files are identical to f0cccd0's. The 8 removed kp yawn files (4 tops x his/hers) are gone in
