@@ -119,7 +119,6 @@ var EXTRA_ITEMS=[
  ["gx_v_slipper","a_shoes","Velvet Smoking Slippers",1300,1,"Oxblood velvet, black soles.",{gar:"v_slipper",b:"rose",mo:1}],
  /* Cal 11-18 VENOM ROSE replacements ("lingerie, a sexy crop top, skin tight top, seductive and revealing clothing"; ROOMS cefab81, 4edfa01, bare base dff4465) */
  ["gx_v_horns","a_hat","Velvet Devil Horns",850,1,"Glossy black horns, oxblood velvet wraps, rhinestone tips.",{gar:"v_horns",b:"rose"}],
- ["gx_v_harness","a_acc","Strappy Chest Harness",950,1,"Black leather straps, a silver O-ring, a buckle at the ribs.",{gar:"v_harness",b:"rose"}],
  ["gx_v_silkshirt","a_top","Unbuttoned Silk Shirt",1600,1,"Oxblood silk open to the navel, black satin collar.",{gar:"v_silkshirt",b:"rose",mo:1}],
  ["gx_v_vinyl","a_pants","Lace-Up Vinyl Trousers",1450,1,"Skin-tight glossy black vinyl, laced up both outer seams.",{gar:"v_vinyl",b:"rose"}],
  ["gx_v_hotpants","a_pants","Vinyl Lace-Up Shorts",1250,1,"High-waisted glossy black vinyl, silver-eyelet sides.",{gar:"v_hotpants",b:"rose",fo:1}],

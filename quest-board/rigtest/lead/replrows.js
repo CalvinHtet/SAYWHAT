@@ -1,4 +1,4 @@
-// Cal 11-18 replacements (ROOMS cefab81, 4edfa01, dff4465) on the plain build: VENOM ROSE's 7, OVERPASS's 2, SAYMØRE's 1 new rows and 5
+// Cal 11-18 replacements (ROOMS cefab81, 4edfa01, dff4465) on the plain build: VENOM ROSE's 6 (the harness removed: Cal "remove the strappy chest harness"), OVERPASS's 2, SAYMØRE's 1 new rows and 5
 // new shop lines. For each brand, on a day it is live: every new piece has ROOMS's name and line, its price inside its grade's band on
 // its floor, its art loads (front, back unless front-only, icon; m_ for men-only, f_ otherwise), and its brand tab lists it; the five
 // repainted rows show their new lines. The bare base: on her body, each top flagged bare (bralette, crop, corset, slip, bodysuit) is
@@ -10,7 +10,6 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
 // ROOMS's rows (shots/pending_art/new1118/rows/rows_draft.json, not committed), copied so a clean checkout can run this
 const ROWS = [
   ["gx_v_horns", "a_hat", "Velvet Devil Horns", 850, 1, "Glossy black horns, oxblood velvet wraps, rhinestone tips.", {"gar": "v_horns", "b": "rose"}],
-  ["gx_v_harness", "a_acc", "Strappy Chest Harness", 950, 1, "Black leather straps, a silver O-ring, a buckle at the ribs.", {"gar": "v_harness", "b": "rose"}],
   ["gx_v_silkshirt", "a_top", "Unbuttoned Silk Shirt", 1600, 1, "Oxblood silk open to the navel, black satin collar.", {"gar": "v_silkshirt", "b": "rose", "mo": 1}],
   ["gx_v_vinyl", "a_pants", "Lace-Up Vinyl Trousers", 1450, 1, "Skin-tight glossy black vinyl, laced up both outer seams.", {"gar": "v_vinyl", "b": "rose"}],
   ["gx_v_hotpants", "a_pants", "Vinyl Lace-Up Shorts", 1250, 1, "High-waisted glossy black vinyl, silver-eyelet sides.", {"gar": "v_hotpants", "b": "rose", "fo": 1}],
