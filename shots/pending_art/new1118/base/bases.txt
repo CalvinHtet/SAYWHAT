@@ -1,0 +1,15 @@
+v_horns v_cap
+v_harness v_choke
+v_silkshirt v_biker
+v_vinyl v_leather
+v_hotpants v_mini
+o_guards oak_wrist
+o_resp o_gaiter
+sm_grille sm_track
+v_flare v_flare
+v_blazer v_blazer
+v_bralette v_corset
+v_crop v_mesh
+v_corset v_corset
+v_slip v_slip
+v_bodysuit v_bodysuit

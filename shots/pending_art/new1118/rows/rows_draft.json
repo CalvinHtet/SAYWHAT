@@ -1,0 +1,12 @@
+[
+["gx_v_horns", "a_hat", "Velvet Devil Horns", 850, 1, "Glossy black horns, oxblood velvet wraps, rhinestone tips.", {"gar": "v_horns", "b": "rose"}],
+["gx_v_harness", "a_acc", "Strappy Chest Harness", 950, 1, "Black leather straps, a silver O-ring, a buckle at the ribs.", {"gar": "v_harness", "b": "rose"}],
+["gx_v_silkshirt", "a_top", "Unbuttoned Silk Shirt", 1600, 1, "Oxblood silk open to the navel, black satin collar.", {"gar": "v_silkshirt", "b": "rose", "mo": 1}],
+["gx_v_vinyl", "a_pants", "Lace-Up Vinyl Trousers", 1450, 1, "Skin-tight glossy black vinyl, laced up both outer seams.", {"gar": "v_vinyl", "b": "rose"}],
+["gx_v_hotpants", "a_pants", "Vinyl Lace-Up Shorts", 1250, 1, "High-waisted glossy black vinyl, silver-eyelet sides.", {"gar": "v_hotpants", "b": "rose", "fo": 1}],
+["gx_o_guards", "a_acc", "Grip-Tape Wrist Guards", 850, 1, "Grip-tape facing, orange straps, scuffed grey plates.", {"gar": "o_guards", "b": "over"}],
+["gx_o_resp", "a_acc", "Spray Respirator", 700, 1, "Matte black half mask, orange filter caps, reflective strip.", {"gar": "o_resp", "b": "over"}],
+["gx_sm_grille", "a_top", "Speaker-Grille Bomber", 1600, 1, "Grille-mesh panels, cyan EQ bars up the back, orange Ø badge.", {"gar": "sm_grille", "b": "sm"}],
+["gx_v_bralette", "a_top", "Lace Bralette Set", 1400, 1, "Black lace, oxblood satin trim, thin straps.", {"gar": "v_bralette", "b": "rose", "fo": 1}],
+["gx_v_crop", "a_top", "Keyhole Crop Top", 1300, 1, "Skin-tight black long sleeves, keyhole with a silver ring.", {"gar": "v_crop", "b": "rose", "fo": 1}]
+]
