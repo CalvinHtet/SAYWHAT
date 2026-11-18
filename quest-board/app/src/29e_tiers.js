@@ -63,7 +63,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   /* Cal 11-18 replacements (LEAD, by QA's rules; QA to check): VENOM ROSE's horns, silk shirt, vinyl, keyhole crop premium,
      the lace bralette luxury (lace lingerie, like the corset); OVERPASS's wrist guards and respirator standard; SAYMØRE's grille bomber
      premium (its statement piece) */
-  put("premium","gx_v_horns gx_v_silkshirt gx_v_vinyl gx_v_hotpants gx_v_crop gx_sm_grille");
+  put("premium","gx_v_horns gx_v_sandal gx_v_silkshirt gx_v_vinyl gx_v_hotpants gx_v_crop gx_sm_grille");
   put("luxury","gx_v_bralette");
   put("standard","gx_o_guards gx_o_resp");
   }return m[id]||null}

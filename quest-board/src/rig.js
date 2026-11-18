@@ -695,7 +695,10 @@
       gl.vertexAttribPointer(this.a.uv, 2, gl.FLOAT, false, 16, 8);
 
       const bones = this.solve(look.body, view, pose);
-      const place = [k, 0, 0, k, W / 2 - rig.anchor[0] * k, H - rig.anchorPad - rig.anchor[1] * k];
+      // Heels (look.lift, canvas px, look.js): standing poses lift the whole figure, painted pictures too (below), so the heel tip
+      // meets the floor; sitting and lying poses are not lifted.
+      const heelUp = pose.ground && look.lift ? look.lift * k : 0;
+      const place = [k, 0, 0, k, W / 2 - rig.anchor[0] * k, H - rig.anchorPad - rig.anchor[1] * k - heelUp];
       const skin = (v) => {
         const a = bones[v.b0], b = bones[v.b1], w = v.w, i = 1 - w;
         const x = i * (a[0] * v.x + a[2] * v.y + a[4]) + w * (b[0] * v.x + b[2] * v.y + b[4]);
@@ -754,7 +757,7 @@
             gl.uniform1i(this.u.uMode, tint ? tint.mode : 0);
             gl.uniform1fv(this.u.uClip, NO_CLIP);
             if (tint) { gl.uniform3fv(this.u.uA, tint.a); gl.uniform3fv(this.u.uB, tint.b || tint.a); gl.uniform3fv(this.u.uC, tint.c || tint.a); }
-            const up = (l.lift || 0) * k;
+            const up = (l.lift || 0) * k + heelUp;
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, -up, 0, 0, W, -up, 1, 0, 0, H - up, 0, 1, W, -up, 1, 0, W, H - up, 1, 1, 0, H - up, 0, 1]), gl.DYNAMIC_DRAW);
             gl.uniform1f(this.u.uOnly, -1);
             gl.drawArrays(gl.TRIANGLES, 0, 6);
