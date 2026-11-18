@@ -297,7 +297,13 @@
 
     async bindLayer(im, bodyId, view, slot, armsUp, skirt) {
       const { rig } = this.cfg, bv = this.cfg.bodies[bodyId][view];
-      const W = rig.canvas[0], H = rig.canvas[1], step = rig.meshStep;
+      // rig.fineSlots / rig.meshStepFine: a finer grid for the layers that bend most (the body, tops, arm pieces), so a tight elbow
+      // folds the cloth in smaller pieces instead of creasing it into a zigzag (LEAD, emotes, Cal 11-18: "the clothes are already
+      // ripping when she stretches"). The stretch limits in render (maxStretch, armpit cap) stay distances in rig.meshStep units, so a
+      // fine cell may stretch to twice its own size before it is dropped: with the limits per fine cell, the bent sleeve lost cells
+      // and the arm's skin showed through the holes (measured on the varsity jacket, rigtest/lead/emoteprev.js).
+      const fine = !!(rig.meshStepFine && (rig.fineSlots || []).includes(slot.id));
+      const W = rig.canvas[0], H = rig.canvas[1], step = fine ? rig.meshStepFine : rig.meshStep;
       const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
 
       const probe = document.createElement("canvas");
