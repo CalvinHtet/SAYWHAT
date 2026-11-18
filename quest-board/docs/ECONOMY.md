@@ -148,7 +148,8 @@ runs `econEarn("garden")` again). A room that doesn't earn coins (the Pond) keep
 **Rooms growing by 15** (Cal, 2026-11-17: "Add 15 more upgrades to everything else"; Lock and Key first, 13 to 28, v1.13). Two rules so a bigger room never costs a player anything they had:
 - A gate that counted a share of a room's upgrades is pinned to the count it asked before (`n` in `ECON.unlock`): the Rooftop at 7 of Lock and Key's upgrades, Boba at 10, the Mall at 79 of Kode Plaza's. Otherwise 15 more upgrades would push the next room back (Rooftop 14, Boba 21, Mall 88).
 - The room's `bizDay` goes up so a room holding only its old upgrades still earns what it did: Lock and Key 250 to 360 (the old 13 earn 256 a day, was 250; an empty room 133, was 136; all 28, 360). Each new upgrade's price falls in the room's existing tiers.
-The economy pass after all the +15s resets these on purpose. Check: `rigtest/lead/skybar15.js` (against a v1.12 build).
+Boba (15 to 30, v1.15): Dessert pinned at 9 of Boba's upgrades (18 without it); `bizDay` 250 to 360 (the old 15 earn 258, was 250; empty 162, was 166; old pieces' prices 5-9% lower as the price ramp spans more). Payback of a whole room: Lock and Key 197 days (was 152), Boba 208 (was 152).
+The economy pass after all the +15s resets these on purpose. Check any grown room: `ROOM=<id> rigtest/lead/roomplus.js` against the last release's build (Lock and Key's own: `skybar15.js`).
 
 **How rooms open** (w-unlock, Cal's table, 2026-11-10; replaces SPEC8's focus rule): each story room opens at a share of the upgrades
 of the room before it (`ECON.unlock`; retired pieces, openers and Trophy Room finds don't count), and there is no level on any story
