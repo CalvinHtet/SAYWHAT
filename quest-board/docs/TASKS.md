@@ -280,7 +280,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
+- Now (on 6a0272c): v1.25 PASS, can ship (QA findings). Nothing open from QA.
+  Was: Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
   Was: Now (on 368507e): KODE PINK detail pass PASS (QA findings).
   Was: Now (on 581c6cd): GILDED PASS, waits on LEAD's rows (QA findings).
   Was: Now (on cb01321): GILDED recheck, NOT A PASS yet (the beret's bald band; QA findings).
@@ -349,6 +350,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.25 = release/v1.25 at 6a0272c (release/v1.24 + 8b8d4a0 + b559d09 + ROOMS's 4 GILDED + a604760 + 368507e + 651fbfe + 6100e8f +
+  APPV 125). v1.25 can ship. Cal approved GILDED via ROOMS. Pictures: shots/qa/v125b/.
+  - The exact build: against release/v1.24, all 112 changed app/data/art/src/tools files are identical to qa-local's 6100e8f, except
+    30_app_b.js, whose only difference is the APPV line (125). artcheck: 0 gaps of 340. Web build: 3,448 files + version.txt = 3,449,
+    APPV 125.
+  - rigdiff.js against a clean v1.24 build, every Shop row not cut or gone (355, including the old Basics rows), both bodies, all 35 poses
+    both builds have: 22,050 frames, 0 page errors.
+    - Lost pixels max 44 (tops, accessories) and 61 (hats, pants, shoes). By eye these are the removed underarm streaks in
+      stretchUp/cheer/wave (red lines under raised arms), plus KODE PINK's repainted track pants and cargo, whose art changed.
+      No holes (topacc_lost.jpg, rest_lost.jpg).
+    - Gained max 135, in dance1/dance2/chat on him: the sleeve at the bent forearm, no longer torn (topacc_gained.jpg). Nothing new by eye.
+  - The default look at HI 3: her dance2 loses 27 px (was 1,364 before 6100e8f). No hole at the waist and no trouser specks
+    (default_f_dance2_fixed.jpg); what is left matches v1.24.
+  - The six new emote poses (thinkA-C, sideUp/L/R): brandwear gd, v and kp, 0 not drawn, 0 errors, clean by eye. barecheck MODE=real on
+    all 41 poses: the five VENOM ROSE bare tops and the GILDED bustier cover the bust in the emote poses too.
+  - LEAD's gdrows, kprows and emotes PASS (on the 651fbfe build; 6100e8f changes only rig.json, rig.js and emotes.js's config).
+  - Not checked: a phone (speed), which LEAD still owes.
 - NOT A PASS, v1.25 candidate (LEAD's recipe: release/v1.24 + b559d09 + ROOMS 3a10edf, fa1864a, cb01321, 581c6cd + a604760 + 368507e +
   651fbfe). Two FIXes for LEAD; the rows, emotes and GILDED wiring pass. Pictures: shots/qa/v125/.
   - FIX 1 (LEAD), the recipe misses 8b8d4a0. rig.js's fineSlots/meshStepFine code is in 8b8d4a0 ("off until rig.json sets it"), which
