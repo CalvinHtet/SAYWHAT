@@ -60,10 +60,10 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   put("standard","gx_v_bunny gx_v_pipe gx_v_fishnet");
   put("premium","gx_v_veil gx_v_captain gx_v_mask gx_v_robe gx_v_pajama gx_v_mini gx_v_stiletto gx_v_thigh gx_v_slipper");
   put("luxury","gx_v_bodychain gx_v_bodysuit gx_v_slip");
-  /* Cal 11-18 replacements (LEAD, by QA's rules; QA to check): VENOM ROSE's horns, harness, silk shirt, vinyl, keyhole crop premium,
+  /* Cal 11-18 replacements (LEAD, by QA's rules; QA to check): VENOM ROSE's horns, silk shirt, vinyl, keyhole crop premium,
      the lace bralette luxury (lace lingerie, like the corset); OVERPASS's wrist guards and respirator standard; SAYMØRE's grille bomber
      premium (its statement piece) */
-  put("premium","gx_v_horns gx_v_harness gx_v_silkshirt gx_v_vinyl gx_v_hotpants gx_v_crop gx_sm_grille");
+  put("premium","gx_v_horns gx_v_silkshirt gx_v_vinyl gx_v_hotpants gx_v_crop gx_sm_grille");
   put("luxury","gx_v_bralette");
   put("standard","gx_o_guards gx_o_resp");
   }return m[id]||null}
