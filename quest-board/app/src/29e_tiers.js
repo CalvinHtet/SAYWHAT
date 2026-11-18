@@ -66,4 +66,8 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   put("premium","gx_v_horns gx_v_sandal gx_v_silkshirt gx_v_vinyl gx_v_hotpants gx_v_crop gx_sm_grille");
   put("luxury","gx_v_bralette");
   put("standard","gx_o_guards gx_o_resp");
+  /* GILDED (LEAD, 2026-11-18, by QA's rules; QA to check): sculpted gold, jewels and boning luxury (the leaf crown, the sapphire cuffs,
+     the brocade bustier, the gold-woven bomber and frock coat, the gold-capped high-tops, the sculpted-heel mules); the rest premium */
+  put("luxury","gx_gd_wreath gx_gd_cuffs gx_gd_bustier gx_gd_bomber gx_gd_frock gx_gd_hightop gx_gd_mule");
+  put("premium","gx_gd_cap gx_gd_beret gx_gd_scarf gx_gd_shirt gx_gd_jogger gx_gd_cargo gx_gd_skirt gx_gd_loafer");
   }return m[id]||null}
