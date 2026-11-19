@@ -111,45 +111,6 @@
    }
   ]
  },
- "pd_cable": {
-  "kind": "body",
-  "pet": "dogs",
-  "cells": [
-   {
-    "cell": 0,
-    "pet": "chopstick",
-    "frame": 0,
-    "w": 219,
-    "h": 123,
-    "pivot": [
-     51.2,
-     12.6
-    ]
-   },
-   {
-    "cell": 1,
-    "pet": "chopstick",
-    "frame": 2,
-    "w": 178,
-    "h": 137,
-    "pivot": [
-     40.9,
-     54.8
-    ]
-   },
-   {
-    "cell": 2,
-    "pet": "chopstick",
-    "frame": 3,
-    "w": 269,
-    "h": 125,
-    "pivot": [
-     92.4,
-     23.8
-    ]
-   }
-  ]
- },
  "pd_poppy": {
   "kind": "head",
   "pet": "dogs",
