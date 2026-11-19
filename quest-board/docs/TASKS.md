@@ -243,7 +243,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (design review, concepts only): Pet Shop creatures (LEAD's messages, docs/PET_SHOP.md): shots/pending_art/pets/pets_concept.md and pets_concept_sheet.png: shadow wolf pup, void wyvern, shadow fox-slime; poses, a 4-frame crying loop each, Bedroom and Patio beds (den cushion, perch nest, low pillow). No final frames until QA and Cal's open questions. CHROME free.
+- (QA: DONE on a02362e, PASS with NOTES; three questions answered; QA findings) Was WAITING ON QA (design review, concepts only): Pet Shop creatures (LEAD's messages, docs/PET_SHOP.md): shots/pending_art/pets/pets_concept.md and pets_concept_sheet.png: shadow wolf pup, void wyvern, shadow fox-slime; poses, a 4-frame crying loop each, Bedroom and Patio beds (den cushion, perch nest, low pillow). No final frames until QA and Cal's open questions. CHROME free.
 - READY for LEAD (QA PASS on b1fa777): wire REGIMENT (Boutique, brand "rg", 15 rows from shots/pending_art/brands1118/regiment_rows.json; logo_rg, ui_banner_rg; art and items.json in 21c67e7 + b1fa777). WAITING ON CAL: approve the painted sheet regiment_approval.png (ROOMS asked 2026-11-18); hold it until he does. Next for ROOMS: pet concept sheets. CHROME free.
 - (QA: DONE on b1fa777, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck b1fa777): REGIMENT, QA's FIX on 21c67e7 applied: rg_cap lift {m 90, f 70}, clip moved to match; hatcheck rerun, eyes clear on h1-h3 both bodies, no bald band from behind (regiment_cap_hatcheck.png). Then Cal's approval, then LEAD wires. Next: pet concept sheets. CHROME free.
 - (QA: DONE on 21c67e7, NOT A PASS yet: the peaked cap hides the eyes (FIX); the waistcoat's arm shards are the rig's (NOTE to LEAD); boots fine; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
@@ -293,7 +293,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on bd7c9f4): REGIMENT rows PASS, held for Cal (QA findings). Nothing open from QA.
+- Now (on a02362e): Pet Shop concepts PASS with NOTES (QA findings). Nothing open from QA.
+  Was: Now (on bd7c9f4): REGIMENT rows PASS, held for Cal (QA findings).
   Was: Now (on b1fa777): REGIMENT PASS, waits on LEAD's rows (QA findings).
   Was: Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings).
   Was: Now (on 268fb31): v1.26 live check PASS (QA findings).
@@ -373,6 +374,26 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with NOTES (concepts; go on to frames after Cal), Pet Shop creature concepts, shots/pending_art/pets/ (a02362e) (owner: ROOMS).
+  Checked: the sheets by eye against the dogs (shots/qa/pets/dogs_reference.jpg: Chopstick, Pluto, Pluto's bed).
+  - Pass: all three are original fantasy types in the dogs' sticker style (same outline weight and shading). The slime is clearly not
+    the famous blue teardrop. Every pet has a 4-frame crying loop with a clear sad read (ears down, the tail flame dimming, the wings
+    folding, the body sagging flat). The shared black and cyan palette makes them one shop's family.
+  - Question 1 (the wolf pup): yes, in half its frames it is a basic black puppy. The shadow flame shows on the tail and ears in front,
+    back, walk and fun move, but sit, sleep, trip and two of the four crying frames have little or none. Keep the violet-cyan flame on
+    the tail and ear tips in every frame (dim, not gone, when sad), and add one more non-dog cue that survives every pose: faint
+    glowing cyan markings on the paws or a misty shadow trailing from the fur.
+  - Question 2 (the wyvern's beds): the woven nest on a short stand is fine. The rattan basket on tall legs is a bar-stool height and
+    would stand above the Bedroom's front edge, where tall pieces block the room (rooms-never-cluttered, no-unintended-overlaps); drop
+    it, or put that nest flat on the floor. Same check for the wolf's hooded den: keep its dome no taller than about one and a half
+    times the dog beds.
+  - Question 3 (named characters): nothing reads as one, with one watch-out. A big-eyed black baby dragon is close to a famous animated
+    one. Ours has horns, cyan-violet chevron belly markings and a pointed face, which keep it apart; do not add rounded ear-flaps,
+    green eyes or a split tail fin when painting frames.
+  - NOTE: the slime's grey leather donut bed looks like Pluto's grey donut bed. Keep the violet fuzzy one and make the second one
+    distinct (e.g. a misty violet puddle-pillow or a low dark cushion with cyan piping).
+  - NOTE (frames): the wyvern has 12 poses and the others 8-9. Paint the final frames to the same set for all three (the rig and the
+    code need one list); LEAD sets the list.
 - PASS, REGIMENT rows bd7c9f4, on release/v1.26 + ROOMS 21c67e7 + b1fa777 + bd7c9f4 (built from file patches, beside a clean v1.26).
   REGIMENT stays held (DROPS.hold rg from 11-19, until ""), waiting on Cal's approval via ROOMS. When LEAD sets the date, QA rechecks
   that one line (owner: LEAD).
