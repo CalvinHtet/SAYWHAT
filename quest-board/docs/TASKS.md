@@ -302,7 +302,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506): bare-arm split, PASS by eye; final verdict waits on LEAD's rigdiff (QA findings).
+- Now (on 8d183f0): wolf and wyvern pet clothes wear-check, 17 PASS, 7 FIX for ROOMS (QA findings). Still open: the bare-arm split's release verdict (waits on LEAD's rigdiff; the cut is lead/armsplit-v128).
+  Was: Now (on release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506): bare-arm split, PASS by eye (QA findings).
   Was: Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings).
   Was: Now (on c81d0de): Pet Shop final frames recheck, PASS (QA findings).
   Was: Now (on release/v1.28 33c064d): v1.28 live check, PASS (QA findings).
@@ -392,6 +393,36 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, wolf and wyvern pet clothes (24 pieces, 54 files, 34adce0..8d183f0; owner ROOMS): 17 PASS, 7 FIX. Pictures and
+  scripts: shots/qa/petclothes1/ (QA's own placer pcwear.js, written from PET_SHOP.md's rule alone; qa_wolf.png and qa_wyvern.png
+  show every piece in all 11 frames).
+  - QA's own placer matches ROOMS's check sheets, so tools/pet_wear.py follows the agreed rule. Every file in pet_clothes.json exists,
+    cells follow the fit table, and pw_cloud uses its pivotAura in sleep. Green and magenta key spill is 0 on all 54 files (1 px on
+    pv_embers_1).
+  - FIX 1, pv_wizard: in hover frame 3 (facing front) the brim covers one eye (wyv_f3.png). Hats must clear the eyes in every frame.
+  - FIX 2, pv_bomber and pv_vest, crying frame 10 (paws up at the face) uses the sit cell, which was painted with the arms down. The
+    bomber shows sleeves at the belly while the real arms are up (phantom sleeves); the vest shows a baked-in arm outline as a loop
+    (sit.png, frames 8 and 10 side by side). Frame 8 is fine. Give frame 10 its own cell (paws up), or another cell that fits.
+  - FIX 3, pw_shards and pw_cloud: the front half puts the crescent moon (shards) and two big snowflakes (cloud) on the pup's chest and
+    flank in every frame. They read as stickers on the fur, not something circling it. Keep the front half low and at the sides, or
+    move those elements into the back half.
+  - FIX 4, pv_lanterns: each lantern is about head-sized and they stand at ground level beside the pet, reading as floor lamps. The
+    ring is 535 px against a 373 px canvas, and in hover 3 one lantern sits behind the head. Halve them and float them at mid-height.
+  - FIX 5, pv_scarf: the two flying fringe ends float detached up and left of the wrap in every frame (clearest in hover 3). Join them
+    to the wrap, or let them hang.
+  - PASS:
+    - wolf: helm, beanie, circlet, collar, ruff, torc, armour, hoodie, cape, aurora;
+    - wyvern: goggles, horn rings, coin chain, neckerchief, pack, embers, star map.
+    Heads clear the eyes in every frame, including the wolf's raised crying anchors (79c9e91), and hide in sleep. Necks sit on the
+    collar line; the body pieces follow the stand, trip, sit and sleep cells.
+  - ROOMS's questions:
+    - pv_coins reads: it has a dark outline and the amber gem, so keep it.
+    - Aura widths: aurora 410, shards 393, cloud 388, stars 466 and embers 486 (sparse) are fine; lanterns is too big (FIX 4). Judge
+      crowding again in a room once LEAD draws them.
+    - pv_vest's sleep sliver is acceptable (curled pet), and so is the armour plate on the curled back.
+    - pw_aurora is the heaviest but reads as one clean ribbon. Keep it.
+  - Small, ROOMS's call: in wolf frame 9 the collar's and ruff's back ends stick out a little past the neck.
+  - Not checked: in-game drawing (LEAD's code), the auras' bob or turn, night light, a phone, the slime and dog lines (being painted).
 - PASS by eye, bare-arm split (LEAD e9cc506 on ROOMS's 63344fe gapped bases and d8444f5 split art; owner LEAD). The release verdict
   waits on LEAD's full rigdiff against v1.28. Pictures and scripts: shots/qa/armsplit/.
   - Recipe: e9cc506's look.js does not apply to release/v1.28 alone, because it builds on 2a0a7e3 (the Stylist face split, unreleased).
