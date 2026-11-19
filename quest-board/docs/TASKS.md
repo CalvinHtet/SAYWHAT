@@ -244,7 +244,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (design review, no paint yet, 180defc): 48 Pet Shop clothing concepts, shots/pending_art/pets/pets_clothes.md: 12 each for the wolf pup, the wyvern, the fox-slime and one shared line for Chopstick and Pluto (3 per slot: head, neck/base, body, aura), in each pet's colours, nothing green; 4 questions. Pet frames PASS (QA 722b642); Bedroom bed spot PASS; Patio bed waits on Cal via LEAD. Next: the base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
+- (QA: DONE on 180defc, PASS with NOTES, apply before paint; QA findings) Design review, no paint yet: 48 Pet Shop clothing concepts, shots/pending_art/pets/pets_clothes.md: 12 each for the wolf pup, the wyvern, the fox-slime and one shared line for Chopstick and Pluto (3 per slot: head, neck/base, body, aura), in each pet's colours, nothing green; 4 questions. Pet frames PASS (QA 722b642); Bedroom bed spot PASS; Patio bed waits on Cal via LEAD. Next: the base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
 - (QA: DONE on c81d0de, PASS; QA findings) Recheck: QA d2f4bfb's two FIXes applied: wyvern frame 6 repainted (happy hop, one tail, neck; only that cell changed), slime olive spill recoloured (olive.js 0 on every frame). Bed spots after the kennel-row note: Bedroom window corner x 8.9 y 2.6 (beds/); Patio: no spot of its own fully furnished, LEAD takes the options to Cal (lounge chair moves fail; bed in the lounge chair's spot works with a supersede). Next: 48 clothing concepts to QA once frames pass; base arm-gap repaint. CHROME free.
 - (QA: DONE on e82a602, NOT A PASS: two FIXes, wyvern frame 6 and the slime tail tips; the rest PASS; QA findings) Pet Shop final frames. Cal: "Approve both" + each pet its own colour (wolf charcoal/icy cyan, wyvern navy/amber, slime plum/hot pink). art/app/pgx_<pet>_0..10 + pbed_<pet>, data/pet_art.json (canvas, cx, bed sleepOff, dog anchors), tools/pet_cut.py (green key only). Sheets: shots/pending_art/pets/pets_final_frames.png, pets_final_sizes(_loft).png, notes at the end of pets_concept.md. Wolf: flame, paw marks and mist in every frame incl. crying; den is a low open bed. Bedroom bed spot x 0.15 y 6.55 (beds/); Patio has NO clean spot fully furnished (LEAD: layout call). Next: 48 clothing concepts (pets_clothes.md) to QA after this passes; base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
 - Pet Shop final frames (Cal 2026-11-18: "Approve both", the pet concepts and REGIMENT's sheet): painting 11 front frames per pet to LEAD's list (wolf pup, void wyvern, fox-slime), the wolf's crying frames with flame, paw marks and mist, the den about half as tall; then the Bedroom and Patio beds after a free-floor check; QA first. REGIMENT: Cal approved, told LEAD (hold can go). CHROME taken.
@@ -299,7 +299,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c81d0de): Pet Shop final frames recheck, PASS (QA findings). Nothing open from QA.
+- Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings). Nothing open from QA.
+  Was: Now (on c81d0de): Pet Shop final frames recheck, PASS (QA findings).
   Was: Now (on release/v1.28 33c064d): v1.28 live check, PASS (QA findings).
   Was: Now (on e82a602): Pet Shop final frames, NOT A PASS, two FIXes for ROOMS (QA findings).
   Was: Now (on release/v1.27 + 4fe171c): bare-arm rig fix, PASS (QA findings).
@@ -387,6 +388,38 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with NOTES, pet clothing concepts (180defc, shots/pending_art/pets/pets_clothes.md, 48 pieces; owner ROOMS, note A also LEAD).
+  Every line has two or more details; no letters, logos, named gear or green. Apply these before painting; resend only the changed rows.
+  - A (structure, ROOMS and LEAD): one flat image per piece on an anchor cannot fit the body pieces to the curled sleep (5), the sit
+    and crying frames (4, 7-10), the wyvern's hops, the slime's flat melt (10) or the dogs' sleep. A hoodie, plate, bomber, swim ring,
+    puffer or turtleneck painted for standing will float off a curled pet. Owners see the crying frames too, in the adoption splash.
+    Following Cal's rule (one image per cosmetic, holding every angle), paint each body piece as one sheet with its pose variants
+    (stand/move, sit/cry, sleep, plus the slime's flat and the wyvern's hop), and have LEAD map frames to variants. Settle before
+    painting which frames each slot hides in, if any. Head and neck pieces only need the head and neck anchors.
+  - B (contrast): dark pieces on a dark pet vanish. Wolf (charcoal): beanie, hoodie, cape (black velvet). Wyvern (navy): wizard hat,
+    bomber, vest. Slime (plum): headphones, backpack. Give each a base that reads against the body (silver or slate on the wolf;
+    cream, rust or brown leather on the wyvern; pink, gold or cream on the slime) and keep the pet's own colour for trim. Dogs: Pluto is
+    apricot and cream, so the cream turtleneck and cream daisies wash out on him. Test on Pluto, or lead with cherry or navy.
+  - C (repeats a player sees together: their creature's line plus the dog line):
+    - Bandana: wolf and dogs. Replace pw_bandana (it also avoids any echo of the people's bandana Cal removed).
+    - Heart aura: slime and dogs, and the slime also has heart bubbles next to the dogs' soap bubbles. Change ps_hearts.
+    - Pearls: slime and dogs, minor.
+    - Inside lines: the wolf has a moon three times (circlet gem, collar tag, shard ring) and two icy-ring auras (snow, shards); its
+      Frost Wisp Orbit repeats both the pup's own flames and the slime's spirit-flame aura (Cal's words for the slime). Replace pw_wisps
+      with something distinct and drop one moon. The wyvern has coins twice (coin chain, orbiting coins): change one.
+  - D (auras): a ring drawn over the pet crosses its face. Paint each ring as back and front halves on the same sheet (back under
+    the pet, front over it), keep the front half low and sparse, nothing across the eyes. One image is fine; LEAD can add a slow bob or
+    turn in code instead of a second painted frame.
+  - E (fit): head pieces must clear the eyes in every frame, including the wolf's drooped crying ears (9-10) and the wyvern facing front
+    (3, 6). The circlet's chains and the aviator's flaps hang down, so keep them short.
+  - Borderline, low risk: pw_torc (a historical Celtic neck ring, jewellery rather than costume, so fine by QA). ps_crown: keep it small,
+    tilted and pink-gemmed as written, never a big gold crown centred on top of a round slime, which a famous game's slime king wears.
+  - Answers to ROOMS's questions:
+    1. Armour: fine with no emblem. Steel, cyan seams, brown straps, the small fin; no plume, horns or heraldry.
+    2. Slime body: keep the three (cape on the back, ring round the middle, pack), with variants for the flat frames (note A). No fourth hat.
+    3. Auras: one image, front and back halves (note D).
+    4. Dogs: no stretching, which warps quilting and cable knit. Paint both dogs' fits on the one sheet (still one image per
+       cosmetic), with every body piece fully covering Pluto's grey vest in all 4 frames.
 - PASS, Pet Shop final frames recheck (c81d0de; owner ROOMS, the bed spot LEAD). Pictures: shots/qa/pets2/recheck_*.png.
   - FIX 1 done: wyvern frame 6 is a happy hop, one tail with one spade, the neck showing, wings wide, lifted 8 px like a hover.
   - FIX 2 done: olive.js reads 0 on all 11 slime frames and its bed (it was up to 105 px), the wolf still 0, and the wyvern's green
