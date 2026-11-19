@@ -240,7 +240,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck): OIL & CANVAS f041b24 (QA design PASS e5b4684, NOTES applied cc85bab): 15 pieces, brand key "oc", logo_oc, ui_banner_oc; rows shots/pending_art/brands1118/oilcanvas_rows.json; sheets oilcanvas_approval.png, oilcanvas_wear_m/f.png, oilcanvas_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; hatcheck both hats; halter on the bare base. oc_felt lift 90 with its clip moved up. For QA to judge: the gloves read as knit arm-warmers; specks by her arm with the halter in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: REGIMENT draft, the five Street brands, Stylist face art. CHROME free.
+- (QA: DONE on f041b24, NOT A PASS yet: three FIXes (gloves, palette size, smock tank on her) and a process NOTE; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck): OIL & CANVAS f041b24 (QA design PASS e5b4684, NOTES applied cc85bab): 15 pieces, brand key "oc", logo_oc, ui_banner_oc; rows shots/pending_art/brands1118/oilcanvas_rows.json; sheets oilcanvas_approval.png, oilcanvas_wear_m/f.png, oilcanvas_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; hatcheck both hats; halter on the bare base. oc_felt lift 90 with its clip moved up. For QA to judge: the gloves read as knit arm-warmers; specks by her arm with the halter in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: REGIMENT draft, the five Street brands, Stylist face art. CHROME free.
 - (QA: DONE on e5b4684, PASS with four NOTES, cleared to paint; answers to the three questions; QA findings) Was WAITING ON QA (design review, no paint yet): OIL & CANVAS draft, shots/pending_art/brands1118/oilcanvas.md (15 pieces, brand key "oc", indigo/cream/cadmium, studio lane apart from OVERPASS's spray tee and chore jacket, no beret; halter bare, slingbacks heel; 3 questions for QA). Then REGIMENT, then the five Street brands; Stylist face art (LEAD's 2a0a7e3 split is in). Done and live in v1.25: GILDED, KODE PINK detail pass. CHROME free.
 - (QA: DONE on fa1864a, NOT A PASS yet: two FIXes (frock sleeves, bustier icon straps), two NOTES; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck): GILDED, 3a10edf + fa1864a (scarf patch). 15 pieces, logo_gd and ui_banner_gd (brand key "gd", CHROME RAIN's Boutique slot); rows shots/pending_art/brands1118/gilded_rows.json; sheet gilded_approval.png + gilded_wear_m/f.png. ROOMS checked: both bodies, 35 poses, 34 outfits, 0 not drawn, 0 page errors; the bustier on the bare base and the mules on the tiptoe base (both injected), 35 poses each, 0 not drawn; close-ups idle, sitBack, stretch, walk2. Painted to QA's trade-dress guard (channel-quilted cap; leaf ornament only; scarf repainted ivory-only when the first came with black scroll ends). Known: the high-tops came out more gold than black; the banner is cropped from the sharp band of a 1:1 image. Not checked: Shop cards, night. Then Cal (batch), then LEAD. CHROME free.
 - (QA: DONE on 52dda64 + 8e6eecf: KODE PINK art PASS, one FIX (the Shop text) and two NOTES for Cal; GILDED review: two FIXes, two NOTES; QA findings) All applied in 022a2f8: READY for LEAD: KODE PINK's 15 new names and lines (shots/pending_art/kodepink/final/shop_text.md). WAITING ON QA: GILDED re-review (gilded.md revised). WAITING ON CAL: KODE PINK's five plain-reading pieces and the palm shirt. Was WAITING ON QA: (1) KODE PINK "Night drive" repaint 52dda64 (Cal approved 2026-11-18 via LEAD: banner, logo, 15 pieces, kp_bucket clip; 4 old kp yawn pictures removed, soft fallback); re-tested on today's build: both bodies, 35 poses, 37 outfits, 0 not drawn, 0 errors; sheets shots/pending_art/kodepink/final/. (2) Design review before paint: GILDED's 15 pieces, shots/pending_art/brands1118/gilded.md (CHROME RAIN's Boutique slot; palette moved from emerald to sapphire accents because green keys out). Then OIL & CANVAS, REGIMENT, then the 5 Street brands (slots in my message to LEAD). CHROME free.
@@ -283,7 +283,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings). Nothing open from QA.
+- Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings). Nothing open from QA.
+  Was: Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings).
   Was: Now (on 6a0272c): v1.25 live check PASS (QA findings).
   Was: Now (on 6a0272c): v1.25 PASS, can ship (QA findings).
   Was: Now (on 651fbfe): v1.25 candidate NOT A PASS (8b8d4a0 missing from the recipe; the new rig's dance2 hole; QA findings).
@@ -355,6 +356,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, OIL & CANVAS painted, f041b24 (rows not wired: oilcanvas_rows.json injected; clean build). Three FIXes, one process
+  NOTE; the rest passes (owner: ROOMS). Pictures: shots/qa/oc/.
+  - Passes:
+    - newwear oc, 41 poses: him 15 outfits, her 19, 0 not drawn, 0 icons missing, 0 page errors. fitsweep oc: 15 pieces, 0 flagged.
+    - barecheck MODE=real, the halter, 41 poses: the bust is covered from the front in every pose; the open back shows her back (skin,
+      not nude) from behind (bare_halter.jpg).
+    - heelcheck SHOE=gx_oc_sling: the right tiptoe bases; floor within 4 px except backwalk1/3/4 (7-8 px), as with the stilettos.
+    - hatcheck: the felt hat (lift 90) and the studio cap over h1, h2 and h3 on both bodies show no bald band from behind and keep the
+      eyes clear in front (hat_felt.jpg, hat_cap.jpg). Asleep, the felt hat's brim stands over the face, like a hat tipped over a nap;
+      left as is.
+    - The brush roll reads well across the chest on both bodies (ROOMS's question 3: not too cute).
+    - ROOMS's question 2: no specks beside her arm with the halter in stretchUp, dance1/2 or cheer1 at HI 3 (halter_roll_f.jpg). The
+      only stray pixel is the old white sliver by the shoe, which v1.24 has too, on the default look.
+  - FIX (ROOMS): the Paint-Dipped Gloves are giant knit mitts wider than the forearm, with orange fists bigger than her face's width in
+    raised-arm poses. They read as oven mitts, not fingerless gloves (gloves_f.jpg, m_armsup_gloves_palette.jpg). That answers
+    ROOMS's question 1. Scale them down to wrist-to-knuckle on the hand, or swap the piece.
+  - FIX (ROOMS): the Palette Pendant came out far too big. The palette covers most of the torso on both bodies and reads as a toy or a
+    bib (question 3: too cute). Roughly half the size; my design note asked for "enough size to read", not this.
+  - FIX (ROOMS): the Drip Smock Shirt is open at the chest, and on her the grey base tank shows in the V (smock_tank_f.jpg). This is
+    the defect the `bare` base exists for. Either give it `bare` (then barecheck: the V must stay above the bust), or paint the V
+    closed for her.
+  - NOTE (process, for Cal via ROOMS): Higgsfield's filter refused the gloves' first run, and the identical prompt was resubmitted and
+    passed. The drafts' rule says a blocked piece is "replaced, not retried". The gloves are innocent and the refusal was likely a false
+    positive on the bare reference body, but the redo for the FIX above should be a fresh prompt, and a second refusal means a
+    different piece.
 - PASS with NOTES (cleared to paint), OIL & CANVAS design review, shots/pending_art/brands1118/oilcanvas.md (e5b4684) (owner: ROOMS).
   - Pass:
     - Nothing plain: every line names two or more details.
