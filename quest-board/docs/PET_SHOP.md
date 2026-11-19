@@ -122,7 +122,7 @@ size goes to QA.
 
 Cal approved LEAD's proposal below. Not yet painted: no pet clothes exist, and the first draft's pool (about 18) was sized for the two dogs. Split over three pets that is
 6 each. Proposal: 12 per pet at launch (3 per slot: head, neck or base, body, aura), 36 in all, each made for its own pet's shape;
-each Mon/Thu shuffle shows 6 (2 per pet), so about 6 shuffles before a repeat. More added over time.
+each Mon/Thu shuffle shows 2 per line (see the dogs below: 8 in all, 4 lines), so 6 shuffles before a line repeats. More added over time.
 
 ## The dogs dress too (Cal, 2026-11-18: "Dogs too")
 
