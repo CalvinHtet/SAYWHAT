@@ -124,9 +124,24 @@ Cal approved LEAD's proposal below. Not yet painted: no pet clothes exist, and t
 6 each. Proposal: 12 per pet at launch (3 per slot: head, neck or base, body, aura), 36 in all, each made for its own pet's shape;
 each Mon/Thu shuffle shows 6 (2 per pet), so about 6 shuffles before a repeat. More added over time.
 
+## The dogs dress too (Cal, 2026-11-18: "Dogs too")
+
+Asked whether Chopstick and Pluto can wear Pet Shop clothes as well, Cal: "Dogs too". LEAD's defaults (Cal may correct):
+
+- **A dog line of its own, 12 pieces**, the same count and slots as each creature (3 each: head, neck, body, aura), because a creature's
+  piece is shaped for it and would not fit a dog. 48 pieces in all at launch (36 creature + 12 dog).
+- **One dog piece fits both dogs:** painted once and placed on each dog's own anchors (neck, head top, back) in their 4 frames
+  (dgx_chopstick_0..3, dgx_pluto_0..3: stand, step, sit, sleep), scaled to each dog. ROOMS marks those 8 anchor sets once.
+- **Bought once, worn by either dog or both:** a shared dog closet. The Wardrobe's pet switcher has you, Chopstick, Pluto and your
+  creature.
+- **The dogs need no level-30 creature:** their pieces are on the Pets tab for everyone on floor 2.
+- **Shuffle:** each Mon/Thu drop shows 8 pieces, 2 per line (wolf, wyvern, slime, dogs). The Pets tab shows only your creature's line
+  and the dog line, so you see 4 at a time.
+- **Testing:** every dog piece on both dogs in all 4 frames, a sheet per drop, like the creature pieces in all 11.
+
 ## Questions for Cal (open)
 
-1. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
+None right now.
 
 
 ## Earlier questions (answered or replaced)
