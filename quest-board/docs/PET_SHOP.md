@@ -110,9 +110,24 @@ per pet: 0-1 idle A/B (the loop), 2-3 move A/B (trot, hover or waddle, bounce), 
 (the adoption splash). No back views: each clothing piece would need back art too. Clothes are one image per piece on per-frame anchors
 (head, neck or base, body, aura), measured once per frame.
 
+## Each pet its own colour (Cal, 2026-11-18)
+
+Cal: "Love the pets! But can we make them all a slightly different color so they look unique and different?" All three were black with
+violet glow. ROOMS paints it into the final frames: wolf pup charcoal-black with icy cyan flame, eyes and paw marks; wyvern deep
+navy-steel with molten amber-gold markings and eyes (not green: the green-screen key would cut it, and QA bans green eyes on it);
+slime plum-violet with hot magenta-pink glow and eyes. Beds follow each accent. A side-by-side sheet with Chopstick and Pluto at Loft
+size goes to QA.
+
+## Clothes per pet (LEAD's proposal, Cal asked "Do they have enough clothes to make them unique?")
+
+Not yet: no pet clothes are painted, and the first draft's pool (about 18) was sized for the two dogs. Split over three pets that is
+6 each. Proposal: 12 per pet at launch (3 per slot: head, neck or base, body, aura), 36 in all, each made for its own pet's shape;
+each Mon/Thu shuffle shows 6 (2 per pet), so about 6 shuffles before a repeat. More added over time.
+
 ## Questions for Cal (open)
 
 1. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
+2. 12 clothes per pet at launch (36 in all), or a different number?
 
 ## Earlier questions (answered or replaced)
 
