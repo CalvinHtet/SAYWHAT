@@ -1,4 +1,54 @@
 {
+ "pw_armour": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 137,
+    "h": 105,
+    "pivot": [
+     33.4,
+     50.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 136,
+    "h": 92,
+    "pivot": [
+     36.4,
+     52.9
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 144,
+    "h": 87,
+    "pivot": [
+     74.5,
+     56.8
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 121,
+    "h": 64,
+    "pivot": [
+     76.4,
+     82.2
+    ]
+   }
+  ]
+ },
  "pw_beanie": {
   "kind": "head",
   "pet": "wolf",
@@ -12,6 +62,56 @@
     "pivot": [
      91.4,
      47.4
+    ]
+   }
+  ]
+ },
+ "pw_cape": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 211,
+    "h": 112,
+    "pivot": [
+     108.0,
+     52.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 233,
+    "h": 102,
+    "pivot": [
+     130.5,
+     78.4
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 175,
+    "h": 118,
+    "pivot": [
+     107.7,
+     60.9
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 121,
+    "h": 93,
+    "pivot": [
+     29.3,
+     75.4
     ]
    }
   ]
@@ -46,6 +146,107 @@
     "pivot": [
      111.1,
      80.2
+    ]
+   }
+  ]
+ },
+ "pw_helm": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 135,
+    "h": 104,
+    "pivot": [
+     74.1,
+     42.3
+    ]
+   }
+  ]
+ },
+ "pw_hoodie": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 156,
+    "h": 145,
+    "pivot": [
+     46.5,
+     79.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 174,
+    "h": 163,
+    "pivot": [
+     52.9,
+     89.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 163,
+    "h": 163,
+    "pivot": [
+     86.9,
+     95.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 177,
+    "h": 146,
+    "pivot": [
+     125.1,
+     93.9
+    ]
+   }
+  ]
+ },
+ "pw_ruff": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 145,
+    "h": 107,
+    "pivot": [
+     91.0,
+     46.4
+    ]
+   }
+  ]
+ },
+ "pw_torc": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 144,
+    "h": 133,
+    "pivot": [
+     111.1,
+     79.8
     ]
    }
   ]

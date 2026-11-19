@@ -1,6 +1,7 @@
 """Pet Shop clothes: painting templates and cutting the painted pieces (ROOMS 2026-11-18).
 
-  pet_wear.py template <pet> <frames> <out.png>          e.g. template wolf 0 sheet.png   or   template wolf 0,6,4,5 sheet.png
+  pet_wear.py template <pet> <frames> <out.png> [fit]    e.g. template wolf 0 sheet.png   or   template wolf 0,6,4,5 sheet.png
+                                                         (fit 0.55: the pet smaller, room round it for an aura)
   pet_wear.py cut <sheet.png> <piece id> <kind>          kind: head | neck | body | base | aura (base: the slime's base band pieces,
                                                          cells by the body fit, placed on the neck anchor)
   pet_wear.py check <piece id> <out.png>                 the piece worn on every frame, as the game places it
@@ -44,7 +45,7 @@ def frame_img(pet, f):
     return Image.open(os.path.join(APP, name + ".webp")).convert("RGBA")
 
 
-def template(pet, frames, out):
+def template(pet, frames, out, fit=1.0):
     fl = frame_list(pet, frames.split(","))
     ims = [frame_img(p, f) for p, f in fl]
     n = len(ims)
@@ -52,7 +53,7 @@ def template(pet, frames, out):
     rows = -(-n // cols)
     cw, ch = SIZE // cols, SIZE // rows
     mw, mh = max(i.size[0] for i in ims), max(i.size[1] for i in ims)
-    k = min((cw - 60) / mw, (ch - 60) / mh)
+    k = min((cw - 60) / mw, (ch - 60) / mh) * fit  # fit < 1 leaves room round the pet (auras)
     key = np.array(KEY[pet], float)
     sheet = np.zeros((SIZE, SIZE, 3), np.uint8)
     sheet[...] = GREEN
@@ -225,7 +226,7 @@ def check(pid, out):
 
 if __name__ == "__main__":
     if sys.argv[1] == "template":
-        template(sys.argv[2], sys.argv[3], sys.argv[4])
+        template(sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]) if len(sys.argv) > 5 else 1.0)
     elif sys.argv[1] == "check":
         check(sys.argv[2], sys.argv[3])
     else:
