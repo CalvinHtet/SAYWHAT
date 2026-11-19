@@ -28,10 +28,15 @@ function pzWorn(who){if(who==="pluto"||who==="chopstick")return (S.dogw&&S.dogw[
 /* ---- the drop: 2 pieces of each line per Monday/Thursday 8 am slot, a fixed seeded order per line, so no piece twice running ---- */
 var PZ_DAY0="2026-11-16";
 function pzSlotNow(){var n=dropNow(),k=0;for(var i=0;i<4000;i++){var ymd=ymdAdd(PZ_DAY0,i),wd=new Date(ymdN(ymd)*864e5).getUTCDay();if(wd!==1&&wd!==4)continue;if(dropStart(ymd)>n)break;k++}return Math.max(0,k-1)}
-function pzLine(line){var C=pzCl();return Object.keys(C).filter(function(id){return C[id].pet===line&&PCNAME[id]}).sort()}
+/* The order is set over every name ROOMS listed for the line (PCNAME, 12 each), whether its art is in yet or not, so art landing later
+   never reshuffles anyone's drops (QA). A piece without art is replaced by the one half a round away (6 drops off: never two drops
+   running), else that drop shows one fewer. New lines of pieces after release go in PCNAME_ADD and are appended, never shuffled in. */
+var PZPRE={wolf:"pw_",wyvern:"pv_",slime:"ps_",dogs:"pd_"},PCNAME_ADD={wolf:[],wyvern:[],slime:[],dogs:[]};
+function pzLine(line){return Object.keys(PCNAME).filter(function(id){return id.indexOf(PZPRE[line])===0}).sort()}
 function pzOrder(line){var ids=pzLine(line),h=0,s=line+"|pets";for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;
-  var r=function(){h=(h*1103515245+12345)|0;return ((h>>>8)&0xffff)/65536};for(var j=ids.length-1;j>0;j--){var q=Math.floor(r()*(j+1)),t=ids[j];ids[j]=ids[q];ids[q]=t}return ids}
-function pzDrop(line){var P=pzOrder(line),n=P.length;if(!n)return [];var s=pzSlotNow();return n<3?P.slice():[P[(2*s)%n],P[(2*s+1)%n]]}
+  var r=function(){h=(h*1103515245+12345)|0;return ((h>>>8)&0xffff)/65536};for(var j=ids.length-1;j>0;j--){var q=Math.floor(r()*(j+1)),t=ids[j];ids[j]=ids[q];ids[q]=t}return ids.concat(PCNAME_ADD[line]||[])}
+function pzDrop(line){var P=pzOrder(line),n=P.length,C=pzCl();if(!n)return [];var s=pzSlotNow(),out=[];
+  [(2*s)%n,(2*s+1)%n].forEach(function(i){var id=C[P[i]]?P[i]:C[P[(i+Math.floor(n/2))%n]]?P[(i+Math.floor(n/2))%n]:null;if(id&&out.indexOf(id)<0)out.push(id)});return out}
 /* ---- compositing a pet with its clothes (ROOMS's tools/pet_wear.py is the reference) ---- */
 var PZIMG={},PZSPR={},PZWAIT={};
 function pzImg(n){if(PZIMG[n])return PZIMG[n];return PZIMG[n]=new Promise(function(ok){var im=new Image();im.onload=function(){ok(im)};im.onerror=function(){ok(null)};im.src=pzArt(n)})}
