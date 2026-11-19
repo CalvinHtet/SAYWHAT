@@ -1,0 +1,8 @@
+// crop poses from a split.js sheet: OLD over NEW, upper body, zoom Z
+const pw = require('playwright'), fs = require('fs'); const [IN, OUT, LIST] = process.argv.slice(2); const Z = +process.env.Z || 2.5, Y0 = +process.env.Y0 || 25, YH = +process.env.YH || 110;
+const ALL = 'rest idle idleIn walk1 walk2 walk3 walk4 stretchUp stretch sitFront sitFrontIn sitBack type1 type2 sleep sleepIn rearStand rearStandIn backwalk1 backwalk2 backwalk3 backwalk4 sleepHead wave1 wave2 cheer1 cheer2 laugh1 laugh2 dance1 dance2 chat1 chat2 clap1 clap2 thinkA thinkB thinkC sideUp sideL sideR'.split(' ');
+(async () => { const b = await pw.chromium.launch(); const p = await (await b.newContext()).newPage(); const src = 'data:image/png;base64,' + fs.readFileSync(IN).toString('base64');
+  const png = await p.evaluate(async ([src, idx, Z, Y0, YH, names]) => { const im = await new Promise((o) => { const i = new Image(); i.onload = () => o(i); i.src = src; }); const cw = 128, ch = 200, per = 14, bh = 2 * ch + 20, lab = 14;
+    const cv = document.createElement('canvas'); cv.width = idx.length * cw * Z; cv.height = 2 * YH * Z + 16; const g = cv.getContext('2d'); g.imageSmoothingEnabled = false; g.fillStyle = '#8b8fa3'; g.fillRect(0, 0, cv.width, cv.height);
+    idx.forEach((i, k) => { const bx = (i % per) * cw, by = Math.floor(i / per) * bh + lab; [0, 1].forEach((r) => g.drawImage(im, bx, by + r * ch + Y0, cw, YH, k * cw * Z, 16 + r * YH * Z, cw * Z, YH * Z)); g.fillStyle = '#fff'; g.font = 'bold 13px sans-serif'; g.fillText(names[k], k * cw * Z + 4, 12); }); return cv.toDataURL('image/png'); }, [src, LIST.split(',').map((q) => ALL.indexOf(q)), Z, Y0, YH, LIST.split(',')]);
+  fs.writeFileSync(OUT, Buffer.from(png.split(',')[1], 'base64')); await b.close(); })();

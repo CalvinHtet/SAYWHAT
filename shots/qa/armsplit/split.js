@@ -1,0 +1,24 @@
+// QA scratch: looks drawn by OLD (v1.28) and NEW (arm-split candidate), every pose, full body, HI. One sheet per look: bands of 14 poses,
+// OLD row over NEW row. Also counts per pose the alpha px lost/gained and colour change px (|dRGB|>60 where both solid).
+// LOOKS='[["name","m",{"a_top":"gx_rg_vest"},bare?,skin?]]' OUT=<dir> HI=2
+const pw = require('playwright'), fs = require('fs'); const HI = +process.env.HI || 2, OUT = process.env.OUT; fs.mkdirSync(OUT, { recursive: true }); const LOOKS = JSON.parse(process.env.LOOKS);
+const setup = async (b, base) => { const p = await (await b.newContext({ viewport: { width: 900, height: 700 } })).newPage(); p.errs = []; p.on('pageerror', (e) => p.errs.push(e.message.slice(0, 160)));
+  await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data && window.QBDATA && window.QBRig && window.QBLook, null, { timeout: 120000 }); await p.waitForTimeout(1500);
+  await p.evaluate(async (HI) => { const Q = window.QBDATA; const { clips, ...poses } = Q.poses; window.__poses = Object.keys(poses);
+    window.__rig = await QBRig.create({ rig: Object.assign({}, Q.rig, { frame: [Q.loft.frame[0] * HI, Q.loft.frame[1] * HI], frameScale: Q.loft.frameScale * HI, anchorPad: Q.loft.anchorPad * HI, frameCache: 2 }), bodies: Q.bodies, poses, clips,
+      assetUrl: (a) => (window.QBART && QBART[a]) || Q.loft.artBase + a + (Q.arthash && Q.arthash[a] ? '?h=' + Q.arthash[a] : '') }); }, HI); return p; };
+const strip = (p, L, P) => p.evaluate(async ([L, P]) => { const [nm, sex, ov, bare, skin] = L; const Q = window.QBDATA, x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex }); S.char.rig = Object.assign({}, QBLoft.data.creator.defaults, { body: sex, hairStyle: sex === 'f' ? 'h1' : 'h1', hairColor: 'brown' }, skin ? { skin } : {}); S.owned = {}; Object.values(ov).forEach((id) => { S.owned[id] = true; });
+  const LK = QBLook.build(Q.creator, window.__qb.lookOf(ov).rig); if (bare) delete LK.layers.top; const out = [];
+  for (const ps of P) { const c = await window.__rig.render(LK, ps); const cc = document.createElement('canvas'); cc.width = c.width; cc.height = c.height; cc.getContext('2d').drawImage(c, 0, 0); out.push(cc.toDataURL('image/png')); } return out; }, [L, P]);
+(async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
+  const O = await setup(b, 'http://127.0.0.1:8825'), N = await setup(b, 'http://127.0.0.1:8827'); const PO = await O.evaluate(() => window.__poses), PN = await N.evaluate(() => window.__poses); const P = PN.filter((q) => PO.includes(q));
+  if (PN.length !== P.length) console.log('NEW-only poses', PN.filter((q) => !PO.includes(q)));
+  for (const L of LOOKS) { const a = await strip(O, L, P), n = await strip(N, L, P);
+    const r = await N.evaluate(async ([a, n, P, HI, nm]) => { const ld = (u) => new Promise((o) => { const im = new Image(); im.onload = () => o(im); im.src = u; }); const cw = 64 * HI, ch = 100 * HI, per = 14, bands = Math.ceil(P.length / per), lab = 14;
+      const cv = document.createElement('canvas'); cv.width = per * cw; cv.height = bands * (2 * ch + lab + 6); const g = cv.getContext('2d'); g.fillStyle = '#8b8fa3'; g.fillRect(0, 0, cv.width, cv.height); const stats = [];
+      for (let i = 0; i < P.length; i++) { const A = await ld(a[i]), B = await ld(n[i]), bx = (i % per) * cw, by = Math.floor(i / per) * (2 * ch + lab + 6); g.fillStyle = '#fff'; g.font = 'bold 12px sans-serif'; g.fillText(P[i], bx + 3, by + 11); g.drawImage(A, bx, by + lab, cw, ch); g.drawImage(B, bx, by + lab + ch, cw, ch); g.fillStyle = '#000'; g.fillRect(0, by + 2 * ch + lab + 2, cv.width, 2);
+        const t = document.createElement('canvas'); t.width = A.width; t.height = A.height; const tg = t.getContext('2d'); tg.drawImage(A, 0, 0); const da = tg.getImageData(0, 0, t.width, t.height).data; tg.clearRect(0, 0, t.width, t.height); tg.drawImage(B, 0, 0); const db = tg.getImageData(0, 0, t.width, t.height).data;
+        let lost = 0, gain = 0, col = 0; for (let j = 0; j < da.length; j += 4) { const x = da[j + 3], y = db[j + 3]; if (x > 128 && y < 40) lost++; else if (x < 40 && y > 128) gain++; else if (x > 200 && y > 200 && Math.abs(da[j] - db[j]) + Math.abs(da[j + 1] - db[j + 1]) + Math.abs(da[j + 2] - db[j + 2]) > 60) col++; } stats.push(`${P[i]}:${lost}/${gain}/${col}`); }
+      return { png: cv.toDataURL('image/png'), stats }; }, [a, n, P, HI, L[0]]);
+    fs.writeFileSync(`${OUT}/${L[0]}.png`, Buffer.from(r.png.split(',')[1], 'base64')); console.log(L[0], 'lost/gained/colour per pose:', r.stats.join(' ')); }
+  console.log('page errors', O.errs.length, N.errs.length, JSON.stringify(N.errs.slice(0, 2))); await b.close(); })();

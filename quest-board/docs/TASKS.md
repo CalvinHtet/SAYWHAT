@@ -301,7 +301,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings). Nothing open from QA.
+- Now (on release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506): bare-arm split, PASS by eye; final verdict waits on LEAD's rigdiff (QA findings).
+  Was: Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings).
   Was: Now (on c81d0de): Pet Shop final frames recheck, PASS (QA findings).
   Was: Now (on release/v1.28 33c064d): v1.28 live check, PASS (QA findings).
   Was: Now (on e82a602): Pet Shop final frames, NOT A PASS, two FIXes for ROOMS (QA findings).
@@ -390,6 +391,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS by eye, bare-arm split (LEAD e9cc506 on ROOMS's 63344fe gapped bases and d8444f5 split art; owner LEAD). The release verdict
+  waits on LEAD's full rigdiff against v1.28. Pictures and scripts: shots/qa/armsplit/.
+  - Recipe: e9cc506's look.js does not apply to release/v1.28 alone, because it builds on 2a0a7e3 (the Stylist face split, unreleased).
+    QA's candidate is release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506. All 29 changed files match e9cc506. The cut must include
+    2a0a7e3, which adds an empty mouth slot (no art), or rebase e9cc506. Plain and web build clean: web 3,617 with version.txt
+    (v1.28 3,603, +14 split files), artcheck 0 gaps (370). 0 page errors on either build.
+  - Checked old against new in all 41 poses at HI 2 (sheets, plus 4x zooms of the changed poses):
+    - his bare torso, REGIMENT's waistcoat, the waistcoat with gauntlet gloves;
+    - her default, the OC halter with slingback heels and paint gloves, the GILDED bustier, the VENOM ROSE bralette with sandal heels;
+    - skin s5 on him bare and on her halter, s4 on the waistcoat, s3 on her bare base.
+  - Him: the torn wedges and holes at the armpit and upper arm are gone in stretchUp, cheer1-2, wave1-2, dance1-2, chat1-2, the side
+    stretches and the back views (sitBack, type1-2). The arms are whole and the flank clean, a big change from v1.28. The large "lost"
+    counts (up to 1,594 px in dance2) are those tears removed, not new holes. The raised-arm underside is still a little stepped in
+    stretchUp and cheer, far less than before.
+  - Her: less changes, since her hair covers the shoulders; the near-arm edges in dance2, chat2 and sideL are cleaner. Her default look
+    changes by 40-80 colour px at most.
+  - Skin: the arms layer takes the same tint as the torso, with no seam on s3, s4 or s5. Gloves sit on the hands with no skin peeking.
+    Her heel feet are unchanged. The yawn (stretch) shows one pair of arms, from the painted picture (0 px change bare). Walks, sleep
+    and backwalks show no far arm drawn wrongly in front of the body.
+  - Sleeved tops, his default tee and her boat-neck tee: at most 96 colour px change per pose, from the repainted full base, with no
+    shape change. LEAD's rigdiff covers every other row.
+  - Not checked: a phone, the Loft and visitors in-game, the other sleeveless rows (v_bodysuit, v_slip, v_corset) beyond LEAD's sheets.
 - PASS, wolf body anchors moved (555cc91): standing 0-3 at y 212-217, trip 6 at 232, sitting 4 and 7-10 at 240-245. On the re-rendered
   check_wolf.png the line runs through the middle of the torso in every frame. The slime's anchor stays at the dome's centre, and its swim
   ring is painted low, under the eyes (LEAD to ROOMS); QA checks the eyes on the wear-test.
