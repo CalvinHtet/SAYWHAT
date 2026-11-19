@@ -70,14 +70,26 @@ famous slime's shape and colours. The names in the game are ours, and QA's desig
   sit, sleep, and one fun move (the pup trips, the wyvern loops, the slime squashes). About 8 frames per pet, front and back.
 - Clothes are overlays on anchors per frame (head, neck or base, body, aura). Each pet has its own clothes, since a wolf hoodie does not
   fit a slime.
-- **Chopstick and Pluto stay** as they are (Cal's real dogs) unless Cal says otherwise.
+- **Chopstick and Pluto stay** as they are (Cal, later the same day: "keep chopstick and pluto").
+
+## Cal's answers (2026-11-18, later)
+
+- "Remove Chopstick and Pluto", then: "nevermind. keep chopstick and pluto. But after buying the 3rd pet, add another pet bed in the
+  loft and patio". So **the dogs stay as they are** (their adopt rows, beds, visits, Walkies, all unchanged).
+- **The new creature is your third pet:** it unlocks at level 30 with floor 2 and is "a big floor 2 buy" (about 3,000 coins, tuned in
+  the economy pass).
+- **Its bed:** buying it adds a third pet bed in the Bedroom (the Loft) and one on the Patio, next to where the dog beds are, shaped
+  for that pet ("a pet bed depending on the pet"): a den cushion for the wolf pup, a perch nest for the wyvern, a low pillow for the
+  slime. ROOMS checks free floor first (no crowding, no overlaps: rooms-never-cluttered, no-unintended-overlaps). The Bedroom's dog
+  beds sit at x 2.0 and 4.7 on the front edge, and the Patio's at 1.6 and 0.2 on the 3.8 row.
+- **Every player has their own:** "Me and my girlfriend dont share accounts. this is a game for everyone and they should have their own
+  pets and own save files." The pet, its bed and its clothes live in each player's own save.
+- **Emotes:** no stutter on Cal's phone, so the v1.25 warm-up is fine.
 
 ## Questions for Cal (open)
 
-1. Do Chopstick and Pluto stay in the Loft as they are, next to the new pet?
-2. Can you own all three pets, with one following you at a time, or only one?
-3. Should a pet cost coins (about 3,000, a floor-2 big buy), or unlock as a quest reward?
-4. Do your girlfriend's character and yours each get their own pet, or do you share one?
+1. Can a player buy more than one of the three creatures, or pick one?
+2. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
 
 ## Earlier questions (answered or replaced)
 
