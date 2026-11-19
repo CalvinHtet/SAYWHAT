@@ -22,8 +22,8 @@ paint-brand labels on the tubes or rolls. All brushwork is invented, loose and a
 | oc_cap | hat | Finger-Swipe Studio Cap | Cream cotton ball cap with stitched panels, finger-wiped cadmium orange, red and ochre smears and drips, an indigo-dipped brim. | both | |
 | oc_felt | hat | Dipped-Brim Felt Hat | Cream wool felt with a wide brim dipped in indigo, cadmium drips running up the crown, a brush tucked in the band. | both | |
 | oc_roll | acc (neck) | Brush Roll Sling | A rolled canvas brush wrap worn across the body, worn-wood brush handles poking out, a paint-stained leather strap. | both | |
-| oc_palette | acc (neck) | Palette Pendant | A small carved wooden palette on a waxed cord, raised enamel dabs of cadmium, cobalt and cream. | both | |
-| oc_gloves | acc (arms) | Paint-Dipped Gloves | Cream knit fingerless gloves, fingertips dipped cadmium orange, indigo running stitch at the cuff. | both | |
+| oc_palette | acc (neck) | Palette Pendant | A small carved wooden palette charm on a thin waxed cord, a brass jump ring, four raised dots of cadmium, cobalt and cream. | both | |
+| oc_gloves | acc (arms) | Paint-Stained Leather Gloves | Fitted cream fingerless leather gloves, hand-sized, orange paint-stained fingertips, an indigo wrist strap with a brass snap. | both | |
 | oc_denim | top | Hand-Painted Denim Jacket | Indigo denim jacket, a loose cadmium sunburst of brushstrokes across the back, cream topstitching, copper buttons. | both | |
 | oc_coat | top | Patchwork Studio Coat | Long cream coat pieced from canvas offcuts, indigo running stitch, paint-smeared patch pockets, a brush in the breast pocket. | both | long coat (QB_STRAY 0.12, hemtrim) |
 | oc_smock | top | Drip Smock Shirt | Oversized cream smock with a gathered yoke, open at the chest, rolled sleeves, cadmium and cobalt drips down the front. | both | |
@@ -63,3 +63,7 @@ bald band from behind. Sheets: oilcanvas_approval.png, oilcanvas_wear_m/f.png (4
 Checked by ROOMS: both bodies, 41 poses, 15 + 19 outfits, 0 not drawn, 0 page errors; hatcheck on both hats (h1-h3, both bodies);
 the halter on her bare base (no tank). Known, for QA to judge: the gloves read as chunky knit arm-warmers (the arm bone carries
 the whole forearm); tiny specks beside her arm with the halter in stretchUp and dance2 (the rig's underarm wisp?).
+
+QA 2026-11-18 (f041b24, NOT A PASS: three FIXes) applied: gloves repainted with a fresh design (fitted leather, hand-sized; the knit
+mitts were wider than the forearm), the pendant repainted about a third of the old size, the smock flagged `bare` (her grey tank
+showed in the V; on the bare base the V shows a strip of skin above the bust).
