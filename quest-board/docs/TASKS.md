@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.30 98aa14b): v1.30 cut, NOT A PASS yet: text-only FIXes in the letter and seven Shop lines (QA findings). Recheck the text diff when it lands.
+- Now (on release/v1.30 c1cff49): v1.30 cut, PASS, can ship (QA findings). Next: the live check.
+  Was: Now (on release/v1.30 98aa14b): v1.30 cut, NOT A PASS yet: text-only FIXes (QA findings).
   Was: Now (on 9c6b5cc): Pet Shop recheck with the Patio dog beds removed and refunded, PASS (QA findings).
   Was: Now (on 9d925a5): Pet Shop recheck, NOT A PASS: two Patio FIXes (QA findings).
   Was: Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings).
@@ -404,6 +405,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.30 can ship (release/v1.30 c1cff49; owner LEAD). Over 98aa14b only 29zz_pets.js and 29q_news.js change, both identical to
+  qa-local 5a0a9f0.
+  - The seven Shop lines now say what is painted, and each still names two or more details: Frost-Wave Half Helm with a wave-etched
+    band, the embers with gold sparks, lanterns with gold sparkles, the scarf's ends hanging, the comet with a long gold tail, the
+    sparkle ring in pink and gold, the backpack with gold zips and a plum star charm. No other name or line changed.
+  - The letter: "The dogs sleep indoors now" (no refund line, as Cal asked) and "A Stylist for new cuts, colours and eye colours".
+  - Clean rebuild of the exact cut: APPV 130, web 3,770, artcheck 0 gaps. petshop.js (wolf, slime) and petdrops.js PASS. The letter
+    shows the new lines and pays 500 once, 0 page errors. Everything else is as passed on 98aa14b (c062103).
+  - Not checked: a real phone. Do the live check after the ship.
 - NOT A PASS yet, v1.30 cut (release/v1.30 98aa14b; owner LEAD). Everything works; the hold is for text only: the letter and seven Shop
   lines. Pictures and scripts: shots/qa/v130/.
   - Cut: release/v1.29 + b95a995 + 98aa14b + APPV 130. Only pet files, the letter (29q_news.js) and APPV change, with no Stylist split
