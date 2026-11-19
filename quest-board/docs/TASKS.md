@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.29 0e5e736): v1.29 live check, PASS (QA findings). Waiting on ROOMS: the pet clothes FIXes and the rest of the dog line.
+- Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings). Waiting on ROOMS: the dog body pieces and auras.
+  Was: Now (on release/v1.29 0e5e736): v1.29 live check, PASS (QA findings).
   Was: Now (on f1ba1fc): pet clothes recheck plus the slime line and 6 dog pieces, FIXes for ROOMS (QA findings).
   Was: Now (on release/v1.29 0e5e736): v1.29 cut (bare-arm split), PASS, can ship (QA findings).
   Was: Now (on 8d183f0): wolf and wyvern pet clothes wear-check, 17 PASS, 7 FIX for ROOMS (QA findings).
@@ -398,6 +399,25 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- Pet clothes recheck of 1d58285 (976305b, bea0f82, LEAD's 2bf476e; owner ROOMS): PASS but one small FIX. Pictures:
+  shots/qa/petclothes3/. QA's placer reports no missing cells; green spill is 0-1 px.
+  - PASS:
+    - ps_crown: cell 1 is in, so the crown stays on through the flat frames 3 and 10 (no blink).
+    - ps_float: the melt ring sits just under the eyes, which are clear.
+    - The slivers on ps_cape_3, ps_float_4 and ps_ruffle_4 are gone. Composited, the parts left on ps_pack_1/2, ps_pearls_4 and
+      ps_cape_4 read as the far strap and pearls.
+    - pd_bucket: Pluto's notch is filled; Chopstick's sit brim is lifted 6 px and the eyes are clear.
+    - pd_bandana: Pluto's loose knot is gone.
+    - pd_aviator's line matches the hanging flaps.
+    - The circlet, collar and torc wisps are gone.
+  - Small FIX, pw_cloud: the flakes are back (14, none on the pup) but small. About 10-15 px in frame pixels, so about 3-4 px at Loft
+    size; they gather round the feet, apart from the cloud. In a room it will read as a grey cloud plus specks. Make 4-6 of them about
+    twice the size, with two or three falling just under the cloud (above the head, not on it), so the snow visibly comes from the
+    cloud.
+  - Minor, ROOMS's call: ps_cape in melt frame 10 drapes to the upper edge of the left eye; the eyes still read.
+  - PASS, pd_fleece design (replacing the refused puffer): cherry and navy check fleece, cream sherpa collar, two navy toggles, a leash
+    loop. Three details, the line's colours, no named tartan, no logos, nothing cultural. On the wear-test, check that the navy reads on
+    Chopstick's black coat and that it fully covers Pluto's grey vest in all 4 frames.
 - PASS, v1.29 live check (release/v1.29 0e5e736; owner LEAD): release/v1.29 and rollback-v0.80 match origin (0e5e736, 71f62ef). The
   shipped commit is the exact one QA built and passed (bbe2625: APPV 129 in dist and dist-web, web 3,617, artcheck 0 gaps, 0 page
   errors). The rollback commit changes only APPV, 129 to 130. Not checked by QA: the hosted pages (LEAD's ship run compared all 3,617
