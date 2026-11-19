@@ -240,7 +240,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (design review, no paint yet): REGIMENT draft, shots/pending_art/brands1118/regiment.md (15 pieces, brand key "rg", navy/scarlet/brass; invented brass-knot crest only, insignia and costume guard; mess jacket and waistcoat bare, stiletto boots heel; 3 questions for QA). Then the five Street brands; Stylist face art. CHROME free.
+- (QA: DONE on c45cedb, PASS with NOTES, cleared to paint; three questions answered; QA findings) Was WAITING ON QA (design review, no paint yet): REGIMENT draft, shots/pending_art/brands1118/regiment.md (15 pieces, brand key "rg", navy/scarlet/brass; invented brass-knot crest only, insignia and costume guard; mess jacket and waistcoat bare, stiletto boots heel; 3 questions for QA). Then the five Street brands; Stylist face art. CHROME free.
 - READY for LEAD (QA PASS on 4c60022): wire OIL & CANVAS (Boutique, brand "oc", 15 rows from shots/pending_art/brands1118/oilcanvas_rows.json; logo_oc, ui_banner_oc; art and items.json in f041b24 + 4c60022). Cal APPROVED 2026-11-18 ("Approve OIL & CANVAS"); no hold. Next for ROOMS: REGIMENT draft. CHROME free.
 - (QA: DONE on 4c60022, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck 4c60022): OIL & CANVAS, QA's three FIXes on f041b24 applied: gloves repainted with a fresh design (fitted cream leather, hand-sized, renamed Paint-Stained Leather Gloves), palette pendant repainted about a third the size, oc_smock flagged bare (barecheck please; the V shows a strip of skin above the bust). ROOMS: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; close sheets oilcanvas_fix_m/f.png. Process NOTE taken: a refused prompt gets a fresh design, never a resubmit. Then Cal's approval, then LEAD wires. Next: REGIMENT draft. CHROME free.
 - (QA: DONE on f041b24, NOT A PASS yet: three FIXes (gloves, palette size, smock tank on her) and a process NOTE; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck): OIL & CANVAS f041b24 (QA design PASS e5b4684, NOTES applied cc85bab): 15 pieces, brand key "oc", logo_oc, ui_banner_oc; rows shots/pending_art/brands1118/oilcanvas_rows.json; sheets oilcanvas_approval.png, oilcanvas_wear_m/f.png, oilcanvas_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; hatcheck both hats; halter on the bare base. oc_felt lift 90 with its clip moved up. For QA to judge: the gloves read as knit arm-warmers; specks by her arm with the halter in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: REGIMENT draft, the five Street brands, Stylist face art. CHROME free.
@@ -286,7 +286,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+- Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings). Nothing open from QA.
+  Was: Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings).
   Was: Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings).
   Was: Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings).
   Was: Now (on 6a0272c): v1.25 live check PASS (QA findings).
@@ -360,6 +361,31 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with NOTES (cleared to paint), REGIMENT design review, shots/pending_art/brands1118/regiment.md (c45cedb) (owner: ROOMS).
+  - Pass:
+    - Nothing plain.
+    - One invented crest only, and a thorough insignia and costume guard (no real insignia, emblems or regimental colours; no stage
+      or band-uniform looks).
+    - Natural shoulders and plain domed buttons clear the power-shoulder trade dress.
+    - Military tailoring is general fashion, not national costume. The counts (2/3/4/3/3 = 15) fit the Boutique. The palette is
+      keying-safe.
+    - Gates after paint: the mess jacket's bandeau through barecheck, the stiletto boots through heelcheck, both caps through hatcheck
+      (front and back), and the gauntlets at hand size in arms-up poses (OIL & CANVAS's gloves came out as giant mitts first).
+  - NOTE (overlap): the Cord Peaked Cap shares its silhouette with VENOM ROSE's Velvet Captain's Cap. The navy wool, scarlet band,
+    brass cord and crest keep it apart; just do not make the crown as tall and soft as the velvet one. The Tall Riding Boots are
+    distinct from VENOM ROSE's Lace-Up Knee Boots (patent, no lacing). The Officer Stiletto Boots make the Shop's third stiletto,
+    but they are the only stiletto boot.
+  - NOTE (costume guard): the sash must carry nothing but its buckle and fringe. A sash with a star, badge or medallion on it reads as
+    a real order of chivalry. The aiguillette hangs as a fashion cord, without the metal tips pinned to a breast pocket the regulation
+    way.
+  - Answers to ROOMS's three questions:
+    1. The jacket: tone it down a little. Keep the brass frogging (three or four rows) and the scarlet collar and cuffs, but no fringe
+       on the epaulettes: plain shoulder boards. Frogging, fringed epaulettes and a scarlet collar together are drum-major or stage
+       costume. Worn with the aiguillette and sash, the outfit is the player's choice; each piece alone must read as fashion.
+    2. Keep the capelet, ending above the elbow, with hemtrim, clear of the hands (the frock coat lesson). A greatcoat would be the
+       third long coat after GILDED's frock and OIL & CANVAS's studio coat.
+    3. Enough: his waistcoat on the bare chest, and her open mess jacket over the bandeau, which barecheck checks. The skirt's back
+       slit stays below the shorts' line.
 - PASS, OIL & CANVAS at 4c60022 (ROOMS's fixes for 739ee5e; rows still injected from oilcanvas_rows.json). The art is done from QA's side;
   next LEAD wires and prices the rows, and QA checks that commit (owner: LEAD). Pictures: shots/qa/oc2/.
   - Only the gloves' and the palette's art and icons change, plus items.json oc_smock `bare`.
