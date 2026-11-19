@@ -195,4 +195,5 @@ kind is head, neck, body, base (the slime's base pieces: body cells placed on th
 frame's anchor and turns by (anchor deg of the frame) - (anchor deg of the cell's painted frame). Body and base cells follow
 `fit.cells`; aura cell 0 is the back half (under the pet), 1 the front half (over it). Dogs: a cell per dog (head and neck 2, body 6:
 Chopstick stand/sit/sleep then Pluto's, auras 4). An aura with `"anchor": "head"` (pw_cloud) sits on the head anchor, and on the aura
-anchor where the head anchor is null (sleep). `tools/pet_wear.py check <id> <out.png>` is the placement reference the code matches.
+anchor where the head anchor is null (sleep): its cells carry `pivot` (for the head anchor) and `pivotAura` (for the
+fallback). `tools/pet_wear.py check <id> <out.png>` is the placement reference the code matches.
