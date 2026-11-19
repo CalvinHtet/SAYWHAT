@@ -25,7 +25,7 @@ fine here (the magenta-body rule is only for people's clothes).
 | pw_hoodie | body | Oversized Pup Hoodie | A silver-grey hoodie far too big, sleeves pushed up, icy cyan drawstrings, a pouch pocket with a paw print. |
 | pw_cape | body | Frost Star Cape | A short slate-blue velvet cape, silver star embroidery along the hem, an icy cyan clasp at the chest. |
 | pw_aurora | aura | Aurora Ribbon | A soft ribbon of icy cyan and silver northern light curling round the pup, a few pale sparkles along it. |
-| pw_snow | aura | Snowfall Halo | A slow ring of six-point snowflakes in white and icy cyan, a glitter of frost between them. |
+| pw_cloud | aura | Little Snow Cloud | A small silver-grey cloud floating above the pup, white and icy cyan snowflakes drifting down round it. |
 | pw_shards | aura | Moon Shard Ring | A ring of tiny pale-blue ice crystals with one small silver crescent moon among them, each crystal catching a glint. |
 
 ## Void wyvern (navy, amber-gold)
@@ -83,16 +83,19 @@ fine here (the magenta-body rule is only for people's clothes).
 
 Changed rows: pw_beanie, pw_circlet, pw_collar, pw_ruff (was pw_bandana), pw_hoodie, pw_cape, pw_aurora (was pw_wisps), pv_wizard,
 pv_bomber, pv_vest, pv_lanterns (was pv_orbit), ps_crown, ps_phones, ps_pack, ps_comet (was ps_hearts), pd_poppy (was pd_daisy),
-pd_studs (was pd_pearls), pd_aviator, pd_cable. Why: dark-on-dark pieces got a base that reads against the body (pet colour as
+pd_studs (was pd_pearls), pd_aviator, pd_cable; then pw_cloud (was pw_snow: two icy rings). Why: dark-on-dark pieces got a base that reads against the body (pet colour as
 trim); repeats a player sees together went (the bandana, hearts and pearls the dogs also have; the wolf's third moon and its flame
 orbit; the wyvern's second coin piece); the slime's crown stays small, pink-gold and tilted (never the famous slime king's big
 centred gold crown); cream on Pluto (apricot) is now navy or cherry.
 
 How they are painted (QA's notes A, D, E; frame map agreed with LEAD before any paint):
-- Body pieces: one sheet per piece holding its pose variants. Wolf: stand/move, sit (also crying), curled sleep. Wyvern: stand,
-  sit (also crying), sleep, airborne (hover and hop). Slime: dome, flat (squash and the crying melt), sleep. Dogs: no stretching,
-  one sheet with both dogs' fits (Chopstick and Pluto, each stand, sit, sleep); every dog body piece covers Pluto's grey vest in
-  all four frames.
+- Body pieces (and the slime's base pieces): one sheet per piece holding its pose cells. Final map, frames by cell (settled by eye
+  with LEAD and QA; LEAD writes it as the fit table in data/pet_art.json):
+  wolf: stand 0 1 2 3 / trip 6 (front low, tilted) / sit 4 7 8 9 10 / sleep 5
+  wyvern: stand 0 1 7 9 / glide 2 (side-on, wings back) / hover 3 (front, wings spread) / hop 6 / sit 4 8 10 / sleep 5
+  slime: round 0 1 2 7 8 9 / tall 4 (egg) / stretch 6 (pill) / flat 3 10 / sleep 5
+  dogs, per dog (Chopstick, Pluto): stand 0 1 / sit 2 / sleep 3. No stretching; every dog body piece covers Pluto's grey vest.
+  Head pieces hide in sleep (creatures 5, dogs 3); neck pieces hide where LEAD marks the neck anchor null. Nothing else hides.
 - Auras: one sheet, the ring as a back half (drawn under the pet) and a front half (over it, low and sparse, never across the eyes).
   LEAD can bob or turn it in code.
 - Head pieces clear the eyes in every frame, including the wolf's drooped crying ears and the wyvern's front-facing hover and hop;
