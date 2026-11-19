@@ -18,6 +18,8 @@
  "meshStep": 24,
  "fineSlots": ["top", "arms"],
  "meshStepFine": 12,
+ "fineUp": ["body"],
+ "slotStretch": {"body": 9},
  "solidStretch": 4,
  "solidSlots": ["top", "arms", "body"],
  "blend": 70,
@@ -334,7 +336,7 @@
   ]
  },
  "maxStretch": 1.5,
- "armpit": {"slots": {"top": {"sleeves": true, "cap": 2}, "body": {"sleeves": false, "cap": 0}}, "arms": ["uaN", "uaF"], "joints": ["shoulderN", "shoulderF"], "above": 80, "armsAbove": 0},
+ "armpit": {"slots": {"top": {"sleeves": true, "cap": 2}, "body": {"sleeves": true, "cap": 2}}, "arms": ["uaN", "uaF"], "joints": ["shoulderN", "shoulderF"], "above": 80, "armsAbove": 0},
  "faceCover":["sm_halomask"],
  "keepAsleep":["sm_halomask","sm_halo"]
 }

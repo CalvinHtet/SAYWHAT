@@ -302,7 +302,10 @@
       // ripping when she stretches"). The stretch limits in render (maxStretch, armpit cap) stay distances in rig.meshStep units, so a
       // fine cell may stretch to twice its own size before it is dropped: with the limits per fine cell, the bent sleeve lost cells
       // and the arm's skin showed through the holes (measured on the varsity jacket, rigtest/lead/emoteprev.js).
-      const fine = !!(rig.meshStepFine && (rig.fineSlots || []).includes(slot.id));
+      // rig.fineUp: slots on the fine grid only in arms-up poses. The bare body's arms (sleeveless tops, a bare chest) tore at the
+      // armpit with the arms raised (QA, REGIMENT's waistcoat); on the fine grid the cut between arm and trunk is half the size. Not
+      // in other poses: there the fine body peeked through the trousers as white specks in dance2 (QA 2d2c911).
+      const fine = !!(rig.meshStepFine && ((rig.fineSlots || []).includes(slot.id) || (armsUp && (rig.fineUp || []).includes(slot.id))));
       const W = rig.canvas[0], H = rig.canvas[1], step = fine ? rig.meshStepFine : rig.meshStep;
       const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
 
@@ -793,7 +796,11 @@
             for (const t of tris) {
               const p = t.map(skinned);
               // Solid fabric may stretch freely; loose triangles past the limit are skipped.
-              const tooLong = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.loose * rig.maxStretch * rig.meshStep * k;
+              // rig.slotStretch: a higher limit for one slot outside arms-up poses. The bare body's edge cells where an arm meets the trunk
+              // (hands on hips, the dances) went past maxStretch and were dropped, leaving holes in the upper arm; skin stretched over
+              // skin there does not smear (QA, the waistcoat).
+              const ms = (!pose.armsUp && rig.slotStretch && rig.slotStretch[s.id]) || rig.maxStretch;
+              const tooLong = (a, b, rest) => Math.hypot(a[0] - b[0], a[1] - b[1]) > rest * t.loose * ms * rig.meshStep * k;
               if (t.loose && (tooLong(p[0], p[1], 1) || tooLong(p[1], p[2], 1.42) || tooLong(p[2], p[0], 1))) continue;
               // rig.solidStretch: solid fabric too has a limit, much further out. With an arm raised (wave, cheer) a few solid cells
               // between the sleeve and the body were pulled into long thin streaks hanging from the arm (QA 824cd53, Cal on GILDED).
