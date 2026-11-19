@@ -66,3 +66,6 @@ boots on the tiptoe base. Sheets: regiment_approval.png, regiment_wear_m/f.png, 
 For QA to judge: his Braided Waistcoat in stretchUp and dance2 shows light shards along the bare arms (the waistcoat layer itself is
 one clean piece, so it may be the rig's bare-arm stretch; no other top leaves his arms bare to compare). The riding boots come to
 mid-shin on the chibi legs.
+
+QA 21c67e7 FIX applied: the peaked cap's peak hid the eyes; items.json rg_cap lift {m 90, f 70}, its clip moved up by the same
+(lift/2528). hatcheck rerun: eyes clear on h1-h3 for both bodies, no bald band from behind (regiment_cap_hatcheck.png).
