@@ -147,11 +147,11 @@ var PATCHNOTES=[
   /* v1.21 to v1.30, same rules: vague, no brand or room names, nothing still to come */
   {v:130,lines:[
     "Your character waves, thinks and stretches now and then",
-    "A Stylist for new cuts, colours and eyes",
+    "A Stylist for new cuts, colours and eye colours",
     "New brands and fresh pieces in the Shop",
     "Arms and sleeves move more smoothly",
     "A new tab on the Shop's second floor",
-    "The dogs sleep indoors now, and the beds they left outside were paid back"]}
+    "The dogs sleep indoors now"]}
 ];
 var PNCOINS=500,PNPAID=2,PNEVERY=10;
 /* 90 -> "v0.90", 100 -> "v1.00" */
