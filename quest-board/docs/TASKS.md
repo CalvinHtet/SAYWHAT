@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (painting REGIMENT on Higgsfield, Unlimited, 2026-11-18)
+CHROME: free (ROOMS done painting REGIMENT, 2026-11-18)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -242,7 +242,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- Now: painting REGIMENT (QA design PASS with NOTES, applied in 7eedcf1's regiment.md), brand key "rg", 15 pieces; CHROME taken. Then wear-test and QA's gates (barecheck, heelcheck, hatcheck, gauntlet size), then WAITING ON QA. Then the five Street brands; Stylist face art.
+- WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
 - (QA: DONE on c45cedb, PASS with NOTES, cleared to paint; three questions answered; QA findings) Was WAITING ON QA (design review, no paint yet): REGIMENT draft, shots/pending_art/brands1118/regiment.md (15 pieces, brand key "rg", navy/scarlet/brass; invented brass-knot crest only, insignia and costume guard; mess jacket and waistcoat bare, stiletto boots heel; 3 questions for QA). Then the five Street brands; Stylist face art. CHROME free.
 - READY for LEAD (QA PASS on 4c60022): wire OIL & CANVAS (Boutique, brand "oc", 15 rows from shots/pending_art/brands1118/oilcanvas_rows.json; logo_oc, ui_banner_oc; art and items.json in f041b24 + 4c60022). Cal APPROVED 2026-11-18 ("Approve OIL & CANVAS"); no hold. Next for ROOMS: REGIMENT draft. CHROME free.
 - (QA: DONE on 4c60022, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck 4c60022): OIL & CANVAS, QA's three FIXes on f041b24 applied: gloves repainted with a fresh design (fitted cream leather, hand-sized, renamed Paint-Stained Leather Gloves), palette pendant repainted about a third the size, oc_smock flagged bare (barecheck please; the V shows a strip of skin above the bust). ROOMS: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; close sheets oilcanvas_fix_m/f.png. Process NOTE taken: a refused prompt gets a fresh design, never a resubmit. Then Cal's approval, then LEAD wires. Next: REGIMENT draft. CHROME free.
