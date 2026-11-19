@@ -73,6 +73,17 @@
     const bare = !!meta("top").bare, heel = !!meta("shoes").heel, heelLift = +meta("shoes").heelLift || 0;
     const pick = [bare && heel && "base_bare_heel", bare && "base_bare", heel && "base_heel"].filter((a) => a && has(a))[0];
     if (pick) layers.body = views(b, pick);
+    // Bare arms as their own layer (ROOMS d8444f5; Cal "Yes, repaint", QA's bare-arm tear): <b>_basearms_* holds only the arms, from a
+    // rounded shoulder cap to the fingertips, and <b>_basetorso[_bare|_heel|_bare_heel]_* the same base without them. The arms then
+    // ride the arm bones alone (rig slot skinArms, drawn over the torso), so with the arms raised no torso skin is pulled up with
+    // them. The full base still teaches the rig where each limb is (rig.js bodyParts) and keeps its painted pictures (the yawn): in a
+    // painted pose the body draws its full picture and the arms layer steps aside (paintBase, painted: "hide"). Under a sleeved top
+    // the rig swaps back to the full base (body.full; rig.js armsCover). Missing files keep today's single base.
+    const baseName = pick || "base", torsoName = baseName.replace(/^base/, "basetorso");
+    if (has("basearms") && has(torsoName)) {
+      layers.body = { ...views(b, torsoName), paintBase: `${b}_${baseName}_front.webp`, full: views(b, baseName) };
+      layers.skinArms = { ...views(b, "basearms"), painted: "hide" };
+    }
     // The Stylist's eye shapes and mouths (Cal 11-18: "new hairstyles, eye shapes, mouth"; the layer format agreed with ROOMS):
     // choice.eyeShape (default e0) and choice.mouth (default m0) draw <b>_eyes_<id> (brows and eyes), <b>_eyes_<id>c (eyes closed, for
     // blinks, sleep and laughs), <b>_iris_<id> (the tinted eye colour mask) and <b>_mouth_<id> (mouth and the nose dot; rig slot

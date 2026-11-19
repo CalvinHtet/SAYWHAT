@@ -16,7 +16,8 @@
  ],
  "anchorPad": 38,
  "meshStep": 24,
- "fineSlots": ["top", "arms"],
+ "fineSlots": ["top", "arms", "skinArms"],
+ "armsCoverMax": 0.15,
  "meshStepFine": 12,
  "fineUp": ["body"],
  "slotStretch": {"body": 9},
@@ -193,6 +194,18 @@
   {
    "id": "body",
    "bones": "*"
+  },
+  {
+   "id": "skinArms",
+   "bones": [
+    "uaN",
+    "faN",
+    "hnN",
+    "uaF",
+    "faF",
+    "hnF"
+   ],
+   "skin": true
   },
   {
    "id": "shoes",
