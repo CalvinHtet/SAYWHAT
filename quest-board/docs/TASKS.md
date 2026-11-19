@@ -287,7 +287,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings). Nothing open from QA.
+- Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings). Nothing open from QA.
+  Was: Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings).
   Was: Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings).
   Was: Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings).
   Was: Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings).
@@ -362,6 +363,18 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.26 candidate = release/v1.25 + ROOMS f041b24 + 4c60022 + LEAD abe4e6d (OIL & CANVAS on the Boutique; Cal "Approve OIL &
+  CANVAS"). v1.26 can be cut. QA built that exact set (file patches onto release/v1.25) and a clean v1.25 beside it.
+  - All 82 changed app/data/art/src/tools files are identical to abe4e6d. 2a0a7e3 (the Stylist face split: rig.json, look.js) is not in
+    it and must stay out of v1.26 unless LEAD means to ship it. artcheck: 0 gaps of 355.
+  - The 15 rows in 15_shop.js match shots/pending_art/brands1118/oilcanvas_rows.json (id, slot, name, line; scripted). DROPS.hold oc
+    runs 11-19 to 11-26.
+  - LEAD's ocrows.js, gdrows.js, kprows.js and floors122.js against the v1.25 build: all PASS (floors 11-10..11-22 unchanged, GILDED
+    still first drops Mon 11-23).
+  - On the real rows: brandwear oc, 41 poses: him 15 outfits, her 19, 0 not drawn, 0 icons missing, 0 page errors. barecheck MODE=real:
+    the halter and the smock cover the bust in all 41 (the same counts as the art pass). heelcheck with the slingbacks: the tiptoe bases,
+    floor as before.
+  - Not checked: the Shop cards on screen, a phone.
 - PASS with NOTES (cleared to paint), REGIMENT design review, shots/pending_art/brands1118/regiment.md (c45cedb) (owner: ROOMS).
   - Pass:
     - Nothing plain.
