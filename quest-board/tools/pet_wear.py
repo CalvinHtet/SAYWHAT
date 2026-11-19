@@ -86,6 +86,7 @@ def keyed(rgb, pet):
         tpl = (r > g + .1) & (b > g + .1) & (np.abs(r - b) < .32) & (sat > .3)
     else:
         tpl = (g > r + .1) & (b > r + .1) & (np.abs(g - b) < .3) & (sat > .3)
+        tpl |= (g > r + .06) & (b > r + .12) & (mx < .45)  # the cyan template in shadow (dark teal)
     dark = mx < .3
     # dark outline pixels squeezed between key colour and green belong to the template, not the piece
     edge = dark & ndi.binary_dilation(tpl, iterations=6) & ndi.binary_dilation(grn, iterations=6)
@@ -130,7 +131,7 @@ def cut(sheet, pid, kind, append=False):
         if not n:
             continue
         sz = ndi.sum(a > 0, lab, range(1, n + 1))
-        keep = np.isin(lab, 1 + np.flatnonzero(sz > max(80, .01 * sz.max())))
+        keep = np.isin(lab, 1 + np.flatnonzero(sz > max(80, (.01 if kind == "aura" else .04) * sz.max())))  # stray bits off worn pieces
         ys, xs = np.nonzero(keep)
         y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
         piece = np.dstack([rgb[by + y0:by + y1, bx + x0:bx + x1], np.where(keep[y0:y1, x0:x1], a[y0:y1, x0:x1], 0)])
