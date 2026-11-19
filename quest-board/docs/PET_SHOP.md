@@ -118,16 +118,16 @@ navy-steel with molten amber-gold markings and eyes (not green: the green-screen
 slime plum-violet with hot magenta-pink glow and eyes. Beds follow each accent. A side-by-side sheet with Chopstick and Pluto at Loft
 size goes to QA.
 
-## Clothes per pet (LEAD's proposal, Cal asked "Do they have enough clothes to make them unique?")
+## Clothes per pet (Cal, 2026-11-18: "12 per pet")
 
-Not yet: no pet clothes are painted, and the first draft's pool (about 18) was sized for the two dogs. Split over three pets that is
+Cal approved LEAD's proposal below. Not yet painted: no pet clothes exist, and the first draft's pool (about 18) was sized for the two dogs. Split over three pets that is
 6 each. Proposal: 12 per pet at launch (3 per slot: head, neck or base, body, aura), 36 in all, each made for its own pet's shape;
 each Mon/Thu shuffle shows 6 (2 per pet), so about 6 shuffles before a repeat. More added over time.
 
 ## Questions for Cal (open)
 
 1. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
-2. 12 clothes per pet at launch (36 in all), or a different number?
+
 
 ## Earlier questions (answered or replaced)
 
