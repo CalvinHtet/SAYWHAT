@@ -136,7 +136,7 @@ def cut(sheet, pid, kind, append=False):
         if not n:
             continue
         sz = ndi.sum(a > 0, lab, range(1, n + 1))
-        ok = sz > max(80, (.01 if kind == "aura" else .05) * sz.max())
+        ok = sz > (40 if kind == "aura" else max(80, .05 * sz.max()))  # aura: small flakes and sparks count
         if kind != "aura":
             # a small part on the cell's edge is a sliver of the next cell's painting (cut by the box), not this piece
             rim = np.zeros((bh, bw), bool)
