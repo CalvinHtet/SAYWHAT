@@ -240,7 +240,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (recheck 4c60022): OIL & CANVAS, QA's three FIXes on f041b24 applied: gloves repainted with a fresh design (fitted cream leather, hand-sized, renamed Paint-Stained Leather Gloves), palette pendant repainted about a third the size, oc_smock flagged bare (barecheck please; the V shows a strip of skin above the bust). ROOMS: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; close sheets oilcanvas_fix_m/f.png. Process NOTE taken: a refused prompt gets a fresh design, never a resubmit. Then Cal's approval, then LEAD wires. Next: REGIMENT draft. CHROME free.
+- (QA: DONE on 4c60022, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck 4c60022): OIL & CANVAS, QA's three FIXes on f041b24 applied: gloves repainted with a fresh design (fitted cream leather, hand-sized, renamed Paint-Stained Leather Gloves), palette pendant repainted about a third the size, oc_smock flagged bare (barecheck please; the V shows a strip of skin above the bust). ROOMS: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; close sheets oilcanvas_fix_m/f.png. Process NOTE taken: a refused prompt gets a fresh design, never a resubmit. Then Cal's approval, then LEAD wires. Next: REGIMENT draft. CHROME free.
 - (QA: DONE on f041b24, NOT A PASS yet: three FIXes (gloves, palette size, smock tank on her) and a process NOTE; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck): OIL & CANVAS f041b24 (QA design PASS e5b4684, NOTES applied cc85bab): 15 pieces, brand key "oc", logo_oc, ui_banner_oc; rows shots/pending_art/brands1118/oilcanvas_rows.json; sheets oilcanvas_approval.png, oilcanvas_wear_m/f.png, oilcanvas_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; hatcheck both hats; halter on the bare base. oc_felt lift 90 with its clip moved up. For QA to judge: the gloves read as knit arm-warmers; specks by her arm with the halter in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: REGIMENT draft, the five Street brands, Stylist face art. CHROME free.
 - (QA: DONE on e5b4684, PASS with four NOTES, cleared to paint; answers to the three questions; QA findings) Was WAITING ON QA (design review, no paint yet): OIL & CANVAS draft, shots/pending_art/brands1118/oilcanvas.md (15 pieces, brand key "oc", indigo/cream/cadmium, studio lane apart from OVERPASS's spray tee and chore jacket, no beret; halter bare, slingbacks heel; 3 questions for QA). Then REGIMENT, then the five Street brands; Stylist face art (LEAD's 2a0a7e3 split is in). Done and live in v1.25: GILDED, KODE PINK detail pass. CHROME free.
 - (QA: DONE on fa1864a, NOT A PASS yet: two FIXes (frock sleeves, bustier icon straps), two NOTES; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck): GILDED, 3a10edf + fa1864a (scarf patch). 15 pieces, logo_gd and ui_banner_gd (brand key "gd", CHROME RAIN's Boutique slot); rows shots/pending_art/brands1118/gilded_rows.json; sheet gilded_approval.png + gilded_wear_m/f.png. ROOMS checked: both bodies, 35 poses, 34 outfits, 0 not drawn, 0 page errors; the bustier on the bare base and the mules on the tiptoe base (both injected), 35 poses each, 0 not drawn; close-ups idle, sitBack, stretch, walk2. Painted to QA's trade-dress guard (channel-quilted cap; leaf ornament only; scarf repainted ivory-only when the first came with black scroll ends). Known: the high-tops came out more gold than black; the banner is cropped from the sharp band of a 1:1 image. Not checked: Shop cards, night. Then Cal (batch), then LEAD. CHROME free.
@@ -284,7 +284,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings). Nothing open from QA.
+- Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+  Was: Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings).
   Was: Now (on e5b4684): OIL & CANVAS design review PASS with NOTES (QA findings).
   Was: Now (on 6a0272c): v1.25 live check PASS (QA findings).
   Was: Now (on 6a0272c): v1.25 PASS, can ship (QA findings).
@@ -357,6 +358,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, OIL & CANVAS at 4c60022 (ROOMS's fixes for 739ee5e; rows still injected from oilcanvas_rows.json). The art is done from QA's side;
+  next LEAD wires and prices the rows, and QA checks that commit (owner: LEAD). Pictures: shots/qa/oc2/.
+  - Only the gloves' and the palette's art and icons change, plus items.json oc_smock `bare`.
+  - newwear oc, 41 poses: him 15 outfits, her 19, 0 not drawn, 0 icons missing, 0 page errors. fitsweep oc: 15 pieces, 0 flagged.
+  - Gloves (FIX 1): fitted fingerless leather on the hand, cream with orange tips and an indigo strap; hand-sized in raised-arm poses
+    on both bodies (z_gl_f.jpg, close_m.jpg). New design and prompt, accepted first time (the process NOTE is answered).
+  - Palette Pendant (FIX 2): now a small charm on the cord, about a third of the old size; it no longer reads as a bib.
+  - Smock (FIX 3): `bare` now. barecheck MODE=real, 41 poses: a narrow V of skin from the neck to above the bust, with the sides of the
+    chest covered; no tank (bare_smock.jpg, z_sm_idle.jpg). The halter is unchanged (bust covered in all 41); the denim jacket is a
+    control: 0 px.
+  - Not checked: Shop cards with the real rows (LEAD), night lighting.
 - NOT A PASS yet, OIL & CANVAS painted, f041b24 (rows not wired: oilcanvas_rows.json injected; clean build). Three FIXes, one process
   NOTE; the rest passes (owner: ROOMS). Pictures: shots/qa/oc/.
   - Passes:
