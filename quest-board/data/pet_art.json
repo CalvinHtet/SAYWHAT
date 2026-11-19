@@ -2,7 +2,8 @@
  "_note": [
   "Pet Shop art (ROOMS 2026-11-18). pgx_<pet>_0..10: 0-1 idle A/B, 2-3 move A/B, 4 sit, 5 sleep (no bed), 6 fun move, 7-10 crying. All 11 frames of a pet share one canvas w x h; the ground line is the canvas bottom; every frame's mass centre sits on column cx (so place by cx, not by the canvas centre). Frames face right (flip for left). Floating frames keep their lift inside the canvas: wyvern 2-3 (hover) and 6 (hop), slime 2 (bounce).",
   "bed: pbed_<pet>, same scale as the frames. To show the pet asleep in its bed: draw the bed, then frame 5 with its cx column over the bed's centre and its ground line (canvas bottom) sleepOff px above the bed's bottom edge.",
-  "dogs: Pet Shop clothing anchors on dgx_<dog>_0..3 (stand, step, sit, sleep), frame px from the top-left. head = top of the skull between the ears; neck = collar line at the front of the neck; back = top of the back over the shoulders; aura = the frame's mass centre."
+  "dogs: Pet Shop clothing anchors on dgx_<dog>_0..3 (stand, step, sit, sleep), frame px from the top-left. head = top of the skull between the ears; neck = collar line at the front of the neck; back = top of the back over the shoulders; aura = the frame's mass centre.",
+  "fit (LEAD 2026-11-18, ROOMS's final map settled by eye; QA tests against it): fit.body[f] = the body piece's cell for frame f (a body piece's sheet holds fit.cells in that order; the dogs' sheet holds each dog's cells, Chopstick then Pluto). Head pieces hide in fit.headHide; neck pieces hide where the frame's neck anchor is null. Head and neck pieces are one cell; auras are a back half (under the pet) and a front half (over it)."
  ],
  "pets": {
   "wolf": {
@@ -15,6 +16,11 @@
     "w": 278,
     "h": 177,
     "sleepOff": 40
+   },
+   "fit": {
+    "body": ["stand","stand","stand","stand","sit","sleep","trip","sit","sit","sit","sit"],
+    "cells": ["stand","trip","sit","sleep"],
+    "headHide": [5]
    }
   },
   "wyvern": {
@@ -27,6 +33,11 @@
     "w": 336,
     "h": 194,
     "sleepOff": 20
+   },
+   "fit": {
+    "body": ["stand","stand","glide","hover","sit","sleep","hop","stand","sit","stand","sit"],
+    "cells": ["stand","glide","hover","hop","sit","sleep"],
+    "headHide": [5]
    }
   },
   "slime": {
@@ -39,6 +50,11 @@
     "w": 281,
     "h": 146,
     "sleepOff": 40
+   },
+   "fit": {
+    "body": ["round","round","round","flat","tall","sleep","stretch","round","round","round","flat"],
+    "cells": ["round","tall","stretch","flat","sleep"],
+    "headHide": [5]
    }
   }
  },
@@ -99,5 +115,11 @@
    "aura": [130,90],
    "size": [261,167]
   }
+ },
+ "dogFit": {
+  "body": ["stand","stand","sit","sleep"],
+  "cells": ["stand","sit","sleep"],
+  "perDog": true,
+  "headHide": [3]
  }
 }

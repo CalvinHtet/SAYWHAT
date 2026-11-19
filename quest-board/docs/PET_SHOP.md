@@ -170,16 +170,15 @@ each piece is still one Higgsfield image, but that image holds the piece's pose 
 
 | Pet | Variant: frames |
 |---|---|
-| wolf | stand: 0 1 2 3 6 · sit: 4 7 8 9 10 · sleep: 5 |
-| wyvern | stand: 0 1 · airborne (hover and hop, front-facing): 2 3 6 · sit: 4 7 8 9 10 · sleep: 5 |
-| slime | dome: 0 1 2 4 6 7 8 9 (the tall stretch in 6 uses dome at its anchor) · flat: 3 10 · sleep: 5 |
+| wolf | stand: 0 1 2 3 · trip: 6 · sit: 4 7 8 9 10 · sleep: 5 |
+| wyvern | stand: 0 1 7 9 · glide: 2 · hover: 3 · hop: 6 · sit: 4 8 10 · sleep: 5 |
+| slime | round: 0 1 2 7 8 9 · tall: 4 · stretch: 6 · flat: 3 10 · sleep: 5 |
 | dogs | per dog (Chopstick, Pluto): stand: 0 1 · sit: 2 · sleep: 3 (six cells; every fit covers Pluto's grey vest) |
 
-(ROOMS's map from the painted poses, ab0fe18, agreed by LEAD; it replaces LEAD's first draft.)
+(ROOMS's final map, settled by eye on the cut files with QA's three checks; the fit table in data/pet_art.json is the one source.)
 
-**Head and neck pieces:** one cell, placed on the frame's anchor and turned by the anchor's angle. Nothing hides: every slot shows in
-every frame, the crying splash included. Where a piece cannot sit right in the curled sleep (a tall hat on a tucked head), ROOMS paints it
-a sleep cell instead of hiding it.
+**Head and neck pieces:** one cell, placed on the frame's anchor and turned by the anchor's angle. Head pieces hide in the sleep frame
+(creatures 5, dogs 3); neck pieces hide where the neck anchor is null. Everything else shows in every frame, the crying splash included.
 
 **Auras:** two cells, a back half drawn under the pet and a front half over it, on every frame; the bob and spin are done in code.
 
