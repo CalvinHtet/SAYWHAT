@@ -291,7 +291,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on b1fa777): REGIMENT PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+- Now (on bd7c9f4): REGIMENT rows PASS, held for Cal (QA findings). Nothing open from QA.
+  Was: Now (on b1fa777): REGIMENT PASS, waits on LEAD's rows (QA findings).
   Was: Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings).
   Was: Now (on 268fb31): v1.26 live check PASS (QA findings).
   Was: Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings).
@@ -370,6 +371,16 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, REGIMENT rows bd7c9f4, on release/v1.26 + ROOMS 21c67e7 + b1fa777 + bd7c9f4 (built from file patches, beside a clean v1.26).
+  REGIMENT stays held (DROPS.hold rg from 11-19, until ""), waiting on Cal's approval via ROOMS. When LEAD sets the date, QA rechecks
+  that one line (owner: LEAD).
+  - All 82 changed app/data/art/src/tools files are identical to bd7c9f4; it does not include 2a0a7e3. artcheck: 0 gaps of 370.
+  - The 15 rows match regiment_rows.json (id, slot, name, line, mo/fo; scripted).
+  - LEAD's rgrows.js (SEX=f and m), ocrows, gdrows, kprows and floors122 against the v1.26 build: all PASS (held: floors unchanged;
+    with the hold lifted in-page, live Mon 11-23 with all 15 on the tab).
+  - On the real rows: brandwear rg, 41 poses, 0 not drawn, 0 page errors. barecheck: the mess jacket's bandeau covers the bust in
+    all 41. heelcheck: the stiletto boots on the tiptoe bases. hatcheck: the lifted peaked cap is clean front and back.
+  - Not checked: the Shop cards on screen, a phone. The bare-arm rig note is with LEAD (older than v1.25, per LEAD).
 - PASS, REGIMENT at b1fa777 (rg_cap lift m 90 / f 70, its clip moved up to match; items.json only). The art is done from QA's side;
   next LEAD wires and prices the rows (regiment_rows.json), and QA checks that commit (owner: LEAD).
   - hatcheck, the peaked cap over h1, h2 and h3 on both bodies in 7 poses: the eyes show under the peak in front views, and there is no
