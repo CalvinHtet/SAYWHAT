@@ -1,0 +1,1595 @@
+{
+ "pd_aviator": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 158,
+    "h": 182,
+    "pivot": [
+     81.5,
+     53.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 170,
+    "h": 194,
+    "pivot": [
+     93.3,
+     29.8
+    ]
+   }
+  ]
+ },
+ "pd_bandana": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 158,
+    "h": 144,
+    "pivot": [
+     108.8,
+     64.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 176,
+    "h": 133,
+    "pivot": [
+     143.6,
+     40.9
+    ]
+   }
+  ]
+ },
+ "pd_bowtie": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 96,
+    "h": 80,
+    "pivot": [
+     42.0,
+     30.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 93,
+    "h": 66,
+    "pivot": [
+     64.4,
+     7.7
+    ]
+   }
+  ]
+ },
+ "pd_bucket": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 217,
+    "h": 143,
+    "pivot": [
+     115.6,
+     73.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 219,
+    "h": 140,
+    "pivot": [
+     123.7,
+     42.3
+    ]
+   }
+  ]
+ },
+ "pd_cable": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 219,
+    "h": 123,
+    "pivot": [
+     51.2,
+     12.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 178,
+    "h": 137,
+    "pivot": [
+     40.9,
+     54.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 269,
+    "h": 125,
+    "pivot": [
+     92.4,
+     23.8
+    ]
+   }
+  ]
+ },
+ "pd_poppy": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 183,
+    "h": 82,
+    "pivot": [
+     110.1,
+     33.5
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 186,
+    "h": 70,
+    "pivot": [
+     111.2,
+     5.9
+    ]
+   }
+  ]
+ },
+ "pd_rain": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 265,
+    "h": 137,
+    "pivot": [
+     95.9,
+     25.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 203,
+    "h": 145,
+    "pivot": [
+     65.3,
+     63.0
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 266,
+    "h": 147,
+    "pivot": [
+     84.1,
+     22.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 172,
+    "h": 120,
+    "pivot": [
+     55.1,
+     15.4
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "pluto",
+    "frame": 2,
+    "w": 160,
+    "h": 110,
+    "pivot": [
+     46.1,
+     29.5
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "pluto",
+    "frame": 3,
+    "w": 140,
+    "h": 87,
+    "pivot": [
+     47.0,
+     35.0
+    ]
+   }
+  ]
+ },
+ "pd_studs": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 88,
+    "h": 75,
+    "pivot": [
+     47.5,
+     28.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 84,
+    "h": 63,
+    "pivot": [
+     63.0,
+     9.6
+    ]
+   }
+  ]
+ },
+ "ps_bow": {
+  "kind": "head",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 146,
+    "h": 118,
+    "pivot": [
+     68.6,
+     58.3
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 3,
+    "w": 171,
+    "h": 93,
+    "pivot": [
+     78.2,
+     35.4
+    ]
+   }
+  ]
+ },
+ "ps_cape": {
+  "kind": "body",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 85,
+    "h": 123,
+    "pivot": [
+     136.0,
+     55.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 111,
+    "h": 149,
+    "pivot": [
+     153.1,
+     68.6
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 123,
+    "h": 191,
+    "pivot": [
+     140.2,
+     71.4
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 258,
+    "h": 124,
+    "pivot": [
+     175.3,
+     73.4
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 205,
+    "h": 122,
+    "pivot": [
+     115.1,
+     88.9
+    ]
+   }
+  ]
+ },
+ "ps_comet": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 414,
+    "h": 133,
+    "pivot": [
+     197.4,
+     51.3
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 414,
+    "h": 133,
+    "pivot": [
+     197.4,
+     51.3
+    ]
+   }
+  ]
+ },
+ "ps_crown": {
+  "kind": "head",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 79,
+    "h": 70,
+    "pivot": [
+     25.9,
+     50.3
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 79,
+    "h": 70,
+    "pivot": [
+     25.9,
+     50.3
+    ]
+   }
+  ]
+ },
+ "ps_flames": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 443,
+    "h": 269,
+    "pivot": [
+     215.1,
+     154.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 443,
+    "h": 269,
+    "pivot": [
+     215.1,
+     154.2
+    ]
+   }
+  ]
+ },
+ "ps_float": {
+  "kind": "body",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 259,
+    "h": 99,
+    "pivot": [
+     127.4,
+     14.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 247,
+    "h": 134,
+    "pivot": [
+     124.1,
+     53.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 223,
+    "h": 100,
+    "pivot": [
+     83.3,
+     -8.8
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 285,
+    "h": 117,
+    "pivot": [
+     143.8,
+     27.9
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 279,
+    "h": 104,
+    "pivot": [
+     137.5,
+     13.2
+    ]
+   }
+  ]
+ },
+ "ps_pack": {
+  "kind": "body",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 88,
+    "h": 102,
+    "pivot": [
+     124.3,
+     75.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 216,
+    "h": 104,
+    "pivot": [
+     117.5,
+     90.4
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 189,
+    "h": 100,
+    "pivot": [
+     76.2,
+     57.2
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 144,
+    "h": 113,
+    "pivot": [
+     77.7,
+     103.8
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 143,
+    "h": 107,
+    "pivot": [
+     49.1,
+     114.3
+    ]
+   }
+  ]
+ },
+ "ps_pearls": {
+  "kind": "base",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 214,
+    "h": 112,
+    "pivot": [
+     105.5,
+     57.3
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 197,
+    "h": 103,
+    "pivot": [
+     93.6,
+     100.6
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 170,
+    "h": 93,
+    "pivot": [
+     51.3,
+     125.2
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 208,
+    "h": 99,
+    "pivot": [
+     86.9,
+     40.9
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 192,
+    "h": 112,
+    "pivot": [
+     114.1,
+     69.4
+    ]
+   }
+  ]
+ },
+ "ps_phones": {
+  "kind": "head",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 234,
+    "h": 136,
+    "pivot": [
+     112.8,
+     22.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 3,
+    "w": 213,
+    "h": 116,
+    "pivot": [
+     93.6,
+     25.9
+    ]
+   }
+  ]
+ },
+ "ps_ruffle": {
+  "kind": "base",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 264,
+    "h": 102,
+    "pivot": [
+     136.5,
+     45.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 236,
+    "h": 96,
+    "pivot": [
+     122.1,
+     84.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 202,
+    "h": 80,
+    "pivot": [
+     69.6,
+     98.8
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 277,
+    "h": 89,
+    "pivot": [
+     135.6,
+     27.7
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 122,
+    "h": 69,
+    "pivot": [
+     122.8,
+     33.3
+    ]
+   }
+  ]
+ },
+ "ps_scarf": {
+  "kind": "base",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 236,
+    "h": 118,
+    "pivot": [
+     104.5,
+     42.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 234,
+    "h": 148,
+    "pivot": [
+     95.2,
+     101.1
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 163,
+    "h": 163,
+    "pivot": [
+     47.7,
+     102.9
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 238,
+    "h": 86,
+    "pivot": [
+     111.8,
+     37.3
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 184,
+    "h": 113,
+    "pivot": [
+     110.6,
+     67.8
+    ]
+   }
+  ]
+ },
+ "ps_sparkle": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 464,
+    "h": 175,
+    "pivot": [
+     242.2,
+     102.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 464,
+    "h": 175,
+    "pivot": [
+     242.2,
+     102.4
+    ]
+   }
+  ]
+ },
+ "pv_bomber": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 142,
+    "h": 182,
+    "pivot": [
+     82.9,
+     88.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 145,
+    "h": 149,
+    "pivot": [
+     68.7,
+     123.7
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 121,
+    "h": 127,
+    "pivot": [
+     21.5,
+     107.9
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 158,
+    "h": 136,
+    "pivot": [
+     75.3,
+     111.5
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 149,
+    "h": 143,
+    "pivot": [
+     80.9,
+     96.5
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 185,
+    "h": 127,
+    "pivot": [
+     158.6,
+     45.5
+    ]
+   },
+   {
+    "cell": 6,
+    "pet": "wyvern",
+    "frame": 10,
+    "w": 152,
+    "h": 130,
+    "pivot": [
+     88.4,
+     112.8
+    ]
+   }
+  ]
+ },
+ "pv_coins": {
+  "kind": "neck",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 83,
+    "h": 87,
+    "pivot": [
+     36.7,
+     -9.8
+    ]
+   }
+  ]
+ },
+ "pv_embers": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 486,
+    "h": 415,
+    "pivot": [
+     257.4,
+     228.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 486,
+    "h": 415,
+    "pivot": [
+     257.4,
+     228.8
+    ]
+   }
+  ]
+ },
+ "pv_goggles": {
+  "kind": "head",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 134,
+    "h": 90,
+    "pivot": [
+     37.6,
+     15.5
+    ]
+   }
+  ]
+ },
+ "pv_hornring": {
+  "kind": "head",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 130,
+    "h": 69,
+    "pivot": [
+     43.5,
+     19.7
+    ]
+   }
+  ]
+ },
+ "pv_kerchief": {
+  "kind": "neck",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 120,
+    "h": 135,
+    "pivot": [
+     62.8,
+     14.9
+    ]
+   }
+  ]
+ },
+ "pv_lanterns": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 420,
+    "h": 325,
+    "pivot": [
+     220.3,
+     153.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 420,
+    "h": 325,
+    "pivot": [
+     220.3,
+     153.9
+    ]
+   }
+  ]
+ },
+ "pv_pack": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 162,
+    "h": 94,
+    "pivot": [
+     112.3,
+     93.5
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 179,
+    "h": 106,
+    "pivot": [
+     109.5,
+     122.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 136,
+    "h": 136,
+    "pivot": [
+     1.1,
+     109.1
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 169,
+    "h": 126,
+    "pivot": [
+     116.7,
+     118.7
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 171,
+    "h": 124,
+    "pivot": [
+     118.7,
+     101.9
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 106,
+    "h": 105,
+    "pivot": [
+     62.1,
+     60.5
+    ]
+   },
+   {
+    "cell": 6,
+    "pet": "wyvern",
+    "frame": 10,
+    "w": 102,
+    "h": 119,
+    "pivot": [
+     102.3,
+     112.6
+    ]
+   }
+  ]
+ },
+ "pv_scarf": {
+  "kind": "neck",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 116,
+    "h": 136,
+    "pivot": [
+     59.1,
+     17.1
+    ]
+   }
+  ]
+ },
+ "pv_stars": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 466,
+    "h": 138,
+    "pivot": [
+     237.9,
+     61.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 466,
+    "h": 138,
+    "pivot": [
+     237.9,
+     61.2
+    ]
+   }
+  ]
+ },
+ "pv_vest": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 128,
+    "h": 134,
+    "pivot": [
+     81.1,
+     80.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 120,
+    "h": 132,
+    "pivot": [
+     51.3,
+     113.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 95,
+    "h": 118,
+    "pivot": [
+     1.1,
+     102.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 111,
+    "h": 131,
+    "pivot": [
+     63.3,
+     108.5
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 122,
+    "h": 141,
+    "pivot": [
+     71.3,
+     94.1
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 59,
+    "h": 85,
+    "pivot": [
+     51.9,
+     31.7
+    ]
+   },
+   {
+    "cell": 6,
+    "pet": "wyvern",
+    "frame": 10,
+    "w": 127,
+    "h": 129,
+    "pivot": [
+     89.0,
+     106.3
+    ]
+   }
+  ]
+ },
+ "pv_wizard": {
+  "kind": "head",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 164,
+    "h": 124,
+    "pivot": [
+     71.9,
+     71.6
+    ]
+   }
+  ]
+ },
+ "pw_armour": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 137,
+    "h": 105,
+    "pivot": [
+     33.4,
+     50.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 136,
+    "h": 92,
+    "pivot": [
+     36.4,
+     52.9
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 144,
+    "h": 87,
+    "pivot": [
+     74.5,
+     56.8
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 121,
+    "h": 64,
+    "pivot": [
+     76.4,
+     82.2
+    ]
+   }
+  ]
+ },
+ "pw_aurora": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 410,
+    "h": 176,
+    "pivot": [
+     206.1,
+     91.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 410,
+    "h": 176,
+    "pivot": [
+     206.1,
+     91.1
+    ]
+   }
+  ]
+ },
+ "pw_beanie": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 156,
+    "h": 131,
+    "pivot": [
+     91.4,
+     47.4
+    ]
+   }
+  ]
+ },
+ "pw_cape": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 211,
+    "h": 112,
+    "pivot": [
+     108.0,
+     52.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 233,
+    "h": 102,
+    "pivot": [
+     130.5,
+     78.4
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 175,
+    "h": 118,
+    "pivot": [
+     107.7,
+     60.9
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 121,
+    "h": 93,
+    "pivot": [
+     29.3,
+     75.4
+    ]
+   }
+  ]
+ },
+ "pw_circlet": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 124,
+    "h": 53,
+    "pivot": [
+     66.5,
+     -12.6
+    ]
+   }
+  ]
+ },
+ "pw_cloud": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 468,
+    "h": 474,
+    "pivot": [
+     282.0,
+     163.6
+    ],
+    "pivotAura": [
+     229.5,
+     263.5
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 468,
+    "h": 474,
+    "pivot": [
+     282.0,
+     163.6
+    ],
+    "pivotAura": [
+     229.5,
+     263.5
+    ]
+   }
+  ],
+  "anchor": "head"
+ },
+ "pw_collar": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 124,
+    "h": 72,
+    "pivot": [
+     91.2,
+     39.1
+    ]
+   }
+  ]
+ },
+ "pw_helm": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 135,
+    "h": 104,
+    "pivot": [
+     74.1,
+     42.3
+    ]
+   }
+  ]
+ },
+ "pw_hoodie": {
+  "kind": "body",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 156,
+    "h": 145,
+    "pivot": [
+     46.5,
+     79.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 6,
+    "w": 174,
+    "h": 163,
+    "pivot": [
+     52.9,
+     89.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wolf",
+    "frame": 4,
+    "w": 163,
+    "h": 163,
+    "pivot": [
+     86.9,
+     95.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wolf",
+    "frame": 5,
+    "w": 177,
+    "h": 146,
+    "pivot": [
+     125.1,
+     93.9
+    ]
+   }
+  ]
+ },
+ "pw_ruff": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 145,
+    "h": 107,
+    "pivot": [
+     91.0,
+     46.4
+    ]
+   }
+  ]
+ },
+ "pw_shards": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 436,
+    "h": 274,
+    "pivot": [
+     222.1,
+     160.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 436,
+    "h": 274,
+    "pivot": [
+     222.1,
+     160.1
+    ]
+   }
+  ]
+ },
+ "pw_torc": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 96,
+    "h": 80,
+    "pivot": [
+     63.0,
+     26.9
+    ]
+   }
+  ]
+ }
+}

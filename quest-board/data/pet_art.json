@@ -1,0 +1,169 @@
+{
+ "_note": [
+  "Pet Shop art (ROOMS 2026-11-18). pgx_<pet>_0..10: 0-1 idle A/B, 2-3 move A/B, 4 sit, 5 sleep (no bed), 6 fun move, 7-10 crying. All 11 frames of a pet share one canvas w x h; the ground line is the canvas bottom; every frame's mass centre sits on column cx (so place by cx, not by the canvas centre). Frames face right (flip for left). Floating frames keep their lift inside the canvas: wyvern 2-3 (hover) and 6 (hop), slime 2 (bounce).",
+  "bed: pbed_<pet>, same scale as the frames. To show the pet asleep in its bed: draw the bed, then frame 5 with its cx column over the bed's centre and its ground line (canvas bottom) sleepOff px above the bed's bottom edge.",
+  "dogs: Pet Shop clothing anchors on dgx_<dog>_0..3 (stand, step, sit, sleep), frame px from the top-left. head = top of the skull between the ears; neck = collar line at the front of the neck; back = top of the back over the shoulders; aura = the frame's mass centre.",
+  "fit (LEAD 2026-11-18, ROOMS's final map settled by eye; QA tests against it): fit.body[f] = the body piece's cell for frame f (a body piece's sheet holds fit.cells in that order; the dogs' sheet holds each dog's cells, Chopstick then Pluto). Head pieces hide in fit.headHide; neck pieces hide where the frame's neck anchor is null. Head and neck pieces are one cell; auras are a back half (under the pet) and a front half (over it).",
+  "anchors (LEAD 2026-11-18, measured by eye on a 10 px grid over the cut files; aura = the frame's mass centre, computed): pets.<pet>.anchors[f] = {head:[x,y,deg] (top of the skull between the ears or horns; null where fit.headHide hides it), neck:[x,y,deg] (front of the collar line; for the slime its base band; null where tucked), body:[x,y,deg] (torso centre), aura:[x,y]} in frame px from the top-left; deg turns the piece clockwise. The dogs' head and neck gained a third value, deg (0).",
+  "fit.head (the slime only, LEAD 2026-11-18): the head piece's cell per frame, in fit.headCells order: \"up\" everywhere but the flat frames 3 (squash) and 10 (melt), which take a \"flat\" cell painted for the low body (a single-cell head piece is used as is). Hiding them there would make hats blink on and off every bounce."
+ ],
+ "spots": {"bedroom": [8.9,2.6], "patio": [1.7,2.6]},
+ "pets": {
+  "wolf": {
+   "frames": 11,
+   "w": 308,
+   "h": 324,
+   "cx": 161,
+   "bed": {
+    "id": "pbed_wolf",
+    "w": 278,
+    "h": 177,
+    "sleepOff": 40
+   },
+   "fit": {
+    "body": ["stand","stand","stand","stand","sit","sleep","trip","sit","sit","sit","sit"],
+    "cells": ["stand","trip","sit","sleep"],
+    "headHide": [5]
+   },
+   "anchors": [
+    {"head": [213,78,0], "neck": [218,198,12], "body": [150,212,0], "aura": [160,178]},
+    {"head": [220,72,0], "neck": [222,198,12], "body": [150,212,0], "aura": [161,179]},
+    {"head": [217,78,0], "neck": [220,200,12], "body": [150,217,0], "aura": [161,179]},
+    {"head": [220,75,0], "neck": [225,200,12], "body": [150,217,0], "aura": [161,175]},
+    {"head": [200,75,0], "neck": [205,200,10], "body": [180,240,0], "aura": [160,197]},
+    {"head": null, "neck": null, "body": [190,265,0], "aura": [161,250]},
+    {"head": [180,85,-10], "neck": [190,215,20], "body": [150,232,15], "aura": [161,188]},
+    {"head": [192,75,0], "neck": [195,200,10], "body": [175,240,0], "aura": [160,195]},
+    {"head": [185,78,-5], "neck": [180,205,10], "body": [170,242,0], "aura": [160,201]},
+    {"head": [185,82,0], "neck": [165,215,5], "body": [170,245,0], "aura": [161,203]},
+    {"head": [195,88,10], "neck": [195,215,10], "body": [165,242,0], "aura": [161,208]}
+   ]
+  },
+  "wyvern": {
+   "frames": 11,
+   "w": 373,
+   "h": 394,
+   "cx": 192,
+   "bed": {
+    "id": "pbed_wyvern",
+    "w": 336,
+    "h": 194,
+    "sleepOff": 20
+   },
+   "fit": {
+    "body": ["stand","stand","glide","hover","sit","sleep","hop","stand","sit","stand","paws"],
+    "cells": ["stand","glide","hover","hop","sit","sleep","paws"],
+    "headHide": [5]
+   },
+   "anchors": [
+    {"head": [210,95,0], "neck": [240,205,10], "body": [240,280,0], "aura": [191,240]},
+    {"head": [178,88,0], "neck": [200,205,10], "body": [205,280,0], "aura": [192,231]},
+    {"head": [240,45,0], "neck": [240,160,20], "body": [230,255,20], "aura": [192,178]},
+    {"head": [165,20,0], "neck": [150,135,0], "body": [145,220,0], "aura": [192,162]},
+    {"head": [200,72,0], "neck": [225,185,10], "body": [220,265,0], "aura": [192,238]},
+    {"head": null, "neck": null, "body": [230,295,0], "aura": [192,300]},
+    {"head": [188,72,0], "neck": [230,200,5], "body": [230,280,0], "aura": [192,199]},
+    {"head": [200,92,0], "neck": [215,200,10], "body": [220,285,0], "aura": [191,230]},
+    {"head": [200,78,0], "neck": [225,185,10], "body": [225,280,0], "aura": [192,229]},
+    {"head": [215,85,0], "neck": [235,195,10], "body": [235,295,0], "aura": [191,234]},
+    {"head": [205,85,5], "neck": [225,195,10], "body": [220,290,0], "aura": [191,231]}
+   ]
+  },
+  "slime": {
+   "frames": 11,
+   "w": 316,
+   "h": 291,
+   "cx": 169,
+   "bed": {
+    "id": "pbed_slime",
+    "w": 281,
+    "h": 146,
+    "sleepOff": 40
+   },
+   "fit": {
+    "body": ["round","round","round","flat","tall","sleep","stretch","round","round","round","flat"],
+    "cells": ["round","tall","stretch","flat","sleep"],
+    "headHide": [5],
+    "head": ["up","up","up","flat","up","up","up","up","up","up","flat"],
+    "headCells": ["up","flat"]
+   },
+   "anchors": [
+    {"head": [200,135,0], "neck": [200,260,0], "body": [200,220,0], "aura": [168,204]},
+    {"head": [185,140,0], "neck": [185,265,0], "body": [185,220,0], "aura": [169,184]},
+    {"head": [185,90,0], "neck": [180,215,0], "body": [185,160,0], "aura": [169,158]},
+    {"head": [190,175,0], "neck": [190,270,0], "body": [190,240,0], "aura": [170,227]},
+    {"head": [195,85,0], "neck": [180,255,0], "body": [180,190,0], "aura": [169,183]},
+    {"head": null, "neck": [170,268,0], "body": [170,220,0], "aura": [169,211]},
+    {"head": [160,45,0], "neck": [160,270,0], "body": [160,170,0], "aura": [170,165]},
+    {"head": [205,125,0], "neck": [205,265,0], "body": [205,215,0], "aura": [169,208]},
+    {"head": [195,135,0], "neck": [195,270,0], "body": [195,220,0], "aura": [169,210]},
+    {"head": [190,125,0], "neck": [190,270,0], "body": [190,215,0], "aura": [169,209]},
+    {"head": [230,190,5], "neck": [220,272,0], "body": [215,245,0], "aura": [169,245]}
+   ]
+  }
+ },
+ "dogs": {
+  "dgx_chopstick_0": {
+   "head": [345,75,0],
+   "neck": [322,178,0],
+   "back": [200,148],
+   "aura": [236,145],
+   "size": [444,300]
+  },
+  "dgx_chopstick_1": {
+   "head": [335,72,0],
+   "neck": [335,182,0],
+   "back": [205,148],
+   "aura": [243,149],
+   "size": [438,293]
+  },
+  "dgx_chopstick_2": {
+   "head": [263,72,0],
+   "neck": [258,172,0],
+   "back": [168,198],
+   "aura": [197,178],
+   "size": [342,314]
+  },
+  "dgx_chopstick_3": {
+   "head": [250,52,0],
+   "neck": null,
+   "back": [126,22],
+   "aura": [175,110],
+   "size": [416,222]
+  },
+  "dgx_pluto_0": {
+   "head": [178,22,0],
+   "neck": [192,145,0],
+   "back": [100,132],
+   "aura": [134,152],
+   "size": [258,300]
+  },
+  "dgx_pluto_1": {
+   "head": [182,22,0],
+   "neck": [192,145,0],
+   "back": [102,132],
+   "aura": [138,146],
+   "size": [264,299]
+  },
+  "dgx_pluto_2": {
+   "head": [143,22,0],
+   "neck": [138,147,0],
+   "back": [70,165],
+   "aura": [120,157],
+   "size": [225,303]
+  },
+  "dgx_pluto_3": {
+   "head": [193,20,0],
+   "neck": null,
+   "back": [63,30],
+   "aura": [130,90],
+   "size": [261,167]
+  }
+ },
+ "dogFit": {
+  "body": ["stand","stand","sit","sleep"],
+  "cells": ["stand","sit","sleep"],
+  "perDog": true,
+  "headHide": [3]
+ }
+}
