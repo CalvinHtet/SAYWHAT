@@ -400,6 +400,10 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- QA correction (owner QA): QA passed pd_bowtie and pd_poppy (1d58285) while the navy collar and the navy side bow named in their lines
+  were missing; the cyan key had eaten them. ROOMS found and fixed it in e304a15 (the key now keeps navy). QA missed it because it
+  judged fit and spill, not each piece against its line. From now on every wear-check also ticks each piece's named details and
+  colours against its concept line. Both pieces get rechecked with the dog set.
 - PASS, pw_cloud and pd_rain (3c309e4; owner ROOMS; shots/qa/petclothes3/cloud_3c309e4.png, rain_3c309e4.png):
   - pw_cloud: the bigger flakes now read, and three fall just under the cloud above the head (none on the pup), in stand, sleep and
     crying alike. The stray outline curls are gone. 0 green.
