@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 9c6b5cc): Pet Shop recheck with the Patio dog beds removed and refunded, PASS (QA findings). Waiting on ROOMS: the rest of the dog line.
+- Now (on release/v1.30 98aa14b): v1.30 cut, NOT A PASS yet: text-only FIXes in the letter and seven Shop lines (QA findings). Recheck the text diff when it lands.
+  Was: Now (on 9c6b5cc): Pet Shop recheck with the Patio dog beds removed and refunded, PASS (QA findings).
   Was: Now (on 9d925a5): Pet Shop recheck, NOT A PASS: two Patio FIXes (QA findings).
   Was: Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings).
   Was: Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings).
@@ -403,6 +404,40 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, v1.30 cut (release/v1.30 98aa14b; owner LEAD). Everything works; the hold is for text only: the letter and seven Shop
+  lines. Pictures and scripts: shots/qa/v130/.
+  - Cut: release/v1.29 + b95a995 + 98aa14b + APPV 130. Only pet files, the letter (29q_news.js) and APPV change, with no Stylist split
+    (look.js and rig.json as in v1.29) and no shots. Every changed file under app, src, data, art and tools matches qa-local except
+    30_app_b.js (APPV only); pd_cable is held out of the cut but kept on qa-local. 153 pet art files are added (33 frames, 3 beds,
+    117 cells, each matching pet_clothes.json). Plain and web builds clean, web 3,770 with version.txt, APPV 130, artcheck 0 gaps.
+    Rollback adf0f80 changes only APPV, 130 to 131.
+  - Rerun by QA on 98aa14b, all PASS:
+    - LEAD's petshop.js for wolf, wyvern and slime, and petdrops.js (dogs: 7 pieces, 1-2 a drop, no repeats running).
+    - dbedcheck: the Patio dog beds are not drawn and not listed.
+    - pbref: the refund is paid once, and two reloads keep the same pbref. The script's two "BAD" lines are its own over-strict coin
+      check catching the +150 room income.
+    - Compositor: 452 piece-frames match the rule; the cloud's head turn matches pet_wear.py.
+  - pd_bowtie and pd_poppy (ROOMS e304a15): PASS on both dogs in all 4 frames (qa2_dogs.png, bp_cells.png). The bowtie has its navy
+    collar, cherry gingham bow and brass bell; the poppy crown has cherry poppies with navy centres, tan twine and the navy bow.
+  - Line tick, all 43 shipped pieces against their Shop lines (lines_*.png; QA d7fd35e's promise): every piece shows its main details.
+    FIX (LEAD, text in 29zz_pets.js PCNAME), seven lines promise what the art no longer shows:
+    - pw_helm "rune-etched brow band": the band is waves (ROOMS took the runes out as letter-like).
+    - pv_embers "faint curls of warm smoke": no smoke (repainted solid).
+    - pv_lanterns "a warm glow and a faint gold trail behind each": small gold sparkles only.
+    - pv_scarf "fringed ends flying": they hang from the knot (QA's own FIX).
+    - ps_comet "tiny pink sparkles shed along the loop": none, only a few gold dashes.
+    - ps_sparkle "a faint plum glow behind them": no glow.
+    - ps_pack "a tiny keyring": none visible.
+    Reword each to what is painted. Every piece still names two or more details.
+  - Letter {v:130} (l130_list.png, phone.png; isMobile 390 px, 3x, non-local requests blocked): a v1.29 player gets "What’s new in v1.30"
+    in the inbox. Opening it pays 500 once (1,000 to 1,500, unchanged on a second open), it fits the width (356 of 390 px), 0 page
+    errors. No brands, dates or anything to come. FIX (LEAD):
+    - "and the beds they left outside were paid back": Cal said "no message of refund necessary", so drop that half and keep "The dogs
+      sleep indoors now".
+    - NOTE: "A Stylist for new cuts, colours and eyes": the Stylist sells eye colours. "eye colours" is exact and does not hint at the
+      eye shapes still to come (the held Stylist split).
+  - Phone size (emulated iPhone width, not a real phone): the adopt and give-up screens fit, and the crying pet shows its clothes and
+    aura. A real phone is still not checked.
 - PASS, Pet Shop recheck 5eb9ca2 + 9c6b5cc (clean builds; owner LEAD; pictures and scripts shots/qa/petshop3/). Not a release yet:
   the dog line is still being painted.
   - petshop.js, rerun by QA: PASS for all three creatures, including LEAD's new refund check.
