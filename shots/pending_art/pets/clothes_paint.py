@@ -47,7 +47,7 @@ P = [
  ("pd_bowtie", "dogs", "neck", "a navy collar round each dog's neck with a cherry gingham bow tie at the front and a small brass bell"),
  ("pd_bandana", "dogs", "neck", "a cream bandana round each dog's neck with cherry paw prints and a twisted rope edge, knotted at the side"),
  ("pd_studs", "dogs", "neck", "a cherry leather collar round each dog's neck with a row of brass studs and a blank brass bone-shaped tag at the front"),
- ("pd_puffer", "dogs", "body", "a cherry quilted puffer vest fitted to each dog in each pose, navy lining, a leash loop on the back and a cream zip pull; it covers the poodle's whole little vest; head, legs and tail free"),
+ ("pd_fleece", "dogs", "body", "a cherry and navy check fleece coat on the dog's back and chest in each pose, with a cream sherpa collar, two navy toggles and a leash loop on the back; it covers the whole little vest the dog wears; head, legs and tail free"),
  ("pd_rain", "dogs", "body", "a mustard rain slicker fitted to each dog in each pose with a little hood down on the back, toggle buttons and a cream reflective stripe; it covers the poodle's whole little vest; head, legs and tail free"),
  ("pd_cable", "dogs", "body", "a navy cable-knit sweater fitted to each dog in each pose with a cream rolled neck and a cherry heart patch on the side; it covers the poodle's whole little vest; head, legs and tail free"),
  ("pd_hearts", "dogs", "aura", "about eight small separate cherry and cream hearts drifting round each dog in a wide low oval at mid height, spaced far apart, a few with a navy stitched outline like felt patches; a few behind and a few in front low down, sparse, never across the eyes or face"),

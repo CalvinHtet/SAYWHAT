@@ -72,7 +72,7 @@ fine here (the magenta-body rule is only for people's clothes).
 | pd_bowtie | neck | Gingham Bow-Tie Collar | A navy collar with a cherry gingham bow tie and a small brass bell. |
 | pd_bandana | neck | Paw-Print Rope Bandana | A cream bandana with cherry paw prints and a twisted rope edge, knotted at the side. |
 | pd_studs | neck | Studded Leather Collar | Cherry leather with a row of brass studs and a blank brass bone-shaped tag at the front. |
-| pd_puffer | body | Quilted Puffer Vest | A cherry quilted puffer vest with navy lining, a leash loop on the back and a cream zip pull. |
+| pd_fleece | body | Check Fleece Coat | A cherry and navy check fleece coat with a cream sherpa collar, two navy toggles and a leash loop on the back. (Was pd_puffer: Higgsfield refused it as NSFW on 11-18, a false positive; the rule is a new design, never a resubmit.) |
 | pd_rain | body | Mustard Rain Slicker | A mustard rain slicker with a little hood, toggle buttons and a cream reflective stripe. |
 | pd_cable | body | Cable-Knit Turtleneck | A navy cable-knit sweater with a cream rolled neck and a cherry heart patch on the side. |
 | pd_hearts | aura | Floating Hearts | Small cherry and cream hearts drifting up round the dog, a few with a navy stitched outline like felt patches. |
