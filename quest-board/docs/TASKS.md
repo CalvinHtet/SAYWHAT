@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: taken by ROOMS (pet fixes: wyvern fun frame, QA d2f4bfb; 2026-11-18)
+CHROME: free (ROOMS done with the pet fixes, 2026-11-18)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -244,6 +244,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
+- WAITING ON QA (c81d0de, recheck): QA d2f4bfb's two FIXes applied: wyvern frame 6 repainted (happy hop, one tail, neck; only that cell changed), slime olive spill recoloured (olive.js 0 on every frame). Bed spots after the kennel-row note: Bedroom window corner x 8.9 y 2.6 (beds/); Patio: no spot of its own fully furnished, LEAD takes the options to Cal (lounge chair moves fail; bed in the lounge chair's spot works with a supersede). Next: 48 clothing concepts to QA once frames pass; base arm-gap repaint. CHROME free.
 - (QA: DONE on e82a602, NOT A PASS: two FIXes, wyvern frame 6 and the slime tail tips; the rest PASS; QA findings) Pet Shop final frames. Cal: "Approve both" + each pet its own colour (wolf charcoal/icy cyan, wyvern navy/amber, slime plum/hot pink). art/app/pgx_<pet>_0..10 + pbed_<pet>, data/pet_art.json (canvas, cx, bed sleepOff, dog anchors), tools/pet_cut.py (green key only). Sheets: shots/pending_art/pets/pets_final_frames.png, pets_final_sizes(_loft).png, notes at the end of pets_concept.md. Wolf: flame, paw marks and mist in every frame incl. crying; den is a low open bed. Bedroom bed spot x 0.15 y 6.55 (beds/); Patio has NO clean spot fully furnished (LEAD: layout call). Next: 48 clothing concepts (pets_clothes.md) to QA after this passes; base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
 - Pet Shop final frames (Cal 2026-11-18: "Approve both", the pet concepts and REGIMENT's sheet): painting 11 front frames per pet to LEAD's list (wolf pup, void wyvern, fox-slime), the wolf's crying frames with flame, paw marks and mist, the den about half as tall; then the Bedroom and Patio beds after a free-floor check; QA first. REGIMENT: Cal approved, told LEAD (hold can go). CHROME taken.
 - Pet concepts: QA PASS with NOTES; NOTES applied (wolf flame and paw marks in every pose, wyvern floor nest, slime bed not a donut; the wolf crying edit was refused by the filter and not resubmitted, the final frames carry it). LEAD's frame list recorded in pets_concept.md (11 front frames per pet). Next: final frames once Cal has seen the concepts. CHROME free.
