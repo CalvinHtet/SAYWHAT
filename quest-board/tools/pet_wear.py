@@ -175,7 +175,7 @@ def cut(sheet, pid, kind, append=False):
     p = os.path.join(ROOT, "data", "pet_clothes.json")
     d = json.load(open(p)) if os.path.exists(p) else {}
     keep = {k2: v for k2, v in d.get(pid, {}).items() if k2 not in ("kind", "pet", "cells")} if append else {}
-    d[pid] = dict({"kind": kind, "pet": pet, "cells": out}, **keep)
+    d[pid] = dict({"kind": kind, "pet": "dogs" if pet in ("chopstick", "pluto") else pet, "cells": out}, **keep)  # a per-dog sheet still makes a dog-line piece
     json.dump(dict(sorted(d.items())), open(p, "w"), indent=1)
 
 
