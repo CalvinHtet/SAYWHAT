@@ -1,0 +1,103 @@
+{
+ "_note": [
+  "Pet Shop art (ROOMS 2026-11-18). pgx_<pet>_0..10: 0-1 idle A/B, 2-3 move A/B, 4 sit, 5 sleep (no bed), 6 fun move, 7-10 crying. All 11 frames of a pet share one canvas w x h; the ground line is the canvas bottom; every frame's mass centre sits on column cx (so place by cx, not by the canvas centre). Frames face right (flip for left). Floating frames keep their lift inside the canvas: wyvern 2-3 (hover), slime 2 (bounce).",
+  "bed: pbed_<pet>, same scale as the frames. To show the pet asleep in its bed: draw the bed, then frame 5 with its cx column over the bed's centre and its ground line (canvas bottom) sleepOff px above the bed's bottom edge.",
+  "dogs: Pet Shop clothing anchors on dgx_<dog>_0..3 (stand, step, sit, sleep), frame px from the top-left. head = top of the skull between the ears; neck = collar line at the front of the neck; back = top of the back over the shoulders; aura = the frame's mass centre."
+ ],
+ "pets": {
+  "wolf": {
+   "frames": 11,
+   "w": 308,
+   "h": 324,
+   "cx": 161,
+   "bed": {
+    "id": "pbed_wolf",
+    "w": 278,
+    "h": 177,
+    "sleepOff": 40
+   }
+  },
+  "wyvern": {
+   "frames": 11,
+   "w": 359,
+   "h": 395,
+   "cx": 176,
+   "bed": {
+    "id": "pbed_wyvern",
+    "w": 336,
+    "h": 194,
+    "sleepOff": 20
+   }
+  },
+  "slime": {
+   "frames": 11,
+   "w": 317,
+   "h": 291,
+   "cx": 170,
+   "bed": {
+    "id": "pbed_slime",
+    "w": 281,
+    "h": 146,
+    "sleepOff": 40
+   }
+  }
+ },
+ "dogs": {
+  "dgx_chopstick_0": {
+   "head": [345,75],
+   "neck": [322,178],
+   "back": [200,148],
+   "aura": [236,145],
+   "size": [444,300]
+  },
+  "dgx_chopstick_1": {
+   "head": [335,72],
+   "neck": [335,182],
+   "back": [205,148],
+   "aura": [243,149],
+   "size": [438,293]
+  },
+  "dgx_chopstick_2": {
+   "head": [263,78],
+   "neck": [258,172],
+   "back": [168,198],
+   "aura": [197,178],
+   "size": [342,314]
+  },
+  "dgx_chopstick_3": {
+   "head": [250,52],
+   "neck": [246,32],
+   "back": [126,22],
+   "aura": [175,110],
+   "size": [416,222]
+  },
+  "dgx_pluto_0": {
+   "head": [178,22],
+   "neck": [192,145],
+   "back": [100,132],
+   "aura": [134,152],
+   "size": [258,300]
+  },
+  "dgx_pluto_1": {
+   "head": [182,22],
+   "neck": [192,145],
+   "back": [102,132],
+   "aura": [138,146],
+   "size": [264,299]
+  },
+  "dgx_pluto_2": {
+   "head": [143,22],
+   "neck": [138,147],
+   "back": [70,165],
+   "aura": [120,157],
+   "size": [225,303]
+  },
+  "dgx_pluto_3": {
+   "head": [193,20],
+   "neck": [130,100],
+   "back": [63,30],
+   "aura": [130,90],
+   "size": [261,167]
+  }
+ }
+}

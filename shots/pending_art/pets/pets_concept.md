@@ -50,3 +50,32 @@ pet_slime_cry_beds.png (tufted indigo square cushion). Not applied in a sheet: t
 Higgsfield's filter (a false positive); per the rule it was not resubmitted. pet_wolf_cry_beds.png keeps the earlier crying frames
 and the taller den; the final frames will carry the flame, paw marks and mist in all four crying frames, and the final den will be
 about half as tall.
+
+## Final frames (ROOMS, 2026-11-18): painted, cut, for QA
+
+Cal 2026-11-18: "Approve both" (the concepts; REGIMENT's sheet). Cal (via LEAD) the same day: "can we make them all a slightly
+different color so they look unique and different?" So each pet has its own colour: wolf pup charcoal with icy cyan flame, eyes,
+paw marks (no violet); wyvern navy steel with molten amber-gold markings and eyes (LEAD's neon green is impossible: green keys out,
+and QA banned green eyes on it); fox-slime plum with hot pink eyes, sparkles and tail tip.
+
+One Higgsfield sheet per pet (12 cells, 4 x 3, flat green), then edits of that same sheet, nothing reworded around a filter:
+- wolf: tail flame added where it was missing (trot B, sit, trip, the four crying frames, dim but lit), the den lowered (it came
+  back as a low open round bed, no hood), frame 5 without a bed.
+- wyvern: hover A and sit redrawn (were standing, facing left), frame 5 without the nest.
+- slime: idle B got its tail back, the bounce and the stretch lost stray legs and arms, frame 5 without the cushion.
+Cut by quest-board/tools/pet_cut.py (keys green only, no magenta key; despill to max(r,b); specks dropped; the slime's green rim
+cleaned with --edgefix 5; left-facing slime cells mirrored: 0, 4, 8, 9). Sheets kept in final/sheet_<pet>.png.
+
+Files: art/app/pgx_<pet>_0..10.webp (11 frames per pet, one canvas each) and pbed_<pet>.webp; data/pet_art.json (canvas, the
+cx column, bed size and sleepOff, the dog anchors). Sizes against the dogs (pets_final_sizes.png, _loft.png at about room size):
+the pup about the dogs' height (320 px with flames), the wyvern a little taller (340), the slime a little smaller (195).
+Bed fit (sleep frame over its bed): wolf 40 px, wyvern 20, slime 40 above the bed's bottom edge.
+Sheet: pets_final_frames.png (every frame per pet on its ground line, the bed, the pet in its bed).
+
+Known, for QA to judge: the wolf's mist is translucent teal over the fur (it came painted that way, keyed clean); a faint warm
+tint stays on two of the slime's tail tips (idle B, squash); the wyvern's hover A dangles its tail to the ground line; the trip
+and wobble frames keep their little motion lines.
+
+Beds in the rooms (free-floor check, everything bought, beds/): Bedroom: a pet corner at x 0.15, y 6.55 against the left wall by
+the mirror, clear of the mirror and the dog bed. Patio: no clean spot when fully furnished: the front row clips the lounge chair,
+the back-left corner hides behind the egg swing, the right rail falls off the floor. Needs a layout call (LEAD, maybe Cal).
