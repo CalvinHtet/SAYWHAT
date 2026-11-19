@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: ROOMS (pet concept sheets on Higgsfield, Unlimited, 2026-11-18)
+CHROME: free (ROOMS done with the pet concept sheets, 2026-11-18)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -243,6 +243,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
+- WAITING ON QA (design review, concepts only): Pet Shop creatures (LEAD's messages, docs/PET_SHOP.md): shots/pending_art/pets/pets_concept.md and pets_concept_sheet.png: shadow wolf pup, void wyvern, shadow fox-slime; poses, a 4-frame crying loop each, Bedroom and Patio beds (den cushion, perch nest, low pillow). No final frames until QA and Cal's open questions. CHROME free.
 - READY for LEAD (QA PASS on b1fa777): wire REGIMENT (Boutique, brand "rg", 15 rows from shots/pending_art/brands1118/regiment_rows.json; logo_rg, ui_banner_rg; art and items.json in 21c67e7 + b1fa777). WAITING ON CAL: approve the painted sheet regiment_approval.png (ROOMS asked 2026-11-18); hold it until he does. Next for ROOMS: pet concept sheets. CHROME free.
 - (QA: DONE on b1fa777, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck b1fa777): REGIMENT, QA's FIX on 21c67e7 applied: rg_cap lift {m 90, f 70}, clip moved to match; hatcheck rerun, eyes clear on h1-h3 both bodies, no bald band from behind (regiment_cap_hatcheck.png). Then Cal's approval, then LEAD wires. Next: pet concept sheets. CHROME free.
 - (QA: DONE on 21c67e7, NOT A PASS yet: the peaked cap hides the eyes (FIX); the waistcoat's arm shards are the rig's (NOTE to LEAD); boots fine; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
