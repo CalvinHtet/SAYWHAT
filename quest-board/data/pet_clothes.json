@@ -1,4 +1,93 @@
 {
+ "pv_bomber": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 142,
+    "h": 182,
+    "pivot": [
+     82.9,
+     88.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 145,
+    "h": 149,
+    "pivot": [
+     68.7,
+     123.7
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 121,
+    "h": 127,
+    "pivot": [
+     21.5,
+     107.9
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 158,
+    "h": 136,
+    "pivot": [
+     75.3,
+     111.5
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 149,
+    "h": 143,
+    "pivot": [
+     80.9,
+     96.5
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 185,
+    "h": 127,
+    "pivot": [
+     158.6,
+     45.5
+    ]
+   }
+  ]
+ },
+ "pv_coins": {
+  "kind": "neck",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 83,
+    "h": 87,
+    "pivot": [
+     36.7,
+     -9.8
+    ]
+   }
+  ]
+ },
  "pv_goggles": {
   "kind": "head",
   "pet": "wyvern",
@@ -33,6 +122,95 @@
    }
   ]
  },
+ "pv_kerchief": {
+  "kind": "neck",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 120,
+    "h": 135,
+    "pivot": [
+     62.8,
+     14.9
+    ]
+   }
+  ]
+ },
+ "pv_pack": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 162,
+    "h": 94,
+    "pivot": [
+     112.3,
+     93.5
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 179,
+    "h": 106,
+    "pivot": [
+     109.5,
+     122.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 136,
+    "h": 136,
+    "pivot": [
+     1.1,
+     109.1
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 169,
+    "h": 126,
+    "pivot": [
+     116.7,
+     118.7
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 171,
+    "h": 124,
+    "pivot": [
+     118.7,
+     101.9
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 106,
+    "h": 105,
+    "pivot": [
+     62.1,
+     60.5
+    ]
+   }
+  ]
+ },
  "pv_scarf": {
   "kind": "neck",
   "pet": "wyvern",
@@ -46,6 +224,78 @@
     "pivot": [
      233.5,
      145.7
+    ]
+   }
+  ]
+ },
+ "pv_vest": {
+  "kind": "body",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 128,
+    "h": 134,
+    "pivot": [
+     81.1,
+     80.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 2,
+    "w": 120,
+    "h": 132,
+    "pivot": [
+     51.3,
+     113.5
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "wyvern",
+    "frame": 3,
+    "w": 95,
+    "h": 118,
+    "pivot": [
+     1.1,
+     102.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "wyvern",
+    "frame": 6,
+    "w": 111,
+    "h": 131,
+    "pivot": [
+     63.3,
+     108.5
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "wyvern",
+    "frame": 4,
+    "w": 122,
+    "h": 141,
+    "pivot": [
+     71.3,
+     94.1
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "wyvern",
+    "frame": 5,
+    "w": 59,
+    "h": 85,
+    "pivot": [
+     51.9,
+     31.7
     ]
    }
   ]
