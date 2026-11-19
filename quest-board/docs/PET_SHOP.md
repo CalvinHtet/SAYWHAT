@@ -197,3 +197,10 @@ frame's anchor and turns by (anchor deg of the frame) - (anchor deg of the cell'
 Chopstick stand/sit/sleep then Pluto's, auras 4). An aura with `"anchor": "head"` (pw_cloud) sits on the head anchor, and on the aura
 anchor where the head anchor is null (sleep): its cells carry `pivot` (for the head anchor) and `pivotAura` (for the
 fallback). `tools/pet_wear.py check <id> <out.png>` is the placement reference the code matches.
+
+## Patio bed (Cal, 2026-11-18: "Yes, replace it")
+
+With the Patio fully furnished there is no clean free spot (ROOMS's tries: the dog-bed row reads as a kennel, moving the lounge chair
+pushes it into the telescope, the back corner hides behind the egg swing, the right rail is off the floor). Cal chose the creature's bed
+at 4.25, 3.5 by the fire, in place of the white lounge chair: once a creature (and so its bed) is owned, the lounge chair is superseded
+there; the egg chair stays. The Bedroom bed goes in the window corner at 8.9, 2.6.
