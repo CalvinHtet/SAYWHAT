@@ -1,4 +1,21 @@
 {
+ "pv_wizard": {
+  "kind": "head",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 216,
+    "h": 159,
+    "pivot": [
+     96.8,
+     77.6
+    ]
+   }
+  ]
+ },
  "pw_armour": {
   "kind": "body",
   "pet": "wolf",
@@ -45,6 +62,34 @@
     "pivot": [
      76.4,
      82.2
+    ]
+   }
+  ]
+ },
+ "pw_aurora": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 410,
+    "h": 176,
+    "pivot": [
+     206.1,
+     91.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 410,
+    "h": 176,
+    "pivot": [
+     206.1,
+     91.1
     ]
    }
   ]
@@ -129,6 +174,34 @@
     "pivot": [
      106.1,
      -12.6
+    ]
+   }
+  ]
+ },
+ "pw_cloud": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 388,
+    "h": 362,
+    "pivot": [
+     200.2,
+     267.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 388,
+    "h": 362,
+    "pivot": [
+     200.2,
+     267.1
     ]
    }
   ]
@@ -230,6 +303,34 @@
     "pivot": [
      91.0,
      46.4
+    ]
+   }
+  ]
+ },
+ "pw_shards": {
+  "kind": "aura",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 393,
+    "h": 148,
+    "pivot": [
+     204.3,
+     65.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 393,
+    "h": 148,
+    "pivot": [
+     204.3,
+     65.6
     ]
    }
   ]
