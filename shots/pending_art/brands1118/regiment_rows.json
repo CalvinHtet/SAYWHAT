@@ -1,0 +1,186 @@
+[
+ [
+  "gx_rg_cap",
+  "a_hat",
+  "Cord Peaked Cap",
+  1100,
+  1,
+  "Navy wool, scarlet band, brass chin cord, a knot crest.",
+  {
+   "gar": "rg_cap",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_side",
+  "a_hat",
+  "Piped Side Cap",
+  950,
+  1,
+  "Navy side cap worn tilted, scarlet piping, brass buttons.",
+  {
+   "gar": "rg_side",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_cord",
+  "a_acc",
+  "Brass Aiguillette",
+  1000,
+  1,
+  "Looped brass cords from a scarlet shoulder knot.",
+  {
+   "gar": "rg_cord",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_sash",
+  "a_acc",
+  "Scarlet Parade Sash",
+  950,
+  1,
+  "Scarlet silk across the body, domed buckle, brass fringe.",
+  {
+   "gar": "rg_sash",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_gloves",
+  "a_acc",
+  "Gauntlet Gloves",
+  950,
+  1,
+  "Ivory leather, navy gauntlet cuffs, scarlet piping.",
+  {
+   "gar": "rg_gloves",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_jacket",
+  "a_top",
+  "Frogged Officer Jacket",
+  1900,
+  1,
+  "Navy wool, brass frogging, scarlet collar and cuffs.",
+  {
+   "gar": "rg_jacket",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_capelet",
+  "a_top",
+  "Capelet Tunic",
+  1900,
+  1,
+  "Fitted navy tunic, scarlet-lined capelet, brass chain clasp.",
+  {
+   "gar": "rg_capelet",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_mess",
+  "a_top",
+  "Cropped Mess Jacket",
+  1700,
+  1,
+  "Scarlet, open over a navy bandeau, satin lapels.",
+  {
+   "gar": "rg_mess",
+   "b": "rg",
+   "fo": 1
+  }
+ ],
+ [
+  "gx_rg_vest",
+  "a_top",
+  "Braided Waistcoat",
+  1700,
+  1,
+  "Sleeveless navy on bare skin, scarlet piping, brass braid.",
+  {
+   "gar": "rg_vest",
+   "b": "rg",
+   "mo": 1
+  }
+ ],
+ [
+  "gx_rg_breeches",
+  "a_pants",
+  "Stripe Riding Breeches",
+  1500,
+  1,
+  "Navy jodhpur cut, scarlet stripe, brass knee buttons.",
+  {
+   "gar": "rg_breeches",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_trouser",
+  "a_pants",
+  "Scarlet Dress Trousers",
+  1500,
+  1,
+  "Slim scarlet wool, navy double stripe, brass tabs.",
+  {
+   "gar": "rg_trouser",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_skirt",
+  "a_pants",
+  "Frogged Pencil Skirt",
+  1500,
+  1,
+  "Navy pencil, brass frogging, scarlet hem, back slit.",
+  {
+   "gar": "rg_skirt",
+   "b": "rg",
+   "fo": 1
+  }
+ ],
+ [
+  "gx_rg_boot",
+  "a_shoes",
+  "Tall Riding Boots",
+  1700,
+  1,
+  "Black patent, scarlet top band, brass ankle buckle.",
+  {
+   "gar": "rg_boot",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_spat",
+  "a_shoes",
+  "Spat Brogues",
+  1600,
+  1,
+  "Black wingtips under navy spats, brass buttons.",
+  {
+   "gar": "rg_spat",
+   "b": "rg"
+  }
+ ],
+ [
+  "gx_rg_stiletto",
+  "a_shoes",
+  "Officer Stiletto Boots",
+  1700,
+  1,
+  "Navy patent, brass side buttons, scarlet heel.",
+  {
+   "gar": "rg_stiletto",
+   "b": "rg",
+   "fo": 1
+  }
+ ]
+]
