@@ -79,3 +79,20 @@ and wobble frames keep their little motion lines.
 Beds in the rooms (free-floor check, everything bought, beds/): Bedroom: a pet corner at x 0.15, y 6.55 against the left wall by
 the mirror, clear of the mirror and the dog bed. Patio: no clean spot when fully furnished: the front row clips the lounge chair,
 the back-left corner hides behind the egg swing, the right rail falls off the floor. Needs a layout call (LEAD, maybe Cal).
+
+QA d2f4bfb (NOT A PASS, two FIXes) applied:
+- Wyvern frame 6 (two spade tails, head floating without a neck): repainted as a happy hop, right way up, facing right, wings wide,
+  neck showing, one tail with one spade. An edit of the same sheet; only that cell changed (mean pixel change per cell: 36 there,
+  3-4 elsewhere, which is re-encode noise). Floats like the hovers (--float 2,3,6). New canvas 373 x 394, cx 192 (pet_art.json).
+- Slime olive tail tips: pet_cut.py --edgefix now recolours any pixel whose green beats its blue (olive, khaki, tan; near the
+  edge also dusty rose-brown) from the nearest clean solid pixel, and drops faint ones (the green floor shadow under a glow).
+  QA's olive.js reads 0 on every slime frame (and still 0 on the wolf). Left: a soft mauve shadow under the tail tip on sit and
+  sleep (pink over plum, not spill).
+
+Bed spots, redone after QA's kennel-row note (LEAD: its own spot, not lined up with the dog beds), beds/:
+- Bedroom: the window corner, x 8.9, y 2.6 (bedroom_petbed_window_8.9_2.6.png): clear of the doormat, the desk chair and the path
+  from the Patio door, far from the dog beds. 0.15, 6.55 is out (kennel row).
+- Patio: no clean spot of its own when fully furnished. Moving the lounge chair right (0.6 and 0.9) pushes it off the bottom of the
+  view toward the telescope and still lines the pet bed up with the dog beds. The one workable option needs a supersede: the pet
+  bed takes the lounge chair's spot (4.25, 3.5) and the chair goes (it only shows once the egg swing is bought); its front edge
+  is cut by the view's bottom, as the chair's was. LEAD to take it to Cal.

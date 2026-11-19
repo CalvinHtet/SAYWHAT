@@ -8,8 +8,8 @@ and pbed_<pet>.webp. All 11 frames share one canvas and one ground line (the bot
 (frame 0 is <height> px tall) and are placed by their mass centre, so clothing anchors measured once per frame hold.
 Every frame stands on the ground line, except --float cells (hover, bounce), which keep their height above their
 row's first cell's feet. --flip mirrors cells that face left
-(cell numbers as above). --edgefix N cleans a green rim off glow edges (only for pets with no green-leaning
-colour at their edges: the slime). The bed uses the same scale, trimmed tight.
+(cell numbers as above). --edgefix N cleans a green rim off glow edges and recolours olive or khaki spill (only for a pet with no
+colour whose green beats its blue: the slime). The bed uses the same scale, trimmed tight.
 """
 import json
 import os
@@ -58,6 +58,15 @@ def main():
         spill = np.clip((a[..., 1] - a[..., 2] - 10) / 70, 0, 1) * band
         alpha = alpha * (1 - spill)
         a[..., 1] = np.where(band, np.minimum(a[..., 1], a[..., 2]), a[..., 1])
+        # olive: pink blended with green reads khaki once green is capped; within 2N px of the background, a pixel whose
+        # green still beats its blue takes the colour of the nearest clean solid pixel (alpha stays)
+        o = rgb.astype(float)
+        bad = (alpha > .02) & (((o[..., 1] > o[..., 2] + 8) & ndi.binary_dilation(alpha < .5, iterations=2 * n))
+               | ((o[..., 1] >= o[..., 2] - 12) & (o[..., 0] > o[..., 2] + 30) & ndi.binary_dilation(alpha < .5, iterations=2 * n)) | (o[..., 1] > o[..., 2] + 12) | ((o[..., 1] >= o[..., 2] - 5) & (o[..., 0] > o[..., 2] + 25)))  # near the edge, or olive, khaki or tan anywhere
+        good = (alpha >= .5) & ~bad
+        _, (iy, ix) = ndi.distance_transform_edt(~good, return_indices=True)
+        a[bad] = a[iy[bad], ix[bad]]
+        alpha = np.where(bad & (alpha < .8), 0, alpha)  # a faint smudge (green floor shadow under a glow) goes
         rgb = a.astype(np.uint8)
     H, W = alpha.shape
     solid = alpha > .5

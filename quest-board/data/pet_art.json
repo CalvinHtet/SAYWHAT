@@ -1,6 +1,6 @@
 {
  "_note": [
-  "Pet Shop art (ROOMS 2026-11-18). pgx_<pet>_0..10: 0-1 idle A/B, 2-3 move A/B, 4 sit, 5 sleep (no bed), 6 fun move, 7-10 crying. All 11 frames of a pet share one canvas w x h; the ground line is the canvas bottom; every frame's mass centre sits on column cx (so place by cx, not by the canvas centre). Frames face right (flip for left). Floating frames keep their lift inside the canvas: wyvern 2-3 (hover), slime 2 (bounce).",
+  "Pet Shop art (ROOMS 2026-11-18). pgx_<pet>_0..10: 0-1 idle A/B, 2-3 move A/B, 4 sit, 5 sleep (no bed), 6 fun move, 7-10 crying. All 11 frames of a pet share one canvas w x h; the ground line is the canvas bottom; every frame's mass centre sits on column cx (so place by cx, not by the canvas centre). Frames face right (flip for left). Floating frames keep their lift inside the canvas: wyvern 2-3 (hover) and 6 (hop), slime 2 (bounce).",
   "bed: pbed_<pet>, same scale as the frames. To show the pet asleep in its bed: draw the bed, then frame 5 with its cx column over the bed's centre and its ground line (canvas bottom) sleepOff px above the bed's bottom edge.",
   "dogs: Pet Shop clothing anchors on dgx_<dog>_0..3 (stand, step, sit, sleep), frame px from the top-left. head = top of the skull between the ears; neck = collar line at the front of the neck; back = top of the back over the shoulders; aura = the frame's mass centre."
  ],
@@ -19,9 +19,9 @@
   },
   "wyvern": {
    "frames": 11,
-   "w": 359,
-   "h": 395,
-   "cx": 176,
+   "w": 373,
+   "h": 394,
+   "cx": 192,
    "bed": {
     "id": "pbed_wyvern",
     "w": 336,
@@ -31,9 +31,9 @@
   },
   "slime": {
    "frames": 11,
-   "w": 317,
+   "w": 316,
    "h": 291,
-   "cx": 170,
+   "cx": 169,
    "bed": {
     "id": "pbed_slime",
     "w": 281,
