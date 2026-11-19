@@ -81,7 +81,9 @@
    "fit": {
     "body": ["round","round","round","flat","tall","sleep","stretch","round","round","round","flat"],
     "cells": ["round","tall","stretch","flat","sleep"],
-    "headHide": [5]
+    "headHide": [5],
+    "head": ["up","up","up","flat","up","up","up","up","up","up","flat"],
+    "headCells": ["up","flat"]
    },
    "anchors": [
     {"head": [200,135,0], "neck": [200,260,0], "body": [200,220,0], "aura": [168,204]},
