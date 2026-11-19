@@ -242,7 +242,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (recheck b1fa777): REGIMENT, QA's FIX on 21c67e7 applied: rg_cap lift {m 90, f 70}, clip moved to match; hatcheck rerun, eyes clear on h1-h3 both bodies, no bald band from behind (regiment_cap_hatcheck.png). Then Cal's approval, then LEAD wires. Next: pet concept sheets. CHROME free.
+- (QA: DONE on b1fa777, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck b1fa777): REGIMENT, QA's FIX on 21c67e7 applied: rg_cap lift {m 90, f 70}, clip moved to match; hatcheck rerun, eyes clear on h1-h3 both bodies, no bald band from behind (regiment_cap_hatcheck.png). Then Cal's approval, then LEAD wires. Next: pet concept sheets. CHROME free.
 - (QA: DONE on 21c67e7, NOT A PASS yet: the peaked cap hides the eyes (FIX); the waistcoat's arm shards are the rig's (NOTE to LEAD); boots fine; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
 - (QA: DONE on c45cedb, PASS with NOTES, cleared to paint; three questions answered; QA findings) Was WAITING ON QA (design review, no paint yet): REGIMENT draft, shots/pending_art/brands1118/regiment.md (15 pieces, brand key "rg", navy/scarlet/brass; invented brass-knot crest only, insignia and costume guard; mess jacket and waistcoat bare, stiletto boots heel; 3 questions for QA). Then the five Street brands; Stylist face art. CHROME free.
 - READY for LEAD (QA PASS on 4c60022): wire OIL & CANVAS (Boutique, brand "oc", 15 rows from shots/pending_art/brands1118/oilcanvas_rows.json; logo_oc, ui_banner_oc; art and items.json in f041b24 + 4c60022). Cal APPROVED 2026-11-18 ("Approve OIL & CANVAS"); no hold. Next for ROOMS: REGIMENT draft. CHROME free.
@@ -290,7 +290,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings). Nothing open from QA.
+- Now (on b1fa777): REGIMENT PASS, waits on LEAD's rows (QA findings). Nothing open from QA.
+  Was: Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings).
   Was: Now (on 268fb31): v1.26 live check PASS (QA findings).
   Was: Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings).
   Was: Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings).
@@ -368,6 +369,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, REGIMENT at b1fa777 (rg_cap lift m 90 / f 70, its clip moved up to match; items.json only). The art is done from QA's side;
+  next LEAD wires and prices the rows (regiment_rows.json), and QA checks that commit (owner: LEAD).
+  - hatcheck, the peaked cap over h1, h2 and h3 on both bodies in 7 poses: the eyes show under the peak in front views, and there is no
+    bald band from behind (shots/qa/rg2/). newwear rg on this build, 41 poses: 0 not drawn, 0 page errors.
+  - Everything else stands from 21c67e7. The arm-shard rig NOTE stays with LEAD.
 - NOT A PASS yet (one FIX), REGIMENT painted, 21c67e7 (rows not wired; regiment_rows.json injected; clean build). Pictures:
   shots/qa/rg/.
   - Passes:
