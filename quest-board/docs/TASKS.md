@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings). Waiting on ROOMS: the dog body pieces and auras.
+- Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings). Waiting on ROOMS: the rest of the dog line (cable knit, fleece, three auras).
+  Was: Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings).
   Was: Now (on release/v1.29 0e5e736): v1.29 live check, PASS (QA findings).
   Was: Now (on f1ba1fc): pet clothes recheck plus the slime line and 6 dog pieces, FIXes for ROOMS (QA findings).
   Was: Now (on release/v1.29 0e5e736): v1.29 cut (bare-arm split), PASS, can ship (QA findings).
@@ -399,6 +400,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, pw_cloud and pd_rain (3c309e4; owner ROOMS; shots/qa/petclothes3/cloud_3c309e4.png, rain_3c309e4.png):
+  - pw_cloud: the bigger flakes now read, and three fall just under the cloud above the head (none on the pup), in stand, sleep and
+    crying alike. The stray outline curls are gone. 0 green.
+  - pd_rain: each dog's stand, sit and sleep cells sit right on both dogs. The slicker fully covers Pluto's grey vest in all 4 frames
+    (none shows through in sleep either), and the mustard reads on Chopstick's black coat. 0-1 px green.
 - Pet clothes recheck of 1d58285 (976305b, bea0f82, LEAD's 2bf476e; owner ROOMS): PASS but one small FIX. Pictures:
   shots/qa/petclothes3/. QA's placer reports no missing cells; green spill is 0-1 px.
   - PASS:
