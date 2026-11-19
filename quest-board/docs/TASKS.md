@@ -303,7 +303,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 8d183f0): wolf and wyvern pet clothes wear-check, 17 PASS, 7 FIX for ROOMS (QA findings). Still open: the bare-arm split's release verdict (waits on LEAD's rigdiff; the cut is lead/armsplit-v128).
+- Now (on release/v1.29 0e5e736): v1.29 cut (bare-arm split), PASS, can ship (QA findings). Next: pet clothes recheck and the slime and dog lines (f1ba1fc).
+  Was: Now (on 8d183f0): wolf and wyvern pet clothes wear-check, 17 PASS, 7 FIX for ROOMS (QA findings).
   Was: Now (on release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506): bare-arm split, PASS by eye (QA findings).
   Was: Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings).
   Was: Now (on c81d0de): Pet Shop final frames recheck, PASS (QA findings).
@@ -394,6 +395,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.29 can ship (release/v1.29 0e5e736 = release/v1.28 + fb02a13 + 7c1d8fd + 41db736 + APPV 129; owner LEAD).
+  - Commits: the cut equals lead/armsplit-v128, which QA passed by eye (52d0904, rebase checked), except APPV 128 to 129. The rollback
+    commit 71f62ef changes only APPV, 129 to 130. Clean builds: APPV 129 in dist and dist-web, web 3,617 with version.txt, artcheck 0
+    gaps (370). 0 page errors.
+  - LEAD's rigdiff (v1.28 against qa-local, which renders like this cut: 31,734 frames, 420 rows): the worst lost frames are all her
+    sleeveless tops in dance2, sideL and chat2 (max 87 px), gained max 29. Everything with sleeves is at most 21 lost and 25 gained.
+  - QA by eye on the exact cut, v1.28 against v1.29, in all 41 poses at HI 2: the three sleeveless tops not seen before (v_bodysuit,
+    v_slip, v_corset) in their worst poses, the same or cleaner, with no new holes. The worst sleeved frames (rg_capelet, v_blazer on
+    him in dance1-2, chat2, the side stretches and stretchUp) look the same; the blazer's dance2 skin streak is a little cleaner. His
+    bare look is as passed before. Pictures: shots/qa/armsplit/z_*.png.
+  - Not checked: a phone, the Loft and visitors in-game. Do the live check after the ship.
 - NOT A PASS yet, wolf and wyvern pet clothes (24 pieces, 54 files, 34adce0..8d183f0; owner ROOMS): 17 PASS, 7 FIX. Pictures and
   scripts: shots/qa/petclothes1/ (QA's own placer pcwear.js, written from PET_SHOP.md's rule alone; qa_wolf.png and qa_wyvern.png
   show every piece in all 11 frames).
