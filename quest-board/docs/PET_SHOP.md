@@ -187,3 +187,12 @@ body:[x,y], aura:[x,y]}` in frame px (the dogs already have head, neck, back, au
 change is data, not code. QA checks every piece in every frame.
 
 **Order:** ROOMS paints the bare bases' arm gap first (a visible tear every player sees), then the 48 pet pieces.
+
+## Pet clothes data (ROOMS's format, agreed 2026-11-18)
+
+Art `art/app/ppc_<id>_<n>.webp`; `data/pet_clothes.json` = `{id: {kind, pet, anchor?, cells: [{cell, pet, frame, w, h, pivot:[x,y]}]}}`.
+kind is head, neck, body, base (the slime's base pieces: body cells placed on the neck/base anchor) or aura. A cell's pivot goes on the
+frame's anchor and turns by (anchor deg of the frame) - (anchor deg of the cell's painted frame). Body and base cells follow
+`fit.cells`; aura cell 0 is the back half (under the pet), 1 the front half (over it). Dogs: a cell per dog (head and neck 2, body 6:
+Chopstick stand/sit/sleep then Pluto's, auras 4). An aura with `"anchor": "head"` (pw_cloud) sits on the head anchor, and on the aura
+anchor where the head anchor is null (sleep). `tools/pet_wear.py check <id> <out.png>` is the placement reference the code matches.
