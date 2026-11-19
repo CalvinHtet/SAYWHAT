@@ -208,3 +208,15 @@ The chair it replaces is pt_chair1 (Wicker Lounge Chair), already superseded by 
 fire only shows when both are owned (27_rooms.js), so no paid piece loses its role and nothing is refunded. The creature's buy confirm
 says its Patio bed takes the spot by the fire; after an adoption the chair comes back. The chair's sit spot (4.75, 4.0, tag
 "chair") goes and comes back with it, so nobody sits on the pet bed (QA).
+
+## Beds and sizes after QA's review of db99820 (2026-11-19)
+
+- **The pets lie in their beds:** the sleep point is the footprint point under the bed picture's centre nearest the front, and a
+  platform sets the ground line sleepOff (ROOMS's numbers) above the bed's bottom edge (QA FIX 1: they floated over or behind them).
+- **Patio bed moved to 2.1, 2.6** (data/pet_art.json "spots"): left of the fire pit on the rug's corner, in full view (QA FIX 2: the
+  chair's old spot at 4.25, 3.5 was cut off by the view's bottom edge). Its picture overlaps the fire-side chair's, so the chair and its
+  seat stay out while a creature is owned, as Cal approved ("Yes, replace it").
+- **Sizes (Cal, 2026-11-19: "Make the dogs overall a bit smaller including their bed. And make the pet we buy a bit bigger so it is
+  noticeable"):** the dogs 34 to 29 px standing (LFDOGH), their beds at 85% in the Bedroom and on the Patio; the creature 34 to 40 px per
+  300 frame px (PZ_K), its beds with it.
+- No dog clothes without a dog (QA's note).

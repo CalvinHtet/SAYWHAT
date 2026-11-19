@@ -1541,7 +1541,7 @@ function lfAgentG(a){
 function lfDrop(id){var e=document.getElementById("lfa-"+id.replace(/[^a-z0-9_-]/gi,"_"));if(e)e.remove()}
 // Painted dogs (Cal, v0.74: "really tiny… make them bigger and more recognizable"): dgx_<name>_<0 stand|1 walk|2 sit|3 sleep>
 // in rsart.json, all frames of a dog at one scale so the standing frame is LFDOGH tall. Missing art falls back to the pixel dog.
-var LFDOGH={pluto:34,chopstick:34};
+var LFDOGH={pluto:29,chopstick:29};/* was 34; Cal 11-19: "Make the dogs overall a bit smaller including their bed" (and the Pet Shop's creature bigger, 29zz_pets.js) */
 // Cal approved the art (2026-11-08: "I approve the new dogs"); window.LFDOGON=0 brings the pixel dogs back for a comparison.
 function lfDogSpr(n,p){if(window.LFDOGON===0)return null;/* the Pet Shop's creature, and dogs in Pet Shop clothes (29zz_pets.js) */var pz=typeof pzLoftSpr==="function"?pzLoftSpr(n,p):undefined;if(pz!==undefined)return pz;var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
   if(!f||!f0)return null;var k=(LFDOGH[n]||34)/f0.h;return{u:f.u,w:f.w*k,h:f.h*k}}
@@ -1754,7 +1754,7 @@ function lfPvStart(i,mm){
     if(bi>=0){var pa=r.a||{},beds=[];if(pa.pt_dbed)beds.push([1.95,4.05]);if(pa.pt_dbed2)beds.push([.75,4.05]);
       lfDesired().filter(function(w){return w.room===bi&&(w.role==="me"||w.role==="dog")}).forEach(function(w){
         var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:0});
-        if(w.role==="dog")n.bed=w.dname==="pet"?(typeof petMine==="function"&&petMine()?[4.85,4.0]:null):beds[w.dname==="chopstick"?1:0]||beds[0]||null;/* the creature's own bed by the fire (Cal: "Yes, replace it") */
+        if(w.role==="dog")n.bed=w.dname==="pet"?(typeof pzBedPt==="function"?pzBedPt("patio"):null):beds[w.dname==="chopstick"?1:0]||beds[0]||null;/* the creature's own bed by the fire (Cal: "Yes, replace it") */
         var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
         try{lfPlace(a)}catch(e){}a.alpha=1;a.fade=0})}}
 }
@@ -3166,7 +3166,7 @@ function lfPatioReal(){
        chair, and the back left corner) */
     [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
     /* each Patio bed has its dog: the first is Pluto's, the second Chopstick's */
-    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);if(typeof petMine==="function"&&petMine())R.beds.push([4.85+ox,4.0+oy,"pet"]);
+    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);var pq=typeof pzBedPt==="function"?pzBedPt("patio"):null;if(pq)R.beds.push([pq[0]+ox,pq[1]+oy,"pet"]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
     R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})});
     /* only spots a walk from the sliding door reaches (QA on v0.75: with the Patio full, the back-left spot was boxed in by the
