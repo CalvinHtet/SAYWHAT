@@ -160,3 +160,27 @@ None right now.
 The creature bed gets a spot of its own in the Bedroom and on the Patio, near the dogs but not lined up with their beds: three beds in a
 row read as a kennel row (rooms-never-cluttered). Cal's later words were "add another pet bed in the loft and patio", so it need not
 touch the dog beds. If a room has no clean spot when fully furnished, the options go to Cal as pictures.
+
+## How clothes fit each frame (LEAD with QA and ROOMS, 2026-11-18; QA 180defc, d93c192)
+
+A single image per piece does not fit the curled sleep, the sit and cry frames, the wyvern's hover and hop or the slime's flat melt. So
+each piece is still one Higgsfield image, but that image holds the piece's pose variants as cells, and the code picks a cell per frame.
+
+**Body pieces (and the slime's base pieces): variants per pet, frame by frame (frames 0-10)**
+
+| Pet | Variant: frames |
+|---|---|
+| wolf | stand: 0 1 2 3 6 · sit: 4 7 8 9 10 · sleep: 5 |
+| wyvern | stand: 0 1 7 · hover: 2 3 · hop: 6 · sit: 4 8 9 10 · sleep: 5 |
+| slime | round: 0 1 2 7 8 9 · tall: 4 6 · flat: 3 10 · sleep: 5 |
+| dogs | per dog (Chopstick, Pluto): stand: 0 1 · sit: 2 · sleep: 3 (six cells) |
+
+**Head and neck pieces:** one cell, placed on the frame's anchor and turned by the anchor's angle. Head pieces hide in the sleep frame
+(creatures 5, dogs 3); neck pieces hide wherever the anchor is marked null (a tucked neck).
+
+**Auras:** two cells, a back half drawn under the pet and a front half over it, on every frame; the bob and spin are done in code.
+
+**Data (data/pet_art.json, ROOMS fills, LEAD reads):** per creature frame `anchors[f] = {head:[x,y,deg], neck:[x,y,deg]|null,
+body:[x,y], aura:[x,y]}` in frame px (the dogs already have head, neck, back, aura; they gain the angle); `fit` = the table above, so a
+change is data, not code. ROOMS may move a frame to another variant where the painted pose says so, before painting starts; QA checks
+every piece in every frame.
