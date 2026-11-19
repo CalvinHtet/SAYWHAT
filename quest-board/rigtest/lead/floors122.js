@@ -31,7 +31,7 @@ const live = (p, days) => p.evaluate((days) => days.map(([y, m, d]) => { const t
   ok(!f.some((o) => (o.street + ',' + o.boutique).split(',').includes('cr')), 'CHROME RAIN never drops from 11-19 (Cal: "Not a fan of chrome rain")');
   ok(f.some((o) => o.street.split(',').includes('sv')) && f.some((o) => o.street.split(',').includes('alt')), 'SØLVBERG and ALTITUDE drop on the Street (Cal: "I like altitude and solvberg")');
   ok(!f.some((o) => /\b(gp|sp|bb|km|oak)\b/.test(o.street + ',' + o.boutique)), 'GACHA POP, SAVE POINT, BARD & BLADE, KAIMANA and OAKMONT never drop while held for their redo');
-  ok(f.every((o) => o.boutique.split(',').every((id) => !id || ['rose', 'sm', 'gd', 'oc'].includes(id))), 'the Boutique shows only VENOM ROSE, SAYMØRE, (v1.25) GILDED and (v1.26) OIL & CANVAS ' + [...new Set(f.map((o) => o.boutique))].join(' | '));
+  ok(f.every((o) => o.boutique.split(',').every((id) => !id || ['rose', 'sm', 'gd', 'oc', 'rg'].includes(id))), 'the Boutique shows only VENOM ROSE, SAYMØRE, (v1.25) GILDED, (v1.26) OIL & CANVAS and (v1.27) REGIMENT ' + [...new Set(f.map((o) => o.boutique))].join(' | '));
   /* (itemFits is not on the test hook: what is offered is read from the Shop's own cards below) */
   // the Shop: the line, the Stylist, basics off sale, owners keep, a new player's originals
   const shop = await P.evaluate(async () => { const x = window.__qb.x(), S = x.S; const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(2026, 10, 19, 10, 0).getTime() - real;

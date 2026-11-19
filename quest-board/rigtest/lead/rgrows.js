@@ -1,6 +1,6 @@
-// REGIMENT, the third new Boutique brand (ROOMS 21c67e7 b1fa777, QA 806a9bf), held until Cal approves its painted sheet. On the plain build
-// (PORT) against the last release (REF, v1.26): every floor from 11-10 for 16 weeks is as in the last release (the hold changes nothing).
-// Then, with the hold lifted in the page only: REGIMENT goes live on the Boutique; on that day its 15 rows have ROOMS's names and lines,
+// REGIMENT, the third new Boutique brand (ROOMS 21c67e7 b1fa777, QA 806a9bf; Cal approved its painted sheet 11-18), held until Thu 11-26.
+// On the plain build (PORT) against the last release (REF, v1.26): every floor from 11-10 to the day before REGIMENT's debut is as in the
+// last release, GILDED still first drops Mon 11-23 and OIL & CANVAS Mon 11-30, and REGIMENT first drops Mon 12-14. On that day its 15 rows have ROOMS's names and lines,
 // prices inside their grade's Boutique band (premium 800-1,050, luxury 1,050-1,200), art (front, back unless front-only, icon; f_ for
 // women-only), and its tab lists all 15 for either body (SEX=f|m). No page errors.
 //   PORT=<plain build> REF=<last release build> SEX=f|m NODE_PATH=<playwright's parent> node rigtest/lead/rgrows.js
@@ -31,12 +31,11 @@ const page = async (b, url) => { const p = await (await b.newContext({ viewport:
 const live = (p, from, n) => p.evaluate(([from, n]) => { const o = []; for (let d = 0; d < n; d++) { const t = new Date(2026, 10, from + d, 10, 0).getTime(), r = {};
   for (const fl of ['street', 'boutique', 'atelier']) { const f = window.__qbDrops.floor(fl, t); r[fl] = ((f && f.live) || []).map((q) => q.id).sort().join(','); } o.push(r); } return o; }, [from, n]);
 (async () => { const b = await chromium.launch({ args: ['--mute-audio'] }); const P = await page(b, base), R = await page(b, ref);
-  const a = await live(P, 10, 13 + 112), r = await live(R, 10, 13 + 112), diff = a.findIndex((o, i) => JSON.stringify(o) !== JSON.stringify(r[i]));
-  ok(diff < 0, 'held: every floor 11-10 .. +16 weeks is as in the last release' + (diff < 0 ? '' : ' (first change ' + new Date(2026, 10, 10 + diff).toDateString() + ')'));
-  /* the rows themselves, with the hold lifted in this page only (as when Cal approves) */
-  await P.evaluate(() => { const c = window.__qbDrops.cfg; c.hold = c.hold.filter((h) => h.ids.indexOf('rg') < 0); });
-  const f = await live(P, 10, 13 + 112), first = f.findIndex((o) => o.boutique.split(',').includes('rg')), on = new Date(2026, 10, 10 + first).toDateString();
-  ok(first >= 0, 'with the hold lifted, REGIMENT first live on the Boutique on ' + on);
+  const f = await live(P, 10, 13 + 112), r = await live(R, 10, 13 + 112), firstOf = (id) => f.findIndex((o) => o.boutique.split(',').includes(id));
+  const first = firstOf('rg'), on = new Date(2026, 10, 10 + first).toDateString(), diff = f.findIndex((o, i) => JSON.stringify(o) !== JSON.stringify(r[i]));
+  ok(first === 34, 'REGIMENT first live on the Boutique on ' + on + ' (Mon 12-14)');
+  ok(diff === first, 'every floor 11-10 .. the day before is as in the last release' + (diff === first ? '' : ' (first change ' + new Date(2026, 10, 10 + diff).toDateString() + ')'));
+  ok(firstOf('gd') === 13 && firstOf('oc') === 20, 'GILDED still first drops Mon 11-23 and OIL & CANVAS Mon 11-30 (' + firstOf('gd') + ', ' + firstOf('oc') + ')');
   const s = await P.evaluate(async ([day, ids, process_SEX]) => { const x = window.__qb.x(), S = x.S; const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(2026, 10, day, 10, 0).getTime() - real;
     S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: process_SEX }); S.xp = x.cum(35); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false; S.fsall = 1; S.areaOn = { board: 1, shop: 1, hideout: 1 }; S.owned = {}; window.__qbRooms.open('closet', 1); x.render();
     const rows = {}; ids.forEach((id) => { const it = x.SHOP.find((q) => q[0] === id); rows[id] = it ? { n: it[2], p: it[3], line: it[5], slot: it[1], item: !!QBLoft.data.items[it[6].gar], front: !!(QBLoft.data.items[it[6].gar] || {}).frontOnly } : null; });
