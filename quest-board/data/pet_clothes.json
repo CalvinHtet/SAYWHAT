@@ -88,6 +88,34 @@
    }
   ]
  },
+ "ps_comet": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 414,
+    "h": 133,
+    "pivot": [
+     197.4,
+     51.3
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 414,
+    "h": 133,
+    "pivot": [
+     197.4,
+     51.3
+    ]
+   }
+  ]
+ },
  "ps_crown": {
   "kind": "head",
   "pet": "slime",
@@ -101,6 +129,34 @@
     "pivot": [
      25.9,
      50.3
+    ]
+   }
+  ]
+ },
+ "ps_flames": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 498,
+    "h": 264,
+    "pivot": [
+     252.3,
+     113.1
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 498,
+    "h": 264,
+    "pivot": [
+     252.3,
+     113.1
     ]
    }
   ]
@@ -434,6 +490,34 @@
     "pivot": [
      110.6,
      68.3
+    ]
+   }
+  ]
+ },
+ "ps_sparkle": {
+  "kind": "aura",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 464,
+    "h": 175,
+    "pivot": [
+     242.2,
+     102.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 0,
+    "w": 464,
+    "h": 175,
+    "pivot": [
+     242.2,
+     102.4
     ]
    }
   ]
