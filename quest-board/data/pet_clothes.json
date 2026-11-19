@@ -1,4 +1,88 @@
 {
+ "pd_aviator": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 158,
+    "h": 182,
+    "pivot": [
+     81.5,
+     53.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 170,
+    "h": 194,
+    "pivot": [
+     93.3,
+     29.8
+    ]
+   }
+  ]
+ },
+ "pd_bandana": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 158,
+    "h": 144,
+    "pivot": [
+     108.8,
+     64.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 176,
+    "h": 133,
+    "pivot": [
+     143.6,
+     40.9
+    ]
+   }
+  ]
+ },
+ "pd_bowtie": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 64,
+    "h": 59,
+    "pivot": [
+     9.7,
+     9.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 64,
+    "h": 58,
+    "pivot": [
+     34.9,
+     -0.1
+    ]
+   }
+  ]
+ },
  "pd_bucket": {
   "kind": "head",
   "pet": "dogs",
@@ -51,6 +135,34 @@
     "pivot": [
      96.5,
      5.9
+    ]
+   }
+  ]
+ },
+ "pd_studs": {
+  "kind": "neck",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 88,
+    "h": 75,
+    "pivot": [
+     47.5,
+     28.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 84,
+    "h": 63,
+    "pivot": [
+     63.0,
+     9.6
     ]
    }
   ]
