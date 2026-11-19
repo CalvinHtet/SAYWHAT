@@ -171,16 +171,20 @@ each piece is still one Higgsfield image, but that image holds the piece's pose 
 | Pet | Variant: frames |
 |---|---|
 | wolf | stand: 0 1 2 3 6 · sit: 4 7 8 9 10 · sleep: 5 |
-| wyvern | stand: 0 1 7 · hover: 2 3 · hop: 6 · sit: 4 8 9 10 · sleep: 5 |
-| slime | round: 0 1 2 7 8 9 · tall: 4 6 · flat: 3 10 · sleep: 5 |
-| dogs | per dog (Chopstick, Pluto): stand: 0 1 · sit: 2 · sleep: 3 (six cells) |
+| wyvern | stand: 0 1 · airborne (hover and hop, front-facing): 2 3 6 · sit: 4 7 8 9 10 · sleep: 5 |
+| slime | dome: 0 1 2 4 6 7 8 9 (the tall stretch in 6 uses dome at its anchor) · flat: 3 10 · sleep: 5 |
+| dogs | per dog (Chopstick, Pluto): stand: 0 1 · sit: 2 · sleep: 3 (six cells; every fit covers Pluto's grey vest) |
 
-**Head and neck pieces:** one cell, placed on the frame's anchor and turned by the anchor's angle. Head pieces hide in the sleep frame
-(creatures 5, dogs 3); neck pieces hide wherever the anchor is marked null (a tucked neck).
+(ROOMS's map from the painted poses, ab0fe18, agreed by LEAD; it replaces LEAD's first draft.)
+
+**Head and neck pieces:** one cell, placed on the frame's anchor and turned by the anchor's angle. Nothing hides: every slot shows in
+every frame, the crying splash included. Where a piece cannot sit right in the curled sleep (a tall hat on a tucked head), ROOMS paints it
+a sleep cell instead of hiding it.
 
 **Auras:** two cells, a back half drawn under the pet and a front half over it, on every frame; the bob and spin are done in code.
 
-**Data (data/pet_art.json, ROOMS fills, LEAD reads):** per creature frame `anchors[f] = {head:[x,y,deg], neck:[x,y,deg]|null,
+**Data (data/pet_art.json; LEAD measures the creature anchors on the cut files and writes the fit table):** per creature frame `anchors[f] = {head:[x,y,deg], neck:[x,y,deg]|null,
 body:[x,y], aura:[x,y]}` in frame px (the dogs already have head, neck, back, aura; they gain the angle); `fit` = the table above, so a
-change is data, not code. ROOMS may move a frame to another variant where the painted pose says so, before painting starts; QA checks
-every piece in every frame.
+change is data, not code. QA checks every piece in every frame.
+
+**Order:** ROOMS paints the bare bases' arm gap first (a visible tear every player sees), then the 48 pet pieces.
