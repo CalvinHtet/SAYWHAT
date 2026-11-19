@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings). Waiting on ROOMS: the rest of the dog line.
+- Now (on 9d925a5): Pet Shop recheck, NOT A PASS: two Patio FIXes (QA findings). Waiting on ROOMS: the rest of the dog line.
+  Was: Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings).
   Was: Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings).
   Was: Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings).
   Was: Now (on release/v1.29 0e5e736): v1.29 live check, PASS (QA findings).
@@ -401,6 +402,25 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, Pet Shop recheck (9d925a5 on a clean build; owner LEAD; pictures shots/qa/petshop2/). The Bedroom is fixed; the
+  Patio still needs two fixes.
+  - PASS:
+    - petshop.js, rerun by QA, passes for all three creatures.
+    - The compositor diff is unchanged: 457 of 460 to the pixel, and the cloud's head turn matches pet_wear.py.
+    - pzedge.js passes: 26 drops, the gates, and dog clothes now refused without a dog ("Adopt Pluto or Chopstick in the Bedroom first",
+      button off).
+    - FIX 1 is done: in the Bedroom the wolf, wyvern and slime each lie in their own bed (beds2.png). The smaller Pluto and Chopstick
+      lie in their smaller Bedroom beds, and the bigger creature reads well beside them (Cal's 11-19 size change).
+  - FIX A, Patio bed spot 2.1, 2.6: it is in view now, but squeezed between Pluto's bed and the fire pit. The right end of the wolf's
+    bed and the wyvern's nest goes under the pit's rim (dogs2.png, dogbeds.png; rule 20), and the corner reads crowded (Cal's
+    no-clutter rule). Shift it left or forward by about 0.3-0.5, which the smaller dog beds may now allow, or find a spot clear of both.
+    The creatures' auras (embers, slime flames) also drift over the pit's front, which is acceptable for effects once the bed itself
+    is clear.
+  - FIX B, the dogs on the Patio: Chopstick sleeps on top of the upper bed's back rim, and Pluto lies behind the lower bed with only his
+    head above the rim (dogs2.png, both creature runs). They are not in their beds, the same fault FIX 1 fixed for the creatures. The
+    same shows in the db99820 pictures, so it predates the size change; QA did not capture it on v1.29 (that run's dogs had gone
+    indoors), so it may be live already. Use the same sleep-point fix for the Patio dog beds.
+  - Not checked: a phone, night light, visitors, the dogs on the Patio in v1.29.
 - NOT A PASS yet, Pet Shop code (db99820 on a clean build; owner LEAD). The Shop side and the compositing pass; the beds in both rooms
   need fixing. Pictures and scripts: shots/qa/petshop/.
   - LEAD's petshop.js rerun by QA: PASS for wolf, wyvern and slime (tab, warning, adoption and coins, "already have a pet", 2+2 drop,
