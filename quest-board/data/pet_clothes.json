@@ -1,0 +1,53 @@
+{
+ "pw_beanie": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 156,
+    "h": 131,
+    "pivot": [
+     91.4,
+     47.4
+    ]
+   }
+  ]
+ },
+ "pw_circlet": {
+  "kind": "head",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 163,
+    "h": 81,
+    "pivot": [
+     106.1,
+     -12.6
+    ]
+   }
+  ]
+ },
+ "pw_collar": {
+  "kind": "neck",
+  "pet": "wolf",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wolf",
+    "frame": 0,
+    "w": 144,
+    "h": 113,
+    "pivot": [
+     111.1,
+     80.2
+    ]
+   }
+  ]
+ }
+}
