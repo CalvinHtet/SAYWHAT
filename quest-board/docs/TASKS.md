@@ -388,6 +388,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, pet clothing notes applied (ab0fe18; owner ROOMS, the variant table with LEAD). Still 48 pieces, 12 per line, 3 per slot.
+  - Contrast fixed: the wolf's beanie and hoodie are silver-grey or slate and its cape slate-blue; the wyvern's hat rust, bomber tan
+    and vest cream; the slime's headphones and pack pink and gold; the dogs' turtleneck navy and crown cherry poppies.
+  - Repeats fixed: pw_ruff for the bandana, pw_aurora for the wisps, a snowflake tag (two moons left), pv_lanterns for the orbiting
+    coins, ps_comet for the hearts, pd_studs for the pearls. The crown is small, tilted and pink-gold. Short chains and flaps.
+  - Before painting, one table: ROOMS's plan (wyvern stand/sit/sleep/airborne; slime dome/flat/sleep) differs from LEAD's map in
+    PET_SHOP.md 78c4cd3 (wyvern stand/hover/hop/sit/sleep; slime round/tall/flat/sleep). Agree on one and write it as the fit table in
+    data/pet_art.json; QA tests against that. Also check that one airborne cell fits both wyvern 2 (side-on) and 3 (facing front)
+    plus the hop, and where wyvern 8 (crying, standing) and wolf 6 (tilted trip) go.
+  - Small, ROOMS's call: pw_snow and pw_shards are still both icy rings. On the wear-test, check the navy turtleneck reads on
+    Chopstick's black coat.
 - PASS with NOTES, pet clothing concepts (180defc, shots/pending_art/pets/pets_clothes.md, 48 pieces; owner ROOMS, note A also LEAD).
   Every line has two or more details; no letters, logos, named gear or green. Apply these before painting; resend only the changed rows.
   - A (structure, ROOMS and LEAD): one flat image per piece on an anchor cannot fit the body pieces to the curled sleep (5), the sit
