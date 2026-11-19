@@ -154,3 +154,9 @@ None right now.
 3. Is a piece bought once for both dogs, or bought per dog?
 4. Which pieces first? My suggestion: a bandana, a collar with a tag, a bow tie, a beanie, a hoodie, a raincoat, sunglasses and a
    birthday hat, then seasonal ones.
+
+## Bed spots (LEAD, 2026-11-18, after QA's note on e82a602)
+
+The creature bed gets a spot of its own in the Bedroom and on the Patio, near the dogs but not lined up with their beds: three beds in a
+row read as a kennel row (rooms-never-cluttered). Cal's later words were "add another pet bed in the loft and patio", so it need not
+touch the dog beds. If a room has no clean spot when fully furnished, the options go to Cal as pictures.
