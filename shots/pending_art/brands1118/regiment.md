@@ -19,13 +19,13 @@ peaked cap is navy wool with a scarlet band and a brass chin cord, and the brand
 
 | id | slot | name | line | body | flags |
 |---|---|---|---|---|---|
-| rg_cap | hat | Cord Peaked Cap | Navy wool peaked cap, a scarlet band, a twisted brass chin cord, the brass knot crest, a black patent peak. | both | |
+| rg_cap | hat | Cord Peaked Cap | Navy wool peaked cap with a low, firm, flat-topped crown, a scarlet band, a twisted brass chin cord, the brass knot crest, a black patent peak. | both | |
 | rg_side | hat | Piped Side Cap | Navy wool side cap worn tilted, scarlet piping along every edge, two small brass buttons at the front. | both | noClip if it sits on top of the hair |
-| rg_cord | acc (neck) | Brass Aiguillette | Braided brass cords looped from the right shoulder across the chest, two brass tips, a scarlet knot at the shoulder. | both | chain mode |
-| rg_sash | acc (neck) | Scarlet Parade Sash | A wide scarlet silk sash across the body, a fringed brass-thread end at the hip, a domed brass buckle. | both | chain mode |
+| rg_cord | acc (neck) | Brass Aiguillette | Braided brass cords hung as a fashion cord in loose loops across the chest from the right shoulder, two brass tips swinging free, a scarlet knot at the shoulder. | both | chain mode |
+| rg_sash | acc (neck) | Scarlet Parade Sash | A wide scarlet silk sash across the body, a fringed brass-thread end at the hip, a plain domed brass buckle; no star, badge or medallion. | both | chain mode |
 | rg_gloves | acc (arms) | Gauntlet Gloves | Ivory leather gloves with flared navy gauntlet cuffs, scarlet piping, a brass button at each wrist. | both | hand-sized cuff |
-| rg_jacket | top | Frogged Officer Jacket | Navy wool, rows of brass braided frogging across the chest, a scarlet stand collar and cuffs, fringed brass epaulettes. | both | |
-| rg_capelet | top | Capelet Tunic | A fitted navy tunic with a short scarlet-lined capelet to the elbow, brass buttons down the front, a brass chain clasp. | both | capelet short, clear of the hands |
+| rg_jacket | top | Frogged Officer Jacket | Navy wool, three rows of brass braided frogging across the chest, a scarlet stand collar and cuffs, plain navy shoulder boards with a brass button. | both | |
+| rg_capelet | top | Capelet Tunic | A fitted navy tunic with a short scarlet-lined capelet ending above the elbow, brass buttons down the front, a brass chain clasp. | both | capelet above the elbow, hemtrim, clear of the hands |
 | rg_mess | top | Cropped Mess Jacket | A cropped scarlet mess jacket worn open over a navy bandeau, brass buttons, black satin lapels, bare midriff. | women | bare |
 | rg_vest | top | Braided Waistcoat | A sleeveless navy waistcoat worn on the bare chest, scarlet piping, brass braid loops, a low V. | men | bare (his base is bare already) |
 | rg_breeches | pants | Stripe Riding Breeches | Navy jodhpur-cut breeches, a wide scarlet side stripe, brass buttons at the knee. | both | |
@@ -46,3 +46,8 @@ Questions for QA:
 2. The capelet: arms lift the art beside the hands, so I would paint it ending at the elbow and hemtrim it. Fine, or swap it for a
    double-breasted greatcoat?
 3. His sexy piece is the waistcoat on the bare chest, hers the open mess jacket over a bandeau. Enough, or one more?
+
+QA design review 2026-11-18: PASS with NOTES, cleared to paint; applied above: the jacket keeps three rows of frogging and the scarlet
+collar and cuffs but has plain shoulder boards, no fringe (drum-major risk); the capelet ends above the elbow; the cap's crown is
+low and firm, not tall and soft like VENOM ROSE's velvet one; the sash has no star or medallion; the aiguillette hangs as a fashion
+cord. Gates after paint: barecheck (bandeau), heelcheck (stiletto boots), hatcheck (both caps), gauntlets hand-sized in arms-up poses.

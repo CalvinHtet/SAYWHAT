@@ -1,0 +1,15 @@
+rg_cap gd_cap
+rg_side h_beret
+rg_cord nc_pendant
+rg_sash h_sling
+rg_gloves gd_cuffs
+rg_jacket o_work
+rg_capelet gd_shirt
+rg_mess v_crop
+rg_vest v_blazer
+rg_breeches gd_jogger
+rg_trouser nc_jog_black
+rg_skirt gd_skirt
+rg_boot v_boot
+rg_spat h_derby
+rg_stiletto gd_mule
