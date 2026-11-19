@@ -139,6 +139,78 @@
    }
   ]
  },
+ "pd_rain": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 265,
+    "h": 137,
+    "pivot": [
+     95.9,
+     25.9
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 203,
+    "h": 145,
+    "pivot": [
+     65.3,
+     63.0
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 266,
+    "h": 147,
+    "pivot": [
+     84.1,
+     22.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 172,
+    "h": 120,
+    "pivot": [
+     55.1,
+     15.4
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "pluto",
+    "frame": 2,
+    "w": 160,
+    "h": 110,
+    "pivot": [
+     46.1,
+     29.5
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "pluto",
+    "frame": 3,
+    "w": 140,
+    "h": 87,
+    "pivot": [
+     47.0,
+     35.0
+    ]
+   }
+  ]
+ },
  "pd_studs": {
   "kind": "neck",
   "pet": "dogs",
@@ -1306,8 +1378,8 @@
     "cell": 0,
     "pet": "wolf",
     "frame": 0,
-    "w": 460,
-    "h": 465,
+    "w": 468,
+    "h": 474,
     "pivot": [
      282.0,
      163.6
@@ -1321,8 +1393,8 @@
     "cell": 1,
     "pet": "wolf",
     "frame": 0,
-    "w": 460,
-    "h": 465,
+    "w": 468,
+    "h": 474,
     "pivot": [
      282.0,
      163.6
