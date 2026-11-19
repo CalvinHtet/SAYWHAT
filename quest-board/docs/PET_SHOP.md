@@ -14,6 +14,9 @@ and Thursday."
 
 So "clothes for the pets" means clothes for Chopstick and Pluto, drawn over their four frames.
 
+> **Replaced:** this section, "The Pet Shop itself" and "Work" below are the first draft (dogs only). Build from the sections from
+> "Cal's answer" on: three creatures plus the dogs, 12 pieces per line (48 in all), 2 per line per drop (8 per drop, 4 seen).
+
 ## How dog clothes would work (my proposal)
 
 - **Pieces are small overlays, not full repaints:** collars, bandanas, bows, hats, little sweaters, harnesses, glasses. Each piece is
