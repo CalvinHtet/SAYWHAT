@@ -29,3 +29,24 @@ All three share one palette (black or violet-black with glowing cyan), so they r
 QA: (1) is the wolf pup too close to a dog (Cal: "not a basic dog"), or does the shadow flame carry it; (2) are the wyvern's beds
 (a woven nest on a stand, a rattan nest on legs) too tall for the Bedroom's front edge, or should they sit flat on the floor;
 (3) anything that reads as a named character. Nothing final is painted; frames, keying and bed placement follow Cal's last answers.
+
+## QA review (2026-11-18): PASS with NOTES, applied
+
+- Wolf pup: the flame stays on the tail and ear tips in every frame (dim when sad, never gone), plus glowing cyan flame-swirl paw
+  markings and violet shadow mist off the fur, so it never reads as a plain black puppy.
+- Beds: the wolf's hooded den is lower (hood about half as tall); the wyvern's tall rattan stool became a floor nest; the slime's grey
+  donut (too close to Pluto's) became a tufted indigo canvas square cushion. Keep the wolf's den under about 1.5x the dog beds' height.
+- Wyvern watch-out: no rounded ear-flaps, green eyes or split tail fin (a famous animated black dragon).
+
+## Final frames (LEAD, 2026-11-18): one list for all three pets
+
+11 frames each, all front 3/4 facing right (LEAD flips for left, like the dogs); no back views (pet clothes would need back art too):
+0-1 idle A/B (the loop), 2-3 move A/B, 4 sit, 5 sleep lying in its bed, 6 fun move, 7-10 crying for the adoption splash.
+Same canvas and ground line for all 11 frames of a pet (clothing anchors measured once per frame). Size against the dgx_ dogs: the
+pup about the dogs' height, the wyvern a little taller, the slime a little smaller. Pets only for now; dog clothes wait on Cal.
+
+Applied in the sheets: pet_wolf_concept.png (flame, paw marks, mist in all 8), pet_wyvern_cry_beds.png (floor nest),
+pet_slime_cry_beds.png (tufted indigo square cushion). Not applied in a sheet: the wolf's crying-and-beds edit was refused by
+Higgsfield's filter (a false positive); per the rule it was not resubmitted. pet_wolf_cry_beds.png keeps the earlier crying frames
+and the taller den; the final frames will carry the flame, paw marks and mist in all four crying frames, and the final den will be
+about half as tall.
