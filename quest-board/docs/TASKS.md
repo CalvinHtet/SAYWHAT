@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.28 LIVE 33c064d (APPV 128; rollback APPV 129 a9e38cd; pushed): the bare-arm rig fix 4fe171c alone (QA PASS ad8b85c: fills the upper-arm holes in his dance1/dance2/sideUp). WAITING ON QA: live check. Arms-up fraying waits on ROOMS's gapped bases, then LEAD retunes and reruns the rigdiff. Pets: ROOMS's final frames e82a602 with QA; LEAD wires from data/pet_art.json on QA's pass. Patio bed: ROOMS tries the dog-bed row first, then moving the lounge chair.
+- v1.28 LIVE 33c064d (APPV 128; rollback APPV 129 a9e38cd; pushed): the bare-arm rig fix 4fe171c alone (QA PASS ad8b85c: fills the upper-arm holes in his dance1/dance2/sideUp). Live check (QA: DONE, PASS; QA findings). Arms-up fraying waits on ROOMS's gapped bases, then LEAD retunes and reruns the rigdiff. Pets: ROOMS's final frames e82a602 with QA; LEAD wires from data/pet_art.json on QA's pass. Patio bed: ROOMS tries the dog-bed row first, then moving the lounge chair.
 - v1.27 LIVE 050ddd2 (APPV 127; rollback APPV 128 e3e2b1a; pushed): REGIMENT on the Boutique, hold ends Thu 11-26, first drop Mon 12-14, GILDED 11-23 and OC 11-30 unchanged (QA PASS 9489e9e). Live check (QA: DONE, PASS; QA findings). Bare-arm rig fix 4fe171c (rig.json fineUp body, slotStretch body 9, armpit body sleeves/cap 2; rigdiff vs v1.26 30,668 frames, lost max 54, gained max 121 in his dance1 underarm; renders in shots/lead_arms/). (QA: DONE, PASS, better than v1.27 alone, QA would ship it in the next release; QA findings) LEAD suggests releasing it together with the repainted bases, not alone. Cal said "Yes, repaint" to the bare bases with a gap under the arms: brief sent to ROOMS (queued after the pet frames); LEAD renders before/after in arms-up for QA. Pets: Cal wants each a different colour (relayed to ROOMS: wolf cyan, wyvern navy + amber, slime plum + magenta); 12 clothes per pet at launch (Cal: "12 per pet"), 3 per slot, 36 in all; ROOMS paints them after the final frames pass QA. Dogs too (Cal: "Dogs too"): a 12-piece dog line on both dogs' anchors, one buy for both; 48 pieces in all.
 - v1.26 LIVE on Live and Test = 268fb31 (release/v1.25 + f041b24 + 4c60022 + abe4e6d + APPV 126; QA PASS 69af73e; Cal via ROOMS: "Approve OIL & CANVAS"): OIL & CANVAS on the Boutique, 15 rows, held to Thu 11-26 so GILDED keeps its Mon 11-23 debut; OIL & CANVAS first drops Mon 11-30. Live checks PASS; 3526/3526 identical on both. Rollback = rollback-v0.80 22b253c (APPV 127). Both pushed. (QA: DONE, live check PASS; QA findings) (QA: DONE, PASS; QA findings)
 - Pet Shop (Cal 11-18): "pet shop open level 2. but i dont want a basic dog" plus three creatures (shadow wolf pup, void wyvern, shadow fox-slime): docs/PET_SHOP.md 1334747, original designs only. ROOMS: concept sheets after REGIMENT, QA design review first. WAITING ON CAL: 4 questions (dogs stay, own all three, price, one each).
@@ -297,7 +297,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on e82a602): Pet Shop final frames, NOT A PASS, two FIXes for ROOMS (QA findings). Next: v1.28 live check.
+- Now (on release/v1.28 33c064d): v1.28 live check, PASS (QA findings). Waiting on ROOMS: the pet frame fixes.
+  Was: Now (on e82a602): Pet Shop final frames, NOT A PASS, two FIXes for ROOMS (QA findings).
   Was: Now (on release/v1.27 + 4fe171c): bare-arm rig fix, PASS (QA findings).
   Was: Now (on release/v1.27 050ddd2): v1.27 live check, PASS (QA findings).
   Was: Now (on release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46): REGIMENT hold line, PASS, v1.27 can ship (QA findings).
@@ -383,6 +384,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.28 live check (release/v1.28 33c064d; owner LEAD):
+  - release/v1.28 and rollback-v0.80 match origin (33c064d, a9e38cd). v1.28 changes only rig.js, rig.json and 30_app_b.js from v1.27.
+    rig.js is 4fe171c's. The rig.json change is line for line the one QA passed (ad8b85c), with no Stylist mouth slot. 30_app_b.js
+    changes only APPV, 127 to 128. The rollback commit changes only APPV, 128 to 129.
+  - Clean build: APPV 128 in dist and dist-web, web 3,603 files with version.txt (same as LEAD's), artcheck 0 gaps (370).
+  - Not checked by QA: the hosted pages (LEAD compared all 3,603 on both), a phone.
 - NOT A PASS, Pet Shop final frames (e82a602; 33 frames, 3 beds, pet_art.json, the sheets in shots/pending_art/pets/). Two FIXes,
   owner ROOMS. Pictures: shots/qa/pets2/ (with the two measuring scripts).
   - FIX 1, wyvern frame 6 (fun): it has two spade tails, one at each end of the arched body, and the head floats beside the body with no
