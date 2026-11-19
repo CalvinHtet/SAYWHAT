@@ -204,3 +204,6 @@ With the Patio fully furnished there is no clean free spot (ROOMS's tries: the d
 pushes it into the telescope, the back corner hides behind the egg swing, the right rail is off the floor). Cal chose the creature's bed
 at 4.25, 3.5 by the fire, in place of the white lounge chair: once a creature (and so its bed) is owned, the lounge chair is superseded
 there; the egg chair stays. The Bedroom bed goes in the window corner at 8.9, 2.6.
+The chair it replaces is pt_chair1 (Wicker Lounge Chair), already superseded by the Egg Swing in the chair chain; its copy by the
+fire only shows when both are owned (27_rooms.js), so no paid piece loses its role and nothing is refunded. The creature's buy confirm
+says its Patio bed takes the spot by the fire; after an adoption the chair comes back.
