@@ -42,7 +42,44 @@ So "clothes for the pets" means clothes for Chopstick and Pluto, drawn over thei
   draw per piece per frame.
 - **QA:** the shuffle schedule and every piece on both dogs in all four frames.
 
-## Questions for Cal
+## Cal's answer (2026-11-18): floor 2, and three creatures, not a basic dog
+
+Cal: "pet shop open level 2. but i dont want a basic dog", with three pets he described (his notes, summarised; original designs only, so
+no names, looks or signature details from the shows he mentioned as the mood):
+
+1. **Shadow wolf pup:** a chibi, palm-sized dire-wolf pup. Pitch-black fur, wispy violet or cyan shadow flame off its tail and ear tips,
+   oversized glowing eyes, oversized paws it sometimes trips over. Dresses: glowing collars, tiny battle armour, mini capes, oversized
+   hoodies, hats between its pointed ears.
+2. **Void wyvern:** a chubby, upright baby dragon. Stubby wings, small horns, obsidian scales with bright neon markings. Hovers by your
+   shoulder or waddles behind you. Dresses: tiny backpacks, scarves, a wizard hat over one horn, jackets with wing cutouts.
+3. **Shadow fox-slime:** a round, semi-translucent body of swirling dark violet and black, two pointed fox ears, a smoky misty tail, big
+   glowing neon eyes. Bounces or floats a little off the floor. Dresses: big hats, crowns, headphones, bows on top; scarves or collars
+   round its base; floating auras like tiny orbiting spirit flames.
+
+**Copyright line (CLAUDE.md, "original designs only"):** the three kinds are common fantasy types (shadow wolf, baby dragon, slime), so
+they are fine. Nothing may copy a named character's look or name: no "Shadow Monarch", no named shadow soldier or wyvern, no copy of a
+famous slime's shape and colours. The names in the game are ours, and QA's design review checks the sheets for it.
+
+**What changes from the draft above:**
+
+- The Pet Shop sells **the pets themselves** (one each, adopted once) and then **their clothes**, which shuffle Mon/Thu as planned.
+- Floor 2 (the Boutique, level 30). A "Pets" tab next to its brands.
+- A pet follows your character in the Loft and rooms, as visitors do: the pup trots and trips, the wyvern hovers by the shoulder or
+  waddles, the slime bounces and floats.
+- Each is a sprite like the dogs, but with more frames: idle (with its own loop: flame flicker, wing flap, slime wobble), walk or hover,
+  sit, sleep, and one fun move (the pup trips, the wyvern loops, the slime squashes). About 8 frames per pet, front and back.
+- Clothes are overlays on anchors per frame (head, neck or base, body, aura). Each pet has its own clothes, since a wolf hoodie does not
+  fit a slime.
+- **Chopstick and Pluto stay** as they are (Cal's real dogs) unless Cal says otherwise.
+
+## Questions for Cal (open)
+
+1. Do Chopstick and Pluto stay in the Loft as they are, next to the new pet?
+2. Can you own all three pets, with one following you at a time, or only one?
+3. Should a pet cost coins (about 3,000, a floor-2 big buy), or unlock as a quest reward?
+4. Do your girlfriend's character and yours each get their own pet, or do you share one?
+
+## Earlier questions (answered or replaced)
 
 1. Should the Pet Shop open with floor 2 (level 30), or be on the Street so it is there from the start?
 2. Overlays as proposed (cheap, one image per piece), or a full repaint of each dog per piece (better fit, eight times the art)?
