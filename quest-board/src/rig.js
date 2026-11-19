@@ -196,6 +196,26 @@
       return p;
     }
 
+    /* How much of the bare arms (look.js skinArms) a top covers at rest, 0..1, from both pictures' alpha at a small size; cached
+       per pair. A sleeved top bends its sleeves with weights the rigid arms layer does not share, so under one the skin would peek
+       out along the sleeve's edge and through its folds (LEAD's hoodie check); there the single full base is used instead. */
+    async armsCover(topPath, armsPath) {
+      const key = "cover|" + topPath + "|" + armsPath;
+      if (sharedImages.has(key)) return sharedImages.get(key);
+      const made = Promise.all([this.image(topPath), this.image(armsPath)]).then(([t, a]) => {
+        const w = 96, h = Math.round((96 * a.height) / a.width), c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        const g = c.getContext("2d", { willReadFrequently: true });
+        const alpha = (im) => { g.clearRect(0, 0, w, h); g.drawImage(im, 0, 0, w, h); const d = g.getImageData(0, 0, w, h).data, o = new Uint8Array(w * h); for (let i = 0; i < w * h; i++) o[i] = d[i * 4 + 3]; return o; };
+        const A = alpha(a), T = alpha(t);
+        let arm = 0, hid = 0;
+        for (let i = 0; i < w * h; i++) if (A[i] > 128) { arm++; if (T[i] > 128) hid++; }
+        return arm ? hid / arm : 0;
+      }, () => 0);
+      sharedImages.set(key, made);
+      return made;
+    }
+
     image(path) {
       const url = this.cfg.assetUrl(path);
       if (sharedImages.has(url)) return sharedImages.get(url);
@@ -663,6 +683,17 @@
       const { rig, poses } = this.cfg;
       const pose = typeof poseRef === "string" ? poses[poseRef] : poseRef;
       if (!pose) throw new Error("unknown pose: " + poseRef);
+      // Bare arms as their own layer only under a top that leaves them bare (armsCover above; rig.armsCoverMax, share of the arms
+      // a top may hide). Otherwise the full base, as before the split. Decided on the front view, so a look is the same both ways.
+      const AL = look.layers;
+      if (AL.skinArms && AL.body && AL.body.full) {
+        const top = AL.top && AL.top.front, cover = top ? await this.armsCover(top, AL.skinArms.front) : 0;
+        if (cover > (rig.armsCoverMax != null ? rig.armsCoverMax : 0.25)) {
+          const layers = { ...AL, body: AL.body.full };
+          delete layers.skinArms;
+          look = { ...look, layers };
+        }
+      }
       // A painted pose (the stretch's yawn) needs the top's own painted picture. A top without one (every brand from NICE COCK on,
       // so far) would fall back to bending its normal art overhead, which tears at the armpits; instead the arms stay down and
       // the yawn face plays on the standing pose. Missing art fails softly (CLAUDE.md); the list of
@@ -683,7 +714,10 @@
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
       const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp, l.skirt)));
-      const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat(l.front.replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
+      // l.paintBase: the layer's painted picture is named after another file (look.js: the bare torso uses the full base's yawn).
+      const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat((l.paintBase || l.front).replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
+      // l.painted "hide": drawn by the body's painted picture already (the bare arms), so left out when the body has one.
+      const bodyFlat = slots.some(({ s }, i) => s.id === "body" && flats[i]);
       // A painted layer is drawn once, in the last group its mesh would use, so everything it should cover is already down.
       // The bare body goes in its first group instead, under the face, hair and clothes (ROOMS, yawn pilot).
       const lastGroup = slots.map((x, i) => { let g = -1; if (flats[i]) for (const gg of rig.drawSequence[view]) if ((x.s.id !== "body" || g < 0) && [meshes[i].groups[gg], ...meshes[i].seams[gg].map((z) => z[1])].some((t) => t && t.length)) g = gg; return g; });
@@ -758,9 +792,10 @@
       }
       for (const [i, g] of order) {
         (({ s, l }) => {
+          if (bodyFlat && l.painted === "hide") return;
           if (flats[i]) {
             if (g !== lastGroup[i]) return;
-            const tint = l.tint || (s.id === "body" && look.skin) || null;
+            const tint = l.tint || ((s.id === "body" || s.skin) && look.skin) || null;
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, flats[i].tex);
             gl.uniform1i(this.u.uMode, tint ? tint.mode : 0);
@@ -780,7 +815,7 @@
           gl.bindTexture(gl.TEXTURE_2D, m.partTex);
           gl.activeTexture(gl.TEXTURE0);
           gl.bindTexture(gl.TEXTURE_2D, m.tex);
-          const tint = l.tint || (s.id === "body" && look.skin) || null;
+          const tint = l.tint || ((s.id === "body" || s.skin) && look.skin) || null;
           gl.uniform1i(this.u.uMode, tint ? tint.mode : 0);
           // Hair is only trimmed while the hat that hides it is actually on.
           const hatOff = pose.swap && "hat" in pose.swap && !pose.swap.hat && !(look.layers.hat && look.layers.hat.keepAsleep);
