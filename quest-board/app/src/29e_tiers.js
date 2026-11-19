@@ -70,4 +70,8 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
      the brocade bustier, the gold-woven bomber and frock coat, the gold-capped high-tops, the sculpted-heel mules); the rest premium */
   put("luxury","gx_gd_wreath gx_gd_cuffs gx_gd_bustier gx_gd_bomber gx_gd_frock gx_gd_hightop gx_gd_mule");
   put("premium","gx_gd_cap gx_gd_beret gx_gd_scarf gx_gd_shirt gx_gd_jogger gx_gd_cargo gx_gd_skirt gx_gd_loafer");
+  /* OIL & CANVAS (LEAD, 2026-11-18, by QA's rules; QA to check): the hand-painted and pieced work luxury (the dipped felt hat with its brush,
+     the painted denim jacket, the patchwork coat, the drip smock and halter, the gesso boots, the slingbacks on tiptoe); the rest premium */
+  put("luxury","gx_oc_felt gx_oc_denim gx_oc_coat gx_oc_smock gx_oc_halter gx_oc_boot gx_oc_sling");
+  put("premium","gx_oc_cap gx_oc_roll gx_oc_palette gx_oc_gloves gx_oc_trouser gx_oc_jean gx_oc_skirt gx_oc_derby");
   }return m[id]||null}
