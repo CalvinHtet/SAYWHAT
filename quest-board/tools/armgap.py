@@ -30,6 +30,7 @@ JOINS = {
     "m_front": [(706, 1295, 1, 1560), (1107, 1265, -1, 1545)],
     "m_back": [(662, 1240, 1, 1560), (1033, 1295, -1, 1555)],
 }
+CURVES = []  # filled by plan(): each join's gap-centre curve [(x, y)], for armsplit.py
 FILES = {"f": ["f_base", "f_base_heel", "f_base_bare", "f_base_bare_heel"], "m": ["m_base"]}
 
 
@@ -102,6 +103,8 @@ def plan(a, joins):
             if al[y, xi - 6:xi + 7].min() < 64:  # the gap's edge reaches the opening
                 break
         rep.append((x0, y0, int(ys[0]), int(y1)))
+        curve = []
+        CURVES.append(curve)
         for y in range(y0, y1 + 3):
             xc = np.polyval(fit, y) if y <= ys[-1] else np.polyval(tail, y)
             slope = np.polyval(np.polyder(fit), y) if y <= ys[-1] else tail[0]
@@ -109,6 +112,7 @@ def plan(a, joins):
             t = min(1.0, (y - y0) / TAPER)
             rg = GAP / 2 * t
             rw = rg + 6.0 * min(1.0, (y - y0) / 20, max(0.0, (y1 + 2 - y) / 12))  # the widened line fades in and out: no flat ends
+            curve.append((float(xc), y))
             xs = np.arange(int(xc - 30), int(xc + 31))
             d = (xs - xc) * k
             gapc[y, xs] = np.maximum(gapc[y, xs], np.clip(rg - np.abs(d) + .5, 0, 1))
