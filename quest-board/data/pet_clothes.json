@@ -1,4 +1,60 @@
 {
+ "pd_bucket": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 217,
+    "h": 143,
+    "pivot": [
+     115.6,
+     73.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 219,
+    "h": 140,
+    "pivot": [
+     123.7,
+     42.3
+    ]
+   }
+  ]
+ },
+ "pd_poppy": {
+  "kind": "head",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 164,
+    "h": 82,
+    "pivot": [
+     90.3,
+     33.5
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 171,
+    "h": 70,
+    "pivot": [
+     96.5,
+     5.9
+    ]
+   }
+  ]
+ },
  "ps_bow": {
   "kind": "head",
   "pet": "slime",

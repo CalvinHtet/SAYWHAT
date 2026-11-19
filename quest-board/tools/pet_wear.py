@@ -131,7 +131,19 @@ def cut(sheet, pid, kind, append=False):
         if not n:
             continue
         sz = ndi.sum(a > 0, lab, range(1, n + 1))
-        keep = np.isin(lab, 1 + np.flatnonzero(sz > max(80, (.01 if kind == "aura" else .04) * sz.max())))  # stray bits off worn pieces
+        ok = sz > max(80, (.01 if kind == "aura" else .04) * sz.max())  # stray bits off worn pieces
+        if kind != "aura":
+            # a worn piece touches the pet: drop parts that float free of the template figure (ghost copies the painter adds)
+            fa = np.asarray(frame_img(c["pet"], c["frame"]))[..., 3] > 128
+            fm = np.zeros((bh, bw), bool)
+            fh, fw = fa.shape
+            big = np.asarray(Image.fromarray(fa.astype(np.uint8) * 255).resize((round(fw * k), round(fh * k)))) > 127
+            oy, ox = c["y"] - by, c["x"] - bx
+            fm[oy:oy + big.shape[0], ox:ox + big.shape[1]] = big[:bh - oy, :bw - ox]
+            fm = ndi.binary_dilation(fm, iterations=12)
+            touch = np.array([(fm & (lab == j + 1)).any() for j in range(n)])
+            ok &= touch
+        keep = np.isin(lab, 1 + np.flatnonzero(ok))
         ys, xs = np.nonzero(keep)
         y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
         piece = np.dstack([rgb[by + y0:by + y1, bx + x0:bx + x1], np.where(keep[y0:y1, x0:x1], a[y0:y1, x0:x1], 0)])
