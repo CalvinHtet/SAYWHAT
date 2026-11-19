@@ -220,3 +220,10 @@ says its Patio bed takes the spot by the fire; after an adoption the chair comes
   noticeable"):** the dogs 34 to 29 px standing (LFDOGH), their beds at 85% in the Bedroom and on the Patio; the creature 34 to 40 px per
   300 frame px (PZ_K), its beds with it.
 - No dog clothes without a dog (QA's note).
+
+## No dog beds outside (Cal, 2026-11-19)
+
+Cal: "Remove the dog beds from outside and only have the pet bed. Chopstick is also floating on top of the bed rather than sleeping on it
+properly". Both Patio dog beds (pt_dbed, pt_dbed2) are retired (off sale) and no longer drawn; owners keep the ids. The dogs sleep in
+their Bedroom beds and only wander out on the Patio. The creature's Patio bed is at 1.7, 2.6, left of the fire pit, clear of everything
+now that Pluto's bed is gone (QA FIX A). The Bedroom dogs sit lower in their beds (platform 3, was 7, then 6).

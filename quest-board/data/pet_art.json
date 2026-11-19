@@ -7,7 +7,7 @@
   "anchors (LEAD 2026-11-18, measured by eye on a 10 px grid over the cut files; aura = the frame's mass centre, computed): pets.<pet>.anchors[f] = {head:[x,y,deg] (top of the skull between the ears or horns; null where fit.headHide hides it), neck:[x,y,deg] (front of the collar line; for the slime its base band; null where tucked), body:[x,y,deg] (torso centre), aura:[x,y]} in frame px from the top-left; deg turns the piece clockwise. The dogs' head and neck gained a third value, deg (0).",
   "fit.head (the slime only, LEAD 2026-11-18): the head piece's cell per frame, in fit.headCells order: \"up\" everywhere but the flat frames 3 (squash) and 10 (melt), which take a \"flat\" cell painted for the low body (a single-cell head piece is used as is). Hiding them there would make hats blink on and off every bounce."
  ],
- "spots": {"bedroom": [8.9,2.6], "patio": [2.1,2.6]},
+ "spots": {"bedroom": [8.9,2.6], "patio": [1.7,2.6]},
  "pets": {
   "wolf": {
    "frames": 11,

@@ -1751,10 +1751,10 @@ function lfPvStart(i,mm){
   /* The Patio window shows you and the dogs out there too (Cal): copies of the Bedroom's people for this window, each
      dog with its own Patio bed (Pluto the first, Chopstick the second). */
   if(r.t==="patio"){var bi=-1;S.base.slots.forEach(function(q,j){if(bi<0&&q&&q.t==="bedroom")bi=j});
-    if(bi>=0){var pa=r.a||{},beds=[];if(pa.pt_dbed)beds.push([1.95,4.05]);if(pa.pt_dbed2)beds.push([.75,4.05]);
+    if(bi>=0){var pa=r.a||{},beds=[];/* no dog beds out here any more (Cal 11-19, 27_rooms.js): the dogs sleep indoors */
       lfDesired().filter(function(w){return w.room===bi&&(w.role==="me"||w.role==="dog")}).forEach(function(w){
         var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:0});
-        if(w.role==="dog")n.bed=w.dname==="pet"?(typeof pzBedPt==="function"?pzBedPt("patio"):null):beds[w.dname==="chopstick"?1:0]||beds[0]||null;/* the creature's own bed by the fire (Cal: "Yes, replace it") */
+        if(w.role==="dog")n.bed=w.dname==="pet"?(typeof pzBedPt==="function"?pzBedPt("patio"):null):null;/* the creature's own bed by the fire (Cal: "Yes, replace it") */
         var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
         try{lfPlace(a)}catch(e){}a.alpha=1;a.fade=0})}}
 }
@@ -3166,7 +3166,7 @@ function lfPatioReal(){
        chair, and the back left corner) */
     [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
     /* each Patio bed has its dog: the first is Pluto's, the second Chopstick's */
-    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);var pq=typeof pzBedPt==="function"?pzBedPt("patio"):null;if(pq)R.beds.push([pq[0]+ox,pq[1]+oy,"pet"]);
+    var pq=typeof pzBedPt==="function"?pzBedPt("patio"):null;if(pq)R.beds.push([pq[0]+ox,pq[1]+oy,"pet"]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
     R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})});
     /* only spots a walk from the sliding door reaches (QA on v0.75: with the Patio full, the back-left spot was boxed in by the
