@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.27 LIVE 050ddd2 (APPV 127; rollback APPV 128 e3e2b1a; pushed): REGIMENT on the Boutique, hold ends Thu 11-26, first drop Mon 12-14, GILDED 11-23 and OC 11-30 unchanged (QA PASS 9489e9e). WAITING ON QA: live check. Bare-arm rig fix (QA note) on qa-local, not committed: rig.json fineUp body, slotStretch body 9, armpit body sleeves/cap 2; full rigdiff vs v1.26 running. Pets: Cal wants each a different colour (relayed to ROOMS: wolf cyan, wyvern navy + amber, slime plum + magenta); 12 clothes per pet at launch (Cal: "12 per pet"), 3 per slot, 36 in all; ROOMS paints them after the final frames pass QA.
+- v1.27 LIVE 050ddd2 (APPV 127; rollback APPV 128 e3e2b1a; pushed): REGIMENT on the Boutique, hold ends Thu 11-26, first drop Mon 12-14, GILDED 11-23 and OC 11-30 unchanged (QA PASS 9489e9e). Live check (QA: DONE, PASS; QA findings). Bare-arm rig fix (QA note) on qa-local, not committed: rig.json fineUp body, slotStretch body 9, armpit body sleeves/cap 2; full rigdiff vs v1.26 running. Pets: Cal wants each a different colour (relayed to ROOMS: wolf cyan, wyvern navy + amber, slime plum + magenta); 12 clothes per pet at launch (Cal: "12 per pet"), 3 per slot, 36 in all; ROOMS paints them after the final frames pass QA.
 - v1.26 LIVE on Live and Test = 268fb31 (release/v1.25 + f041b24 + 4c60022 + abe4e6d + APPV 126; QA PASS 69af73e; Cal via ROOMS: "Approve OIL & CANVAS"): OIL & CANVAS on the Boutique, 15 rows, held to Thu 11-26 so GILDED keeps its Mon 11-23 debut; OIL & CANVAS first drops Mon 11-30. Live checks PASS; 3526/3526 identical on both. Rollback = rollback-v0.80 22b253c (APPV 127). Both pushed. (QA: DONE, live check PASS; QA findings) (QA: DONE, PASS; QA findings)
 - Pet Shop (Cal 11-18): "pet shop open level 2. but i dont want a basic dog" plus three creatures (shadow wolf pup, void wyvern, shadow fox-slime): docs/PET_SHOP.md 1334747, original designs only. ROOMS: concept sheets after REGIMENT, QA design review first. WAITING ON CAL: 4 questions (dogs stay, own all three, price, one each).
 - Was: v1.25 LIVE on Live and Test = 6a0272c (QA PASS, every Shop row x both bodies x 35 poses vs v1.24): your character's emotes, the side stretch, the rig fixes (finer mesh on tops/arms, arms-up stretch cap), GILDED (first drop Mon 11-23), KODE PINK's detail pass. wlive PASS; 3449/3449 identical on both (the ship run's Test read failed on 1,935 files over the long upload, a rerun matched all). Rollback = rollback-v0.80 cd5a4ef (APPV 126). Both pushed. QA: live check please. Owed: Cal's phone check of first-emote lag. (QA: DONE, PASS; QA findings)
@@ -295,7 +295,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46): REGIMENT hold line, PASS, v1.27 can ship (QA findings). Nothing open from QA.
+- Now (on release/v1.27 050ddd2): v1.27 live check, PASS (QA findings). Nothing open from QA.
+  Was: Now (on release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46): REGIMENT hold line, PASS, v1.27 can ship (QA findings).
   Was: Now (on 156340f): Pet Shop concept notes applied, PASS (QA findings).
   Was: Now (on a02362e): Pet Shop concepts PASS with NOTES (QA findings).
   Was: Now (on bd7c9f4): REGIMENT rows PASS, held for Cal (QA findings).
@@ -378,6 +379,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.27 live check (release/v1.27 050ddd2; owner LEAD):
+  - release/v1.27 and rollback-v0.80 match origin (050ddd2, e3e2b1a). Every quest-board file v1.27 changes from v1.26 matches the cut
+    QA passed (9489e9e) byte for byte, except 30_app_b.js, which differs only in the APPV line (126 to 127). The rollback commit
+    changes only APPV, 127 to 128.
+  - Clean build of release/v1.27: APPV 127 in dist and dist-web, web 3,603 files with version.txt (same as LEAD's 3,603), artcheck 0 gaps
+    (370). The test hooks are the same two as in v1.26 (still to remove before the real release, per CLAUDE.md).
+  - The branch also carries ROOMS's 22 REGIMENT review sheets under shots/ (rows json, wear sheets, rg_base jpgs). They are not in the
+    build, so they are harmless. Note only: LEAD's message said "shots/ drafts left out".
+  - Not checked by QA: the hosted pages themselves (LEAD's ship run compared all 3,603 files on both), a phone.
 - PASS, REGIMENT hold line, v1.27 can ship (release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46, built clean; owner LEAD):
   - The 84 files the four commits change match 3876c46 byte for byte. Plain build and web build clean; web 3,603 files with version.txt
     (v1.26 3,526, +77 for REGIMENT). artcheck 0 gaps (370 garments).
