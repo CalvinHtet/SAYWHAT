@@ -103,6 +103,13 @@ as the pet to give up. And then you can buy another."
 - **Its clothes stay yours** (LEAD's default): they are hidden while you have no pet of that kind and come back if you adopt that kind
   again. Nothing is refunded.
 
+## Frame list (LEAD for ROOMS, 2026-11-18, QA's note on a02362e)
+
+The same 11 frames for all three pets, front 3/4 view facing right (flipped for left, as the dogs are), one canvas size and ground line
+per pet: 0-1 idle A/B (the loop), 2-3 move A/B (trot, hover or waddle, bounce), 4 sit, 5 sleep (in its bed), 6 fun move, 7-10 crying
+(the adoption splash). No back views: each clothing piece would need back art too. Clothes are one image per piece on per-frame anchors
+(head, neck or base, body, aura), measured once per frame.
+
 ## Questions for Cal (open)
 
 1. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
