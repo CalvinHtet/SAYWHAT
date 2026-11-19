@@ -27,6 +27,67 @@
    }
   ]
  },
+ "ps_cape": {
+  "kind": "body",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 247,
+    "h": 132,
+    "pivot": [
+     131.9,
+     53.4
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 250,
+    "h": 146,
+    "pivot": [
+     149.5,
+     55.9
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 202,
+    "h": 172,
+    "pivot": [
+     82.8,
+     44.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 238,
+    "h": 103,
+    "pivot": [
+     154.9,
+     71.3
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 189,
+    "h": 128,
+    "pivot": [
+     72.5,
+     92.5
+    ]
+   }
+  ]
+ },
  "ps_crown": {
   "kind": "head",
   "pet": "slime",
@@ -101,6 +162,67 @@
     "pivot": [
      185.2,
      13.2
+    ]
+   }
+  ]
+ },
+ "ps_pack": {
+  "kind": "body",
+  "pet": "slime",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "slime",
+    "frame": 0,
+    "w": 89,
+    "h": 102,
+    "pivot": [
+     124.8,
+     75.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "slime",
+    "frame": 4,
+    "w": 216,
+    "h": 105,
+    "pivot": [
+     117.5,
+     90.4
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "slime",
+    "frame": 6,
+    "w": 189,
+    "h": 100,
+    "pivot": [
+     76.2,
+     57.7
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "slime",
+    "frame": 3,
+    "w": 144,
+    "h": 113,
+    "pivot": [
+     77.7,
+     103.8
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "slime",
+    "frame": 5,
+    "w": 143,
+    "h": 107,
+    "pivot": [
+     49.1,
+     114.3
     ]
    }
   ]
