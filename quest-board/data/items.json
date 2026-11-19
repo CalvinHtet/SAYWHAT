@@ -1820,7 +1820,8 @@
   "slot": "top"
  },
  "oc_smock": {
-  "slot": "top"
+  "slot": "top",
+  "bare": true
  },
  "oc_halter": {
   "slot": "top",

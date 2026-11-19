@@ -41,7 +41,7 @@
   "Palette Pendant",
   950,
   1,
-  "Carved wooden palette, raised cadmium and cobalt dabs.",
+  "A small carved palette charm on a waxed cord, four paint dots.",
   {
    "gar": "oc_palette",
    "b": "oc"
@@ -50,10 +50,10 @@
  [
   "gx_oc_gloves",
   "a_acc",
-  "Paint-Dipped Gloves",
+  "Paint-Stained Leather Gloves",
   950,
   1,
-  "Cream fingerless knit, cadmium-dipped tips, indigo stitch.",
+  "Fitted cream fingerless leather, orange-stained tips, indigo strap.",
   {
    "gar": "oc_gloves",
    "b": "oc"
