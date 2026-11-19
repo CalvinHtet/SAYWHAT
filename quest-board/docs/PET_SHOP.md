@@ -86,10 +86,26 @@ famous slime's shape and colours. The names in the game are ours, and QA's desig
   pets and own save files." The pet, its bed and its clothes live in each player's own save.
 - **Emotes:** no stutter on Cal's phone, so the v1.25 warm-up is fine.
 
+## One pet only, and adoption (Cal, 2026-11-18)
+
+Cal: "They can own only 1. Make sure to provide a warning that you can only buy one. If you wish to give it up for adoption, the pet
+should have a sad crying animation splash screen where you confirm if you want to give it up for adoption, which costs the same price
+as the pet to give up. And then you can buy another."
+
+- **One creature per player.** The Pets tab shows all three; once you own one, the other two say "You already have a pet".
+- **Warning before buying:** the buy button opens a confirm: "You can only have one pet. To switch later you would give <name> up for
+  adoption, which costs <price> coins." Buy or Cancel.
+- **Giving it up for adoption:** a button on the pet's card in the Wardrobe (and the Pets tab). It opens a full-screen splash with the pet
+  crying (its own short animation: big wet eyes, tears, a sniffle loop; the wolf's ears droop, the wyvern's wings fold, the slime sags),
+  and "Give <name> up for adoption? It costs <price> coins, the same as adopting." Confirm or Keep <name>. Confirm needs the coins.
+- **After:** the pet and its two beds leave the Loft and Patio, you can buy any of the three again (full price), and the new one brings
+  its own beds.
+- **Its clothes stay yours** (LEAD's default): they are hidden while you have no pet of that kind and come back if you adopt that kind
+  again. Nothing is refunded.
+
 ## Questions for Cal (open)
 
-1. Can a player buy more than one of the three creatures, or pick one?
-2. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
+1. Do the Pet Shop's clothes also fit Chopstick and Pluto, or only the new creatures?
 
 ## Earlier questions (answered or replaced)
 
