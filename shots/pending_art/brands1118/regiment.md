@@ -1,0 +1,48 @@
+# REGIMENT (Boutique): draft pieces (ROOMS, 2026-11-18), for QA's design review before any paint
+
+Concept approved by Cal 2026-11-18 ("approve all", via LEAD): military tailoring, "Ranked by outfit".
+Palette: navy, scarlet, brass, with black patent and a little ivory. Nothing green (keyed), nothing magenta or hot pink (the
+bodies are flat magenta); scarlet keys with flatbody_red.
+
+Cal's standing rules: nothing plain (every line names two or more details), original designs only, no cultural dress, adults only,
+sexy pieces welcome (skin, never nude). The mess jacket and the waistcoat are `bare` tops (QA's coverage gate), the skirt's slit stays
+below the shorts' line, the stiletto boots use the tiptoe `heel` base.
+
+Insignia and costume guard (QA's earlier NOTE: invented crests only): no real insignia, flags, rank badges, chevrons, stars, pips or
+medals; no eagles, crowned lions or national emblems; no real regiment's colours. The only crest is invented: a brass knot inside a
+plain ring. Not a costume either: no famous singer's red stage jacket with an armband, no pastel satin band-uniform suits, no
+bearskins, shakos or plumes, no kilts or tartan. Trade dress: no fashion house's signature power-shoulder jacket with rows of
+embossed gold buttons; REGIMENT's buttons are plain domed brass, the shoulders natural.
+
+Overlap check: the Shop's only military-ish piece is VENOM ROSE's Velvet Captain's Cap (oxblood velvet, patent brim). REGIMENT's
+peaked cap is navy wool with a scarlet band and a brass chin cord, and the brand's second hat is a side cap, a different shape.
+
+| id | slot | name | line | body | flags |
+|---|---|---|---|---|---|
+| rg_cap | hat | Cord Peaked Cap | Navy wool peaked cap, a scarlet band, a twisted brass chin cord, the brass knot crest, a black patent peak. | both | |
+| rg_side | hat | Piped Side Cap | Navy wool side cap worn tilted, scarlet piping along every edge, two small brass buttons at the front. | both | noClip if it sits on top of the hair |
+| rg_cord | acc (neck) | Brass Aiguillette | Braided brass cords looped from the right shoulder across the chest, two brass tips, a scarlet knot at the shoulder. | both | chain mode |
+| rg_sash | acc (neck) | Scarlet Parade Sash | A wide scarlet silk sash across the body, a fringed brass-thread end at the hip, a domed brass buckle. | both | chain mode |
+| rg_gloves | acc (arms) | Gauntlet Gloves | Ivory leather gloves with flared navy gauntlet cuffs, scarlet piping, a brass button at each wrist. | both | hand-sized cuff |
+| rg_jacket | top | Frogged Officer Jacket | Navy wool, rows of brass braided frogging across the chest, a scarlet stand collar and cuffs, fringed brass epaulettes. | both | |
+| rg_capelet | top | Capelet Tunic | A fitted navy tunic with a short scarlet-lined capelet to the elbow, brass buttons down the front, a brass chain clasp. | both | capelet short, clear of the hands |
+| rg_mess | top | Cropped Mess Jacket | A cropped scarlet mess jacket worn open over a navy bandeau, brass buttons, black satin lapels, bare midriff. | women | bare |
+| rg_vest | top | Braided Waistcoat | A sleeveless navy waistcoat worn on the bare chest, scarlet piping, brass braid loops, a low V. | men | bare (his base is bare already) |
+| rg_breeches | pants | Stripe Riding Breeches | Navy jodhpur-cut breeches, a wide scarlet side stripe, brass buttons at the knee. | both | |
+| rg_trouser | pants | Scarlet Dress Trousers | Slim scarlet wool trousers, a navy double side stripe, brass buckle side tabs. | both | |
+| rg_skirt | pants | Frogged Pencil Skirt | Navy pencil skirt, brass frogging down one side, a scarlet hem stripe, a back slit. | women | skirt |
+| rg_boot | shoes | Tall Riding Boots | Knee-high black patent riding boots, a scarlet top band, a brass strap buckle at the ankle. | both | |
+| rg_spat | shoes | Spat Brogues | Black brogues under navy wool spats, a row of brass buttons up the side, scarlet laces. | both | |
+| rg_stiletto | shoes | Officer Stiletto Boots | Navy patent ankle boots on a slim stiletto, brass buttons up the side, a scarlet heel. | women | heel (tiptoe) |
+
+Counts: 2 hats, 3 accessories, 4 tops, 3 bottoms, 3 shoes = 15. Prices as GILDED and OIL & CANVAS (Boutique 950-1,900; jacket and
+capelet luxury). Brand key "rg".
+Logo: the brass knot inside a plain ring on a scarlet ground, no letters.
+Banner: a dark navy dressing room, a jacket on a stand under a lamp, brass buttons catching light, no flags, no portraits, no text.
+
+Questions for QA:
+1. Does the frogged officer jacket stay clear of the costume and trade-dress lines above, or does it need toning down (fewer
+   frogging rows, no fringe on the epaulettes)?
+2. The capelet: arms lift the art beside the hands, so I would paint it ending at the elbow and hemtrim it. Fine, or swap it for a
+   double-breasted greatcoat?
+3. His sexy piece is the waistcoat on the bare chest, hers the open mess jacket over a bandeau. Enough, or one more?
