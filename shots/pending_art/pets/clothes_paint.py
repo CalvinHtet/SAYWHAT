@@ -43,7 +43,7 @@ P = [
  ("ps_sparkle", "slime", "aura", "about ten tiny separate four-point stars in pink and gold twinkling round the slime in a wide low oval at mid height, spaced far apart, each with a plum outline; a few behind it and a few in front low down, sparse, never across the eyes or face"),
  ("pd_bucket", "dogs", "head", "a caramel corduroy bucket hat on each dog's head with two ear slits so the ears come through, a cherry stitched bone patch on the front, a cream band; above the eyes"),
  ("pd_poppy", "dogs", "head", "a woven ring of cherry-red poppies with navy centres on tan twine worn as a crown on each dog's head, no leaves, no stems, a small navy bow at the side; above the eyes"),
- ("pd_aviator", "dogs", "head", "a brown leather flight cap on each dog's head with cream fleece lining, short ear flaps buckled up, tiny goggles high on the brow; above the eyes"),
+ ("pd_aviator", "dogs", "head", "a brown leather flight cap on each dog's head with cream fleece lining, short fleece-lined ear flaps hanging to the jaw, tiny goggles high on the brow; above the eyes"),
  ("pd_bowtie", "dogs", "neck", "a navy collar round each dog's neck with a cherry gingham bow tie at the front and a small brass bell"),
  ("pd_bandana", "dogs", "neck", "a cream bandana round each dog's neck with cherry paw prints and a twisted rope edge, knotted at the side"),
  ("pd_studs", "dogs", "neck", "a cherry leather collar round each dog's neck with a row of brass studs and a blank brass bone-shaped tag at the front"),

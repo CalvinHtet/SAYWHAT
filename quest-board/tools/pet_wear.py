@@ -87,6 +87,11 @@ def keyed(rgb, pet):
     else:
         tpl = (g > r + .1) & (b > r + .1) & (np.abs(g - b) < .3) & (sat > .3)
         tpl |= (g > r + .06) & (b > r + .12) & (mx < .45)  # the cyan template in shadow (dark teal)
+        # deeper shadow (slate teal, greener than navy and duller): only where it joins the template itself
+        slate = (g > r + .015) & (b > r + .09) & (b < r + .2) & (mx < .45) & (sat < .5)
+        lab, n = ndi.label(slate | tpl)
+        if n:
+            tpl |= np.isin(lab, np.unique(lab[tpl])) & slate
     dark = mx < .3
     # dark outline pixels squeezed between key colour and green belong to the template, not the piece
     edge = dark & ndi.binary_dilation(tpl, iterations=6) & ndi.binary_dilation(grn, iterations=6)
@@ -131,7 +136,13 @@ def cut(sheet, pid, kind, append=False):
         if not n:
             continue
         sz = ndi.sum(a > 0, lab, range(1, n + 1))
-        ok = sz > max(80, (.01 if kind == "aura" else .04) * sz.max())  # stray bits off worn pieces
+        ok = sz > max(80, (.01 if kind == "aura" else .05) * sz.max())
+        if kind != "aura":
+            # a small part on the cell's edge is a sliver of the next cell's painting (cut by the box), not this piece
+            rim = np.zeros((bh, bw), bool)
+            rim[:3], rim[-3:], rim[:, :3], rim[:, -3:] = True, True, True, True
+            edge = np.array([(rim & (lab == j + 1)).any() for j in range(n)])
+            ok &= ~(edge & (sz < .25 * sz.max()))
         if kind != "aura":
             # a worn piece touches the pet: drop parts that float free of the template figure (ghost copies the painter adds)
             fa = np.asarray(frame_img(c["pet"], c["frame"]))[..., 3] > 128

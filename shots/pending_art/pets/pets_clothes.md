@@ -68,7 +68,7 @@ fine here (the magenta-body rule is only for people's clothes).
 |---|---|---|---|
 | pd_bucket | head | Corduroy Ear-Slit Bucket Hat | Caramel corduroy with two ear slits, a cherry stitched bone patch on the front, a cream band. |
 | pd_poppy | head | Poppy Chain Crown | A woven ring of cherry-red poppies with navy centres on tan twine (no leaves, no stems), a small navy bow at the side. |
-| pd_aviator | head | Pup Aviator Cap | A brown leather flight cap with cream fleece lining, short ear flaps buckled up, tiny goggles high on the brow. |
+| pd_aviator | head | Pup Aviator Cap | A brown leather flight cap with cream fleece lining, short fleece-lined ear flaps hanging to the jaw, tiny goggles high on the brow. |
 | pd_bowtie | neck | Gingham Bow-Tie Collar | A navy collar with a cherry gingham bow tie and a small brass bell. |
 | pd_bandana | neck | Paw-Print Rope Bandana | A cream bandana with cherry paw prints and a twisted rope edge, knotted at the side. |
 | pd_studs | neck | Studded Leather Collar | Cherry leather with a row of brass studs and a blank brass bone-shaped tag at the front. |
