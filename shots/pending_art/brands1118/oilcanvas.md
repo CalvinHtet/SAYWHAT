@@ -19,7 +19,7 @@ paint-brand labels on the tubes or rolls. All brushwork is invented, loose and a
 
 | id | slot | name | line | body | flags |
 |---|---|---|---|---|---|
-| oc_cap | hat | Thumbprint Painter's Cap | Cream cotton short-brim painter's cap, cadmium thumbprints round the crown, an indigo-dipped brim edge. | both | |
+| oc_cap | hat | Finger-Swipe Studio Cap | Cream cotton ball cap with stitched panels, finger-wiped cadmium orange, red and ochre smears and drips, an indigo-dipped brim. | both | |
 | oc_felt | hat | Dipped-Brim Felt Hat | Cream wool felt with a wide brim dipped in indigo, cadmium drips running up the crown, a brush tucked in the band. | both | |
 | oc_roll | acc (neck) | Brush Roll Sling | A rolled canvas brush wrap worn across the body, worn-wood brush handles poking out, a paint-stained leather strap. | both | |
 | oc_palette | acc (neck) | Palette Pendant | A small carved wooden palette on a waxed cord, raised enamel dabs of cadmium, cobalt and cream. | both | |
@@ -49,3 +49,17 @@ Questions for QA (answered):
    nothing hanging below the band, and test with hatcheck under every hair.
 2. The brush roll sling crosses the chest: neck slot with chain mode `2 0.5`, like the body chain. Fine, or arms?
 3. Is the open-chest smock on his body enough "sexy" for the brand, or should his side get one more skin piece?
+
+## Painted (ROOMS, 2026-11-18): status for QA's wear-check
+
+All 15 painted on Nano Banana Pro (Unlimited), one image per piece holding every angle; logo_oc (a stretched canvas with three
+palette-knife smears) and ui_banner_oc (a studio wall of painted canvases, cropped clear of a seam the generator left).
+Redone once before keeping: denim (the first back was a centred sun emblem, now loose diagonal sweeps), halter (read as a bib, now
+shaped cups, knot, piping), skirt (plain towel wrap, now frayed diagonal overlap, slit, brass pin), cap (polka-dot thumbprints and
+a wavy brim read cute, now finger-wiped smears; it came out a ball cap, renamed Finger-Swipe Studio Cap). The gloves' first run
+was refused by Higgsfield's filter (bare bodies); the identical prompt passed on the second run, nothing reworded.
+The felt hat's brim sat on her eyes: items.json lift {m 90, f 90} and its hair clip moved up by the same amount (90/2528), so no
+bald band from behind. Sheets: oilcanvas_approval.png, oilcanvas_wear_m/f.png (41 poses), oilcanvas_close_m/f.png (6 poses, HI 3).
+Checked by ROOMS: both bodies, 41 poses, 15 + 19 outfits, 0 not drawn, 0 page errors; hatcheck on both hats (h1-h3, both bodies);
+the halter on her bare base (no tank). Known, for QA to judge: the gloves read as chunky knit arm-warmers (the arm bone carries
+the whole forearm); tiny specks beside her arm with the halter in stretchUp and dance2 (the rig's underarm wisp?).

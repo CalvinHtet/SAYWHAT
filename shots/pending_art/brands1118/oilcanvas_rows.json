@@ -1,0 +1,185 @@
+[
+ [
+  "gx_oc_cap",
+  "a_hat",
+  "Finger-Swipe Studio Cap",
+  950,
+  1,
+  "Cream cotton, finger-wiped cadmium smears, an indigo brim.",
+  {
+   "gar": "oc_cap",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_felt",
+  "a_hat",
+  "Dipped-Brim Felt Hat",
+  1100,
+  1,
+  "Cream felt, indigo-dipped brim, cadmium drips, a brush in the band.",
+  {
+   "gar": "oc_felt",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_roll",
+  "a_acc",
+  "Brush Roll Sling",
+  1000,
+  1,
+  "Canvas brush roll across the body, worn handles, stained strap.",
+  {
+   "gar": "oc_roll",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_palette",
+  "a_acc",
+  "Palette Pendant",
+  950,
+  1,
+  "Carved wooden palette, raised cadmium and cobalt dabs.",
+  {
+   "gar": "oc_palette",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_gloves",
+  "a_acc",
+  "Paint-Dipped Gloves",
+  950,
+  1,
+  "Cream fingerless knit, cadmium-dipped tips, indigo stitch.",
+  {
+   "gar": "oc_gloves",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_denim",
+  "a_top",
+  "Hand-Painted Denim Jacket",
+  1900,
+  1,
+  "Indigo denim, cadmium brush sweeps across the back, copper buttons.",
+  {
+   "gar": "oc_denim",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_coat",
+  "a_top",
+  "Patchwork Studio Coat",
+  1900,
+  1,
+  "Cream canvas offcuts, indigo running stitch, a brush in the pocket.",
+  {
+   "gar": "oc_coat",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_smock",
+  "a_top",
+  "Drip Smock Shirt",
+  1700,
+  1,
+  "Oversized cream smock, open chest, cadmium and cobalt drips.",
+  {
+   "gar": "oc_smock",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_halter",
+  "a_top",
+  "Paint-Drip Halter",
+  1700,
+  1,
+  "Cream linen halter, drips from the neckline, an open back.",
+  {
+   "gar": "oc_halter",
+   "b": "oc",
+   "fo": 1
+  }
+ ],
+ [
+  "gx_oc_trouser",
+  "a_pants",
+  "Splattered Wide Trousers",
+  1500,
+  1,
+  "Cream wide-leg linen, splatter, a palette knife on the belt loop.",
+  {
+   "gar": "oc_trouser",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_jean",
+  "a_pants",
+  "Gesso-Dipped Jeans",
+  1500,
+  1,
+  "Raw indigo dipped in cream gesso, cadmium drips below.",
+  {
+   "gar": "oc_jean",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_skirt",
+  "a_pants",
+  "Brushstroke Wrap Skirt",
+  1500,
+  1,
+  "Cream canvas wrap, an indigo stroke at the hem, a side slit.",
+  {
+   "gar": "oc_skirt",
+   "b": "oc",
+   "fo": 1
+  }
+ ],
+ [
+  "gx_oc_boot",
+  "a_shoes",
+  "Gesso Studio Boots",
+  1700,
+  1,
+  "Cream canvas lace-ups crusted in gesso, cadmium flecks.",
+  {
+   "gar": "oc_boot",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_derby",
+  "a_shoes",
+  "Splatter Suede Derbies",
+  1600,
+  1,
+  "Indigo suede, cream splatter, cadmium-red laces.",
+  {
+   "gar": "oc_derby",
+   "b": "oc"
+  }
+ ],
+ [
+  "gx_oc_sling",
+  "a_shoes",
+  "Brushstroke Slingbacks",
+  1700,
+  1,
+  "Cream slingbacks, a cadmium stroke over the toe, indigo heel.",
+  {
+   "gar": "oc_sling",
+   "b": "oc",
+   "fo": 1
+  }
+ ]
+]
