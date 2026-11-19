@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.27 LIVE 050ddd2 (APPV 127; rollback APPV 128 e3e2b1a; pushed): REGIMENT on the Boutique, hold ends Thu 11-26, first drop Mon 12-14, GILDED 11-23 and OC 11-30 unchanged (QA PASS 9489e9e). Live check (QA: DONE, PASS; QA findings). Bare-arm rig fix 4fe171c (rig.json fineUp body, slotStretch body 9, armpit body sleeves/cap 2; rigdiff vs v1.26 30,668 frames, lost max 54, gained max 121 in his dance1 underarm; renders in shots/lead_arms/). WAITING ON QA; LEAD suggests releasing it together with the repainted bases, not alone. Cal said "Yes, repaint" to the bare bases with a gap under the arms: brief sent to ROOMS (queued after the pet frames); LEAD renders before/after in arms-up for QA. Pets: Cal wants each a different colour (relayed to ROOMS: wolf cyan, wyvern navy + amber, slime plum + magenta); 12 clothes per pet at launch (Cal: "12 per pet"), 3 per slot, 36 in all; ROOMS paints them after the final frames pass QA. Dogs too (Cal: "Dogs too"): a 12-piece dog line on both dogs' anchors, one buy for both; 48 pieces in all.
+- v1.27 LIVE 050ddd2 (APPV 127; rollback APPV 128 e3e2b1a; pushed): REGIMENT on the Boutique, hold ends Thu 11-26, first drop Mon 12-14, GILDED 11-23 and OC 11-30 unchanged (QA PASS 9489e9e). Live check (QA: DONE, PASS; QA findings). Bare-arm rig fix 4fe171c (rig.json fineUp body, slotStretch body 9, armpit body sleeves/cap 2; rigdiff vs v1.26 30,668 frames, lost max 54, gained max 121 in his dance1 underarm; renders in shots/lead_arms/). (QA: DONE, PASS, better than v1.27 alone, QA would ship it in the next release; QA findings) LEAD suggests releasing it together with the repainted bases, not alone. Cal said "Yes, repaint" to the bare bases with a gap under the arms: brief sent to ROOMS (queued after the pet frames); LEAD renders before/after in arms-up for QA. Pets: Cal wants each a different colour (relayed to ROOMS: wolf cyan, wyvern navy + amber, slime plum + magenta); 12 clothes per pet at launch (Cal: "12 per pet"), 3 per slot, 36 in all; ROOMS paints them after the final frames pass QA. Dogs too (Cal: "Dogs too"): a 12-piece dog line on both dogs' anchors, one buy for both; 48 pieces in all.
 - v1.26 LIVE on Live and Test = 268fb31 (release/v1.25 + f041b24 + 4c60022 + abe4e6d + APPV 126; QA PASS 69af73e; Cal via ROOMS: "Approve OIL & CANVAS"): OIL & CANVAS on the Boutique, 15 rows, held to Thu 11-26 so GILDED keeps its Mon 11-23 debut; OIL & CANVAS first drops Mon 11-30. Live checks PASS; 3526/3526 identical on both. Rollback = rollback-v0.80 22b253c (APPV 127). Both pushed. (QA: DONE, live check PASS; QA findings) (QA: DONE, PASS; QA findings)
 - Pet Shop (Cal 11-18): "pet shop open level 2. but i dont want a basic dog" plus three creatures (shadow wolf pup, void wyvern, shadow fox-slime): docs/PET_SHOP.md 1334747, original designs only. ROOMS: concept sheets after REGIMENT, QA design review first. WAITING ON CAL: 4 questions (dogs stay, own all three, price, one each).
 - Was: v1.25 LIVE on Live and Test = 6a0272c (QA PASS, every Shop row x both bodies x 35 poses vs v1.24): your character's emotes, the side stretch, the rig fixes (finer mesh on tops/arms, arms-up stretch cap), GILDED (first drop Mon 11-23), KODE PINK's detail pass. wlive PASS; 3449/3449 identical on both (the ship run's Test read failed on 1,935 files over the long upload, a rerun matched all). Rollback = rollback-v0.80 cd5a4ef (APPV 126). Both pushed. QA: live check please. Owed: Cal's phone check of first-emote lag. (QA: DONE, PASS; QA findings)
@@ -295,7 +295,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.27 050ddd2): v1.27 live check, PASS (QA findings). Nothing open from QA.
+- Now (on release/v1.27 + 4fe171c): bare-arm rig fix, PASS (QA findings). Nothing open from QA.
+  Was: Now (on release/v1.27 050ddd2): v1.27 live check, PASS (QA findings).
   Was: Now (on release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46): REGIMENT hold line, PASS, v1.27 can ship (QA findings).
   Was: Now (on 156340f): Pet Shop concept notes applied, PASS (QA findings).
   Was: Now (on a02362e): Pet Shop concepts PASS with NOTES (QA findings).
@@ -379,6 +380,21 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, bare-arm rig fix 4fe171c on its own (release/v1.27 + 4fe171c's rig.json and rig.js, against v1.27; owner LEAD). A small check
+  by eye, not a sweep (LEAD's full rigdiff covers every row): his bare torso, REGIMENT's waistcoat, his default tee, SAYMØRE cargo;
+  her bare base, the OIL & CANVAS halter, the REGIMENT mess jacket, the boat-neck tee; 9 poses (idle, stretchUp, cheer1-2, dance1-2,
+  wave1, sideUp, clap1) at HI 3. Pictures: shots/qa/arms4fe/ (arms_m/f: OLD row over NEW row; z_dance: dance1/dance2 zoomed).
+  - Better on him: the holes in dance1, dance2 and sideUp, where the background showed through the upper arm and underarm, are filled
+    on every look, including the default tee that every player sees.
+  - Your point 1 (dance1): the skin wedge under the near sleeve has a dark streak a few pixels long at HI 3, about a pixel at Loft size.
+    It is smaller and far less visible than the hole it replaces. Better, not worse.
+  - Unchanged, not made worse: the frayed armpits in stretchUp, cheer1 and cheer2 on him (bare torso, waistcoat and tee alike). The
+    repainted bases with a gap under the arms are the fix for those.
+  - Her: no visible change in any look or pose; her hair and sleeves cover the armpit. No new specks on the trousers in dance2 (fineUp
+    keeps the fine body to arms-up poses).
+  - QA's view: it beats v1.27 on its own, so ship it in the next release rather than wait for ROOMS's bases (queued behind the pets).
+    When the new bases land, retune and rerun the rigdiff then. LEAD's call.
+  - 0 page errors. Not checked: a phone, the other 32 poses by eye.
 - PASS, v1.27 live check (release/v1.27 050ddd2; owner LEAD):
   - release/v1.27 and rollback-v0.80 match origin (050ddd2, e3e2b1a). Every quest-board file v1.27 changes from v1.26 matches the cut
     QA passed (9489e9e) byte for byte, except 30_app_b.js, which differs only in the APPV line (126 to 127). The rollback commit
