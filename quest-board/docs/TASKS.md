@@ -244,7 +244,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (e82a602): Pet Shop final frames. Cal: "Approve both" + each pet its own colour (wolf charcoal/icy cyan, wyvern navy/amber, slime plum/hot pink). art/app/pgx_<pet>_0..10 + pbed_<pet>, data/pet_art.json (canvas, cx, bed sleepOff, dog anchors), tools/pet_cut.py (green key only). Sheets: shots/pending_art/pets/pets_final_frames.png, pets_final_sizes(_loft).png, notes at the end of pets_concept.md. Wolf: flame, paw marks and mist in every frame incl. crying; den is a low open bed. Bedroom bed spot x 0.15 y 6.55 (beds/); Patio has NO clean spot fully furnished (LEAD: layout call). Next: 48 clothing concepts (pets_clothes.md) to QA after this passes; base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
+- (QA: DONE on e82a602, NOT A PASS: two FIXes, wyvern frame 6 and the slime tail tips; the rest PASS; QA findings) Pet Shop final frames. Cal: "Approve both" + each pet its own colour (wolf charcoal/icy cyan, wyvern navy/amber, slime plum/hot pink). art/app/pgx_<pet>_0..10 + pbed_<pet>, data/pet_art.json (canvas, cx, bed sleepOff, dog anchors), tools/pet_cut.py (green key only). Sheets: shots/pending_art/pets/pets_final_frames.png, pets_final_sizes(_loft).png, notes at the end of pets_concept.md. Wolf: flame, paw marks and mist in every frame incl. crying; den is a low open bed. Bedroom bed spot x 0.15 y 6.55 (beds/); Patio has NO clean spot fully furnished (LEAD: layout call). Next: 48 clothing concepts (pets_clothes.md) to QA after this passes; base arm-gap repaint (Cal "Yes, repaint"). CHROME free.
 - Pet Shop final frames (Cal 2026-11-18: "Approve both", the pet concepts and REGIMENT's sheet): painting 11 front frames per pet to LEAD's list (wolf pup, void wyvern, fox-slime), the wolf's crying frames with flame, paw marks and mist, the den about half as tall; then the Bedroom and Patio beds after a free-floor check; QA first. REGIMENT: Cal approved, told LEAD (hold can go). CHROME taken.
 - Pet concepts: QA PASS with NOTES; NOTES applied (wolf flame and paw marks in every pose, wyvern floor nest, slime bed not a donut; the wolf crying edit was refused by the filter and not resubmitted, the final frames carry it). LEAD's frame list recorded in pets_concept.md (11 front frames per pet). Next: final frames once Cal has seen the concepts. CHROME free.
 - (QA: DONE on a02362e, PASS with NOTES; three questions answered; QA findings) Was WAITING ON QA (design review, concepts only): Pet Shop creatures (LEAD's messages, docs/PET_SHOP.md): shots/pending_art/pets/pets_concept.md and pets_concept_sheet.png: shadow wolf pup, void wyvern, shadow fox-slime; poses, a 4-frame crying loop each, Bedroom and Patio beds (den cushion, perch nest, low pillow). No final frames until QA and Cal's open questions. CHROME free.
@@ -297,7 +297,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.27 + 4fe171c): bare-arm rig fix, PASS (QA findings). Nothing open from QA.
+- Now (on e82a602): Pet Shop final frames, NOT A PASS, two FIXes for ROOMS (QA findings). Next: v1.28 live check.
+  Was: Now (on release/v1.27 + 4fe171c): bare-arm rig fix, PASS (QA findings).
   Was: Now (on release/v1.27 050ddd2): v1.27 live check, PASS (QA findings).
   Was: Now (on release/v1.26 + 21c67e7 + b1fa777 + bd7c9f4 + 3876c46): REGIMENT hold line, PASS, v1.27 can ship (QA findings).
   Was: Now (on 156340f): Pet Shop concept notes applied, PASS (QA findings).
@@ -382,6 +383,29 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS, Pet Shop final frames (e82a602; 33 frames, 3 beds, pet_art.json, the sheets in shots/pending_art/pets/). Two FIXes,
+  owner ROOMS. Pictures: shots/qa/pets2/ (with the two measuring scripts).
+  - FIX 1, wyvern frame 6 (fun): it has two spade tails, one at each end of the arched body, and the head floats beside the body with no
+    neck joining them (wyvern6_two_tails.png). It breaks the single-tail design and reads as a broken creature. Repaint the frame, for
+    example a happy spin or hop with one tail and the neck visible.
+  - FIX 2, slime tail tips: a khaki-olive halo where the hot-pink tip met the green screen, worst in frame 4 sit (105 px along the
+    floor), then 5 sleep (39), 0 idle A (35), 3 (30), 1 idle B (24), 2 (14); a few px in 6-8 and 10 (slime_olive_tips.png, 4x).
+    pet_cut.py keys alpha only, so pink mixed with green keeps its olive colour. Despill in key(): on edge pixels pull g down to
+    max(r, b) (or blend toward the nearest solid neighbour), recut, and the measurement should read about 0. Wolf and wyvern measure 0.
+  - PASS on the rest:
+    - Every pet's frames share one canvas size, the ground line is the canvas bottom (except the slime bounce, lifted 48 px as noted),
+      and the mass centre is within 1 px of pet_art.json's cx. No green left (0 px on all 36 files).
+    - Wolf: the flame on the tail and ear tips and the cyan paw marks show in all four crying frames (7-10) too, dimmer, which is right.
+      The mist is a faint teal, fine. The den is now a low open round bed with a cyan rim.
+    - Wyvern: navy with amber, no green, one spade tail in every frame but 6, the nest flat on the floor. The tail touching the ground
+      line in the hover frames (2, 3) is acceptable; the body is clearly lifted.
+    - Slime: plum with hot-pink glow, the square cushion. The motion lines in the trip and wobble frames are fine.
+    - Sizes next to Chopstick and Pluto at room scale look right: the wolf and wyvern about dog-sized, the slime a little smaller.
+    - In-bed pictures: frame 5 sits inside each bed at its sleepOff.
+  - NOTE for LEAD (layout, not art): the Bedroom spot at x 0.15, y 6.55 makes three beds in a row down the left wall next to the two
+    dog beds, which reads as a kennel row. The real beds differ in shape, which helps, but Cal's no-clutter rule applies. Consider
+    giving the creature bed its own spot away from the dog beds. The Patio: no clean spot, as ROOMS says; LEAD's call.
+  - Not checked: in-game drawing, night lighting, clothes on the anchors (no clothes yet), a phone.
 - PASS, bare-arm rig fix 4fe171c on its own (release/v1.27 + 4fe171c's rig.json and rig.js, against v1.27; owner LEAD). A small check
   by eye, not a sweep (LEAD's full rigdiff covers every row): his bare torso, REGIMENT's waistcoat, his default tee, SAYMØRE cargo;
   her bare base, the OIL & CANVAS halter, the REGIMENT mess jacket, the boat-neck tee; 9 poses (idle, stretchUp, cheer1-2, dance1-2,
