@@ -1506,6 +1506,9 @@ var BRANDS=[
  /* GILDED takes CHROME RAIN's Boutique slot (Cal 11-18: "Not a fan of chrome rain. Create a different brand"; concept "approve all"): baroque
     streetwear in black, antique gold and ivory (ROOMS: emerald would key out with the green screen) */
  {id:"gd",name:"GILDED",fl:"boutique",tag:"Too much is the right amount",c:["#0b0a08","#2a2318","#c9a24a"],ac:"#e6c36a",start:"2027-01-25",sub:"baroque streetwear"},
+ /* OIL & CANVAS, the second new Boutique brand (Cal 11-18: "3 other mid tier but more stylized clothing with lots of detail"): painter's
+    studio couture in indigo, cream and cadmium (ROOMS f041b24) */
+ {id:"oc",name:"OIL & CANVAS",fl:"boutique",tag:"Never washed the paint off",c:["#141a3c","#28357a","#f0e6cf"],ac:"#f2a516",start:"2027-01-25",sub:"artist couture"},
  {id:"km",name:"KAIMANA",tag:"Back when the waves were bigger",c:["#e6d7c2","#34a1a0","#fb7167"],ac:"#fb7167",start:"2027-02-01",sub:"surf club"},
  {id:"oak",name:"OAKMONT",tag:"Members only, dress code optional",c:["#f2e6cb","#26345c","#641b38"],ac:"#641b38",start:"2027-02-08",sub:"80s country-club athletic"},
  {id:"sv",name:"S\u00d8LVBERG",tag:"Never actually skied",c:["#f0f1f3","#bb2b35","#2d4066"],ac:"#bb2b35",start:"2027-02-15",sub:"apr\u00e8s-ski"}];
