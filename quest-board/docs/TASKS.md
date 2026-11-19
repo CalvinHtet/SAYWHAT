@@ -18,7 +18,7 @@ Loops are back on (Cal, 2026-11-13: "reactivate the occasional 15 minute checks 
 every 15 minutes, does what waits on it, and keeps its Doing line true (TEAMWORK.md rules 13 to 18).
 
 LEAD Doing:
-- v1.26 LIVE on Live and Test = 268fb31 (release/v1.25 + f041b24 + 4c60022 + abe4e6d + APPV 126; QA PASS 69af73e; Cal via ROOMS: "Approve OIL & CANVAS"): OIL & CANVAS on the Boutique, 15 rows, held to Thu 11-26 so GILDED keeps its Mon 11-23 debut; OIL & CANVAS first drops Mon 11-30. Live checks PASS; 3526/3526 identical on both. Rollback = rollback-v0.80 22b253c (APPV 127). Both pushed. QA: live check please.
+- v1.26 LIVE on Live and Test = 268fb31 (release/v1.25 + f041b24 + 4c60022 + abe4e6d + APPV 126; QA PASS 69af73e; Cal via ROOMS: "Approve OIL & CANVAS"): OIL & CANVAS on the Boutique, 15 rows, held to Thu 11-26 so GILDED keeps its Mon 11-23 debut; OIL & CANVAS first drops Mon 11-30. Live checks PASS; 3526/3526 identical on both. Rollback = rollback-v0.80 22b253c (APPV 127). Both pushed. QA: live check please. (QA: DONE, PASS; QA findings)
 - Pet Shop (Cal 11-18): "pet shop open level 2. but i dont want a basic dog" plus three creatures (shadow wolf pup, void wyvern, shadow fox-slime): docs/PET_SHOP.md 1334747, original designs only. ROOMS: concept sheets after REGIMENT, QA design review first. WAITING ON CAL: 4 questions (dogs stay, own all three, price, one each).
 - Was: v1.25 LIVE on Live and Test = 6a0272c (QA PASS, every Shop row x both bodies x 35 poses vs v1.24): your character's emotes, the side stretch, the rig fixes (finer mesh on tops/arms, arms-up stretch cap), GILDED (first drop Mon 11-23), KODE PINK's detail pass. wlive PASS; 3449/3449 identical on both (the ship run's Test read failed on 1,935 files over the long upload, a rerun matched all). Rollback = rollback-v0.80 cd5a4ef (APPV 126). Both pushed. QA: live check please. Owed: Cal's phone check of first-emote lag. (QA: DONE, PASS; QA findings)
 - Also on qa-local, not released: 2a0a7e3 the Stylist eyes/mouth split (no change until ROOMS's art); f2eda97 docs/PET_SHOP.md.
@@ -289,7 +289,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings). Nothing open from QA.
+- Now (on 268fb31): v1.26 live check PASS (QA findings). Nothing open from QA.
+  Was: Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings).
   Was: Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings).
   Was: Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings).
   Was: Now (on f041b24): OIL & CANVAS painted, NOT A PASS yet (gloves, palette size, smock tank; QA findings).
@@ -365,6 +366,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.26 live check (LEAD: live on Live and Test at 268fb31).
+  - release/v1.26 and its origin copy are both 268fb31. Against release/v1.25, 83 app/data/art/src/tools files change: 82 are
+    identical to abe4e6d, the build QA passed in 69af73e, and 30_app_b.js differs only by its APPV line (126). look.js and rig.json
+    are unchanged, so 2a0a7e3 is not in it.
+  - rollback-v0.80 and its origin copy are both 22b253c, APPV 126 -> 127 (its only change).
+  - A clean web build of 268fb31: APPV 126, 3,525 files + version.txt = 3,526 (LEAD's count), artcheck 0 gaps of 355.
+  - Not checked by QA: the live site played by hand.
 - PASS, v1.26 candidate = release/v1.25 + ROOMS f041b24 + 4c60022 + LEAD abe4e6d (OIL & CANVAS on the Boutique; Cal "Approve OIL &
   CANVAS"). v1.26 can be cut. QA built that exact set (file patches onto release/v1.25) and a clean v1.25 beside it.
   - All 82 changed app/data/art/src/tools files are identical to abe4e6d. 2a0a7e3 (the Stylist face split: rig.json, look.js) is not in
