@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings). Waiting on ROOMS: the rest of the dog line (cable knit, fleece, three auras).
+- Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings). Waiting on ROOMS: the rest of the dog line.
+  Was: Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings).
   Was: Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings).
   Was: Now (on release/v1.29 0e5e736): v1.29 live check, PASS (QA findings).
   Was: Now (on f1ba1fc): pet clothes recheck plus the slime line and 6 dog pieces, FIXes for ROOMS (QA findings).
@@ -400,6 +401,33 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, Pet Shop code (db99820 on a clean build; owner LEAD). The Shop side and the compositing pass; the beds in both rooms
+  need fixing. Pictures and scripts: shots/qa/petshop/.
+  - LEAD's petshop.js rerun by QA: PASS for wolf, wyvern and slime (tab, warning, adoption and coins, "already have a pet", 2+2 drop,
+    crying frame, dressed creature and dogs in the Loft, beds, giving up with the clothes kept, 0 page errors).
+  - Compositor: QA loaded 29zz_pets.js's own pzSprite into the page and drew every piece in every frame (460 piece-frames, dogs per dog)
+    against QA's reading of the rule. 457 match to the pixel. The other 3 are pw_cloud in frames 6, 8 and 10, where the game turns the
+    head-anchored aura with the head; ROOMS's pet_wear.py does the same, so the game is right and QA's placer was wrong there.
+  - Drops (pzedge.js, a wolf owner, 26 Mon/Thu slots from 11-23): always 2 wolf and 2 dog pieces, no piece twice running, all 12 wolf
+    pieces in 6 drops, the 8 dog pieces in art all show.
+  - Gates: at level 20 (Boutique locked) there is no Pets tab. With 2,000 coins, adopting is blocked ("need 1,000 more") and so is
+    giving up. 0 page errors.
+  - FIX 1, Bedroom: all three creatures sleep floating above or behind their bed, not in it. The wolf hovers over its basket, the
+    wyvern lies on the nest's back rim, and the slime floats over its cushion (beds.png, wolf_4_bedroom.png). The sleep spot
+    (bed:[9.5,3.1]) and the platform's height do not meet the drawn bed. Settle each creature into its bed, using sleepOff.
+  - FIX 2, Patio: the bed at 4.25, 3.5 falls below the view's bottom edge. The sleeping creature is cut in half by the edge and its bed
+    does not show; its aura (the snow cloud, embers, flames) draws over the front of the fire pit (wolf_4_patio.png; rule 20). Move the
+    bed and sleep spot up into view and clear of the fire pit, or take the layout back to Cal. Cal approved "the bed by the fire", not
+    a half-hidden one. The fire-side chair and seat are gone as asked.
+  - NOTE: the creature beds are drawn at the frames' scale, about the pet's own size and much smaller than the dog beds. Judge again
+    once the pets sit in them.
+  - NOTE: with no dogs owned, the dog pieces can still be bought (an active 300-coin button), then say "Adopt Pluto or Chopstick". Either
+    block the buy or say so before it.
+  - NOTE: each line's order is a seeded shuffle of the pieces that have art, so adding pieces (the 4 dog pieces still to come, or more
+    later) reshuffles the whole line for everyone and can repeat a piece across the drop where it changes. Fine before release; after
+    it, append new pieces to the order instead of reshuffling.
+  - NOTE for Cal: the prices are placeholders (pets 3,000; clothes 300-600).
+  - Not checked: a phone, a cloud merge of S.pet between devices, night light, visitors.
 - QA correction (owner QA): QA passed pd_bowtie and pd_poppy (1d58285) while the navy collar and the navy side bow named in their lines
   were missing; the cyan key had eaten them. ROOMS found and fixed it in e304a15 (the key now keeps navy). QA missed it because it
   judged fit and spill, not each piece against its line. From now on every wear-check also ticks each piece's named details and
