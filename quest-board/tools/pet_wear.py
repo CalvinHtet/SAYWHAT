@@ -85,8 +85,9 @@ def keyed(rgb, pet):
     if KEY[pet] == (255, 0, 255):
         tpl = (r > g + .1) & (b > g + .1) & (np.abs(r - b) < .32) & (sat > .3)
     else:
-        tpl = (g > r + .1) & (b > r + .1) & (np.abs(g - b) < .3) & (sat > .3)
-        tpl |= (g > r + .06) & (b > r + .12) & (mx < .45)  # the cyan template in shadow (dark teal)
+        # cyan and teal keep green close to blue; navy (blue well above green) is a piece colour, never the template
+        tpl = (g > r + .1) & (b > r + .1) & (np.abs(g - b) < .3) & (b - g < .12) & (sat > .3)
+        tpl |= (g > r + .06) & (b > r + .12) & (b - g < .12) & (mx < .45)  # the cyan template in shadow (dark teal)
         # deeper shadow (slate teal, greener than navy and duller): only where it joins the template itself
         slate = (g > r + .015) & (b > r + .09) & (b < r + .2) & (mx < .45) & (sat < .5)
         lab, n = ndi.label(slate | tpl)
