@@ -161,3 +161,8 @@ function pzBed(C,room){var mine=petMine(),D=pzData();if(!mine||!D||!D.pets[mine.
   C.plat.push({x0:x,y0:y,x1:x+w,y1:y+d,z:z,key:x+w+y+d+.01});return [px,py]}
 /* where the creature sleeps in a room's bed, without drawing it (20_loft.js: the Patio window's copies and its Patio walks) */
 function pzBedPt(room){var D=pzData(),sp=D&&D.spots&&D.spots[room];if(!petMine()||!sp)return null;var w=1.2,d=1.0;var px=sp[0]+w-.1;return [px,px-(sp[0]-sp[1])-(w-d)/2]}
+/* The Patio dog beds are gone (Cal 11-19, 27_rooms.js). Cal: "refund for the patio beds but no message of refund necessary": once per save,
+   each one owned pays back its price, silently; S.pbref marks it done (and what it paid) */
+setInterval(function(){try{if(!loaded||!S||!S.created||S.pbref)return;var c=0;
+  (S.base&&S.base.slots||[]).forEach(function(r){if(!r||r.t!=="patio"||!r.a)return;["pt_dbed","pt_dbed2"].forEach(function(id){if(!r.a[id])return;var a=(ADDONS.patio||[]).filter(function(q){return q[0]===id})[0];c+=(a&&+a[2])||200})});
+  S.pbref={at:Date.now(),c:c};if(c){S.coins=(S.coins||0)+c;S.spent=Math.max(0,(S.spent||0)-c)}persist()}catch(e){}},1500);

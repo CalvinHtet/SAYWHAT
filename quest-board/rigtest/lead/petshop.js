@@ -1,7 +1,7 @@
 // The Pet Shop (docs/PET_SHOP.md): on the plain build (PORT), for PET=wolf|wyvern|slime. The Pets tab is on the Boutique (floor 2) with
 // the three creatures; adopting warns first, takes 3,000 and makes it yours; the other two then say "You already have a pet"; this drop
 // shows 2 of its line and 2 of the dogs'; the giving-up screen shows it crying and costs 3,000, after which it is gone and any can be
-// adopted again. In the Loft: the creature is an actor drawn with its clothes, its beds are in the Bedroom and on the Patio (the fire-
+// adopted again. The Patio dog beds owned are refunded once, with no message (Cal 11-19). In the Loft: the creature is an actor drawn with its clothes, its beds are in the Bedroom and on the Patio (the fire-
 // side chair gone), and dressed dogs draw their clothes. Pictures in OUT. No page errors.
 //   PORT=<plain build> PET=wolf OUT=<folder> NODE_PATH=<playwright's parent> node rigtest/lead/petshop.js
 const { chromium } = require('playwright'), fs = require('fs');
@@ -12,7 +12,7 @@ const base = 'http://127.0.0.1:' + PORT, gone = (p) => p.evaluate(() => document
   const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 200)));
   await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data, null, { timeout: 90000 }); await p.waitForTimeout(800);
   const info = await p.evaluate(() => { const A = window.__qb.x().ADDONS || {}; return { bd: (A.bedroom || []).map((a) => a[0]), pt: (A.patio || []).map((a) => a[0]) }; });
-  await p.evaluate((info) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(35); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false; S.fsall = 1; S.areaOn = { board: 1, shop: 1, hideout: 1 }; S.coins = 20000; S.pet = null; S.petw = {}; S.dogw = {};
+  await p.evaluate((info) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(35); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false; S.fsall = 1; S.areaOn = { board: 1, shop: 1, hideout: 1 }; S.coins = 20000; S.pet = null; S.petw = {}; S.dogw = {}; delete S.pbref;
     S.base.slots = [{ t: 'bedroom', a: Object.fromEntries(info.bd.filter((k) => k !== 'bd_game').map((k) => [k, 1])), st: 0, pend: 0 }, { t: 'patio', a: Object.fromEntries(info.pt.map((k) => [k, 1])), st: 0, pend: 0 }]; window.__qbRooms.open('closet', 1); x.render(); }, info);
   await p.evaluate(() => document.querySelector('.nav button[data-v="shop"]').click()); for (let i = 0; i < 3; i++) { await p.waitForTimeout(900); await gone(p); }
   await p.evaluate(() => { const f = document.querySelector('[data-qsfl="boutique"]'); if (f) f.click(); }); await p.waitForTimeout(700); await gone(p);
@@ -52,4 +52,6 @@ const base = 'http://127.0.0.1:' + PORT, gone = (p) => p.evaluate(() => document
   await p.evaluate(() => document.querySelector('[data-act="pzadopt"]').click()); await p.waitForTimeout(800); await p.evaluate(() => document.querySelector('[data-act="pzadoptok"]').click()); await p.waitForTimeout(1000); await gone(p);
   s = await p.evaluate(() => { const S = window.__qb.x().S; return { pet: S.pet, coins: S.coins, buy: document.querySelectorAll('[data-act="pzbuy"]').length, kept: Object.keys(S.owned).filter((k) => k.startsWith('pc_')).length }; });
   ok(!s.pet && s.coins === c1 - 3000 && s.buy === 3 && s.kept === 4, `given up: no pet, coins ${c1} -> ${s.coins}, all three adoptable again, ${s.kept} clothes kept`);
+  const ref = await p.evaluate(() => { const S = window.__qb.x().S, A = window.__qb.x().ADDONS.patio || []; return { r: S.pbref, want: A.filter((q) => q[0] === 'pt_dbed' || q[0] === 'pt_dbed2').reduce((t, q) => t + (+q[2] || 0), 0) }; });
+  ok(ref.r && ref.r.c === ref.want && ref.want > 0, 'the Patio dog beds owned were refunded once, silently: ' + JSON.stringify(ref));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })().catch((e) => { console.error(e); process.exit(1); });
