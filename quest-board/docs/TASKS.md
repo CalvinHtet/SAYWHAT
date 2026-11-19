@@ -388,6 +388,9 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, wolf body anchors moved (555cc91): standing 0-3 at y 212-217, trip 6 at 232, sitting 4 and 7-10 at 240-245. On the re-rendered
+  check_wolf.png the line runs through the middle of the torso in every frame. The slime's anchor stays at the dome's centre, and its swim
+  ring is painted low, under the eyes (LEAD to ROOMS); QA checks the eyes on the wear-test.
 - PASS with two NOTES, pet clothing anchors (data/pet_art.json 186b0e8 + 49f7574; LEAD's sheets shots/lead_pets/check_*.png; owner
   LEAD, note 2 with ROOMS). Data: 11 frames per pet, every anchor inside its canvas, head null only in sleep (5), neck null only for the
   wolf's and wyvern's sleep, every head, neck and body anchor has an angle, the dogs gained deg 0. By eye: the head anchors sit
