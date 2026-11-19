@@ -294,7 +294,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on a02362e): Pet Shop concepts PASS with NOTES (QA findings). Nothing open from QA.
+- Now (on 156340f): Pet Shop concept notes applied, PASS (QA findings). Nothing open from QA.
+  Was: Now (on a02362e): Pet Shop concepts PASS with NOTES (QA findings).
   Was: Now (on bd7c9f4): REGIMENT rows PASS, held for Cal (QA findings).
   Was: Now (on b1fa777): REGIMENT PASS, waits on LEAD's rows (QA findings).
   Was: Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings).
@@ -375,6 +376,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, Pet Shop concept notes applied (156340f; rebuilt pets_concept_sheet.png, checked by eye):
+  - Wolf pup: the flame on the tail and ear tips, cyan paw marks and shadow mist are in all 8 poses (sit, sleep and trip included);
+    it no longer reads as a plain puppy.
+  - Wyvern: the tall rattan basket is now a floor nest; the short-stand nest stays.
+  - Slime: the grey donut is now a tufted indigo square cushion on a woven mat, no longer Pluto's bed.
+  - Still old on the concept sheet: the wolf's crying frames and its tall hooded den. Higgsfield refused that edit and ROOMS did not
+    resubmit it, as the rule says. ROOMS commits in pets_concept.md to the flame, paw marks and mist in all 4 crying frames and a den
+    about half as tall in the final frames; QA checks both there (owner: ROOMS). LEAD's frame list (11 front frames per pet, no backs)
+    settles the pose-count note.
 - PASS with NOTES (concepts; go on to frames after Cal), Pet Shop creature concepts, shots/pending_art/pets/ (a02362e) (owner: ROOMS).
   Checked: the sheets by eye against the dogs (shots/qa/pets/dogs_reference.jpg: Chopstick, Pluto, Pluto's bed).
   - Pass: all three are original fantasy types in the dogs' sticker style (same outline weight and shading). The slime is clearly not
