@@ -5,6 +5,7 @@
   pet_wear.py cut <sheet.png> <piece id> <kind>          kind: head | neck | body | base | aura (base: the slime's base band pieces,
                                                          cells by the body fit, placed on the neck anchor)
   pet_wear.py check <piece id> <out.png>                 the piece worn on every frame, as the game places it
+  pet_wear.py headaura <piece id>                        an aura placed on the head anchor (mass centre where the head is null)
 
 A template is a 2048 x 2048 flat green sheet with the given frames of the pet (pgx_<pet>_<f>, or the dogs' dgx_<dog>_<f> when
 <pet> is chopstick or pluto, or "dogs" for both dogs' frames) in a grid, every frame at one scale, each frame turned into a single
@@ -88,7 +89,14 @@ def keyed(rgb, pet):
     dark = mx < .3
     # dark outline pixels squeezed between key colour and green belong to the template, not the piece
     edge = dark & ndi.binary_dilation(tpl, iterations=6) & ndi.binary_dilation(grn, iterations=6)
-    return grn | tpl | edge
+    # a white sticker border the painter sometimes draws round the figure: near-white, colourless, between key and green
+    cand = (mx > .78) & (sat < .2) & ndi.binary_dilation(tpl, iterations=34) & ndi.binary_dilation(grn, iterations=34)
+    lab, n = ndi.label(cand)
+    rim = np.zeros_like(cand)
+    if n:
+        sz = ndi.sum(cand, lab, range(1, n + 1))
+        rim = np.isin(lab, 1 + np.flatnonzero(sz > 20000))  # only a band round the whole figure, never a piece's white part
+    return grn | tpl | edge | rim
 
 
 def anchor(pet, f, kind):
@@ -197,12 +205,19 @@ def check(pid, out):
                 if hide or not c.get("pivot"):
                     continue
                 im = Image.open(os.path.join(APP, "ppc_%s_%d.webp" % (pid, c["cell"]))).convert("RGBA")
-                a = anc[akind] if kind != "aura" else list(ndi.center_of_mass(np.asarray(fr)[..., 3] > 128))[::-1]
-                deg = (a[2] if len(a) > 2 else 0)
-                if c["frame"] is not None and kind != "aura" and not (p in ("chopstick", "pluto")):
-                    ref = art["pets"][p]["anchors"][c["frame"]].get(akind) or [0, 0, 0]
-                    deg -= ref[2] if len(ref) > 2 else 0
                 px, py = c["pivot"]
+                if kind == "aura" and d.get("anchor") == "head" and anc.get("head"):
+                    a = anc["head"]
+                elif kind == "aura":
+                    a = list(ndi.center_of_mass(np.asarray(fr)[..., 3] > 128))[::-1]
+                    px, py = c.get("pivotAura", c["pivot"])
+                else:
+                    a = anc[akind]
+                deg = (a[2] if len(a) > 2 else 0)
+                rk = "head" if (kind == "aura" and d.get("anchor") == "head" and anc.get("head")) else akind
+                if c["frame"] is not None and (kind != "aura" or rk == "head") and not (p in ("chopstick", "pluto")):
+                    ref = art["pets"][p]["anchors"][c["frame"]].get(rk) or [0, 0, 0]
+                    deg -= ref[2] if len(ref) > 2 else 0
                 big = Image.new("RGBA", (im.size[0] * 3, im.size[1] * 3))
                 big.alpha_composite(im, (im.size[0], im.size[1]))
                 rot = big.rotate(-deg, center=(im.size[0] + px, im.size[1] + py), resample=Image.BICUBIC)
@@ -224,9 +239,30 @@ def check(pid, out):
     print(out, len(tiles), "frames")
 
 
+def headaura(pid):
+    """an aura that belongs above the head (LEAD 2026-11-18): "anchor": "head", pivot on the frame's head anchor (turned by
+    the head-angle delta); where the head anchor is null (sleep) it falls back to the mass centre with pivotAura."""
+    p = os.path.join(ROOT, "data", "pet_clothes.json")
+    d = json.load(open(p))
+    e = d[pid]
+    assert e["kind"] == "aura"
+    for c in e["cells"]:
+        fr = np.asarray(frame_img(c["pet"], c["frame"]))[..., 3] > 128
+        cy, cx = ndi.center_of_mass(fr)
+        h = anchor(c["pet"], c["frame"], "head")
+        pa = c.get("pivotAura", c["pivot"])
+        c["pivotAura"] = pa
+        c["pivot"] = [round(pa[0] + h[0] - cx, 1), round(pa[1] + h[1] - cy, 1)]
+    e["anchor"] = "head"
+    json.dump(dict(sorted(d.items())), open(p, "w"), indent=1)
+    print(pid, "head-anchored", [c["pivot"] for c in e["cells"]])
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "template":
         template(sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]) if len(sys.argv) > 5 else 1.0)
+    elif sys.argv[1] == "headaura":
+        headaura(sys.argv[2])
     elif sys.argv[1] == "check":
         check(sys.argv[2], sys.argv[3])
     else:

@@ -68,8 +68,9 @@ def prompt(pid, pet, kind, what):
            ("Keep the %s %s exactly as it is: the same pose, size, place and flat %s colour" % (k, n, k))
     fitn = " The same piece on every figure, fitted to each pose and body." if many else ""
     return ("Edit Image 1. %s, and the same flat green background. Only add one thing to %s: %s.%s Paint only that piece, in full "
-            "colour with clean dark outlines and soft cartoon shading, the same sticker style; do not paint the figure, it stays "
-            "flat %s. Nothing green and no %s in the piece. No text, no letters, no logos." % (keep, who, what, fitn, k, k))
+            "colour with clean dark outlines and soft cartoon shading, the same cartoon style; do not paint the figure, it stays "
+            "flat %s, with no white border or sticker outline round it. Nothing green and no %s in the piece. No text, no "
+            "letters, no logos." % (keep, who, what, fitn, k, k))
 
 
 if __name__ == "__main__":
