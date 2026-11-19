@@ -388,6 +388,18 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with two NOTES, pet clothing anchors (data/pet_art.json 186b0e8 + 49f7574; LEAD's sheets shots/lead_pets/check_*.png; owner
+  LEAD, note 2 with ROOMS). Data: 11 frames per pet, every anchor inside its canvas, head null only in sleep (5), neck null only for the
+  wolf's and wyvern's sleep, every head, neck and body anchor has an angle, the dogs gained deg 0. By eye: the head anchors sit
+  between the ears in every frame, including the wolf's drooped crying ears (8-10). The necks are on the collar line, the wyvern's
+  body on the belly in all six poses, and the slime's base band at its bottom edge.
+  - NOTE 1, wolf body: in every frame but 5 and 6 the green body anchor sits on the belly line under the torso (y 240-260), about
+    25-30 px below the torso centre the data note describes; the wyvern's sits mid-belly. Either move it up, or write down that the
+    wolf's cells register on the belly line, so ROOMS paints to the same point.
+  - NOTE 2, slime body: the body anchor is on the eye line (the dome's middle) in 0-2 and 7-9. The Candy Swim Ring "round its middle"
+    centred there would cover the eyes. Paint the ring low, under the eyes, or give the ring a lower point. The cape and pack sit
+    behind and at the side, so they are fine.
+  - The aura on the mass centre is pulled toward the tail on the slime and wyvern, as LEAD says. Judge it with the real auras.
 - PASS, pet clothing notes applied (ab0fe18; owner ROOMS, the variant table with LEAD). Still 48 pieces, 12 per line, 3 per slot.
   - Contrast fixed: the wolf's beanie and hoodie are silver-grey or slate and its cape slate-blue; the wyvern's hat rust, bomber tan
     and vest cream; the slime's headphones and pack pink and gold; the dogs' turtleneck navy and crown cherry poppies.
