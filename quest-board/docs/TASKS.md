@@ -244,7 +244,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- Pet clothes: wolf 12/12, wyvern 12/12 (QA d7fd35e fixes applied: wizard hat + LEAD's frame-3 anchor, paws cell 6 for pack/bomber/vest, lanterns smaller, shards/cloud off the chest, scarf ends attached), slime 12/12 (headphones and bow with up+flat cells) -> WAITING ON QA (through f1ba1fc). Dogs 6/12 (head + neck done; neck pieces hide in sleep after LEAD's anchor fix). Dog body pieces: Higgsfield failed 4x on the six-dog sheet (generic 'try again', not a refusal); retrying one sheet per dog. Dog auras after. CHROME taken.
+- Pet clothes: wolf 12/12, wyvern 12/12 (QA d7fd35e fixes applied: wizard hat + LEAD's frame-3 anchor, paws cell 6 for pack/bomber/vest, lanterns smaller, shards/cloud off the chest, scarf ends attached), slime 12/12 (headphones and bow with up+flat cells) -> (QA: DONE through f1ba1fc: 6 of 7 fixes PASS, slime 8 PASS / 4 FIX, dogs 4 PASS / 2 FIX; QA findings). Dogs 6/12 (head + neck done; neck pieces hide in sleep after LEAD's anchor fix). Dog body pieces: Higgsfield failed 4x on the six-dog sheet (generic 'try again', not a refusal); retrying one sheet per dog. Dog auras after. CHROME taken.
 - Painting the 48 pet clothes (QA-passed concepts, LEAD's map and anchors): wolf 12/12 done, wyvern 9/12 (auras painting), slime and dogs next. Committed in batches (34adce0, d868771, 5f14634, 12bb813, 881fd11): art/app/ppc_<id>_<n>, data/pet_clothes.json, tools/pet_wear.py (template, cut, check, headaura); wear checks per piece in shots/pending_art/pets/clothes/check_*.png. QA gets the full set per line when each line is done. CHROME taken.
 - READY for LEAD (d8444f5): bare bases split for the arms slot (LEAD's plan after the gap alone did not fix the tear): m_basearms, f_basearms (hers shared: arms identical on all four bases) and m_basetorso, f_basetorso[_heel][_bare][_bare_heel], front and back, 14 files; tools/armsplit.py. Arms: rounded feathered shoulder cap to fingertips. Torso: round shoulder kept under the cap, new outline + shadow. ROOMS checked: torso+arms at rest match today's bases (armsplit_rest.png); arms swung 40 deg (armsplit_check.png) show a round shoulder, nothing opens. Not checked in the rig (LEAD wires the skin-arms layer, rigdiff, then QA). Next: the 48 pet pieces. CHROME free.
 - READY for LEAD (63344fe, before QA as LEAD asked): bare bases' arm gap (Cal "Yes, repaint"), 10 files (m_base, f_base, f_base_heel, f_base_bare, f_base_bare_heel; front and back). tools/armgap.py: a smooth 7 px gap (about 3.5 px runtime) down the middle of the line the arm shares with the torso, from the armpit into the opening where the arm leaves the body; both sides keep a full outline, the torso edge a soft shadow. Her cut measured once, same on all four. Sheet shots/pending_art/armgap/armgap_before_after.png. ROOMS checked: build OK; wear-test (REGIMENT rows) idle/stretchUp/dance2 at 5x, 0 not drawn, 0 errors; his bare arms still shard in stretchUp (the rig fault, LEAD's fix not in this build). Next: LEAD's before/after rig run, then QA; then the 48 pet pieces (variant map agreed, LEAD's anchors in pet_art.json). Layer originals kept in shots/pending_art/armgap/orig_layers (not in git). CHROME free.
@@ -303,7 +303,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.29 0e5e736): v1.29 cut (bare-arm split), PASS, can ship (QA findings). Next: pet clothes recheck and the slime and dog lines (f1ba1fc).
+- Now (on f1ba1fc): pet clothes recheck plus the slime line and 6 dog pieces, FIXes for ROOMS (QA findings). Next: the v1.29 live check.
+  Was: Now (on release/v1.29 0e5e736): v1.29 cut (bare-arm split), PASS, can ship (QA findings).
   Was: Now (on 8d183f0): wolf and wyvern pet clothes wear-check, 17 PASS, 7 FIX for ROOMS (QA findings).
   Was: Now (on release/v1.28 + 2a0a7e3 + 63344fe + d8444f5 + e9cc506): bare-arm split, PASS by eye (QA findings).
   Was: Now (on 180defc): pet clothing concepts, PASS with NOTES (QA findings).
@@ -395,6 +396,36 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- Pet clothes through f1ba1fc (owner ROOMS; pictures and scripts in shots/qa/petclothes2/). QA's placer v2 (pcwear2.js) reads
+  fit.head/headCells, the wyvern's paws cell, base pieces on the neck anchor, and the dogs per dog (head, neck, back, aura).
+  - Recheck of d7fd35e: 6 of 7 PASS.
+    - pv_wizard: tipped back, both eyes clear in hover 3.
+    - pv_bomber, pv_vest, pv_pack: the frame-10 paws cell follows the paws up to the face, with no phantom sleeves or arm loop (w310.png).
+    - pw_shards: the moon is behind the head and the crystals are low at the sides.
+    - pv_lanterns: small and floating, 420 wide.
+    - pv_scarf: the ends hang from the knot.
+  - Still FIX, pw_cloud: no snowflakes show at all (at 1x the pup frames show only a grey cloud floating above the head). As painted it
+    is a plain cloud: Cal's never-plain rule, and its Shop line says it drops snowflakes. Make 3-5 clear white or icy-cyan flakes fall
+    beside the pup, not on it.
+  - Slime (12): 8 PASS (bow, headphones, comet, flames, pearls, scarf, sparkles, pack; the pearls and pack pending the edge check in
+    FIX 3). 4 FIX (crown, float, ruffle, cape). The comet's thin gold tail crossing low reads as an orbit, so it is fine. The headphone
+    cups sit beside the eyes.
+    - FIX 1, ps_crown: only one cell. fit.head maps frames 3 and 10 to "flat", so the crown disappears in bounce frame 3 and blinks
+      every hop. ROOMS's note says two cells; the data has one. Add ppc_ps_crown_1 and its pet_clothes.json cell.
+    - FIX 2, ps_float: in melt frame 10 the ring covers the low eyes (as ROOMS noted). Lower the flat cell or cut the front of the
+      ring below the eyes.
+    - FIX 3, slivers of the neighbouring cell left at the crop edge, which float loose beside the slime (cells.png, sl.png):
+      ps_float_4 (the valve, left of the sleeping slime), ps_ruffle_4 (a frill bit to the left), ps_cape_3 and ps_cape_4 (a dark bit
+      off the cape's end in frames 3, 10 and 5). blobs.js also lists edge parts on ps_pack_1, ps_pack_2 and ps_pearls_4: check whether
+      those are the charm or slivers.
+  - Dogs (6 of 12): 4 PASS (poppy crown, bow-tie collar, studded collar, aviator). The aviator's ears poke out and its eyes are clear;
+    the flaps hang to the jaw, so change its Shop line from "ear flaps buckled up" to match, or repaint. The neck pieces hide in sleep.
+    - FIX 4, pd_bandana on Pluto: in sit (frame 2) the knot's tie ends float detached to the left of the neck (dz.png).
+    - FIX 5, pd_bucket: on Pluto the crown has a jagged notch at the top left (the unused ear slit) that reads as a bite out of the
+      hat. On Chopstick the ears come through the slits well, but in sit the brim sits right on the eyes. Close the slit on Pluto's
+      cell and lift Chopstick's sit fit a little.
+  - Spill: no green on any slime or dog file. The magenta counts on slime pieces are their own hot pink (green-keyed), not key.
+  - Not checked: the dog body pieces and auras (not painted yet), in-game drawing, night light, a phone.
 - PASS, v1.29 can ship (release/v1.29 0e5e736 = release/v1.28 + fb02a13 + 7c1d8fd + 41db736 + APPV 129; owner LEAD).
   - Commits: the cut equals lead/armsplit-v128, which QA passed by eye (52d0904, rebase checked), except APPV 128 to 129. The rollback
     commit 71f62ef changes only APPV, 129 to 130. Clean builds: APPV 129 in dist and dist-web, web 3,617 with version.txt, artcheck 0
