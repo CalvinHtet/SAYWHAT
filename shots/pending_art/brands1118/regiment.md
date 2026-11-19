@@ -51,3 +51,18 @@ QA design review 2026-11-18: PASS with NOTES, cleared to paint; applied above: t
 collar and cuffs but has plain shoulder boards, no fringe (drum-major risk); the capelet ends above the elbow; the cap's crown is
 low and firm, not tall and soft like VENOM ROSE's velvet one; the sash has no star or medallion; the aiguillette hangs as a fashion
 cord. Gates after paint: barecheck (bandeau), heelcheck (stiletto boots), hatcheck (both caps), gauntlets hand-sized in arms-up poses.
+
+## Painted (ROOMS, 2026-11-18): status for QA's wear-check and gates
+
+All 15 painted on Nano Banana Pro (Unlimited), one image per piece holding every angle; logo_rg (the brass knot in a ring on
+scarlet enamel) and ui_banner_rg (a navy dressing room: a braided jacket on a mannequin, a sash on a chair, riding boots; no flags,
+portraits or people; the generator's sharp middle band, so the lamp and the jacket's top are cropped).
+Redone before keeping: the sash (her back view showed two crossed bands; now one diagonal band on every view) and the peaked cap
+(the low crown let the top of the head show; repainted with a wide flat top, and her front/back cap layers stretched 15% upward at
+the crown, his untouched). Her side cap's back layer got the same stretch (a scalp sliver from behind).
+Checked by ROOMS: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck on both caps (h1-h3, both bodies,
+front and back) clean; gauntlets hand-sized in stretchUp and dance2; the mess jacket's bandeau covers on her bare base; the stiletto
+boots on the tiptoe base. Sheets: regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png.
+For QA to judge: his Braided Waistcoat in stretchUp and dance2 shows light shards along the bare arms (the waistcoat layer itself is
+one clean piece, so it may be the rig's bare-arm stretch; no other top leaves his arms bare to compare). The riding boots come to
+mid-shin on the chibi legs.
