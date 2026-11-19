@@ -50,8 +50,8 @@
     "sleepOff": 20
    },
    "fit": {
-    "body": ["stand","stand","glide","hover","sit","sleep","hop","stand","sit","stand","sit"],
-    "cells": ["stand","glide","hover","hop","sit","sleep"],
+    "body": ["stand","stand","glide","hover","sit","sleep","hop","stand","sit","stand","paws"],
+    "cells": ["stand","glide","hover","hop","sit","sleep","paws"],
     "headHide": [5]
    },
    "anchors": [
