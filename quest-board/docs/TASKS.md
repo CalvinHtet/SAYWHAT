@@ -242,7 +242,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
-- WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
+- (QA: DONE on 21c67e7, NOT A PASS yet: the peaked cap hides the eyes (FIX); the waistcoat's arm shards are the rig's (NOTE to LEAD); boots fine; QA findings) Was WAITING ON QA (wear-check + barecheck + heelcheck + hatcheck + gauntlet size): REGIMENT 21c67e7 (QA design PASS c45cedb, NOTES applied 7eedcf1): 15 pieces, brand key "rg", logo_rg, ui_banner_rg; rows shots/pending_art/brands1118/regiment_rows.json; sheets regiment_approval.png, regiment_wear_m/f.png, regiment_close_m/f.png. ROOMS checked: both bodies, 41 poses, 15/17 outfits, 0 not drawn, 0 page errors; hatcheck both caps clean (her cap crowns stretched to cover the head); gauntlets hand-sized arms-up; bandeau covers. For QA to judge: light shards on his bare arms with the waistcoat in stretchUp/dance2. Then Cal's approval, then LEAD wires. Next: pet concept sheets (LEAD's three messages), the five Street brands, Stylist face art. CHROME free.
 - (QA: DONE on c45cedb, PASS with NOTES, cleared to paint; three questions answered; QA findings) Was WAITING ON QA (design review, no paint yet): REGIMENT draft, shots/pending_art/brands1118/regiment.md (15 pieces, brand key "rg", navy/scarlet/brass; invented brass-knot crest only, insignia and costume guard; mess jacket and waistcoat bare, stiletto boots heel; 3 questions for QA). Then the five Street brands; Stylist face art. CHROME free.
 - READY for LEAD (QA PASS on 4c60022): wire OIL & CANVAS (Boutique, brand "oc", 15 rows from shots/pending_art/brands1118/oilcanvas_rows.json; logo_oc, ui_banner_oc; art and items.json in f041b24 + 4c60022). Cal APPROVED 2026-11-18 ("Approve OIL & CANVAS"); no hold. Next for ROOMS: REGIMENT draft. CHROME free.
 - (QA: DONE on 4c60022, PASS; rows next (LEAD); QA findings) Was WAITING ON QA (recheck 4c60022): OIL & CANVAS, QA's three FIXes on f041b24 applied: gloves repainted with a fresh design (fitted cream leather, hand-sized, renamed Paint-Stained Leather Gloves), palette pendant repainted about a third the size, oc_smock flagged bare (barecheck please; the V shows a strip of skin above the bust). ROOMS: both bodies, 41 poses, 15/19 outfits, 0 not drawn, 0 page errors; close sheets oilcanvas_fix_m/f.png. Process NOTE taken: a refused prompt gets a fresh design, never a resubmit. Then Cal's approval, then LEAD wires. Next: REGIMENT draft. CHROME free.
@@ -289,7 +289,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 268fb31): v1.26 live check PASS (QA findings). Nothing open from QA.
+- Now (on 21c67e7): REGIMENT painted, NOT A PASS yet (the peaked cap hides the eyes; QA findings). Nothing open from QA.
+  Was: Now (on 268fb31): v1.26 live check PASS (QA findings).
   Was: Now (on abe4e6d): v1.26 candidate (OIL & CANVAS rows) PASS (QA findings).
   Was: Now (on c45cedb): REGIMENT design review PASS with NOTES (QA findings).
   Was: Now (on 4c60022): OIL & CANVAS PASS, waits on LEAD's rows (QA findings).
@@ -366,6 +367,27 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet (one FIX), REGIMENT painted, 21c67e7 (rows not wired; regiment_rows.json injected; clean build). Pictures:
+  shots/qa/rg/.
+  - Passes:
+    - newwear rg, 41 poses: him 15 outfits, her 17, 0 not drawn, 0 icons missing, 0 page errors. fitsweep rg: 15 pieces, 0 flagged.
+    - barecheck MODE=real, the mess jacket: the navy bandeau covers the bust in all 41 poses; the skin is the bare midriff
+      (bare_mess.jpg). The officer jacket is a control: 0 px.
+    - heelcheck SHOE=gx_rg_stiletto: the right tiptoe bases. Floor within 4 px except backwalk1/3/4 (7-8 px), as before, plus sitBack and
+      type1 at 5 px.
+    - hatcheck: the side cap and the peaked cap over h1, h2 and h3 on both bodies show no bald band from behind (hat_side.jpg,
+      hat_cap.jpg).
+    - The gauntlets are hand-sized in arms-up poses on both bodies (close_m.jpg, close_f.jpg).
+    - QA's design NOTES are applied: three rows of frogging and plain shoulder boards; the capelet above the elbow; a low, firm cap
+      crown unlike VENOM ROSE's; a sash with only its buckle and fringe; the aiguillette in loose loops.
+    - ROOMS's question 2: the riding boots reach the knee line on the chibi legs and read as tall boots. Fine.
+  - FIX (ROOMS): the Cord Peaked Cap's patent peak hides his eyes in front views (all three hairstyles), and half of hers
+    (cap_eyes_m.jpg, cap_eyes_f.jpg). Lift it so the eyes show under the peak, as the OIL & CANVAS felt hat needed (lift, with the
+    clip moved to match), then rerun hatcheck front and back.
+  - ROOMS's question 1, settled: the light shards along his bare arms are the rig's, not the waistcoat's. The same look with the top layer
+    removed (bare torso) shows the same shards in stretchUp, dance1, dance2 and sideUp (waistcoat_vs_bare_arms_m.jpg, top row with the
+    waistcoat, bottom row without). NOTE (LEAD, rig, not blocking REGIMENT): his bare arms tear at the armpit in arms-up poses,
+    visible with any sleeveless top. Her bare base probably does the same under the sleeveless `bare` tops (not checked yet).
 - PASS, v1.26 live check (LEAD: live on Live and Test at 268fb31).
   - release/v1.26 and its origin copy are both 268fb31. Against release/v1.25, 83 app/data/art/src/tools files change: 82 are
     identical to abe4e6d, the build QA passed in 69af73e, and 30_app_b.js differs only by its APPV line (126). look.js and rig.json
