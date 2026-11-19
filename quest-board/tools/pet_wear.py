@@ -2,7 +2,7 @@
 
   pet_wear.py template <pet> <frames> <out.png> [fit]    e.g. template wolf 0 sheet.png   or   template wolf 0,6,4,5 sheet.png
                                                          (fit 0.55: the pet smaller, room round it for an aura)
-  pet_wear.py cut <sheet.png> <piece id> <kind>          kind: head | neck | body | base | aura (base: the slime's base band pieces,
+  pet_wear.py cut <sheet.png> <piece id> <kind> [--append]  (--append adds cells after the existing ones) kind: head | neck | body | base | aura (base: the slime's base band pieces,
                                                          cells by the body fit, placed on the neck anchor)
   pet_wear.py check <piece id> <out.png>                 the piece worn on every frame, as the game places it
   pet_wear.py headaura <piece id>                        an aura placed on the head anchor (mass centre where the head is null)
@@ -109,7 +109,7 @@ def anchor(pet, f, kind):
     return a[kind][:2] if a.get(kind) else None
 
 
-def cut(sheet, pid, kind):
+def cut(sheet, pid, kind, append=False):
     lay = json.load(open(sheet + ".json"))
     rgb = np.asarray(Image.open(sheet).convert("RGB"))
     pet = lay["pet"]
@@ -120,7 +120,9 @@ def cut(sheet, pid, kind):
     alpha = np.where(gone, 0, 255).astype(np.uint8)
     alpha = ndi.median_filter(alpha, 3)
     k = lay["scale"]
-    out = []
+    p0 = os.path.join(ROOT, "data", "pet_clothes.json")
+    d0 = json.load(open(p0)) if os.path.exists(p0) else {}
+    out = list(d0[pid]["cells"]) if append and pid in d0 else []  # append: new cells go after the existing ones
     for i, c in enumerate(lay["cells"]):
         bx, by, bw, bh = c["box"]
         a = alpha[by:by + bh, bx:bx + bw]
@@ -159,7 +161,8 @@ def cut(sheet, pid, kind):
             print(name, arr.shape[1], "x", arr.shape[0], "pivot", out[-1]["pivot"])
     p = os.path.join(ROOT, "data", "pet_clothes.json")
     d = json.load(open(p)) if os.path.exists(p) else {}
-    d[pid] = {"kind": kind, "pet": pet, "cells": out}
+    keep = {k2: v for k2, v in d.get(pid, {}).items() if k2 not in ("kind", "pet", "cells")} if append else {}
+    d[pid] = dict({"kind": kind, "pet": pet, "cells": out}, **keep)
     json.dump(dict(sorted(d.items())), open(p, "w"), indent=1)
 
 
@@ -200,6 +203,8 @@ def check(pid, out):
                 pick = [mine[order.index(want)]] if order.index(want) < len(mine) else []
             elif kind == "aura":
                 pick = mine[:2]
+            elif kind == "head" and len(mine) > 1 and fit.get("head"):
+                pick = [mine[fit["headCells"].index(fit["head"][f])]]
             else:
                 pick = mine[:1]
             hide = (kind == "head" and f in fit.get("headHide", [])) or (kind != "aura" and not anc.get(akind))
@@ -269,4 +274,4 @@ if __name__ == "__main__":
     elif sys.argv[1] == "check":
         check(sys.argv[2], sys.argv[3])
     else:
-        cut(sys.argv[2], sys.argv[3], sys.argv[4])
+        cut(sys.argv[2], sys.argv[3], sys.argv[4], "--append" in sys.argv)
