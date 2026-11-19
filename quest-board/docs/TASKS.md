@@ -304,7 +304,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 9d925a5): Pet Shop recheck, NOT A PASS: two Patio FIXes (QA findings). Waiting on ROOMS: the rest of the dog line.
+- Now (on 9c6b5cc): Pet Shop recheck with the Patio dog beds removed and refunded, PASS (QA findings). Waiting on ROOMS: the rest of the dog line.
+  Was: Now (on 9d925a5): Pet Shop recheck, NOT A PASS: two Patio FIXes (QA findings).
   Was: Now (on db99820): Pet Shop code review, NOT A PASS: two FIXes in the rooms (QA findings).
   Was: Now (on 3c309e4): pw_cloud and pd_rain, PASS (QA findings).
   Was: Now (on bea0f82): pet clothes recheck, PASS but one small FIX (pw_cloud's flakes); pd_fleece design PASS (QA findings).
@@ -402,6 +403,22 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, Pet Shop recheck 5eb9ca2 + 9c6b5cc (clean builds; owner LEAD; pictures and scripts shots/qa/petshop3/). Not a release yet:
+  the dog line is still being painted.
+  - petshop.js, rerun by QA: PASS for all three creatures, including LEAD's new refund check.
+  - FIX A done: the creature's Patio bed at 1.7, 2.6 sits clear of the fire pit and the bistro table, with nothing else beside it. The
+    widest piece (the wyvern's nest) and the slime's cushion are both fully in view (pat3.png).
+  - FIX B done by Cal's call ("Remove the dog beds from outside"): pt_dbed and pt_dbed2 are not drawn and not listed, for an owner and a
+    new player alike, with 0 page errors (dbedcheck.js). Owners keep the ids and their +0.5% XP each. In the Bedroom both smaller dogs
+    now lie down in their cushions (bd3.png), and the creature lies in its bed.
+  - Refund (Cal: "refund for the patio beds but no message of refund necessary"), pbref.js, with every non-local request blocked:
+    - A save owning both beds gets coins 1,000 to 1,400 and spent 5,000 to 4,600, with S.pbref {c: 400}, saved locally.
+    - Two reloads keep the same pbref and pay nothing more. The first reload's other +150 is room income (earnedC), not the refund.
+    - A save with no beds gets pbref {c: 0} and no coins. No message shows.
+  - Not checked: two devices running the refund before a cloud sync (whichever save wins carries one pbref, so it should not double;
+    not tested), a phone.
+  - QA's own false alarm, for the record: QA first thought the retire line wrote to the wrong field of the row, but at runtime the row
+    is reshaped and field 3 is the options object, so it works as LEAD wrote it.
 - NOT A PASS yet, Pet Shop recheck (9d925a5 on a clean build; owner LEAD; pictures shots/qa/petshop2/). The Bedroom is fixed; the
   Patio still needs two fixes.
   - PASS:
