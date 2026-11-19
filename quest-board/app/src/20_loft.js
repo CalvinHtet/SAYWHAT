@@ -1520,6 +1520,8 @@ function lfSep(a,dt,C){
 function lfAnimF(a){ // returns {pose,act,key}
   if(a.role==="dog"){
     if(a.mode==="walk")return {p:Math.floor(a.ph)%4};
+    /* the Pet Shop's creature has a two-frame idle loop (its flame, wings or wobble), and now and then its fun move */
+    if(a.dname==="pet"&&!(a.mode==="do"&&(a.act==="sleep"||a.act==="sit"))){var tq=Math.floor(performance.now()/650);return {p:(tq%23===7)?"fun":"idle"+(tq%2)}}
     if(a.mode==="do")return {p:a.act==="sleep"?"sleep":a.act==="sit"?"sit":0};
     return {p:0};
   }
@@ -1541,7 +1543,7 @@ function lfDrop(id){var e=document.getElementById("lfa-"+id.replace(/[^a-z0-9_-]
 // in rsart.json, all frames of a dog at one scale so the standing frame is LFDOGH tall. Missing art falls back to the pixel dog.
 var LFDOGH={pluto:34,chopstick:34};
 // Cal approved the art (2026-11-08: "I approve the new dogs"); window.LFDOGON=0 brings the pixel dogs back for a comparison.
-function lfDogSpr(n,p){if(window.LFDOGON===0)return null;var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
+function lfDogSpr(n,p){if(window.LFDOGON===0)return null;/* the Pet Shop's creature, and dogs in Pet Shop clothes (29zz_pets.js) */var pz=typeof pzLoftSpr==="function"?pzLoftSpr(n,p):undefined;if(pz!==undefined)return pz;var S=window.LFSPR,fi=p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0,f=S&&S["dgx_"+n+"_"+fi],f0=S&&S["dgx_"+n+"_0"];
   if(!f||!f0)return null;var k=(LFDOGH[n]||34)/f0.h;return{u:f.u,w:f.w*k,h:f.h*k}}
 function lfDogURL(n,p){var k="dog2|"+n+"|"+p;if(PXC[k])return PXC[k];
   var g=PixAv.dog2(n,p),o=[],h=Math.ceil(36*PixAv.K*1.0);
@@ -1602,7 +1604,7 @@ function lfDraw(a,force){
   if(g._op!==a.alpha){g._op=a.alpha;g.style.opacity=a.alpha}
   if(a._k!==k||force){a._k=k;var img=g.querySelector(".lfi");
     var dsp=a.role==="dog"?lfDogSpr(a.dname,f.p):null,cdg=!dsp&&a.role==="dog"&&typeof chDog==="function"?chDog(a.dname,f.p):null;
-    if(dsp){img.setAttribute("href",dsp.u);img.setAttribute("width",dsp.w.toFixed(1));img.setAttribute("height",dsp.h.toFixed(1));img.setAttribute("x",(-dsp.w/2).toFixed(1));img.setAttribute("y",(-dsp.h*.97).toFixed(1));a._chb=0}
+    if(dsp){img.setAttribute("href",dsp.u);img.setAttribute("width",dsp.w.toFixed(1));img.setAttribute("height",dsp.h.toFixed(1));img.setAttribute("x",(dsp.ax!=null?-dsp.ax:-dsp.w/2).toFixed(1));img.setAttribute("y",(dsp.ay!=null?-dsp.ay:-dsp.h*.97).toFixed(1));a._chb=0}
     else if(cdg){var DK=.19;img.setAttribute("href",cdg.u);img.setAttribute("width",(cdg.w*DK).toFixed(1));img.setAttribute("height",(cdg.h*DK).toFixed(1));img.setAttribute("x",(-cdg.ax*DK).toFixed(1));img.setAttribute("y",(-cdg.ay*DK).toFixed(1));a._chb=1}
     else if(a.role==="dog"){img.setAttribute("href",lfDogURL(a.dname,f.p));var dw=Math.ceil(46*PixAv.K)*LFSC*1.12;img.setAttribute("width",dw);img.setAttribute("height",Math.ceil(36*PixAv.K)*LFSC*1.12);img.setAttribute("x",-dw*.5);img.setAttribute("y",-Math.ceil(33*PixAv.K)*LFSC*1.12)}
     else{if(img._bd==null){img._bd=1;img.style.animationDelay=(-Math.random()*3).toFixed(2)+"s"}img.classList.toggle("lfidle",a.mode!=="walk");var cf=cpi>=0?chFrame(a.look,cpi):null;
@@ -1752,7 +1754,7 @@ function lfPvStart(i,mm){
     if(bi>=0){var pa=r.a||{},beds=[];if(pa.pt_dbed)beds.push([1.95,4.05]);if(pa.pt_dbed2)beds.push([.75,4.05]);
       lfDesired().filter(function(w){return w.room===bi&&(w.role==="me"||w.role==="dog")}).forEach(function(w){
         var n=Object.assign({},w,{id:"pv:"+w.id,room:uid,pv:1,pvslot:i,fresh:0,wand:0,leaveAt:0,visitor:0});
-        if(w.role==="dog")n.bed=beds[w.dname==="chopstick"?1:0]||beds[0]||null;
+        if(w.role==="dog")n.bed=w.dname==="pet"?(typeof petMine==="function"&&petMine()?[4.85,4.0]:null):beds[w.dname==="chopstick"?1:0]||beds[0]||null;/* the creature's own bed by the fire (Cal: "Yes, replace it") */
         var a=LFA[n.id]=Object.assign({wspawn:0,x:3,y:3,mode:"idle",t:0,ph:0,face:1,pose:0,alpha:1,fade:0,si:-1,tx:0,ty:0,sk:"",leaving:0},n);
         try{lfPlace(a)}catch(e){}a.alpha=1;a.fade=0})}}
 }
@@ -3164,7 +3166,7 @@ function lfPatioReal(){
        chair, and the back left corner) */
     [[2.4,1.6],[4.6,1.0],[5.9,2.6],[3.2,3.0],[1.8,3.05],[.4,1.2]].forEach(function(q){add(q[0],q[1],1)});
     /* each Patio bed has its dog: the first is Pluto's, the second Chopstick's */
-    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);
+    if(a.pt_dbed)R.beds.push([1.95+ox,4.05+oy,"pluto"]);if(a.pt_dbed2)R.beds.push([.75+ox,4.05+oy,"chopstick"]);if(typeof petMine==="function"&&petMine())R.beds.push([4.85+ox,4.0+oy,"pet"]);
     /* a dog walks onto its own bed, so the beds are not obstacles (the Bedroom's beds work the same way) */
     R.box=R.box.filter(function(o){return !R.beds.some(function(q){var px=q[0]-ox,py=q[1]-oy;return px>o[0]&&px<o[2]&&py>o[1]&&py<o[3]})});
     /* only spots a walk from the sliding door reaches (QA on v0.75: with the Patio full, the back-left spot was boxed in by the
