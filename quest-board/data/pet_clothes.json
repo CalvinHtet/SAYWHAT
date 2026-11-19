@@ -88,6 +88,34 @@
    }
   ]
  },
+ "pv_embers": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 486,
+    "h": 415,
+    "pivot": [
+     257.4,
+     228.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 486,
+    "h": 415,
+    "pivot": [
+     257.4,
+     228.8
+    ]
+   }
+  ]
+ },
  "pv_goggles": {
   "kind": "head",
   "pet": "wyvern",
@@ -135,6 +163,34 @@
     "pivot": [
      62.8,
      14.9
+    ]
+   }
+  ]
+ },
+ "pv_lanterns": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 535,
+    "h": 355,
+    "pivot": [
+     279.0,
+     192.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 535,
+    "h": 355,
+    "pivot": [
+     279.0,
+     192.8
     ]
    }
   ]
@@ -224,6 +280,34 @@
     "pivot": [
      233.5,
      145.7
+    ]
+   }
+  ]
+ },
+ "pv_stars": {
+  "kind": "aura",
+  "pet": "wyvern",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 466,
+    "h": 138,
+    "pivot": [
+     237.9,
+     61.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "wyvern",
+    "frame": 0,
+    "w": 466,
+    "h": 138,
+    "pivot": [
+     237.9,
+     61.2
     ]
    }
   ]

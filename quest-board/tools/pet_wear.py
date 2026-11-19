@@ -114,6 +114,9 @@ def cut(sheet, pid, kind):
     rgb = np.asarray(Image.open(sheet).convert("RGB"))
     pet = lay["pet"]
     gone = keyed(rgb, pet)
+    # despill: no line uses green, so green never rises above red or blue (thin lines and edges blended with the screen)
+    rgb = rgb.copy()
+    rgb[..., 1] = np.minimum(rgb[..., 1], np.maximum(rgb[..., 0], rgb[..., 2]))
     alpha = np.where(gone, 0, 255).astype(np.uint8)
     alpha = ndi.median_filter(alpha, 3)
     k = lay["scale"]

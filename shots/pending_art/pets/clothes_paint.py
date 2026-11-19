@@ -26,8 +26,8 @@ P = [
  ("pv_pack", "wyvern", "body", "a tiny brown leather explorer backpack fitted to each pose, worn on its back between the wings with straps over the shoulders, brass buckles, a rolled map and a little lantern hooked on the side; the wings stay free"),
  ("pv_bomber", "wyvern", "body", "a tan leather bomber jacket fitted to each pose with amber lining, ribbed cuffs, two slits so the wings come through, a navy flame-shaped patch on the chest; the wings, tail and head stay free"),
  ("pv_vest", "wyvern", "body", "a quilted cream waistcoat fitted to each pose with gold embroidery, navy piping and brass buttons, a pocket watch chain across the front; the wings, tail and head stay free"),
- ("pv_embers", "wyvern", "aura", "about ten small amber embers and a few tiny gold sparks rising round the wyvern in a wide low oval at mid height, spaced far apart, two or three faint curls of warm smoke; a few behind it and a few in front low down, small and sparse, never across the eyes or face"),
- ("pv_lanterns", "wyvern", "aura", "three tiny brass lanterns with amber glass circling the wyvern in a wide oval ring at mid height, a warm glow and a faint gold trail behind each; one behind it, two in front low down, never across the eyes"),
+ ("pv_embers", "wyvern", "aura", "about twelve small solid glowing amber embers shaped like little teardrops and a few tiny solid gold four-point sparks rising round the wyvern in a wide low oval at mid height, spaced far apart, every one opaque with a dark outline, no smoke, no haze, no glow on the background; a few behind it and a few in front low down, never across the eyes or face"),
+ ("pv_lanterns", "wyvern", "aura", "three tiny brass lanterns with amber glass floating round the wyvern at mid height in a wide low oval, spaced far apart, a few tiny solid gold sparkles near each; one behind it, two in front low down, never across the eyes or face"),
  ("pv_stars", "wyvern", "aura", "about nine small amber star points joined by fine thin gold lines like invented constellations, circling the wyvern in a wide low oval at mid height, one bright navy-rimmed star at the front; a few behind it and a few in front low down, sparse, never across the eyes or face"),
  ("ps_crown", "slime", "head", "a small pink-gold crown tilted to one side between its ears, hot pink gems, tiny pearl tips; small, never big and centred; it sits above the eyes"),
  ("ps_phones", "slime", "head", "chunky hot pink headphones with a gold band over the top of its head between the ears, the round cups on its sides, glowing pink cups with a gold star on each; above the eyes"),
@@ -67,6 +67,9 @@ def prompt(pid, pet, kind, what):
     keep = ("Keep every %s figure exactly as it is: the same poses, sizes, places and flat %s colour" % (k, k)) if many else \
            ("Keep the %s %s exactly as it is: the same pose, size, place and flat %s colour" % (k, n, k))
     fitn = " The same piece on every figure, fitted to each pose and body." if many else ""
+    if kind == "aura":  # translucent glow over the green screen keys out green-tinted (QA: nothing green)
+        fitn += (" Every element solid and opaque with a clean dark outline; no smoke, no haze, no glow halos, no "
+                 "translucent trails, nothing faded into the background.")
     return ("Edit Image 1. %s, and the same flat green background. Only add one thing to %s: %s.%s Paint only that piece, in full "
             "colour with clean dark outlines and soft cartoon shading, the same cartoon style; do not paint the figure, it stays "
             "flat %s, with no white border or sticker outline round it. Nothing green and no %s in the piece. No text, no "
