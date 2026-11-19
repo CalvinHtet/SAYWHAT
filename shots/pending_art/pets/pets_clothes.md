@@ -8,7 +8,7 @@ navy with amber-gold, fox-slime plum with hot pink; the dogs' line is warm and h
 reads apart from the three creatures. Pluto's painted grey vest stays under body pieces (they cover it).
 
 Rules: never plain (every line names two or more details), original designs only (no named character's gear, no brand
-logos, no letters on anything), no cultural dress, nothing green (keyed). Pieces sit over the pet, so pink and magenta are
+logos, no letters on anything), no cultural dress, nothing green (keyed: no leaves, no stems, no rainbow sheen). Pieces sit over the pet, so pink and magenta are
 fine here (the magenta-body rule is only for people's clothes).
 
 ## Shadow wolf pup (charcoal, icy cyan)
@@ -24,9 +24,9 @@ fine here (the magenta-body rule is only for people's clothes).
 | pw_armour | body | Pup Battle Plate | A steel chest plate and shoulder guards with cyan-lit seams, brown leather straps, a rivet border. |
 | pw_hoodie | body | Oversized Pup Hoodie | A charcoal hoodie far too big, sleeves pushed up, cyan drawstrings, a pouch pocket with a paw print. |
 | pw_cape | body | Midnight Star Cape | A short black velvet cape, silver star embroidery along the hem, an icy cyan clasp at the chest. |
-| pw_wisps | aura | Frost Wisp Orbit | Three small icy cyan spirit flames circling the pup. |
-| pw_snow | aura | Snowfall Halo | A slow ring of glittering snowflakes drifting round it. |
-| pw_shards | aura | Moon Shard Ring | A ring of tiny floating ice crystals catching light. |
+| pw_wisps | aura | Frost Wisp Orbit | Three small icy cyan spirit flames circling the pup, each trailing a thin wisp of pale mist. |
+| pw_snow | aura | Snowfall Halo | A slow ring of six-point snowflakes in white and icy cyan, a glitter of frost between them. |
+| pw_shards | aura | Moon Shard Ring | A ring of tiny pale-blue ice crystals with one small silver crescent moon among them, each crystal catching a glint. |
 
 ## Void wyvern (navy, amber-gold)
 
@@ -41,9 +41,9 @@ fine here (the magenta-body rule is only for people's clothes).
 | pv_pack | body | Tiny Explorer Pack | A brown leather backpack with brass buckles, a rolled map and a lantern hooked on the side. |
 | pv_bomber | body | Wing-Slit Bomber | A navy bomber jacket with amber lining, two slits for the wings, a flame-shaped patch. |
 | pv_vest | body | Hoard-Keeper Vest | A quilted navy waistcoat with gold embroidery and brass buttons, a pocket watch chain. |
-| pv_embers | aura | Ember Motes | A drift of small amber embers rising round it. |
-| pv_orbit | aura | Orbiting Coins | Three tiny gold coins circling it. |
-| pv_stars | aura | Star-Map Ring | A faint ring of amber dots joined like constellations. |
+| pv_embers | aura | Ember Motes | Small amber embers rising round it with a few glowing gold sparks and faint curls of warm smoke. |
+| pv_orbit | aura | Orbiting Coins | Three tiny blank gold coins circling it edge-on, one amber gem tumbling between them, a soft gold trail. |
+| pv_stars | aura | Star-Map Ring | A ring of amber star points joined by fine gold lines like invented constellations, one bright navy-rimmed star at the front. |
 
 ## Shadow fox-slime (plum, hot pink)
 
@@ -58,16 +58,16 @@ fine here (the magenta-body rule is only for people's clothes).
 | ps_cape | body | Heart-Clasp Cape | A tiny pink satin cape over the back, plum lining, a gold heart clasp. |
 | ps_float | body | Candy Swim Ring | A plum and pink striped float ring round its middle, a little valve and shine. |
 | ps_pack | body | Star Charm Backpack | A plum mini backpack with pink zips, a star charm and a tiny keyring. |
-| ps_flames | aura | Spirit Flame Orbit | Small hot pink spirit flames circling it (Cal's "tiny orbiting spirit flames"). |
-| ps_hearts | aura | Heart Bubbles | Glossy pink heart-shaped bubbles floating up round it. |
-| ps_sparkle | aura | Sparkle Ring | A ring of tiny four-point stars twinkling round it. |
+| ps_flames | aura | Spirit Flame Orbit | Four small hot pink spirit flames circling it with plum smoke tails (Cal's "tiny orbiting spirit flames"). |
+| ps_hearts | aura | Heart Bubbles | Glossy hot pink heart-shaped bubbles floating up round it, each with a white shine and a plum rim. |
+| ps_sparkle | aura | Sparkle Ring | A ring of tiny four-point stars in pink and gold twinkling round it, a faint plum glow behind them. |
 
 ## Chopstick and Pluto (one line for both dogs: caramel, cream, cherry red, navy)
 
 | id | slot | name | line |
 |---|---|---|---|
 | pd_bucket | head | Corduroy Ear-Slit Bucket Hat | Caramel corduroy with two ear slits, a cherry stitched bone patch on the front, a cream band. |
-| pd_daisy | head | Daisy Chain Crown | A woven ring of cream and butter-yellow daisies on tan twine, a small cherry bow at the side. |
+| pd_daisy | head | Daisy Chain Crown | A woven ring of cream and butter-yellow daisies on tan twine (no leaves, no stems), a small cherry bow at the side. |
 | pd_aviator | head | Pup Aviator Cap | A brown leather flight cap with cream fleece lining, ear flaps buckled up, tiny goggles on the brow. |
 | pd_bowtie | neck | Gingham Bow-Tie Collar | A navy collar with a cherry gingham bow tie and a small brass bell. |
 | pd_bandana | neck | Paw-Print Rope Bandana | A cream bandana with cherry paw prints and a twisted rope edge, knotted at the side. |
@@ -75,9 +75,9 @@ fine here (the magenta-body rule is only for people's clothes).
 | pd_puffer | body | Quilted Puffer Vest | A cherry quilted puffer vest with navy lining, a leash loop on the back and a cream zip pull. |
 | pd_rain | body | Mustard Rain Slicker | A mustard rain slicker with a little hood, toggle buttons and a cream reflective stripe. |
 | pd_cable | body | Cable-Knit Turtleneck | A cream cable-knit sweater with a rolled neck and a cherry heart patch on the side. |
-| pd_hearts | aura | Floating Hearts | Small cherry and cream hearts drifting up round the dog. |
-| pd_bubbles | aura | Soap Bubbles | A few glossy rainbow-sheen bubbles floating round it. |
-| pd_treats | aura | Orbiting Treats | Three tiny bone-shaped biscuits circling it. |
+| pd_hearts | aura | Floating Hearts | Small cherry and cream hearts drifting up round the dog, a few with a navy stitched outline like felt patches. |
+| pd_bubbles | aura | Soap Bubbles | A few glossy soap bubbles with a pink and sky-blue sheen (no green) and a white shine, one popping into a tiny splash. |
+| pd_treats | aura | Orbiting Treats | Three tiny bone-shaped biscuits circling it, golden-baked with cream icing dots, a few crumbs trailing. |
 
 Questions for QA:
 1. The pup's helm and plate: tiny battle armour (Cal's word) without reading as any named game's knight; fine with no crest
