@@ -1509,6 +1509,9 @@ var BRANDS=[
  /* OIL & CANVAS, the second new Boutique brand (Cal 11-18: "3 other mid tier but more stylized clothing with lots of detail"): painter's
     studio couture in indigo, cream and cadmium (ROOMS f041b24) */
  {id:"oc",name:"OIL & CANVAS",fl:"boutique",tag:"Never washed the paint off",c:["#141a3c","#28357a","#f0e6cf"],ac:"#f2a516",start:"2027-01-25",sub:"artist couture"},
+ /* REGIMENT, the third new Boutique brand (Cal 11-18: "3 other mid tier but more stylized clothing with lots of detail"): military
+    tailoring in navy, scarlet and brass (ROOMS 21c67e7) */
+ {id:"rg",name:"REGIMENT",fl:"boutique",tag:"Ranked by outfit",c:["#0e1730","#22315f","#c9a646"],ac:"#d0283a",start:"2027-01-25",sub:"military tailoring"},
  {id:"km",name:"KAIMANA",tag:"Back when the waves were bigger",c:["#e6d7c2","#34a1a0","#fb7167"],ac:"#fb7167",start:"2027-02-01",sub:"surf club"},
  {id:"oak",name:"OAKMONT",tag:"Members only, dress code optional",c:["#f2e6cb","#26345c","#641b38"],ac:"#641b38",start:"2027-02-08",sub:"80s country-club athletic"},
  {id:"sv",name:"S\u00d8LVBERG",tag:"Never actually skied",c:["#f0f1f3","#bb2b35","#2d4066"],ac:"#bb2b35",start:"2027-02-15",sub:"apr\u00e8s-ski"}];

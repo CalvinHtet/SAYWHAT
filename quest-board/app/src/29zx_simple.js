@@ -234,6 +234,9 @@ DROPS.hold=[{from:"2026-11-16",until:"",ids:["gp","sp","bb","km","oak"]},
      every phone whenever this ships and GILDED keeps its 11-23 debut (held to 11-23 it took that slot and pushed GILDED to 11-30); its first
      drop is Mon 11-30 (rigtest/lead/ocrows.js). If this ships after 11-26 8 am, move "until" to the release day */
   {from:"2026-11-19",until:"2026-11-26",ids:["oc"]},
+  /* REGIMENT waits on Cal's approval of the painted sheet (ROOMS, 2026-11-18): held from the day v1.22's changes start, no end yet. Once he
+     approves, set "until" to a Boutique drop day no phone has shown yet, and check GILDED's and OIL & CANVAS's debuts stay put (rgrows.js) */
+  {from:"2026-11-19",until:"",ids:["rg"]},
   /* Cal (via ROOMS, 2026-11-16): "ship NICE COCK on friday". NICE COCK has been live on the Boutique since Fri 11-13 (it dropped before
      the hold began) and stays live to Thu 11-26; its hold ends 11-20, so later Boutique slots may pick it again once its new art is in */
   {from:"2026-11-16",until:"2026-11-19",ids:["nc"]},/* v1.22: until 11-19, its drop day now */
