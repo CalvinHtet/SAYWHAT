@@ -49,6 +49,10 @@ one day unless it is a huge moment. `app/src/29_prices.js` sets them:
 Room upgrades have no level locks (Cal, 2026-11-05): each room shows its next 4, the 4th a mystery, and coins pace them.
 Rooms later in the story cost more (`ROOMSTEP` in `29_prices.js`: Garden x1 up to the Club x6), because passive income and
 dungeons pay more by then. Only an upgrade that opens a new room keeps a level until the story scenes open rooms instead.
+Cal, 2026-11-22: "the money scaling is too fast ... make things a tiny more expensive, maybe 10-15%." Every coin price
+above is now x1.15 (`PRICEK` in `app/src/29z_pricek.js`, applied once after every other price rule, so the tables above
+show the shape and the dial sets the level): Shop items, new rooms, room upgrades, decor sets and crew hires. A small thing
+is 230, normal 460, big 920. Free things stay free; the 150-coin repaint is unchanged. `PRICEK=1` undoes it.
 A kitchen runs at full speed only after 3 quests that day (20% with none), so chores still drive
 everything. Set `fp:1` on an upgrade to keep its price exactly as written.
 

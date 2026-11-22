@@ -2890,6 +2890,17 @@ Requests for LEAD (from ROOMS):
   filters, 76 blend modes, about 15,000 SVG nodes, 783 images, 97 MB JS heap. Dragging sets the transform on every
   pointermove. No fix written. Fixes in room code are ROOMS's: put what you want under Art requests or here.
 
+Requests for LEAD (from a cloud chat, Cal 2026-11-22, branch `claude/wizardly-hopper-sp10lg`, NOT on main):
+- Cal: "the money scaling is too fast ... I am basically able to buy the entire shop right now. Can you make things a tiny
+  more expensive? Maybe 10-15%." Done as a new file, `app/src/29z_pricek.js` (`PRICEK=1.15`, applied once after every other
+  price rule; no LEAD file touched in app/src). All 946 priced things went up 10 to 20%, total x1.15, free things stay free.
+  Checked headless: no page errors, savecheck 37/37, `rigtest/qa/sim.js regular 30` before and after. NOT checked: a phone,
+  the Shop and room windows by eye, casual and grinder sims. Merge it into main before the next Live cut.
+- The sim shows prices are not the real problem: the first day with nothing left to buy moves only from day 13 to day 14,
+  and every upgrade is still bought by day 25. The regular player (12 tasks) makes 570 to 1,500 XP a day, not 200 (proof,
+  streak, crits, combos), and tasks pay 7,000 to 12,000 coins a day against ECONOMY.md's "a good day about 1,000"; tasks
+  are about 60% of all coins and rooms pay a share of them. The faucet (6 coins an XP plus momentum, v0.79) needs Cal's call.
+
 ---
 
 ## ROOMS: all art, the art tools, the room code
