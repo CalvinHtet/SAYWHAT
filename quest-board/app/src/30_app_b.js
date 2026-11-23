@@ -902,7 +902,7 @@ async function socLoad(){
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
     var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
     (ps.docs||[]).forEach(function(d){var x=d.data();if(x&&x.rx&&typeof x.rx==="object")SOC.rxDocs.push({id:d.id,rx:x.rx});if(!x||!Array.isArray(x.posts))return;
-      x.posts.forEach(function(p){if(p&&p.text)all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null})})});
+      x.posts.forEach(function(p){if(p&&p.text&&!(+p.until>0&&+p.until<Date.now()))all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null,kd:p.kd?1:0})})});/* a post with an end time (until) goes when it passes: Cal's posted notes, 48 hours (29zz_v139.js) */
     all.sort(function(a,b){return b.t-a.t});SOC.posts=all.slice(0,30);
     await socCheckPings();
     SOC.loaded=Date.now();SOC.err="";
@@ -953,7 +953,7 @@ function socInner(){
   if(SOC.err)h+='<p class="note">Could not reach the neighborhood ('+esc(SOC.err)+'). Your access may be view-only.</p>';
   h+=SOC.worlds.length?SOC.worlds.map(socWorldCard).join(""):'<p class="note">'+(SOC.loaded?'No neighbors yet. Share this page with a friend as a Contributor and they will show up here once they open it.':'Looking for neighbors…')+'</p>';
   h+='<h3 class="label" style="margin-top:16px">Town board</h3><div class="snpost"><textarea id="sntext" maxlength="280" rows="2" placeholder="Post something for everyone in the neighborhood">'+esc(SOC.draft||"")+'</textarea><button class="btn" data-act="snpost">Post</button></div>';
-  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b>'+esc(p.name||"Neighbor")+(p.from!==MYUID?plDot(SOC.worlds.filter(function(w){return w&&w.id===p.from})[0]):'')+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p>'+(typeof townRxBar==="function"?townRxBar(p):'')+'</div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
+  h+=SOC.posts.length?'<div class="snposts">'+SOC.posts.map(function(p){return '<div class="snp"><div><b'+(p.from&&p.from!==MYUID?' class="v39who" role="button" tabindex="0" data-act="fshview" data-u="'+esc(p.from)+'"':'')+'>'+esc(p.name||"Neighbor")+(p.from!==MYUID?plDot(SOC.worlds.filter(function(w){return w&&w.id===p.from})[0]):'')+'</b><small>'+socAgo(p.t||0)+'</small>'+(p.from===MYUID?'<button class="lnk" data-act="sndel" data-p="'+esc(p.id)+'">delete</button>':'')+'</div><p>'+esc(p.text||"")+'</p>'+(typeof townRxBar==="function"?townRxBar(p):'')+'</div>'}).join("")+'</div>':'<p class="note">No posts yet. Be the first.</p>';
   return h;
 }
 function socPaint(){var el=document.getElementById("socnb");if(el)el.innerHTML=socInner()}
@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=139, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=141, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1439,8 +1439,10 @@ function boardHtml(){
   var cats=CLUSTERS.filter(function(c){return open.some(function(q){return q.cl===c[0]})});
   if(cats.length<2){if(open.length)h+='<section class="cluster plain">'+open.map(qRow).join("")+'</section>'}
   else cats.forEach(function(c){
-    var qs=vis.filter(function(q){return q.cl===c[0]}),dn=qs.filter(function(q){return S.done[q.id]}).length;
-    h+='<section class="cluster"><header'+(ART["cl_"+c[0]]?' class="hasart" style="--cl:url('+ART["cl_"+c[0]]+')"':'')+'><h3 class="label">'+c[1]+'</h3><span class="note mono">'+dn+'/'+qs.length+'</span></header><div class="cbar"><i style="width:'+(dn/qs.length*100)+'%"></i></div>'
+    /* Cal 11-23: "for the 0/3 counter next to the boardroom task categories, make sure you are not counting the completed ones": the
+       header counts the open quests in it, as many as are listed under it (finished ones are in Completed at the bottom) */
+    var qs=open.filter(function(q){return q.cl===c[0]});
+    h+='<section class="cluster"><header'+(ART["cl_"+c[0]]?' class="hasart" style="--cl:url('+ART["cl_"+c[0]]+')"':'')+'><h3 class="label">'+c[1]+'</h3><span class="note mono">'+qs.length+'</span></header>'
       +open.filter(function(q){return q.cl===c[0]}).map(qRow).join("")+'</section>';
   });
   /* Cal, 2026-11-09: "a clear completed quests button at the bottom to remove those quests" */
@@ -1851,17 +1853,21 @@ function fallbackSplit(txt){
 function clampXp(n){n=Math.round((+n||25)/5)*5;return Math.max(5,Math.min(100,n))}
 function guess(t){
   var s=t.toLowerCase(), r={xp:25,stat:"productivity",cl:"admin"};
-  if(/gym|workout|lift|run\b|jog|walk|stretch|swim|yoga/.test(s)){r.stat="fitness";r.cl=/walk/.test(s)?"out":"body";r.xp=25}
+  /* Cal 11-23: "Helping someone with laptop or calling a bank about this or that or cancelling a membership should be work/admin"; "Go on
+     a date with sydney or plan a date or call this person or that person for personal bonding activities should be people" */
+  var adm=/\bbank|cancel|membership|subscription|insurance|refund|\bbills?\b|laptop|computer|\bpc\b|printer|wi-?fi|router|\bdmv\b|appointment|customer service|support|warranty|\baccounts?\b/.test(s);
+  if(adm){r.stat="productivity";r.cl="admin";r.xp=/help|fix|set ?up/.test(s)?25:10}
+  else if(/gym|workout|lift|run\b|jog|walk|stretch|swim|yoga/.test(s)){r.stat="fitness";r.cl=/walk/.test(s)?"out":"body";r.xp=25}
   else if(/edit|film|shoot|record|produce|mix|master|song|track|beat|studio|mashup|video|reel|cover art|epk|design/.test(s)){r.stat="creativity";r.cl="create";r.xp=/edit|film|shoot|produce|finish|mix|master/.test(s)?50:25}
   else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water|breakfast|lunch|\bmeals?\b|\beat\b|\bnap\b|meditat/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}/* self care (Cal 11-23) */
   else if(/dish|laundry|clean|vacuum|trash|sweep|tidy|organi[sz]e|assemble|put together|groom/.test(s)){r.stat="productivity";r.cl="home";r.xp=/clean|laundry|assemble|put together/.test(s)?25:10}
-  else if(/call|text|dinner|friend|date|party|hang|visit|birthday/.test(s)){r.stat="social";r.cl="social";r.xp=25}
+  else if(/\bcall|\btext|dinner|friend|\bdates?\b|party|hang|visit|birthday|catch up|facetime|\bmom\b|\bdad\b|family/.test(s)){r.stat="social";r.cl="social";r.xp=25}
   /* QA's review (2026-11-14): "Reply to emails" matched "mail" below and was filed under Outside run; desk work is admin */
   else if(/e-?mails?|inbox|\brepl(y|ies)\b|slack|invoices?|paperwork|\bforms?\b/.test(s)){r.stat="productivity";r.cl="admin";r.xp=10}
   else if(/unload|groceries|errand|\bmail\b|gas|feed|pick up/.test(s)){r.stat="productivity";r.cl="out";r.xp=10}
-  if(/finish|build|platform|app|launch|submit|ship|migrate|tax|taxes/.test(s)&&r.xp<50)r.xp=50;
+  if(/finish|build|platform|\bapp\b|launch|submit|\bship|migrate|tax|taxes/.test(s)&&r.xp<50)r.xp=50;
   if(t.length<22&&r.xp>10&&/^(post|send|reply|pay|book|buy|check)\b/.test(s))r.xp=10;
-  return {name:t,xp:r.xp,stat:r.stat,cl:r.cl,why:"Quick offline estimate",rep:/daily|every day|feed|walk|teeth|shower|bed\b|gym|dishes/.test(s)?"daily":"once"};
+  return {name:t,xp:r.xp,stat:r.stat,cl:r.cl,why:"Quick offline estimate",rep:!adm&&/daily|every day|feed|walk|teeth|shower|bed\b|gym|dishes/.test(s)?"daily":"once"};
 }
 function validate(o,src){
   o=o||{};
@@ -1874,7 +1880,8 @@ var PARSE="The user pasted a messy brain dump for a gamified to-do app (bullets,
  +"repeat is 'daily' for routines that recur every day (feeding pets, hygiene, making the bed, gym) and 'once' for one-off tasks.\n"
  +"XP scale: 5 = trivial, under 5 minutes. 10 = under 15 minutes. 25 = 15 to 60 minutes. 50 = 1 to 3 hours of focused or physically demanding work. 75 = multi-hour, open-ended, or something the person is likely avoiding. 100 = whole-day effort or a major milestone. Reward effort and difficulty, not importance. Open-ended building or 'finish X' tasks score at least 50.\n"
  +"stat must be one of: creativity (music, video, design, content making), discipline (habits, hygiene, routines, things avoided), fitness (exercise, walking), productivity (chores, admin, work, building, logistics), social (time with people, relationships, rest and fun).\n"
- +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (self care: meals, morning and night routines, hygiene, rest), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software), create (music, filming, editing, posting content), social (people and plans), boss (a single dreaded or very large task).\n"
+ +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (self care: meals, morning and night routines, hygiene, rest), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software, calls and chores about a service or a problem: the bank, a bill, a refund, cancelling a membership or subscription, tech help like fixing someone's laptop), create (music, filming, editing, posting content), social (people and bonding: going on a date, planning a date, calling or seeing a friend or family member to catch up, plans with people), boss (a single dreaded or very large task).\n"
+ +"A call or a favour is social only when its point is the person (call Mom, call Sydney, plan a date with her); it is admin, stat productivity, when its point is getting something sorted (call the bank about a charge, cancel the gym membership, help Dad with his laptop).\n"
  +"Return ONLY a JSON array of at most 40 objects, in the order the tasks appear.\nBrain dump:\n";
 async function scoreAll(text){
   var sample=null;

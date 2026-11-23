@@ -19,7 +19,7 @@
  "fineSlots": ["top", "arms", "skinArms"],
  "armsCoverMax": 0.15,
  "meshStepFine": 12,
- "fineUp": ["body"],
+ "fineUp": ["body", "top", "arms", "skinArms"],
  "slotStretch": {"body": 9},
  "solidStretch": 4,
  "solidSlots": ["top", "arms", "body"],
