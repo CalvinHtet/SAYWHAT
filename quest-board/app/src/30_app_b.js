@@ -897,7 +897,7 @@ async function socLoad(){
   if(!socOn()||SOC.busy)return;SOC.busy=1;
   try{
     var ws=await db.collection("worlds").limit(60).get();
-    SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name});
+    SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name&&(x.ep==null?6:+x.ep)>=QB_EPOCH});/* a player from before a reset (QB_EPOCH) shows again once they play on the new one (29zz_v132.js stamps ep) */
     SOC.worlds.sort(function(a,b){return (b.t||0)-(a.t||0)});
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
     var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
