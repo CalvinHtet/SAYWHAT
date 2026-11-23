@@ -309,7 +309,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 05c353be): the Speakeasy recheck, PASS; seating left for a later pass (QA findings).
+- Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
+  Was: Now (on 05c353be): the Speakeasy recheck, PASS; seating left for a later pass (QA findings).
   Was: Now (on 268253fe): the Speakeasy rework, NOT A PASS yet: two small FIXes (cart on the armchair, barrels boxed in), a seating NOTE (QA findings).
   Was: Now (on bdb442d1): Karaoke Disco Ball retired, PASS with a refund NOTE (QA findings).
   Was: Now (on release/v1.31 62a515fe, Live): v1.31 live check, PASS (QA findings).
@@ -426,6 +427,29 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- HELD for one Cal decision, otherwise PASS: the reboot, release/v1.35 d2cfa06c (= release/v1.31 + qa-local d92a226a, APPV 135,
+  QB_EPOCH 7; rollback-v1.31 08c7d93e, APPV 136, epoch 7; owner LEAD; shots/qa/v135/).
+  - The cut: over d92a226a only APPV and QB_EPOCH; over v1.31 the shipped changes are 29zz_v135.js, the group/perk texts, the Speakeasy
+    and Disco Ball (QA passed), creator.json. The commit message says "v1.32"; the game shows v1.35 (cosmetic).
+  - LEAD's reboot.js on the plain cut with every non-local request blocked: PASS (his 4 starting cuts; 2 letters only; the new group
+    names; Wave, Fist bump, High five; the brand window only in the Shop and the Shop's "!"; windows held during the tour and shown
+    after; fashion shut at 4 players with 5 buys and open at 5 with its letter and tab; 2 votes, one a person, never yourself; only
+    players who used both votes place; no counts shown; the productivity note and the other's quest list); 0 page errors.
+  - The reset (reboot2.js, one origin and profile): a played v1.31 save (level 20, 5,000 coins) opens v1.35 at epoch 7, not
+    created, 0 XP, 0 coins; the inbox holds exactly Welcome (1,000) and "SAYWHAT is live" (500); through the inbox buttons each pays
+    once (0, 1,000, 1,500, then nothing); 0 page errors.
+  - The web build: wlive.js (APPV 135, EPOCH 7) PASS; the v135 test hook is behind noTest and absent.
+  - THE DECISION (Cal; privacy): a productivity challenge writes the quest names into duel/<uid>, which every signed-in player may
+    read (firestore.rules) and which every player's game downloads in full (collection("duel").limit(300)). So the names reach every
+    player's browser, only not the screen, while the game now says "Nobody else sees the challenge" and the Welcome letter "Your
+    quests are private". The rules cannot narrow it as stored ({j, t} docs). Either accept it as screen-only privacy (and say "Only
+    the two of you see it in the game"), or move the quest names to a doc per pair with a rule that only those two read (as the
+    photo ids carry the uid), before this ships. Fashion votes are the same kind (counts are worked out on every phone from the likes
+    docs); Cal asked only that nobody sees counts, which holds on screen.
+  - NOTES (LEAD): the cloud clear should delete photos with their comments (photos/<post>/cm, firestore:delete -r) and leaves the
+    pictures in Storage; Cal named chats and likes, "square 1" covers the rest, photos included, QA asks Cal to confirm photos. A
+    rollback to 08c7d93e would show new players v1.31's letter and its 500 notice (emergency only).
+  - Not checked: two real accounts reaching 5x5 and voting, the week-end warning in real time, a phone, the real Firebase.
 - PASS, the Speakeasy recheck (ROOMS 05c353be; a clean build, every upgrade owned; owner ROOMS; shots/qa/speakeasy1123/after_*.jpg):
   FIX 1 done, the cart (x 9.1) stands clear of the right armchair; FIX 2 done, the piano down its wall (y 2.3-3.8) and the bar, jukebox,
   lamp table and booth along, so the barrel rack stands free of the bar, only a sliver behind the piano's back corner (depth). Audit:
