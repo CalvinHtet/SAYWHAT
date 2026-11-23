@@ -1429,7 +1429,7 @@ function lfNext(a){
   if(a.visitor&&a.leaveAt&&Date.now()>a.leaveAt){a.leaving=1;return lfNext(a)}
   if(R==="crew"&&a.post){var po=lfPostSpot(C,a);if(po){a.si=po.i;po.s.by=a.id;a.last=po.i;a.speed=1;a.stretch=0;lfGo(a,po.s.x,po.s.y,po.s);return}}
   if(R==="crew"&&!a.post&&lfSvcWork(a,C,r))return;
-  var cand=lfFree(C,a,function(s){return !s.cust&&!s.plot&&s.kind!=="door"&&!(s.tag==="deck"&&(lfBlockedAt(C,8.75,.75)||lfBlockedAt(C,8.75,1.3)))&&(R==="me"||R==="visitor"||true)});
+  var cand=lfFree(C,a,function(s){return !s.cust&&!s.plot&&s.kind!=="door"&&!(s.staffOnly&&(R!=="crew"||a.wand||a.idle))&&!(s.tag==="deck"&&(lfBlockedAt(C,8.75,.75)||lfBlockedAt(C,8.75,1.3)))&&(R==="me"||R==="visitor"||true)});
   // roles prefer their trade
   if(R==="crew"&&r.t!=="lounge"&&!a.wand){var jobs=cand.filter(function(o){return o.s.kind==="work"||o.s.kind==="play"||o.s.kind==="run"||o.s.kind==="fish"||o.s.kind==="water"||o.s.kind==="smell"||o.s.kind==="browse"});
     if(jobs.length&&Math.random()<.78)cand=jobs;
@@ -1556,12 +1556,13 @@ function lfProp(a){
   if(a.carry||t==="serve"&&a.mode==="do"){var it=a.job&&a.job.s?(a.job.plot?"crate":a.job.s.item||""):a.npc?"box":"";var cp=lfCarryProp(it,a);if(cp)return cp;return '<g transform="translate(11,-40)"><rect x="-9" y="3" width="18" height="2.4" rx="1" fill="#c9ced8" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><ellipse cx="0" cy="1.6" rx="5.6" ry="2.2" fill="#fff" stroke="rgba(0,0,0,.35)" stroke-width=".5"/><ellipse cx="0" cy=".8" rx="3.4" ry="1.4" fill="#ff8a5c"/></g>';}
   if(a.mode!=="do")return "";
   if(t==="pour"||t==="mix"){var r=t==="mix"?w*8:0;return '<g transform="translate(12,-34) rotate('+(t==="pour"?-50:r)+')"><rect x="-3" y="-8" width="6" height="14" rx="2" fill="'+(t==="mix"?"#c9ced8":"#6cff9a")+'" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><rect x="-1.4" y="-12" width="2.8" height="5" fill="#8a8f9c"/></g>'+(t==="pour"?'<path d="M14 -30 q4 4 3 14" stroke="rgba(255,190,110,.9)" stroke-width="1.6" fill="none"/><rect x="14" y="-16" width="6" height="8" rx="1" fill="rgba(255,255,255,.35)" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>':'')}
-  if(t==="cook"||t==="oven")return '<g transform="translate(14,-27)"><ellipse rx="7" ry="2.4" fill="#2a2a32" stroke="rgba(0,0,0,.5)" stroke-width=".6"/><rect x="5" y="-1" width="9" height="2" fill="#2a2a32"/></g><g class="lfsteam" fill="rgba(255,255,255,.5)"><circle cx="12" cy="-36" r="2.2"/><circle cx="17" cy="-42" r="1.8"/></g>';
+  if(t==="snip"){var o=(Math.sin(at*9)+1)*9;return '<g transform="translate(14,-34)"><g transform="rotate('+(-o).toFixed(1)+')"><path d="M0 0 L13 -1.5" stroke="#d6dbe4" stroke-width="1.8" stroke-linecap="round"/><circle cx="-3.2" cy="1.6" r="2.2" fill="none" stroke="#e05a3a" stroke-width="1.3"/></g><g transform="rotate('+o.toFixed(1)+')"><path d="M0 0 L13 1.5" stroke="#aeb4c0" stroke-width="1.8" stroke-linecap="round"/><circle cx="-3.2" cy="-1.6" r="2.2" fill="none" stroke="#e05a3a" stroke-width="1.3"/></g></g>'+(Math.floor(at*2)%3===0?'<path d="M31 -31 l3 7 M34 -29 l-1 8" stroke="#4f9234" stroke-width="1.5" stroke-linecap="round"/>':'')}
+  if(t==="cook"||t==="oven")return '<g transform="translate(14,'+(-27+Math.max(0,w)*-3).toFixed(1)+') rotate('+(w*7).toFixed(1)+')"><ellipse rx="7" ry="2.4" fill="#2a2a32" stroke="rgba(0,0,0,.5)" stroke-width=".6"/><rect x="5" y="-1" width="9" height="2" fill="#2a2a32"/></g><g class="lfsteam" fill="rgba(255,255,255,.5)"><circle cx="12" cy="-36" r="2.2"/><circle cx="17" cy="-42" r="1.8"/></g>';
   if(t==="prep")return '<rect x="8" y="-26" width="16" height="3" rx="1" fill="#c9a06a" stroke="rgba(0,0,0,.4)" stroke-width=".5"/><path d="M12 '+(-34+w*3)+' l8 6" stroke="#dfe6ee" stroke-width="1.8"/>';
   if(t==="wipe")return '<path d="M8 '+(-24+w*2)+' h16" stroke="rgba(255,255,255,.7)" stroke-width="5" stroke-linecap="round"/>';
   if(t==="water")return '<g transform="translate(12,-30) rotate(-18)"><rect x="-6" y="-4" width="12" height="9" rx="2" fill="#6cb6ff" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><path d="M6 -1 l9 -4" stroke="#6cb6ff" stroke-width="2.2"/></g><g fill="rgba(160,215,255,.9)"><circle cx="28" cy="-30" r="1.3" class="lfdrop2"/><circle cx="31" cy="-24" r="1.3" class="lfdrop2" style="animation-delay:-.3s"/><circle cx="26" cy="-22" r="1.3" class="lfdrop2" style="animation-delay:-.6s"/></g>';
   if(t==="hoe")return '<path d="M12 -34 L26 -4" stroke="#8a5a30" stroke-width="2.4" stroke-linecap="round"/><path d="M24 -6 l8 2" stroke="#9aa3b5" stroke-width="3"/>';
-  if(t==="weed")return '<path d="M20 -2 q-2 -8 0 -12 M23 -2 q1 -8 4 -10 M17 -2 q-4 -6 -6 -8" stroke="#3fae5a" stroke-width="2" fill="none"/>';
+  if(t==="weed")return '<g transform="translate(16,'+(-14+w*3).toFixed(1)+') rotate(35)"><rect x="-1.2" y="-9" width="2.4" height="7" rx="1" fill="#8a5a30"/><path d="M-2.6 -2 h5.2 l-1 7 h-3.2z" fill="#aeb4c0" stroke="rgba(0,0,0,.4)" stroke-width=".5"/></g><path d="M20 -2 q-2 -8 0 -12 M23 -2 q1 -8 4 -10 M17 -2 q-4 -6 -6 -8" stroke="#3fae5a" stroke-width="2" fill="none"/>';
   if(t==="feed")return '<g transform="translate(12,-24)"><path d="M-6 -5 h12 l-2 11 h-8z" fill="#c9a06a" stroke="rgba(0,0,0,.4)" stroke-width=".6"/></g><g fill="#f0d878"><circle cx="22" cy="-18" r="1.2"/><circle cx="26" cy="-10" r="1.2"/><circle cx="19" cy="-8" r="1.2"/></g>';
   if(t==="smell")return '<g transform="translate(10,-42)"><path d="M0 0 v8" stroke="#3fae5a" stroke-width="1.6"/><circle r="3.6" fill="#ff8ab8"/><circle r="1.4" fill="#ffe27a"/></g>';
   if(t==="fish")return '<path d="M12 -32 L32 -64" stroke="#8a5a30" stroke-width="1.6"/><path d="M32 -64 L38 -8" stroke="rgba(255,255,255,.7)" stroke-width=".7" fill="none"/><circle cx="38" cy="'+(-8+Math.sin(at*2)*1.5)+'" r="2.2" fill="#ff5a4a"/>';
@@ -3489,7 +3490,12 @@ function lfRigState0(a){var ch=a.look&&a.look.rig;if(!ch)return null;
   if(a.mode==="walk"){var cl=a.back?"walkBack":"walk";return {ch:ch,clip:cl,f:QBLoft.walkFrame(a.ph||0,cl)}}
   if(a.mode==="do"&&(a.act==="up"||a.act==="stretch")){if(!a._st0)a._st0=now;var c=QBLoft.clips.stretch;return {ch:ch,clip:"stretch",f:Math.min(c.frames-1,Math.floor((now-a._st0)/1000*c.fps))}}
   a._st0=0;if(a.mode==="do"&&/^(sit|read|eat)$/.test(a.act||"")){var bk=a.st&&a.st.facewall;return {ch:ch,clip:bk?"sitBack":"sit",f:QBLoft.clipFrame(bk?"sitBack":"sit",now)}}
-  if(a.mode==="do"&&a.st&&a.st.fxwall){return {ch:ch,clip:"back",f:QBLoft.clipFrame("back",now)}}return {ch:ch,clip:"idle",f:QBLoft.clipFrame("idle",now)}}
+  if(a.mode==="do"&&a.st&&a.st.fxwall){return {ch:ch,clip:"back",f:QBLoft.clipFrame("back",now)}}
+  /* ROOMS 11-23 (Cal: "the chefs doing a generic cooking animation", "the gardener casually snipping"): hands at work move. The rig
+     has no cooking or snipping pose, so the talking-hands clip carries it, with the held prop (pan, knife, shears, trowel, shaker) */
+  if(a.mode==="do"&&LFBUSY[a.tag||""])return {ch:ch,clip:"chat",f:QBLoft.clipFrame("chat",now)};
+  return {ch:ch,clip:"idle",f:QBLoft.clipFrame("idle",now)}}
+var LFBUSY={cook:1,oven:1,prep:1,snip:1,weed:1,water:1,mix:1,pour:1,wipe:1};
 function lfRigKey(a){var r=lfRigState(a);return r?(r.hide?"h":r.clip+r.f+(r.seat||"")):""}
 function lfCalImg(a,f,img){var r=lfRigState(a);if(!r)return false;if(!a.look.npc)QBLoft.warm(r.ch);img.style.imageRendering="auto";
   if(r.hide){img.setAttribute("href","data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==");return true}

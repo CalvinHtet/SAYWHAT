@@ -51,7 +51,10 @@ var TOURS=[
     {sel:'[data-act="wkplan"]',t:"Pick a plan",x:"Choose what you're training today. It builds the session around it, and you can swap any exercise."}]},
   {id:"hideout",ready:function(){return tourAreaOpen("hideout")&&view==="board"&&tourVis('.nav button[data-v="hideout"]')},steps:[
     {sel:'.nav button[data-v="hideout"]',t:"You unlocked The Loft!",x:"Your own place to build up. Tap here.",tap:1},
-    {sel:"#lfwrap",t:"Your Loft",x:"Tap a room to open it. Each upgrade you buy with coins makes it nicer, and new rooms open as you go."}]},
+    /* Cal 11-23: "make sure the tutorial tells us to tap the loft to see the rooms inside, and then tap the rooms to see the available
+       upgrades inside each individual room" */
+    {sel:'[data-act="bldgo"][data-v="0"]',t:"This is The Loft",x:"Your building. Tap it to see the rooms inside.",tap:1},
+    {sel:"#lfwrap",t:"Your rooms",x:"Tap a room to see the upgrades you can buy for it. Each one makes the room nicer, and some open a new room next door."}]},
   {id:"hall",ready:function(){return tourAreaOpen("hall")&&tourAfter("hideout")&&tourVis('.nav button[data-v="hall"]')&&(view==="board"||view==="hideout")},steps:[
     {sel:'.nav button[data-v="hall"]',t:"You unlocked Town!",x:"See what everyone playing is up to. Tap here.",tap:1},
     {sel:".htab",t:"Posts and Chat",x:"Posts from everyone in town, and a chat to talk. Be nice, it's your friends."}]},

@@ -185,7 +185,7 @@ LFROOM.garden=function(C){
   [["g_let","gd_bed2"],["g_tom","gdx_tomato"],["g_herb","gdx_herb"],["g_berry","gd_berry"]].forEach(function(c){if(!H(c[0]))return;
     var j=beds.indexOf("gdx_seed");if(j<0)j=beds.indexOf("gd_bed1");if(j>=0)beds[j]=c[1];else beds.push(c[1])});
   beds=beds.slice(0,spots.length);
-  beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"reach",[6,12],{tag:"tend"})});
+  beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"work",[6,12],{tag:i%3?"water":"weed",staffOnly:1})})/* ROOMS 11-23: the gardeners water some beds and weed the others (trowel); visitors leave the beds to them */;
   if(H("g_spr"))beds.forEach(function(k,i){var p=spots[i];gdMist(C,st===0&&p[0]>5&&p[1]>7?p[0]-.25:p[0]+3.7,p[1]+.8)});/* QA re-audit: one per bed, not every other. On the Back Plot the front right bed's sprinkler goes on its left side: on the right it sprayed into the produce stand (QA v0.74, rule 20) */
   /* QA audit: a hairline before. A black drip hose along each bed's front with water beads, so it can be seen */
   if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.82,0),lfP(p[0]-.1,p[1]+1.82,0)],"#16191f"));
@@ -212,8 +212,8 @@ LFROOM.garden=function(C){
   if(st>0){var zx=st===2?16.4:11.2;
     if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184,dk:1});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
     else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
-    if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx-.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.1,4.8,1.1,1.1,70,{H:120})}
-    if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx-.6,E?6.8:7.0,3.6,1.0,50,{H:96});
+    if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx-.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.1,4.8,1.1,1.1,70,{H:120});[E?zx-.2:zx-.2,E?zx+1.8:zx+1.1].forEach(function(tx,k){gdSnip(C,tx+(k?1.0:.1),6.2,k?-1:1)})}
+    if(H("g_grape")){gdS(C,"gdx_grape",E?zx-.2:zx-.6,E?6.8:7.0,3.6,1.0,50,{H:96});gdSnip(C,(E?zx-.2:zx-.6)+2.6,(E?6.8:7.0)+1.4,-1)}
     /* QA f210213: the Estate's front-right corner was the most crowded spot; hive and coop take the open lawn left of the fountain */var hx=st===2?8.9:zx,hy=st===2?10.35:8.6;
     if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
@@ -237,13 +237,13 @@ LFROOM.garden=function(C){
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
       if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */if(st===2&&H("g_koi")&&lx>10.9&&lx<15.1)return;/* QA room sweep: nor inside the koi pond */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
-      if(H("g_arch"))open("gdx_arch",W*.7,py-.15,.9,1.55,132);
+      if(H("g_arch")){open("gdx_arch",W*.7,py-.15,.9,1.55,132);gdSnip(C,W*.7-.45,py+.8,1)}
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
       /* Cal: no room may look crowded. In the Estate the fountain is the centrepiece and takes the place of the sundial,
          the birdbath and the topiaries (still owned; they show again only without it) */
       var calm=E&&H("g_fount");
       if(H("g_sun")&&!calm)gdS(C,"gdx_sundial",W*.3-.3,py-.95,.6,.6,30,{H:52});/* clear of the lantern post (QA) */
-      if(H("g_topi")&&!calm)[W*.7-.7,W*.7+1.2].forEach(function(x){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56})});
+      if(H("g_topi")&&!calm)[W*.7-.7,W*.7+1.2].forEach(function(x,k){gdS(C,"gdx_topiary",x,py-.95,.6,.6,34,{H:56});if(k)gdSnip(C,x+.95,py-.45,-1)});
       if(H("g_birdb")&&!calm)gdS(C,"gdx_birdbath",E?10.3:W*.46,py-.95,.6,.6,30,{H:52});
       if(H("g_koi")&&st===2)gdS(C,"gd_koi",11.3,11,3.4,2.0,16,{dk:1});
     }
@@ -255,8 +255,12 @@ function gdFountain(C,cx,cy){gdS(C,"gdx_fount",cx-1.5,cy-1.5,3,3,26,{H:126});var
   s+='<path class="gfw" d="M'+t[0]+' '+t[1]+' V'+(t[1]-30)+'" stroke="rgba(225,245,255,.95)" stroke-width="3.2" stroke-linecap="round"/>';
   [0,1,2].forEach(function(i){s+='<ellipse class="gfr" style="animation-delay:-'+(i*.6)+'s" cx="'+t[0]+'" cy="'+(t[1]+68)+'" rx="30" ry="12" fill="none" stroke="rgba(235,250,255,.8)" stroke-width="1.2"/>'});
   C.add(k,'<g pointer-events="none">'+s+'</g>')}
+/* ROOMS 11-23 (Cal: "the gardener casually snipping the plants and flowers and maintaining the garden"): a spot where a gardener
+   trims with shears (lfProp "snip", hands moving); only the gardeners take it */
+var GDWEAR=["gp_overall","km_straw"];/* the gardeners dress for it: overalls and a straw hat, so they read as staff, not visitors */
+function gdSnip(C,x,y,f){C.s("work",x,y,f,"work",[7,13],{tag:"snip",staffOnly:1})}
 function gdPeople(r,i,C,out){var a=r.a||{};
-  if(a.g_gard)out.push({id:"gd:g1",room:i,role:"crew",look:rsNpc({body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"grey",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black"}),ix:0});
-  if(a.g_gard2)out.push({id:"gd:g2",room:i,role:"crew",look:rsNpc({body:"f",skin:"s3",hairStyle:"h2",hairColor:"auburn",top:"hoodie",topColor:"grey",bottom:"joggers",bottomColor:"black",shoe:"boots",shoeColor:"black"}),ix:1});
+  if(a.g_gard)out.push({id:"gd:g1",room:i,role:"crew",look:rsNpc({body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:GDWEAR}),ix:0});
+  if(a.g_gard2)out.push({id:"gd:g2",room:i,role:"crew",look:rsNpc({body:"f",skin:"s3",hairStyle:"h2",hairColor:"auburn",top:"tee",topColor:"white",bottom:"joggers",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:GDWEAR}),ix:1});
   if(a.g_walk)RSGUESTS.slice(0,3+rsStageGd(a)).forEach(function(g,j){out.push({id:"gd:v"+j,room:i,role:"crew",look:rsNpc(g),ix:2+j,wand:1,idle:1})})}
 function rsStageGd(a){return gdStage(a)}

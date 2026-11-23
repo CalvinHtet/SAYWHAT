@@ -188,6 +188,11 @@ var ZXFIT=null,ZXFITTING=0,ZXAPK="",ZXAPE=null;
 function zxFitB(c){try{var L=window.LFLAY;if(!c||!L||!L.b||!L.b[LFBSEL])return false;var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,n=0,add=function(t){var q=cellRect(t,L);n++;
     x0=Math.min(x0,q.x);y0=Math.min(y0,q.y);x1=Math.max(x1,q.x+LFCELLW);y1=Math.max(y1,q.y+LFFP)};
   S.base.slots.forEach(function(r){if(r&&ROOMCELL[r.t]&&ROOMCELL[r.t][0]===LFBSEL)add(r.t)});
+  /* Cal 11-23: "When the walk in closet is available for purchase, only the bedroom comes into view. It should zoom out a tiny bit so the
+     + icon in the circle shows up": the "+" of a room an upgrade can open now (29o_alerts.js alPlus, drawn at the room's cell, 2.2x) is in
+     the box too; once that room is built its whole cell is, with the next "+", so the view steps out as the Loft grows */
+  try{if(typeof alRooms==="function")alRooms().forEach(function(x){if(x.lot||!ROOMCELL[x.room]||ROOMCELL[x.room][0]!==LFBSEL||hasRoom(x.room))return;var p=cellXY(x.room,L),py=Math.max(LFROOF+60,p.y);n++;
+    x0=Math.min(x0,p.x-340);x1=Math.max(x1,p.x+340);y0=Math.min(y0,py-90);y1=Math.max(y1,py+160)})}catch(e){}/* the circle and its name under it */
   /* an open lot is drawn on the street under its cell (26_world.js: a 140 box at the street line), not in the cell */
   try{var gb=LFROOF+L.rows*LFFP;lotsOpen().forEach(function(k){if(!ROOMCELL[k]||ROOMCELL[k][0]!==LFBSEL)return;var p=cellXY(k,L);n++;
     x0=Math.min(x0,p.x-70);x1=Math.max(x1,p.x+70);y0=Math.min(y0,gb-104);y1=Math.max(y1,gb+36)})}catch(e){}
@@ -295,8 +300,8 @@ var zxRS0=lfRigState0;lfRigState0=function(a){var r=zxRS0.apply(this,arguments);
    A save from before this (S.fsd unset): what it has already done counts as done, without coins, so a long-time player sees only what
    is new to them, or no card at all. S.fsd {id:1} and S.fsall are new save fields; merge() keeps unknown fields. */
 var ZXFS=[
-  {id:"add",t:"Add today's tasks",x:"Type what you need to do, messy is fine, then tap Add.",open:function(){return true},
-    done:function(){return (+S.total||0)>0||(S.quests||[]).some(function(q){return q&&q.rep!=="weekly4"&&!q.bty})},show:[{sel:"#cap",t:"Add today's tasks",x:"Type what you need to do today, messy is fine, then tap Add."}]},
+  {id:"add",t:"Add today's tasks",x:"Type your tasks, separated by commas, then tap Add.",open:function(){return true},
+    done:function(){return (+S.total||0)>0||(S.quests||[]).some(function(q){return q&&q.rep!=="weekly4"&&!q.bty})},show:[{sel:"#cap",t:"Add today's tasks",x:"Type what you need to do today, separated by commas, then tap Add."}]},
   {id:"tick",t:"Finish one and tick it",x:"Did it in real life? Tap it. XP and coins.",open:function(){return true},
     done:function(){return (+S.total||0)>0},show:[{sel:".q .qmain",t:"Tick it off",x:"Done it for real? Tap the quest to tick it. That pays XP and coins."}]},
   {id:"loft",t:"Open The Loft",x:"Your own place, built with your coins.",open:function(){return tourAreaOpen("hideout")},
