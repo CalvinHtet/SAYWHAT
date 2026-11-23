@@ -433,7 +433,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
 - PASS, v1.35 live check (release/v1.35 a7ba8e21 on Live; owner LEAD): Live serves version.txt a7ba8e21 and version.json appv 135;
   its 12 listed files are identical to QA's own web build of a7ba8e21 (the commit QA passed, c4bd127a), and index.html, config.js,
   app.js, web.js, qbdata.js and creator.js are byte-identical; the build carries QB_EPOCH 7, APPV 135 and noTest. Rollback ready:
-  rollback-v1.31 08c7d93e (APPV 136, epoch 7). Branches release/v1.35 and rollback-v1.31 are local only (pushing is Cal's OK).
+  rollback-v1.31 08c7d93e (APPV 136, epoch 7). Branches release/v1.35 and rollback-v1.31 match origin (a7ba8e21, 08c7d93e).
   Not checked by QA (cloud): the rules deploy and the clear of board, pings, worlds, chat, chatnow, likes, kudos, kudosok, duel,
   duelq, photos and photolk (LEAD's second pass found them empty), the Test channel (ship.sh compared it), a real sign-in, a phone.
 - PASS, v1.35 can ship (release/v1.35 a7ba8e21 = release/v1.31 + qa-local 867f9152, APPV 135, QB_EPOCH 7; rollback-v1.31 08c7d93e;
