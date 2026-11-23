@@ -147,6 +147,78 @@
      92.4,
      23.8
     ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 166,
+    "h": 110,
+    "pivot": [
+     46.6,
+     6.9
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "pluto",
+    "frame": 2,
+    "w": 154,
+    "h": 102,
+    "pivot": [
+     35.7,
+     29.2
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "pluto",
+    "frame": 3,
+    "w": 107,
+    "h": 63,
+    "pivot": [
+     45.1,
+     13.3
+    ]
+   }
+  ]
+ },
+ "pd_fleece": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 242,
+    "h": 138,
+    "pivot": [
+     69.7,
+     23.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 195,
+    "h": 143,
+    "pivot": [
+     54.2,
+     61.2
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 228,
+    "h": 146,
+    "pivot": [
+     67.5,
+     38.1
+    ]
    }
   ]
  },

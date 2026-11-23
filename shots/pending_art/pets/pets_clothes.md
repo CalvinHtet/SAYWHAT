@@ -76,7 +76,7 @@ fine here (the magenta-body rule is only for people's clothes).
 | pd_rain | body | Mustard Rain Slicker | A mustard rain slicker with a little hood, toggle buttons and a cream reflective stripe. |
 | pd_cable | body | Cable-Knit Turtleneck | A navy cable-knit sweater with a cream rolled neck and a cherry heart patch on the side. |
 | pd_hearts | aura | Floating Hearts | Small cherry and cream hearts drifting up round the dog, a few with a navy stitched outline like felt patches. |
-| pd_bubbles | aura | Soap Bubbles | A few glossy soap bubbles with a pink and sky-blue sheen (no green) and a white shine, one popping into a tiny splash. |
+| pd_bubbles | aura | Soap Bubbles | A few glossy soap bubbles with a pink and lilac sheen (no green, no sky blue: the dogs key is cyan) and a white shine, one popping into a tiny splash. |
 | pd_treats | aura | Orbiting Treats | Three tiny bone-shaped biscuits circling it, golden-baked with cream icing dots, a few crumbs trailing. |
 
 ## QA review (180defc): PASS with NOTES, applied (TASKS d93c192)

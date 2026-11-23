@@ -51,7 +51,7 @@ P = [
  ("pd_rain", "dogs", "body", "a mustard rain slicker fitted to each dog in each pose with a little hood down on the back, toggle buttons and a cream reflective stripe; it covers the poodle's whole little vest; head, legs and tail free"),
  ("pd_cable", "dogs", "body", "a navy cable-knit sweater fitted to each dog in each pose with a cream rolled neck and a cherry heart patch on the side; it covers the poodle's whole little vest; head, legs and tail free"),
  ("pd_hearts", "dogs", "aura", "about eight small separate cherry and cream hearts drifting round each dog in a wide low oval at mid height, spaced far apart, a few with a navy stitched outline like felt patches; a few behind and a few in front low down, sparse, never across the eyes or face"),
- ("pd_bubbles", "dogs", "aura", "about six separate glossy soap bubbles of different small sizes with a pink and sky-blue sheen and a white shine floating round each dog in a wide low oval at mid height, spaced far apart, one popping into a tiny splash; a few behind and a few in front low down, never across the eyes or face"),
+ ("pd_bubbles", "dogs", "aura", "about six separate glossy soap bubbles of different small sizes with a pink and lilac sheen and a white shine floating round each dog in a wide low oval at mid height, spaced far apart, one popping into a tiny splash; a few behind and a few in front low down, never across the eyes or face"),
  ("pd_treats", "dogs", "aura", "three tiny bone-shaped biscuits, golden-baked with cream icing dots, circling each dog in a wide oval ring at mid height with a few crumbs trailing; one behind, two in front low down, never across the eyes"),
 ]
 
