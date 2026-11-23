@@ -83,6 +83,16 @@
     "id": "h3",
     "label": "Curtains",
     "stylistOnly": true
+   },
+   {
+    "id": "h6",
+    "label": "Combover",
+    "stylistOnly": true
+   },
+   {
+    "id": "h7",
+    "label": "Wolf Cut",
+    "stylistOnly": true
    }
   ],
   "f": [
@@ -101,6 +111,11 @@
    {
     "id": "h4",
     "label": "Wavy"
+   },
+   {
+    "id": "h5",
+    "label": "Wolf Cut",
+    "stylistOnly": true
    }
   ]
  },

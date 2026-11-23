@@ -14,7 +14,10 @@ econSort();
 
 /* ---- the Garden at about 70% of The Loft's upgrades (ECON.loftCore: the Bedroom, Closet, Game Room and Patio; never the Lair or the
    Trophy Room), was 50% ---- */
-ECON.gardenLoft=.7;
+/* the gate that runs is ECON.unlock (29b_story.js line 148 replaces each room's story gate with unlockMet); gardenLoft is set to match */
+ECON.gardenLoft=.7;if(ECON.unlock&&ECON.unlock.garden)ECON.unlock.garden.loft=.7;
+/* and the Walk-in Closet's own gate: 15% of the Bedroom's upgrades, was 30% */
+if(ECON.unlock&&ECON.unlock.closet)ECON.unlock.closet.pct=.15;
 (function(){var g=STORY.filter(function(s){return s.id==="garden"})[0];if(!g)return;g.why="Fill most of The Loft and you might pick up a new hobby.";
   if(g.scene&&g.scene.lines)g.scene.lines[0]="Most of the Loft done, and the place finally feels like home. You decided to pick up a new hobby: gardening."})();
 
