@@ -45,7 +45,10 @@ def main():
         name = "%s_%shi_%s" % (b, s, v)
         Image.fromarray((out * 255 + .5).astype(np.uint8)).save(os.path.join(ROOT, "art", "layers", name + ".png"))
         Image.fromarray((out * 255 + .5).astype(np.uint8)).save(os.path.join(lay_tmp, name + ".png"))
-        print(name, "streak px", int((a > .5).sum()), "of hair", int((hair[..., 3] > .5).sum()))
+        raw = cyan > .5
+        inside = (raw & (hair[..., 3] > .5)).sum() / max(1, raw.sum())
+        print(name, "streak px", int((a > .5).sum()), "of hair", int((hair[..., 3] > .5).sum()), "cyan inside hair %.1f%%" % (100 * inside),
+              "" if inside > .97 else "  <-- LOW: the repaint moved; check before use")
     subprocess.check_call([sys.executable, os.path.join(HERE, "pack.py"), lay_tmp, os.path.join(ROOT, "art", "app")])
 
 
