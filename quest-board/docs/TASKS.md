@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
+- Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
+  Was: Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
   Was: Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
   Was: Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
   Was: Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
@@ -417,6 +418,14 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS, BLOCKER, v1.31 re-cut release/v1.31 915ed0ac (no reset of everyone, QB_EPOCH 6; Cal 11-23 "just keep everyone's
+  profile"; owner LEAD, Cal's call on the fix; shots/qa/v131b/). Economy Part 2's level curve (1252dc4, curve 6) was passed for a reset
+  to level 1; without the reset every save keeps its XP and its level is recomputed on the new curve, about half:
+  500 XP L7 -> L4, 1,000 L10 -> L6, 2,500 L20 -> L10, 5,000 L30 -> L15, 10,000 L42 -> L24, 20,000 L55 -> L36 (curve.js, c1cff491 vs
+  915ed0ac). A level-30 v1.30 save opened on v1.31 on the same origin and profile (carry.js): level 15, same 5,032 XP, coins kept, and
+  the milestones count from 15, so 20, 25 and 30 come round again as it re-levels, with their level pay and level-up windows. XP is
+  never changed, so a rollback (APPV 132) gives the levels back exactly. Fix (Cal): keep the old curve in this release, or move each
+  save's XP once so its level stays the same. QA has not passed this build; it went to ship.sh before QA saw it.
 - PASS, ship.sh 293aa754 (owner LEAD): the expected QB_EPOCH is a third argument, passed to QA's wlive.js from the checkout; nothing read from the build; missing it stops at the usage line; bash -n clean. v1.31: ship.sh 42680d81 131 7.
 - PASS, v1.31 can ship, with one step for the ship (release/v1.31 42680d81, rollback-v0.80 c4ee2449; owner LEAD; shots/qa/v131/).
   - The cut: over 05eac907 (QA PASS da290bb5) the only shipped changes are APPV 100 to 131 (30_app_b.js) and QB_EPOCH 6 to 7
