@@ -312,7 +312,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
+- Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
+  Was: Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
   Was: Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
   Was: Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
   Was: Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
@@ -433,6 +434,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.39 can ship (release/v1.39 297b2192 = release/v1.37 + qa-local e44186fa, APPV 139, QB_EPOCH 8, no reset; rollback-v1.37
+  d80690fc, APPV 140; owner LEAD; shots/qa/v139/). Ship: ship.sh release/v1.39 139 8.
+  - The cut: over e44186fa only APPV and QB_EPOCH (the rules file as on every release branch; the deploy is hosting only). Over
+    f3d8c5e8 (all seven of LEAD's tests passed there, cloud blocked): the tutorial quest at ~1 min, coin counts redrawn after a greeting
+    pays, no dirty plates or held seats (Cal: "Don't need to wait for the table to be cleared"), butterflies at hen size off the coop.
+  - On 297b2192, every non-local request blocked: tutquest ("~1 min"), v136 (one Edit window), reboot, hall3, tourcard PASS; two players
+    on the web build with the stand-in (hall2p.js): a wave pays Ann 3 (her coin count shows 53 at once) and Bo 3 once, Room 3 reaches the
+    other player and not Room 1; Restaurant and Garden live 120 s each: nobody in a footprint, 0 page errors; wlive.js 139/8 PASS.
+  - From f3d8c5e8, seen by eye: the guided Training screen without the coin badge over its buttons; renamed exercises with an emoji; the
+    tutorial's second step ringing "Finish the tutorial" with Cal's wording; the Welcome letter only in the inbox (tutquest).
+  - Not checked: a real phone, real accounts, the photo upload from a real camera roll (the test sets a picture).
 - PASS, v1.37 live check (release/v1.37 c3584739 on Live, shipped on Cal's word before QA's pass; owner LEAD; shots/qa/v137/):
   Live serves c3584739, appv 137; its 12 listed files match QA's own web build of c3584739, six main files byte-identical; QB_EPOCH 8,
   noTest; branches on origin. On the cut QA was checking (0d34367e, the same but the letter text): LEAD's reboot, v136, loftplus,
