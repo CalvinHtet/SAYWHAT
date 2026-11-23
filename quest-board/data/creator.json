@@ -63,12 +63,36 @@
     "label": "Tousled"
    },
    {
+    "id": "h4",
+    "label": "Buzz Cut"
+   },
+   {
+    "id": "fr_victor_hair",
+    "label": "Long"
+   },
+   {
+    "id": "h5",
+    "label": "Man Bun"
+   },
+   {
     "id": "h2",
-    "label": "Crop"
+    "label": "Crop",
+    "stylistOnly": true
    },
    {
     "id": "h3",
-    "label": "Curtains"
+    "label": "Curtains",
+    "stylistOnly": true
+   },
+   {
+    "id": "h6",
+    "label": "Combover",
+    "stylistOnly": true
+   },
+   {
+    "id": "h7",
+    "label": "Wolf Cut",
+    "stylistOnly": true
    }
   ],
   "f": [
@@ -83,6 +107,15 @@
    {
     "id": "h3",
     "label": "Ponytail"
+   },
+   {
+    "id": "h4",
+    "label": "Wavy"
+   },
+   {
+    "id": "h5",
+    "label": "Wolf Cut",
+    "stylistOnly": true
    }
   ]
  },
@@ -166,6 +199,132 @@
     0.42,
     0.26
    ]
+  },
+  {
+   "id": "white",
+   "label": "White",
+   "swatch": "#eeeef2",
+   "a": [
+    0.55,
+    0.55,
+    0.6
+   ],
+   "b": [
+    0.82,
+    0.82,
+    0.86
+   ],
+   "c": [
+    0.98,
+    0.98,
+    1.0
+   ],
+   "stylistOnly": true
+  },
+  {
+   "id": "silver",
+   "label": "Silver",
+   "swatch": "#a9aebb",
+   "a": [
+    0.28,
+    0.29,
+    0.33
+   ],
+   "b": [
+    0.58,
+    0.6,
+    0.66
+   ],
+   "c": [
+    0.86,
+    0.88,
+    0.93
+   ],
+   "stylistOnly": true
+  },
+  {
+   "id": "purple",
+   "label": "Purple",
+   "swatch": "#7b3fc4",
+   "a": [
+    0.17,
+    0.07,
+    0.3
+   ],
+   "b": [
+    0.42,
+    0.2,
+    0.68
+   ],
+   "c": [
+    0.75,
+    0.55,
+    0.95
+   ],
+   "stylistOnly": true
+  },
+  {
+   "id": "pink",
+   "label": "Pink",
+   "swatch": "#ef7fb3",
+   "a": [
+    0.42,
+    0.12,
+    0.25
+   ],
+   "b": [
+    0.85,
+    0.42,
+    0.62
+   ],
+   "c": [
+    1.0,
+    0.78,
+    0.88
+   ],
+   "stylistOnly": true
+  },
+  {
+   "id": "blue",
+   "label": "Blue",
+   "swatch": "#3d6fd6",
+   "a": [
+    0.06,
+    0.12,
+    0.32
+   ],
+   "b": [
+    0.2,
+    0.38,
+    0.78
+   ],
+   "c": [
+    0.6,
+    0.76,
+    1.0
+   ],
+   "stylistOnly": true
+  },
+  {
+   "id": "red",
+   "label": "Red",
+   "swatch": "#c42a2a",
+   "a": [
+    0.3,
+    0.03,
+    0.04
+   ],
+   "b": [
+    0.7,
+    0.12,
+    0.12
+   ],
+   "c": [
+    0.98,
+    0.5,
+    0.45
+   ],
+   "stylistOnly": true
   }
  ],
  "eyeColors": [

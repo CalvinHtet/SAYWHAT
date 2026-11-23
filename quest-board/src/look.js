@@ -31,6 +31,10 @@
     // arm) so a sleeve never shows through it (QA's idle notch). Only styles that have the cut file get it; the same pixels are
     // still in the main hair, so without the file nothing is missing.
     const lockArt = `${b}_${c.hairStyle}front_front.webp`, G = global.QBDATA, QA = global.QBART;
+    // Highlights (Cal 11-23: "allow for highlights in the hair as well"): choice.hairHi, a hair colour id, tints <b>_<style>hi_*, a layer of
+    // streaks painted for each style (ROOMS), drawn over the hair (rig slot hairHi). A style without that layer shows no highlights.
+    const hiArt = `${b}_${c.hairStyle}hi_front.webp`;
+    if (c.hairHi && ((QA && QA[hiArt]) || (G && G.arthash && G.arthash[hiArt]))) layers.hairHi = { ...views(b, c.hairStyle + "hi"), tint: ramp(find(data.hairColors, c.hairHi)) };
     if ((QA && QA[lockArt]) || (G && G.arthash && G.arthash[lockArt])) layers.hairFront = { front: lockArt, tint: layers.hair.tint };
     for (const [slot, item] of Object.entries(c.equipped || {})) {
       const set = item.frontOnly ? frontOnly(b, item.art) : views(b, item.art);
@@ -41,7 +45,7 @@
       } else {
         layers[slot] = set;
       }
-      if (slot === "hat" && item.clip && item.clip[b]) { layers.hair.clip = item.clip[b]; if (layers.hairFront) layers.hairFront.clip = item.clip[b]; }
+      if (slot === "hat" && item.clip && item.clip[b]) { layers.hair.clip = item.clip[b]; if (layers.hairFront) layers.hairFront.clip = item.clip[b]; if (layers.hairHi) layers.hairHi.clip = item.clip[b]; }
       if (item.lift && item.lift[b]) layers[slot].lift = item.lift[b];
       // A long skirt moves as one piece (rig.js bindLayer). The flag lives in data/items.json; read it there too, so every
       // place that equips an item gets it without copying one more field.
@@ -83,6 +87,17 @@
     if (has("basearms") && has(torsoName)) {
       layers.body = { ...views(b, torsoName), paintBase: `${b}_${baseName}_front.webp`, full: views(b, baseName) };
       layers.skinArms = { ...views(b, "basearms"), painted: "hide" };
+    }
+    // The Stylist's eye shapes and mouths (Cal 11-18: "new hairstyles, eye shapes, mouth"; the layer format agreed with ROOMS):
+    // choice.eyeShape (default e0) and choice.mouth (default m0) draw <b>_eyes_<id> (brows and eyes), <b>_eyes_<id>c (eyes closed, for
+    // blinks, sleep and laughs), <b>_iris_<id> (the tinted eye colour mask) and <b>_mouth_<id> (mouth and the nose dot; rig slot
+    // "mouth", under the face). Only when all of them exist; otherwise today's single painted face (which has the mouth in it).
+    const eid = c.eyeShape || "e0", mid = c.mouth || "m0";
+    if (has(`eyes_${eid}`) && has(`eyes_${eid}c`) && has(`mouth_${mid}`)) {
+      layers.face = frontOnly(b, `eyes_${eid}`);
+      layers.faceClosed = frontOnly(b, `eyes_${eid}c`);
+      layers.iris = { ...frontOnly(b, has(`iris_${eid}`) ? `iris_${eid}` : "iris"), tint: layers.iris.tint };
+      layers.mouth = frontOnly(b, `mouth_${mid}`);
     }
     const lift = pick && /_heel$/.test(pick) ? heelLift : 0;
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.

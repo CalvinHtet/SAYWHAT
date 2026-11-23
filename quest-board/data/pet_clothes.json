@@ -83,6 +83,56 @@
    }
   ]
  },
+ "pd_bubbles": {
+  "kind": "aura",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 407,
+    "pivot": [
+     390.1,
+     60.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 407,
+    "pivot": [
+     390.1,
+     60.7
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 678,
+    "h": 393,
+    "pivot": [
+     343.5,
+     67.7
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 678,
+    "h": 393,
+    "pivot": [
+     343.5,
+     67.7
+    ]
+   }
+  ]
+ },
  "pd_bucket": {
   "kind": "head",
   "pet": "dogs",
@@ -107,6 +157,200 @@
     "pivot": [
      123.7,
      42.3
+    ]
+   }
+  ]
+ },
+ "pd_cable": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 219,
+    "h": 123,
+    "pivot": [
+     51.2,
+     12.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 178,
+    "h": 137,
+    "pivot": [
+     40.9,
+     54.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 269,
+    "h": 125,
+    "pivot": [
+     92.4,
+     23.8
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 166,
+    "h": 110,
+    "pivot": [
+     46.6,
+     6.9
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "pluto",
+    "frame": 2,
+    "w": 154,
+    "h": 102,
+    "pivot": [
+     35.7,
+     29.2
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "pluto",
+    "frame": 3,
+    "w": 107,
+    "h": 63,
+    "pivot": [
+     45.1,
+     13.3
+    ]
+   }
+  ]
+ },
+ "pd_fleece": {
+  "kind": "body",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 242,
+    "h": 138,
+    "pivot": [
+     69.7,
+     23.6
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 2,
+    "w": 195,
+    "h": 143,
+    "pivot": [
+     54.2,
+     61.2
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "chopstick",
+    "frame": 3,
+    "w": 228,
+    "h": 146,
+    "pivot": [
+     67.5,
+     38.1
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 173,
+    "h": 112,
+    "pivot": [
+     51.0,
+     8.5
+    ]
+   },
+   {
+    "cell": 4,
+    "pet": "pluto",
+    "frame": 2,
+    "w": 161,
+    "h": 102,
+    "pivot": [
+     39.2,
+     28.0
+    ]
+   },
+   {
+    "cell": 5,
+    "pet": "pluto",
+    "frame": 3,
+    "w": 117,
+    "h": 76,
+    "pivot": [
+     37.2,
+     25.3
+    ]
+   }
+  ]
+ },
+ "pd_hearts": {
+  "kind": "aura",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 325,
+    "pivot": [
+     392.6,
+     79.2
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 325,
+    "pivot": [
+     392.6,
+     79.2
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 725,
+    "h": 309,
+    "pivot": [
+     369.5,
+     70.3
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 725,
+    "h": 309,
+    "pivot": [
+     369.5,
+     70.3
     ]
    }
   ]
@@ -235,6 +479,56 @@
     "pivot": [
      63.0,
      9.6
+    ]
+   }
+  ]
+ },
+ "pd_treats": {
+  "kind": "aura",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 731,
+    "h": 316,
+    "pivot": [
+     379.2,
+     34.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 731,
+    "h": 316,
+    "pivot": [
+     379.2,
+     34.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 684,
+    "h": 315,
+    "pivot": [
+     348.5,
+     43.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 684,
+    "h": 315,
+    "pivot": [
+     348.5,
+     43.5
     ]
    }
   ]

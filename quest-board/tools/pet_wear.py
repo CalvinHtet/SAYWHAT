@@ -5,6 +5,7 @@
   pet_wear.py cut <sheet.png> <piece id> <kind> [--append]  (--append adds cells after the existing ones) kind: head | neck | body | base | aura (base: the slime's base band pieces,
                                                          cells by the body fit, placed on the neck anchor)
   pet_wear.py check <piece id> <out.png>                 the piece worn on every frame, as the game places it
+  pet_wear.py aurashrink <piece id> <es> <ps>            an aura painted too big: elements to es of their size, ps of their distance
   pet_wear.py headaura <piece id>                        an aura placed on the head anchor (mass centre where the head is null)
 
 A template is a 2048 x 2048 flat green sheet with the given frames of the pet (pgx_<pet>_<f>, or the dogs' dgx_<dog>_<f> when
@@ -291,9 +292,44 @@ def headaura(pid):
     print(pid, "head-anchored", [c["pivot"] for c in e["cells"]])
 
 
+def aurashrink(pid, es, ps):
+    """an aura painted too big: every element (a heart, a bubble) shrinks to es round its own centre and moves to ps of its
+    distance from the pivot, so the ring tightens without redrawing anything. Back and front cells (pairs 0-1, 2-3, ...) are
+    worked together, so an element cut by the back/front line keeps its two halves joined. Rewrites in place, same pivot."""
+    p = os.path.join(ROOT, "data", "pet_clothes.json")
+    d = json.load(open(p))
+    e = d[pid]
+    assert e["kind"] == "aura"
+    cells = e["cells"]
+    for k in range(0, len(cells), 2):
+        pair = cells[k:k + 2]
+        paths = [os.path.join(APP, "ppc_%s_%d.webp" % (pid, c["cell"])) for c in pair]
+        arrs = [np.asarray(Image.open(q).convert("RGBA")) for q in paths]
+        H, W = arrs[0].shape[:2]
+        px, py = pair[0]["pivot"]
+        union = np.zeros((H, W), bool)
+        for a in arrs:
+            union |= a[..., 3] > 0
+        lab, n = ndi.label(ndi.binary_dilation(union, iterations=2))
+        outs = [Image.new("RGBA", (W, H)) for _ in arrs]
+        for j, sl in enumerate(ndi.find_objects(lab)):
+            m = (lab[sl] == j + 1)[..., None]
+            cy, cx = (sl[0].start + sl[0].stop) / 2, (sl[1].start + sl[1].stop) / 2
+            w = max(1, round((sl[1].stop - sl[1].start) * es))
+            h = max(1, round((sl[0].stop - sl[0].start) * es))
+            nx, ny = px + (cx - px) * ps, py + (cy - py) * ps
+            for a, o in zip(arrs, outs):
+                im = Image.fromarray((a[sl] * m).astype(np.uint8)).resize((w, h), Image.LANCZOS)
+                o.alpha_composite(im, (int(round(nx - w / 2)), int(round(ny - h / 2))))
+        for o, q in zip(outs, paths):
+            o.save(q, quality=90, method=6)
+    print(pid, "shrunk", es, ps)
+
 if __name__ == "__main__":
     if sys.argv[1] == "template":
         template(sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]) if len(sys.argv) > 5 else 1.0)
+    elif sys.argv[1] == "aurashrink":
+        aurashrink(sys.argv[2], float(sys.argv[3]), float(sys.argv[4]))
     elif sys.argv[1] == "headaura":
         headaura(sys.argv[2])
     elif sys.argv[1] == "check":

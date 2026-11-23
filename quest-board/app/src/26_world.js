@@ -422,7 +422,7 @@ LFROOM.restaurant=function(C){
   if(H("r_l1"))(st===0?[6.1,7.3]:st===1?[3.2,7.0]:[3.2,7.0,10.4]).forEach(function(y){lfSpr(C,"rdx_sconce",.05,y,.9,.05,{h:1,dy:-62,nosh:1,nob:1});lfLight(C,.7,y,70,"#ffc968",2,.35)});
   else if(st===0&&!H("r_l2")){rsS(C,"rsx_bulb",3.8,4.4,.2,.2,1,{H:96,dy:-84,nosh:1,dk:-6,nob:1});lfLight(C,3.8,4.4,60,"#ffe2a8",2.2,.28)}
   /* a few things in the corners, with air around them */
-  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with the Menu Boards, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
+  /* QA f210213: r_d1 is cut (v1.10), so the mop also goes with r_d3, a kept early decor buy */if(!H("r_d1")&&!H("r_d3"))rsS(C,"rsx_mop",.25,D-1.4,.9,.9,24);
   /* superseded: once the Sculptural Vases stand at the front, the potted tree goes (one piece there, not two) */
   if(H("r_d1")&&!(H("r_d8")&&st>1))lfSpr(C,"rdx_olive",crescent&&H("r_b1")?14.4:.3,D-1.3,1,1,{h:40,ctr:1});/* the booths fill the left wall then */
   /* QA audit (WEAK): Sculptural Vases drew the olive tree; it has its own art now, black ceramic and dry branches */
@@ -434,7 +434,7 @@ LFROOM.restaurant=function(C){
   /* QA: against the back wall by the bar stools, not free in the walkway beside the door mat */
   if(H("r_cool")&&st>0&&!H("r_d5"))/* superseded by the Backlit Wine Wall in every style, not only Noir */lfSpr(C,"rsx_cooler",Wi-2.95,.2,.75,.7,{h:50,ctr:1});
   /* QA: beside the door mat, not in front of it */
-  var hy=Math.max(2.2,D*.5-.2)+1.7;if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",Wi-1.0,hy,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",Wi-1.0,hy,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",Wi-1.0,hy,.8,.8,30,{});
+  var hy=Math.max(2.2,D*.5-.2)+1.7,hx=Wi-(patio&&st===1?1.3:1.0);if(H("r_hd2")&&noir)lfSpr(C,"rdx_host",hx,hy,.9,.7,{h:30,ctr:1});else if(H("r_hd2"))lfSpr(C,"rs_host",hx,hy,.8,.8,{h:30,ctr:1,H:64});else if(H("r_hd1"))rsS(C,"rsx_lectern",hx,hy,.8,.8,30,{});
   if(H("r_sign")&&!patio)rsS(C,"rsx_aframe",Wi-.9,D*.5+.9,.7,.5,24);
   /* Cal (playtest): "Sidewalk sign doesn't really change anything". It also hangs a neon OPEN in the first window, bright after
      dark and soft by day (not in Noir's fine dining) */
@@ -445,11 +445,11 @@ LFROOM.restaurant=function(C){
     pl+=lfPoly([lfP(px,kd,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,kd,0)],"#6d4c2e","none");C.decals.push(pl);
     if(H("r_sign"))rsS(C,"rsx_aframe",px+3.6,D-.75,.7,.5,24,{dk:-.5});/* in the gap between the fire pit and the table */
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,kd+.4,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",Wt-1.1,kd+.3,.9,.9,50)}
-    if(H("r_p1"))[[px+2.2,kd+2.4],[px+5.6,kd+2.4]].forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
+    if(H("r_p1"))(st===2?[[px+2.2,kd+2.4],[px+5.6,kd+2.4]]:[[px+3.5,kd+2.6]])/* QA db6a2a6b: +0.9 (ROOMS), the fire-pit chair ran into it */.forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
     /* Cal: no room crowded. The front of the deck holds two pieces with air between them: the fire pit on the left and, on
        the right, the umbrella table, which moves under the pergola as a plain table once the pergola is up */
-    if(H("r_p2")&&!H("r_p5"))[[px+6.0,D-2.0]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
-    if(H("r_p2")&&H("r_p5"))rsTable(C,"iron",px+6.45,D-2.75,"P");
+    if(H("r_p2")&&!(H("r_p5")&&st===2))[[px+(st===1?6.6:6.0),D-(st===1?2.6:2.0)]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
+    if(H("r_p2")&&H("r_p5")&&st===2)rsTable(C,"iron",px+6.45,D-2.75,"P");
     /* a low rail between the deck and the dining room, open at the front door */
     var dy0=Math.max(2.2,D*.5-.2)-.3,dy1=dy0+2.0;rsWallRun(C,px-.07,kd,.14,dy0-kd,18,"#6d4c2e","#9a6e45");rsWallRun(C,px-.07,dy1,.14,D-dy1,18,"#6d4c2e","#9a6e45");
     /* QA: out on the deck between the two bistro sets, not across the kitchen half wall */
@@ -457,9 +457,9 @@ LFROOM.restaurant=function(C){
     /* QA (Cal's use check): the smoker faced a bistro chair; it stands in the corner by the olive tree */
     if(H("r_p6"))rsS(C,"rsx_bbq",Wt-3.0,kd+.25,1.7,1.0,28,{flip:1});
     /* QA: a little wider and centred on its table, so the posts stand clear of the chairs */
-    /* QA sweep 11-17: centred on the table its roof hid the table top (two chairs facing nothing); it stands a step back, so the table sits under its front edge and shows */if(H("r_p5")){rsS(C,"rsx_pergola",px+4.85,D-3.6,2.85,2.85,90,{dk:-4});lfLight(C,px+6.3,D-2.15,90,"#ffd890",3,.5)}
+    /* QA sweep 11-17: centred on the table its roof hid the table top (two chairs facing nothing); it stands a step back, so the table sits under its front edge and shows */if(H("r_p5")&&st===2){rsS(C,"rsx_pergola",px+4.85,D-3.6,2.85,2.85,90,{dk:-4});lfLight(C,px+6.3,D-2.15,90,"#ffd890",3,.5)}
     /* Cal: a real fire pit, not a second curved booth: a stone fire bowl with Adirondack chairs round it (rsx_firepit2) */
-    if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+.6,D-3.1,2.8,2.8,24,{});lfLight(C,px+2.0,D-1.7,50,"#ff9a3a",2.4,.55)/* clear of the deck rail (QA) */}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
+    if(H("r_p7")){if(LFSPR.rsx_firepit2){rsS(C,"rsx_firepit2",px+(st===1?.9:.6),D-3.1,2.8,2.8,24,{});lfLight(C,px+(st===1?2.3:2.0),D-1.7,50,"#ff9a3a",2.4,.55)/* clear of the deck rail (QA) */}else rsS(C,"rsx_firepit",px+.4,D-3.0,2.5,2.5,24,{})}
   }
 };
 (function(){RS_UPS.forEach(function(u){var n={r_t1:["Walnut Dining Tables","Long walnut tables for four, plates set, velvet chairs."],r_t2:["Marble Round Tables","Round marble tops, brass pedestals, flowers on every table."],r_t3:["White Linen Service","Square linen tables, crystal and candles. Tips go up."],r_b1:["Leather Booths","Real high-backed booths down the window wall. Guests sit inside them."],r_more2:["Curved Corner Booth","A big crescent banquette around a marble table. The best seat in the house."],r_more1:["Second Row of Tables","Two more tables means two more parties at once."],r_l2:["Brass Chandeliers","Sculptural brass over the room."],r_d7:["Oil Painting","One big piece on the wall, deep red and gold."],r_d8:["Olive Tree","A real tree in the corner of the dining room."],r_d3:["Walnut Dividers","Slatted screens give the booths some privacy."],r_d6:["Dessert Trolley","Cakes under glass come right to the table."],r_l1:["Brass Sconces","Warm light along the window wall."],r_d5:["Glass Wine Wall","Bottles lit from inside, right where guests can see them."],r_k7:["Wood-Fired Oven","A brick dome in the kitchen with a real fire."]}[u[0]];if(n){u[1]=n[0];u[4]=n[1]}});var drop={r_b2:1,r_bar:0,r_more2:0};RS_UPS=RS_UPS.filter(function(u){return !drop[u[0]]});

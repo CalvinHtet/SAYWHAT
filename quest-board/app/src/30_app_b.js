@@ -897,7 +897,7 @@ async function socLoad(){
   if(!socOn()||SOC.busy)return;SOC.busy=1;
   try{
     var ws=await db.collection("worlds").limit(60).get();
-    SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name});
+    SOC.worlds=(ws.docs||[]).map(function(d){return Object.assign({},d.data(),{id:d.id})}).filter(function(x){return x&&x.id!==MYUID&&x.name&&(x.ep==null?6:+x.ep)>=QB_EPOCH});/* a player from before a reset (QB_EPOCH) shows again once they play on the new one (29zz_v132.js stamps ep) */
     SOC.worlds.sort(function(a,b){return (b.t||0)-(a.t||0)});
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
     var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
@@ -1140,7 +1140,8 @@ function mults(q,o){
   o=o||{};var m=1,cm=1,tags=[],now=Date.now(),ri=rankIdx();
   /* Cal, 2026-11-09: photos are a pure bonus. With no photo a quest pays its listed XP; a verified photo pays at least double
      the no-photo XP and coins on every quest (2.1x with the verify perk). vb is applied last, in payXp, after rounding. */
-  var vb=o.verified?(hasSpecial("verify")?2.1:2):1;if(vb>1)tags.push("Verified x"+vb);
+  /* Cal, 2026-11-23: a verified photo pays 1.5x (was 2x; the economy ran too fast), 1.6x with the verify perk (PROOFX, 29zzz_econ.js) */
+  var vb=o.verified?((typeof PROOFX!=="undefined"?PROOFX:2)+(hasSpecial("verify")?.1:0)):1;if(vb>1)tags.push("Verified x"+vb);
   var sm=1+Math.min(streakCap(),.02*streakNow());if(sm>1){m*=sm;tags.push("Streak x"+sm.toFixed(2))}
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
@@ -1157,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=130, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=133, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1577,7 +1578,7 @@ function creditStreak(){
   if(CHESTS[S.streak]&&!S.chests[S.streak]){S.skUndo.chest=S.streak;S.chests[S.streak]=true;S.xp+=CHESTS[S.streak];var cc=Math.round(CHESTS[S.streak]*5);S.coins+=cc;S.earnedC+=cc;out.push("Streak chest: +"+CHESTS[S.streak]+" XP and "+cc+" coins")}
   if(S.streak%ECON.freezeEvery===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
   var wq=wqState();wq.n++;S.skUndo.wq=1;
-  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=wn*6;/* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
+  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=econScaled((typeof ECON!=="undefined"&&ECON.wqCoins)||3000,50);/* Cal 11-23: coins no longer follow the level's XP (the steeper curve would triple them); a set sum, scaled as the other rewards (29zzz_econ.js) *//* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
   return out.join(" | ")||("Streak: day "+S.streak);
 }
 function uncreditStreak(){

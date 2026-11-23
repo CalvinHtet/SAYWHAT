@@ -40,11 +40,13 @@ ADDONS.bedroom.push(["bd_game","Knock Into the Game Room",1500,{lv:18,opens:"gam
 /* Cal, 2026-11-09: "I want the game room expansion to be available only after the walk in closet is built. Not right away."
    It needs the Walk-in Closet (bd_ward2) and stays hidden until then (RSTCH: no "Needs ..." teaser card) */
 ADDREQ.bd_game="bd_ward2";window.RSTCH=window.RSTCH||{};window.RSTCH.bd_game=1;
-ADDONS.bedroom.push(["bd_dbed1","Dog Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);
-ADDONS.bedroom.push(["bd_pluto","Adopt Pluto",400,{fp:1,g:"Dogs"},"A toy poodle with opinions."]);
-ADDONS.bedroom.push(["bd_dbed2","Second Dog Bed",200,{fp:1,g:"Dogs"},"So nobody has to share."]);
-ADDONS.bedroom.push(["bd_chop","Adopt Chopstick",400,{fp:1,g:"Dogs"},"A chihuahua dachshund mix. Very fast, very long."]);
-Object.assign(ADDREQ,{bd_pluto:"bd_dbed1",bd_dbed2:"bd_pluto",bd_chop:"bd_dbed2"});
+/* Cal 11-23: "Adopt pluto (add description that this is Calvin's dog). Adopt Chopstick (add description that this is Sydney's dog).
+   Then purchase dog beds for the dogs." Until their beds come, the dogs nap on the floor where the beds go. */
+ADDONS.bedroom.push(["bd_pluto","Adopt Pluto",400,{fp:1,g:"Dogs"},"Calvin's dog. A toy poodle with opinions."]);
+ADDONS.bedroom.push(["bd_chop","Adopt Chopstick",400,{fp:1,g:"Dogs"},"Sydney's dog. A chihuahua dachshund mix. Very fast, very long."]);
+ADDONS.bedroom.push(["bd_dbed1","Pluto's Bed",200,{fp:1,g:"Dogs"},"A soft round bed by the window."]);
+ADDONS.bedroom.push(["bd_dbed2","Chopstick's Bed",200,{fp:1,g:"Dogs"},"So nobody has to share."]);
+Object.assign(ADDREQ,{bd_chop:"bd_pluto",bd_dbed1:"bd_chop",bd_dbed2:"bd_dbed1"});
 /* Painted walls (Cal approved the four tiers 2026-11-05). Tier 1 is the bare start; each tier is a painting of the walls
    and floor, in each Room style's colours (tools/shell_styles.py): art/app/bdw_t<tier>[_<style>].webp. */
 ADDONS.bedroom.push(["bd_wt2","Fresh Paint & Oak Floors",120,{g:"Walls"},"Two soft paint colours, crown moulding and warm oak planks."]);
