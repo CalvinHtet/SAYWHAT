@@ -134,7 +134,8 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
       // &styles=h4,h5 &bodies=m: other hairstyles (ROOMS 11-23); default the original three on both bodies
       const HS = (q.get("styles") || "h1,h2,h3").split(","), HB = (q.get("bodies") || "m,f").split(",");
       for (const c of D.creator.hairColors) for (const body of HB) for (const hair of HS) for (const clip of ["idle", "back"])
-        cells.push({ label: `${hair} ${c.id} ${body}`, body, opts: { hairStyle: hair, hairColor: c.id }, arts: [], clip, crop: HEAD });
+        cells.push({ label: `${hair} ${c.id} ${body}`, body, opts: { hairStyle: hair, hairColor: c.id, hairHi: q.get("hi") || undefined }, arts: [], clip, crop: HEAD });
+      // &hi=<hair colour id>: highlights in that colour over every cell (needs <b>_<style>hi_* and artnames.json, or &allart=1)
     }
     if (q.get("cw")) cw = +q.get("cw");
     if (q.get("ch")) ch = +q.get("ch");
