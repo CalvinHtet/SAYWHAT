@@ -61,7 +61,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 
 /* ---- official notices on the Town board: pinned at the top of Posts, 500 coins each, once per player ---- */
 var NOTICES=[
-  {id:"n131",d:"2026-11-23",title:"The latest version is live",text:"A new version of the game is live. It is still a work in progress, so expect changes as we go. I hope this becomes a way for all of us to be productive, through accountability and a little competition. Have fun, and get after it."}];
+  {id:"n131",d:"2026-11-23",title:"Version 1.31 is live",text:"The testing phase is over and version 1.31 is live for everyone. The game will keep growing, so expect new things as we go. I hope this becomes a way for all of us to be productive, through accountability and a little competition. Have fun, and get after it."}];
 var NOTICECOINS=500;
 function ntPaid(){if(!S.notices||typeof S.notices!=="object")S.notices={};return S.notices}
 function ntHtml(){var P=ntPaid();return NOTICES.slice().reverse().map(function(n){var got=!!P[n.id];

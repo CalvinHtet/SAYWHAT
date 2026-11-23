@@ -39,9 +39,13 @@ var EARNK=.77;
 (function(){var E=ECON;E.coinXp=Math.round(6*EARNK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);
   E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
   E.goal={half:[100,150],full:[300,400],story:[75,100]};
-  /* curve 6, take two (Cal 11-23, after v1.31's first ship halved every level: "Slightly slower curve. Just slightly"): curve 5's shape,
-     every level 25% longer (level 30 at 6,225 XP, was 4,931; the first try's 14,276). Saves move over at the same level (xpc6 below). */
-  E.lvFirst=25;E.lvRamp=6;E.lvFlat=170;E.lvK=.4;E.lvP=2;E.lvTop=.25;E.lvTopFrom=40;
+  /* curve 6, take three (Cal 11-23: "use the new slower level curve. But make it a bit faster. meet in the middle. Later levels should be
+     harder to level, but still obtainable. The first few days can ramp up faster, but late game would take a heavy day for 1 level"):
+     levels 1-6 as fast as curve 5 (20 to 170), then 170 + .65 x (L - 6)^2, plus .35 x (L - 40)^2 above 40. Level 30 needs 544 (curve 5
+     316, the pulled curve 820), 80 needs 4,289 and 100 needs 7,173: about a heavy day each. At the sims' average XP a day, a daily player
+     is level 7 on day 1, 14 on day 3, 44 on day 30 (curve 5: 55, the pulled curve: 35); a heavy one 66 on day 30. Saves move over at the
+     same level (xpc6 below). */
+  E.lvFirst=20;E.lvRamp=6;E.lvFlat=170;E.lvK=.65;E.lvP=2;E.lvTop=.35;E.lvTopFrom=40;
   SHOP.forEach(function(it){if(it&&it[3]&&typeof clothTier==="function"&&clothTier(it[0])==="luxury"){var n=it[3]*1.1;it[3]=n<1000?Math.round(n/10)*10:Math.round(n/50)*50}})})();
 var ekScaled=econScaled;econScaled=function(c,step){return ekScaled(c*EARNK,step)};
 /* the Loft's Goals pay their coins as they are (glCoins x the room's phase), so the phase no longer multiplies them up */
@@ -54,7 +58,7 @@ if(typeof v33Closet==="function")v33Closet();
 var CUMT5=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT5.push(CUMT5[L]+Math.round(L<6?20+115*(L-1)/5:135+.315*Math.pow(L-6,2)+(L>40?.2*Math.pow(L-40,2):0)))})();
 function cum5(L){return L<=1?0:L<CUMT5.length?CUMT5[L]:CUMT5[CUMT5.length-1]+(L-CUMT5.length+1)*(CUMT5[CUMT5.length-1]-CUMT5[CUMT5.length-2])}
 var c6Fresh=fresh;fresh=function(){var f=c6Fresh.apply(this,arguments);f.xpc6=1;return f};
-var c6Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc6);var r=c6Merge.apply(this,arguments);
+var c6Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc6&&d.xpc5);/* a save from before curve 5 is put on this curve by merge itself (QA) */var r=c6Merge.apply(this,arguments);
   if(move&&S){var x=S.xp||0,L=1;while(L<MAXL+49&&x>=cum5(L+1))L++;var fr=(x-cum5(L))/Math.max(1,cum5(L+1)-cum5(L)),nx=Math.round(cum(L)+fr*(cum(L+1)-cum(L)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=nx-x;S.xp=nx}
   if(S&&d&&d.epoch===QB_EPOCH)S.xpc6=1;return r};

@@ -107,3 +107,22 @@ var v33View=qsViewHtml;qsViewHtml=function(it){var h=v33View.apply(this,argument
   SHOPTABS.forEach(function(t){if(t[0]==="wardrobe"&&t[2].indexOf("a_hairhi")<0)t[2].splice(t[2].indexOf("a_hairc")+1,0,"a_hairhi")});
   D.hairColors.forEach(function(c){var id="bs_hi_"+c.id;if(SHOP.some(function(x){return x[0]===id}))return;var dye=SHOP.filter(function(x){return x[0]==="bs_dye_"+c.id})[0];
     SHOP.push([id,"a_hairhi",c.label+" Highlights",dye?dye[3]:400,1,"Thin streaks of "+c.label.toLowerCase()+" through your hair.",{basic:{key:"hairHi",id:c.id},b:"basics",swatch:"repeating-linear-gradient(115deg,#3a2f36 0 12px,"+c.swatch+" 12px 17px)"/* streaks, so it never reads as the dye */}])})})();
+
+/* ---- the letter (Cal 11-23: "include the message in their inbox that the testing phase is now over and v1.31 is live with new level
+   curves, economy scaling, features, and late game shop items"); the board notice n131 pays the 500 ---- */
+PATCHES.push({id:"patch131",d:"2026-11-23",subj:"Update 1.31: testing is over",body:'<p>The testing phase is over. Version 1.31 is live for everyone.</p><ul class="wl">'
+  +'<li>A new level curve. The first days move fast, and the late levels take a real day of work each. Your level stayed where it was.</li>'
+  +'<li>The economy is rebalanced. Coins come in slower, so everything you own is earned.</li>'
+  +'<li>New features: an Upgrades tab, new cuts, dyes and highlights at the Stylist, a reward to pick every 5 levels, and a Reset progress option in your profile.</li>'
+  +'<li>Late-game items in the Shop to work toward.</li>'
+  +'</ul><p>Thanks for testing with me. Now get after it.</p>'});
+
+/* ---- Cal 11-23: "Only reset my progress": once, the owner's own save (web/config.js owners; never the sandbox) is backed up to
+   data/users/<uid>/backup_reset131 and on this device, then starts over at level 1, as Reset progress does. The backup doc is the mark:
+   another device that finds it does not reset again. ---- */
+(function(){var t=setInterval(function(){try{if(typeof loaded==="undefined"||!loaded||!S||!S.created||!db||typeof MYUID==="undefined"||!MYUID)return;
+  var W=window.QB_WEB;clearInterval(t);if(!W||W.sandbox||(W.owners||[]).indexOf(MYUID)<0||S.calRs131)return;
+  var ref=db.doc("data/users/"+MYUID+"/backup_reset131");
+  ref.get().then(function(sn){if(sn.exists){S.calRs131=1;persist();return}var old=JSON.parse(JSON.stringify(S));
+    return ref.set(old).then(function(){try{localStorage.setItem("quest-board-backup-reset131",JSON.stringify(old))}catch(x){}
+      try{closeModals()}catch(x){}S=fresh();S.calRs131=1;view="board";persist();render();window.scrollTo(0,0)})}).catch(function(){})}catch(e){}},1500)})();
