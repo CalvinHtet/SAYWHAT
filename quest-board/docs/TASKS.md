@@ -2900,6 +2900,10 @@ Requests for LEAD (from a cloud chat, Cal 2026-11-22, branch `claude/wizardly-ho
   and every upgrade is still bought by day 25. The regular player (12 tasks) makes 570 to 1,500 XP a day, not 200 (proof,
   streak, crits, combos), and tasks pay 7,000 to 12,000 coins a day against ECONOMY.md's "a good day about 1,000"; tasks
   are about 60% of all coins and rooms pay a share of them. The faucet (6 coins an XP plus momentum, v0.79) needs Cal's call.
+- 2026-11-23, Cal: "cap momentum to 1.5x and 15% increase. I don't want them to be able to have nothing to purchase by day
+  25." Momentum capped in d45b19f (one line in 10_app_a.js, rule 2). Sim: still idle from day 16, so the goal is NOT met.
+  WAITING ON CAL: tasks at 4 coins an XP instead of 6 (simulated: 1 idle day in 30). Full details, numbers and steps:
+  `docs/HANDOFF_ECONOMY_2026-11-23.md`.
 
 ---
 
