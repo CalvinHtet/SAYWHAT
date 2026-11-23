@@ -13,7 +13,8 @@ SHOP.forEach(function(it){if(it&&it[6]&&V31CUT.indexOf(it[0])>=0)it[6].cut=1});
 AREAS.splice(AREAS.map(function(a){return a[0]}).indexOf("shop")+1,0,["sys","Upgrades",1]);
 var v31Gate=areaGate;areaGate=function(id){if(id==="sys")return !(typeof sysHas==="function"&&sysHas());return v31Gate.apply(this,arguments)};
 var v31Icon=areaIcon;areaIcon=function(k){if(k!=="sys")return v31Icon.apply(this,arguments);
-  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V7"/><path d="M7 12l5-5 5 5"/><path d="M5 21h14"/><path d="M5 3h14"/></svg>'};
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg>'};
+/* QA: the arrow read as "upload"; sliders, as in settings */
 /* no "?" before the console is bought: the tab is not drawn at all (as the Shop before the Walk-in Closet) */
 var v31Nav=navHtml;navHtml=function(){var h=v31Nav.apply(this,arguments);if(areaGate("sys"))h=h.replace(/<button data-act="nav" data-v="sys"[\s\S]*?<\/button>/,"");return h};
 var SXTAB="upgrades";
@@ -28,12 +29,12 @@ var v31View=viewHtml;viewHtml=function(v){if(v==="sys")return areaGate("sys")?v3
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=sxtab]");if(!b)return;SXTAB=b.dataset.v;render();window.scrollTo(0,0)});
 sysOpen=function(tab){try{closeModals()}catch(e){}view="sys";SXTAB=tab==="interface"?"interface":"upgrades";render();window.scrollTo(0,0)};
 /* the Shop's look for the tab (its styles key on body.shopmode and the data-view palette) */
+(function(){var st=document.createElement("style");st.textContent=".sxv .qs-tab{min-height:44px;padding-left:18px;padding-right:18px}";document.head.appendChild(st)})();/* QA: tap targets were 37-45 px */
 var v31Render=render;render=function(){var r=v31Render.apply(this,arguments);if(view==="sys"){document.body.classList.add("shopmode");document.documentElement.setAttribute("data-view","shop")}return r};
 
 /* ---- the Shop: no Upgrades or Interface; the Stylist beside the Wardrobe ---- */
 var v31Shop=shopHtml;shopHtml=function(){if(shopTab==="upgrades"||shopTab==="interface")shopTab="wardrobe";var h=v31Shop.apply(this,arguments);
   try{h=h.replace(/<button class="qs-tab[^"]*" data-act="stab" data-v="(upgrades|interface)">[^<]*<\/button>/g,"");
-    var i0=h.indexOf('<h3 class="label qs-uplab">Interface</h3>');if(i0>=0){var j=h.indexOf('<p class="qs-dev"',i0);h=h.slice(0,i0)+(j>0?h.slice(j):"")}
     var sty=/<button class="qs-tab( on)?" data-act="stab" data-v="basics">Stylist<\/button>/;if(sty.test(h)){h=h.replace(sty,"");
       h=h.replace(/(data-v="wardrobe">Wardrobe<\/button>)/,'$1<button class="qs-tab qs-wdb'+(shopTab==="basics"?" on":"")+'" data-act="stab" data-v="basics">Stylist</button>')}}catch(e){}
   return h};
