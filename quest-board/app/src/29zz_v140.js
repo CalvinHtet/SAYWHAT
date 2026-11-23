@@ -28,6 +28,8 @@ var v40Grant=grantXp;grantXp=function(x,coins,stat){
   if(V40WK){var P=v40Paid(),t=today();
     if(P.d===t){V40WK.paid=0;V40WK.again=1;x=0;coins=0}else{P.d=t;V40WK.paid=1;V40WK.xp=x;V40WK.coins=coins}}
   return v40Grant.call(this,x,coins,stat)};
+/* an unpaid second session adds nothing to the Daily Quest's training XP or a stat either (QA 11-23) */
+var v40Trained=econTrained;econTrained=function(){if(V40WK&&V40WK.again)return;return v40Trained.apply(this,arguments)};
 var v40Train=trainAct;trainAct=function(a){if(a!=="wkdone")return v40Train.apply(this,arguments);
   V40WK={};try{return v40Train.apply(this,arguments)}finally{setTimeout(function(){V40WK=null},0)}};
 var v40Sum=wkSummary;wkSummary=function(o,after){var w=V40WK||{};var r=v40Sum.apply(this,arguments);

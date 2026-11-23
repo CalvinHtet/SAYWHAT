@@ -20,12 +20,12 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const sess = async () => { await p.evaluate(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="train"]').click(); }); await p.waitForTimeout(700);
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); const bt = document.querySelector('[data-act="wkplan"]'); bt.click(); });
     await p.waitForTimeout(500);
-    return p.evaluate(async () => { const x = window.__qb.x(), S = x.S; S.wk.list.forEach((id) => { S.wk.sets[id] = [1, 1, 1, 1, 1, 1] }); const c0 = S.coins, x0 = S.xp; x.render(); await new Promise((r) => setTimeout(r, 300));
+    return p.evaluate(async () => { const x = window.__qb.x(), S = x.S; S.wk.list.forEach((id) => { S.wk.sets[id] = [1, 1, 1, 1, 1, 1] }); const c0 = S.coins, x0 = S.xp, tx0 = window.__qbEcon && JSON.stringify(window.__qbEcon.stats()), dq0 = (S.dq && S.dq.tx) || 0; x.render(); await new Promise((r) => setTimeout(r, 300));
       const d = document.querySelector('[data-act="wkdone"]'); d.click(); await new Promise((r) => setTimeout(r, 900));
-      const m = document.querySelector('#layer .wksum'); return { coins: S.coins - c0, xp: S.xp - x0, text: m ? m.innerText.replace(/\s+/g, ' ').match(/(\+\d+ XP.*?session\.|Logged\..*?tomorrow\.)/) : null }; }); };
+      const m = document.querySelector('#layer .wksum'); return { stat: JSON.stringify(window.__qbEcon.stats()) !== tx0, coins: S.coins - c0, xp: S.xp - x0, text: m ? m.innerText.replace(/\s+/g, ' ').match(/(\+\d+ XP.*?session\.|Logged\..*?tomorrow\.)/) : null }; }); };
   const s1 = await sess(); ok(s1.xp >= 50 && s1.coins > 0 && s1.text && new RegExp('\\+' + s1.xp + ' XP, \\+' + s1.coins + ' coins').test(s1.text[0]), 'the first session pays XP and coins, and says so: ' + JSON.stringify(s1));
   await p.screenshot({ path: OUT + '/train140_sum.png' });
-  const s2 = await sess(); ok(s2.xp === 0 && s2.coins === 0 && s2.text && /already paid/.test(s2.text[0]), 'a second one the same day is logged, not paid: ' + JSON.stringify(s2));
+  const s2 = await sess(); ok(s2.xp === 0 && s2.coins === 0 && !s2.stat && s2.text && /already paid/.test(s2.text[0]), 'a second one the same day is logged, not paid: ' + JSON.stringify(s2));
   const s3 = await p.evaluate(() => (window.__qb.x().S.sessions || []).length); ok(s3 >= 2, 'both sessions are in the log (' + s3 + ')');
   /* the Board count */
   const bc = await p.evaluate(async () => { const x = window.__qb.x(), S = x.S; document.querySelectorAll('#layer .modal').forEach((m) => m.remove());
