@@ -1,14 +1,14 @@
 #!/bin/bash
 # LEAD's ship (docs/RELEASING.md): a QA-passed release commit to Live and the Test channel, with the checks on the way. Kept in the repo.
-#   bash quest-board/rigtest/lead/release/ship.sh <commit> <APPV>
+#   bash quest-board/rigtest/lead/release/ship.sh <commit> <APPV> <QB_EPOCH the saves must carry>
 # Clean web build in a worktree, the build checks, QA's Live check (rigtest/qa/wlive.js), deploy to Live and to the Test channel, then
 # every built file compared with what each site serves. Stops before deploying if a check fails. The Test channel's address is looked
 # up from Firebase and never printed.
 R=$(git -C "$(dirname "$0")" rev-parse --show-toplevel) || exit 1
 HERE="$R/quest-board/rigtest/lead/release"
 C=$(git -C "$R" rev-parse "$1") || exit 1
-WANT=$2
-[ -n "$WANT" ] || { echo "usage: ship.sh <commit> <APPV>"; exit 1; }
+WANT=$2; EPOCH=$3
+[ -n "$WANT" ] && [ -n "$EPOCH" ] || { echo "usage: ship.sh <commit> <APPV> <QB_EPOCH>"; exit 1; }
 WT=${TMPDIR:-/tmp}/qb_ship_$WANT
 LIVEURL=https://saywhat-b7ae8.web.app
 FB="npx -y firebase-tools@15.35.0"
@@ -23,8 +23,8 @@ python3 -m http.server 8812 --bind 127.0.0.1 >/dev/null 2>&1 &
 SRV=$!
 sleep 2
 cd "$WT/quest-board" || exit 1
-# QA's current wlive.js from this checkout (the release commit's own copy can be older: v1.31's wanted QB_EPOCH 6); EPOCH from the build
-EPOCH=$(grep -oE 'QB_EPOCH=[0-9]+' dist-web/app.js | head -1 | cut -d= -f2)
+# QA's current wlive.js from this checkout (the release commit's own copy can be older: v1.31's wanted QB_EPOCH 6). The epoch it checks
+# comes from the command line, never from the build (QA: a build checked against itself can never fail)
 BASE=http://127.0.0.1:8812 DIST="$WT/quest-board/dist-web" APPV="$WANT" CHROME_PORT=9374 EPOCH="$EPOCH" node "$R/quest-board/rigtest/qa/wlive.js" > "$WT.wlive.txt" 2>&1
 T=$?
 kill "$SRV" 2>/dev/null
