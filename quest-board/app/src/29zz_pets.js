@@ -82,10 +82,25 @@ function pzPic(who,f,cls){var w=pzWorn(who),key=pzKey(who,f,w),s=pzSprite(who,f,
 /* ---- the Loft: the creature is a dog-like actor (id "pet"), drawn with its clothes; the dogs wear theirs too ---- */
 function pzLoftFrame(who,p,a){/* dogs: 0 stand, 1 step, 2 sit, 3 sleep; creatures: 0-1 idle, 2-3 move, 4 sit, 5 sleep, 6 fun */
   if(!PETS[who])return p==="sleep"?3:p==="sit"?2:(typeof p==="number"&&p%2)?1:0;
-  if(p==="sleep")return 5;if(p==="sit")return 4;if(p==="fun")return 6;if(typeof p==="string"&&/^idle/.test(p))return +p.slice(4)||0;return typeof p==="number"?2+(p%2):0}
+  if(p==="sleep")return 5;if(p==="sit")return 4;if(p==="fun")return 6;if(typeof p==="string"&&/^idle/.test(p))return +p.slice(4)||0;
+  /* QA (petslive): the wyvern's frame 3 is a front-facing hover, so alternating it with the side-on glide flipped it between profile
+     and front every step; it walks on the glide alone and bobs (pzLoftSpr) */
+  if(who==="wyvern"&&typeof p==="number")return 2;return typeof p==="number"?2+(p%2):0}
+/* QA (petslive): the first time a frame was drawn the creature showed undressed while its composite was built (4-6 times in 75 s).
+   Every frame of a look is built as soon as the Loft first draws it, and until a frame is ready the last dressed picture of that pet
+   stands in (an outfit change keeps the old outfit for a moment, never none) */
+var PZWARM={},PZLAST={};
+/* and built before the Loft is ever opened: the pet's look and each dressed dog's, a moment after the save loads */
+setTimeout(function pzPre(){try{if(typeof loaded==="undefined"||!loaded||!S||!S.created)return setTimeout(pzPre,2000);var m=petMine();if(m)pzWarm(m.k,pzWorn(m.k));
+  ["pluto","chopstick"].forEach(function(d){var w=pzWorn(d);if(Object.keys(w).some(function(k){return w[k]}))pzWarm(d,w)})}catch(e){}},2500);
+function pzWarm(who,worn){var k=pzKey(who,"*",worn);if(PZWARM[k])return;PZWARM[k]=1;var P=PETS[who]&&pzData()&&pzData().pets[who],n=P?(P.frames||11):4;
+  for(var i=0;i<n;i++)pzSprite(who,i,worn)}
 function pzLoftSpr(dname,p){var who=dname==="pet"?(petMine()||{}).k:dname;if(!who)return null;var worn=pzWorn(who),any=Object.keys(worn).some(function(k){return worn[k]});
   if(!PETS[who]&&!any)return undefined;/* an undressed dog: the dogs' own code */
-  var f=pzLoftFrame(who,p),s=pzSprite(who,f,worn);if(!s)return null;var k=PETS[who]?PZ_K:((typeof LFDOGH!=="undefined"&&LFDOGH[who])||29)/300;/* a dressed dog keeps the dogs' size */return {u:s.u,w:s.w*k,h:s.h*k,ax:s.ax*k,ay:s.ay*k}}
+  pzWarm(who,worn);var f=pzLoftFrame(who,p),s=pzSprite(who,f,worn);if(!s)return null;if(s.plain){if(PZLAST[who])s=PZLAST[who];else if(PETS[who])return null/* not drawn for the moment before its first picture */}else PZLAST[who]=s;
+  var k=PETS[who]?PZ_K:((typeof LFDOGH!=="undefined"&&LFDOGH[who])||29)/300;/* a dressed dog keeps the dogs' size */
+  var bob=who==="wyvern"&&typeof p==="number"&&p%2?1.5:0;/* the wyvern's glide rises and dips a little each step */
+  return {u:s.u,w:s.w*k,h:s.h*k,ax:s.ax*k,ay:s.ay*k+bob}}
 /* ---- the Shop's Pets tab ---- */
 function pzCard(k){var mine=petMine(),own=mine&&mine.k===k,price='<i class="coin"></i>'+PET_PRICE.toLocaleString(),btn;
   if(own)btn='<button class="qs-btn ghost" disabled>Yours</button><button class="qs-link pz-adopt" data-act="pzadopt">Give up for adoption</button>';
