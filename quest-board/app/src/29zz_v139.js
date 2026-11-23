@@ -73,6 +73,33 @@ var v39Ph=phViewHtml;phViewHtml=function(p){var h=v39Ph.apply(this,arguments);if
   +".v39fr{margin:10px 0;padding:10px;border-radius:12px;background:var(--surface2);text-align:left}.v39frh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}"
   +".v39bar{display:block;height:8px;border-radius:999px;background:rgba(255,255,255,.1);margin:6px 0;overflow:hidden}.v39bar b{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}"
   +".sq-acts .btn[disabled]{opacity:.45}";document.head.appendChild(st)})();
+/* ---- kind notes to Cal (Cal 11-23: "For the nice notes to me, make it always private unless i choose to post it in the town hall where it
+   posts just for 48 hours. Make the reward 500 coins only if i choose to accept the coins."): Cal's queue answers each note with two
+   choices, the 500 coins and a post, in any mix: "+500", "+500 and post", "Post only", "No". A posted note goes on Cal's town board for 48
+   hours (board/<Cal> post with until; 30_app_b.js drops it after), as "A note from <name>". Otherwise nothing is shown anywhere. ---- */
+KD.max=500;KD.pick=[500];
+async function v39KdAnswer(uid,id,c,post){var r=KD.all.filter(function(x){return x.uid===uid&&x.id===id})[0];if(!r||!kdOwner())return;
+  try{var ref=db.doc("kudosok/"+uid),s=await ref.get(),d=s.exists?(s.data()||{}):{};if(!d.items||typeof d.items!=="object")d.items={};var t=Date.now();
+    d.items[id]={ok:c>0,c:c,text:"",name:r.name,d:r.d,t:t,post:post?1:0};
+    var ks=Object.keys(d.items).sort(function(a,b){return (d.items[b].t||0)-(d.items[a].t||0)});ks.slice(30).forEach(function(k){delete d.items[k]});
+    d.name=r.name;d.t=t;await ref.set(d);
+    if(post){var tx=("A note from "+r.name+": \u201C"+String(r.text||"").slice(0,240)+"\u201D").slice(0,280);
+      await socMine("board",function(b){var a=Array.isArray(b.posts)?b.posts:[];a.unshift({t:t,text:tx,look:lookOf(),kd:1,until:t+48*36e5});b.posts=a.slice(0,10)});
+      try{SOC.posts.unshift({id:MYUID+"|"+t,from:MYUID,name:(S.char&&S.char.name)||"Cal",text:tx,t:t,look:lookOf(),kd:1});socPaint()}catch(x){}}
+    pop(c>0&&post?r.name+" gets 500 coins, and the note is posted for 48 hours":c>0?r.name+" gets 500 coins":post?"Posted for 48 hours":"Passed on "+r.name+"'s note");
+    KD.all=KD.all.filter(function(x){return x!==r});await kdLoad()}
+  catch(e){pop("Could not save ("+((e&&e.code)||"error")+")")}}
+var v39KdHtml=kdHtml;kdHtml=function(){if(!kdOwner()){var h=v39KdHtml.apply(this,arguments);
+    return h.replace(/If he approves yours, it is pinned in the Town Hall and up to [\d,]+ coins land in your account\./,"If he likes it, he can send you 500 coins, and he might post it on the Town Hall board for 2 days. Otherwise it stays between you two.")
+      .replace(/Approved and pinned, \+([\d,]+) coins/g,"Cal sent you +$1 coins")};
+  var h='<h3>Kind words</h3><p class="note">Notes people wrote you. They stay private unless you post one: it goes on the Town Hall board for 48 hours. The 500 coins go only if you choose them. One note per person a day.</p>';
+  h+=KD.all.length?KD.all.map(function(r){var a='data-u="'+esc(r.uid)+'" data-i="'+esc(r.id)+'"';return kdNote(r,'<div class="kdgo"><button class="btn" data-kd="v39" '+a+' data-c="500" data-p="0">+500</button><button class="btn" data-kd="v39" '+a+' data-c="500" data-p="1">+500 and post</button><button class="btn ghost" data-kd="v39" '+a+' data-c="0" data-p="1">Post only</button><button class="btn ghost" data-kd="v39" '+a+' data-c="0" data-p="0">No</button></div>')}).join(""):'<p class="note">'+(KD.t?'Nothing waiting.':'Loading...')+'</p>';
+  if(KD.done.length)h+='<details><summary class="note">Answered ('+KD.done.length+')</summary>'+KD.done.map(function(r){var a=r.a||{};return kdNote(r,'<small class="'+(a.ok||a.post?'kdok':'kdno')+'">'+(a.ok?'+'+kdFmt(a.c)+' coins':'No coins')+(a.post?', posted for 48 hours':'')+'</small>')}).join("")+'</details>';
+  return '<div class="card box2 kd">'+h+'</div>'};
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-kd="v39"]');if(!b)return;b.disabled=true;v39KdAnswer(b.dataset.u,b.dataset.i,+b.dataset.c||0,b.dataset.p==="1")});
+/* the writer's own list says what Cal chose */
+var v39KdNote=kdNote;kdNote=function(n,tail){try{if(tail&&/Not this time/.test(tail)&&!kdOwner()){var a=null,mine=KD.ok[MYUID]||{};Object.keys(mine).forEach(function(k){var x=mine[k];if(x&&x.d===n.d&&x.post)a=x});if(a)tail='<small class="kdok">Posted in the Town Hall for 2 days</small>'}}catch(e){}return v39KdNote.call(this,n,tail)};
+
 /* a window held back for a tour (29zz_v135.js) goes too when the game closes its windows, so a stale card never comes up later */
 var v39Close=closeModals;closeModals=function(){var r=v39Close.apply(this,arguments);try{document.querySelectorAll("#layer .qb-held").forEach(function(m){m.remove()})}catch(e){}return r};
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV139={lv:v39Lv,pts:v39Pts,pay:v39Pay,sq:SQ,day:v39Day,box:v39FrBox};
