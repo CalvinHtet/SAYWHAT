@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
+- Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
+  Was: Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
   Was: Now (on qa-local 8ca029d): the 11-23 batch, NOT A PASS: one FIX, the milestones' S.ms is wiped every 5 s by the old Missions refund; economy, v1.32, hair, dogs, pets recheck PASS; later rooms PASS with one FIX (Club DJ) (QA findings).
@@ -414,6 +415,33 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, the release batch on qa-local head e0724a7c (68c4b15 through e0724a7c; a clean build, cloud blocked; owner LEAD,
+  coordinates ROOMS): three small placement FIXes left, everything else PASS. Pictures: shots/qa/rooms1123b/.
+  - FIX 1 (027f23e, Karaoke): the disco ball at 5.6,5.8 (dy -92) now hangs over the drinks table's corner, over a glass, so it
+    reads as sitting on the table (kz_ball.jpg). It is off the bookshelf as asked; move it about a tile further out over open floor.
+  - FIX 2 (e0724a7c, Garden stage 1): the barrel goes to 0.05,3.75 "under the wall tap", but stage 1 has no tap there: it stands in
+    the painted back-left doorway (y 3.0-4.6), covering its lower half (gz_door.jpg). Nobody walks there (the walking door is the
+    front corner), but it clips the door (rule 20). Stage 0 already live has the same barrel over the door frame's corner, beside the
+    tap (garden_st0.jpg): move it left of the door, under the tap, at both stages.
+  - FIX 3 (e0724a7c, Restaurant stage 1): the right fire-pit chair's back runs into the iron bistro chair behind it (rz_pit.jpg);
+    the audit misses it because the chairs' footprints are small. Shift the bistro set about half a tile right or back.
+  - PASS: Speakeasy (jukebox clear of the armchairs, cart clear of the bassist; live 5 people, 625 samples, nobody in a footprint;
+    the 4 overlaps are the band on the stage, as meant); Karaoke (tambourine rack on the floor in front of the stage; live 5 people,
+    703 samples, none); Club (DJ gaps, laser, smoke, tables off the dance floor; live 7 people, 610 samples, the DJ never in a
+    footprint). The Club's remaining walk samples (14, about 2 s in 2 min) are guests going into the seat spots inside the wall
+    booths (x 0.95, y 3.3-9.05), through the open front: as LEAD said, not phasing. Restaurant stage 1 otherwise reads well (the
+    pergola gone, one iron set, the host stand clear); the stage sweep: Restaurant st0 1/st1 0/st2 2 overlaps (all intended), Garden 0
+    at every stage, Karaoke 0. Garden stage 1's right corner is snug but separate (NOTE).
+  - PASS again on head: LEAD's v132.js (vs 1252dc4), hilite.js, QA's ms2_mile.js and rerender_mile.js, econ.js numbers unchanged;
+    0 page errors.
+  - Not checked: Restaurant and Garden live on head (ROOMS's changes are layout only; LEAD ran laterooms on them), a phone.
+- PASS, Stylist highlights (117e1e3 on a clean build; LEAD's hilite.js with the cloud blocked, and QA's hibuy.js by real taps, shots/qa/rooms1123b/; owner
+  LEAD): 10 "<colour> Highlights" for both bodies in a Highlights section after Hair color, 180 each (as the dye), striped swatches
+  that never read as the dye. Tapping Buy charges once and wears it (the look carries hairHi, the streak layer is drawn); buying
+  another colour switches; Take off in the Wardrobe removes the layer and keeps both owned. Not in the milestone or chest pools
+  (basics). 0 page errors. NOTES: the Black Highlights swatch is near-invisible (black stripes on the dark base); a highlight the same
+  colour as the hair buys an invisible streak (fine if meant).
+  Not checked: f_h1's front lock (LEAD's known), every colour on screen.
 - PASS, hair highlights, all 13 styles (ROOMS 6feb83e..2abdb00a; worn in the rig on a clean 2abdb00a build before the Stylist wiring,
   through the creator's hairHi, blonde streaks on brown hair; rigtest/qa/hairtest.js HC= HL=; shots/qa/hairhi1123/): his h1-h7 and
   Victor's hair, her h1-h5, every pose (43, incl. arms-up, dances, sleep, sits) and every live hat for the body (56 his, 59 hers),
