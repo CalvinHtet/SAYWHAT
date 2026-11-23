@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local 8ca029d): the 11-23 batch, NOT A PASS: one FIX, the milestones' S.ms is wiped every 5 s by the old Missions refund; economy, v1.32, hair, dogs, pets recheck PASS; later rooms PASS with one FIX (Club DJ) (QA findings).
+- Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
+  Was: Now (on qa-local 8ca029d): the 11-23 batch, NOT A PASS: one FIX, the milestones' S.ms is wiped every 5 s by the old Missions refund; economy, v1.32, hair, dogs, pets recheck PASS; later rooms PASS with one FIX (Club DJ) (QA findings).
   Was: Now (on release/v1.30 c1cff49): v1.30 live check, PASS (QA findings). Waiting on ROOMS: pd_cable (Pluto's cells), pd_fleece and the three dog auras.
   Was: Now (on release/v1.30 c1cff49): v1.30 cut, PASS, can ship (QA findings).
   Was: Now (on release/v1.30 98aa14b): v1.30 cut, NOT A PASS yet: text-only FIXes (QA findings).
@@ -411,6 +412,14 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS on ROOMS's later-rooms placement findings (3b1e3fa, rigtest/qa/stagesweep.js, shots/pending_art/rooms_sweep_1123/; QA looked at
+  every picture; owner LEAD for the code fixes, ROOMS for spots). All five agreed by eye: (1) Restaurant stage 1 with the patio fully
+  bought: the pergola over a bistro set, the fire-pit chairs into the pergola, the iron set into the grill and the kitchen corner;
+  (2) the Speakeasy jukebox overlapping the right armchair; (3) the Karaoke disco ball hanging over the bookshelf top, and the
+  tambourine rack against the stage lip; (4) the Club's front glowing table on the dance floor's edge, and the DJ path (QA's FIX);
+  (5) Garden stage 1: the bottom-right corner is packed (potting bench, barrel, crate, produce stand, greenhouse), and the grape arbor
+  sits against an apple tree. QA adds: (6) Restaurant stage 1: the host stand by the patio step is jammed against the fire-pit's
+  rug and the deck edge (restaurant_st1.png, centre); give it clear floor. Not checked: partial buys between empty and full.
 - NOT A PASS, the 11-23 batch on qa-local 8ca029d (a clean build; every non-local request blocked; owner LEAD): one FIX in fccf7c9's
   milestones, the rest PASS. Scripts and pictures: shots/qa/batch1123/.
   - FIX (LEAD, code), the milestone's save is wiped every 5 s: 29zz_v133.js keeps the milestones in S.ms, and 28_missions.js:6 (the old
