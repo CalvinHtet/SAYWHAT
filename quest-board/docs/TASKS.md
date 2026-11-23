@@ -314,7 +314,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
+- Now (on qa-local 8df50fb4): rig flag 3f15f863 PASS, 1c7e636d PASS with one FIX (econTrained on unpaid sessions), curve 7 PASS with a NOTE (QA findings).
+  Was: Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
   Was: Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
   Was: Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
   Was: Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
@@ -439,6 +440,24 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, the per-pose rig flag 3f15f863 (replaces a888ed55; owner LEAD; ROOMS passed it too, shots/pending_art/skin_1123/v3/): the 14
+  poses marked coarse (rest, idle, idleIn, walks, rear stands, back walks, stretch) bind the top and arms on the usual grid; the other
+  28 poses are pixel-identical to live in QA's starter sweep (54 looks x 43 poses; shots/qa/skin1123/starter_live_vs_perposeflag.txt).
+  In the coarse poses the skin through the seams falls (idle 25.7k to 14.4k px, rear stand 23.1k to 7.3k, back walks about 3x), tears
+  rise a little (edges, ROOMS by eye). The creator's preview plays Front (idle), Back, Walk and Stretch, so where Cal saw it is now
+  clean. The switch: blending from a coarse pose into a fine one (idle to thinkA, walk to chat) changes about 2,600 px at 4x on its
+  first frame, the seam slivers coming back as the character starts to move (switch_idle_to_thinkA.jpg), i.e. live's look; minor.
+  Bent-elbow and arms-up poses keep live's slivers: the coarse copy of the top drawn under the fine one (ROOMS) is held for them.
+- PASS with one FIX, Training, Weekly Warrior and categories (1c7e636d; owner LEAD): train140.js, hall3, reboot, v136, tutquest and
+  tourcard PASS with every non-local request blocked (x1.25 a week to x2, -0.25 a missed week to x1; one paid session a day, the second
+  logged and its summary says so; category counts of open quests; dates/calls to People, bank, memberships, laptop to Work and admin,
+  moved once). FIX: wkdone calls econTrained(x, plan) with the session's full XP after the unpaid second session too, so it still adds
+  to the Daily Quest's XP (whose chests pay coins) and gives +1 to a stat each time; skip econTrained when the session is not paid.
+- PASS with a NOTE, curve 7 (8df50fb4; owner LEAD): saves carried from the build before (same origin and profile, curve7.js): level 8
+  stays 8; level 30 shows 33 and level 60 shows 70 (64 until the level-65 trial); on load nothing is paid and a reload changes nothing;
+  the next real level-up (c7gain.js: a quest to level 34) shows one "Level 34" window paying 31 to 34 together (+676 coins), lvPaid 34,
+  nothing twice. NOTE: the level-ups do not play on load (LEAD's line says they do): a player sees their level jump silently and
+  one level-up window later; a "your level went up with the new scale" window on first load would explain it (Cal's call).
 - NOT A PASS, the rig fix a888ed55 (fineSlots [], fineUp body/top/arms/skinArms; owner LEAD; shots/qa/skin1123/bent_live.jpg vs
   bent_fix.jpg, starter_live_fix_fineoff.txt). Straight-arm poses are fixed: his white hoodie on deep skin is clean in idle and sitFront
   (live: slivers at both seams). Bent-elbow poses got worse: thinkA, laugh1 and sideR now show large skin patches on the upper sleeve

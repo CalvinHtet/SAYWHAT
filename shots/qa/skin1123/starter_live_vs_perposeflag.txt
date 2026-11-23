@@ -1,0 +1,16 @@
+coarse poses rest idle idleIn walk1 walk2 walk3 walk4 stretch rearStand rearStandIn backwalk1 backwalk2 backwalk3 backwalk4
+  changed backwalk1    coarse=True  live gap/tear [23442, 2199]  flag [8286, 2697]
+  changed backwalk2    coarse=True  live gap/tear [25395, 4779]  flag [7665, 5007]
+  changed backwalk3    coarse=True  live gap/tear [25965, 5244]  flag [7362, 6402]
+  changed backwalk4    coarse=True  live gap/tear [25122, 3783]  flag [7584, 4053]
+  changed idle         coarse=True  live gap/tear [25707, 2313]  flag [14421, 3213]
+  changed idleIn       coarse=True  live gap/tear [28662, 2205]  flag [15987, 2802]
+  changed rearStand    coarse=True  live gap/tear [23142, 1134]  flag [7290, 1818]
+  changed rearStandIn  coarse=True  live gap/tear [25734, 1152]  flag [7344, 1845]
+  changed rest         coarse=True  live gap/tear [23205, 2967]  flag [11127, 2949]
+  changed walk1        coarse=True  live gap/tear [28632, 5877]  flag [16083, 5895]
+  changed walk2        coarse=True  live gap/tear [27507, 6276]  flag [17391, 6831]
+  changed walk3        coarse=True  live gap/tear [29277, 2559]  flag [18972, 3837]
+  changed walk4        coarse=True  live gap/tear [27447, 4416]  flag [16380, 4953]
+poses identical to live: 28
+totals live [1107594, 162543] flag [924249, 169941]
