@@ -314,7 +314,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.41 4dcc070c): v1.41, PASS, can ship; a rollback NOTE (curve 6 drops levels) (QA findings). Next: the live check.
+- Now (on release/v1.41 4dcc070c, Live): v1.41 live check, PASS; the rollback carries curve 7 (QA findings).
+  Was: Now (on release/v1.41 4dcc070c): v1.41, PASS, can ship; a rollback NOTE (curve 6 drops levels) (QA findings). Next: the live check.
   Was: Now (on qa-local 8df50fb4): rig flag 3f15f863 PASS, 1c7e636d PASS with one FIX (econTrained on unpaid sessions), curve 7 PASS with a NOTE (QA findings).
   Was: Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
   Was: Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
@@ -441,6 +442,11 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.41 live check (release/v1.41 4dcc070c on Live; owner LEAD): Live serves version.txt 4dcc070c, appv 141; its 12 listed files
+  match QA's own web build of 4dcc070c (the commit QA passed, ecc89400), index.html, config.js, app.js, web.js, qbdata.js and creator.js
+  byte-identical; QB_EPOCH 8, no reset; release/v1.41 and rollback-v1.39 on origin. The rollback is now 936eb255: release/v1.39 with
+  curve 7's numbers (lvK .364, lvTop .196, the same as live) and APPV 142, epoch 8, so a rollback no longer drops levels (QA's NOTE,
+  done). Not checked: the Test channel (ship.sh compared it), a real phone, real accounts.
 - PASS, v1.41 can ship (release/v1.41 4dcc070c = qa-local ff86b273 + APPV 141, QB_EPOCH 8 (checked in the cut's 00_clock.js), no
   reset; owner LEAD; shots/qa/v141/). Ship: ship.sh release/v1.41 141 8.
   - The cut: over ff86b273 only APPV and QB_EPOCH; over v1.39 seven files, as listed. The rig (rig.js, rig.json, poses.json) and the
