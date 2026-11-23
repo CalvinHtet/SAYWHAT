@@ -23,7 +23,9 @@ python3 -m http.server 8812 --bind 127.0.0.1 >/dev/null 2>&1 &
 SRV=$!
 sleep 2
 cd "$WT/quest-board" || exit 1
-BASE=http://127.0.0.1:8812 DIST="$WT/quest-board/dist-web" APPV="$WANT" CHROME_PORT=9374 node rigtest/qa/wlive.js > "$WT.wlive.txt" 2>&1
+# QA's current wlive.js from this checkout (the release commit's own copy can be older: v1.31's wanted QB_EPOCH 6); EPOCH from the build
+EPOCH=$(grep -oE 'QB_EPOCH=[0-9]+' dist-web/app.js | head -1 | cut -d= -f2)
+BASE=http://127.0.0.1:8812 DIST="$WT/quest-board/dist-web" APPV="$WANT" CHROME_PORT=9374 EPOCH="$EPOCH" node "$R/quest-board/rigtest/qa/wlive.js" > "$WT.wlive.txt" 2>&1
 T=$?
 kill "$SRV" 2>/dev/null
 wait "$SRV" 2>/dev/null
