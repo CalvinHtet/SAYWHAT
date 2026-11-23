@@ -582,7 +582,7 @@ var lfSvcWorkLife0=lfSvcWork;lfSvcWork=function(a,C,r){
   return false};
 var lfDoneLife0=lfDone;lfDone=function(a){var s=a.st;if(s&&s.plateFor){var o=s.plateFor;if(o.plating===a.id){o.plated=1;o.plating=null}a.carry=0}
   if(s&&s.escort)a.escort=0;
-  if(a.role==="guest"&&a.sat&&s&&s.served&&s.dish)s.dirty=Date.now();/* they ate: the plates stay until bussed */
+  /* Cal 11-23: "As soon as the guests finish eating, they are happy and leave and the table is cleared": no dirty plates, no seat held (the busser code below never runs) */
   /* the busser stacks the plates and takes them back to the pass */
   if(s&&s.clearFor){var q=s.clearFor,C=lfC(a);if(q.clearing===a.id){q.dirty=0;q.clearing=null}a.st=null;a._exit=null;var P=C&&C.prep&&C.prep.pass;
     if(P){a.carry=1;lfGo(a,P.x,P.y,{kind:"bus",act:"reach",tag:"dropoff",dur:[.6,1],fx:-1});return}}

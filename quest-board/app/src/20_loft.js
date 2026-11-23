@@ -1848,7 +1848,7 @@ function lfGuestNext(a,C,r){
     if(a.st){a.st.ord=0;a.st.served=0;a.st.hand=null}
     a.wait=0;a.sat=0;a.st=null;var d=lfDoorOf(C);a.speed=1;lfGo(a,d.x,d.y+.3,"leave");return}
   if(a.alpha>0&&a.mode!=="idle"){a.mode="idle";a.t=1;return}
-  var f=lfFree(C,a,function(s){return s.cust&&!s.dirty});if(!f.length){a.alpha=0;a.mode="idle";a.t=6;return}/* a table left with dirty plates waits for the busser */
+  var f=lfFree(C,a,function(s){return s.cust});if(!f.length){a.alpha=0;a.mode="idle";a.t=6;return}
   var dv=ROOMDEF[r.t]&&ROOMDEF[r.t].visitors,me=dv&&a.vis&&dv.filter(function(v){return v.id===a.vis})[0];
   var o=lfPick(f);a.look=me?rsNpc(me.look):lfGuestLook(a);a.si=o.i;o.s.by=a.id;o.s.ord=0;o.s.served=0;o.s.hand=null;o.s.stage=0;
   var d=lfDoorOf(C);a.x=d.x;a.y=d.y+.3;a.alpha=0;a.fade=1;a.sat=0;a.speed=lfRand(.85,1.1);

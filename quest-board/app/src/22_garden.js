@@ -238,7 +238,7 @@ LFROOM.garden=function(C){
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
       if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */if(st===2&&H("g_koi")&&lx>10.9&&lx<15.1)return;/* QA room sweep: nor inside the koi pond */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
-      if(H("g_arch")){open("gdx_arch",W*.7,py-.15,.9,1.55,132);gdSnip(C,W*.7-.45,py+.8,1);gdFly(C,W*.7+.45,py+.6,96,"#ff9ac8",0);gdFly(C,W*.7+.2,py+.9,70,"#ffe07a",1)}
+      if(H("g_arch")){open("gdx_arch",W*.7,py-.15,.9,1.55,132);gdSnip(C,W*.7-.45,py+.8,1);gdFly(C,W*.7+.45,py+.6,96,"#ff9ac8",0);gdFly(C,W*.7-.35,py+.2,88,"#ffe07a",1)/* QA: off the coop roof */}
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
       /* Cal: no room may look crowded. In the Estate the fountain is the centrepiece and takes the place of the sundial,
          the birdbath and the topiaries (still owned; they show again only without it) */
@@ -271,7 +271,7 @@ function gdChicken(C,x,y,k){var p=lfP(x,y,0),fl=k%2?-1:1,d=(1.7+k*.5).toFixed(1)
   C.add(x+y+.15,'<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+')" pointer-events="none"><g><animateTransform attributeName="transform" type="translate" values="0 0;7 3.5;7 3.5;-4 1.5;-4 1.5;0 0" keyTimes="0;.25;.45;.65;.85;1" dur="'+w+'" repeatCount="indefinite"/><g transform="scale('+(1.7*fl)+',1.7)">'+body+head+'</g></g></g>')}
 function gdFly(C,x,y,z,col,k){var p=lfP(x,y,z),d=(7+k*1.6).toFixed(1);
   var wing='<g><animateTransform attributeName="transform" type="scale" values="1 1;.2 1;1 1" dur="'+(.28+k*.03).toFixed(2)+'s" repeatCount="indefinite"/><path d="M0 0 C-4 -5 -7.5 -1 -4 1.5 C-6 4 -2 5 0 1z M0 0 C4 -5 7.5 -1 4 1.5 C6 4 2 5 0 1z" fill="'+col+'" stroke="rgba(0,0,0,.35)" stroke-width=".4"/></g><path d="M0 -1.6 v3.6" stroke="#2a2218" stroke-width=".9"/>';
-  C.front.push('<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+') scale(2.6)" pointer-events="none"><g><animateMotion dur="'+d+'s" repeatCount="indefinite" begin="-'+k+'s" path="M0 0 c8 -7 18 3 26 -5 c6 -7 -3 -16 -14 -11 c-9 4 -18 -4 -13 5 c3 5 -3 9 1 11z"/>'+wing+'</g></g>')}
+  C.front.push('<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+') scale(1.3)" pointer-events="none"><g><animateMotion dur="'+d+'s" repeatCount="indefinite" begin="-'+k+'s" path="M0 0 c8 -7 18 3 26 -5 c6 -7 -3 -16 -14 -11 c-9 4 -18 -4 -13 5 c3 5 -3 9 1 11z"/>'+wing+'</g></g>')}
 function gdSnip(C,x,y,f){C.s("work",x,y,f,"work",[7,13],{tag:"snip",staffOnly:1})}
 function gdPeople(r,i,C,out){var a=r.a||{};
   if(a.g_gard)out.push({id:"gd:g1",room:i,role:"crew",look:rsNpc({body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:GDWEAR}),ix:0});
