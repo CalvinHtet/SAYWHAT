@@ -198,22 +198,22 @@ LFROOM.garden=function(C){
   /* the watering can in the back corner waters the beds when tapped (LEAD's gdwater); the Hose & Watering Can takes over */
   if(!H("g_can"))gdS(C,"gdx_can",.3,.3,.8,.7,12,{act:"gdwater",hit:110});/* QA (Cal's use check): the compost crate stood in front of the potting bench's work side; the bench ends the column now, open
      in front, and the low wheelbarrow takes its old place */
-  tool("g_wheel","gdx_wheel",TY[1],1.4,1.0,16);tool("g_comp","gdx_comp",TY[2],st===0?1.0:1.2,st===0?.95:1.1,24);if(st===0){if(H("g_barrel"))gdS(C,"gdx_barrel",.05,3.75,.75,.75,28,{H:56})/* rule 20: the Back Plot's tool column has no room for it; under the wall tap instead */}else tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_bench","gdx_bench",TY[4],1.4,1.0,26);
+  tool("g_wheel","gdx_wheel",TY[1],1.4,1.0,16);tool("g_comp","gdx_comp",TY[2],st===0?1.0:1.2,st===0?.95:1.1,24);if(st<2){if(H("g_barrel"))gdS(C,"gdx_barrel",.05,3.75,.75,.75,28,{H:56})/* rule 20: the Back Plot's tool column has no room for it; under the wall tap instead */}else tool("g_barrel","gdx_barrel",TY[3],.9,.9,28,{H:64});tool("g_bench","gdx_bench",st===1?TY[3]:TY[4],1.4,1.0,26);
   /* the Back Plot's gate corner is the produce stand's */
   if(H("g_scare"))gdS(C,"gd_scare",st===1?5.05:.3,st===0?8.3:st===1?3.45:6.9,/* QA room sweep: clear of the moved back door *//* rule 20: in the Kitchen Garden the hanging pots painted on the left wall run its whole front, so there it guards the crossing between the four back beds */.7,.7,50,{H:100});/* by the left wall, clear of every bed (QA) */
   /* where produce is sold (the story's selling, from the first day): a homemade crate stand until the Farm Stand
      replaces it, at every stage (the Farm Stand used to show only from the Kitchen Garden on) */
   /* in the Estate the stand sorts just after the wide bed behind it and just before the lantern in front of it */
   /* on the Back Plot the stand takes the wheelbarrow's place, a tile further in, so a wide screen shows it whole (QA) */
-  var sp=st===0?[10.1,8.3]:/* rule 20: the tool column closes up (the barrel lives under the wall tap) and the stand ends it, on open floor; front-left it stood behind the front bed (QA v0.74) */st===2?[.4,12.9]:[14.0,4.8],sdk=st===2?-1.12:0;
+  var sp=st===0?[10.1,8.3]:/* rule 20: the tool column closes up (the barrel lives under the wall tap) and the stand ends it, on open floor; front-left it stood behind the front bed (QA v0.74) */st===2?[.4,12.9]:[13.8,5.2],sdk=st===2?-1.12:0;
   /* tap either stand to sell (LEAD's stysell, 29b_story.js) */
   if(H("g_stand"))gdS(C,"gdx_stand",sp[0],sp[1],1.8,1.0,34,{H:86,dk:sdk,act:"stysell"});else if(window.LFSPR&&LFSPR.gdx_stand0)gdS(C,"gdx_stand0",sp[0],sp[1],1.6,.9,24,{dk:sdk,act:"stysell"});
   if(st===0)lfWander(C,[[10.8,8.0,1],[5.7,3.8,-1],[5.7,7.0,1]]);
   if(st>0){var zx=st===2?16.4:11.2;
     if(H("g_green2")&&st===2){gdS(C,"gdx_conserv",zx-.2,.7,5.2,3.6,80,{H:184,dk:1});lfLight(C,zx+2.4,2.4,70,"#c8f0ff",3,.35)}
     else if(H("g_green1")){gdS(C,"gdx_ghouse",zx,.8,3.6,2.8,70,{H:132});lfLight(C,zx+1.8,2.2,50,"#c8f0ff",2.4,.3)}
-    if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx+.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.5,4.8,1.1,1.1,70,{H:120})}
-    if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx,E?6.8:6.6,3.6,1.0,50,{H:96});
+    if(H("g_orch")){gdS(C,"gdx_tree",E?zx-.2:zx-.2,4.8,1.1,1.1,70,{H:112});gdS(C,"gdx_tree",E?zx+1.8:zx+1.1,4.8,1.1,1.1,70,{H:120})}
+    if(H("g_grape"))gdS(C,"gdx_grape",E?zx-.2:zx-.6,E?6.8:7.0,3.6,1.0,50,{H:96});
     /* QA f210213: the Estate's front-right corner was the most crowded spot; hive and coop take the open lawn left of the fountain */var hx=st===2?8.9:zx,hy=st===2?10.35:8.6;
     if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
     if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
