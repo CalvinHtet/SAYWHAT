@@ -1578,7 +1578,7 @@ function creditStreak(){
   if(CHESTS[S.streak]&&!S.chests[S.streak]){S.skUndo.chest=S.streak;S.chests[S.streak]=true;S.xp+=CHESTS[S.streak];var cc=Math.round(CHESTS[S.streak]*5);S.coins+=cc;S.earnedC+=cc;out.push("Streak chest: +"+CHESTS[S.streak]+" XP and "+cc+" coins")}
   if(S.streak%ECON.freezeEvery===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
   var wq=wqState();wq.n++;S.skUndo.wq=1;
-  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=wn*6;/* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
+  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=econScaled((typeof ECON!=="undefined"&&ECON.wqCoins)||3000,50);/* Cal 11-23: coins no longer follow the level's XP (the steeper curve would triple them); a set sum, scaled as the other rewards (29zzz_econ.js) *//* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
   return out.join(" | ")||("Streak: day "+S.streak);
 }
 function uncreditStreak(){
