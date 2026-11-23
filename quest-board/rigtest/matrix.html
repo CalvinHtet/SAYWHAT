@@ -131,7 +131,9 @@ for (const f of ["../dist/qbdata.js", "../src/rig.js", "../src/look.js"]) docume
       }
     } else if (sheet === "hair") {
       cols = 12; cw = 100; ch = 118;
-      for (const c of D.creator.hairColors) for (const body of ["m", "f"]) for (const hair of ["h1", "h2", "h3"]) for (const clip of ["idle", "back"])
+      // &styles=h4,h5 &bodies=m: other hairstyles (ROOMS 11-23); default the original three on both bodies
+      const HS = (q.get("styles") || "h1,h2,h3").split(","), HB = (q.get("bodies") || "m,f").split(",");
+      for (const c of D.creator.hairColors) for (const body of HB) for (const hair of HS) for (const clip of ["idle", "back"])
         cells.push({ label: `${hair} ${c.id} ${body}`, body, opts: { hairStyle: hair, hairColor: c.id }, arts: [], clip, crop: HEAD });
     }
     if (q.get("cw")) cw = +q.get("cw");
