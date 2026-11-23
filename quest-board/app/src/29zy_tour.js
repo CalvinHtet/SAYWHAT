@@ -25,6 +25,7 @@ function tourInit(){if(!loaded||!S.created||S.calm!==undefined)return;
   persist()}
 function tourAreaOpen(k){try{var a=AREAS.filter(function(x){return x[0]===k})[0];return !!a&&effLvl()>=a[2]&&!areaGate(k)&&!!areaOn()[k]}catch(e){return false}}
 /* the player's own first quest still to do (not the weekly Workout, not a bounty) */
+function tourTutQ(){return (S.quests||[]).filter(function(q){return q&&q.tut&&!(S.done&&S.done[q.id])})[0]||null}
 function tourOwnQ(){return (S.quests||[]).filter(function(q){return q&&q.rep!=="weekly4"&&!q.bty&&!(S.done&&S.done[q.id])})[0]||null}
 /* QA's review: level 2 brought the Loft tour and the Town tour within minutes. A tour that waits for another one runs only on a later day
    than that one ran (S.tourOn {id: day}; a save from before has no day, so it is long ago) */
@@ -36,8 +37,10 @@ var TOURS=[
     {sel:"#cap",t:"Welcome to SAYWHAT",x:"Every real thing you need to do is a quest. Type today's tasks here, as many as you like, then tap Add."},
     /* QA's review (2026-11-14): this step rang the only quest on a new Board, the hour-long Workout with photo proof. It rings the
        player's own first task, or, before they have added one, the Add button. */
-    {get sel(){var q=tourOwnQ();return q?'.qmain[data-id="'+q.id+'"]':"#capgo"},get t(){return tourOwnQ()?"Do it, then tick it":"Add one first"},
-     get x(){return tourOwnQ()?"Done it in real life? Tap it. You earn XP and coins for every one.":"Type something you need to do today, then tap Add. When it's done in real life, tick it here."}},
+    /* Cal 11-23: the second card said to add tasks again and to tick one you could not have yet. It rings the "Finish the tutorial" quest
+       every new character starts with (10_app_a.js ccdone) and waits for the tick; without it (an older save), the player's own first task */
+    {get sel(){var q=tourTutQ()||tourOwnQ();return q?'.qmain[data-id="'+q.id+'"]':"#capgo"},get tap(){return !!tourTutQ()},get t(){return tourTutQ()?"Tick it off":tourOwnQ()?"Do it, then tick it":"Add one first"},
+     get x(){return tourTutQ()?"Tasks you enter get categorized automatically and show up here. Tick this box to complete it and claim your reward.":tourOwnQ()?"Done it in real life? Tap it. You earn XP and coins for every one.":"Type something you need to do today, then tap Add. When it's done in real life, tick it here."}},
     {sel:".bline",t:"Your level",x:"XP fills this bar. Each new level pays coins, and now and then opens something new. We'll show you each one."},
     {sel:".coinpill",t:"Your coins",x:"Coins build your home and buy clothes, once those open. For now, finish a few tasks."}]},
   {id:"dq",ready:function(){return view==="board"&&tourVis(".card.dq")},steps:[

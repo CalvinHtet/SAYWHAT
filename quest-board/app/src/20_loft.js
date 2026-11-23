@@ -1429,7 +1429,7 @@ function lfNext(a){
   if(a.visitor&&a.leaveAt&&Date.now()>a.leaveAt){a.leaving=1;return lfNext(a)}
   if(R==="crew"&&a.post){var po=lfPostSpot(C,a);if(po){a.si=po.i;po.s.by=a.id;a.last=po.i;a.speed=1;a.stretch=0;lfGo(a,po.s.x,po.s.y,po.s);return}}
   if(R==="crew"&&!a.post&&lfSvcWork(a,C,r))return;
-  var cand=lfFree(C,a,function(s){return !s.cust&&!s.plot&&s.kind!=="door"&&!(s.staffOnly&&(R!=="crew"||a.wand||a.idle))&&!(s.tag==="deck"&&(lfBlockedAt(C,8.75,.75)||lfBlockedAt(C,8.75,1.3)))&&(R==="me"||R==="visitor"||true)});
+  var cand=lfFree(C,a,function(s){return !s.cust&&!s.plot&&s.kind!=="door"&&!(s.staffOnly&&(R!=="crew"||a.wand||a.idle))&&!(s.kit&&!(a.look&&a.look.chef)&&a.tm!=="mara")&&!(s.station&&a.look&&a.look.chef)&&!(s.tag==="deck"&&(lfBlockedAt(C,8.75,.75)||lfBlockedAt(C,8.75,1.3)))&&(R==="me"||R==="visitor"||true)});
   // roles prefer their trade
   if(R==="crew"&&r.t!=="lounge"&&!a.wand){var jobs=cand.filter(function(o){return o.s.kind==="work"||o.s.kind==="play"||o.s.kind==="run"||o.s.kind==="fish"||o.s.kind==="water"||o.s.kind==="smell"||o.s.kind==="browse"});
     if(jobs.length&&Math.random()<.78)cand=jobs;
@@ -1556,6 +1556,7 @@ function lfProp(a){
   if(a.carry||t==="serve"&&a.mode==="do"){var it=a.job&&a.job.s?(a.job.plot?"crate":a.job.s.item||""):a.npc?"box":"";var cp=lfCarryProp(it,a);if(cp)return cp;return '<g transform="translate(11,-40)"><rect x="-9" y="3" width="18" height="2.4" rx="1" fill="#c9ced8" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><ellipse cx="0" cy="1.6" rx="5.6" ry="2.2" fill="#fff" stroke="rgba(0,0,0,.35)" stroke-width=".5"/><ellipse cx="0" cy=".8" rx="3.4" ry="1.4" fill="#ff8a5c"/></g>';}
   if(a.mode!=="do")return "";
   if(t==="pour"||t==="mix"){var r=t==="mix"?w*8:0;return '<g transform="translate(12,-34) rotate('+(t==="pour"?-50:r)+')"><rect x="-3" y="-8" width="6" height="14" rx="2" fill="'+(t==="mix"?"#c9ced8":"#6cff9a")+'" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><rect x="-1.4" y="-12" width="2.8" height="5" fill="#8a8f9c"/></g>'+(t==="pour"?'<path d="M14 -30 q4 4 3 14" stroke="rgba(255,190,110,.9)" stroke-width="1.6" fill="none"/><rect x="14" y="-16" width="6" height="8" rx="1" fill="rgba(255,255,255,.35)" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>':'')}
+  if(t==="polish"){var r=(at*220)%360;return '<g transform="translate(13,-33)"><path d="M-3.4 -6 h6.8 l-1 8.4 q-2.4 1.4 -4.8 0z" fill="rgba(215,240,255,.55)" stroke="rgba(255,255,255,.85)" stroke-width=".7"/><path d="M0 2.4 v3.2 M-2.4 5.8 h4.8" stroke="rgba(255,255,255,.85)" stroke-width=".8"/><g transform="rotate('+r.toFixed(0)+' 0 -2)"><path d="M-2.6 -4.6 q2.4 -2 5 .4 q-.6 2.6 -3 2.8z" fill="#f4f1ea" stroke="rgba(0,0,0,.25)" stroke-width=".4"/></g></g>'}
   if(t==="snip"){var o=(Math.sin(at*9)+1)*9;return '<g transform="translate(14,-34)"><g transform="rotate('+(-o).toFixed(1)+')"><path d="M0 0 L13 -1.5" stroke="#d6dbe4" stroke-width="1.8" stroke-linecap="round"/><circle cx="-3.2" cy="1.6" r="2.2" fill="none" stroke="#e05a3a" stroke-width="1.3"/></g><g transform="rotate('+o.toFixed(1)+')"><path d="M0 0 L13 1.5" stroke="#aeb4c0" stroke-width="1.8" stroke-linecap="round"/><circle cx="-3.2" cy="-1.6" r="2.2" fill="none" stroke="#e05a3a" stroke-width="1.3"/></g></g>'+(Math.floor(at*2)%3===0?'<path d="M31 -31 l3 7 M34 -29 l-1 8" stroke="#4f9234" stroke-width="1.5" stroke-linecap="round"/>':'')}
   if(t==="cook"||t==="oven")return '<g transform="translate(14,'+(-27+Math.max(0,w)*-3).toFixed(1)+') rotate('+(w*7).toFixed(1)+')"><ellipse rx="7" ry="2.4" fill="#2a2a32" stroke="rgba(0,0,0,.5)" stroke-width=".6"/><rect x="5" y="-1" width="9" height="2" fill="#2a2a32"/></g><g class="lfsteam" fill="rgba(255,255,255,.5)"><circle cx="12" cy="-36" r="2.2"/><circle cx="17" cy="-42" r="1.8"/></g>';
   if(t==="prep")return '<rect x="8" y="-26" width="16" height="3" rx="1" fill="#c9a06a" stroke="rgba(0,0,0,.4)" stroke-width=".5"/><path d="M12 '+(-34+w*3)+' l8 6" stroke="#dfe6ee" stroke-width="1.8"/>';
@@ -3495,7 +3496,7 @@ function lfRigState0(a){var ch=a.look&&a.look.rig;if(!ch)return null;
      has no cooking or snipping pose, so the talking-hands clip carries it, with the held prop (pan, knife, shears, trowel, shaker) */
   if(a.mode==="do"&&LFBUSY[a.tag||""])return {ch:ch,clip:"chat",f:QBLoft.clipFrame("chat",now)};
   return {ch:ch,clip:"idle",f:QBLoft.clipFrame("idle",now)}}
-var LFBUSY={cook:1,oven:1,prep:1,snip:1,weed:1,water:1,mix:1,pour:1,wipe:1};
+var LFBUSY={cook:1,oven:1,prep:1,snip:1,weed:1,water:1,mix:1,pour:1,wipe:1,polish:1};
 function lfRigKey(a){var r=lfRigState(a);return r?(r.hide?"h":r.clip+r.f+(r.seat||"")):""}
 function lfCalImg(a,f,img){var r=lfRigState(a);if(!r)return false;if(!a.look.npc)QBLoft.warm(r.ch);img.style.imageRendering="auto";
   if(r.hide){img.setAttribute("href","data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==");return true}
