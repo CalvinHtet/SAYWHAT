@@ -1,6 +1,6 @@
 // Cal 11-23 after the reboot (29zz_v136.js): the coins step rings the coin count on screen (scrolled down too); two level-ups show 2 then
-// 3; the cleared box keeps only its title; the task box asks for commas; Training: - Set / + Set on every exercise (remembered), a pencil
-// to swap a plan's exercise for one you name (an emoji instead of the demonstration), and back.
+// 3; the cleared box keeps only its title; the task box asks for commas; Training: one Edit per exercise (sets, reps, name, photo; an emoji
+// for a renamed exercise, the photo once given), and back to the original.
 //   PORT=<plain build> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/v136.js
 const { chromium } = require('playwright'); const PORT = process.env.PORT || 8779, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
 (async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 700 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
@@ -27,22 +27,37 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.evaluate(() => { const S = window.__qb.x().S; S.areaOn = Object.assign(S.areaOn || {}, { train: 1 }); document.querySelector('.nav button[data-v="train"]').click(); }); await p.waitForTimeout(700); await clear();
   await p.evaluate(() => { const b = document.querySelector('[data-act="wkplan"]'); if (b) b.click(); }); await p.waitForTimeout(900);
   await p.evaluate(() => { const go = [...document.querySelectorAll('#layer .modal button')].find((b) => /start|begin|go/i.test(b.textContent)); if (go) go.click(); }); await p.waitForTimeout(900); await clear();
-  let t = await p.evaluate(() => { const S = window.__qb.x().S, L = (S.wk && S.wk.list) || []; return { list: L.slice(), bars: document.querySelectorAll('.v36ex').length, pencils: document.querySelectorAll('[data-act="v36sw"]').length }; });
-  ok(t.list.length > 0 && t.bars >= t.list.length && t.pencils > 0, 'a session: every exercise has - Set / + Set, plan exercises a pencil ' + JSON.stringify(t));
+  let t = await p.evaluate(() => { const S = window.__qb.x().S, L = (S.wk && S.wk.list) || []; return { list: L.slice(), edits: document.querySelectorAll('.v36ex [data-act="v36ed"]').length, old: document.querySelectorAll('[data-act="v36set"],[data-act="v36sw"]').length }; });
+  ok(t.list.length > 0 && t.edits >= t.list.length && t.old === 0, 'a session: one Edit button per exercise, no separate set/swap buttons ' + JSON.stringify(t));
   const first = t.list[0];
   const n0 = await p.evaluate((id) => (window.__qb.x().S.wk.setsN || {})[id] || window.__qbV136.ex(id)[2], first);
-  await p.evaluate((id) => document.querySelector('[data-act="v36set"][data-d="1"][data-ex="' + id + '"]').click(), first); await p.waitForTimeout(300);
-  const n1 = await p.evaluate((id) => ({ n: window.__qb.x().S.wk.setsN[id], kept: (window.__qb.x().S.exSets || {})[id], boxes: document.querySelector('[data-act="v36set"][data-ex="' + id + '"]').closest('.ex').querySelectorAll('.sb').length }), first);
-  ok(n1.n === n0 + 1 && n1.kept === n0 + 1 && n1.boxes === n0 + 1, '+ Set adds a set and remembers it ' + JSON.stringify([n0, n1]));
-  await p.evaluate((id) => document.querySelector('[data-act="v36set"][data-d="-1"][data-ex="' + id + '"]').click(), first); await p.waitForTimeout(300);
-  const n2 = await p.evaluate((id) => window.__qb.x().S.wk.setsN[id], first); ok(n2 === n0, '- Set takes it away (' + n2 + ')');
-  await p.evaluate((id) => document.querySelector('[data-act="v36sw"][data-ex="' + id + '"]').click(), first); await p.waitForTimeout(300);
-  await p.fill('#v36swin', 'Hip thrusts'); await p.evaluate(() => document.querySelector('[data-act="v36swok"]').click()); await p.waitForTimeout(500);
-  const sw = await p.evaluate((id) => { const S = window.__qb.x().S; return { list: S.wk.list.slice(), swap: S.swap[id], ex: window.__qbV136.ex('sw_' + id), tile: !!document.querySelector('.xcust'), name: [...document.querySelectorAll('.exhead b')].map((e) => e.textContent).includes('Hip thrusts') }; }, first);
-  ok(sw.list[0] === 'sw_' + first && sw.swap && sw.swap.n === 'Hip thrusts' && sw.ex && sw.tile && sw.name, 'swapped: the card says Hip thrusts with an emoji tile ' + JSON.stringify({ l: sw.list[0], swap: sw.swap, ic: sw.ex && sw.ex[6] }));
-  await p.screenshot({ path: OUT + '/v136_swap.png', fullPage: false });
-  await p.evaluate(() => document.querySelector('[data-act="v36sw"][data-ex^="sw_"]').click()); await p.waitForTimeout(300);
-  await p.evaluate(() => document.querySelector('[data-act="v36swback"]').click()); await p.waitForTimeout(500);
-  const back = await p.evaluate((id) => { const S = window.__qb.x().S; return { l: S.wk.list[0], swap: S.swap[id] || null }; }, first);
-  ok(back.l === first && !back.swap, 'swapped back ' + JSON.stringify(back));
+  const ed = async (id) => { await p.evaluate((id) => document.querySelector('[data-act="v36ed"][data-ex="' + id + '"]').click(), id); await p.waitForTimeout(400); };
+  await ed(first);
+  const win = await p.evaluate(() => { const m = document.querySelector('#layer .v36edm'); return m ? { name: document.getElementById('v36n').value, reps: document.getElementById('v36r').value, sets: document.getElementById('v36sv').textContent, pic: (m.querySelector('.v36pic') || {}).innerHTML || '' } : null; });
+  ok(win && win.name && win.reps && +win.sets === n0, 'the Edit window shows name, reps, sets ' + JSON.stringify(win && { name: win.name, reps: win.reps, sets: win.sets }));
+  await p.evaluate(() => { document.querySelector('[data-act="v36s"][data-d="1"]').click(); document.getElementById('v36r').value = '10-12'; document.querySelector('[data-act="v36save"]').click(); }); await p.waitForTimeout(500);
+  let r = await p.evaluate((id) => { const S = window.__qb.x().S; return { n: S.wk.setsN[id], kept: (S.exSets || {})[id], reps: window.__qbV136.ex(id)[3], list0: S.wk.list[0], boxes: document.querySelector('[data-act="v36ed"][data-ex="' + id + '"]').closest('.ex').querySelectorAll('.sb').length }; }, first);
+  ok(r.n === n0 + 1 && r.kept === n0 + 1 && r.reps === '10-12' && r.list0 === first && r.boxes === n0 + 1, 'sets +1 and reps 10-12 saved, the name kept so the demo stays ' + JSON.stringify(r));
+  await ed(first); await p.evaluate(() => { document.getElementById('v36n').value = 'Hip thrusts'; document.querySelector('[data-act="v36save"]').click(); }); await p.waitForTimeout(500);
+  r = await p.evaluate((id) => { const S = window.__qb.x().S; return { l: S.wk.list[0], swap: S.swap[id], tile: !!document.querySelector('.xcust'), name: [...document.querySelectorAll('.exhead b')].map((e) => e.textContent).includes('Hip thrusts'), reps: (window.__qbV136.ex('sw_' + id) || [])[3] }; }, first);
+  ok(r.l === 'sw_' + first && r.swap && r.swap.n === 'Hip thrusts' && r.tile && r.name && r.reps === '10-12', 'renamed: Hip thrusts with an emoji, reps kept ' + JSON.stringify(r));
+  await ed('sw_' + first);
+  const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==', 'base64');
+  await p.setInputFiles('#v36p', { name: 'x.png', mimeType: 'image/png', buffer: png }); await p.waitForTimeout(800);
+  const pv = await p.evaluate(() => !!document.querySelector('#layer .v36edm .v36pic img')); ok(pv, 'the photo previews in the window');
+  await p.evaluate(() => document.querySelector('[data-act="v36save"]').click()); await p.waitForTimeout(500);
+  r = await p.evaluate((id) => ({ img: !!((window.__qb.x().S.swap[id] || {}).img), tile: !!document.querySelector('.xd.xphoto img') }), first);
+  ok(r.img && r.tile, 'saved: the card shows the photo ' + JSON.stringify(r));
+  await p.screenshot({ path: OUT + '/v136_edit.png' });
+  await ed('sw_' + first); await p.evaluate(() => document.querySelector('[data-act="v36orig"]').click()); await p.waitForTimeout(500);
+  const back = await p.evaluate((id) => { const S = window.__qb.x().S; return { l: S.wk.list[0], swap: S.swap[id] || null, reps: window.__qbV136.ex(id)[3] }; }, first);
+  ok(back.l === first && !back.swap && back.reps !== '10-12', 'back to the original (name, demo and reps) ' + JSON.stringify(back));
+  /* the guided session screen has the same Edit and shows the change at once */
+  await p.evaluate(() => { const b = document.querySelector('[data-act="wkopen"]'); if (b) b.click(); }); await p.waitForTimeout(800);
+  const g0 = await p.evaluate(() => !!document.querySelector('.cinner [data-act="v36ed"]')); ok(g0, 'the guided screen has Edit');
+  await p.evaluate(() => document.querySelector('.cinner [data-act="v36ed"]').click()); await p.waitForTimeout(400);
+  await p.evaluate(() => { document.getElementById('v36n').value = 'Hip thrusts'; document.querySelector('[data-act="v36save"]').click(); }); await p.waitForTimeout(600);
+  const g1 = await p.evaluate(() => { const c = document.querySelector('.cinner'); return c ? { name: /Hip thrusts/.test(c.innerText), tile: !!c.querySelector('.xcust') } : null; });
+  ok(g1 && g1.name && g1.tile, 'and after saving it shows Hip thrusts with an emoji ' + JSON.stringify(g1));
+  await p.screenshot({ path: OUT + '/v136_guided.png' });
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

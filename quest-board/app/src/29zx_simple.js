@@ -301,7 +301,7 @@ var zxRS0=lfRigState0;lfRigState0=function(a){var r=zxRS0.apply(this,arguments);
    is new to them, or no card at all. S.fsd {id:1} and S.fsall are new save fields; merge() keeps unknown fields. */
 var ZXFS=[
   {id:"add",t:"Add today's tasks",x:"Type your tasks, separated by commas, then tap Add.",open:function(){return true},
-    done:function(){return (+S.total||0)>0||(S.quests||[]).some(function(q){return q&&q.rep!=="weekly4"&&!q.bty})},show:[{sel:"#cap",t:"Add today's tasks",x:"Type what you need to do today, separated by commas, then tap Add."}]},
+    done:function(){/* the prefilled "Finish the tutorial" quest is not a task the player added (Cal 11-23) */var tq=(S.quests||[]).filter(function(q){return q&&q.tut})[0],td=S.tutDone||(tq&&S.done&&S.done[tq.id])?1:0;return (+S.total||0)>td||(S.quests||[]).some(function(q){return q&&q.rep!=="weekly4"&&!q.bty&&!q.tut})},show:[{sel:"#cap",t:"Add today's tasks",x:"Type what you need to do today, separated by commas, then tap Add."}]},
   {id:"tick",t:"Finish one and tick it",x:"Did it in real life? Tap it. XP and coins.",open:function(){return true},
     done:function(){return (+S.total||0)>0},show:[{sel:".q .qmain",t:"Tick it off",x:"Done it for real? Tap the quest to tick it. That pays XP and coins."}]},
   {id:"loft",t:"Open The Loft",x:"Your own place, built with your coins.",open:function(){return tourAreaOpen("hideout")},
