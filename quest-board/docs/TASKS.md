@@ -309,7 +309,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.31 62a515fe, Live): v1.31 live check, PASS (QA findings).
+- Now (on bdb442d1): Karaoke Disco Ball retired, PASS with a refund NOTE (QA findings).
+  Was: Now (on release/v1.31 62a515fe, Live): v1.31 live check, PASS (QA findings).
   Was: Now (on release/v1.31 62a515fe): v1.31 take three, PASS, can ship; one pace NOTE for Cal (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
@@ -423,6 +424,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with a NOTE, the Karaoke Disco Ball retired (ROOMS bdb442d1, in qa-local; clean builds of bdb442d1 and the commit before;
+  shots/qa/disco/): before, the ball is drawn (kax_disco twice in the page) and the room window offers "Disco Ball"; after, a save
+  that owns all 12 Karaoke ids incl. ka_disco opens the room with no ball art, the window offers no Disco Ball, and of the 11 live
+  upgrades it owns 11 (full: roomFill and roomsShare drop retired pieces, as do upFrac, income and the price lists); the same with
+  the ball not owned; stage audit 9 pieces, 0 outside, 0 overlaps; 0 page errors. NOTE (Cal/LEAD): a player who bought the ball paid
+  its price (2,150 before the retirement) for a piece no longer shown; the Patio dog beds were refunded when retired (9c6b5cc).
+  Karaoke now has one upgrade fewer than Cal's +15 (ROOMS told LEAD). Not checked: a real owner's save (QA knows of none).
 - PASS, v1.31 live check (release/v1.31 62a515fe on Live; owner LEAD): Live serves version.txt 62a515fe, version.json appv 133; its 12
   listed files (hashed names, sizes) are identical to QA's own web build of 62a515fe (the commit QA passed, f83ec7bf), and index.html,
   config.js, app.js, web.js and qbdata.js are byte-identical; config has noTest and one owner. Rollback ready: rollback-v1.30
