@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
+- Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
+  Was: Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
   Was: Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
   Was: Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
   Was: Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
@@ -419,6 +420,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.31 can ship (release/v1.31 9b2c2206 = release/v1.30 + qa-local 21e2706d, APPV 133, QB_EPOCH 6; rollback-v1.30 ce74e7b7,
+  APPV 134; owner LEAD; shots/qa/v131c/). Ship: ship.sh release/v1.31 133 6.
+  - The cut: over 21e2706d only APPV differs; over QA's last pass (05eac907) the shipped changes are the curve (29zzz_econ.js), the
+    milestone re-base (29zz_v133.js), the Closet at 600 and web/web.js. Parent release/v1.30. The rollback is 1c6ef20d (v1.30 code) +
+    29zzz_curve6.js (the same curve values and move code, byte for byte) at APPV 134, epoch 6.
+  - The XP move (xpmove.js): its copy of curve 5 equals v1.30's real cum() at every level 1-101; 396 v1.30 saves (every level at 0, 1,
+    50 and 99% of the way) keep their level when moved. The curve is 25-26% longer per level (level 30: 4,932 to 6,225 XP).
+    merge() replaces S with the incoming doc, so each doc (local or cloud) is moved once, by its own xpc6.
+  - Real saves (carry3.js, one profile each, v1.30 then the cut then the rollback on one origin): levels 8, 30 and 55 at 40% keep
+    level and share (30: 5,058 to 6,384 XP), coins, level pay and the Town week's 300 XP unchanged, xpc6 set, no second move on a
+    reload, the same on the rollback build; 0 page errors. The save that opened the pulled v1.31 (5,349 XP, since 15): level 31
+    again, since re-based to 30, no stale offers, stable on reload.
+  - Web build: wlive.js with APPV 133 and EPOCH 6 PASS (first load shows sign-in, no hooks, no Testing row, 0 errors). Sign-in
+    (inapp.js): Instagram, Facebook, Messenger, TikTok, Snapchat and the Google app show "Open this in Safari or Chrome" and Copy link,
+    which copies the page's address and says so; Safari, Chrome (iPhone, Android) and an iMessage link view keep the Google button;
+    0 errors each.
+  - Closet 600 (fixed) right after the Figurine Cabinet at levels 1 and 30; milestones (ms2_mile.js), no idle re-render, the econ
+    numbers (prices, task coins 46/116/231) as passed before; 0 page errors.
+  - NOTE (LEAD): a save still without xpc5 (not loaded since curve 5 came in) would be moved by merge's curve5 block onto curve 6 and
+    then again by xpc6, landing a few levels high; any save that loaded a recent version has xpc5, so QA expects none.
+  - Not checked: a real phone or a real app browser (UA stand-ins), the friend's crash itself (waiting on their phone and browser),
+    signed-in cloud saves (the cloud), the Test channel (ship.sh compares it).
 - PASS, rollback live check (rollback-v1.30 1c6ef20d on Live; owner LEAD; shots/qa/v131b/): 1c6ef20d is release/v1.30 c1cff491 with
   APPV 130 to 132 and nothing else. Live serves version.txt 1c6ef20d and version.json appv 132; its 12 listed files (names with
   hashes, sizes) are identical to QA's own web build of 1c6ef20d, and index.html, config.js and app.js are byte-identical. The carried
