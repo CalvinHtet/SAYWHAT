@@ -1,0 +1,45 @@
+pose          live gap  tear |  fix gap  tear | fineoff gap tear   (all 54 starter looks summed; gap = skin in gaps/slivers, tear = background)
+backwalk1       23442  2199 |    8286  2697 |    8286  2697  fix better
+backwalk2       25395  4779 |    7665  5007 |    7665  5007  fix better
+backwalk3       25965  5244 |    7362  6402 |    7362  6402  fix better
+backwalk4       25122  3783 |    7584  4053 |    7584  4053  fix better
+chat1           32673  7872 |   19869  5418 |   19869  5418  fix better
+chat2           35442  6201 |   26301  4467 |   26301  4467  fix better
+cheer1          12222  7854 |   12222  7854 |   21312  5433
+cheer2          11961  7395 |   11961  7395 |   25533  7269
+clap1           26556  3894 |   23040  4836 |   23040  4836
+clap2           29457  1788 |   20463  2943 |   20463  2943  fix better
+dance1          39258  7068 |   22599  3828 |   22599  3828  fix better
+dance2          41304  4638 |   23976  3414 |   23976  3414  fix better
+idle            25707  2313 |   14421  3213 |   14421  3213  fix better
+idleIn          28662  2205 |   15987  2802 |   15987  2802  fix better
+laugh1          27036  3222 |   22470  4557 |   22470  4557
+laugh2          27288  3135 |   23193  4398 |   23193  4398
+rearStand       23142  1134 |    7290  1818 |    7290  1818  fix better
+rearStandIn     25734  1152 |    7344  1845 |    7344  1845  fix better
+rest            23205  2967 |   11127  2949 |   11127  2949  fix better
+sideL           48150  3126 |   34662  3873 |   34662  3873  fix better
+sideR           44430  3936 |   37551  3576 |   37551  3576
+sideUp          46983  3570 |   36735  3609 |   36735  3609  fix better
+sitBack         24030  1362 |   13119  1995 |   13119  1995  fix better
+sitFront        28179  1554 |   21759  3444 |   21759  3444
+sitFrontIn      28494  2103 |   22068  4110 |   22068  4110
+sleep           27336  2598 |   19191  3993 |   19191  3993  fix better
+sleepHead       26211  5754 |   23064  6858 |   23064  6858
+sleepIn         25755  2634 |   19254  4395 |   19254  4395
+stretch          9459  2460 |    9459  2460 |    9459  2460
+stretchUp       12336  9798 |   12336  9798 |   23367  7509
+thinkA          27048  3273 |   24687  4272 |   24687  4272
+thinkB          29721  3921 |   26184  5001 |   26184  5001
+thinkC          29493  3915 |   26388  4836 |   26388  4836
+type1           25008  2472 |   12822  1998 |   12822  1998  fix better
+type2           26238  1005 |   11571  1830 |   11571  1830  fix better
+walk1           28632  5877 |   16083  5895 |   16083  5895  fix better
+walk2           27507  6276 |   17391  6831 |   17391  6831  fix better
+walk3           29277  2559 |   18972  3837 |   18972  3837  fix better
+walk4           27447  4416 |   16380  4953 |   16380  4953  fix better
+wave1           13104  5433 |   13104  5433 |   28914  5910
+wave2           13185  5658 |   13185  5658 |   23037  4893
+live total gap 1107594 tear 162543
+fix total gap 739125 tear 178551
+fineoff total gap 798480 tear 173427

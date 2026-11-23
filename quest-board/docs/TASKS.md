@@ -313,7 +313,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
+- Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
+  Was: Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
   Was: Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
   Was: Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
@@ -437,6 +438,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS, the rig fix a888ed55 (fineSlots [], fineUp body/top/arms/skinArms; owner LEAD; shots/qa/skin1123/bent_live.jpg vs
+  bent_fix.jpg, starter_live_fix_fineoff.txt). Straight-arm poses are fixed: his white hoodie on deep skin is clean in idle and sitFront
+  (live: slivers at both seams). Bent-elbow poses got worse: thinkA, laugh1 and sideR now show large skin patches on the upper sleeve
+  (live: thin slivers); ROOMS's 17-top sweep finds the same (63,500 px of new damage against 25,700 removed; shots/pending_art/
+  skin_1123/v2/), also gp_bear m sideR and o_work m thinkA. The starter sweep (54 looks x 43 poses, skinleak.js) agrees on the split:
+  skin slivers in gaps fall in every pose (1.11M to 0.74M px; idle, walks and back views about 3x), tears (background through a sleeve)
+  rise in bent-elbow poses (sitFront 1.5k to 3.4k, sleep, think, laugh; 162k to 179k overall); arms-up poses are unchanged (fine mesh
+  there either way). Limit of the detector: a wide skin patch over a sleeve reads to it like an arm in front of a shirt, so the patches
+  above were found by eye and by ROOMS's before/after diff, not by its count. Options (ROOMS): coarse mesh only in straight-arm poses (a
+  per-pose flag), fine elsewhere; or a coarse copy of the top drawn under the fine one, which would fill the cracks in every pose.
+- PASS by review and LEAD's tests (with every non-local request blocked, on a888ed55's web build): Players and friendship (55c6202e;
+  friends39.js: one leaderboard, card with friendship, a greeting pays both 5, once a day a person, 2 people a day, Bo paid and at
+  level 1) and kind notes (3485b007; kudos39.js: Cal's four choices, a posted note on the board then gone after 48 hours, 500 only with
+  coins). Kind notes stay private in the rules (kudos/kudosok readable by the writer and the owner only). NOTES (LEAD): the greeted
+  player's once-a-day mark (social.sqt.got, now a date) is deleted by sqPaid's 2-hour trim on every read (it reads a date as no time),
+  so only the sender's own limit holds; friendship counts live in each player's own pings doc, so a tampered game could raise its
+  level (at most 55 coins a greeting, 2 a day).
 - FIX (LEAD, rig; Cal 11-23: "There is some skin showing through the clothes for the character creator ... could be other clothes
   where the skin shows through?"): yes. On the live build (297b2192) every sleeved top lets slivers of the base's skin through along
   the arm-to-torso seams: the starter tee, hoodie and bomber on both bodies, and every Shop top ROOMS sampled (17, worst h_hoodie,

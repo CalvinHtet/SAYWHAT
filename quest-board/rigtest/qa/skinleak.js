@@ -5,6 +5,7 @@
 //            meant; a layer drawn in the wrong order shows up there by eye), and
 //   - "gap":  visible skin inside the clothes' outline closed by R px (a hole or a seam a few px wide: armpit, waist, shoulder, ankle),
 //            but not where the clothes are; big openings (a neckline, a crop top, shorts) are wider than 2R and are not counted;
+//   - "tear": background showing inside the clothes' closed outline (green; a sleeve pulled apart), counted on its own;
 //   - "thin": visible skin over the clothes that is a sliver under 2T+1 px wide (a crack along a seam), counted with the gaps.
 // Only "gap" counts (MIN px in a pose).
 // Looks: LOOKS=creator (every starter top x bottom x shoe), LOOKS=shop (every Shop clothing piece worn over the starter outfit in its slot),
@@ -37,7 +38,9 @@ const OUT = process.env.OUT || 'qa-out/skinleak'; fs.mkdirSync(OUT, { recursive:
       /* thin skin over the clothes (a sliver or crack a few px wide) is a leak; a wide blob (an arm in front of a shirt, a hand) is not */
       const opened = morph(morph(ov, w, h, K.T, false), w, h, K.T, true); let over = 0, gap = 0, thin = 0; const mark = [], markO = [];
       for (let i = 0; i < w * h; i++) { if (!skin[i]) continue; if (cl[i]) { over++; if (opened[i]) markO.push(i); else { thin++; mark.push(i); } } else if (closed[i]) { gap++; mark.push(i); } }
-      return { over, gap: gap + thin, w, h, mark, markO, canvas: cA }; };
+      /* tears: background showing inside the clothes' closed outline (a sleeve pulled apart in arms-up poses) */
+      let tear = 0; const markT = []; for (let i = 0; i < w * h; i++) if (closed[i] && !cl[i] && A[i * 4 + 3] < 60) { tear++; markT.push(i); }
+      return { over, gap: gap + thin, tear, w, h, mark, markO, markT, canvas: cA }; };
   }, { hi: +(process.env.HI || 2), r: +(process.env.R || 3), t: +(process.env.T || 2), min: +(process.env.MIN || 4), poses: process.env.POSES ? process.env.POSES.split(',') : null });
   // the looks
   const looks = await p.evaluate((mode) => { const Q = window.QBDATA, C = Q.creator, D = C.defaults, out = [];
@@ -56,15 +59,15 @@ const OUT = process.env.OUT || 'qa-out/skinleak'; fs.mkdirSync(OUT, { recursive:
       else rig = Object.assign({}, Q.creator.defaults, look.rig, { body: bd });
       const bare = look.shop ? !!((I[((x.SHOP.find((q) => q[0] === look.id) || [])[6] || {}).gar] || {}).bare) : false;
       const res = []; const cols = 12, cw = 64 * K.HI, ch = 100 * K.HI; let sheet = null, g = null, n = 0;
-      for (let i = 0; i < K.poses.length; i++) { const c = await K.check(rig, K.poses[i]); if (c.gap >= K.MIN) { res.push([K.poses[i], c.over, c.gap]);
+      for (let i = 0; i < K.poses.length; i++) { const c = await K.check(rig, K.poses[i]); if (c.gap >= K.MIN || c.tear >= K.MIN) { res.push([K.poses[i], c.over, c.gap, c.tear]);
           if (!sheet) { sheet = document.createElement('canvas'); sheet.width = cols * cw; sheet.height = Math.ceil(K.poses.length / cols) * (ch + 14); g = sheet.getContext('2d'); g.fillStyle = '#8b8fa3'; g.fillRect(0, 0, sheet.width, sheet.height); }
           const X = (n % cols) * cw, Y = Math.floor(n / cols) * (ch + 14); n++; const cc = document.createElement('canvas'); cc.width = c.w; cc.height = c.h; const cg = cc.getContext('2d'); cg.drawImage(c.canvas, 0, 0); const id = cg.getImageData(0, 0, c.w, c.h);
-          c.markO.forEach((k) => { id.data[k * 4] = Math.round(id.data[k * 4] * .6); id.data[k * 4 + 1] = Math.round(id.data[k * 4 + 1] * .6); id.data[k * 4 + 2] = 255; }); c.mark.forEach((k) => { id.data[k * 4] = 255; id.data[k * 4 + 1] = 0; id.data[k * 4 + 2] = 0; id.data[k * 4 + 3] = 255; }); cg.putImageData(id, 0, 0);
-          g.drawImage(cc, 0, 0, c.w, c.h, X, Y + 14, cw, ch); g.fillStyle = '#fff'; g.font = '11px sans-serif'; g.fillText(`${K.poses[i]} o${c.over} g${c.gap}`, X + 2, Y + 11); } }
+          c.markO.forEach((k) => { id.data[k * 4] = Math.round(id.data[k * 4] * .6); id.data[k * 4 + 1] = Math.round(id.data[k * 4 + 1] * .6); id.data[k * 4 + 2] = 255; }); c.mark.forEach((k) => { id.data[k * 4] = 255; id.data[k * 4 + 1] = 0; id.data[k * 4 + 2] = 0; id.data[k * 4 + 3] = 255; }); c.markT.forEach((k) => { id.data[k * 4] = 0; id.data[k * 4 + 1] = 230; id.data[k * 4 + 2] = 60; id.data[k * 4 + 3] = 255; }); cg.putImageData(id, 0, 0);
+          g.drawImage(cc, 0, 0, c.w, c.h, X, Y + 14, cw, ch); g.fillStyle = '#fff'; g.font = '11px sans-serif'; g.fillText(`${K.poses[i]} g${c.gap} t${c.tear}`, X + 2, Y + 11); } }
       return { res, bare, png: sheet ? sheet.toDataURL('image/png') : null }; }, [look, bd]);
     if (r.skip) continue;
     if (r.res.length) { const f = path.join(OUT, `leak_${look.id.replace(/[^a-z0-9_+-]/gi, '_')}_${bd}.png`); if (r.png) fs.writeFileSync(f, Buffer.from(r.png.split(',')[1], 'base64'));
-      rows.push({ look: look.id, body: bd, bare: r.bare, poses: r.res.length, worst: r.res.sort((a, c) => c[2] - a[2]).slice(0, 4) }); console.log(look.id, bd, r.bare ? '(bare)' : '', 'leaks in', r.res.length, 'poses; worst', JSON.stringify(r.res.slice(0, 4))); }
+      rows.push({ look: look.id, body: bd, bare: r.bare, poses: r.res.length, all: r.res.map((x) => x.slice()), worst: r.res.sort((a, c) => c[2] - a[2]).slice(0, 4) }); console.log(look.id, bd, r.bare ? '(bare)' : '', 'leaks in', r.res.length, 'poses; worst', JSON.stringify(r.res.slice(0, 4))); }
   }
   fs.writeFileSync(path.join(OUT, 'skinleak.json'), JSON.stringify(rows, null, 1));
   console.log('looks with leaks', rows.length, 'of', L.length * 2, '| minutes', ((Date.now() - t0) / 60000).toFixed(1), '| page errors', errs.length, JSON.stringify(errs.slice(0, 2))); await b.close(); })();
