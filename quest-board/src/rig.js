@@ -238,16 +238,20 @@
     }
 
     /* One layer ready to draw: its binding plus this rig's textures. */
-    mesh(path, bodyId, view, slot, armsUp, skirt) {
+    mesh(path, bodyId, view, slot, armsUp, skirt, coarse) {
       // Poses with the arms overhead use their own binding of the clothes (see rig.armpit); every other pose the usual one.
       armsUp = !!(armsUp && this.cfg.rig.armpit && this.cfg.rig.armpit.slots[slot.id]);
+      // A pose marked `coarse` (poses.json: standing and walking, arms straight) binds rig.fineSlots on the usual grid (see bindLayer).
+      // Only where that changes the binding, so the other slots keep one copy.
+      const R = this.cfg.rig;
+      coarse = !!(coarse && R.meshStepFine && (R.fineSlots || []).includes(slot.id) && !(armsUp && (R.fineUp || []).includes(slot.id)));
       // A skirt (item flag `skirt`) is one piece of cloth, not two trouser legs: see bindLayer.
       skirt = !!(skirt && slot.bones !== "*" && slot.bones.includes("thN") && slot.bones.includes("thF"));
-      const key = [path, bodyId, view, armsUp ? "up" : "", skirt ? "skirt" : ""].join("|");
+      const key = [path, bodyId, view, armsUp ? "up" : "", skirt ? "skirt" : "", coarse ? "coarse" : ""].join("|");
       if (this.meshes.has(key)) return this.meshes.get(key);
       const made = (async () => {
         const im = await this.image(path);
-        const bound = await this.bind(im, path, bodyId, view, slot, armsUp, skirt);
+        const bound = await this.bind(im, path, bodyId, view, slot, armsUp, skirt, coarse);
         const gl = this.gl, tex = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
@@ -307,15 +311,15 @@
 
     /* Bind one layer to the skeleton once. Weights come from geometry, so a new
        item needs no authoring: it just has to be painted on the rest pose. */
-    bind(im, path, bodyId, view, slot, armsUp, skirt) {
-      const key = [path, bodyId, view, slot.id, armsUp ? "up" : "", skirt ? "skirt" : ""].join("|");
+    bind(im, path, bodyId, view, slot, armsUp, skirt, coarse) {
+      const key = [path, bodyId, view, slot.id, armsUp ? "up" : "", skirt ? "skirt" : "", coarse ? "coarse" : ""].join("|");
       if (sharedBindings.has(key)) return sharedBindings.get(key);
-      const made = this.bindLayer(im, bodyId, view, slot, armsUp, skirt);
+      const made = this.bindLayer(im, bodyId, view, slot, armsUp, skirt, coarse);
       sharedBindings.set(key, made);
       return made;
     }
 
-    async bindLayer(im, bodyId, view, slot, armsUp, skirt) {
+    async bindLayer(im, bodyId, view, slot, armsUp, skirt, coarse) {
       const { rig } = this.cfg, bv = this.cfg.bodies[bodyId][view];
       // rig.fineSlots / rig.meshStepFine: a finer grid for the layers that bend most (the body, tops, arm pieces), so a tight elbow
       // folds the cloth in smaller pieces instead of creasing it into a zigzag (LEAD, emotes, Cal 11-18: "the clothes are already
@@ -325,7 +329,11 @@
       // rig.fineUp: slots on the fine grid only in arms-up poses. The bare body's arms (sleeveless tops, a bare chest) tore at the
       // armpit with the arms raised (QA, REGIMENT's waistcoat); on the fine grid the cut between arm and trunk is half the size. Not
       // in other poses: there the fine body peeked through the trousers as white specks in dance2 (QA 2d2c911).
-      const fine = !!(rig.meshStepFine && ((rig.fineSlots || []).includes(slot.id) || (armsUp && (rig.fineUp || []).includes(slot.id))));
+      // `coarse` (a pose flag, poses.json): the standing and walking poses keep rig.fineSlots on the usual grid. With the arms straight
+      // nothing folds, and the fine grid's cut between sleeve and trunk let the base's skin through the seams of sleeved tops (Cal 11-23:
+      // "skin showing through the clothes"). In bent-elbow poses the fine grid still tears less (ROOMS's sweep of a888ed55, 17 tops,
+      // both bodies, 40 poses), so they keep it.
+      const fine = !!(rig.meshStepFine && ((!coarse && (rig.fineSlots || []).includes(slot.id)) || (armsUp && (rig.fineUp || []).includes(slot.id))));
       const W = rig.canvas[0], H = rig.canvas[1], step = fine ? rig.meshStepFine : rig.meshStep;
       const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
 
@@ -627,7 +635,7 @@
       }
       const ra = a.root || {}, rb = b.root || {};
       return {
-        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, painted: t < 0.5 ? a.painted : b.painted, armsUp: !!(a.armsUp || b.armsUp), bones,
+        view: a.view, flip: a.flip, ground: a.ground, swap: t < 0.5 ? a.swap : b.swap, painted: t < 0.5 ? a.painted : b.painted, armsUp: !!(a.armsUp || b.armsUp), coarse: !!(a.coarse && b.coarse), bones,
         root: { x: num(ra.x, rb.x, 0), y: num(ra.y, rb.y, 0), r: num(ra.r, rb.r, 0) },
       };
     }
@@ -647,7 +655,7 @@
         bones[id] = { r: at("r", 0), l: at("l", 1), w: at("w", 1) };
       }
       const root = (name) => field((k) => (k.root || {})[name], 0);
-      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, painted: t < 0.5 ? k1.painted : k2.painted, armsUp: !!(k1.armsUp || k2.armsUp), bones, root: { x: root("x"), y: root("y"), r: root("r") } };
+      return { view: k1.view, flip: k1.flip, ground: k1.ground, swap: t < 0.5 ? k1.swap : k2.swap, painted: t < 0.5 ? k1.painted : k2.painted, armsUp: !!(k1.armsUp || k2.armsUp), coarse: !!(k1.coarse && k2.coarse), bones, root: { x: root("x"), y: root("y"), r: root("r") } };
     }
 
     /* Frame f of a clip. Clips are data in poses.json. A loop of three or more keys follows
@@ -673,7 +681,7 @@
       for (const s of this.cfg.rig.slots) {
         const l = look.layers[s.id];
         if (!l) continue;
-        for (const view of ["front", "back"]) if (l[view]) this.mesh(l[view], look.body, view, s, false, l.skirt);
+        for (const view of ["front", "back"]) if (l[view]) this.mesh(l[view], look.body, view, s, false, l.skirt, true);
       }
     }
 
@@ -713,7 +721,7 @@
       const art = (s) => (keep(s) ? s.id : pose.swap && s.id in pose.swap ? pose.swap[s.id] : s.id);
       const slots = rig.slots.map((s) => ({ s, l: art(s) && look.layers[art(s)] }))
         .filter(({ l }) => l && l[view]);
-      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp, l.skirt)));
+      const meshes = await Promise.all(slots.map(({ s, l }) => this.mesh(l[view], look.body, view, s, pose.armsUp, l.skirt, pose.coarse)));
       // l.paintBase: the layer's painted picture is named after another file (look.js: the bare torso uses the full base's yawn).
       const flats = await Promise.all(slots.map(({ l }) => (pose.painted && view === "front" && l.front ? this.flat((l.paintBase || l.front).replace(/_front\.webp$/, "_" + pose.painted + ".webp")) : null)));
       // l.painted "hide": drawn by the body's painted picture already (the bare arms), so left out when the body has one.

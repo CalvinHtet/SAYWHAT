@@ -16,7 +16,7 @@
  ],
  "anchorPad": 38,
  "meshStep": 24,
- "fineSlots": [],
+ "fineSlots": ["top", "arms", "skinArms"],
  "armsCoverMax": 0.15,
  "meshStepFine": 12,
  "fineUp": ["body", "top", "arms", "skinArms"],
