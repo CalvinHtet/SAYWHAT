@@ -31,6 +31,10 @@
     // arm) so a sleeve never shows through it (QA's idle notch). Only styles that have the cut file get it; the same pixels are
     // still in the main hair, so without the file nothing is missing.
     const lockArt = `${b}_${c.hairStyle}front_front.webp`, G = global.QBDATA, QA = global.QBART;
+    // Highlights (Cal 11-23: "allow for highlights in the hair as well"): choice.hairHi, a hair colour id, tints <b>_<style>hi_*, a layer of
+    // streaks painted for each style (ROOMS), drawn over the hair (rig slot hairHi). A style without that layer shows no highlights.
+    const hiArt = `${b}_${c.hairStyle}hi_front.webp`;
+    if (c.hairHi && ((QA && QA[hiArt]) || (G && G.arthash && G.arthash[hiArt]))) layers.hairHi = { ...views(b, c.hairStyle + "hi"), tint: ramp(find(data.hairColors, c.hairHi)) };
     if ((QA && QA[lockArt]) || (G && G.arthash && G.arthash[lockArt])) layers.hairFront = { front: lockArt, tint: layers.hair.tint };
     for (const [slot, item] of Object.entries(c.equipped || {})) {
       const set = item.frontOnly ? frontOnly(b, item.art) : views(b, item.art);
@@ -41,7 +45,7 @@
       } else {
         layers[slot] = set;
       }
-      if (slot === "hat" && item.clip && item.clip[b]) { layers.hair.clip = item.clip[b]; if (layers.hairFront) layers.hairFront.clip = item.clip[b]; }
+      if (slot === "hat" && item.clip && item.clip[b]) { layers.hair.clip = item.clip[b]; if (layers.hairFront) layers.hairFront.clip = item.clip[b]; if (layers.hairHi) layers.hairHi.clip = item.clip[b]; }
       if (item.lift && item.lift[b]) layers[slot].lift = item.lift[b];
       // A long skirt moves as one piece (rig.js bindLayer). The flag lives in data/items.json; read it there too, so every
       // place that equips an item gets it without copying one more field.

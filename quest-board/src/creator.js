@@ -35,7 +35,7 @@
     // stylistOnly is sold in the Stylist but not offered here, and a style whose art is not in yet stays hidden until it is.
     const hasArt = (b, id) => { const f = `${b}_${id}_front.webp`, G = window.QBDATA, A = window.QBART; return !G || !G.arthash || !!((A && A[f]) || G.arthash[f]); };
     const options = (row) => { const L = row.byBody ? data[row.list][choice.body] : data[row.list];
-      return row.key === "hairStyle" ? L.filter((o) => !o.stylistOnly && hasArt(choice.body, o.id)) : L; };
+      return (row.key === "hairStyle" ? L.filter((o) => hasArt(choice.body, o.id)) : L).filter((o) => !o.stylistOnly); };
     const groups = [];
 
     function syncGroup(g) {

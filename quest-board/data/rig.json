@@ -315,6 +315,12 @@
    ]
   },
   {
+   "id": "hairHi",
+   "bones": [
+    "head"
+   ]
+  },
+  {
    "id": "hat",
    "bones": [
     "head"
