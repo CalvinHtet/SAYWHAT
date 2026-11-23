@@ -117,12 +117,4 @@ PATCHES.push({id:"patch131",d:"2026-11-23",subj:"Update 1.31: testing is over",b
   +'<li>Late-game items in the Shop to work toward.</li>'
   +'</ul><p>Thanks for testing with me. Now get after it.</p>'});
 
-/* ---- Cal 11-23: "Only reset my progress": once, the owner's own save (web/config.js owners; never the sandbox) is backed up to
-   data/users/<uid>/backup_reset131 and on this device, then starts over at level 1, as Reset progress does. The backup doc is the mark:
-   another device that finds it does not reset again. ---- */
-(function(){var t=setInterval(function(){try{if(typeof loaded==="undefined"||!loaded||!S||!S.created||!db||typeof MYUID==="undefined"||!MYUID)return;
-  var W=window.QB_WEB;clearInterval(t);if(!W||W.sandbox||(W.owners||[]).indexOf(MYUID)<0||S.calRs131)return;
-  var ref=db.doc("data/users/"+MYUID+"/backup_reset131");
-  ref.get().then(function(sn){if(sn.exists){S.calRs131=1;persist();return}var old=JSON.parse(JSON.stringify(S));
-    return ref.set(old).then(function(){try{localStorage.setItem("quest-board-backup-reset131",JSON.stringify(old))}catch(x){}
-      try{closeModals()}catch(x){}S=fresh();S.calRs131=1;view="board";persist();render();window.scrollTo(0,0)})}).catch(function(){})}catch(e){}},1500)})();
+/* (rollback: the one-time reset of Cal's own save is left out; the world started over at QB_EPOCH 7) */
