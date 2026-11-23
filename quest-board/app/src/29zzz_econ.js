@@ -33,16 +33,28 @@ coinsFor=function(xp){return Math.max(10,Math.round(xp*((typeof ECON!=="undefine
    - The weekly quest pays a set 3,000 (scaled like the other rewards) instead of one level's XP x 6 coins.
    - Luxury clothes x1.1 on top of PRICEK.
    - The Loft's Goals: a few hundred coins at most and more XP (were up to 1,200 x the room's phase, 4,500 for the last rooms).
-   - The level curve (curve 6): level 1 to 2 is 60 XP, ramping to 500 by level 10, then 500 + 0.8 x (L - 10)^2, plus 0.3 x (L - 40)^2
-     above 40: a heavy player levels at most about 3 times a day, a regular one about once (sims: rigtest/qa/sim.js). */
+   - The level curve (curve 6): curve 5 with every level 25% longer (see below); the first curve 6 (60 to 500 by level 10, then 500 +
+     0.8 x (L - 10)^2) was only safe with the reset of everyone, which Cal called off. */
 var EARNK=.77;
 (function(){var E=ECON;E.coinXp=Math.round(6*EARNK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);
   E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
   E.goal={half:[100,150],full:[300,400],story:[75,100]};
-  E.lvFirst=60;E.lvRamp=10;E.lvFlat=500;E.lvK=.8;E.lvP=2;E.lvTop=.3;E.lvTopFrom=40;
+  /* curve 6, take two (Cal 11-23, after v1.31's first ship halved every level: "Slightly slower curve. Just slightly"): curve 5's shape,
+     every level 25% longer (level 30 at 6,225 XP, was 4,931; the first try's 14,276). Saves move over at the same level (xpc6 below). */
+  E.lvFirst=25;E.lvRamp=6;E.lvFlat=170;E.lvK=.4;E.lvP=2;E.lvTop=.25;E.lvTopFrom=40;
   SHOP.forEach(function(it){if(it&&it[3]&&typeof clothTier==="function"&&clothTier(it[0])==="luxury"){var n=it[3]*1.1;it[3]=n<1000?Math.round(n/10)*10:Math.round(n/50)*50}})})();
 var ekScaled=econScaled;econScaled=function(c,step){return ekScaled(c*EARNK,step)};
 /* the Loft's Goals pay their coins as they are (glCoins x the room's phase), so the phase no longer multiplies them up */
 glCoins=function(k,t){return Math.round(ECON.goal[k][0]/50)*50};
 /* the Walk-in Closet stays at its flat 600 (Cal 11-23, 29zz_v133.js), after the rise above */
 if(typeof v33Closet==="function")v33Closet();
+/* ---- curve 6 for saves made on curve 5 (v1.30 and before): the same level and the same share of the way to the next, as curves 3 to 5
+   moved over (30_app_b.js merge, xpc4/xpc5). XP is the only number moved, with the Weekly Warrior's start (wkg.x0) by the same amount;
+   level pay, gates and the level a player has reached stay as they were. Saves made new from here are on curve 6 already. ---- */
+var CUMT5=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT5.push(CUMT5[L]+Math.round(L<6?20+115*(L-1)/5:135+.315*Math.pow(L-6,2)+(L>40?.2*Math.pow(L-40,2):0)))})();
+function cum5(L){return L<=1?0:L<CUMT5.length?CUMT5[L]:CUMT5[CUMT5.length-1]+(L-CUMT5.length+1)*(CUMT5[CUMT5.length-1]-CUMT5[CUMT5.length-2])}
+var c6Fresh=fresh;fresh=function(){var f=c6Fresh.apply(this,arguments);f.xpc6=1;return f};
+var c6Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc6);var r=c6Merge.apply(this,arguments);
+  if(move&&S){var x=S.xp||0,L=1;while(L<MAXL+49&&x>=cum5(L+1))L++;var fr=(x-cum5(L))/Math.max(1,cum5(L+1)-cum5(L)),nx=Math.round(cum(L)+fr*(cum(L+1)-cum(L)));
+    if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=nx-x;S.xp=nx}
+  if(S&&d&&d.epoch===QB_EPOCH)S.xpc6=1;return r};

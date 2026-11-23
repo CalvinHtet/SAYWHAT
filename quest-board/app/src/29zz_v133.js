@@ -32,7 +32,12 @@ if(ECON.unlock&&ECON.unlock.closet)ECON.unlock.closet.pct=.15;
 var MS_EVERY=5,MS_FROM=5;
 /* S.mile, not S.ms: 28_missions.js deletes S.ms (the old Missions) every 5 s (QA bbcfb26). since: the milestone this save had already passed when it first saw this code; only the ones after it are offered (a save past
    level 40 does not get eight windows at once). Set on first use, so a save loaded later (the cloud's) gets its own. */
-function msState(){if(!S.mile||typeof S.mile!=="object")S.mile={};var M=S.mile;if(M.since==null&&typeof loaded!=="undefined"&&loaded&&S.created){M.since=Math.floor(effLvl()/MS_EVERY)*MS_EVERY;persist()}return M}
+function msState(){if(!S.mile||typeof S.mile!=="object")S.mile={};var M=S.mile;if(typeof loaded!=="undefined"&&loaded&&S.created){var base=Math.floor(effLvl()/MS_EVERY)*MS_EVERY;
+    if(M.since==null){M.since=base;M.fx1=1;persist()}
+    /* QA: a save that opened v1.31's first ship (its levels halved) took its since from the halved level, so 20, 25 and 30 would all
+       fall due once its level came back; once, with nothing picked yet, since moves up to today's level and the offers go */
+    else if(!M.fx1){M.fx1=1;if(!Object.keys(M).some(function(k){return /^g\d/.test(k)})&&M.since<base){M.since=base;Object.keys(M).forEach(function(k){if(/^o\d/.test(k))delete M[k]})}persist()}}
+  return M}
 function msOffer(L){var M=msState(),k="o"+L;if(M[k])return M[k];var pool=[];try{pool=freePool({slots:/^a_/,basics:false})}catch(e){}
   for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=pool[i];pool[i]=pool[j];pool[j]=t}
   var o=pool.slice(0,3).map(function(it){return it[0]});while(o.length<3)o.push("coins");M[k]=o;persist();return o}
