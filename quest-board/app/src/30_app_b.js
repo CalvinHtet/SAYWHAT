@@ -1380,7 +1380,7 @@ function profileHtml(){
     h+='<h3 class="label" style="margin-top:4px">Titles</h3><div class="titles">'+STATS.map(function(s){var t=titleFor(s[0]);return '<span class="chip" style="'+(t?'color:var(--s-'+s[0]+');border-color:var(--s-'+s[0]+')':'')+'">'+(t?esc(t):s[1].split(" ")[0]+': next title at '+([5,15,30].filter(function(x){return x>(S.stats[s[0]]||0)})[0]||"max"))+'</span>'}).join("")+'</div>';
   }
   h+='</section>';
-  h+='<div class="foot"><span class="note">Photo proof: '+Math.round(integrity()*100)+'% of your big-quest XP has a photo. Photos are optional and pay double XP and coins. Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared.</span></div>';
+  h+='<div class="foot"><span class="note">Photo proof: '+Math.round(integrity()*100)+'% of your big-quest XP has a photo. Photos are optional and pay 1.5x XP and coins. Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared.</span></div>';
   return h;
 }
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
@@ -1669,8 +1669,8 @@ function askProof(id){
   /* wake the photo checker while the player is still framing the shot (web build only; a no-op elsewhere) */
   try{if(window.claude)window.claude.use("sample").then(function(s){if(s&&s.warm)s.warm()}).catch(function(){})}catch(e){}
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
-  proofModal=modal('<div class="card box2"><span class="label">Quest done? Double it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
-   +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for double XP and coins.":"Snap a live photo of the finished result for double XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
+  proofModal=modal('<div class="card box2"><span class="label">Quest done? Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
+   +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for 1.5x XP and coins.":"Snap a live photo of the finished result for 1.5x XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
    +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.cx)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.cx)+' coins</span></div>'
    +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
    +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'

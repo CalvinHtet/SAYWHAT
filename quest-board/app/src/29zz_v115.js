@@ -6,7 +6,7 @@
 delete NAVHIDE.train;
 (function(){for(var i=ZXHUB.length-1;i>=0;i--)if(ZXHUB[i][0]==="train")ZXHUB.splice(i,1)})();
 var v15Nav=navHtml;navHtml=function(){var h=v15Nav.apply(this,arguments);
-  try{if(typeof calmOn==="function"&&calmOn()&&calmDay()<4)h=h.replace(/<button data-act="nav" data-v="train"[^>]*>[\s\S]*?<\/button>/,"")}catch(e){}
+  /* Cal 11-23: "Where is the training tab? It disappeared?": Training stays in the bar from day one (29zz_v135.js) */
   return h};
 /* the Training tour rings the tab now */
 TOURS.forEach(function(T){if(T.id!=="train")return;T.ready=function(){return view==="board"&&!!tourVis('.nav button[data-v="train"]')};

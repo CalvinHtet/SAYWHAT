@@ -158,3 +158,29 @@ var v35New=dlNewHtml;dlNewHtml=function(){var h=v35New.apply(this,arguments);try
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV135={on:fshIsOn,buyers:fshBuyers,left:fshLeft,used:fshUsed,counts:fshCounts,rank:fshRank,box:function(){return fshBoxInner()},likeBox:fshLikeBox,tg:fshTg,
   fsh:FSH,setWorlds:function(w){SOC.worlds=w},myId:function(){return MYUID},setMe:function(id){MYUID=id},wk:function(){return fshWk()},
   pub:dlpAll,quests:dlQuests,item:dlItem,what:dlWhat,sqk:function(){return SQK},cl:function(){return CLUSTERS},inbox:function(){return ibAll().map(function(l){return [l.id,l.subj,l.coins||0]})},tour:TOUR};
+
+/* ---- Training (Cal: "Where is the training tab? It disappeared? Move the workout task that is always present on the main board, to the
+   training tab. And have a checkmark tick option at the top that shows which days of the week we went. And allow for photo proof as
+   well. When taking a photo, allow the option to post to the town hall"):
+   - Training is a tab in the bar again, from day one (it had moved to a Board tile, and hid in the calm first days: 29zz_v115.js).
+   - The weekly Workout quest leaves the Board's list; Training's top card logs it: its week strip ticks the days you worked out, and
+     "Log today's workout" takes the live photo proof, as tapping the quest did (onTap: askProof). A photo that passes its check offers
+     "Post to the town board" in its result window (29ph_photos.js phOffer), as before. ---- */
+delete NAVHIDE.train;
+var v35Vis=visQ;visQ=function(q){if(q&&q.rep==="weekly4")return false;return v35Vis.apply(this,arguments)};
+function v35Gq(){return (S.quests||[]).filter(function(q){return q&&q.rep==="weekly4"})[0]||null}
+var v35Train=trainHtml;trainHtml=function(){var h=v35Train.apply(this,arguments);try{var q=v35Gq();if(!q)return h;var done=!!(S.done&&S.done[q.id]),full=weekCount()>=4;
+    var add=done?'<p class="note v35wk"><b>&#10003; Today&rsquo;s workout is logged.</b></p>'
+      :'<button class="btn big v35wk" data-act="v35wk">'+(full?'Log another workout':'Log today&rsquo;s workout')+'</button><p class="note">Take a live photo as proof. After it passes, you can post it to the Town Hall.</p>';
+    var i=h.indexOf('</section>');if(i>=0)h=h.slice(0,i)+add+h.slice(i)}catch(e){}return h};
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=v35wk]");if(!b)return;var q=v35Gq();if(q)onTap(q.id,e)});
+
+/* ---- the Town Hall's photos as small squares, three a row; tap one for the photo full size, likes and comments (29ph_photos.js phOpen) ---- */
+(function(){var st=document.createElement("style");st.textContent=[
+  ".ph-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}",
+  ".ph-card{padding:0!important;gap:0!important;border-radius:10px!important;position:relative}",
+  ".ph-card .ph-img{display:block;aspect-ratio:1/1;overflow:hidden}.ph-card .ph-img img{width:100%;height:100%;object-fit:cover;display:block}",
+  ".ph-card .ph-meta{position:absolute;left:4px;bottom:4px;right:4px;display:flex;align-items:center;gap:4px;font-size:10px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.8);pointer-events:none}",
+  ".ph-card .ph-meta small,.ph-card .ph-cap{display:none!important}.ph-card .ph-meta b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
+  ".ph-card .ph-n{position:absolute;top:4px;right:4px;font-size:10px;padding:1px 5px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff}",
+  ".v35wk{margin-top:10px}"].join("");document.head.appendChild(st)})();
