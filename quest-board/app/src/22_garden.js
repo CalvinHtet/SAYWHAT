@@ -186,6 +186,7 @@ LFROOM.garden=function(C){
     var j=beds.indexOf("gdx_seed");if(j<0)j=beds.indexOf("gd_bed1");if(j>=0)beds[j]=c[1];else beds.push(c[1])});
   beds=beds.slice(0,spots.length);
   beds.forEach(function(k,i){var p=spots[i];gdFit(C,k,p[0],p[1],3.4,1.6);C.s("work",p[0]+1.7,p[1]+2.2,i%2?-1:1,i%3?"water":"work",[6,12],{tag:i%3?"water":"weed",staffOnly:1})})/* ROOMS 11-23: the gardeners water some beds and weed the others (trowel); visitors leave the beds to them */;
+  /* butterflies over the lavender along the back wall */gdFly(C,C.W*.42,.95,34,"#a98bff",2);gdFly(C,C.W*.78,.95,40,"#ffb36b",3);
   if(H("g_spr"))beds.forEach(function(k,i){var p=spots[i];gdMist(C,st===0&&p[0]>5&&p[1]>7?p[0]-.25:p[0]+3.7,p[1]+.8)});/* QA re-audit: one per bed, not every other. On the Back Plot the front right bed's sprinkler goes on its left side: on the right it sprayed into the produce stand (QA v0.74, rule 20) */
   /* QA audit: a hairline before. A black drip hose along each bed's front with water beads, so it can be seen */
   if(H("g_drip"))beds.forEach(function(k,i){var p=spots[i];C.decals.push(lfPoly([lfP(p[0]-.1,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.66,0),lfP(p[0]+3.5,p[1]+1.82,0),lfP(p[0]-.1,p[1]+1.82,0)],"#16191f"));
@@ -216,8 +217,8 @@ LFROOM.garden=function(C){
     if(H("g_grape")){gdS(C,"gdx_grape",E?zx-.2:zx-.6,E?6.8:7.0,3.6,1.0,50,{H:96});gdSnip(C,(E?zx-.2:zx-.6)+2.6,(E?6.8:7.0)+1.4,-1)}
     /* QA f210213: the Estate's front-right corner was the most crowded spot; hive and coop take the open lawn left of the fountain */var hx=st===2?8.9:zx,hy=st===2?10.35:8.6;
     if(st===1){hx=.4;hy=9.9}/* the Kitchen Garden spreads its front out: hive and coop on the strip left of the beds' fronts, shed and pump on the right (QA: they piled up) */
-    if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});var bp=lfP(hx+.6,hy+.4,40);for(var b=0;b<4;b++)C.front.push('<circle class="lfbee" style="animation-delay:'+(b*.6)+'s" cx="'+bp[0]+'" cy="'+bp[1]+'" r="1.6" fill="#2a2a2a"/>')}
-    if(H("g_coop"))gdS(C,"gdx_coop",st===2?14.9:3.0,/* rule 20: off the hive, a lantern between them */st===2?9.8:9.65,1.7,1.3,36,{H:78});
+    if(H("g_bee")){gdS(C,"gdx_hive",hx,hy,1.2,.9,24,{H:56});gdBees(C,hx,hy)}
+    if(H("g_coop")){var cpx=st===2?14.9:3.0,cpy=st===2?9.8:9.65;gdS(C,"gdx_coop",cpx,/* rule 20: off the hive, a lantern between them */cpy,1.7,1.3,36,{H:78});gdChicken(C,cpx+.35,cpy+1.55,0);gdChicken(C,cpx+1.3,cpy+1.75,1)}
     /* QA room sweep (rooms-never-cluttered): in the full garden the big glasshouse holds the tools, so the shed is superseded there */
     if(H("g_shed")&&!(st===2&&H("g_green2")))gdS(C,"gdx_shed",st===2?zx+3.7:Rx,st===2?4.8:8.4,1.6,1.3,50,{H:92});
     if(H("g_mush"))gdS(C,"gdx_logs",st===2?zx+4.0:zx,st===2?6.9:9.9,1.4,.8,16,{H:48});
@@ -237,7 +238,7 @@ LFROOM.garden=function(C){
       if(H("g_bench2"))[W*.22,W*.5].forEach(function(x){gdS(C,"gdx_seat",x,py+1.25,1.5,.45,14,{nosh:1,sh:1,nob:1})});
       if(H("g_lant"))(st===1?[.12,.38,.62,.8]:[.12,.38,.62,.86]).forEach(/* Kitchen Garden: the last one stood on the shed */function(f){var lx=W*f;if(E&&H("g_fount")&&Math.abs(lx-19.4)<3)return;/* not inside the fountain's plaza */if(st===2&&H("g_koi")&&lx>10.9&&lx<15.1)return;/* QA room sweep: nor inside the koi pond */gdS(C,"gdx_lantern",lx,py-.45,.35,.35,50,{H:88});lfLight(C,lx,py,50,"#ffcf7a",2.4,.55)});
       var open=function(k,x,y,w,d,HH){var RR=LFREC;LFREC=null;gdS(C,k,x,y,w,d,1,{H:HH,nosh:1,nob:1});LFREC=RR};
-      if(H("g_arch")){open("gdx_arch",W*.7,py-.15,.9,1.55,132);gdSnip(C,W*.7-.45,py+.8,1)}
+      if(H("g_arch")){open("gdx_arch",W*.7,py-.15,.9,1.55,132);gdSnip(C,W*.7-.45,py+.8,1);gdFly(C,W*.7+.45,py+.6,96,"#ff9ac8",0);gdFly(C,W*.7+.2,py+.9,70,"#ffe07a",1)}
       if(H("g_gate"))open("gdx_gate",W-.6,py-.2,.5,1.6,92);/* where the walk leaves the lot */
       /* Cal: no room may look crowded. In the Estate the fountain is the centrepiece and takes the place of the sundial,
          the birdbath and the topiaries (still owned; they show again only without it) */
@@ -258,6 +259,19 @@ function gdFountain(C,cx,cy){gdS(C,"gdx_fount",cx-1.5,cy-1.5,3,3,26,{H:126});var
 /* ROOMS 11-23 (Cal: "the gardener casually snipping the plants and flowers and maintaining the garden"): a spot where a gardener
    trims with shears (lfProp "snip", hands moving); only the gardeners take it */
 var GDWEAR=["gp_overall","km_straw"];/* the gardeners dress for it: overalls and a straw hat, so they read as staff, not visitors */
+/* ROOMS 11-23 (Cal: "any other small details like this to increase immersion"): bees about the hive, two hens pecking by the coop,
+   butterflies over the lavender and the rose arch. Drawn in SVG with its own animation (no CSS), no footprints. */
+function gdBees(C,x,y){var o="";for(var b=0;b<5;b++){var p=lfP(x+.6,y+.45,46+b*4),r=8+b*3,d=(2.4+b*.55).toFixed(2);
+    o+='<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+') scale(1.6)"><g><animateMotion dur="'+d+'s" repeatCount="indefinite" begin="-'+(b*.7).toFixed(1)+'s" path="M'+r+' 0 A'+r+' '+(r*.45).toFixed(1)+' 0 1 '+(b%2)+' -'+r+' 0 A'+r+' '+(r*.45).toFixed(1)+' 0 1 '+(b%2)+' '+r+' 0"/>'+
+      '<ellipse cx="-.3" cy="-1.9" rx="1.5" ry=".9" fill="rgba(235,248,255,.9)"/><ellipse rx="2.2" ry="1.5" fill="#f2c53a" stroke="#2a2218" stroke-width=".6"/><path d="M-.5 -1.4 v2.8 M.9 -1.3 v2.6" stroke="#2a2218" stroke-width=".7"/></g></g>'}
+  C.front.push('<g pointer-events="none">'+o+'</g>')}
+function gdChicken(C,x,y,k){var p=lfP(x,y,0),fl=k%2?-1:1,d=(1.7+k*.5).toFixed(1),w=(9+k*3)+"s";
+  var body='<ellipse cx="0" cy="4" rx="5" ry="1.4" fill="rgba(0,0,0,.18)"/><path d="M-1.2 1 v3 M1.4 1 v3" stroke="#e0a030" stroke-width=".9"/><ellipse cx="0" cy="-2.2" rx="5" ry="3.8" fill="#f6f1e6" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><path d="M-4.4 -3.6 l-3 -3 l.8 4.4z" fill="#ebe3d2" stroke="rgba(0,0,0,.35)" stroke-width=".5"/><path d="M-1.6 -2.4 q1.6 1.4 3.4 0" stroke="rgba(0,0,0,.25)" fill="none" stroke-width=".6"/>';
+  var head='<g><animateTransform attributeName="transform" type="rotate" values="0 3 -4;0 3 -4;60 3 -4;0 3 -4;0 3 -4" keyTimes="0;.5;.62;.75;1" dur="'+d+'s" repeatCount="indefinite"/><circle cx="4.2" cy="-6.6" r="2.4" fill="#f6f1e6" stroke="rgba(0,0,0,.4)" stroke-width=".6"/><path d="M3.4 -8.9 q.7 -1.6 1.6 -.2 q.7 -1.2 1.3 .1z" fill="#d8322a"/><path d="M6.4 -6.8 l2 .6 l-2 .6z" fill="#e0a030"/><circle cx="4.9" cy="-7" r=".45" fill="#222"/><path d="M5.6 -5.2 q.4 1.2 -.4 1.6" stroke="#d8322a" stroke-width=".9" fill="none"/></g>';
+  C.add(x+y+.15,'<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+')" pointer-events="none"><g><animateTransform attributeName="transform" type="translate" values="0 0;7 3.5;7 3.5;-4 1.5;-4 1.5;0 0" keyTimes="0;.25;.45;.65;.85;1" dur="'+w+'" repeatCount="indefinite"/><g transform="scale('+(1.7*fl)+',1.7)">'+body+head+'</g></g></g>')}
+function gdFly(C,x,y,z,col,k){var p=lfP(x,y,z),d=(7+k*1.6).toFixed(1);
+  var wing='<g><animateTransform attributeName="transform" type="scale" values="1 1;.2 1;1 1" dur="'+(.28+k*.03).toFixed(2)+'s" repeatCount="indefinite"/><path d="M0 0 C-4 -5 -7.5 -1 -4 1.5 C-6 4 -2 5 0 1z M0 0 C4 -5 7.5 -1 4 1.5 C6 4 2 5 0 1z" fill="'+col+'" stroke="rgba(0,0,0,.35)" stroke-width=".4"/></g><path d="M0 -1.6 v3.6" stroke="#2a2218" stroke-width=".9"/>';
+  C.front.push('<g transform="translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+') scale(2.6)" pointer-events="none"><g><animateMotion dur="'+d+'s" repeatCount="indefinite" begin="-'+k+'s" path="M0 0 c8 -7 18 3 26 -5 c6 -7 -3 -16 -14 -11 c-9 4 -18 -4 -13 5 c3 5 -3 9 1 11z"/>'+wing+'</g></g>')}
 function gdSnip(C,x,y,f){C.s("work",x,y,f,"work",[7,13],{tag:"snip",staffOnly:1})}
 function gdPeople(r,i,C,out){var a=r.a||{};
   if(a.g_gard)out.push({id:"gd:g1",room:i,role:"crew",look:rsNpc({body:"m",skin:"s2",hairStyle:"h2",hairColor:"brown",top:"tee",topColor:"white",bottom:"jeans",bottomColor:"black",shoe:"boots",shoeColor:"black",eq:GDWEAR}),ix:0});
