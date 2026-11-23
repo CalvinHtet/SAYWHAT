@@ -153,19 +153,19 @@ autoRoom("speakeasy",{name:"Speakeasy",lv:1,startLv:45,step:1,wall:"#5b2c20",wai
     corner with the curtain hung on the wall behind it, seats facing the band, the jukebox and a lamp table against the wall by the booth.
     The plan is drawn in the room's own units (no layout spread). */
  sup:[["sp_mic","sp_singer"]]/* the singer brings her own mic: the open-mic stand goes when she is hired */,
- items:[/* QA (Cal's use check): out from the wall, so a bartender fits behind it */PL("sp_bar","Mahogany Bar",UP_M,"spx_bar",2.4,.8,4.6,1.6,1,"Dark wood and a brass rail.",{light:[4.7,1.8,50,"#ffb46a",3,.55],cust:[[3.6,3.0,-1],[5.7,3.0,-1]]}),
-  PL("sp_cart","Whiskey Cart",UP_S,"spx_cart",8.65,6.1,1.0,.9,0,"Rolls right up to your table."),
-  PL("sp_booth","Leather Booth",UP_M,"spx_booth",9.9,.2,2.8,1.8,1,"A curved booth in dark leather.",{cust:[[11.3,2.6,-1]]}),
-  PL("sp_lamp","Banker's Lamp Table",UP_S,"spx_lamp",8.75,.2,.9,.9,0,"Green glass and low light.",{light:[9.2,.9,40,"#b8e0a0",1.8,.4]}),
+ items:[/* QA (Cal's use check): out from the wall, so a bartender fits behind it */PL("sp_bar","Mahogany Bar",UP_M,"spx_bar",2.75,.8,4.6,1.6,1,"Dark wood and a brass rail.",{light:[5.05,1.8,50,"#ffb46a",3,.55],cust:[[4.15,2.8,-1,{fxwall:1}],[6.4,2.8,-1,{fxwall:1}]]/* between the stools, facing the bar */}),
+  PL("sp_cart","Whiskey Cart",UP_S,"spx_cart",9.1,6.1,1.0,.9,0,"Rolls right up to your table."),
+  PL("sp_booth","Leather Booth",UP_M,"spx_booth",10.0,.2,2.8,1.8,1,"A curved booth in dark leather.",{cust:[[11.4,2.6,-1]]}),
+  PL("sp_lamp","Banker's Lamp Table",UP_S,"spx_lamp",8.85,.2,.9,.9,0,"Green glass and low light.",{light:[9.3,.9,40,"#b8e0a0",1.8,.4]}),
   PL("sp_stage","Jazz Stage",UP_M,"spx_stage",.3,5.4,4.2,3.7,0,"A low stage in the corner. Now it needs a band.",{o:{dk:12},light:[3.0,6.9,80,"#ffc27a",3.4,.7]}),
   ["sp_curtain","Velvet Curtain",UP_S,"spx_curtain","",0,0,0,"Red velvet behind the band.",{fx:function(C){lfWallSpr(C,"spx_curtain","L",5.5,C.has("sp_stage")?SPCZ:0,3.6)}}],
-  PL("sp_piano","Hire a Pianist",UP_M,"spx_piano",.12,1.8,1.5,1.5,1,"The first notes of the night."),
+  PL("sp_piano","Hire a Pianist",UP_M,"spx_piano",.12,2.3,1.5,1.5,1,"The first notes of the night."),
   PL("sp_bass","Hire a Bassist",UP_M,"spx_bass",1.14,5.56,.7,.7,0,"Holds it all together.",{o:{dy:-10}}),
   PL("sp_drums","Hire a Drummer",UP_M,"spx_drums",3.0,5.37,1.4,1.2,0,"Brushes, mostly.",{o:{dy:-10}}),
   PL("sp_singer","Hire a Singer",UP_L,"spx_singer",2.26,7.07,1.1,1.1,0,"The whole room goes quiet.",{o:{dy:-10},splash:"The band is complete. On nights like this nobody leaves."}),
   PL("sp_barrel","Whiskey Barrels",UP_S,"spx_barrel",.1,.12,1.2,1.4,1,"Aged right here in the back.",{cust:[[2.3,3.9,-1]]}),
   PL("sp_chairs","Leather Armchairs",UP_S,"spx_chairs",6.1,5.7,2.2,1.7,0,"Cracked leather, front row for the band.",{cust:[[7.2,7.9,-1]]}),
-  PL("sp_juke","Vintage Jukebox",UP_M,"spx_juke",7.3,.15,1,.8,0,"For when the band takes five.",{cust:[[7.8,1.6,-1]]}),
+  PL("sp_juke","Vintage Jukebox",UP_M,"spx_juke",7.6,.15,1,.8,0,"For when the band takes five.",{cust:[[8.1,1.6,-1]]}),
   PL("sp_mic","Vintage Microphone",UP_S,"spx_mic",2.63,7.44,.36,.36,0,"Open mic on Tuesdays.",{o:{dy:-10},cust:[[5.4,5.2,-1],[5.2,8.6,-1]]})]});
 /* ---- arcade: machines around the walls, the action in the middle ---- */
 autoRoom("arcade",{name:"Arcade",lv:1,startLv:34,step:1,wall:"#17132a",wain:"#0e0b1c",acc:"#ff4fa3",fl:"k",size:[[13,10]],layout:[11,9],shell:0,coin:35,guests:4,group:"Arcade",dark:1,staff:[["ar_prize",RSK]],desc:"Tokens, neon and a very old high score.",
