@@ -1,0 +1,1514 @@
+[
+ {
+  "look": "tee+joggers+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "rearStandIn",
+    1781,
+    786
+   ],
+   [
+    "backwalk2",
+    1910,
+    738
+   ],
+   [
+    "backwalk4",
+    1907,
+    728
+   ],
+   [
+    "backwalk1",
+    4191,
+    726
+   ]
+  ]
+ },
+ {
+  "look": "tee+joggers+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sleepHead",
+    6369,
+    485
+   ],
+   [
+    "sideR",
+    1906,
+    396
+   ],
+   [
+    "sideL",
+    2558,
+    393
+   ],
+   [
+    "idleIn",
+    567,
+    386
+   ]
+  ]
+ },
+ {
+  "look": "tee+joggers+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "rearStandIn",
+    1781,
+    786
+   ],
+   [
+    "backwalk2",
+    1908,
+    736
+   ],
+   [
+    "backwalk4",
+    1907,
+    728
+   ],
+   [
+    "backwalk1",
+    4191,
+    726
+   ]
+  ]
+ },
+ {
+  "look": "tee+joggers+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sleepHead",
+    6369,
+    485
+   ],
+   [
+    "sideR",
+    1906,
+    396
+   ],
+   [
+    "sideL",
+    2558,
+    393
+   ],
+   [
+    "idleIn",
+    567,
+    386
+   ]
+  ]
+ },
+ {
+  "look": "tee+joggers+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sitFrontIn",
+    1110,
+    1062
+   ],
+   [
+    "sitFront",
+    1292,
+    1042
+   ],
+   [
+    "rearStandIn",
+    1870,
+    901
+   ],
+   [
+    "walk1",
+    1240,
+    897
+   ]
+  ]
+ },
+ {
+  "look": "tee+joggers+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sleepHead",
+    6493,
+    694
+   ],
+   [
+    "sideL",
+    2689,
+    604
+   ],
+   [
+    "idleIn",
+    697,
+    602
+   ],
+   [
+    "sideR",
+    2015,
+    586
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "rearStandIn",
+    1749,
+    783
+   ],
+   [
+    "backwalk2",
+    1879,
+    741
+   ],
+   [
+    "backwalk4",
+    1869,
+    735
+   ],
+   [
+    "backwalk1",
+    4188,
+    725
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sleepHead",
+    6369,
+    486
+   ],
+   [
+    "idleIn",
+    489,
+    474
+   ],
+   [
+    "sideL",
+    2496,
+    395
+   ],
+   [
+    "sideR",
+    1898,
+    394
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "rearStandIn",
+    1749,
+    783
+   ],
+   [
+    "backwalk2",
+    1878,
+    738
+   ],
+   [
+    "backwalk4",
+    1869,
+    734
+   ],
+   [
+    "backwalk1",
+    4188,
+    724
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sleepHead",
+    6369,
+    486
+   ],
+   [
+    "idleIn",
+    489,
+    474
+   ],
+   [
+    "sideL",
+    2496,
+    395
+   ],
+   [
+    "sideR",
+    1898,
+    394
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sitFrontIn",
+    1098,
+    996
+   ],
+   [
+    "sitFront",
+    1277,
+    984
+   ],
+   [
+    "idle",
+    2729,
+    928
+   ],
+   [
+    "rearStandIn",
+    1842,
+    921
+   ]
+  ]
+ },
+ {
+  "look": "tee+jeans+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sleepHead",
+    6509,
+    694
+   ],
+   [
+    "idleIn",
+    627,
+    672
+   ],
+   [
+    "sitFront",
+    968,
+    645
+   ],
+   [
+    "sitFrontIn",
+    722,
+    616
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "backwalk2",
+    2007,
+    1032
+   ],
+   [
+    "backwalk1",
+    4305,
+    975
+   ],
+   [
+    "walk3",
+    5498,
+    905
+   ],
+   [
+    "walk4",
+    1639,
+    897
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sleepHead",
+    6458,
+    587
+   ],
+   [
+    "thinkC",
+    4063,
+    549
+   ],
+   [
+    "thinkB",
+    4429,
+    543
+   ],
+   [
+    "walk4",
+    560,
+    518
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sitFront",
+    1256,
+    1141
+   ],
+   [
+    "sitFrontIn",
+    1061,
+    1106
+   ],
+   [
+    "backwalk4",
+    2021,
+    888
+   ],
+   [
+    "rearStandIn",
+    1855,
+    880
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sleepHead",
+    6462,
+    587
+   ],
+   [
+    "idleIn",
+    658,
+    505
+   ],
+   [
+    "sideR",
+    1977,
+    483
+   ],
+   [
+    "laugh2",
+    3955,
+    478
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "walk1",
+    1732,
+    930
+   ],
+   [
+    "backwalk4",
+    2023,
+    897
+   ],
+   [
+    "sitFrontIn",
+    1112,
+    894
+   ],
+   [
+    "rearStandIn",
+    1835,
+    875
+   ]
+  ]
+ },
+ {
+  "look": "tee+shorts+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sleepHead",
+    6509,
+    644
+   ],
+   [
+    "idleIn",
+    712,
+    572
+   ],
+   [
+    "sideL",
+    2664,
+    551
+   ],
+   [
+    "laugh2",
+    3991,
+    519
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance2",
+    861,
+    1199
+   ],
+   [
+    "sideUp",
+    4327,
+    1198
+   ],
+   [
+    "dance1",
+    673,
+    1186
+   ],
+   [
+    "sideL",
+    4365,
+    1118
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2013,
+    731
+   ],
+   [
+    "sideR",
+    1789,
+    675
+   ],
+   [
+    "sideUp",
+    2012,
+    630
+   ],
+   [
+    "dance2",
+    166,
+    459
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance2",
+    861,
+    1199
+   ],
+   [
+    "sideUp",
+    4327,
+    1198
+   ],
+   [
+    "dance1",
+    673,
+    1186
+   ],
+   [
+    "sideL",
+    4365,
+    1118
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2013,
+    731
+   ],
+   [
+    "sideR",
+    1789,
+    675
+   ],
+   [
+    "sideUp",
+    2012,
+    630
+   ],
+   [
+    "dance2",
+    166,
+    459
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    842,
+    1494
+   ],
+   [
+    "sideUp",
+    4499,
+    1474
+   ],
+   [
+    "dance2",
+    1025,
+    1417
+   ],
+   [
+    "sideL",
+    4542,
+    1401
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+joggers+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2144,
+    942
+   ],
+   [
+    "sideR",
+    1898,
+    865
+   ],
+   [
+    "sideUp",
+    2142,
+    839
+   ],
+   [
+    "dance2",
+    280,
+    653
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance2",
+    861,
+    1199
+   ],
+   [
+    "sideUp",
+    4327,
+    1198
+   ],
+   [
+    "dance1",
+    673,
+    1186
+   ],
+   [
+    "sideL",
+    4352,
+    1139
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    1984,
+    775
+   ],
+   [
+    "sideR",
+    1787,
+    682
+   ],
+   [
+    "sideUp",
+    2012,
+    630
+   ],
+   [
+    "dance2",
+    166,
+    459
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance2",
+    861,
+    1199
+   ],
+   [
+    "sideUp",
+    4327,
+    1198
+   ],
+   [
+    "dance1",
+    673,
+    1186
+   ],
+   [
+    "sideL",
+    4352,
+    1139
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    1984,
+    775
+   ],
+   [
+    "sideR",
+    1787,
+    682
+   ],
+   [
+    "sideUp",
+    2012,
+    630
+   ],
+   [
+    "dance2",
+    166,
+    459
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideUp",
+    4512,
+    1521
+   ],
+   [
+    "dance2",
+    1034,
+    1497
+   ],
+   [
+    "dance1",
+    830,
+    1473
+   ],
+   [
+    "sideL",
+    4533,
+    1457
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+jeans+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2118,
+    968
+   ],
+   [
+    "sideR",
+    1908,
+    861
+   ],
+   [
+    "sideUp",
+    2135,
+    816
+   ],
+   [
+    "dance2",
+    298,
+    641
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance2",
+    988,
+    1329
+   ],
+   [
+    "dance1",
+    795,
+    1314
+   ],
+   [
+    "sideUp",
+    4437,
+    1314
+   ],
+   [
+    "sideL",
+    4464,
+    1268
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2084,
+    835
+   ],
+   [
+    "sideR",
+    1865,
+    751
+   ],
+   [
+    "sideUp",
+    2112,
+    732
+   ],
+   [
+    "thinkC",
+    2653,
+    584
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideUp",
+    4457,
+    1398
+   ],
+   [
+    "dance2",
+    1004,
+    1392
+   ],
+   [
+    "dance1",
+    812,
+    1379
+   ],
+   [
+    "sideL",
+    4475,
+    1335
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2076,
+    829
+   ],
+   [
+    "sideR",
+    1864,
+    759
+   ],
+   [
+    "sideUp",
+    2110,
+    736
+   ],
+   [
+    "dance2",
+    280,
+    580
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideUp",
+    4519,
+    1443
+   ],
+   [
+    "dance2",
+    1059,
+    1435
+   ],
+   [
+    "dance1",
+    857,
+    1426
+   ],
+   [
+    "sideL",
+    4531,
+    1380
+   ]
+  ]
+ },
+ {
+  "look": "hoodie+shorts+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2134,
+    904
+   ],
+   [
+    "sideR",
+    1897,
+    795
+   ],
+   [
+    "sideUp",
+    2146,
+    777
+   ],
+   [
+    "dance2",
+    320,
+    627
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    690,
+    1228
+   ],
+   [
+    "dance2",
+    720,
+    1153
+   ],
+   [
+    "sideUp",
+    4848,
+    1063
+   ],
+   [
+    "sideR",
+    4800,
+    1020
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2176,
+    955
+   ],
+   [
+    "sideUp",
+    1918,
+    880
+   ],
+   [
+    "sideR",
+    1703,
+    762
+   ],
+   [
+    "dance2",
+    173,
+    452
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    690,
+    1228
+   ],
+   [
+    "dance2",
+    720,
+    1153
+   ],
+   [
+    "sideUp",
+    4848,
+    1063
+   ],
+   [
+    "sideR",
+    4800,
+    1020
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2176,
+    955
+   ],
+   [
+    "sideUp",
+    1918,
+    880
+   ],
+   [
+    "sideR",
+    1703,
+    762
+   ],
+   [
+    "dance2",
+    173,
+    452
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    859,
+    1536
+   ],
+   [
+    "dance2",
+    884,
+    1371
+   ],
+   [
+    "sideUp",
+    5020,
+    1339
+   ],
+   [
+    "sideL",
+    4965,
+    1302
+   ]
+  ]
+ },
+ {
+  "look": "bomber+joggers+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2307,
+    1166
+   ],
+   [
+    "sideUp",
+    2048,
+    1089
+   ],
+   [
+    "sideR",
+    1812,
+    952
+   ],
+   [
+    "dance2",
+    287,
+    646
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    690,
+    1228
+   ],
+   [
+    "dance2",
+    720,
+    1153
+   ],
+   [
+    "sideUp",
+    4848,
+    1063
+   ],
+   [
+    "sideL",
+    4771,
+    1044
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2121,
+    962
+   ],
+   [
+    "sideUp",
+    1899,
+    879
+   ],
+   [
+    "sideR",
+    1700,
+    769
+   ],
+   [
+    "dance2",
+    173,
+    452
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    690,
+    1228
+   ],
+   [
+    "dance2",
+    720,
+    1153
+   ],
+   [
+    "sideUp",
+    4848,
+    1063
+   ],
+   [
+    "sideL",
+    4771,
+    1044
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 32,
+  "worst": [
+   [
+    "sideL",
+    2121,
+    962
+   ],
+   [
+    "sideUp",
+    1899,
+    879
+   ],
+   [
+    "sideR",
+    1700,
+    769
+   ],
+   [
+    "dance2",
+    173,
+    452
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    847,
+    1515
+   ],
+   [
+    "dance2",
+    893,
+    1451
+   ],
+   [
+    "sideUp",
+    5033,
+    1386
+   ],
+   [
+    "sideL",
+    4952,
+    1362
+   ]
+  ]
+ },
+ {
+  "look": "bomber+jeans+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2255,
+    1155
+   ],
+   [
+    "sideUp",
+    2022,
+    1065
+   ],
+   [
+    "sideR",
+    1821,
+    948
+   ],
+   [
+    "dance2",
+    305,
+    634
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+sneakers",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    812,
+    1356
+   ],
+   [
+    "dance2",
+    847,
+    1283
+   ],
+   [
+    "sideUp",
+    4958,
+    1179
+   ],
+   [
+    "sideL",
+    4882,
+    1175
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+sneakers",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2242,
+    1046
+   ],
+   [
+    "sideUp",
+    2001,
+    981
+   ],
+   [
+    "sideR",
+    1778,
+    838
+   ],
+   [
+    "thinkB",
+    2942,
+    585
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+boots",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    829,
+    1421
+   ],
+   [
+    "dance2",
+    863,
+    1346
+   ],
+   [
+    "sideUp",
+    4978,
+    1263
+   ],
+   [
+    "sideL",
+    4893,
+    1242
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+boots",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2234,
+    1040
+   ],
+   [
+    "sideUp",
+    1999,
+    985
+   ],
+   [
+    "sideR",
+    1777,
+    846
+   ],
+   [
+    "dance2",
+    287,
+    573
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+flipflops",
+  "body": "m",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "dance1",
+    874,
+    1468
+   ],
+   [
+    "dance2",
+    918,
+    1389
+   ],
+   [
+    "sideUp",
+    5040,
+    1308
+   ],
+   [
+    "sideL",
+    4949,
+    1287
+   ]
+  ]
+ },
+ {
+  "look": "bomber+shorts+flipflops",
+  "body": "f",
+  "bare": false,
+  "poses": 41,
+  "worst": [
+   [
+    "sideL",
+    2292,
+    1115
+   ],
+   [
+    "sideUp",
+    2035,
+    1026
+   ],
+   [
+    "sideR",
+    1810,
+    882
+   ],
+   [
+    "dance2",
+    327,
+    620
+   ]
+  ]
+ }
+]

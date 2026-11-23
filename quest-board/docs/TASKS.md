@@ -313,7 +313,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
+- Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
+  Was: Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
   Was: Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
   Was: Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
@@ -436,6 +437,18 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- FIX (LEAD, rig; Cal 11-23: "There is some skin showing through the clothes for the character creator ... could be other clothes
+  where the skin shows through?"): yes. On the live build (297b2192) every sleeved top lets slivers of the base's skin through along
+  the arm-to-torso seams: the starter tee, hoodie and bomber on both bodies, and every Shop top ROOMS sampled (17, worst h_hoodie,
+  tm_sable_jacket, oak_vest; shots/pending_art/skin_1123/crack_table.txt). Clean renders on deep skin under white: his hoodie in idle
+  (both sides of the chest), from behind (both armpits), dance1; his tee from behind (shots/qa/skin1123/clean_*.jpg). Cause (ROOMS,
+  confirmed here): data/rig.json fineSlots ["top","arms","skinArms"] (meshStepFine 12): the fine grid cracks along the arm/trunk cut
+  even standing, and the full base under the sleeve shows through; with fineSlots [] both seams close (QA's copy of the live build
+  with that one change, and ROOMS's). Art: no holes in the pieces checked. Separate, known: sleeves tear in arms-out poses either way
+  (the old arms-up stretch). QA's sweep (rigtest/qa/skinleak.js: Fair vs Deep skin = visible skin; clothes-only render; skin in a
+  small gap or a thin sliver over the clothes) flags all 54 starter looks (27 combos x 2 bodies) in about 39 of 43 poses each on the
+  live build; with the fine grid off the marks left are the neck at the collar and hands beside the trousers (false alarms by eye).
+  Next: on LEAD's fix, the before/after diff over every Shop top and outer piece, and the detector with a look by eye over the rest.
 - PASS, v1.39 live check (release/v1.39 297b2192 on Live; owner LEAD): Live serves version.txt 297b2192, appv 139; its 12 listed files
   match QA's own web build of 297b2192 (the commit QA passed, 80b8747d), index.html, config.js, app.js, web.js, qbdata.js and
   creator.js byte-identical; QB_EPOCH 8 (no reset), noTest; release/v1.39 and rollback-v1.37 on origin (297b2192, d80690fc). Not
