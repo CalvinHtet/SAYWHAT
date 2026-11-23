@@ -309,7 +309,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on bdb442d1): Karaoke Disco Ball retired, PASS with a refund NOTE (QA findings).
+- Now (on 268253fe): the Speakeasy rework, NOT A PASS yet: two small FIXes (cart on the armchair, barrels boxed in), a seating NOTE (QA findings).
+  Was: Now (on bdb442d1): Karaoke Disco Ball retired, PASS with a refund NOTE (QA findings).
   Was: Now (on release/v1.31 62a515fe, Live): v1.31 live check, PASS (QA findings).
   Was: Now (on release/v1.31 62a515fe): v1.31 take three, PASS, can ship; one pace NOTE for Cal (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
@@ -424,6 +425,23 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- NOT A PASS yet, two small FIXes, the Speakeasy rework (ROOMS 268253fe; Cal 11-23 "this room does not really make sense"; a clean
+  build, every upgrade owned; owner ROOMS; shots/qa/speakeasy1123/). Cal's four problems are fixed: the singer has her own slim mic
+  (no big stand in front of her), the curtain hangs on the wall behind the stage, the jukebox stands with the lamp table and booth
+  on the back wall, the barrels are in the back corner by the bar. Footprints: 12 pieces, 0 outside, none overlapping (only the band
+  on its stage); "piano drawn over stage" is depth, agreed. Live (laterooms.js, 150 s + 90 s): 5 people, 1,453 samples, nobody inside
+  a footprint, 0 page errors. Against jazz-club references (Cotton Club, Green Mill: bar on one wall, band in a corner, seating
+  facing it) the plan reads right and the room is not cluttered.
+  - FIX 1 (ROOMS): the whiskey cart's frame covers the right armchair's arm (speakeasy_static.jpg, sp_cart.jpg; footprints 0.35
+    apart, the art is wider). Move the cart about 0.4 further from the chairs.
+  - FIX 2 (ROOMS, Cal's "barrels placed awkwardly"): the barrel rack is boxed in: the piano covers its lower-left barrel and the bar's
+    end the right one (sp_corner.jpg). The piano has room to move down its wall (it ends at y 3.3, the stage starts at 5.4): about
+    +0.5 would let the rack stand clear and still read as stock in the corner.
+  - NOTE (ROOMS, seating; not new, the old layout was the same): nobody sits. Every guest spot is a standing one: bar guests stand
+    beside the stools with their backs to the bar, the booth guest stands in front of the booth, the armchair spot is behind the cart
+    (speakeasy_people.jpg); the armchairs face the viewer, not the band ("front row for the band"). A seat on each stool facing the
+    bar, one in the booth and the chairs turned to the stage, as the Sky Bar seats its stool guests, would make it read as a club.
+  - Not checked: other stages of ownership live (ROOMS's stage pictures cover them), a phone.
 - PASS with a NOTE, the Karaoke Disco Ball retired (ROOMS bdb442d1, in qa-local; clean builds of bdb442d1 and the commit before;
   shots/qa/disco/): before, the ball is drawn (kax_disco twice in the page) and the room window offers "Disco Ball"; after, a save
   that owns all 12 Karaoke ids incl. ka_disco opens the room with no ball art, the window offers no Disco Ball, and of the 11 live
