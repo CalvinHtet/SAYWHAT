@@ -45,6 +45,16 @@ progress and it is basically invisible and non intrusive."
   never overwrite newer progress; the platform also moves open pages to the new version at a quiet moment.
 - Only additive changes in a release (see the list at the top): saves are never wiped or reshaped without a migration.
 
+## LEAD's scripts (rigtest/lead/release/, 2026-11-23)
+
+- `cut.sh <prev> <new> <APPV> "<message>" [src=qa-local]`: release/<new> = release/<prev> with app, src, data, art and tools as on the
+  source ref, APPV set, `EPOCH=<n>` only for a reset Cal asked for; prints what differs from the source (APPV/QB_EPOCH only), runs
+  artcheck, moves rollback-v0.80 to APPV+1 (and the same epoch). `DRY=1` leaves the rollback alone.
+- `ship.sh <commit> <APPV>`: web build, checks, QA's wlive.js, deploy to Live and the Test channel, every file compared (livecmp.py).
+- `mkref.sh <commit> <port>`: a frozen plain build served for side-by-side checks.
+- An epoch bump also clears `board`, `pings`, `worlds`, `chat`, `chatnow`, `likes`, `kudos`, `kudosok` and `duel` (see the web section),
+  after Cal's yes and before the deploy.
+
 ## The publish, step by step (LEAD; any LEAD session can do it)
 
 The passed build is staged in `SAYWHAT/r/` (git-ignored through `.git/info/exclude`): `dist/` of the passed commit plus
