@@ -613,7 +613,9 @@ var view="board";
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
    coins an XP (was 2.5), and the more you do in a day the more each pays: full rate for the first 3, then +12.5% a task, double from
    the 11th. A light day still counts, a big day buys several upgrades. See docs/ECONOMY.md. */
-function coinMomentum(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(1,Math.max(0,n-2)*.125)}
+/* Cal, 2026-11-23: momentum tops out at 1.5x (was 2x), reached on the 7th task */
+var MOMENTUM_MAX=.5;
+function coinMomentum(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(MOMENTUM_MAX,Math.max(0,n-2)*.125)}
 function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+.01*(effLvl()-1))*coinMomentum()))}
 var SHOP=[
  ["th_sunset","theme","Sunset Drive",60,3,"Warm orange and hot pink across the board.",{a:"#ff8a3d",b:"#ff3d81"}],

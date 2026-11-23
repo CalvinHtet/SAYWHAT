@@ -21,7 +21,7 @@ under 50 XP, that day's streak credit and any chest it opened.
 
 | Source | Amount |
 | --- | --- |
-| Quests | XP x 6, plus 1% per level, times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, double from the 11th (Cal, 2026-11-08) |
+| Quests | XP x 6, plus 1% per level, times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, at most 1.5x from the 7th (Cal, 2026-11-23; was double from the 11th, Cal 2026-11-08; `MOMENTUM_MAX` in `10_app_a.js`) |
 | Level up | 100 + 10 x level, paid once per level |
 | Wheel (level 6+) | about 230 a day |
 | Dungeons, 3 a day | 40 to 70 each at the start, 280 to 380 at the top. Scaled down by quest effort |
