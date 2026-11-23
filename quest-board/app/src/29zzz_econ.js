@@ -44,3 +44,5 @@ var EARNK=.77;
 var ekScaled=econScaled;econScaled=function(c,step){return ekScaled(c*EARNK,step)};
 /* the Loft's Goals pay their coins as they are (glCoins x the room's phase), so the phase no longer multiplies them up */
 glCoins=function(k,t){return Math.round(ECON.goal[k][0]/50)*50};
+/* the Walk-in Closet stays at its flat 600 (Cal 11-23, 29zz_v133.js), after the rise above */
+if(typeof v33Closet==="function")v33Closet();

@@ -8,7 +8,11 @@
 
 /* ---- the Walk-in Closet comes straight after the Figurine Cabinet it needs, not last in the Bedroom (it was after ~28 others,
    about day 7 for a daily player). Its price is unchanged. ---- */
-var v33Sort=econSort;econSort=function(){v33Sort.apply(this,arguments);try{var A=ADDONS.bedroom,i=A.map(function(a){return a[0]}).indexOf("bd_ward2");
+/* Cal 11-23: "I want the walk in closet to be purchasable for a bit cheaper. Make it 600 coins so that the shop can be unlocked sooner."
+   600 flat: marked fixed so the economy's re-pricing (econEarn) leaves it, and set again after every sort and after the 1.15 price rise
+   (29zzz_econ.js calls v33Closet) */
+var CLOSETP=600;function v33Closet(){try{(ADDONS.bedroom||[]).forEach(function(a){if(a[0]==="bd_ward2"){a[2]=CLOSETP;a[3]=Object.assign({},a[3]||{},{fixed:1})}})}catch(e){}}
+var v33Sort=econSort;econSort=function(){v33Closet();v33Sort.apply(this,arguments);try{var A=ADDONS.bedroom,i=A.map(function(a){return a[0]}).indexOf("bd_ward2");
   if(i<0)return;var w=A.splice(i,1)[0],j=A.map(function(a){return a[0]}).indexOf("bd_ward1");A.splice(j<0?0:j+1,0,w)}catch(e){}};
 econSort();
 

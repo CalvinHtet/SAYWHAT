@@ -121,6 +121,8 @@
 
   /* ---- sign-in: a plain screen before the game, once per device; the game waits behind it ---- */
   var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+  var inApp = (function (ua) { var m = /(Instagram|FBAN|FBAV|FB_IAB|Messenger|Snapchat|musical_ly|TikTok|Bytedance|LinkedInApp|Line\/|KAKAOTALK|Twitter|Pinterest|GSA\/)/.exec(ua || "");
+    if (!m) return ""; var n = m[1]; return /FBAN|FBAV|FB_IAB/.test(n) ? "Facebook" : /musical_ly|Bytedance/.test(n) ? "TikTok" : n === "GSA/" ? "the Google app" : n.replace(/\/$/, "").replace("App", ""); })(navigator.userAgent);
   function signInScreen(msg) {
     var el = document.getElementById("qbsignin");
     if (!el) {
@@ -131,7 +133,19 @@
         + '<button id="qbsigninbtn" style="font:inherit;font-weight:700;padding:14px 22px;border-radius:999px;border:0;background:#ffc857;color:#14121c;cursor:pointer">Sign in with Google</button>'
         + '<div id="qbsigninmsg" style="min-height:1.4em;color:#ff9b9b;max-width:300px"></div>';
       document.body.appendChild(el);
-      el.querySelector("#qbsigninbtn").addEventListener("click", function () {
+      /* Cal 11-23: a friend's sign-in "led to a google sign in but then it crashed". Inside an app's own browser (Instagram, Messenger,
+         Snapchat, TikTok and the like) Google refuses sign-in or its window cannot hand back to the page, so there the screen asks for
+         Safari or Chrome instead, with the link to copy. */
+      if (inApp) {
+        el.querySelector("#qbsigninbtn").outerHTML = '<div style="max-width:300px;line-height:1.45;background:#221f2e;border:1px solid #3a3550;border-radius:14px;padding:14px">'
+          + '<b>Open this in Safari or Chrome</b><br>Google sign-in does not work inside ' + inApp + '. Tap the <b>&middot;&middot;&middot;</b> menu and choose <b>Open in browser</b>, or copy the link.</div>'
+          + '<button id="qbcopylink" style="font:inherit;font-weight:700;padding:14px 22px;border-radius:999px;border:0;background:#ffc857;color:#14121c;cursor:pointer">Copy link</button>';
+        el.querySelector("#qbcopylink").addEventListener("click", function () {
+          var u = location.origin + location.pathname, m = el.querySelector("#qbsigninmsg");
+          var ok = function () { m.style.color = "#9bffb0"; m.textContent = "Copied. Paste it into Safari or Chrome."; };
+          try { navigator.clipboard.writeText(u).then(ok, function () { m.textContent = u; }); } catch (e) { m.textContent = u; }
+        });
+      } else el.querySelector("#qbsigninbtn").addEventListener("click", function () {
         var p = new firebase.auth.GoogleAuthProvider(), a = firebase.auth();
         el.querySelector("#qbsigninmsg").textContent = "";
         /* a home-screen app has no popups: it signs in by leaving and coming back */
