@@ -9,7 +9,7 @@
    that have not happened yet in this world (the Town Boss, the fashion competition) still arrive when they do ---- */
 WELCOMEBODY='<p>I&rsquo;m bad at finishing my to-do list. The boring stuff (laundry, dishes, emails, the gym) always slides to tomorrow. So I built SAYWHAT to make those tasks worth doing.</p>'
   +'<h3 class="label">How it works</h3><ul class="wl">'
-  +'<li><b>Add your tasks.</b> Type them, messy is fine, in the box at the top of the Board and each one becomes a quest. Your quests are private.</li>'
+  +'<li><b>Add your tasks.</b> Type them in the box at the top of the Board, separated by commas, and each one becomes a quest. Your quests are private.</li>'
   +'<li><b>Finish quests</b> to earn XP and coins. Prove the big ones with a photo for bigger rewards.</li>'
   +'<li><b>Level up</b> as your XP adds up. Each level pays coins, and every 5th level lets you pick a reward.</li>'
   +'<li><b>Spend coins</b> on your Loft. Start with your Bedroom: tap it to see what you can add. The Walk-in Closet opens the Shop.</li>'
