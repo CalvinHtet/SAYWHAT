@@ -417,6 +417,7 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, ship.sh 293aa754 (owner LEAD): the expected QB_EPOCH is a third argument, passed to QA's wlive.js from the checkout; nothing read from the build; missing it stops at the usage line; bash -n clean. v1.31: ship.sh 42680d81 131 7.
 - PASS, v1.31 can ship, with one step for the ship (release/v1.31 42680d81, rollback-v0.80 c4ee2449; owner LEAD; shots/qa/v131/).
   - The cut: over 05eac907 (QA PASS da290bb5) the only shipped changes are APPV 100 to 131 (30_app_b.js) and QB_EPOCH 6 to 7
     (00_clock.js); everything else that differs is docs, rigtest and shots. Parent release/v1.30 c1cff491. The rollback changes only
