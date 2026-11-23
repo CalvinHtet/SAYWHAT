@@ -39,3 +39,15 @@ sqScan=async function(){if(!socOn())return;var q=await db.collection("pings").li
 
 /* the fashion warning's "Vote now" (29zz_v135.js) opens the Hall's Players tab */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=v35fsh]");if(!b)return;e.stopImmediatePropagation();try{closeModals()}catch(x){}FSH.mode="fashion";htabSet("style");view="hall";render();window.scrollTo(0,0)},true);
+
+/* ---- the live letter, redone for this reboot (Cal 11-23: "reboot game again and reinitialize for everyone. Redo the message for the live
+   version"): a new id, so it reads as this launch's; still 500 coins ---- */
+var V37LAUNCH='<p>SAYWHAT is live for everyone, and everybody starts from scratch today. We did some testing for a few weeks, and it is still a work in progress, so expect periodic updates as we go.</p>'
+  +'<h3 class="label">Where to start</h3><ul class="wl">'
+  +'<li><b>The Board.</b> Add your tasks, separated by commas, and tick them off in real life. Your quests are private.</li>'
+  +'<li><b>Training.</b> Log your workouts with a photo. Swap any exercise and add or remove sets to fit how you train.</li>'
+  +'<li><b>The Loft.</b> Tap the building, then a room, to see what you can build. The Walk-in Closet opens the Shop.</li>'
+  +'<li><b>The Town Hall.</b> Posts, Chat and Players. Wave, fist bump or high five your friends, and challenge them.</li>'
+  +'</ul><p>I hope this becomes a way for all of us to be productive, through accountability and a little competition. Have fun and get after it.</p>';
+(function(){for(var i=INBOX.length-1;i>=0;i--)if(INBOX[i]&&INBOX[i].id==="live135")INBOX.splice(i,1);
+  INBOX.push({id:"live137",from:"Cal",subj:"SAYWHAT is live",d:"2026-11-23",body:V37LAUNCH,coins:500})})();

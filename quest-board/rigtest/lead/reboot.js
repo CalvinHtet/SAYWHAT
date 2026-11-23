@@ -11,7 +11,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   ok(hair.join() === 'Buzz Cut,Mid Part,Tousled,Combover', 'his starting cuts: ' + hair.join(', '));
   await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; S.areaOn = { board: 1, hideout: 1, hall: 1, players: 1 }; x.render(); });
   const V = (f) => p.evaluate(f);
-  const inbox = await V(() => window.__qbV135.inbox()); ok(inbox.length === 2 && inbox.some((l) => l[0] === 'welcome' && l[2] === 1000) && inbox.some((l) => l[0] === 'live135' && l[2] === 500), 'two letters: ' + JSON.stringify(inbox));
+  const inbox = await V(() => window.__qbV135.inbox()); ok(inbox.length === 2 && inbox.some((l) => l[0] === 'welcome' && l[2] === 1000) && inbox.some((l) => l[0] === 'live137' && l[2] === 500), 'two letters: ' + JSON.stringify(inbox));
   const cl = await V(() => window.__qbV135.cl().map((c) => c[0] + '=' + c[1]).join(', ')); ok(/reset=Self care/.test(cl) && /admin=Work and admin/.test(cl), 'groups: ' + cl);
   const sq = await V(() => Object.keys(window.__qbV135.sqk()).map((k) => window.__qbV135.sqk()[k][1])); ok(sq.join() === 'Wave,Fist bump,High five', 'greetings: ' + sq.join(', '));
   /* the Shop: built Closet, a brand never seen. On the Board: no brand window; the Shop button has "!"; in the Shop: the window */
