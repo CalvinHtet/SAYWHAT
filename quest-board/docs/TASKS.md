@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
+- Now (on release/v1.31 62a515fe): v1.31 take three, PASS, can ship; one pace NOTE for Cal (QA findings). Next: the live check after the ship.
+  Was: Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
   Was: Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
   Was: Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
@@ -420,6 +421,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.31 take three can ship (release/v1.31 62a515fe = release/v1.30 + qa-local 04a48b33, APPV 133, QB_EPOCH 6; rollback-v1.30
+  34271088, APPV 134; owner LEAD; shots/qa/v131d/, scripts in shots/qa/v131c/). Ship: ship.sh release/v1.31 133 6.
+  - The cut: over 04a48b33 only APPV; over take two the shipped changes are the curve values, the xpc5 guard, the Cal-only reset, the
+    patch131 letter and the n131 notice text. The rollback carries the same curve and move code.
+  - The XP move (xpmove.js, v1.30 c1cff491 vs the cut): curve 5's copy equals v1.30's at every level 1-101; 396 moved saves keep
+    their level. Real saves at levels 8, 30, 55 and 90 (carry3.js, v1.30 then the cut then the rollback on one origin): level and
+    share kept (30: 5,058 to 7,510 XP), coins, level pay and the Town week unchanged, no second move on reload, the same on the
+    rollback; the pulled-v1.31 visitor back at 31 with milestones re-based to 30; 0 page errors.
+  - The Cal-only reset, by code: web/config.js owners holds one uid (Cal's); it runs after the boot has picked and merged the cloud
+    save (loaded is set last), never on the sandbox, once (S.calRs131, and the backup doc stops other devices); it resets only after
+    the backup write succeeds (a failed write leaves the save alone). Another device holding the old save on the device loses to the
+    reset cloud save, as saveWhich takes the newer savedAt. The boot also keeps the normal per-version backup. LEAD's calreset.js,
+    run on the cut's web build with every non-local request blocked (calresetqa.js): owner backed up and reset once, not again on
+    reload; another player keeps level 31 and 5,000 coins with no backup; the letter in the inbox; 0 page errors.
+  - Web build: wlive.js (APPV 133, EPOCH 6) PASS; the app-browser sign-in screen as passed on take two (inapp.js, 10 browsers).
+  - Text: the letter "Update 1.31: testing is over" (level curve, economy, features, late-game items; no brands, no dates, no coins);
+    the board notice "Version 1.31 is live" pays 500 once.
+  - NOTE for Cal (pace, not a bug): from LEAD's own day-30 figures (daily player level 44, heavy 66: about 610 and 1,940 XP a day),
+    level 60 takes about 1 heavy day, 70 about 1.6, 80 about 2.2, 90 about 2.9 and 99 about 3.6 (pace.js; need 2,205 / 3,147 /
+    4,289 / 5,631 / 7,010). Cal asked for "a heavy day for 1 level" late; that holds around 60, later levels take 2-4 heavy days.
+    Early: level 7 by day 1 (570 XP), 14 by day 3. No sim run on this curve (LEAD's numbers are from average XP a day).
+  - Not checked: a real phone or app browser, the real Firebase (the stand-in only), the Test channel (ship.sh compares it).
 - PASS, v1.31 can ship (release/v1.31 9b2c2206 = release/v1.30 + qa-local 21e2706d, APPV 133, QB_EPOCH 6; rollback-v1.30 ce74e7b7,
   APPV 134; owner LEAD; shots/qa/v131c/). Ship: ship.sh release/v1.31 133 6.
   - The cut: over 21e2706d only APPV differs; over QA's last pass (05eac907) the shipped changes are the curve (29zzz_econ.js), the
