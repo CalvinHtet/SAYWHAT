@@ -12,7 +12,7 @@ TMP=${TMPDIR:-/tmp}/qb_cut_$NEW
 cd "$R" || exit 1
 git worktree add -q -b "release/$NEW" "$TMP" "refs/heads/release/$PREV" || exit 1
 cd "$TMP" || exit 1
-P="quest-board/app quest-board/src quest-board/data quest-board/art quest-board/tools"
+P="quest-board/app quest-board/src quest-board/data quest-board/art quest-board/tools quest-board/web/web.js"  # web.js yes, config.js (noTest) no
 git checkout -q "$SRC" -- $P || { echo "STOP: checkout from $SRC failed"; exit 1; }
 git diff --name-only --diff-filter=D "refs/heads/release/$PREV" "$SRC" -- $P > "$TMP.del"
 while read -r f; do [ -n "$f" ] && git rm -q "$f"; done < "$TMP.del"
@@ -26,7 +26,7 @@ if ep:
     p = 'quest-board/app/src/00_clock.js'; s = open(p).read(); s2 = re.sub(r'var QB_EPOCH=\d+;', 'var QB_EPOCH=' + ep + ';', s, count=1)
     assert s2 != s; open(p, 'w').write(s2)
 EOF
-git add -A quest-board/app quest-board/src quest-board/data quest-board/art quest-board/tools
+git add -A $P
 git commit -q -m "$NEW: APPV $V${EPOCH:+, QB_EPOCH $EPOCH} ($MSG)
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" || { echo "STOP: nothing to commit"; exit 1; }
