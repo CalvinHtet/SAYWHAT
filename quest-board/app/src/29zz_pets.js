@@ -170,7 +170,7 @@ function pzBedPt(room){var D=pzData(),sp=D&&D.spots&&D.spots[room];if(!petMine()
 /* The Patio dog beds are gone (Cal 11-19, 27_rooms.js). Cal: "refund for the patio beds but no message of refund necessary": once per save,
    each one owned pays back its price, silently; S.pbref marks it done (and what it paid) */
 setInterval(function(){try{if(!loaded||!S||!S.created||S.pbref)return;var c=0;
-  (S.base&&S.base.slots||[]).forEach(function(r){if(!r||r.t!=="patio"||!r.a)return;["pt_dbed","pt_dbed2"].forEach(function(id){if(!r.a[id])return;var a=(ADDONS.patio||[]).filter(function(q){return q[0]===id})[0];c+=(a&&+a[2])||200})});
+  (S.base&&S.base.slots||[]).forEach(function(r){if(!r||r.t!=="patio"||!r.a)return;["pt_dbed","pt_dbed2"].forEach(function(id){if(!r.a[id])return;c+=(typeof UP_S!=="undefined"&&UP_S)||200/* what it cost when bought, before the 11-23 price rise (PRICEK) */})});
   S.pbref={at:Date.now(),c:c};if(c){S.coins=(S.coins||0)+c;S.spent=Math.max(0,(S.spent||0)-c)}persist()}catch(e){}},1500);
 /* ---- the pet beside its player on the Town's weekly pedestal (Cal 11-23: "When displaying characters on the town hall for the weekly
    competitions, make sure the pet shows up alongside them in a neutral position wearing whatever outfit we bought") ----

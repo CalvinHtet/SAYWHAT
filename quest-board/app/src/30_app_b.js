@@ -1140,7 +1140,8 @@ function mults(q,o){
   o=o||{};var m=1,cm=1,tags=[],now=Date.now(),ri=rankIdx();
   /* Cal, 2026-11-09: photos are a pure bonus. With no photo a quest pays its listed XP; a verified photo pays at least double
      the no-photo XP and coins on every quest (2.1x with the verify perk). vb is applied last, in payXp, after rounding. */
-  var vb=o.verified?(hasSpecial("verify")?2.1:2):1;if(vb>1)tags.push("Verified x"+vb);
+  /* Cal, 2026-11-23: a verified photo pays 1.5x (was 2x; the economy ran too fast), 1.6x with the verify perk (PROOFX, 29zzz_econ.js) */
+  var vb=o.verified?((typeof PROOFX!=="undefined"?PROOFX:2)+(hasSpecial("verify")?.1:0)):1;if(vb>1)tags.push("Verified x"+vb);
   var sm=1+Math.min(streakCap(),.02*streakNow());if(sm>1){m*=sm;tags.push("Streak x"+sm.toFixed(2))}
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
