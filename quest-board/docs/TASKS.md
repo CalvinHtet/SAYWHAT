@@ -314,7 +314,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local 8df50fb4): rig flag 3f15f863 PASS, 1c7e636d PASS with one FIX (econTrained on unpaid sessions), curve 7 PASS with a NOTE (QA findings).
+- Now (on release/v1.41 4dcc070c): v1.41, PASS, can ship; a rollback NOTE (curve 6 drops levels) (QA findings). Next: the live check.
+  Was: Now (on qa-local 8df50fb4): rig flag 3f15f863 PASS, 1c7e636d PASS with one FIX (econTrained on unpaid sessions), curve 7 PASS with a NOTE (QA findings).
   Was: Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
   Was: Now (Cal's skin-through report, on the live build 297b2192): rig seam crack under sleeved tops (fineSlots), FIX for LEAD; waiting on his fix to sweep every Shop piece (QA findings).
   Was: Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
@@ -440,6 +441,17 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.41 can ship (release/v1.41 4dcc070c = qa-local ff86b273 + APPV 141, QB_EPOCH 8 (checked in the cut's 00_clock.js), no
+  reset; owner LEAD; shots/qa/v141/). Ship: ship.sh release/v1.41 141 8.
+  - The cut: over ff86b273 only APPV and QB_EPOCH; over v1.39 seven files, as listed. The rig (rig.js, rig.json, poses.json) and the
+    curve are byte-identical to what QA passed (3f15f863, 8df50fb4); ff86b273 adds QA's FIX: econTrained is skipped when the session is
+    the unpaid second one (it runs after grantXp marks it).
+  - With every non-local request blocked: train140 (now also no stat change on the second session), reboot, v136, tutquest, tourcard,
+    hall3, curve6 PASS on the plain build; friends39 and kudos39 PASS on the web build with the stand-in; wlive.js 141/8 PASS.
+  - NOTE (LEAD, before it is needed): rollback-v1.39 b60f3330 keeps curve 6, so a rollback would drop carried players' levels (a curve-7
+    level 33 shows 30 on curve 6, 70 shows 60); lvPaid keeps anything from being paid twice and the levels come back on the next
+    release. A rollback that carries curve 7 (as rollback-v1.31 carried curve 6) would avoid the drop.
+  - Not checked: a real phone, real accounts, the Test channel (ship.sh compares it).
 - PASS, the per-pose rig flag 3f15f863 (replaces a888ed55; owner LEAD; ROOMS passed it too, shots/pending_art/skin_1123/v3/): the 14
   poses marked coarse (rest, idle, idleIn, walks, rear stands, back walks, stretch) bind the top and arms on the usual grid; the other
   28 poses are pixel-identical to live in QA's starter sweep (54 looks x 43 poses; shots/qa/skin1123/starter_live_vs_perposeflag.txt).
