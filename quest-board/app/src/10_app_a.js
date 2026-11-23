@@ -616,7 +616,10 @@ var view="board";
 /* Cal, 2026-11-23: momentum tops out at 1.5x (was 2x), reached on the 7th task */
 var MOMENTUM_MAX=.5;
 function coinMomentum(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(MOMENTUM_MAX,Math.max(0,n-2)*.125)}
-function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+.01*(effLvl()-1))*coinMomentum()))}
+/* Cal, 2026-11-23: the economy ran too fast. Photo proof pays 1.5x (was 2x, used in mults, 30_app_b.js) and task coins no
+   longer grow 1% a level (COINLV was .01). Tasks still pay 6 coins an XP, times the day's momentum. */
+var PROOFX=1.5,COINLV=0;
+function coinsFor(xp){return Math.max(10,Math.round(xp*6*(1+COINLV*(effLvl()-1))*coinMomentum()))}
 var SHOP=[
  ["th_sunset","theme","Sunset Drive",60,3,"Warm orange and hot pink across the board.",{a:"#ff8a3d",b:"#ff3d81"}],
  ["th_mint","theme","Mint Circuit",70,5,"Cool mint and cyan.",{a:"#4dffc3",b:"#22d3ee"}],

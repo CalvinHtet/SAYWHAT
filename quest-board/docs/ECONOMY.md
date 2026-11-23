@@ -13,7 +13,8 @@ eight months; busy 450 XP days roughly halve that. No level ever takes more than
 curve keep their level and their progress through it (`xpc2` in `merge`).
 
 Quest XP stays on the 5 to 100 scale. Honor system on a 50+ XP task pays half, photo proof
-on 25+ XP pays 2x (a live camera photo; Cal doubled it 2026-11-05 so proof is always worth taking), a streak adds up to 30%, and combos, bounties and crits stack on top
+on 25+ XP pays 1.5x (a live camera photo; Cal doubled it 2026-11-05 so proof is always worth taking, then set it to 1.5x
+2026-11-23 because the economy ran too fast; `PROOFX` in `10_app_a.js`), a streak adds up to 30%, and combos, bounties and crits stack on top
 as you rank up. Undoing a task takes back its XP, coins, combo step and, if the day falls
 under 50 XP, that day's streak credit and any chest it opened.
 
@@ -21,7 +22,7 @@ under 50 XP, that day's streak credit and any chest it opened.
 
 | Source | Amount |
 | --- | --- |
-| Quests | XP x 6, plus 1% per level, times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, at most 1.5x from the 7th (Cal, 2026-11-23; was double from the 11th, Cal 2026-11-08; `MOMENTUM_MAX` in `10_app_a.js`) |
+| Quests | XP x 6 (the 1% a level was removed, Cal 2026-11-23, `COINLV`), times the day's momentum: full rate for the first 3 tasks, +12.5% a task after, at most 1.5x from the 7th (Cal, 2026-11-23; was double from the 11th, Cal 2026-11-08; `MOMENTUM_MAX` in `10_app_a.js`) |
 | Level up | 100 + 10 x level, paid once per level |
 | Wheel (level 6+) | about 230 a day |
 | Dungeons, 3 a day | 40 to 70 each at the start, 280 to 380 at the top. Scaled down by quest effort |

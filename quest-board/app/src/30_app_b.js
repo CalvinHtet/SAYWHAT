@@ -895,8 +895,9 @@ function bountyId(){var l=ordered().filter(function(q){return q.xp>=25});if(!l.l
 function mults(q,o){
   o=o||{};var m=1,tags=[],now=Date.now(),ri=rankIdx();
   if(q.xp>=50&&!o.verified){m*=.5;tags.push("Honor x0.5")}
-  /* Prove it pays double, coins included (coins follow XP), so a photo is always worth taking (Cal, 2026-11-05) */
-  if(q.xp>=25&&o.verified){var vb2=hasSpecial("verify")?2.1:2;m*=vb2;tags.push("Verified x"+vb2)}
+  /* Proof pays extra, coins included (coins follow XP), so a photo is always worth taking (Cal, 2026-11-05: x2;
+     Cal, 2026-11-23: x1.5, the economy ran too fast). The "verify" special still adds 0.1. */
+  if(q.xp>=25&&o.verified){var vb2=PROOFX+(hasSpecial("verify")?.1:0);m*=vb2;tags.push("Verified x"+vb2)}
   var sm=1+Math.min(streakCap(),.02*streakNow());if(sm>1){m*=sm;tags.push("Streak x"+sm.toFixed(2))}
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
