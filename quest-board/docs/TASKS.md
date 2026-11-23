@@ -309,7 +309,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.31 62a515fe): v1.31 take three, PASS, can ship; one pace NOTE for Cal (QA findings). Next: the live check after the ship.
+- Now (on release/v1.31 62a515fe, Live): v1.31 live check, PASS (QA findings).
+  Was: Now (on release/v1.31 62a515fe): v1.31 take three, PASS, can ship; one pace NOTE for Cal (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.31 9b2c2206): v1.31 from v1.30 with curve 6 take two, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
   Was: Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
@@ -422,6 +423,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.31 live check (release/v1.31 62a515fe on Live; owner LEAD): Live serves version.txt 62a515fe, version.json appv 133; its 12
+  listed files (hashed names, sizes) are identical to QA's own web build of 62a515fe (the commit QA passed, f83ec7bf), and index.html,
+  config.js, app.js, web.js and qbdata.js are byte-identical; config has noTest and one owner. Rollback ready: rollback-v1.30
+  34271088 (APPV 134). Branches: release/v1.31 and rollback-v1.30 are local only (not on origin yet; pushing is Cal's OK);
+  rollback-v0.80 is f8e882d3 here and adf0f80c on origin, and is not the rollback for this release. Not checked: the Test channel
+  (ship.sh compared 3,839 files on both), Cal's one-time reset (it runs when he next opens the game signed in), a real phone.
 - PASS, v1.31 take three can ship (release/v1.31 62a515fe = release/v1.30 + qa-local 04a48b33, APPV 133, QB_EPOCH 6; rollback-v1.30
   34271088, APPV 134; owner LEAD; shots/qa/v131d/, scripts in shots/qa/v131c/). Ship: ship.sh release/v1.31 133 6.
   - The cut: over 04a48b33 only APPV; over take two the shipped changes are the curve values, the xpc5 guard, the Cal-only reset, the
