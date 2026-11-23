@@ -429,7 +429,7 @@ QA findings (Mac team; one line each: what, where, how to see it, pictures, owne
   that owns all 12 Karaoke ids incl. ka_disco opens the room with no ball art, the window offers no Disco Ball, and of the 11 live
   upgrades it owns 11 (full: roomFill and roomsShare drop retired pieces, as do upFrac, income and the price lists); the same with
   the ball not owned; stage audit 9 pieces, 0 outside, 0 overlaps; 0 page errors. NOTE (Cal/LEAD): a player who bought the ball paid
-  its price (2,150 before the retirement) for a piece no longer shown; the Patio dog beds were refunded when retired (9c6b5cc).
+  its price (2,150 before the retirement) for a piece no longer shown; the Patio dog beds were refunded when retired (9c6b5cc). Cal 11-23: "No refund" (closed).
   Karaoke now has one upgrade fewer than Cal's +15 (ROOMS told LEAD). Not checked: a real owner's save (QA knows of none).
 - PASS, v1.31 live check (release/v1.31 62a515fe on Live; owner LEAD): Live serves version.txt 62a515fe, version.json appv 133; its 12
   listed files (hashed names, sizes) are identical to QA's own web build of 62a515fe (the commit QA passed, f83ec7bf), and index.html,
