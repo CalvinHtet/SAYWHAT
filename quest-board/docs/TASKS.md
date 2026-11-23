@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
+- Now (on rollback-v1.30 1c6ef20d, Live): rollback live check PASS, levels back (QA findings). Waiting on Cal's choice for the fix-forward v1.31 (APPV 133+).
+  Was: Now (on release/v1.31 915ed0ac): the no-reset re-cut, NOT A PASS, BLOCKER: every existing save drops to about half its level on the new curve (QA findings).
   Was: Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
   Was: Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
   Was: Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
@@ -418,6 +419,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, rollback live check (rollback-v1.30 1c6ef20d on Live; owner LEAD; shots/qa/v131b/): 1c6ef20d is release/v1.30 c1cff491 with
+  APPV 130 to 132 and nothing else. Live serves version.txt 1c6ef20d and version.json appv 132; its 12 listed files (names with
+  hashes, sizes) are identical to QA's own web build of 1c6ef20d, and index.html, config.js and app.js are byte-identical. The carried
+  level-30 save that opened v1.31 loads on 1c6ef20d at its old level (level 31 with the 317 XP the test added; was 15 on v1.31),
+  coins and XP unchanged, 0 page errors. Level pay: levelUp pays only levels above S.lvPaid, which keeps the save's high mark, so
+  re-reaching 16-30 on v1.31 paid nothing (it would show level-up windows only); saves with no lvPaid are given lvlOf(xp) on load, so a
+  very old save first loaded on v1.31 would be paid again for those levels (edge, QA knows of none). S.mile stays in saves that opened
+  v1.31 (since = their v1.31 level, rounded to 5): the fix-forward resets it (LEAD's plan). v1.31 was live about 10:33-10:45.
+  Not checked: the Test channel (LEAD compared 3,770 files on both), a real phone, signed-in cloud saves.
 - NOT A PASS, BLOCKER, v1.31 re-cut release/v1.31 915ed0ac (no reset of everyone, QB_EPOCH 6; Cal 11-23 "just keep everyone's
   profile"; owner LEAD, Cal's call on the fix; shots/qa/v131b/). Economy Part 2's level curve (1252dc4, curve 6) was passed for a reset
   to level 1; without the reset every save keeps its XP and its level is recomputed on the new curve, about half:
