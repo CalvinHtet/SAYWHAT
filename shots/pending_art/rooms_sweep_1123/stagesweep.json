@@ -1,0 +1,199 @@
+[
+ {
+  "t": "restaurant",
+  "variant": "st0",
+  "size": [
+   12.3,
+   8
+  ],
+  "pieces": 16,
+  "outside": [],
+  "overlap": [
+   [
+    "box",
+    "rsx_prep",
+    0.04
+   ]
+  ],
+  "depth": [
+   "rsx_counter0 drawn over box"
+  ],
+  "spots": 14
+ },
+ {
+  "t": "restaurant",
+  "variant": "st0_noir",
+  "size": [
+   12.3,
+   8
+  ],
+  "pieces": 16,
+  "outside": [],
+  "overlap": [
+   [
+    "box",
+    "rsx_prep",
+    0.04
+   ]
+  ],
+  "depth": [
+   "rsx_counter0 drawn over box"
+  ],
+  "spots": 14
+ },
+ {
+  "t": "restaurant",
+  "variant": "st1",
+  "size": [
+   21,
+   12
+  ],
+  "pieces": 53,
+  "outside": [
+   "rsx_iron"
+  ],
+  "overlap": [
+   [
+    "rsx_iron",
+    "rsx_pergola",
+    2.5
+   ]
+  ],
+  "depth": [
+   "rdx_bench drawn over rdx_tlong",
+   "rdx_bench drawn over rdx_tlong",
+   "rsx_counter0 drawn over box",
+   "rsx_counter0 drawn over box",
+   "rsx_counter0 drawn over box"
+  ],
+  "spots": 44
+ },
+ {
+  "t": "restaurant",
+  "variant": "st1_noir",
+  "size": [
+   21,
+   12
+  ],
+  "pieces": 53,
+  "outside": [
+   "rsx_iron"
+  ],
+  "overlap": [
+   [
+    "rsx_iron",
+    "rsx_pergola",
+    2.5
+   ]
+  ],
+  "depth": [
+   "rdx_bench drawn over rdx_tlong",
+   "rdx_bench drawn over rdx_tlong",
+   "rsx_counter0 drawn over box",
+   "rsx_counter0 drawn over box",
+   "rsx_counter0 drawn over box"
+  ],
+  "spots": 44
+ },
+ {
+  "t": "restaurant",
+  "variant": "st2",
+  "size": [
+   24.6,
+   14
+  ],
+  "pieces": 63,
+  "outside": [],
+  "overlap": [
+   [
+    "rdx_curve2",
+    "rdx_tround",
+    2.89
+   ],
+   [
+    "rsx_iron",
+    "rsx_pergola",
+    2.5
+   ]
+  ],
+  "depth": [
+   "rdx_bench drawn over rdx_tlong",
+   "rdx_bench drawn over rdx_tlong",
+   "rsx_counter0 drawn over box",
+   "rsx_counter0 drawn over box",
+   "rsx_oven drawn over box"
+  ],
+  "spots": 47
+ },
+ {
+  "t": "restaurant",
+  "variant": "st2_noir",
+  "size": [
+   24.6,
+   14
+  ],
+  "pieces": 64,
+  "outside": [],
+  "overlap": [
+   [
+    "rdx_curve2",
+    "rdx_tround",
+    2.89
+   ],
+   [
+    "rsx_iron",
+    "rsx_pergola",
+    2.5
+   ]
+  ],
+  "depth": [
+   "rdx_bench drawn over rdx_tlong",
+   "rdx_bench drawn over rdx_tlong",
+   "rdx_pass drawn over box",
+   "rdx_pass drawn over box",
+   "rsx_oven drawn over box"
+  ],
+  "spots": 47
+ },
+ {
+  "t": "garden",
+  "variant": "st0",
+  "size": [
+   12,
+   10
+  ],
+  "pieces": 10,
+  "outside": [],
+  "overlap": [],
+  "depth": [],
+  "spots": 8
+ },
+ {
+  "t": "garden",
+  "variant": "st1",
+  "size": [
+   18,
+   13
+  ],
+  "pieces": 22,
+  "outside": [],
+  "overlap": [],
+  "depth": [
+   "gdx_raised drawn over gdx_lantern"
+  ],
+  "spots": 10
+ },
+ {
+  "t": "garden",
+  "variant": "st2",
+  "size": [
+   24,
+   16
+  ],
+  "pieces": 26,
+  "outside": [],
+  "overlap": [],
+  "depth": [],
+  "spots": 17
+ }
+]
