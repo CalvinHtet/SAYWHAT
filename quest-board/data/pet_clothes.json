@@ -83,6 +83,56 @@
    }
   ]
  },
+ "pd_bubbles": {
+  "kind": "aura",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 407,
+    "pivot": [
+     390.1,
+     60.7
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 775,
+    "h": 407,
+    "pivot": [
+     390.1,
+     60.7
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 678,
+    "h": 393,
+    "pivot": [
+     343.5,
+     67.7
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 678,
+    "h": 393,
+    "pivot": [
+     343.5,
+     67.7
+    ]
+   }
+  ]
+ },
  "pd_bucket": {
   "kind": "head",
   "pet": "dogs",
