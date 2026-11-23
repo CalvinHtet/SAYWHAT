@@ -14,7 +14,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const rooms = await p.evaluate(() => window.__qbHall.chat().msgs.length); ok(rooms === 3, 'Chat has 3 rooms (' + rooms + '; their buttons draw only online)');
   await p.evaluate(() => document.querySelector('.htab [data-t="style"]').click()); await p.waitForTimeout(900); await clear();
   const pl = await p.evaluate(() => ({ mode: [...document.querySelectorAll('.fsh-tg button')].map((b) => b.textContent + (b.classList.contains('on') ? '*' : '')), rows: [...document.querySelectorAll('.fsh-row .fsh-rn')].map((e) => e.textContent.replace(/\s+/g, ' ').trim()) }));
-  ok(pl.mode.some((m) => /Highest level\*/.test(m)) && /Ann/.test(pl.rows[0] || pl.rows.join()), 'Players ranks by level: ' + JSON.stringify(pl));
+  /* Cal 11-23: Players is one level leaderboard, no Highest level / Most rich buttons (29zz_v139.js) */ ok(!pl.mode.some((m) => /rich/i.test(m)) && /Ann/.test(pl.rows[0] || ''), 'Players ranks by level, no other ranking: ' + JSON.stringify(pl));
   await p.screenshot({ path: OUT + '/hall3_players.png' });
   await p.evaluate(() => { const r = [...document.querySelectorAll('[data-act="fshview"]')].find((e) => /Ann/.test(e.textContent)); if (r) r.click(); }); await p.waitForTimeout(700);
   const card = await p.evaluate(() => { const m = document.querySelector('#layer .modal'); return m ? [...m.querySelectorAll('.sq-acts button')].map((b) => b.textContent.trim()) : null; });

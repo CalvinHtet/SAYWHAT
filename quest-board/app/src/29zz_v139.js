@@ -55,7 +55,10 @@ sqScan=async function(){if(!socOn())return;var q=await db.collection("pings").li
     Object.keys(m).forEach(function(to){var e=m[to];if(!e||!sqKind(e.k)||now-(+e.t||0)>864e5)return;all.push({from:d.id,fromName:x.fromName||"Neighbor",to:to,k:e.k,t:+e.t})})});
   SQ.frMine=mine;SQ.frTheirs=theirs;
   all.sort(function(a,b){return b.t-a.t});SQ.feed=all.slice(0,8);
-  var o=socState(),seen=o.sqSeen||(o.sqSeen={}),G=v37Got(),got=[],td=today();
+  var o=socState(),seen=o.sqSeen||(o.sqSeen={}),got=[],td=today();
+  /* the once-a-day mark has its own store: sqPaid() (29p_square.js) drops social.sqt.got entries that do not read as a time within 2 hours,
+     so a date there was gone on the next read (QA 11-23) */
+  var G=o.sqGotD&&typeof o.sqGotD==="object"?o.sqGotD:(o.sqGotD={});Object.keys(G).forEach(function(u){if(G[u]!==td)delete G[u]});
   all.forEach(function(e){if(e.to!==MYUID||e.from===MYUID||(seen[e.from]||0)>=e.t)return;seen[e.from]=e.t;var pay=0;
     if(G[e.from]!==td){pay=5+5*v39Lv(Math.max(0,v39Pts(e.from)-1))/* the level before this greeting, as the sender was paid */;G[e.from]=td;S.coins+=pay;S.earnedC+=pay}got.push({e:e,pay:pay})});
   try{fshModalPaint()}catch(x){}
