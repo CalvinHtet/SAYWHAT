@@ -1,0 +1,13 @@
+ok   app.js compiles (1,989,314 chars)
+BAD  QB_EPOCH 7 (want 6)
+ok   APPV 131 (want 131)
+ok   version.json appv 131
+ok   version.json lists 12 files with sizes; 0 mismatched
+ok   config.js sets noTest: noTest: true
+ok   config.js is not the sandbox: (no sandbox key)
+ok   test hooks on window: none
+ok   no "Testing" text or test button on the first screen
+ok   no SANDBOX badge
+ok   page errors on the first load: 0 
+     first screen: LOADING SAYWHAT Real chores, real XP. Sign in once so your progress follows you and your friends can see your Loft. Sign | boot note: null
+LIVE CHECKS: 1 problem(s)

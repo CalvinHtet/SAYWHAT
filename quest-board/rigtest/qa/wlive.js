@@ -1,18 +1,19 @@
 // Live build checks for a release candidate (LEAD 17:28): the test tools are stripped (no window.__qb* hooks, no "Testing" rows or
-// buttons), QB_EPOCH 6, APPV, version.json lists every file with its size and the sizes match, app.js compiles, and a first load has
+// buttons), QB_EPOCH (7 from v1.31; EPOCH=n), APPV, version.json lists every file with its size and the sizes match, app.js compiles, and a first load has
 // no page errors. Run on the Live build (build_web.sh without "sandbox"), served on its own port. __qbLoad (the loader's timing,
 // loader.html) and __qbWeb (web.js: live, signedIn, running) are platform objects, not test hooks, and are allowed.
 //   BASE=http://127.0.0.1:8812 DIST=<that dist-web> APPV=91 CHROME_PORT=9374 bash tools/windows/node.sh rigtest/qa/wlive.js
 const fs = require('fs'), path = require('path');
 const { browser, sleep } = require('./cdp.js');
 const BASE = process.env.BASE || 'http://127.0.0.1:8812', DIST = process.env.DIST, WANT = +(process.env.APPV || 91);
+const EPOCH = String(process.env.EPOCH || 7); // the saves' epoch the release must carry: 7 from v1.31 (Cal 11-23 reset of everyone); EPOCH=n for another
 (async () => {
   const P = []; const ok = (c, s) => { console.log((c ? 'ok   ' : 'BAD  ') + s); if (!c) P.push(s); };
   if (DIST) {
     const js = fs.readFileSync(path.join(DIST, 'app.js'), 'utf8');
     try { new Function(js); ok(true, `app.js compiles (${js.length.toLocaleString()} chars)`); } catch (e) { ok(false, 'app.js does not compile: ' + e.message); }
     const ep = (js.match(/QB_EPOCH\s*=\s*(\d+)/) || [])[1], av = (js.match(/APPV\s*=\s*(\d+)/) || [])[1];
-    ok(ep === '6', `QB_EPOCH ${ep} (want 6)`); ok(+av === WANT, `APPV ${av} (want ${WANT})`);
+    ok(ep === EPOCH, `QB_EPOCH ${ep} (want ${EPOCH})`); ok(+av === WANT, `APPV ${av} (want ${WANT})`);
     const v = JSON.parse(fs.readFileSync(path.join(DIST, 'version.json'), 'utf8'));
     ok(+v.appv === WANT, `version.json appv ${v.appv}`);
     const files = v.files || []; let bad = 0;

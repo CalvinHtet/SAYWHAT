@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
+- Now (on release/v1.31 42680d81): v1.31 cut, PASS, can ship once ship.sh uses QA's fixed wlive.js (epoch 7) (QA findings).
+  Was: Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
   Was: Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
   Was: Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
@@ -416,6 +417,25 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.31 can ship, with one step for the ship (release/v1.31 42680d81, rollback-v0.80 c4ee2449; owner LEAD; shots/qa/v131/).
+  - The cut: over 05eac907 (QA PASS da290bb5) the only shipped changes are APPV 100 to 131 (30_app_b.js) and QB_EPOCH 6 to 7
+    (00_clock.js); everything else that differs is docs, rigtest and shots. Parent release/v1.30 c1cff491. The rollback changes only
+    APPV 131 to 132 and QB_EPOCH 6 to 7 over the last rollback adf0f80c, as it should.
+  - The web build (QB_TARGET=web), served on its own port: wlive.js PASS, 11 of 11 (app.js compiles, APPV 131, version.json 12 files
+    with sizes and 0 mismatched, noTest, not the sandbox, no test hooks on window, no Testing text or button, no SANDBOX badge, 0 page
+    errors on the first load, which shows the sign-in screen).
+  - STEP FOR THE SHIP (LEAD): ship.sh runs the release commit's own rigtest/qa/wlive.js, and that copy wants QB_EPOCH 6: run as is
+    it fails ("QB_EPOCH 7 (want 6)", exit 1) and ship.sh stops before deploying (wlive_release_copy.txt). QA's wlive.js on qa-local
+    (this commit) now wants 7 by default (EPOCH=n for another). Either point ship.sh at $R's rigtest/qa/wlive.js or add this one file
+    to release/v1.31 (rigtest only, nothing shipped changes; QA will check the diff).
+  - The reset, plain builds of release/v1.30 and the cut on one origin and one browser profile: a played v1.30 save (epoch 6, level
+    20, 5,000 coins) opens on v1.31 as a fresh start (epoch 7, not created, 0 XP, 0 coins); 0 page errors on both.
+  - The n131 notice: from level 2 (the Town opens there) it pays 500 once (0 to 500, a second tap pays nothing); the text is vague,
+    no brands or dates.
+  - LEAD's striptest.js FAILs: the same two fail on release/v1.30; wlive covers the stripping, so not blocking (the test is stale).
+  - Before the ship, Cal's OK for clearing the shared cloud collections (RELEASING.md) is LEAD's to ask; QA has not touched the cloud.
+    Known and accepted: an old local-only save has no backup.
+  - Not checked: the hosted pages (ship.sh compares every file), a real phone, a signed-in player's cloud backup_e6 (the cloud).
 - PASS, the release batch on qa-local 05eac907 (QA's three db6a2a6b placement FIXes, ROOMS's tested values; a clean build; owner
   LEAD). stagesweep.js: Restaurant st0 1 / st1 0 / st2 2 overlaps (all intended, as before), Garden 0 at every stage, Karaoke 0;
   0 page errors. By eye: (1) Karaoke's disco ball at 7.0,5.8 hangs over open floor by the stage's left edge, clear of the drinks
