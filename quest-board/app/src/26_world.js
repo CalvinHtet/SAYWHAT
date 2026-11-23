@@ -445,7 +445,7 @@ LFROOM.restaurant=function(C){
     pl+=lfPoly([lfP(px,kd,0),lfP(px,D,0),lfP(px+.12,D,0),lfP(px+.12,kd,0)],"#6d4c2e","none");C.decals.push(pl);
     if(H("r_sign"))rsS(C,"rsx_aframe",px+3.6,D-.75,.7,.5,24,{dk:-.5});/* in the gap between the fire pit and the table */
     if(H("r_p3")){rsS(C,"rsx_planter",px+.4,kd+.4,1.9,.7,16,{flip:1});rsS(C,"rsx_olive",Wt-1.1,kd+.3,.9,.9,50)}
-    if(H("r_p1"))(st===2?[[px+2.2,kd+2.4],[px+5.6,kd+2.4]]:[[px+2.6,kd+2.6]]).forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
+    if(H("r_p1"))(st===2?[[px+2.2,kd+2.4],[px+5.6,kd+2.4]]:[[px+3.5,kd+2.6]])/* QA db6a2a6b: +0.9 (ROOMS), the fire-pit chair ran into it */.forEach(function(p){rsTable(C,"iron",p[0]-1,p[1]-1,"P")});
     /* Cal: no room crowded. The front of the deck holds two pieces with air between them: the fire pit on the left and, on
        the right, the umbrella table, which moves under the pergola as a plain table once the pergola is up */
     if(H("r_p2")&&!(H("r_p5")&&st===2))[[px+(st===1?6.6:6.0),D-(st===1?2.6:2.0)]].forEach(function(p){rsTable(C,"umb",p[0]-1,p[1]-1,"P")});
