@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: taken by ROOMS (pet clothes, 48 pieces, 2026-11-18)
+CHROME: taken by ROOMS (hair, highlights; 2026-11-23)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -247,6 +247,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
+- Cal's 11-23 asks (via LEAD), ROOMS: (1) dog line 12/12 DONE (pd_cable, pd_fleece both dogs; pd_hearts, pd_bubbles, pd_treats auras: daa18ad, 9c3a732, 44310cc, 65804c3) -> WAITING ON QA wear-test. (2) Hair DONE: m_h4 Buzz, m_h5 Man Bun, f_h4 Wavy (starting), m_h6 Combover, m_h7 + f_h5 Wolf Cuts (Stylist), each with icon; fr_victor_hair takes all 10 dyes (3f29721..da7ac03; LEAD wired) -> WAITING ON QA wear-test (arms-up, hats). (3) Highlights: method OK'd by LEAD (tools/hair_hi.py, 3 px streaks); h1 done (75987b8), h2/h3/h4 painting, then h5-h7, f h4/h5, Victor. (4) Later rooms placement sweep at every stage (rigtest/qa/stagesweep.js), split with QA (QA: live walking-through). (5) Visitor: held for Cal's name and photos. CHROME taken.
 - Pet clothes: QA's fixes all PASS (976305b, bea0f82, 3c309e4; QA f3f56bd). e304a15: the cyan key no longer eats navy (bowtie collar and poppy side bow restored, to QA). Dog bodies, one sheet per dog: pd_rain both dogs (QA PASS), pd_cable Chopstick done, Pluto painting; pd_fleece (replaces the NSFW-refused puffer, QA design PASS) Chopstick painting, Pluto next. Then the three dog auras, then the dog set to QA. CHROME taken.
 - Pet clothes: wolf 12/12, wyvern 12/12 (QA d7fd35e fixes applied: wizard hat + LEAD's frame-3 anchor, paws cell 6 for pack/bomber/vest, lanterns smaller, shards/cloud off the chest, scarf ends attached), slime 12/12 (headphones and bow with up+flat cells) -> (QA: DONE through f1ba1fc: 6 of 7 fixes PASS, slime 8 PASS / 4 FIX, dogs 4 PASS / 2 FIX; QA findings). Dogs 6/12 (head + neck done; neck pieces hide in sleep after LEAD's anchor fix). Dog body pieces: Higgsfield failed 4x on the six-dog sheet (generic 'try again', not a refusal); retrying one sheet per dog. Dog auras after. CHROME taken.
 - Painting the 48 pet clothes (QA-passed concepts, LEAD's map and anchors): wolf 12/12 done, wyvern 9/12 (auras painting), slime and dogs next. Committed in batches (34adce0, d868771, 5f14634, 12bb813, 881fd11): art/app/ppc_<id>_<n>, data/pet_clothes.json, tools/pet_wear.py (template, cut, check, headaura); wear checks per piece in shots/pending_art/pets/clothes/check_*.png. QA gets the full set per line when each line is done. CHROME taken.
