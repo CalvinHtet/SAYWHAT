@@ -408,6 +408,28 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- Pets in the Loft (Cal 11-23: "make sure their animations are good and their outfits are good"; qa-local 649f1fc, a clean build; the
+  Bedroom in the Loft scene, each creature fully dressed and both dogs dressed; non-local requests blocked). Scripts and pictures:
+  shots/qa/petslive/.
+  - FIX 1 (LEAD, code), clothes pop off: the first time each frame is drawn (the first walk step, sit, fun move, waking), the creature
+    shows for a moment without any clothes until its dressed picture is ready: 4-6 times per creature in 75 s (pzSprite returns the
+    plain frame while the composite draws). Build all 11 composites for the worn outfit when the Loft opens and when the outfit changes,
+    or keep the last dressed picture on screen until the new one is ready. The dogs use the same path, so dressed dogs pop the same way.
+  - FIX 2 (LEAD, frame choice; or ROOMS), the wyvern's walk: walking alternates frame 2 (side-on glide, wings back) and frame 3 (facing
+    front, legs dangling) every step, so it flips between profile and front view as it moves (wyvern_walk_sheet.png, rows 3-4). Walk on
+    one airborne frame with a bob, or have ROOMS paint a second glide frame to pair with 2. The wolf's trot and the slime's
+    bounce/squash pair read fine.
+  - PASS:
+    - Facing: the actor's face flag is -1 exactly while it moves left on screen, so it turns with its walk.
+    - Footprints: natural roaming (75 s each, woken every 15 s, never steered): the creature and both dogs never walked inside one of the
+      Bedroom's 9 furniture footprints. The overlaps QA saw with the desk and the plant came from QA forcing walks to targets inside them.
+    - The idle loop (0/1 every 650 ms), sit, sleep and the crying screen show their right frames. Mass centres agree within 1 px, so
+      nothing jumps between frames.
+    - Clothes on every frame: the compositor diff of 452 piece-frames matches the rule, including the slime's flat head cells, the
+      wyvern's paws cell, and the dogs per dog. Beds and the give-up screen as passed before (3fee540).
+  - NOTE: the fun move is one frame shown for 650 ms about every 15 s, a flash rather than a move. Fine if meant; two frames would read
+    better.
+  - Not checked: the Patio by eye this round (passed at 5d9274c), night light, a real phone.
 - PASS, v1.30 live check (release/v1.30 c1cff49; owner LEAD): release/v1.30 and rollback-v0.80 match origin (c1cff49, adf0f80). The
   shipped commit is the exact one QA rebuilt and passed (3fee540: APPV 130, web 3,770, artcheck 0, petshop.js and petdrops.js PASS,
   the letter pays 500 once). The rollback commit changes only APPV, 130 to 131. Not checked by QA: the hosted pages (LEAD's ship run
