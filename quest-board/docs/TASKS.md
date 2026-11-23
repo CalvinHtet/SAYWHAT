@@ -309,7 +309,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
+- Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
+  Was: Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
   Was: Now (on 05c353be): the Speakeasy recheck, PASS; seating left for a later pass (QA findings).
   Was: Now (on 268253fe): the Speakeasy rework, NOT A PASS yet: two small FIXes (cart on the armchair, barrels boxed in), a seating NOTE (QA findings).
   Was: Now (on bdb442d1): Karaoke Disco Ball retired, PASS with a refund NOTE (QA findings).
@@ -427,6 +428,26 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.35 can ship (release/v1.35 a7ba8e21 = release/v1.31 + qa-local 867f9152, APPV 135, QB_EPOCH 7; rollback-v1.31 08c7d93e;
+  rules from the qa-local checkout; owner LEAD; shots/qa/v135/). Cal 11-23: quest names "Ship, reword the text" (LEAD made them private
+  instead, which covers it) and photos "Yes, delete photos". Ship: rules deploy, ship.sh release/v1.35 135 7, then the clear (board,
+  pings, worlds, chat, chatnow, likes, kudos, kudosok, duel, duelq, photos -r, photolk).
+  - The cut: over 867f9152 only APPV, QB_EPOCH and firestore.rules (the release branch keeps v1.31's rules file; the deploy is from the
+    checkout, whose rules differ from live by the duelq block only). Over d2cfa06c: private quest names, Training, the starting bed.
+  - Private quest names (867f9152): the names leave duel/<id>; each player writes duelq/<me>~<other>~<cid> and gets the other's
+    duelq/<other>~<me>~<cid> by doc. The rule: read only if the signed-in uid is the id's first or second part, create/update only
+    the first, delete the first or the owner; nobody can list the collection (the rule depends on the id). The web wrapper stores
+    {qs} as {j, t}, so small(8000) holds (30 names x 60 characters). Rules not run in an emulator (read by eye).
+  - LEAD's reboot.js and training.js on the cut, every non-local request blocked: PASS (as on d2cfa06c; Training in the bar from day
+    one, the Workout off the Board, the week strip of 7 days, "Log today's workout" opens the photo proof at 1.5x, the card says when
+    it is logged); 0 page errors. The Town Hall's 3-a-row photo squares are style only, read but not seen (no posts offline).
+  - The starting bed (ROOMS c192b451): the headboard sits under the prints and the poster; the player asleep lies in it, head on the
+    pillow (bedsleep.js: the sleeping overlay's box equals the bed's at the starting, Memory Foam and LED beds); the footprint is
+    unchanged. Cal called the nightstand over the bed's corner correct.
+  - The reset and the letters as passed on d2cfa06c (code unchanged there); wlive.js (APPV 135, EPOCH 7) PASS on the web build.
+  - Still screen-only: fashion vote counts (likes/<id> readable by every signed-in player); LEAD is telling Cal.
+  - Not checked: the rule in Firebase's emulator, two real players in a productivity challenge, the photo grid with real posts, a
+    phone.
 - HELD for one Cal decision, otherwise PASS: the reboot, release/v1.35 d2cfa06c (= release/v1.31 + qa-local d92a226a, APPV 135,
   QB_EPOCH 7; rollback-v1.31 08c7d93e, APPV 136, epoch 7; owner LEAD; shots/qa/v135/).
   - The cut: over d92a226a only APPV and QB_EPOCH; over v1.31 the shipped changes are 29zz_v135.js, the group/perk texts, the Speakeasy
