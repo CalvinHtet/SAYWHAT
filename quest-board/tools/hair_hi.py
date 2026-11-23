@@ -5,7 +5,7 @@
 
 The sheet is that style's own hair sheet, repainted by Higgsfield with a few strand-following streaks in flat pure cyan and
 nothing else changed (checked: same place to the pixel, every streak inside the hair). The cyan is the streak mask: softened,
-widened a touch, kept inside the hair layer, and painted in the hair's own grey texture lifted into the light end of the ramp,
+widened 3 px, kept inside the hair layer, and painted in the hair's own grey texture lifted into the light end of the ramp,
 so the rig's tint shows the highlight colour's light tones and the strand shading still reads. Writes art/layers/<b>_<style>hi_<view>.png
 and the packed art/app/<b>_<style>hi_<view>.webp. Transparent everywhere else.
 """
@@ -20,7 +20,7 @@ from scipy import ndimage as ndi
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
-GROW = 2  # px at layer size: the generator's streaks are a hair thinner than a strand
+GROW = 3  # px at layer size: thin streaks vanish at Loft and phone scale on blue, purple, pink (LEAD 11-23)
 
 
 def main():
