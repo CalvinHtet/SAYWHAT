@@ -3323,7 +3323,7 @@ LFROOM.bedroom=function(C){
   /* QA (every room against references): the round rug floated in the open floor; it now tucks under the foot of the bed */
   if(H("bd_rug"))lfSpr4(C,"bd4_rug",2.3,2.6,2.8,2.8,{h:1,nosh:1,dk:99,sc:1});
   var bk=H("bd_bed2")?"bd4_bed2":H("bd_bed1")?"bd4_bed1":"bd4_bed0";
-  var bo={h:14,occ:1.3,flip:1,fit:1,sc:H("bd_bed2")?1:H("bd_bed1")?.86:.88,dy:H("bd_bed2")?4:H("bd_bed1")?7:6};
+  var bo={h:14,occ:1.3,flip:1,fit:1,sc:H("bd_bed2")?1:H("bd_bed1")?.86:.78,dy:H("bd_bed2")?4:H("bd_bed1")?7:14};
   lfSpr4(C,bk,.1,1.0,3.3,2.7,Object.assign({id:"lfbed"+C.chu},bo));
   C.chd.slk=bk.slice(-1);lfSpr4(C,bk,.1,1.0,3.3,2.7,Object.assign({id:"lfslp"+C.chu,hid:1,nosh:1,dk:-.02},bo));
   C.s("look",4.8,4.6,-1,"look",[4,9]);

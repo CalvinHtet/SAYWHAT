@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=133, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=135, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1380,7 +1380,7 @@ function profileHtml(){
     h+='<h3 class="label" style="margin-top:4px">Titles</h3><div class="titles">'+STATS.map(function(s){var t=titleFor(s[0]);return '<span class="chip" style="'+(t?'color:var(--s-'+s[0]+');border-color:var(--s-'+s[0]+')':'')+'">'+(t?esc(t):s[1].split(" ")[0]+': next title at '+([5,15,30].filter(function(x){return x>(S.stats[s[0]]||0)})[0]||"max"))+'</span>'}).join("")+'</div>';
   }
   h+='</section>';
-  h+='<div class="foot"><span class="note">Photo proof: '+Math.round(integrity()*100)+'% of your big-quest XP has a photo. Photos are optional and pay double XP and coins. Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared.</span></div>';
+  h+='<div class="foot"><span class="note">Photo proof: '+Math.round(integrity()*100)+'% of your big-quest XP has a photo. Photos are optional and pay 1.5x XP and coins. Level cap '+MAXL+'. Daily quests reset each morning; one-offs vanish once cleared.</span></div>';
   return h;
 }
 /* the Board's one progress line: today's Daily Quest XP against the goal; tap it (or the avatar) for the profile */
@@ -1669,8 +1669,8 @@ function askProof(id){
   /* wake the photo checker while the player is still framing the shot (web build only; a no-op elsewhere) */
   try{if(window.claude)window.claude.use("sample").then(function(s){if(s&&s.warm)s.warm()}).catch(function(){})}catch(e){}
   var mv=mults(q,{verified:true}), mh=mults(q,{verified:false});
-  proofModal=modal('<div class="card box2"><span class="label">Quest done? Double it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
-   +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for double XP and coins.":"Snap a live photo of the finished result for double XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
+  proofModal=modal('<div class="card box2"><span class="label">Quest done? Prove it</span><h2 style="font-size:26px">'+esc(q.name)+'</h2>'
+   +'<p class="note">'+(isDigital(q)?"Snap a live photo of your screen showing the finished work for 1.5x XP and coins.":"Snap a live photo of the finished result for 1.5x XP and coins.")+' Camera only: screenshots and saved photos are turned off, and each photo counts once.</p>'
    +'<div class="row"><span class="chip xp">Verified +'+mv.xp+' XP, +'+Math.ceil(coinsFor(mh.cx)*mv.vb)+' coins</span><span class="chip">No photo +'+mh.xp+' XP, +'+coinsFor(mh.cx)+' coins</span></div>'
    +'<div class="btns"><label class="btn" for="pf1">Open camera</label></div>'
    +'<input class="vh" type="file" id="pf1" accept="image/jpeg" capture="environment" aria-label="Take a proof photo">'
@@ -1853,7 +1853,7 @@ function guess(t){
   var s=t.toLowerCase(), r={xp:25,stat:"productivity",cl:"admin"};
   if(/gym|workout|lift|run\b|jog|walk|stretch|swim|yoga/.test(s)){r.stat="fitness";r.cl=/walk/.test(s)?"out":"body";r.xp=25}
   else if(/edit|film|shoot|record|produce|mix|master|song|track|beat|studio|mashup|video|reel|cover art|epk|design/.test(s)){r.stat="creativity";r.cl="create";r.xp=/edit|film|shoot|produce|finish|mix|master/.test(s)?50:25}
-  else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}
+  else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water|breakfast|lunch|\bmeals?\b|\beat\b|\bnap\b|meditat/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}/* self care (Cal 11-23) */
   else if(/dish|laundry|clean|vacuum|trash|sweep|tidy|organi[sz]e|assemble|put together|groom/.test(s)){r.stat="productivity";r.cl="home";r.xp=/clean|laundry|assemble|put together/.test(s)?25:10}
   else if(/call|text|dinner|friend|date|party|hang|visit|birthday/.test(s)){r.stat="social";r.cl="social";r.xp=25}
   /* QA's review (2026-11-14): "Reply to emails" matched "mail" below and was filed under Outside run; desk work is admin */
@@ -1874,7 +1874,7 @@ var PARSE="The user pasted a messy brain dump for a gamified to-do app (bullets,
  +"repeat is 'daily' for routines that recur every day (feeding pets, hygiene, making the bed, gym) and 'once' for one-off tasks.\n"
  +"XP scale: 5 = trivial, under 5 minutes. 10 = under 15 minutes. 25 = 15 to 60 minutes. 50 = 1 to 3 hours of focused or physically demanding work. 75 = multi-hour, open-ended, or something the person is likely avoiding. 100 = whole-day effort or a major milestone. Reward effort and difficulty, not importance. Open-ended building or 'finish X' tasks score at least 50.\n"
  +"stat must be one of: creativity (music, video, design, content making), discipline (habits, hygiene, routines, things avoided), fitness (exercise, walking), productivity (chores, admin, work, building, logistics), social (time with people, relationships, rest and fun).\n"
- +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (morning and night routines, hygiene), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software), create (music, filming, editing, posting content), social (people and plans), boss (a single dreaded or very large task).\n"
+ +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (self care: meals, morning and night routines, hygiene, rest), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software), create (music, filming, editing, posting content), social (people and plans), boss (a single dreaded or very large task).\n"
  +"Return ONLY a JSON array of at most 40 objects, in the order the tasks appear.\nBrain dump:\n";
 async function scoreAll(text){
   var sample=null;

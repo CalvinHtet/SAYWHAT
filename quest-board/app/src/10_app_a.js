@@ -60,7 +60,7 @@ var CREW={
  rook:{name:"Rook",role:"Trainer",a:{skin:"#8d5a3b",hair:"#1a1426",hs:"spike",outfit:"#ff3d81",acc:"goggles",pop:"#4dffc3"},buff:{stat:"fitness",pct:10,text:"Fitness quests +10% XP"}},
  nova:{name:"Nova",role:"Producer",a:{skin:"#f2c9a0",hair:"#ff3d81",hs:"long",outfit:"#2a2650",acc:"headphones",pop:"#8b5cff"},buff:{stat:"creativity",pct:10,text:"Creativity quests +10% XP"}},
  bleep:{name:"Bleep",role:"Cleaning Bot",a:{skin:"#b8c4d6",hair:"#b8c4d6",hs:"none",outfit:"#4dffc3",acc:"antenna",pop:"#ffc857"},buff:{cl:"home",pct:10,text:"Home quests +10% XP"}},
- vex:{name:"Vex",role:"Hacker",a:{skin:"#e0b08a",hair:"#4dffc3",hs:"cap",outfit:"#2a2650",acc:"visor",pop:"#4dffc3"},buff:{cl:"admin",pct:10,text:"Admin quests +10% XP"}},
+ vex:{name:"Vex",role:"Hacker",a:{skin:"#e0b08a",hair:"#4dffc3",hs:"cap",outfit:"#2a2650",acc:"visor",pop:"#4dffc3"},buff:{cl:"admin",pct:10,text:"Work and admin quests +10% XP"}},
  ko:{name:"Sensei Ko",role:"Discipline Master",a:{skin:"#e8bf98",hair:"#e9e6f5",hs:"bun",outfit:"#ff8a3d",acc:"scarf",pop:"#ff3d3d"},buff:{stat:"discipline",pct:10,text:"Discipline quests +10% XP"}},
  echo:{name:"Echo",role:"Scribe",a:{skin:"#d9a67c",hair:"#6b46d9",hs:"long",outfit:"#6cb6ff",acc:"goggles",pop:"#ffc857"},buff:{stat:"social",pct:10,text:"Social quests +10% XP"}},
  brisa:{name:"Brisa",role:"Quartermaster",a:{skin:"#a86f4c",hair:"#ff8a3d",hs:"bob",outfit:"#3b82f6",acc:"scarf",pop:"#ffd27a"},buff:{special:"crit",text:"Critical hit chance 10% to 15%"}},
@@ -277,10 +277,10 @@ function P(cls,id,name,tag,skill,desc,perk,titles,place,rival,relic,b,fa,fb){
   var forms=[fa,fb].map(function(f,i){return {id:id+(i?"B":"A"),name:f[0],final:f[1],skill:f[2],perk:f[3]}});
   SPECS[id]={cls:cls,name:name,tag:tag,skill:skill,desc:desc,perk:perk,titles:titles,place:place,rival:rival,relic:relic,b:b,awaken:forms};
 }
-P("vanguard","berserker","Berserker","Win by overwhelming force.","Bloodrush","For heavy training days. Body quests pay +10%.",{cl:"body",pct:10,text:"Body quests +10% XP"},["Reaver","Warlord","Juggernaut","Titan Lord"],"the Crimson Colosseum","the Heavy Silence","Chain of Titans","#fbbf24",
+P("vanguard","berserker","Berserker","Win by overwhelming force.","Bloodrush","For heavy training days. Fitness quests pay +10%.",{cl:"body",pct:10,text:"Fitness quests +10% XP"},["Reaver","Warlord","Juggernaut","Titan Lord"],"the Crimson Colosseum","the Heavy Silence","Chain of Titans","#fbbf24",
   ["Blood Sovereign","Crimson Monarch","Bloodthirst",{stat:"fitness",pct:10,text:"Fitness quests +10% XP"}],
   ["Storm Titan","Titan of the Dawn","Thunder Step",{special:"crit",text:"Critical hit chance up"}]);
-P("vanguard","bulwark","Bulwark","Win by never falling.","Iron Bastion","For protecting your routines. Reset quests pay +10%.",{cl:"reset",pct:10,text:"Reset quests +10% XP"},["Gate Warden","Bastion","Citadel Guardian","Fortress Lord"],"the Last Gate","the Long Siege","Wall-Heart Shield","#60a5fa",
+P("vanguard","bulwark","Bulwark","Win by never falling.","Iron Bastion","For protecting your routines. Self care quests pay +10%.",{cl:"reset",pct:10,text:"Self care quests +10% XP"},["Gate Warden","Bastion","Citadel Guardian","Fortress Lord"],"the Last Gate","the Long Siege","Wall-Heart Shield","#60a5fa",
   ["Iron Sovereign","Monarch of Walls","Unbreakable",{special:"streakcap",text:"Streak bonus cap +5%"}],
   ["Radiant Paladin","Archangel of Dawn","Holy Aegis",{special:"freeze",text:"Hold one extra streak freeze"}]);
 P("vanguard","lancer","Lancer","Win by going the distance.","Skyward Charge","For time outside and long hauls. Outside quests pay +10%.",{cl:"out",pct:10,text:"Outside quests +10% XP"},["Dragoon","Wyvern Rider","Skybreaker","Dragon Lord"],"the Cloud Spire","the Endless Mile","Wyrmscale Lance","#5eead4",
@@ -295,8 +295,8 @@ P("runeweaver","spellwright","Spellwright","Build worlds from silence.","Studio 
 P("runeweaver","cantor","Cantor","Heal the room with a melody.","Calming Hymn","For recovery and steady habits. Discipline quests pay +10%.",{stat:"discipline",pct:10,text:"Discipline quests +10% XP"},["Vesper Cantor","Hymn Priest","High Cantor","Bishop of Echoes"],"the Cathedral of Echoes","the Restless Night","Silver Censer","#c4b5fd",
   ["Dusk Sovereign","Monarch of Twilight","Requiem",{stat:"discipline",pct:10,text:"Discipline quests +10% XP"}],
   ["Choir Seraph","Seraph of Mercy","Sanctuary",{special:"freeze",text:"Hold one extra streak freeze"}]);
-P("swiftblade","shadowdancer","Shadowdancer","Clear the board unseen.","Shadowstep","For clearing busywork. Admin quests pay +10%.",{cl:"admin",pct:10,text:"Admin quests +10% XP"},["Nightstep","Phantom Courier","Veilwalker","Grand Veilwalker"],"the Midnight Market","the Pile of Busywork","Ink-Black Dagger","#a78bfa",
-  ["Shadow Sovereign","Shadow Monarch","Umbral Step",{cl:"admin",pct:10,text:"Admin quests +10% XP"}],
+P("swiftblade","shadowdancer","Shadowdancer","Clear the board unseen.","Shadowstep","For clearing busywork. Work and admin quests pay +10%.",{cl:"admin",pct:10,text:"Work and admin quests +10% XP"},["Nightstep","Phantom Courier","Veilwalker","Grand Veilwalker"],"the Midnight Market","the Pile of Busywork","Ink-Black Dagger","#a78bfa",
+  ["Shadow Sovereign","Shadow Monarch","Umbral Step",{cl:"admin",pct:10,text:"Work and admin quests +10% XP"}],
   ["Twilight Seraph","Seraph of Twilight","Moonlit Veil",{special:"crit",text:"Critical hit chance up"}]);
 P("swiftblade","duelist","Duelist","One opponent. One perfect strike.","Focus Strike","For finishing the big thing. Boss quests pay +10%.",{cl:"boss",pct:10,text:"Boss quests +10% XP"},["Rapier Adept","Blade Dancer","Starblade","Grand Starblade"],"the Mirror Court","the Perfect Plan","Glass Rapier","#34d399",
   ["Mirror Sovereign","Monarch of Mirrors","Shatter",{cl:"boss",pct:10,text:"Boss quests +10% XP"}],

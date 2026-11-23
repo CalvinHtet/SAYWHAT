@@ -42,7 +42,8 @@ var EARNK=.77;
   /* curve 6, take three (Cal 11-23: "use the new slower level curve. But make it a bit faster. meet in the middle. Later levels should be
      harder to level, but still obtainable. The first few days can ramp up faster, but late game would take a heavy day for 1 level"):
      levels 1-6 as fast as curve 5 (20 to 170), then 170 + .65 x (L - 6)^2, plus .35 x (L - 40)^2 above 40. Level 30 needs 544 (curve 5
-     316, the pulled curve 820), 80 needs 4,289 and 100 needs 7,173: about a heavy day each. At the sims' average XP a day, a daily player
+     316, the pulled curve 820), 80 needs 4,289 and 100 needs 7,173: a heavy player (about 1,940 XP a day) takes about 1 day for level 60,
+     2 for 80, 3.6 for 99 (QA f83ec7bf; Cal: "This is fine. Keep it for now"). At the sims' average XP a day, a daily player
      is level 7 on day 1, 14 on day 3, 44 on day 30 (curve 5: 55, the pulled curve: 35); a heavy one 66 on day 30. Saves move over at the
      same level (xpc6 below). */
   E.lvFirst=20;E.lvRamp=6;E.lvFlat=170;E.lvK=.65;E.lvP=2;E.lvTop=.35;E.lvTopFrom=40;
