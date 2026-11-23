@@ -23,8 +23,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   ok(s.h === 'Upgrades' && s.cards > 0, 'the tab shows the permanent upgrades (' + s.cards + ' cards)');
   await p.screenshot({ path: (process.env.OUT || '.') + '/v131_upgrades.png' });
   await p.evaluate(() => document.querySelector('[data-act="sxtab"][data-v="interface"]').click()); await p.waitForTimeout(700);
-  s = await p.evaluate(() => ({ pv: !!document.querySelector('.sxv .qs-fitif'), cards: document.querySelectorAll('.sxv .qs-rack > *').length }));
-  ok(s.pv && s.cards > 0, 'and the interface pieces on its second tab (' + s.cards + ')'); await p.screenshot({ path: (process.env.OUT || '.') + '/v131_interface.png' });
+  s = await p.evaluate(() => ({ pv: !!document.querySelector('.sxv .ifp-wrap .ifp'), cards: document.querySelectorAll('.sxv .shopgrid > *').length, nopet: ![...document.querySelectorAll('.sxv .qs-sec h3')].some((h) => /Companions|Status displays/.test(h.textContent)) }));
+  ok(s.pv && s.cards > 0 && s.nopet, 'and the interface pieces on its second tab, with the preview, no Companions or Status displays (' + s.cards + ')'); await p.screenshot({ path: (process.env.OUT || '.') + '/v131_interface.png' });
   await p.evaluate(() => { const x = window.__qb.x(); window.__qb.x().render(); }); 
   const cut = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; const f = (id) => { const it = x.SHOP.find((q) => q[0] === id); return { fits: x.itemFits ? x.itemFits(it) : null, cut: !!(it && it[6].cut) }; };
     const r = ['gx_y_phone', 'gx_y_ring', 'gx_y_baby'].map(f); S.owned.gx_y_ring = true; const own = x.itemFits ? x.itemFits(x.SHOP.find((q) => q[0] === 'gx_y_ring')) : null; return { r, own }; });

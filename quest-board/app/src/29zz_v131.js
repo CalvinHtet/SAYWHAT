@@ -21,7 +21,8 @@ function sxHtml(){var t=SXTAB==="interface"?"interface":"upgrades";
   var h='<div class="qshop sxv"><header class="qs-top qs-head"><h1>Upgrades</h1><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div><small class="qs-when">From your Lair’s console</small></header>';
   h+='<nav class="qs-tabs" aria-label="Upgrade sections"><button class="qs-tab'+(t==="upgrades"?" on":"")+'" data-act="sxtab" data-v="upgrades">Upgrades</button><button class="qs-tab'+(t==="interface"?" on":"")+'" data-act="sxtab" data-v="interface">Interface</button></nav>';
   if(t==="upgrades")h+='<p class="qs-note">Each upgrade is permanent and stacks with your other bonuses.</p>'+qsLegacy(["buff"]);
-  else h+='<div class="qs-fit qs-fitif">'+ifPreview()+'<div class="qs-rack">'+qsLegacy(["theme","frame","bg","pet","title","burst","hud","sound","scene"])+'</div></div>';
+  /* Cal 11-23: "The comapnions are pointless. Remove status displays", and a preview that fits (29zz_v133.js ifPrev2, View shows each piece on) */
+  else h+='<div class="ifp-wrap">'+(typeof ifPrev2==="function"?ifPrev2():ifPreview())+'<p><b>Your interface</b>Tap View on anything to see it here on your setup before you buy.</p></div>'+qsLegacy(["theme","frame","bg","title","burst","sound","scene"]);
   return h+'</div>'}
 var v31View=viewHtml;viewHtml=function(v){if(v==="sys")return areaGate("sys")?v31View.call(this,"board"):sxHtml();return v31View.apply(this,arguments)};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=sxtab]");if(!b)return;SXTAB=b.dataset.v;render();window.scrollTo(0,0)});
