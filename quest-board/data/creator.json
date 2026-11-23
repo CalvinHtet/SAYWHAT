@@ -63,12 +63,26 @@
     "label": "Tousled"
    },
    {
+    "id": "h4",
+    "label": "Buzz Cut"
+   },
+   {
+    "id": "fr_victor_hair",
+    "label": "Long"
+   },
+   {
+    "id": "h5",
+    "label": "Man Bun"
+   },
+   {
     "id": "h2",
-    "label": "Crop"
+    "label": "Crop",
+    "stylistOnly": true
    },
    {
     "id": "h3",
-    "label": "Curtains"
+    "label": "Curtains",
+    "stylistOnly": true
    }
   ],
   "f": [
