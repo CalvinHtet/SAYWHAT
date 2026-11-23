@@ -1,0 +1,21 @@
+// QA: economy Parts 1 and 2 (b4c2fef, 1252dc4) on a clean build: the numbers a player meets, and sanity on every price.
+const pw = require('playwright'); const base = process.env.BASE;
+(async () => { const b = await pw.chromium.launch(); const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**/*', (r) => (r.request().url().startsWith(base) ? r.continue() : r.abort())); const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data, null, { timeout: 90000 }); await p.waitForTimeout(1500);
+  const r = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); const o = {};
+    const at = (L, f) => { S.xp = x.cum(L); try { return f(); } catch (e) { return 'ERR ' + e.message; } };
+    o.keys = Object.keys(x).filter((k) => /coin|need|cum|econ|week|gl|ECON|SHOP|ADDONS|ROOMT|lvl|MAXL/i.test(k)).join(' ');
+    const E = x.ECON || window.ECON; o.ECON = E ? { coinXp: E.coinXp, vegCoin: E.vegCoin, trainCoins: E.trainCoins, lvPay: E.lvPay, wqCoins: E.wqCoins, goal: E.goal, coinLv: E.coinLv } : 'no ECON';
+    o.need = [1, 2, 5, 9, 10, 11, 20, 30, 40, 41, 50, 60].map((L) => [L, x.need ? x.need(L) : null]);
+    o.cum = [5, 10, 20, 40].map((L) => [L, x.cum(L)]);
+    for (const L of [1, 10, 30]) o['coinsFor(10/25/50) L' + L] = at(L, () => [10, 25, 50].map((v) => x.coinsFor(v)));
+    for (const L of [1, 10, 30]) o['econScaled(300) L' + L] = at(L, () => x.econScaled ? x.econScaled(300) : 'n/a');
+    for (const L of [1, 10, 30]) o['weekBonus L' + L] = at(L, () => x.weekBonus ? JSON.stringify(x.weekBonus()) : 'n/a');
+    o.glCoins = x.glCoins ? ['half', 'full', 'story'].map((k) => [k, x.glCoins(k, 'loft')]) : 'n/a';
+    const sh = x.SHOP || []; o.shopN = sh.length; o.shopBad = sh.filter((it) => it[3] != null && !(it[3] > 0 && isFinite(it[3]))).map((it) => it[0]).slice(0, 10);
+    const cl = sh.filter((it) => /^a_/.test(it[1]) && it[3]); o.clothesMinMax = [Math.min(...cl.map((i) => i[3])), Math.max(...cl.map((i) => i[3]))];
+    o.notRound = sh.filter((it) => it[3] && (it[3] < 1000 ? it[3] % 10 : it[3] % 50)).map((it) => it[0] + ':' + it[3]).slice(0, 10);
+    const A = x.ADDONS || {}; let n = 0, bad = []; Object.keys(A).forEach((k) => (A[k] || []).forEach((a) => { n++; if (!(a[2] >= 0 && isFinite(a[2]))) bad.push(k + ':' + a[0]); })); o.addons = [n, bad.slice(0, 10)];
+    return o; });
+  for (const [k, v] of Object.entries(r)) console.log(k, typeof v === 'string' ? v : JSON.stringify(v));
+  console.log('page errors', errs.length, JSON.stringify(errs.slice(0, 2))); await b.close(); })();

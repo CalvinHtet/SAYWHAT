@@ -1,0 +1,19 @@
+// QA: the reset of everyone by QB_EPOCH 6 -> 7, local saves (no sign-in; every non-local request blocked). One browser profile kept on
+// disk: STEP=old makes a played save on the epoch-6 build; STEP=new loads the epoch-7 build on the same origin and checks the fresh
+// start, what happened to the old local save, then makes a character, opens the Town's Posts and collects the official notice twice.
+const pw = require('playwright'), fs = require('fs'); const base = process.env.BASE, DIR = process.env.DIR, STEP = process.env.STEP;
+(async () => { const ctx = await pw.chromium.launchPersistentContext(DIR, { viewport: { width: 390, height: 844 } }); await ctx.route('**/*', (r) => (r.request().url().startsWith(base) ? r.continue() : r.abort()));
+  const p = ctx.pages()[0] || await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft && QBLoft.data, null, { timeout: 90000 }); await p.waitForTimeout(2500);
+  const ls = () => p.evaluate(() => { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); const v = localStorage.getItem(k); let j = null; try { j = JSON.parse(v); } catch (e) {} o[k] = j && typeof j === 'object' ? { epoch: j.epoch, created: j.created, xp: j.xp, coins: j.coins, name: j.char && j.char.name, appv: j.appv } : String(v).slice(0, 40); } return o; });
+  if (STEP === 'old') { await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'OldCal', sex: 'm' }); S.xp = x.cum(20); S.coins = 5000; S.total = 50; x.persist(); }); await p.waitForTimeout(1500);
+    console.log('OLD build: S', JSON.stringify(await p.evaluate(() => { const S = window.__qb.x().S; return { epoch: S.epoch, created: S.created, coins: S.coins, xp: S.xp }; }))); console.log('localStorage', JSON.stringify(await ls())); }
+  else { console.log('NEW build after reload: S', JSON.stringify(await p.evaluate(() => { const x = window.__qb.x(), S = x.S; return { epoch: S.epoch, created: !!S.created, coins: S.coins, xp: S.xp, lvl: x.lvlOf ? x.lvlOf(S.xp || 0) : null, name: S.char && S.char.name }; })));
+    console.log('localStorage', JSON.stringify(await ls()));
+    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'NewCal', sex: 'm' }); S.areaOn = null; x.persist(); x.render(); document.querySelectorAll('.modal,.overlay,[class*=splash]').forEach((m) => m.remove()); const h = document.querySelector('.nav button[data-v="hall"]'); if (h) h.click(); });
+    await p.waitForTimeout(1500); await p.evaluate(() => { document.querySelectorAll('.modal,.overlay,[class*=splash]').forEach((m) => m.remove()); const t = [...document.querySelectorAll('button, [data-act]')].find((b) => /^\s*Posts\s*$/i.test(b.textContent)); if (t) t.click(); }); await p.waitForTimeout(1200);
+    const n0 = await p.evaluate(() => ({ coins: window.__qb.x().S.coins, notice: (document.querySelector('.ntc') || {}).textContent || 'NO NOTICE', btn: !!document.querySelector('[data-act="ntget"]') }));
+    console.log('notice before', JSON.stringify(n0).slice(0, 400)); await p.screenshot({ path: DIR + '_notice.png' });
+    await p.evaluate(() => { const b = document.querySelector('[data-act="ntget"]'); if (b) b.click(); }); await p.waitForTimeout(800); await p.evaluate(() => { const b = document.querySelector('[data-act="ntget"]'); if (b) b.click(); }); await p.waitForTimeout(800);
+    console.log('after two collects: coins', await p.evaluate(() => window.__qb.x().S.coins), 'paid', JSON.stringify(await p.evaluate(() => window.__qb.x().S.notices))); }
+  console.log('page errors', errs.length, JSON.stringify(errs.slice(0, 2))); await ctx.close(); })();

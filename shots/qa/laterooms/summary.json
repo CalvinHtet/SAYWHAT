@@ -1,0 +1,278 @@
+[
+ {
+  "t": "skybar",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 9,
+  "samples": 196,
+  "obstacles": 18,
+  "seen": {
+   "crew:idle": 2,
+   "crew:do": 565,
+   "crew:walk": 217,
+   "guest:walk": 303,
+   "guest:do": 512,
+   "guest:idle": 36
+  },
+  "inside": {
+   "crew:do:sit@bench in [6.6,7.2,8.7,9.0]": 195,
+   "guest:walk in [1.5,3.5,2.1,4.1]": 1,
+   "guest:walk in [4.7,3.5,5.3,4.1]": 1,
+   "guest:idle in [1.5,3.5,2.1,4.1]": 7,
+   "guest:idle in [4.7,3.5,5.3,4.1]": 6,
+   "crew:walk in [6.6,7.2,8.7,9.0]": 1
+  }
+ },
+ {
+  "t": "rooftop",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 5,
+  "samples": 243,
+  "obstacles": 14,
+  "seen": {
+   "guest:walk": 383,
+   "guest:do": 518,
+   "guest:idle": 36
+  },
+  "inside": {}
+ },
+ {
+  "t": "boba",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 7,
+  "samples": 235,
+  "obstacles": 14,
+  "seen": {
+   "crew:walk": 32,
+   "crew:do": 438,
+   "guest:walk": 259,
+   "guest:do": 505,
+   "guest:idle": 30
+  },
+  "inside": {}
+ },
+ {
+  "t": "dessert",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 5,
+  "samples": 200,
+  "obstacles": 12,
+  "seen": {
+   "guest:walk": 252,
+   "guest:do": 499,
+   "guest:idle": 15
+  },
+  "inside": {}
+ },
+ {
+  "t": "speakeasy",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 1,
+  "samples": 16,
+  "obstacles": 14,
+  "seen": {
+   "guest:walk": 1
+  },
+  "inside": {}
+ },
+ {
+  "t": "garden",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 7,
+  "samples": 94,
+  "obstacles": 29,
+  "seen": {
+   "crew:idle": 40,
+   "crew:walk": 471,
+   "crew:do": 147
+  },
+  "inside": {}
+ },
+ {
+  "t": "theater",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 7,
+  "samples": 98,
+  "obstacles": 17,
+  "seen": {
+   "crew:idle": 14,
+   "crew:walk": 207,
+   "crew:do": 171,
+   "guest:walk": 182
+  },
+  "inside": {}
+ },
+ {
+  "t": "auditorium",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 3,
+  "samples": 62,
+  "obstacles": 25,
+  "seen": {
+   "guest:walk": 131,
+   "guest:do": 4
+  },
+  "inside": {
+   "guest:walk in [9.0,1.9,10.2,4.6]": 1
+  }
+ },
+ {
+  "t": "mall",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 3,
+  "samples": 177,
+  "obstacles": 11,
+  "seen": {
+   "guest:walk": 244,
+   "guest:do": 76
+  },
+  "inside": {}
+ },
+ {
+  "t": "bowling",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 6,
+  "samples": 160,
+  "obstacles": 12,
+  "seen": {
+   "crew:idle": 8,
+   "crew:walk": 152,
+   "guest:walk": 200,
+   "crew:do": 160,
+   "guest:do": 154
+  },
+  "inside": {}
+ },
+ {
+  "t": "karaoke",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 5,
+  "samples": 164,
+  "obstacles": 9,
+  "seen": {
+   "guest:walk": 147,
+   "guest:do": 240
+  },
+  "inside": {}
+ },
+ {
+  "t": "arcade",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 4,
+  "samples": 133,
+  "obstacles": 11,
+  "seen": {
+   "crew:idle": 12,
+   "guest:walk": 134,
+   "crew:walk": 25,
+   "crew:do": 96,
+   "guest:do": 211,
+   "guest:idle": 2
+  },
+  "inside": {}
+ },
+ {
+  "t": "rhythm",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 5,
+  "samples": 189,
+  "obstacles": 10,
+  "seen": {
+   "guest:walk": 202,
+   "guest:do": 541,
+   "guest:idle": 14
+  },
+  "inside": {}
+ },
+ {
+  "t": "vr",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 4,
+  "samples": 161,
+  "obstacles": 9,
+  "seen": {
+   "crew:walk": 43,
+   "guest:walk": 89,
+   "crew:do": 118,
+   "guest:do": 228,
+   "guest:idle": 16
+  },
+  "inside": {}
+ },
+ {
+  "t": "club",
+  "pieces": 0,
+  "outside": [],
+  "depth": [],
+  "overlaps": 0,
+  "live": "yes",
+  "people": 5,
+  "samples": 125,
+  "obstacles": 15,
+  "seen": {
+   "crew:walk": 175,
+   "guest:walk": 158,
+   "crew:do": 75,
+   "guest:do": 7
+  },
+  "inside": {
+   "crew:walk in [6.2,0.8,9.4,2.3]": 2,
+   "guest:walk in [0.3,7.5,2.5,9.9]": 7
+  }
+ }
+]
