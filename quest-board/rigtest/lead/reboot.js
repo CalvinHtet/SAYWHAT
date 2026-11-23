@@ -46,7 +46,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await V(() => { window.__qbV135.fsh.mode = 'fashion'; }); const box = await V(() => window.__qbV135.box()); console.log('box text:', box.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 400)); ok(!/\d+\s*(♥|likes?)|\d+ votes? (from|got)/.test(box.replace(/\d+ votes? left/, '')) && /You used both votes/.test(box), 'the Fashion box shows no counts and says you qualify');
   const lb = await V(() => window.__qbV135.likeBox({ id: 'c', name: 'Cy', me: 0, earnedC: 0, lv: 1 })); ok(/No votes left/.test(lb), 'no votes left after two: ' + lb.replace(/<[^>]+>/g, ' ').slice(0, 80));
   /* challenges */
-  const d = await V(() => { const H = window.__qbV135; return { what: H.what({ kind: 'q', days: 3, stake: 100, cash: 0 }), item: H.item({ kind: 'q', st: 'live', start: Date.now() - 1e5, end: Date.now() + 1e7, stake: 100, otherName: 'Ann', opp: { n: 30, t: Date.now(), qs: ['Laundry', 'Taxes'] }, cid: 'x' }) }; });
+  const d = await V(() => { const H = window.__qbV135; return { what: H.what({ kind: 'q', days: 3, stake: 100, cash: 0 }), item: (H.dq.theirs[H.dqId('ann', H.myId(), 'x')] = ['Laundry', 'Taxes'], H.item({ kind: 'q', st: 'live', start: Date.now() - 1e5, end: Date.now() + 1e7, stake: 100, otherName: 'Ann', other: 'ann', opp: { n: 30, t: Date.now() }, cid: 'x' })) }; });
   ok(/see each other's finished quests/.test(d.what) && /Ann's quests \(2\)/.test(d.item) && /Laundry/.test(d.item), 'a productivity challenge says both see the quests and lists the other\'s');
   await p.screenshot({ path: OUT + '/reboot_end.png' });
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

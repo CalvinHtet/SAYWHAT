@@ -138,17 +138,28 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
    the two challengers will be able to see the other's quests and make sure this is stated so there are no surprises. Everyone else like
    in the main board, your individual productivity quests remain private.")
    - "Challenges in town" lists only challenges this player is in.
-   - A productivity challenge publishes, with its score, the names of the quests that scored (duel/<id>.sc[cid].qs, at most 30), and the
-     card shows the other player's list. The rules say so wherever a productivity challenge is made, offered or shown. ---- */
+   - A productivity challenge's quest names are not in duel/<id> (every signed-in player reads those): each player writes theirs to
+     duelq/<writer>~<other>~<cid>, which the rules let only those two read (firestore.rules), and reads the other's the same way. QA on
+     d2cfa06c: the names had reached every player's browser. The rules say so wherever a productivity challenge is made, offered or shown. ---- */
 var v35Pub=dlpAll;dlpAll=function(){return v35Pub.apply(this,arguments).filter(function(p){return dlpMine(p)})};
 var v35Tog=toggle;toggle=function(id){var r=v35Tog.apply(this,arguments);try{if(S.done&&S.done[id]){var q=(S.quests||[]).filter(function(x){return x&&x.id===id})[0];
   if(q){if(!S.dlqn||typeof S.dlqn!=="object")S.dlqn={};S.dlqn[id]=String(q.name||"").slice(0,60);var ks=Object.keys(S.dlqn);if(ks.length>300)ks.slice(0,ks.length-300).forEach(function(k){delete S.dlqn[k]})}}}catch(e){}return r};
 function dlQuests(a,b){var g=dlLog(),N=S.dlqn||{},out=[];Object.keys(g.q).forEach(function(k){var x=g.q[k];if(x[0]>=a&&x[0]<b){var id=k.slice(0,k.lastIndexOf("|"));out.push([x[0],N[id]||"A quest"])}});
   return out.sort(function(p,q){return p[0]-q[0]}).map(function(p){return p[1]}).slice(-30)}
-var v35DlWrite=dlWrite;dlWrite=function(mut){return v35DlWrite.call(this,function(d){mut(d);try{var now=Date.now();dlAll().forEach(function(c){if(c.kind==="q"&&d.sc&&d.sc[c.cid])d.sc[c.cid].qs=dlQuests(c.start,Math.min(now,c.end))})}catch(e){}})};
+var V35DQ={mine:{},theirs:{},t:{}};
+function v35DqId(a,b,cid){return a+"~"+b+"~"+cid}
+function v35DqSync(){if(typeof dlOn!=="function"||!dlOn()||!db||!MYUID)return;var now=Date.now();
+  dlAll().forEach(function(c){if(c.kind!=="q"||(c.st!=="live"&&c.st!=="over")||!c.other)return;
+    var qs=dlQuests(c.start,Math.min(now,c.end)),j=JSON.stringify(qs),id=v35DqId(MYUID,c.other,c.cid);
+    if(V35DQ.mine[id]!==j){V35DQ.mine[id]=j;try{db.doc("duelq/"+id).set({qs:qs}).catch(function(){delete V35DQ.mine[id]})}catch(e){delete V35DQ.mine[id]}}
+    var oid=v35DqId(c.other,MYUID,c.cid);if(!V35DQ.t[oid]||now-V35DQ.t[oid]>60000){V35DQ.t[oid]=now;
+      try{db.doc("duelq/"+oid).get().then(function(sn){var d=sn&&sn.exists?sn.data():null;var L=d&&Array.isArray(d.qs)?d.qs.slice(0,30).map(function(x){return String(x).slice(0,60)}):[];
+        if(JSON.stringify(L)!==JSON.stringify(V35DQ.theirs[oid]||null)){V35DQ.theirs[oid]=L;try{if(typeof htabShown==="function"&&htabShown("posts"))render()}catch(x){}}}).catch(function(){})}catch(e){}}})}
+setInterval(function(){try{v35DqSync()}catch(e){}},30000);
+var v35DqTog=toggle;toggle=function(){var r=v35DqTog.apply(this,arguments);setTimeout(function(){try{v35DqSync()}catch(e){}},1500);return r};
 var V35QNOTE="In a productivity challenge you both see each other's finished quests. Nobody else sees the challenge.";
 var v35What=dlWhat;dlWhat=function(c){var h=v35What.apply(this,arguments);return c&&c.kind==="q"?h+'. '+V35QNOTE.replace(/\.$/,""):h};
-var v35Item=dlItem;dlItem=function(c){var h=v35Item.apply(this,arguments);try{if(c&&c.kind==="q"&&(c.st==="live"||c.st==="over")){var qs=c.opp&&Array.isArray(c.opp.qs)?c.opp.qs:[];
+var v35Item=dlItem;dlItem=function(c){var h=v35Item.apply(this,arguments);try{if(c&&c.kind==="q"&&(c.st==="live"||c.st==="over")){var qs=V35DQ.theirs[v35DqId(c.other,MYUID,c.cid)]||[];
     var add='<details class="dlqs"><summary>'+esc(c.otherName)+'\'s quests ('+qs.length+')</summary>'+(qs.length?'<ul>'+qs.map(function(n){return '<li>'+esc(String(n))+'</li>'}).join("")+'</ul>':'<p class="note">None finished yet.</p>')+'<p class="note">'+V35QNOTE+'</p></details>';
     var i=h.lastIndexOf("</div>");if(i>=0)h=h.slice(0,i)+add+h.slice(i)}}catch(e){}return h};
 var v35New=dlNewHtml;dlNewHtml=function(){var h=v35New.apply(this,arguments);try{if(DL.f&&DL.f.kind==="q")h=h.replace('<div class="card box2 dlm"><div class="rm-head"><h3>Challenge someone</h3>'+coinPillHtml()+'</div>','$&<p class="note"><b>'+V35QNOTE+'</b></p>')}catch(e){}return h};
@@ -157,7 +168,7 @@ var v35New=dlNewHtml;dlNewHtml=function(){var h=v35New.apply(this,arguments);try
 /* test hook (never on a Live build: QB_WEB.noTest) */
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV135={on:fshIsOn,buyers:fshBuyers,left:fshLeft,used:fshUsed,counts:fshCounts,rank:fshRank,box:function(){return fshBoxInner()},likeBox:fshLikeBox,tg:fshTg,
   fsh:FSH,setWorlds:function(w){SOC.worlds=w},myId:function(){return MYUID},setMe:function(id){MYUID=id},wk:function(){return fshWk()},
-  pub:dlpAll,quests:dlQuests,item:dlItem,what:dlWhat,sqk:function(){return SQK},cl:function(){return CLUSTERS},inbox:function(){return ibAll().map(function(l){return [l.id,l.subj,l.coins||0]})},tour:TOUR};
+  pub:dlpAll,quests:dlQuests,dq:V35DQ,dqId:v35DqId,item:dlItem,what:dlWhat,sqk:function(){return SQK},cl:function(){return CLUSTERS},inbox:function(){return ibAll().map(function(l){return [l.id,l.subj,l.coins||0]})},tour:TOUR};
 
 /* ---- Training (Cal: "Where is the training tab? It disappeared? Move the workout task that is always present on the main board, to the
    training tab. And have a checkmark tick option at the top that shows which days of the week we went. And allow for photo proof as

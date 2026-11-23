@@ -51,6 +51,13 @@ service cloud.firestore {
     // challenges sent to them and their own scores. Everyone signed in reads (both sides need the other's doc); only that player
     // writes.
     match /duel/{uid} { allow read: if signedIn(); allow create, update: if mine(uid) && small(30000); allow delete: if mine(uid) || owner(); }
+    // a productivity challenge's finished quest names (app/src/29zz_v135.js, Cal 11-23: "the two challengers will be able to see the
+    // other's quests ... Everyone else ... your individual productivity quests remain private"): duelq/<writer>~<other>~<challenge>,
+    // read by those two players only, written by the writer only
+    function dqA(qid) { return qid.split('~')[0]; }
+    function dqB(qid) { return qid.split('~')[1]; }
+    match /duelq/{qid} { allow read: if signedIn() && (dqA(qid) == request.auth.uid || dqB(qid) == request.auth.uid);
+      allow create, update: if signedIn() && dqA(qid) == request.auth.uid && small(8000); allow delete: if signedIn() && (dqA(qid) == request.auth.uid || owner()); }
 
     // the photo feed on the town board (app/src/29ph_photos.js, W8/W9, SPEC5): photos/<poster uid>~<ms> is one post (the picture
     // itself is in Storage, storage.rules), photos/<post>/cm/<author uid>~<ms> one comment on it, photolk/<uid> the posts that
