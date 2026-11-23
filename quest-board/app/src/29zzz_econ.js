@@ -46,7 +46,12 @@ var EARNK=.77;
      2 for 80, 3.6 for 99 (QA f83ec7bf; Cal: "This is fine. Keep it for now"). At the sims' average XP a day, a daily player
      is level 7 on day 1, 14 on day 3, 44 on day 30 (curve 5: 55, the pulled curve: 35); a heavy one 66 on day 30. Saves move over at the
      same level (xpc6 below). */
-  E.lvFirst=20;E.lvRamp=6;E.lvFlat=170;E.lvK=.65;E.lvP=2;E.lvTop=.35;E.lvTopFrom=40;
+  /* curve 7 (Cal 11-23: "that is way too hard of a level scale. shorten it even more. 4000 exp for lvl 99-100 sounds good to me"): the same
+     shape at 0.56 of the climb above level 6, so levels 1-6 do not change and 99 to 100 needs 4,001 (was 7,010). Level 30 needs 380, 60
+     1,310, 80 2,477; 129,313 XP to level 100 (was 218,055). Heavy player (about 1,940 XP a day): level 44 on day 7, 77 on day 30, 100 about
+     day 62, 2 days for 99 to 100. Daily player (about 610 a day): 50 on day 30, 75 on day 90, about 6.5 days for 99 to 100. Saves keep their
+     XP, so anyone past level 6 lands a little higher (the level-ups play in order, 29zz_v136.js). */
+  E.lvFirst=20;E.lvRamp=6;E.lvFlat=170;E.lvK=.364;E.lvP=2;E.lvTop=.196;E.lvTopFrom=40;
   SHOP.forEach(function(it){if(it&&it[3]&&typeof clothTier==="function"&&clothTier(it[0])==="luxury"){var n=it[3]*1.1;it[3]=n<1000?Math.round(n/10)*10:Math.round(n/50)*50}})})();
 var ekScaled=econScaled;econScaled=function(c,step){return ekScaled(c*EARNK,step)};
 /* the Loft's Goals pay their coins as they are (glCoins x the room's phase), so the phase no longer multiplies them up */
