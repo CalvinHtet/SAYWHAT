@@ -246,7 +246,7 @@ function roomDraw(C,t){var d=ROOMDEF[t],H=function(k){return C.has(k)},sx=functi
     var own=function(x,y){var best=null,bd=1e9;arts.forEach(function(a){var dd=Math.hypot(Math.max(0,a[1]-x,x-a[1]-a[3]),Math.max(0,a[2]-y,y-a[2]-a[4]));if(dd<bd){bd=dd;best=a}});return best};
     (e.sit||[]).forEach(function(q){var n0=C.st.length,qx=near(q[0],q[1],1),qy=near(q[0],q[1],0),o={lift:1,sz:q[3]||6,facewall:q[4]?1:0,dk:q[4]?0:undefined,wx:qx,wy:qy+1.1},a=q[5]&&q[5].over&&own(q[0],q[1]);
       if(a){o.dk=sx(a[1],a[3])+a[3]+sy(a[2],a[4])+a[4]-((a[6]&&a[6].dk)||0)+.05-(qx+qy);if(a[6]&&a[6].flip){o.wx=qx+1.1;o.wy=qy}}
-      C.s("sit",qx,qy,q[2],"look",[10,20],o);lfConvert(C,n0,"sit",{uact:"look",lbl:"G",grp:"g"})});
+      C.s("sit",qx,qy,q[2],"sit",[10,20],o);lfConvert(C,n0,"sit",{uact:"sit",lbl:"G",grp:"g"})});
     /* s[3]: options for the spot, e.g. {fxwall:1} to stand with your back to the camera */
     (e.cust||[]).forEach(function(s,i){lfCust(C,near(s[0],s[1],1),near(s[0],s[1],0),s[2],Object.assign({wact:"look",uact:"look",lbl:"G",grp:"g",num:i+1,udur:[8,16]},s[3]||{}))});
     (e.work||[]).forEach(function(s){C.s("work",s[0],s[1],s[2]||1,"work",[6,12],{tag:"staff"})});
@@ -276,7 +276,7 @@ function rsTier(C){return C.has("r_t3")?3:C.has("r_t2")?2:C.has("r_t1")?1:0}
 /* these sheets are drawn to true proportions, so a height passed in would only squash them */
 var lfSprNat=lfSpr;lfSpr=function(C,k,x,y,w,d,o){if(o&&o.H&&/^(rdx|sbx|rfx|bbx|dsx|spx|acx|rhx|vrx|bwx|kax|cbx|gmx|mlx|hmx|clx)_/.test(k)){o=Object.assign({},o);delete o.H}return lfSprNat(C,k,x,y,w,d,o)};
 var RDT=[null,["rdx_tlong",2.5,1.5,46],["rdx_tround",2.0,2.0,50],["rdx_tsq",2.2,2.0,50]];
-function rsSitAt(C,x,y,face,cx,cy,back,lbl){var n0=C.st.length;C.s("sit",x,y,face,"eat",[10,20],back?{tag:"diner",lift:1,sz:5,facewall:1,dk:0,wx:x,wy:y+1,tb:[cx,cy]}:{tag:"diner",lift:1,sz:5,wx:cx+1.8,wy:cy+1.8,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"})}
+function rsSitAt(C,x,y,face,cx,cy,back,lbl){var n0=C.st.length;C.s("sit",x,y,face,"eat",[10,20],back?{tag:"diner",lift:1,sz:5,facewall:1,dk:0,wx:x,wy:y+1,tb:[cx,cy]}:{tag:"diner",lift:1,sz:5,wx:cx+1.8,wy:cy+1.8,tb:[cx,cy]});lfConvert(C,n0,"sit",{uact:"eat",lbl:lbl||"T",grp:lbl||"t"});rsDishAt(C,C.st[n0],x,y,cx,cy,28)}
 /* two (LEAD and QA, 2026-11-07: the full floor read as packed): a 2-top, the tier's own table art at .65 with one chair each side */
 function rsDinner(C,cx,cy,lbl,two){var tr=rsTier(C),T=RSCH[tr];
   if(tr===0||!LFSPR.rdx_chairf){[[cx-1.15,cy-.1,1],[cx-.1,cy-1.15,-1]].forEach(function(p){lfSpr(C,T[1],p[0]-.3,p[1]-.3,.6,.6,{h:1,H:T[3],flip:p[2]>0?1:0,dk:.6,nob:1,nosh:1,ctr:1});rsSitAt(C,p[0],p[1],p[2],cx,cy,0,lbl)});lfSpr(C,T[0],cx-.9,cy-.9,1.8,1.8,{h:28,H:T[2],ctr:1});return}
@@ -387,7 +387,7 @@ LFROOM.restaurant=function(C){
   if(H("r_till")){if(LFSPR.rsx_register)rsS(C,"rsx_register",Wi-1.05,.85,.62,.62,1,{flip:1,dy:-34,nosh:1,H:66,dk:.4});
     else{var bx0=Wi-.9,by0=.95,cb=lfBox(bx0,by0,34,.42,.36,11,noir?"#26302c":"#2f5a48");C.add(bx0+by0+.8+.05,cb)}}
   /* the tip jar at the pass's back end, clear of the till (Cal 2026-11-13, ROOMS) */if(H("r_till")&&LFSPR.rsx_register&&typeof tipJar==="function")tipJar(C,"restaurant",Wi-1.05,.4,34);/* QA (twice): the partition hides most of the pass, so anywhere else the jar looked balanced on the half wall; it stands beside the till, which reads as the counter top */
-  lfPrep(C,"pass",Wi-1.0,kd-.5);
+  lfPrep(C,"pass",Wi-1.0,kd-.5);rsPassPlates(C,Wi,kd-.5,tiles,td);
   /* re-audit 2026-11-07 (0.07%): at the back of the counter the partition hid it; now on the counter just behind the napkin box, both in view (QA 121dc00) */
   if(H("r_cf1")&&!(H("r_cf2")&&st>0))rsS(C,"rsx_drip",Wi-.78,1.72,.45,.4,1,{flip:1,dy:-34,nosh:1,dk:.5});
   if(H("r_c1")||H("r_c2"))for(var tj=0;tj<tiles;tj++)[.45,1.35].forEach(function(o){var x=Wi-1.68/* QA room sweep: .07 closer, so the stool seats read as at the counter (were .65 off it) */,y=.2+tj*(td+.05)+o;/* Cal: "facing left but unclear why they are there": they face the counter now */lfSpr(C,"sbx_stool",x-.3,y-.3,.6,.6,{h:1,dk:.5,nob:1,nosh:1,sh:1,flip:1});
@@ -522,3 +522,58 @@ lfAgentG=function(a){var g=lfAgentGTmBase(a);if(!a.tm)return g;
   var ring=a.noring?'':'<ellipse rx="'+(15*LFBIG*LFK).toFixed(1)+'" ry="'+(6.5*LFBIG*LFK).toFixed(1)+'" fill="none" stroke="'+a.tmc+'" stroke-width="2" opacity=".9"/>',
     y=(-170*LFSC-6).toFixed(1),tw=Math.max(44,String(a.tmn||'').length*5.4+12),tag='<g class="lftm" transform="translate(0,'+y+')"><rect x="'+(-tw/2).toFixed(1)+'" y="-9" width="'+tw.toFixed(1)+'" height="12" rx="6" fill="rgba(10,10,20,.78)" stroke="'+a.tmc+'" stroke-width="1"/><text x="0" y=".6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+esc(a.tmn)+'</text></g>';
   return g.replace('<g class="lfs">',ring+'<g class="lfs">').replace(/<\/g>$/,tag+'</g>')};
+
+/* ===== ROOMS 2026-11-23, life in the rooms (Cal: "seating in the restaurant as well with the waiters bringing food, and the chefs
+   doing a generic cooking animation and placing a dish for the waiters to pickup and bring to the tables") =====
+   The kitchen: anyone in chef whites stays behind the pass while someone else can serve. Chefs cook at the range, prep or oven;
+   when an order has cooked (5-9 s after the waiter takes it) a chef carries the plate to the pass and sets it down. The waiter
+   waits at the pass for that plate, then carries it to the table; the diner eats with the dish in front of them. With no chef
+   hired the plate is ready when it has cooked. With only chefs hired, they serve as before. */
+function rsChef(a){return !!(a&&(a.look&&a.look.chef||a.tm==="mara"))}/* Mara is the restaurant's partner chef (29c_team.js) */
+var rsNpcLife0=rsNpc;rsNpc=function(spec){var L=rsNpcLife0(spec);if(spec&&spec.eq&&spec.eq.indexOf("npc_chef")>=0)L.chef=1;return L};
+function rsServers(a){return lfRoomCrew(a).filter(function(b){return !rsChef(b)&&!b.post&&!b.idle})}/* hired staff; visitors and the team (idle) never wait tables */
+function rsCookT(s){if(s.stage===1&&!s.cookT)s.cookT=Date.now()+lfRand(4,7)*1000;return s.cookT||0}
+function rsUid(C){if(!C._uid)C._uid=String(C.chu||C.key||Math.random().toString(36).slice(2,8)).replace(/[^a-z0-9]/gi,"");return C._uid}
+function rsChefIn(a){var n=0;Object.keys(LFA).forEach(function(k){var b=LFA[k];if(b.room===a.room&&b.role==="crew"&&b.alpha>0&&!b.leaving&&rsChef(b))n++});return n}
+function rsDishSvg(){return '<ellipse cx="0" cy="1" rx="6.4" ry="2.9" fill="rgba(0,0,0,.25)"/><ellipse cx="0" cy="0" rx="6" ry="2.7" fill="#f7f4ee" stroke="rgba(0,0,0,.35)" stroke-width=".5"/><ellipse cx="-.6" cy="-.6" rx="3.4" ry="1.5" fill="#d9773f"/><ellipse cx="1.6" cy="-.4" rx="1.6" ry=".9" fill="#6fb04a"/><circle cx="-1.8" cy="-1" r=".8" fill="#f3d36b"/>'}
+/* a served plate on the table, between the diner and the table's middle; shown by rsLifeTick */
+function rsDishAt(C,s,x,y,cx,cy,z){if(!s)return;var dx=cx+(x-cx)*.42,dy=cy+(y-cy)*.42,P=lfP(dx,dy,z);s.dish="rsd"+rsUid(C)+"_"+C.st.indexOf(s);
+  C.add(cx+cy+1.85,'<g id="'+s.dish+'" style="display:none" transform="translate('+P[0].toFixed(1)+','+P[1].toFixed(1)+')" pointer-events="none">'+rsDishSvg()+'</g>')}
+function rsPassPlates(C,Wi,py,tiles,td){var K=(C.prep.passK={x:Wi+.25,y:py,fx:-1});C.ppn=0;
+  /* one plate under the heat lamp at the counter's open end, the one stretch of the pass the partition leaves in view */var yEnd=.2+tiles*(td+.05)-.32;for(var k=0;k<1;k++){var y=yEnd,x=Wi-.62,P=lfP(x,y,36),ti=Math.min(tiles-1,Math.max(0,Math.floor((y-.2)/(td+.05))));
+    C.add((Wi-.15)+(.2+ti*(td+.05)+td)+.06,'<g id="rspp'+rsUid(C)+'_'+k+'" style="display:none" transform="translate('+P[0].toFixed(1)+','+P[1].toFixed(1)+')" pointer-events="none">'+rsDishSvg()+'</g>');C.ppn++}}
+function rsShow(id,on){var e=document.getElementById(id);if(e&&e._on!==on){e._on=on;e.style.display=on?"":"none"}}
+function rsLifeTick(C){var now=Date.now();if(C._lt&&now-C._lt<200)return;C._lt=now;
+  var n=0;C.st.forEach(function(s){if(!s.cust)return;if(s.stage===1&&s.ord)rsCookT(s);/* the kitchen starts when the order is taken */if(s.plated&&s.ord&&s.by)n++;if(s.dish){var g=s.by&&lfGuestAt(s);rsShow(s.dish,!!(s.served&&g&&g.mode==="do"))}});
+  for(var k=0;k<(C.ppn||0);k++)rsShow("rspp"+rsUid(C)+"_"+k,k<n);
+  /* a dish has cooked and nobody is bringing it: the chef nearest the pass stops what they are doing and plates it */
+  var K=C.prep.passK,ready=C.st.some(function(s){return s.cust&&s.stage===1&&s.ord&&s.by&&!s.served&&!s.plated&&!s.plating&&s.cookT&&s.cookT<=now});
+  if(ready&&K){var best=null,bd=1e9;Object.keys(LFA).forEach(function(k){var b=LFA[k];if(b.role!=="crew"||!rsChef(b)||b.mode!=="do"||b.job||b.post||lfC(b)!==C)return;
+    var d=Math.hypot(b.x-K.x,b.y-K.y);if(d<bd){bd=d;best=b}});if(best&&best.t>.3)best.t=.2}}
+var lfStepLife0=lfStep;lfStep=function(a,dt){lfStepLife0(a,dt);var C=lfC(a);if(C&&C.prep&&C.prep.passK)rsLifeTick(C)};
+var lfGuestSeatedLife0=lfGuestSeated;lfGuestSeated=function(a,s){s.cookT=0;s.plated=0;s.plating=null;return lfGuestSeatedLife0(a,s)};
+var lfSvcStaffOnLife0=lfSvcStaffOn;lfSvcStaffOn=function(a,r){if(r&&r.t==="restaurant"&&rsServers(a).length)return true;return lfSvcStaffOnLife0(a,r)};
+var lfSvcWorkLife0=lfSvcWork;lfSvcWork=function(a,C,r){
+  if(!r||r.t!=="restaurant")return lfSvcWorkLife0(a,C,r);
+  if(a.idle&&!a.job)return false;var sv=rsServers(a);
+  if(sv.length&&rsChef(a)&&!a.job)return false;/* chefs cook; the waiter and host serve */
+  var J=a.job;
+  if(J&&!J.plot&&J.k===2&&J.st.length===3){var s=J.s;rsCookT(s);
+    var live=s.by&&s.by===J.by&&s.ord&&Date.now()-J.t0<90000;
+    if(live&&!s.plated&&!(rsChefIn(a)===0&&Date.now()>=s.cookT)){a.mode="do";a.act="look";a.tag="waitpass";a.st=null;a.carry=0;a.t=.6;a.at=0;return true}
+    if(live){s.plated=0;s.plating=null}}
+  if(sv.length&&!rsChef(a)){var ix=a.ix;a.ix=99;try{return lfSvcWorkLife0(a,C,r)}finally{a.ix=ix}}/* any waiter or host serves, whatever the hire order */
+  return lfSvcWorkLife0(a,C,r)};
+var lfDoneLife0=lfDone;lfDone=function(a){var s=a.st;if(s&&s.plateFor){var o=s.plateFor;if(o.plating===a.id){o.plated=1;o.plating=null}a.carry=0}return lfDoneLife0(a)};
+var lfNextLife0=lfNext;lfNext=function(a){var C=a&&lfC(a),m=a&&LFMETA[a.room],r=m&&m.r;
+  if(!C||!r||r.t!=="restaurant"||a.role!=="crew"||!rsChef(a)||a.post||a.leaving||a.job||!rsServers(a).length)return lfNextLife0(a);
+  lfRelease(C,a);a.carry=0;a.tag=null;a.act=null;a.emo=null;a.stretch=0;
+  var now=Date.now(),ords=C.st.filter(function(s){return s.cust&&s.stage===1&&!s.served&&s.ord&&s.by&&!s.plated});ords.forEach(rsCookT);
+  var K=C.prep&&C.prep.passK,ready=ords.filter(function(s){return !s.plating&&s.cookT<=now})[0];
+  if(ready&&K){ready.plating=a.id;a.carry=1;a.speed=1;lfGo(a,K.x,K.y,{kind:"plate",act:"reach",tag:"plate",dur:[.7,1.1],fx:K.fx,plateFor:ready});return}
+  var kit=lfFree(C,a,function(s){return s.kind==="work"&&(s.tag==="cook"||s.tag==="oven"||s.tag==="prep")});
+  if(ords.length){var ck=kit.filter(function(o){return o.s.tag==="cook"||o.s.tag==="oven"});if(ck.length)kit=ck}
+  var k2=kit.filter(function(o){return o.i!==a.last});if(k2.length&&Math.random()<.7)kit=k2;
+  if(kit.length){var o=lfPick(kit);a.si=o.i;o.s.by=a.id;a.last=o.i;a.speed=1;lfGo(a,o.s.x,o.s.y,o.s);return}
+  if(K){lfGo(a,K.x+.35,K.y+.7,{kind:"look",act:"look",tag:"look",dur:[2,4],fx:-1});return}
+  return lfNextLife0(a)};
