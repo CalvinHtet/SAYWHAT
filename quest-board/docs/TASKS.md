@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
+- Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
+  Was: Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
   Was: Now (on qa-local 8ca029d): the 11-23 batch, NOT A PASS: one FIX, the milestones' S.ms is wiped every 5 s by the old Missions refund; economy, v1.32, hair, dogs, pets recheck PASS; later rooms PASS with one FIX (Club DJ) (QA findings).
   Was: Now (on release/v1.30 c1cff49): v1.30 live check, PASS (QA findings). Waiting on ROOMS: pd_cable (Pluto's cells), pd_fleece and the three dog auras.
@@ -413,6 +414,16 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, hair highlights, all 13 styles (ROOMS 6feb83e..2abdb00a; worn in the rig on a clean 2abdb00a build before the Stylist wiring,
+  through the creator's hairHi, blonde streaks on brown hair; rigtest/qa/hairtest.js HC= HL=; shots/qa/hairhi1123/): his h1-h7 and
+  Victor's hair, her h1-h5, every pose (43, incl. arms-up, dances, sleep, sits) and every live hat for the body (56 his, 59 hers),
+  front and back. The streaks follow the hair in every pose, nothing floats off it or shows on skin; under hats they are clipped
+  with the hair (none on a hat, none through the balaclava, halo mask or hoods). Victor's stop at the hoodie line and are sparse from
+  behind (ROOMS's 85%). 0 page errors. Not checked: other base/highlight colour pairs by QA (ROOMS's 240-cell matrix covers them),
+  f_h1's unstreaked front lock (ROOMS flagged it to LEAD), the Stylist items once wired (QA rechecks those then).
+- d18c5041 (LEAD, QA's 68c4b15 NOTES; tapsize.js on 2abdb00a vs b30a7ea): the Upgrades section tabs are now 44 px tall (were 40), the
+  icon is sliders, the dead slice is gone: PASS. NOTE stands (LEAD): the 7-button bottom bar is unchanged, 37 px wide per button at 360
+  and 41 at 390 (52 tall), because the open tab takes 97-106 px; equal widths would give about 45-49.
 - PASS, the 11-23 batch recheck (qa-local b30a7ea, a clean build; owner LEAD): the milestones now live in S.mile (nothing else uses
   the name). shots/qa/batch1123/ms2_mile.js: the Level 5 three are kept 3, 6 and 9 s after Later; once the welcome letter is closed
   they open again on the Board with the same three; choosing one puts it in the Wardrobe (g5 kept 6 s later, no window again).
