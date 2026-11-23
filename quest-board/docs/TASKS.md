@@ -310,7 +310,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
+- Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
+  Was: Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
   Was: Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
   Was: Now (on 05c353be): the Speakeasy recheck, PASS; seating left for a later pass (QA findings).
   Was: Now (on 268253fe): the Speakeasy rework, NOT A PASS yet: two small FIXes (cart on the armchair, barrels boxed in), a seating NOTE (QA findings).
@@ -429,6 +430,12 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.35 live check (release/v1.35 a7ba8e21 on Live; owner LEAD): Live serves version.txt a7ba8e21 and version.json appv 135;
+  its 12 listed files are identical to QA's own web build of a7ba8e21 (the commit QA passed, c4bd127a), and index.html, config.js,
+  app.js, web.js, qbdata.js and creator.js are byte-identical; the build carries QB_EPOCH 7, APPV 135 and noTest. Rollback ready:
+  rollback-v1.31 08c7d93e (APPV 136, epoch 7). Branches release/v1.35 and rollback-v1.31 are local only (pushing is Cal's OK).
+  Not checked by QA (cloud): the rules deploy and the clear of board, pings, worlds, chat, chatnow, likes, kudos, kudosok, duel,
+  duelq, photos and photolk (LEAD's second pass found them empty), the Test channel (ship.sh compared it), a real sign-in, a phone.
 - PASS, v1.35 can ship (release/v1.35 a7ba8e21 = release/v1.31 + qa-local 867f9152, APPV 135, QB_EPOCH 7; rollback-v1.31 08c7d93e;
   rules from the qa-local checkout; owner LEAD; shots/qa/v135/). Cal 11-23: quest names "Ship, reword the text" (LEAD made them private
   instead, which covers it) and photos "Yes, delete photos". Ship: rules deploy, ship.sh release/v1.35 135 7, then the clear (board,
