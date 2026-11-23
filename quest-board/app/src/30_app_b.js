@@ -1853,7 +1853,7 @@ function guess(t){
   var s=t.toLowerCase(), r={xp:25,stat:"productivity",cl:"admin"};
   if(/gym|workout|lift|run\b|jog|walk|stretch|swim|yoga/.test(s)){r.stat="fitness";r.cl=/walk/.test(s)?"out":"body";r.xp=25}
   else if(/edit|film|shoot|record|produce|mix|master|song|track|beat|studio|mashup|video|reel|cover art|epk|design/.test(s)){r.stat="creativity";r.cl="create";r.xp=/edit|film|shoot|produce|finish|mix|master/.test(s)?50:25}
-  else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}
+  else if(/bed|teeth|shower|floss|skincare|meds|vitamin|water|breakfast|lunch|\bmeals?\b|\beat\b|\bnap\b|meditat/.test(s)){r.stat="discipline";r.cl="reset";r.xp=10}/* self care (Cal 11-23) */
   else if(/dish|laundry|clean|vacuum|trash|sweep|tidy|organi[sz]e|assemble|put together|groom/.test(s)){r.stat="productivity";r.cl="home";r.xp=/clean|laundry|assemble|put together/.test(s)?25:10}
   else if(/call|text|dinner|friend|date|party|hang|visit|birthday/.test(s)){r.stat="social";r.cl="social";r.xp=25}
   /* QA's review (2026-11-14): "Reply to emails" matched "mail" below and was filed under Outside run; desk work is admin */
@@ -1874,7 +1874,7 @@ var PARSE="The user pasted a messy brain dump for a gamified to-do app (bullets,
  +"repeat is 'daily' for routines that recur every day (feeding pets, hygiene, making the bed, gym) and 'once' for one-off tasks.\n"
  +"XP scale: 5 = trivial, under 5 minutes. 10 = under 15 minutes. 25 = 15 to 60 minutes. 50 = 1 to 3 hours of focused or physically demanding work. 75 = multi-hour, open-ended, or something the person is likely avoiding. 100 = whole-day effort or a major milestone. Reward effort and difficulty, not importance. Open-ended building or 'finish X' tasks score at least 50.\n"
  +"stat must be one of: creativity (music, video, design, content making), discipline (habits, hygiene, routines, things avoided), fitness (exercise, walking), productivity (chores, admin, work, building, logistics), social (time with people, relationships, rest and fun).\n"
- +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (morning and night routines, hygiene), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software), create (music, filming, editing, posting content), social (people and plans), boss (a single dreaded or very large task).\n"
+ +"cluster must be one of: out (errands and things done outside the house, dogs, car), reset (self care: meals, morning and night routines, hygiene, rest), home (cleaning, laundry, household), body (gym, workouts), admin (day job, accounts, paperwork, messages, building software), create (music, filming, editing, posting content), social (people and plans), boss (a single dreaded or very large task).\n"
  +"Return ONLY a JSON array of at most 40 objects, in the order the tasks appear.\nBrain dump:\n";
 async function scoreAll(text){
   var sample=null;

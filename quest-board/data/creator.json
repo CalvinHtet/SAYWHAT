@@ -59,34 +59,34 @@
  "hairStyles": {
   "m": [
    {
-    "id": "h1",
-    "label": "Tousled"
-   },
-   {
     "id": "h4",
     "label": "Buzz Cut"
    },
    {
+    "id": "h3",
+    "label": "Mid Part"
+   },
+   {
+    "id": "h1",
+    "label": "Tousled"
+   },
+   {
+    "id": "h6",
+    "label": "Combover"
+   },
+   {
     "id": "fr_victor_hair",
-    "label": "Long"
+    "label": "Long",
+    "stylistOnly": true
    },
    {
     "id": "h5",
-    "label": "Man Bun"
+    "label": "Man Bun",
+    "stylistOnly": true
    },
    {
     "id": "h2",
     "label": "Crop",
-    "stylistOnly": true
-   },
-   {
-    "id": "h3",
-    "label": "Curtains",
-    "stylistOnly": true
-   },
-   {
-    "id": "h6",
-    "label": "Combover",
     "stylistOnly": true
    },
    {
