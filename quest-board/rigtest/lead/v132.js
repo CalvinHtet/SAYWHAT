@@ -29,7 +29,7 @@ const setup = (p, day, hr) => p.evaluate(([day, hr]) => { const x = window.__qb.
   await Q.evaluate(() => document.querySelector('.nav button[data-v="hall"]').click()); await Q.waitForTimeout(1500); await gone(Q);
   await Q.evaluate(() => { const t = [...document.querySelectorAll('[data-act="htab"],button')].find((x) => /^posts$/i.test((x.dataset && x.dataset.v) || '') || /^Posts$/i.test(x.textContent.trim())); if (t) t.click(); }); await Q.waitForTimeout(1000); await gone(Q);
   let n = await Q.evaluate(() => ({ t: (document.querySelector('.ntc h3') || {}).textContent, c0: window.__qb.x().S.coins }));
-  ok(n.t === 'The latest version is live', 'the Town board shows the official notice');
+  ok(n.t === 'Version 1.31 is live', 'the Town board shows the official notice');
   await Q.evaluate(() => document.querySelector('[data-act="ntget"]').click()); await Q.waitForTimeout(500);
   await Q.evaluate(() => { const b = document.querySelector('[data-act="ntget"]'); if (b) b.click(); }); await Q.waitForTimeout(500);
   const c1 = await Q.evaluate(() => window.__qb.x().S.coins); ok(c1 === n.c0 + 500, `it pays 500 once (${n.c0} -> ${c1})`);
