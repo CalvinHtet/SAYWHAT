@@ -313,7 +313,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
+- Now (on release/v1.39 297b2192, Live): v1.39 live check, PASS (QA findings).
+  Was: Now (on release/v1.39 297b2192): v1.39, PASS, can ship (QA findings). Next: the live check after the ship.
   Was: Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
   Was: Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
   Was: Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
@@ -435,6 +436,10 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.39 live check (release/v1.39 297b2192 on Live; owner LEAD): Live serves version.txt 297b2192, appv 139; its 12 listed files
+  match QA's own web build of 297b2192 (the commit QA passed, 80b8747d), index.html, config.js, app.js, web.js, qbdata.js and
+  creator.js byte-identical; QB_EPOCH 8 (no reset), noTest; release/v1.39 and rollback-v1.37 on origin (297b2192, d80690fc). Not
+  checked: the Test channel (ship.sh compared it), a real phone, real accounts.
 - PASS, v1.39 can ship (release/v1.39 297b2192 = release/v1.37 + qa-local e44186fa, APPV 139, QB_EPOCH 8, no reset; rollback-v1.37
   d80690fc, APPV 140; owner LEAD; shots/qa/v139/). Ship: ship.sh release/v1.39 139 8.
   - The cut: over e44186fa only APPV and QB_EPOCH (the rules file as on every release branch; the deploy is hosting only). Over
