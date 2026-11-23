@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
+- Now (on qa-local 05eac907): the release batch, PASS; v1.31 can be cut; waiting on LEAD's cut for its own check (QA findings).
+  Was: Now (on qa-local e0724a7c): the release batch, NOT A PASS yet: three small placement FIXes (Karaoke ball, Garden st1 barrel in the doorway, Restaurant st1 fire-pit chair into the bistro chair); the rest PASS incl. Stylist highlights (QA findings).
   Was: Now (on 2abdb00a): hair highlights, 13 styles, PASS; d18c5041 PASS with the bottom-bar NOTE open (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
   Was: Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
@@ -415,6 +416,15 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, the release batch on qa-local 05eac907 (QA's three db6a2a6b placement FIXes, ROOMS's tested values; a clean build; owner
+  LEAD). stagesweep.js: Restaurant st0 1 / st1 0 / st2 2 overlaps (all intended, as before), Garden 0 at every stage, Karaoke 0;
+  0 page errors. By eye: (1) Karaoke's disco ball at 7.0,5.8 hangs over open floor by the stage's left edge, clear of the drinks
+  table and the bookshelf; (2) the Garden barrel stands left of the doorway at stage 1 (y 4.8, under the hanging pots) and under the
+  painted tap at stage 0 (y 6.0, clear of the door frame), stage 2 unchanged; (3) Restaurant stage 1's iron set at px+3.5 is off the
+  fire-pit chair's back. Live (laterooms.js, the full Restaurant at stage 2, 120 s): 9 people, 664 samples, only 2 samples of a guest stepping into a booth seat. Pictures: shots/qa/rooms1123c/. NOTE: at Garden stage 0 the scarecrow's hand passes in front of the barrel's side; reads as
+  depth, not a clip. Only 22_garden.js, 26_world.js and 27b_skins.js change over e0724a7c, one line each; the rest of the batch
+  passed on e0724a7c (db6a2a6b). v1.31 can be cut from here; the cut (QB_EPOCH 7, APPV 131, the n131 notice, the exact commit) still
+  gets its own QA check before it ships. Not checked: stage 1 live (layout only; the audit and eye cover it), a phone.
 - NOT A PASS yet, the release batch on qa-local head e0724a7c (68c4b15 through e0724a7c; a clean build, cloud blocked; owner LEAD,
   coordinates ROOMS): three small placement FIXes left, everything else PASS. Pictures: shots/qa/rooms1123b/.
   - FIX 1 (027f23e, Karaoke): the disco ball at 5.6,5.8 (dy -92) now hangs over the drinks table's corner, over a glass, so it
