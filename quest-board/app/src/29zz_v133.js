@@ -87,3 +87,14 @@ var v33View=qsViewHtml;qsViewHtml=function(it){var h=v33View.apply(this,argument
   ".ms-opt:hover{border-color:var(--accent)}.ms-opt .qs-img{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f6f2ea}.ms-opt .qs-img img{width:100%;height:100%;object-fit:contain}",
   ".ms-opt b{font-size:12px;line-height:1.2;text-align:center;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.ms-opt small{font-size:10px;color:var(--muted,#a99fc4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}",
   ".ms-coin i.coin{width:40px;height:40px}"].join("");document.head.appendChild(st)})();
+
+/* ---- highlights in the Stylist (Cal 11-23: "allow for highlights in the hair as well"): one item per hair colour, slot a_hairhi, worn as
+   choice.hairHi (src/look.js tints ROOMS's <b>_<style>hi_* streak layer; all 13 styles have one). Same price as that colour's dye.
+   Taking it off in the Wardrobe takes the highlights out. ---- */
+(function(){var D=window.QBDATA&&QBDATA.creator;if(!D||!D.hairColors)return;
+  if(!SLOTS.some(function(x){return x[0]==="a_hairhi"}))SLOTS.splice(SLOTS.map(function(x){return x[0]}).indexOf("a_hairc")+1,0,["a_hairhi","Highlights"]);
+  if(!QS_GROUPS.some(function(x){return x[0]==="a_hairhi"}))QS_GROUPS.splice(QS_GROUPS.map(function(x){return x[0]}).indexOf("a_hairc")+1,0,["a_hairhi","Highlights"]);
+  STYLIST.a_hairhi=1;THUMB.a_hairhi=1;
+  SHOPTABS.forEach(function(t){if(t[0]==="wardrobe"&&t[2].indexOf("a_hairhi")<0)t[2].splice(t[2].indexOf("a_hairc")+1,0,"a_hairhi")});
+  D.hairColors.forEach(function(c){var id="bs_hi_"+c.id;if(SHOP.some(function(x){return x[0]===id}))return;var dye=SHOP.filter(function(x){return x[0]==="bs_dye_"+c.id})[0];
+    SHOP.push([id,"a_hairhi",c.label+" Highlights",dye?dye[3]:400,1,"Thin streaks of "+c.label.toLowerCase()+" through your hair.",{basic:{key:"hairHi",id:c.id},b:"basics",swatch:"repeating-linear-gradient(115deg,#3a2f36 0 12px,"+c.swatch+" 12px 17px)"/* streaks, so it never reads as the dye */}])})})();
