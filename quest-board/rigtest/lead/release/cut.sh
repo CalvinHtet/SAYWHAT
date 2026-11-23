@@ -40,7 +40,7 @@ RB=${TMPDIR:-/tmp}/qb_rb_$NEW
 git worktree add -q "$RB" refs/heads/rollback-v0.80 && cd "$RB" && git checkout -q rollback-v0.80 \
   && python3 -c "import re;p='quest-board/app/src/30_app_b.js';s=open(p).read();open(p,'w').write(re.sub(r'APPV=\d+','APPV=$((V+1))',s,count=1))" \
   && { [ -z "$EPOCH" ] || python3 -c "import re;p='quest-board/app/src/00_clock.js';s=open(p).read();open(p,'w').write(re.sub(r'var QB_EPOCH=\d+;','var QB_EPOCH=$EPOCH;',s,count=1))"; } \
-  && git commit -qam "Rollback build: APPV $((V+1))${EPOCH:+, QB_EPOCH $EPOCH (a rollback must carry the saves' epoch)}, above $NEW
+  && git commit -qam "Rollback build: APPV $((V+1))${EPOCH:+, QB_EPOCH $EPOCH (a rollback carries the epoch of the saves)}, above $NEW
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" && git log --oneline -1 | cat
 cd "$R" && git worktree remove "$RB"
