@@ -73,7 +73,7 @@ function sqCard(uid){if(uid===MYUID){pop("That's you. Looking good.");return}
 function sqSend(uid,k){if(!socOn()||!Object.prototype.hasOwnProperty.call(SQK,k))return;var w=SOC.worlds.filter(function(x){return x.id===uid})[0];if(!w)return;var t=Date.now();if(t-SQ.lastSend<2500){pop("One at a time");return}SQ.lastSend=t;closeModals();
   SQ.shown[MYUID+"|"+uid+"|"+t]=1;SQ.feed.unshift({from:MYUID,fromName:(S.char&&S.char.name)||"Neighbor",to:uid,k:k,t:t});sqPaint();sqPlay(MYUID,uid,k);
   socMine("pings",function(d){var m=d.emo&&typeof d.emo==="object"?d.emo:{},cut=t-14*864e5;Object.keys(m).forEach(function(x){if(!m[x]||(m[x].t||0)<cut)delete m[x]});m[uid]={k:k,t:t};d.emo=m})
-    .then(function(){var P=sqPaid(),first=!P.sent[uid];if(first){P.sent[uid]=t;S.coins+=SQPAY;S.earnedC+=SQPAY;persist()}pop("You "+SQK[k][2]+" "+w.name+(first?"  +"+SQPAY+" coins":""))})
+    .then(function(){var P=sqPaid(),first=!P.sent[uid];if(first){P.sent[uid]=t;S.coins+=SQPAY;S.earnedC+=SQPAY;persist();try{render()}catch(x){}/* the coin count shows it at once (QA) */}pop("You "+SQK[k][2]+" "+w.name+(first?"  +"+SQPAY+" coins":""))})
     .catch(function(er){pop("Could not send: "+((er&&er.code)||"error"))});
   if(sqSandboxOn()&&uid.indexOf("sb_")===0)setTimeout(function(){var m={};m[MYUID]={k:k,t:Date.now()};db.doc("pings/"+uid).set({name:w.name,fromName:w.name,emo:m,t:Date.now()})},2200)}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=sqtap],[data-act=sqgo]");if(!b)return;if(b.dataset.act==="sqtap")sqCard(b.dataset.u);else sqSend(b.dataset.u,b.dataset.k)});

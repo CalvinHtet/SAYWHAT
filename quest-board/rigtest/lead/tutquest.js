@@ -8,6 +8,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 60000 }); await p.fill('#ccname', 'Tester'); await p.click('[data-act="ccnext"]');
   await p.waitForFunction(() => document.querySelector('[data-act="ccdone"]'), null, { timeout: 60000 }); await p.waitForTimeout(800); await p.click('[data-act="ccdone"]'); await p.waitForTimeout(3000);
   const q = await p.evaluate(() => window.__qb.x().S.quests.filter((x) => x.tut).map((x) => x.name)); ok(q.join() === 'Finish the tutorial', 'the first quest: ' + JSON.stringify(q));
+  const qt = await p.evaluate(() => { const q = window.__qb.x().S.quests.find((x) => x.tut), e = document.querySelector('.qmain[data-id="' + q.id + '"]'); return e ? e.innerText.replace(/\s+/g, ' ') : ''; }); ok(/1 min/.test(qt) && !/30 min/.test(qt), 'it says about a minute: ' + qt);
   await p.waitForTimeout(3000); const wl = await p.evaluate(() => ({ modal: [...document.querySelectorAll('#layer .modal')].map((m) => m.innerText.slice(0, 40)), badge: ((document.querySelector('[data-act="inbox"],.ibbtn,.ib-n,.ibn') || {}).innerText || '').trim() }));
   ok(!wl.modal.some((t) => /Welcome to SAYWHAT/i.test(t)), 'the Welcome letter does not open by itself ' + JSON.stringify(wl));
   await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((m) => { const c = m.querySelector('[data-act="mclose"],.x'); if (c) c.click(); else m.remove(); })); /* the Welcome letter */

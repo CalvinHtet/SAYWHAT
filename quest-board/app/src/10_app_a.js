@@ -1424,7 +1424,7 @@ function ccAct(a,b,e){
     var first=!S.created;
     if(first&&isNewPlayer()&&ccBlank)S.quests=S.quests.filter(function(q){return q.rep==="weekly4"});
     /* Cal 11-23: "I want the first quest to be prepopulated as 'Finish the tutorial' so we have something to actually tick for the second card" */
-    if(first&&isNewPlayer()&&!S.quests.some(function(q){return q&&q.tut}))S.quests.unshift({id:"q"+(S.next++),name:"Finish the tutorial",xp:20,stat:"discipline",cl:"admin",why:"Your first quest",rep:"once",tut:1});
+    if(first&&isNewPlayer()&&!S.quests.some(function(q){return q&&q.tut}))S.quests.unshift({id:"q"+(S.next++),name:"Finish the tutorial",xp:20,stat:"discipline",cl:"admin",why:"Your first quest",rep:"once",mins:1,tut:1});
     S.char=cc;S.created=true;cc=null;ccEdit=false;ccStage="name";qsGrantOriginals();
     /* a new character starts with no areas seen, so The Loft takes day 1's unlock and the Hall waits (29h_unlocks.js; QA) */
     if(first&&(!S.areaOn||typeof S.areaOn!=="object"))S.areaOn={};

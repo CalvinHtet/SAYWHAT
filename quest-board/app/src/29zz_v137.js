@@ -35,7 +35,7 @@ sqScan=async function(){if(!socOn())return;var q=await db.collection("pings").li
   var o=socState(),seen=o.sqSeen||(o.sqSeen={}),G=v37Got(),got=[];
   all.forEach(function(e){if(e.to!==MYUID||e.from===MYUID||(seen[e.from]||0)>=e.t)return;seen[e.from]=e.t;var pay=0;
     if(now-(+G[e.from]||0)>=SQGAP){pay=SQPAY;G[e.from]=now;S.coins+=pay;S.earnedC+=pay}got.push({e:e,pay:pay})});
-  if(!got.length)return;persist();got.forEach(function(g,i){setTimeout(function(){pop(sqName(g.e.from,g.e.fromName)+" "+sqKind(g.e.k)[2]+" you "+sqKind(g.e.k)[0]+(g.pay?"  +"+g.pay+" coins":""))},i*2400)})};
+  if(!got.length)return;persist();try{if(got.some(function(g){return g.pay}))render()}catch(x){}got.forEach(function(g,i){setTimeout(function(){pop(sqName(g.e.from,g.e.fromName)+" "+sqKind(g.e.k)[2]+" you "+sqKind(g.e.k)[0]+(g.pay?"  +"+g.pay+" coins":""))},i*2400)})};
 
 /* the fashion warning's "Vote now" (29zz_v135.js) opens the Hall's Players tab */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=v35fsh]");if(!b)return;e.stopImmediatePropagation();try{closeModals()}catch(x){}FSH.mode="fashion";htabSet("style");view="hall";render();window.scrollTo(0,0)},true);
