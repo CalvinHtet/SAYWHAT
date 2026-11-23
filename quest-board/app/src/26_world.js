@@ -560,8 +560,10 @@ var lfSvcWorkLife0=lfSvcWork;lfSvcWork=function(a,C,r){
   var J=a.job;
   if(J&&!J.plot&&J.k===2&&J.st.length===3){var s=J.s;rsCookT(s);
     var live=s.by&&s.by===J.by&&s.ord&&Date.now()-J.t0<90000;
-    if(live&&!s.plated&&!(rsChefIn(a)===0&&Date.now()>=s.cookT)){a.mode="do";a.act="look";a.tag="waitpass";a.st=null;a.carry=0;a.t=.6;a.at=0;return true}
-    if(live){s.plated=0;s.plating=null}}
+    if(live&&!s.plated&&!(rsChefIn(a)===0&&Date.now()>=s.cookT)){if(!J.hold0)J.hold0=Date.now();a.mode="do";a.act="look";a.tag="waitpass";a.st=null;a.carry=0;a.t=.6;a.at=0;return true}
+    if(live){s.plated=0;s.plating=null;
+      /* the wait at the pass is the kitchen's, not the service's: tips, reviews and the diner's patience don't count it (no change in earnings) */
+      if(J.hold0){var held=Date.now()-J.hold0;J.hold0=0;J.t0+=held;if(s.t0)s.t0+=held;var g=lfGuestAt(s);if(g&&g.wait)g.t+=held/1000}}}
   if(sv.length&&!rsChef(a)){var ix=a.ix;a.ix=99;try{return lfSvcWorkLife0(a,C,r)}finally{a.ix=ix}}/* any waiter or host serves, whatever the hire order */
   return lfSvcWorkLife0(a,C,r)};
 var lfDoneLife0=lfDone;lfDone=function(a){var s=a.st;if(s&&s.plateFor){var o=s.plateFor;if(o.plating===a.id){o.plated=1;o.plating=null}a.carry=0}return lfDoneLife0(a)};
