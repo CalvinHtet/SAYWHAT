@@ -312,7 +312,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
+- Now (on release/v1.39 f3d8c5e8): v1.37 live check PASS; v1.39 tests PASS, waiting on the busser re-cut for the final pass (QA findings).
+  Was: Now (on release/v1.35 a7ba8e21, Live): v1.35 live check, PASS (QA findings).
   Was: Now (on release/v1.35 a7ba8e21): the reboot re-cut, PASS, can ship (QA findings). Next: the live check after the ship and the clear.
   Was: Now (on release/v1.35 d2cfa06c): the reboot, PASS but HELD for Cal's privacy decision on productivity-challenge quest names (QA findings).
   Was: Now (on 05c353be): the Speakeasy recheck, PASS; seating left for a later pass (QA findings).
@@ -432,6 +433,26 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.37 live check (release/v1.37 c3584739 on Live, shipped on Cal's word before QA's pass; owner LEAD; shots/qa/v137/):
+  Live serves c3584739, appv 137; its 12 listed files match QA's own web build of c3584739, six main files byte-identical; QB_EPOCH 8,
+  noTest; branches on origin. On the cut QA was checking (0d34367e, the same but the letter text): LEAD's reboot, v136, loftplus,
+  training and hall3 pass with every non-local request blocked; a v1.35 save (epoch 7, level 20, 5,000 coins) opens fresh at epoch 8
+  with exactly Welcome (1,000) and live137 (500), each paying once; the letter has no brands or dates. Two players on the web build
+  with LEAD's stand-in Firebase (hall2p.js): Ann's Players tab ranks by level, Bo's card has Wave, Fist bump, High five; a wave pays
+  Ann 3 and Bo 3 (when his game checks: at start or every 2 min), a second greeting inside 2 hours pays neither; Ann's Room 3 message
+  reaches Bo's Room 3 and not Room 1; 0 page errors. Not checked: the cloud clear (LEAD's pass), a real phone, real accounts.
+  - FIX (fixed in 7f346f83, then in f3d8c5e8): the Loft tour's new step "This is The Loft. Tap it to see the rooms inside" drew over the
+    "Welcome home" card on a new player's first Loft tap (tour_2.jpg). Now the step waits unseen while a window is open (tourcard.js,
+    and QA's loftour.js: the step shows, visible, once the card is gone).
+  - NOTE (Cal, LEAD told him): with the Closet on offer the Loft zooms out by half (0.56 to 0.27), not "a tiny bit", and the same once
+    built (0.28): the "Walk-in Closet" name is in the fit. Fitting the "+" circle alone would give a small step, then a bigger one.
+- PASS with NOTES, life in the rooms (ROOMS 880e3484 + 2262d9a2, live in v1.37; 5440020e in v1.39; laterooms.js FULL=1 shows the
+  whole room): Speakeasy guests sit on the bar stools, in the booth and the armchairs; the Restaurant takes orders (bubbles), the waiter
+  works the floor, chefs stay in the kitchen; Sky Bar, Garden, Club, Restaurant: nobody walks through furniture except guests stepping
+  into seats (a few samples) and the pianist at the piano (as before). The Speakeasy bartender stands behind the bar polishing a glass.
+  NOTES (ROOMS): the Garden butterflies are drawn about twice a hen's size, one on the coop roof; guests stand on a Sky Bar stool spot
+  up to about 2.5 s before sitting. Not measured: income per minute with the pass wait (the room bank probe read 0 both before and
+  after), the host's escort, a busser's clear (it changes in the next cut), reduced motion for the garden animals.
 - PASS, v1.35 live check (release/v1.35 a7ba8e21 on Live; owner LEAD): Live serves version.txt a7ba8e21 and version.json appv 135;
   its 12 listed files are identical to QA's own web build of a7ba8e21 (the commit QA passed, c4bd127a), and index.html, config.js,
   app.js, web.js, qbdata.js and creator.js are byte-identical; the build carries QB_EPOCH 7, APPV 135 and noTest. Rollback ready:
