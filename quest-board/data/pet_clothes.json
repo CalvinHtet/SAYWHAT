@@ -483,6 +483,56 @@
    }
   ]
  },
+ "pd_treats": {
+  "kind": "aura",
+  "pet": "dogs",
+  "cells": [
+   {
+    "cell": 0,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 731,
+    "h": 316,
+    "pivot": [
+     379.2,
+     34.8
+    ]
+   },
+   {
+    "cell": 1,
+    "pet": "chopstick",
+    "frame": 0,
+    "w": 731,
+    "h": 316,
+    "pivot": [
+     379.2,
+     34.8
+    ]
+   },
+   {
+    "cell": 2,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 684,
+    "h": 315,
+    "pivot": [
+     348.5,
+     43.5
+    ]
+   },
+   {
+    "cell": 3,
+    "pet": "pluto",
+    "frame": 0,
+    "w": 684,
+    "h": 315,
+    "pivot": [
+     348.5,
+     43.5
+    ]
+   }
+  ]
+ },
  "ps_bow": {
   "kind": "head",
   "pet": "slime",
