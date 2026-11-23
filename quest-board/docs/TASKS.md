@@ -308,7 +308,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
+- Now (on qa-local b30a7ea): the 11-23 batch recheck, PASS (QA findings). Next: the rooms commit, then the release cut.
+  Was: Now (on 3b1e3fa): ROOMS's later-rooms placement findings, PASS (all five agreed, one added for the Restaurant) (QA findings).
   Was: Now (on qa-local 8ca029d): the 11-23 batch, NOT A PASS: one FIX, the milestones' S.ms is wiped every 5 s by the old Missions refund; economy, v1.32, hair, dogs, pets recheck PASS; later rooms PASS with one FIX (Club DJ) (QA findings).
   Was: Now (on release/v1.30 c1cff49): v1.30 live check, PASS (QA findings). Waiting on ROOMS: pd_cable (Pluto's cells), pd_fleece and the three dog auras.
   Was: Now (on release/v1.30 c1cff49): v1.30 cut, PASS, can ship (QA findings).
@@ -412,6 +413,13 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, the 11-23 batch recheck (qa-local b30a7ea, a clean build; owner LEAD): the milestones now live in S.mile (nothing else uses
+  the name). shots/qa/batch1123/ms2_mile.js: the Level 5 three are kept 3, 6 and 9 s after Later; once the welcome letter is closed
+  they open again on the Board with the same three; choosing one puts it in the Wardrobe (g5 kept 6 s later, no window again).
+  rerender_mile.js: no re-render bursts on an idle Board in 21 s (8ca029d had one every 5 s). Dog text: pd_bubbles reads lilac,
+  pd_fleece has no internal note. 0 page errors. Over 8ca029d only 29zz_v133.js and 29zz_pets.js change in app/ (plus ROOMS's
+  highlight art). Open, not blocking the batch: the rooms commit (Club DJ, Restaurant stage 1, Speakeasy, Karaoke, Garden stage 1)
+  and the 68c4b15 NOTES. The release cut still needs its own QA check (QB_EPOCH 7, APPV, the exact commit).
 - PASS on ROOMS's later-rooms placement findings (3b1e3fa, rigtest/qa/stagesweep.js, shots/pending_art/rooms_sweep_1123/; QA looked at
   every picture; owner LEAD for the code fixes, ROOMS for spots). All five agreed by eye: (1) Restaurant stage 1 with the patio fully
   bought: the pergola over a bistro set, the fire-pit chairs into the pergola, the iron set into the grill and the kitchen corner;
