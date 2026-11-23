@@ -172,3 +172,23 @@ function pzBedPt(room){var D=pzData(),sp=D&&D.spots&&D.spots[room];if(!petMine()
 setInterval(function(){try{if(!loaded||!S||!S.created||S.pbref)return;var c=0;
   (S.base&&S.base.slots||[]).forEach(function(r){if(!r||r.t!=="patio"||!r.a)return;["pt_dbed","pt_dbed2"].forEach(function(id){if(!r.a[id])return;var a=(ADDONS.patio||[]).filter(function(q){return q[0]===id})[0];c+=(a&&+a[2])||200})});
   S.pbref={at:Date.now(),c:c};if(c){S.coins=(S.coins||0)+c;S.spent=Math.max(0,(S.spent||0)-c)}persist()}catch(e){}},1500);
+/* ---- the pet beside its player on the Town's weekly pedestal (Cal 11-23: "When displaying characters on the town hall for the weekly
+   competitions, make sure the pet shows up alongside them in a neutral position wearing whatever outfit we bought") ----
+   Each player's worlds/<id> doc carries pet = {k, w} (their creature and what it wears); read back through pzSafePet (hostile: only a
+   known kind and pieces of that kind's line, one per slot). On the pedestal it stands on its idle frame by its player's feet, dressed. */
+function pzSafePet(p){try{if(!p||typeof p!=="object"||!PETS[p.k])return null;var C=pzCl(),w={};
+  if(p.w&&typeof p.w==="object")["head","neck","body","aura"].forEach(function(s){var id=p.w[s];if(typeof id==="string"&&C[id]&&C[id].pet===p.k&&pzSlot(C[id].kind)===s)w[s]=id});
+  return {k:p.k,w:w}}catch(e){return null}}
+function pzMyPet(){var m=petMine();return m?pzSafePet({k:m.k,w:pzWorn(m.k)}):null}
+var pzWorldBase=socWorldDoc;socWorldDoc=function(){var d=pzWorldBase.apply(this,arguments);try{d.pet=pzMyPet()}catch(e){}return d};
+var pzSafeBase=fshSafe;fshSafe=function(w){var o=pzSafeBase.apply(this,arguments);try{o.pet=pzSafePet(w&&w.pet)}catch(e){o.pet=null}return o};
+/* sized to its player: the creature's frame stands about two fifths of the figure's height; the picture is placed by its mass centre
+   and ground line (pzFit, as each picture loads: the plain frame first, then the dressed one) */
+function pzPedPic(pet,H){if(!pet)return "";var D=pzData(),P=D&&D.pets[pet.k];if(!P)return "";var key=pzKey(pet.k,0,pet.w),s=pzSprite(pet.k,0,pet.w);if(!s)return "";
+  var k=H*0.4/P.h;return '<img class="fsh-pet" alt="" data-pzk="'+esc(key)+'" data-k="'+k.toFixed(4)+'" data-ax="'+s.ax+'" data-ay="'+s.ay+'" src="'+s.u+'" onload="pzFit(this)">'}
+window.pzFit=function(im){try{var k=+im.dataset.k,s=PZSPR[im.dataset.pzk],full=s&&im.getAttribute("src")===s.u,ax=full?s.ax:+im.dataset.ax,ay=full?s.ay:+im.dataset.ay,
+  w=im.naturalWidth,h=im.naturalHeight;im.style.width=(w*k).toFixed(1)+"px";im.style.height=(h*k).toFixed(1)+"px";im.style.marginLeft=(-ax*k).toFixed(1)+"px";im.style.marginBottom=(-(h-ay)*k).toFixed(1)+"px"}catch(e){}};
+var pzPedBase=fshPed;fshPed=function(rk,mode){var h=pzPedBase.apply(this,arguments);try{var top=rk.filter(function(p){return mode!=="fashion"||p.v>0}).slice(0,3),Hs=[124,104,96];
+  top.forEach(function(p,i){var pet=p.me?pzMyPet():p.pet;if(!pet)return;var tag='data-u="'+esc(p.id)+'"',a=h.indexOf(tag);if(a<0)return;var e=h.indexOf("</button>",a);if(e<0)return;
+    h=h.slice(0,e)+pzPedPic(pet,Hs[i])+h.slice(e)})}catch(x){}return h};
+(function(){var st=document.createElement("style");st.textContent='.fsh-fig{position:relative}.fsh-pet{position:absolute;left:6%;bottom:0;pointer-events:none;max-width:none}';document.head.appendChild(st)})();
