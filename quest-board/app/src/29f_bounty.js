@@ -204,7 +204,7 @@ var BTY1=[
   ["Take ten photos on a walk","Look for light and shapes.",25,"creativity","create"],
   ["Practise an instrument for 20 minutes","Slow and clean beats fast.",30,"creativity","create"],
   ["Rearrange one corner of a room","Move one thing and see.",25,"creativity","home"],
-  ["Make a playlist for a mood","Ten songs and a good name.",20,"creativity","create"],
+  ["Take five photos of things you like the look of","Light, colour, a shape. No people needed.",20,"creativity","create"],
   ["Watch a tutorial and try it once","Cooking, drawing, fixing, anything.",25,"creativity","create"],
   ["Write down five ideas for a project","Bad ideas count.",20,"creativity","create"],
   ["Fix something instead of replacing it","Sew a button, glue a handle.",30,"creativity","home"],
@@ -213,7 +213,7 @@ var BTY1=[
   ["Plan a small project from start to finish","Steps, tools, a date.",25,"creativity","create"],
   ["Make something with your hands","Clay, paper, wood or thread.",30,"creativity","create"],
   ["Learn one new thing in 20 minutes","A lesson, an article, a how-to.",25,"creativity","create"],
-  ["Write the first verse of a song or poem","Rhyme is optional.",30,"creativity","create"]
+  ["Write one page of anything","A story, a letter, a list of ideas. One page.",30,"creativity","create"]
 ];
 var BTY2=[
   /* the original 12, rewritten for two days */
@@ -313,7 +313,7 @@ var BTY2=[
   ["Go to a class or club once","Just turn up and see.",60,"social","social"],
   /* creative and learning */
   ["Write a short story or poem","Draft on day one, edit on day two.",70,"creativity","create"],
-  ["Learn the first verse and chorus of a song","On any instrument, or sung.",70,"creativity","create"],
+  ["Make something with your hands","Cook a new dish, fold, sew, build or fix something. Finish it.",70,"creativity","create"],
   ["Make a photo series of ten shots","One theme, edited the same way.",60,"creativity","create"],
   ["Draw or paint something worth framing","Small is fine.",60,"creativity","create"],
   ["Take a beginner lesson in a new skill","One lesson each day.",60,"creativity","create"],

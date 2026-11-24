@@ -40,12 +40,12 @@ var RANKS=[
  {l:"E",n:"Awakened",f:["Quests, XP, stats, and rewards"]},
  {l:"D",n:"Bass Hunter",f:["Combo meter: chain quests inside 45 minutes for up to x1.5 XP","Stat radar replaces the bars","HUD interface"]},
  {l:"C",n:"Drop Knight",f:["Daily bounty: one big quest pays double each day","Ember forge interface"]},
- {l:"B",n:"Headliner",f:["Stat titles: earn a new title at 5, 15, and 30 in each stat","Crimson stage interface"]},
+ {l:"B",n:"Headliner",f:["Stat titles: earn a new title at 5, 15, and 30 in each stat","Crimson interface"]},
  {l:"A",n:"Sovereign",f:["Raid timer: clear the Now quest in 25 minutes for +25% XP","Gold regalia interface"]},
  {l:"S",n:"Shadow Monarch",f:["All XP +10%, permanently","Monarch's domain interface"]}
 ];
 var FX=[[2,"grid","Grid overlay"],[3,"burst","Completion bursts"],[4,"pulse","Neon edge pulse"],[6,"brackets","HUD brackets"],[7,"sweep","Scan sweep"],[8,"orbs","Drifting orbs"],[9,"ringglow","Ring afterglow"],[10,"embers","Ember particles"],[11,"chipglow","Chip glow"],[12,"aurora","Aurora sky"],[13,"holo","Holo shimmer"],[14,"shimmer","Stat bar shimmer"],[16,"halo","Orbiting halo"],[18,"glowtext","Glowing headlines"],[20,"flares","Corner flares"],[24,"stars","Starlight"],[28,"vignette","Cinematic vignette"],[34,"edgeglow","Screen edge glow"],[50,"gilded","Gilded headlines"]];
-var TITLES={creativity:["Sketcher","Sound Smith","Dreamweaver"],discipline:["Early Riser","Iron Will","Unbreakable"],fitness:["Sprinter","Iron Body","Titan"],productivity:["Operator","Taskmaster","Architect"],social:["Good Friend","Anchor","Heart of the Party"]};
+var TITLES={creativity:["Sketcher","Maker","Dreamweaver"],discipline:["Early Riser","Iron Will","Unbreakable"],fitness:["Sprinter","Iron Body","Titan"],productivity:["Operator","Taskmaster","Architect"],social:["Good Friend","Anchor","Heart of the Party"]};
 var DEFAULTS=[
  ["Workout",40,"fitness","body","4 times a week, live photo proof","weekly4"]
 ];
@@ -247,13 +247,13 @@ var CLASSES={
   story:["You kneel at the gate and a worn shield is placed in your hands. It is heavier than it looks.","The training yard has no shortcuts. You show up in the cold, in the dark, in the rain, and the old hunters begin to nod."],
   fork:"Three roads leave the training yard. One is built on raw power, one on never falling, and one on going the distance.",specs:["berserker","bulwark","lancer"],
   p:{bg:"#0c0606",s:"#1a0e0e",s2:"#271616",line:"#5a2222",fg:"#fbeeee",muted:"#b99a9a",a:"#ef4444",b:"#94a3b8",ink:"#1a0505"}},
- runeweaver:{name:"Runeweaver",tag:"Shape sound into spells.",
-  role:"For makers: music, video, anything creative. Pick this if your best days are the ones where you made something.",
+ runeweaver:{name:"Runeweaver",tag:"Shape ideas into spells.",
+  role:"For makers: art, writing, video, crafts, anything creative. Pick this if your best days are the ones where you made something.",
   sig:{name:"Encore",text:"Every creative quest after your first one each day pays +20% XP."},
   perk:{stat:"creativity",pct:15,text:"Creativity quests +15% XP"},
   tiers:["Novice Runeweaver","Adept Runeweaver"],
-  story:["A quiet road, a chipped rune stone, and a tune you cannot stop humming. The first town goes quiet when you play.","In the market, strangers hum your melody back to you, a little off."],
-  fork:"Three roads open. One leads to grand stages, one to a quiet tower where spells are written note by note, and one to a cathedral where music heals.",specs:["songcaller","spellwright","cantor"],
+  story:["A quiet road, a chipped rune stone, and an idea you cannot put down. The first town stops to watch you work.","In the market, strangers show you their own copies of your design, a little off."],
+  fork:"Three roads open. One leads to grand halls, one to a quiet tower where spells are written line by line, and one to a sanctuary where the work heals.",specs:["songcaller","spellwright","cantor"],
   p:{bg:"#07060d",s:"#100f1c",s2:"#1a1830",line:"#2a2650",fg:"#f1f0fb",muted:"#8d89ad",a:"#ff3d81",b:"#8b5cff",ink:"#16050c"}},
  swiftblade:{name:"Swiftblade",tag:"Cut through the list.",
   role:"For getting things done: projects, chores, errands. Pick this if checking boxes is your favorite feeling.",
@@ -264,7 +264,7 @@ var CLASSES={
   fork:"Three roads split from the market. One slips through the shadows, one faces a single great opponent, and one bets everything on luck.",specs:["shadowdancer","duelist","trickster"],
   p:{bg:"#030a14",s:"#08121f",s2:"#0e1d30",line:"#17406a",fg:"#e8f6ff",muted:"#7ea2bd",a:"#22d3ee",b:"#818cf8",ink:"#021018"}},
  tamer:{name:"Tamer",tag:"You never walk alone.",
-  role:"For people and companions: friends, your partner, your dogs. Pick this if your best moments are shared.",
+  role:"For people and companions: friends, family, your partner, your pets. Pick this if your best moments are shared.",
   sig:{name:"Bond",text:"Every team member's buff is 50% stronger."},
   perk:{stat:"social",pct:15,text:"Social quests +15% XP"},
   tiers:["Novice Tamer","Adept Tamer"],
@@ -286,13 +286,13 @@ P("vanguard","bulwark","Bulwark","Win by never falling.","Iron Bastion","For pro
 P("vanguard","lancer","Lancer","Win by going the distance.","Skyward Charge","For time outside and long hauls. Outside quests pay +10%.",{cl:"out",pct:10,text:"Outside quests +10% XP"},["Dragoon","Wyvern Rider","Skybreaker","Dragon Lord"],"the Cloud Spire","the Endless Mile","Wyrmscale Lance","#5eead4",
   ["Dragon Sovereign","Monarch of Dragons","Dragon Rage",{cl:"out",pct:10,text:"Outside quests +10% XP"}],
   ["Celestial Valkyrie","Valkyrie of the Heavens","Wings of Light",{special:"combo",text:"Combo window 45 to 55 min"}]);
-P("runeweaver","songcaller","Songcaller","Command the whole room.","Stage Presence","For shows and big moments. Boss quests pay +10%.",{cl:"boss",pct:10,text:"Boss quests +10% XP"},["Spotlight Caller","Starcaller","Skyline Starcaller","Celestial Maestro"],"the Starlit Amphitheater","the Silent Critic","Golden Baton","#ff9a3d",
-  ["Stage Sovereign","Monarch of Anthems","Crescendo",{cl:"boss",pct:10,text:"Boss quests +10% XP"}],
-  ["Aurora Muse","Muse of Dawn","Curtain Call",{special:"combo",text:"Combo window 45 to 55 min"}]);
-P("runeweaver","spellwright","Spellwright","Build worlds from silence.","Studio Flow","For studio days and deep creative work. Creative block quests pay +10%.",{cl:"create",pct:10,text:"Creative block quests +10% XP"},["Sigil Writer","Runemaster","Grand Runemaster","Sage Composer"],"the Tower of Quiet Notes","the Unfinished Melody","Silver Tuning Fork","#7cf0ff",
-  ["Void Composer","Monarch of Silence","Resonance",{stat:"creativity",pct:10,text:"Creativity quests +10% XP"}],
-  ["Starlight Sage","Sage of Stars","Perfect Pitch",{special:"verify",text:"Verified bonus +5%"}]);
-P("runeweaver","cantor","Cantor","Heal the room with a melody.","Calming Hymn","For recovery and steady habits. Discipline quests pay +10%.",{stat:"discipline",pct:10,text:"Discipline quests +10% XP"},["Vesper Cantor","Hymn Priest","High Cantor","Bishop of Echoes"],"the Cathedral of Echoes","the Restless Night","Silver Censer","#c4b5fd",
+P("runeweaver","songcaller","Songcaller","Command the whole room.","Command Presence","For big moments and deadlines. Boss quests pay +10%.",{cl:"boss",pct:10,text:"Boss quests +10% XP"},["Herald","Starcaller","Skyline Starcaller","Celestial Herald"],"the Starlit Hall","the Silent Critic","Golden Banner","#ff9a3d",
+  ["Hall Sovereign","Monarch of Banners","Rallying Cry",{cl:"boss",pct:10,text:"Boss quests +10% XP"}],
+  ["Aurora Muse","Muse of Dawn","Last Light",{special:"combo",text:"Combo window 45 to 55 min"}]);
+P("runeweaver","spellwright","Spellwright","Build worlds from silence.","Deep Flow","For deep creative work. Creative block quests pay +10%.",{cl:"create",pct:10,text:"Creative block quests +10% XP"},["Sigil Writer","Runemaster","Grand Runemaster","Sage Author"],"the Tower of Quiet Pages","the Unfinished Draft","Silver Quill","#7cf0ff",
+  ["Void Architect","Monarch of Silence","Resonance",{stat:"creativity",pct:10,text:"Creativity quests +10% XP"}],
+  ["Starlight Sage","Sage of Stars","Perfect Focus",{special:"verify",text:"Verified bonus +5%"}]);
+P("runeweaver","cantor","Cantor","Heal the room with calm.","Calming Word","For recovery and steady habits. Discipline quests pay +10%.",{stat:"discipline",pct:10,text:"Discipline quests +10% XP"},["Vesper Cantor","Hymn Priest","High Cantor","Bishop of Echoes"],"the Cathedral of Echoes","the Restless Night","Silver Censer","#c4b5fd",
   ["Dusk Sovereign","Monarch of Twilight","Requiem",{stat:"discipline",pct:10,text:"Discipline quests +10% XP"}],
   ["Choir Seraph","Seraph of Mercy","Sanctuary",{special:"freeze",text:"Hold one extra streak freeze"}]);
 P("swiftblade","shadowdancer","Shadowdancer","Clear the board unseen.","Shadowstep","For clearing busywork. Work and admin quests pay +10%.",{cl:"admin",pct:10,text:"Work and admin quests +10% XP"},["Nightstep","Phantom Courier","Veilwalker","Grand Veilwalker"],"the Midnight Market","the Pile of Busywork","Ink-Black Dagger","#a78bfa",
@@ -740,7 +740,7 @@ var SHOP=[
  ["sh_boots","a_shoes","Combat Boots",130,4,"Black and heavy.",{s:"boots",c:"#2a2226"}],
  ["sh_red","a_shoes","Red Hi-Tops",140,6,"Loud on purpose.",{s:"sneakers",c:"#d4372c"}],
  ["ac_glasses","a_acc","Round Glasses",60,2,"Thin frames.",{s:"glasses"}],
- ["ac_phones","a_acc","Studio Headphones",80,2,"For the producers.",{s:"phones"}],
+ ["ac_phones","a_acc","Studio Headphones",80,2,"For the deep-focus hours.",{s:"phones"}],
  ["ac_hoops","a_acc","Gold Hoops",70,2,"Small gold hoops.",{s:"hoops",g:"f"}],
  ["ac_shades","a_acc","Shades",80,3,"Dark lenses.",{s:"sunglasses"}],
  ["ac_bow","a_acc","Silk Bow",70,3,"A white bow in your hair.",{s:"bow",g:"f"}],
@@ -757,7 +757,7 @@ var SHOP=[
  ["hr_buzz","a_hair","Buzz Cut",60,2,"Zero maintenance.",{s:"buzz"}],
  ["et_happy","a_eyet","Happy Eyes",70,2,"Curved and cheerful.",{e:"happy"}],
  ["et_dot","a_eyet","Dot Eyes",70,2,"Simple and deadpan.",{e:"dot"}],
- ["et_tired","a_eyet","Tired Eyes",70,3,"Producer hours.",{e:"tired"}],
+ ["et_tired","a_eyet","Tired Eyes",70,3,"Late-night hours.",{e:"tired"}],
  ["tp_button","a_top","Button-Up",90,2,"Rolled sleeves, clean fit.",{s:"button",c:"#eef0f5"}],
  ["sh_loafers","a_shoes","Loafers",100,3,"Low and polished.",{s:"loafers",c:"#2a2226"}],
  ["pt_jeans","a_pants","Jeans",80,2,"Everyday denim.",{s:"jeans",c:"#4a6fa5"}]
@@ -1648,7 +1648,7 @@ var ROOMT={
  theater:{name:"Movie Theater",lv:28,cost:1400,desc:"A full cinema: a lobby with ticket booth and snack counter, plus an auditorium next door (comes with it). Guests buy tickets, grab snacks and take their seats.",coin:10.0,store:8},
  auditorium:{name:"Auditorium",lv:0,cost:0,desc:"The screening room that comes with the Movie Theater: stepped seating, a giant screen and a looping feature.",coin:.8,store:8,bundled:true},
  spa:{name:"Spa",lv:32,cost:1100,desc:"A luxury onsen: hot tub, sauna, massages and silk lounges. Calm guests, steady coins.",coin:10.0,store:10},
- club:{name:"Nightclub",lv:38,cost:1500,desc:"Calibur on the decks, bottles at the booths. The top coin room.",coin:20.0,store:8}
+ club:{name:"Nightclub",lv:38,cost:1500,desc:"A DJ on the decks, bottles at the booths. The top coin room.",coin:20.0,store:8}
 };
 var FOODN={veg:"Veg",grain:"Grain",fish:"Fish"};
 var DISHES={salad:["Garden Salad",{veg:1},.2],omelet:["Farm Omelette",{grain:1},.2],rice:["Fried Rice",{veg:1,grain:1},.35],sushi:["Sushi Platter",{fish:1},.5],ramen:["Signature Ramen",{veg:1,grain:1,fish:1},.8]};
@@ -1665,7 +1665,7 @@ var ADDONS={
  studio:[["s_mon","Studio Monitors",90,{xp:1},"Hear the low end properly."],["s_panel","Acoustic Panels",120,{xp:1},"Dead room, clean mix."],["s_synth","Synth Keyboard",180,{xp:2},"Saw waves for days."],["s_plaque","Platinum Plaques",160,{tip:1},"Clients pay more for a proven room."],["s_drums","Drum Kit",240,{xp:1,m:"Drum take"},"Live drums on the menu."],["s_lounge","Green Room",220,{pat:30},"Artists wait without stressing."],["s_console","Analog Console",320,{spd:.3,xp:1},"Faster mixes, warmer sound."],["s_booth","Vocal Booth",260,{xp:2},"For the hooks."]],
  gym:[["y_bag","Dumbbell Rack",80,{xp:1},"Heavy iron, neatly racked."],["y_rack","Squat Rack",150,{xp:2},"A steel cage with safety bars, for heavy squats."],["y_bench","Bench Press",130,{xp:1},"A flat bench and a squat rack."],["y_tread","Treadmill",180,{xp:1},"Cardio, technically."],["y_mirror","Mirror Wall",220,{xp:1},"Check the form."],["y_smoothie","Rowing Machine",150,{m:"Shake",tip:1},"Full-body cardio."],["y_bike","Spin Bikes",180,{xp:1},"Two more members ride."],["y_cable","Cable Machine",220,{xp:1},"Every angle covered."],["y_sauna","Recovery Corner",240,{pat:30},"Foam rollers and mats by the door."],["y_pt","Trainer Certification",320,{spd:.3,tip:1},"Your coaches level up their service."],["y_lux1","Pro Bench & Rack",600,{xp:1,p:.05},"Upgrade: black-and-gold power rack."],["y_lux2","Pro Cardio",800,{xp:1,p:.05},"Upgrade: curved treadmill, smart bikes and a rowing machine."],["y_lux3","Pro Cable & Dumbbells",1050,{xp:1,p:.05},"Upgrade: dual-stack cable tower and chrome dumbbells."],["y_lux4","Recovery Suite",1350,{xp:1,p:.05},"Upgrade: marble recovery table and gold plate tree."]],
  library:[["lb_lamp","Reading Chair",90,{xp:1},"Deep focus seat."],["lb_globe","Antique Globe",140,{xp:1},"A brass-mounted globe on a stand."],["lb_fire","Banker Lamps",240,{xp:2},"Warm green-glass reading light."],["lb_ladder","Corner Bookcase",100,{spd:.25},"More shelves, more stories."],["lb_carrel","Study Carrels",160,{xp:1},"Two quiet desks."],["lb_cafe","Coffee Nook",140,{m:"Coffee",tip:1},"Fuel for focus."],["lb_rare","Rare Books Case",280,{m:"First Edition",tip:1},"Collectors pay to browse."],["lb_quiet","Quiet Hours",220,{pat:30,xp:1},"Readers settle in."],["lb_lux1","Mahogany Shelves",600,{xp:1,p:.05},"Upgrade: dark mahogany shelving."],["lb_lux2","Leather Reading Suite",800,{xp:1,p:.05},"Upgrade: a tufted leather chair."],["lb_lux3","Executive Desk & Globe",1050,{xp:1,p:.05},"Upgrade: mahogany desks and a brass globe."],["lb_lux4","Marble Salon",1350,{xp:1,p:.05},"Upgrade: marble table, brass lamps, fern."]],
- sky:[["k_lights","String Lights",150,{p:.3},"Instant ambience."],["k_fire","Fire Pit",250,{p:.3},"Warm nights, long tabs."],["k_cabana","VIP Cabana",400,{p:.5},"A curtained cabana for VIPs."],["k_bar","Sky Bar Upgrade",160,{spd:.2,m:"Mojito"},"Faster pours under the stars."],["k_day","Daybeds",220,{p:.2},"Two more VIP spots to lie back."],["k_scope","Telescope",200,{pat:20},"Guests stargaze while they wait."],["k_bottle","Bottle Service",320,{m:"Bottle",tip:1},"Sparklers included."],["k_dj","Rooftop DJ",420,{tip:1,p:.25},"Sunset sets by Calibur."]],
+ sky:[["k_lights","String Lights",150,{p:.3},"Instant ambience."],["k_fire","Fire Pit",250,{p:.3},"Warm nights, long tabs."],["k_cabana","VIP Cabana",400,{p:.5},"A curtained cabana for VIPs."],["k_bar","Sky Bar Upgrade",160,{spd:.2,m:"Mojito"},"Faster pours under the stars."],["k_day","Daybeds",220,{p:.2},"Two more VIP spots to lie back."],["k_scope","Telescope",200,{pat:20},"Guests stargaze while they wait."],["k_bottle","Bottle Service",320,{m:"Bottle",tip:1},"Sparklers included."],["k_dj","Rooftop DJ",420,{tip:1,p:.25},"Sunset sets from a guest DJ."]],
  dojo:[["d_dummy","Training Dummy",200,{xp:1},"It never hits back."],["d_rack","Katana Rack",300,{xp:1},"Practice swords on a lacquered rack."],["d_bonsai","Bonsai",350,{xp:1},"Patience, visualized."],["d_mats","Extra Mats",150,{xp:1},"Room for two more students."],["d_gong","Gong",180,{tip:1},"A bronze gong for belt tests."],["d_cush","Meditation Cushions",200,{pat:30},"Students wait calmly."],["d_belt","Belt Wall",260,{m:"Belt test",tip:1},"Promotions on the menu."],["d_ring","Sparring Ring",380,{xp:1,tip:1},"Ropes, corners, glory."],["d_lux1","Ebony Dummy & Bag",600,{xp:1,p:.05},"Upgrade: black lacquer training gear."],["d_lux2","Lacquer Rack & Gong",800,{xp:1,p:.05},"Upgrade: gold-inlaid weapons and a grand gong."],["d_lux3","Zen Garden Suite",1050,{xp:1,p:.05},"Upgrade: jade-pot bonsai, carved panel and tea set."],["d_lux4","Silk Mats & Cabinet",1350,{xp:1,p:.05},"Upgrade: silk cushions and a lacquered armoire."]],
  theater:[["t_pop","Popcorn Cart",120,{m:"Popcorn",p:.15},"A popcorn machine with a glass hood."],["t_soda","Soda Fountain",140,{m:"Soda",p:.1},"Ice-cold refills."],["t_marquee","Neon Marquee",160,{p:.15},"A marquee ringed with bulbs."],["t_candy","Candy Case",180,{m:["Candy","Gummies"],tip:1},"A glass case of sweets."],["t_usher","Usher Training",220,{spd:.3},"Snacks arrive before the trailer ends."],["t_hotdog","Hot Food & Nachos",260,{m:["Hot dog","Nachos"],tip:1},"Hot dogs and a nacho station."],["t_bar","Drinks Bar",320,{m:"Cocktail",p:.2},"Pull up a stool and order a drink."],["t_lux1","Premium Floors & Carpet",600,{xp:1,p:.05},"Upgrade: marble lobby floor, plush wine carpet and a velvet sofa."],["t_lux2","Gourmet Menu & Copper Popcorn",800,{xp:1,p:.05},"Upgrade: pastry case, copper popcorn cart and a gourmet snack bar."],["t_lux3","Brass Tap Bar",1050,{xp:1,p:.05},"Upgrade: marble bar with brass taps and velvet stools."],["t_lux4","Gold Ticket Booth & Concessions",1350,{xp:1,p:.05},"Upgrade: marble-and-gold booth, counter and bins."]],
  auditorium:[["au_aisle","Aisle Lights",150,{pat:10},"Glowing step edges."],["au_sound","Surround Sound",240,{tip:1,p:.2},"You feel the bass."],["au_carpet","Plush Carpet",300,{p:.1},"Deep wine carpet on every tier."],["au_rows","Back Row",380,{p:.25,pat:20},"A fourth, higher row of seats."],["au_recline","Leather Recliners",480,{p:.2,pat:10},"Black leather seats that lean back."],["au_imax","IMAX Screen",650,{tip:1,p:.4},"Wall-to-wall picture."],["au_lux1","Velvet VIP Seating",600,{xp:1,p:.05},"Upgrade: tufted velvet seats throughout."],["au_lux2","Gold Trim & Marble Landing",800,{xp:1,p:.05},"Upgrade: gold sconces and a marble back landing."],["au_lux3","Reference Speaker Towers",1050,{xp:1,p:.05},"Upgrade: gold speaker towers beside the screen."],["au_lux4","Vintage Gold Projector",1350,{xp:1,p:.05},"Upgrade: a gold-plated cinema projector."]],
