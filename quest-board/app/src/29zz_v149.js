@@ -11,7 +11,7 @@
    - "Wardrobe" is "Closet" everywhere a player reads it (the furniture named Wardrobe keeps its name).
    Everything under it is 15_shop.js's shopHtml and its wrappers; this one decides which of its parts to show (SHUB), and anything that
    jumps to a tab of the old Shop (a brand's splash, a sale link, the Loft's closet, "Have a look") still lands on the right screen. */
-var SHUB="home";
+var SHUB="home",V49KEEP=0;
 function shubOf(){if(SHUB==="home")return "home";if(shopTab==="wardrobe")return "closet";if(shopTab==="basics")return "stylist";if(shopTab==="pets")return "pets";return "street"}
 function shubPets(){try{return shopFloors().some(function(F){return F.id==="boutique"})}catch(e){return false}}
 function shubGo(k){SHUB=k;
@@ -37,11 +37,13 @@ var v49Shop=shopHtml;shopHtml=function(){var hub=shubOf(),h;
   return h};
 document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-shub]");if(t){e.preventDefault();e.stopPropagation();shubGo(t.dataset.shub);return}
   /* the bottom bar's Shop button opens the home screen; anything else that picks a tab or a floor leaves it */
-  var n=e.target.closest&&e.target.closest('.nav [data-v="shop"]');if(n){SHUB="home";return}
-  if(e.target.closest&&e.target.closest('[data-act="stab"],[data-qsfl],[data-flgo],[data-act="wardrobe"],[data-act="bsgo"],.bsplash [data-act],.dropsplash [data-act]'))SHUB="in"},true);
+  /* QA 11-24 (v1.47): "Have a look" on a floor's window (29l_drops.js) picks the floor and then clicks the bottom bar's Shop button
+     itself; that click must not send the player home (V49KEEP). And closing a brand's window with its x is not a jump anywhere: only
+     its "Shop it" (bsgo) leaves the home screen. */
+  var n=e.target.closest&&e.target.closest('.nav [data-v="shop"]');if(n){SHUB=Date.now()-V49KEEP<800?"in":"home";return}
+  if(e.target.closest&&e.target.closest("[data-flgo]")){V49KEEP=Date.now();SHUB="in";return}
+  if(e.target.closest&&e.target.closest('[data-act="stab"],[data-qsfl],[data-act="wardrobe"],[data-act="bsgo"]'))SHUB="in"},true);
 var v49Wd=wardrobeModal;wardrobeModal=function(){SHUB="in";return v49Wd.apply(this,arguments)};
-/* a brand's own window sends the player to that brand: the Street Shop, not the home screen */
-var v49Brand=typeof brandSplash==="function"?brandSplash:null;if(v49Brand)brandSplash=function(){SHUB="in";return v49Brand.apply(this,arguments)};
 htabCss("qb-shub-css",".shub-me{display:flex;flex-direction:column;align-items:center;gap:10px;margin:6px 0 14px}.shub-char{width:100%;max-width:260px}.shub-char .qs-bask{display:none}.shub-closet{min-width:140px;min-height:44px}"
   +".shub-tiles{display:grid;gap:10px;margin:0 0 16px}.shub-tile{position:relative;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;text-align:left;gap:2px 10px;padding:16px 18px;min-height:74px;border-radius:16px;border:1px solid var(--line);background:var(--surface,rgba(255,255,255,.04));color:var(--fg,inherit);cursor:pointer;font:inherit}"
   +".shub-tile b{font-size:1.12em;letter-spacing:.02em;display:flex;align-items:center;gap:8px}.shub-tile small{grid-column:1;color:inherit;opacity:.82}.shub-tile span{grid-column:2;grid-row:1 / span 2;font-size:1.6em;opacity:.6}.shub-tile:active{transform:scale(.985)}"
