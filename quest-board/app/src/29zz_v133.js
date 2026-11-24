@@ -50,7 +50,7 @@ function msHtml(L){var o=msOffer(L);
     +'</div><button class="btn ghost" data-act="mclose">Later</button></div>'}
 function msOpen(L){if(document.querySelector("#layer .modal .ms-pick"))return;modal(msHtml(L))}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=mspick]");if(!b)return;var L=+b.dataset.l,id=b.dataset.id,M=msState();if(M["g"+L])return;
-  var got;if(id==="coins"){var c=msCoins(L);S.coins+=c;S.earnedC+=c;got="+"+c+" coins"}else{var it=shopItem(id);if(!it||S.owned[id])return;S.owned[id]=true;got=it[2]+" is in your Wardrobe"}
+  var got;if(id==="coins"){var c=msCoins(L);S.coins+=c;S.earnedC+=c;got="+"+c+" coins"}else{var it=shopItem(id);if(!it||S.owned[id])return;S.owned[id]=true;got=it[2]+" is in your Closet"}
   M["g"+L]=id;delete M["o"+L];persist();var m=b.closest(".modal");if(m)m.remove();try{qbSnd("coins")}catch(x){}pop(got);render()});
 /* after the level-up window, and on any later screen with no window open */
 var v33Render=render;render=function(){var r=v33Render.apply(this,arguments);try{if(S&&S.created&&msState().since!=null&&!document.querySelector("#layer .modal")){var w=msWaiting();if(w.length)setTimeout(function(){if(!document.querySelector("#layer .modal"))msOpen(w[0])},400)}}catch(e){}return r};

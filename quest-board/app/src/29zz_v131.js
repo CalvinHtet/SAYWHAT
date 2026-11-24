@@ -36,5 +36,5 @@ var v31Render=render;render=function(){var r=v31Render.apply(this,arguments);if(
 var v31Shop=shopHtml;shopHtml=function(){if(shopTab==="upgrades"||shopTab==="interface")shopTab="wardrobe";var h=v31Shop.apply(this,arguments);
   try{h=h.replace(/<button class="qs-tab[^"]*" data-act="stab" data-v="(upgrades|interface)">[^<]*<\/button>/g,"");
     var sty=/<button class="qs-tab( on)?" data-act="stab" data-v="basics">Stylist<\/button>/;if(sty.test(h)){h=h.replace(sty,"");
-      h=h.replace(/(data-v="wardrobe">Wardrobe<\/button>)/,'$1<button class="qs-tab qs-wdb'+(shopTab==="basics"?" on":"")+'" data-act="stab" data-v="basics">Stylist</button>')}}catch(e){}
+      h=h.replace(/(data-v="wardrobe">Closet<\/button>)/,'$1<button class="qs-tab qs-wdb'+(shopTab==="basics"?" on":"")+'" data-act="stab" data-v="basics">Stylist</button>')}}catch(e){}
   return h};

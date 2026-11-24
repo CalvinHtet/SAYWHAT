@@ -131,7 +131,7 @@ function chest3Roll(){var T=ECON.chest3,tot=T.reduce(function(a,x){return a+x[1]
   var c=econScaled(ECON.relicDup[k]||0);S.coins+=c;S.earnedC+=c;persist();return {kind:"coins",n:c,why:"every "+r2Tier(k)[1].toLowerCase()+" relic"}}
 function chest3Html(g){if(!g)return "";
   if(g.kind==="relic")return '<div class="r2 r2-'+g.r.tier+' r2-big">'+(g.r.tier==="legendary"?r2Wings():'')+'<div class="r2-frame">'+r2Icon(g.r)+'</div><small class="r2-t">'+r2Tier(g.r.tier)[2]+' relic</small><b>'+esc(g.r.name)+'</b><small>'+esc(g.r.d)+'</small><small class="r2-b">'+esc(r2BuffTxt(g.r.id))+'</small></div>';
-  if(g.kind==="wear")return '<p class="dg-buff">'+esc(g.it[2])+(freeBrand(g.it)?' from '+esc(freeBrand(g.it)):'')+'. It is in your Wardrobe.</p>';
+  if(g.kind==="wear")return '<p class="dg-buff">'+esc(g.it[2])+(freeBrand(g.it)?' from '+esc(freeBrand(g.it)):'')+'. It is in your Closet.</p>';
   return '<p class="dg-buff">+'+g.n.toLocaleString()+' coins. You already have '+esc(g.why)+'.</p>'}
 /* test hook (sandbox and main only) */
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbFree={pool:freePool,item:freeItem,roll:chest3Roll,relics:RELICS2,state:r2State,buff:r2Buff};

@@ -519,7 +519,7 @@ function spin(){
   while(idx<WHEEL_W.length-1&&r>=WHEEL_W[idx]){r-=WHEEL_W[idx];idx++}
   var pz=WHEEL[idx]; S.wheel=today();
   if(pz[3]){var it=wheelGift();
-    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Wardrobe)":" (saved for later)")}
+    if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});S.wheelRes=it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}
     else{var wa=econScaled(WHEELALL,50);S.coins+=wa;S.earnedC+=wa;S.wheelRes=wa.toLocaleString()+" coins (you own every piece already)"}}
   else if(pz[2]){if(S.freezes<maxFreeze()){S.freezes++;S.wheelRes="Streak freeze"}else{var wf=econScaled(300,50);S.coins+=wf;S.earnedC+=wf;S.wheelRes=wf.toLocaleString()+" coins (freeze slots were full)"}}
   else{var wc=econScaled(pz[1],50);S.coins+=wc;S.earnedC+=wc;S.wheelRes=wc.toLocaleString()+" coins"}
@@ -1444,12 +1444,12 @@ function ccAct(a,b,e){
 function charCard(){
   var c=S.char||defChar();
   return '<section class="card charcard"><div class="figwrap">'+calImg(lookOf(),"idle",190,"")+'</div><div><span class="label">Character</span><h2>'+esc(c.name||"Hunter")+'</h2><div class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+'</div>'
-   +'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="wardrobe">Wardrobe</button></div></div></section>';
+   +'<div class="row" style="margin-top:12px"><button class="btn ghost" data-act="wardrobe">Closet</button></div></div></section>';
 }
 /* the avatar opens the profile (Cal, 2026-11-09): the character, then everything that used to crowd the Board (profileHtml) */
 function charModal(){
   var m=modal('<div class="card box2 adv prof"><div class="prof-top"><div class="figwrap">'+calImg(lookOf(),"idle",120,"")+'</div><div><h2>'+esc((S.char&&S.char.name)||"Hunter")+'</h2><p class="note">'+esc(tierName(S.gates.length))+' &middot; Level '+effLvl()+' &middot; '+S.coins+' coins</p>'
-   +'<button class="btn ghost" data-act="wardrobe">Wardrobe</button>'+(typeof sndBtn==="function"?sndBtn():'')+'</div></div><div class="prof-body">'+profileHtml()+'</div></div>');
+   +'<button class="btn ghost" data-act="wardrobe">Closet</button>'+(typeof sndBtn==="function"?sndBtn():'')+'</div></div><div class="prof-body">'+profileHtml()+'</div></div>');
   m.classList.add("profm");
   return m;
 }

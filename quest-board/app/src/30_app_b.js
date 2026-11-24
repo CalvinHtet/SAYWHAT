@@ -363,7 +363,7 @@ function markActive(){
       var pc=pz?0:econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300);
       /* owned at once; before the Closet it waits "(saved for later)", as the Wheel's prize does (LEAD 11-11) */
       if(pz)S.owned[pz[0]]=true;else{S.coins+=pc;S.earnedC+=pc}persist();
-      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+(hasRoom("closet")?' (in your Wardrobe)':' (saved for later)')+'</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
+      var m=modal('<div class="card box2 adv"><span class="label">Weekly quest complete</span><h2>Weekly Warrior</h2><p class="note">4 proven workouts this week.'+(wb.mult>1?' Week '+(wwPrev()+1)+' in a row: x'+wb.mult+' coins.':'')+'</p><div class="reward reveal">+'+wb.xp+' XP</div><div class="reward reveal" style="animation-delay:.5s">+'+wb.coins+' coins</div>'+(pz?'<div class="reward reveal" style="animation-delay:1s">Prize: '+esc(pz[2])+(hasRoom("closet")?' (in your Closet)':' (saved for later)')+'</div>':'<div class="reward reveal" style="animation-delay:1s">Prize: +'+pc+' coins (you own every piece on offer)</div>')+'<button class="btn big" id="wwok">Claim</button></div>');
       var b=m.querySelector("#wwok");b.onclick=function(){m.remove();grantXp(wb.xp,wb.coins,"fitness");burst(innerWidth/2,innerHeight/3,40)};
     },2200);
   }
@@ -1511,7 +1511,7 @@ function lvCrate(L){if(!S.crates||typeof S.crates!=="object")S.crates={};if(S.cr
   if(typeof areaGate==="function"&&areaGate("shop"))pz=null;/* no Shop yet: a stat point, not a piece for a Wardrobe you cannot open */
   /* the Shop is open but you own every piece on offer: coins, as the Daily Quest chest pays */
   var pc=!pz&&!(typeof areaGate==="function"&&areaGate("shop"))?econScaled((typeof ECON!=="undefined"&&ECON.chestNone)||300):0;
-  if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Wardrobe)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
+  if(pz)S.owned[pz[0]]=true;else if(pc){S.coins+=pc;S.earnedC+=pc}else stats4()[k]++;persist();return "Level crate: "+(pz?pz[2]+" (in your Closet)":pc?"+"+pc+" coins":"+1 "+STATN[k])}
 /* Renown: past level 100, every lvNeed(MAXL) XP is a renown rank with its own crate */
 function renownCheck(){if(effLvl()<MAXL)return;var r=Math.floor((S.xp-cum(MAXL))/lvNeed(MAXL));if(r>(S.renown||0)){S.renown=r;var cr=lvCrate(1000+r);pop("Renown "+r+(cr?". "+cr:""))}}
 function levelUp(lv,extra,from){

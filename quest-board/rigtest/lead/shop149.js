@@ -1,0 +1,34 @@
+// Cal 11-24 (29zz_v149.js): the Shop opens on a home screen (the character, Closet, Street Shop, Stylist, and the Pet Store once the
+// player has it); the Street Shop has a back button and only the floors and this week's brands; Closet, Stylist and Pet Store are
+// their own screens; "Wardrobe" reads "Closet".
+//   PORT=<plain build> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/shop149.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8779, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV149, null, { timeout: 90000 }); await p.waitForTimeout(800);
+  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
+  const V = (f, a) => p.evaluate(f, a);
+  const setup = (lv) => V((lv) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(lv); S.gates = [5, 10, 20, 30, 40].filter((g) => g <= lv); S.calm = false; S.tutDone = 1; S.coins = 5000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1 }; S.areaOn = { board: 1, hideout: 1, hall: 1, shop: 1 };
+    try { window.__qbRooms.open('closet', 1); } catch (e) {} S.brandSeen = S.brandSeen || {}; try { window.__qbDrops.state().live.forEach((b) => { S.brandSeen[b.id + '|' + b.start] = 1; }); } catch (e) {} S.floorSeen = { boutique: 'x', atelier: 'x' }; x.render(); }, lv);
+  const shop = async () => { await V(() => { document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="shop"]').click(); }); await p.waitForTimeout(900); await V(() => document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove())); };
+  const scr = () => V(() => ({ hub: window.__qbV149.hub(), tiles: [...document.querySelectorAll('.shub-tile b')].map((e) => e.innerText.replace(/\s+/g, ' ').trim()), closet: !!document.querySelector('.shub-closet'), back: !!document.querySelector('.shub-back'), title: (document.querySelector('.shub-title') || {}).innerText || '',
+    tabs: [...document.querySelectorAll('nav.qs-tabs:not(.qs-floors) .qs-tab')].map((e) => e.innerText.trim()), floors: [...document.querySelectorAll('.qs-floors .qs-tab')].map((e) => e.innerText.replace(/[!\s]+$/, '').trim()), rack: document.querySelectorAll('.qs-rack .qs-item,.qs-rack [data-id],.qs-rack button').length, text: document.querySelector('.qshop') ? document.querySelector('.qshop').innerText : '' }));
+  const tap = async (sel) => { await V((sel) => document.querySelector(sel).click(), sel); await p.waitForTimeout(700); await V(() => document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove())); };
+  /* level 12: the home screen, no Pet Store */
+  await setup(12); await shop(); let s = await scr();
+  ok(s.hub === 'home' && s.tiles.join('|') === 'Street Shop|Stylist' && s.closet && !s.back, 'the Shop opens on its home screen: ' + s.tiles.join(', ') + ', and Closet (no Pet Store at level 12)'); await p.waitForTimeout(2500); await p.screenshot({ path: OUT + '/shop149_home.png' });
+  ok(!/Wardrobe/.test(s.text), 'no "Wardrobe" on the home screen');
+  await tap('[data-shub="street"]'); s = await scr();
+  ok(s.hub === 'street' && s.back && s.tabs.length >= 1 && !s.tabs.some((t) => /Stylist|Closet|Wardrobe|Pets/.test(t)) && !s.closet && s.rack > 0, 'Street Shop: a back button and only this week\'s brands across the top: ' + s.tabs.join(', ')); await p.screenshot({ path: OUT + '/shop149_street.png' });
+  if (s.tabs.length > 1) { await tap('nav.qs-tabs:not(.qs-floors) .qs-tab:nth-child(2)'); const s2 = await scr(); ok(s2.hub === 'street' && s2.back, 'picking another brand stays in the Street Shop'); }
+  await tap('.shub-back'); s = await scr(); ok(s.hub === 'home', 'back goes to the home screen');
+  await tap('[data-shub="stylist"]'); s = await scr(); ok(s.hub === 'stylist' && /stylist/i.test(s.title) && s.back && !s.tabs.length && !s.floors.length && s.rack > 0, 'Stylist: its own screen, no brand tabs'); const bg = await V(() => getComputedStyle(document.querySelector('.qshop')).backgroundImage); ok(/gradient/.test(bg), 'the Stylist has its own background'); await p.screenshot({ path: OUT + '/shop149_stylist.png' });
+  await tap('.shub-back'); await tap('[data-shub="closet"]'); s = await scr(); ok(s.hub === 'closet' && /closet/i.test(s.title) && s.back && !s.tabs.length, 'Closet: its own screen'); await p.screenshot({ path: OUT + '/shop149_closet.png' });
+  /* leaving and coming back lands on the home screen; the Loft's closet tap lands in the Closet */
+  await V(() => document.querySelector('.nav button[data-v="board"]').click()); await p.waitForTimeout(300); await shop(); s = await scr(); ok(s.hub === 'home', 'the Shop button always opens the home screen');
+  await V(() => { document.querySelector('.nav button[data-v="board"]').click(); const bt = document.createElement('button'); bt.dataset.act = 'wardrobe'; bt.style.display = 'none'; document.body.appendChild(bt); bt.click(); bt.remove(); }); await p.waitForTimeout(600); s = await scr(); ok(s.hub === 'closet' && s.back, 'the Closet opened from elsewhere lands on the Closet screen');
+  /* level 30: the Pet Store and the Boutique */
+  await setup(30); await shop(); s = await scr(); ok(s.tiles.join('|') === 'Street Shop|Pet Store|Stylist', 'level 30: ' + s.tiles.join(', '));
+  await tap('[data-shub="pets"]'); s = await scr(); ok(s.hub === 'pets' && /pet store/i.test(s.title) && s.back && !s.tabs.length, 'Pet Store: its own screen'); await p.screenshot({ path: OUT + '/shop149_pets.png' });
+  await tap('.shub-back'); await tap('[data-shub="street"]'); s = await scr(); ok(s.hub === 'street' && s.floors.join('|').toLowerCase() === 'street|boutique' && !s.tabs.some((t) => /Pets/.test(t)), 'the Street Shop shows the floors, and no Pets tab on the Boutique: ' + s.floors.join(', '));
+  await tap('.qs-floors .qs-tab:nth-child(2)'); s = await scr(); ok(s.hub === 'street' && s.tabs.length >= 1 && !s.tabs.some((t) => /Pets|Stylist/.test(t)), 'the Boutique floor: ' + s.tabs.join(', '));
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
