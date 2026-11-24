@@ -66,7 +66,7 @@ var TOURS=[
     {sel:"#fshbox",t:"Say hi",x:"Tap someone to wave. It shows up live on their screen."}]},
   {id:"shop",ready:function(){return tourAreaOpen("shop")&&tourVis('.nav button[data-v="shop"]')},steps:[
     {sel:'.nav button[data-v="shop"]',t:"You unlocked the Shop!",x:"Clothes for your character. Tap here.",tap:1},
-    {sel:"#app",t:"The Shop",x:"New brands drop every Monday and Thursday. Buy a piece and put it on in your Wardrobe."}]},
+    {sel:"#app",t:"The Shop",x:"New brands drop every Monday and Friday. Buy a piece and put it on in your Wardrobe."}]},
   {id:"away",ready:function(){return view==="board"&&tourVis('.zx-tile[data-v="away"]')},steps:[
     {sel:'.zx-tile[data-v="away"]',t:"New: Dungeon Crawls",x:"Send your team down for coins and, now and then, something rare. Tap here.",tap:1},
     {sel:"#app",t:"Dungeon Crawls",x:"Pick a dungeon and send a crawl. It comes back on its own while you get on with your day."}]},
