@@ -77,4 +77,56 @@ QBINFO.wk=["Logging a workout",["Set the weight, then tap the set you just did: 
 /* ---- QA 11-24: no "!" on the Loft button while the Loft itself is still locked (tapping it said "Locked. Keep playing.") ---- */
 var v44Tabs=alTabs;alTabs=function(){var t=v44Tabs.apply(this,arguments);try{var a=AREAS.filter(function(x){return x[0]==="hideout"})[0];if(t.hideout&&a&&!alOpenTab(a))delete t.hideout}catch(e){}return t};
 
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV144={spin:v44Spin,ranks:function(){return RANKS.map(function(r){return r.n})},sqk:function(){return Object.keys(SQK)},surge:function(){return surgeState()},check:surgeCheck,left:surgeLeft,info:function(k){var e=QBINFO[k];return typeof e[1]==="function"?e[1]():e[1]}};
+/* ---- surprise loot (Cal: "I like the idea of surprise loot. Keep it low chance ... I think the chance of random loot should be 1/15
+   chance", "The common prizes should be a treasure chest with more coins or a soul stone with more exp", "If the loot is furniture, make
+   sure it is usually the cheapest furniture upgrade available in a random room. Do NOT allow new room purchases such as emptying out the
+   back lot or expanding the restaurant or purchasing the mall ... it should be an upgrade that is under 1000 ... a cosmetic item or
+   clothing, but not from the really high tier shop. Can occasionally drop something from the boutique. No pet store loots and no pets
+   ... a random small drop but nothing game breaking").
+   - One roll per finished task, 1 in 15, once per task a day (unticking and ticking again does not roll again). No daily cap (Cal: two
+     on a heavy day is fine). Tutorial tasks never roll.
+   - What: chest 45, soul stone 35, clothing 12, furniture 6, Boutique 2 (of 100). Clothing: a Street piece the player does not own,
+     never the luxury tier, never the Atelier. Boutique: only once the Boutique is open to the player. Furniture: the cheapest upgrade the
+     room's window offers to buy now, under 1,000 coins, in a random room that has one; never one that opens a room, a lot or an
+     expansion, never a trophy piece. With nothing to give in a kind, it is a chest.
+   - A chest pays 350 coins x the game's reward scale (econScaled: about 270 at level 4), +/- 20%: two or three tasks' worth. A soul stone pays 15% of the level, between
+     40 and 400 XP. Pets and Pet Store pieces are never in it (freePool has clothes only). ---- */
+var LOOTP=1/15,LOOTW=[["chest",45],["stone",35],["cloth",12],["furn",6],["bout",2]],LOOTCHEST=350,LOOTSTONE=.15,LOOTFURN=1000;
+function lootState(){var t=today();if(!S.loot||typeof S.loot!=="object"||S.loot.d!==t)S.loot={d:t,ids:{},n:0,all:(S.loot&&S.loot.all)||0};return S.loot}
+function lootKind(r){var tot=LOOTW.reduce(function(a,w){return a+w[1]},0),x=r*tot;for(var i=0;i<LOOTW.length;i++){x-=LOOTW[i][1];if(x<0)return LOOTW[i][0]}return "chest"}
+function lootCloth(floor){try{var F=shopFloors().filter(function(f){return f.id===floor})[0];if(!F)return null;
+    var p=freePool({brands:flBrands(F),basics:floor==="street",lv:effLvl()+5}).filter(function(it){return clothTier(it[0])!=="luxury"&&brandFloor((it[6]||{}).b)!=="atelier"});
+    return p.length?p[Math.floor(Math.random()*p.length)]:null}catch(e){return null}}
+/* [slot index, addon] of what each room's window would sell now for under LOOTFURN, the cheapest per room */
+function lootFurnAll(){var out=[];try{S.base.slots.forEach(function(r,i){if(!r||!ROOMT[r.t])return;var RA=roomAvail(i,r,ROOMT[r.t],ADDONS[r.t]||[]),best=null;
+      (RA.avail||[]).forEach(function(h){var m=/data-act="raddon"[^>]*data-id="([^"]+)"/.exec(h);if(!m)return;var a=(ADDONS[r.t]||[]).filter(function(x){return x[0]===m[1]})[0],e=a&&a[3]||{};
+        if(!a||!(a[2]>0)||a[2]>=LOOTFURN||e.opens||e.trophy||e.splash||e.fixed||e.g==="Expansion"||(r.a&&r.a[a[0]]))return;if(!best||a[2]<best[2])best=a});
+      if(best)out.push([i,best])})}catch(e){}return out}
+function lootGive(kind){var L=lootState(),o={k:kind};
+  if(kind==="bout"){var b=lootCloth("boutique");if(b){S.owned[b[0]]=true;o.it=b}else kind="cloth"}
+  if(kind==="cloth"){var c=lootCloth("street");if(c){S.owned[c[0]]=true;o.it=c}else kind="chest"}
+  if(kind==="furn"){var fs=lootFurnAll(),f=fs.length?fs[Math.floor(Math.random()*fs.length)]:null;
+    if(f){try{simulate()}catch(e){}var r=S.base.slots[f[0]];r.a=r.a||{};r.a[f[1][0]]=1;o.ad=f[1];o.room=(ROOMT[r.t]||{}).name||"your Loft";try{DROP={i:f[0],id:f[1][0],name:f[1][1]}}catch(e){}}else kind="chest"}
+  if(kind==="stone"){var x=Math.round(Math.max(40,Math.min(400,need(Math.min(effLvl(),MAXL-1))*LOOTSTONE)));o.xp=x}
+  if(kind==="chest"){var cn=econScaled(LOOTCHEST*(.8+.4*Math.random()),10);o.coins=cn}
+  o.k=kind;L.n++;L.all=(L.all||0)+1;
+  if(o.xp||o.coins)grantXp(o.xp||0,o.coins||0);else{render();persist()}
+  return o}
+function lootIcon(o){var gem='<svg viewBox="0 0 64 64" width="88" height="88" aria-hidden="true"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9af4ff"/><stop offset=".55" stop-color="#6b7cff"/><stop offset="1" stop-color="#b56bff"/></linearGradient></defs><path d="M32 4 52 22 32 60 12 22Z" fill="url(#lg1)" stroke="#e8f6ff" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 22h40M32 4 24 22l8 38 8-38-8-18" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+  if(o.k==="stone")return ART.soulstone?'<img src="'+ART.soulstone+'" alt="">':gem;
+  if(o.it){try{return '<img src="'+itemArt(o.it)+'" alt="" onerror="this.remove()">'}catch(e){}}
+  if(o.ad){try{var sp=window.LFSPR&&LFSPR[o.ad[0]];if(sp&&sp.u)return '<img src="'+sp.u+'" alt="" style="max-height:120px">'}catch(e){}}
+  return ART.chest?'<img src="'+ART.chest+'" alt="">':gem}
+function lootShow(o){var head=o.k==="stone"?"Soul stone":o.k==="chest"?"Treasure chest":o.ad?esc(o.ad[1]):esc(o.it[2]),
+    line=o.k==="stone"?"+"+o.xp.toLocaleString()+" XP":o.k==="chest"?"+"+o.coins.toLocaleString()+" coins":o.ad?"Installed in "+esc(o.room)+", on the house.":(function(){var b="";try{b=freeBrand(o.it)}catch(e){}return (b?esc(b)+" &middot; ":"")+(hasRoom("closet")?"in your Closet":"saved for later")})();
+  modal('<div class="card box2 adv lootm"><span class="label">Surprise loot</span><div class="lootimg">'+lootIcon(o)+'</div><h2>'+head+'</h2><div class="reward reveal">'+line+'</div>'
+    +'<div class="row" style="justify-content:center"><button type="button" class="btn" data-act="mclose">Nice</button></div></div>');
+  try{qbSnd("big")}catch(e){}try{burst(innerWidth/2,innerHeight/3,26)}catch(e){}}
+htabCss("qb-loot-css",".lootm{text-align:center}.lootimg{display:flex;justify-content:center;align-items:center;min-height:110px;margin:6px 0 2px;animation:lootpop .5s cubic-bezier(.2,1.4,.4,1)}.lootimg img{max-width:150px;max-height:130px;filter:drop-shadow(0 6px 18px rgba(255,200,87,.35))}@keyframes lootpop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}");
+var LOOTRND=Math.random;
+var v44Toggle=toggle;toggle=function(id){var was=!!(S.done&&S.done[id]),r=v44Toggle.apply(this,arguments);
+  try{if(!was&&S.done&&S.done[id]){var q=(S.quests||[]).filter(function(x){return x&&x.id===id})[0],L=lootState();
+      if(q&&!q.tut&&!L.ids[id]){L.ids[id]=1;if(LOOTRND()<LOOTP){var o=lootGive(lootKind(LOOTRND()));setTimeout(function(){try{lootShow(o)}catch(e){}},1200)}}}}catch(e){}
+  return r};
+
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV144={spin:v44Spin,ranks:function(){return RANKS.map(function(r){return r.n})},sqk:function(){return Object.keys(SQK)},surge:function(){return surgeState()},check:surgeCheck,left:surgeLeft,loot:{give:function(k){var o=lootGive(k);lootShow(o);return {k:o.k,xp:o.xp,coins:o.coins,it:o.it&&o.it[0],ad:o.ad&&o.ad[0],price:o.ad&&o.ad[2]}},kind:lootKind,furn:function(){return lootFurnAll().map(function(f){return [S.base.slots[f[0]].t,f[1][0],f[1][2]]})},state:lootState,rnd:function(f){LOOTRND=f||Math.random},p:LOOTP,w:LOOTW},info:function(k){var e=QBINFO[k];return typeof e[1]==="function"?e[1]():e[1]}};
