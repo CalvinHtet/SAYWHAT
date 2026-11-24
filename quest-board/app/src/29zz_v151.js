@@ -33,9 +33,13 @@ var v51Vis=lfVisitors;lfVisitors=function(){var out=v51Vis.apply(this,arguments)
      branch walks it through the door).
    - Furniture: a dog is routed around every recorded footprint (lfGo, A*). Two holes are closed for the companion: it starts each walk
      from a free cell (a start inside a footprint let the route cross it), and it only roams rooms whose furniture is recorded.
-     The Closet and the Lair are painted rooms with almost no footprints (the Closet's island would be walked over), so they are NOT
-     in P3ROOMS until ROOMS gives their furniture boxes (P3BOX: [x, y, w, d] in room cells, added to the room's grid). ---- */
-var P3SPELL=7*60000,P3ROOMS={gameroom:1},P3BOX={};
+     The Closet and the Lair are painted rooms with almost no footprints of their own, so their floor pieces come from P3BOX. ---- */
+/* ROOMS 11-24 (b909831c, proof pictures shots/navboxes_1124/): the floor pieces of the two painted rooms, in each room's own cells,
+   [the upgrade that brings it, x, y, w, d]. The Closet's wardrobes and shoe wall and the Lair's armory, suits and trophies stand behind
+   the floor line; only these reach onto the floor. With them recorded the companion may go into both rooms. */
+var P3SPELL=7*60000,P3ROOMS={gameroom:1,closet:1,lair:1},
+    P3BOX={closet:[["cl_jewel",0,2.2,.9,3.0],["cl_jewel",0,1.0,1.4,1.4],["cl_jewel",0,5.05,1.45,1.45],["cl_isl",3.4,2.5,1.5,3.2]],
+           lair:[["lr_console",0,1.0,.6,6.6],["lr_console",.6,4.2,.45,1.4],["lr_suit",5.2,0,6.1,.4],["lr_rack",0,8.6,.5,2.9],["lr_rack",0,0,.5,1.2]]};
 function p3Hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function p3Room(){try{if(!petMine())return -1;var n=Math.floor(Date.now()/P3SPELL),h=p3Hash("pet|"+(MYUID||"")+"|"+n);if(h%100<60)return -1;
     var opts=[];S.base.slots.forEach(function(r,i){if(r&&P3ROOMS[r.t]&&typeof LFMETA!=="undefined"&&LFMETA[i])opts.push(i)});return opts.length?opts[(h>>>8)%opts.length]:-1}catch(e){return -1}}
@@ -46,9 +50,13 @@ var v51Dog=lfDogNext;lfDogNext=function(a,C){
       if(C&&C.nav&&typeof lfBlockedAt==="function"&&lfBlockedAt(C,a.x,a.y)){var f=lfFreeNear(C,a.x,a.y,2.4);if(f){a.x=f[0];a.y=f[1]}}
       var me=LFA[a.pv?"pv:me":"me"];if(me&&me.room===a.room&&a.last!=="near"&&Math.random()<.45){a.last="near";a.speed=1.4;lfGo(a,me.x+lfRand(-.7,.7),me.y+lfRand(.3,.9),{kind:"dognear"});return}}}catch(e){}
   return v51Dog.apply(this,arguments)};
-/* furniture boxes for a painted room, once ROOMS has measured them: recorded into the room's grid when it is built */
+/* furniture boxes for a painted room: added to the room's grid when it is built, for the upgrades the room has; then any standing
+   spot that ends up inside one is moved to the nearest free cell, as lfRoomCtx does for recorded furniture (the Closet's middle
+   wander spot sat on the island, so people walked into it: ROOMS) */
 var v51Ctx=lfRoomCtx;lfRoomCtx=function(r){var C=v51Ctx.apply(this,arguments);
-  try{var B=r&&P3BOX[r.t];if(B&&C&&C.nav&&!C._p3){C._p3=1;B.forEach(function(q){var N=C.nav,x0=Math.max(0,Math.floor((q[0]-LFPAD)/LFNC)),x1=Math.min(N.nx-1,Math.floor((q[0]+q[2]+LFPAD)/LFNC)),y0=Math.max(0,Math.floor((q[1]-LFPAD)/LFNC)),y1=Math.min(N.ny-1,Math.floor((q[1]+q[3]+LFPAD)/LFNC));
-        for(var y=y0;y<=y1;y++)for(var x=x0;x<=x1;x++)N.cnt[y*N.nx+x]++})}}catch(e){}
+  try{var B=r&&P3BOX[r.t];if(B&&C&&C.nav&&!C._p3){C._p3=1;var N=C.nav,n=0;B.forEach(function(q){if(!(r.a&&r.a[q[0]]))return;n++;
+        var x0=Math.max(0,Math.floor((q[1]-LFPAD)/LFNC)),x1=Math.min(N.nx-1,Math.floor((q[1]+q[3]+LFPAD)/LFNC)),y0=Math.max(0,Math.floor((q[2]-LFPAD)/LFNC)),y1=Math.min(N.ny-1,Math.floor((q[2]+q[4]+LFPAD)/LFNC));
+        for(var y=y0;y<=y1;y++)for(var x=x0;x<=x1;x++)N.cnt[y*N.nx+x]++});
+      if(n)(C.st||[]).forEach(function(sp){if(sp.kind==="door"||(typeof lfSeatish==="function"&&lfSeatish(sp))||sp.lift||sp.onspot||!lfBlockedAt(C,sp.x,sp.y))return;var f=lfFreeNear(C,sp.x,sp.y,3);if(f){sp.x=f[0];sp.y=f[1]}})}}catch(e){}
   return C};
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV151={room:p3Room,rooms:P3ROOMS,box:P3BOX,spell:function(ms){if(ms)P3SPELL=ms;return P3SPELL},pick:function(f){return fvPick(f)},names:function(w){return fvNames(w)},vis:function(){return lfVisitors()}};
