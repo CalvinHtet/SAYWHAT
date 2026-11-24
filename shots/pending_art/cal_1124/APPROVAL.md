@@ -22,7 +22,7 @@ pink star charm. Each evolved pet asleep on its bed: pets/beds_large_fit.png. LE
   pbed_k5 at 1.4x). Slime cushion and wyvern nest unchanged; pbed_k4 / pbed_k6 are them at 1.4x.
 - Every form checked asleep on its bed in the game (pets/ingame_sizes.png, right-hand crops).
 
-## D. Player-card backdrops (bl_pc_<id>, 900x1200) - ALL 10 DONE, WITH QA
+## D. Player-card backdrops (bl_pc_<id>, 900x1200) - ALL 10 DONE, QA PASS (Ember Throne: the throne's top reads like a dark crown behind the head; kept, it suits Monarch)
 neon Neon Alley, skyline Skyline Boulevard, roof Loft Rooftop at dusk, mist Mist Gate, sunrise Sunrise Court, maple Crimson
 Maple, fire Fireworks Night, lantern Lantern Sky, ember Ember Throne, moon Blood Moon. Each checked on the real player card for
 both bodies (backdrops/card_all_m.png, card_all_f.png). No text, signs, logos or real places. Fixes made: Neon Alley's tubes
@@ -30,8 +30,12 @@ that read as letters (IO, M) became a star and a diamond; Fireworks Night's two 
 painted out. Note for Cal: Ember Throne's throne stands right behind the character (only its top shows above the head).
 Sources: backdrops/src_<id>.jpg. Cutter: tools/backdrop_cut.py.
 
-## H. Calvin and Sydney visit picture (friend_calsyd, Cal 11-24 via LEAD) - QUEUED after D
-Walking Pluto and Chopstick on leashes, close together, dogs at real size; Calvin hoodie, baggy pants, hat; Sydney baggy pants.
+## H. Calvin and Sydney visit picture (friend_calsyd, _2, _3; Cal 11-24 via LEAD) - DONE, WITH QA
+One painted walk: the two close together, shoulder to shoulder, each holding a leash; Pluto (on his) and Chopstick (on hers)
+trot ahead at real size, knee-high. Calvin: black beanie with the game's orange circle-slash, plain charcoal hoodie, baggy black
+cargo pants, black sneakers with teal soles. Sydney: long black hair, navy/black varsity with pink trim, baggy light-blue
+wide-leg jeans, white sneakers. Three walk frames on one sheet, aligned on the ground line and heads, 1000x675, transparent.
+In the real visit card: calsyd/ingame_card.png. Frames: calsyd/frames.png. Source: calsyd/src_walk.jpg.
 
 ## C, E, F, G
 Next after D and H: tattoos and scars (E), then pet brands (C), soul stone (F), five Atelier brands (G).
