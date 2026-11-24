@@ -147,4 +147,9 @@ Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the econom
 - Los Angeles: "Make the game 'the City'". Done: the weather line, the Patio, the three interface items.
 - SAYMORE's wording made general: "night culture", Neon Headphones, Mesh Shorts.
 - Not answered, left as they are: Cal's real friends as visitors; "Calibur Mall" and "Kode Plaza".
+- Later the same evening: "Refund all the shop items I bought for my character. Everything in The shop, including stylist and pets and
+  banners, can be viewed first on the character and then confirm to buy it when checking out. Should not automatically buy it and spend
+  my money." Done (29zz_v153.js and the checkouts in v150 and v152): every Shop purchase is a preview where there is something to
+  show, then a checkout with "Confirm purchase". The refund is for Cal's own save only (QB_WEB.owners), once.
+- ROOMS's walk picture for the visit (friend_calsyd, three frames) and the ten backdrops are in and QA-passed; sent to Cal 11-24.
 
