@@ -22,7 +22,7 @@ pink star charm. Each evolved pet asleep on its bed: pets/beds_large_fit.png. LE
   pbed_k5 at 1.4x). Slime cushion and wyvern nest unchanged; pbed_k4 / pbed_k6 are them at 1.4x.
 - Every form checked asleep on its bed in the game (pets/ingame_sizes.png, right-hand crops).
 
-## D. Player-card backdrops (bl_pc_<id>, 900x1200) - ALL 10 DONE, QA PASS (Ember Throne: the throne's top reads like a dark crown behind the head; kept, it suits Monarch)
+## D. Player-card backdrops (bl_pc_<id>, 900x1200) - ALL 10 CAL APPROVED 11-24 ("The visiting animation and 10 backdrops look great", via LEAD); QA PASS. Ember Throne: the throne's top reads like a dark crown behind the head; kept, Cal asked for no change
 neon Neon Alley, skyline Skyline Boulevard, roof Loft Rooftop at dusk, mist Mist Gate, sunrise Sunrise Court, maple Crimson
 Maple, fire Fireworks Night, lantern Lantern Sky, ember Ember Throne, moon Blood Moon. Each checked on the real player card for
 both bodies (backdrops/card_all_m.png, card_all_f.png). No text, signs, logos or real places. Fixes made: Neon Alley's tubes
@@ -30,7 +30,7 @@ that read as letters (IO, M) became a star and a diamond; Fireworks Night's two 
 painted out. Note for Cal: Ember Throne's throne stands right behind the character (only its top shows above the head).
 Sources: backdrops/src_<id>.jpg. Cutter: tools/backdrop_cut.py.
 
-## H. Calvin and Sydney visit picture (friend_calsyd, _2, _3; Cal 11-24 via LEAD) - DONE, WITH QA
+## H. Calvin and Sydney visit picture (friend_calsyd, _2, _3; Cal 11-24 via LEAD) - CAL APPROVED 11-24 (via LEAD); QA PASS
 One painted walk: the two close together, shoulder to shoulder, each holding a leash; Pluto (on his) and Chopstick (on hers)
 trot ahead at real size, knee-high. Calvin: black beanie with the game's orange circle-slash, plain charcoal hoodie, baggy black
 cargo pants, black sneakers with teal soles. Sydney: long black hair, navy/black varsity with pink trim, baggy light-blue
