@@ -1,0 +1,88 @@
+wolf    0  308x324 box 262x318 bottom 323  parts 1 (2nd 0)  fringe 2495 green 0  cx 160  | touches edge (15 px)
+wolf    1  308x324 box 267x316 bottom 323  parts 4 (2nd 123)  fringe 2800 green 0  cx 161  | touches edge (17 px); 2 specks (72 px)
+wolf    2  308x324 box 285x308 bottom 323  parts 3 (2nd 190)  fringe 2638 green 0  cx 161  | touches edge (8 px)
+wolf    3  308x324 box 265x312 bottom 323  parts 3 (2nd 104)  fringe 2865 green 0  cx 161  | touches edge (17 px)
+wolf    4  308x324 box 259x317 bottom 323  parts 3 (2nd 90)  fringe 2015 green 0  cx 160  | touches edge (20 px)
+wolf    5  308x324 box 258x184 bottom 323  parts 1 (2nd 0)  fringe 1146 green 0  cx 161  | touches edge (3 px)
+wolf    6  308x324 box 266x296 bottom 323  parts 6 (2nd 168)  fringe 2565 green 0  cx 161  | touches edge (14 px); 3 specks (147 px)
+wolf    7  308x324 box 247x322 bottom 323  parts 1 (2nd 0)  fringe 2283 green 0  cx 160  | touches edge (21 px)
+wolf    8  308x324 box 250x278 bottom 323  parts 1 (2nd 0)  fringe 2511 green 0  cx 160  | touches edge (19 px)
+wolf    9  308x324 box 264x252 bottom 323  parts 1 (2nd 0)  fringe 1982 green 0  cx 161  | touches edge (10 px)
+wolf   10  308x324 box 289x249 bottom 323  parts 1 (2nd 0)  fringe 2021 green 0  cx 161  | touches edge (18 px)
+wolf   pair 0-1: IoU 0.913, area x0.993, box left +1, top +2, feet +0
+wolf   pair 2-3: IoU 0.790, area x1.017, box left +17, top -4, feet +0
+wyvern  0  373x394 box 289x337 bottom 393  parts 1 (2nd 0)  fringe 2329 green 0  cx 191  | touches edge (8 px)
+wyvern  1  373x394 box 343x338 bottom 393  parts 1 (2nd 0)  fringe 2741 green 0  cx 192  | touches edge (13 px)
+wyvern  2  373x394 box 318x377 bottom 393  parts 1 (2nd 0)  fringe 2747 green 0  cx 192  | touches edge (8 px)
+wyvern  3  373x394 box 353x392 bottom 393  parts 1 (2nd 0)  fringe 2341 green 0  cx 192  | touches edge (4 px)
+wyvern  4  373x394 box 264x352 bottom 393  parts 1 (2nd 0)  fringe 2028 green 0  cx 192  | touches edge (46 px)
+wyvern  5  373x394 box 264x186 bottom 393  parts 1 (2nd 0)  fringe 1138 green 0  cx 192  | touches edge (31 px)
+wyvern  6  373x394 box 369x344 bottom 385  parts 1 (2nd 0)  fringe 2679 green 0  cx 192  | floats 8 px above the ground line
+wyvern  7  373x394 box 281x334 bottom 393  parts 1 (2nd 0)  fringe 2155 green 0  cx 191  | touches edge (4 px)
+wyvern  8  373x394 box 234x356 bottom 393  parts 1 (2nd 0)  fringe 2319 green 0  cx 192  | touches edge (18 px)
+wyvern  9  373x394 box 286x341 bottom 393  parts 1 (2nd 0)  fringe 2326 green 0  cx 191  | touches edge (12 px)
+wyvern 10  373x394 box 229x347 bottom 393  parts 1 (2nd 0)  fringe 2229 green 0  cx 191  | touches edge (14 px)
+wyvern pair 0-1: IoU 0.664, area x1.072, box left +2, top -1, feet +0
+wyvern pair 2-3: IoU 0.490, area x0.754, box left -3, top -15, feet +0
+slime   0  316x291 box 283x192 bottom 290  parts 1 (2nd 0)  fringe 1188 green 0  cx 168  | touches edge (54 px)
+slime   1  316x291 box 226x254 bottom 290  parts 2 (2nd 68)  fringe 1145 green 0  cx 169  | touches edge (57 px)
+slime   2  316x291 box 259x188 bottom 242  parts 1 (2nd 0)  fringe 1009 green 0  cx 169  | floats 48 px above the ground line
+slime   3  316x291 box 277x166 bottom 290  parts 1 (2nd 0)  fringe 909 green 0  cx 170  | touches edge (34 px)
+slime   4  316x291 box 225x248 bottom 290  parts 1 (2nd 0)  fringe 913 green 0  cx 169  | touches edge (24 px)
+slime   5  316x291 box 226x154 bottom 290  parts 1 (2nd 0)  fringe 665 green 0  cx 169  | touches edge (6 px)
+slime   6  316x291 box 217x289 bottom 290  parts 1 (2nd 0)  fringe 1197 green 0  cx 170  | touches edge (27 px)
+slime   7  316x291 box 250x196 bottom 290  parts 1 (2nd 0)  fringe 1044 green 0  cx 169  | touches edge (40 px)
+slime   8  316x291 box 265x195 bottom 290  parts 1 (2nd 0)  fringe 1000 green 0  cx 169  | touches edge (40 px)
+slime   9  316x291 box 244x168 bottom 290  parts 3 (2nd 64)  fringe 1008 green 0  cx 169  | touches edge (38 px); 1 specks (49 px)
+slime  10  316x291 box 301x106 bottom 290  parts 1 (2nd 0)  fringe 744 green 0  cx 169  | touches edge (57 px)
+slime  pair 0-1: IoU 0.575, area x1.045, box left +50, top -62, feet +0
+slime  pair 2-3: IoU 0.272, area x0.823, box left +10, top +70, feet +48
+k4      0  394x408 box 343x357 bottom 407  parts 1 (2nd 0)  fringe 2245 green 0  cx 210  | touches edge (12 px)
+k4      1  394x408 box 350x357 bottom 407  parts 1 (2nd 0)  fringe 2177 green 0  cx 210  | touches edge (14 px)
+k4      2  394x408 box 375x343 bottom 407  parts 1 (2nd 0)  fringe 2578 green 0  cx 211  | touches edge (14 px)
+k4      3  394x408 box 347x330 bottom 407  parts 1 (2nd 0)  fringe 2312 green 0  cx 211  | touches edge (19 px)
+k4      4  394x408 box 338x382 bottom 407  parts 1 (2nd 0)  fringe 2160 green 0  cx 210  | touches edge (8 px)
+k4      5  394x408 box 273x192 bottom 407  parts 1 (2nd 0)  fringe 882 green 0  cx 211  | touches edge (5 px)
+k4      6  394x408 box 289x406 bottom 407  parts 1 (2nd 0)  fringe 1879 green 0  cx 211  | touches edge (12 px)
+k4      7  394x408 box 338x383 bottom 407  parts 1 (2nd 0)  fringe 1693 green 0  cx 210  | touches edge (11 px)
+k4      8  394x408 box 323x298 bottom 407  parts 1 (2nd 0)  fringe 1508 green 0  cx 210  | touches edge (11 px)
+k4      9  394x408 box 310x267 bottom 407  parts 3 (2nd 155)  fringe 1640 green 0  cx 210  | touches edge (11 px)
+k4     10  394x408 box 377x133 bottom 407  parts 1 (2nd 0)  fringe 1011 green 0  cx 211  | touches edge (70 px)
+k4     pair 0-1: IoU 0.907, area x0.974, box left -9, top +0, feet +0
+k4     pair 2-3: IoU 0.732, area x0.900, box left +17, top +13, feet +0
+k5      0  422x444 box 394x437 bottom 443  parts 1 (2nd 0)  fringe 4217 green 0  cx 217  | touches edge (26 px)
+k5      1  422x444 box 384x439 bottom 443  parts 1 (2nd 0)  fringe 4058 green 0  cx 217  | touches edge (25 px)
+k5      2  422x444 box 396x418 bottom 443  parts 1 (2nd 0)  fringe 4001 green 0  cx 217  | touches edge (23 px)
+k5      3  422x444 box 384x418 bottom 443  parts 1 (2nd 0)  fringe 3860 green 0  cx 217  | touches edge (26 px)
+k5      4  422x444 box 373x423 bottom 443  parts 1 (2nd 0)  fringe 3564 green 0  cx 217  | touches edge (13 px)
+k5      5  422x444 box 350x256 bottom 443  parts 1 (2nd 0)  fringe 1628 green 0  cx 217  | touches edge (3 px)
+k5      6  422x444 box 403x413 bottom 443  parts 1 (2nd 0)  fringe 4030 green 0  cx 217  | touches edge (15 px)
+k5      7  422x444 box 360x442 bottom 443  parts 1 (2nd 0)  fringe 3647 green 0  cx 216  | touches edge (17 px)
+k5      8  422x444 box 364x431 bottom 443  parts 1 (2nd 0)  fringe 3442 green 0  cx 217  | touches edge (21 px)
+k5      9  422x444 box 357x421 bottom 443  parts 1 (2nd 0)  fringe 2942 green 0  cx 217  | touches edge (9 px)
+k5     10  422x444 box 399x410 bottom 443  parts 1 (2nd 0)  fringe 3104 green 0  cx 217  | touches edge (14 px)
+k5     pair 0-1: IoU 0.733, area x0.952, box left +4, top -2, feet +0
+k5     pair 2-3: IoU 0.798, area x0.997, box left +12, top +0, feet +0
+k6      0  572x646 box 436x541 bottom 645  parts 3 (2nd 292)  fringe 5337 green 1  cx 306  | touches edge (16 px)
+k6      1  572x646 box 440x508 bottom 645  parts 3 (2nd 184)  fringe 4763 green 11  cx 306  | touches edge (3 px)
+k6      2  572x646 box 494x590 bottom 636  parts 6 (2nd 281)  fringe 4749 green 0  cx 307  | floats 9 px above the ground line
+k6      3  572x646 box 540x637 bottom 638  parts 8 (2nd 344)  fringe 5504 green 3  cx 306  ok
+k6      4  572x646 box 444x496 bottom 645  parts 5 (2nd 324)  fringe 4757 green 0  cx 306  | touches edge (43 px)
+k6      5  572x646 box 411x264 bottom 645  parts 2 (2nd 234)  fringe 2748 green 0  cx 307  | touches edge (18 px)
+k6      6  572x646 box 497x559 bottom 645  parts 6 (2nd 481)  fringe 4808 green 0  cx 306  | touches edge (20 px)
+k6      7  572x646 box 399x473 bottom 645  parts 3 (2nd 240)  fringe 3685 green 2  cx 307  | touches edge (3 px)
+k6      8  572x646 box 313x499 bottom 645  parts 6 (2nd 238)  fringe 3772 green 0  cx 307  | touches edge (7 px); 1 specks (29 px)
+k6      9  572x646 box 374x472 bottom 645  parts 4 (2nd 295)  fringe 3481 green 0  cx 306  | touches edge (9 px)
+k6     10  572x646 box 311x465 bottom 645  parts 1 (2nd 0)  fringe 3291 green 0  cx 306  | touches edge (13 px)
+k6     pair 0-1: IoU 0.604, area x0.915, box left -9, top +33, feet +0
+k6     pair 2-3: IoU 0.473, area x0.979, box left +25, top -45, feet +2
+k5 vs wolf (frame 0 box): 394x437 vs 262x318 = x1.50 wide, x1.37 tall
+k6 vs wyvern (frame 0 box): 436x541 vs 289x337 = x1.51 wide, x1.61 tall
+k4 vs slime (frame 0 box): 343x357 vs 283x192 = x1.21 wide, x1.86 tall
+pbed_wolf_live  278x177 box 278x177 edge 126 fringe 811 green 0 parts 1 specks 0  json 278x180
+pbed_wolf       278x180 box 278x180 edge 51 fringe 899 green 0 parts 1 specks 0  json 278x180
+pbed_wyvern     336x194 box 336x194 edge 97 fringe 1114 green 0 parts 1 specks 0  json 336x194
+pbed_slime      281x146 box 280x146 edge 56 fringe 696 green 0 parts 1 specks 0  json 281x146
+pbed_k4         430x295 box 430x295 edge 164 fringe 1203 green 0 parts 1 specks 0  json 430x295
+pbed_k5         470x464 box 470x464 edge 180 fringe 1896 green 0 parts 1 specks 0  json 470x464
+pbed_k6         500x343 box 500x343 edge 53 fringe 2579 green 0 parts 1 specks 0  json 500x343
