@@ -91,6 +91,11 @@ Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so thes
   how pzBed scales the picture: k5 wolf daybed 470x464 px, sleepOff 90, about 2.0 x 1.7 cells, tall headboard so it goes against a wall;
   k6 wyvern nest 500x343, sleepOff 60, about 1.8 x 1.5; k4 slime-cat bed 430x295, sleepOff 70, about 1.7 x 1.4. Small beds are 1.2 x 1.0
   with sleepOff wolf 40, wyvern 20, slime 40 (unchanged).
+- QA 11-24 on the evolved pets: all pass EXCEPT pbed_k5 (the wolf's large bed): its runes read as real Futhark letters, two S-runes side
+  by side. Do not wire or ship pbed_k5 until ROOMS repaints it and QA rechecks. k6's fit frame 6 is a glide, not a hop.
+- CUT WARNING: c4d9e374 replaced the LIVE first-form wolf bed (pbed_wolf, now a crescent fur rug, h 180) and changed data/pet_art.json
+  (bed sizes, sleepOff, pets.k4/k5/k6). Any release cut from qa-local carries that. Before the pet system ships, either cut from a
+  branch without ROOMS's pet commits (as v1.45 did, lead/v145src) or look at the new wolf bed in the real Bedroom first.
 - Pets must never phase through furniture: LEAD's pet-walk code; watch every room for a few minutes when the pet roams (QA too).
 
 ## Batch 4: Stylist and player card
