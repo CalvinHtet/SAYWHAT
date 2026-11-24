@@ -91,6 +91,9 @@ lfNext=function(a){if(!a||!a.pvn||a.leaving||(a.leaveAt&&Date.now()>a.leaveAt))r
   var c2=cand.filter(function(o){return o.i!==a.last});if(c2.length)cand=c2;
   if(!cand.length)return pvNextBase.apply(this,arguments);
   var o=lfPick(cand);a.si=o.i;o.s.by=a.id;a.last=o.s.cust?"seat":o.i;a.speed=1;a.stretch=0;lfGo(a,o.s.x,o.s.y,o.s)};
+/* Cal 2026-11-24: "put their username under their character in white text just like in Maplestory": the tag sits under the feet again
+   (translate(0,3) and the pill drawn from y 0 down, so however much it is scaled up to stay readable it grows away from the feet). It is still drawn on top of the furniture, so a table
+   in front no longer hides it, which was why it went above the head on 11-13. */
 /* the name tag above their head (Cal, 2026-11-13: "I want their name to be shown above their head when they are walking around and
    roaming"; was under the feet), at the height ROOMS uses for the team and allies (26_world.js, -170 x LFSC). Drawn on top of the room's furniture (the last child of the room's .lfitems), not inside the character's
    own group, which the depth sort puts behind tables and chairs: there a tag under the feet was mostly hidden. It follows the
@@ -99,11 +102,15 @@ function pvTagId(a){return "pvt-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_")}
 /* QA/LEAD 2026-11-11: the tag read about 5 px in the room window and 2 px in the building view. Its size is now set from how big one
    unit of the room drawing is on screen (getScreenCTM, so zooming in or out keeps it the same), for PVTAGPX px text; where that
    would make the tag bigger than PVTAGMAX units (the building view, zoomed out) it is hidden, since it could not be read there. */
-var PVTAGPX=11,PVTAGMAX=28;
+/* QA 11-24: on a phone (390 wide) one unit of the room window is 0.31 px, so 11 px text needs 35 units and the cap of 28 hid every
+   tag; the building view needs 69. 48 shows the name in the room window down to a 320 px phone and still hides it in the building view,
+   where a readable tag would dwarf the 15 px characters. */
+var PVTAGPX=11,PVTAGMAX=48;
 function pvTagDraw(a){var g=document.getElementById("lfa-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_"));if(!g||!g.parentNode)return;
   var host=g.closest(".lfitems")||g.parentNode,t=document.getElementById(pvTagId(a));
-  if(!t){var nm=esc(a.pvn),w=Math.max(30,Math.round(a.pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
-    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,'+(-170*LFSC-3).toFixed(1)+')"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="-12" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="-3.4" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
+  /* QA 11-24: a 24-letter name covered half the Garden window on a phone: the tag shows 14 letters at most */
+  if(!t){var pvn=a.pvn.length>14?a.pvn.slice(0,13)+"\u2026":a.pvn,nm=esc(pvn),w=Math.max(30,Math.round(pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
+    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,3)"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="0" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="8.6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
     t=tmp.firstChild}
   if(t.parentNode!==host||host.lastChild!==t)host.appendChild(t);
   var tf=g.getAttribute("transform")||"";if(t._tf!==tf){t._tf=tf;t.setAttribute("transform",tf)}

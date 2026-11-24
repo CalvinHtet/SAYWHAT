@@ -63,7 +63,7 @@ var TOURS=[
     {sel:".htab",t:"Posts and Chat",x:"Posts from everyone in town, and a chat to talk. Be nice, it's your friends."}]},
   {id:"players",ready:function(){return tourAreaOpen("players")&&tourAfter("hall")&&tourVis('.nav button[data-v="players"]')&&view!=="players"},steps:[
     {sel:'.nav button[data-v="players"]',t:"Meet the players",x:"Everyone in town, in their outfits. Tap here.",tap:1},
-    {sel:"#fshbox",t:"Say hi",x:"Tap someone to wave or high-five. It shows up live on their screen."}]},
+    {sel:"#fshbox",t:"Say hi",x:"Tap someone to wave. It shows up live on their screen."}]},
   {id:"shop",ready:function(){return tourAreaOpen("shop")&&tourVis('.nav button[data-v="shop"]')},steps:[
     {sel:'.nav button[data-v="shop"]',t:"You unlocked the Shop!",x:"Clothes for your character. Tap here.",tap:1},
     {sel:"#app",t:"The Shop",x:"New brands drop every Monday and Thursday. Buy a piece and put it on in your Wardrobe."}]},

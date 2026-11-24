@@ -68,3 +68,34 @@ var c6Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc6&&
   if(move&&S){var x=S.xp||0,L=1;while(L<MAXL+49&&x>=cum5(L+1))L++;var fr=(x-cum5(L))/Math.max(1,cum5(L+1)-cum5(L)),nx=Math.round(cum(L)+fr*(cum(L+1)-cum(L)));
     if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=nx-x;S.xp=nx}
   if(S&&d&&d.epoch===QB_EPOCH)S.xpc6=1;return r};
+
+/* ---------- curve 8 and the flat weekly XP (Cal, 2026-11-24) ----------
+   Cal: "Lets do a flat weekly bonus and a slightly steeper top. Just increase by 10%. I think it is already difficult to get people to
+   play consistently", and "Lets make it 4 months for a normal player to reach level 100". Sims on v1.41 (LEAD 11-24): the two weekly
+   bonuses paid a level's worth each (half a level and 1.2 levels), so they grew with the curve and were about 30% of a heavy player's XP
+   by month 2; a heavy day (26 tasks, 605 listed XP) reached 100 on day 61, a normal one (12 tasks, 200) 86 on day 90.
+   - The Weekly Quest pays ECON.wqFlat XP and the Weekly Warrior ECON.wwFlat, the same at every level, except in a player's first weeks,
+     where each is held to 2 and 2.5 levels' worth so week 1 is not ten levels at once.
+   - The top: the part of a level above 40 is 1.585 times what it was, so 99 to 100 needs 4,400 (was 4,001), 80 needs 2,664 (2,477), 60
+     1,356 (1,310). Levels 1 to 40 do not change, so no save moves: one day after the reboot nobody is past 40.
+   - Sims on this build (rigtest/qa/sim.js, LEAD 11-24): flats of 1,400 and 1,800 put the normal player at 100 on day 135; 1,800 and 2,400
+     put them there on day 122 (99 on day 118; 57 on day 30, 77 on day 60, 90 on day 90) and the heavy player on day 62 (76 on day 30).
+     The same sum for everyone is worth far more to a normal player than to a heavy one: showing up 4 days a week is about 45% of a
+     normal player's XP. */
+(function(){var E=ECON;E.lvTop=.3107;E.wqFlat=1800;E.wwFlat=2400})();
+function wkNeed(){return need(Math.min(effLvl(),MAXL-1))}
+function wqXp(){return Math.min(ECON.wqFlat,Math.round(2*wkNeed()))}
+function wwXp(){return Math.min(ECON.wwFlat,Math.max(250,Math.round(2.5*wkNeed())))}
+/* ---- curve 8 for a save past level 40 made on curve 7 (QA 11-24: "curve 8 has no migration, so any save past level 40 drops one
+   level"). Nobody should be there a day after the reboot, but the cost of being wrong is a player losing a level, so such a save moves
+   over at the same level and the same share of the way to the next, as curves 3 to 6 did (xpc8; curve 7 is frozen here). At level 40
+   and under the two curves are the same numbers, so nothing moves. ---- */
+var CUMT7=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT7.push(CUMT7[L]+Math.round(L<6?20+150*(L-1)/5:170+.364*Math.pow(L-6,2)+(L>40?.196*Math.pow(L-40,2):0)))})();
+function cum7(L){return L<=1?0:L<CUMT7.length?CUMT7[L]:CUMT7[CUMT7.length-1]+(L-CUMT7.length+1)*(CUMT7[CUMT7.length-1]-CUMT7[CUMT7.length-2])}
+var c8Fresh=fresh;fresh=function(){var f=c8Fresh.apply(this,arguments);f.xpc8=1;return f};
+var c8Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc8);var r=c8Merge.apply(this,arguments);
+  if(move&&S){var x=S.xp||0,L=1;while(L<MAXL+49&&x>=cum7(L+1))L++;
+    if(L>40){var fr=(x-cum7(L))/Math.max(1,cum7(L+1)-cum7(L)),nx=Math.round(cum(L)+fr*(cum(L+1)-cum(L)));if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=nx-x;S.xp=nx}}
+  if(S&&d&&d.epoch===QB_EPOCH)S.xpc8=1;return r};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbC8={cum7:cum7};
+

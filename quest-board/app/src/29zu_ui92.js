@@ -6,7 +6,7 @@
    (boardHtml) and shows "~10 min" in grey on each card. */
 var QMKW=[
   [/\b(move|moving|taxes|tax return|renovat\w*|garage|attic|road trip)\b/,180],
-  [/\b(deep clean\w*|spring clean\w*|edit\w*|film\w*|shoot\w*|record\w*|produc\w*|mixing|master\w*|studio|hike|hiking)\b/,120],
+  [/\b(deep clean\w*|spring clean\w*|edit\w*|film\w*|shoot\w*|record\w*|paint\w*|build\w*|hike|hiking)\b/,120],
   [/\b(gym|workout|work out|lift\w*|swim\w*|class|groceries|grocery|errands?|meal prep|assembl\w*|put together)\b/,60],
   [/\b(laundry|clean\w*|cook\w*|run|running|jog\w*|walk\w*|yoga|stretch\w*|vacuum\w*|mop\w*|study\w*|read\w*|practi[cs]e\w*)\b/,30],
   [/\b(dishes|shower\w*|tidy\w*|sweep\w*|organi[sz]e\w*|iron\w*|fold\w*|wash\w*|shave|call\w*)\b/,15],

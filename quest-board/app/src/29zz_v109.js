@@ -25,7 +25,7 @@ TCHROOMS.length=2;if(TCH.room>2)TCH.room=1;
 /* Players: the Town square stays (it is where people greet each other); the Neighbors list under it went, as everyone is already on the
    Players board above it */
 fshFolds=function(){var sq=!!FSH.fold.square;
-  return '<button type="button" class="fsh-fold'+(sq?' open':'')+'" data-act="fshfold" data-k="square" aria-expanded="'+sq+'"><b>Town square</b><small>Wave, fist bump or high five</small></button>'+(sq?sqHtml():'')};
+  return '<button type="button" class="fsh-fold'+(sq?' open':'')+'" data-act="fshfold" data-k="square" aria-expanded="'+sq+'"><b>Town square</b><small>Wave at the players in town</small></button>'+(sq?sqHtml():'')};
 /* the Hall's own Neighbors note (shown without the cloud) goes too: the panel keeps the meter and the Town board */
 var v9SocInner=socInner;socInner=function(){var h=v9SocInner.apply(this,arguments);return /<h3 class="label">Neighbors<\/h3>/.test(h)&&h.indexOf("Town board")<0?"":h};
 

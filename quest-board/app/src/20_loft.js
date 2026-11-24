@@ -1830,7 +1830,7 @@ function lfGuestAt(s){var k=Object.keys(LFA);for(var i=0;i<k.length;i++){var g=L
 function lfLive(a){return !a.pv}
 function lfPersistSoon(){var t=Date.now();if(t-LFPERS>15000){LFPERS=t;try{persist()}catch(e){}}}
 /* ---- reviews ---- */
-var LFREV={5:["{i} hit different.","Best {i} in LA, no cap.","Fast service. Coming back.","Ten out of ten vibes.","Staff remembered my name.","Absolutely elite {i}."],
+var LFREV={5:["{i} hit different.","Best {i} in town, no cap.","Fast service. Coming back.","Ten out of ten vibes.","Staff remembered my name.","Absolutely elite {i}."],
   4:["Solid {i}. Short wait.","Good spot. Would return.","{i} was great, the line was not.","Nice crew, nice {i}."],
   3:["Took a while but the {i} was fine.","Mid wait, decent {i}.","OK. Busy night."],
   1:["Waited forever. Never got my {i}.","Service? Never heard of her.","Left empty-handed. One star.","Walked out. Too slow."]};
@@ -2000,7 +2000,7 @@ function lfPanelHtml(C,r,i){
   return h;
 }
 /* ---- theater film clock ---- */
-var LFFILMS=["Neon Drift","Kaiju Breakfast","Midnight in Shibuya","Bass Drop 2","The Last Ramen","Sky Lounge Heist","Pluto vs. The Vacuum","Calibur: Live","Garden of Static","Tokyo Drift Club"];
+var LFFILMS=["Neon Drift","Kaiju Breakfast","Midnight in Shibuya","Neon Drop 2","The Last Ramen","Sky Lounge Heist","Dog vs. The Vacuum","Legend: Live","Garden of Static","Midnight Drift Club"];
 function lfFilm(key){var F=LFFILM[key];var now=Date.now();
   if(!F||now>F.end){var on=!F||!F.on;F=LFFILM[key]={on:on,name:on?lfPick(LFFILMS):"",start:now,end:now+(on?190000:25000)}}
   F.left=Math.max(0,Math.round((F.end-now)/60000));return F}
