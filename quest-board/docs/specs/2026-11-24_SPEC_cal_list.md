@@ -66,6 +66,13 @@ without a pet; no player-card backdrops, no upgrades or buffs, no interface piec
 20. **Pet clothes.** 5 brands x 5 slots x 3 pieces for the first form AND for the evolved form, per pet. Launch with what is ready
     (one brand each), then a brand per drop. Every piece must work in every pose with every other piece.
 
+Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so these are his words as ROOMS reports them):
+- Evolved forms are 1.4x the first form, "more dramatic, epic but cool", and the outfits must still fit. Ids: k4 slime (an upright jelly
+  cat with slime paws and the forehead star; walk cells still being redone), k5 wolf, k6 wyvern; beds pbed_k4/k5/k6; pbed_wolf is now a
+  crescent-moon fur rug (h 180). data/pet_art.json has pets.k5 and pets.k6 with anchors null: LEAD drafts them, ROOMS checks by eye.
+  k6 frame 6 is a standing wings-up pose: map it to "stand" or "glide", not "hop".
+- Pets must never phase through furniture: LEAD's pet-walk code; watch every room for a few minutes when the pet roams (QA too).
+
 ## Batch 4: Stylist and player card
 21. **Stylist** has its own background colour and sub tabs: Cosmetics, Backdrops. Cosmetics: hairstyles, hair colours, eye styles, eye
     colours, face tattoos and scars. Tribal-style tattoos are fine; no gang marks (teardrop), no religious art.
