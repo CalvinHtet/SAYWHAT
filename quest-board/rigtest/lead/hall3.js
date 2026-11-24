@@ -18,5 +18,5 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.screenshot({ path: OUT + '/hall3_players.png' });
   await p.evaluate(() => { const r = [...document.querySelectorAll('[data-act="fshview"]')].find((e) => /Ann/.test(e.textContent)); if (r) r.click(); }); await p.waitForTimeout(700);
   const card = await p.evaluate(() => { const m = document.querySelector('#layer .modal'); return m ? [...m.querySelectorAll('.sq-acts button')].map((b) => b.textContent.trim()) : null; });
-  ok(card && /Wave/.test(card.join()) && /Fist bump/.test(card.join()) && /High five/.test(card.join()), 'a player\'s card: ' + JSON.stringify(card));
+  ok(card && /Wave/.test(card.join()) && !/Fist bump|High five/.test(card.join()), 'a player\'s card: ' + JSON.stringify(card));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

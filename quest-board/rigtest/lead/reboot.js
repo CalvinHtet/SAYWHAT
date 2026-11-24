@@ -13,7 +13,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const V = (f) => p.evaluate(f);
   const inbox = await V(() => window.__qbV135.inbox()); ok(inbox.length === 2 && inbox.some((l) => l[0] === 'welcome' && l[2] === 1000) && inbox.some((l) => l[0] === 'live137' && l[2] === 500), 'two letters: ' + JSON.stringify(inbox));
   const cl = await V(() => window.__qbV135.cl().map((c) => c[0] + '=' + c[1]).join(', ')); ok(/reset=Self care/.test(cl) && /admin=Work and admin/.test(cl), 'groups: ' + cl);
-  const sq = await V(() => Object.keys(window.__qbV135.sqk()).map((k) => window.__qbV135.sqk()[k][1])); ok(sq.join() === 'Wave,Fist bump,High five', 'greetings: ' + sq.join(', '));
+  const sq = await V(() => Object.keys(window.__qbV135.sqk()).map((k) => window.__qbV135.sqk()[k][1])); ok(sq.join() === 'Wave', 'greetings (Cal 11-24: Wave only): ' + sq.join(', '));
   /* the Shop: built Closet, a brand never seen. On the Board: no brand window; the Shop button has "!"; in the Shop: the window */
   await V(() => { const S = window.__qb.x().S; window.__qbRooms.open('closet', 1); S.areaOn.shop = 1; S.brandSeen = {}; S.seenDr = {}; S.alSeen = { init: 1, room: {}, bld: {}, tab: { shop: 1 }, brand: {} }; /* a save first seen while the Shop was shut */ window.__qb.x().render(); });
   await p.waitForTimeout(6000);

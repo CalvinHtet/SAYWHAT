@@ -91,6 +91,9 @@ lfNext=function(a){if(!a||!a.pvn||a.leaving||(a.leaveAt&&Date.now()>a.leaveAt))r
   var c2=cand.filter(function(o){return o.i!==a.last});if(c2.length)cand=c2;
   if(!cand.length)return pvNextBase.apply(this,arguments);
   var o=lfPick(cand);a.si=o.i;o.s.by=a.id;a.last=o.s.cust?"seat":o.i;a.speed=1;a.stretch=0;lfGo(a,o.s.x,o.s.y,o.s)};
+/* Cal 2026-11-24: "put their username under their character in white text just like in Maplestory": the tag sits under the feet again
+   (translate(0,3) and the pill drawn from y 0 down, so however much it is scaled up to stay readable it grows away from the feet). It is still drawn on top of the furniture, so a table
+   in front no longer hides it, which was why it went above the head on 11-13. */
 /* the name tag above their head (Cal, 2026-11-13: "I want their name to be shown above their head when they are walking around and
    roaming"; was under the feet), at the height ROOMS uses for the team and allies (26_world.js, -170 x LFSC). Drawn on top of the room's furniture (the last child of the room's .lfitems), not inside the character's
    own group, which the depth sort puts behind tables and chairs: there a tag under the feet was mostly hidden. It follows the
@@ -103,7 +106,7 @@ var PVTAGPX=11,PVTAGMAX=28;
 function pvTagDraw(a){var g=document.getElementById("lfa-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_"));if(!g||!g.parentNode)return;
   var host=g.closest(".lfitems")||g.parentNode,t=document.getElementById(pvTagId(a));
   if(!t){var nm=esc(a.pvn),w=Math.max(30,Math.round(a.pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
-    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,'+(-170*LFSC-3).toFixed(1)+')"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="-12" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="-3.4" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
+    tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,3)"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="0" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="8.6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
     t=tmp.firstChild}
   if(t.parentNode!==host||host.lastChild!==t)host.appendChild(t);
   var tf=g.getAttribute("transform")||"";if(t._tf!==tf){t._tf=tf;t.setAttribute("transform",tf)}
