@@ -129,4 +129,13 @@ var v44Toggle=toggle;toggle=function(id){var was=!!(S.done&&S.done[id]),r=v44Tog
       if(q&&!q.tut&&!L.ids[id]){L.ids[id]=1;if(LOOTRND()<LOOTP){var o=lootGive(lootKind(LOOTRND()));setTimeout(function(){try{lootShow(o)}catch(e){}},1200)}}}}catch(e){}
   return r};
 
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV144={spin:v44Spin,ranks:function(){return RANKS.map(function(r){return r.n})},sqk:function(){return Object.keys(SQK)},surge:function(){return surgeState()},check:surgeCheck,left:surgeLeft,loot:{give:function(k){var o=lootGive(k);lootShow(o);return {k:o.k,xp:o.xp,coins:o.coins,it:o.it&&o.it[0],ad:o.ad&&o.ad[0],price:o.ad&&o.ad[2]}},kind:lootKind,furn:function(){return lootFurnAll().map(function(f){return [S.base.slots[f[0]].t,f[1][0],f[1][2]]})},state:lootState,rnd:function(f){LOOTRND=f||Math.random},p:LOOTP,w:LOOTW},info:function(k){var e=QBINFO[k];return typeof e[1]==="function"?e[1]():e[1]}};
+/* ---- every free piece is one the player can use (Cal 11-24: "Make sure that clothing item rewards don't include items that cannot be
+   used. For example, Im a male and my rewards for the random loot or the scratch cards or anywhere in the game should not be female
+   clothing or cosmetics or hairstyles ... if I dont have a pet, pets and their respective items should [not] be available as a prize or
+   loot. Banners for the player cards should also not be available for a prize, or upgrades and interface upgrades"). Every prize in the
+   game comes out of freePool (29y_free.js: loot, the scratch card, chests, the weekly prize, milestones, crawls). It already kept to
+   pieces that fit the body (itemFits: the fo/mo marks and g); this makes the rest of the rule hold whatever a caller asks for: only
+   things worn on the character (slot a_...), never a pet's piece, a backdrop, a buff or an interface piece. ---- */
+var v44Pool=freePool;freePool=function(o){return v44Pool.apply(this,arguments).filter(function(it){var e=it[6]||{};return /^a_/.test(it[1])&&itemFits(it)&&!e.pet&&!e.bg&&!e.card})};
+
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV144={spin:v44Spin,ranks:function(){return RANKS.map(function(r){return r.n})},sqk:function(){return Object.keys(SQK)},surge:function(){return surgeState()},check:surgeCheck,left:surgeLeft,loot:{give:function(k){var o=lootGive(k);lootShow(o);return {k:o.k,xp:o.xp,coins:o.coins,it:o.it&&o.it[0],ad:o.ad&&o.ad[0],price:o.ad&&o.ad[2]}},kind:lootKind,furn:function(){return lootFurnAll().map(function(f){return [S.base.slots[f[0]].t,f[1][0],f[1][2]]})},state:lootState,rnd:function(f){LOOTRND=f||Math.random},p:LOOTP,w:LOOTW,pool:function(o){return freePool(o||{slots:/^a_/,brands:"all",basics:true}).map(function(it){return [it[0],it[1],!!(it[6]||{}).fo,!!(it[6]||{}).mo,(it[6]||{}).g||""]})}},info:function(k){var e=QBINFO[k];return typeof e[1]==="function"?e[1]():e[1]}};

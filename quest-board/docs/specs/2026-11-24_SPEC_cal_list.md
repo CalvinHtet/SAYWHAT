@@ -30,9 +30,12 @@ Walk-in Closet from level 3, first in the list, "!" on the Loft; the Board's stu
 9. **Wave only.** Player cards have one greeting button, Wave (Fist bump and High five go).
 
 ## Batch 2
+Prize rule for the whole game (Cal 11-24): a free piece is always one the player can wear (their body; no pet pieces, least of all
+without a pet; no player-card backdrops, no upgrades or buffs, no interface pieces). Furniture from surprise loot stays, as he set it.
 10. **Scratch card** replaces the Wheel (same level, same average payout). 3x3, once a day, only after 3 tasks that day. Three mascot
-    icons (the home-screen mascot throwing a peace sign) = big prize; three neon orange Ø = medium; three neon cyan Ø = small; no match =
-    each icon carries a small coin value, added up (always less than a match). Must look polished, not MS Paint. Cal's Ø logo files:
+    icons = 1,500 coins; three neon orange Ø = 1,000; three neon cyan Ø = 500; no match = each icon's small coin value, added up
+    (always less than a match). Coins only, flat at every level (Cal: "almost 5000 coins is a lot"). Once in a while the mascots are
+    golden and the card also gives one wearable piece of clothing (a surprise, not in the legend). Must look polished, not MS Paint. Cal's Ø logo files:
     art/src-cal/ (black, cyan and orange versions).
 11. **Bounties.** Three cards: a 1-day, a 2-day and a 3-day. Take two and the third disappears. An x forfeits a taken bounty so a new
     card can appear. 3 rerolls a day in total (not each); after that a reroll costs 150 coins; with no rerolls left the same bounty
@@ -70,8 +73,7 @@ Walk-in Closet from level 3, first in the list, "!" on the Loft; the Board's stu
     top left of the Board, the profile icon on the Town board ("Customize card"), tapping your character in the Shop, tapping a player
     in the Hall (with Wave). "Post my card" puts it on the Town Hall feed.
 23. **Backdrops** (ROOMS paints originals; Cal's pictures in docs/refs are mood only; no real signs or brands): Neon Alley, Skyline
-    Boulevard, Mist Gate, Sunrise Court, Ember Throne, Blood Moon, Crimson Maple, Fireworks Night, Lantern Sky (rare surprise loot
-    only, never sold), Loft Rooftop at dusk. A plain studio backdrop is free. 800 to 2,500 coins.
+    Boulevard, Mist Gate, Sunrise Court, Ember Throne, Blood Moon, Crimson Maple, Fireworks Night, Lantern Sky (sold like the others: Cal 11-24, backdrops are never a prize), Loft Rooftop at dusk. A plain studio backdrop is free. 800 to 2,500 coins.
 
 ## Art for ROOMS (Cal's Chrome, Unlimited on; QA wear-tests; Cal approves everything in one batch at the end)
 - A. Evolved slime, wolf and wyvern, same pose set as the current pets (stand, walk, sit, lie, sleep: whatever the Loft uses).

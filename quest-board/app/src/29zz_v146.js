@@ -9,17 +9,20 @@
      One card a day, open once 3 tasks are done that day (S.cdone, what the day's coin momentum counts). The Wheel's 4-hour timer goes.
    - Nine foil panels, scratch three. What the three show is rolled when the card is first opened (S.sc.out), so the odds do not depend
      on which panels are picked; each scratch shows the next of the three, and the other six are shown, dimmed, when the card is done.
-   - Odds a card (SCODDS): three mascots 2%, three orange 8%, three cyan 20%, no match 70%.
-   - Prizes, x the game's reward scale (econScaled, as the Wheel's were): mascots 6,000 coins and a piece of clothing (the Wheel's gold
-     sliver: wheelGift, else WHEELALL coins); orange 1,500 and a streak freeze (300 coins if the slots are full, as the Wheel paid);
-     cyan 600. No match: mascot 120, orange 70, cyan 50 each, added up (190 to 310), always under the smallest match.
-     An average card is about 500 coins before the scale: 1.6 of the Wheel's spins (310 each). A daily player spun 1 to 3 times. */
-var SCNEED=3,SCODDS=[["m",2],["o",8],["c",20],["x",70]],SCPRIZE={m:6000,o:1500,c:600},SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
-    SCNAME={m:"Three mascots",o:"Three orange",c:"Three cyan"},SCRND=Math.random;
+   - Cal 11-24, after seeing it: "almost 5000 coins is a lot of coins. It should be 1500 coins max for the highest tier, then 1000 coins,
+     then 500 coins. No clothing items or other prizes. Just coins. Maybe once in a while, it will have a golden mascot icon and that
+     could include a free clothing item." So the prizes are flat coins at every level (no reward scale): three mascots 1,500, three
+     orange 1,000, three cyan 500. No match: mascot 120, orange 70, cyan 50 each, added up (190 to 310), always under the smallest match.
+   - Odds a card (SCODDS): three golden mascots 3%, three mascots 2%, three orange 8%, three cyan 20%, no match 67%. The golden card pays
+     the mascots' 1,500 and one piece of clothing the player can wear and does not own (lootCloth: Street, never luxury; nothing more
+     when they own it all). It is a surprise: the card's legend and its (i) do not mention it.
+   - An average card is about 375 coins (the Wheel paid 310 a spin x the reward scale, up to six spins a day). */
+var SCNEED=3,SCODDS=[["g",3],["m",2],["o",8],["c",20],["x",67]],SCPRIZE={g:1500,m:1500,o:1000,c:500},SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
+    SCNAME={g:"Three golden mascots",m:"Three mascots",o:"Three orange",c:"Three cyan"},SCRND=Math.random;
 function scArt(k){k="sc_"+k+".webp";return (window.QBART&&QBART[k])||"art/"+k}
 /* the mascot is its picture; the two Ø are Cal's logo (art/src-cal/o_white.webp, the solid strokes) used as a mask over a flat neon colour
    with a glow, so they read bold and clean at any size (his thin-line colour files went faint on the dark card) */
-function scIcon(s){if(s==="m")return '<img class="sc-ic sc-m" src="'+scArt("mascot")+'" alt="Mascot" draggable="false">';var u="url("+scArt("o_mask")+")";
+function scIcon(s){if(s==="m"||s==="g")return '<img class="sc-ic sc-m'+(s==="g"?' sc-g':'')+'" src="'+scArt("mascot")+'" alt="'+(s==="g"?"Golden mascot":"Mascot")+'" draggable="false">';var u="url("+scArt("o_mask")+")";
   return '<span class="sc-ic sc-gl sc-'+s+'" role="img" aria-label="'+(s==="o"?"Orange":"Cyan")+' logo" style="-webkit-mask-image:'+u+';mask-image:'+u+'"></span>'}
 function scPick(W){var t=W.reduce(function(a,w){return a+w[1]},0),x=SCRND()*t;for(var i=0;i<W.length;i++){x-=W[i][1];if(x<0)return W[i][0]}return W[W.length-1][0]}
 function scTasks(){return Object.keys((S&&S.cdone)||{}).length}
@@ -30,12 +33,10 @@ function scRoll(){var k=scPick(SCODDS);if(k!=="x")return [k,k,k];var a;do{a=[scP
 /* the six never scratched, filled in for the reveal */
 function scRest(){var a=[];for(var i=0;i<6;i++)a.push(scPick(SCMIX));return a}
 function scPay(c){var o=c.out,match=o[0]===o[1]&&o[1]===o[2],k=o[0],coins=0,extra="";
-  if(match){coins=econScaled(SCPRIZE[k],50);
-    if(k==="m"){var it=null;try{it=wheelGift()}catch(e){}
-      if(it){var br=BRANDS.filter(function(b){return b.id===it[6].b})[0];dgGive({kind:"wear",id:it[0]});extra=" and "+it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}
-      else coins+=econScaled(WHEELALL,50)}
-    if(k==="o"){if(S.freezes<maxFreeze()){S.freezes++;extra=" and a streak freeze"}else coins+=econScaled(300,50)}
-  }else coins=o.reduce(function(a,s){return a+econScaled(SCVAL[s],10)},0);
+  if(match){coins=SCPRIZE[k];
+    if(k==="g"){var it=null;try{it=lootCloth("street")}catch(e){}
+      if(it){var br=BRANDS.filter(function(x){return x.id===it[6].b})[0];S.owned[it[0]]=true;extra=" and "+it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}}
+  }else coins=o.reduce(function(a,q){return a+SCVAL[q]},0);
   S.coins+=coins;S.earnedC+=coins;c.done=1;c.win=match?k:"";c.coins=coins;c.rest=scRest();
   c.res=(match?SCNAME[k]+": ":"")+coins.toLocaleString()+" coins"+extra;S.wheel=today();S.wheelRes=c.res;S.wheelAt=Date.now();
   persist();return c}
@@ -43,12 +44,12 @@ function scScratch(i){var c=scState();if(c.done||scTasks()<SCNEED||c.pick.indexO
   if(!c.out)c.out=scRoll();c.pick.push(i);persist();try{qbSnd("build")}catch(e){}
   if(c.pick.length<3){render();return}
   scPay(c);render();
-  setTimeout(function(){try{checkBadges()}catch(e){}try{qbSnd(c.win?"big":"build")}catch(e){}if(c.win)try{burst(innerWidth/2,innerHeight/2.6,c.win==="m"?60:34)}catch(e){}pop("Scratch card: "+c.res)},650)}
+  setTimeout(function(){try{checkBadges()}catch(e){}try{qbSnd(c.win?"big":"build")}catch(e){}if(c.win)try{burst(innerWidth/2,innerHeight/2.6,c.win==="g"?80:c.win==="m"?60:34)}catch(e){}pop("Scratch card: "+c.res)},650)}
 function scCell(c,i){var k=c.pick.indexOf(i),open=k>=0,sym=open?c.out[k]:null,rest=null;
   if(!open&&c.done&&c.rest){var n=0;for(var j=0;j<i;j++)if(c.pick.indexOf(j)<0)n++;rest=c.rest[n]}
   var win=c.done&&c.win&&open;
   return '<button type="button" class="sc-cell'+(open?' open':'')+(rest?' rest':'')+(win?' win':'')+'" data-act="scratch" data-i="'+i+'"'+((open||c.done||scTasks()<SCNEED)?' disabled':'')+' aria-label="'+(open||rest?'Panel '+(i+1):'Scratch panel '+(i+1))+'">'
-    +(sym||rest?'<span class="sc-face sc-glow-'+(sym||rest)+'">'+scIcon(sym||rest)+(c.done&&!c.win&&open?'<i class="sc-v">+'+econScaled(SCVAL[sym],10)+'</i>':'')+'</span>':'')
+    +(sym||rest?'<span class="sc-face sc-glow-'+(sym||rest)+'">'+scIcon(sym||rest)+(c.done&&!c.win&&open?'<i class="sc-v">+'+SCVAL[sym]+'</i>':'')+'</span>':'')
     +(open||rest?'':'<span class="sc-foil"><i></i></span>')+(open&&k===c.pick.length-1&&!c.done?'<span class="sc-dust"></span>':'')+'</button>'}
 function scHtml(){var c=scState(),n=scTasks(),lock=!c.done&&n<SCNEED,left=3-c.pick.length,cells="";for(var i=0;i<9;i++)cells+=scCell(c,i);
   var legend=function(s,t){return '<div class="sc-leg sc-glow-'+s+'">'+scIcon(s)+scIcon(s)+scIcon(s)+'<b>'+t+'</b></div>'};
@@ -57,7 +58,7 @@ function scHtml(){var c=scState(),n=scTasks(),lock=!c.done&&n<SCNEED,left=3-c.pi
    +'<div class="sc-grid">'+cells+'</div>'
    +'<div class="sc-foot">'+(lock?'<b>Finish '+(SCNEED-n)+' more task'+(SCNEED-n===1?'':'s')+' today to scratch</b><span class="sc-prog"><i style="width:'+Math.round(100*n/SCNEED)+'%"></i></span>'
       :c.done?'<b>'+esc(c.res)+'</b><span>A new card tomorrow.</span>':'<b>Scratch '+left+' panel'+(left===1?'':'s')+'</b><span>Match three to win big.</span>')+'</div></div>'
-   +'<div class="sc-legs">'+legend("m",econScaled(SCPRIZE.m,50).toLocaleString()+" + clothing")+legend("o",econScaled(SCPRIZE.o,50).toLocaleString()+" + freeze")+legend("c",econScaled(SCPRIZE.c,50).toLocaleString()+" coins")+'</div>'
+   +'<div class="sc-legs">'+legend("m",SCPRIZE.m.toLocaleString()+" coins")+legend("o",SCPRIZE.o.toLocaleString()+" coins")+legend("c",SCPRIZE.c.toLocaleString()+" coins")+'</div>'
    +'</section>'}
 wheelHtml=function(){return scHtml()};
 spin=function(){};
@@ -83,7 +84,7 @@ htabCss("qb-sc-css",
   +".sc-card.locked .sc-foil{filter:grayscale(.6) brightness(.6);animation:none}"
   +"@keyframes scsheen{from{background-position:0% 0%}to{background-position:220% 220%}}"
   +".sc-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;animation:scin .38s cubic-bezier(.2,1.3,.4,1)}@keyframes scin{from{transform:scale(.5);opacity:0}to{transform:none;opacity:1}}"
-  +".sc-ic{width:74%;height:74%;object-fit:contain;user-select:none;pointer-events:none}.sc-ic.sc-m{width:86%;height:86%;border-radius:22%}.sc-gl{display:block;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}.sc-gl.sc-c{background:#19f3ff}.sc-gl.sc-o{background:#ff5a28}.sc-glow-c{filter:drop-shadow(0 0 7px rgba(0,255,255,.8))}.sc-glow-o{filter:drop-shadow(0 0 7px rgba(255,90,40,.85))}"
+  +".sc-ic{width:74%;height:74%;object-fit:contain;user-select:none;pointer-events:none}.sc-ic.sc-m{width:86%;height:86%;border-radius:22%}.sc-ic.sc-g{filter:sepia(1) saturate(3.2) hue-rotate(-12deg) brightness(1.15);box-shadow:0 0 0 2px #ffd76a,0 0 18px rgba(255,215,106,.8)}.sc-glow-g{filter:drop-shadow(0 0 8px rgba(255,215,106,.7))}.sc-gl{display:block;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}.sc-gl.sc-c{background:#19f3ff}.sc-gl.sc-o{background:#ff5a28}.sc-glow-c{filter:drop-shadow(0 0 7px rgba(0,255,255,.8))}.sc-glow-o{filter:drop-shadow(0 0 7px rgba(255,90,40,.85))}"
   +".sc-cell.rest .sc-face{opacity:.28;filter:grayscale(.5);animation:none}.sc-cell.win{border-color:#ffc857;box-shadow:0 0 0 2px rgba(255,200,87,.5),0 0 22px rgba(255,200,87,.45);animation:scwin 1.1s ease-in-out infinite alternate}@keyframes scwin{to{box-shadow:0 0 0 2px rgba(255,200,87,.9),0 0 30px rgba(255,200,87,.75)}}"
   +".sc-v{position:absolute;right:6px;bottom:4px;font:700 .7em/1 var(--font-mono,monospace);color:#ffc857;font-style:normal}"
   +".sc-dust{position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,#c9cddd,#8f96ad);animation:scwipe .42s ease-out forwards}@keyframes scwipe{0%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}100%{clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%);opacity:.2}}"
