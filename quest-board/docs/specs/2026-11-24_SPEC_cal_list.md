@@ -80,6 +80,13 @@ Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so thes
   cat with slime paws and the forehead star; walk cells still being redone), k5 wolf, k6 wyvern; beds pbed_k4/k5/k6; pbed_wolf is now a
   crescent-moon fur rug (h 180). data/pet_art.json has pets.k5 and pets.k6 with anchors null: LEAD drafts them, ROOMS checks by eye.
   k6 frame 6 is a standing wings-up pose: map it to "stand" or "glide", not "hop".
+- ROOMS 11-24 (fa601f89): k4 is in; ROOMS reports Cal said "Approve on all the pet designs" (the three evolved forms). QA's wear-test
+  still comes before anything uses them.
+- The large bed (Cal via ROOMS: "make sure that when the pet evolves, we have a new upgrade available in the bedroom to purchase a
+  larger bed for our pets"): a Bedroom upgrade that appears only once the pet has evolved; art pbed_k4/k5/k6 (grander beds, ROOMS).
+  LEAD's rules: until it is bought the evolved pet sleeps curled on the floor beside the small bed; the bed drawn follows the form the
+  pet is in (de-evolved: the small bed; the large one stays owned and comes back with the form). The upgrade's name must not give the
+  evolution away before it happens (it is not listed at all until then).
 - Pets must never phase through furniture: LEAD's pet-walk code; watch every room for a few minutes when the pet roams (QA too).
 
 ## Batch 4: Stylist and player card
