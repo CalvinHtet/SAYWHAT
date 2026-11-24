@@ -156,3 +156,8 @@ Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the econom
   backdrops look great"). With the three large beds and the evolved pets, the art still to come to him: the pet clothing brands, the
   tattoos and scars, the soul stone icon, the five Atelier brands, the Pet Store care icons.
 
+## Refund: bought only (Cal 11-24)
+- Asked whether his one-time refund should also pay back pieces he won, Cal said: "Bought only".
+- The save never recorded which pieces were bought and which were prizes, so the refund is a one-time tick list (29zz_v153.js,
+  v53Refund): every priced character piece that is not the creator's look, all ticked; he unticks what he won. Ticked pieces go back
+  for their price; unticked ones stay owned and worn. "Later" (or the x) refunds nothing and asks again on the next launch.
