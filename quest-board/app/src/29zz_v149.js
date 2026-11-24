@@ -42,7 +42,7 @@ document.addEventListener("click",function(e){var t=e.target.closest&&e.target.c
      its "Shop it" (bsgo) leaves the home screen. */
   var n=e.target.closest&&e.target.closest('.nav [data-v="shop"]');if(n){SHUB=Date.now()-V49KEEP<800?"in":"home";return}
   if(e.target.closest&&e.target.closest("[data-flgo]")){V49KEEP=Date.now();SHUB="in";return}
-  if(e.target.closest&&e.target.closest('[data-act="stab"],[data-qsfl],[data-act="wardrobe"],[data-act="bsgo"]'))SHUB="in"},true);
+  if(e.target.closest&&e.target.closest('[data-act="stab"],[data-qsfl],[data-act="wardrobe"],[data-act="bsgo"],.dsgo'))SHUB="in"},true);/* .dsgo: the NEW DROP window's "Open Shop" (QA's note on v1.47) */
 var v49Wd=wardrobeModal;wardrobeModal=function(){SHUB="in";return v49Wd.apply(this,arguments)};
 htabCss("qb-shub-css",".shub-me{display:flex;flex-direction:column;align-items:center;gap:10px;margin:6px 0 14px}.shub-char{width:100%;max-width:260px}.shub-char .qs-bask{display:none}.shub-closet{min-width:140px;min-height:44px}"
   +".shub-tiles{display:grid;gap:10px;margin:0 0 16px}.shub-tile{position:relative;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;text-align:left;gap:2px 10px;padding:16px 18px;min-height:74px;border-radius:16px;border:1px solid var(--line);background:var(--surface,rgba(255,255,255,.04));color:var(--fg,inherit);cursor:pointer;font:inherit}"
