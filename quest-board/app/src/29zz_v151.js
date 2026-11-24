@@ -11,14 +11,25 @@
    dogs adopted, so they no longer come up; this one needs only the Game Room to sit in (the
    Lounge the older visits fall back to is not a room of today's buildings, 26_world.js ROOMCELL; the Bedroom stays private). */
 (function(){var add=function(k,o){if(FRIENDS[k])return;FRIENDS[k]=o;var L=null;Object.defineProperty(o,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(o.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})};
-  add("calvin",{name:"Calvin",tag:"Built this place",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["sm_hoodie","sm_cargo","sm_hightop","sm_pendant"]}});
-  add("sydney",{name:"Sydney",tag:"Keeps Calvin honest",spec:{body:"f",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["kp_varsity","kp_skirt","kp_loafer"]}});
+  /* Cal 11-24, on the first card: "Give Sydney baggy pants, and give me a hoodie with baggy pants as well. And a hat." */
+  add("calvin",{name:"Calvin",tag:"Built this place",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["sm_beanie","sm_hoodie","o_para","sm_hightop"]}});
+  add("sydney",{name:"Sydney",tag:"Keeps Calvin honest",spec:{body:"f",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["kp_varsity","kp_cargo","kp_runner"]}});
   if(!FVISITS.some(function(v){return v.id==="calsyd"}))FVISITS.push({id:"calsyd",who:["calvin","sydney","dog:pluto","dog:chopstick"],w:6,place:"gameroom",text:"Calvin and Sydney came to visit and they brought their dogs!",coin:120})})();
 var V51DOGFREE={calsyd:1};
 /* a card with four guests: the visit window's row squeezed the two rig figures to a third of their width (the dogs' painted pictures
    kept theirs). With four or more, every picture keeps its own shape, none shrinks, and the row wraps: the two people above, the dogs below. */
+/* Cal 11-24: "Generate a different animation for us. I want us to be closer, and I want us to be walking the two dogs on a leash.
+   Notice how the dogs are also giant compared to us? ... Make this picture of us visitng look unique". A visit may have a picture of
+   its own: art/app/friend_<visit id>.webp with _2 and _3 as further frames (ROOMS paints "calsyd": the two of them close together,
+   walking Pluto and Chopstick on leashes, the dogs at their real size). When it is in the build the card shows that one picture,
+   its frames taking turns (the .fvposes timer), in place of one picture per guest. Until then the dogs on the card are drawn small. */
+var v51Show=fvShow;fvShow=function(v){var r=v51Show.apply(this,arguments);
+  try{var A=v&&v.id?fvPoses(v.id):[];if(A.length){var f=document.querySelector("#layer .modal .visit .vfig");
+      if(f){f.classList.add("fvgroup");f.innerHTML='<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(fvNames(v.who)))+'">'}).join("")+'</span>'}}}catch(e){}
+  return r};
 htabCss("qb-v51-css",".visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
-  +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img{height:92px!important;width:auto!important;max-width:none!important}"
+  +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img{height:52px!important;width:auto!important;max-width:none!important}"
+  +".visit .vfig{align-items:flex-end}.visit .vfig.fvgroup img{height:auto!important;max-height:240px;width:auto!important;max-width:100%!important}"
   +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img.calp,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img.calp{height:132px!important}");
 fvPick=function(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
   var dogOk=function(v){return V51DOGFREE[v.id]||v.who.every(function(w){return w.indexOf("dog:")!==0||fvHasAddon(w==="dog:pluto"?"bd_pluto":"bd_chop")})};

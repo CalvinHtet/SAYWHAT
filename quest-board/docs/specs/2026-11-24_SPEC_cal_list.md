@@ -136,3 +136,15 @@ Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the econom
   Order for ROOMS: after A, B and the first pet brands. LEAD adds them to BRANDS with fl:"atelier" as they pass QA; the scratch card's
   three golden mascots draw from this floor as soon as it has pieces (29zz_v146.js scGoldPiece).
 
+## Cal's answers to the end-batch questions (11-24, evening)
+- The three large beds: approved ("3 beds for the pets look great").
+- Calvin and Sydney: "Generate a different animation for us. I want us to be closer, and I want us to be walking the two dogs on a
+  leash. Notice how the dogs are also giant compared to us? Give Sydney baggy pants, and give me a hoodie with baggy pants as well. And
+  a hat. Make this picture of us visitng look unique". Done in code: their rig looks (him: beanie, SAYMORE hoodie, parachute pants; her:
+  varsity jacket, wide cargos), the dogs small on the card, and a visit may have its own painted picture friend_<visit id>.webp (+ _2,
+  _3 as frames). ROOMS paints friend_calsyd (art item H).
+- The Studio room: not in today's game (no cell in 26_world.js ROOMCELL, no story step, no opener). Nothing to change.
+- Los Angeles: "Make the game 'the City'". Done: the weather line, the Patio, the three interface items.
+- SAYMORE's wording made general: "night culture", Neon Headphones, Mesh Shorts.
+- Not answered, left as they are: Cal's real friends as visitors; "Calibur Mall" and "Kode Plaza".
+
