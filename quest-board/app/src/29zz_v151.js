@@ -15,6 +15,11 @@
   add("sydney",{name:"Sydney",tag:"Keeps Calvin honest",spec:{body:"f",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["kp_varsity","kp_skirt","kp_loafer"]}});
   if(!FVISITS.some(function(v){return v.id==="calsyd"}))FVISITS.push({id:"calsyd",who:["calvin","sydney","dog:pluto","dog:chopstick"],w:6,place:"gameroom",text:"Calvin and Sydney came to visit and they brought their dogs!",coin:120})})();
 var V51DOGFREE={calsyd:1};
+/* a card with four guests: the visit window's row squeezed the two rig figures to a third of their width (the dogs' painted pictures
+   kept theirs). With four or more, every picture keeps its own shape, none shrinks, and the row wraps: the two people above, the dogs below. */
+htabCss("qb-v51-css",".visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
+  +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img{height:92px!important;width:auto!important;max-width:none!important}"
+  +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img.calp,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img.calp{height:132px!important}");
 fvPick=function(force){var have=function(t){return typeof hasRoom==="function"&&hasRoom(t)},last=S.visit&&S.visit.id;
   var dogOk=function(v){return V51DOGFREE[v.id]||v.who.every(function(w){return w.indexOf("dog:")!==0||fvHasAddon(w==="dog:pluto"?"bd_pluto":"bd_chop")})};
   var pool=FVISITS.filter(function(v){return (!v.need||have(v.need))&&v.id!==last&&(have(v.place)||have("lounge"))&&dogOk(v)});if(force)pool=FVISITS.filter(function(v){return v.id===force});if(!pool.length)return null;
