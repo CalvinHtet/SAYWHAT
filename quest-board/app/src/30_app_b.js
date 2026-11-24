@@ -335,7 +335,7 @@ function wkKey(d){d=d||gameNow();var x=new Date(d.getFullYear(),d.getMonth(),d.g
 function weekDays(){var m=wkKey(),p=m.split("-"),b=new Date(+p[0],+p[1]-1,+p[2]),o=[];for(var i=0;i<7;i++){var d=new Date(b);d.setDate(b.getDate()+i);o.push(dstr(d))}return o}
 function weekCount(){return (S.wcount&&S.wcount[wkKey()])||0}
 function unmarkActive(){var wk=wkKey();if(!S.wcount)S.wcount={};S.wcount[wk]=Math.max(0,(S.wcount[wk]||0)-1);if(S.active)delete S.active[today()];persist()}
-function weekBonus(){var x=Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));return {xp:x,coins:econScaled(ECON.wwCoins,50)*wwMult(),mult:wwMult()}}
+function weekBonus(){var x=typeof wwXp==="function"?wwXp():Math.round(Math.max(250,need(Math.min(effLvl(),MAXL-1))*1.2));/* Cal 11-24: a flat sum (29zzz_econ.js wwXp) */return {xp:x,coins:econScaled(ECON.wwCoins,50)*wwMult(),mult:wwMult()}}
 /* w-econ4 (Cal, 2026-11-10: "training tab 4 x a week coins increase for each consecutive week. on week 2, if consistent, prizes go to 2x then
    3x then 4x then caps out at 4x"): the coins are x(1 + the Weekly Warrior weeks in a row just before this one, from S.weekPaid), at most
    ECON.wwMax; a week without the 4 workouts starts it again at x1. The XP and the prize stay as they were. */
@@ -1580,7 +1580,7 @@ function creditStreak(){
   if(CHESTS[S.streak]&&!S.chests[S.streak]){S.skUndo.chest=S.streak;S.chests[S.streak]=true;S.xp+=CHESTS[S.streak];var cc=Math.round(CHESTS[S.streak]*5);S.coins+=cc;S.earnedC+=cc;out.push("Streak chest: +"+CHESTS[S.streak]+" XP and "+cc+" coins")}
   if(S.streak%ECON.freezeEvery===0&&S.freezes<maxFreeze()){S.freezes++;out.push("Earned a streak freeze")}
   var wq=wqState();wq.n++;S.skUndo.wq=1;
-  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),wc=econScaled((typeof ECON!=="undefined"&&ECON.wqCoins)||3000,50);/* Cal 11-23: coins no longer follow the level's XP (the steeper curve would triple them); a set sum, scaled as the other rewards (29zzz_econ.js) *//* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
+  if(wq.n>=ECON.wqDays&&!wq.paid){var wn=need(Math.min(effLvl(),MAXL-1)),wx=typeof wqXp==="function"?wqXp():Math.round(wn*((typeof ECON!=="undefined"&&ECON.wqLvl)||1)),/* Cal 11-24: a flat sum (29zzz_econ.js wqXp) */wc=econScaled((typeof ECON!=="undefined"&&ECON.wqCoins)||3000,50);/* Cal 11-23: coins no longer follow the level's XP (the steeper curve would triple them); a set sum, scaled as the other rewards (29zzz_econ.js) *//* w-econ4: XP x wqLvl, coins as before */wq.paid=1;S.skUndo.wqx=wx;S.skUndo.wqc=wc;S.xp+=wx;S.coins+=wc;S.earnedC+=wc;out.push("Weekly Quest: "+ECON.wqDays+" active days, +"+wx+" XP and "+wc+" coins")}
   return out.join(" | ")||("Streak: day "+S.streak);
 }
 function uncreditStreak(){
