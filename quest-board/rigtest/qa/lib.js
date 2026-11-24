@@ -10,6 +10,8 @@ exports.ORDER = ['bedroom', 'closet', 'lair', 'patio', 'gameroom', 'restaurant',
 exports.open = async function ({ width = 1280, height = 900, body = 'm', owned = 'all', mobile = false, slow = 0 } = {}) {
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] });
   const ctx = await b.newContext(mobile ? { viewport: { width, height }, deviceScaleFactor: 1, isMobile: true, hasTouch: true } : { viewport: { width, height }, deviceScaleFactor: 1 });
+  /* every request off this machine is refused: QA never reaches the live game or the Test channel */
+  await ctx.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') || r.request().url().startsWith('http://localhost:') ? r.continue() : r.abort()));
   const p = await ctx.newPage();
   const errs = [];
   p.on('pageerror', (e) => errs.push('pageerror: ' + e.message.slice(0, 300)));

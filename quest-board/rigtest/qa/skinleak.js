@@ -8,7 +8,7 @@
 //   - "tear": background showing inside the clothes' closed outline (green; a sleeve pulled apart), counted on its own;
 //   - "thin": visible skin over the clothes that is a sliver under 2T+1 px wide (a crack along a seam), counted with the gaps.
 // Only "gap" counts (MIN px in a pose).
-// Looks: LOOKS=creator (every starter top x bottom x shoe), LOOKS=shop (every Shop clothing piece worn over the starter outfit in its slot),
+// Looks: LOOKS=mix:N (N seeded random full outfits a body, one Shop piece a slot, hat/accessory some of the time), LOOKS=creator (every starter top x bottom x shoe), LOOKS=shop (every Shop clothing piece worn over the starter outfit in its slot),
 // both bodies, every pose. Prints the looks/poses with leaks; writes sheets (OUT/leak_<look>_<body>.png) with leak pixels in red.
 //   BASE=<server> OUT=<folder> [LOOKS=creator|shop] [HI=2] [R=3] [MIN=4] [ONLY=id,id] [POSES=a,b] node skinleak.js
 const pw = require('playwright'), fs = require('fs'), path = require('path');
@@ -46,6 +46,13 @@ const OUT = process.env.OUT || 'qa-out/skinleak'; fs.mkdirSync(OUT, { recursive:
   const looks = await p.evaluate((mode) => { const Q = window.QBDATA, C = Q.creator, D = C.defaults, out = [];
     if (mode === 'creator') { C.tops.forEach((t) => C.bottoms.forEach((bt) => C.shoes.forEach((s) => out.push({ id: `${t.id}+${bt.id}+${s.id}`, rig: { top: t.id, bottom: bt.id, shoe: s.id } })))); return out; }
     const x = window.__qb.x(), S = x.S; S.created = true; const slots = /^a_(top|pants|shoes|outer|dress|socks|acc|bag|neck|belt)$/;
+    if (mode.startsWith('mix')) { const N = +(mode.split(':')[1] || 60), I = QBLoft.data.items; let seed = 12345; const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+      const live = x.SHOP.filter((it) => /^a_/.test(it[1]) && !(it[6] && (it[6].cut || it[6].gone)) && ((it[6] || {}).gar || /^a_eye/.test(it[1]))); /* rig pieces only: the old pre-rig rows (Cape, Katana, Shadow Wings...) are not on any Shop floor and draw nothing on the rig */
+      for (const bd of ['m', 'f']) { const ok = live.filter((it) => { const g = I[(it[6] || {}).gar] || {}; return !((bd === 'f' && (g.maleOnly || (it[6] || {}).mo)) || (bd === 'm' && (g.femaleOnly || (it[6] || {}).fo))); });
+        const by = {}; ok.forEach((it) => { (by[it[1]] = by[it[1]] || []).push(it[0]); });
+        for (let n = 0; n < N; n++) { const eq = {}; Object.keys(by).forEach((sl) => { const pr = sl === 'a_hat' ? .6 : sl === 'a_acc' ? .5 : /hair/.test(sl) ? 0 : .95; if (rnd() < pr) eq[sl] = by[sl][Math.floor(rnd() * by[sl].length)]; });
+          out.push({ id: 'mix' + bd + String(n).padStart(3, '0'), mix: eq, body: bd }); } }
+      return out; }
     x.SHOP.filter((it) => slots.test(it[1]) && !(it[6] && (it[6].cut || it[6].gone))).forEach((it) => out.push({ id: it[0], slot: it[1], shop: 1 })); return out; }, process.env.LOOKS || 'creator');
   const only = process.env.ONLY ? process.env.ONLY.split(',') : null; const L = only ? looks.filter((l) => only.includes(l.id)) : looks;
   console.log('looks', L.length, 'bodies m,f', 'poses', await p.evaluate(() => window.__K.poses.length));
@@ -53,7 +60,8 @@ const OUT = process.env.OUT || 'qa-out/skinleak'; fs.mkdirSync(OUT, { recursive:
   for (const look of L) for (const bd of ['m', 'f']) {
     const r = await p.evaluate(async ([look, bd]) => { const K = window.__K, Q = window.QBDATA, x = window.__qb.x(), S = x.S, I = QBLoft.data.items;
       let rig;
-      if (look.shop) { const it = x.SHOP.find((q) => q[0] === look.id); const g = I[(it[6] || {}).gar] || {}; if ((bd === 'f' && (g.maleOnly || (it[6] || {}).mo)) || (bd === 'm' && (g.femaleOnly || (it[6] || {}).fo))) return { skip: 1 };
+      if (look.mix) { if (look.body !== bd) return { skip: 3 }; S.char = window.__qb.fixChar({ name: 'Cal', sex: bd }); S.owned = {}; Object.values(look.mix).forEach((id) => { S.owned[id] = true; }); rig = Object.assign({}, window.__qb.lookOf(look.mix).rig, { body: bd }); }
+      else if (look.shop) { const it = x.SHOP.find((q) => q[0] === look.id); const g = I[(it[6] || {}).gar] || {}; if ((bd === 'f' && (g.maleOnly || (it[6] || {}).mo)) || (bd === 'm' && (g.femaleOnly || (it[6] || {}).fo))) return { skip: 1 };
         S.char = window.__qb.fixChar({ name: 'Cal', sex: bd }); S.owned = {}; S.owned[look.id] = true; const eq = {}; eq[look.slot] = look.id; rig = window.__qb.lookOf(eq).rig; if (!rig.equipped || !Object.keys(rig.equipped).length) return { skip: 2 };
         rig = Object.assign({}, rig, { body: bd }); }
       else rig = Object.assign({}, Q.creator.defaults, look.rig, { body: bd });
@@ -67,7 +75,7 @@ const OUT = process.env.OUT || 'qa-out/skinleak'; fs.mkdirSync(OUT, { recursive:
       return { res, bare, png: sheet ? sheet.toDataURL('image/png') : null }; }, [look, bd]);
     if (r.skip) continue;
     if (r.res.length) { const f = path.join(OUT, `leak_${look.id.replace(/[^a-z0-9_+-]/gi, '_')}_${bd}.png`); if (r.png) fs.writeFileSync(f, Buffer.from(r.png.split(',')[1], 'base64'));
-      rows.push({ look: look.id, body: bd, bare: r.bare, poses: r.res.length, all: r.res.map((x) => x.slice()), worst: r.res.sort((a, c) => c[2] - a[2]).slice(0, 4) }); console.log(look.id, bd, r.bare ? '(bare)' : '', 'leaks in', r.res.length, 'poses; worst', JSON.stringify(r.res.slice(0, 4))); }
+      rows.push({ look: look.id, body: bd, mix: look.mix || null, bare: r.bare, poses: r.res.length, all: r.res.map((x) => x.slice()), worst: r.res.sort((a, c) => c[2] - a[2]).slice(0, 4) }); console.log(look.id, bd, r.bare ? '(bare)' : '', 'leaks in', r.res.length, 'poses; worst', JSON.stringify(r.res.slice(0, 4))); }
   }
   fs.writeFileSync(path.join(OUT, 'skinleak.json'), JSON.stringify(rows, null, 1));
   console.log('looks with leaks', rows.length, 'of', L.length * 2, '| minutes', ((Date.now() - t0) / 60000).toFixed(1), '| page errors', errs.length, JSON.stringify(errs.slice(0, 2))); await b.close(); })();

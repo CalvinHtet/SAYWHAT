@@ -314,7 +314,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.41 4dcc070c, Live): v1.41 live check, PASS; the rollback carries curve 7 (QA findings).
+- Now (on release/v1.41 4dcc070c, Live): Cal's platform check (stability, speed, rooms, outfits), PASS; one low NOTE for LEAD (QA findings).
+  Was: Now (on release/v1.41 4dcc070c, Live): v1.41 live check, PASS; the rollback carries curve 7 (QA findings).
   Was: Now (on release/v1.41 4dcc070c): v1.41, PASS, can ship; a rollback NOTE (curve 6 drops levels) (QA findings). Next: the live check.
   Was: Now (on qa-local 8df50fb4): rig flag 3f15f863 PASS, 1c7e636d PASS with one FIX (econTrained on unpaid sessions), curve 7 PASS with a NOTE (QA findings).
   Was: Now (on qa-local a888ed55): skin-through rig fix NOT A PASS (bent-elbow sleeves); friendship and kind notes PASS (QA findings).
@@ -442,6 +443,35 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, Cal's 11-23 platform check: stability, speed, rooms and outfits together (live code v1.41 4dcc070c, plain and web builds,
+  every request off this machine blocked; owner LEAD for the notes; QA's tools rigtest/qa/soak.js, idleprof.js, encodes.js,
+  animcost.js, coldload.js, firstvisit.js, skinleak.js mix mode). Nothing found that needs a fix before the next release.
+  - Stability: 11 minutes, 7 full laps (Board, Training, the Loft street and all 3 buildings, every room's window, Town's
+    tabs, every Shop floor) on a save with every room and upgrade: 0 page errors (the 3 console errors are the blocked Google Fonts).
+    Memory climbs 176 to 189 MB over laps 1-3 while the frame cache fills (limit 900), then stays flat at 190 MB for laps 3-7; DOM
+    nodes 732-774; timers constant (52 intervals, 5 timeouts). Long tasks fall as frames get cached (8 s in lap 1, about 1.5 s a lap
+    after). No leak.
+  - Speed (phone size, CPU slowed x4): tab switches 30-150 ms; Loft 55 fps, a room window 48 fps, the idle Board 60 fps once its
+    frames are made (29 fps for about the first 15 s while it encodes them; 2-3 frames a second, then 0). Idle Loft and Town are
+    about 90% idle (43 ms of script in 8 s). The CSS animations cost nothing measurable (fps the same with them paused).
+  - Load (web build, new player, 12 Mbps / 70 ms, CPU x4): first paint 1.4 s, the creator 2.4 s, 2.9 MB (app.js 1.98 MB before
+    hosting compresses it); a warm open 359 ms from the service worker.
+  - Outfits: 120 random full outfits (60 a body, one Shop piece a slot, hats and accessories some of the time) x idle, rearStand,
+    walk2, sitFront, thinkA, 0 page errors. The six worst by score, looked at by eye: every flag is skin the piece means to show
+    (fishnets, the open robe and blazer, the halter, the mask's eye holes) or the known bent-elbow sleeve slivers in sitFront and
+    thinkA; hats over hair, headsets, trapper with goggles and the wings all layer right. Sheets in QA's scratch, not kept.
+  - Rooms: the static audit of every room flags only intended overlaps (rugs, the band on its stage, booth around its table, the
+    pool float, the bedroom's built-ins). Live, bedroom and patio each had 3 people for 45 s and no one stood in a piece (the patio's
+    "in a footprint" is someone sitting in the egg chair); the closet is one painted room by design; the game room by eye is tidy.
+  - NOTE (LEAD, low, already on your v1.21 cleanup list): 35 old pre-rig rows are still in SHOP (tp_*, pt_*, sh_*, ac_*, and
+    bk_katana, bk_cape, bk_wings). None is on any Shop floor, but a save that owned one from the pixel days and wears it sees
+    nothing (the cape is checked on the Board). When you clean up: refund or remap them.
+  - QA's own slips, fixed in the tools: the first soak's save had the Loft and Town locked (a fresh save records its open areas at
+    level 1) and its "back to the street" button was wrong (bldout), so after lap 1 it never entered a building; the tools now open
+    every area, and the soak's result above is from the fixed run. The mix picker now uses only rig pieces.
+  - Not checked: a real phone (only Chromium with a slowed CPU and network), real accounts and the cloud, the Test channel, two
+    players at once on this build, every outfit combination (120 random of far more) and all 35 poses in the mix (5 of them), the
+    later rooms live (their static audit only, this time).
 - PASS, v1.41 live check (release/v1.41 4dcc070c on Live; owner LEAD): Live serves version.txt 4dcc070c, appv 141; its 12 listed files
   match QA's own web build of 4dcc070c (the commit QA passed, ecc89400), index.html, config.js, app.js, web.js, qbdata.js and creator.js
   byte-identical; QB_EPOCH 8, no reset; release/v1.41 and rollback-v1.39 on origin. The rollback is now 936eb255: release/v1.39 with
