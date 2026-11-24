@@ -1277,7 +1277,7 @@ function lookOf(ovr,base){
      owned accessory that sits on a different part of the body from the first, drawn by the rig like the first */
   var q2=acc2Item(base,ovr),M2=q2&&q2[6].gar&&QBLoft.data.items[q2[6].gar];if(M2&&!_eq[M2.slot])_eq[M2.slot]={art:q2[6].gar,frontOnly:M2.frontOnly,over:M2.over,wide:M2.wide,lift:M2.lift,clip:M2.clip};
   if(Object.keys(_eq).length)L.rig=Object.assign({},L.rig,{equipped:_eq});
-  ["a_top","a_pants","a_shoes","a_hair","a_hairc","a_hairhi","a_eyes"].forEach(function(sl){var q=pick(sl),bs=q&&q[6].basic;if(!bs)return;L.rig=Object.assign({},L.rig);L.rig[bs.key]=bs.id;if(bs.ckey)L.rig[bs.ckey]=bs.color});
+  ["a_top","a_pants","a_shoes","a_hair","a_hairc","a_hairhi","a_eyes","a_tattoo","a_scar"].forEach(function(sl){var q=pick(sl),bs=q&&q[6].basic;if(!bs)return;L.rig=Object.assign({},L.rig);L.rig[bs.key]=bs.id;if(bs.ckey)L.rig[bs.ckey]=bs.color});
   if((it=pick("a_hair"))&&!it[6].basic)L.hair_s=it[6].s;
   if((it=pick("a_hairc"))&&!it[6].basic)L.hair=it[6].c;
   if((it=pick("a_eyes"))&&!it[6].basic)L.eyes=it[6].c;

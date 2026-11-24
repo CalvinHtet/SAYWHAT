@@ -92,4 +92,18 @@ htabCss("qb-pc-css",".pcard{position:relative;width:100%;max-width:300px;aspect-
   +".pc-post{max-width:210px;margin:8px 0 4px;cursor:pointer}.pc-post .pcard{margin:0}"
   +".pcbtn{flex:none;width:30px;height:30px;margin-left:-14px;margin-right:6px;align-self:flex-end;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);background:var(--surface,#14121c);color:var(--fg,inherit);cursor:pointer;position:relative;z-index:1}.pcbtn:hover{border-color:var(--accent)}"
   +".sty-tabs{margin:0 0 10px}.shub-char{cursor:pointer}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT};
+/* ---- face tattoos and scars (Cal: "Cosmetics (which has hairstyles, hair color, eye styles, eye colors, and even face tattoos and
+   scars)", "Tribal tattoos are pretty cool. no gang tattoos such as a teardrop or religion based art"). ROOMS's layer: <b>_mark_<id>_
+   front.webp, ids t1..t6 and s1..s4, rig slots markT and markS (data/rig.json, src/look.js), icons icon_mark_<id>. One tattoo and one
+   scar can be worn together. Each is a Stylist item (slots a_tattoo, a_scar) that exists only once its art is in the build, so the
+   Cosmetics tab shows nothing until ROOMS has painted one. Names are placeholders until ROOMS names what it paints (PCMARKN). ---- */
+var PCMARKN={},PCMARKP={t:700,s:500};
+function pcMarkArt(id){try{var D=window.QBDATA,QA=window.QBART;return ["m","f"].some(function(b){var n=b+"_mark_"+id+"_front.webp";return !!((QA&&QA[n])||(D&&D.arthash&&D.arthash[n]))})}catch(e){return false}}
+function pcMarks(){try{[["a_tattoo","Tattoos"],["a_scar","Scars"]].forEach(function(g){
+      if(!SLOTS.some(function(x){return x[0]===g[0]}))SLOTS.push(g.slice());if(!QS_GROUPS.some(function(x){return x[0]===g[0]}))QS_GROUPS.push(g.slice());STYLIST[g[0]]=1;try{THUMB[g[0]]=1}catch(e){}
+      try{SHOPTABS.forEach(function(t){if(t[0]==="wardrobe"&&t[2].indexOf(g[0])<0)t[2].push(g[0])})}catch(e){}});
+    ["t1","t2","t3","t4","t5","t6","s1","s2","s3","s4"].forEach(function(id,i){var sid="bs_mark_"+id;if(SHOP.some(function(x){return x[0]===sid})||!pcMarkArt(id))return;var tat=id.charAt(0)==="t",nm=PCMARKN[id]||[(tat?"Ink No. ":"Scar No. ")+id.slice(1),tat?"Inked for good. Or until you change your mind.":"There is a story behind it."];
+      SHOP.push([sid,tat?"a_tattoo":"a_scar",nm[0],PCMARKP[id.charAt(0)],1,nm[1],{basic:{key:tat?"markT":"markS",id:id},b:"basics",icon:"mark_"+id}])})}catch(e){}}
+pcMarks();
+
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};
