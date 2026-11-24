@@ -12,8 +12,9 @@
    Lounge the older visits fall back to is not a room of today's buildings, 26_world.js ROOMCELL; the Bedroom stays private). */
 (function(){var add=function(k,o){if(FRIENDS[k])return;FRIENDS[k]=o;var L=null;Object.defineProperty(o,"look",{enumerable:true,get:function(){if(L)return L;var x=fvLook(o.spec);if(window.QBLoft&&QBLoft.data&&QBLoft.data.items)L=x;return x}})};
   /* Cal 11-24, on the first card: "Give Sydney baggy pants, and give me a hoodie with baggy pants as well. And a hat." */
-  add("calvin",{name:"Calvin",tag:"Built this place",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["sm_beanie","sm_hoodie","o_para","sm_hightop"]}});
-  add("sydney",{name:"Sydney",tag:"Keeps Calvin honest",spec:{body:"f",skin:"s2",hairStyle:"h1",hairColor:"black",eq:["kp_varsity","kp_cargo","kp_runner"]}});
+  add("calvin",{name:"Calvin",tag:"Built this place",spec:{body:"m",skin:"s2",hairStyle:"h1",hairColor:"black",top:"hoodie",topColor:"grey",eq:["sm_beanie","o_para","sm_hightop"]}});
+  add("sydney",{name:"Sydney",tag:"Keeps Calvin honest",spec:{body:"f",skin:"s2",hairStyle:"h1",hairColor:"black",shoe:"sneakers",shoeColor:"white",eq:["kp_varsity","h_denim"]}});
+  /* matched to ROOMS's painting of the walk (cb651b3b): him a plain charcoal hoodie, her wide blue jeans and white sneakers */
   if(!FVISITS.some(function(v){return v.id==="calsyd"}))FVISITS.push({id:"calsyd",who:["calvin","sydney","dog:pluto","dog:chopstick"],w:6,place:"gameroom",text:"Calvin and Sydney came to visit and they brought their dogs!",coin:120})})();
 var V51DOGFREE={calsyd:1};
 /* a card with four guests: the visit window's row squeezed the two rig figures to a third of their width (the dogs' painted pictures
@@ -27,7 +28,7 @@ var v51Show=fvShow;fvShow=function(v){var r=v51Show.apply(this,arguments);
   try{var A=v&&v.id?fvPoses(v.id):[];if(A.length){var f=document.querySelector("#layer .modal .visit .vfig");
       if(f){f.classList.add("fvgroup");f.innerHTML='<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(fvNames(v.who)))+'">'}).join("")+'</span>'}}}catch(e){}
   return r};
-htabCss("qb-v51-css",".visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
+htabCss("qb-v51-css",/* QA 11-24: the card grew to its row (430 px on a 320 px phone); it keeps to the screen and the row wraps */".card.visit{max-width:calc(100vw - 24px);box-sizing:border-box}.visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px;width:100%;max-width:100%;box-sizing:border-box}@media(max-width:430px){.visit h2{font-size:26px!important;overflow-wrap:anywhere}}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
   +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img{height:52px!important;width:auto!important;max-width:none!important}"
   +".visit .vfig{align-items:flex-end}.visit .vfig.fvgroup img{height:auto!important;max-height:240px;width:auto!important;max-width:100%!important}"
   +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img.calp,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img.calp{height:132px!important}");
@@ -53,14 +54,16 @@ var v51Vis=lfVisitors;lfVisitors=function(){var out=v51Vis.apply(this,arguments)
 /* ROOMS 11-24 (b909831c, proof pictures shots/navboxes_1124/): the floor pieces of the two painted rooms, in each room's own cells,
    [the upgrade that brings it, x, y, w, d]. The Closet's wardrobes and shoe wall and the Lair's armory, suits and trophies stand behind
    the floor line; only these reach onto the floor. With them recorded the companion may go into both rooms. */
-var P3SPELL=7*60000,P3ROOMS={gameroom:1,closet:1,lair:1},
+var P3BOOT=Math.floor(Date.now()/(7*60000)),/* the spell the game opened in: no fade then, it is simply there */P3SPELL=7*60000,P3ROOMS={gameroom:1,closet:1,lair:1},
     P3BOX={closet:[["cl_jewel",0,2.2,.9,3.0],["cl_jewel",0,1.0,1.4,1.4],["cl_jewel",0,5.05,1.45,1.45],["cl_isl",3.4,2.5,1.5,3.2]],
            lair:[["lr_console",0,1.0,.6,6.6],["lr_console",.6,4.2,.45,1.4],["lr_suit",5.2,0,6.1,.4],["lr_rack",0,8.6,.5,2.9],["lr_rack",0,0,.5,1.2]]};
 function p3Hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function p3Room(){try{if(!petMine())return -1;var n=Math.floor(Date.now()/P3SPELL),h=p3Hash("pet|"+(MYUID||"")+"|"+n);if(h%100<60)return -1;
     var opts=[];S.base.slots.forEach(function(r,i){if(r&&P3ROOMS[r.t]&&typeof LFMETA!=="undefined"&&LFMETA[i])opts.push(i)});return opts.length?opts[(h>>>8)%opts.length]:-1}catch(e){return -1}}
 var v51Des=lfDesired;lfDesired=function(){var o=v51Des.apply(this,arguments);
-  try{var i=p3Room();if(i>=0)o.forEach(function(e){if(e&&e.id==="dog:pet"){e.room=i;e.bed=null}})}catch(e){}return o};
+  /* QA 11-24: the change of room was a pop. For the first 25 s of a spell it comes in the way a visitor does (fresh: faded in at
+     the room's door, lfPlace), in the Bedroom too when it comes back. */
+  try{var i=p3Room(),fresh=Date.now()%P3SPELL<25000&&Math.floor(Date.now()/P3SPELL)!==P3BOOT;o.forEach(function(e){if(e&&e.id==="dog:pet"){if(i>=0){e.room=i;e.bed=null}if(fresh)e.fresh=1}})}catch(e){}return o};
 var v51Dog=lfDogNext;lfDogNext=function(a,C){
   try{if(a&&a.dname==="pet"&&!a.visitor){
       if(C&&C.nav&&typeof lfBlockedAt==="function"&&lfBlockedAt(C,a.x,a.y)){var f=lfFreeNear(C,a.x,a.y,2.4);if(f){a.x=f[0];a.y=f[1]}}

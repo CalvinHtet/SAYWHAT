@@ -92,10 +92,27 @@ function p2CareCard(kind){var o=p2(),t=Math.min(3,+o.care[kind]||0),C=P2CARE[kin
   else if(!has)btn='<button class="qs-btn ghost" disabled>Needs a companion</button>';
   else{var pr=P2CAREP[t];btn=S.coins>=pr?'<button class="qs-btn" data-act="p2care" data-id="'+kind+'"><i class="coin"></i>'+pr.toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+pr.toLocaleString()+' &middot; need '+(pr-S.coins).toLocaleString()+' more</button>'}
   return '<article class="qs-card p2care'+(t>=3?" own":"")+'" data-card="care_'+kind+'"><div class="p2pips">'+[0,1,2].map(function(i){return '<i class="'+(i<t?"on":"")+'">'+P2ROM[i]+'</i>'}).join("")+'</div><h4>'+C[0]+(t<3?" "+P2ROM[t]:"")+'</h4><p>'+C[1]+'</p><small class="p2eff">Each one: '+C[2]+'. Bought once, kept for good.</small>'+btn+'</article>'}
-function p2Clothes(k){var o=p2(),P=o.own[k],C=pzCl(),two=!!(P&&P.evo),tabs=two?'<nav class="qs-tabs p2forms"><button class="qs-tab'+(P2FORM===1?" on":"")+'" data-act="p2ft" data-id="1">I</button><button class="qs-tab'+(P2FORM===2?" on":"")+'" data-act="p2ft" data-id="2">II</button></nav>':"";
+/* Cal 11-24: "Everything in The shop, including stylist and pets and banners, can be viewed first on the character and then confirm to
+   buy it when checking out. Should not automatically buy it and spend my money". Pet clothes: "Try on" puts a piece on the companion's
+   picture at the top of its clothes tab (P2TRY, one per slot, nothing saved); the basket under it opens a checkout that lists the
+   pieces and the total, and only "Confirm purchase" spends coins. Care and the 1,500 switch cannot be shown on anything, so they ask
+   first with what they cost. */
+var P2TRY={};
+function p2TryList(k){var C=pzCl(),T=P2TRY[k]||{};return Object.keys(T).map(function(sl){return T[sl]}).filter(function(id){return C[id]&&C[id].pet===k&&!(S.owned&&S.owned["pc_"+id])})}
+function p2TryHead(k){var o=p2(),P=o.own[k];if(!P)return "";var C=pzCl(),tl=p2TryList(k),worn=Object.assign({},pzWorn(k));tl.forEach(function(id){worn[pzSlot(C[id].kind)]=id});
+  var sp=null;try{sp=pzSprite(k,0,worn)}catch(e){}var pic=sp?'<img class="p2bigpic" data-pzk="'+esc(pzKey(k,0,worn))+'" src="'+sp.u+'" alt="">':"",cost=tl.reduce(function(a,id){return a+(PC_PRICE[C[id].kind]||400)},0);
+  return '<div class="p2hero p2tryhero"><div class="p2big">'+pic+'</div><div class="p2nm"><h3>'+esc(P.n)+'</h3></div>'+(tl.length?'<div class="qs-bask"><small>Trying on '+tl.length+' piece'+(tl.length>1?"s":"")+'</small>'
+    +(S.coins>=cost?'<button class="qs-btn" data-act="p2check" data-id="'+k+'">Buy '+(tl.length>1?"all ":"")+'&middot; <i class="coin"></i>'+cost.toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+cost.toLocaleString()+' &middot; need '+(cost-S.coins).toLocaleString()+' more</button>')
+    +'<button class="qs-link" data-act="p2tryoff" data-id="'+k+'">Take them off</button></div>':'<p class="qs-note">Tap a piece to see it on '+esc(P.n)+' before you buy it.</p>')+'</div>'}
+function p2TryCards(k,h){var o=p2(),T=P2TRY[k]||{};
+  return h.replace(/<button class="qs-btn" data-act="pzclbuy" data-id="([^"]+)">([\s\S]*?)<\/button>/g,function(m,id,inner){var C=pzCl()[id];if(!C)return m;
+    if(!o.own[k])return '<button class="qs-btn ghost" disabled>'+inner+' &middot; needs a '+esc(PETS[k].name)+'</button>';var on=T[pzSlot(C.kind)]===id;
+    return '<button class="qs-btn'+(on?" alt":"")+'" data-act="p2try" data-id="'+id+'">'+(on?"Trying on":"Try on")+' &middot; '+inner+'</button>'})}
+function p2Clothes(k){return p2TryCards(k,p2ClothesBase(k))}
+function p2ClothesBase(k){var o=p2(),P=o.own[k],C=pzCl(),two=!!(P&&P.evo),tabs=two?'<nav class="qs-tabs p2forms"><button class="qs-tab'+(P2FORM===1?" on":"")+'" data-act="p2ft" data-id="1">I</button><button class="qs-tab'+(P2FORM===2?" on":"")+'" data-act="p2ft" data-id="2">II</button></nav>':"";
   if(two&&P2FORM===2)return tabs+'<p class="qs-note qs-lead">Nothing has been made in this size yet. Check back after the next drop.</p>';
   var drop=pzDrop(k),own=Object.keys(C).filter(function(id){return S.owned&&S.owned["pc_"+id]&&C[id].pet===k&&drop.indexOf(id)<0});
-  return tabs+'<section class="qs-sec"><h3>This drop</h3><p class="qs-note">New pieces Tuesdays and Thursdays at 8 am.'+(P?"":" Yours to buy once a "+esc(PETS[k].name)+" lives with you.")+'</p><div class="qs-grid">'+drop.map(pzClCard).join("")+'</div></section>'
+  return p2TryHead(k)+tabs+'<section class="qs-sec"><h3>This drop</h3><p class="qs-note">New pieces Tuesdays and Thursdays at 8 am.'+(P?"":" Yours to buy once a "+esc(PETS[k].name)+" lives with you.")+'</p><div class="qs-grid">'+drop.map(pzClCard).join("")+'</div></section>'
     +(own.length?'<section class="qs-sec"><h3>'+esc(P?P.n:PETS[k].name)+'&rsquo;s clothes</h3><div class="qs-grid">'+own.map(pzClCard).join("")+'</div></section>':"")}
 function p2Store(){var o=p2();if(!o.seen){o.seen=1;persist()}if(P2TAB!=="home"&&!PETS[P2TAB])P2TAB="home";
   var nav='<nav class="p2nav" aria-label="Pet Store">'+["home"].concat(PET_ORDER.slice().sort(function(a,b){return ["slime","wolf","wyvern"].indexOf(a)-["slime","wolf","wyvern"].indexOf(b)})).map(function(k){
@@ -125,11 +142,22 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   if(a==="p2out"){if(!o.own[id])return;S.pet={k:id,t:o.own[id].t||Date.now()};p2Redraw(id);render();persist();pop(o.own[id].n+" is with you now.");return}
   if(a==="p2ren"){if(o.own[id])p2NameModal(id,0);return}
   if(a==="p2renok"){P=o.own[id];var i2=document.getElementById("p2nm");if(!P)return;P.n=p2Name(i2&&i2.value,id);closeModals();render();persist();return}
-  if(a==="p2care"){if(!P2CARE[id]||!petMine())return;var t=Math.min(3,+o.care[id]||0);if(t>=3)return;var pr=P2CAREP[t];if(S.coins<pr){pop("Need "+(pr-S.coins)+" more coins");return}
+  if(a==="p2try"){var c0=pzCl()[id];if(!c0||!o.own[c0.pet])return;var T=P2TRY[c0.pet]=P2TRY[c0.pet]||{},sl=pzSlot(c0.kind);if(T[sl]===id)delete T[sl];else T[sl]=id;render();return}
+  if(a==="p2tryoff"){delete P2TRY[id];render();return}
+  if(a==="p2check"||a==="p2buyok"){var Cl=pzCl(),tl=p2TryList(id),cost=tl.reduce(function(x,q){return x+(PC_PRICE[Cl[q].kind]||400)},0);if(!tl.length||!o.own[id])return;
+    if(a==="p2check"){modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+tl.length+' piece'+(tl.length>1?"s":"")+' for '+esc(o.own[id].n)+'</h3><ul>'+tl.map(function(q){return '<li><span>'+esc((PCNAME[q]||[q])[0])+'</span><b><i class="coin"></i>'+(PC_PRICE[Cl[q].kind]||400).toLocaleString()+'</b></li>'}).join("")
+        +'</ul><p class="note">Total <b><i class="coin"></i>'+cost.toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="p2buyok" data-id="'+id+'">Confirm purchase</button><button class="btn ghost" data-act="mclose">Keep looking</button></div></div>');return}
+    if(S.coins<cost){pop("Need "+(cost-S.coins)+" more coins");return}closeModals();tl.forEach(function(q){var pr0=PC_PRICE[Cl[q].kind]||400;S.coins-=pr0;S.spent=(S.spent||0)+pr0;S.owned["pc_"+q]=true;pzSetWear(id,pzSlot(Cl[q].kind),q)});delete P2TRY[id];
+    try{qbSnd("buy")}catch(x){}render();persist();pop("Bought "+(tl.length>1?tl.length+" pieces":(PCNAME[tl[0]]||[tl[0]])[0])+".");return}
+  if(a==="p2care"){if(!P2CARE[id]||!petMine())return;var t0=Math.min(3,+o.care[id]||0);if(t0>=3)return;var pr1=P2CAREP[t0];if(S.coins<pr1){pop("Need "+(pr1-S.coins)+" more coins");return}
+    modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+P2CARE[id][0]+' '+P2ROM[t0]+'</h3><p class="note">'+P2CARE[id][1]+' It '+P2CARE[id][2]+', for good.</p><p class="note">Price <b><i class="coin"></i>'+pr1.toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="p2careok" data-id="'+id+'">Confirm purchase</button><button class="btn ghost" data-act="mclose">Not now</button></div></div>');return}
+  if(a==="p2careok"){if(!P2CARE[id]||!petMine())return;var t=Math.min(3,+o.care[id]||0);if(t>=3)return;var pr=P2CAREP[t];if(S.coins<pr){pop("Need "+(pr-S.coins)+" more coins");return}closeModals();
     S.coins-=pr;S.spent=(S.spent||0)+pr;o.care[id]=t+1;try{qbSnd("buy")}catch(x){}render();persist();pop(P2CARE[id][0]+" "+P2ROM[t]+": "+P2CARE[id][2]+".");return}
   if(a==="p2evostop"){closeModals();pop("It settles down. For now.");return}
   if(a==="p2evogo"){P=o.own[id];if(!P||P.evo||!P.ready)return;p2Reveal(id);return}
-  if(a==="p2form"){P=o.own[id];if(!P||!P.evo)return;if(S.coins<PETSWAP){pop("Need "+(PETSWAP-S.coins)+" more coins");return}S.coins-=PETSWAP;S.spent=(S.spent||0)+PETSWAP;p2Change(id,!P.form);try{qbSnd("buy")}catch(x){}return}},true);
+  if(a==="p2form"){P=o.own[id];if(!P||!P.evo)return;if(S.coins<PETSWAP){pop("Need "+(PETSWAP-S.coins)+" more coins");return}
+    modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+(P.form?"Back to its first form":"Change again")+'</h3><p class="note">'+esc(P.n)+' can switch back whenever you like, at the same price.</p><p class="note">Price <b><i class="coin"></i>'+PETSWAP.toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="p2formok" data-id="'+id+'">Confirm</button><button class="btn ghost" data-act="mclose">Not now</button></div></div>');return}
+  if(a==="p2formok"){P=o.own[id];if(!P||!P.evo)return;if(S.coins<PETSWAP){pop("Need "+(PETSWAP-S.coins)+" more coins");return}closeModals();S.coins-=PETSWAP;S.spent=(S.spent||0)+PETSWAP;p2Change(id,!P.form);try{qbSnd("buy")}catch(x){}return}},true);
 /* ---- the bed: an upgrade once there is a companion, a larger one once it has changed ---- */
 (function(){var A=ADDONS.bedroom;if(!A)return;
   A.forEach(function(a){if(P2DOGS.indexOf(a[0])>=0)a[3]=Object.assign({},a[3]||{},{retired:1})});
@@ -140,7 +168,7 @@ var v50Avail=roomAvail;roomAvail=function(){p2BedFlags();return v50Avail.apply(t
 var v50Bed=pzBed;pzBed=function(C,room){var mine=petMine(),D=pzData();if(!mine||!D||room!=="bedroom")return null;var sp=(D.spots||{}).bedroom;if(!sp)return null;
   var r=slotOf("bedroom"),has=!!(r&&r.a&&r.a.bd_pbed),big=!!(r&&r.a&&r.a.bd_pbed2),K=p2Form(mine.k),floor=[sp[0]-.7,sp[1]+1.1];
   if(!has)return floor;
-  if(K&&big&&D.pets[K]&&D.pets[K].bed&&window.LFSPR){var b=D.pets[K].bed,k=b.id||("pbed_"+K),fp=P2BIG[mine.k]||[1.8,1.5],w=fp[0],d=fp[1],x=sp[0]+1.2-w,y=sp[1];if(!LFSPR[k])LFSPR[k]={w:b.w,h:b.h,u:pzArt(k)};
+  if(K&&big&&D.pets[K]&&D.pets[K].bed&&window.LFSPR){var b=D.pets[K].bed,k=b.id||("pbed_"+K),fp=P2BIG[mine.k]||[1.8,1.5],w=fp[0],d=fp[1],x=sp[0]+1.2-w,y=Math.max(.35,sp[1]+1.0-d);/* QA 11-24 (rule 20): it grew toward the front and sat on the door mat; its front edge stays where the small bed's is and it grows toward the back wall */if(!LFSPR[k])LFSPR[k]={w:b.w,h:b.h,u:pzArt(k)};
     lfSpr(C,k,x,y,w,d,{h:6,ctr:1,H:b.h*PZ_K,dk:.5});var px=x+w-.1,py=px-(x-y)-(w-d)/2,sy=LF.sy,front=(x+w+y+d)*sy,me=(px+py)*sy,z=b.sleepOff*PZ_K-(front-me);
     C.plat.push({x0:x,y0:y,x1:x+w,y1:y+d,z:z,key:x+w+y+d+.01});return [px,py]}
   var pt=v50Bed.apply(this,arguments);return K?floor:(pt||floor)};

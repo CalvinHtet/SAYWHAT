@@ -18,7 +18,7 @@
      and ROOMS's art; they come with that art. */
 var PCBG=[["studio","Studio",0],["neon","Neon Alley",800],["skyline","Skyline Boulevard",1000],["roof","Loft Rooftop",1200],["mist","Mist Gate",1400],["sunrise","Sunrise Court",1600],
           ["maple","Crimson Maple",1800],["fire","Fireworks Night",2000],["lantern","Lantern Sky",2200],["ember","Ember Throne",2400],["moon","Blood Moon",2500]],
-    STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0;
+    STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0,PCTRY="";/* PCTRY: a backdrop being looked at on the card before it is bought */
 function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
 function pcHas(id){return id==="studio"||!!pcArt(id)}
@@ -30,7 +30,7 @@ function pcSafe(c){try{if(!c||typeof c!=="object")return null;var s=function(v){
 var v52Form=p2Form;p2Form=function(k){return P2OTHER?null:v52Form.apply(this,arguments)};
 var v52MyPet=pzMyPet;pzMyPet=function(){var p=v52MyPet.apply(this,arguments);if(p)p._me=1;return p};
 var v52Ped=pzPedPic;pzPedPic=function(pet,H){if(pet&&!pet._me){P2OTHER=1;try{return v52Ped.apply(this,arguments)}finally{P2OTHER=0}}return v52Ped.apply(this,arguments)};
-function pcHtml(p,H){var card=p.me?pcMine():(p.card||{}),bg=pcBy(card.bg)&&pcHas(card.bg)?card.bg:"studio",u=bg==="studio"?null:pcArt(bg),pet="";H=H||200;
+function pcHtml(p,H,tryBg){var card=p.me?pcMine():(p.card||{});if(tryBg)card=Object.assign({},card,{bg:tryBg});var bg=pcBy(card.bg)&&pcHas(card.bg)?card.bg:"studio",u=bg==="studio"?null:pcArt(bg),pet="";H=H||200;
   try{if(p.pet)pet=pzPedPic(p.pet,H)}catch(e){}
   var line=[card.r,card.c,"Level "+(p.lv||1)].filter(Boolean).join(" · ");
   return '<div class="pcard pc-'+bg+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'><div class="pc-stage"><span class="fsh-fig pc-fig">'+fshChar(p.look,H)+pet+'</span></div>'
@@ -65,10 +65,12 @@ var v52Char=charModal;charModal=function(){var r=v52Char.apply(this,arguments);
 function pcShop(){var o=pcSt(),me=pcMe(),list=PCBG.filter(function(b){return pcHas(b[0])});
   var cards=list.map(function(b){var id=b[0],own=id==="studio"||o.own[id],use=o.bg===id,btn;
     if(use)btn='<button class="qs-btn ghost" disabled>On your card</button>';else if(own)btn='<button class="qs-btn alt" data-act="pcuse" data-id="'+id+'">Use</button>';
-    else btn=S.coins>=b[2]?'<button class="qs-btn" data-act="pcbuy" data-id="'+id+'"><i class="coin"></i>'+b[2].toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+b[2].toLocaleString()+' &middot; need '+(b[2]-S.coins).toLocaleString()+' more</button>';
+    else btn='<button class="qs-btn'+(PCTRY===id?" alt":"")+'" data-act="pctry" data-id="'+id+'">'+(PCTRY===id?"Previewing":"Preview")+' &middot; <i class="coin"></i>'+b[2].toLocaleString()+'</button>';
     var u=id==="studio"?null:pcArt(id);
     return '<article class="qs-card pc-bgc'+(use?" on":"")+'" data-card="pcbg_'+id+'"><div class="pcard pc-'+id+' mini"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'></div><h4>'+esc(b[1])+'</h4>'+btn+'</article>'}).join("");
-  return '<div class="pc-prev" data-act="pcard">'+pcHtml(me,190)+'</div><section class="qs-sec"><h3>Backdrops</h3><p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
+  var T=PCTRY&&pcBy(PCTRY)&&pcHas(PCTRY)&&!o.own[PCTRY]?pcBy(PCTRY):null;if(!T)PCTRY="";
+  var bask=T?'<div class="qs-bask pc-bask"><small>Previewing '+esc(T[1])+'</small>'+(S.coins>=T[2]?'<button class="qs-btn" data-act="pccheck" data-id="'+T[0]+'">Buy &middot; <i class="coin"></i>'+T[2].toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+T[2].toLocaleString()+' &middot; need '+(T[2]-S.coins).toLocaleString()+' more</button>')+'<button class="qs-link" data-act="pctry" data-id="">Back to mine</button></div>':"";
+  return '<div class="pc-prev">'+pcHtml(me,190,T?T[0]:"")+bask+'</div><section class="qs-sec"><h3>Backdrops</h3><p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
 var v52Shop=shopHtml;shopHtml=function(){var h=v52Shop.apply(this,arguments);
   try{if(typeof SHUB==="undefined"||SHUB==="home"||shopTab!=="basics")return h;
     var nav='<nav class="qs-tabs sty-tabs" aria-label="Stylist"><button class="qs-tab'+(STYTAB==="cos"?" on":"")+'" data-act="stytab" data-id="cos">Cosmetics</button><button class="qs-tab'+(STYTAB==="bg"?" on":"")+'" data-act="stytab" data-id="bg">Backdrops</button></nav>';
@@ -76,19 +78,21 @@ var v52Shop=shopHtml;shopHtml=function(){var h=v52Shop.apply(this,arguments);
     h=STYTAB==="bg"?h.slice(0,a)+nav+pcShop()+h.slice(b):h.slice(0,a)+nav+h.slice(a)}catch(e){}
   return h};
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".shub-char");if(c&&!e.target.closest("button")){e.preventDefault();pcOpen();return}
-  var b=e.target.closest&&e.target.closest("[data-act=pcard],[data-act=pcbgs],[data-act=pcpost],[data-act=stytab],[data-act=pcbuy],[data-act=pcuse]");if(!b)return;e.preventDefault();e.stopPropagation();var a=b.dataset.act,id=b.dataset.id,o=pcSt();
+  var b=e.target.closest&&e.target.closest("[data-act=pcard],[data-act=pcbgs],[data-act=pcpost],[data-act=stytab],[data-act=pctry],[data-act=pccheck],[data-act=pcbuy],[data-act=pcuse]");if(!b)return;e.preventDefault();e.stopPropagation();var a=b.dataset.act,id=b.dataset.id,o=pcSt();
   if(a==="pcard"){pcOpen();return}
   if(a==="pcpost"){pcPost();return}
   if(a==="stytab"){STYTAB=id==="bg"?"bg":"cos";render();return}
   if(a==="pcbgs"){closeModals();if(typeof areaGate==="function"&&areaGate("shop")){pop("Backdrops are in the Shop's Stylist. The Shop opens with the Walk-in Closet.");return}STYTAB="bg";SHUB="in";shopTab="basics";window._qsSeen=1;/* else the Shop's first draw lands on the newest brand (15_shop.js) */view="shop";render();window.scrollTo(0,0);return}
+  if(a==="pctry"){PCTRY=PCTRY===id?"":(id||"");render();window.scrollTo(0,0);return}
   var B=pcBy(id);if(!B||!pcHas(id))return;
-  if(a==="pcbuy"){if(o.own[id]||id==="studio")return;if(S.coins<B[2]){pop("Need "+(B[2]-S.coins)+" more coins");return}S.coins-=B[2];S.spent=(S.spent||0)+B[2];o.own[id]=1;o.bg=id;try{qbSnd("buy")}catch(x){}render();persist();try{socPublish(true)}catch(x){}pop(B[1]+" is on your card.");return}
+  if(a==="pccheck"){if(o.own[id]||id==="studio")return;modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+esc(B[1])+'</h3><p class="note">A backdrop for your player card, yours for good.</p><p class="note">Price <b><i class="coin"></i>'+B[2].toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="pcbuy" data-id="'+id+'">Confirm purchase</button><button class="btn ghost" data-act="mclose">Keep looking</button></div></div>');return}
+  if(a==="pcbuy"){if(o.own[id]||id==="studio")return;if(S.coins<B[2]){pop("Need "+(B[2]-S.coins)+" more coins");return}closeModals();PCTRY="";S.coins-=B[2];S.spent=(S.spent||0)+B[2];o.own[id]=1;o.bg=id;try{qbSnd("buy")}catch(x){}render();persist();try{socPublish(true)}catch(x){}pop(B[1]+" is on your card.");return}
   if(a==="pcuse"){if(id!=="studio"&&!o.own[id])return;o.bg=id;render();persist();try{socPublish(true)}catch(x){}return}},true);
 htabCss("qb-pc-css",".pcard{position:relative;width:100%;max-width:300px;aspect-ratio:3/4;margin:0 auto;border-radius:18px;overflow:hidden;background:#141826 center/cover no-repeat;border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 30px rgba(0,0,0,.45)}"
   +".pcard.pc-studio{background:radial-gradient(120% 70% at 50% 18%,#3a4470 0%,#1a1f38 55%,#0c0e1a 100%)}.pcard.pc-studio::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-top:1px solid rgba(255,255,255,.12)}"
-  +".pc-stage{position:absolute;left:0;right:0;bottom:17%;display:flex;justify-content:center;align-items:flex-end}.pc-fig{display:inline-flex;align-items:flex-end;position:relative}.pc-fig .fsh-pet{left:auto!important;right:calc(100% - 18px);margin-left:0!important}"
+  +".pc-stage{position:absolute;left:0;right:0;bottom:17%;display:flex;justify-content:center;align-items:flex-end}.pc-fig{display:inline-flex;align-items:flex-end;position:relative}/* QA 11-24: the figure's picture is a wide transparent frame, so left-of-the-figure was off the card; the companion stands inside the frame's left side, where the frame is empty */.pc-fig .fsh-pet{left:21%!important;right:auto}.pc-stage{overflow:hidden}.pc-fig{max-width:100%}"
   +".pc-plate{position:absolute;left:0;right:0;bottom:0;padding:9px 12px 10px;background:linear-gradient(180deg,rgba(8,9,16,0),rgba(8,9,16,.82) 38%);color:#fff;text-align:center;display:grid;gap:2px}.pc-plate b{font-size:1.08em;letter-spacing:.03em}.pc-plate small{font-size:.74em;letter-spacing:.06em;text-transform:uppercase;opacity:.85}"
-  +".pcard.mini{max-width:none;border-radius:12px;box-shadow:none}.pc-bgc.on .pcard{outline:2px solid var(--gold,#ffc857)}.pc-prev{margin:4px 0 14px;cursor:pointer}.pc-row{justify-content:center;margin-top:12px}.pcm{text-align:center}.pc-wrap{display:block}"
+  +".pcard.mini{max-width:none;border-radius:12px;box-shadow:none}.pc-bgc.on .pcard{outline:2px solid var(--gold,#ffc857)}.pc-prev{margin:4px 0 14px}.pc-bask{display:grid;gap:6px;justify-items:center;margin-top:10px}.pc-row{justify-content:center;margin-top:12px}.pcm{text-align:center}.pc-wrap{display:block}"
   +".pc-post{max-width:210px;margin:8px 0 4px;cursor:pointer}.pc-post .pcard{margin:0}"
   +".pcbtn{flex:none;width:30px;height:30px;margin-left:-14px;margin-right:6px;align-self:flex-end;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);background:var(--surface,#14121c);color:var(--fg,inherit);cursor:pointer;position:relative;z-index:1}.pcbtn:hover{border-color:var(--accent)}"
   +".sty-tabs{margin:0 0 10px}.shub-char{cursor:pointer}");
