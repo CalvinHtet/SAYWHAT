@@ -453,7 +453,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* W42: the floor on screen (the Street, the Boutique, ...). Only floors this player has show, and the switch only with two or more */
 var QSFLOOR="street";
 /* W47: the line under "The Shop", per floor (Bebas shows it in capitals) */
-var QS_WHEN={street:"New brands Mon and Thu 8 am",boutique:"New brands Mon and Thu 8 am",atelier:"New brands every other Mon and Thu 8 am"};
+var QS_WHEN={street:"New brands Mon and Fri 8 am",boutique:"New brands Mon and Fri 8 am",atelier:"New brands every other Mon and Fri 8 am"};
 /* a floor other than the one on screen with a live brand not yet looked at: its button gets a "!" (29o_alerts.js clears it per floor) */
 function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.init)return false;
   return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}
@@ -464,7 +464,7 @@ shopHtml=function(){
   var d=dropState(),FO=d.open&&d.open.length?d.open:["street"];if(FO.indexOf(QSFLOOR)<0)QSFLOOR=FO[0];
   var FD=(d.floors&&d.floors[QSFLOOR])||d,FL=(typeof flGet==="function"&&flGet(QSFLOOR))||{},live=(FD.live||[]).slice().reverse();
   qsGrantOriginals();
-  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Stylist"],["wardrobe","Wardrobe"]]).concat(typeof sysHas==="function"&&!sysHas()?[]:[["upgrades","Upgrades"],["interface","Interface"]]);/* W48: Upgrades and Interface only once the Lair's big screen is built (29sy_system.js) */
+  var tabs=live.map(function(b){return [b.id,(b.back?"\u21BA ":"")+b.name]}).concat([["basics","Stylist"],["wardrobe","Closet"]]).concat(typeof sysHas==="function"&&!sysHas()?[]:[["upgrades","Upgrades"],["interface","Interface"]]);/* W48: Upgrades and Interface only once the Lair's big screen is built (29sy_system.js) */
   /* Opening the shop lands on the newest brand, not whichever tab was last in the save. */
   if(!window._qsSeen||!tabs.some(function(t){return t[0]===shopTab})){window._qsSeen=1;shopTab=live.length?live[0].id:"wardrobe"}
   /* Cal: the next drop is a small countdown on the Shop itself, not part of the banner. */
@@ -473,7 +473,7 @@ shopHtml=function(){
      says the vault is open, on the Wednesdays it is (25_splash.js) */
   var cd=FD.next?'<small class="qs-cd">New brand in '+cdTxt(dropStart(FD.next.start)-d.n)+'</small>':'';
   var h='<div class="qshop"><header class="qs-top qs-head"><h1>The Shop</h1><div class="qs-coin"><i class="coin"></i><b>'+S.coins+'</b></div><small class="qs-when">'+esc(QS_WHEN[QSFLOOR]||FL.line||QS_WHEN.street)+'</small></header>'
-    +'<div class="qs-bar"><button class="qs-tab qs-wdb'+(shopTab==="wardrobe"?" on":"")+'" data-act="stab" data-v="wardrobe">Wardrobe</button>'+cd+'</div>';
+    +'<div class="qs-bar"><button class="qs-tab qs-wdb'+(shopTab==="wardrobe"?" on":"")+'" data-act="stab" data-v="wardrobe">Closet</button>'+cd+'</div>';
   if(FO.length>1)h+='<nav class="qs-tabs qs-floors" aria-label="Shop floors">'+FO.map(function(id){var F=flGet(id)||{name:id};return '<button class="qs-tab'+(QSFLOOR===id?" on":"")+'" data-qsfl="'+esc(id)+'">'+esc(F.name)+(qsFloorNew(d,id)?'<i class="qs-flnew" aria-label="New">!</i>':'')+'</button>'}).join("")+'</nav>';
   h+='<nav class="qs-tabs" aria-label="Shop sections">'+tabs.filter(function(t){return t[0]!=="wardrobe"}).map(function(t){return '<button class="qs-tab'+(shopTab===t[0]?" on":"")+'" data-act="stab" data-v="'+t[0]+'">'+esc(t[1])+'</button>'}).join("")+'</nav>';
   var b=(FD.live||[]).filter(function(x){return x.id===shopTab})[0];qsTheme(b);

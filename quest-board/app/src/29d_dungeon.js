@@ -106,7 +106,7 @@ function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=dgGive(P.g),h;
       +(g.first?'<p class="note">The first trophy is home. A Trophy Room can now be built above the Hero\'s Lair.</p>':'')}
   else if(g.kind==="ally"){var n=DNPC.filter(function(x){return x.id===g.id})[0]||{name:"Someone",line:"",buff:{text:""}};
     h='<span class="label">A new ally</span><h3>'+esc(n.name)+'</h3><p class="note">'+esc(n.line)+' They followed you home and moved into your Loft.</p><p class="dg-buff">'+esc(n.buff.text)+'</p>'}
-  else if(g.kind==="wear"){var it=shopItem(g.id);h='<span class="label">Something to wear</span><img class="dg-ic big" src="'+itemArt(it)+'" alt=""><h3>'+esc(it[2])+'</h3><p class="note">'+esc(it[5])+'</p><p class="dg-buff">'+(g.shop?'It is in your Wardrobe.':'It is in your Wardrobe. Nobody can buy one.')+'</p>'}
+  else if(g.kind==="wear"){var it=shopItem(g.id);h='<span class="label">Something to wear</span><img class="dg-ic big" src="'+itemArt(it)+'" alt=""><h3>'+esc(it[2])+'</h3><p class="note">'+esc(it[5])+'</p><p class="dg-buff">'+(g.shop?'It is in your Closet.':'It is in your Closet. Nobody can buy one.')+'</p>'}
   else h='<span class="label">A strongbox</span><h3>'+(+g.n||0).toLocaleString()+' coins</h3><p class="note">Nothing rare was left down there, but nobody had opened this in years.</p>';
   render();modal('<div class="card box2 dgg">'+h+'<div class="row"><button class="btn" data-act="mclose">Done</button></div></div>');try{burst(innerWidth/2,innerHeight/3,24)}catch(e){}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=dgopen]");if(!b)return;var m=b.closest(".modal");if(m)m.remove();dgReveal()});

@@ -152,9 +152,9 @@ var ECON={
      hangang, dial up, and overpass." The Street keeps 3 live (was 2); a 4th drop retires the oldest; the Wednesday brand is extra */
   /* Cal, 2026-11-18: "Lets change the clothing drops to be Monday and thursday. The vault can still come in on Wednesday" (every floor,
      from this week): days from Thu 11-19 (FLDAYS1, 29l_drops.js), days0 before it, so no drop that already happened moves */
-  floors:[{id:"street",name:"Street",lv:0,days:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Thursdays, 8 am"},
-    {id:"boutique",name:"Boutique",lv:30,days:[1,4],days0:[5],every:1,live:2,line:"New brands Mondays and Thursdays, 8 am"},
-    {id:"atelier",name:"Atelier",lv:70,days:[1,4],days0:[5],every:2,live:1,line:"New brands every other Monday and Thursday, 8 am"}],
+  floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Fridays, 8 am"},
+    {id:"boutique",name:"Boutique",lv:30,days:[1,5],days1:[1,4],days0:[5],every:1,live:2,line:"New brands Mondays and Fridays, 8 am"},
+    {id:"atelier",name:"Atelier",lv:70,days:[1,5],days1:[1,4],days0:[5],every:2,live:1,line:"New brands every other Monday and Friday, 8 am"}],
   /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 450, Boutique about
      600 to 1,200, Atelier about 1,300 to 3,000 */
   clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,450],luxury:[440,450]},   /* w-shopui: the Street tops out at 450 (QA: the Shadow Wings were 460) */

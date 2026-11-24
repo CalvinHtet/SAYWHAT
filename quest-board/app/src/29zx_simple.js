@@ -320,7 +320,7 @@ var ZXFS=[
         {sel:'#layer .rmodal [data-act="raddon"]:not([disabled])',t:"Buy one",x:"Tap Buy on an upgrade your coins cover. Each makes the room nicer.",modal:1,tap:1}]}},
   {id:"town",t:"Visit Town",x:"See what everyone playing is up to.",open:function(){return tourAreaOpen("hall")},
     done:function(){return !!(S.fsd&&S.fsd.townSeen)},show:[{sel:'.nav button[data-v="hall"]',t:"Visit Town",x:"Tap here.",tap:1}]},
-  {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Thursday.",open:function(){return tourAreaOpen("shop")},
+  {id:"shop",t:"Buy something to wear",x:"New brands drop every Monday and Friday.",open:function(){return tourAreaOpen("shop")},
     /* QA's review: a new character owns the creator's basics, which ticked this at once; only a brand's piece counts */
     done:function(){return !!S.owned&&SHOP.some(function(it){var b=it&&it[6]&&it[6].b;return b&&b!=="basics"&&S.owned[it[0]]})},show:[{sel:'.nav button[data-v="shop"]',t:"The Shop",x:"Tap here, then buy a piece you like.",tap:1}]}
 ];

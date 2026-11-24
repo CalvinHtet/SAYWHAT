@@ -22,7 +22,7 @@ setInterval(v17Refund,5000);
    (never below 0 coins). Once per piece: its S.goneRef entry goes. Not put back on, as v1.18 did not record what was worn. */
 function v17Back(){try{if(!loaded||!S||!S.created||!S.goneRef)return;var n=0,c=0;
     V17BACK.forEach(function(id){var r=S.goneRef[id];if(!r)return;S.owned=S.owned||{};S.owned[id]=true;var k=Math.min(Math.max(0,S.coins||0),r>1?r:0);S.coins-=k;c+=k;delete S.goneRef[id];n++});
-    if(n){persist();render();pop(n+" SMOKE BOMB piece"+(n>1?"s are":" is")+" back in your Wardrobe"+(c?" (-"+c.toLocaleString()+" coins, the refund)":""))}}catch(e){}}
+    if(n){persist();render();pop(n+" SMOKE BOMB piece"+(n>1?"s are":" is")+" back in your Closet"+(c?" (-"+c.toLocaleString()+" coins, the refund)":""))}}catch(e){}}
 setInterval(v17Back,5000);
 /* SMOKE BOMB: held until its new pieces are in; no "ninja anime" under its name */
 /* v1.19: no hold any more (it began and ended 11-17, so no drop slot ever skipped it) and its own subtitle again */
