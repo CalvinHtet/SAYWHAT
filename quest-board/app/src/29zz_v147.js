@@ -126,10 +126,20 @@ document.addEventListener("click",function(e){var t=e.target.closest&&e.target.c
   if(a==="bqduel"){if(!bqOthers()||typeof dlNew!=="function"){pop("Nobody to challenge yet");return}try{DL.f.kind="w";DL.f.days=3}catch(x){}dlNew();return}},true);
 /* bounties are checked after every tick of a quest, a few seconds after the game opens and every 20 s (a timer running out, a challenge
    accepted or over, a finished slot opening again); never from inside the Board's own drawing, since finishing one pays and redraws */
-var bqToggle=toggle;toggle=function(){var r=bqToggle.apply(this,arguments);try{if(bqTick())render()}catch(e){}return r};
-function bqBeat(){try{if(S&&S.created&&loaded&&!document.hidden){if(bqTick()&&view==="board"&&!document.querySelector("#layer .modal"))render()}}catch(e){}}
+/* QA 11-24 (FIX): unticking a finished chore bounty's quest kept the bounty's coins, the one undo that did not undo. The untick takes
+   them back and reopens the bounty on its own clock, as uncreditStreak does for the Weekly Quest. */
+function bqUndo(){var b=bqState(),ch=0;[1,2,3].forEach(function(k){var A=b.act[k];if(!A||!A.done||A.ty!=="q"||!A.qid)return;
+    if(S.done&&S.done[A.qid])return;if(!S.quests.some(function(q){return q&&q.id===A.qid}))return;
+    var c=BQPAY[A.k]||0;S.coins-=c;S.earnedC=Math.max(0,(S.earnedC||0)-c);A.done=0;delete A.at;ch=1});
+  if(ch)persist();return ch}
+var bqToggle=toggle;toggle=function(){var r=bqToggle.apply(this,arguments);try{var u=bqUndo();if(bqTick()||u)render()}catch(e){}return r};
+/* QA 11-24 (NOTE): a photo counts only when it is posted from the composer the card opened. Backing out of it disarms the card, so
+   an unrelated Town Hall photo a few minutes later does not count. */
+function bqDisarm(){try{if(BQARM&&Date.now()-BQARM.t>900&&!document.getElementById("phcap")&&!(typeof PH!=="undefined"&&PH.posting))BQARM=null}catch(e){}}
+document.addEventListener("click",function(){setTimeout(bqDisarm,450)},true);
+function bqBeat(){bqDisarm();try{if(S&&S.created&&loaded&&!document.hidden){if(bqTick()&&view==="board"&&!document.querySelector("#layer .modal"))render()}}catch(e){}}
 setTimeout(bqBeat,4000);setInterval(bqBeat,20000);
 htabCss("qb-bq-css",".bty-card.bq{position:relative}.bq-x{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted,inherit);font-size:17px;line-height:1;cursor:pointer}.bq-x:hover{color:var(--fg);border-color:var(--accent)}"
   +".bty-card.bq.on{border-color:var(--gold,#ffc857)}.bty-card.bq .label{padding-right:30px}.chip.coin2{color:var(--gold,#ffc857);border-color:var(--gold,#ffc857)}.bty-card.bq.done{opacity:.75}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV147={state:bqState,offer:bqOffer,take:bqTake,drop:bqDrop,roll:bqRoll,tick:bqTick,photo:bqPhoto,running:bqRunning,pool:bqPool,pay:BQPAY,P3:BTY3P,
-  photosOn:function(v){bqPhotos=v==null?bqPhotos:function(){return !!v}},othersOn:function(v){bqOthers=function(){return !!v}},duel:function(f){bqDuel=f}};
+  arm:function(k){if(k!==undefined)BQARM=k?{k:k,t:Date.now()-1000}:null;return BQARM?BQARM.k:0},disarm:bqDisarm,photosOn:function(v){bqPhotos=v==null?bqPhotos:function(){return !!v}},othersOn:function(v){bqOthers=function(){return !!v}},duel:function(f){bqDuel=f}};
