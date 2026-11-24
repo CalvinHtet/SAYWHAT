@@ -66,3 +66,21 @@
   (:33-63); fvPick (:78-83) needs the dogs adopted (fvHasAddon bd_pluto/bd_chop: gone since v150, so the two dog visits never roll);
   fvCheck (:122) once a day, 3+ days apart, 35%; S.visit={d,t,who,id,place}; fvShow (:111) the card; fvNames hardcodes the dogs' names.
   lfVisitors (20_loft.js:1365) places each human in lfVisitRoom(place) and DROPS "dog:" members. No Calvin or Sydney data exists.
+
+## Characters as pictures, profiles, posts (third map, 2026-11-24, for the player card)
+- calImg(L,pose,H,cls) 10_app_a.js:1360: an <img> string filled in later by calHyd (needs WebGL2); poses still/idle/walk/stretch.
+  fshChar(look,H) 29u_style.js:225 (still, feet on the line). Pets need no WebGL: pzPedPic(pet,H) 29zz_pets.js:202 + window.pzFit.
+- Board header: stripHtml() 10_app_a.js:809-812 (.who > button.avbtn data-act="char" > calImg; .right = coinpill, kdBtn(), ibBtn(),
+  rankpill), wrapped by 29zz_v109.js:36-48. data-act="char" -> charModal() 10_app_a.js:1450 (profile; .prof-top, profileHtml()).
+- Another player: fshView(uid) 29u_style.js:303 -> modal(fshViewHtml(p)) (.fsh-card > .fsh-big fshChar(p.look,200), h2, .fsh-stats,
+  .sq-acts with data-act="sqgo"); wrapped at 29zz_v139.js:36 (friendship). p from fshPlayers() via fshSafe (29u_style.js:99: id, name,
+  look, lv, earnedC, fw, streak, rooms, t; + pet from 29zz_pets.js:199). cls and rank are NOT passed through.
+- World doc: socWorldDoc() 30_app_b.js:887 + wrappers (wk, boss fields, sqm, pet, ep, sb); written to worlds/<uid>; firestore.rules is
+  path-only for worlds and board (no fixed keys), so a new small field is accepted; whitelist it in fshSafe.
+- Text posts: socialAct "snpost" 30_app_b.js:964-968 -> socMine("board", fn) (30_app_b.js:921): board/<uid> = {posts:[{t,text,look}]
+  newest first, max 10, rx, name, t}; 15 s cooldown SOC.lastPost; drawn by socInner() 30_app_b.js:948-957 and its wrapper 29g_town.js:25
+  (.snp.has-look > .snp-fig nbAv(p.look,52)). Works on every build. The photo feed (phPublish) needs a photos host (web build only).
+- Interface "bg" items (bg_stars, bg_rain, bg_city, bg_weather, bg_skyline) are app backgrounds, unrelated to card backdrops.
+- Art: tools/build.py copies art/app/*.webp to dist/art and lists them in QBDATA.arthash; on the Claude build only the prefixes m_ f_
+  icon_ ui_ logo_ friend_ ex_ bl_ are packed (other files are loose and count toward its file limit). Fail-soft lookup: bldArt(id)
+  26_world.js:10: (QBART&&QBART[n]) || (arthash[n] ? artBase+n+"?h="+hash : null).
