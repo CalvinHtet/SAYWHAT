@@ -44,3 +44,25 @@
   Loaded by tools/build.py:99 into QBDATA.pet_art (pzData, pets:21).
 - data/pet_clothes.json: 48 pieces (pw_, pv_, ps_, pd_), 12 a line, 3 per slot; art ppc_<id>_<cell>.
 - No Calvin/Sydney visitor exists yet (29kv_visitors.js is other players; 29k_friends.js is the story friends).
+
+## Loft actors and friend visits (second map, 2026-11-24)
+- window.LFNOCHAR=true (20_loft.js:2): lfDesired (20_loft.js:1334) always takes its first branch. "me" is ONE actor, always in the first
+  Bedroom; no actor ever changes room (lfSync 1374 deletes and recreates one whose desired room changed). Dogs: any room whose C.dogs
+  has entries gets {id:"dog:"+d.id, room, role:"dog", dname, bed}; only the Bedroom fills C.dogs.
+- Room window: lfPvStart (20_loft.js:1741) clones each lfDesired entry of that room as "pv:<id>" in LFMETA[uid]; the Patio window also
+  clones the Bedroom's me and dogs (1755-1761). In the building view the Patio slot has no actors; the Bedroom's walk onto its patio zone.
+- lfDogNext (1446-1461): patio branch; bed 28% (and after every run); sit to 45%; run to a "wander" spot to 72%; else "dognear" (a
+  point .3-.9 in front of "me", only in the same room). 28_missions.js:12 wraps it (6% poop).
+- Pathing: footprints recorded while a room draws (lfSpr/lfBox -> lfRecBox, 935) build C.nav (cells .25); lfGo (1412) moves a target
+  to lfFreeNear and routes with A* (lfRoute 1078). A dog can cross furniture when (a) its start or goal is inside a footprint (softened,
+  4x cost), (b) A* fails (straight line), (c) the room is a painted one with no footprints, (d) dogs never re-check while walking (only
+  "me" does, 1499-1504).
+- Footprints by room: Bedroom and Game Room (27b_skins.js:65-111) have real sprites; the Patio's four pieces too; the Closet
+  (27_rooms.js:112-134) records NONE (its island is walkable, the base wander spot 3.5,3.5 sits on it); the Lair (27_rooms.js:136-141)
+  only lr_holo (6.1,5.6, 1.8 x 1.8). Every autoRoom has three base wander spots (26_world.js:225) and a door spot.
+- Test hook: window.__qbLoft() -> {A:LFA, C, go, route, blocked, roomCtx}; actors "me", "dog:pet", "pv:..." with x, y, room, mode.
+- Visits (29k_friends.js): FRIENDS key:{name, tag, spec:{body, skin, hairStyle, hairColor, top/topColor, bottom/bottomColor,
+  shoe/shoeColor, eq:[item ids]}} (look via fvLook, :10); FVISITS {id, who:[keys or "dog:<name>"], w, place, need?, text, buff?, coin?}
+  (:33-63); fvPick (:78-83) needs the dogs adopted (fvHasAddon bd_pluto/bd_chop: gone since v150, so the two dog visits never roll);
+  fvCheck (:122) once a day, 3+ days apart, 35%; S.visit={d,t,who,id,place}; fvShow (:111) the card; fvNames hardcodes the dogs' names.
+  lfVisitors (20_loft.js:1365) places each human in lfVisitRoom(place) and DROPS "dog:" members. No Calvin or Sydney data exists.
