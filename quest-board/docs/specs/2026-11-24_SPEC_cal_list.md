@@ -152,4 +152,7 @@ Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the econom
   my money." Done (29zz_v153.js and the checkouts in v150 and v152): every Shop purchase is a preview where there is something to
   show, then a checkout with "Confirm purchase". The refund is for Cal's own save only (QB_WEB.owners), once.
 - ROOMS's walk picture for the visit (friend_calsyd, three frames) and the ten backdrops are in and QA-passed; sent to Cal 11-24.
+- APPROVED by Cal 11-24: the visit picture (friend_calsyd, three frames) and all ten backdrops ("The visiting animation and 10
+  backdrops look great"). With the three large beds and the evolved pets, the art still to come to him: the pet clothing brands, the
+  tattoos and scars, the soul stone icon, the five Atelier brands, the Pet Store care icons.
 
