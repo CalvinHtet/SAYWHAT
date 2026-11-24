@@ -87,6 +87,10 @@ Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so thes
   LEAD's rules: until it is bought the evolved pet sleeps curled on the floor beside the small bed; the bed drawn follows the form the
   pet is in (de-evolved: the small bed; the large one stays owned and comes back with the form). The upgrade's name must not give the
   evolution away before it happens (it is not listed at all until then).
+- Large beds are in (ROOMS 3b969813; sheet shots/pending_art/cal_1124/pets/beds_large_fit.png). ROOMS's footprints, to check against
+  how pzBed scales the picture: k5 wolf daybed 470x464 px, sleepOff 90, about 2.0 x 1.7 cells, tall headboard so it goes against a wall;
+  k6 wyvern nest 500x343, sleepOff 60, about 1.8 x 1.5; k4 slime-cat bed 430x295, sleepOff 70, about 1.7 x 1.4. Small beds are 1.2 x 1.0
+  with sleepOff wolf 40, wyvern 20, slime 40 (unchanged).
 - Pets must never phase through furniture: LEAD's pet-walk code; watch every room for a few minutes when the pet roams (QA too).
 
 ## Batch 4: Stylist and player card
