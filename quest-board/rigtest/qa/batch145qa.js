@@ -58,7 +58,7 @@ const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); 
     const need = await V(n.p, () => window.__qb.x().need(99)); let firstDiff = 0; for (let i = 0; i < 100; i++) if (c0[i] !== c1[i]) { firstDiff = i + 1; break; }
     ok(firstDiff === 0 || firstDiff > 40, 'levels 1-40 need the same XP as on v1.43 (first difference at level ' + firstDiff + ')');
     ok(need === 4400, '99 to 100 needs ' + need); console.log('     total XP to 60 / 80 / 100: v1.43 ' + [60, 80, 100].map((l) => c0[l - 1]).join(' / ') + ', now ' + [60, 80, 100].map((l) => c1[l - 1]).join(' / '));
-    const drop = await V(n.p, (xp) => { const x = window.__qb.x(); return [45, 60, 80].map((l) => l + '->' + x.lvlOf(xp[l - 1])).join(' '); }, c0); note('CURVE (LEAD, before shipping): a save past level 40 on curve 7 drops on curve 8 (no migration): ' + drop + '. Fine only if nobody is past 40 when v1.45 ships; QA can\'t see real saves: check the Town board\'s levels first.');
+    /* saves past 40 made on curve 7 move over at their level (xpc8, from ea0657be): rigtest/qa/curve8.js checks that */
     await a.ctx.close(); await n.ctx.close(); }
 
   /* ---------- WEEK ---------- */
@@ -146,7 +146,7 @@ const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); 
     /* odds over 20,000 rolls and the average */
     const od = await V(p, () => { const H = window.__qbV146, P = H.prize, VAL = H.val, n = 20000, c = {}; let sum = 0; for (let i = 0; i < n; i++) { const o = H.roll(); const B = o.map((q) => (q === 'g' ? 'm' : q)); const m = B[0] === B[1] && B[1] === B[2]; const k = m ? B[0] : 'x'; c[k] = (c[k] || 0) + 1; sum += m ? P[B[0]] : B.reduce((a, q) => a + VAL[q], 0); } return { pct: Object.fromEntries(Object.entries(c).map(([k, v]) => [k, +(100 * v / n).toFixed(1)])), avg: Math.round(sum / n) }; });
     console.log('     20,000 cards: ' + JSON.stringify(od.pct) + ' %, average ' + od.avg + ' coins'); const gp = await V(p, () => { const H = window.__qbV146, n = 40000, c = [0, 0, 0, 0]; for (let i = 0; i < n; i++) c[H.roll().filter((q) => q === 'g').length]++; return c.map((v) => +(100 * v / n).toFixed(2)); });
-    console.log('     40,000 cards by golden count 0/1/2/3: ' + gp.join(' / ') + ' %'); ok(Math.abs(gp[1] - 2.3) < 0.4 && Math.abs(gp[2] - 0.55) < 0.2 && gp[3] < 0.35 && Math.abs(od.pct.x + (gp[1] + gp[2]) - 67 - 2.85) < 2.5 && od.avg > 300 && od.avg < 450, 'odds as set (gold 2.3 / 0.55 / 0.15) and an average card of about 375 coins (' + od.avg + ')');
+    console.log('     40,000 cards by golden count 0/1/2/3: ' + gp.join(' / ') + ' %'); ok(Math.abs(gp[1] - 2.3) < 0.4 && Math.abs(gp[2] - 0.55) < 0.2 && gp[3] < 0.35 && Math.abs(od.pct.x - 67 - gp[1] - gp[2]) < 1.5 /* a card with one or two gold is no match too */ && od.avg > 300 && od.avg < 450, 'odds as set (gold 2.3 / 0.55 / 0.15) and an average card of about 375 coins (' + od.avg + ')');
     await V(p, () => window.__qbV146.rnd()); ok(!p.errs.length, 'CARD: no page errors ' + JSON.stringify(p.errs.slice(0, 2))); await ctx.close(); }
   /* the golden mascots: 1, 2 and 3, on his and her save, a save owning every Street piece; the piece in the Wardrobe below level 30 */
   for (const sex of ['m', 'f']) { const { ctx, p } = await open(); await seed(p, 12, { sex, rooms: ['bedroom', 'closet'] }); await shut(p); await V(p, () => ['qa0', 'qa1', 'qa2'].forEach((id) => window.__qb.x().toggle(id))); await shut(p);
