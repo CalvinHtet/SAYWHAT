@@ -34,8 +34,8 @@ Prize rule for the whole game (Cal 11-24): a free piece is always one the player
 without a pet; no player-card backdrops, no upgrades or buffs, no interface pieces). Furniture from surprise loot stays, as he set it.
 10. **Scratch card** replaces the Wheel (same level, same average payout). 3x3, once a day, only after 3 tasks that day. Three mascot
     icons = 1,500 coins; three neon orange Ø = 1,000; three neon cyan Ø = 500; no match = each icon's small coin value, added up
-    (always less than a match). Coins only, flat at every level (Cal: "almost 5000 coins is a lot"). Once in a while the mascots are
-    golden and the card also gives one wearable piece of clothing (a surprise, not in the legend). Must look polished, not MS Paint. Cal's Ø logo files:
+    (always less than a match). Coins only, flat at every level (Cal: "almost 5000 coins is a lot"). About 3 cards in 100 show golden
+    mascots (a surprise, not in the legend): one = a clothing piece, two = a rare piece (Boutique), three = a legendary piece (Atelier). Must look polished, not MS Paint. Cal's Ø logo files:
     art/src-cal/ (black, cyan and orange versions).
 11. **Bounties.** Three cards: a 1-day, a 2-day and a 3-day. Take two and the third disappears. An x forfeits a taken bounty so a new
     card can appear. 3 rerolls a day in total (not each); after that a reroll costs 150 coins; with no rerolls left the same bounty

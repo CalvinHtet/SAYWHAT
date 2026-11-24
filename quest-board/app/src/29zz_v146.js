@@ -13,12 +13,17 @@
      then 500 coins. No clothing items or other prizes. Just coins. Maybe once in a while, it will have a golden mascot icon and that
      could include a free clothing item." So the prizes are flat coins at every level (no reward scale): three mascots 1,500, three
      orange 1,000, three cyan 500. No match: mascot 120, orange 70, cyan 50 each, added up (190 to 310), always under the smallest match.
-   - Odds a card (SCODDS): three golden mascots 3%, three mascots 2%, three orange 8%, three cyan 20%, no match 67%. The golden card pays
-     the mascots' 1,500 and one piece of clothing the player can wear and does not own (lootCloth: Street, never luxury; nothing more
-     when they own it all). It is a surprise: the card's legend and its (i) do not mention it.
+   - Golden mascots (Cal 11-24, later: "if 3 out of 100 are golden, make it so that if they even get 1 golden mascot, it is a clothing
+     item. 2 would be a rare clothing item. 3 would be a legendary clothing item from the rare legenedary shop towards the end game").
+     About 3 cards in 100 show gold: one golden mascot 2.3%, two 0.55%, three 0.15%. A golden mascot counts as a mascot for the coins
+     (so three golden are also three mascots: 1,500), and the gold is what gives clothing: one = a Street piece (never the luxury
+     tier), two = a Boutique piece, three = an Atelier piece (the level 70 floor), each one the player can wear and does not own, from
+     any brand on that floor, open to them yet or not; with none left on a floor it steps down one. Gold is a surprise: the card's legend
+     and its (i) do not mention it.
+   - Odds a card (SCODDS): gold 3% as above, three mascots 2%, three orange 8%, three cyan 20%, no match 67%.
    - An average card is about 375 coins (the Wheel paid 310 a spin x the reward scale, up to six spins a day). */
-var SCNEED=3,SCODDS=[["g",3],["m",2],["o",8],["c",20],["x",67]],SCPRIZE={g:1500,m:1500,o:1000,c:500},SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
-    SCNAME={g:"Three golden mascots",m:"Three mascots",o:"Three orange",c:"Three cyan"},SCRND=Math.random;
+var SCNEED=3,SCODDS=[["g1",2.3],["g2",.55],["g3",.15],["m",2],["o",8],["c",20],["x",67]],SCPRIZE={m:1500,o:1000,c:500},SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
+    SCNAME={m:"Three mascots",o:"Three orange",c:"Three cyan"},SCGOLD=[null,["street","a piece of clothing"],["boutique","a rare piece"],["atelier","a legendary piece"]],SCRND=Math.random;
 function scArt(k){k="sc_"+k+".webp";return (window.QBART&&QBART[k])||"art/"+k}
 /* the mascot is its picture; the two Ø are Cal's logo (art/src-cal/o_white.webp, the solid strokes) used as a mask over a flat neon colour
    with a glow, so they read bold and clean at any size (his thin-line colour files went faint on the dark card) */
@@ -29,27 +34,41 @@ function scTasks(){return Object.keys((S&&S.cdone)||{}).length}
 function scState(){var t=today();if(!S.sc||typeof S.sc!=="object"||S.sc.d!==t)S.sc={d:t,out:null,pick:[],done:0,res:""};return S.sc}
 function scReady(){var c=scState();return !c.done&&scTasks()>=SCNEED}
 /* the three that will show: a match, or three that are not all the same */
-function scRoll(){var k=scPick(SCODDS);if(k!=="x")return [k,k,k];var a;do{a=[scPick(SCMIX),scPick(SCMIX),scPick(SCMIX)]}while(a[0]===a[1]&&a[1]===a[2]);return a}
+function scBase(q){return q==="g"?"m":q}
+function scRoll(){var k=scPick(SCODDS),a;
+  if(/^g/.test(k)){var n=+k.slice(1);a=[];for(var i=0;i<3;i++)a.push(i<n?"g":scPick(SCMIX));
+    for(var j=2;j>0;j--){var r=Math.floor(SCRND()*(j+1)),t=a[j];a[j]=a[r];a[r]=t}return a}
+  if(k!=="x")return [k,k,k];do{a=[scPick(SCMIX),scPick(SCMIX),scPick(SCMIX)]}while(a[0]===a[1]&&a[1]===a[2]);return a}
+/* a piece from a floor for the gold: any brand of that floor, worn, fitting, not owned; stepping down a floor when it has none */
+function scGoldPiece(n){var lux=function(it){return clothTier(it[0])==="luxury"},on=function(it,fl){return brandFloor(it[6].b)===fl},
+    pool=SHOP.filter(function(it){var e=it[6]||{};return /^a_/.test(it[1])&&e.b&&e.b!=="basics"&&!e.dungeon&&!S.owned[it[0]]&&(typeof isRigItem!=="function"||isRigItem(it))&&itemFits(it)}),
+    pick=function(p,tag){if(!p.length)return null;var it=p[Math.floor(Math.random()*p.length)];return {it:it,fl:tag||brandFloor(it[6].b)}},r=null;
+  if(n>=3){r=pick(pool.filter(function(it){return on(it,"atelier")}));
+    /* the Atelier has no brand yet (LEAD 11-24): until it does, "legendary" is one of the ten dearest pieces the player could get */
+    if(!r)r=pick(pool.slice().sort(function(x,y){return y[3]-x[3]}).slice(0,10),"top")}
+  if(!r&&n>=2)r=pick(pool.filter(function(it){return on(it,"boutique")}));
+  if(!r)r=pick(pool.filter(function(it){return on(it,"street")&&!lux(it)}));
+  return r}
 /* the six never scratched, filled in for the reveal */
 function scRest(){var a=[];for(var i=0;i<6;i++)a.push(scPick(SCMIX));return a}
-function scPay(c){var o=c.out,match=o[0]===o[1]&&o[1]===o[2],k=o[0],coins=0,extra="";
-  if(match){coins=SCPRIZE[k];
-    if(k==="g"){var it=null;try{it=lootCloth("street")}catch(e){}
-      if(it){var br=BRANDS.filter(function(x){return x.id===it[6].b})[0];S.owned[it[0]]=true;extra=" and "+it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}}
-  }else coins=o.reduce(function(a,q){return a+SCVAL[q]},0);
-  S.coins+=coins;S.earnedC+=coins;c.done=1;c.win=match?k:"";c.coins=coins;c.rest=scRest();
+function scPay(c){var o=c.out,B=o.map(scBase),match=B[0]===B[1]&&B[1]===B[2],k=B[0],gold=o.filter(function(q){return q==="g"}).length,extra="";
+  var coins=match?SCPRIZE[k]:B.reduce(function(a,q){return a+SCVAL[q]},0);
+  if(gold){var g=null;try{g=scGoldPiece(gold)}catch(e){}
+    if(g){var it=g.it,br=BRANDS.filter(function(x){return x.id===it[6].b})[0];S.owned[it[0]]=true;c.item=it[0];c.itemFl=g.fl;
+      extra=" and "+SCGOLD[gold][1]+": "+it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}}
+  S.coins+=coins;S.earnedC+=coins;c.done=1;c.win=match?k:"";c.gold=gold;c.coins=coins;c.rest=scRest();
   c.res=(match?SCNAME[k]+": ":"")+coins.toLocaleString()+" coins"+extra;S.wheel=today();S.wheelRes=c.res;S.wheelAt=Date.now();
   persist();return c}
 function scScratch(i){var c=scState();if(c.done||scTasks()<SCNEED||c.pick.indexOf(i)>=0||c.pick.length>=3||i<0||i>8)return;
   if(!c.out)c.out=scRoll();c.pick.push(i);persist();try{qbSnd("build")}catch(e){}
   if(c.pick.length<3){render();return}
   scPay(c);render();
-  setTimeout(function(){try{checkBadges()}catch(e){}try{qbSnd(c.win?"big":"build")}catch(e){}if(c.win)try{burst(innerWidth/2,innerHeight/2.6,c.win==="g"?80:c.win==="m"?60:34)}catch(e){}pop("Scratch card: "+c.res)},650)}
+  setTimeout(function(){try{checkBadges()}catch(e){}try{qbSnd(c.win||c.gold?"big":"build")}catch(e){}if(c.win||c.gold)try{burst(innerWidth/2,innerHeight/2.6,c.gold?40+20*c.gold:c.win==="m"?60:34)}catch(e){}pop("Scratch card: "+c.res)},650)}
 function scCell(c,i){var k=c.pick.indexOf(i),open=k>=0,sym=open?c.out[k]:null,rest=null;
   if(!open&&c.done&&c.rest){var n=0;for(var j=0;j<i;j++)if(c.pick.indexOf(j)<0)n++;rest=c.rest[n]}
-  var win=c.done&&c.win&&open;
+  var win=c.done&&open&&(c.win||sym==="g");
   return '<button type="button" class="sc-cell'+(open?' open':'')+(rest?' rest':'')+(win?' win':'')+'" data-act="scratch" data-i="'+i+'"'+((open||c.done||scTasks()<SCNEED)?' disabled':'')+' aria-label="'+(open||rest?'Panel '+(i+1):'Scratch panel '+(i+1))+'">'
-    +(sym||rest?'<span class="sc-face sc-glow-'+(sym||rest)+'">'+scIcon(sym||rest)+(c.done&&!c.win&&open?'<i class="sc-v">+'+SCVAL[sym]+'</i>':'')+'</span>':'')
+    +(sym||rest?'<span class="sc-face sc-glow-'+(sym||rest)+'">'+scIcon(sym||rest)+(c.done&&!c.win&&open?'<i class="sc-v">+'+SCVAL[scBase(sym)]+'</i>':'')+'</span>':'')
     +(open||rest?'':'<span class="sc-foil"><i></i></span>')+(open&&k===c.pick.length-1&&!c.done?'<span class="sc-dust"></span>':'')+'</button>'}
 function scHtml(){var c=scState(),n=scTasks(),lock=!c.done&&n<SCNEED,left=3-c.pick.length,cells="";for(var i=0;i<9;i++)cells+=scCell(c,i);
   var legend=function(s,t){return '<div class="sc-leg sc-glow-'+s+'">'+scIcon(s)+scIcon(s)+scIcon(s)+'<b>'+t+'</b></div>'};
@@ -92,4 +111,4 @@ htabCss("qb-sc-css",
   +".sc-prog{display:block;height:6px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden}.sc-prog i{display:block;height:100%;background:linear-gradient(90deg,#00ffff,#ff5a28)}"
   +".sc-legs{display:grid;gap:6px;max-width:340px;margin:0 auto}.sc-leg b{filter:none;text-shadow:none}.sc-leg{display:flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid var(--line);border-radius:12px}.sc-leg .sc-ic{width:26px;height:26px;flex:none}.sc-leg .sc-ic.sc-m{width:26px;height:26px;border-radius:7px}.sc-leg b{margin-left:auto;font-size:.86em}"
   +".zx-sc.wait b{opacity:.7}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV146={state:scState,ready:scReady,roll:scRoll,scratch:scScratch,tasks:scTasks,rnd:function(f){SCRND=f||Math.random},odds:SCODDS,prize:SCPRIZE,val:SCVAL};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV146={state:scState,ready:scReady,roll:scRoll,scratch:scScratch,tasks:scTasks,rnd:function(f){SCRND=f||Math.random},odds:SCODDS,prize:SCPRIZE,val:SCVAL,floor:function(id){var it=SHOP.filter(function(x){return x[0]===id})[0];return it?brandFloor((it[6]||{}).b):""},left:function(fl){return SHOP.filter(function(it){var e=it[6]||{};return /^a_/.test(it[1])&&e.b&&brandFloor(e.b)===fl&&!S.owned[it[0]]&&itemFits(it)&&(typeof isRigItem!=="function"||isRigItem(it))}).length}};
