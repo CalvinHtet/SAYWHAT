@@ -130,7 +130,7 @@ htabCss("qb-loot-css",".lootm{text-align:center}.lootimg{display:flex;justify-co
 var LOOTRND=Math.random;
 var v44Toggle=toggle;toggle=function(id){var was=!!(S.done&&S.done[id]),r=v44Toggle.apply(this,arguments);
   try{if(!was&&S.done&&S.done[id]){var q=(S.quests||[]).filter(function(x){return x&&x.id===id})[0],L=lootState();
-      if(q&&!q.tut&&!L.ids[id]){L.ids[id]=1;if(LOOTRND()<LOOTP){var o=lootGive(lootKind(LOOTRND()));setTimeout(function(){try{lootShow(o)}catch(e){}},1200)}}}}catch(e){}
+      if(q&&!q.tut&&!L.ids[id]){L.ids[id]=1;if(LOOTRND()<(typeof lootP==="function"?lootP():LOOTP)){/* lootP: the Pet Store's Lucky Soul Stones (29zz_v150.js) */var o=lootGive(lootKind(LOOTRND()));setTimeout(function(){try{lootShow(o)}catch(e){}},1200)}}}}catch(e){}
   return r};
 
 /* ---- every free piece is one the player can use (Cal 11-24: "Make sure that clothing item rewards don't include items that cannot be
