@@ -25,10 +25,11 @@ var V51DOGFREE={calsyd:1};
    walking Pluto and Chopstick on leashes, the dogs at their real size). When it is in the build the card shows that one picture,
    its frames taking turns (the .fvposes timer), in place of one picture per guest. Until then the dogs on the card are drawn small. */
 var v51Show=fvShow;fvShow=function(v){var r=v51Show.apply(this,arguments);
+  try{var f4=document.querySelector("#layer .modal .visit .vfig");if(f4&&v&&v.who&&v.who.length>=4)f4.classList.add("fv4")}catch(e){}
   try{var A=v&&v.id?fvPoses(v.id):[];if(A.length){var f=document.querySelector("#layer .modal .visit .vfig");
       if(f){f.classList.add("fvgroup");f.innerHTML='<span class="fvposes">'+A.map(function(u,k){return '<img class="vart fvart'+(k?'':' on')+'" src="'+u+'" alt="'+(k?'':esc(fvNames(v.who)))+'">'}).join("")+'</span>'}}}catch(e){}
   return r};
-htabCss("qb-v51-css",/* QA 11-24: the card grew to its row (430 px on a 320 px phone); it keeps to the screen and the row wraps */".card.visit{max-width:calc(100vw - 24px);box-sizing:border-box}.visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px;width:100%;max-width:100%;box-sizing:border-box}@media(max-width:430px){.visit h2{font-size:26px!important;overflow-wrap:anywhere}}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
+htabCss("qb-v51-css",/* QA 11-24: the card grew to its row (430 px on a 320 px phone); it keeps to the screen and the row wraps. QA's recheck: older rules outranked these two (the card's own 430 px and the row's nowrap), so they are said louder, the wrap only for a row of four */"#layer .modal .card.visit{max-width:min(430px,calc(100vw - 24px))!important;min-width:0!important;box-sizing:border-box}#layer .modal .visit .vfig.fv4{flex-wrap:wrap!important;width:100%!important;max-width:100%!important;min-width:0!important}#layer .modal .visit .vfig.fv4>.fvpose{max-width:none}"+".card.visit{max-width:calc(100vw - 24px);box-sizing:border-box}.visit .vfig{flex-wrap:wrap;justify-content:center;row-gap:4px;width:100%;max-width:100%;box-sizing:border-box}@media(max-width:430px){.visit h2{font-size:26px!important;overflow-wrap:anywhere}}.visit .vfig .fvpose:first-child:nth-last-child(n+4),.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose{flex:none}"
   +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img{height:52px!important;width:auto!important;max-width:none!important}"
   +".visit .vfig{align-items:flex-end}.visit .vfig.fvgroup img{height:auto!important;max-height:240px;width:auto!important;max-width:100%!important}"
   +".visit .vfig .fvpose:first-child:nth-last-child(n+4) img.calp,.visit .vfig .fvpose:first-child:nth-last-child(n+4)~.fvpose img.calp{height:132px!important}");
@@ -64,6 +65,12 @@ var v51Des=lfDesired;lfDesired=function(){var o=v51Des.apply(this,arguments);
   /* QA 11-24: the change of room was a pop. For the first 25 s of a spell it comes in the way a visitor does (fresh: faded in at
      the room's door, lfPlace), in the Bedroom too when it comes back. */
   try{var i=p3Room(),fresh=Date.now()%P3SPELL<25000&&Math.floor(Date.now()/P3SPELL)!==P3BOOT;o.forEach(function(e){if(e&&e.id==="dog:pet"){if(i>=0){e.room=i;e.bed=null}if(fresh)e.fresh=1}})}catch(e){}return o};
+/* QA's recheck: "fresh" only did anything for visitors (lfPlace), so the change of room was still a pop in the middle of the room.
+   The companion with fresh set is put at the room's door, unseen, and fades in there, the way a visitor arrives. */
+var v51Place=lfPlace;lfPlace=function(a){
+  try{if(a&&a.dname==="pet"&&a.fresh&&!a.visitor&&!a.pv){var C=lfC(a);if(C){var d=lfDoorOf(C),f=C.nav&&typeof lfFreeNear==="function"?lfFreeNear(C,d.x,d.y+.3,1.5):null;
+        a.x=f?f[0]:d.x;a.y=f?f[1]:d.y+.3;a.alpha=0;a.fade=1;a.mode="idle";a.t=.6;a.sleep=0;a.act=null;return}}}catch(e){}
+  return v51Place.apply(this,arguments)};
 var v51Dog=lfDogNext;lfDogNext=function(a,C){
   try{if(a&&a.dname==="pet"&&!a.visitor){
       if(C&&C.nav&&typeof lfBlockedAt==="function"&&lfBlockedAt(C,a.x,a.y)){var f=lfFreeNear(C,a.x,a.y,2.4);if(f){a.x=f[0];a.y=f[1]}}

@@ -35,6 +35,10 @@ function pcHtml(p,H,tryBg){var card=p.me?pcMine():(p.card||{});if(tryBg)card=Obj
   var line=[card.r,card.c,"Level "+(p.lv||1)].filter(Boolean).join(" · ");
   return '<div class="pcard pc-'+bg+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'><div class="pc-stage"><span class="fsh-fig pc-fig">'+fshChar(p.look,H)+pet+'</span></div>'
     +'<div class="pc-plate"><b>'+esc(p.name||"Player")+'</b><small>'+esc(line)+'</small></div></div>'}
+/* QA's recheck: at 320 px the changed wolf's and slime-cat's tail flames were cut by the card's left edge. Once a companion's picture
+   is sized (pzFit) and again when the figure beside it has drawn, it is pushed right by whatever part of it is past the stage. */
+function pcClamp(im){try{var st=im&&im.closest&&im.closest(".pc-stage");if(!st||!im.isConnected)return;im.style.transform="";/* never the margins: pzFit anchors the picture with them */var r=im.getBoundingClientRect(),q=st.getBoundingClientRect(),d=q.left+3-r.left;if(r.width>1&&d>0)im.style.transform="translateX("+Math.ceil(d)+"px)"}catch(e){}}
+(function(){var base=window.pzFit;window.pzFit=function(im){var r=base.apply(this,arguments);try{if(im&&im.closest&&im.closest(".pc-stage")){pcClamp(im);[300,900,2000].forEach(function(t){setTimeout(function(){pcClamp(im)},t)})}}catch(e){}return r}})();
 function pcOpen(){closeModals();var p=pcMe(),on=typeof socOn==="function"&&socOn();
   modal('<div class="card box2 pcm"><span class="label">Player card</span>'+pcHtml(p,210)
     +'<div class="row pc-row"><button type="button" class="btn ghost" data-act="pcbgs">Change backdrop</button>'+(on?'<button type="button" class="btn" data-act="pcpost">Post my card</button>':'')+'</div></div>')}
