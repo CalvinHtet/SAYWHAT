@@ -82,3 +82,15 @@ without a pet; no player-card backdrops, no upgrades or buffs, no interface piec
 - D. The 10 backdrops, card ratio 3:4, clear floor in the bottom third for the character and the pet.
 - E. Face tattoos (6) and scars (4), both sexes, front view.
 - F. A soul stone icon (a chest icon exists).
+- G. The Atelier (Cal 11-24: "Create 5 brands of 3 items from each category for the atelier brand as well"): 5 brands x 5 categories
+  (hat, accessory, top, bottom, shoes) x 3 pieces = 75 pieces, every piece for both bodies. The level 70 floor, the legendary shop:
+  the most detailed pieces in the game (never plain, sexy is fine, adults only, no cultural costume, no trademarks). LEAD's concepts,
+  ROOMS may improve them; names and looks go to Cal in the end batch:
+  1. AURELIA NOIR: black velvet and gold filigree couture. Black, antique gold, oxblood.
+  2. GLASSHOUSE: crystal and iridescent organza, glass beading, prism light. Clear, opal, ice blue.
+  3. NIGHT COURT: celestial royalty, midnight silk with silver constellations, star crowns. Midnight blue, silver, violet.
+  4. EMBERLINE: molten couture, lava-cracked leather with ember-glow seams, obsidian plates. Obsidian, ember orange, ash.
+  5. PALE MACHINE: white and liquid-chrome futurist couture, sculpted shoulders, pearl. White, chrome, pearl pink.
+  Order for ROOMS: after A, B and the first pet brands. LEAD adds them to BRANDS with fl:"atelier" as they pass QA; the scratch card's
+  three golden mascots draw from this floor as soon as it has pieces (29zz_v146.js scGoldPiece).
+
