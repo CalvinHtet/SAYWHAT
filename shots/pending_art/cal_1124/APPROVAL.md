@@ -15,7 +15,9 @@ with slime paws and keeps the forehead star; wyvern gets black-purple accents an
 
 ## B. Pet beds - first-form beds CAL APPROVED; large beds for the evolved forms: DRAFT
 Cal 11-24: the baby and adult wolf beds looked the same (they were: one design scaled). When a pet evolves, the Bedroom offers a new
-upgrade, a larger bed. ROOMS paints three large beds (pbed_k4/k5/k6, new designs); LEAD wires the upgrade.
+upgrade, a larger bed. ROOMS painted three large beds (pbed_k4/k5/k6): wolf a fur daybed on a runed stone base with a crescent-moon
+headboard and moon-stone; wyvern a black-purple nest on a rock plinth with amber crystals; slime-cat a plum velvet cat bed with a
+pink star charm. Each evolved pet asleep on its bed: pets/beds_large_fit.png. LEAD wires the upgrade (hidden until the pet evolves).
 - Wolf: the round dog-bowl bed is replaced by a shaggy fur rug with a navy crescent-moon bolster and a moon-stone (pbed_wolf, and
   pbed_k5 at 1.4x). Slime cushion and wyvern nest unchanged; pbed_k4 / pbed_k6 are them at 1.4x.
 - Every form checked asleep on its bed in the game (pets/ingame_sizes.png, right-hand crops).
