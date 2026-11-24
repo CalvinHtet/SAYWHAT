@@ -86,3 +86,16 @@ var c6Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc6&&
 function wkNeed(){return need(Math.min(effLvl(),MAXL-1))}
 function wqXp(){return Math.min(ECON.wqFlat,Math.round(2*wkNeed()))}
 function wwXp(){return Math.min(ECON.wwFlat,Math.max(250,Math.round(2.5*wkNeed())))}
+/* ---- curve 8 for a save past level 40 made on curve 7 (QA 11-24: "curve 8 has no migration, so any save past level 40 drops one
+   level"). Nobody should be there a day after the reboot, but the cost of being wrong is a player losing a level, so such a save moves
+   over at the same level and the same share of the way to the next, as curves 3 to 6 did (xpc8; curve 7 is frozen here). At level 40
+   and under the two curves are the same numbers, so nothing moves. ---- */
+var CUMT7=[0,0];(function(){for(var L=1;L<=MAXL+50;L++)CUMT7.push(CUMT7[L]+Math.round(L<6?20+150*(L-1)/5:170+.364*Math.pow(L-6,2)+(L>40?.196*Math.pow(L-40,2):0)))})();
+function cum7(L){return L<=1?0:L<CUMT7.length?CUMT7[L]:CUMT7[CUMT7.length-1]+(L-CUMT7.length+1)*(CUMT7[CUMT7.length-1]-CUMT7[CUMT7.length-2])}
+var c8Fresh=fresh;fresh=function(){var f=c8Fresh.apply(this,arguments);f.xpc8=1;return f};
+var c8Merge=merge;merge=function(d){var move=!!(d&&d.epoch===QB_EPOCH&&!d.xpc8);var r=c8Merge.apply(this,arguments);
+  if(move&&S){var x=S.xp||0,L=1;while(L<MAXL+49&&x>=cum7(L+1))L++;
+    if(L>40){var fr=(x-cum7(L))/Math.max(1,cum7(L+1)-cum7(L)),nx=Math.round(cum(L)+fr*(cum(L+1)-cum(L)));if(S.wkg&&typeof S.wkg.x0==="number")S.wkg.x0+=nx-x;S.xp=nx}}
+  if(S&&d&&d.epoch===QB_EPOCH)S.xpc8=1;return r};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbC8={cum7:cum7};
+

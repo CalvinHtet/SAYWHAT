@@ -15,10 +15,14 @@
    with one of the words below (syncing…, Loading…, Posting…, Reading your brain dump..., Looking for players…, Connecting…): each gets a
    small spinning ring in front of it, in its own colour, for as long as it shows. Found after every render and twice a second, so a line
    written later (a fetch that answers, a window that opens) gets one too. ---- */
-var V44WAIT=/^(loading|posting|looking for|reading|opening|checking|connecting|syncing|saving|sending|sorting|uploading|verifying|adding|working|thinking)\b[^\n]{0,60}(…|\.\.\.)$/i;
+/* QA 11-24 (FIX): the first rule (any short line that starts with a waiting word and ends in "...") also ringed a player's own words, for
+   good: quests named "Sorting laundry..." or "Reading chapter 3...", chat lines, posts. Now only the game's own status lines, matched
+   whole, and never inside anything a player wrote (a quest's name, the chat log, a post's caption or comments, a text box). */
+var V44WAIT=/^(syncing|loading|loading photos|posting|sending|saving|uploading|verifying|checking|connecting|working|looking for neighbors|looking for players|checking who is here|reading the image|reading the photo|reading your brain dump|opening the room)(\u2026|\.\.\.)$/i,
+    V44USER=".name,.quest,.qrow,.bty-card,.tch-log,.tch-logw,.tch-in,.ph-cap,.ph-cm,.ph-cms,.ph-card,.tw-row,.pname,[contenteditable],svg,script,style,textarea,input,option";
 htabCss("qb-spin-css",".qspin::before{content:\"\";display:inline-block;box-sizing:border-box;width:.78em;height:.78em;margin-right:.42em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:-.08em;animation:qspin .7s linear infinite}@keyframes qspin{to{transform:rotate(360deg)}}");
 function v44Spin(){try{var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,on=[];
-    while((n=w.nextNode())){var t=n.nodeValue;if(t.length<5||t.length>80)continue;t=t.trim();if(!V44WAIT.test(t))continue;var p=n.parentNode;if(!p||!p.closest||p.closest("svg,script,style,textarea,option"))continue;on.push(p)}
+    while((n=w.nextNode())){var t=n.nodeValue;if(t.length<5||t.length>80)continue;t=t.trim();if(!V44WAIT.test(t))continue;var p=n.parentNode;if(!p||!p.closest||p.closest(V44USER))continue;on.push(p)}
     document.querySelectorAll(".qspin").forEach(function(e){if(on.indexOf(e)<0)e.classList.remove("qspin")});
     on.forEach(function(e){e.classList.add("qspin")})}catch(e){}}
 var v44Render=render;render=function(){var r=v44Render.apply(this,arguments);v44Spin();return r};
@@ -137,5 +141,16 @@ var v44Toggle=toggle;toggle=function(id){var was=!!(S.done&&S.done[id]),r=v44Tog
    pieces that fit the body (itemFits: the fo/mo marks and g); this makes the rest of the rule hold whatever a caller asks for: only
    things worn on the character (slot a_...), never a pet's piece, a backdrop, a buff or an interface piece. ---- */
 var v44Pool=freePool;freePool=function(o){return v44Pool.apply(this,arguments).filter(function(it){var e=it[6]||{};return /^a_/.test(it[1])&&itemFits(it)&&!e.pet&&!e.bg&&!e.card})};
+
+/* ---- the tabs work while the save syncs (Cal 11-24: "When the save is syncing on the top right, i cant go into my different tabs. Make
+   sure you add a pulsating glowing syncing... text or spinning circle on the top right so we know it is syncing, and also do not
+   disable to option to click on other tabs while things are syncing. it should be able to be run in the background").
+   The fast start draws the copy on this device and turns every tap off until the online save has answered (29zx_simple.js:
+   html.qb-sync body *{pointer-events:none}), because nothing done before then is saved (persist waits for it) and the online save
+   replaces the screen when it lands. Looking around is safe, so the bottom bar, anything that only changes the screen (data-act="nav",
+   the Hall's tabs) and the (i) sheets take taps again; ticking, buying and typing still wait. "syncing…" gets its ring (v44Spin) and a
+   slow glow so it reads as working, not stuck. ---- */
+htabCss("qb-syncnav-css","html.qb-sync body .nav,html.qb-sync body .nav *,html.qb-sync body [data-act=\"nav\"],html.qb-sync body [data-act=\"nav\"] *,html.qb-sync body .htab,html.qb-sync body .htab *{pointer-events:auto!important}"
+  +"html.qb-sync #savest{color:var(--accent,#7cf0ff);font-weight:700;animation:qbsyncglow 1.3s ease-in-out infinite}@keyframes qbsyncglow{0%,100%{opacity:.55;text-shadow:none}50%{opacity:1;text-shadow:0 0 10px currentColor}}");
 
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV144={spin:v44Spin,ranks:function(){return RANKS.map(function(r){return r.n})},sqk:function(){return Object.keys(SQK)},surge:function(){return surgeState()},check:surgeCheck,left:surgeLeft,loot:{give:function(k){var o=lootGive(k);lootShow(o);return {k:o.k,xp:o.xp,coins:o.coins,it:o.it&&o.it[0],ad:o.ad&&o.ad[0],price:o.ad&&o.ad[2]}},kind:lootKind,furn:function(){return lootFurnAll().map(function(f){return [S.base.slots[f[0]].t,f[1][0],f[1][2]]})},state:lootState,rnd:function(f){LOOTRND=f||Math.random},p:LOOTP,w:LOOTW,pool:function(o){return freePool(o||{slots:/^a_/,brands:"all",basics:true}).map(function(it){return [it[0],it[1],!!(it[6]||{}).fo,!!(it[6]||{}).mo,(it[6]||{}).g||""]})}},info:function(k){var e=QBINFO[k];return typeof e[1]==="function"?e[1]():e[1]}};
