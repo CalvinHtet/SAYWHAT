@@ -100,6 +100,14 @@ Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so thes
   branch without ROOMS's pet commits (as v1.45 did, lead/v145src) or look at the new wolf bed in the real Bedroom first.
 - Pets must never phase through furniture: LEAD's pet-walk code; watch every room for a few minutes when the pet roams (QA too).
 
+Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the economy scaling so it makes sense at that level"):
+- On the live curve a normal player (12 tasks) is level 25 on day 9 earning about 3,800 coins a day, level 30 on day 11 (about 5,000);
+  a heavy one is 25 on day 4 at about 8,500 a day.
+- The first companion is free. A second is 6,900 (about two normal days), a third 13,800 (about three and a half). Care is 1,500 /
+  3,000 / 6,000 a tier, 31,500 for all nine: about eight normal days, a long sink on purpose. The Companion Bed is 690 and the Grand one
+  2,050, in line with Bedroom furniture. Pet clothes are 350 to 690, beside Street clothes (110 to 450) and under the Boutique's (600 to
+  1,500, which opens at 30). Switching form is 1,500 (Cal's number). Nothing here needed changing; QA's sim can confirm.
+
 ## Batch 4: Stylist and player card
 21. **Stylist** has its own background colour and sub tabs: Cosmetics, Backdrops. Cosmetics: hairstyles, hair colours, eye styles, eye
     colours, face tattoos and scars. Tribal-style tattoos are fine; no gang marks (teardrop), no religious art.
