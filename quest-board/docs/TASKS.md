@@ -316,7 +316,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on lead/v147src b145deeb, v1.47): NOT A PASS, two Shop FIXes (QA findings); the rest passes. Next: the FIX recheck, then the pet system phase 1 (qa-local a551390e).
+- Now (on lead/v147src d40320c4, v1.47): PASS, v1.47 can be cut (QA findings). Next: the v1.47 candidate and live check, then the pet system phase 1 (qa-local a551390e).
+  Was: Now (on lead/v147src b145deeb, v1.47): NOT A PASS, two Shop FIXes (QA findings).
   Was: Now (on qa-local 2cfa126f): ROOMS's pbed_k5 fix and the k6 resize, PASS (QA findings).
   Was: Now (on qa-local 2f02dbaa): the 1/2/3-day bounties (96465b5b), NOT A PASS: one low FIX (QA findings).
   Was: Now (on qa-local 3b969813): ROOMS's evolved pets and large beds, NOT A PASS: one FIX, the runes on the wolf's moon daybed (QA findings).
@@ -457,6 +458,10 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.47 can be cut: lead/v147src d40320c4 = b145deeb + the Shop fix (29zz_v149.js and shop149.js only; still 16 game files against release/v1.45, no pet art, no v150). QA's clean build; rigtest/qa/shopfix147.js, real taps.
+  - FIX 1 done: opening the Shop on a day a "NOW ON SALE ..." window waits and closing it with its x leaves the home screen, still there 25 s later through the game's own redraws and the next brand window (fix1_home.png); a brand window's "Go to Shop" still opens the Street Shop.
+  - FIX 2 done: "Have a look" from the Board, three times (Boutique, Street, Boutique), lands on the Street Shop with that floor selected; a real bottom-bar tap a second later still opens the home screen (the 800 ms V49KEEP is only the handler's own click).
+  - Again on this build, all PASS: LEAD's shop149, drops148, bounty147; QA's shop147qa.js 53/53 (drops 11-20..12-31 against v1.45, the home screen and every screen's back at 390/320 and levels 34/12, try-on and buy, every way in), closet143.js, bq147qa.js. The profile's Closet button opens the Closet in all three set-ups (QA's earlier misses were other windows stacked over the profile). Not checked: the NEW DROP window's "Open Shop" (none came up in QA's runs; it has no data-act, so it lands wherever the Shop last was, as before), a phone, the web build (at the candidate check, with the Testing row that must not be there).
 - NOT A PASS yet (two Shop FIXes), v1.47 = lead/v147src b145deeb (owner LEAD). The branch: release/v1.45's source plus exactly the bounties, the drop days, close-during-sync and the Shop's home screen (16 game files; no pet art, no pet_art.json change, no 29zz_v150.js; c4d9e374 and a551390e not in it). QA's clean build; pictures shots/qa/v147/. LEAD's bounty147, drops148, shop149: PASS on it.
   - FIX 1 (LEAD), the Shop: a brand's window flips the Shop off its home screen. Open the Shop on a day a brand window is waiting ("NOW ON SALE ..."), close it with its x: the Shop shows the Street Shop, not the home screen (real taps; bs_after_x.png). 29zz_v149.js sets SHUB="in" when brandSplash opens and for any tap inside .bsplash (its x is data-act="mclose"). Suggest: only the window's "Shop it" button (bsgo) leaves the home screen. The same flip made the home screen show Street at random in QA's runs (a back tap that didn't stick, the bottom bar opening on Street at level 12).
   - FIX 2 (LEAD), the Shop: "Have a look" on a floor's window ("The Boutique is open") lands on the home screen, not that floor: its handler (29l_drops.js) closes the window and clicks the bottom bar's Shop button, and 29zz_v149.js turns any bottom-bar tap into the home screen. QSFLOOR is set, so the Street Shop opens on that floor if the player taps it, but the window promises the floor.
