@@ -2000,7 +2000,7 @@ function lfPanelHtml(C,r,i){
   return h;
 }
 /* ---- theater film clock ---- */
-var LFFILMS=["Neon Drift","Kaiju Breakfast","Midnight in Shibuya","Neon Drop 2","The Last Ramen","Sky Lounge Heist","Dog vs. The Vacuum","Legend: Live","Garden of Static","Tokyo Drift Club"];
+var LFFILMS=["Neon Drift","Kaiju Breakfast","Midnight in Shibuya","Neon Drop 2","The Last Ramen","Sky Lounge Heist","Dog vs. The Vacuum","Legend: Live","Garden of Static","Midnight Drift Club"];
 function lfFilm(key){var F=LFFILM[key];var now=Date.now();
   if(!F||now>F.end){var on=!F||!F.on;F=LFFILM[key]={on:on,name:on?lfPick(LFFILMS):"",start:now,end:now+(on?190000:25000)}}
   F.left=Math.max(0,Math.round((F.end-now)/60000));return F}

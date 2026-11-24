@@ -108,7 +108,8 @@ function pvTagId(a){return "pvt-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_")}
 var PVTAGPX=11,PVTAGMAX=48;
 function pvTagDraw(a){var g=document.getElementById("lfa-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_"));if(!g||!g.parentNode)return;
   var host=g.closest(".lfitems")||g.parentNode,t=document.getElementById(pvTagId(a));
-  if(!t){var nm=esc(a.pvn),w=Math.max(30,Math.round(a.pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
+  /* QA 11-24: a 24-letter name covered half the Garden window on a phone: the tag shows 14 letters at most */
+  if(!t){var pvn=a.pvn.length>14?a.pvn.slice(0,13)+"\u2026":a.pvn,nm=esc(pvn),w=Math.max(30,Math.round(pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
     tmp.innerHTML='<g class="pv-tag" id="'+pvTagId(a)+'" data-a="'+g.id+'" style="pointer-events:none"><g transform="translate(0,3)"><g class="pv-tag-s"><rect x="'+(-w/2)+'" y="0" width="'+w+'" height="12" rx="6" fill="rgba(10,10,20,.8)" stroke="rgba(255,255,255,.4)" stroke-width=".8"/><text x="0" y="8.6" font-size="8" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">'+nm+'</text></g></g></g>';
     t=tmp.firstChild}
   if(t.parentNode!==host||host.lastChild!==t)host.appendChild(t);
