@@ -102,7 +102,10 @@ function pvTagId(a){return "pvt-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_")}
 /* QA/LEAD 2026-11-11: the tag read about 5 px in the room window and 2 px in the building view. Its size is now set from how big one
    unit of the room drawing is on screen (getScreenCTM, so zooming in or out keeps it the same), for PVTAGPX px text; where that
    would make the tag bigger than PVTAGMAX units (the building view, zoomed out) it is hidden, since it could not be read there. */
-var PVTAGPX=11,PVTAGMAX=28;
+/* QA 11-24: on a phone (390 wide) one unit of the room window is 0.31 px, so 11 px text needs 35 units and the cap of 28 hid every
+   tag; the building view needs 69. 48 shows the name in the room window down to a 320 px phone and still hides it in the building view,
+   where a readable tag would dwarf the 15 px characters. */
+var PVTAGPX=11,PVTAGMAX=48;
 function pvTagDraw(a){var g=document.getElementById("lfa-"+String(a.id).replace(/[^a-z0-9_-]/gi,"_"));if(!g||!g.parentNode)return;
   var host=g.closest(".lfitems")||g.parentNode,t=document.getElementById(pvTagId(a));
   if(!t){var nm=esc(a.pvn),w=Math.max(30,Math.round(a.pvn.length*5.4+14)),tmp=document.createElementNS("http://www.w3.org/2000/svg","g");
