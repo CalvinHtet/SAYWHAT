@@ -316,8 +316,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on qa-local 0fd4dc82, the v1.49 batch): the three FIXes rechecked (one done, two down to low notes), try-before-buy and the refund PASS (QA findings). Still to check: the rig sweep (running), the Vault, other players' cards and posts, secrecy, the City text.
-  Was: Now (on qa-local d3ca8ee6, the v1.49 batch): three FIXes and a NOTE (QA findings).
+- Now (on qa-local e43010c8, the v1.49 batch): LEAD's three leftovers are fixed: the companion fades in at the door (alpha 0.12-0.18 up to 1), the no-art visit card fits (288 px at 320, 358 px at 390), the pets stay on the player card at 320. The Vault calendar is right (12-09 DIAL-UP, 12-30, 02-03, 02-10, 03-10, 03-24) and its home tile shows on 12-09; the Vault screen itself not yet confirmed (my tap on the tile did not open it, probably my test). Paused at Cal's usage limit. Still to check: the rig sweep (running), the Vault screen, buy and Thursday 8 am, other players' cards and posts, secrecy, the City text. No verdict for LEAD yet.
+  Was: Now (on qa-local 0fd4dc82, the v1.49 batch): the three FIXes rechecked (one done, two down to low notes), try-before-buy and the refund PASS (QA findings).
   Was: Now (on release/v1.47 b2b7a2e3, Live): v1.47 live check, PASS (QA findings).
   Was: Now (on release/v1.47 b2b7a2e3): the v1.47 candidate and its rollback, PASS, can ship (QA findings).
   Was: Now (on lead/v147src d40320c4, v1.47): PASS, v1.47 can be cut (QA findings).
