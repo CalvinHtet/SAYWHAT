@@ -126,6 +126,21 @@
     "headHide": [5]
    },
    "anchors": null
+  },
+  "k4": {
+   "frames": 11,
+   "w": 394,
+   "h": 408,
+   "cx": 211,
+   "bed": {"id": "pbed_k4", "w": 379, "h": 197, "sleepOff": 56},
+   "fit": {
+    "body": ["round","round","round","flat","tall","sleep","stretch","round","round","round","flat"],
+    "cells": ["round","tall","stretch","flat","sleep"],
+    "headHide": [5],
+    "head": ["up","up","up","flat","up","up","up","up","up","up","flat"],
+    "headCells": ["up","flat"]
+   },
+   "anchors": null
   }
  },
  "dogs": {
