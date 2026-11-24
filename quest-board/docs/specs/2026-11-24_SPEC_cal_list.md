@@ -66,6 +66,15 @@ without a pet; no player-card backdrops, no upgrades or buffs, no interface piec
 20. **Pet clothes.** 5 brands x 5 slots x 3 pieces for the first form AND for the evolved form, per pet. Launch with what is ready
     (one brand each), then a brand per drop. Every piece must work in every pose with every other piece.
 
+Pet Store main tab, the one-time buys (Cal 11-24, later: "In the pet shop, in the main tab where you can purchase the other pets, add
+some treats, pet milk, soul stones, that increase affection (increase exp gain), keep your pet full (increase overall coin gain by a
+little), and soul stones that permanently increase the chance to pickup random loot from tasks. These are all one time purchases."):
+- Treats (3, each bought once): affection, which raises the pet's share of the player's task XP: 10% -> 12 / 14 / 16%.
+- Pet Milk (3, each once): the pet stays full, task coins +1% each (+3% in all). Small on purpose.
+- Lucky Soul Stones (3, each once): the chance of surprise loot from a task, 1 in 15 -> about 1 in 14 / 13 / 12 (LOOTP + .005 each).
+  Named "Lucky" so they are not mixed up with the soul stone that drops as loot and pays XP.
+- All need a pet. Prices set with the level 25 economy pass (LEAD's start: 1,500 / 3,000 / 6,000 a tier). Numbers are LEAD's; Cal can change them.
+
 Pets, from ROOMS (11-24, c4d9e374; ROOMS shaped the forms live with Cal, so these are his words as ROOMS reports them):
 - Evolved forms are 1.4x the first form, "more dramatic, epic but cool", and the outfits must still fit. Ids: k4 slime (an upright jelly
   cat with slime paws and the forehead star; walk cells still being redone), k5 wolf, k6 wyvern; beds pbed_k4/k5/k6; pbed_wolf is now a
