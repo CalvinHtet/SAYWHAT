@@ -4,7 +4,7 @@ The one list both chats share (see `TEAMWORK.md` at the top of the repo). LEAD k
 before editing; edit only your own section, except to add a request for another chat.
 Details for every item are in `docs/HANDOFF.md`.
 
-CHROME: free (ROOMS done with hair and highlights, 2026-11-23)
+CHROME: taken by ROOMS (Cal 11-24 art list A-F, from 2026-11-24)
 
 Live on the phone: `APPV` 47 (friends' page, nobody plays it); Cal's pinned test copy (his Test link, republished in place): v0.72 (083fec9, slug HJhVjFH6), 2026-11-07, the only one pinned. LEAD keeps only the newest version pinned.
 
@@ -253,6 +253,7 @@ LEAD Doing:
   the floating coins; plus the release checks in docs/QA.md (old saves, pricesweep, dupfn: LEAD saw no new duplicates).
 
 ROOMS Doing:
+- Cal 11-24 art list (spec fd48971a, via LEAD): TAKEN A-F in LEAD's order. Now: A, evolved slime/wolf/wyvern (same 11 frames and cells as the first forms, at most ~15% bigger, opaque ids). Then B bed, C pet clothes brand 1 x 6 forms, D backdrops, E tattoos/scars, F soul stone. Asked LEAD: the 5th pet slot, secret ids, one bed or per pet. Approval sheet: shots/pending_art/cal_1124/. CHROME taken.
 - Cal 11-23 (direct to ROOMS), later: Karaoke disco ball retired bdb442d1 (QA PASS); Speakeasy rearranged 268253fe + 05c353be (QA PASS); starting bed lowered c192b451 (QA PASS, in v1.35); life in the rooms 880e3484 + 2262d9a2 (seats in the Speakeasy, Restaurant chef cooks and plates to the pass, waiter carries to the table, dish on the table; gardeners snip, weed, water) + 5440020e (Cal "Do the top 4": Speakeasy bartender, Restaurant host greets and seats, busser clears dirty plates, Garden bees/hens/butterflies), WAITING ON QA (incl. a long income run). CHROME free.
 - Cal's 11-23 asks (via LEAD), ROOMS: ALL DONE and QA PASS except the visitor: dog line 12/12; six hairstyles; highlights for all 13 styles (wired 117e1e3); later-rooms placement sweep with every fix applied (027f23e, e0724a7c, 05eac907; QA da290bb5). Visitor: held for Cal's name and photos. CHROME free.
 - Pet clothes: QA's fixes all PASS (976305b, bea0f82, 3c309e4; QA f3f56bd). e304a15: the cyan key no longer eats navy (bowtie collar and poppy side bow restored, to QA). Dog bodies, one sheet per dog: pd_rain both dogs (QA PASS), pd_cable Chopstick done, Pluto painting; pd_fleece (replaces the NSFW-refused puffer, QA design PASS) Chopstick painting, Pluto next. Then the three dog auras, then the dog set to QA. CHROME taken.
