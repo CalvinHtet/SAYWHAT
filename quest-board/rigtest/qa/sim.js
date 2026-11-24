@@ -37,6 +37,8 @@ const P = {
   await p.goto(BASE + '/dist/index.html');
   await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbStory, null, { timeout: 60000 });
   await p.waitForTimeout(1500);
+  // LOOT=off: the surprise loot of v1.45 (29zz_v144.js) never rolls, to see what it adds to a day (QA, batch 1c)
+  if (process.env.LOOT === 'off') await p.evaluate(() => { if (window.__qbV144 && window.__qbV144.loot) window.__qbV144.loot.rnd(() => 0.999); });
   // a new player, created today; the board holds this player type's own daily tasks and the weekly workout
   await p.evaluate((P) => {
     const x = window.__qb.x(), S = x.S;
@@ -152,6 +154,7 @@ const P = {
     console.log(`day ${String(d + 1).padStart(3)} ${playing ? 'play' : 'rest'} lv ${s.lv}${s.raw > s.lv ? '(' + s.raw + ' trial)' : ''} xp ${s.xp} coins ${s.coins} earned ${s.earned} rooms ${s.rooms.length} ups ${s.ups} bought ${day.bought.length}${day.built.length ? ' built ' + day.built.join(',') : ''}${day.story.length ? ' story ' + day.story.join(',') : ''} cheapest ${s.cheapest} streak ${s.streak}`);
     fs.writeFileSync(path.join(OUT, `sim_${TYPE}${WATER === 'daily' ? '' : '_' + WATER}${NOBUY.length ? '_no' + NOBUY.join('_') : ''}.json`), JSON.stringify({ type: TYPE, P, days, errs }, null, 0));
   }
+  console.log('surprise loot given', await p.evaluate(() => { const L = window.__qb.x().S.loot; return L ? L.all || 0 : 'none'; }), '(LOOT ' + (process.env.LOOT || 'on') + ')');
   console.log('page errors', errs.length, [...new Set(errs)].slice(0, 5));
   await b.close();
 })();
