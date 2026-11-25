@@ -14,6 +14,11 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await V(() => { document.getElementById('t168').remove(); const d = document.createElement('div'); d.id = 't168b'; d.innerHTML = '<svg><image href="art/acx_change.webp"/></svg>'; document.body.appendChild(d); });
   const k1 = await V(() => window.__qbV168.kicks()); await p.waitForTimeout(500); const k2 = await V(() => window.__qbV168.kicks());
   ok(k2 === k1, 'a picture already fetched is not fetched or re-set again');
+  /* QA 0d64dd6a: a picture arriving mid-pinch must not reset the SVG's own transform (the Loft's pan and zoom) */
+  const tf = await V(async () => { const d = document.createElement('div'); d.innerHTML = '<svg id="t168c" style="transform:translate(12px,-8px) scale(1.2)"><image href="art/acx_claw.webp"/></svg>'; document.body.appendChild(d); const s = d.firstChild, seen = [];
+    const mo = new MutationObserver(() => seen.push(s.style.transform)); mo.observe(s, { attributes: true, attributeFilter: ['style'] }); await new Promise((q) => setTimeout(q, 1200)); mo.disconnect();
+    const im = s.querySelector('image'); return { now: s.style.transform, seen, op: im.style.opacity, kicked: window.__qbV168.state()['art/acx_claw.webp'] }; });
+  ok(tf.kicked === 2 && tf.now === 'translate(12px, -8px) scale(1.2)' && tf.seen.every((t) => t === tf.now) && tf.op === '', 'the SVG keeps its pan/zoom transform throughout, and the picture\'s nudge leaves no opacity behind ' + JSON.stringify(tf));
   const y = await V(() => { const out = {}; ['m', 'f'].forEach((sx) => { const L = window.QBLook.build(QBLoft.data.creator, { body: sx }).layers || {}; out[sx] = { yawn: L.faceYawn && L.faceYawn.front, closed: L.faceClosed && L.faceClosed.front }; }); return out; });
   const hasArt = await V(() => ['m', 'f'].map((s) => !!((window.QBART && QBART[s + '_faceyawn_front.webp']) || (QBDATA.arthash && QBDATA.arthash[s + '_faceyawn_front.webp']))));
   ok(['m', 'f'].every((s, i) => y[s].yawn && (hasArt[i] ? /faceyawn/.test(y[s].yawn) : y[s].yawn === y[s].closed)), 'the stretch\'s yawn face: ' + (hasArt.some(Boolean) ? 'the painted yawn face' : 'no art yet, so the closed-eyes face as before') + ' ' + JSON.stringify(y));
