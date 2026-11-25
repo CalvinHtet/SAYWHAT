@@ -198,3 +198,14 @@ a live perk: one quest of 25+ XP pays double each day), renamed "Daily double" w
 cards. Guard: rigtest/lead/wording155.js reads every area, info window, tour, rank line, "New area" card and nine screens as drawn
 and fails on a retired word. Not covered by it: story scenes, side quests, bounty and visit texts (those were scanned by hand in the
 source for wheel / spin / wardrobe / old rank names / daily bounty only).
+
+## A scratch card you scratch, and its button by the mailbox (Cal 11-25)
+Cal: "Is there an actual way to scratch this off rather than just tapping the card? If I try to rub my hand on my phone in a scratching
+motion, it scrolls the screen up and down. Instead of its own text box on the board, make this a scratch card icon next to the mailbox
+icon that stays persistent. Going into that menu before completing 3 tasks will still show the scratch card menu, but a message that
+says it is locked until 3 tasks are completed"
+Built in app/src/29zz_v156.js: canvas foil rubbed off by finger or mouse (touch-action none on a live card's grid; a stroke stays on
+the panel it began on; 8 px of movement fixes the pick, a tap spends nothing; half gone and the rest clears; paid when the third panel
+is clear; a panel begun counts as scratched if the app is left; an unpaid three-pick card is paid on a later day). The keyboard still
+reveals at once. The Board row is gone; .scbtn sits after the mailbox on every header from level 6 (lit when ready). The locked card
+says "Locked until you finish 3 tasks today, n of 3 done". Test: rigtest/lead/scratch156.js (mouse and touch events).

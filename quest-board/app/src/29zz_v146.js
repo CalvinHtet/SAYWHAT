@@ -86,7 +86,9 @@ if(typeof wheelLeft==="function")wheelLeft=function(){return scReady()?0:1};
 zxSpin=function(){try{if(!zxOpen("wheel"))return "";var c=scState(),n=scTasks();if(c.done)return "";
     if(n<SCNEED)return '<button type="button" class="zx-next zx-spin zx-sc wait" data-act="nav" data-v="wheel"><span class="label">Scratch card</span><span>Finish '+(SCNEED-n)+' more task'+(SCNEED-n===1?'':'s')+' to scratch today&rsquo;s card.</span><b>'+n+'/'+SCNEED+'</b></button>';
     return '<button type="button" class="zx-next zx-spin zx-sc" data-act="nav" data-v="wheel"><span class="label">Scratch card</span><span>Today&rsquo;s card is ready.</span><b>Scratch &rsaquo;</b></button>'}catch(e){return ""}};
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=scratch]");if(!b||b.disabled)return;e.preventDefault();e.stopPropagation();scScratch(+b.dataset.i)},true);
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=scratch]");if(!b||b.disabled)return;e.preventDefault();e.stopPropagation();
+  /* Cal 11-25: a finger or a mouse scratches the foil off (29zz_v156.js); only the keyboard, or a script, reveals with a click */
+  if(e.detail>0)return;scScratch(+b.dataset.i)},true);
 (function(){var a=AREAS.filter(function(x){return x[0]==="wheel"})[0];if(a)a[1]="Scratch card";
   try{AREALINE.wheel="A scratch card every day, once you have finished "+SCNEED+" tasks. Match three to win coins, and the golden mascots hold a piece of clothing."}catch(e){}
   QBINFO.wheel=["Scratch card",function(){return ["One card a day, once you have finished "+SCNEED+" tasks that day.","Scratch three of the nine panels. Three of a kind wins: mascots pay the most, then orange, then cyan.",
