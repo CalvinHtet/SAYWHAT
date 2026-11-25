@@ -1,57 +1,34 @@
-# Card banners to level 50 (ROOMS plan, 2026-11-25, second version)
+# Card banners to level 50 (ROOMS plan, 2026-11-25, third version)
 
-Cal 11-25 via LEAD: five more banners every five levels to 50, all 1,000 coins, each tier more detailed and intricate; "very
-beautiful and cute", and real variety of art style. Set I = first five + level 10 + levels 15, 20, 25. Set II (its own tab from
-level 30) = levels 30, 35, 40, 45, 50. Rows go in quest-board/data/banners.json as [id, name, level]; art in
-art/app/bl_pc_<id>.webp (1200x1600 from 2K 3:4).
+Cal 11-25 via LEAD: five more banners every five levels to 50, all 1,000 coins, each tier more detailed and intricate.
+Set I = first five + level 10 + levels 15, 20, 25. Set II (its own tab from level 30) = levels 30, 35, 40, 45, 50.
+Rows in quest-board/data/banners.json as [id, name, level]; art in art/app/bl_pc_<id>.webp (1200x1600 from 2K 3:4, cut with
+tools/backdrop_cut.py --w 1200, which keeps a file under about 320 KB).
 
-STOPPED by Cal 11-25 ("stop on the maplestory brand and banners. it doesnt look right"): no side-scroller or voxel-game looks
-until Cal says what he wants there. The three side-scroller paintings made before the stop are kept, unshipped, in
-stopped_sidescroller/.
+## Cal's taste (11-25, on the first level-15 set)
+- Loved: Ink-Wash Peaks ("i really love the first one") and Papercut Forest. "More in the style of the ink wash peaks and the
+  papercut forest."
+- Turned down: Woodblock Tide and Cat Café Window ("too tacky": postcard sunset shore; cosy cats with fairy lights), Watercolour
+  Meadow ("too bright": pastel, high-key).
+- So: restrained palettes, strong composition, craft you can see (brushwork, cut layers), nothing cute-cluttered, nothing
+  high-key pastel. Ink wash should carry a medium-grey mid-tone behind the figure (a white top on bare paper is too pale).
+- STOPPED: side-scroller and voxel-game looks; the WISHBOX brand.
 
-Contract per banner: floor in the bottom third, centre open from the middle down, nothing important in the bottom ~18%, no
-readable text or glyphs, no religious imagery, no national or cultural costume. A style that does not hold up behind the
-character at card size is swapped (say so to LEAD).
+## Tiers
+| Level | id | Name | Style | Status |
+|---|---|---|---|---|
+| 15 | ink_peaks | Ink-Wash Peaks | ink wash | Cal approved |
+| 15 | papercut | Papercut Forest | papercut | Cal approved |
+| 15 | ink_bamboo | Bamboo Mist | ink wash, deeper mid-tones | generating |
+| 15 | paper_village | Papercut Mountain Village | papercut, dusk | generating |
+| 15 | ink_lake | Lone Boat Lake | ink wash, boat and crane | next |
+| 20 | ink_storm | Storm Peaks | ink wash, dark thunderclouds, rain | |
+| 20 | paper_abyss | Papercut Abyss | papercut, deep ocean, dark blues, faint glow | |
+| 20 | paper_city | Papercut Night City | papercut, rooftops, deep night, few lit windows | |
+| 20 | ink_snow | Winter Night Valley | ink wash, night snow, dark | |
+| 20 | glass_midnight | Midnight Glass | dark stained glass, deep blues and black, moon | |
+| 25+ | to plan | ink wash, papercut, and crafted looks with the same restraint (stained glass dark and rich, embroidery, lacquer and gold leaf, etched copperplate, cut-paper silhouette), more intricate each tier | | |
 
-| Level | id | Name | Style |
-|---|---|---|---|
-| 15 | ink_peaks | Ink-Wash Peaks | sumi-e brush and ink |
-| 15 | meadow | Watercolour Meadow | loose watercolour |
-| 15 | papercut | Papercut Forest | layered cut paper |
-| 15 | cat_cafe | Cat Café Window | cosy storybook gouache |
-| 15 | woodblock | Woodblock Tide | woodblock print waves (not the famous composition) |
-| 20 | stained | Stained-Glass Garden | stained glass, flowers (no religious motifs) |
-| 20 | bakery | Moonlight Bakery | storybook gouache |
-| 20 | candy | Candy Cloud Kingdom | pastel candy fantasy |
-| 20 | fairy | Fairy Mushroom Glade | storybook watercolour |
-| 20 | teaparty | Teacup Picnic | pastel cute painted |
-| 25 | nouveau | Art Nouveau Conservatory | art nouveau frame and glasshouse |
-| 25 | diorama | Teahouse Diorama | isometric miniature (no cultural costume) |
-| 25 | clay | Clay Picnic Hill | claymation |
-| 25 | stitch | Embroidered Night Garden | embroidery on fabric |
-| 25 | rainy | Rainy Day Bookshop | gouache, rain on glass |
-| 30 | lowpoly | Low-Poly Canyon | low-poly |
-| 30 | chalk | Chalkboard Stargazing | chalk on slate |
-| 30 | neonline | Neon Line City | neon line art |
-| 30 | koi | Koi Pond Pavilion | gouache garden (no shrine) |
-| 30 | snowglobe | Snow Globe Village | miniature under glass |
-| 35 | library | Celestial Library | ultra-detailed painted |
-| 35 | crystal | Crystal Cavern | ultra-detailed painted |
-| 35 | railway | Brass Railway Station | steampunk, painted |
-| 35 | reef | Glowing Reef | bioluminescent, painted |
-| 35 | blossom | Blossom Castle Bridge | painted, spring |
-| 40 | mosaic | Mosaic Sun Court | tile mosaic |
-| 40 | origami | Origami Sky | folded paper |
-| 40 | clockgarden | Gilded Clockwork Garden | ornate painted |
-| 40 | butterfly | Butterfly Glasshouse | ornate painted |
-| 40 | kaleido | Kaleidoscope Hall | kaleidoscopic |
-| 45 | vapor | Vaporwave Sunset | vaporwave grid |
-| 45 | carousel | Starlit Carousel | ornate painted |
-| 45 | teagarden | Floating Tea Garden | ornate painted |
-| 45 | moonisle | Moonlit Lighthouse Isle | ornate painted |
-| 45 | balloon | Balloon Festival Sky | ornate painted |
-| 50 | starthrone | Starforged Throne | apex painted, cosmic |
-| 50 | greattree | The Great Tree | apex painted |
-| 50 | skycitadel | Dragon Sky Citadel | apex painted |
-| 50 | phoenix | Phoenix Dawn Spire | apex painted |
-| 50 | skywhale | Sky Whale Voyage | apex painted |
+Cal 11-25 again: "I do not want anything cute or too girly ... I want something darker and sleek and cooler." The cute ideas
+(Moonlight Bakery, Candy Cloud Kingdom, Teacup Picnic, Fairy Mushroom Glade, Cat Café) and the warm floral Stained-Glass Garden are
+dropped. Every tier from here: dark, sleek, cool.
