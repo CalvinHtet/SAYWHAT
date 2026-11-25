@@ -902,7 +902,7 @@ async function socLoad(){
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
     var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
     (ps.docs||[]).forEach(function(d){var x=d.data();if(x&&x.rx&&typeof x.rx==="object")SOC.rxDocs.push({id:d.id,rx:x.rx});if(!x||!Array.isArray(x.posts))return;
-      x.posts.forEach(function(p){if(p&&p.text&&!(+p.until>0&&+p.until<Date.now()))all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null,kd:p.kd?1:0})})});/* a post with an end time (until) goes when it passes: Cal's posted notes, 48 hours (29zz_v139.js) */
+      x.posts.forEach(function(p){if(p&&p.text&&!(+p.until>0&&+p.until<Date.now()))all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null,kd:p.kd?1:0,snap:p.snap&&typeof p.snap==="object"?p.snap:null/* a card post's card as it was (29zz_v152.js) */})})});/* a post with an end time (until) goes when it passes: Cal's posted notes, 48 hours (29zz_v139.js) */
     all.sort(function(a,b){return b.t-a.t});SOC.posts=all.slice(0,30);
     await socCheckPings();
     SOC.loaded=Date.now();SOC.err="";

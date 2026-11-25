@@ -46,19 +46,21 @@ function pcSt(){var o=S.pc;if(!o||typeof o!=="object")o=S.pc={bg:"studio",own:{}
       if(diff){S.coins=(S.coins||0)+diff;S.spent=Math.max(0,(S.spent||0)-diff);o.ref=(o.ref||0)+diff;setTimeout(function(){try{pop("Banners cost 1,000 now: "+diff.toLocaleString()+" coins refunded for the ones you own");persist();render()}catch(e){}},900)}}
     if(back){S.coins=(S.coins||0)+back;S.spent=Math.max(0,(S.spent||0)-back);o.ref=(o.ref||0)+back;setTimeout(function(){try{pop("A banner you owned was retired: "+back.toLocaleString()+" coins refunded");persist();render()}catch(e){}},600)}}catch(e){}
   if(!pcBy(o.bg)||!pcHas(o.bg)||(o.bg!=="studio"&&!o.own[o.bg]))o.bg="studio";return o}
-function pcMine(){var r="",c="";try{r=RANKS[rankIdx()].n}catch(e){}try{c=S.cls&&CLASSES[S.cls]?CLASSES[S.cls].name:""}catch(e){}return {bg:pcSt().bg,r:r,c:c}}
+function pcMine(){var r="",c="";try{r=RANKS[rankIdx()].n}catch(e){}try{c=S.cls&&CLASSES[S.cls]?CLASSES[S.cls].name:""}catch(e){}var o=pcSt();return {bg:o.bg,r:r,c:c,pose:(typeof pcPoseBy==="function"&&pcPoseBy(o.pose)?o.pose:"stand")}}
 function pcMe(){var pet=null;try{pet=pzMyPet();if(pet)pet._me=1}catch(e){}return {id:MYUID||"me",me:1,name:(S.char&&S.char.name)||"Player",look:lookOf(),lv:effLvl(),pet:pet,card:pcMine()}}
-function pcSafe(c){try{if(!c||typeof c!=="object")return null;var s=function(v){return String(v==null?"":v).replace(/[<>&"']/g,"").slice(0,28)};return {bg:pcBy(c.bg)?c.bg:"studio",r:s(c.r),c:s(c.c)}}catch(e){return null}}
+function pcSafe(c){try{if(!c||typeof c!=="object")return null;var s=function(v){return String(v==null?"":v).replace(/[<>&"']/g,"").slice(0,28)};return {bg:pcBy(c.bg)?c.bg:"studio",r:s(c.r),c:s(c.c),pose:(typeof pcPoseBy==="function"&&pcPoseBy(c.pose)?c.pose:"stand")}}catch(e){return null}}
 /* another player's companion is always drawn in its first form */
 var v52Form=p2Form;p2Form=function(k){return P2OTHER?null:v52Form.apply(this,arguments)};
 var v52MyPet=pzMyPet;pzMyPet=function(){var p=v52MyPet.apply(this,arguments);if(p)p._me=1;return p};
 var v52Ped=pzPedPic;pzPedPic=function(pet,H){if(pet&&!pet._me){P2OTHER=1;try{return v52Ped.apply(this,arguments)}finally{P2OTHER=0}}return v52Ped.apply(this,arguments)};
 /* the card's character is drawn sharp: data-hi asks calHyd (29zz_v155.js) for a frame made at the size the screen really shows */
-function pcChar(look,H){var k=1;try{k=Math.max(1,Math.min(3,Math.round(H*(window.devicePixelRatio||1)/QBLoft.data.loft.standPx*2)/2))}catch(e){}return fshChar(look,H).replace("<img ",'<img data-hi="'+k+'" ')}
-function pcHtml(p,H,tryBg){var card=p.me?pcMine():(p.card||{});if(tryBg)card=Object.assign({},card,{bg:tryBg});var bg=pcBy(card.bg)&&pcHas(card.bg)?card.bg:"studio",u=bg==="studio"?null:pcArt(bg),pet="";H=H||200;
+function pcChar(look,H,pose){var k=1;try{k=Math.max(1,Math.min(3,Math.round(H*(window.devicePixelRatio||1)/QBLoft.data.loft.standPx*2)/2))}catch(e){}
+  var P=null;try{P=typeof pcPoseBy==="function"?pcPoseBy(pose):null}catch(e){}/* a pose from the rig's own clips (29zz_v162.js): one frame of it, drawn sharp */
+  return fshChar(look,H).replace("<img ",'<img data-hi="'+k+'" '+(P&&P[2]!=="idle"?'data-clip="'+P[2]+'" data-f="'+P[3]+'" ':''))}
+function pcHtml(p,H,tryBg,tryPose){var card=p.me?pcMine():(p.card||{});if(tryBg)card=Object.assign({},card,{bg:tryBg});var bg=pcBy(card.bg)&&pcHas(card.bg)?card.bg:"studio",u=bg==="studio"?null:pcArt(bg),pet="";H=H||200;
   try{if(p.pet)pet=pzPedPic(p.pet,H)}catch(e){}
   var line=[card.r,card.c,"Level "+(p.lv||1)].filter(Boolean).join(" · ");
-  return '<div class="pcard pc-'+bg+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'><div class="pc-stage"><span class="fsh-fig pc-fig">'+pcChar(p.look,H)+pet+'</span></div>'
+  return '<div class="pcard pc-'+bg+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'><div class="pc-stage"><span class="fsh-fig pc-fig">'+pcChar(p.look,H,tryPose||card.pose)+pet+'</span></div>'
     +'<div class="pc-plate"><b>'+esc(p.name||"Player")+'</b><small>'+esc(line)+'</small></div></div>'}
 /* QA's recheck: at 320 px the changed wolf's and slime-cat's tail flames were cut by the card's left edge. Once a companion's picture
    is sized (pzFit) and again when the figure beside it has drawn, it is pushed right by whatever part of it is past the stage. */
@@ -70,14 +72,23 @@ function pcPostW(){var w=300;try{w=Math.max(180,Math.min(300,window.innerWidth-7
 function pcOpen(){closeModals();var p=pcMe(),on=typeof socOn==="function"&&socOn();
   modal('<div class="card box2 pcm"><span class="label">Player card</span>'+pcHtml(p,210)
     +'<div class="row pc-row"><button type="button" class="btn ghost" data-act="pcbgs">Change banner</button>'+(on?'<button type="button" class="btn" data-act="pcpost">Post my card</button>':'')+'</div></div>')}
+function pcSnap(){var m=pcMine(),pet=null;try{var q=pzMyPet();if(q)pet={k:q.k,w:q.w}}catch(e){}return {bg:m.bg,r:m.r,c:m.c,pose:m.pose,lv:effLvl(),pet:pet}}
+/* the card a post shows: its own snapshot; a post from before snapshots keeps the outfit it was posted in (its look) on today's card */
+function pcOfPost(p){var mine=p.from===MYUID,now=mine?pcMe():((typeof fshFind==="function"&&fshFind(p.from))||{name:p.name,look:p.look,lv:1}),sn=p.snap,pet=null;
+  if(sn){try{pet=sn.pet?pzSafePet(sn.pet):null;if(pet&&mine)pet._me=1}catch(e){pet=null}
+    return {id:p.from,name:p.name||now.name,look:p.look||now.look,lv:Math.max(1,Math.min(999,Math.round(+sn.lv)||1)),pet:pet,card:pcSafe(sn)||{}}}
+  return {id:p.from,name:now.name||p.name,look:p.look||now.look,lv:now.lv,pet:now.pet,card:mine?pcMine():(now.card||{})}}
 function pcPost(){if(!(typeof socOn==="function"&&socOn())){pop("Posting needs an online save");return}if(Date.now()-SOC.lastPost<15000){pop("Slow down a little");return}SOC.lastPost=Date.now();
-  var pt=Date.now(),lk=lookOf();socMine("board",function(d){var a=Array.isArray(d.posts)?d.posts:[];a.unshift({t:pt,text:PCTXT,look:lk,pc:1});d.posts=a.slice(0,10)})
-    .then(function(){SOC.posts.unshift({id:MYUID+"|"+pt,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:PCTXT,t:pt,look:lk});try{socPublish(true)}catch(e){}try{socPaint()}catch(e){}closeModals();pop("Your card is on the Town board")})
+  /* Cal 11-25: "The posted picture of my banner card on the town hall is dyanmically changing based off of the outfit i am wearing. i
+     DON'T WANT THAT. i want it to be a snapshot of the current outfit so that i can post multiple outfits". A card post carries its
+     own card: the look, banner, pose, rank, class, level and companion as they were when it was posted (snap). */
+  var pt=Date.now(),lk=lookOf(),sn=pcSnap();socMine("board",function(d){var a=Array.isArray(d.posts)?d.posts:[];a.unshift({t:pt,text:PCTXT,look:lk,pc:1,snap:sn});d.posts=a.slice(0,10)})
+    .then(function(){SOC.posts.unshift({id:MYUID+"|"+pt,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:PCTXT,t:pt,look:lk,snap:sn});try{socPublish(true)}catch(e){}try{socPaint()}catch(e){}closeModals();pop("Your card is on the Town board")})
     .catch(function(er){pop("Could not post: "+((er&&er.code)||"error"))})}
 /* a card post on the Town board is drawn as that player's card */
 var v52Soc=socInner;socInner=function(){var h=v52Soc.apply(this,arguments);
   try{var key="<p>"+esc(PCTXT)+"</p>",parts=h.split(key);if(parts.length<2)return h;var ps=(SOC.posts||[]).filter(function(p){return p.text===PCTXT}),out=parts[0];
-    for(var i=1;i<parts.length;i++){var p=ps[i-1],q=null;if(p){q=p.from===MYUID?pcMe():(typeof fshFind==="function"&&fshFind(p.from))||{name:p.name,look:p.look,lv:1}}
+    for(var i=1;i<parts.length;i++){var p=ps[i-1],q=null;if(p)q=pcOfPost(p);
       out+=(q?'<div class="pc-post"'+(p.from!==MYUID?' role="button" tabindex="0" data-act="fshview" data-u="'+esc(p.from)+'"':' data-act="pcard"')+' style="width:'+pcPostW()+'px">'+pcHtml(q,Math.round(pcPostW()*.7))+'</div>':key)+parts[i]}
     return out}catch(e){return h}};
 /* another player's window: their card in place of the plain figure; your own gets "Customize" */
@@ -154,4 +165,4 @@ function pcMarks(){try{[["a_tattoo","Tattoos"],["a_scar","Scars"]].forEach(funct
       SHOP.push([sid,tat?"a_tattoo":"a_scar",nm[0],PCMARKP[id.charAt(0)],1,nm[1],{basic:{key:tat?"markT":"markS",id:id},b:"basics",icon:"mark_"+id}])})}catch(e){}}
 pcMarks();
 
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={hold:function(on){if(on===false)PCHOLD={};return Object.keys(PCHOLD)},price:PCPRICE,tab:function(k){if(k!==undefined)PCTAB=k;return PCTAB},gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={snap:pcSnap,ofPost:pcOfPost,hold:function(on){if(on===false)PCHOLD={};return Object.keys(PCHOLD)},price:PCPRICE,tab:function(k){if(k!==undefined)PCTAB=k;return PCTAB},gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};

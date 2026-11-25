@@ -305,3 +305,19 @@ Weekly Warrior is only in Training (its head already had it). The level's effect
 everyone: owned, On / Off each (S.fxOff), All on / All off, the next one shown with its level. LEAD's calls: Relics kept as a button
 above Replay tutorial (Cal named only two buttons for the top); the earned stat titles and the stat counts under the diagram went
 with "all text underneath". Test: rigtest/lead/prof161.js.
+
+## Card posts are snapshots; a pose on the card (Cal 11-25, night)
+Cal: "The posted picture of my banner card on the town hall is dyanmically changing based off of the outfit i am wearing. i DON'T WANT
+THAT. i want it to be a snapshot of the current outfit so that i can post multiple outfits" / "Is there any way to have the characters
+do some sort of pose in these banner pics without having to redo EVERY single asset in the game?" / "But what if I want a different
+pose such as looking behind the shoulder, or crossing arms? Would that be too hard and we would need to repaint all the assets in that
+pose?"
+- Snapshot: a card post saves its card (snap: banner, pose, rank, class, level, companion) beside the look it already saved, and is
+  drawn from that (pcSnap, pcOfPost in 29zz_v152.js; the board loader keeps snap). A post from before keeps its saved outfit on
+  today's card.
+- Poses (29zz_v162.js): nine, free, from the rig's own clips (stand, wave, cheer, laugh, dance, think, clap, stretch, back); one
+  sharp frame; S.pc.pose; rides on the card to other players (whitelisted). Answer given to Cal on new poses: a pose in the front
+  view (arms crossed, hands on hips, a peace sign) is a new entry of bone angles in data/poses.json, no repainting, but each needs a
+  sweep against every top; a turned or three-quarter view (over the shoulder) is a view the art does not have (front and back only)
+  and would mean repainting everything.
+Tests: rigtest/lead/pose162.js, cards155.js.
