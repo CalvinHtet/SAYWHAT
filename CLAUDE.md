@@ -13,7 +13,10 @@ publishes, only ROOMS generates art.**
 - Never spend Higgsfield credits. Art comes only from Cal's Chrome with the Unlimited toggle
   on. A cloud session has no such Chrome, so do not generate art there, and never use
   the Higgsfield connector. List what is needed in the handoff and make missing art fail softly.
-- Original designs only. No copyrighted costumes, characters or brand logos.
+- Designs are our own, but real media and games are fair game as inspiration (Cal, 2026-11-25): a style, a genre, a mood, a kind of
+  item. Every piece that leans on a real-world reference gets a line in `quest-board/docs/REFERENCES.md`, so the non-original-leaning
+  work can be scanned later and replaced or removed. Still out: a real game's or brand's name, logo, characters, or a copy of one of
+  its actual items or pictures.
 - One Higgsfield image per cosmetic, holding every angle.
 - Test every outfit combination and every pose before calling anything ready. Cal wants
   honest status, not optimism: say what was checked and what was not.

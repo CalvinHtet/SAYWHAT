@@ -11,9 +11,9 @@
    Remove this text altogether. Remove all text underneath the stats diagram."
    - The profile: the banner whole at the top left (tapping it opens the big card, where "Post my card" lives), the name and one
      line beside it, and two buttons: Closet, Change banner. Then the level card, the class card, the skills that are unlocked, the
-     stats diagram alone, Relics (once open), and at the bottom Replay tutorial and Start over.
+     stats card, Relics (once open), and at the bottom Replay tutorial and Start over.
    - Gone from it: the sound switch (sound is always on), the "UI upgrades" line, Weekly Warrior (it is the Training tab's head
-     already), the two locked skill cards, the line under "Your skills", and every line under the stats diagram.
+     already), the two locked skill cards, the line under "Your skills", and the photo-proof paragraph under the stats card.
    - The header's card opens the profile again (29zz_v155.js).
    - The level's interface effects (FX, 10_app_a.js) are in the Shop's Interface, tab "Effects": each one the level has reached is
      listed as owned with an On / Off switch (S.fxOff), the next one shows its level. applyFx leaves a switched-off effect out. */
@@ -23,8 +23,7 @@ var v61Prof=profileHtml;profileHtml=function(){var h=v61Prof.apply(this,argument
   try{var relics=/data-v="trophy"/.test(h),tour=/data-act="tourreplay"/.test(h);
     h=h.replace(/<div class="zx-me">[\s\S]*?<\/div>/,"").replace(/<div class="upg">[\s\S]*?<\/div>/,"").replace(/<section class="card wstrip"[\s\S]*?<\/section>/,"")
        .replace(/(<h3 class="label">Your skills<\/h3>)<p class="note">[\s\S]*?<\/p>/,"$1").replace(/<div class="chap lockc">[\s\S]*?<\/div>/g,"").replace(/<div class="foot">[\s\S]*?<\/div>/,"")
-       /* the stats: the diagram alone (a new player's bars, which are the diagram before rank D, stay as they are) */
-       .replace(/(<section class="card panel"><h3 class="label">Stats<\/h3>)([\s\S]*?)(<\/section>)/,function(m,a,body,c){var svg=/<svg class="radar"[\s\S]*?<\/svg>/.exec(body);return a+(svg?svg[0]:body)+c});
+       ;/* Cal, later on 11-25: "for the text underneath the stats, I just meant remove the 'Photo proof: 0% of your etc etc --- once cleared.' Keep the stat diagram and the text in that box." The Stats card stays whole; only the paragraph under it (.foot, above) is gone. */
     var end=(relics?'<div class="zx-me v61rel"><button type="button" class="btn ghost" data-act="nav" data-v="trophy">Relics</button></div>':'')+(tour?'<div class="v61end"><button type="button" class="btn ghost" data-act="tourreplay">Replay tutorial</button></div>':'');
     var i=h.indexOf('<section class="card panel rsp">');h=i<0?h+end:h.slice(0,i)+end+h.slice(i)}catch(e){}
   return h};
