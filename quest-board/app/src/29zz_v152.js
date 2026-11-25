@@ -27,7 +27,10 @@ var PCBG=[["studio","Studio",0,0],["neon","Neon Alley",800,0],["maple","Crimson 
     STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0,PCTRY="";/* PCTRY: a backdrop being looked at on the card before it is bought */
 function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
-function pcHas(id){return id==="studio"||!!pcArt(id)}
+/* PCHOLD: painted and passed by QA, but not on sale until Cal has approved the art (LEAD 11-25: his answer on the level-10 tier is
+   still open, and these cost coins). Emptying it is the whole release of the tier. */
+var PCHOLD={orrery:1,tidal:1,skyship:1,aurora:1,hoard:1};
+function pcHas(id){return id==="studio"||(!PCHOLD[id]&&!!pcArt(id))}
 function pcLv(id){var b=pcBy(id);return b?(b[3]||0):0}
 function pcOpenLv(id){try{return effLvl()>=pcLv(id)}catch(e){return true}}
 function pcSt(){var o=S.pc;if(!o||typeof o!=="object")o=S.pc={bg:"studio",own:{}};if(!o.own||typeof o.own!=="object")o.own={};
@@ -137,4 +140,4 @@ function pcMarks(){try{[["a_tattoo","Tattoos"],["a_scar","Scars"]].forEach(funct
       SHOP.push([sid,tat?"a_tattoo":"a_scar",nm[0],PCMARKP[id.charAt(0)],1,nm[1],{basic:{key:tat?"markT":"markS",id:id},b:"basics",icon:"mark_"+id}])})}catch(e){}}
 pcMarks();
 
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={hold:function(on){if(on===false)PCHOLD={};return Object.keys(PCHOLD)},gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};
