@@ -30,6 +30,13 @@ that read as letters (IO, M) became a star and a diamond; Fireworks Night's two 
 painted out. Note for Cal: Ember Throne's throne stands right behind the character (only its top shows above the head).
 Sources: backdrops/src_<id>.jpg. Cutter: tools/backdrop_cut.py.
 
+## D2. Tier-2 card backdrops (level 10; Cal 11-25 via LEAD) - ALL 5 DONE, WITH QA
+orrery Clockwork Observatory, tidal Tidal Palace, skyship Skyship Deck, aurora Aurora Citadel, hoard Dragon's Hoard.
+1200x1600 (2K sources; 4K is not Unlimited), layered depth, fine ornament. Read enlarged: the Observatory floor's
+star-in-circle lines were edited to plain rings; the first Hoard was redone (dragon behind the figure, cross-topped crowns).
+On the real card, both bodies with a companion: shots/pending_art/cal_1125_tier2/card_tier2_all.png. Retired (Cal 11-25):
+roof, skyline, mist, sunrise, ember (deleted a4fb187a).
+
 ## H. Calvin and Sydney visit picture (friend_calsyd, _2, _3; Cal 11-24 via LEAD) - CAL APPROVED 11-24 (via LEAD); QA PASS
 One painted walk: the two close together, shoulder to shoulder, each holding a leash; Pluto (on his) and Chopstick (on hers)
 trot ahead at real size, knee-high. Calvin: black beanie with the game's orange circle-slash, plain charcoal hoodie, baggy black
