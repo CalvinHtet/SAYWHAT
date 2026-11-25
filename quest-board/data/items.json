@@ -768,6 +768,10 @@
  "smk_hoodie": {
   "slot": "top"
  },
+ "smk_resp": {
+  "slot": "mask",
+  "neutral": true
+ },
  "gp_cathood": {
   "slot": "hat",
   "clip": {
