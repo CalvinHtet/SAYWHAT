@@ -77,5 +77,5 @@ htabCss("qb-v156-css",".sc-card:not(.locked):not(.done) .sc-grid{touch-action:no
   +".sc-lock{display:inline-flex;vertical-align:-3px;margin-right:6px;opacity:.85}.sc-lock svg{width:16px;height:16px}"
   +".scbtn{position:relative;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--fg);padding:0;display:grid;place-items:center;cursor:pointer;flex:none}.scbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.scbtn svg{display:block}"
   +".scbtn.wait,.scbtn.done{color:color-mix(in srgb,var(--fg) 55%,transparent)}.scbtn.rdy{border-color:var(--gold,#ffc857);color:var(--gold,#ffc857);box-shadow:0 0 12px -2px var(--gold,#ffc857)}"
-  +".scbtn i{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--gold,#ffc857);box-shadow:0 0 8px var(--gold,#ffc857)}.scbtn .nbang{top:-6px;right:-7px}");
+  +".scbtn i{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--gold,#ffc857);box-shadow:0 0 8px var(--gold,#ffc857)}.scbtn .nbang{top:-6px;right:auto;left:-7px}/* QA 2a20e7a8: the alert mark takes the other corner from the ready dot */");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV156={cv:function(){return Object.keys(SCCV).map(Number)},gone:function(i){return SCCV[i]?v56Gone(SCCV[i]):null},btn:v56Btn};

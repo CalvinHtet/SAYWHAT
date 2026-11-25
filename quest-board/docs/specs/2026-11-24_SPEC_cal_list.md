@@ -209,3 +209,16 @@ the panel it began on; 8 px of movement fixes the pick, a tap spends nothing; ha
 is clear; a panel begun counts as scratched if the app is left; an unpaid three-pick card is paid on a later day). The keyboard still
 reveals at once. The Board row is gone; .scbtn sits after the mailbox on every header from level 6 (lit when ready). The locked card
 says "Locked until you finish 3 tasks today, n of 3 done". Test: rigtest/lead/scratch156.js (mouse and touch events).
+
+## Quick steps, repeats, a private bounty photo (Cal 11-25)
+Cal: "For all bounties and everything across the app actually, give users the ability to post to town hall, or not. It should require
+photo proof for the ones that need it, but users can choose to share it with the town or not. Do a QA check on all the bounties and
+also make the AI that categorizes the tasks smarter. There are some tasks that could be faked and spammed such as 'put on socks' or
+'walk to car' and even those would give ample experience. Now that I'm playing more heavily on each day, there could be more coin
+opportunities but the main focus should still be the tasks done and not relying on passive money to bring you coins."
+Built in app/src/29zz_v157.js and PARSE (30_app_b.js): the rater's "step" rung (1 XP, nothing else, not one of the day's tasks), the
+offline list of motions, minutes and XP agreeing at the bottom of the scale, the prompt ignoring instructions inside a brain dump; the
+same small one-off (10 XP or less) a third time in a day is a quick step; a 3-day bounty's photo can be kept private (checked by the
+photo checker, counted, never uploaded). Quest, Workout and level-trial photos were already private with an optional post. Not built:
+the coin balance between tasks and businesses (numbers and a proposal went to Cal). QA asked for the full bounty sweep.
+Test: rigtest/lead/tasks157.js.
