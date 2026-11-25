@@ -33,11 +33,18 @@ var v60Shop=shopHtml;shopHtml=function(){var h=v60Shop.apply(this,arguments);
         return m.replace(/(<div class="qs-worn">)<b>[\s\S]*?<\/b>/,"$1").replace(/<div class="qs-bask"><small>Trying on \d+ pieces?<\/small>/,'<div class="qs-bask">').replace(">Take them off<",">Take off<").replace(/<aside class="qs-mirror/,'<aside class="qs-mirror v60m')})}}catch(e){}
   return h};
 /* the page's background in a brand's room: its banner at the top, then its colours */
+/* Cal 11-25 (evening): "For the banner gradient that fades into the shop, make the static colors at the bottom look better with some
+   sparkles or different gradient hues that match the palette of the brand. i dont want it to be one static color." Under the
+   picture the page runs through the brand's own colours: its main colour deepening down the page, with soft glows of its second
+   colour and its accent, and a slow field of sparkles in the accent (.v60room::before / ::after, behind the cards). */
 var v60Theme=qsTheme;qsTheme=function(b){var r=v60Theme.apply(this,arguments);
-  try{var art=b&&SHUB!=="home"&&SHUB!=="iface"?v60Art(b):null;
-    if(art)document.body.style.setProperty("--shopbg","linear-gradient(180deg,rgba(8,10,18,.5) 0,rgba(8,10,18,.18) 120px,"+b.c[1]+" 300px,"+b.c[0]+" 100%),url(\""+art+"\") center top/auto 320px no-repeat,"+b.c[1])}catch(e){}
+  try{if(b&&SHUB!=="home"&&SHUB!=="iface"){var art=v60Art(b),c1=b.c[1],c2=b.c[2]||b.c[1],ac=b.ac||c2,mx=function(c,p,w){return "color-mix(in srgb,"+c+" "+p+"%,"+(w||"transparent")+")"},dk="#0b0e1a";
+      var L=["linear-gradient(180deg,rgba(8,10,18,.5) 0,rgba(8,10,18,.18) 120px,"+c1+" 300px,"+c1+" 324px,transparent 325px)"];if(art)L.push("url(\""+art+"\") center top/auto 320px no-repeat");
+      /* a soft bloom of the brand's light colour, a pool of its accent, then its main colour running down into its second colour */
+      L.push("radial-gradient(70% 30% at 100% 52%,"+mx(b.c[0]||"#fff",20)+",transparent 70%)","radial-gradient(80% 32% at 0% 78%,"+mx(ac,46)+",transparent 72%)",
+        "linear-gradient(180deg,"+c1+" 0,"+c1+" 330px,"+mx(c1,50,c2)+" 54%,"+c2+" 76%,"+mx(c2,52,dk)+" 100%)");
+      var st=document.body.style;st.setProperty("--shopbg",L.join(","));st.setProperty("--shopsolid",mx(c2,52,dk));st.setProperty("--v60sp",ac);st.setProperty("--v60sp2",b.c[0]||"#fff")}}catch(e){}
   return r};
-/* the card fades in with the scroll (phones); shown at once while something is tried on */
 /* QA a52807f3: (2) the card took taps from 40% while the tabs still showed through it: it takes them only once fully shown, and the
    fade ends as the brand tabs leave the screen; (3) a try-on at the top put it over the title, countdown and coins: while a piece is
    tried on it sits just under the tabs (where the rack begins) until the page scrolls it up to the top. */
@@ -48,6 +55,10 @@ function v60Fade(){try{var m=document.querySelector(".qs-mirror.v60m");if(!m)ret
     m.style.top=top;m.style.opacity=o.toFixed(2);m.style.pointerEvents=o<.99?"none":"";m.style.visibility=o<=0?"hidden":""}catch(e){}}
 window.addEventListener("scroll",v60Fade,{passive:true});window.addEventListener("resize",v60Fade);
 var v60Render=render;render=function(){var r=v60Render.apply(this,arguments);v60Fade();return r};
+htabCss("qb-v160-spark",".qshop.v60room{position:relative;z-index:0}.qshop.v60room::before,.qshop.v60room::after{content:\"\";position:fixed;inset:0;z-index:-1;pointer-events:none;background-repeat:repeat}"
+  +".qshop.v60room::before{background-image:radial-gradient(1.6px 1.6px at 22px 38px,var(--v60sp2,#fff),transparent),radial-gradient(1.2px 1.2px at 118px 96px,var(--v60sp,#fff),transparent),radial-gradient(2px 2px at 164px 22px,var(--v60sp,#fff),transparent),radial-gradient(1.2px 1.2px at 64px 168px,var(--v60sp2,#fff),transparent),radial-gradient(1.5px 1.5px at 196px 148px,var(--v60sp2,#fff),transparent);background-size:230px 210px;opacity:.6;animation:v60tw 5.5s ease-in-out infinite;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 340px);mask-image:linear-gradient(180deg,transparent 0,#000 340px)}"
+  +".qshop.v60room::after{background-image:radial-gradient(2.2px 2.2px at 40px 120px,var(--v60sp,#fff),transparent),radial-gradient(1.3px 1.3px at 150px 60px,var(--v60sp2,#fff),transparent),radial-gradient(1.6px 1.6px at 250px 190px,var(--v60sp,#fff),transparent),radial-gradient(1.2px 1.2px at 300px 30px,var(--v60sp2,#fff),transparent);background-size:340px 260px;opacity:.28;animation:v60tw 7.5s ease-in-out -3s infinite;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 340px);mask-image:linear-gradient(180deg,transparent 0,#000 340px)}"
+  +"@keyframes v60tw{0%,100%{opacity:.22}50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.qshop.v60room::before,.qshop.v60room::after{animation:none}}");
 htabCss("qb-v160-css",(typeof v59Up==="function"?v59Up:function(x){return x})(
   ".qs-bh{margin:0}.qs-bh .blg{gap:10px}.qs-bh .blg_e{width:42px;height:42px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))}.qs-bh .blg b{font-size:22px;line-height:1.05;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.65)}.qs-bh .blg small{font-size:11px;letter-spacing:.28em;color:rgba(255,255,255,.88);text-shadow:0 1px 4px rgba(0,0,0,.7)}"
   +".qshop.v60room .qs-top{align-items:center}.qshop.v60room .qs-cbar{display:flex;align-items:center;gap:10px}.qshop.v60room .qs-cbar .qs-cd{color:#fff;opacity:.92;text-shadow:0 1px 4px rgba(0,0,0,.7);white-space:normal;text-align:right;max-width:78px;line-height:1.25;margin:0}.qshop.v60room .qs-top h1{min-width:0}.qshop.v60room .qs-cbar{flex:none}"

@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=153, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=155, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1302,9 +1302,11 @@ function applyFx(){
   var bgi=eqItem("bg"), dc=document.getElementById("deco");
   if(bgi){if(!dc){dc=document.createElement("div");dc.id="deco";dc.setAttribute("aria-hidden","true");document.body.appendChild(dc)}dc.className="bgx "+bgi[0]}
   else if(dc)dc.remove();
-  embers(lv>=10);emColor();
+  embers(lv>=10&&fxOn("embers"));emColor();
   applyClass();
 }
+/* QA 716955df: an effect switched off in the Shop's Interface (S.fxOff, 29zz_v161.js) is off everywhere it is drawn by level, not only as a body class */
+function fxOn(k){try{return !(S&&S.fxOff&&S.fxOff[k])}catch(e){return true}}
 function ensureEl(id,on,cls){
   var e=document.getElementById(id);
   if(on){if(!e){e=document.createElement("div");e.id=id;e.className=cls||"fxo";e.setAttribute("aria-hidden","true");document.body.appendChild(e)}}
@@ -1321,7 +1323,7 @@ function applyClass(){
   if(cb){cb.className="cls-"+S.cls;cb.style.setProperty("--ci",(0.1+0.04*t).toFixed(2))}
   /* Cal, 2026-11-07: "I don't like the crt scan lines. And the red hue it too aggressive": scanlines became Starlight (behind
      the panels, never over the art) and the vignette and edge glow are much softer; none of them cover the Loft and its rooms */
-  ensureEl("fxo-scan",false);ensureEl("fxo-stars",lv>=24);ensureEl("fxo-vignette",lv>=28);ensureEl("fxo-edgeglow",lv>=34);
+  ensureEl("fxo-scan",false);ensureEl("fxo-stars",lv>=24&&fxOn("stars"));ensureEl("fxo-vignette",lv>=28&&fxOn("vignette"));ensureEl("fxo-edgeglow",lv>=34&&fxOn("edgeglow"));
 }
 function burst(x,y,n){
   var L=document.getElementById("layer");
@@ -1636,7 +1638,7 @@ function toggle(id,ev,mode){
     /* W59 (Cal, 2026-11-10): the quest's XP, coins and bonuses in a compact box at the top, 3 s then a slow fade (29zu_ui92.js) */
     qToast(mu.xp,cn,roll,mu.tags);
     if(note&&/Streak chest/.test(note)&&ART.chest)setTimeout(function(){chestModal(note)},1800);else if(note)setTimeout(function(){pop(note)},1800);
-    if(ev&&ev.clientX!=null&&effLvl()>=3)burst(ev.clientX,ev.clientY);
+    if(ev&&ev.clientX!=null&&effLvl()>=3&&fxOn("burst"))burst(ev.clientX,ev.clientY);
     if(crit)burst(innerWidth/2,innerHeight/2,30);
     ifOnDone(crit);
     checkBadges();

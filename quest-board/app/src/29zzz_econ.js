@@ -36,7 +36,11 @@ coinsFor=function(xp){return Math.max(10,Math.round(xp*((typeof ECON!=="undefine
    - The level curve (curve 6): curve 5 with every level 25% longer (see below); the first curve 6 (60 to 500 by level 10, then 500 +
      0.8 x (L - 10)^2) was only safe with the reset of everyone, which Cal called off. */
 var EARNK=.77;
-(function(){var E=ECON;E.coinXp=Math.round(6*EARNK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);
+/* Cal 11-25: "I've been playing for 3 days i just hit level 10, but have not upgraded much in my base ... can we increase the coin gain
+   by a little bit more?", with "the main focus should still be the tasks done and not relying on passive money". Tasks pay a fifth
+   more coins (TASKK); businesses, chests and the rest are unchanged. */
+var TASKK=1.2;
+(function(){var E=ECON;E.coinXp=Math.round(6*EARNK*TASKK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);
   E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
   E.goal={half:[100,150],full:[300,400],story:[75,100]};
   /* curve 6, take three (Cal 11-23: "use the new slower level curve. But make it a bit faster. meet in the middle. Later levels should be

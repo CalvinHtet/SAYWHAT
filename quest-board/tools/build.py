@@ -96,7 +96,7 @@ def fp(path):
         return hashlib.sha1(f.read()).hexdigest()[:10]
 
 
-data = {name: json.loads(read(ROOT, "data", name + ".json")) for name in ("rig", "bodies", "poses", "creator", "loft", "items", "rsart", "pet_art", "pet_clothes")}
+data = {name: json.loads(read(ROOT, "data", name + ".json")) for name in ("rig", "bodies", "poses", "creator", "loft", "items", "rsart", "pet_art", "pet_clothes", "banners")}
 data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.join(DIST, "art", "*.webp")))}
 # every runtime picture by name, packed or loose, for the rig test pages (rigtest/matrix.html; written there, never into dist, so a
 # publish carries no extra file), which load art straight from

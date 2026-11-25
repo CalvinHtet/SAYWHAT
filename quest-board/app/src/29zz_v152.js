@@ -21,20 +21,29 @@
    increasingly varied and more intricate". The fourth field is the level a backdrop opens at. A tier's rows sit here before ROOMS has
    painted them: an unpainted one is not shown or sold (pcHas). PCGONE: the five retired ones and what they cost, refunded once to
    anyone who owned one (pcSt). */
-var PCBG=[["studio","Studio",0,0],["neon","Neon Alley",800,0],["maple","Crimson Maple",1800,0],["fire","Fireworks Night",2000,0],["lantern","Lantern Sky",2200,0],["moon","Blood Moon",2500,0],
-          ["orrery","Clockwork Observatory",3000,10],["tidal","Tidal Palace",3500,10],["skyship","Skyship Deck",4000,10],["aurora","Aurora Citadel",4500,10],["hoard","Dragon's Hoard",5000,10]],
+/* Cal 11-25 (evening): "I approve the banners ... i would keep all banners at 1000 coins fixed. I want to include 5 more banners at each
+   level. Once hitting level 25, there should be 25 banners total. Once we hit level 30, i want the current banners to collapse into a
+   tab labeled ' I ' ... Make enough to last until level 50." Every banner costs PCPRICE. The first five are here; every later tier is a
+   row of data/banners.json ([id, name, level]; ROOMS adds rows as it paints: levels 10, 15, 20 and 25 make 25 banners, the set "I";
+   30 to 50 are the set "II"). PCWAS: what the first five used to cost; an owner who paid more than PCPRICE gets the difference back
+   once (pcSt). */
+var PCPRICE=1000,PCWAS={maple:1800,fire:2000,lantern:2200,moon:2500},PCTAB="",
+    PCBG=[["studio","Studio",0,0],["neon","Neon Alley",PCPRICE,0],["maple","Crimson Maple",PCPRICE,0],["fire","Fireworks Night",PCPRICE,0],["lantern","Lantern Sky",PCPRICE,0],["moon","Blood Moon",PCPRICE,0]]
+      .concat((function(){try{return (window.QBDATA&&QBDATA.banners||[]).filter(function(r){return r&&/^[a-z0-9_]+$/.test(r[0])&&r[0]!=="studio"}).map(function(r){return [r[0],String(r[1]||r[0]),PCPRICE,+r[2]||0]})}catch(e){return []}})()),
     PCGONE={roof:1200,skyline:1000,mist:1400,sunrise:1600,ember:2400},
     STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0,PCTRY="";/* PCTRY: a backdrop being looked at on the card before it is bought */
 function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
 /* PCHOLD: painted and passed by QA, but not on sale until Cal has approved the art (LEAD 11-25: his answer on the level-10 tier is
    still open, and these cost coins). Emptying it is the whole release of the tier. */
-var PCHOLD={orrery:1,tidal:1,skyship:1,aurora:1,hoard:1};
+var PCHOLD={};/* Cal approved the level-10 tier on 11-25 */
 function pcHas(id){return id==="studio"||(!PCHOLD[id]&&!!pcArt(id))}
 function pcLv(id){var b=pcBy(id);return b?(b[3]||0):0}
 function pcOpenLv(id){try{return effLvl()>=pcLv(id)}catch(e){return true}}
 function pcSt(){var o=S.pc;if(!o||typeof o!=="object")o=S.pc={bg:"studio",own:{}};if(!o.own||typeof o.own!=="object")o.own={};
   try{var back=0;Object.keys(PCGONE).forEach(function(id){if(o.own[id]){back+=PCGONE[id];delete o.own[id]}});
+    if(!o.r1k){o.r1k=1;var diff=0;Object.keys(PCWAS).forEach(function(id){if(o.own[id]&&PCWAS[id]>PCPRICE)diff+=PCWAS[id]-PCPRICE});
+      if(diff){S.coins=(S.coins||0)+diff;S.spent=Math.max(0,(S.spent||0)-diff);o.ref=(o.ref||0)+diff;setTimeout(function(){try{pop("Banners cost 1,000 now: "+diff.toLocaleString()+" coins refunded for the ones you own");persist();render()}catch(e){}},900)}}
     if(back){S.coins=(S.coins||0)+back;S.spent=Math.max(0,(S.spent||0)-back);o.ref=(o.ref||0)+back;setTimeout(function(){try{pop("A banner you owned was retired: "+back.toLocaleString()+" coins refunded");persist();render()}catch(e){}},600)}}catch(e){}
   if(!pcBy(o.bg)||!pcHas(o.bg)||(o.bg!=="studio"&&!o.own[o.bg]))o.bg="studio";return o}
 function pcMine(){var r="",c="";try{r=RANKS[rankIdx()].n}catch(e){}try{c=S.cls&&CLASSES[S.cls]?CLASSES[S.cls].name:""}catch(e){}return {bg:pcSt().bg,r:r,c:c}}
@@ -89,6 +98,10 @@ function pcShop(){var o=pcSt(),me=pcMe(),lvl=1;try{lvl=effLvl()}catch(e){}
   /* what is listed: every painted backdrop whose level is reached (or that is owned), and the next tier up, locked, as something to climb to */
   var all=PCBG.filter(function(b){return pcHas(b[0])}),nx=all.map(function(b){return b[3]||0}).filter(function(v){return v>lvl}).sort(function(x,y){return x-y})[0],
       list=all.filter(function(b){return (b[3]||0)<=lvl||(b[3]||0)===nx||o.own[b[0]]});
+  /* from level 30, with a banner of the second set painted: the first 25 fold into the tab "I", the newer ones are "II" */
+  var two=lvl>=30&&all.some(function(b){return (b[3]||0)>=30}),tab=two?(PCTAB==="1"?"1":"2"):"",tabs="";
+  if(two){list=list.filter(function(b){return tab==="1"?(b[3]||0)<30:((b[3]||0)>=30||b[0]==="studio")});
+    tabs='<nav class="qs-tabs pc-sets" aria-label="Banner sets"><button class="qs-tab'+(tab==="1"?" on":"")+'" data-act="pcset" data-id="1" aria-label="Set one">I</button><button class="qs-tab'+(tab==="2"?" on":"")+'" data-act="pcset" data-id="2" aria-label="Set two">II</button></nav>'}
   var cards=list.map(function(b){var id=b[0],own=id==="studio"||o.own[id],use=o.bg===id,btn;
     var lock=!own&&(b[3]||0)>lvl;
     if(lock)btn='<button class="qs-btn ghost" disabled>Opens at level '+b[3]+'</button>';else if(use)btn='<button class="qs-btn ghost" disabled>On your card</button>';else if(own)btn='<button class="qs-btn alt" data-act="pcuse" data-id="'+id+'">Use</button>';
@@ -97,7 +110,7 @@ function pcShop(){var o=pcSt(),me=pcMe(),lvl=1;try{lvl=effLvl()}catch(e){}
     return '<article class="qs-card pc-bgc'+(use?" on":"")+(lock?" lock":"")+'" data-card="pcbg_'+id+'"><div class="pcard pc-'+id+' mini"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'></div><h4>'+esc(b[1])+'</h4>'+btn+'</article>'}).join("");
   var T=PCTRY&&pcBy(PCTRY)&&pcHas(PCTRY)&&!o.own[PCTRY]&&pcOpenLv(PCTRY)?pcBy(PCTRY):null;if(!T)PCTRY="";
   var bask=T?'<div class="qs-bask pc-bask"><small>Previewing '+esc(T[1])+'</small>'+(S.coins>=T[2]?'<button class="qs-btn" data-act="pccheck" data-id="'+T[0]+'">Buy &middot; <i class="coin"></i>'+T[2].toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+T[2].toLocaleString()+' &middot; need '+(T[2]-S.coins).toLocaleString()+' more</button>')+'<button class="qs-link" data-act="pctry" data-id="">Back to mine</button></div>':"";
-  return '<div class="pc-prev">'+pcHtml(me,190,T?T[0]:"")+bask+'</div><section class="qs-sec"><h3>Banners</h3><p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
+  return '<div class="pc-prev">'+pcHtml(me,190,T?T[0]:"")+bask+'</div><section class="qs-sec"><h3>Banners</h3>'+tabs+'<p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
 var v52Shop=shopHtml;shopHtml=function(){var h=v52Shop.apply(this,arguments);
   try{if(typeof SHUB==="undefined"||SHUB==="home"||shopTab!=="basics")return h;
     var nav='<nav class="qs-tabs sty-tabs" aria-label="Stylist"><button class="qs-tab'+(STYTAB==="cos"?" on":"")+'" data-act="stytab" data-id="cos">Cosmetics</button><button class="qs-tab'+(STYTAB==="bg"?" on":"")+'" data-act="stytab" data-id="bg">Backdrops</button></nav>';
@@ -105,8 +118,9 @@ var v52Shop=shopHtml;shopHtml=function(){var h=v52Shop.apply(this,arguments);
     h=STYTAB==="bg"?h.slice(0,a)+nav+pcShop()+h.slice(b):h.slice(0,a)+nav+h.slice(a)}catch(e){}
   return h};
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".shub-char");if(c&&!e.target.closest("button")){e.preventDefault();pcOpen();return}
-  var b=e.target.closest&&e.target.closest("[data-act=pcard],[data-act=pcbgs],[data-act=pcpost],[data-act=stytab],[data-act=pctry],[data-act=pccheck],[data-act=pcbuy],[data-act=pcuse]");if(!b)return;e.preventDefault();e.stopPropagation();var a=b.dataset.act,id=b.dataset.id,o=pcSt();
+  var b=e.target.closest&&e.target.closest("[data-act=pcard],[data-act=pcbgs],[data-act=pcset],[data-act=pcpost],[data-act=stytab],[data-act=pctry],[data-act=pccheck],[data-act=pcbuy],[data-act=pcuse]");if(!b)return;e.preventDefault();e.stopPropagation();var a=b.dataset.act,id=b.dataset.id,o=pcSt();
   if(a==="pcard"){pcOpen();return}
+  if(a==="pcset"){PCTAB=id==="1"?"1":"2";render();return}
   if(a==="pcpost"){pcPost();return}
   if(a==="stytab"){STYTAB=id==="bg"?"bg":"cos";render();return}
   if(a==="pcbgs"){closeModals();if(typeof areaGate==="function"&&areaGate("shop")){pop("Banners are in the Shop. The Shop opens with the Walk-in Closet.");return}if(typeof v59Banners==="function"){v59Banners();return}/* v1.53: the banners live in the Shop's Interface (29zz_v159.js) */STYTAB="bg";SHUB="in";shopTab="basics";window._qsSeen=1;/* else the Shop's first draw lands on the newest brand (15_shop.js) */view="shop";render();window.scrollTo(0,0);return}
@@ -140,4 +154,4 @@ function pcMarks(){try{[["a_tattoo","Tattoos"],["a_scar","Scars"]].forEach(funct
       SHOP.push([sid,tat?"a_tattoo":"a_scar",nm[0],PCMARKP[id.charAt(0)],1,nm[1],{basic:{key:tat?"markT":"markS",id:id},b:"basics",icon:"mark_"+id}])})}catch(e){}}
 pcMarks();
 
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={hold:function(on){if(on===false)PCHOLD={};return Object.keys(PCHOLD)},gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV152={hold:function(on){if(on===false)PCHOLD={};return Object.keys(PCHOLD)},price:PCPRICE,tab:function(k){if(k!==undefined)PCTAB=k;return PCTAB},gone:PCGONE,postW:pcPostW,st:pcSt,list:PCBG,has:pcHas,html:pcHtml,me:pcMe,safe:pcSafe,open:pcOpen,tab:function(k){STYTAB=k},txt:PCTXT,marks:pcMarks};

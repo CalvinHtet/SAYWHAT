@@ -29,14 +29,15 @@ function v59Door(k,name,sub,bang,wide){var u=v59Art(k);
 function v59Home(h){var sub=function(k){var m=new RegExp('data-shub="'+k+'"><b>[\\s\\S]*?</b><small>([\\s\\S]*?)</small>').exec(h);return m?m[1]:null},bang=function(k){return new RegExp('data-shub="'+k+'"><b>[^<]*<i class="qs-flnew"').test(h)};
   var st=sub("street"),va=sub("vault"),pe=sub("pets"),con=false;try{con=sysHas()}catch(e){}
   var g=(va!==null?v59Door("vault","The Vault",va,1,1):"")+'<div class="shub-grid">'+v59Door("street","Street Shop",st||"This week&rsquo;s brands",bang("street"))+v59Door("stylist","Stylist","Hair, eyes, tattoos and scars",0)
-    +v59Door("iface","Interface",con?"Banners, upgrades and interface":"Banners for your player card",0)+(pe!==null?v59Door("pets","Pet Store",pe,0):'<span class="shub-sq empty" aria-hidden="true"></span>')+'</div>';
+    +v59Door("iface","Interface",con?"Banners, effects, upgrades and interface":"Banners and effects",0)+(pe!==null?v59Door("pets","Pet Store",pe,0):'<span class="shub-sq empty" aria-hidden="true"></span>')+'</div>';
   return h.replace(/<div class="shub-tiles">[\s\S]*?<\/div>/,g)}
 function v59Iface(base){var head=(/<header class="qs-top qs-head">[\s\S]*?<\/header>/.exec(base)||[""])[0].replace(/<small class="qs-when">[\s\S]*?<\/small>/,""),dev=(/<p class="qs-dev">[\s\S]*?<\/p>/.exec(base)||[""])[0],con=false;try{con=sysHas()}catch(e){}
-  if(!con)V59TAB="ban";var t=V59TAB,tab=function(k,n){return '<button class="qs-tab'+(t===k?" on":"")+'" data-act="iftab" data-v="'+k+'">'+n+'</button>'},body="";
-  if(t==="ban")body=pcShop();
+  var fx=false;try{fx=typeof v61FxHtml==="function"&&FX.some(function(f){return f[0]<=effLvl()})}catch(e){}/* the level's effects (29zz_v161.js): a tab for everyone who has one */
+  if(!con&&V59TAB!=="fx")V59TAB="ban";if(V59TAB==="fx"&&!fx)V59TAB="ban";var t=V59TAB,tab=function(k,n){return '<button class="qs-tab'+(t===k?" on":"")+'" data-act="iftab" data-v="'+k+'">'+n+'</button>'},body="";
+  if(t==="ban")body=pcShop();else if(t==="fx")body=v61FxHtml();
   else{var o=SXTAB;SXTAB=t==="ifc"?"interface":"upgrades";try{var sx=sxHtml(),a=sx.indexOf("</nav>");body=a>=0?sx.slice(a+6).replace(/<\/div>$/,""):""}finally{SXTAB=o}}
   return '<div class="qshop sxv shub-in shub-iface">'+head+'<div class="qs-bar shub-bar"><button type="button" class="shub-back" data-shub="home">&lsaquo; Shop</button><b class="shub-title">Interface</b></div>'
-    +(con?'<nav class="qs-tabs" aria-label="Interface sections">'+tab("ban","Banners")+tab("upg","Upgrades")+tab("ifc","Interface")+'</nav>':'')+body+dev+'</div>'}
+    +(con||fx?'<nav class="qs-tabs" aria-label="Interface sections">'+tab("ban","Banners")+(fx?tab("fx","Effects"):"")+(con?tab("upg","Upgrades")+tab("ifc","Interface"):"")+'</nav>':'')+body+dev+'</div>'}
 var v59Shop=shopHtml;shopHtml=function(){if(SHUB==="iface"){var keep=SHUB,base;SHUB="home";try{base=v59Shop.apply(this,arguments)}finally{SHUB=keep}try{return v59Iface(base)}catch(e){SHUB="home"}}
   if(shopTab==="basics")STYTAB="cos";var h=v59Shop.apply(this,arguments);
   try{if(/class="qshop shub"/.test(h))h=v59Home(h);
@@ -44,7 +45,7 @@ var v59Shop=shopHtml;shopHtml=function(){if(SHUB==="iface"){var keep=SHUB,base;S
     h=h.replace(/<nav class="qs-tabs sty-tabs"[\s\S]*?<\/nav>/,"")}catch(e){}
   return h};
 function v59Banners(){STYTAB="cos";PCTRY=PCTRY||"";SHUB="iface";V59TAB="ban";window._qsSeen=1;view="shop";render();window.scrollTo(0,0)}
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=iftab]");if(!b)return;e.preventDefault();V59TAB=b.dataset.v==="upg"?"upg":b.dataset.v==="ifc"?"ifc":"ban";render();window.scrollTo(0,0)},true);
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=iftab]");if(!b)return;e.preventDefault();V59TAB=b.dataset.v==="upg"?"upg":b.dataset.v==="ifc"?"ifc":b.dataset.v==="fx"?"fx":"ban";render();window.scrollTo(0,0)},true);
 /* the bottom bar has no Upgrades tab; the console's screen and anything else that opened it land in the Shop's Interface */
 var v59Gate=areaGate;areaGate=function(id){if(id==="sys")return true;return v59Gate.apply(this,arguments)};
 sysOpen=function(tab){try{closeModals()}catch(e){}V59TAB=tab==="interface"?"ifc":"upg";SHUB="iface";window._qsSeen=1;view="shop";render();window.scrollTo(0,0)};
