@@ -30,11 +30,11 @@ var QBINFO={
     "Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare.",
     "Quest effort: the fuller your Daily Quest, the better the loot."]],
   allies:["Rescued allies",["Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good."]],
-  wheel:["The Wheel",["One free spin every 4 hours. Coins, now and then a streak freeze, and the thin gold slivers hold a piece of clothing from any brand in the game."]],
+  wheel:["Scratch card",["One card a day, once you have finished 3 tasks that day. Scratch three panels: three of a kind wins."]],/* 29zz_v146.js writes the full text */
   likes:["Likes",function(){var r="";try{r=fshRule()+". "}catch(e){}var pz="";try{pz=" The top 3 win "+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+" coins and a medal."}catch(e){}return [
     "Tap a look to like it. "+r+"Every like counts.","The week ends Sunday 7 pm Pacific."+pz]}],
   coach:["Coaches",["A new coach runs each session. Every session earns that coach XP. Higher levels boost your quests, and top coaches show up in your Gym."]],
-  vault:["The Vault",["Only 3 brands stay live. When a 4th drops, the oldest retires here and returns much later.","Vaulted brands are unavailable until they return. Pieces you own stay in your wardrobe."]]
+  vault:["The Vault",["Only 3 brands stay live. When a 4th drops, the oldest retires here and returns much later.","Vaulted brands are unavailable until they return. Pieces you own stay in your Closet."]]
 };
 function qbI(k){return QBINFO[k]?'<button type="button" class="qbi" data-act="qbinfo" data-k="'+k+'" aria-label="How '+esc(QBINFO[k][0])+' works">i</button>':''}
 function qbInfo(k){var e=QBINFO[k];if(!e)return;var t=typeof e[1]==="function"?e[1]():e[1];

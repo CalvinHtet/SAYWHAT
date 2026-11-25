@@ -11,6 +11,7 @@ var WDSLOT=["a_hat","a_acc","a_mask","a_xface","a_eyet","a_eyes","a_top","a_pant
 var WDF={cat:"all",brand:"all"},WDSX=0;
 function wdReset(){WDF={cat:"all",brand:"all"};WDSX=0}
 function wdCatOf(x){var s=x[1];
+  if(s==="a_tattoo"||s==="a_scar")return "face";/* QA fd5c2713: face marks belong under Face, not Accessories */
   if(s==="a_top")return "top";if(s==="a_pants")return "bottom";if(s==="a_shoes")return "shoes";if(s==="a_hat")return "hat";if(s==="a_back")return "back";
   if(s==="a_hair"||s==="a_hairc"||s==="a_beard")return "hair";if(s==="a_eyes"||s==="a_eyet"||s==="a_mask"||s==="a_xface")return "face";
   var z=typeof acc2Slot==="function"?acc2Slot(x):"";return z==="mask"||z==="glasses"?"face":z==="back"?"back":"acc"}

@@ -122,7 +122,13 @@ def icon(mid, out):
     im = Image.open(os.path.join(APP, "m_base_front.webp")).convert("RGBA")
     im.alpha_composite(Image.open(os.path.join(out, "m_mark_%s_front.webp" % mid)).convert("RGBA"))
     im.alpha_composite(Image.open(os.path.join(APP, "m_face_front.webp")).convert("RGBA"))
-    head = im.crop((205, 200, 605, 600)).resize((320, 320), Image.LANCZOS)
+    # centred on the mark, so a thin scar still reads at the 92 px mirror (QA 11-25); never smaller than 300 px of canvas
+    al = np.asarray(Image.open(os.path.join(out, "m_mark_%s_front.webp" % mid)))[..., 3]
+    ys, xs = np.nonzero(al > 60)
+    cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
+    side = max(300, 1.5 * max(xs.max() - xs.min(), ys.max() - ys.min()))
+    box = tuple(int(round(v)) for v in (cx - side / 2, cy - side / 2, cx + side / 2, cy + side / 2))
+    head = im.crop(box).resize((320, 320), Image.LANCZOS)
     p = os.path.join(out, "icon_mark_%s.webp" % mid)
     head.save(p, "WEBP", quality=90, alpha_quality=92, method=6)
     print(p)

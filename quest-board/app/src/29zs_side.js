@@ -29,7 +29,7 @@ var SIDEQ=[
     ask:["I'm filming a closet clear-out and mine's already empty.","Bag up what you never wear. Send me the bag before it goes to donation."],yes:"I'll bag it",
     snap:"The bag or box of clothes you're giving away.",
     check:"a bag or box packed with clothes to give away or donate",
-    done:["That's a full bag. Someone's going to love that jacket.","I'm having something made for you. It won't be in any store."],reward:"A piece made for you by Nova's tailor. It lands in your wardrobe when it's finished."},
+    done:["That's a full bag. Someone's going to love that jacket.","I'm having something made for you. It won't be in any store."],reward:"A piece made for you by Nova's tailor. It lands in your Closet when it's finished."},
   {id:"theo",pic:"theo",who:"Theo",role:"Theater crew",at:"the movie theater",name:"Movie night",gate:function(){return teamHas("theo")&&styHas("theater")},
     ask:["After close I get the projector to myself.","It's not the same alone.","Watch a movie at home with a friend. Both of you send me a picture, same night."],yes:"Pick a night",
     snap:"The movie on the screen, from where you're sitting. Your friend sends one too, the same night.",
