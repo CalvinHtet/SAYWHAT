@@ -13,4 +13,4 @@ Risk: `style` = a look or genre only; `close` = someone who knows the source wou
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-11-25 | banners, one "blocky voxel world" (id to come) | player-card banners | voxel sandbox games | cube terrain look | style | stopped by Cal 2026-11-25 ("it doesnt look right"), nothing shipped |
 | 2026-11-25 | banners, five "side-scroller" (ids to come) | player-card banners | 2D side-scrolling MMOs of the 2000s | layered parallax towns, chunky cute props, bright pastel light | style | stopped by Cal 2026-11-25 ("it doesnt look right"), nothing shipped |
-| 2026-11-25 | brand drop WISHBOX (docs/BRANDS_PROPOSAL.md) | Street Shop | the cash-shop cosmetics of 2D MMOs of the 2000s | oversized cute pieces, star and wing accessories, pastel glow; every piece our own design | style | proposed, not painted |
+| 2026-11-25 | brand drop WISHBOX (docs/BRANDS_PROPOSAL.md) | Street Shop | the cash-shop cosmetics of 2D MMOs of the 2000s | oversized cute pieces, star and wing accessories, pastel glow; every piece our own design | style | stopped by Cal 2026-11-25, proposal only, nothing painted |
