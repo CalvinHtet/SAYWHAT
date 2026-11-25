@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8819; let bad = 0; const ok = (c, s) => { if (!
     im.remove(); return { kicked: window.__qbV168.kicks() - k0, seen, end: svg.style.transform, pan }; });
   console.log('     transforms seen on the room SVG while a late picture arrived: ' + JSON.stringify(r.seen));
   ok(r.kicked > 0, 'the late picture was re-set (kicks ' + r.kicked + ')');
-  ok(r.end === r.pan && !r.seen.includes(''), 'a mid-gesture pan/zoom transform survives the nudge (if it is wiped, the room jumps back until the gesture commits)');
+  ok(r.seen.length === 1 && r.end === r.seen[0] && r.end !== '', 'a mid-gesture pan/zoom transform survives the nudge (if it is wiped, the room jumps back until the gesture commits)');
   /* idle scans in the Loft over 10 s */
   const n = await p.evaluate(async () => { let c = 0; const S0 = window.__qbV168.scan; const obs = new MutationObserver((ms) => { for (const m of ms) if (m.addedNodes && m.addedNodes.length) { c++; return; } }); obs.observe(document.documentElement, { childList: true, subtree: true }); await new Promise((ok) => setTimeout(ok, 10000)); obs.disconnect(); return c; });
   console.log('     Loft idle 10 s: ' + n + ' mutation batches that add nodes (each can start one debounced scan, at most one per 120 ms)');
