@@ -28,13 +28,13 @@ function v67Next(){try{var d=dropState(),t=null;Object.keys(d.floors||{}).forEac
 var v67Shop=shopHtml;shopHtml=function(){
   var street=false;try{street=SHUB!=="home"&&shubOf()==="street"}catch(e){}
   if(street){try{var A=v67All(),vb=shubVault(),L=A.filter(function(b){return !vb||b.id!==vb.id});
-      if(L.length&&(!window._qsSeen||!L.some(function(b){return b.id===shopTab}))){shopTab=L[0].id;window._qsSeen=1}
+      if(L.length&&shopTab!=="gmnext"&&(!window._qsSeen||!L.some(function(b){return b.id===shopTab}))){shopTab=L[0].id;window._qsSeen=1}
       var cur=L.filter(function(b){return b.id===shopTab})[0];if(cur)QSFLOOR=cur.fl||brandFloor(cur.id)/* v1.63: the one rotation lists every brand on the Street's calendar */}catch(e){}}
   var h=v67Shop.apply(this,arguments);if(!street)return h;
   try{var A2=v67All(),vb2=shubVault(),L2=A2.filter(function(b){return !vb2||b.id!==vb2.id});
     h=h.replace(/<nav class="qs-tabs qs-floors"[\s\S]*?<\/nav>/,"");
     var tabs=L2.map(function(b){return '<button class="qs-tab'+(shopTab===b.id?" on":"")+(v67Prem(b.id)?" v67p":"")+'" data-act="stab" data-v="'+esc(b.id)+'">'+(v67Prem(b.id)?'<i class="v67dia" aria-hidden="true"></i>':'')+esc(b.name)+'</button>'}).join("");
-    h=h.replace(/(<nav class="qs-tabs" aria-label="Shop sections">)[\s\S]*?(<\/nav>)/,function(m,a,z){return a+tabs+z});
+    h=h.replace(/(<nav class="qs-tabs" aria-label="Shop sections">)([\s\S]*?)(<\/nav>)/,function(m,a,mid,z){/* QA: keep the game master's "Next drop" tab (29zz_v132.js) */var gm=(/<button[^>]*data-v="gmnext"[\s\S]*?<\/button>/.exec(mid)||[""])[0];return a+gm+tabs+z});
     var ms=v67Next();if(ms!=null)h=h.replace(/(<small class="qs-cd">)[\s\S]*?(<\/small>)/,function(m,a,z){return a+"New brand in "+cdTxt(ms)+z});
     if(v67Prem(shopTab)&&/class="qshop[^"]*v60room/.test(h)){var art=null;try{art=(window.QBART&&(QBART["ui_banner_"+shopTab+"_p.webp"]||QBART["ui_banner_"+shopTab+".webp"]))||null}catch(e){}
       if(art)h=h.replace(/class="qshop([^"]*)v60room"/,'class="qshop$1v60room v67room"').replace(/(<div class="qshop[^"]*v67room">)/,'$1<div class="v67bg" aria-hidden="true" style="background-image:linear-gradient(180deg,rgba(8,10,18,.42) 0,rgba(8,10,18,.12) 22%,rgba(8,10,18,.2) 55%,rgba(8,10,18,.62) 100%),url(&quot;'+art+'&quot;)"></div>')}}catch(e){}
