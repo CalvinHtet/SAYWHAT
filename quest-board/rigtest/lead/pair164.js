@@ -1,0 +1,24 @@
+// Cal 11-25 (29zz_v164.js): with a companion, the character and the companion are centred together on the card, and both shrink a
+// little only if the pair would not fit. Every companion in its first and evolved form, on the big card and the header's small card.
+//   PORT=<plain build> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/pair164.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8779, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const errs = [];
+  for (const W of [390, 320]) { const p = await (await b.newContext({ viewport: { width: W, height: 844 }, deviceScaleFactor: 2 })).newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+    await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV164 && window.__qbV150 && window.__qbV152, null, { timeout: 90000 }); await p.waitForTimeout(800);
+    await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
+    const measure = (sel) => V((sel) => { const st = document.querySelector(sel); if (!st) return null; const fig = st.querySelector('.pc-fig'), ch = fig.querySelector('img.calp'), pet = fig.querySelector('img.fsh-pet'), H = window.__qbV164; if (!pet) return { pet: false };
+      const on = (im) => { const bx = H.box(im); if (!bx) return null; const r = im.getBoundingClientRect(); return { l: r.left + bx[0] * r.width, r: r.left + bx[2] * r.width, t: r.top + bx[1] * r.height, b: r.top + bx[3] * r.height }; };
+      const A = on(ch), B = on(pet); if (!A || !B) return { pet: true, ready: false }; const C = (st.closest('.pcard,.avbtn') || st).getBoundingClientRect(); const U = { l: Math.min(A.l, B.l), r: Math.max(A.r, B.r), t: Math.min(A.t, B.t) };
+      return { pet: true, ready: true, inside: U.l >= C.left + 1 && U.r <= C.right - 1 && U.t >= C.top, off: Math.round((U.l + U.r) / 2 - (C.left + C.right) / 2), tr: fig.style.transform, pl: Math.round(B.l - C.left), pr: Math.round(C.right - B.r), cl: Math.round(U.l - C.left), cr: Math.round(C.right - U.r) }; }, sel);
+    const setup = (k, form) => V((a) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(30); S.gates = [5, 10, 20, 30]; S.tutDone = 1; S.pc = { bg: 'ink_peaks', own: { ink_peaks: 1 } }; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
+      const H = window.__qbV150.state(); H.own = {}; H.own[a.k] = { n: 'Pal', xp: 0, evo: a.form, form: a.form, t: Date.now() }; H.seen = 1; S.pet = { k: a.k, t: Date.now() }; S.dogref = { at: 1 }; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); x.render(); }, { k, form });
+    const wait = async (sel) => { let m = null; for (let i = 0; i < 40; i++) { await p.waitForTimeout(250); m = await measure(sel); if (m && m.ready) break; } await p.waitForTimeout(400); return measure(sel); };
+    const rows = [];
+    for (const k of ['wolf', 'wyvern', 'slime']) for (const form of [0, 1]) { await setup(k, form); await V(() => window.__qbV152.open()); const big = await wait('#layer .pcm .pc-stage'); if (W === 390) await (await p.$('#layer .pcm .pcard')).screenshot({ path: OUT + '/pair164_' + k + form + '.png' });
+      await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove())); const hdr = await wait('.strip .avbtn .pc-stage'); rows.push([k + (form ? ' evolved' : ''), big, hdr]); }
+    for (const [nm, big, hdr] of rows) { ok(big && big.ready && big.inside && Math.abs(big.off) <= 3, W + ': big card, ' + nm + ': the pair is whole on the card and centred (off ' + (big && big.off) + ' px; margins ' + (big && big.cl) + ' / ' + (big && big.cr) + '; ' + (big && big.tr) + ')');
+      ok(hdr && hdr.ready && hdr.inside && Math.abs(hdr.off) <= 3, W + ': header card, ' + nm + ': whole and centred (off ' + (hdr && hdr.off) + '; ' + (hdr && hdr.tr) + ')'); }
+    await V(() => { const x = window.__qb.x(), S = x.S; const H = window.__qbV150.state(); H.own = {}; delete S.pet; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); x.render(); window.__qbV152.open(); }); await p.waitForTimeout(1500);
+    ok(await V(() => { const f = document.querySelector('#layer .pcm .pc-fig'); return !!f && !f.querySelector('img.fsh-pet') && !f.style.transform; }), W + ': without a companion the card is unchanged');
+    await p.context().close(); }
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
