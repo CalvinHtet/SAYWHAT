@@ -362,3 +362,18 @@ profile page. The main board you can't even see the tasks until you scroll down 
 header, the add-task box and the tasks (First steps for new players, bounties, Completed); the level bar, NEXT line, Daily Quest and
 the level trial move into the profile under the level card; while a trial waits, one slim row on the Board opens the profile at it
 (so does "Show me the trial"); the trial's title clears its emblem. Test: rigtest/lead/board165.js.
+
+## Every brand 42 pieces; 21 a drop; a random Vault; no floor level locks (Cal 11-25, late) — IN PROGRESS
+Cal: "All brands should have the same amount of pieces per category. If they don't, add them in now. Each week, there should only be 3
+pieces in each category: hat, gloves, necklace, top, bottom, shoes, mask/glasses which would go into the head category (this could be a
+helmet or a mask or glasses or a cigarette). Which means the first time we see a drop, it will be 7 x 3 = 21 pieces. Then the next time
+will be the other 21 pieces in this ensemble. So 42 pieces for each brand which means 6 pieces for each category. The wednesday vault
+drop will have a randomized 21 items across every brand in the game. I changed my mind about having the boutique and atelier come later
+and being level locked. Lets just make every brand rotate across the shop at the same time instead of being level locked. We'll have the
+other shops like the pet shop (lvl 25) and tattoos and scars (lvl 30) be available once we reach that level."
+Count on 11-25 (19 brands, cut pieces excluded): 461 pieces to paint (smk 29, nc 26, thirteen brands 27 each, hanga 12, over 15,
+y2k 14, rose 14). Briefed to ROOMS, smk first. Extras above 6 in a category leave the weekly rotation (owned stays owned; Vault pool).
+LEAD's code, in order: (1) the seven categories as wear slots (head, necklace, gloves split out of Accessories, all worn at once; save
+migration); (2) a drop shows one half (3 per category) and the brand's next appearance the other half; (3) the Vault is 21 random
+pieces from every brand (3 per category); (4) no floor level locks: all brands in one rotation; (5) the Pet Store at 25 (already), the
+Stylist's tattoos and scars from level 30.
