@@ -245,3 +245,19 @@ Store bottom right once the player has it; the Vault's day is a wide door above)
 pets>.webp when ROOMS has painted it, a dark panel with a line drawing until then; Interface = Banners, plus Upgrades and Interface
 once the Lair's console is owned; the bottom bar's Upgrades tab is gone and the console's screen opens Interface; the Stylist is
 Cosmetics only; "backdrop" reads "banner" to the player. Test: rigtest/lead/shop159.js.
+
+## A brand's room wears its banner as the background (Cal 11-25)
+Cal: "I like the banner for the brand drops, but it takes up too much space. Can we not have a separate banner but have it be
+integrated into the background for each brand? Instead of The Shop at the top left here, the name and logo of the brand should be
+there. And remove the 'new brands mon and Fri at 8 am' message and place the new brand in 1 D 1H message on the top right to the left of
+the coins I own. Remove the plus icon and mail icon since that can just be on the main board. As for my character where it shows my
+clothes I'm wearing and the name of each item, make that slowly appear as I scroll down and the top of the screen goes out of view. So
+when I scroll down, the opacity of my player card should go from 0% to 100%. I don't like how trying something on makes this box with my
+character longer. Remove the username from this card and change 'take them off' to 'take off' and place it to the right of the purchase
+text so it doesn't create a larger box."
+Built in app/src/29zz_v160.js: no banner block; the brand's picture is the top 320 px of the page's fixed background, fading into the
+brand's colours; the title is the brand's emblem and name; the Shop's header loses the schedule line, the "+" and the mailbox, and
+in a brand's room the countdown sits left of the coins; the character card in the Shop's rooms has no name, a two-line worn list and
+one row (buy button, "Take off"), the same height trying or not; on a phone it is pinned to the top out of the page's flow and its
+opacity follows the scroll (0 at the top, 1 from about 220 px). LEAD's addition: while a piece is tried on the card shows at once,
+because that is the only place the try-on and its price are seen. Test: rigtest/lead/shop160.js.

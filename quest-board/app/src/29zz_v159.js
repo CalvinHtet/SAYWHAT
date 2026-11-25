@@ -52,12 +52,12 @@ var v59View=viewHtml;viewHtml=function(v){if(v==="sys"){view="shop";SHUB="iface"
 /* the Shop's own screens are dark; a brand's room keeps the brand's colours */
 var v59Theme=qsTheme;qsTheme=function(b){var r=v59Theme.apply(this,arguments);try{if(!b||SHUB==="home"||SHUB==="iface"){/* the home screen and Interface are the Shop's own, whatever brand tab is remembered */var st=document.body.style;st.setProperty("--shopbg","linear-gradient(180deg,#151b31 0%,#0b0e1a 70%)");st.setProperty("--shopfg","#eef1f8");st.setProperty("--shopsolid","#0b0e1a")}}catch(e){}return r};
 /* the app's own stylesheet comes after the ones added here, so each selector gets "html " in front to win over its light rules */
-function v59Up(css){return css.replace(/(^|})([^{}]+)\{/g,function(m,a,sel){return a+sel.split(",").map(function(x){return "html "+x.trim()}).join(",")+"{"})}
+function v59Up(css){return css.replace(/(^|})([^{}]+)\{/g,function(m,a,sel){if(/^\s*@/.test(sel))return m;/* an @media line is not a selector */return a+sel.split(",").map(function(x){return "html "+x.trim()}).join(",")+"{"})}
 htabCss("qb-shopdark-css",v59Up(
   ".qshop{--ink:#eef1f8;--soft:#a3a9bd;--line:#2b3046;--pad:#1b2033;--well:#dfe3ec;--cardbg:#141829}body.shopmode{background:var(--shopbg,#0b0e1a)!important}body.shopmode .nav{background:linear-gradient(180deg,transparent,var(--shopsolid,#0b0e1a) 42%)!important}"
   +".qs-coin,.qs-tab,.qs-mirror,.qs-card,.qshop .card.panel,.qshop .item,.qshop .btn.ghost,.qs-wdc,.qs-mark{background:var(--cardbg);color:var(--ink)}"
   +".qs-tab.on,.qs-wdc.on{background:var(--ink);border-color:var(--ink);color:#0b0e1a}.qs-btn{background:var(--ink);border-color:var(--ink);color:#0b0e1a}.qs-btn.alt{background:transparent;color:var(--ink)}.qs-btn.ghost{background:transparent;border-color:var(--line);color:var(--soft)}"
-  +".qs-img,.qs-glass,.qshop .thumb{background:var(--well)}.qs-card p,.qs-worn small{color:var(--soft)}.qs-card.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}.qs-mirror{box-shadow:0 8px 22px rgba(0,0,0,.35)}"
+  +".qs-img,.qs-glass{background:var(--well)}/* QA f1f63523: interface pieces (titles are pale text, themes their own colours) sit in a dark well; clothes keep the light one */.qshop .thumb{background:#0f1322;color:var(--ink)}.qs-card p,.qs-worn small{color:var(--soft)}.qs-card.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}.qs-mirror{box-shadow:0 8px 22px rgba(0,0,0,.35)}"
   +"body.shopmode .qs-top,body.shopmode .qs-top h1,body.shopmode .qs-top small,body.shopmode .qs-sec>h3,body.shopmode .qs-note,body.shopmode .qs-lead,body.shopmode .qs-dev,body.shopmode .qs-empty,body.shopmode .qs-bar .qs-cd{color:var(--shopfg,#eef1f8)}"
   +".shub-back,.shub-title{color:var(--shopfg,#eef1f8)}.shub-back{border-color:rgba(255,255,255,.22)}.qs-link{color:var(--ink)}"
   /* the doors */

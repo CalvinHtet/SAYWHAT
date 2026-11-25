@@ -79,5 +79,5 @@ htabCss("qb-v156-css",".sc-card:not(.locked):not(.done) .sc-grid{touch-action:no
   +".scbtn.wait,.scbtn.done{color:color-mix(in srgb,var(--fg) 55%,transparent)}.scbtn.rdy{border-color:var(--gold,#ffc857);color:var(--gold,#ffc857);box-shadow:0 0 12px -2px var(--gold,#ffc857)}"
   +".scbtn .scdot{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--gold,#ffc857);box-shadow:0 0 8px var(--gold,#ffc857)}"
   /* QA: the dot was styled as any <i> in the button, so the alerts' mark (an <i> too) took its gold disc; the dot has its own class, and steps aside while the mark shows */
-  +".scbtn:has(.nbang) .scdot{display:none}.scbtn .nbang{transform:scale(.72);transform-origin:100% 0}");
+  +".scbtn:has(.nbang) .scdot{display:none}.scbtn .nbang{scale:.72;transform-origin:100% 0}/* QA 5d625049: the scale property, since the mark\'s bounce animates transform */");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV156={cv:function(){return Object.keys(SCCV).map(Number)},gone:function(i){return SCCV[i]?v56Gone(SCCV[i]):null},btn:v56Btn};
