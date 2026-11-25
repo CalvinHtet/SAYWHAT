@@ -52,8 +52,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(/unequip/i.test(un.lbl) && !un.after && /^equip$/i.test(un.lbl2.trim()), 'the Shop\'s Interface, Effects: Unequip takes it off, and the card then says Equip ' + JSON.stringify(un));
   await V(() => { document.querySelector('.nav button[data-v="board"]').click(); }); await p.waitForTimeout(800);
   ok(await V(() => !document.querySelector('.strip .pc-fig.v74on')), 'unequipped, the header card has no halo');
-  const ro = await V(() => { const H = window.__qbV174, S = window.__qb.x().S; H.ch.push({ m: '2027-01', n: 2, title: 'T', from: 'M.', body: '' }); H.prize.push({ id: 'px_two', name: 'Two', line: '' });
-    const was = S.ch.done['2026-12']; const a = H.prizeOf('2027-01').id; delete S.ch.done['2026-12']; const b = H.prizeOf('2027-01').id; S.ch.done['2026-12'] = was; H.ch.pop(); H.prize.pop(); return { a, b }; });
-  ok(ro.a === 'px_two' && ro.b === 'px_halo', 'a month somebody finished passes the next prize on; a month nobody finished moves its prize to the next chest ' + JSON.stringify(ro));
+  const ro = await V(() => { const H = window.__qbV174, S = window.__qb.x().S, was = S.ch.done['2026-12'];
+    const a = H.chOf('2027-01'); delete S.ch.done['2026-12']; S.ch.seen = {}; const b = H.chOf('2027-01'), c = H.chOf('2027-02'); S.ch.done['2026-12'] = was; return { a: [a.n, a.prize, a.r], b: [b.n, b.prize, b.r, b.body.slice(0, 40)], c: [c.n, c.r], d1: H.chOf('2026-12').body.slice(0, 40) }; });
+  ok(ro.a[0] === 2 && ro.a[1] === 'px_ring' && ro.b[0] === 1 && ro.b[1] === 'px_halo' && ro.b[2] === 1 && ro.b[3] !== ro.d1 && ro.c[0] === 1 && ro.c[1] === 2, 'a cleared month moves the story on (Chapter 2, its own prize); a month nobody cleared runs the same chapter again, told differently ' + JSON.stringify(ro));
   const wd = await V(() => { try { return null } catch (e) { return null } });
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

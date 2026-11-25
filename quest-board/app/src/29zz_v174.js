@@ -8,27 +8,49 @@
      month). S.ch.t0 is S.total when the month began here, so an undone task comes off the count.
    - The goal met: a window pays V74COINS coins and V74XP XP and hands over the month's key; the key opens a chest (in the window, or later
      from the Board's Goals), which holds the month's prize. The prize is never named before the chest opens (Cal: "surprise me").
-   - The prizes go in order (V74PRIZE). A month's prize is the next one nobody has won yet: if nobody (this player or anyone in the
-     town's worlds, field chd) finished a month, its prize moves to the next month's chest, under that month's new story.
+   - Each chapter has its own prize (CH[].prize). A chapter nobody (this player or anyone in the town's worlds, field chd) clears runs again
+     the next month, told a little differently (Cal changed his mind on moving prizes; see CH below).
    - The first prize is the Timekeeper's Halo: a gilded clockwork halo turning over the head, a golden glow and drifting time-dust, on
      the player card everywhere it is shown (the Board's header, the profile, the card, other players' views of it). S.chfx is the prize
      worn (on by default once won; the card's Effects can come later). */
-var V74GOAL=90,V74COINS=10000,V74XP=1000;
+var V74GOAL=90,V74COINS=10000,V74XP=1000,V74START="2026-12";
+/* Cal 11-25 (later): "Forget what I said about transferring the prizes to the next month. The prizes should make sense with the story. If no
+   one clears the month's tasks, it repeats again the next month but with a slightly different text story but it is still the same story of
+   the timekeeper." The Timekeeper's story, one chapter a month: a chapter stays until somebody clears it, and each month it repeats, its
+   letter is told a little differently (texts[r], r = the months it has already run). Each chapter keeps its own prize. */
 var CH=[
-  {m:"2026-12",n:1,title:"The Clock Tower",from:"M.",body:'<p>The lamp in the old clock tower went out last night.</p>'
-    +'<p>Nobody in town will say who used to keep it lit. I asked at every shop on the street, and every shopkeeper found something else to look at. The door at the bottom is locked, and the key is not anywhere I have looked.</p>'
-    +'<p>If the town gets busy enough this month, somebody is bound to turn it up.</p><p>&mdash; M.</p>',
-    found:'<p>It was under the last stair, wrapped in a cloth that smelled of oil and brass. A small key, warm as if somebody had just put it down.</p><p>It does not fit the tower door. It fits something else.</p>'}];
-var V74PRIZE=[{id:"px_halo",name:"Timekeeper's Halo",line:"A gilded clockwork halo that keeps its own time, a golden glow and drifting time-dust."}];
+  {n:1,title:"The Clock Tower",from:"M.",prize:"px_halo",texts:[
+    {body:'<p>The lamp in the old clock tower went out last night.</p><p>Nobody in town will say who used to keep it lit. I asked at every shop on the street, and every shopkeeper found something else to look at. The door at the bottom is locked, and the key is not anywhere I have looked.</p><p>If the town gets busy enough this month, somebody is bound to turn it up.</p><p>&mdash; M.</p>',
+     found:'<p>It was under the last stair, wrapped in a cloth that smelled of oil and brass. A small key, warm as if somebody had just put it down.</p><p>It does not fit the tower door. It fits something else.</p>'},
+    {body:'<p>The tower stayed dark all last month. Nobody found the key.</p><p>Last night the clock struck thirteen. I counted twice. The old woman who sells oranges crossed herself and shut her stall early, and she would not tell me why.</p><p>The key is still out there. Keep the town moving and it will turn up.</p><p>&mdash; M.</p>',
+     found:'<p>Somebody had pushed it under the tower door from the inside. A small brass key, still warm.</p><p>It does not open the tower. It opens something else.</p>'},
+    {body:'<p>Another month, and the tower is still dark.</p><p>I sat on the steps until midnight. The hands moved on their own, backwards, then stopped at four minutes to twelve. Whoever kept the lamp is still up there, I think. Or something is.</p><p>Somebody has to find that key.</p><p>&mdash; M.</p>',
+     found:'<p>It hung from a nail in the stairwell, where the lamp-keeper\'s coat used to hang. Small, brass and warm.</p><p>It fits something else.</p>'}]},
+  {n:2,title:"The Keeper's Ring",from:"M.",prize:"px_ring",texts:[
+    {body:'<p>The lamp is lit again. Whoever opened that chest woke something.</p><p>The tower clock runs true now, but it hums at night, low, like a held note. The baker swears she saw a ring of light pass across her ceiling at three in the morning. The Keeper wore a ring, the old ones say. Nobody has seen it in forty years.</p><p>&mdash; M.</p>',
+     found:'<p>It was inside the clock, caught between two teeth of the great wheel. A plain ring, until you hold it. Then the air around your hand starts to move.</p>'},
+    {body:'<p>The humming has not stopped. It moves now, from the tower down the street and back, as if something is looking.</p><p>The Keeper\'s ring is still out there. The clock will not rest until somebody wears it.</p><p>&mdash; M.</p>',
+     found:'<p>It rolled out of the gutter in front of the tower and stopped at your feet. The air around it will not keep still.</p>'}]},
+  {n:3,title:"The Storm Over the Tower",from:"M.",prize:"px_storm",texts:[
+    {body:'<p>Clouds came in last night that did not move with the wind. They sat over the tower, black on one side and white on the other, and the lightning between them made no sound.</p><p>The Keeper did not only keep time. The Keeper kept that.</p><p>&mdash; M.</p>',
+     found:'<p>At the top of the tower, where the lamp used to be, the storm had folded itself into a small dark stone with a white seam. When you pick it up, it crackles.</p>'},
+    {body:'<p>The storm is still over the tower. The lightning is closer every night, black and white, and still silent.</p><p>Somebody has to go up and take it.</p><p>&mdash; M.</p>',
+     found:'<p>The storm came down the stairs to meet you and went quiet in your hands: a dark stone with a white seam, crackling.</p>'}]}];
+var V74PRIZE=[{id:"px_halo",name:"Timekeeper's Halo",line:"A gilded clockwork halo that keeps its own time, a golden glow and drifting time-dust."},
+  {id:"px_ring",name:"Keeper's Ring",line:"An aura that rises off you and never settles."},
+  {id:"px_storm",name:"Silent Storm",line:"Black and white lightning that crackles off you without a sound."}];
 function v74Month(){return today().slice(0,7)}
-function v74Ch(m){return CH.filter(function(c){return c.m===m})[0]||null}
-function v74St(){if(!S.ch||typeof S.ch!=="object")S.ch={};var C=S.ch;["done","prize","open"].forEach(function(k){if(!C[k]||typeof C[k]!=="object")C[k]={}});
+function v74Next(m){var a=m.split("-").map(Number);a[1]++;if(a[1]>12){a[1]=1;a[0]++}return a[0]+"-"+(a[1]<10?"0":"")+a[1]}
+function v74St(){if(!S.ch||typeof S.ch!=="object")S.ch={};var C=S.ch;["done","prize","open","seen"].forEach(function(k){if(!C[k]||typeof C[k]!=="object")C[k]={}});
   var m=v74Month();if(C.m!==m){C.m=m;C.t0=+S.total||0;try{persist()}catch(e){}}return C}
 function v74Count(){var C=v74St();return Math.max(0,(+S.total||0)-(+C.t0||0))}
-/* did anybody finish month m: this player, or a player in the town's worlds (w.chd, a list of months) */
-function v74Anyone(m){if(v74St().done[m])return true;try{return (SOC.worlds||[]).some(function(w){return w&&Array.isArray(w.chd)&&w.chd.indexOf(m)>=0})}catch(e){return false}}
-/* the prize a month's chest holds: the first one no earlier month gave away */
-function v74PrizeOf(m){var k=0;CH.forEach(function(c){if(c.m<m&&v74Anyone(c.m))k++});return V74PRIZE[Math.min(k,V74PRIZE.length-1)]||null}
+/* did anybody clear month m: this player, or a player in the town's worlds (w.chd, a list of months); remembered once seen */
+function v74Anyone(m){var C=v74St();if(C.done[m]||C.seen[m])return true;try{if((SOC.worlds||[]).some(function(w){return w&&Array.isArray(w.chd)&&w.chd.indexOf(m)>=0})){C.seen[m]=1;return true}}catch(e){}return false}
+/* month m's chapter and the telling: chapters advance only past a month somebody cleared */
+function v74Pos(m){if(!m||m<V74START)return null;var k=0,r=0;for(var x=V74START;x<m;x=v74Next(x)){if(v74Anyone(x)){k++;r=0}else r++}
+  var c=CH[k];if(!c)return null;var t=c.texts[Math.min(r,c.texts.length-1)];return {c:c,k:k,r:r,t:t}}
+function v74Ch(m){var P=v74Pos(m);return P?{n:P.c.n,title:P.c.title,from:P.c.from,body:P.t.body,found:P.t.found,prize:P.c.prize,r:P.r}:null}
+function v74PrizeOf(m){var c=v74Ch(m);return c?v74Prize(c.prize):null}
 function v74Prize(id){return V74PRIZE.filter(function(p){return p.id===id})[0]||null}
 /* the month's goal met: pay once, hand the key over */
 function v74Check(){try{if(!loaded||!S||!S.created)return;var m=v74Month(),c=v74Ch(m),C=v74St();if(!c||C.done[m]||v74Count()<V74GOAL)return;
@@ -105,4 +127,4 @@ htabCss("qb-v174-css",".pc-fig.v74on{position:relative;isolation:isolate}.pc-fig
   +".v74show{position:relative;height:170px;margin:6px auto 10px;width:170px}.v74fx.v74big{position:absolute;inset:0}.v74big .v74glow{left:0;width:100%;top:10%;height:90%}.v74big .v74halo{left:10%;width:80%;top:18%}"
   +".v74win .v74key{color:#ffd56b}"
   +"@media (prefers-reduced-motion:reduce){.v74spin,.v74spin2,.v74glow,.v74dust i,.pc-fig.v74on>img.calp{animation:none}.v74dust{display:none}}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV174={goals:function(){return v67Goals()},st:v74St,count:v74Count,check:v74Check,open:v74Open,prizeOf:v74PrizeOf,ch:CH,prize:V74PRIZE,goal:V74GOAL};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV174={chOf:v74Ch,goals:function(){return v67Goals()},st:v74St,count:v74Count,check:v74Check,open:v74Open,prizeOf:v74PrizeOf,ch:CH,prize:V74PRIZE,goal:V74GOAL};
