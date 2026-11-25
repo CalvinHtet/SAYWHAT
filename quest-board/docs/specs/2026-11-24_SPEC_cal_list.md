@@ -161,3 +161,12 @@ Level 25 prices, checked against the sims (LEAD 11-24; item 14, "redo the econom
 - The save never recorded which pieces were bought and which were prizes, so the refund is a one-time tick list (29zz_v153.js,
   v53Refund): every priced character piece that is not the creator's look, all ticked; he unticks what he won. Ticked pieces go back
   for their price; unticked ones stay owned and worn. "Later" (or the x) refunds nothing and asks again on the next launch.
+
+## Header avatar is the player card (Cal 11-25)
+Cal: "I want the player card and banner to be visible on the top player card. Make sure that clicking the player icon on any screen
+will open up the player banner. On the main board, this may mean moving all the text at the top slightly to the right to make room for
+the full customized player banner without it being cut off."
+Built in app/src/29zz_v155.js: the header avatar is a 3:4 mini card (backdrop whole, character, companion), 108 x 144 (96 x 128 under
+350 px wide); tapping it opens the player card on every screen with a header (Board, Train, Town Hall; the Loft and the Shop cover or hide
+the header, and the Shop's character already opens the card). The small card button is gone. The card has a Profile button; the Board's
+level bar still opens the profile; the Relics and streak-freeze tours point at the level bar. Test: rigtest/lead/header155.js.
