@@ -18,16 +18,14 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779), SHOTS = process.e
       S.quests = [{ id: 'q1', name: 'Wash the dishes', cl: 'home', xp: 10, stat: 'productivity', rep: 'daily' }]; S.done = {}; x.render(); });
     await p.waitForTimeout(800);
     const board = await p.evaluate(() => { const n = document.querySelector('.zx-next'); return n ? n.innerText.replace(/\s+/g, ' ') : ''; });
-    ok(board && !/afford|upgrade/i.test(board), `${w}: the Board's Next line names no upgrade: "${board}"`);
+    ok(!/afford|upgrade/i.test(board), /* no Next line at all since the Board move and Goals (v1.65, v1.67) */ `${w}: the Board's Next line names no upgrade: "${board}"`);
     await p.evaluate(() => document.querySelector('.nav button[data-v="hideout"]').click()); await p.waitForTimeout(2500);
     for (const bi of [0, 1]) {
       await p.evaluate((bi) => { const e = document.querySelector('[data-act="bldgo"][data-v="' + bi + '"]'); if (e) e.dispatchEvent(new MouseEvent('click', { bubbles: true })); }, bi); await p.waitForTimeout(2500);
       const r = await p.evaluate(() => { const top = document.querySelector('.lfbtop'), gb = document.querySelector('.lfbtop .glbtn'), q = top && top.getBoundingClientRect();
         return { pill: document.querySelectorAll('.glnext,.zx-afnext').length, top: !!top && q.left >= 0 && q.right <= innerWidth + .5, name: top && top.querySelector('b') && top.querySelector('b').innerText, goals: gb ? gb.innerText.replace(/\s+/g, ' ') : null }; });
-      ok(!r.pill && r.top && r.goals, `${w}: building ${bi}: no pill under the name; Street, name and Goals stay on screen ` + JSON.stringify(r));
+      /* Cal 11-25: no Goals button in the building any more (the Board's Goals, bld171.js) */ ok(!r.pill && r.top && !r.goals, `${w}: building ${bi}: no pill under the name; Street and the name stay on screen, no Goals button ` + JSON.stringify(r));
       if (SHOTS && bi === 0) await p.screenshot({ path: `${SHOTS}/bldtop_${w}.png`, clip: { x: 0, y: 0, width: w, height: 260 } });
-      const gl = await p.evaluate(async () => { document.querySelector('.lfbtop .glbtn').click(); await new Promise((o) => setTimeout(o, 800)); const m = document.querySelector('.glmodal'); const t = m ? m.innerText.slice(0, 40).replace(/\s+/g, ' ') : ''; if (m) m.remove(); return t; });
-      ok(/Goals/.test(gl), `${w}: building ${bi}: the Goals button opens the goals: "${gl}"`);
       await p.evaluate(() => { const e = document.querySelector('[data-act="bldout"]'); if (e) e.click(); }); await p.waitForTimeout(1500); }
     ok(!errs.length, `${w}: no page errors ` + JSON.stringify(errs.slice(0, 3))); await p.context().close(); }
   await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
