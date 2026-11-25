@@ -316,7 +316,8 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.49 3e3774ad = qa-local f15055ae + APPV 149, QB_EPOCH 8): v1.49 candidate PASS, can ship (QA findings). Next: the live check after LEAD ships.
+- Now (on release/v1.49 3e3774ad, LIVE): v1.49 live check PASS (QA findings).
+  Was: Now (on release/v1.49 3e3774ad = qa-local f15055ae + APPV 149, QB_EPOCH 8): v1.49 candidate PASS, can ship (QA findings). Next: the live check after LEAD ships.
   Was: Now (on qa-local e43010c8, the v1.49 batch): LEAD's three leftovers are fixed: the companion fades in at the door (alpha 0.12-0.18 up to 1), the no-art visit card fits (288 px at 320, 358 px at 390), the pets stay on the player card at 320. The Vault calendar is right (12-09 DIAL-UP, 12-30, 02-03, 02-10, 03-10, 03-24) and its home tile shows on 12-09; the Vault screen itself not yet confirmed (my tap on the tile did not open it, probably my test). Paused at Cal's usage limit. Still to check: the rig sweep (running), the Vault screen, buy and Thursday 8 am, other players' cards and posts, secrecy, the City text. No verdict for LEAD yet.
   Was: Now (on release/v1.47 b2b7a2e3, Live): v1.47 live check, PASS (QA findings).
   Was: Now (on release/v1.47 b2b7a2e3): the v1.47 candidate and its rollback, PASS, can ship (QA findings).
@@ -462,6 +463,7 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS, v1.49 LIVE check: Live version.txt 3e3774ad; QA's own web build of 3e3774ad (APPV 149, QB_EPOCH 8) against https://saywhat-b7ae8.web.app: 3890/3890 files identical. A signed-out load: noTest on, only __qbLoad and __qbWeb, the sign-in screen, no page errors. ls-remote: release/v1.49 3e3774ad, rollback-v1.47 88ad2409. Test channel not compared by QA (LEAD's ship.sh: 3890/3890).
 - PASS, v1.49 candidate release/v1.49 3e3774ad (= qa-local f15055ae; only APPV 149 and QB_EPOCH 8 differ, checked on app, data, web, tools, art/app), with the rest of the batch on e43010c8/f15055ae (QA's clean builds, plain and sandbox web; owner LEAD). Can ship.
   - The candidate as built for the web: noTest on, the Shop's and rooms' "Testing:" rows gated off, a signed-out load shows only __qbLoad and __qbWeb (no test hooks), no page errors; version.json appv 149.
   - The three leftovers (e43010c8): the companion fades in at the door on a room change (alpha 0.12-0.18 up to 1), the no-art visit card fits (288 px at 320, 358 px at 390), the pets stay inside the player card at 320. FIXED.
