@@ -17,7 +17,7 @@
    "bed": {
     "id": "pbed_wolf",
     "w": 278,
-    "h": 177,
+    "h": 180,
     "sleepOff": 40
    },
    "fit": {
@@ -100,6 +100,47 @@
     {"head": [190,125,0], "neck": [190,270,0], "body": [190,215,0], "aura": [169,209]},
     {"head": [230,190,5], "neck": [220,272,0], "body": [215,245,0], "aura": [169,245]}
    ]
+  },
+  "k5": {
+   "frames": 11,
+   "w": 422,
+   "h": 444,
+   "cx": 217,
+   "bed": {"id": "pbed_k5", "w": 470, "h": 464, "sleepOff": 90},
+   "fit": {
+    "body": ["stand","stand","stand","stand","sit","sleep","trip","sit","sit","sit","sit"],
+    "cells": ["stand","trip","sit","sleep"],
+    "headHide": [5]
+   },
+   "anchors": null
+  },
+  "k6": {
+   "frames": 11,
+   "w": 515,
+   "h": 580,
+   "cx": 276,
+   "bed": {"id": "pbed_k6", "w": 450, "h": 308, "sleepOff": 54},
+   "fit": {
+    "body": ["stand","stand","glide","hover","sit","sleep","hop","stand","sit","stand","paws"],
+    "cells": ["stand","glide","hover","hop","sit","sleep","paws"],
+    "headHide": [5]
+   },
+   "anchors": null
+  },
+  "k4": {
+   "frames": 11,
+   "w": 394,
+   "h": 408,
+   "cx": 211,
+   "bed": {"id": "pbed_k4", "w": 430, "h": 295, "sleepOff": 70},
+   "fit": {
+    "body": ["round","round","round","flat","tall","sleep","stretch","round","round","round","flat"],
+    "cells": ["round","tall","stretch","flat","sleep"],
+    "headHide": [5],
+    "head": ["up","up","up","flat","up","up","up","up","up","up","flat"],
+    "headCells": ["up","flat"]
+   },
+   "anchors": null
   }
  },
  "dogs": {

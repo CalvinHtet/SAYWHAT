@@ -35,6 +35,10 @@
     // streaks painted for each style (ROOMS), drawn over the hair (rig slot hairHi). A style without that layer shows no highlights.
     const hiArt = `${b}_${c.hairStyle}hi_front.webp`;
     if (c.hairHi && ((QA && QA[hiArt]) || (G && G.arthash && G.arthash[hiArt]))) layers.hairHi = { ...views(b, c.hairStyle + "hi"), tint: ramp(find(data.hairColors, c.hairHi)) };
+    // Face marks (Cal 11-24: "face tattoos and scars" in the Stylist; ROOMS's layer): choice.markT (t1..t6) and choice.markS (s1..s4), one of
+    // each at most, <b>_mark_<id>_front.webp on the face's own canvas, front view only, no tint. Rig slots markS and markT sit over the
+    // skin and the blush and under the mouth, the brows and eyes and the hair. Without the file nothing is drawn.
+    for (const [slot, id] of [["markS", c.markS], ["markT", c.markT]]) { const art = `${b}_mark_${id}_front.webp`; if (id && ((QA && QA[art]) || (G && G.arthash && G.arthash[art]))) layers[slot] = { front: art }; }
     if ((QA && QA[lockArt]) || (G && G.arthash && G.arthash[lockArt])) layers.hairFront = { front: lockArt, tint: layers.hair.tint };
     for (const [slot, item] of Object.entries(c.equipped || {})) {
       const set = item.frontOnly ? frontOnly(b, item.art) : views(b, item.art);

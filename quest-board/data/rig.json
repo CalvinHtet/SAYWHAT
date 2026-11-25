@@ -283,7 +283,7 @@
    "bones": [
     "head"
    ]
-  },
+  }, {"id": "markS", "bones": ["head"]}, {"id": "markT", "bones": ["head"]},
   {
    "id": "mouth",
    "bones": [
