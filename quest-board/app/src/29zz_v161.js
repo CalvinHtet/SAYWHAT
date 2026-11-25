@@ -25,7 +25,23 @@ var v61Prof=profileHtml;profileHtml=function(){var h=v61Prof.apply(this,argument
        .replace(/(<h3 class="label">Your skills<\/h3>)<p class="note">[\s\S]*?<\/p>/,"$1").replace(/<div class="chap lockc">[\s\S]*?<\/div>/g,"").replace(/<div class="foot">[\s\S]*?<\/div>/,"")
        ;/* Cal, later on 11-25: "for the text underneath the stats, I just meant remove the 'Photo proof: 0% of your etc etc --- once cleared.' Keep the stat diagram and the text in that box." The Stats card stays whole; only the paragraph under it (.foot, above) is gone. */
     var end=(relics?'<div class="zx-me v61rel"><button type="button" class="btn ghost" data-act="nav" data-v="trophy">Relics</button></div>':'')+(tour?'<div class="v61end"><button type="button" class="btn ghost" data-act="tourreplay">Replay tutorial</button></div>':'');
-    var i=h.indexOf('<section class="card panel rsp">');h=i<0?h+end:h.slice(0,i)+end+h.slice(i)}catch(e){}
+    var i=h.indexOf('<section class="card panel rsp">');h=i<0?h+end:h.slice(0,i)+end+h.slice(i);
+    /* Cal, later on 11-25: "put the circular level icon to the left of that box, and then the xp and remaining exp to level 9 to the
+       right", and on the class card: "remove the Runeweaver: tier 1 of 9 text. Remove the story button. and remove the 'next advancement
+       at level 10' text. Remove Encore in the box above your skills. Just have the skills slowly fill up the table underneath 'Your
+       Skills' as you unlock them." The level card is one row (ring, then XP and what is left) with the streak row under it; the class
+       card is its emblem and title. */
+    var d=document.createElement("div");d.innerHTML=h;var hero=d.querySelector("section.hero"),ring=hero&&hero.querySelector(".ring"),inner=ring&&ring.nextElementSibling;
+    if(hero&&ring&&inner){var row=document.createElement("div");row.className="v61lv";var txt=document.createElement("div");txt.className="v61xp";
+      [].slice.call(inner.children).forEach(function(c){if(!/\b(meta|streakline)\b/.test(c.className))txt.appendChild(c)});hero.insertBefore(row,ring);row.appendChild(ring);row.appendChild(txt);
+      [].slice.call(inner.children).forEach(function(c){hero.appendChild(c)});inner.remove()}
+    var ban=d.querySelector("section.banner");if(ban)[].forEach.call(ban.querySelectorAll(".sub,.row2"),function(e){e.remove()});
+    /* Cal, later: "combine the novice runeweaver and the skills tab into one box where the gradient of the art comes down into the
+       skills and fades out": the class card holds its skills; its art runs down behind them and fades out */
+    var sk=[].slice.call(d.querySelectorAll("section")).filter(function(e){var t=e.querySelector("h3");return t&&/Your skills/i.test(t.textContent)})[0];
+    if(ban&&sk){var head=document.createElement("div");head.className="v61clshead";[].slice.call(ban.children).forEach(function(c){if(!c.classList.contains("clsbg"))head.appendChild(c)});ban.appendChild(head);
+      var body=document.createElement("div");body.className="v61sk";[].slice.call(sk.children).forEach(function(c){body.appendChild(c)});ban.appendChild(body);ban.classList.add("v61cls");sk.remove()}
+    h=d.innerHTML}catch(e){}
   return h};
 charModal=function(){var p=pcMe(),ban="";try{ban=pcHtml(p,104)}catch(e){ban='<div class="figwrap">'+calImg(lookOf(),"idle",120,"")+'</div>'}
   var m=modal('<div class="card box2 adv prof v61"><div class="prof-top v61top"><button type="button" class="v61ban" data-act="pcard" aria-label="Your banner. Open your player card">'+ban+'</button>'
@@ -52,8 +68,14 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
   persist();render()},true);
 htabCss("qb-v161-css",".prof.v61 .v61top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;text-align:left;margin-bottom:14px}.v61ban{display:block;width:148px;padding:0;border:0;background:none;cursor:pointer;border-radius:18px}"
   +".v61ban .pcard{width:148px;max-width:none;margin:0;border-radius:16px}.v61ban .pc-plate{display:none}.v61ban .pc-stage{bottom:8%}.v61ban:focus-visible{outline:2px solid var(--accent);outline-offset:3px}"
-  +".v61id{min-width:0}.v61id h2{margin:0 0 4px;padding-right:40px;font-size:clamp(20px,6.2vw,28px);line-height:1.1;overflow-wrap:anywhere}.v61id .note{margin:0 0 12px}.v61btns{display:grid;gap:8px}.v61btns .btn{width:100%;margin:0}"
+  +".v61id{min-width:0}.v61id{padding-top:46px}/* the name starts under the close button, so it has the column's whole width */.v61id h2{margin:0 0 4px;font-size:clamp(19px,5.8vw,26px);line-height:1.1;overflow-wrap:break-word}.v61id .note{margin:0 0 12px}.v61btns{display:grid;gap:8px}.v61btns .btn{width:100%;margin:0}"
   +".prof.v61 .zx-me.v61rel,.prof.v61 .v61end{display:flex;justify-content:center;margin:12px 0}.prof.v61 .v61rel .btn,.prof.v61 .v61end .btn{min-width:180px}"
+  +".prof.v61 .hero{display:block}.prof.v61 .v61lv{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 12px}.prof.v61 .v61lv .ring{flex:none;margin:0}.prof.v61 .v61xp{min-width:0;text-align:left}.prof.v61 .v61xp .xp{line-height:1}.prof.v61 .v61xp .note{margin-top:6px}"
+  +".prof.v61 section.banner h3{margin:0}"
+  +".prof.v61 section.banner.v61cls{display:block;padding:0 0 16px;overflow:hidden}.prof.v61 .v61cls .v61clshead{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:16px 14px 10px;min-height:150px}"
+  +".prof.v61 .v61cls.hasart .clsbg{inset:0 0 auto 0;height:min(100%,360px);-webkit-mask-image:linear-gradient(180deg,#000 0,#000 38%,rgba(0,0,0,.35) 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 38%,rgba(0,0,0,.35) 70%,transparent 100%)}"
+  +".prof.v61 .v61cls.hasart .clsbg:after{background:linear-gradient(90deg,rgba(10,8,8,.78) 0%,rgba(10,8,8,.45) 50%,rgba(10,8,8,.25) 100%),linear-gradient(180deg,transparent 40%,rgba(10,8,8,.55) 100%)}"
+  +".prof.v61 .v61cls .v61sk{padding:4px 14px 0}.prof.v61 .v61cls .v61sk>h3{margin:4px 0 10px}"
   +"@media (max-width:350px){.v61ban,.v61ban .pcard{width:120px}}"
   +".v61fxs{display:grid;gap:8px}.v61fx{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--cardbg,#141829);color:var(--ink,#eef1f8)}.v61fx>div{min-width:0;display:grid;gap:3px}.v61fx b{font-size:15px}.v61fx small{color:var(--soft,#a3a9bd);font-size:12.5px;line-height:1.3}"
   +".v61fx .qs-btn{flex:none;min-width:64px}.v61fx.lock{opacity:.6}.v61fx .chip{flex:none}.v61all{display:flex;gap:14px;margin:0 0 8px}");

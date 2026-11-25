@@ -902,7 +902,7 @@ async function socLoad(){
     /* one doc per player, board/<their id>, holding their last few posts (the database rules let each player write only their own) */
     var ps=await db.collection("board").limit(60).get(),all=[];SOC.rxDocs=[];
     (ps.docs||[]).forEach(function(d){var x=d.data();if(x&&x.rx&&typeof x.rx==="object")SOC.rxDocs.push({id:d.id,rx:x.rx});if(!x||!Array.isArray(x.posts))return;
-      x.posts.forEach(function(p){if(p&&p.text&&!(+p.until>0&&+p.until<Date.now()))all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null,kd:p.kd?1:0})})});/* a post with an end time (until) goes when it passes: Cal's posted notes, 48 hours (29zz_v139.js) */
+      x.posts.forEach(function(p){if(p&&p.text&&!(+p.until>0&&+p.until<Date.now()))all.push({id:d.id+"|"+(p.t||0),from:d.id,name:x.name||"Neighbor",text:p.text,t:p.t||0,look:p.look||null,kd:p.kd?1:0,snap:p.snap&&typeof p.snap==="object"?p.snap:null/* a card post's card as it was (29zz_v152.js) */})})});/* a post with an end time (until) goes when it passes: Cal's posted notes, 48 hours (29zz_v139.js) */
     all.sort(function(a,b){return b.t-a.t});SOC.posts=all.slice(0,30);
     await socCheckPings();
     SOC.loaded=Date.now();SOC.err="";
@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=155, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=157, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};

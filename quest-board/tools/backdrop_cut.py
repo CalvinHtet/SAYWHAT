@@ -30,10 +30,21 @@ def main():
         nh = w * 4 // 3
         y = int((h - nh) * fy)
         im = im.crop((0, y, w, y + nh))
-    im = im.resize((W, W * 4 // 3), Image.LANCZOS)
+    src = im
     out = os.path.join(APP, "bl_pc_%s.webp" % pid)
-    im.save(out, "WEBP", quality=86, method=6)
-    print(out, os.path.getsize(out) // 1024, "KB")
+    # very detailed pictures (stained glass) get a lower quality, then a smaller size (never under the 900 x 1200 floor),
+    # so a banner stays under about 320 KB
+    for w in (W, 1050, 900):
+        if w > W:
+            continue
+        im = src.resize((w, w * 4 // 3), Image.LANCZOS)
+        for q in (86, 82, 78, 74, 70):
+            im.save(out, "WEBP", quality=q, method=6)
+            if os.path.getsize(out) <= 320 * 1024:
+                break
+        if os.path.getsize(out) <= 320 * 1024:
+            break
+    print(out, im.size, os.path.getsize(out) // 1024, "KB q", q)
 
 
 if __name__ == "__main__":
