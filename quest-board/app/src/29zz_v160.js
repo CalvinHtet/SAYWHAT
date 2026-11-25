@@ -38,13 +38,22 @@ var v60Theme=qsTheme;qsTheme=function(b){var r=v60Theme.apply(this,arguments);
     if(art)document.body.style.setProperty("--shopbg","linear-gradient(180deg,rgba(8,10,18,.5) 0,rgba(8,10,18,.18) 120px,"+b.c[1]+" 300px,"+b.c[0]+" 100%),url(\""+art+"\") center top/auto 320px no-repeat,"+b.c[1])}catch(e){}
   return r};
 /* the card fades in with the scroll (phones); shown at once while something is tried on */
+/* QA a52807f3: (2) the card took taps from 40% while the tabs still showed through it: it takes them only once fully shown, and the
+   fade ends as the brand tabs leave the screen; (3) a try-on at the top put it over the title, countdown and coins: while a piece is
+   tried on it sits just under the tabs (where the rack begins) until the page scrolls it up to the top. */
 function v60Fade(){try{var m=document.querySelector(".qs-mirror.v60m");if(!m)return;var on=false;try{on=qsTryList().length>0||!!PCTRY}catch(e){}
-    var y=window.scrollY||0,o=window.innerWidth>640||on?1:Math.max(0,Math.min(1,(y-70)/150));m.style.opacity=o.toFixed(2);m.style.pointerEvents=o<.4?"none":"";m.style.visibility=o<=0?"hidden":""}catch(e){}}
+    if(window.innerWidth>640){m.style.opacity="";m.style.pointerEvents="";m.style.visibility="";m.style.top="";return}
+    var y=window.scrollY||0,o=on?1:Math.max(0,Math.min(1,(y-110)/140)),top="";
+    if(on){var f=m.parentNode,ft=f&&f.getBoundingClientRect?f.getBoundingClientRect().top:0;if(ft>8)top=Math.round(ft)+"px"}
+    m.style.top=top;m.style.opacity=o.toFixed(2);m.style.pointerEvents=o<.99?"none":"";m.style.visibility=o<=0?"hidden":""}catch(e){}}
 window.addEventListener("scroll",v60Fade,{passive:true});window.addEventListener("resize",v60Fade);
 var v60Render=render;render=function(){var r=v60Render.apply(this,arguments);v60Fade();return r};
 htabCss("qb-v160-css",(typeof v59Up==="function"?v59Up:function(x){return x})(
   ".qs-bh{margin:0}.qs-bh .blg{gap:10px}.qs-bh .blg_e{width:42px;height:42px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))}.qs-bh .blg b{font-size:22px;line-height:1.05;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.65)}.qs-bh .blg small{font-size:11px;letter-spacing:.28em;color:rgba(255,255,255,.88);text-shadow:0 1px 4px rgba(0,0,0,.7)}"
   +".qshop.v60room .qs-top{align-items:center}.qshop.v60room .qs-cbar{display:flex;align-items:center;gap:10px}.qshop.v60room .qs-cbar .qs-cd{color:#fff;opacity:.92;text-shadow:0 1px 4px rgba(0,0,0,.7);white-space:normal;text-align:right;max-width:78px;line-height:1.25;margin:0}.qshop.v60room .qs-top h1{min-width:0}.qshop.v60room .qs-cbar{flex:none}"
   +".qs-mirror.v60m .qs-worn small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.qs-mirror.v60m .qs-bask{flex-direction:row;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:8px}.qs-mirror.v60m .qs-bask .qs-btn{flex:0 1 auto;min-width:0;white-space:nowrap}.qs-mirror.v60m .qs-bask .qs-link{flex:none;white-space:nowrap}"
+  /* QA a52807f3 (1): at 320 the title ran under the countdown: narrow screens stack the countdown under the coins and let the name wrap */
+  +".qs-bh .blg{display:flex;max-width:100%}.qs-bh .blg>span{min-width:0}.qs-bh .blg b{overflow-wrap:anywhere}.qshop.v60room .qs-top h1{flex:1 1 auto}"
+  +"@media (max-width:370px){.qshop.v60room .qs-cbar{flex-direction:column-reverse;align-items:flex-end;gap:4px}.qshop.v60room .qs-cbar .qs-cd{max-width:none;white-space:nowrap}.qs-bh .blg b{font-size:19px}.qs-bh .blg_e{width:36px;height:36px}}"
   +"@media (max-width:640px){.qs-mirror.v60m{position:fixed;left:10px;right:10px;top:max(6px,env(safe-area-inset-top));margin:0;z-index:30;opacity:0;transition:opacity .12s linear}.qs-mirror.v60m .qs-glass{width:84px;height:96px}}"));
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV160={brand:function(){var b=v60Brand();return b?b.id:""},bg:function(){return V60BG},fade:v60Fade};
