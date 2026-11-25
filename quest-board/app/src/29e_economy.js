@@ -101,7 +101,7 @@ var ECON={
   /* W25: coins earned since the story room before it opened (STYCHAIN in 29b_story.js) */
   storyCoins:{chef:2000,boba:6000,dessert:8000,lockkey:12000,mall:20000},
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
-  trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
+  trainXp:100,trainCoins:300,trainFull:3,         /* a session with at least 3 exercises done; Cal 11-25: "It should be 100 experience for this and 500 coins" (was 50; the coins are set flat in 29zzz_econ.js) */
   /* each stat point, and its cap. INT had none: the hidden quest adds one most days, so the chest grew without end (QA) */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.05,int:.05,intMax:.25,
   /* ---- prices (QA, 2026-11-09). Cal: "i want everyone to feel like buying stuff is worth it and not too expensive, but also
@@ -152,7 +152,7 @@ var ECON={
      hangang, dial up, and overpass." The Street keeps 3 live (was 2); a 4th drop retires the oldest; the Wednesday brand is extra */
   /* Cal, 2026-11-18: "Lets change the clothing drops to be Monday and thursday. The vault can still come in on Wednesday" (every floor,
      from this week): days from Thu 11-19 (FLDAYS1, 29l_drops.js), days0 before it, so no drop that already happened moves */
-  floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Fridays, 8 am"},
+  floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Thursdays, 8 am"/* Cal 11-25: one rotation, Mon and Thu (29zz_v172.js) */},
     /* Cal 11-25: "Lets just make every brand rotate across the shop at the same time instead of being level locked", and the pricier ones
        "cheaper and less often, but not too rare": no floor has a level any more; the Boutique drops one brand each Monday (two live, so a
        brand stays two weeks), the Atelier every other Friday (from 11-28, FLDAYS2; drops before it keep days0/days1) */
