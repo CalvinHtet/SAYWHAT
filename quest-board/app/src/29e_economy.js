@@ -153,12 +153,19 @@ var ECON={
   /* Cal, 2026-11-18: "Lets change the clothing drops to be Monday and thursday. The vault can still come in on Wednesday" (every floor,
      from this week): days from Thu 11-19 (FLDAYS1, 29l_drops.js), days0 before it, so no drop that already happened moves */
   floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Fridays, 8 am"},
-    {id:"boutique",name:"Boutique",lv:30,days:[1,5],days1:[1,4],days0:[5],every:1,live:2,line:"New brands Mondays and Fridays, 8 am"},
-    {id:"atelier",name:"Atelier",lv:70,days:[1,5],days1:[1,4],days0:[5],every:2,live:1,line:"New brands every other Monday and Friday, 8 am"}],
+    /* Cal 11-25: "Lets just make every brand rotate across the shop at the same time instead of being level locked", and the pricier ones
+       "cheaper and less often, but not too rare": no floor has a level any more; the Boutique drops one brand each Monday (two live, so a
+       brand stays two weeks), the Atelier every other Friday (from 11-28, FLDAYS2; drops before it keep days0/days1) */
+    {id:"boutique",name:"Boutique",lv:0,lvWas:30,days:[1],days1:[1,4],days0:[5],every:1,live:2,line:"New brands Mondays, 8 am"},
+    {id:"atelier",name:"Atelier",lv:0,lvWas:70,days:[5],days1:[1,4],days0:[5],every:2,live:1,line:"New brands every other Friday, 8 am"}],
   /* a piece costs what its brand's floor charges, and QA's grade orders it inside the floor: Street 110 to 450, Boutique about
      600 to 1,200, Atelier about 1,300 to 3,000 */
   clothFloor:{street:{thrift:[110,250],standard:[250,440],premium:[440,450],luxury:[440,450]},   /* w-shopui: the Street tops out at 450 (QA: the Shadow Wings were 460) */
-    boutique:{thrift:[600,650],standard:[600,800],premium:[800,1050],luxury:[1050,1200]},
+    /* Cal 11-25 (option 1): the Boutique about twice the Street, the Atelier about three times (were 600 to 1,200 and 1,300 to 3,000;
+       clothFloorWas below keeps the old bands so an owner gets the difference back once, 29zz_v167.js) */
+    boutique:{thrift:[220,300],standard:[300,600],premium:[600,850],luxury:[850,900]},
+    atelier:{thrift:[350,450],standard:[450,900],premium:[900,1200],luxury:[1200,1350]}},
+  clothFloorWas:{boutique:{thrift:[600,650],standard:[600,800],premium:[800,1050],luxury:[1050,1200]},
     atelier:{thrift:[1300,1400],standard:[1300,1800],premium:[1800,2400],luxury:[2400,3000]}},
   /* SPEC8 (Cal, 2026-11-10: "by capping the amount of features, it allows more focus in the beginning and then the next expansion
      makes more sense"): a story room opens only when its trigger is met AND every room the player has in its building (the building
@@ -389,6 +396,7 @@ function econBuffPrice(it){var e=it[6]||{},L=+it[4]||1,p;
   else p=(ECON.utilDay[e.k]||.5)*econDayInc(L);
   return Math.max(500,Math.round(p/50)*50)}
 /* a brand's Shop floor (W42): fl in BRANDS, else the Street (the Basics and the creator's pieces too) */
+var CLOTHWAS={};  /* a Boutique or Atelier piece's [old, new] price around Cal's 11-25 cut, both before PRICEK (29zz_v167.js refunds the difference) */
 function brandFloor(id){var b=(typeof BRANDS!=="undefined"?BRANDS:[]).filter(function(x){return x.id===id})[0];return (b&&b.fl)||"street"}
 (function(){var seen=typeof WeakSet==="function"?new WeakSet():null,graded=[];
   [typeof SHOP!=="undefined"?SHOP:[],typeof GITEMS!=="undefined"?GITEMS:[],typeof EXTRA_ITEMS!=="undefined"?EXTRA_ITEMS:[]].forEach(function(l){
@@ -401,7 +409,9 @@ function brandFloor(id){var b=(typeof BRANDS!=="undefined"?BRANDS:[]).filter(fun
   var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
   graded.forEach(function(g){var it=g[0],b=(it[6]&&it[6].b)||"",fb=ECON.clothFloor[brandFloor(b)],B=(fb&&fb[g[1]])||ECON.cloth[g[1]],a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
       p=ECON.clothSlot[it[1]]+(ECON.clothBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.clothNudge*rel));
-    it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10})})();
+    var fw=ECON.clothFloorWas[brandFloor(b)],W=fw&&fw[g[1]];
+    it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10;
+    if(W)CLOTHWAS[it[0]]=[Math.round((W[0]+(W[1]-W[0])*Math.max(0,Math.min(1,p)))/10)*10,it[3]]})})();
 window.__qbEcon={ECON:ECON,eff:dqEff,xp:dqXp,room:payRoom,share:payShare,stats:stats4,check:dqCheck,trainXp:econTrainXp,trained:econTrained};
 /* ---- Room Bonus (Cal, 2026-11-10: "some assets should provide a buff but very miniscule ... a new bed would increase your
    productivity by 0.2% exp gain ... each room should have some stats on the screen that show you how much passive buff increase is

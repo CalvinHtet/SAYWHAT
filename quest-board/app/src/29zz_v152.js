@@ -36,7 +36,7 @@ function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
 /* PCHOLD: painted and passed by QA, but not on sale until Cal has approved the art (LEAD 11-25: his answer on the level-10 tier is
    still open, and these cost coins). Emptying it is the whole release of the tier. */
-var PCHOLD={ink_bamboo:1,paper_village:1,ink_lake:1};/* Cal approved the level-10 tier, Ink-Wash Peaks and Papercut Forest on 11-25; the three level-15 replacements wait for his yes (LEAD) */
+var PCHOLD={hoard_ink:1,sky_paper:1,ink_storm:1,paper_abyss:1,paper_city:1,ink_snow:1,glass_midnight:1};/* Cal approved the level-10 tier and the whole level-15 tier on 11-25; the two level-10 redos and the level-20 tier wait for his yes */
 function pcHas(id){return id==="studio"||(!PCHOLD[id]&&!!pcArt(id))}
 function pcLv(id){var b=pcBy(id);return b?(b[3]||0):0}
 function pcOpenLv(id){try{return effLvl()>=pcLv(id)}catch(e){return true}}

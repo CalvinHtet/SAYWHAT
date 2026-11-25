@@ -9,13 +9,21 @@
 function v63Pri(q){var p=Math.round(+(q&&q.pri)||0);return p>=1&&p<=3?p:0}
 function v63Btn(q){var p=v63Pri(q);return '<button type="button" class="qpri p'+p+'" data-act="qpri" data-id="'+esc(q.id)+'" aria-label="'+esc(q.name)+': priority '+(p?p+" of 3":"off")+'. Tap to change">'
   +'<b aria-hidden="true">'+(p?"!!!".slice(0,p):"!")+'</b><small>'+(p?"Priority":"Priority")+'</small></button>'}
-function v63Board(){try{if(view!=="board")return;var app=document.getElementById("app");if(!app)return;var rows=[].slice.call(app.querySelectorAll(".q"));if(!rows.length)return;
+/* Cal, later on 11-25: "reorganize it on the top of the page only after I click a different button. This way, I can tap to adjust the
+   priority level before it goes all the way to the top". The first tap on a priority button freezes the Board's order as it was
+   (V63SNAP: every task's priority at that moment); the buttons show the new levels, but rows stay where they are. The next tap on
+   anything that is not a priority button (or leaving the Board) lets the order catch up. */
+var V63SNAP=null;
+function v63Order(q){return V63SNAP&&Object.prototype.hasOwnProperty.call(V63SNAP,q.id)?V63SNAP[q.id]:v63Pri(q)}
+function v63Release(){if(!V63SNAP)return;V63SNAP=null;try{render()}catch(e){}}
+document.addEventListener("click",function(e){if(!V63SNAP)return;var t=e.target;if(t&&t.closest&&t.closest("[data-act=qpri]"))return;setTimeout(v63Release,0)},true);
+function v63Board(){try{if(view!=="board"){V63SNAP=null;return}var app=document.getElementById("app");if(!app)return;var rows=[].slice.call(app.querySelectorAll(".q"));if(!rows.length)return;
     var byId={};(S.quests||[]).forEach(function(q){byId[q.id]=q});var pri=[];
     rows.forEach(function(r){var m=r.querySelector(".qmain[data-act=toggle]");if(!m)return;var q=byId[m.dataset.id];if(!q)return;
       if(!r.querySelector(".qpri"))m.insertAdjacentHTML("afterend",v63Btn(q));r.classList.add("v63");
-      if(!S.done[q.id]&&v63Pri(q)&&!r.closest(".donebox"))pri.push([r,q])});
+      if(!S.done[q.id]&&v63Order(q)&&!r.closest(".donebox"))pri.push([r,q])});
     var old=app.querySelector("section.v63pri");if(old&&!pri.length){old.remove();return}if(!pri.length)return;
-    pri.sort(function(a,b){return v63Pri(b[1])-v63Pri(a[1])||qMin(a[1])-qMin(b[1])});
+    pri.sort(function(a,b){return v63Order(b[1])-v63Order(a[1])||qMin(a[1])-qMin(b[1])});
     var first=app.querySelector("section.cluster:not(.v63pri)"),sec=old;
     if(!sec){sec=document.createElement("section");sec.className="cluster v63pri";sec.innerHTML='<header><h3 class="label">Priority</h3><span class="note mono"></span></header>'}
     if(first&&first.parentNode&&sec.parentNode!==first.parentNode)first.parentNode.insertBefore(sec,first);else if(!first&&!sec.parentNode)return;
@@ -24,7 +32,7 @@ function v63Board(){try{if(view!=="board")return;var app=document.getElementById
     left.forEach(function(c){var n=c.querySelectorAll(".q").length,nt=c.querySelector("header .note");if(!n)c.remove();else if(nt)nt.textContent=n})}catch(e){}}
 var v63Render=render;render=function(){var r=v63Render.apply(this,arguments);v63Board();return r};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=qpri]");if(!b)return;e.preventDefault();e.stopPropagation();
-  var q=(S.quests||[]).filter(function(x){return x.id===b.dataset.id})[0];if(!q)return;var p=(v63Pri(q)+1)%4;if(p)q.pri=p;else delete q.pri;persist();render();
+  var q=(S.quests||[]).filter(function(x){return x.id===b.dataset.id})[0];if(!q)return;if(!V63SNAP){V63SNAP={};(S.quests||[]).forEach(function(x){V63SNAP[x.id]=v63Pri(x)})}var p=(v63Pri(q)+1)%4;if(p)q.pri=p;else delete q.pri;persist();render();
   try{var nb=document.querySelector('.qpri[data-id="'+b.dataset.id.replace(/"/g,"")+'"]');if(nb)nb.focus({preventScroll:true})}catch(x){}},true);
 htabCss("qb-v163-css",".q.v63{grid-template-columns:1fr auto auto auto}"
   +".qpri{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:46px;padding:0 6px;background:none;border:0;border-left:1px solid var(--line);color:var(--muted);cursor:pointer;font:inherit;line-height:1}"
@@ -40,4 +48,4 @@ htabCss("qb-v163-css",".q.v63{grid-template-columns:1fr auto auto auto}"
   /* Edit mode adds the delete x: up to 430 px a row with it takes the compact layout too */
   +"@media (max-width:430px){.q.v63:has(.del) .qpri{min-width:32px;padding:0 3px}.q.v63:has(.del) .qpri small,.q.v63:has(.del) .qrep small{display:none}.q.v63:has(.del) .qrep{min-width:36px;padding:0 4px}"
   +".q.v63:has(.del) .qmain{min-width:0;grid-template-columns:auto 1fr;row-gap:6px}.q.v63:has(.del) .qmain .tags{grid-column:2;justify-self:start}}");/* the XP pill goes under the name */
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV163={pri:v63Pri,board:v63Board};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV163={pri:v63Pri,board:v63Board,held:function(){return !!V63SNAP}};
