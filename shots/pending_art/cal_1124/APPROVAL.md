@@ -30,12 +30,18 @@ that read as letters (IO, M) became a star and a diamond; Fireworks Night's two 
 painted out. Note for Cal: Ember Throne's throne stands right behind the character (only its top shows above the head).
 Sources: backdrops/src_<id>.jpg. Cutter: tools/backdrop_cut.py.
 
-## D2. Tier-2 card backdrops (level 10; Cal 11-25 via LEAD) - ALL 5 DONE, WITH QA
+## D2. Tier-2 card backdrops (level 10; Cal 11-25 via LEAD) - ALL 5 DONE, QA PASS (orrery scroll mark fixed 11839a9c)
 orrery Clockwork Observatory, tidal Tidal Palace, skyship Skyship Deck, aurora Aurora Citadel, hoard Dragon's Hoard.
 1200x1600 (2K sources; 4K is not Unlimited), layered depth, fine ornament. Read enlarged: the Observatory floor's
 star-in-circle lines were edited to plain rings; the first Hoard was redone (dragon behind the figure, cross-topped crowns).
 On the real card, both bodies with a companion: shots/pending_art/cal_1125_tier2/card_tier2_all.png. Retired (Cal 11-25):
 roof, skyline, mist, sunrise, ember (deleted a4fb187a).
+
+## S. Shop home doors (Cal 11-25 via LEAD, 29zz_v159.js) - DONE, QA PASS (a42be8f3, 35738c34)
+ui_shop_street (boutique street at night), ui_shop_stylist (barber shop, barber pole), ui_shop_iface (tech boutique, screens,
+empty card frames), ui_shop_pets (pet shop window: plush toys, beds, scarves, treats; no real animals), 800x800 from one 2x2
+sheet; ui_shop_vault (vault door ajar, warm light) 1200x300. On the real Shop home at 390 and 320:
+shots/pending_art/cal_1125_shopdoors/shophome_390.png.
 
 ## H. Calvin and Sydney visit picture (friend_calsyd, _2, _3; Cal 11-24 via LEAD) - CAL APPROVED 11-24 (via LEAD); QA PASS
 One painted walk: the two close together, shoulder to shoulder, each holding a leash; Pluto (on his) and Chopstick (on hers)
@@ -44,7 +50,7 @@ cargo pants, black sneakers with teal soles. Sydney: long black hair, navy/black
 wide-leg jeans, white sneakers. Three walk frames on one sheet, aligned on the ground line and heads, 1000x675, transparent.
 In the real visit card: calsyd/ingame_card.png. Frames: calsyd/frames.png. Source: calsyd/src_walk.jpg.
 
-## E. Face tattoos and scars (<b>_mark_<id>_front, icon_mark_<id>; LEAD's markT/markS layer) - ALL 10 DONE, WITH QA
+## E. Face tattoos and scars (<b>_mark_<id>_front, icon_mark_<id>; LEAD's markT/markS layer) - ALL 10 DONE, QA PASS (a41a1149, 3d5a26a5)
 Tattoos (dark navy ink): t1 Tide Lines, t2 Starfall, t3 Ember Mark, t4 War Stripes (both cheeks), t5 Ivy Curl, t6 Circuit.
 Scars (pale raised line, darker edge): s1 Eye Scar (brow to cheek, the eye and brow drawn over it), s2 Cheek Line, s3 Bridge
 Scar, s4 Cross Scar. First set had marks at the temple and ear: long hair and fringes hid them, so all ten sit on the open
