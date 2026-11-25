@@ -27,7 +27,9 @@ var v65Char=charModal;charModal=function(){var m=v65Char.apply(this,arguments);
 var v65Gate=gateOpened;gateOpened=function(){var r=v65Gate.apply(this,arguments);
   try{var b=document.querySelector("#layer #gok");if(b)b.onclick=function(){var m=b.closest(".modal");if(m)m.remove();V65GO="gate";charModal()}}catch(e){}return r};
 /* QA: the welcome tour's "Your level" step pointed at the level bar; it points at the header's card, which opens the profile */
-try{TOURS.forEach(function(t){t.steps.forEach(function(st){if(st.sel===".bline"&&st.t==="Your level"){st.sel=".strip .avbtn";st.x="Your card. Tap it for your profile: your level, XP, the Daily Quest and your class. Each new level pays coins, and now and then opens something new."}})})}catch(e){}
+/* QA c0407ae0: some steps have getters (sel, t) that read the save, which does not exist yet at load: read only plain values, one step at a time */
+try{TOURS.forEach(function(t){t.steps.forEach(function(st){try{var d=Object.getOwnPropertyDescriptor(st,"sel"),dt=Object.getOwnPropertyDescriptor(st,"t");if(!d||d.get||!dt||dt.get)return;
+    if(st.sel===".bline"&&st.t==="Your level"){st.sel=".strip .avbtn";st.x="Your card. Tap it for your profile: your level, XP, the Daily Quest and your class. Each new level pays coins, and now and then opens something new."}}catch(e){}})})}catch(e){}
 /* tours that pointed at the Board's level bar or Daily Quest card */
 try{TOURS.forEach(function(t){if(t.id==="trophy"||t.id==="freeze"){var st=t.steps[0];t.ready=function(){return view==="board"&&(t.id!=="freeze"||(S.freezes||0)>0)&&(t.id!=="trophy"||tourAreaOpen("trophy"))&&!!tourVis(".strip .avbtn")};
       t.steps=[{sel:".strip .avbtn",t:st.t,get x(){return String(typeof st.x==="string"?st.x:st.x).replace(/Tap your level bar/g,"Tap your card")}}]}})}catch(e){}
@@ -38,4 +40,4 @@ htabCss("qb-v165-css",".card.gate h2{padding-right:78px}.card.gate .label.lbi{pa
   +".prof.v61 .v61cls h3{font-size:clamp(15px,4.9vw,28px);line-height:1.1;overflow-wrap:break-word;min-width:0}.prof.v61 .v61clshead>div{min-width:0}@media (max-width:370px){.prof.v61 .v61clshead{grid-template-columns:64px 1fr;gap:10px}.prof.v61 .v61clshead svg{width:64px;height:64px}}"
   +".v65gate{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:2px 12px;align-items:center;width:100%;margin:10px 0 4px;padding:12px 14px;border-radius:14px;border:1px solid var(--gold,#ffc857);background:color-mix(in srgb,var(--gold,#ffc857) 10%,transparent);color:var(--fg,inherit);text-align:left;font:inherit;cursor:pointer}"
   +".v65gate .label{grid-column:1;color:var(--gold,#ffc857)}.v65gate>span:not(.label){grid-column:1}.v65gate b{grid-column:2;grid-row:1/span 2;color:var(--gold,#ffc857);white-space:nowrap}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV165={parts:v65Parts};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV165={parts:v65Parts,bline:function(){var n=0;TOURS.forEach(function(t){t.steps.forEach(function(st){var d=Object.getOwnPropertyDescriptor(st,"sel");if(d&&!d.get&&st.sel===".bline")n++})});return n},welcome:function(){var w=TOURS.filter(function(t){return t.id==="welcome"})[0];return w?w.steps.map(function(st){var d=Object.getOwnPropertyDescriptor(st,"sel");return d&&d.get?"(getter)":st.sel}):[]}};

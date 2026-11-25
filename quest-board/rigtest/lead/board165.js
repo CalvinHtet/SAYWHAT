@@ -24,4 +24,6 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     ok(pr && pr.clear && pr.fits, W + ': the trial\'s title stays clear of its emblem and fits the card (emblem shown: ' + (pr && pr.em) + ')');
     ok(pr && !/below/.test(pr.nextTxt), W + ': in the profile the NEXT line does not point "below" at a trial that sits above it (' + (pr && pr.nextTxt.replace(/\s+/g, ' ')) + ')');
     const tw = await V(() => { const t = (window.TOURS || []); return ''; }); await p.screenshot({ path: OUT + '/board165_' + W + '_trial.png' }); await p.context().close(); }
+  { const p2 = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); await p2.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p2.waitForFunction(() => window.__qbV165, null, { timeout: 90000 });
+    const t = await p2.evaluate(() => ({ n: window.__qbV165.bline(), w: window.__qbV165.welcome() })); ok(t.n === 0 && t.w.indexOf('.strip .avbtn') >= 0, 'no tour step points at the old level bar; the welcome tour\'s level step points at the header card (' + t.w.join(', ') + ')'); await p2.context().close(); }
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
