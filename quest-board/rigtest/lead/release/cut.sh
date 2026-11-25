@@ -29,7 +29,7 @@ EOF
 git add -A $P
 git commit -q -m "$NEW: APPV $V${EPOCH:+, QB_EPOCH $EPOCH} ($MSG)
 
-Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>" || { echo "STOP: nothing to commit"; exit 1; }
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" || { echo "STOP: nothing to commit"; exit 1; }
 echo "--- differs from $SRC (want APPV${EPOCH:+ and QB_EPOCH} only):"
 git diff --stat "$SRC" HEAD -- $P | cat
 echo "--- vs release/$PREV:"; git diff --stat "refs/heads/release/$PREV" HEAD -- $P | tail -1
@@ -42,6 +42,6 @@ git worktree add -q "$RB" refs/heads/rollback-v0.80 && cd "$RB" && git checkout 
   && { [ -z "$EPOCH" ] || python3 -c "import re;p='quest-board/app/src/00_clock.js';s=open(p).read();open(p,'w').write(re.sub(r'var QB_EPOCH=\d+;','var QB_EPOCH=$EPOCH;',s,count=1))"; } \
   && git commit -qam "Rollback build: APPV $((V+1))${EPOCH:+, QB_EPOCH $EPOCH (a rollback carries the epoch of the saves)}, above $NEW
 
-Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>" && git log --oneline -1 | cat
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" && git log --oneline -1 | cat
 cd "$R" && git worktree remove "$RB"
 echo "release/$NEW $(git rev-parse --short "refs/heads/release/$NEW")  rollback $(git rev-parse --short refs/heads/rollback-v0.80)"
