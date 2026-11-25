@@ -321,3 +321,15 @@ pose?"
   sweep against every top; a turned or three-quarter view (over the shoulder) is a view the art does not have (front and back only)
   and would mean repainting everything.
 Tests: rigtest/lead/pose162.js, cards155.js.
+
+## Profile consolidated; banners hidden until their level; two level-10 banners redone (Cal 11-25, late)
+Cal: "put the circular level icon to the left of that box, and then the xp and remaining exp to level 9 to the right" / "In the class,
+remove the Runeweaver: tier 1 of 9 text. Remove the story button. and remove the 'next advancement at level 10' text. Remove Encore in the
+box above your skills. Just have the skills slowly fill up the table underneath 'Your Skills' as you unlock them." / "combine the novice
+runeweaver and the skills tab into one box where the gradient of the art comes down into the skills and fades out". To ROOMS, relayed:
+"Redo dragon's hoard, skyship deck. And don't reveal them until we level up to the necessary level".
+- Profile (29zz_v161.js): the level card is one row (ring, then XP and what is left) with the streak row under it; the class card is
+  its emblem and title only and holds Your skills, its art running down behind them and fading out.
+- Banners (29zz_v152.js): a tier is not listed at all until its level (no locked rows). Skyship Deck and Dragon's Hoard are out
+  (ROOMS 85ac2277); anyone who bought them in v1.55 is refunded 1,000 each once (PCGONE); their replacements take new ids.
+Tests: prof161.js, cards155.js.

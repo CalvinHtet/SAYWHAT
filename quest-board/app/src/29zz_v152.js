@@ -30,7 +30,7 @@
 var PCPRICE=1000,PCWAS={maple:1800,fire:2000,lantern:2200,moon:2500},PCTAB="",
     PCBG=[["studio","Studio",0,0],["neon","Neon Alley",PCPRICE,0],["maple","Crimson Maple",PCPRICE,0],["fire","Fireworks Night",PCPRICE,0],["lantern","Lantern Sky",PCPRICE,0],["moon","Blood Moon",PCPRICE,0]]
       .concat((function(){try{return (window.QBDATA&&QBDATA.banners||[]).filter(function(r){return r&&/^[a-z0-9_]+$/.test(r[0])&&r[0]!=="studio"}).map(function(r){return [r[0],String(r[1]||r[0]),PCPRICE,+r[2]||0]})}catch(e){return []}})()),
-    PCGONE={roof:1200,skyline:1000,mist:1400,sunrise:1600,ember:2400},
+    PCGONE={roof:1200,skyline:1000,mist:1400,sunrise:1600,ember:2400,skyship:1000,hoard:1000/* Cal 11-25: "Redo dragon's hoard, skyship deck": sold at 1,000 in v1.55, refunded once; their replacements take new ids */},
     STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0,PCTRY="";/* PCTRY: a backdrop being looked at on the card before it is bought */
 function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
@@ -108,9 +108,10 @@ var v52Char=charModal;charModal=function(){var r=v52Char.apply(this,arguments);
 function pcShop(){var o=pcSt(),me=pcMe(),lvl=1;try{lvl=effLvl()}catch(e){}
   /* what is listed: every painted backdrop whose level is reached (or that is owned), and the next tier up, locked, as something to climb to */
   var all=PCBG.filter(function(b){return pcHas(b[0])}),nx=all.map(function(b){return b[3]||0}).filter(function(v){return v>lvl}).sort(function(x,y){return x-y})[0],
-      list=all.filter(function(b){return (b[3]||0)<=lvl||(b[3]||0)===nx||o.own[b[0]]});
+      /* Cal 11-25: "don't reveal them until we level up to the necessary level": a tier is not listed at all, locked or not, until its level */
+      list=all.filter(function(b){return (b[3]||0)<=lvl||o.own[b[0]]});
   /* from level 30, with a banner of the second set painted: the first 25 fold into the tab "I", the newer ones are "II" */
-  var two=lvl>=30&&all.some(function(b){return (b[3]||0)>=30}),tab=two?(PCTAB==="1"?"1":"2"):"",tabs="";
+  var two=lvl>=30&&list.some(function(b){return (b[3]||0)>=30}),tab=two?(PCTAB==="1"?"1":"2"):"",tabs="";
   if(two){list=list.filter(function(b){return tab==="1"?(b[3]||0)<30:((b[3]||0)>=30||b[0]==="studio")});
     tabs='<nav class="qs-tabs pc-sets" aria-label="Banner sets"><button class="qs-tab'+(tab==="1"?" on":"")+'" data-act="pcset" data-id="1" aria-label="Set one">I</button><button class="qs-tab'+(tab==="2"?" on":"")+'" data-act="pcset" data-id="2" aria-label="Set two">II</button></nav>'}
   var cards=list.map(function(b){var id=b[0],own=id==="studio"||o.own[id],use=o.bg===id,btn;
