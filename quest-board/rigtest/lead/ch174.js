@@ -1,0 +1,50 @@
+// Cal 11-25 (29zz_v174.js): the monthly story chapter. Before December: no letter, no row. On 12-02: the chapter's letter, the Goals row
+// counting this month's tasks; 90 tasks: 10,000 coins, 1,000 XP and a key, once; the key opens the chest: the Timekeeper's Halo, worn on the
+// player card (header, profile, card); a month nobody finished passes its prize to the next month's chest.
+//   PORT=<build server> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/ch174.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8838, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const errs = [];
+  const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV174, null, { timeout: 90000 }); await p.waitForTimeout(500);
+  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
+  const at = (y, mo, d) => V(([y, mo, d]) => { const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(y, mo, d, 12).getTime() - real; }, [y, mo, d]);
+  await at(2026, 10, 27);
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.total = 100; S.coins = 0; S.v67ref = 1;
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 }; S.letters = { read: { welcome: 1 }, paid: {}, at: { welcome: '2026-11-10' } }; x.render(); });
+  await p.waitForTimeout(600); await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
+  const nov = await V(() => ({ rows: window.__qbV174.goals().list.map((r) => r.k), letter: window.__qb.x() && (typeof ibAll === 'undefined') }));
+  ok(nov.rows.indexOf('ch') < 0, 'November: no chapter row ' + JSON.stringify(nov.rows));
+  await at(2026, 11, 2); await V(() => window.__qb.x().render()); await p.waitForTimeout(300);
+  const dec = await V(() => { const G = window.__qbV174.goals(), r = G.list.find((q) => q.k === 'ch'); return { r, t0: window.__qbV174.st().t0, n: window.__qbV174.count() }; });
+  ok(dec.r && /Chapter 1: The Clock Tower/.test(dec.r.t) && /0 of 90 tasks/.test(dec.r.s) && dec.t0 === 100, 'December: the Goals row "Chapter 1: The Clock Tower", 0 of 90, counted from this month\'s start ' + JSON.stringify(dec));
+  await V(() => document.querySelector('.ibbtn').click()); await p.waitForTimeout(400);
+  const let1 = await V(() => { const r = document.querySelector('.ibrow[data-id="ch_2026-12"]'); return r ? r.innerText.replace(/\s+/g, ' ') : null; });
+  ok(let1 && /Chapter 1: The Clock Tower/.test(let1), 'the chapter\'s letter is in the mailbox: ' + let1);
+  await V(() => document.querySelector('.ibrow[data-id="ch_2026-12"]').click()); await p.waitForTimeout(400);
+  const lt = await V(() => (document.querySelector('.ibox') || {}).innerText || '');
+  ok(/90 tasks/.test(lt) && /10,000 coins/.test(lt) && !/Halo|halo/.test(lt), 'the letter names the goal and the reward, not the prize');
+  await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
+  const pay = await V(async () => { const x = window.__qb.x(), S = x.S; S.total = 189; x.render(); await new Promise((r) => setTimeout(r, 900)); const a = !!document.querySelector('#layer .v74win'); const c0 = S.coins, x0 = S.xp;
+    S.total = 190; x.render(); await new Promise((r) => setTimeout(r, 1500)); const w = document.querySelector('#layer .v74win'); const c1 = S.coins - c0, x1 = S.xp - x0;
+    x.render(); window.__qbV174.check(); await new Promise((r) => setTimeout(r, 1200)); return { early: a, win: !!w, txt: w ? w.innerText.replace(/\s+/g, ' ') : '', coins: c1, xp: x1, again: S.coins - c0 - c1 }; });
+  ok(!pay.early && pay.win && pay.coins >= 10000 /* plus any level-up pay from the 1,000 XP */ && pay.xp === 1000 && pay.again === 0 && !/Halo/.test(pay.txt), 'at 90 tasks: 10,000 coins, 1,000 XP and a key, once; the prize still unnamed ' + JSON.stringify(pay));
+  await p.screenshot({ path: OUT + '/ch174_win.png' });
+  const rowKey = await V(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); const G = window.__qbV174.goals(); const r = G.list.find((q) => q.k === 'ch'); return { r, ready: G.ready }; });
+  ok(rowKey.r && /key/i.test(rowKey.r.s) && rowKey.r.ready === 1, 'until it is used, the Goals row says there is a key ' + JSON.stringify(rowKey.r));
+  await V(() => { document.querySelector('[data-v67="goals"]').click(); }); await p.waitForTimeout(400); await V(() => document.querySelector('#layer .v67row[data-k="ch"]').click()); await p.waitForTimeout(800);
+  const chest = await V(() => { const m = document.querySelector('#layer .v74chest'), S = window.__qb.x().S; return { m: m ? m.innerText.replace(/\s+/g, ' ') : '', owned: !!S.owned.px_halo, worn: S.chfx, svg: !!(m && m.querySelector('.v74ring')) }; });
+  ok(/Timekeeper/.test(chest.m) && chest.owned && chest.worn === 'px_halo' && chest.svg, 'the key opens the chest from the Goals: the Timekeeper\'s Halo, owned and worn ' + JSON.stringify(chest));
+  await p.waitForTimeout(1200); await p.screenshot({ path: OUT + '/ch174_chest.png' });
+  await V(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); window.__qb.x().render(); }); await p.waitForTimeout(2500);
+  const card = await V(() => { const f = document.querySelector('.strip .pc-fig.v74on'), h = f && f.querySelector('.v74halo'), im = f && f.querySelector('img.calp'); if (!h || !im) return null; const H = h.getBoundingClientRect(), I = im.getBoundingClientRect(), bx = window.__qbV164.box(im);
+    return { halo: [H.left, H.top, H.width].map(Math.round), headTop: bx ? Math.round(I.top + bx[1] * I.height) : null, cx: bx ? Math.round(I.left + (bx[0] + bx[2]) / 2 * I.width) : null }; });
+  ok(card && card.headTop != null && Math.abs(card.halo[0] + card.halo[2] / 2 - card.cx) < 4 && card.halo[1] < card.headTop, 'the header\'s card wears it: the halo centred over the head ' + JSON.stringify(card));
+  await p.screenshot({ path: OUT + '/ch174_header.png', clip: { x: 0, y: 0, width: 390, height: 260 } });
+  await V(() => document.querySelector('.strip .avbtn').click()); await p.waitForTimeout(2500); await p.screenshot({ path: OUT + '/ch174_prof.png' });
+  ok(await V(() => !!document.querySelector('#layer .prof .pc-fig.v74on .v74halo')), 'the profile\'s banner wears it');
+  await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
+  const ro = await V(() => { const H = window.__qbV174, S = window.__qb.x().S; H.ch.push({ m: '2027-01', n: 2, title: 'T', from: 'M.', body: '' }); H.prize.push({ id: 'px_two', name: 'Two', line: '' });
+    const was = S.ch.done['2026-12']; const a = H.prizeOf('2027-01').id; delete S.ch.done['2026-12']; const b = H.prizeOf('2027-01').id; S.ch.done['2026-12'] = was; H.ch.pop(); H.prize.pop(); return { a, b }; });
+  ok(ro.a === 'px_two' && ro.b === 'px_halo', 'a month somebody finished passes the next prize on; a month nobody finished moves its prize to the next chest ' + JSON.stringify(ro));
+  const wd = await V(() => { try { return null } catch (e) { return null } });
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
