@@ -34,4 +34,6 @@ Cal 11-25 again: "I do not want anything cute or too girly ... I want something 
 dropped. Every tier from here: dark, sleek, cool.
 Cal 11-25 later: "I like the ink one style but i think it could vary a little more with different colors": each ink-wash piece
 gets its own colour wash (indigo, vermilion, jade, gold, plum), still dark and restrained, not all grey.
-Cal 11-25: "Redo dragon's hoard, skyship deck" (level 10; taken out 85ac2277), in the new direction.
+Cal 11-25: "Redo dragon's hoard, skyship deck" (level 10; taken out 85ac2277), in the new direction. The old ids skyship and
+hoard are retired for good (LEAD's PCGONE refunds and strips them), so the replacements are NEW ids: hoard_ink (Dragon's Hoard,
+ink and gold leaf) and sky_paper (Skyship, papercut night sky). Banners above the player's level are hidden (LEAD).
