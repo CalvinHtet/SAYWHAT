@@ -16,7 +16,7 @@
       "Post to the town board" after the check (29ph_photos.js); they are unchanged. */
 var V57STEP=/^(?:(?:put|pull|slip) on (?:my |the |some |a )?(?:socks?|shoes?|slippers|shirt|t-?shirt|pants|shorts|jacket|coat|hoodie|hat|cap|clothes|glasses|watch|belt)|take off (?:my |the )?(?:socks?|shoes?|jacket|coat|hat|hoodie)|walk(?:ed)? (?:to|into|out of) (?:the |my )?(?:car|door|front door|kitchen|bathroom|bedroom|living room|room|desk|couch|sofa|mailbox|garage|fridge)|get (?:out of|up from|into|in) (?:the |my )?(?:bed|couch|sofa|chair|car)|stand up|sit down|sit up|wake up|open (?:the |my )?(?:door|laptop|fridge|window|app|phone|eyes|curtains|blinds|computer)|close (?:the |my )?(?:door|laptop|fridge|window|curtains|blinds)|turn (?:on|off) (?:the |my )?(?:lights?|lamp|tv|fan|computer|laptop|phone|alarm)|(?:un)?lock (?:the |my )?(?:phone|door|front door|car)|grab (?:my |the )?(?:keys|phone|wallet|bag|water|coffee)|pick up (?:my |the )?(?:phone|keys)|check (?:the )?time|breathe|blink|yawn|stretch my (?:arms|legs))\s*[.!]?$/i;
 function v57Micro(q){return !!q&&!q.bty&&(+q.xp||0)<5}
-function v57Step(r){r.xp=1;r.mins=1;r.proof=false;r.why="A quick step, not a task";return r}
+function v57Step(r){r.xp=1;r.mins=1;r.proof=false;r.rep="once";r.why="A quick step, not a task";return r}
 /* the rater's answer: a step, an xp of 0, or a known motion is a quick step; minutes and XP have to agree at the bottom of the scale */
 var v57Val=validate;validate=function(o,src){var r=v57Val.apply(this,arguments);
   try{if(o&&(o.step===true||o.xp===0||o.xp==="0"||V57STEP.test(String(r.name||"").trim())))return v57Step(r);
@@ -56,6 +56,16 @@ async function v57Private(btn){var arm=BQARM,src=PH.sel;if(!arm||!src||!src.file
   if(hh){S.hashes.push(hh);S.hashes=S.hashes.slice(-300)}
   BQARM=null;if(!src.k&&src.url){try{URL.revokeObjectURL(src.url)}catch(e){}}PH.sel=null;closeModals();
   if(bqPhoto(arm.k))pop("Counted for your bounty. The photo was not shared.");return true}
+/* QA f5f960fe: "Post to the town" counted any picture (an all-black one three times finished a bounty). A bounty's photo is checked
+   the same way whichever button is pressed; it is posted only on a pass, and the same image never counts twice. */
+if(typeof phPublish==="function"){var v57Pub=phPublish;phPublish=async function(src,cap){var arm=BQARM,A=null;try{A=arm&&Date.now()-arm.t<15*60000?bqState().act[arm.k]:null}catch(e){}
+  if(!A||A.done||A.ty!=="p"||!src||!src.file)return v57Pub.apply(this,arguments);
+  var msg=function(t){var e=document.getElementById("bqprivmsg");if(e)e.textContent=t;else if(t)pop(t)};
+  if(A.daily&&A.days&&A.days[today()]){msg("That one counts once a day. Post the next one tomorrow.");return false}
+  var hh="";try{hh=hashFile(await src.file.arrayBuffer())}catch(e){}
+  if(hh&&(S.hashes.indexOf(hh)>=0||pendHash(hh))){msg("This exact image was already used. Take a new one.");return false}
+  msg("");var v=await v57Check(A,src.file);if(!v.ok){msg(v.why.replace(", or post it to the town",""));return false}
+  var ok=await v57Pub.apply(this,arguments);if(ok&&hh){S.hashes.push(hh);S.hashes=S.hashes.slice(-300);persist()}return ok}}
 if(typeof phNewHtml==="function"){var v57New=phNewHtml;phNewHtml=function(){var h=v57New.apply(this,arguments);
   try{var arm=BQARM,A=arm&&Date.now()-arm.t<15*60000?bqState().act[arm.k]:null;if(!A||A.ty!=="p")return h;var sel=PH.sel;
     h=h.replace("<h2>Post a photo</h2>","<h2>Bounty photo</h2>").replace(/<p class="note">Everyone in town sees the photo[^<]*<\/p>/,'<p class="note">Your choice: post it to the town, or keep it private. Either way it counts toward <b>'+esc(A.n)+'</b>. A private photo is checked and is not saved or shown to anyone.</p><p class="note" id="bqprivmsg" role="status"></p>')
@@ -64,4 +74,4 @@ if(typeof phNewHtml==="function"){var v57New=phNewHtml;phNewHtml=function(){var 
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=bqpriv]");if(!b||b.disabled)return;e.preventDefault();e.stopPropagation();v57Private(b)},true);
 htabCss("qb-v157-css","#bqprivmsg:empty{display:none}#bqprivmsg{color:var(--bad,#ff6b6b)}.ph-new .btns{flex-wrap:wrap}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV157={micro:v57Micro,val:function(o){return validate(o,"Task")},guess:function(t){return guess(t)},rpt:v57Rpt,step:V57STEP,
-  chk:function(f){V57CHK=f||null},priv:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:""}:null;return v57Private(null)},newHtml:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:"data:,"}:null;return phNewHtml()},parse:function(){return PARSE}};
+  chk:function(f){V57CHK=f||null},pub:function(file,inner){/* the posted path with a stand-in for the real upload */var real=v57Pub;v57Pub=inner||function(){return Promise.resolve(true)};return phPublish({file:file,kind:'photo',what:''},'').then(function(r){v57Pub=real;return r},function(e){v57Pub=real;throw e})},priv:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:""}:null;return v57Private(null)},newHtml:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:"data:,"}:null;return phNewHtml()},parse:function(){return PARSE}};
