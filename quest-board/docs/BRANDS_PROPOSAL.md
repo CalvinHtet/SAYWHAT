@@ -104,7 +104,7 @@ gift boxes, star confetti and a ribbon garland.
 **Bottoms**
 1. *Moonbeam Puff Pants*: lilac satin balloon pants gathered at the ankle, star-shaped knee patches, thin gold piping down the side.
 2. *Petal Tier Skirt* (her): three ruffled tiers in pink, mint and lilac, tiny star sequins along each hem, a ribbon waist tie.
-3. *Starlight Overalls*: mint overall shorts over striped tights, a cloud-shaped bib pocket, star buckles on the straps.
+3. *Starlight Shorts*: mint shorts that end at the waist, worn over pink-and-white striped tights, a cloud-shaped front pocket and a belt with two star buckles (no bib or straps, so every top sits over them cleanly).
 
 **Shoes**
 1. *Cloud Stompers*: chunky white boots with puffy cloud soles and small feathered wings at the ankles.
@@ -112,8 +112,9 @@ gift boxes, star confetti and a ribbon garland.
 3. *Ribbon Platforms*: glossy lilac platform Mary Janes with big satin bows and heart buckles, white ruffle socks.
 
 **Accessories**
-1. *Fairy Light Wings* (back): small iridescent wings, pink to mint, each tip ending in a glowing gold star.
-2. *Lucky Star Choker* (neck): a pastel ribbon choker with a dangling glowing star and two tiny bells.
+1. *Fairy Light Wings* (slot neck, shop a_acc, done the way gp_wings is): small iridescent wings, pink to mint, each tip ending in a glowing gold star.
+2. *Star Charm Cuffs* (slot arms): a pair of lilac ribbon wrist cuffs with ruffled edges, each with a dangling glowing star charm and a tiny bell (arms, so wings, cuffs and glasses can all be worn together).
 3. *Heart Visor Glasses* (glasses): pink heart-shaped lenses in a thin gold frame with little star studs at the corners.
 
-Waiting on: LEAD's and QA's OK, then Cal's, before any painting.
+LEAD OK 11-25 with notes (applied: wings on neck like gp_wings, cuffs on arms in place of a choker, shorts in place of overalls). Brand id wb; art logo_wb, ui_banner_wb and the portrait banner as for the other brands; Street floor, ordinary prices.
+Waiting on: QA's read, then Cal's OK (with the level-15 banners), before any painting.
