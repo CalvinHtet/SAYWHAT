@@ -349,3 +349,9 @@ points. These tasks should be bumped to the top of the task list". Built in app/
 every task (off, !, !!, !!!, off; q.pri saved with the task); on the Board every open task with a priority sits in a "Priority" group
 at the very top, !!! first, shortest first within a level; the categories it left count one fewer and an emptied one is not shown. Order
 only, no XP or coin change; a finished one goes to Completed and keeps its priority. Test: rigtest/lead/pri163.js.
+
+## Level-15 banners approved; priority reorders after a tap elsewhere (Cal 11-25, late)
+Cal: "Approve." (the three level-15 replacements: PCHOLD emptied) and "For the priority button on the tasks, reorganize it on the top of
+the page only after I click a different button. This way, I can tap to adjust the priority level before it goes all the way to the top".
+29zz_v163.js: the first priority tap freezes the Board's order (V63SNAP); the buttons show the new levels in place; the next tap on
+anything else, or leaving the Board, lets the order catch up. Test: rigtest/lead/pri163.js.
