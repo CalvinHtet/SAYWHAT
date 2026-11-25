@@ -66,7 +66,7 @@ wheelHtml=function(){return scHtml()};
 /* ---- the button by the mailbox; the Board's row goes ---- */
 zxSpin=function(){return ""};
 function v56Btn(){try{if(!loaded||!S||!S.created||!zxOpen("wheel"))return "";var c=scState(),n=scTasks(),st=c.done?"done":n>=SCNEED?"rdy":"wait";
-    return '<button type="button" class="scbtn zx-spin '+st+'" data-act="nav" data-v="wheel" aria-label="Scratch card: '+(st==="rdy"?"today’s card is ready":st==="done"?"scratched today":"locked, "+n+" of "+SCNEED+" tasks done")+'">'+areaIcon("wheel").replace("<svg ",'<svg width="16" height="16" ')+(st==="rdy"?'<i></i>':'')+'</button>'}catch(e){return ""}}
+    return '<button type="button" class="scbtn zx-spin '+st+'" data-act="nav" data-v="wheel" aria-label="Scratch card: '+(st==="rdy"?"today’s card is ready":st==="done"?"scratched today":"locked, "+n+" of "+SCNEED+" tasks done")+'">'+areaIcon("wheel").replace("<svg ",'<svg width="16" height="16" ')+(st==="rdy"?'<i class="scdot"></i>':'')+'</button>'}catch(e){return ""}}
 var v56Strip=stripHtml;stripHtml=function(){var h=v56Strip.apply(this,arguments);
   try{var b=v56Btn();if(b){var d=document.createElement("div");d.innerHTML=h;var ib=d.querySelector(".strip .ibbtn"),cp=d.querySelector(".strip .coinpill"),at=ib||d.querySelector(".strip .kdbtn")||cp;if(at){at.insertAdjacentHTML("afterend",b);h=d.innerHTML}}}catch(e){}
   return h};
@@ -77,5 +77,7 @@ htabCss("qb-v156-css",".sc-card:not(.locked):not(.done) .sc-grid{touch-action:no
   +".sc-lock{display:inline-flex;vertical-align:-3px;margin-right:6px;opacity:.85}.sc-lock svg{width:16px;height:16px}"
   +".scbtn{position:relative;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--fg);padding:0;display:grid;place-items:center;cursor:pointer;flex:none}.scbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.scbtn svg{display:block}"
   +".scbtn.wait,.scbtn.done{color:color-mix(in srgb,var(--fg) 55%,transparent)}.scbtn.rdy{border-color:var(--gold,#ffc857);color:var(--gold,#ffc857);box-shadow:0 0 12px -2px var(--gold,#ffc857)}"
-  +".scbtn i{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--gold,#ffc857);box-shadow:0 0 8px var(--gold,#ffc857)}.scbtn .nbang{top:-6px;right:auto;left:-7px}/* QA 2a20e7a8: the alert mark takes the other corner from the ready dot */");
+  +".scbtn .scdot{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--gold,#ffc857);box-shadow:0 0 8px var(--gold,#ffc857)}"
+  /* QA: the dot was styled as any <i> in the button, so the alerts' mark (an <i> too) took its gold disc; the dot has its own class, and steps aside while the mark shows */
+  +".scbtn:has(.nbang) .scdot{display:none}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV156={cv:function(){return Object.keys(SCCV).map(Number)},gone:function(i){return SCCV[i]?v56Gone(SCCV[i]):null},btn:v56Btn};
