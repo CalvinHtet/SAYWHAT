@@ -54,7 +54,7 @@ setInterval(v67Refund,4000);setTimeout(v67Refund,1500);
 function v67Goals(){var out=[],ready=0;
   try{var g=gated(),dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]});
     if(g!==null){out.push({k:"trial",t:"Pass your level trial",s:"It holds your levelling until you do.",go:'data-act="char" data-v65="gate"',ready:1});ready++}
-    else if(!open.length)out.push({k:"tasks",t:"Add today's tasks",s:"Every one pays XP and coins.",go:'data-v67="add"'});
+    else if(!open.length)out.push({k:"tasks",t:"Add today's tasks",s:"",go:'data-v67="add"'});
     var L=effLvl(),into=Math.max(0,(S.xp||0)-cum(L)),nd=need(L);
     out.push({k:"level",t:"Reach level "+(L+1),s:Math.max(0,nd-into).toLocaleString()+" XP to go",fr:nd>0?Math.min(1,into/nd):0});
     if(dqOn&&typeof dqGoal==="function"){var x=dqXp(),gl=dqGoal();if(gl)out.push({k:"dq",t:"Daily Quest",s:x>=gl?"Done today":(gl-x)+" XP of tasks to go",fr:Math.min(1,x/gl),done:x>=gl})}

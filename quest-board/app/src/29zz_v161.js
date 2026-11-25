@@ -58,7 +58,7 @@ function v61FxList(){return FX.filter(function(f){return !V61DEAD[f[1]]})}
 function v61FxHtml(){var lv=effLvl(),off=v61Off(),L=v61FxList(),got=L.filter(function(f){return f[0]<=lv}),nxt=L.filter(function(f){return f[0]>lv})[0];
   var card=function(f,lock){var on=!off[f[1]];return '<article class="v61fx'+(lock?' lock':on?' on':'')+'" data-fx="'+f[1]+'"><div><b>'+esc(f[2])+'</b><small>'+esc(lock?"Yours at level "+f[0]+".":(V61FXD[f[1]]||"An interface effect."))+'</small></div>'
     +(lock?'<span class="chip">Level '+f[0]+'</span>':'<button type="button" class="qs-btn'+(on?'':' alt')+'" data-act="fxtog" data-id="'+f[1]+'" aria-pressed="'+on+'">'+(on?"On":"Off")+'</button>')+'</article>'};
-  return '<section class="qs-sec"><h3>Effects</h3><p class="qs-note">Yours already: one comes with every few levels. Switch any of them on or off.</p>'
+  return '<section class="qs-sec"><h3>Effects</h3>'
     +(got.length>1?'<div class="v61all"><button type="button" class="qs-link" data-act="fxall" data-id="on">All on</button><button type="button" class="qs-link" data-act="fxall" data-id="off">All off</button></div>':'')
     +'<div class="v61fxs">'+got.map(function(f){return card(f,0)}).join("")+(nxt?card(nxt,1):"")+'</div></section>'}
 var v61Fx=applyFx;applyFx=function(){var r=v61Fx.apply(this,arguments);try{var off=(S&&S.fxOff)||{};Object.keys(off).forEach(function(k){if(off[k])document.body.classList.remove("fx-"+k)})}catch(e){}return r};

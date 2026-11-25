@@ -46,7 +46,7 @@ function v75Air(){var s=v75Season();if(s==="summer")return "";var n=s==="winter"
     h+='<i style="left:'+L+'%;width:'+sz.toFixed(1)+'px;height:'+(s==="winter"?sz:sz*.55).toFixed(1)+'px;animation-duration:'+d.toFixed(1)+'s,'+(2.6+v75R(i+3)*2).toFixed(1)+'s;animation-delay:'+dl.toFixed(1)+'s,'+dl.toFixed(1)+'s;--c:'+(s==="winter"?"#fff":s==="spring"?["#ffb3cf","#fff0f6","#ffd6e6"][i%3]:["#e0702a","#c2471c","#f2a33a"][i%3])+'"></i>'}
   return '<div class="v75air v75-'+s+'" aria-hidden="true">'+h+'</div>'}
 var v75Html=lfHtml;lfHtml=function(){var h=v75Html.apply(this,arguments);try{h=h.replace('<div class="lfwxb mono" id="lfwxb">',v75Air()+'<div class="lfwxb mono" id="lfwxb">')}catch(e){}return h};
-htabCss("qb-v175-css",".lfwrap{position:relative}.v75air{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}"
+htabCss("qb-v175-css",".qs-lead:empty{display:none}/* Cal 11-25: filler leads cut */.lfwrap{position:relative}.v75air{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}"
   +".v75air i{position:absolute;top:-20px;border-radius:50%;background:var(--c);opacity:.9;animation-name:v75fall,v75sway;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-direction:normal,alternate}"
   +".v75-winter i{box-shadow:0 0 4px rgba(255,255,255,.8)}.v75-spring i,.v75-fall i{border-radius:60% 0 60% 0}"
   +"@keyframes v75fall{to{top:105%}}@keyframes v75sway{from{margin-left:-14px;transform:rotate(-30deg)}to{margin-left:14px;transform:rotate(40deg)}}"

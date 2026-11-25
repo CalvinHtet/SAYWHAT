@@ -37,7 +37,7 @@ function gmNextDrop(){var n=dropNow(),base=dropYmd(n);
     if(out.length)return {t:t,ymd:ymd,list:out}}
   return null}
 function gmTab(){var nd=gmNextDrop();if(!nd)return '<p class="qs-note">No drop in the next week.</p>';
-  var h='<p class="qs-note qs-lead">Only you see this. It goes on sale '+esc(new Date(nd.t).toLocaleString([],{weekday:"long",hour:"numeric",minute:"2-digit"}))+'.</p>';
+  var h='<p class="qs-note qs-lead">Goes on sale '+esc(new Date(nd.t).toLocaleString([],{weekday:"long",hour:"numeric",minute:"2-digit"}))+'.</p>';
   nd.list.forEach(function(q){var its=SHOP.filter(function(it){return it[6]&&it[6].b===q.b.id&&!it[6].cut&&!it[6].gone&&isRigItem(it)});
     h+='<section class="qs-sec"><h3>'+esc(q.fl.name||q.fl.id)+': '+esc(q.b.name)+' ('+its.length+' pieces)</h3><div class="qs-grid">'+its.map(function(it){
       return '<article class="qs-card" data-card="'+esc(it[0])+'">'+qsThumb(it)+'<h4>'+esc(it[2])+'</h4><p>'+esc(it[5]||"")+'</p><span class="qs-btn ghost"><i class="coin"></i>'+it[3].toLocaleString()+'</span></article>'}).join("")+'</div></section>'});

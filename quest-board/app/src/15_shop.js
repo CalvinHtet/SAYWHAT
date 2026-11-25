@@ -485,7 +485,7 @@ shopHtml=function(){
   }else if(shopTab==="basics"){
     /* v1.22, the Stylist (Cal, 2026-11-18: "Lets remove the Basics from the street. Replace it with something else for new hairstyles, eye
        shapes, mouth, like a stylist department"): haircuts, dyes and eye colours; the plain clothes are off sale (29zz_v122.js) */
-    h+='<p class="qs-note qs-lead">A new cut, a new colour, new eyes.</p>';
+    h+='<p class="qs-note qs-lead"></p>';
     h+='<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(x){return x[6].b==="basics"&&STYLIST[x[1]]})+'</div></div>';
   }else if(shopTab==="wardrobe"){
     var mine=SHOP.filter(function(x){return isRigItem(x)&&S.owned[x[0]]&&itemFits(x)});

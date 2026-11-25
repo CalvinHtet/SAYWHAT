@@ -12,7 +12,7 @@ function v65Parts(){var o={gate:"",next:"",dq:""};try{var d=document.createEleme
 var V65BASE=boardHtml;boardHtml=function(){var h=V65BASE.apply(this,arguments);
   try{var d=document.createElement("div");d.innerHTML=h;var g=d.querySelector("section.card.gate");
     [".bline",".zx-next","section.card.dq","section.card.gate"].forEach(function(s){var e=d.querySelector(s);if(e)e.remove()});
-    if(g){var at=d.querySelector(".strip");var row='<button type="button" class="v65gate" data-act="char" data-v65="gate"><span class="label">Level trial</span><span>Waiting for you. Pass it to keep levelling.</span><b>Open &rsaquo;</b></button>';
+    if(g){var at=d.querySelector(".strip");var row='<button type="button" class="v65gate" data-act="char" data-v65="gate"><span class="label">Level trial</span><span>Pass it to keep levelling.</span><b>Open &rsaquo;</b></button>';
       if(at)at.insertAdjacentHTML("afterend",row);else d.insertAdjacentHTML("afterbegin",row)}
     h=d.innerHTML}catch(e){}
   return h};

@@ -1415,12 +1415,12 @@ function boardHtml(){
 
   /* Cal, 2026-11-09: no "Now" card. Quests go in without any order, so every quest is equal and sits in its category below. */
   if(!cur){
-    h+='<section class="card allclear"><span class="label">'+(S.quests.length?'Run complete':'Empty board')+'</span><h2>'+(S.quests.length?'Every quest cleared':'No quests yet')+'</h2><p class="note" style="margin:6px 0 12px">'+(S.quests.length?'XP and stats stay. Start a fresh run tomorrow.':'Type your tasks in the brain dump above. Each one becomes a quest with XP and coins.')+'</p><button class="btn ghost" data-act="newday">New run</button></section>';
+    h+='<section class="card allclear"><span class="label">'+(S.quests.length?'Run complete':'Empty board')+'</span><h2>'+(S.quests.length?'Every quest cleared':'No quests yet')+'</h2><p class="note" style="margin:6px 0 12px">'+(S.quests.length?'XP and stats stay. Start a fresh run tomorrow.':'Add tasks above.')+'</p><button class="btn ghost" data-act="newday">New run</button></section>';
   }
 
   var bid=ri>=2?bountyId():null;
   /* Cal, 2026-11-09: "add the delete button behind an edit toggle": the &times; on each quest shows only while editing */
-  if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+(qEdit?'Tap &times; to remove a quest':'')+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
+  if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+''+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
   /* Cal, 2026-11-09: "if there are no quests, which is the beginning of the game, there should be no categories ... only
      categorize them once tasks start coming in" and "Completed tasks can be all the way at the bottom". Open quests are a plain
      list while they all sit in one category, with category headers once they span two or more; every finished quest goes into

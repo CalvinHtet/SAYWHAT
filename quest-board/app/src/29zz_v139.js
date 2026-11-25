@@ -23,7 +23,7 @@ function v39Day(){var o=socState(),d=o.sqDay;if(!d||d.d!==today()){d=o.sqDay={d:
 /* ---- Players: the leaderboard ---- */
 FSHMODES=[["level","Leaderboard"],["fashion","Fashion"]];if(FSH.mode==="rich")FSH.mode="level";
 var v39Tg=fshTg;fshTg=function(){var h=v39Tg.apply(this,arguments);return (h.match(/data-m=/g)||[]).length<2?"":h};
-var v39Head=fshHead;fshHead=function(mode){if(mode==="level")return '<p class="note">Everyone by level. Tap a player for their card.</p>';return v39Head.apply(this,arguments)};
+var v39Head=fshHead;fshHead=function(mode){if(mode==="level")return '';return v39Head.apply(this,arguments)};
 fshStats=function(p){return '<span><b>Lv '+p.lv+'</b></span>'+(p.me?'':'<span>'+v39FrLine(p.id)+'</span>')};
 
 /* ---- the card: friendship and the greetings ---- */
@@ -95,7 +95,7 @@ async function v39KdAnswer(uid,id,c,post){var r=KD.all.filter(function(x){return
 var v39KdHtml=kdHtml;kdHtml=function(){if(!kdOwner()){var h=v39KdHtml.apply(this,arguments);
     return h.replace(/If he approves yours, it is pinned in the Town Hall and up to [\d,]+ coins land in your account\./,"If he likes it, he can send you 500 coins, and he might post it on the Town Hall board for 2 days. Otherwise it stays between you two.")
       .replace(/Approved and pinned, \+([\d,]+) coins/g,"Cal sent you +$1 coins")};
-  var h='<h3>Kind words</h3><p class="note">Notes people wrote you. They stay private unless you post one: it goes on the Town Hall board for 48 hours. The 500 coins go only if you choose them. One note per person a day.</p>';
+  var h='<h3>Kind words</h3><p class="note">They stay private unless you post one: it goes on the Town Hall board for 48 hours. The 500 coins go only if you choose them. One note per person a day.</p>';
   h+=KD.all.length?KD.all.map(function(r){var a='data-u="'+esc(r.uid)+'" data-i="'+esc(r.id)+'"';return kdNote(r,'<div class="kdgo"><button class="btn" data-kd="v39" '+a+' data-c="500" data-p="0">+500</button><button class="btn" data-kd="v39" '+a+' data-c="500" data-p="1">+500 and post</button><button class="btn ghost" data-kd="v39" '+a+' data-c="0" data-p="1">Post only</button><button class="btn ghost" data-kd="v39" '+a+' data-c="0" data-p="0">No</button></div>')}).join(""):'<p class="note">'+(KD.t?'Nothing waiting.':'Loading...')+'</p>';
   if(KD.done.length)h+='<details><summary class="note">Answered ('+KD.done.length+')</summary>'+KD.done.map(function(r){var a=r.a||{};return kdNote(r,'<small class="'+(a.ok||a.post?'kdok':'kdno')+'">'+(a.ok?'+'+kdFmt(a.c)+' coins':'No coins')+(a.post?', posted for 48 hours':'')+'</small>')}).join("")+'</details>';
   return '<div class="card box2 kd">'+h+'</div>'};

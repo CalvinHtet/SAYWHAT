@@ -61,7 +61,7 @@ INBOXGEN.push(function(){try{if(!S||!S.created)return [];var m=v74Month(),c=v74C
 
 /* the Board's Goals: the chapter's row (29zz_v167.js) */
 var v74Goals=v67Goals;v67Goals=function(){var G=v74Goals.apply(this,arguments);try{var m=v74Month(),c=v74Ch(m),C=v74St();if(!c)return G;var row;
-    if(C.done[m]&&!C.open[m]){row={k:"ch",t:"Chapter "+c.n+": "+c.title,s:"You have a key. Use it.",go:'data-v74="open" data-m="'+m+'"',ready:1};G.ready++}
+    if(C.done[m]&&!C.open[m]){row={k:"ch",t:"Chapter "+c.n+": "+c.title,s:"You have a key.",go:'data-v74="open" data-m="'+m+'"',ready:1};G.ready++}
     else if(C.done[m])row={k:"ch",t:"Chapter "+c.n+": "+c.title,s:"Complete. The next chapter starts next month.",done:1};
     else{var n=v74Count();row={k:"ch",t:"Chapter "+c.n+": "+c.title,s:n+" of "+V74GOAL+" tasks this month",fr:Math.min(1,n/V74GOAL)}}
     G.list.splice(Math.min(1,G.list.length),0,row)}catch(e){}return G};

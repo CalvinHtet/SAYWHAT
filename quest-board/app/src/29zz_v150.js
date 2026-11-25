@@ -91,7 +91,7 @@ function p2CareCard(kind){var o=p2(),t=Math.min(3,+o.care[kind]||0),C=P2CARE[kin
   if(t>=3)btn='<button class="qs-btn ghost" disabled>All three owned</button>';
   else if(!has)btn='<button class="qs-btn ghost" disabled>Needs a companion</button>';
   else{var pr=P2CAREP[t];btn=S.coins>=pr?'<button class="qs-btn" data-act="p2care" data-id="'+kind+'"><i class="coin"></i>'+pr.toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+pr.toLocaleString()+' &middot; need '+(pr-S.coins).toLocaleString()+' more</button>'}
-  return '<article class="qs-card p2care'+(t>=3?" own":"")+'" data-card="care_'+kind+'"><div class="p2pips">'+[0,1,2].map(function(i){return '<i class="'+(i<t?"on":"")+'">'+P2ROM[i]+'</i>'}).join("")+'</div><h4>'+C[0]+(t<3?" "+P2ROM[t]:"")+'</h4><p>'+C[1]+'</p><small class="p2eff">Each one: '+C[2]+'. Bought once, kept for good.</small>'+btn+'</article>'}
+  return '<article class="qs-card p2care'+(t>=3?" own":"")+'" data-card="care_'+kind+'"><div class="p2pips">'+[0,1,2].map(function(i){return '<i class="'+(i<t?"on":"")+'">'+P2ROM[i]+'</i>'}).join("")+'</div><h4>'+C[0]+(t<3?" "+P2ROM[t]:"")+'</h4><p>'+C[1]+'</p><small class="p2eff">Each one: '+C[2]+'.</small>'+btn+'</article>'}
 /* Cal 11-24: "Everything in The shop, including stylist and pets and banners, can be viewed first on the character and then confirm to
    buy it when checking out. Should not automatically buy it and spend my money". Pet clothes: "Try on" puts a piece on the companion's
    picture at the top of its clothes tab (P2TRY, one per slot, nothing saved); the basket under it opens a checkout that lists the
@@ -103,7 +103,7 @@ function p2TryHead(k){var o=p2(),P=o.own[k];if(!P)return "";var C=pzCl(),tl=p2Tr
   var sp=null;try{sp=pzSprite(k,0,worn)}catch(e){}var pic=sp?'<img class="p2bigpic" data-pzk="'+esc(pzKey(k,0,worn))+'" src="'+sp.u+'" alt="">':"",cost=tl.reduce(function(a,id){return a+(PC_PRICE[C[id].kind]||400)},0);
   return '<div class="p2hero p2tryhero"><div class="p2big">'+pic+'</div><div class="p2nm"><h3>'+esc(P.n)+'</h3></div>'+(tl.length?'<div class="qs-bask"><small>Trying on '+tl.length+' piece'+(tl.length>1?"s":"")+'</small>'
     +(S.coins>=cost?'<button class="qs-btn" data-act="p2check" data-id="'+k+'">Buy '+(tl.length>1?"all ":"")+'&middot; <i class="coin"></i>'+cost.toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+cost.toLocaleString()+' &middot; need '+(cost-S.coins).toLocaleString()+' more</button>')
-    +'<button class="qs-link" data-act="p2tryoff" data-id="'+k+'">Take them off</button></div>':'<p class="qs-note">Tap a piece to see it on '+esc(P.n)+' before you buy it.</p>')+'</div>'}
+    +'<button class="qs-link" data-act="p2tryoff" data-id="'+k+'">Take them off</button></div>':'')+'</div>'}
 function p2TryCards(k,h){var o=p2(),T=P2TRY[k]||{};
   return h.replace(/<button class="qs-btn" data-act="pzclbuy" data-id="([^"]+)">([\s\S]*?)<\/button>/g,function(m,id,inner){var C=pzCl()[id];if(!C)return m;
     if(!o.own[k])return '<button class="qs-btn ghost" disabled>'+inner+' &middot; needs a '+esc(PETS[k].name)+'</button>';var on=T[pzSlot(C.kind)]===id;

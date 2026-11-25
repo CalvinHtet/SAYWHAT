@@ -119,7 +119,7 @@ function zxSwapOrig(x){var m=S.wkSwap&&S.wk&&S.wkSwap[S.wk.plan];if(!m)return x;
 function zxSwapModal(from){var E=EX[from];if(!E||!S.wk)return;var inList=S.wk.list||[],o=zxSwapOrig(from),pl=planOf(S.wk.plan);
   var ids=Object.keys(EX).filter(function(k){return k!==from&&!EX[k][5]&&inList.indexOf(k)<0});
   ids.sort(function(a,b){var sa=EX[a][1]===E[1]?0:1,sb=EX[b][1]===E[1]?0:1;return sa-sb||EX[a][0].localeCompare(EX[b][0])});
-  modal('<div class="card box2 zx-swap"><span class="label">Swap</span><h2>'+esc(E[0])+'</h2><p class="note">Pick what to do instead. It stays in your '+esc(pl?pl[1]:"")+' plan from now on.</p>'
+  modal('<div class="card box2 zx-swap"><span class="label">Swap</span><h2>'+esc(E[0])+'</h2><p class="note">It stays in your '+esc(pl?pl[1]:"")+' plan from now on.</p>'
     +'<div class="zx-own"><input id="zxown" type="text" maxlength="40" autocomplete="off" placeholder="Your own, like Hip Thrust" aria-label="Your own exercise"><button type="button" class="btn" data-act="wkswapown" data-ex="'+from+'">Use it</button></div>'
     +(o!==from&&EX[o]&&inList.indexOf(o)<0?'<button type="button" class="btn ghost zx-orig" data-act="wkswapto" data-ex="'+from+'" data-to="'+o+'">Back to '+esc(EX[o][0])+'</button>':'')
     +'<div class="zx-list">'+ids.map(function(k){return '<button type="button" class="zx-pick" data-act="wkswapto" data-ex="'+from+'" data-to="'+k+'"><b>'+esc(EX[k][0])+'</b><small>'+esc(EX[k][1])+'</small></button>'}).join("")+'</div>'
