@@ -377,3 +377,12 @@ LEAD's code, in order: (1) the seven categories as wear slots (head, necklace, g
 migration); (2) a drop shows one half (3 per category) and the brand's next appearance the other half; (3) the Vault is 21 random
 pieces from every brand (3 per category); (4) no floor level locks: all brands in one rotation; (5) the Pet Store at 25 (already), the
 Stylist's tattoos and scars from level 30.
+
+### Cal 11-25, the 20 ideas answered, and the over-6 purge
+- Over 6 in a category: "purge the boring ones", owners keep them. Done in 05da5315 (29zz_v166.js, V66CUT, 14 pieces; rigtest/lead/cut166.js), WAITING ON QA.
+- YES: 2 header still until tapped; 3 cached Board shown at once ONLY if it stays accurate; 4 voice task entry; 5 templates incl. a
+  morning routine; 6 snooze to tomorrow; 8 outfit presets; 10 Lookbook of his card posts, with delete; 11 focus timer (he asked how:
+  explained); 15 seasonal events; 16 co-op bounties; 17 weekly Town Goal; 18 outfit battles; 19 gift shop.
+- NO: 1 (load all brands' art), 7 Big Three, 9 wishlist, 12 streak heat-map, 14 rival NPC brands, 20 guild crests.
+- 13 monthly story chapter: he asked for more explanation (sent).
+- Still open: the price question for the all-brands rotation (cheaper and less often / same prices / Street first).
