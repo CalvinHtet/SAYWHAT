@@ -261,3 +261,29 @@ in a brand's room the countdown sits left of the coins; the character card in th
 one row (buy button, "Take off"), the same height trying or not; on a phone it is pinned to the top out of the page's flow and its
 opacity follows the scroll (0 at the top, 1 from about 220 px). LEAD's addition: while a piece is tried on the card shows at once,
 because that is the only place the try-on and its price are seen. Test: rigtest/lead/shop160.js.
+
+## Banners at 1,000 and by tier, bounty pay and photos, brand backgrounds, task coins (Cal 11-25, evening)
+Cal: "For the banner gradient that fades into the shop, make the static colors at the bottom look better with some sparkles or different
+gradient hues that match the palette of the brand. i dont want it to be one static color." / "Since the banners are 3000-5000 coins,
+that seems pretty expensive. How is the level and economy scaling working towards this goal? I've been playing for 3 days i just hit
+level 10, but have not upgraded much in my base. Is this expected? Or can we increase the coin gain by a little bit more?" / "I approve
+the banners ... i would keep all banners at 1000 coins fixed. I want to include 5 more banners at each level. Once hitting level 25,
+there should be 25 banners total. Once we hit level 30, i want the current banners to collapse into a tab labeled ' I ' which is roman
+numeral one. Go ahead and make more banners that are even more detailed and intricate. Make enough to last until level 50. Make them
+very beautiful and cute and even make some in different art styles such as brush stroke, or japanese, or even a maplestory one or a
+minecraft one. Go wild with it." / "a 1 day bounty can pay 500, a 2 day can pay 1000, 3 day pays 2000. Keep song of the day. Allow
+people to post a photo from their phone screen of a spotify or soundcloud screenshot. Even the 1 day bounty chores need a photo. And
+remember that all photos are private until they decide to post it to the townhall."
+- Banners: PCHOLD emptied (approved). Every banner 1,000 (PCPRICE); an owner who paid more for one of the first five gets the
+  difference back once (PCWAS). Tiers are rows of data/banners.json ([id, name, level], ROOMS's file from here): LEAD's reading of
+  "25 by level 25" is the first five, then five each at levels 10, 15, 20 and 25 (set I), then five each at 30, 35, 40, 45 and 50
+  (set II): 40 more paintings. From level 30, once a set-II banner is painted, the list has tabs I and II. The game-inspired styles
+  are briefed to ROOMS as styles only (a blocky voxel world, a side-scrolling storybook town): original designs, no game's name,
+  characters or look copied (CLAUDE.md).
+- Bounties: BQPAY 500 / 1,000 / 2,000. A bounty chore on the Board opens the photo check when ticked and has no "Done without a
+  photo" wherever a checker can exist; a device-only build still ticks on trust. A screen photo or screenshot counts for a challenge
+  about something on a screen (Song of the Day with any music app). Photos stay private unless posted.
+- Brand rooms: under the picture the page runs from the brand's main colour into its second colour with a bloom of its light colour
+  and a pool of its accent, and two slow layers of sparkles in its colours behind the cards.
+- Coins: TASKK 1.2 (29zzz_econ.js): tasks pay a fifth more coins; businesses and chests unchanged. With the bounty raise an active
+  day earns roughly a third more.

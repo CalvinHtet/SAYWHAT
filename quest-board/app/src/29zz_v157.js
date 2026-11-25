@@ -36,13 +36,29 @@ var v57Toggle=toggle;toggle=function(id,ev,mode){var q=(S.quests||[]).filter(fun
   else{S.done[id]=1;S.vdone[id]=0;S.xp+=1;var t=today();if(!S.dayXp||S.dayXp.d!==t)S.dayXp={d:t,x:0};S.dayXp.x+=1;if(!v57Micro(q))R.m[id]=1;
     try{qToast(1,0,1,[v57Micro(q)?"Quick step: 1 XP, no coins":"Same small task again today: counts as a quick step"])}catch(e){}}
   render();persist();var after=effLvl();try{if(after>before)levelUp(after,null,before);else if(!wasGate&&gated())gateOpened(gated())}catch(e){}};
+/* ---- every bounty needs a photo (Cal 11-25: "Even the 1 day bounty chores need a photo. And remember that all photos are private until
+   they decide to post it to the townhall") ----
+   A 1-day or 2-day bounty is a chore on the Board. Ticking it opens the photo check, with no "Done without a photo": it is finished
+   only by a photo that passes, taken in the app, and that photo stays private (the check's result offers "Post to the town board",
+   as for any quest). Where no photo checker can exist (a device-only build) the chore is ticked on trust as before, since nothing
+   could ever pass. */
+var V57FORCE=null;/* tests: true or false overrides whether a checker exists */
+function v57Checker(){if(V57FORCE!==null)return !!V57FORCE;try{return !!window.claude||!!(window.QB_WEB&&QB_WEB.sandbox)}catch(e){return false}}
+function v57BtyProof(q){try{var ms=document.querySelectorAll("#layer .modal"),m=ms[ms.length-1];if(!m)return;[].forEach.call(m.querySelectorAll('[data-act="honor"],[data-act="proofhonor"]'),function(b){b.remove()});
+    [].forEach.call(m.querySelectorAll(".chip"),function(c){if(/^No photo/.test(c.textContent))c.remove()});
+    var n=m.querySelector(".note");if(n&&!m.querySelector(".v57bty")){var d=document.createElement("p");d.className="note v57bty";d.textContent="This is a bounty: it needs a photo to count. The photo stays private unless you choose to post it.";n.parentNode.insertBefore(d,n.nextSibling)}}catch(e){}}
+var v57TogB=toggle;toggle=function(id,ev,mode){var q=(S.quests||[]).filter(function(x){return x.id===id})[0];
+  if(q&&q.bty&&!(S.done&&S.done[id])&&mode!=="v"&&v57Checker()){askProof(id);v57BtyProof(q);return}
+  return v57TogB.apply(this,arguments)};
+var v57Verdict=proofVerdict;proofVerdict=function(q,ok){var r=v57Verdict.apply(this,arguments);try{if(q&&q.bty&&!ok)v57BtyProof(q)}catch(e){}return r};
+
 /* ---- a bounty's photo, kept private ---- */
 var V57CHK=null;/* tests set a stand-in checker */
 async function v57Check(A,file){if(V57CHK)return V57CHK(A,file);var vis=null;
   try{var sample=window.claude?await window.claude.use("sample"):null;
     if(!sample&&window.QB_WEB&&QB_WEB.sandbox){var lum=await sbLum(file);vis={matches:lum>35,what:"your test photo (sandbox stand-in check)",note:lum>35?"":"Too dark to see anything (sandbox stand-in)."}}
     var lim=sample?await sample.limits().catch(function(){return null}):null;
-    if(sample&&lim&&lim.images)vis=await sample.json('A person claims this photo shows them doing this challenge for a habit game: "'+String(A.n||"").replace(/"/g,"'")+'" ('+String(A.why||"").replace(/"/g,"'")+'). Look at the image. Return ONLY JSON: {"matches":true,"what":"","note":""} where matches = the image plausibly shows this challenge done or clearly in progress (be fair but skeptical; a blank, black or unrelated picture does not match), what = what you see in under 14 words, note = short reason under 12 words.',{images:file,modelTier:"quick",cache:false})}catch(e){vis=null}
+    if(sample&&lim&&lim.images)vis=await sample.json('A person claims this photo shows them doing this challenge for a habit game: "'+String(A.n||"").replace(/"/g,"'")+'" ('+String(A.why||"").replace(/"/g,"'")+'). Look at the image. Return ONLY JSON: {"matches":true,"what":"","note":""} where matches = the image plausibly shows this challenge done or clearly in progress (be fair but skeptical; a blank, black or unrelated picture does not match), what = what you see in under 14 words, note = short reason under 12 words. A screenshot, or a photo of a screen, counts when the challenge is about something on a screen: a song playing in a music app (any app), a film or show, a game.',{images:file,modelTier:"quick",cache:false})}catch(e){vis=null}
   if(!vis)return {ok:false,why:"The photo checker couldn't be reached, so nothing was counted. Try again in a minute, or post it to the town."};
   return vis.matches?{ok:true,what:vis.what||""}:{ok:false,why:"It doesn't look like this bounty."+(vis.note?" "+vis.note:"")}}
 async function v57Private(btn){var arm=BQARM,src=PH.sel;if(!arm||!src||!src.file)return false;var A=bqState().act[arm.k];if(!A||A.done||A.ty!=="p")return false;
@@ -74,4 +90,4 @@ if(typeof phNewHtml==="function"){var v57New=phNewHtml;phNewHtml=function(){var 
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=bqpriv]");if(!b||b.disabled)return;e.preventDefault();e.stopPropagation();v57Private(b)},true);
 htabCss("qb-v157-css","#bqprivmsg:empty{display:none}#bqprivmsg{color:var(--bad,#ff6b6b)}.ph-new .btns{flex-wrap:wrap}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV157={micro:v57Micro,val:function(o){return validate(o,"Task")},guess:function(t){return guess(t)},rpt:v57Rpt,step:V57STEP,
-  chk:function(f){V57CHK=f||null},pub:function(file,inner){/* the posted path with a stand-in for the real upload */var real=v57Pub;v57Pub=inner||function(){return Promise.resolve(true)};return phPublish({file:file,kind:'photo',what:''},'').then(function(r){v57Pub=real;return r},function(e){v57Pub=real;throw e})},priv:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:""}:null;return v57Private(null)},newHtml:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:"data:,"}:null;return phNewHtml()},parse:function(){return PARSE}};
+  chk:function(f){V57CHK=f||null},force:function(v){V57FORCE=v===undefined?null:v;return v57Checker()},pub:function(file,inner){/* the posted path with a stand-in for the real upload */var real=v57Pub;v57Pub=inner||function(){return Promise.resolve(true)};return phPublish({file:file,kind:'photo',what:''},'').then(function(r){v57Pub=real;return r},function(e){v57Pub=real;throw e})},priv:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:""}:null;return v57Private(null)},newHtml:function(file){PH.sel=file?{file:file,kind:"photo",what:"",url:"data:,"}:null;return phNewHtml()},parse:function(){return PARSE}};

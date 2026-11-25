@@ -22,7 +22,7 @@
      unfinished goes, and the next card comes at no cost.
    S.bq = {d, rr, off:{1,2,3}, act:{k: bounty}, hold:{k: bounty}}; a bounty = {k, pi (its place in the pool), n, why, xp, stat, cl, ty
    (q chore, p photos, d challenge), t0, end, qid, need, daily, got, days, cid, done, at}. */
-var BQPAY={1:250,2:400,3:600},BQRR=3,BQCOST=150,BQARM=null;
+var BQPAY={1:500,2:1000,3:2000},/* Cal 11-25: "a 1 day bounty can pay 500, a 2 day can pay 1000, 3 day pays 2000" (was 250 / 400 / 600) */BQRR=3,BQCOST=150,BQARM=null;
 var BTY3P=[
   {id:"menu",n:"Menu Ideas",why:"Post photos of 3 meals you ate. The Restaurant wants new menu ideas.",need:3,xp:150},
   {id:"water",n:"Hydration Check",why:"Post your water bottle on 3 different days.",need:3,daily:1,xp:150},

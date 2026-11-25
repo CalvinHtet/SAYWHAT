@@ -1,5 +1,5 @@
 // Cal 11-24 (29zz_v147.js): three bounty cards (1, 2 and 3 days), two at once, timers from the take, 3 rerolls a day then 150 coins,
-// the x gives one up (a new card with a reroll left, the same bounty with its old timer without), 250/400/600 coins, 3-day bounties
+// the x gives one up (a new card with a reroll left, the same bounty with its old timer without), 500/1,000/2,000 coins (Cal 11-25; were 250/400/600), 3-day bounties
 // done by Town Hall photos, the Gym Challenge card taking over a challenge's name and end.
 //   PORT=<plain build> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/bounty147.js
 const { chromium } = require('playwright'); const PORT = process.env.PORT || 8779, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
@@ -13,7 +13,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const cards = () => V(() => [...document.querySelectorAll('.bty .bty-card')].map((c) => ({ lab: c.querySelector('.label').innerText, name: c.querySelector('b').innerText, txt: c.innerText.replace(/\s+/g, ' '), btns: [...c.querySelectorAll('button')].map((q) => q.dataset.act + ':' + q.innerText.replace(/\s+/g, ' ')) })));
   const click = async (act, k) => { await V(([act, k]) => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.bty [data-act="' + act + '"][data-k="' + k + '"]').click(); }, [act, k]); await p.waitForTimeout(250); };
   let c = await cards(); ok(c.length === 3 && /1-day/i.test(c[0].lab) && /2-day/i.test(c[1].lab) && /3-day/i.test(c[2].lab), 'three cards: ' + c.map((q) => q.lab + ' "' + q.name + '"').join(' | '));
-  ok(/\+250 coins/.test(c[0].txt) && /\+400 coins/.test(c[1].txt) && /\+600 coins/.test(c[2].txt) && c.every((q) => q.btns.some((t) => /bqtake/.test(t)) && q.btns.some((t) => /bqroll:Reroll$/.test(t))), 'each pays 250 / 400 / 600 coins and has Take it and Reroll');
+  ok(/\+500 coins/.test(c[0].txt) && /\+1000 coins/.test(c[1].txt) && /\+2000 coins/.test(c[2].txt) && c.every((q) => q.btns.some((t) => /bqtake/.test(t)) && q.btns.some((t) => /bqroll:Reroll$/.test(t))), 'each pays 500 / 1000 / 2000 coins (Cal 11-25) and has Take it and Reroll');
   ok(await V(() => /3 rerolls left today/.test(document.querySelector('.bty').innerText)), '3 rerolls a day'); await p.screenshot({ path: OUT + '/bq_offer.png' });
   /* rerolls: 3 free over all cards, then 150 coins */
   const n0 = c[0].name; await click('bqroll', 1); c = await cards(); ok(c[0].name !== n0, 'a reroll swaps the card: "' + n0 + '" -> "' + c[0].name + '"');
@@ -36,10 +36,10 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   /* finishing the chore pays 250 on top of its XP, once */
   const q1 = await V(async () => { const x = window.__qb.x(), S = x.S, A = window.__qbV147.state().act[1]; const base = x.mults(S.quests.find((q) => q.id === A.qid), {}); const c0 = S.coins, x0 = S.xp; x.toggle(A.qid); await new Promise((r) => setTimeout(r, 200)); document.querySelectorAll('#layer .modal').forEach((m) => m.remove());
     const r = { dc: S.coins - c0, questCoins: S.cdone[A.qid], dx: S.xp - x0, tags: base.tags.join(), done: window.__qbV147.state().act[1].done }; const c1 = S.coins; x.toggle(A.qid); x.toggle(A.qid); r.again = S.coins - c1 - 0; return r; });
-  ok(q1.done === 1 && q1.dc >= q1.questCoins + 250 && /Bounty x1\.5/.test(q1.tags), 'ticking the chore finishes the bounty: its own coins (' + q1.questCoins + ') + 250, XP x1.5 (' + q1.dx + ' XP)');
+  ok(q1.done === 1 && q1.dc >= q1.questCoins + 500 && /Bounty x1\.5/.test(q1.tags), 'ticking the chore finishes the bounty: its own coins (' + q1.questCoins + ') + 250, XP x1.5 (' + q1.dx + ' XP)');
   /* QA: unticking the finished chore takes the 250 back and reopens the bounty; ticking again pays it once more, never twice */
   const un = await V(async () => { const x = window.__qb.x(), S = x.S, A = window.__qbV147.state().act[1]; const c0 = S.coins; x.toggle(A.qid); await new Promise((r) => setTimeout(r, 150)); const r = { back: c0 - S.coins, questCoins: 0, open: A.done === 0 }; const c1 = S.coins; x.toggle(A.qid); await new Promise((q) => setTimeout(q, 200)); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); r.again = S.coins - c1; r.done = A.done; r.net = S.coins - c0; return r; });
-  ok(un.open && un.back >= 250 && un.done === 1 && un.net === 0, 'unticking gives back the quest\'s coins and the bounty\'s 250 (' + un.back + '), and the bounty reopens; ticking again pays the same once (net ' + un.net + ')');
+  ok(un.open && un.back >= 500 && un.done === 1 && un.net === 0, 'unticking gives back the quest\'s coins and the bounty\'s 500 (' + un.back + '), and the bounty reopens; ticking again pays the same once (net ' + un.net + ')');
   /* QA: backing out of the photo composer disarms the card */
   ok(await V(async () => { const H = window.__qbV147; H.arm(3); H.disarm(); return H.arm() === 0; }), 'a card armed for a photo is disarmed once the composer is gone');
   c = await cards(); ok(/Completed/.test(c[0].txt) && /Next one in/.test(c[0].txt), 'the finished slot waits for its window: ' + c[0].txt);
@@ -48,7 +48,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     const mk = (q) => { b.act[3] = { k: 3, pi: q.pi, id: q.id, n: q.n, why: q.why, xp: q.xp, ty: 'p', t0: Date.now(), end: Date.now() + 3 * 864e5, need: q.need, daily: q.daily, got: 0, days: {}, done: 0 }; };
     const r = {}; mk(w); r.w1 = H.photo(3); r.w2 = H.photo(3); r.wgot = b.act[3].got; mk(m); const c0 = S.coins, x0 = S.xp; H.photo(3); H.photo(3); r.mid = b.act[3].done; H.photo(3); await new Promise((q) => setTimeout(q, 200)); r.done = b.act[3].done; r.dc = S.coins - c0; r.dx = S.xp - x0; r.pool = P.map((q) => q.id).join(','); return r; });
   ok(ph.w1 === 1 && ph.w2 === 0 && ph.wgot === 1, 'Hydration Check counts one photo a day');
-  ok(ph.mid === 0 && ph.done === 1 && ph.dc === 600 && ph.dx === 150, 'Menu Ideas: 3 photos finish it for 600 coins and 150 XP');
+  ok(ph.mid === 0 && ph.done === 1 && ph.dc === 2000 && ph.dx === 150, 'Menu Ideas: 3 photos finish it for 2,000 coins and 150 XP');
   ok(ph.pool === 'menu,water,chef,sweep,bed,fit,desk,grass,made,letgo,movie,song,game,gym', 'the 3-day pool is the fourteen Cal picked: ' + ph.pool);
   /* the Gym Challenge card */
   const gy = await V(async () => { const H = window.__qbV147, b = H.state(), x = window.__qb.x(); delete b.act[3]; const g = H.pool(3).find((q) => q.id === 'gym'); const t0 = Date.now();
@@ -58,7 +58,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     const c0 = x.S.coins; ch = Object.assign({}, ch, { st: 'over' }); H.tick(); await new Promise((q) => setTimeout(q, 200)); r.done = b.act[3].done; r.dc = x.S.coins - c0; H.duel(() => null); return r; });
   ok(/Challenge a player/i.test(gy.a) && /Waiting for Sydney/i.test(gy.b), 'Gym Challenge: asks for a player, then waits for their answer');
   ok(/Gym Challenge vs Sydney/.test(gy.c) && /pot of 500 coins/.test(gy.c) && /3 days left/i.test(gy.c) && gy.end, 'once accepted the card is the challenge: who, the pot, and its own end: ' + gy.c.slice(0, 150));
-  ok(gy.done === 1 && gy.dc === 600, 'the challenge over finishes the bounty: +600 coins');
+  ok(gy.done === 1 && gy.dc === 2000, 'the challenge over finishes the bounty: +2,000 coins');
   /* a bounty that runs out goes, with its quest, and the next card comes free */
   const ex = await V(() => { const H = window.__qbV147, b = H.state(), x = window.__qb.x(), S = x.S; delete b.act[2]; delete b.act[3]; const off0 = b.off[2] || 0; const A = H.take(2); const qid = A.qid; A.end = Date.now() - 1000; H.tick(); return { gone: !b.act[2], quest: S.quests.some((q) => q.id === qid), off: (b.off[2] || 0) - off0 }; });
   ok(ex.gone && !ex.quest && ex.off === 1, 'a bounty that runs out leaves with its quest and the next card comes');
