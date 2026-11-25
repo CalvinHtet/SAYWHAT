@@ -1,5 +1,5 @@
 """Run tools/strip_mannequin.py on layer PNGs, keeping them PNG (lossless).
-  strip_layers.py [--lens] <layer.png> ...   (default --garment)"""
+  strip_layers.py [--lens | --plain] <layer.png> ...   (default --garment; --plain = the default mode, for bright metal chains)"""
 import sys, os
 import numpy as np
 sys.path.insert(0, os.path.join(os.getcwd(), 'tools'))
@@ -22,6 +22,7 @@ def sil_edge(path):
     return ndi.distance_transform_edt(~(body ^ ndi.binary_erosion(body, iterations=2)))
 sm.silhouette_edge = sil_edge
 lens = '--lens' in sys.argv
+plain = '--plain' in sys.argv
 for p in sys.argv[1:]:
     if not p.startswith('--'):
-        sm.strip(p, lens=lens, garment=not lens)
+        sm.strip(p, lens=lens, garment=not (lens or plain))
