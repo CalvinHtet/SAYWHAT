@@ -386,3 +386,8 @@ Stylist's tattoos and scars from level 30.
 - NO: 1 (load all brands' art), 7 Big Three, 9 wishlist, 12 streak heat-map, 14 rival NPC brands, 20 guild crests.
 - 13 monthly story chapter: he asked for more explanation (sent).
 - Still open: the price question for the all-brands rotation (cheaper and less often / same prices / Street first).
+- Cal 11-25 answered the price question: "1. Cheaper and less often, but not too rare", plus the Boutique brand's banner over the whole
+  Shop page; the NEXT box becomes a Goals button under the name on the Board (goals for everything, not just the Loft); the Shop's
+  try-on character was cut off (QA sweep asked). Built in ea71679e (29zz_v167.js, rigtest/lead/shop167.js), WAITING ON QA. ROOMS asked
+  for portrait banners (ui_banner_<id>_p.webp) for sm, cr, gd, oc, rg. Next for LEAD: the seven wear categories, half-brand drops,
+  the 21-piece Vault, tattoos and scars at 30.
