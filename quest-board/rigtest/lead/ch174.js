@@ -10,7 +10,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const at = (y, mo, d) => V(([y, mo, d]) => { const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(y, mo, d, 12).getTime() - real; }, [y, mo, d]);
   await at(2026, 10, 27);
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.total = 100; S.coins = 0; S.v67ref = 1;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 }; S.letters = { read: { welcome: 1 }, paid: {}, at: { welcome: '2026-11-10' } }; x.render(); });
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 }; S.letters = { read: { welcome: 1 }, paid: {}, at: { welcome: '2026-11-10' } }; try { window.__qbRooms.open('closet', 1); } catch (e) {} x.render(); });
   await p.waitForTimeout(600); await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
   const nov = await V(() => ({ rows: window.__qbV174.goals().list.map((r) => r.k), letter: window.__qb.x() && (typeof ibAll === 'undefined') }));
   ok(nov.rows.indexOf('ch') < 0, 'November: no chapter row ' + JSON.stringify(nov.rows));
@@ -33,7 +33,9 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(rowKey.r && /key/i.test(rowKey.r.s) && rowKey.r.ready === 1, 'until it is used, the Goals row says there is a key ' + JSON.stringify(rowKey.r));
   await V(() => { document.querySelector('[data-v67="goals"]').click(); }); await p.waitForTimeout(400); await V(() => document.querySelector('#layer .v67row[data-k="ch"]').click()); await p.waitForTimeout(800);
   const chest = await V(() => { const m = document.querySelector('#layer .v74chest'), S = window.__qb.x().S; return { m: m ? m.innerText.replace(/\s+/g, ' ') : '', owned: !!S.owned.px_halo, worn: S.chfx, svg: !!(m && m.querySelector('.v74ring')) }; });
-  ok(/Timekeeper/.test(chest.m) && chest.owned && chest.worn === 'px_halo' && chest.svg, 'the key opens the chest from the Goals: the Timekeeper\'s Halo, owned and worn ' + JSON.stringify(chest));
+  ok(/Timekeeper/.test(chest.m) && chest.owned && !chest.worn && chest.svg && /EQUIP$/i.test(chest.m) && !/player card|wherever/i.test(chest.m), 'the key opens the chest from the Goals: the Timekeeper\'s Halo, owned, with one "Equip" button and no extra line ' + JSON.stringify(chest));
+  await V(() => document.querySelector('#layer .v74chest [data-v74="equip"]').click()); await p.waitForTimeout(400);
+  ok(await V(() => window.__qb.x().S.chfx === 'px_halo' && !document.querySelector('#layer .v74chest')), 'Equip puts it on and closes the chest');
   await p.waitForTimeout(1200); await p.screenshot({ path: OUT + '/ch174_chest.png' });
   await V(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); window.__qb.x().render(); }); await p.waitForTimeout(2500);
   const card = await V(() => { const f = document.querySelector('.strip .pc-fig.v74on'), h = f && f.querySelector('.v74halo'), im = f && f.querySelector('img.calp'); if (!h || !im) return null; const H = h.getBoundingClientRect(), I = im.getBoundingClientRect(), bx = window.__qbV164.box(im);
@@ -43,6 +45,13 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await V(() => document.querySelector('.strip .avbtn').click()); await p.waitForTimeout(2500); await p.screenshot({ path: OUT + '/ch174_prof.png' });
   ok(await V(() => !!document.querySelector('#layer .prof .pc-fig.v74on .v74halo')), 'the profile\'s banner wears it');
   await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
+  const un = await V(async () => { document.querySelector('.nav button[data-v="shop"]').click(); await new Promise((r) => setTimeout(r, 1200)); document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove());
+    window.__qbV149.go('iface'); await new Promise((r) => setTimeout(r, 800)); const t = document.querySelector('[data-act="iftab"][data-v="fx"]'); if (t) t.click(); await new Promise((r) => setTimeout(r, 600));
+    const bt = document.querySelector('.v61fxs [data-v74="equip"]'); const lbl = bt ? bt.innerText : ''; if (bt) bt.click(); await new Promise((r) => setTimeout(r, 600));
+    const bt2 = document.querySelector('.v61fxs [data-v74="equip"]'); return { lbl, after: window.__qb.x().S.chfx, lbl2: bt2 ? bt2.innerText : '' }; });
+  ok(/unequip/i.test(un.lbl) && !un.after && /^equip$/i.test(un.lbl2.trim()), 'the Shop\'s Interface, Effects: Unequip takes it off, and the card then says Equip ' + JSON.stringify(un));
+  await V(() => { document.querySelector('.nav button[data-v="board"]').click(); }); await p.waitForTimeout(800);
+  ok(await V(() => !document.querySelector('.strip .pc-fig.v74on')), 'unequipped, the header card has no halo');
   const ro = await V(() => { const H = window.__qbV174, S = window.__qb.x().S; H.ch.push({ m: '2027-01', n: 2, title: 'T', from: 'M.', body: '' }); H.prize.push({ id: 'px_two', name: 'Two', line: '' });
     const was = S.ch.done['2026-12']; const a = H.prizeOf('2027-01').id; delete S.ch.done['2026-12']; const b = H.prizeOf('2027-01').id; S.ch.done['2026-12'] = was; H.ch.pop(); H.prize.pop(); return { a, b }; });
   ok(ro.a === 'px_two' && ro.b === 'px_halo', 'a month somebody finished passes the next prize on; a month nobody finished moves its prize to the next chest ' + JSON.stringify(ro));

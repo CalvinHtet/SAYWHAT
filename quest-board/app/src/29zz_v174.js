@@ -19,7 +19,7 @@ var CH=[
     +'<p>Nobody in town will say who used to keep it lit. I asked at every shop on the street, and every shopkeeper found something else to look at. The door at the bottom is locked, and the key is not anywhere I have looked.</p>'
     +'<p>If the town gets busy enough this month, somebody is bound to turn it up.</p><p>&mdash; M.</p>',
     found:'<p>It was under the last stair, wrapped in a cloth that smelled of oil and brass. A small key, warm as if somebody had just put it down.</p><p>It does not fit the tower door. It fits something else.</p>'}];
-var V74PRIZE=[{id:"px_halo",name:"Timekeeper's Halo",line:"A gilded clockwork halo that keeps its own time, a golden glow and drifting time-dust. Only those who opened the first chest have one."}];
+var V74PRIZE=[{id:"px_halo",name:"Timekeeper's Halo",line:"A gilded clockwork halo that keeps its own time, a golden glow and drifting time-dust."}];
 function v74Month(){return today().slice(0,7)}
 function v74Ch(m){return CH.filter(function(c){return c.m===m})[0]||null}
 function v74St(){if(!S.ch||typeof S.ch!=="object")S.ch={};var C=S.ch;["done","prize","open"].forEach(function(k){if(!C[k]||typeof C[k]!=="object")C[k]={}});
@@ -41,12 +41,18 @@ function v74Win(m){var c=v74Ch(m)||{n:"",title:""},C=v74St();try{closeModals()}c
   try{burst(innerWidth/2,innerHeight/3,40)}catch(e){}return md}
 /* the chest: the prize, once */
 function v74Open(m){var C=v74St();if(!C.done[m])return;var id=C.prize[m],p=v74Prize(id);try{closeModals()}catch(e){}
-  if(!C.open[m]){C.open[m]=Date.now();if(p){S.owned[p.id]=true;S.chfx=p.id}persist()}
+  if(!C.open[m]){C.open[m]=Date.now();if(p)S.owned[p.id]=true;persist()}
   var md=modal('<div class="card box2 v74chest"><span class="label">The chest opens</span><div class="v74show">'+(p?v74Stage(p.id):'')+'</div><h2>'+esc(p?p.name:"Empty")+'</h2><p class="note">'+esc(p?p.line:"")+'</p>'
-    +'<p class="note">It shows on your player card, wherever anyone sees it.</p><div class="btns"><button class="btn big" data-act="mclose">Wear it</button></div></div>');
+    +(p?'<div class="btns"><button class="btn big" data-v74="equip" data-id="'+esc(p.id)+'">'+(S.chfx===p.id?"Unequip":"Equip")+'</button></div>':'')+'</div>');
   try{burst(innerWidth/2,innerHeight/2.5,60)}catch(e){}try{render()}catch(e){}return md}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-v74]");if(!b)return;e.preventDefault();e.stopPropagation();
-  if(b.dataset.v74==="open")v74Open(b.dataset.m||v74Month())},true);
+  if(b.dataset.v74==="open")v74Open(b.dataset.m||v74Month());
+  /* Cal 11-25: "simply have a button that says equip just like the shop. And we can unequip it in the shop": the chest's button, and
+     the prize's card in the Shop's Interface, Effects */
+  if(b.dataset.v74==="equip"){var id=b.dataset.id;if(!(S.owned&&S.owned[id])||!v74Prize(id))return;S.chfx=S.chfx===id?null:id;persist();var md=b.closest(".modal");if(md)md.remove();render()}},true);
+var v74Fx=v61FxHtml;v61FxHtml=function(){var h=v74Fx.apply(this,arguments);try{var mine=V74PRIZE.filter(function(p){return S.owned&&S.owned[p.id]});if(!mine.length)return h;
+    var cards=mine.map(function(p){var on=S.chfx===p.id;return '<article class="v61fx'+(on?' on':'')+'"><div><b>'+esc(p.name)+'</b><small>'+esc(p.line)+'</small></div><button type="button" class="qs-btn'+(on?' alt':'')+'" data-v74="equip" data-id="'+esc(p.id)+'">'+(on?"Unequip":"Equip")+'</button></article>'}).join("");
+    h=h.replace('<div class="v61fxs">','<div class="v61fxs">'+cards)}catch(e){}return h};
 
 /* the month's letter, from the 1st (only for a player who has a save by then) */
 INBOXGEN.push(function(){try{if(!S||!S.created)return [];var m=v74Month(),c=v74Ch(m);if(!c)return [];
