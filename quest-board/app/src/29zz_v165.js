@@ -18,7 +18,7 @@ var V65BASE=boardHtml;boardHtml=function(){var h=V65BASE.apply(this,arguments);
   return h};
 /* the profile: under the level card, the trial (when one waits), the NEXT line and the Daily Quest */
 var v65Prof=profileHtml;profileHtml=function(){var h=v65Prof.apply(this,arguments);
-  try{var P=v65Parts(),add=P.gate+P.next+P.dq;if(!add)return h;var d=document.createElement("div");d.innerHTML=h;var hero=d.querySelector("section.hero");
+  try{var P=v65Parts(),add=P.gate+P.dq;/* Cal 11-25: the NEXT line moved into the Board's Goals button (29zz_v167.js) */if(!add)return h;var d=document.createElement("div");d.innerHTML=h;var hero=d.querySelector("section.hero");
     if(hero)hero.insertAdjacentHTML("afterend",add);else d.insertAdjacentHTML("afterbegin",add);h=d.innerHTML}catch(e){}
   return h};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-v65=gate]");if(b)V65GO="gate"},true);
