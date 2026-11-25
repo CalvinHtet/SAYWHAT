@@ -75,7 +75,7 @@ at a time: ROOMS paints and ingests, QA checks every piece of that brand in the 
 
 ---
 
-# WISHBOX: a cash-shop-spirit brand (proposal for LEAD, QA and Cal, 2026-11-25, ROOMS)
+# WISHBOX: a cash-shop-spirit brand (proposal, 2026-11-25, ROOMS) - STOPPED BY CAL 11-25 ("stop on the maplestory brand and banners. it doesnt look right"); nothing painted
 
 LEAD 11-25 (Cal: a brand drop "in that spirit"): oversized cute pieces, star and wing accessories, pastel glow, a little magical,
 in the spirit of the cosmetic shops of 2D side-scrolling MMOs. Original: no game's name, items, mascots or UI; nothing repaints a
