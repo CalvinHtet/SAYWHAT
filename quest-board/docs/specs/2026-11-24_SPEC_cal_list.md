@@ -333,3 +333,12 @@ runeweaver and the skills tab into one box where the gradient of the art comes d
 - Banners (29zz_v152.js): a tier is not listed at all until its level (no locked rows). Skyship Deck and Dragon's Hoard are out
   (ROOMS 85ac2277); anyone who bought them in v1.55 is refunded 1,000 each once (PCGONE); their replacements take new ids.
 Tests: prof161.js, cards155.js.
+
+## Card poses parked (Cal 11-25, late)
+Cal: "None of these poses even look right. The wave, looks very weird. Honestly, everything besides the stretch, stand, and back poses look
+off. The other poses just look like the same thing but with arms in different locations. I would personally redo these until the poses
+actually look obvious and unique. But if it requires redoing every asset with a new animation, then we can hold off until we run out of
+tasks to do". LEAD's answer: poses that read as distinct (arms crossed, hands on hips, a real wave with the body turned) move the arms
+across the body and far from where every piece of clothing was painted; the rig already tears at the seams on today's milder poses at
+card size, so doing it properly means per-pose arm art for every top (about 115 tops, both bodies) or a rig rebuild. PARKED until the
+list runs dry. Live meanwhile: Stand and Back only (Stretch tears at 3x too, QA). Revisit: a few strong poses with their own arm layers.
