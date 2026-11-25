@@ -5,5 +5,8 @@
  ["aurora", "Aurora Citadel", 10],
  ["hoard", "Dragon's Hoard", 10],
  ["ink_peaks", "Ink-Wash Peaks", 15],
- ["papercut", "Papercut Forest", 15]
+ ["papercut", "Papercut Forest", 15],
+ ["ink_bamboo", "Bamboo Mist", 15],
+ ["paper_village", "Dusk Village", 15],
+ ["ink_lake", "Lone Boat Lake", 15]
 ]
