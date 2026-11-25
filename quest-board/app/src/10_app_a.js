@@ -778,7 +778,7 @@ function areaIcon(k){
    trophy:'<path d="M8 4h8v6a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 14v4M9 20h6"/>',
    hall:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
    /* Cal 11-25: "The scratch card logo is still a wheel": a card with scratch strokes across it and the coin that scratches it (the area's key stays "wheel") */
-   wheel:'<rect x="2.5" y="4" width="17" height="13" rx="2.5"/><path d="M6.5 13.5l5-6M10 14l5-6M13.5 14l2.5-3"/><circle cx="18" cy="17.5" r="3.5" fill="var(--bg,#0b0813)"/><path d="M18 16v3"/>',
+   wheel:'<rect x="2.5" y="4" width="17" height="13" rx="2.5"/><path d="M6.5 13.5l5-6M10 14l5-6M13.5 14l2.5-3"/><circle cx="18" cy="17.5" r="3.5" fill="var(--bg,#0b0813)"/><circle cx="18" cy="17.5" r=".6" fill="currentColor"/>',
    train:'<path d="M7 12h10"/><rect x="3.5" y="7" width="3.5" height="10" rx="1"/><rect x="17" y="7" width="3.5" height="10" rx="1"/><path d="M2 10v4M22 10v4"/>',
    away:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
    lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};

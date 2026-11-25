@@ -127,7 +127,7 @@ htabCss("qb-pc-css",".pcard{position:relative;width:100%;max-width:300px;aspect-
    Cosmetics tab shows nothing until ROOMS has painted one. Names are placeholders until ROOMS names what it paints (PCMARKN). ---- */
 var PCMARKN={/* ROOMS a41a1149: the ten marks, all on the open cheek under the eye */
       t1:["Tide Lines","Three swept lines across the cheekbone, like wind over water."],t2:["Starfall","Three small stars falling down the cheek."],t3:["Ember Mark","A tribal flame flicking up the cheek."],
-      t4:["War Stripes","Two bold stripes under each eye. Ready for anything."],t5:["Ivy Curl","A thin vine curling down the cheek."],t6:["Circuit","Circuit traces wired under the eye."],
+      t4:["Twin Stripes","Two bold stripes under each eye. Ready for anything."]/* QA fd5c2713: "War Stripes" read as war paint (Cal: no cultural costume) */,t5:["Ivy Curl","A thin vine curling down the cheek."],t6:["Circuit","Circuit traces wired under the eye."],
       s1:["Eye Scar","The classic scar straight down through the eye."],s2:["Cheek Line","One clean healed line across the cheek."],s3:["Bridge Scar","A short scar across the bridge of the nose."],s4:["Cross Scar","A small X on the cheek. Ask about it later."]},PCMARKP={t:700,s:500};
 function pcMarkArt(id){try{var D=window.QBDATA,QA=window.QBART;return ["m","f"].some(function(b){var n=b+"_mark_"+id+"_front.webp";return !!((QA&&QA[n])||(D&&D.arthash&&D.arthash[n]))})}catch(e){return false}}
 function pcMarks(){try{[["a_tattoo","Tattoos"],["a_scar","Scars"]].forEach(function(g){

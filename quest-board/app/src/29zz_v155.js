@@ -32,6 +32,15 @@ var v55Hyd=calHyd;calHyd=function(img){var fresh=!img.dataset.hy&&!!window.QBLof
   try{var hi=+img.dataset.hi||0;if(fresh&&hi>1&&img.dataset.pose==="still"&&QBLoft.frameHi){var ch=JSON.parse(img.dataset.look).rig,n=0,after=0;if(!ch)return r;
       var go=function(){if(!img.isConnected)return;var u=QBLoft.frameHi(ch,"idle",0,hi);if(u){if(img.getAttribute("src")!==u)img.src=u;if(++after>6)return}if(++n<160)setTimeout(go,250)};go()}}catch(e){}
   return r};
+/* QA fd5c2713: "the Stylist's try-on mirror draws the character about 100 CSS px tall, so a face mark is a few pixels and can't be
+   judged before buying". While a tattoo or scar is tried on, the mirror shows the head close up, drawn sharp (the head is 84 of the
+   frame's 208 standing px, 42 px down from the frame's top, centred). */
+var v55Mirror=qsMirror;qsMirror=function(){var h=v55Mirror.apply(this,arguments);
+  try{if(!(QS_TRY.a_tattoo||QS_TRY.a_scar))return h;var tl=qsTryList(),ovr={};tl.forEach(function(it){ovr[it[1]]=it[0]});if(!ovr.a_tattoo&&!ovr.a_scar)return h;
+    var H=250,k=H/QBLoft.data.loft.standPx,hi=Math.max(1,Math.min(3,Math.round(H*(window.devicePixelRatio||1)/QBLoft.data.loft.standPx*2)/2));
+    var img=calImg(lookOf(ovr),"still",H,"").replace("<img ",'<img data-hi="'+hi+'" style="position:absolute;left:50%;top:50%;max-width:none;margin-left:-'+(QBLoft.data.loft.frame[0]/2*k).toFixed(1)+'px;margin-top:-'+(88*k).toFixed(1)+'px" ');
+    h=h.replace(/<div class="qs-glass">[\s\S]*?<\/div>/,'<div class="qs-glass qs-face">'+img+'</div>')}catch(e){}
+  return h};
 /* Profile on the card: the card closes first (charModal stacks on whatever is open) */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#layer .pcm [data-act=char]");if(!b)return;e.preventDefault();e.stopPropagation();closeModals();charModal()},true);
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV155={texts:function(){/* every line of standing copy, for the stale-wording sweep (rigtest/lead/wording155.js) */var o=[],put=function(w,t){if(t!=null&&t!=="")o.push(w+": "+String(t).replace(/<[^>]+>/g," "))};
@@ -47,4 +56,4 @@ if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV155={texts:function(){/* every li
 htabCss("qb-v155-css",".avbtn.pcav{position:relative;display:block;flex:none;aspect-ratio:3/4;height:auto;padding:0;border-radius:14px;overflow:hidden;background:#141826 center/cover no-repeat;border:1px solid var(--accent);box-shadow:0 0 14px -4px var(--accent);cursor:pointer}"
   +".avbtn.pcav.pc-studio{background:radial-gradient(120% 70% at 50% 18%,#3a4470 0%,#1a1f38 55%,#0c0e1a 100%)}.avbtn.pcav.pc-studio::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-top:1px solid rgba(255,255,255,.12)}"
   +".avbtn.pcav .pc-stage{bottom:8%}.avbtn.pcav .pc-fig{width:auto;cursor:pointer}.avbtn.pcav .nbang{z-index:2;top:4px;right:6px}/* QA 68bfead9: the card clips, so the mark sits inside it; and the Profile button holds its own mark */.pcm .pc-row [data-act=char]{position:relative}"
-  +".strip .who{gap:14px}");
+  +".strip .who{gap:14px}.qs-glass.qs-face{position:relative;overflow:hidden}");
