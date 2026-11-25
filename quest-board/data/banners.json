@@ -5,8 +5,5 @@
  ["aurora", "Aurora Citadel", 10],
  ["hoard", "Dragon's Hoard", 10],
  ["ink_peaks", "Ink-Wash Peaks", 15],
- ["meadow", "Watercolour Meadow", 15],
- ["papercut", "Papercut Forest", 15],
- ["cat_cafe", "Cat Café Window", 15],
- ["woodblock", "Woodblock Tide", 15]
+ ["papercut", "Papercut Forest", 15]
 ]
