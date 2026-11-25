@@ -772,6 +772,17 @@
   "slot": "mask",
   "neutral": true
  },
+ "smk_slitvisor": {
+  "slot": "glasses",
+  "neutral": true
+ },
+ "smk_goggles": {
+  "slot": "glasses",
+  "neutral": true
+ },
+ "smk_wrapjacket": {
+  "slot": "top"
+ },
  "gp_cathood": {
   "slot": "hat",
   "clip": {
