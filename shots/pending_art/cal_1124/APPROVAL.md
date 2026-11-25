@@ -37,5 +37,12 @@ cargo pants, black sneakers with teal soles. Sydney: long black hair, navy/black
 wide-leg jeans, white sneakers. Three walk frames on one sheet, aligned on the ground line and heads, 1000x675, transparent.
 In the real visit card: calsyd/ingame_card.png. Frames: calsyd/frames.png. Source: calsyd/src_walk.jpg.
 
-## C, E, F, G
+## E. Face tattoos and scars (<b>_mark_<id>_front, icon_mark_<id>; LEAD's markT/markS layer) - ALL 10 DONE, WITH QA
+Tattoos (dark navy ink): t1 Tide Lines, t2 Starfall, t3 Ember Mark, t4 War Stripes (both cheeks), t5 Ivy Curl, t6 Circuit.
+Scars (pale raised line, darker edge): s1 Eye Scar (brow to cheek, the eye and brow drawn over it), s2 Cheek Line, s3 Bridge
+Scar, s4 Cross Scar. First set had marks at the temple and ear: long hair and fringes hid them, so all ten sit on the open
+cheek under the eye now. Checked in the game's rig (rigtest/qa/markcheck.js): every hairstyle x 6 poses, 21 glasses/masks,
+5 skin tones, both bodies; marks/checks/all_marks_every_hair.png. Tribal ok; no teardrop, no gang or religious marks.
+
+## C, F, G
 Next after D and H: tattoos and scars (E), then pet brands (C), soul stone (F), five Atelier brands (G).
