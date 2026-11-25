@@ -71,7 +71,7 @@ var TOURS=[
     {sel:'.zx-tile[data-v="away"]',t:"New: Dungeon Crawls",x:"Send your team down for coins and, now and then, something rare. Tap here.",tap:1},
     {sel:"#app",t:"Dungeon Crawls",x:"Pick a dungeon and send a crawl. It comes back on its own while you get on with your day."}]},
   {id:"wheel",ready:function(){return view==="board"&&tourVis(".zx-spin")},steps:[
-    {sel:".zx-spin",t:"New: the Wheel",x:"A free spin every few hours. When one is ready, it shows up here. Tap to spin.",tap:1}]},
+    {sel:".zx-spin",t:"New: the scratch card",x:"One card a day, once you have finished 3 tasks. When it is ready, it shows up here. Tap to open it.",tap:1}]},
   {id:"trophy",ready:function(){return tourAreaOpen("trophy")&&view==="board"&&tourVis(".avbtn")},steps:[
     {sel:".avbtn",t:"New: Relics",x:"Your profile now holds your Relics, with your class and skills. Tap your character to open it.",tap:1}]}
 ];

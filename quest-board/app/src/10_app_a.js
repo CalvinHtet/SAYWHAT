@@ -39,7 +39,7 @@ function rwTier(r){return r[0]>=60?"Legendary":r[0]>=35?"Epic":r[0]>=20?"Rare":"
 var RANKS=[
  {l:"E",n:"Awakened",f:["Quests, XP, stats, and rewards"]},
  {l:"D",n:"Bass Hunter",f:["Combo meter: chain quests inside 45 minutes for up to x1.5 XP","Stat radar replaces the bars","HUD interface"]},
- {l:"C",n:"Drop Knight",f:["Daily bounty: one big quest pays double each day","Ember forge interface"]},
+ {l:"C",n:"Drop Knight",f:["Daily double: one big quest pays double each day","Ember forge interface"]},
  {l:"B",n:"Headliner",f:["Stat titles: earn a new title at 5, 15, and 30 in each stat","Crimson interface"]},
  {l:"A",n:"Sovereign",f:["Raid timer: clear the Now quest in 25 minutes for +25% XP","Gold regalia interface"]},
  {l:"S",n:"Shadow Monarch",f:["All XP +10%, permanently","Monarch's domain interface"]}
@@ -670,8 +670,8 @@ function aclaim(id,ev){
 }
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
-var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Town",2],["players","Players",3],["trophy","Relics",8],["wheel","Wheel",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A free spin every day: coins, now and then a streak freeze, and thin gold slivers that hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
+var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Town",2],["players","Players",3],["trophy","Relics",8],["wheel","Scratch card",6],["away","Dungeon Crawls",1]];
+var AREALINE={shop:"The Shop. New brands drop Mondays and Fridays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A scratch card every day, once you have finished 3 tasks. Match three to win coins, and the golden mascots hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6
@@ -763,7 +763,7 @@ var SHOP=[
  ["pt_jeans","a_pants","Jeans",80,2,"Everyday denim.",{s:"jeans",c:"#4a6fa5"}]
 ];
 var SLOTS=[["theme","Themes"],["frame","Frames"],["bg","Backdrops"],["pet","Companions"],["title","Titles"],["burst","Tap effects"],["buff","Permanent upgrades"],["a_hair","Hair styles"],["a_hairc","Hair dye"],["a_outfit","Outfits"],["a_eyes","Eye color"],["a_eyet","Eye types"],["a_xface","Face marks"],["a_beard","Facial hair"],["a_mask","Masks"],["a_top","Tops"],["a_pants","Bottoms"],["a_shoes","Shoes"],["a_acc","Accessories"],["a_back","Back gear"]];
-var SHOPTABS=[["wardrobe","Wardrobe",["a_hair","a_hairc","a_eyet","a_xface","a_beard","a_mask","a_top","a_pants","a_shoes","a_acc","a_back"]],["upgrades","Upgrades",["buff"]],["interface","Interface",["theme","frame","bg","pet","title","burst"]]];
+var SHOPTABS=[["wardrobe","Closet",["a_hair","a_hairc","a_eyet","a_xface","a_beard","a_mask","a_top","a_pants","a_shoes","a_acc","a_back"]],["upgrades","Upgrades",["buff"]],["interface","Interface",["theme","frame","bg","pet","title","burst"]]];
 var THUMB={a_back:1,a_hair:1,a_hairc:1,a_eyes:1,a_eyet:1,a_xface:1,a_beard:1,a_mask:1,a_acc:1,a_top:1,a_pants:1,a_shoes:1};
 var shopTab="wardrobe";
 var BURST_PAL={bu_confetti:["#ff3d81","#ffc857","#4dffc3","#6cb6ff","#b388ff"],bu_star:["#fff8d6","#ffc857","#ffffff"]};
@@ -777,7 +777,8 @@ function areaIcon(k){
    shop:'<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
    trophy:'<path d="M8 4h8v6a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 14v4M9 20h6"/>',
    hall:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
-   wheel:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/>',
+   /* Cal 11-25: "The scratch card logo is still a wheel": a card with scratch strokes across it and the coin that scratches it (the area's key stays "wheel") */
+   wheel:'<rect x="2.5" y="4" width="17" height="13" rx="2.5"/><path d="M6.5 13.5l5-6M10 14l5-6M13.5 14l2.5-3"/><circle cx="18" cy="17.5" r="3.5" fill="var(--bg,#0b0813)"/><path d="M18 16v3"/>',
    train:'<path d="M7 12h10"/><rect x="3.5" y="7" width="3.5" height="10" rx="1"/><rect x="17" y="7" width="3.5" height="10" rx="1"/><path d="M2 10v4M22 10v4"/>',
    away:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
    lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
@@ -1463,7 +1464,7 @@ function wdOpts(tab){
 function wdCur(tab){var c=fixChar(S.char);var sl={top:"a_top",pants:"a_pants",shoes:"a_shoes",acc:"a_acc",hat:"a_hat"}[tab];if(sl&&S.eq&&S.eq[sl]&&S.owned&&S.owned[S.eq[sl]])return S.eq[sl];return c[tab]}
 function wardrobeHtml(tab){
   var tabs=[["top","Tops"],["pants","Pants"],["shoes","Shoes"],["hat","Hats"],["acc","Extras"]],cur=wdCur(tab),c=fixChar(S.char);
-  var h='<div class="card box2 adv wdr"><div class="figwrap">'+calImg(lookOf(),"idle",190,"")+'</div><h2 style="font-size:28px">Wardrobe</h2><p class="note">Tap anything you own to wear it.</p>'
+  var h='<div class="card box2 adv wdr"><div class="figwrap">'+calImg(lookOf(),"idle",190,"")+'</div><h2 style="font-size:28px">Closet</h2><p class="note">Tap anything you own to wear it.</p>'
    +'<div class="ccopts" style="justify-content:center;margin:8px 0">'+tabs.map(function(t){return '<button class="ccopt'+(t[0]===tab?" on":"")+'" data-wd="tab" data-v="'+t[0]+'">'+t[1]+'</button>'}).join("")+'</div>'
    +'<div class="ccopts" style="justify-content:center">'+wdOpts(tab).map(function(o){return '<button class="ccopt'+(String(cur)===String(o.v)?" on":"")+'" data-wd="pick" data-it="'+o.it+'" data-v="'+esc(o.v)+'" aria-pressed="'+(String(cur)===String(o.v))+'">'+esc(o.n)+'</button>'}).join("")+'</div>';
   var ck={top:"topC",pants:"pantsC",shoes:"shoesC"}[tab];
@@ -1559,7 +1560,7 @@ function brandLogo(b,big){return '<div class="blg'+(big?" big":"")+' blg_'+b.id+
 var _shopOld=shopHtml;
 shopHtml=function(){
   var d=dropState();
-  SHOPTABS=[["wardrobe","Wardrobe",["a_hair","a_hairc","a_eyet","a_xface","a_beard","a_mask","a_hat","a_top","a_pants","a_shoes","a_acc","a_back"]]];
+  SHOPTABS=[["wardrobe","Closet",["a_hair","a_hairc","a_eyet","a_xface","a_beard","a_mask","a_hat","a_top","a_pants","a_shoes","a_acc","a_back"]]];
   d.live.slice().reverse().forEach(function(b){SHOPTABS.push([b.id,b.name,[]])});
   SHOPTABS.push(["vault","Vault",[]],["upgrades","Upgrades",["buff"]],["interface","Interface",["theme","frame","bg","pet","title","burst"]]);
   if(!SHOPTABS.some(function(t){return t[0]===shopTab}))shopTab="wardrobe";

@@ -188,3 +188,13 @@ Generate 5 more intricate ones than the existing ones. Lots of detail, high reso
   hoard). The Stylist lists what the level has reached plus the next tier, locked. Tiers 3+ (levels 20, 30, ...) follow the same way,
   five paintings at a time, each more intricate; prices are LEAD's call per tier unless Cal says otherwise.
 - Test: rigtest/lead/cards155.js.
+
+## Wording sweep after the scratch card (Cal 11-25)
+Cal: "The scratch card logo is still a wheel. And the text is still about the wheel. Make sure you check the whole app and make sure
+everything else is consistent". Cause: the area table in 10_app_a.js (icon and the "New area" line) was never changed. Fixed: the
+icon (a card with scratch strokes and a coin), the area's line and base name, the base tour and info text. Also found by the sweep:
+"wardrobe" in the Vault's info window and a side quest (now Closet), the old Shop tab label, and the rank C perk "Daily bounty" (still
+a live perk: one quest of 25+ XP pays double each day), renamed "Daily double" with its tag, since Bounty now means the 1, 2 and 3-day
+cards. Guard: rigtest/lead/wording155.js reads every area, info window, tour, rank line, "New area" card and nine screens as drawn
+and fails on a retired word. Not covered by it: story scenes, side quests, bounty and visit texts (those were scanned by hand in the
+source for wheel / spin / wardrobe / old rank names / daily bounty only).

@@ -88,6 +88,7 @@ zxSpin=function(){try{if(!zxOpen("wheel"))return "";var c=scState(),n=scTasks();
     return '<button type="button" class="zx-next zx-spin zx-sc" data-act="nav" data-v="wheel"><span class="label">Scratch card</span><span>Today&rsquo;s card is ready.</span><b>Scratch &rsaquo;</b></button>'}catch(e){return ""}};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=scratch]");if(!b||b.disabled)return;e.preventDefault();e.stopPropagation();scScratch(+b.dataset.i)},true);
 (function(){var a=AREAS.filter(function(x){return x[0]==="wheel"})[0];if(a)a[1]="Scratch card";
+  try{AREALINE.wheel="A scratch card every day, once you have finished "+SCNEED+" tasks. Match three to win coins, and the golden mascots hold a piece of clothing."}catch(e){}
   QBINFO.wheel=["Scratch card",function(){return ["One card a day, once you have finished "+SCNEED+" tasks that day.","Scratch three of the nine panels. Three of a kind wins: mascots pay the most, then orange, then cyan.",
     "No match still pays: every icon you uncover is worth a few coins, added up."]}];
   try{TOURS.forEach(function(t){if(t.id==="wheel")t.steps=[{sel:".zx-spin",t:"New: the scratch card",x:"One card a day, once you have finished "+SCNEED+" tasks. Scratch three panels and match them to win. Tap to open it.",tap:1}]})}catch(e){}})();

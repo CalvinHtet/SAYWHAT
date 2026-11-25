@@ -1146,7 +1146,7 @@ function mults(q,o){
   var cp=crewPct(q);if(cp>0){m*=1+cp/100;tags.push("Perks +"+cp+"%")}
   if(S.cls==="runeweaver"&&q.stat==="creativity"&&S.quests.some(function(q2){return q2.id!==q.id&&q2.stat==="creativity"&&S.done[q2.id]})){m*=1.2;tags.push("Encore x1.2")}
   if(ri>=1){var n=(S.combo&&now-S.combo.t<(hasSpecial("combo")?3300000:2700000))?S.combo.n+1:1;var c=Math.min(1.5,1+0.1*(n-1));if(c>1){m*=c;tags.push("Combo x"+c.toFixed(1))}if(o.commit)S.combo={n:n,t:now}}
-  if(ri>=2&&q.id===bountyId()){m*=2;cm*=2;tags.push("Bounty x2")}
+  if(ri>=2&&q.id===bountyId()){m*=2;cm*=2;tags.push("Daily double x2")/* Cal 11-25 sweep: "Bounty" now means the 1, 2 and 3-day cards */}
   if(ri>=4&&S.raid&&S.raid.id===q.id&&now<=S.raid.end){m*=1.25;tags.push("Raid x1.25")}
   if(ri>=5){m*=1.1;tags.push("Monarch x1.1")}
   if(o.commit&&isCrit(q)){m*=1.5;tags.push("CRITICAL HIT")}
