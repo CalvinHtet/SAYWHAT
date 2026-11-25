@@ -34,8 +34,12 @@ charModal=function(){var p=pcMe(),ban="";try{ban=pcHtml(p,104)}catch(e){ban='<di
   m.classList.add("profm");return m};
 /* ---- the level's effects: owned, and switched on or off, in the Shop's Interface ---- */
 function v61Off(){var o=S.fxOff;if(!o||typeof o!=="object")o=S.fxOff={};return o}
-var V61FXD={grid:"A faint grid behind every screen.",burst:"A burst of sparks when you finish a task.",pulse:"A slow neon pulse on card edges.",brackets:"Corner brackets on the main cards.",sweep:"A scan line that sweeps the header.",orbs:"Soft orbs drifting in the background.",ringglow:"Your level ring keeps a glow.",embers:"Embers rising from the bottom of the screen.",chipglow:"Chips and tags glow.",aurora:"An aurora across the top of the sky.",holo:"A holographic shimmer on cards.",shimmer:"A shimmer along your progress bars.",halo:"A halo orbiting your level.",glowtext:"Headlines glow.",flares:"Light flares in the corners.",stars:"Starlight in the background.",vignette:"A cinematic vignette.",edgeglow:"The screen's edge glows.",gilded:"Headlines turn gold."};
-function v61FxHtml(){var lv=effLvl(),off=v61Off(),got=FX.filter(function(f){return f[0]<=lv}),nxt=FX.filter(function(f){return f[0]>lv})[0];
+var V61FXD={grid:"A faint grid behind every screen.",burst:"A burst of sparks when you finish a task.",pulse:"A slow neon pulse on card edges.",brackets:"Corner brackets on the main cards.",sweep:"On your profile: a scan line sweeps the level card.",orbs:"Soft orbs drifting in the background.",ringglow:"On your profile: your level ring keeps a glow.",embers:"Embers rising from the bottom of the screen.",chipglow:"Chips and tags glow.",aurora:"An aurora across the top of the sky.",holo:"A holographic shimmer on cards.",shimmer:"A shimmer along your progress bars.",halo:"On your profile: a halo orbits your level.",glowtext:"On your profile: headlines glow.",flares:"Light flares in the corners.",stars:"Starlight in the background.",vignette:"A cinematic vignette.",edgeglow:"The screen's edge glows.",gilded:"Headlines turn gold."};
+/* QA 716955df: Holo shimmer and Stat bar shimmer style elements no screen has any more, so they are not offered; four others only
+   touch the profile's level card, and their line says so */
+var V61DEAD={holo:1,shimmer:1};
+function v61FxList(){return FX.filter(function(f){return !V61DEAD[f[1]]})}
+function v61FxHtml(){var lv=effLvl(),off=v61Off(),L=v61FxList(),got=L.filter(function(f){return f[0]<=lv}),nxt=L.filter(function(f){return f[0]>lv})[0];
   var card=function(f,lock){var on=!off[f[1]];return '<article class="v61fx'+(lock?' lock':on?' on':'')+'" data-fx="'+f[1]+'"><div><b>'+esc(f[2])+'</b><small>'+esc(lock?"Yours at level "+f[0]+".":(V61FXD[f[1]]||"An interface effect."))+'</small></div>'
     +(lock?'<span class="chip">Level '+f[0]+'</span>':'<button type="button" class="qs-btn'+(on?'':' alt')+'" data-act="fxtog" data-id="'+f[1]+'" aria-pressed="'+on+'">'+(on?"On":"Off")+'</button>')+'</article>'};
   return '<section class="qs-sec"><h3>Effects</h3><p class="qs-note">Yours already: one comes with every few levels. Switch any of them on or off.</p>'
@@ -43,8 +47,8 @@ function v61FxHtml(){var lv=effLvl(),off=v61Off(),got=FX.filter(function(f){retu
     +'<div class="v61fxs">'+got.map(function(f){return card(f,0)}).join("")+(nxt?card(nxt,1):"")+'</div></section>'}
 var v61Fx=applyFx;applyFx=function(){var r=v61Fx.apply(this,arguments);try{var off=(S&&S.fxOff)||{};Object.keys(off).forEach(function(k){if(off[k])document.body.classList.remove("fx-"+k)})}catch(e){}return r};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=fxtog],[data-act=fxall]");if(!b)return;e.preventDefault();e.stopPropagation();var off=v61Off(),id=b.dataset.id;
-  if(b.dataset.act==="fxall"){FX.forEach(function(f){if(f[0]<=effLvl()){if(id==="off")off[f[1]]=1;else delete off[f[1]]}})}
-  else if(FX.some(function(f){return f[1]===id&&f[0]<=effLvl()})){if(off[id])delete off[id];else off[id]=1}
+  if(b.dataset.act==="fxall"){v61FxList().forEach(function(f){if(f[0]<=effLvl()){if(id==="off")off[f[1]]=1;else delete off[f[1]]}})}
+  else if(v61FxList().some(function(f){return f[1]===id&&f[0]<=effLvl()})){if(off[id])delete off[id];else off[id]=1}
   persist();render()},true);
 htabCss("qb-v161-css",".prof.v61 .v61top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;text-align:left;margin-bottom:14px}.v61ban{display:block;width:148px;padding:0;border:0;background:none;cursor:pointer;border-radius:18px}"
   +".v61ban .pcard{width:148px;max-width:none;margin:0;border-radius:16px}.v61ban .pc-plate{display:none}.v61ban .pc-stage{bottom:8%}.v61ban:focus-visible{outline:2px solid var(--accent);outline-offset:3px}"
@@ -53,4 +57,4 @@ htabCss("qb-v161-css",".prof.v61 .v61top{display:grid;grid-template-columns:auto
   +"@media (max-width:350px){.v61ban,.v61ban .pcard{width:120px}}"
   +".v61fxs{display:grid;gap:8px}.v61fx{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--cardbg,#141829);color:var(--ink,#eef1f8)}.v61fx>div{min-width:0;display:grid;gap:3px}.v61fx b{font-size:15px}.v61fx small{color:var(--soft,#a3a9bd);font-size:12.5px;line-height:1.3}"
   +".v61fx .qs-btn{flex:none;min-width:64px}.v61fx.lock{opacity:.6}.v61fx .chip{flex:none}.v61all{display:flex;gap:14px;margin:0 0 8px}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV161={fx:function(){return FX.map(function(f){return f.slice()})},off:function(){return Object.keys(v61Off())},fxHtml:v61FxHtml};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV161={fx:function(){return v61FxList().map(function(f){return f.slice()})},off:function(){return Object.keys(v61Off())},fxHtml:v61FxHtml};
