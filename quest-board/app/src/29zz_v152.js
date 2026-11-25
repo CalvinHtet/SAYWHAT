@@ -32,7 +32,7 @@ function pcLv(id){var b=pcBy(id);return b?(b[3]||0):0}
 function pcOpenLv(id){try{return effLvl()>=pcLv(id)}catch(e){return true}}
 function pcSt(){var o=S.pc;if(!o||typeof o!=="object")o=S.pc={bg:"studio",own:{}};if(!o.own||typeof o.own!=="object")o.own={};
   try{var back=0;Object.keys(PCGONE).forEach(function(id){if(o.own[id]){back+=PCGONE[id];delete o.own[id]}});
-    if(back){S.coins=(S.coins||0)+back;S.spent=Math.max(0,(S.spent||0)-back);o.ref=(o.ref||0)+back;setTimeout(function(){try{pop("A backdrop you owned was retired: "+back.toLocaleString()+" coins refunded");persist();render()}catch(e){}},600)}}catch(e){}
+    if(back){S.coins=(S.coins||0)+back;S.spent=Math.max(0,(S.spent||0)-back);o.ref=(o.ref||0)+back;setTimeout(function(){try{pop("A banner you owned was retired: "+back.toLocaleString()+" coins refunded");persist();render()}catch(e){}},600)}}catch(e){}
   if(!pcBy(o.bg)||!pcHas(o.bg)||(o.bg!=="studio"&&!o.own[o.bg]))o.bg="studio";return o}
 function pcMine(){var r="",c="";try{r=RANKS[rankIdx()].n}catch(e){}try{c=S.cls&&CLASSES[S.cls]?CLASSES[S.cls].name:""}catch(e){}return {bg:pcSt().bg,r:r,c:c}}
 function pcMe(){var pet=null;try{pet=pzMyPet();if(pet)pet._me=1}catch(e){}return {id:MYUID||"me",me:1,name:(S.char&&S.char.name)||"Player",look:lookOf(),lv:effLvl(),pet:pet,card:pcMine()}}
@@ -57,7 +57,7 @@ function pcClamp(im){try{var st=im&&im.closest&&im.closest(".pc-stage");if(!st||
 function pcPostW(){var w=300;try{w=Math.max(180,Math.min(300,window.innerWidth-76))}catch(e){}return w}
 function pcOpen(){closeModals();var p=pcMe(),on=typeof socOn==="function"&&socOn();
   modal('<div class="card box2 pcm"><span class="label">Player card</span>'+pcHtml(p,210)
-    +'<div class="row pc-row"><button type="button" class="btn ghost" data-act="pcbgs">Change backdrop</button>'+(on?'<button type="button" class="btn" data-act="pcpost">Post my card</button>':'')+'</div></div>')}
+    +'<div class="row pc-row"><button type="button" class="btn ghost" data-act="pcbgs">Change banner</button>'+(on?'<button type="button" class="btn" data-act="pcpost">Post my card</button>':'')+'</div></div>')}
 function pcPost(){if(!(typeof socOn==="function"&&socOn())){pop("Posting needs an online save");return}if(Date.now()-SOC.lastPost<15000){pop("Slow down a little");return}SOC.lastPost=Date.now();
   var pt=Date.now(),lk=lookOf();socMine("board",function(d){var a=Array.isArray(d.posts)?d.posts:[];a.unshift({t:pt,text:PCTXT,look:lk,pc:1});d.posts=a.slice(0,10)})
     .then(function(){SOC.posts.unshift({id:MYUID+"|"+pt,from:MYUID,name:(S.char&&S.char.name)||"Neighbor",text:PCTXT,t:pt,look:lk});try{socPublish(true)}catch(e){}try{socPaint()}catch(e){}closeModals();pop("Your card is on the Town board")})
@@ -94,7 +94,7 @@ function pcShop(){var o=pcSt(),me=pcMe(),lvl=1;try{lvl=effLvl()}catch(e){}
     return '<article class="qs-card pc-bgc'+(use?" on":"")+(lock?" lock":"")+'" data-card="pcbg_'+id+'"><div class="pcard pc-'+id+' mini"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'></div><h4>'+esc(b[1])+'</h4>'+btn+'</article>'}).join("");
   var T=PCTRY&&pcBy(PCTRY)&&pcHas(PCTRY)&&!o.own[PCTRY]&&pcOpenLv(PCTRY)?pcBy(PCTRY):null;if(!T)PCTRY="";
   var bask=T?'<div class="qs-bask pc-bask"><small>Previewing '+esc(T[1])+'</small>'+(S.coins>=T[2]?'<button class="qs-btn" data-act="pccheck" data-id="'+T[0]+'">Buy &middot; <i class="coin"></i>'+T[2].toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+T[2].toLocaleString()+' &middot; need '+(T[2]-S.coins).toLocaleString()+' more</button>')+'<button class="qs-link" data-act="pctry" data-id="">Back to mine</button></div>':"";
-  return '<div class="pc-prev">'+pcHtml(me,190,T?T[0]:"")+bask+'</div><section class="qs-sec"><h3>Backdrops</h3><p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
+  return '<div class="pc-prev">'+pcHtml(me,190,T?T[0]:"")+bask+'</div><section class="qs-sec"><h3>Banners</h3><p class="qs-note">Where your character stands on your player card.'+(list.length<2?' More are on their way.':'')+'</p><div class="qs-grid">'+cards+'</div></section>'}
 var v52Shop=shopHtml;shopHtml=function(){var h=v52Shop.apply(this,arguments);
   try{if(typeof SHUB==="undefined"||SHUB==="home"||shopTab!=="basics")return h;
     var nav='<nav class="qs-tabs sty-tabs" aria-label="Stylist"><button class="qs-tab'+(STYTAB==="cos"?" on":"")+'" data-act="stytab" data-id="cos">Cosmetics</button><button class="qs-tab'+(STYTAB==="bg"?" on":"")+'" data-act="stytab" data-id="bg">Backdrops</button></nav>';
@@ -106,10 +106,10 @@ document.addEventListener("click",function(e){var c=e.target.closest&&e.target.c
   if(a==="pcard"){pcOpen();return}
   if(a==="pcpost"){pcPost();return}
   if(a==="stytab"){STYTAB=id==="bg"?"bg":"cos";render();return}
-  if(a==="pcbgs"){closeModals();if(typeof areaGate==="function"&&areaGate("shop")){pop("Backdrops are in the Shop's Stylist. The Shop opens with the Walk-in Closet.");return}STYTAB="bg";SHUB="in";shopTab="basics";window._qsSeen=1;/* else the Shop's first draw lands on the newest brand (15_shop.js) */view="shop";render();window.scrollTo(0,0);return}
+  if(a==="pcbgs"){closeModals();if(typeof areaGate==="function"&&areaGate("shop")){pop("Banners are in the Shop. The Shop opens with the Walk-in Closet.");return}if(typeof v59Banners==="function"){v59Banners();return}/* v1.53: the banners live in the Shop's Interface (29zz_v159.js) */STYTAB="bg";SHUB="in";shopTab="basics";window._qsSeen=1;/* else the Shop's first draw lands on the newest brand (15_shop.js) */view="shop";render();window.scrollTo(0,0);return}
   if(a==="pctry"){if(id&&pcBy(id)&&!o.own[id]&&!pcOpenLv(id)){pop("Opens at level "+pcLv(id));return}PCTRY=PCTRY===id?"":(id||"");render();window.scrollTo(0,0);return}
   var B=pcBy(id);if(!B||!pcHas(id))return;if(id!=="studio"&&!o.own[id]&&!pcOpenLv(id)){pop("Opens at level "+pcLv(id));return}
-  if(a==="pccheck"){if(o.own[id]||id==="studio")return;modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+esc(B[1])+'</h3><p class="note">A backdrop for your player card, yours for good.</p><p class="note">Price <b><i class="coin"></i>'+B[2].toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="pcbuy" data-id="'+id+'">Confirm purchase</button><button class="btn ghost" data-act="mclose">Keep looking</button></div></div>');return}
+  if(a==="pccheck"){if(o.own[id]||id==="studio")return;modal('<div class="card box2 qs-confirm"><div class="rm-head"><span class="label">Checkout</span>'+coinPillHtml()+'</div><h3>'+esc(B[1])+'</h3><p class="note">A banner for your player card, yours for good.</p><p class="note">Price <b><i class="coin"></i>'+B[2].toLocaleString()+'</b>. You have '+S.coins.toLocaleString()+'.</p><div class="row"><button class="btn" data-act="pcbuy" data-id="'+id+'">Confirm purchase</button><button class="btn ghost" data-act="mclose">Keep looking</button></div></div>');return}
   if(a==="pcbuy"){if(o.own[id]||id==="studio")return;if(S.coins<B[2]){pop("Need "+(B[2]-S.coins)+" more coins");return}closeModals();PCTRY="";S.coins-=B[2];S.spent=(S.spent||0)+B[2];o.own[id]=1;o.bg=id;try{qbSnd("buy")}catch(x){}render();persist();try{socPublish(true)}catch(x){}pop(B[1]+" is on your card.");return}
   if(a==="pcuse"){if(id!=="studio"&&!o.own[id])return;o.bg=id;render();persist();try{socPublish(true)}catch(x){}return}},true);
 htabCss("qb-pc-css",".pcard{position:relative;width:100%;max-width:300px;aspect-ratio:3/4;margin:0 auto;border-radius:18px;overflow:hidden;background:#141826 center/cover no-repeat;border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 30px rgba(0,0,0,.45)}"

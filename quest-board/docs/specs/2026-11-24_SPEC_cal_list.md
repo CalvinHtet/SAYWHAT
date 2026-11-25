@@ -231,3 +231,17 @@ the profile, the mailbox and letters, (i) sheets, the scratch button, the Shop's
 trying on a piece or a backdrop, another player's card, photos, scrolling in a window). What changes the save still waits (it would be
 replaced when the online save lands) and a tap on it now says "Still syncing your save. That will work in a moment."
 Test: rigtest/lead/sync158.js.
+
+## A sleeker Shop, four picture doors, one Interface shop (Cal 11-25)
+Cal: "The shop color can be a sleeker color rather than this cream or pastel white color. The text is also white so it's very hard to
+see. Instead of two text boxes for street shop and stylist, can you turn this into a square button where there is a picture of a street
+of clothing stores and then the stylist could be a barber shop. The bottom left will be the 'Interface' shop for the banners and
+upgrades/interface upgrades once the hero console is unlocked. Remove the separate upgrade tab I originally had planned and just place
+everything that can be purchased onto the shop. Eventually there will be a pet shop on the bottom right and that will make a perfect 4
+square menu."
+Built in app/src/29zz_v159.js: the Shop's own screens are dark (night-blue paper, light ink, dark cards, light picture wells; a brand's
+room keeps the brand's colours behind the dark cards); the home is a 2 x 2 grid of square doors (Street Shop, Stylist, Interface, Pet
+Store bottom right once the player has it; the Vault's day is a wide door above); each door is art/app/ui_shop_<street|stylist|iface|
+pets>.webp when ROOMS has painted it, a dark panel with a line drawing until then; Interface = Banners, plus Upgrades and Interface
+once the Lair's console is owned; the bottom bar's Upgrades tab is gone and the console's screen opens Interface; the Stylist is
+Cosmetics only; "backdrop" reads "banner" to the player. Test: rigtest/lead/shop159.js.
