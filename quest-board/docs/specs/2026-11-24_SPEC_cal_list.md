@@ -342,3 +342,10 @@ tasks to do". LEAD's answer: poses that read as distinct (arms crossed, hands on
 across the body and far from where every piece of clothing was painted; the rig already tears at the seams on today's milder poses at
 card size, so doing it properly means per-pose arm art for every top (about 115 tops, both bodies) or a rig rebuild. PARKED until the
 list runs dry. Live meanwhile: Stand and Back only (Stretch tears at 3x too, QA). Revisit: a few strong poses with their own arm layers.
+
+## Task priority (Cal 11-25, late)
+Cal: "Allow us to prioritize tasks with a button that toggles between off, 1 exclamation point, 2 exclamation points, and 3 exclamation
+points. These tasks should be bumped to the top of the task list". Built in app/src/29zz_v163.js: a Priority button beside Daily on
+every task (off, !, !!, !!!, off; q.pri saved with the task); on the Board every open task with a priority sits in a "Priority" group
+at the very top, !!! first, shortest first within a level; the categories it left count one fewer and an emptied one is not shown. Order
+only, no XP or coin change; a finished one goes to Completed and keeps its priority. Test: rigtest/lead/pri163.js.
