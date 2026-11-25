@@ -25,9 +25,16 @@ try{TOURS.forEach(function(t){
     if(t.id==="trophy"){t.ready=function(){return tourAreaOpen("trophy")&&view==="board"&&tourVis(".bline")};t.steps=[{sel:".bline",t:"New: Relics",x:"Your profile now holds your Relics, with your class and skills. Tap your level bar to open it.",tap:1}]}
     if(t.id==="freeze"){var old=t.steps[0];t.ready=function(){return view==="board"&&(S.freezes||0)>0&&!!tourVis(".bline")};
       t.steps=[{sel:".bline",t:old.t,get x(){return String(old.x).replace("Tap your character to see","Tap your level bar to see")}}]}})}catch(e){}
+/* Cal 11-25: "for the player card, my character looks blurry compared to the banner". A still with data-hi is swapped for a frame
+   rendered that many times larger (QBLoft.frameHi) once it is made; the Loft-size frame shows until then. The larger frame is
+   re-asserted a few times, since the plain loop (calHyd) may set the small one after it. */
+var v55Hyd=calHyd;calHyd=function(img){var fresh=!img.dataset.hy&&!!window.QBLoft,r=v55Hyd.apply(this,arguments);
+  try{var hi=+img.dataset.hi||0;if(fresh&&hi>1&&img.dataset.pose==="still"&&QBLoft.frameHi){var ch=JSON.parse(img.dataset.look).rig,n=0,after=0;if(!ch)return r;
+      var go=function(){if(!img.isConnected)return;var u=QBLoft.frameHi(ch,"idle",0,hi);if(u){if(img.getAttribute("src")!==u)img.src=u;if(++after>6)return}if(++n<160)setTimeout(go,250)};go()}}catch(e){}
+  return r};
 /* Profile on the card: the card closes first (charModal stacks on whatever is open) */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#layer .pcm [data-act=char]");if(!b)return;e.preventDefault();e.stopPropagation();closeModals();charModal()},true);
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV155={tours:function(){return TOURS.filter(function(t){return t.id==="trophy"||t.id==="freeze"}).map(function(t){return {id:t.id,sel:t.steps[0].sel,x:String(t.steps[0].x),ready:!!t.ready()}})}};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV155={feed:function(){/* the Town board with a card post and a text post, drawn as if signed in (the plain build has no cloud save) */var d0=db,u0=MYUID;db=db||{};MYUID=MYUID||"me";try{SOC.posts=[{id:MYUID+"|1",from:MYUID,name:(S.char&&S.char.name)||"Me",text:PCTXT,t:Date.now(),look:lookOf()},{id:"x|2",from:"x",name:"Ann",text:"hello there",t:Date.now()-5000,look:lookOf()}];return socInner()}finally{db=d0;MYUID=u0}},tours:function(){return TOURS.filter(function(t){return t.id==="trophy"||t.id==="freeze"}).map(function(t){return {id:t.id,sel:t.steps[0].sel,x:String(t.steps[0].x),ready:!!t.ready()}})}};
 htabCss("qb-v155-css",".avbtn.pcav{position:relative;display:block;flex:none;aspect-ratio:3/4;height:auto;padding:0;border-radius:14px;overflow:hidden;background:#141826 center/cover no-repeat;border:1px solid var(--accent);box-shadow:0 0 14px -4px var(--accent);cursor:pointer}"
   +".avbtn.pcav.pc-studio{background:radial-gradient(120% 70% at 50% 18%,#3a4470 0%,#1a1f38 55%,#0c0e1a 100%)}.avbtn.pcav.pc-studio::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-top:1px solid rgba(255,255,255,.12)}"
   +".avbtn.pcav .pc-stage{bottom:8%}.avbtn.pcav .pc-fig{width:auto;cursor:pointer}.avbtn.pcav .nbang{z-index:2}"

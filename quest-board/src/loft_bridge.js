@@ -102,6 +102,21 @@
       encode(await rig.render(lookOf(choice), rig.clipPose(clip, f)), 0.92));
   }
 
+  /* A sharper frame for a big portrait (Cal 11-25, the player card: "my character looks blurry compared to the banner"). Frames are
+     made at the Loft's size, a standing character 208 px tall, and a 210 px portrait on a 3x phone needs three times that. It goes
+     through the same queue (one render at a time): the rig's frame is grown for that one render, and its own small frame cache is
+     stepped around so a Loft-size frame is never handed back for a sharp one or the other way round. */
+  function frameHi(choice, clip, f, s) {
+    s = Math.max(1, Math.min(4, Math.round((+s || 1) * 2) / 2));
+    if (s === 1) return frame(choice, clip, f);
+    return ask(frameKey(choice, clip, f) + "|x" + s, async (rig) => {
+      const R = rig.cfg.rig, keep = [R.frame, R.frameScale, R.anchorPad], held = rig.frames;
+      R.frame = [Math.round(FW * s), Math.round(FH * s)]; R.frameScale = SC * s; R.anchorPad = PAD * s; rig.frames = new Map();
+      try { return await encode(await rig.render(lookOf(choice), rig.clipPose(clip, f)), 0.95); }
+      finally { R.frame = keep[0]; R.frameScale = keep[1]; R.anchorPad = keep[2]; rig.frames = held; }
+    });
+  }
+
   /* The newest frame available: the wanted one, else any already made for this clip. */
   function frameOrNear(choice, clip, f) {
     const c = clips[clip];
@@ -242,5 +257,5 @@
   }
 
   g.LFCALH_PX = 74;
-  g.QBLoft = { frame, frameOrNear, seated, warm, clipFrame, step, walkFrame, geometry, sleeper, clips, poses, data: D };
+  g.QBLoft = { frame, frameHi, frameOrNear, seated, warm, clipFrame, step, walkFrame, geometry, sleeper, clips, poses, data: D };
 })(window);

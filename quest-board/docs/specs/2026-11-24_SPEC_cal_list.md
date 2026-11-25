@@ -170,3 +170,21 @@ Built in app/src/29zz_v155.js: the header avatar is a 3:4 mini card (backdrop wh
 350 px wide); tapping it opens the player card on every screen with a header (Board, Train, Town Hall; the Loft and the Shop cover or hide
 the header, and the Shop's character already opens the card). The small card button is gone. The card has a Profile button; the Board's
 level bar still opens the profile; the Relics and streak-freeze tours point at the level bar. Test: rigtest/lead/header155.js.
+
+## Card posts, a sharp character, backdrop tiers (Cal 11-25)
+Cal: "When posting the player card to the town hall, I want it to show the full picture, not just a tiny thumbnail. Also for the player
+card, my character looks blurry compared to the banner. I also want 5 more banners in the shop but much higher quality and intricate
+that unlock at level 10. The current ones I would consider tier 1 cards in terms of detail and intricacy. Let's unlock 5 more at level
+10. Then 5 more every 10 levels that are increasingly varied and more intricate. Remove these 5 currently so there are only 5 banners
+available right now: Loft rooftop, skyline blvd, mist gate, sunrise court, ember throne. Don't use these anymore and delete them.
+Generate 5 more intricate ones than the existing ones. Lots of detail, high resolution, very expensive and professional looking"
+- Card post: the whole card, up to 300 px wide (29zz_v152.js pcPostW; it had fallen into the avatar's grid column).
+- Sharp character: src/loft_bridge.js frameHi renders a frame up to 3x the Loft's size; the card asks for it (pcChar, data-hi; calHyd
+  wrapper in 29zz_v155.js). 720 x 819 on a 3x phone instead of 240 x 273.
+- Backdrops: tier 1 is Neon Alley, Crimson Maple, Fireworks Night, Lantern Sky, Blood Moon (plus the free Studio). Retired: roof,
+  skyline, mist, sunrise, ember (PCGONE; an owner is refunded the price once and the card falls back to Studio). ROOMS deletes the five
+  files. PCBG's fourth field is the level. Tier 2 (level 10, LEAD's working names and prices, ROOMS may rename): Clockwork Observatory
+  3,000, Tidal Palace 3,500, Skyship Deck 4,000, Aurora Citadel 4,500, Dragon's Hoard 5,000 (bl_pc_orrery / tidal / skyship / aurora /
+  hoard). The Stylist lists what the level has reached plus the next tier, locked. Tiers 3+ (levels 20, 30, ...) follow the same way,
+  five paintings at a time, each more intricate; prices are LEAD's call per tier unless Cal says otherwise.
+- Test: rigtest/lead/cards155.js.
