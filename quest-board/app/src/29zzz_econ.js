@@ -40,7 +40,7 @@ var EARNK=.77;
    by a little bit more?", with "the main focus should still be the tasks done and not relying on passive money". Tasks pay a fifth
    more coins (TASKK); businesses, chests and the rest are unchanged. */
 var TASKK=1.2;
-(function(){var E=ECON;E.coinXp=Math.round(6*EARNK*TASKK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);
+(function(){var E=ECON;E.coinXp=Math.round(6*EARNK*TASKK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);/* Cal 11-25: a full workout pays 500 coins flat */E.trainCoins=500;
   E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
   E.goal={half:[100,150],full:[300,400],story:[75,100]};
   /* curve 6, take three (Cal 11-23: "use the new slower level curve. But make it a bit faster. meet in the middle. Later levels should be

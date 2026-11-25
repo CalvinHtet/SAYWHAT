@@ -101,7 +101,7 @@ var ECON={
   /* W25: coins earned since the story room before it opened (STYCHAIN in 29b_story.js) */
   storyCoins:{chef:2000,boba:6000,dessert:8000,lockkey:12000,mall:20000},
   gateLockKey:25000,gateMall:30000,               /* Cal: story gates count every coin ever earned (S.earnedC); Mall was 80,000 */
-  trainXp:50,trainCoins:300,trainFull:3,          /* a session with at least 3 exercises done */
+  trainXp:100,trainCoins:300,trainFull:3,         /* a session with at least 3 exercises done; Cal 11-25: "It should be 100 experience for this and 500 coins" (was 50; the coins are set flat in 29zzz_econ.js) */
   /* each stat point, and its cap. INT had none: the hidden quest adds one most days, so the chest grew without end (QA) */
   vit:.01,vitMax:.10,agi:.01,agiMax:.20,str:.005,strMax:.05,int:.05,intMax:.25,
   /* ---- prices (QA, 2026-11-09). Cal: "i want everyone to feel like buying stuff is worth it and not too expensive, but also
