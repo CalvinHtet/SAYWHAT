@@ -222,3 +222,12 @@ same small one-off (10 XP or less) a third time in a day is a quick step; a 3-da
 photo checker, counted, never uploaded). Quest, Workout and level-trial photos were already private with an optional post. Not built:
 the coin balance between tasks and businesses (numbers and a proposal went to Cal). QA asked for the full bounty sweep.
 Test: rigtest/lead/tasks157.js.
+
+## Syncing never stops you looking around (Cal 11-25)
+Cal: "When the game was syncing, I could not press the player banner on the top left to edit and see my banner. I want the syncing
+status on the top right to be completely in the background and never prevent the user from navigating the app"
+Built in app/src/29zz_v158.js: while html.qb-sync is on, everything that only looks takes taps (the header card and the player card,
+the profile, the mailbox and letters, (i) sheets, the scratch button, the Shop's doors, tabs and floors, the Closet, Stylist tabs,
+trying on a piece or a backdrop, another player's card, photos, scrolling in a window). What changes the save still waits (it would be
+replaced when the online save lands) and a tap on it now says "Still syncing your save. That will work in a moment."
+Test: rigtest/lead/sync158.js.
