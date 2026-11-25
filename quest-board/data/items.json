@@ -765,6 +765,9 @@
  "smk_runner": {
   "slot": "shoes"
  },
+ "smk_hoodie": {
+  "slot": "top"
+ },
  "gp_cathood": {
   "slot": "hat",
   "clip": {
