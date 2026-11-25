@@ -783,6 +783,9 @@
  "smk_wrapjacket": {
   "slot": "top"
  },
+ "smk_grips": {
+  "slot": "arms"
+ },
  "gp_cathood": {
   "slot": "hat",
   "clip": {

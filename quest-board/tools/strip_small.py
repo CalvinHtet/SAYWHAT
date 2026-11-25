@@ -1,5 +1,5 @@
 """Small head/hand pieces on layer PNGs: drop the template's thin outline without filling holes.
-  strip_small.py [--open N] <layer.png> ...
+  strip_small.py [--open N] [--purge-purple] <layer.png> ...
 Thin template lines vanish under a binary opening; the piece (thick) survives. Keep every component at
 least 4% of the biggest, grow back a few px to restore the piece's own outline, never fill holes."""
 import sys
@@ -8,6 +8,7 @@ from PIL import Image
 from scipy import ndimage as ndi
 a = sys.argv[1:]
 k = int(a[a.index('--open') + 1]) if '--open' in a else 5
+purge = '--purge-purple' in a
 paths = [p for p in a if p.endswith('.png')]
 for p in paths:
     im = np.asarray(Image.open(p).convert('RGBA')).astype(float)
@@ -34,6 +35,14 @@ for p in paths:
         rgb = rgb.copy()
         rgb[holes] = rgb[iy[holes], ix[holes]]
         al = np.where(holes, 1.0, al)
+    # neutralise magenta spill on the rim (as strip_mannequin.py does)
+    spill = np.clip(np.minimum(rgb[..., 0], rgb[..., 2]) - rgb[..., 1], 0, None)
+    rim = ndi.distance_transform_edt(al > 0.5) <= 4
+    if purge:  # pieces with no pink or purple in them: shaded magenta (thumb holes) goes grey everywhere
+        rim = np.ones_like(rim)
+    rgb = rgb.copy()
+    rgb[..., 0] = np.where(rim, rgb[..., 0] - spill, rgb[..., 0])
+    rgb[..., 2] = np.where(rim, rgb[..., 2] - spill, rgb[..., 2])
     out = np.dstack([rgb, al * 255]).clip(0, 255).astype('uint8')
     Image.fromarray(out).save(p)
     ys, xs = np.nonzero(keep & (al > 0.5))
