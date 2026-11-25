@@ -11,7 +11,7 @@ function v55Av(){var p=pcMe(),c=p.card||{},bg=pcBy(c.bg)&&pcHas(c.bg)?c.bg:"stud
   try{if(p.pet)pet=pzPedPic(p.pet,H)}catch(e){}
   /* the frame keeps 11% of its height under the feet (fshChar); idle, so the header's character still breathes */
   var fig=calImg(p.look,"idle",H,"").replace("<img ",'<img style="margin-bottom:-'+Math.round(H*0.11)+'px" ');
-  return '<button class="avbtn pcav pc-'+bg+'" data-act="pcard" aria-label="Your player card" style="width:'+W+'px'+(u?';background-image:url(&quot;'+esc(u)+'&quot;)':'')+'"><span class="pc-stage"><span class="fsh-fig pc-fig">'+fig+pet+'</span></span></button>'}
+  return '<button class="avbtn pcav pc-'+bg+'" data-act="char" aria-label="Your profile" style="width:'+W+'px'+(u?';background-image:url(&quot;'+esc(u)+'&quot;)':'')+'"><span class="pc-stage"><span class="fsh-fig pc-fig">'+fig+pet+'</span></span></button>'}
 var v55Strip=stripHtml;stripHtml=function(){var h=v55Strip.apply(this,arguments);
   try{var d=document.createElement("div");d.innerHTML=h;var av=d.querySelector(".avbtn"),pb=d.querySelector(".pcbtn");
     if(av){av.outerHTML=v55Av();if(pb&&pb.parentNode)pb.parentNode.removeChild(pb);h=d.innerHTML}}catch(e){}

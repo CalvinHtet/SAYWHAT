@@ -182,7 +182,7 @@ var v35Vis=visQ;visQ=function(q){if(q&&q.rep==="weekly4")return false;return v35
 function v35Gq(){return (S.quests||[]).filter(function(q){return q&&q.rep==="weekly4"})[0]||null}
 var v35Train=trainHtml;trainHtml=function(){var h=v35Train.apply(this,arguments);try{var q=v35Gq();if(!q)return h;var done=!!(S.done&&S.done[q.id]),full=weekCount()>=4;
     var add=done?'<p class="note v35wk"><b>&#10003; Today&rsquo;s workout is logged.</b></p>'
-      :'<button class="btn big v35wk" data-act="v35wk">'+(full?'Log another workout':'Log today&rsquo;s workout')+'</button><p class="note">Take a live photo as proof. After it passes, you can post it to the Town Hall.</p>';
+      :'<button class="btn big v35wk" data-act="v35wk">'+(full?'Log another workout':'Log today&rsquo;s workout')+'</button><p class="note">Take a live photo as proof.</p>';
     var i=h.indexOf('</section>');if(i>=0)h=h.slice(0,i)+add+h.slice(i)}catch(e){}return h};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=v35wk]");if(!b)return;var q=v35Gq();if(q)onTap(q.id,e)});
 

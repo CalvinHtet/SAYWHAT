@@ -287,3 +287,21 @@ remember that all photos are private until they decide to post it to the townhal
   and a pool of its accent, and two slow layers of sparkles in its colours behind the cards.
 - Coins: TASKK 1.2 (29zzz_econ.js): tasks pay a fifth more coins; businesses and chests unchanged. With the bounty raise an active
   day earns roughly a third more.
+
+## A tidy profile; effects in the Interface shop (Cal 11-25, night)
+Cal: "In the profile page, there are too many things going on. First, the player card, closet, sound:on, replay tutorial, and relics are
+all placed in random areas. Remove Sound On and just make the sound permanently on. Remove '6 UI upgrades active. Next upgrade at level
+9.' Move this into the interface shop as an already purchased item. Make sure we can toggle these interface items on and off and that
+they place nice with each other. Remove the weekly warrior section and just put that in the training tab instead. In the training tab,
+remove 'after it passes, you can post it to town hall'. When clicking on the top left profile card, it takes me to my banner. Instead,
+take me to the profile page but have the banner show in full on this page on the top left. Change Player card button here to 'Change
+banner'. On this page, there should just be 'Closet', 'Change Banner'. 'Replay Tutorial' can be on the bottom of this profile page.
+Remove 'Path Skill' card and the 'Final Form skill card.' ... Change the text under your skills ... Remove this text altogether. Remove
+all text underneath the stats diagram."
+Built in app/src/29zz_v161.js (and one line each in 29zz_v155.js, 29zz_v135.js, 29zz_v159.js): the header's card opens the profile;
+its top is the banner whole (tap = the big card, where Post my card is) with Closet and Change banner; then the level card, class
+card, unlocked skills, the stats diagram alone, Relics once open, Replay tutorial, Start over. Sound is forced on (S.sndOff cleared).
+Weekly Warrior is only in Training (its head already had it). The level's effects (FX) are the Interface shop's "Effects" tab for
+everyone: owned, On / Off each (S.fxOff), All on / All off, the next one shown with its level. LEAD's calls: Relics kept as a button
+above Replay tutorial (Cal named only two buttons for the top); the earned stat titles and the stat counts under the diagram went
+with "all text underneath". Test: rigtest/lead/prof161.js.
