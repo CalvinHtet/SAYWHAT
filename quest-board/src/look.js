@@ -103,6 +103,10 @@
       layers.iris = { ...frontOnly(b, has(`iris_${eid}`) ? `iris_${eid}` : "iris"), tint: layers.iris.tint };
       layers.mouth = frontOnly(b, `mouth_${mid}`);
     }
+    // The stretch's yawn (Cal 11-25: "I want them to open their mouth and reach high up to stretch and yawn"): <b>_faceyawn, eyes
+    // shut and the mouth open, painted like faceclosed (ROOMS). Until it exists, and with the Stylist's own eyes and mouth, the yawn
+    // keeps the closed-eyes face (data/poses.json stretch swaps face for faceYawn).
+    layers.faceYawn = has("faceyawn") && !layers.mouth ? frontOnly(b, "faceyawn") : layers.faceClosed;
     const lift = pick && /_heel$/.test(pick) ? heelLift : 0;
     // Slim legs tuck into tall footwear; wide legs stack over it, or they stick out around it.
     if (c.equipped && c.equipped.pants && c.equipped.pants.wide && layers.shoesOver) {
