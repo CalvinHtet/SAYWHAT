@@ -23,5 +23,9 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(g.card, 'Training\'s card says today\'s workout is logged and offers "Add a photo" ' + JSON.stringify(g));
   const dbl = await p.evaluate(() => { const n0 = window.__qbV170.wcount(); window.__qbV170.mark(); const n1 = window.__qbV170.wcount(); window.__qbV170.unmark(); const n2 = window.__qbV170.wcount(); return { n0, n1, n2, on: window.__qbV170.active() }; });
   ok(dbl.n1 === dbl.n0 && dbl.n2 === dbl.n0 && dbl.on, 'a verified photo the same day adds nothing to the meter, and undoing it leaves the day counted ' + JSON.stringify(dbl));
+  /* QA 250a711b A: the photo first, then a session, then the photo undone: the day stays counted */
+  const pa = await p.evaluate(() => { const S = window.__qb.x().S, t = Object.keys(S.active || {}).sort().pop(); delete S.active[t]; const wk = Object.keys(S.wcount)[0]; S.wcount[wk] = 0; S.v70tr = null; window.__qbV170.mark(); const n1 = window.__qbV170.wcount();
+    window.__qbV170.trained(window.__qbEcon.ECON.trainXp, 'pull'); const n2 = window.__qbV170.wcount(); window.__qbV170.unmark(); return { n1, n2, n3: window.__qbV170.wcount(), on: window.__qbV170.active() }; });
+  ok(pa.n1 === 1 && pa.n2 === 1 && pa.n3 === 1 && pa.on, 'photo first, then a full session, then the photo undone: the day stays counted ' + JSON.stringify(pa));
   await p.screenshot({ path: OUT + '/train170.png' });
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
