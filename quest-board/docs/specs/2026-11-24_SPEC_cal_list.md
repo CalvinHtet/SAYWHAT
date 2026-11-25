@@ -355,3 +355,10 @@ Cal: "Approve." (the three level-15 replacements: PCHOLD emptied) and "For the p
 the page only after I click a different button. This way, I can tap to adjust the priority level before it goes all the way to the top".
 29zz_v163.js: the first priority tap freezes the Board's order (V63SNAP); the buttons show the new levels in place; the next tap on
 anything else, or leaving the Board, lets the order catch up. Test: rigtest/lead/pri163.js.
+
+## The Board starts at the tasks (Cal 11-25, late)
+Cal: "The C icon on the tier 2 advancement trial is covering the font. I think we can also consolidate this whole first page into the
+profile page. The main board you can't even see the tasks until you scroll down a bit. Too cluttered". 29zz_v165.js: the Board is the
+header, the add-task box and the tasks (First steps for new players, bounties, Completed); the level bar, NEXT line, Daily Quest and
+the level trial move into the profile under the level card; while a trial waits, one slim row on the Board opens the profile at it
+(so does "Show me the trial"); the trial's title clears its emblem. Test: rigtest/lead/board165.js.

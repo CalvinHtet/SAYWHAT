@@ -33,7 +33,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     /* Profile from the card; the level bar still opens the profile */
     await clear(); await V(() => document.querySelector('.nav button[data-v="board"]').click()); await p.waitForTimeout(500); await clear(); await p.click('.strip .avbtn'); await p.waitForTimeout(400); await p.click('#layer .prof .v61ban'); await p.waitForTimeout(500); ok(await V(() => !!document.querySelector('#layer .pcm')), W + ': the banner on the profile opens the big player card');
     await p.click('#layer .pcm [data-act="char"]'); await p.waitForTimeout(500); ok(await V(() => !!document.querySelector('#layer .prof') && !document.querySelector('#layer .pcm')), W + ': Profile on the card opens the profile');
-    await clear(); await p.click('.bline'); await p.waitForTimeout(400); ok(await V(() => !!document.querySelector('#layer .prof')), W + ': the level bar opens the profile'); await clear();
-    if (W === 390) { const t = await V(() => { return window.__qbV155.tours().map((q) => q.id + ':' + q.sel + ':' + q.x); }); ok(t.length === 2 && t.every((q) => /:\.bline:/.test(q) && /level bar/.test(q) && !/Tap your character/.test(q)), 'the Relics and freeze tours point at the level bar: ' + t.map((q) => q.slice(0, 60)).join(' | ')); }
+    /* v1.61: the Board has no level bar (29zz_v165.js); the header's card is the way into the profile */
+    if (W === 390) { const t = await V(() => { return window.__qbV155.tours().map((q) => q.id + ':' + q.sel + ':' + q.x); }); ok(t.length === 2 && t.every((q) => /:\.strip \.avbtn:/.test(q) && /Tap your card/.test(q) && !/level bar/.test(q)), 'the Relics and freeze tours point at the header card: ' + t.map((q) => q.slice(0, 60)).join(' | ')); }
     await p.context().close(); }
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
