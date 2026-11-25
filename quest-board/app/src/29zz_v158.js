@@ -7,7 +7,7 @@
    letters, the (i) sheets, the scratch card's button, the Shop's doors, tabs and floors, the Closet, the Stylist's tabs, trying a
    piece or a backdrop on (nothing is bought), another player's card, a photo, and scrolling inside any window. What changes the save
    (ticking a task, buying, claiming, collecting, typing) still waits, and now says so instead of doing nothing. */
-(function(){var A=['.avbtn','[data-act="pcard"]','[data-act="char"]','[data-act="qbinfo"]','.ibbtn','.ibrow','.scbtn','[data-act="pcbgs"]','[data-act="wardrobe"]','[data-shub]','.shub-char','[data-act="stab"]','[data-qsfl]','[data-act="stytab"]','[data-wdf]',
+(function(){var A=['.avbtn','[data-act="pcard"]','[data-act="char"]','[data-act="qbinfo"]','.ibbtn','.ibrow','.ibback',/* QA 4713444b: back from a letter to the list */'.scbtn','[data-act="pcbgs"]','[data-act="wardrobe"]','[data-shub]','.shub-char','[data-act="stab"]','[data-qsfl]','[data-act="stytab"]','[data-wdf]',
     '[data-act="qstry"]','[data-act="qsclear"]','[data-act="pctry"]','[data-act="fshview"]','[data-act="phopen"]','[data-act="sxtab"]'],css=[];
   A.forEach(function(s){css.push("html.qb-sync body "+s,"html.qb-sync body "+s+" *")});
   htabCss("qb-synclook-css",css.join(",")+"{pointer-events:auto!important}"
