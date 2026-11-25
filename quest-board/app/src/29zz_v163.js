@@ -32,9 +32,12 @@ htabCss("qb-v163-css",".q.v63{grid-template-columns:1fr auto auto auto}"
   +".qpri.p1{color:#ffc857;background:rgba(255,200,87,.08)}.qpri.p2{color:#ff9a3d;background:rgba(255,154,61,.12)}.qpri.p3{color:#ff5a5a;background:rgba(255,90,90,.15)}"
   +".qpri:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}.q.done .qpri{opacity:.6}"
   +".cluster.v63pri>header .label{color:#ff9a3d}"
-  /* QA (pri_320.png): at narrow widths the fourth column broke task names mid-word and let the XP pill run over the button; there the
+  /* QA (pri_320.png): on small phones (370 px and under; 390 held with the labels) the fourth column broke task names mid-word and let the XP pill run over the button; there the
      Priority and Daily buttons are icon-only and words break only between words */
   +".q.v63 .name{overflow-wrap:break-word;word-break:normal;hyphens:manual}"
-  +"@media (max-width:400px){.q.v63 .qpri{min-width:32px;padding:0 3px}.q.v63 .qpri small{display:none}.q.v63 .qrep{min-width:36px;padding:0 4px}.q.v63 .qrep small{display:none}"
-  +".q.v63 .qmain{min-width:0;grid-template-columns:auto 1fr;row-gap:6px}.q.v63 .qmain .tags{grid-column:2;justify-self:start}}");/* the XP pill goes under the name */
+  +"@media (max-width:370px){.q.v63 .qpri{min-width:32px;padding:0 3px}.q.v63 .qpri small{display:none}.q.v63 .qrep{min-width:36px;padding:0 4px}.q.v63 .qrep small{display:none}"
+  +".q.v63 .qmain{min-width:0;grid-template-columns:auto 1fr;row-gap:6px}.q.v63 .qmain .tags{grid-column:2;justify-self:start}}"
+  /* Edit mode adds the delete x: up to 430 px a row with it takes the compact layout too */
+  +"@media (max-width:430px){.q.v63:has(.del) .qpri{min-width:32px;padding:0 3px}.q.v63:has(.del) .qpri small,.q.v63:has(.del) .qrep small{display:none}.q.v63:has(.del) .qrep{min-width:36px;padding:0 4px}"
+  +".q.v63:has(.del) .qmain{min-width:0;grid-template-columns:auto 1fr;row-gap:6px}.q.v63:has(.del) .qmain .tags{grid-column:2;justify-self:start}}");/* the XP pill goes under the name */
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV163={pri:v63Pri,board:v63Board};
