@@ -32,7 +32,7 @@ function dropPlan(rounds){var ids=BRANDS.map(function(b){return b.id}),fx=DROPS.
     row.forEach(function(id,k){out.push({id:id,slot:r*n+k,start:dropSlotDate(r*n+k)})})}
   return out}
 /* one brand every DROPS.every days per player (dropMine below), so the cadence reads in days */
-function dropCadence(){return "Mondays and Fridays at 8 am Pacific"}
+function dropCadence(){return "Mondays and Thursdays at 8 am Pacific"}
 /* the Shop at any moment n, for both modes: live (newest first-dropped last), the retired ones, and the next drop */
 function dropAt(n){var byId={};BRANDS.forEach(function(b){byId[b.id]=b});
   if(!DROPS.on){var rel=BRANDS.filter(function(b){return ptMidnight(b.start)<=n});return {live:rel.slice(-3),vault:rel.slice(0,Math.max(0,rel.length-3)),next:BRANDS.filter(function(b){return ptMidnight(b.start)>n})[0]||null}}

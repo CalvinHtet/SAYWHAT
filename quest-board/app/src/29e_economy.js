@@ -152,7 +152,7 @@ var ECON={
      hangang, dial up, and overpass." The Street keeps 3 live (was 2); a 4th drop retires the oldest; the Wednesday brand is extra */
   /* Cal, 2026-11-18: "Lets change the clothing drops to be Monday and thursday. The vault can still come in on Wednesday" (every floor,
      from this week): days from Thu 11-19 (FLDAYS1, 29l_drops.js), days0 before it, so no drop that already happened moves */
-  floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Fridays, 8 am"},
+  floors:[{id:"street",name:"Street",lv:0,days:[1,5],days1:[1,4],days0:[1,5],every:1,live:3,line:"New brands Mondays and Thursdays, 8 am"/* Cal 11-25: one rotation, Mon and Thu (29zz_v172.js) */},
     /* Cal 11-25: "Lets just make every brand rotate across the shop at the same time instead of being level locked", and the pricier ones
        "cheaper and less often, but not too rare": no floor has a level any more; the Boutique drops one brand each Monday (two live, so a
        brand stays two weeks), the Atelier every other Friday (from 11-28, FLDAYS2; drops before it keep days0/days1) */

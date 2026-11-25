@@ -112,7 +112,7 @@ function p2Clothes(k){return p2TryCards(k,p2ClothesBase(k))}
 function p2ClothesBase(k){var o=p2(),P=o.own[k],C=pzCl(),two=!!(P&&P.evo),tabs=two?'<nav class="qs-tabs p2forms"><button class="qs-tab'+(P2FORM===1?" on":"")+'" data-act="p2ft" data-id="1">I</button><button class="qs-tab'+(P2FORM===2?" on":"")+'" data-act="p2ft" data-id="2">II</button></nav>':"";
   if(two&&P2FORM===2)return tabs+'<p class="qs-note qs-lead">Nothing has been made in this size yet. Check back after the next drop.</p>';
   var drop=pzDrop(k),own=Object.keys(C).filter(function(id){return S.owned&&S.owned["pc_"+id]&&C[id].pet===k&&drop.indexOf(id)<0});
-  return p2TryHead(k)+tabs+'<section class="qs-sec"><h3>This drop</h3><p class="qs-note">New pieces Tuesdays and Thursdays at 8 am.'+(P?"":" Yours to buy once a "+esc(PETS[k].name)+" lives with you.")+'</p><div class="qs-grid">'+drop.map(pzClCard).join("")+'</div></section>'
+  return p2TryHead(k)+tabs+'<section class="qs-sec"><h3>This drop</h3><p class="qs-note">New pieces Tuesdays and Fridays at 8 am.'+(P?"":" Yours to buy once a "+esc(PETS[k].name)+" lives with you.")+'</p><div class="qs-grid">'+drop.map(pzClCard).join("")+'</div></section>'
     +(own.length?'<section class="qs-sec"><h3>'+esc(P?P.n:PETS[k].name)+'&rsquo;s clothes</h3><div class="qs-grid">'+own.map(pzClCard).join("")+'</div></section>':"")}
 function p2Store(){var o=p2();if(!o.seen){o.seen=1;persist()}if(P2TAB!=="home"&&!PETS[P2TAB])P2TAB="home";
   var nav='<nav class="p2nav" aria-label="Pet Store">'+["home"].concat(PET_ORDER.slice().sort(function(a,b){return ["slime","wolf","wyvern"].indexOf(a)-["slime","wolf","wyvern"].indexOf(b)})).map(function(k){
@@ -179,9 +179,9 @@ function p2DogRefund(){if(!S||!S.created||typeof loaded==="undefined"||!loaded||
   Object.keys(C).forEach(function(id){if(C[id].pet==="dogs"&&S.owned&&S.owned["pc_"+id]){c+=PC_PRICE[C[id].kind]||400;delete S.owned["pc_"+id];n++}});
   S.dogw={};S.dogref={at:Date.now(),c:c,n:n};if(c){S.coins=(S.coins||0)+c;S.spent=Math.max(0,(S.spent||0)-c)}persist();
   if(n){try{render()}catch(e){}setTimeout(function(){pop("Pluto and Chopstick went home with Calvin and Sydney. "+c.toLocaleString()+" coins are back in your pocket.")},1500)}}
-/* ---- pet clothes: Tuesdays and Thursdays from 11-28 (Mondays and Thursdays before, so no drop that happened moves) ---- */
+/* ---- pet clothes: Tuesdays and Fridays from 11-28 (Mondays and Thursdays before, so no drop that happened moves) ---- */
 pzSlotNow=function(){var n=dropNow(),k=0,cut=ymdN("2026-11-28");for(var i=0;i<4000;i++){var ymd=ymdAdd(PZ_DAY0,i),x=ymdN(ymd),wd=new Date(x*864e5).getUTCDay();
-    if(x<cut?(wd!==1&&wd!==4):(wd!==2&&wd!==4))continue;if(dropStart(ymd)>n)break;k++}return Math.max(0,k-1)};
+    if(x<cut?(wd!==1&&wd!==4):(wd!==2&&wd!==5))continue;/* Cal 11-25: "The pet shop cycles through on Tuesday and Friday" (was Tuesday and Thursday from 11-28, never shipped a drop) */if(dropStart(ymd)>n)break;k++}return Math.max(0,k-1)};
 /* ---- a "!" on the Shop until the level 25 player has opened the Pet Store ---- */
 var v50Tabs=alTabs;alTabs=function(){var t=v50Tabs.apply(this,arguments);try{if(effLvl()>=PETLV&&!areaGate("shop")&&!p2().seen)t.shop=1}catch(e){}return t};
 var v50Render=render;render=function(){try{p2BedFlags();p2DogRefund()}catch(e){}var r=v50Render.apply(this,arguments);try{p2Ask()}catch(e){}return r};

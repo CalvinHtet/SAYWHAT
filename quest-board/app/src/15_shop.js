@@ -453,7 +453,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* W42: the floor on screen (the Street, the Boutique, ...). Only floors this player has show, and the switch only with two or more */
 var QSFLOOR="street";
 /* W47: the line under "The Shop", per floor (Bebas shows it in capitals) */
-var QS_WHEN={street:"New brands Mon and Fri 8 am",boutique:"New brands Mon and Fri 8 am",atelier:"New brands every other Mon and Fri 8 am"};
+var QS_WHEN={street:"New brands Mon and Thu 8 am",boutique:"New brands Mon and Fri 8 am",atelier:"New brands every other Mon and Fri 8 am"};
 /* a floor other than the one on screen with a live brand not yet looked at: its button gets a "!" (29o_alerts.js clears it per floor) */
 function qsFloorNew(d,id){try{if(id===QSFLOOR)return false;var o=alSeen();if(!o.init)return false;
   return ((d.floors&&d.floors[id]&&d.floors[id].live)||[]).some(function(b){return !o.brand[b.id]})}catch(e){return false}}

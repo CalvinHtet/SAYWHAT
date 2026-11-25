@@ -29,7 +29,7 @@ var v67Shop=shopHtml;shopHtml=function(){
   var street=false;try{street=SHUB!=="home"&&shubOf()==="street"}catch(e){}
   if(street){try{var A=v67All(),vb=shubVault(),L=A.filter(function(b){return !vb||b.id!==vb.id});
       if(L.length&&(!window._qsSeen||!L.some(function(b){return b.id===shopTab}))){shopTab=L[0].id;window._qsSeen=1}
-      var cur=L.filter(function(b){return b.id===shopTab})[0];if(cur)QSFLOOR=brandFloor(cur.id)}catch(e){}}
+      var cur=L.filter(function(b){return b.id===shopTab})[0];if(cur)QSFLOOR=cur.fl||brandFloor(cur.id)/* v1.63: the one rotation lists every brand on the Street's calendar */}catch(e){}}
   var h=v67Shop.apply(this,arguments);if(!street)return h;
   try{var A2=v67All(),vb2=shubVault(),L2=A2.filter(function(b){return !vb2||b.id!==vb2.id});
     h=h.replace(/<nav class="qs-tabs qs-floors"[\s\S]*?<\/nav>/,"");
