@@ -115,7 +115,7 @@ async function sdqFile(file){var id=SDQASK,q=sdqOf(id);if(!file||!q||!sdqOn(id)|
 var SDQWAIT=6000,SDQFAKE=null;   /* the sandbox stand-in's delay; test friends for Movie night */
 /* Night watch also asks the checker to read the stamp's time */
 function sdqNightAsk(){return ' This is a bedtime check: also return "night_ok": true only if the time stamp reads between 8:00 PM and 11:59 PM, false otherwise.'}
-async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=sdqWhen(at),stp=p.txt;
+async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=sdqWhen(at),stp="";/* Cal 11-26: no time stamp on any photo, so the checker is not asked to read one (the phone's hour still decides the night) */
   try{var sample=window.claude?await window.claude.use("sample"):null;
     /* local sandbox only, as for quests: a stand-in passes any photo that is not nearly black, and reads the stamp as the game does */
     if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,SDQWAIT)});var lum=await sbLum(file);
