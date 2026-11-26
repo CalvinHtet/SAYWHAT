@@ -21,10 +21,10 @@ var ECON={
   /* Cal, later: "make the hidden chest at 300 exp instead of the 300 exp being shown. At first, it should say 100 exp is the goal,
      then once that finishes, the goal bar expands to 200 exp without any text indication. And then any additional exp gained will
      move the bar farther until it reached 300 exp for the hidden chest." The first dqShown tiers are shown, the rest never named. */
-  dqGoal:100,dqTiers:[[100,200],[200,400],[300,600]],dqShown:2,
+  dqGoal:100,dqTiers:[[100,300],[200,600],[300,900]]/* Cal 11-25 (later): "give even more coins": the Daily Quest chests 1.5x */,dqShown:2,
   /* Cal: "the odds should be 50% low tier relic, 33% accessory, 13% mid, 4% high"; chestNone coins when every accessory is owned,
      relicDup coins by tier when every relic of the tier is owned (a relic is never given twice) */
-  chest3:[["low",50],["acc",33],["mid",13],["high",4]],chestNone:300,relicDup:{low:150,mid:400,high:1000,legendary:2500},
+  chest3:[["low",50],["acc",33],["mid",13],["high",4]],chestNone:450,relicDup:{low:150,mid:400,high:1000,legendary:2500},
   /* the relics' buffs (Cal's list, SPEC6; the kinds are explained in 29y_free.js). Low: +0.5% XP on one quest group; mid: +1% on one
      group or +2% income in one business; high: a small rule-bender; legendary (Rafe's hunts): each stronger than the last.
      relicSet: owning every relic of a tier adds this % XP on every quest. */

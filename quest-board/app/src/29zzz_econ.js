@@ -39,10 +39,10 @@ var EARNK=.77;
 /* Cal 11-25: "I've been playing for 3 days i just hit level 10, but have not upgraded much in my base ... can we increase the coin gain
    by a little bit more?", with "the main focus should still be the tasks done and not relying on passive money". Tasks pay a fifth
    more coins (TASKK); businesses, chests and the rest are unchanged. */
-var TASKK=1.45;/* Cal 11-25 (later): a fifth more again for tasks (was 1.2) */
+var TASKK=1.6;/* Cal 11-25 (later): a fifth more again for tasks (was 1.2), then "give even more coins" (1.45 to 1.6) */
 (function(){var E=ECON;E.coinXp=Math.round(6*EARNK*TASKK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);/* Cal 11-25: a full workout pays 500 coins flat */E.trainCoins=500;
-  E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
-  E.goal={half:[100,150],full:[300,400],story:[75,100]};
+  E.lvPay=[Math.round(E.lvPay[0]*EARNK*1.5),Math.max(1,Math.round(E.lvPay[1]*EARNK*1.5))];/* Cal 11-25 (later): level pay 1.5x */E.wqCoins=3000;
+  E.goal={half:[250,150],full:[750,400],story:[200,100]};/* Cal 11-25 (later): "give even more coins": the Loft's Goals pay 2.5x */
   /* curve 6, take three (Cal 11-23: "use the new slower level curve. But make it a bit faster. meet in the middle. Later levels should be
      harder to level, but still obtainable. The first few days can ramp up faster, but late game would take a heavy day for 1 level"):
      levels 1-6 as fast as curve 5 (20 to 170), then 170 + .65 x (L - 6)^2, plus .35 x (L - 40)^2 above 40. Level 30 needs 544 (curve 5

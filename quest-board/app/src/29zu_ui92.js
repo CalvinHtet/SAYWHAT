@@ -80,10 +80,11 @@ function nxModal(o){var k=o.room,T=ROOMT[k];if(!T||hasRoom(k)){render();return}
     h='<div class="card box2 nxm"><span class="label">New room</span><h2 class="rm-title">? ? ?</h2><div class="nxpic nxq" aria-hidden="true">?</div>'
       +'<p class="note">Not yet. To open it:</p><span class="stytr nxlines">'+nxLines(o,src,a).map(function(x){return '<span'+(x[0]?' class="ok">✓ ':'>')+esc(x[1])+(x[2]!=null&&!x[0]?'<i class="stybar"><i style="width:'+Math.round(x[2]*100)+'%"></i></i>':'')+'</span>'}).join("")+'</span>'
       +'<div class="nxbtns">'+see+'<button class="btn ghost" data-act="mclose">Close</button></div></div>'}
-  else{var price=o.lot?T.cost:a[2],art=ART["room_"+k],can=S.coins>=price,pr='<i class="coin"></i>&nbsp;'+price.toLocaleString();
-    h='<div class="card box2 nxm"><span class="label">New room</span><div class="rm-head"><h2 class="rm-title">'+esc(o.lot?T.name:a[1])+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div>'
-      +'<div class="bpart nxpic'+(art?' post':'')+'">'+(art?'<img class="rpost" src="'+art+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div>'
-      +'<p class="note">'+esc(o.lot?T.desc:a[4])+'</p>'
+  else{var price=o.lot?T.cost:a[2],art=ART["room_"+k],can=S.coins>=price,pr='<i class="coin"></i>&nbsp;'+price.toLocaleString(),
+      /* Cal 11-25: no spoilers until the story has teased the room (29o_alerts.js alTeased; QA 2b951ed7 FIX 1) */tz=typeof alTeased!=="function"||alTeased(k);
+    h='<div class="card box2 nxm"><span class="label">New room</span><div class="rm-head"><h2 class="rm-title">'+(tz?esc(o.lot?T.name:a[1]):'? ? ?')+'</h2>'+(typeof coinBar==="function"?coinBar():'')+'</div>'
+      +(tz?'<div class="bpart nxpic'+(art?' post':'')+'">'+(art?'<img class="rpost" src="'+art+'" alt="">':lfPreview({t:k,a:{},st:0},95))+'</div>':'<div class="nxpic nxq" aria-hidden="true">?</div>')
+      +'<p class="note">'+(tz?esc(o.lot?T.desc:a[4]):'Something new is ready to open.')+'</p>'
       +'<div class="nxbtns"><button class="btn'+(can?'':' ghost')+'" data-act="nxbuy" '+(o.lot?'data-t="'+k+'"':'data-i="'+o.slot+'" data-id="'+a[0]+'"')+'>'+(can?'Buy &middot; '+pr:pr+' &middot; need '+(price-S.coins).toLocaleString()+' more')+'</button>'
       +see+'<button class="btn ghost" data-act="mclose">Close</button></div></div>'}
   modal(h)}
