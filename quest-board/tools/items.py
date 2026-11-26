@@ -81,6 +81,11 @@ for art, meta in items.items():
                 p = os.path.join(layers, f"{b}_{art}_{view}.png")
                 if os.path.exists(p):
                     alpha = np.asarray(Image.open(p).convert("RGBA"))[..., 3] > 40
+                    # clipTop (0..1 of the layer height): only the hat above this row cuts the hair, so long hanging parts
+                    # (a bandana's tails) do not cut a deep notch that tears when they swing (ROOMS 11-25, QA on smk_tails)
+                    if meta.get("clipTop"):
+                        alpha = alpha.copy()
+                        alpha[int(meta["clipTop"] * alpha.shape[0]):] = False
                     head = np.asarray(Image.open(os.path.join(layers, f"{b}_base_{view}.png")).convert("RGBA"))[..., 3] > 40
                     up = meta.get("lift", {}).get(b, 0) / alpha.shape[0]
                     meta["clip"][b][view] = [round(max(0, y - up), 4) for y in trim_line(alpha, head)]
