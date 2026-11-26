@@ -391,3 +391,24 @@ Stylist's tattoos and scars from level 30.
   try-on character was cut off (QA sweep asked). Built in ea71679e (29zz_v167.js, rigtest/lead/shop167.js), WAITING ON QA. ROOMS asked
   for portrait banners (ui_banner_<id>_p.webp) for sm, cr, gd, oc, rg. Next for LEAD: the seven wear categories, half-brand drops,
   the 21-piece Vault, tattoos and scars at 30.
+
+### Cal 11-26: answers to the 20 new ideas, and more
+- YES: 2 pause animations off screen; 4 photo processing in the background; 5 sync in the background so nothing stalls ("I am not
+  able to do certain things while it is syncing"); 6 custom repeat days ("the repeat button opens another edit screen ... schedule tasks
+  for repeat for whatever days you choose"); 8 a private photo gallery in the profile card ("not ... another tab"); 9 notifications: a
+  town hall post, a bounty about to expire; 12 a 7-day login calendar.
+- NO / LATER: 1, 3, 7 (not yet), 10, 11 (maybe later), 14 (not until animations look good), 15, 16, 17, 18, 19, 20. 13 pet tricks: he
+  asked what kind (proposal sent to APPROVALS).
+- Loot: cosmetic drops from quests are too frequent: make them rarer. A furniture drop is not installed: it becomes that building's next
+  upgrade at no price, and its splash says it is waiting in the Loft (or that building) for free.
+- Seasonal cosmetics: no; all seasons. Brands: 6 a category, 3 a category per rotation (the restructure).
+- Economy: one price for cosmetics, special brands double; passive income must not overshadow tasks; future rooms' furniture and room
+  prices must scale to what a player makes; "use my profile as a metric for a heavy player" (Cal allows reading his own save for this).
+- Photos: no time stamp on any picture ("the post itself should have a date and time and the picture should be untouched").
+- More clothes to 6 a category (ROOMS); Higgsfield banner loops and other videos that help without costing speed (ROOMS, credits ok).
+- Speed: the header's character shows a few seconds late at launch; "quick and snappy and no visible loading or freezing or missing
+  assets"; QA sweep asked.
+- Approvals go to the APPROVALS chat (TEAMWORK.md); Cal's chat stays minimal.
+LEAD's order: no photo stamps -> loot -> header at once -> QA's lag list -> pause off-screen -> repeat days -> sync in background -> photo
+work in background -> profile gallery -> login calendar -> notifications -> economy check -> the Shop restructure (7 categories, half drops,
+21-piece Vault) as ROOMS's clothes land.
