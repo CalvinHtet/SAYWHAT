@@ -1,0 +1,32 @@
+// QA, v1.65 (29zz_v176.js: the second and third chapter prizes; 29zz_v177.js: every banner's 8 s loop). Do NOT name the prizes to Cal.
+// Per prize (px_ring, px_storm), at 390: worn on the header card, the profile's banner card and the big card, every effect layer inside its
+// card; reduced motion stops the layers; another player's view (world doc through fshSafe) shows it. Then the cost: frames over 4 s with
+// the header + profile + big card on screen together, no prize vs each prize (swiftshader, so only the ratio means anything), and how
+// many silhouette masks get built while the header's figure animates.
+//   PORT=<plain build> OUT=<dir> node prize176qa.js
+const pw = require('playwright');
+const PORT = process.env.PORT || 8819, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+const T = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
+(async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const errs = []; const fps = {};
+  for (const [fx, rm] of [['none', 'no-preference'], ['px_halo', 'no-preference'], ['px_ring', 'no-preference'], ['px_storm', 'no-preference'], ['px_ring', 'reduce'], ['px_storm', 'reduce']]) {
+    const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, reducedMotion: rm }); await ctx.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort())); const p = await ctx.newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160))); p.on('dialog', (d) => { errs.push('DIALOG'); d.dismiss(); });
+    await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV174 && window.__qbV152 && window.__qbV135, null, { timeout: 120000 }); await p.waitForTimeout(800); await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
+    const tag = fx + (rm === 'reduce' ? ' reduced motion' : '');
+    await p.evaluate(([T, fx]) => { window.__qbShift = new Date('2026-12-10T12:00:00').getTime() - Date.now(); const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Keeper', sex: 'm' }); S.xp = x.cum(30) + 10; S.gates = [5, 10, 20, 30]; S.tutDone = 1; S.tours = T; S.pc = { bg: 'moon', own: { moon: 1 } };
+      S.owned = S.owned || {}; if (fx !== 'none') { S.owned[fx] = true; S.chfx = fx; } else delete S.chfx; x.persist(); x.render(); }, [T, fx]);
+    await p.waitForTimeout(2500); await p.evaluate(() => { for (const m of document.querySelectorAll('#layer > *')) m.remove(); });
+    const inside = (sel) => p.evaluate((sel) => { const host = document.querySelector(sel); if (!host) return null; const f = host.querySelector('.pc-fig.v76on, .pc-fig.v74on'); if (!f) return { on: false }; const card = host.closest('.pcard,.avbtn') || host.querySelector('.pcard') || host; const C = card.getBoundingClientRect(); const out = [];
+      for (const l of f.querySelectorAll('.v76aura,.v76storm,.v76bolt,.v74halo')) { const r = l.getBoundingClientRect(); if (!r.width) continue; if (r.left < C.left - 2 || r.right > C.right + 2 || r.top < C.top - 2) out.push(l.className.baseVal || l.className); }
+      const anims = [...f.querySelectorAll('.v76aura i,.v76bolt,.v76st i,.v74spin')].map((e) => getComputedStyle(e).animationName).filter((n) => n && n !== 'none').length; return { on: true, out, anims }; }, sel);
+    if (fx !== 'none') { const h = await inside('.strip .avbtn'); ok(h && h.on && !h.out.length, tag + ': header card wears it, every layer inside the card ' + JSON.stringify(h)); if (rm === 'reduce') ok(h && h.anims === 0, tag + ': reduced motion stops every layer (' + (h && h.anims) + ' still running)'); }
+    await p.evaluate(() => document.querySelector('.strip .avbtn').click()); await p.waitForTimeout(1800); await p.evaluate(() => { for (const m of [...document.querySelectorAll('#layer > *')]) if (!m.querySelector('.prof')) m.remove(); });
+    if (fx !== 'none') { const pr = await inside('#layer .prof .v61ban'); ok(pr && pr.on && !pr.out.length, tag + ': profile banner card wears it, inside ' + JSON.stringify(pr)); }
+    await p.evaluate(() => { const b = document.querySelector('#layer [data-act="pcard"]'); if (b) b.click(); else window.__qbV152.open(); }); await p.waitForTimeout(2200);
+    if (fx !== 'none') { const bg = await inside('#layer .pcm'); ok(bg && bg.on && !bg.out.length, tag + ': big card wears it, inside ' + JSON.stringify(bg)); if (rm !== 'reduce') await (await p.$('#layer .pcm .pcard')).screenshot({ path: OUT + '/prize_' + fx + '.png' }).catch(() => {}); }
+    if (rm !== 'reduce') { fps[fx] = await p.evaluate(async () => { const t = []; const t0 = performance.now(); while (performance.now() - t0 < 4000) { await new Promise((o) => requestAnimationFrame(o)); t.push(performance.now()); } const d = t.slice(1).map((v, i) => v - t[i]).sort((a, z) => a - z); return { frames: t.length, p50: Math.round(d[d.length >> 1]), p95: Math.round(d[Math.floor(d.length * .95)]) }; }); }
+    if (fx !== 'none' && rm !== 'reduce') { await p.evaluate((fx) => { for (const m of document.querySelectorAll('#layer > *')) m.remove(); const look = JSON.parse(JSON.stringify(window.__qb.lookOf())); window.__qbV135.setWorlds([{ id: 'u9', name: 'Other', look, lv: 30, ep: 8, chfx: fx, xp: 1, total: 100 }]); const bt = document.createElement('button'); bt.setAttribute('data-act', 'fshview'); bt.setAttribute('data-u', 'u9'); document.body.appendChild(bt); bt.click(); bt.remove(); }, fx); await p.waitForTimeout(1500);
+      const ov = await p.evaluate(() => { const m = document.querySelector('#layer .fsh-modal'); return m ? !!m.querySelector('.pc-fig.v76on, .pc-fig.v74on') : 'no window'; }); ok(ov === true, tag + ': another player\'s view shows it ' + ov); }
+    await ctx.close(); }
+  console.log('     frames over 4 s with header + profile + big card on screen (swiftshader): ' + JSON.stringify(fps));
+  const base = fps.none && fps.none.frames; for (const k of ['px_halo', 'px_ring', 'px_storm']) if (fps[k]) ok(fps[k].frames >= base * 0.7, k + ' keeps at least 70% of the frames of no prize (' + fps[k].frames + ' vs ' + base + ')');
+  ok(!errs.length, 'no page errors or dialogs ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
