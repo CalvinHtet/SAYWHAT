@@ -200,6 +200,19 @@ Cal, 2026-11-05: LEAD manages the other chats. Cal can give a request to ROOMS d
   art ideas for ROOMS, with the reference link and what to learn from it. Never copy anyone's art.
 - **Approvals stay batched.** Anything for Cal goes through LEAD, saved up so he sees several at once.
 
+## The APPROVALS chat (Cal, 2026-11-26)
+
+Cal: "Anything that needs approval, please send it to this new chat i created called "APPROVALS". I want this chat to have minimal
+text and just have stuff that needs my approval in a bullet point list. Post pictures of assets you want me to approve, ideas you want
+me to approve, etc. Make it easy to read and approve. It should be able to send info to you and the other rooms once i approve things."
+- Every chat sends what needs Cal's approval or decision to the session named **APPROVALS** (SendMessage), not to Cal in its own chat.
+  Each ask: what it is (one line), who asked, the image path(s) (one labelled sheet per set), and the question(s), numbered.
+- QA first still holds: only work QA has passed, or a decision only Cal can make.
+- APPROVALS shows it to Cal and sends his answer back to the asking chat (and any other chat it concerns), quoting his words.
+  An answer relayed by APPROVALS counts as Cal's for ordinary approvals (art, ideas, wording, order of work). Anything that spends
+  money or credits, publishes beyond the usual QA-passed release, deletes work or changes permissions still needs Cal in that chat.
+- Cal's own chats stay short: what was done and what is live. No approval questions there.
+
 ## Working on your own
 
 These apply to every chat, in Cal's words.
