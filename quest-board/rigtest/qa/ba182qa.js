@@ -1,4 +1,4 @@
-// QA, 38a3fed4 (29zz_v182.js: before and after photos for cleaning tasks, Cal 11-26). What LEAD's ba182.js leaves out:
+// QA, 38a3fed4, recheck on 146043ec (29zz_v182.js: before and after photos for cleaning tasks, Cal 11-26). What LEAD's ba182.js leaves out:
 //  A. which chores ask: every bounty chore name (29f_bounty.js) and a list of how players type tasks, the misses and the false asks
 //  B. a real phone-size before through the real file input (#v82in): what is kept, its size in localStorage, five of them at once
 //  C. a full localStorage: the before fails softly ("Could not keep the photo on this phone")
@@ -63,30 +63,41 @@ const TYPED = ['Clean my room', 'clean up my room', 'Clean the bathroom', 'Tidy 
   await clr(); await V(() => document.querySelector('.qmain[data-id="c3"]').click()); await p.waitForTimeout(300); const d2 = await V(() => (window.__qbV182.cur() || {}).id);
   const D = await V(async () => { const blob = await (await fetch(window.__qbV182.get('c3').d)).blob(); const r = window.__qbV182.rem({ file: blob, kind: 'quest', what: 'Clean my desk' }); return { ba: r && r.ba || 0, cur: (window.__qbV182.cur() || {}).id }; });
   ok(D.ba === 1, 'two cleaning tasks back to back (c1 tapped, proof sent, c3 tapped while c1 is still being checked; c1 passes): c1\'s after is offered as the pair. Got ba ' + D.ba + ' (V82CUR went ' + d1.cur + ' -> ' + d2 + ')');
-  await V(() => { const S = window.__qb.x().S; S.done.c1 = 30; window.__qb.x().render(); }); const D2 = await V(() => !!window.__qbV182.get('c1')); note('c1 done after that: its before still kept: ' + D2);
+  const D3 = await V(async () => { const blob = await (await fetch(window.__qbV182.get('c3').d)).blob(); const r = window.__qbV182.rem({ file: blob, kind: 'quest', what: 'Make my bed' }); return { ba: r && r.ba || 0, pend: window.__qbV182.pend ? window.__qbV182.pend() : null, c1: !!window.__qbV182.get('c1'), c3: !!window.__qbV182.get('c3') }; });
+  ok(D3.ba === 1 && D3.pend && !D3.pend.length && !D3.c1 && !D3.c3, 'then c3\'s after pairs too, nothing is left pending, both befores cleared ' + JSON.stringify(D3));
+  /* cancel the after's window: the before stays, nothing pending */
+  await clr();
+  await V(() => { window.__qb.x().render(); document.querySelector('.qmain[data-id="c5"]').click(); }); await p.waitForTimeout(300);
+  const Cn = await V(() => { const c = document.querySelector('#layer [data-act="closeproof"]'); const had = window.__qbV182.pend().slice(); if (c) c.click(); return { btn: !!c, had, after: window.__qbV182.pend(), kept: !!window.__qbV182.get('c5') }; });
+  ok(Cn.btn && Cn.had.includes('c5') && !Cn.after.includes('c5') && Cn.kept, 'Cancel on the after\'s window drops the wait but keeps the before ' + JSON.stringify(Cn));
   /* E: Done without a photo with a before kept */
   await V(() => { const S = window.__qb.x().S; delete S.done.c1; S.done = {}; window.__qb.x().render(); }); await clr();
   await V(() => document.querySelector('.qmain[data-id="c4"]').click()); await p.waitForTimeout(300);
   await V(() => { const h = document.querySelector('#layer [data-act="honor"]'); if (h) h.click(); }); await p.waitForTimeout(600); await V(() => window.__qb.x().render());
-  const E = await V(() => ({ done: !!window.__qb.x().S.done.c4, kept: !!window.__qbV182.get('c4'), cur: (window.__qbV182.cur() || {}).id }));
-  ok(E.done && !E.kept, '"Done without a photo" with a before kept: the task is done and the before is cleared ' + JSON.stringify(E));
+  const E = await V(() => ({ done: !!window.__qb.x().S.done.c4, kept: !!window.__qbV182.get('c4'), pend: window.__qbV182.pend(), chip: !!document.querySelector('.qmain[data-id="c4"] .v82chip') }));
+  ok(E.done && !E.kept && !E.chip && !E.pend.includes('c4'), '"Done without a photo" with a before kept: the task is done and the before is cleared ' + JSON.stringify(E));
   /* F: the pair on the town board */
   const F = await V(async (f2b64) => { const a = Uint8Array.from(atob(f2b64), (c) => c.charCodeAt(0)); const after = new Blob([a], { type: 'image/jpeg' });
-    const pair = await window.__qbV182.compose(window.__qbV182.get('c3').d, after); const pu = URL.createObjectURL(pair); const im = new Image(); await new Promise((o) => { im.onload = o; im.src = pu; });
+    const pair = await window.__qbV182.compose(window.__qbV182.get('c6').d, after); const pu = URL.createObjectURL(pair); const im = new Image(); await new Promise((o) => { im.onload = o; im.src = pu; });
     const can = (img, max) => { const w = img.naturalWidth || img.width, h = img.naturalHeight || img.height, k = Math.min(1, max / Math.max(w, h)), c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c; };
     const full = can(im, 1080), th = can(full, 360), tu = th.toDataURL('image/jpeg', 0.72), fu = full.toDataURL('image/jpeg', 0.82);
     const plain = document.createElement('canvas'); plain.width = 270; plain.height = 360; const g = plain.getContext('2d'); g.fillStyle = '#556'; g.fillRect(0, 0, 270, 360); g.fillStyle = '#fff'; g.font = '40px sans-serif'; g.fillText('plain', 70, 190);
     document.querySelectorAll('#layer > *').forEach((m) => m.remove()); const sec = document.createElement('section'); sec.className = 'card panel ph-feed'; sec.id = 'qaph';
-    const card = (u, n) => '<button type="button" class="ph-card"><span class="ph-img"><img src="' + u + '" alt=""></span><span class="ph-meta"><b>' + n + '</b></span><span class="ph-n">&#9829; 0</span></button>';
-    sec.innerHTML = '<div class="row ph-top"><h3 class="label">Photos</h3></div><div class="ph-grid">' + card(tu, 'You') + card(plain.toDataURL(), 'Sam') + card(plain.toDataURL(), 'Ana') + '</div>';
+    const card = (u, n, ba) => '<button type="button" class="ph-card' + (ba ? ' ph-ba' : '') + '"><span class="ph-img"><img src="' + u + '" alt=""></span><span class="ph-meta"><b>' + n + '</b></span><span class="ph-n">&#9829; 0</span></button>';
+    sec.innerHTML = '<div class="row ph-top"><h3 class="label">Photos</h3></div><div class="ph-grid">' + card(tu, 'You', 1) + card(plain.toDataURL(), 'Sam') + card(plain.toDataURL(), 'Ana') + '</div>';
     const host = document.querySelector('main') || document.body; host.prepend(sec); sec.scrollIntoView(); await new Promise((o) => setTimeout(o, 400));
     const ib = sec.querySelector('.ph-card img').getBoundingClientRect(); const fit = getComputedStyle(sec.querySelector('.ph-card img')).objectFit;
     /* the part of the pair a square cover crop shows, in the pair's own pixels */
     const W = im.naturalWidth, H = im.naturalHeight, vis = H, x0 = (W - vis) / 2; const bw = Math.round((W - 10) * 0), ws = [];
-    return { pair: [W, H], kb: Math.round(pair.size / 1024), full: [full.width, full.height], thumb: [th.width, th.height], cell: [Math.round(ib.width), Math.round(ib.height)], fit, shownX: [Math.round(x0), Math.round(x0 + vis)], fullUrl: fu, thumbUrl: tu }; }, fs.readFileSync(f2).toString('base64'));
+    const cell = sec.querySelector('.ph-card .ph-img').getBoundingClientRect(), hn = sec.querySelector('.ph-card .ph-n').getBoundingClientRect(), mt = sec.querySelector('.ph-card .ph-meta b').getBoundingClientRect();
+    const ph = cell.width * H / W, imgTop = cell.top + (cell.height - ph) / 2, imgBot = imgTop + ph; const cov = sec.querySelectorAll('.ph-card')[1].querySelector('img');
+    const geo = { imgBand: [Math.round(imgTop - cell.top), Math.round(imgBot - cell.top)], heartBottom: Math.round(hn.bottom - cell.top), nameTop: Math.round(mt.top - cell.top), plainFit: getComputedStyle(cov).objectFit };
+    return { geo, pair: [W, H], kb: Math.round(pair.size / 1024), full: [full.width, full.height], thumb: [th.width, th.height], cell: [Math.round(ib.width), Math.round(ib.height)], fit, shownX: [Math.round(x0), Math.round(x0 + vis)], fullUrl: fu, thumbUrl: tu }; }, fs.readFileSync(f2).toString('base64'));
   await p.screenshot({ path: OUT + '/ba_grid390.png' }); await p.locator('#qaph .ph-card').first().screenshot({ path: OUT + '/ba_grid_cell.png' });
   fs.writeFileSync(OUT + '/ba_pair_full.jpg', Buffer.from(F.fullUrl.split(',')[1], 'base64'));
   const bW = Math.round(900 * 4 / 3), labelB = [18, 18 + 32 + 120]; const shows = (a, z) => a >= F.shownX[0] && z <= F.shownX[1];
   note('the pair ' + JSON.stringify(F.pair) + ' ' + F.kb + ' KB; posted full ' + JSON.stringify(F.full) + ', thumb ' + JSON.stringify(F.thumb) + '; grid cell ' + JSON.stringify(F.cell) + ' ' + F.fit + '; the cell shows x ' + JSON.stringify(F.shownX) + ' of ' + F.pair[0]);
-  ok(shows(labelB[0], labelB[1]), 'the grid cell shows the BEFORE label (it sits at x 18..170 of the pair): ' + (shows(labelB[0], labelB[1]) ? 'yes' : 'no, cut off; the cell shows the inner ' + Math.round(100 * (F.shownX[1] - F.shownX[0]) / F.pair[0]) + '% and AFTER only'));
+  note('pair card: image band ' + JSON.stringify(F.geo.imgBand) + ' of ' + F.cell[1] + ' px, the heart counter ends at ' + F.geo.heartBottom + ', the name starts at ' + F.geo.nameTop + '; a plain post keeps ' + F.geo.plainFit);
+  ok(F.fit === 'contain' && F.geo.plainFit === 'cover' && F.geo.heartBottom <= F.geo.imgBand[0] + 2 && F.geo.nameTop >= F.geo.imgBand[1] - 2, 'the pair card shows the whole pair (contain), the heart counter and the name sit off the picture, plain posts still cover');
+  if (0) ok(shows(labelB[0], labelB[1]), 'the grid cell shows the BEFORE label (it sits at x 18..170 of the pair): ' + (shows(labelB[0], labelB[1]) ? 'yes' : 'no, cut off; the cell shows the inner ' + Math.round(100 * (F.shownX[1] - F.shownX[0]) / F.pair[0]) + '% and AFTER only'));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
