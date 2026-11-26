@@ -26,7 +26,7 @@ var v57Guess=guess;guess=function(t){var r=v57Guess.apply(this,arguments);try{if
 /* the day's finished small one-offs by name, for the repeat rule */
 function v57Key(q){return String(q.name||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
 function v57Rpt(){var t=today(),o=S.rpt;if(!o||typeof o!=="object"||o.d!==t)o=S.rpt={d:t,n:{},m:{}};if(!o.n||typeof o.n!=="object")o.n={};if(!o.m||typeof o.m!=="object")o.m={};return o}
-function v57Small(q){return !!q&&!q.bty&&q.rep!=="daily"&&q.rep!=="weekly4"&&(+q.xp||0)>=5&&(+q.xp||0)<=10}
+function v57Small(q){return !!q&&!q.bty&&q.rep!=="daily"&&q.rep!=="days"&&q.rep!=="weekly4"&&(+q.xp||0)>=5&&(+q.xp||0)<=10}
 var V57REPEAT=2;/* this many of the same small task a day pay in full */
 var v57Toggle=toggle;toggle=function(id,ev,mode){var q=(S.quests||[]).filter(function(x){return x.id===id})[0];if(!q)return v57Toggle.apply(this,arguments);
   var R=v57Rpt(),was=!!(S.done&&S.done[id]),asStep=v57Micro(q)||(was?!!R.m[id]:(v57Small(q)&&(R.n[v57Key(q)]||0)>=V57REPEAT));
