@@ -28,5 +28,8 @@ window.addEventListener("scroll",function(){requestAnimationFrame(v81Stick)},{pa
 htabCss("qb-v181-css",".qshop .v81cats{position:sticky;z-index:29;display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:none;margin:6px 0 10px;padding:6px 2px;background:linear-gradient(180deg,rgba(11,14,26,.92),rgba(11,14,26,.78));border-radius:14px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}"
   +".qshop .v81cats::-webkit-scrollbar{display:none}.qshop .v81cats .qs-tab{flex:none;white-space:nowrap}"
   +".qs-sec.v81off{display:none}.qs-sec.v81sec>h3{display:none}"
+  /* QA b2755c42: another .qs-tabs rule wrapped the row onto two lines; and the fixed coin pill sat over the end of the card's piece names */
+  +".qshop nav.v81cats{flex-wrap:nowrap!important;overflow-x:auto!important;justify-content:flex-start!important}"
+  +"@media (max-width:640px){.qs-mirror.v60m .qs-worn{padding-right:clamp(78px,26vw,112px)}}"
   +"@media (max-width:640px){.qs-mirror.v60m{position:sticky!important;top:6px!important;left:auto!important;right:auto!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;margin:0 0 6px!important;transition:none!important}}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV181={apply:v81Apply,sel:function(){return V81SEL}};
