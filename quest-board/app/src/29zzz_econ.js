@@ -9,7 +9,7 @@
    - MOMENTUM_MAX: a day's quest coins grow to 1.5x (was 2x), reached on the 7th task.
    - PROOFX: a verified photo pays 1.5x (was 2x), read in mults (30_app_b.js); the verify perk still adds 0.1.
    - COINLV: task coins no longer grow 1% a level (missions, the wheel and chests still do, econScaled). */
-var PRICEK=1.15,MOMENTUM_MAX=.5,PROOFX=1.5,COINLV=0;
+var PRICEK=1.15,MOMENTUM_MAX=.5,PROOFX=1.5,COINLV=.01,COINLVMAX=.5;/* Cal 11-25 (later): "I still want it a bit faster in terms of upgrades ... casual players will play once and step away": task coins grow 1% a level again, up to +50% (level 51), so income keeps up with the dearer rooms */
 function priceK(c){if(!c||c<0||PRICEK===1)return c;var n=c*PRICEK;return n<1000?Math.round(n/10)*10:Math.round(n/50)*50}
 (function(){
   SHOP.forEach(function(it){if(it&&it[3])it[3]=priceK(it[3])});
@@ -23,7 +23,7 @@ function priceK(c){if(!c||c<0||PRICEK===1)return c;var n=c*PRICEK;return n<1000?
 /* rooms with no LFDS entry get their decor sets (Industrial, Modern) made fresh on every call in 20_loft.js */
 var pkDecBase=lfDecSets;lfDecSets=function(t){if(LFDS[t])return LFDS[t];return pkDecBase(t).map(function(q){if(q.cost)q.cost=priceK(q.cost);return q})};
 coinMomentum=function(){var n=Object.keys(S.cdone||{}).length;return 1+Math.min(MOMENTUM_MAX,Math.max(0,n-2)*.125)};
-coinsFor=function(xp){return Math.max(10,Math.round(xp*((typeof ECON!=="undefined"&&ECON.coinXp)||6)*(1+COINLV*(effLvl()-1))*coinMomentum()))};
+coinsFor=function(xp){return Math.max(10,Math.round(xp*((typeof ECON!=="undefined"&&ECON.coinXp)||6)*(1+Math.min(COINLVMAX,COINLV*(effLvl()-1)))*coinMomentum()))};
 /* ---------- Part 2 (Cal, 2026-11-23, after the sims: "i definitely want better balancing so its not too easy to become super rich.
    Everything should be earned ... Luxury clothes can be a tiny bit pricier, but I think we can also make everything about 2 times slower
    instead of 5 times", "Reduce the coin rewards for completing goals in the loft ... Change this to exp gain instead of so much money",
@@ -39,7 +39,7 @@ var EARNK=.77;
 /* Cal 11-25: "I've been playing for 3 days i just hit level 10, but have not upgraded much in my base ... can we increase the coin gain
    by a little bit more?", with "the main focus should still be the tasks done and not relying on passive money". Tasks pay a fifth
    more coins (TASKK); businesses, chests and the rest are unchanged. */
-var TASKK=1.2;
+var TASKK=1.45;/* Cal 11-25 (later): a fifth more again for tasks (was 1.2) */
 (function(){var E=ECON;E.coinXp=Math.round(6*EARNK*TASKK*100)/100;E.vegCoin=Math.max(1,Math.round(E.vegCoin*EARNK));/* whole coins: a fraction left coin balances like 299.76 (sims) */E.trainCoins=Math.round(E.trainCoins*EARNK);/* Cal 11-25: a full workout pays 500 coins flat */E.trainCoins=500;
   E.lvPay=[Math.round(E.lvPay[0]*EARNK),Math.max(1,Math.round(E.lvPay[1]*EARNK))];E.wqCoins=3000;
   E.goal={half:[100,150],full:[300,400],story:[75,100]};
