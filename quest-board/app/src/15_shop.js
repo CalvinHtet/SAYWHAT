@@ -194,7 +194,7 @@ var EXTRA_ITEMS=[
  ["gx_smk_band","a_hat","Stitched Headband",700,1,"Ash-grey cloth, a stitched smoke puff.",{gar:"smk_band",b:"smk"}],
  ["gx_smk_wrap","a_hat","Spiky Headwrap",650,1,"Ink black, an ember-orange tie.",{gar:"smk_wrap",b:"smk"}],
  ["gx_smk_cowl","a_acc","Half-Face Cowl",800,1,"Up over the nose, eyes only.",{gar:"smk_cowl",b:"smk"}],
- ["gx_smk_tape","a_acc","Wrap Tape Set",500,1,"Cream tape on the arms and shins.",{gar:"smk_tape",b:"smk"}],
+ ["gx_smk_tape","a_acc","Wrap Tape Set",500,1,"Cream tape on the forearms.",{gar:"smk_tape",b:"smk"}],
  ["gx_smk_pouch","a_acc","Scroll Pouch",600,1,"A scroll on a hip strap.",{gar:"smk_pouch",b:"smk"}],
  ["gx_smk_jacket","a_top","High-Collar Zip Jacket",1500,1,"Ink black, ember-orange panels.",{gar:"smk_jacket",b:"smk"}],
  ["gx_smk_mesh","a_top","Mesh Wrap Top",1100,1,"Sleeveless wrap over a mesh undershirt.",{gar:"smk_mesh",b:"smk"}],
