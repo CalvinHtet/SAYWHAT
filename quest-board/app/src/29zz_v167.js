@@ -54,7 +54,7 @@ setInterval(v67Refund,4000);setTimeout(v67Refund,1500);
 function v67Goals(){var out=[],ready=0;
   try{var g=gated(),dqOn=!(typeof calmOn==="function"&&calmOn()&&calmDay()<2),open=(S.quests||[]).filter(function(q){return q&&!S.done[q.id]});
     if(g!==null){out.push({k:"trial",t:"Pass your level trial",s:"It holds your levelling until you do.",go:'data-act="char" data-v65="gate"',ready:1});ready++}
-    else if(!open.length)out.push({k:"tasks",t:"Add today's tasks",s:"Every one pays XP and coins.",go:'data-v67="add"'});
+    else if(!open.length)out.push({k:"tasks",t:"Add today's tasks",s:"",go:'data-v67="add"'});
     var L=effLvl(),into=Math.max(0,(S.xp||0)-cum(L)),nd=need(L);
     out.push({k:"level",t:"Reach level "+(L+1),s:Math.max(0,nd-into).toLocaleString()+" XP to go",fr:nd>0?Math.min(1,into/nd):0});
     if(dqOn&&typeof dqGoal==="function"){var x=dqXp(),gl=dqGoal();if(gl)out.push({k:"dq",t:"Daily Quest",s:x>=gl?"Done today":(gl-x)+" XP of tasks to go",fr:Math.min(1,x/gl),done:x>=gl})}
@@ -84,7 +84,7 @@ var v67Board=boardHtml;boardHtml=function(){var h=v67Board.apply(this,arguments)
   return h};
 
 /* ---- the try-on card's character fits its frame ---- */
-function v67Fit(im){try{var gl=im.closest(".qs-glass");if(!gl||gl.classList.contains("qs-face"))return;im.style.transform="";var b=v64Box(im);if(!b)return;
+function v67Fit(im){try{var gl=im.closest(".qs-glass");if(!gl||gl.classList.contains("qs-face"))return;/* QA: an animated figure swaps its picture every frame; fit it once per look, so it does not drift */var lk=(im.getAttribute("data-look")||"")+"|"+gl.clientWidth+"x"+gl.clientHeight;if(im.dataset.v67k===lk&&im.style.transform)return;im.dataset.v67k=lk;im.style.transform="";var b=v64Box(im);if(!b)return;
     var G=gl.getBoundingClientRect(),R=im.getBoundingClientRect();if(G.width<10||R.height<10)return;var m=Math.max(3,G.height*.05),
       dw=(b[2]-b[0])*R.width,dh=(b[3]-b[1])*R.height,s=Math.min(1,(G.width-2*m)/dw,(G.height-2*m)/dh),
       cx=R.left+(b[0]+b[2])/2*R.width,by=R.top+b[3]*R.height,ty=R.top+b[1]*R.height,dx=(G.left+G.width/2)-cx,dy=0;

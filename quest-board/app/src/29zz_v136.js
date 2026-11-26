@@ -75,7 +75,7 @@ function v36EdHtml(id){var custom=EX[id][1]==="custom"&&!/^sw_/.test(id),o=v36Or
     +'<div class="v36row"><div class="v36f"><small>Sets</small><div class="v36st"><button class="btn ghost sm" data-act="v36s" data-d="-1">&minus;</button><b id="v36sv">'+sets+'</b><button class="btn ghost sm" data-act="v36s" data-d="1">+</button></div></div>'
     +'<label class="v36f"><small>Reps</small><input id="v36r" type="text" maxlength="16" value="'+esc(reps)+'" placeholder="8-10" style="'+inp+'"></label></div>'
     +'<div class="v36f"><small>Photo (optional)</small><div class="row" style="gap:8px;flex-wrap:wrap"><label class="btn ghost sm" style="cursor:pointer">'+(img?'Change photo':'Add a photo')+'<input id="v36p" type="file" accept="image/*" hidden></label>'+(img?'<button class="btn ghost sm" data-act="v36pnone">Use the emoji</button>':'')+'</div></div>'
-    +'<p class="note">Only you see this. It changes this exercise wherever it comes up.</p>'
+    +''
     +'<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-act="v36save">Save</button>'+(!custom&&w?'<button class="btn ghost" data-act="v36orig">Back to '+esc(EX[o][0])+'</button>':'')+'<button class="btn ghost" data-act="mclose">Cancel</button></div></div>'}
 function v36EdOpen(id){V36ED={id:id,img:null,sets:null};modal(v36EdHtml(id))}
 function v36EdRedraw(){var m=document.querySelector("#layer .v36edm");if(!m)return;var n=document.getElementById("v36n"),r=document.getElementById("v36r"),sv=document.getElementById("v36sv"),keep={n:n&&n.value,r:r&&r.value,s:sv&&sv.textContent};

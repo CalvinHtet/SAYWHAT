@@ -116,8 +116,8 @@ var v35Box=fshBoxInner;fshBoxInner=function(){if(FSH.mode!=="fashion")return v35
   var wk=fshWk(),left=Math.max(1,7*1440-wk.mins),dd=Math.floor(left/1440),hh=Math.floor(left%1440/60),u=fshUsed(),rk=fshRank("fashion");
   return '<p class="note lbi">Fashion week &middot; ends in '+(dd?dd+'d '+hh+'h':hh?hh+'h':(left%60)+' min')+'</p>'+fshLastWeek()
     +'<div class="fsh-you"><span>'+(u>=2?'You used both votes this week. You qualify.':'You have '+(2-u)+' vote'+(2-u===1?'':'s')+' left this week. Use both to qualify.')+'</span></div>'
-    +'<p class="note">'+fshRule()+'. Tap a look to vote.</p>'+fshList(rk,"fashion")};
-fshLikeBox=function(p){if(p.me)return '<p class="note">Your look. Others vote here. The week closes Sunday 7 pm Pacific.</p>';
+    +'<p class="note">'+fshRule()+'.</p>'+fshList(rk,"fashion")};
+fshLikeBox=function(p){if(p.me)return '';
   if(!fshIsOn())return '';if(FSH.err==="permission-denied")return '<p class="note">Voting is not switched on yet.</p>';
   var mine=(fshMyTo()[p.id]||0)>0,left=fshLeft(p.id);
   if(mine)return '<button type="button" class="btn ghost big fsh-like on" disabled>You voted for this look</button><button type="button" class="btn ghost sm fsh-back" data-act="fshunlike" data-u="'+esc(p.id)+'">Take back my vote</button><p class="note">'+fshRule()+'.</p>';
@@ -182,7 +182,7 @@ var v35Vis=visQ;visQ=function(q){if(q&&q.rep==="weekly4")return false;return v35
 function v35Gq(){return (S.quests||[]).filter(function(q){return q&&q.rep==="weekly4"})[0]||null}
 var v35Train=trainHtml;trainHtml=function(){var h=v35Train.apply(this,arguments);try{var q=v35Gq();if(!q)return h;var done=!!(S.done&&S.done[q.id]),full=weekCount()>=4;
     var add=done?'<p class="note v35wk"><b>&#10003; Today&rsquo;s workout is logged.</b></p>'
-      :'<button class="btn big v35wk" data-act="v35wk">'+(full?'Log another workout':'Log today&rsquo;s workout')+'</button><p class="note">Take a live photo as proof.</p>';
+      :'<button class="btn big v35wk" data-act="v35wk">'+(full?'Log another workout':'Log today&rsquo;s workout')+'</button>';
     var i=h.indexOf('</section>');if(i>=0)h=h.slice(0,i)+add+h.slice(i)}catch(e){}return h};
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=v35wk]");if(!b)return;var q=v35Gq();if(q)onTap(q.id,e)});
 

@@ -14,7 +14,7 @@ function roomCell(i){
 function baseHtml(){
   simulate();
   var B=S.base,rate=B.slots.reduce(function(s,r,i){return s+(r&&ROOMT[r.t].coin?coinRate(i):0)},0),tot=B.slots.reduce(function(s,r,k){return s+(r&&r.pend?Math.min(Math.floor(r.pend),typeof bizLeft==="function"?bizLeft(r,k):Infinity):0)},0);/* w-econ3: what each business may still pay today */
-  var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'/* Cal 11-25: "I just want to see the coins on the building page": no "+" or mailbox here (both are on the Board) */+(B.slots.some(function(r){return r&&r.t==="restaurant"})?'<span>'+Math.round(rate)+' / hr</span>':'')+'</div>'+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
+  var hud='<div class="lfhud mono"><span class="coinlive" data-c="'+coinShown()+'"><i class="coin"></i>&nbsp;<b>'+coinShown().toLocaleString()+'</b></span>'/* Cal 11-25: "I just want to see the coins on the building page": no "+" or mailbox here (both are on the Board) */+'</div>'/* Cal 11-25: "Remove the n/hr" */+(function(){/* Cal, 2026-11-06: "it still says collect coins when I have nothing left to collect": the button offers only what
     today's share still pays (payRoom); coins past it wait in the rooms, shown as a quiet note, not a Collect button */
     var can=Math.min(tot,typeof payRoom==="function"?payRoom():tot);return can>=1?'<button class="btn lfcol" data-act="rall"><i class="coin"></i>&nbsp;Collect '+can+'</button>':tot>=1?'<span class="lfcol lfwait mono">'+tot+' waiting &middot; finish a quest</span>':''})();
   if(LFBSEL!=null)hud+='<div class="lfbtop"><button class="btn ghost" data-act="bldout" aria-label="Back to the street">&larr; Street</button><b>'+esc(BLD[LFBSEL].name)+'</b></div>';/* Cal 11-25: the building's Goals live in the Board's one Goals button (29zz_v167.js), not here */
@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=163, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=165, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1415,12 +1415,12 @@ function boardHtml(){
 
   /* Cal, 2026-11-09: no "Now" card. Quests go in without any order, so every quest is equal and sits in its category below. */
   if(!cur){
-    h+='<section class="card allclear"><span class="label">'+(S.quests.length?'Run complete':'Empty board')+'</span><h2>'+(S.quests.length?'Every quest cleared':'No quests yet')+'</h2><p class="note" style="margin:6px 0 12px">'+(S.quests.length?'XP and stats stay. Start a fresh run tomorrow.':'Type your tasks in the brain dump above. Each one becomes a quest with XP and coins.')+'</p><button class="btn ghost" data-act="newday">New run</button></section>';
+    h+='<section class="card allclear"><span class="label">'+(S.quests.length?'Run complete':'Empty board')+'</span><h2>'+(S.quests.length?'Every quest cleared':'No quests yet')+'</h2><p class="note" style="margin:6px 0 12px">'+(S.quests.length?'XP and stats stay. Start a fresh run tomorrow.':'Add tasks above.')+'</p><button class="btn ghost" data-act="newday">New run</button></section>';
   }
 
   var bid=ri>=2?bountyId():null;
   /* Cal, 2026-11-09: "add the delete button behind an edit toggle": the &times; on each quest shows only while editing */
-  if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+(qEdit?'Tap &times; to remove a quest':'')+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
+  if(S.quests.some(function(q){return visQ(q)}))h+='<div class="qhead"><span class="note">'+''+'</span><button class="qedit'+(qEdit?' on':'')+'" data-act="qedit" aria-pressed="'+qEdit+'">'+(qEdit?'Done':'Edit')+'</button></div>';
   /* Cal, 2026-11-09: "if there are no quests, which is the beginning of the game, there should be no categories ... only
      categorize them once tasks start coming in" and "Completed tasks can be all the way at the bottom". Open quests are a plain
      list while they all sit in one category, with category headers once they span two or more; every finished quest goes into
