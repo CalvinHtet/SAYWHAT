@@ -13,8 +13,8 @@ Existing: hats band, wrap; head cowl; neck tape, pouch; tops (2 live); bottoms c
 | head (glasses) | smk_slitvisor | Ember Slit Visor | Thin wraparound black visor with one glowing ember-orange slit lens. |
 | head (mask) | smk_resp | Smoke Respirator | Sleek matte-black half respirator with twin round ember-orange filter caps. |
 | head (glasses) | smk_goggles | Night Goggles | Round smoked-lens goggles with steel rims and a black strap. |
-| head (mask) | smk_senbon | Senbon Pick | A thin steel needle held at the corner of the mouth, a tiny ember wrap at its end. |
-| head (mask) | smk_meshmask | Mesh Mask | Black mesh lower-face mask with an ember-orange edge, the jaw shows faintly through. |
+| head (glasses) | smk_scoutlens | Scout Lens | A single round ember-orange scope lens clipped over one eye on a slim black steel band, tiny rivets. (ROOMS 11-26: replaces the Senbon Pick, too plain for Cal's never-plain rule.) |
+| head (mask) | smk_ventmask | Vent Mask | Matte-black lower-face guard with stacked vent slits, ember-orange edge piping and steel side clasps. (ROOMS 11-26: replaces the Mesh Mask; see-through mesh cannot be keyed over magenta.) |
 | necklace (neck) | smk_trailscarf | Trail Scarf | Long ink-black scarf with ember-orange tips trailing behind. |
 | necklace (neck) | smk_kunai | Kunai Chain | Steel chain with a small kunai-blade pendant. |
 | necklace (neck) | smk_platecollar | Plated Collar | High segmented steel neck guard on black straps. |
