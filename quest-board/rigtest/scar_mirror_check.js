@@ -8,12 +8,15 @@ const OUT = process.env.OUT;
     const R = await QBRig.create({ rig: Object.assign({}, Q.rig, { frame: [Q.loft.frame[0] * HI, Q.loft.frame[1] * HI], frameScale: Q.loft.frameScale * HI, anchorPad: Q.loft.anchorPad * HI, frameCache: 4 }), bodies: Q.bodies, poses, clips, assetUrl: (a) => (window.QBART && QBART[a]) || Q.loft.artBase + a });
     const hairs = QBLoft.data.creator.hairStyles; const out = {};
     for (const sex of ['m', 'f']) { const HS = hairs[sex].map((h) => h.id); const fw = Q.loft.frame[0] * HI, fh = Q.loft.frame[1] * HI, cw = 260, ch = 230;
-      const cv = document.createElement('canvas'); cv.width = cw * 5; cv.height = ch * HS.length; const g = cv.getContext('2d'); g.fillStyle = '#8b8fa3'; g.fillRect(0, 0, cv.width, cv.height);
-      for (let hi = 0; hi < HS.length; hi++) for (let si = 0; si < 5; si++) {
-        S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex }); S.char.rig = Object.assign({}, QBLoft.data.creator.defaults, { body: sex, hairStyle: HS[hi], hairColor: 'brown' });
-        const L = JSON.parse(JSON.stringify(window.__qb.lookOf({}).rig)); L.markS = si < 4 ? 's' + (si + 1) : null; L.markT = si < 4 ? 't2' : 't4';
+      // rows 0-3: scar s1..s4 x tattoo t1..t6 on the first hairstyle; then one row per hairstyle, tattoo t1..t6 with scar s(1+col%4)
+      const rows = 4 + HS.length;
+      const cv = document.createElement('canvas'); cv.width = cw * 6; cv.height = ch * rows; const g = cv.getContext('2d'); g.fillStyle = '#8b8fa3'; g.fillRect(0, 0, cv.width, cv.height);
+      for (let r = 0; r < rows; r++) for (let ti = 0; ti < 6; ti++) {
+        const hair = r < 4 ? HS[0] : HS[r - 4], scar = r < 4 ? 's' + (r + 1) : 's' + (1 + (ti % 4));
+        S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex }); S.char.rig = Object.assign({}, QBLoft.data.creator.defaults, { body: sex, hairStyle: hair, hairColor: 'brown' });
+        const L = JSON.parse(JSON.stringify(window.__qb.lookOf({}).rig)); L.markS = scar; L.markT = 't' + (ti + 1);
         const c = await R.render(QBLook.build(Q.creator, L), 'idle');
-        g.drawImage(c, fw * 0.28, fh * 0.08, fw * 0.44, fh * 0.39, si * cw, hi * ch, cw, ch);
+        g.drawImage(c, fw * 0.28, fh * 0.08, fw * 0.44, fh * 0.39, ti * cw, r * ch, cw, ch);
       }
       out[sex] = cv.toDataURL('image/png'); }
     return out; });
