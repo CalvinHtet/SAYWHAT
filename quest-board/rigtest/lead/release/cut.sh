@@ -5,6 +5,7 @@
 # are deleted too; web/, firestore rules and the release-only noTest config stay as the previous release had them), sets APPV, and,
 # with EPOCH=<n> in the environment, QB_EPOCH (only when Cal has asked for a reset of everyone). Then: what differs from the source
 # (should be APPV/QB_EPOCH only), artcheck, and the rollback build moved to APPV+1. Nothing is pushed or deployed.
+# From v1.72 (Cal 11-25): APPV = version x 10 (1720), the rollback is made by hand at APPV + 5 ("v1.71.5"); always run with DRY=1.
 R=$(git -C "$(dirname "$0")" rev-parse --show-toplevel) || exit 1
 PREV=$1; NEW=$2; V=$3; MSG=$4; SRC=${5:-qa-local}
 [ -n "$PREV" ] && [ -n "$NEW" ] && [ -n "$V" ] && [ -n "$MSG" ] || { echo "usage: cut.sh <prev> <new> <APPV> <message> [src]"; exit 1; }

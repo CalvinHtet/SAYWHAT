@@ -6,7 +6,7 @@ player's save is at `data/users/<id>/state`, and publishing does not touch it.
 Before publishing:
 
 1. Never bump `QB_EPOCH` in `app/src/00_clock.js`. It wipes every player's save.
-2. Bump `APPV` in `app/src/30_app_b.js` on every release. A page still open from an older version stops saving once a
+2. Bump `APPV` in `app/src/30_app_b.js` on every release. From v1.72 (Cal 11-25, sequential versions): `APPV` = version x 10 (v1.72 is 1720, v1.73 is 1730), and the stand-by rollback for a release is the previous version's code at that release's `APPV` + 5, shown as "v1.71.5" (1725 stands behind 1720). It must count higher than the release it would replace (the save guard and the update check compare numbers). A page still open from an older version stops saving once a
    newer version has saved, so it cannot overwrite that progress.
 3. Never rename or delete an item or upgrade id. Saves store those ids, so players would lose what they bought. Retire
    something by hiding it from the shop. New fields are safe, because `merge()` fills in defaults.
