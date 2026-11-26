@@ -7,9 +7,13 @@
    - Tapping it again opens the photo proof as usual (even for a task that would not normally ask): that photo is the after.
    - When the after passes its check, the photo offered for the town board is one picture, before and after side by side, labelled;
      posting is still the player's choice (private until posted). The before is cleared once the task is done or after two days. */
-var V82RX=/\b(clean|cleans|cleaning|tidy|tidying|declutter|decluttering|organi[sz]e|organi[sz]ing|vacuum|vacuuming|hoover|mop|mopping|sweep|sweeping|dust|dusting|scrub|scrubbing|wipe down|wash (the |my )?(dishes|car|windows)|do (the |my )?(dishes|laundry)|laundry|make (the |my )?bed|clear (out )?(the |my )?(desk|table|closet|garage))\b/i;
-var V82KEY="qb-ba-",V82ASK={},V82CUR=null;
-function v82Is(q){return !!q&&!q.bty&&q.rep!=="weekly4"&&V82RX.test(q.name||"")}
+/* QA 38a3fed4 LOW 3: more chores (wipe, bedding and sheets, trash, the dishwasher, counters and floors, putting away and folding),
+   and nothing digital or admin (inboxes, files, code, a resume, eating, a backlog) */
+var V82NOT=/\b(inbox|e-?mails?|files?|folders?|desktop|computer|laptop|phone|drive|downloads|calendar|code|codebase|refactor|resume|cv|backlog|social media|eating|diet|notes|tabs|apps?|account|budget|spreadsheet)\b/i;
+var V82RX0=/\b(clean|cleans|cleaning|tidy|tidying|declutter|decluttering|organi[sz]e|organi[sz]ing|vacuum|vacuuming|hoover|mop|mopping|sweep|sweeping|dust|dusting|scrub|scrubbing|wipe down|wash (the |my )?(dishes|car|windows)|do (the |my )?(dishes|laundry)|laundry|make (the |my )?bed|clear (out |off )?(the |my )?(desk|table|closet|garage|counters?|floor))\b/i;
+var V82RX=/\b(wipe|wiping|bedding|bed ?sheets|sheets|trash|garbage|bins?|recycling|dishwasher|counters?|put away|putting away|fold|folding|iron|ironing|hang up)\b/i;
+var V82KEY="qb-ba-",V82ASK={},V82PEND={};/* QA 38a3fed4 MED: every task whose after is on its way, by quest id */
+function v82Is(q){var n=(q&&q.name)||"";return !!q&&!q.bty&&q.rep!=="weekly4"&&!/^(admin|social)$/.test(q.cl||"")&&!V82NOT.test(n)&&(V82RX0.test(n)||V82RX.test(n))}
 function v82Get(id){try{var o=JSON.parse(localStorage.getItem(V82KEY+id)||"null");if(o&&o.d&&Date.now()-o.t<2*864e5)return o;if(o)localStorage.removeItem(V82KEY+id)}catch(e){}return null}
 function v82Set(id,d){try{localStorage.setItem(V82KEY+id,JSON.stringify({d:d,t:Date.now()}));return true}catch(e){return false}}
 function v82Del(id){try{localStorage.removeItem(V82KEY+id)}catch(e){}}
@@ -34,19 +38,22 @@ document.addEventListener("change",function(e){var t=e.target;if(!t||t.id!=="v82
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-v82]");if(!b)return;e.preventDefault();e.stopPropagation();var id=b.getAttribute("data-id");
   if(b.getAttribute("data-v82")==="skip"){V82ASK[id]=1;try{closeModals()}catch(x){}v82Tap(id)}},true);
 var v82Tap=onTap;onTap=function(id,ev){var q=S.quests.filter(function(x){return x.id===id})[0];
-  try{if(q&&!S.done[id]&&!proofPend[id]&&v82Is(q)){var B=v82Get(id);if(B){V82CUR={id:id,d:B.d};askProof(id);return}if(!V82ASK[id]){v82Ask(id);return}}}catch(x){}
+  try{if(q&&!S.done[id]&&!proofPend[id]&&v82Is(q)){var B=v82Get(id);if(B){V82PEND[id]={d:B.d,t:Date.now()};askProof(id);return}if(!V82ASK[id]){v82Ask(id);return}}}catch(x){}
   return v82Tap.apply(this,arguments)};
 /* the after passed: what is offered for the town board is the pair, side by side */
 var v82Rem=phRemember;phRemember=function(o){var r=v82Rem.apply(this,arguments);
-  try{var C=V82CUR;if(r&&C&&o&&o.kind==="quest"){var q=S.quests.filter(function(x){return x.id===C.id})[0];if(q&&o.what===q.name){V82CUR=null;r.ba=1;
+  try{if(r&&o&&o.kind==="quest"){var id=Object.keys(V82PEND).filter(function(k){var q=S.quests.filter(function(x){return x.id===k})[0];return q&&q.name===o.what})[0],C=id&&V82PEND[id];
+      if(C){delete V82PEND[id];v82Del(id);r.ba=1;
         r.ready=v82Compose(C.d,o.file).then(function(b){if(b){r.file=b;if(r.url){try{URL.revokeObjectURL(r.url)}catch(x){}r.url=""}}return r},function(){return r});
         r.ready.then(function(){try{var im=document.querySelector('#layer .ph-share[data-k="'+r.k+'"] img');if(im)im.src=phRecUrl(r)}catch(x){}})}}}catch(e){}
   return r};
+/* QA LOW 1: "Done without a photo" ends the before too; Cancel only drops the wait */
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-act="honor"],[data-act="closeproof"]');if(!b)return;try{var id=proofId;if(id&&V82PEND[id]){delete V82PEND[id];if(b.getAttribute("data-act")==="honor")v82Del(id)}}catch(x){}},true);
 var v82Pub=phPublish;phPublish=function(src,cap){var self=this,a=arguments;if(src&&src.ready)return src.ready.then(function(){return v82Pub.apply(self,a)});return v82Pub.apply(this,arguments)};
 /* tidy up: a finished or removed task drops its before; the rows that have one say so */
 var v82Render=render;render=function(){var r=v82Render.apply(this,arguments);
-  try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(V82KEY)!==0)return;var id=k.slice(V82KEY.length),q=S.quests.filter(function(x){return x.id===id})[0];if(!q||(S.done&&S.done[id]&&!(V82CUR&&V82CUR.id===id)))v82Del(id)});
+  try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(V82KEY)!==0)return;var id=k.slice(V82KEY.length),q=S.quests.filter(function(x){return x.id===id})[0];if(!q||(S.done&&S.done[id]&&!V82PEND[id]))v82Del(id)});
     [].forEach.call(document.querySelectorAll(".qmain[data-id]"),function(b){var id=b.getAttribute("data-id"),has=!!v82Get(id),c=b.querySelector(".v82chip");if(has&&!c)b.insertAdjacentHTML("beforeend",'<i class="v82chip">Before &#10003;</i>');if(!has&&c)c.remove()})}catch(e){}
   return r};
-htabCss("qb-v182-css",".v82chip{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;background:rgba(77,232,176,.14);color:#4de8b0;border:1px solid rgba(77,232,176,.45);vertical-align:middle}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV182={rem:function(o){return phRemember(o)},is:v82Is,get:v82Get,set:v82Set,compose:v82Compose,cur:function(){return V82CUR}};
+htabCss("qb-v182-css",".ph-card.ph-ba .ph-img img{object-fit:contain!important;background:#0b0e1a}.v82chip{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;background:rgba(77,232,176,.14);color:#4de8b0;border:1px solid rgba(77,232,176,.45);vertical-align:middle}");
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV182={rem:function(o){return phRemember(o)},is:v82Is,get:v82Get,set:v82Set,compose:v82Compose,cur:function(){var k=Object.keys(V82PEND);return k.length?{id:k[0],n:k.length}:null},pend:function(){return Object.keys(V82PEND)}};

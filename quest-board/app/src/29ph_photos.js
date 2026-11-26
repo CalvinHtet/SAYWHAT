@@ -37,7 +37,7 @@ function phUrl(u){u=typeof u==="string"?u:"";if(u.length<4e6&&/^data:image\/jpeg
 function phSafe(id,d){if(typeof id!=="string"||!d||typeof d!=="object")return null;var p=id.split("~");if(p.length!==2||!p[0]||!(+p[1]>0))return null;
   var th=phUrl(d.thumb),fu=phUrl(d.full)||th;if(!fu)return null;
   return {id:id,u:p[0],t:+p[1],name:fshStr(d.name,24).trim()||"Player",cap:fshStr(d.cap,PHCAP).trim(),what:fshStr(d.what,60).trim(),kind:d.kind==="photo"||d.kind==="trial"?d.kind:"quest",
-    thumb:th||fu,full:fu,sp:typeof d.sp==="string"&&d.sp.indexOf("photos/"+p[0]+"/")===0&&/^[\w\/~.-]+$/.test(d.sp)?d.sp.slice(0,200):"",w:fshNum(d.w,0,4096),h:fshNum(d.h,0,4096)}}
+    thumb:th||fu,full:fu,sp:typeof d.sp==="string"&&d.sp.indexOf("photos/"+p[0]+"/")===0&&/^[\w\/~.-]+$/.test(d.sp)?d.sp.slice(0,200):"",w:fshNum(d.w,0,4096),h:fshNum(d.h,0,4096),ba:d.ba===1?1:0}}
 function phCmSafe(id,d){var p=String(id).split("~");if(p.length!==2||!p[0]||!(+p[1]>0)||!d||typeof d!=="object")return null;var x=fshStr(d.x,PHCM).trim();if(!x)return null;
   return {id:String(id),u:p[0],t:+p[1],x:x,name:fshStr(d.name,24).trim()||"Player"}}
 function phPost(pid){return PH.posts.filter(function(p){return p.id===pid})[0]||null}
@@ -82,7 +82,7 @@ async function phPublish(src,cap){if(!phOn()||!src||!src.file)return false;if(PH
   cap=String(cap||"").replace(/\s+/g," ").trim().slice(0,PHCAP);PH.posting=1;var h=PH.host,t=Date.now(),sp="photos/"+MYUID+"/"+t,up=[];
   try{var im=await phImages(src.file,src.stamp,!!h.local);
     var fu=await h.put(sp+".jpg",im.full);up.push(sp+".jpg");var th=await h.put(sp+"_t.jpg",im.thumb);up.push(sp+"_t.jpg");
-    var d={u:MYUID,name:phMyName(),cap:cap,what:src.kind==="photo"?"":src.what||"",kind:src.kind||"photo",full:fu,thumb:th,sp:sp,w:im.w,h:im.h,t:t};
+    var d={u:MYUID,name:phMyName(),cap:cap,what:src.kind==="photo"?"":src.what||"",kind:src.kind||"photo",full:fu,thumb:th,sp:sp,w:im.w,h:im.h,t:t};if(src.ba)d.ba=1;/* a before and after pair (29zz_v182.js): the grid shows it whole */
     await db.doc("photos/"+MYUID+"~"+t).set(d);
     PH.lastPost=Date.now();src.posted=1;var p=phSafe(MYUID+"~"+t,d);if(p){PH.posts.unshift(p);PH.posts=PH.posts.slice(0,PHN);PH.cm[p.id]=[]}
     PH.posting=0;phPaint();pop("Posted to the town board");return true}
@@ -109,7 +109,7 @@ function phAv(uid,name,sz){var w=null;try{w=typeof tchWho1==="function"?tchWho1(
   return '<span class="ph-av" style="width:'+sz+'px;height:'+sz+'px" aria-hidden="true">'+(w&&w.look?nbAv(w.look,sz):'<span class="ph-ini">'+esc((Array.from(name||"?")[0]||"?").toUpperCase())+'</span>')+'</span>'}
 var PHBUB='<svg class="ph-bub" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6A1.5 1.5 0 0 1 12.5 11H7l-3.2 2.6c-.3.2-.8 0-.8-.4V11h0A1.5 1.5 0 0 1 2 9.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
 function phCounts(p){var n=phLikers(p.id).length,c=(PH.cm[p.id]||[]).length;return '<span class="ph-n"><span class="ph-heart'+(phLiked(p.id)?' on':'')+'">&#9829;</span> '+n+'<span class="ph-gap"></span>'+PHBUB+' '+c+'</span>'}
-function phCard(p){return '<button type="button" class="ph-card" data-act="phopen" data-p="'+esc(p.id)+'" aria-label="Photo by '+esc(p.name)+(p.cap?': '+esc(p.cap):'')+'">'
+function phCard(p){return '<button type="button" class="ph-card'+(p.ba?' ph-ba':'')+'" data-act="phopen" data-p="'+esc(p.id)+'" aria-label="Photo by '+esc(p.name)+(p.cap?': '+esc(p.cap):'')+'">'
   +'<span class="ph-img"><img src="'+esc(p.thumb)+'" alt="" loading="lazy" decoding="async"></span>'
   +'<span class="ph-meta">'+phAv(p.u,p.name,20)+'<b>'+esc(p.u===MYUID?"You":p.name)+'</b><small>'+socAgo(p.t)+'</small></span>'
   +(p.cap?'<span class="ph-cap">'+esc(p.cap)+'</span>':'')+phCounts(p)+'</button>'}
