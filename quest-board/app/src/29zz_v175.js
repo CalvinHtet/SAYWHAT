@@ -36,10 +36,15 @@ var v75Facade=worldFacade;worldFacade=function(L){var s=v75Facade.apply(this,arg
     /* the building's top edge: each roof cap (14 high) in the building view; each building's top on the street */
     s.replace(/<rect x="(-?[\d.]+)" y="(-?[\d.]+)" width="([\d.]+)" height="14" rx="3" fill="[^"]*"\/>/g,function(m,x,y,w){add+=v75Roof(+x,+y-4,+w);return m});
     if(LFBSEL==null)bldList().forEach(function(o,n){var x=60+n*(BLDW+BLDGAP),h=o.f*BLDF+160;add+=v75Roof(x,bot-h-6,BLDW)});
-    s+='<g class="v75g" pointer-events="none">'+add+v75Ground(bot,-600,LFWW+600)+'</g>'}catch(e){}
+    s+='<g class="v75g" pointer-events="none">'+add+'</g>';/* QA v1.65: the ground's flowers and drifts stood over the bottom of the rooms in the building view; they go in front, on the sidewalk, after the rooms (v75Front) */V75BOT=bot}catch(e){}
   return s};
 /* a building's painted backdrop in its season: bld_bg_<id>_<season>.webp (ROOMS), else the one painting as before */
-var v75Bg=bldBgArt;bldBgArt=function(id){try{var n="bld_bg_"+id+"_"+v75Season()+".webp",D=QBLoft.data,u=(window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null);if(u)return u}catch(e){}return v75Bg.apply(this,arguments)};
+/* the painted winter sets carry holiday lights: December only; January and February use bld_bg_<id>_snow.webp once ROOMS paints it, else the winter set */
+function v75Art(n){var D=QBLoft.data;return (window.QBART&&QBART[n])||(D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}
+var v75Bg=bldBgArt;bldBgArt=function(id){try{var s=v75Season(),u=(s==="winter"&&!v75Xmas()?v75Art("bld_bg_"+id+"_snow.webp"):null)||v75Art("bld_bg_"+id+"_"+s+".webp");if(u)return u}catch(e){}return v75Bg.apply(this,arguments)};
+var V75BOT=null;
+/* the sidewalk's flowers, leaves and snow: drawn after the rooms, on the front half of the sidewalk, so nothing stands over a room */
+var v75World=lfWorld;lfWorld=function(){var h=v75World.apply(this,arguments);try{if(V75BOT!=null){var g='<g class="v75front" pointer-events="none">'+v75Ground(V75BOT+(LFBSEL!=null?20:6),-600,LFWW+600)+'</g>';h=h.replace('<g id="lfagS"></g>',g+'<g id="lfagS"></g>')}}catch(e){}return h};
 /* what falls through the air, over the whole view */
 function v75Air(){var s=v75Season();if(s==="summer")return "";var n=s==="winter"?34:18,h="";
   for(var i=0;i<n;i++){var L=(v75R(i+1)*100).toFixed(1),d=(s==="winter"?7:9)+v75R(i+4)*6,dl=-(v75R(i+8)*d),sz=s==="winter"?2+v75R(i)*3.5:6+v75R(i)*5;

@@ -10,7 +10,12 @@ function v73Seed(){try{if(!S.bseed){S.bseed=Math.random().toString(36).slice(2,1
 var V73K="";
 function v73Plan(seed,pool){var ord=dropShuffle(pool.slice().sort(),"v173|"+seed),lv={};ord.forEach(function(id,i){lv[id]=V73FROM+5*Math.floor(i/5)});return lv}
 function v73Assign(){try{if(typeof PCBG==="undefined"||!S||!S.created)return;var pool=v73Pool();if(!pool.length)return;var seed=v73Seed(),k=seed+"|"+pool.join(",");if(k===V73K)return;V73K=k;
-    var lv=v73Plan(seed,pool);
+    /* QA v1.65: a new "r" row must not reshuffle tiers a player already has: assignments are kept in S.bfix; new rows fill the first
+       tiers with room (fewer than five), shuffled among themselves with the same seed */
+    if(!S.bfix||typeof S.bfix!=="object")S.bfix={};var fx=S.bfix,fresh=pool.filter(function(id){return fx[id]==null});
+    if(fresh.length){var cnt={};Object.keys(fx).forEach(function(id){cnt[fx[id]]=(cnt[fx[id]]||0)+1});var ord=dropShuffle(fresh.slice().sort(),"v173|"+seed+"|"+Object.keys(fx).length),L=V73FROM;
+      ord.forEach(function(id){while((cnt[L]||0)>=5)L+=5;fx[id]=L;cnt[L]=(cnt[L]||0)+1});try{persist()}catch(e){}}
+    var lv=fx;
     PCBG.forEach(function(b){if(lv[b[0]]!=null)b[3]=lv[b[0]]})}catch(e){}}
 /* rows marked "r" read as level 0 in PCBG (+"r"||0): hidden until assigned */
 (function(){try{var P={};v73Pool().forEach(function(id){P[id]=1});PCBG.forEach(function(b){if(P[b[0]])b[3]=999})}catch(e){}})();

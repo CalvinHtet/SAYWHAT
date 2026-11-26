@@ -22,7 +22,7 @@
      and its (i) do not mention it.
    - Odds a card (SCODDS): gold 3% as above, three mascots 2%, three orange 8%, three cyan 20%, no match 67%.
    - An average card is about 375 coins (the Wheel paid 310 a spin x the reward scale, up to six spins a day). */
-var SCNEED=3,SCODDS=[["g1",2.3],["g2",.55],["g3",.15],["m",2],["o",8],["c",20],["x",67]],SCPRIZE={m:1500,o:1000,c:500},SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
+var SCNEED=3,SCODDS=[["g1",2.3],["g2",.55],["g3",.15],["m",2],["o",8],["c",20],["x",67]],SCPRIZE={m:2000,o:1000,c:500}/* Cal 11-25: "500, 1000, and 2000 if you get the matching logos" */,SCVAL={m:120,o:70,c:50},SCMIX=[["c",50],["o",35],["m",15]],
     SCNAME={m:"Three mascots",o:"Three orange",c:"Three cyan"},SCGOLD=[null,["street","a piece of clothing"],["boutique","a rare piece"],["atelier","a legendary piece"]],SCRND=Math.random;
 function scArt(k){k="sc_"+k+".webp";return (window.QBART&&QBART[k])||"art/"+k}
 /* the mascot is its picture; the two Ø are Cal's logo (art/src-cal/o_white.webp, the solid strokes) used as a mask over a flat neon colour
