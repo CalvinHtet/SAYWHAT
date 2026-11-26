@@ -1,0 +1,21 @@
+// Cal 11-25 (29zz_v181.js): category tabs under the character card in the Shop's rooms: one per section, only the chosen one shows,
+// the row stays under the card while scrolling; the Stylist, a brand's room and the Closet.
+//   PORT=<build server> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/cats181.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8838, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const errs = [];
+  for (const W of [390, 320]) { const p = await (await b.newContext({ viewport: { width: W, height: 844 }, deviceScaleFactor: 2 })).newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+    await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV181 && window.__qbV149, null, { timeout: 90000 }); await p.waitForTimeout(400);
+    await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
+    await V(async () => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(12); S.tutDone = 1; S.coins = 5000; S.v67ref = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
+      try { window.__qbRooms.open('closet', 1); } catch (e) {} S.brandSeen = {}; window.__qbDrops.state().live.forEach((q) => { S.brandSeen[q.id + '|' + q.start] = 1; }); x.render(); document.querySelector('.nav button[data-v="shop"]').click(); await new Promise((o) => setTimeout(o, 1200)); document.querySelectorAll('#layer .modal,.bsplash').forEach((m) => m.remove()); });
+    for (const hub of ['stylist', 'street', 'closet']) {
+      await V((hub) => window.__qbV149.go(hub), hub); await p.waitForTimeout(900); await V(() => { document.querySelectorAll('#layer .modal,.bsplash').forEach((m) => m.remove()); window.scrollTo(0, 0); });
+      const s = await V(() => { const n = document.querySelector('.qshop .v81cats'), tabs = n ? [...n.querySelectorAll('.v81c')].map((t) => t.textContent) : [], secs = [...document.querySelectorAll('.qshop .qs-rack > .qs-sec')]; return { tabs, shown: secs.filter((s) => getComputedStyle(s).display !== 'none').length, n: secs.length, on: n && n.querySelector('.on') ? n.querySelector('.on').textContent : '' }; });
+      ok(s.tabs.length === s.n && s.n >= 2 && s.shown === 1 && s.on === s.tabs[0], W + ' ' + hub + ': a tab per section (' + s.tabs.join(', ') + '), the first open, only its section shown');
+      const last = s.tabs[s.tabs.length - 1]; await V((t) => document.querySelector('.v81c[data-v81="' + t + '"]').click(), last); await p.waitForTimeout(300);
+      const s2 = await V(() => { const secs = [...document.querySelectorAll('.qshop .qs-rack > .qs-sec')].filter((s) => getComputedStyle(s).display !== 'none'); return { shown: secs.length, cards: secs[0] ? secs[0].querySelectorAll('.qs-card').length : 0, on: document.querySelector('.v81cats .on').textContent }; });
+      ok(s2.shown === 1 && s2.cards > 0 && s2.on === last, W + ' ' + hub + ': "' + last + '" shows its own ' + s2.cards + ' pieces');
+      if (hub === 'stylist') { await V(() => window.scrollTo(0, 400)); await p.waitForTimeout(400); const st = await V(() => { const n = document.querySelector('.v81cats').getBoundingClientRect(), m = document.querySelector('.qs-mirror.v60m'); const mo = m ? +getComputedStyle(m).opacity : 0, mb = m ? m.getBoundingClientRect().bottom : 0; return { top: Math.round(n.top), mb: Math.round(mb), mo, wide: document.documentElement.scrollWidth > innerWidth + 1 }; });
+        ok(!st.wide && (st.mo > .5 ? st.top >= st.mb - 1 && st.top <= st.mb + 14 : st.top <= 14), W + ': scrolled, the tabs stay just under the character card ' + JSON.stringify(st)); if (W === 390) await p.screenshot({ path: OUT + '/cats181_stylist.png' }); } }
+    await p.context().close(); }
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
