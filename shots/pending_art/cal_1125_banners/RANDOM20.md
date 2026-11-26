@@ -4,6 +4,9 @@ Format: art/app/bl_pc_<id>.webp, 3:4 at 2K, cut with tools/backdrop_cut.py --w 1
 (29zz_v173.js shuffles every "r" row per player; a random 5 open at levels 25, 30, 35, 40). Calm floor for the character and pet,
 nothing busy behind the head, no lettering, runes or symbols (zoom in on every one), no crosses. One REFERENCES.md row if a piece
 leans on a real work. After the Smoke Bomb batch; through QA, then batched to Cal.
+Every new or changed bl_pc_ banner: run python3 quest-board/tools/thumbs.py and commit bl_pc_<id>_t.webp (360x480) with it
+(LEAD: the banner shop grid loads thumbnails; a missing one falls back to the full painting, slow but not broken).
+If a paid generation hits zero credits: stop there, note the exact piece and prompt, resume when credits return (Cal 11-25).
 
 ## Set A: vibrant and psychedelic (Cal: "more colors but nothing too cute")
 Saturated and glowing, but dark-grounded, sleek and cool. No pastel, no kawaii, no rainbows-and-clouds.
