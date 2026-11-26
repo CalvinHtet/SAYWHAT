@@ -6,12 +6,14 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.QBLook && window.QBLoft && QBDATA.rig, null, { timeout: 90000 });
   const r = await p.evaluate(() => { const B = (eq) => Object.keys(window.QBLook.build(QBLoft.data.creator, { body: 'm', equipped: eq }).layers);
     const R = QBDATA.rig, ids = R.slots.map((s) => s.id), sl = (id) => R.slots.find((s) => s.id === id);
-    return { ph: B({ neck: { art: 'sm_phones' } }), wg: B({ neck: { art: 'gp_wings' } }), sh: B({ glasses: { art: 'h_shades', frontOnly: true } }), ch: B({ neck: { art: 'h_chain' } }),
-      order: { neckOver: ids.indexOf('neckOver') > ids.indexOf('arms') && sl('neckOver').group === 6, backAcc: ids.indexOf('backAcc') < ids.indexOf('body') && sl('backAcc').group === 0, glassesUnder: ids.indexOf('glassesUnder') < ids.indexOf('hair') },
+    return { ph: B({ neck: { art: 'sm_phones' } }), wg: B({ neck: { art: 'gp_wings' } }), wgL: (() => { const L = window.QBLook.build(QBLoft.data.creator, { body: 'm', equipped: { neck: { art: 'gp_wings' } } }).layers; return { f: !!(L.backAcc && L.backAcc.front && !L.backAcc.back), b: !!(L.backAccTop && L.backAccTop.back && !L.backAccTop.front) }; })(), g4: ['h_oval', 'o_rect', 'gp_hearts', 'km_round'].map((a) => B({ glasses: { art: a, frontOnly: true } }).indexOf('glassesUnder') >= 0), sh: B({ glasses: { art: 'h_shades', frontOnly: true } }), ch: B({ neck: { art: 'h_chain' } }),
+      order: { neckOver: ids.indexOf('neckOver') > ids.indexOf('arms') && sl('neckOver').group === 6, backAcc: ids.indexOf('backAcc') < ids.indexOf('body') && sl('backAcc').group === 0, glassesUnder: ids.indexOf('glassesUnder') < ids.indexOf('hair'), top: ids[ids.length - 1] === 'backAccTop' && sl('backAccTop').group === 5 },
       sleep: (JSON.stringify(QBDATA.poses || {}).match(/"glassesUnder":null/g) || []).length }; });
   ok(r.ph.indexOf('neckOver') >= 0 && r.ph.indexOf('neck') < 0, 'headphones draw in neckOver (after the near arm) ' + JSON.stringify(r.order));
   ok(r.wg.indexOf('backAcc') >= 0 && r.wg.indexOf('neck') < 0, 'wings draw in backAcc (behind the body)');
   ok(r.sh.indexOf('glassesUnder') >= 0 && r.sh.indexOf('glasses') < 0, 'wide sunglasses draw in glassesUnder (under the hair)');
+  ok(r.wgL.f && r.wgL.b && r.order.top, 'wings: the front view behind the body, the back view in backAccTop, the last slot, on top from behind ' + JSON.stringify(r.wgL));
+  ok(r.g4.every(Boolean), 'h_oval, o_rect, gp_hearts and km_round go under the hair too');
   ok(r.ch.indexOf('neck') >= 0, 'every other neck piece stays in neck');
   ok(r.order.neckOver && r.order.backAcc && r.order.glassesUnder, 'the new slots sit where they should in the rig');
   ok(!errs.length, 'no page errors'); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

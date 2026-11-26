@@ -50,6 +50,10 @@
         delete layers.shoes;
         delete layers.shoesOver;
         layers[item.over ? "shoesOver" : "shoes"] = set;
+      } else if (slot === "backAcc" && set.back) {
+        // QA e17f9be2: from behind, wings belong on top of the back and the hair; their back view draws in the last slot
+        layers.backAcc = { front: set.front };
+        layers.backAccTop = { back: set.back };
       } else {
         layers[slot] = set;
       }
