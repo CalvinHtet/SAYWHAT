@@ -66,7 +66,7 @@ function alWorldExtra(){var L=window.LFLAY;if(!L||!S||!S.base)return '';var o=al
       var x=60+n*(BLDW+BLDGAP),top=bot-(b.f*BLDF+160);s+=alBang(x+BLDW+10,top-200,1.6)});
     var nb=bldList().length;try{streetLots().forEach(function(k,j){if(effLvl()<ROOMT[k].lv||o.bld[k])return;s+=alBang(60+(nb+j)*(BLDW+BLDGAP)+BLDW/2,bot-230,1.4)})}catch(e){}
   }else{
-    rooms.forEach(function(x){if(x.lot||ROOMCELL[x.room][0]!==LFBSEL)return;var p=cellXY(x.room,L);s+=alPlus(p.x,Math.max(LFROOF+60,p.y),x.slot,(ROOMT[x.room]||{}).name||x.room,x.id,x.room)});
+    rooms.forEach(function(x){if(x.lot||ROOMCELL[x.room][0]!==LFBSEL)return;var p=cellXY(x.room,L);s+=alPlus(p.x,Math.max(LFROOF+60,p.y),x.slot,"???"/* Cal 11-25: "Don't spoil the next room upgrade like this. Keep it as question marks" */,x.id,x.room)});
   }
   return s}
 /* the building's layout takes in the spot of a room an upgrade can open, so the view inside the building includes its "+" (lots
