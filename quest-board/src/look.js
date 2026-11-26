@@ -40,7 +40,11 @@
     // skin and the blush and under the mouth, the brows and eyes and the hair. Without the file nothing is drawn.
     for (const [slot, id] of [["markS", c.markS], ["markT", c.markT]]) { const art = `${b}_mark_${id}_front.webp`; if (id && ((QA && QA[art]) || (G && G.arthash && G.arthash[art]))) layers[slot] = { front: art }; }
     if ((QA && QA[lockArt]) || (G && G.arthash && G.arthash[lockArt])) layers.hairFront = { front: lockArt, tint: layers.hair.tint };
-    for (const [slot, item] of Object.entries(c.equipped || {})) {
+    // Cal 11-25 (QA's accessory sweep): data/rig.json slotMap draws a few pieces in another slot than their items.json one
+    // (headphones over the arms, wings behind the body, wide sunglasses under the hair).
+    const SMAP = (global.QBDATA && global.QBDATA.rig && global.QBDATA.rig.slotMap) || {};
+    for (let [slot, item] of Object.entries(c.equipped || {})) {
+      if (item && SMAP[item.art] && typeof SMAP[item.art] === "string") slot = SMAP[item.art];
       const set = item.frontOnly ? frontOnly(b, item.art) : views(b, item.art);
       if (slot === "shoes") {
         delete layers.shoes;
@@ -65,7 +69,7 @@
     // A helmet that covers the whole face (SAYMØRE's Halo Mask, data/rig.json faceCover) hides glasses and face pieces, which
     // would otherwise draw on top of it; pieces in keepAsleep stay on in the sleeping pose (Cal: the SAYMØRE figure stays masked).
     const R = (global.QBDATA && global.QBDATA.rig) || {}, hatArt = c.equipped && c.equipped.hat && c.equipped.hat.art;
-    if (hatArt && (R.faceCover || []).indexOf(hatArt) >= 0) { delete layers.glasses; delete layers.mask; }
+    if (hatArt && (R.faceCover || []).indexOf(hatArt) >= 0) { delete layers.glasses; delete layers.glassesUnder; delete layers.mask; }
     if (hatArt && layers.hat && (R.keepAsleep || []).indexOf(hatArt) >= 0) layers.hat.keepAsleep = true;
     // A revealing top (items.json "bare", ROOMS dff4465; Cal 11-18: "lingerie, a sexy crop top ... seductive and revealing") is worn
     // over the bare base: her base has a painted grey tank that would show under it; <b>_base_bare_* paints that tank as skin (shorts
