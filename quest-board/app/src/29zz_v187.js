@@ -32,7 +32,9 @@ var v87Render=render;render=function(){var r=v87Render.apply(this,arguments);
   try{[].forEach.call(document.querySelectorAll(".q .qmain[data-id]"),function(mb){var id=mb.getAttribute("data-id"),q=S.quests.filter(function(x){return x.id===id})[0];if(!q||q.rep==="weekly4")return;
       var row=mb.parentNode,btn=row.querySelector(".qrep");
       if(!btn&&q.rep==="days"){mb.insertAdjacentHTML("afterend",'<button class="qrep on" data-act="qrep" data-id="'+esc(id)+'" aria-label="'+esc(q.name)+': repeats '+esc(v87Lbl(q))+'"><span aria-hidden="true">&#8635;</span><small></small></button>');btn=row.querySelector(".qrep")}
-      if(btn){var s=btn.querySelector("small");if(s)s.textContent=v87Lbl(q)}})}catch(e){}
+      if(btn){var s=btn.querySelector("small");if(s)s.textContent=v87Lbl(q)}
+      /* QA d2676c78 LOW: the row's sub-line names the days too, not "One-off" */
+      if(q.rep==="days"){var sub=mb.querySelector(".sub");if(sub)[].forEach.call(sub.childNodes,function(n){if(n.nodeType===3&&n.nodeValue.indexOf("One-off")>=0)n.nodeValue=n.nodeValue.replace("One-off",v87Lbl(q))})}})}catch(e){}
   return r};
 htabCss("qb-v187-css",".v87t{min-height:44px;padding:8px 18px;border-radius:999px;border:1px solid var(--line,#3a2a22);background:transparent;color:var(--fg,#fff);font:inherit;font-weight:700;cursor:pointer}.v87t.on{background:#fff;border-color:#fff;color:#0b0e1a}.v87row{display:flex;gap:8px;margin:6px 0 10px}.v87days{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}.v87d{min-width:44px;padding:8px 6px;border-radius:12px;border:1px solid var(--line,#3a2a22);background:transparent;color:var(--fg,#fff);font:inherit;font-weight:700;cursor:pointer}.v87d.on{background:var(--accent,#ff8a3d);border-color:var(--accent,#ff8a3d);color:#140a04}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV187={wd:v87Wd,lbl:v87Lbl,open:v87Open};

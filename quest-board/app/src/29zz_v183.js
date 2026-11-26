@@ -10,3 +10,5 @@ stampText=function(){return ""};
 function v83When(t){try{return new Date(t).toLocaleString([],{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}catch(e){return ""}}
 var v83View=phViewHtml;phViewHtml=function(p){var h=v83View.apply(this,arguments);try{var ago=socAgo(p.t),w=v83When(p.t);if(w)h=h.replace("<small>"+ago+"</small>",'<small>'+esc(w)+' &middot; '+ago+'</small>')}catch(e){}return h};
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV183={when:v83When,stamp:function(){return stampText()},view:function(p){return phViewHtml(p)}};
+/* QA 5cdb0ddd LOW: the side-quest verdict no longer lays a time over the photo either (the message says when it was taken) */
+htabCss("qb-v183-css",".sdq-shot .sdq-stamp{display:none!important}");

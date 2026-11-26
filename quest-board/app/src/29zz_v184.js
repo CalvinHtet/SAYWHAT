@@ -20,18 +20,26 @@ var v84Give=lootGive;lootGive=function(kind){if(kind!=="furn")return v84Give.app
 var v84Show=lootShow;lootShow=function(o){var m=v84Show.apply(this,arguments);
   try{if(o&&o.free){var c=document.querySelector("#layer .lootm .reward");if(c)c.innerHTML='Free in your '+esc(o.room)+', in '+esc(o.bld)+'.';
       var h=document.querySelector("#layer .lootm h2");if(h)h.insertAdjacentHTML("afterend",'<p class="note v84note">Install it there for 0 coins.</p>')}}catch(e){}return m};
-/* the room's window: the free one first, its button "Free" */
+function v84Opener(t,h){var m=/data-aid="([^"]+)"/.exec(h||"");if(!m)return false;var a=(ADDONS[t]||[]).filter(function(x){return x[0]===m[1]})[0];return !!(a&&a[3]&&a[3].opens)}
+/* the room's window: the free one first (after a new room's opener), its button "Free" */
 var v84Avail=roomAvail;roomAvail=function(i,r,T,list){var R=v84Avail.apply(this,arguments);
   try{var F=v84Free(),keys=Object.keys(F).filter(function(k){return k.indexOf(r.t+":")===0});if(!keys.length||!R||!R.avail)return R;
     keys.forEach(function(k){var aid=k.slice(r.t.length+1);if(r.a&&r.a[aid]){delete F[k];return}
       var j=-1;R.avail.forEach(function(h,n){if(j<0&&h.indexOf('data-aid="'+aid+'"')>=0)j=n});if(j<0)return;
       var h=R.avail[j].replace(/<button class="btn[^"]*" data-act="raddon"([^>]*)>[\s\S]*?<\/button>/,'<button class="btn v84free" data-act="raddon"$1>Free</button>').replace('class="addon next"','class="addon next v84"');
-      R.avail.splice(j,1);R.avail.unshift(h)})}catch(e){}
+      R.avail.splice(j,1);
+      /* QA 13185c03 NOTE 2: a new room's opener stays first (Cal 11-07); the free piece goes right after any openers */
+      var at=0;while(at<R.avail.length&&v84Opener(r.t,R.avail[at]))at++;R.avail.splice(at,0,h)})}catch(e){}
   return R};
 /* installing it costs nothing */
 var v84Act=baseAct;baseAct=function(a,b,e){
   if(a==="raddon"&&b&&b.dataset){try{var i=+b.dataset.i,r=bslot(i),id=b.dataset.id,F=v84Free(),k=r&&(r.t+":"+id);
       if(k&&F[k]){var ad=(ADDONS[r.t]||[]).filter(function(x){return x[0]===id})[0];if(ad){var p=ad[2];ad[2]=0;var out;try{out=v84Act.apply(this,arguments)}finally{ad[2]=p}if(r.a&&r.a[id]){delete F[k];persist()}return out}}}catch(x){}}
   return v84Act.apply(this,arguments)};
+/* QA 13185c03 NOTE 1: the Loft tab gets its "!" for a free piece found since the Loft was last opened */
+var v84Tabs=alTabs;alTabs=function(){var t=v84Tabs.apply(this,arguments);
+  try{var F=v84Free(),seen=S.v84seen||0,A=AREAS.filter(function(x){return x[0]==="hideout"})[0];/* never on a locked Loft (batch 1b) */if(A&&effLvl()>=A[2]&&!areaGate("hideout")&&Object.keys(F).some(function(k){return F[k]>seen}))t.hideout=1}catch(e){}return t};
+var v84Visit=alVisit;alVisit=function(){var r=v84Visit.apply(this,arguments);
+  try{if(view==="hideout"&&S&&S.freeUp&&Object.keys(S.freeUp).some(function(k){return S.freeUp[k]>(S.v84seen||0)})){S.v84seen=Date.now();persist()}}catch(e){}return r};
 htabCss("qb-v184-css",".addon.v84{border-color:#4de8b0!important;box-shadow:0 0 0 1px rgba(77,232,176,.35)}.btn.v84free{background:#4de8b0!important;color:#0b1a14!important}.v84note{margin:4px 0 0;text-align:center}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV184={free:v84Free,give:function(k){return lootGive(k)},show:function(o){return lootShow(o)},w:function(){return LOOTW},chest3:function(){return ECON.chest3}};

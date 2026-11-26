@@ -42,7 +42,7 @@ var SIDEQ=[
     done:[function(){return sdqDogName()+(sdqDogName().indexOf(" and ")>0?" know":" knows")+" every tree on the block now."},"There's a box on the porch with their names on it."],reward:"An outfit for the dogs. They wear it once it's finished."},
   {id:"sable",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",name:"Night watch",need:3,gate:function(){return teamHas("sable")},
     ask:["Your lights were on at two last night.","Bed before midnight. Three nights in a row.","Send me a picture from bed each night. The time goes on it."],yes:"Start the watch",
-    snap:"A picture of you in bed, between 8 pm and midnight. The game stamps the time on it.",
+    snap:"A picture of you in bed, taken between 8 pm and midnight.",
     check:"a person lying in a bed at night: a selfie or photo taken from bed, with low or night-time light. An empty bed, a couch or daylight do not count",self:1,
     done:["Three nights. Good.","Last watch I found a door under the Lair. It's not on any map.","I marked it. It's on your crawl list."],reward:"A hidden dungeon is on your Dungeon Crawls list."}];
 function sdqOf(id){return SIDEQ.filter(function(q){return q.id===id})[0]}
@@ -113,7 +113,7 @@ async function sdqFile(file){var id=SDQASK,q=sdqOf(id);if(!file||!q||!sdqOn(id)|
   proofPend["sdq:"+id]={t:Date.now(),h:hh};pendMark();document.querySelectorAll("#layer .modal").forEach(function(m){if(m.querySelector(".sdq-ask"))m.remove()});render();pop("Photo sent. Checking it in the background");
   sdqCheck(id,file,hh,{w:fw,nm:fn})}
 var SDQWAIT=6000,SDQFAKE=null;   /* the sandbox stand-in's delay; test friends for Movie night */
-/* Night watch also asks the checker to read the stamp's time */
+/* Cal 11-26: no stamps, so Night watch goes by the phone's hour alone (QA 5cdb0ddd MED); kept for old callers */
 function sdqNightAsk(){return ' This is a bedtime check: also return "night_ok": true only if the time stamp reads between 8:00 PM and 11:59 PM, false otherwise.'}
 async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=sdqWhen(at),stp="";/* Cal 11-26: no time stamp on any photo, so the checker is not asked to read one (the phone's hour still decides the night) */
   try{var sample=window.claude?await window.claude.use("sample"):null;
@@ -121,16 +121,15 @@ async function sdqCheck(id,file,hh,fr){var q=sdqOf(id),vis=null,at=Date.now(),p=
     if(!sample&&window.QB_WEB&&QB_WEB.sandbox){await new Promise(function(r){setTimeout(r,SDQWAIT)});var lum=await sbLum(file);
       vis={matches:lum>35,what:"your test photo (sandbox stand-in check)",screen:false,note:lum>35?"":"Too dark to see anything (sandbox stand-in).",night_ok:p.h>=SDQNIGHT[0]&&p.h<SDQNIGHT[1]}}
     var lim=sample?await sample.limits().catch(function(){return null}):null;
-    if(sample&&lim&&lim.images)vis=await sample.json('A player of a habit game sends a photo for a side-quest. It should show '+q.check+'. Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""'+(stp?',"stamp_ok":true':'')+(id==="sable"?',"night_ok":true':'')+'} where matches = the photo clearly shows that (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.'+stampAsk(stp)+(id==="sable"?sdqNightAsk():''),{images:file,stamp:stp,modelTier:"quick",cache:false});
+    if(sample&&lim&&lim.images)vis=await sample.json('A player of a habit game sends a photo for a side-quest. It should show '+q.check+'. Look at the image. Return ONLY JSON: {"matches":true,"what":"","screen":false,"note":""'+(stp?',"stamp_ok":true':'')+'} where matches = the photo clearly shows that (be fair but skeptical), what = what you see in under 14 words, screen = true if it is a screenshot or a photo of a screen, note = short reason under 12 words.'+stampAsk(stp),{images:file,stamp:stp,modelTier:"quick",cache:false});
   }catch(e){vis=null}
   delete proofPend["sdq:"+id];pendMark();
   var url="";try{url=URL.createObjectURL(file);setTimeout(function(){URL.revokeObjectURL(url)},600000)}catch(e){}
   var why=!vis?"The photo checker couldn't be reached, so nothing was counted. Try again in a minute."
     :vis.stamp_ok===false?STAMPBAD:!vis.matches?"That doesn't look like it."+(vis.note?" "+vis.note:"")
     :(vis.screen&&!q.screenOk)?"That looks like a photo of a screen. Take a real photo.":"";
-  /* Night watch: the stamped time, by the game and by the checker */
-  if(!why&&id==="sable"){if(p.h<SDQNIGHT[0])why=p.h<5?"Stamped "+sdqTime(p)+". That's after midnight, so tonight doesn't count.":"Stamped "+sdqTime(p)+". Night watch counts from 8 pm to midnight.";
-    else if(vis.night_ok===false)why="The stamp doesn't read between 8 pm and midnight. Take a new photo in the game.";
+  /* Night watch: the time it was taken, by the phone's clock */
+  if(!why&&id==="sable"){if(p.h<SDQNIGHT[0])why=p.h<5?"Taken at "+sdqTime(p)+". That's after midnight, so tonight doesn't count.":"Taken at "+sdqTime(p)+". Night watch counts from 8 pm to midnight.";
     else if(sdqState().nw.d===p.d)why="Tonight is already logged.";}
   if(!why&&id==="dogs"&&sdqState().walk.indexOf(today())>=0)why="Today's walk is already logged.";
   if(!sdqOn(id)){render();return}
