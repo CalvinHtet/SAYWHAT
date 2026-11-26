@@ -155,7 +155,11 @@ var PATCHNOTES=[
 ];
 var PNCOINS=500,PNPAID=2,PNEVERY=10;
 /* 90 -> "v0.90", 100 -> "v1.00" */
-function pnVer(v){return "v"+Math.floor(v/100)+"."+("0"+v%100).slice(-2)}
+/* Cal 11-25: "No just have a 1.71.5 for a backup. i want the updates to be sequential". From v1.72 the build number is the version x 10
+   (1720 is v1.72) and a backup build is the version it brings back plus .5 (1725 is v1.71.5, the stand-by for v1.72): it still counts
+   higher than the release it would replace, which the save guard (newerSeen) and the update check need. Numbers under 1000 are the old
+   scheme (171 is v1.71). */
+function pnVer(v){v=+v||0;if(v>=1000){var n=Math.floor(v/10);if(v%10===5){n-=1;return "v"+Math.floor(n/100)+"."+("0"+n%100).slice(-2)+".5"}return "v"+Math.floor(n/100)+"."+("0"+n%100).slice(-2)}return "v"+Math.floor(v/100)+"."+("0"+v%100).slice(-2)}
 function pnFrom(){if(!S.pn||typeof S.pn!=="object")S.pn={from:+S.appv||APPV};return +S.pn.from||0}
 /* a save loaded from before patch notes: start from the version it last ran (S.appv), so it gets the letters since */
 var pnMergeBase=merge;merge=function(d){var r=pnMergeBase.apply(this,arguments);try{if(S&&d&&!S.pn)S.pn={from:d.created?(+d.appv||0):APPV}}catch(e){}return r};
