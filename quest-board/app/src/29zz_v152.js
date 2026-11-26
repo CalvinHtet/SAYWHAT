@@ -33,6 +33,9 @@ var PCPRICE=1000,PCWAS={maple:1800,fire:2000,lantern:2200,moon:2500},PCTAB="",
     PCGONE={roof:1200,skyline:1000,mist:1400,sunrise:1600,ember:2400,skyship:1000,hoard:1000/* Cal 11-25: "Redo dragon's hoard, skyship deck": sold at 1,000 in v1.55, refunded once; their replacements take new ids */},
     STYTAB="cos",PCTXT="Shared a player card.",P2OTHER=0,PCTRY="";/* PCTRY: a backdrop being looked at on the card before it is bought */
 function pcBy(id){return PCBG.filter(function(b){return b[0]===id})[0]||null}
+/* the grid's small banners use a 360 x 480 thumbnail when there is one (tools/thumbs.py; Cal 11-25: the banner shop froze for seconds
+   decoding twenty full paintings) */
+function pcThumb(id){try{var n="bl_pc_"+id+"_t.webp",D=window.QBLoft&&QBLoft.data,u=(window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null);return u||pcArt(id)}catch(e){return pcArt(id)}}
 function pcArt(id){try{var n="bl_pc_"+id+".webp",D=window.QBLoft&&QBLoft.data;return (window.QBART&&QBART[n])||(D&&D.arthash&&D.arthash[n]?D.loft.artBase+n+"?h="+D.arthash[n]:null)}catch(e){return null}}
 /* PCHOLD: painted and passed by QA, but not on sale until Cal has approved the art (LEAD 11-25: his answer on the level-10 tier is
    still open, and these cost coins). Emptying it is the whole release of the tier. */
@@ -118,7 +121,7 @@ function pcShop(){var o=pcSt(),me=pcMe(),lvl=1;try{lvl=effLvl()}catch(e){}
     var lock=!own&&(b[3]||0)>lvl;
     if(lock)btn='<button class="qs-btn ghost" disabled>Opens at level '+b[3]+'</button>';else if(use)btn='<button class="qs-btn ghost" disabled>On your card</button>';else if(own)btn='<button class="qs-btn alt" data-act="pcuse" data-id="'+id+'">Use</button>';
     else btn='<button class="qs-btn'+(PCTRY===id?" alt":"")+'" data-act="pctry" data-id="'+id+'">'+(PCTRY===id?"Previewing":"Preview")+' &middot; <i class="coin"></i>'+b[2].toLocaleString()+'</button>';
-    var u=id==="studio"?null:pcArt(id);
+    var u=id==="studio"?null:pcThumb(id);
     return '<article class="qs-card pc-bgc'+(use?" on":"")+(lock?" lock":"")+'" data-card="pcbg_'+id+'"><div class="pcard pc-'+id+' mini"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'></div><h4>'+esc(b[1])+'</h4>'+btn+'</article>'}).join("");
   var T=PCTRY&&pcBy(PCTRY)&&pcHas(PCTRY)&&!o.own[PCTRY]&&pcOpenLv(PCTRY)?pcBy(PCTRY):null;if(!T)PCTRY="";
   var bask=T?'<div class="qs-bask pc-bask"><small>Previewing '+esc(T[1])+'</small>'+(S.coins>=T[2]?'<button class="qs-btn" data-act="pccheck" data-id="'+T[0]+'">Buy &middot; <i class="coin"></i>'+T[2].toLocaleString()+'</button>':'<button class="qs-btn ghost" disabled><i class="coin"></i>'+T[2].toLocaleString()+' &middot; need '+(T[2]-S.coins).toLocaleString()+' more</button>')+'<button class="qs-link" data-act="pctry" data-id="">Back to mine</button></div>':"";
