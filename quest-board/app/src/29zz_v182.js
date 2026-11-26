@@ -9,8 +9,8 @@
      posting is still the player's choice (private until posted). The before is cleared once the task is done or after two days. */
 /* QA 38a3fed4 LOW 3: more chores (wipe, bedding and sheets, trash, the dishwasher, counters and floors, putting away and folding),
    and nothing digital or admin (inboxes, files, code, a resume, eating, a backlog) */
-var V82NOT=/\b(inbox|e-?mails?|files?|folders?|desktop|computer|laptop|phone|drive|downloads|calendar|code|codebase|refactor|resume|cv|backlog|social media|eating|diet|notes|tabs|apps?|account|budget|spreadsheet)\b/i;
-var V82RX0=/\b(clean|cleans|cleaning|tidy|tidying|declutter|decluttering|organi[sz]e|organi[sz]ing|vacuum|vacuuming|hoover|mop|mopping|sweep|sweeping|dust|dusting|scrub|scrubbing|wipe down|wash (the |my )?(dishes|car|windows)|do (the |my )?(dishes|laundry)|laundry|make (the |my )?bed|clear (out |off )?(the |my )?(desk|table|closet|garage|counters?|floor))\b/i;
+var V82NOT=/\b(inbox|e-?mails?|files?|folders?|desktop|computer|laptop|phone|google drive|hard drive|thumb drive|cloud drive|downloads|savings|money|dollars|bank|\$\d+|calendar|code|codebase|refactor|resume|cv|backlog|social media|eating|diet|notes|tabs|apps?|account|budget|spreadsheet)\b/i;
+var V82RX0=/\b(clean|cleans|cleaning|tidy|tidying|declutter|decluttering|organi[sz]e|organi[sz]ing|vacuum|vacuuming|hoover|mop|mopping|sweep|sweeping|dust|dusting|scrub|scrubbing|wipe down|wash (every |all |the |my )?(\w+ )?(dishes|car|windows?|blankets?|bedding|towels|curtains|floors?|sheets)|do (the |my )?(dishes|laundry)|laundry|make (the |my )?bed|clear (out |off )?(the |my |one |a )?(desk|table|closet|garage|counters?|floor|hallway|(shower |sink )?drain|room|shelf|shelves))\b/i;
 var V82RX=/\b(wipe|wiping|bedding|bed ?sheets|sheets|trash|garbage|bins?|recycling|dishwasher|counters?|put away|putting away|fold|folding|iron|ironing|hang up)\b/i;
 var V82KEY="qb-ba-",V82ASK={},V82PEND={};/* QA 38a3fed4 MED: every task whose after is on its way, by quest id */
 function v82Is(q){var n=(q&&q.name)||"";return !!q&&!q.bty&&q.rep!=="weekly4"&&!/^(admin|social)$/.test(q.cl||"")&&!V82NOT.test(n)&&(V82RX0.test(n)||V82RX.test(n))}
