@@ -412,3 +412,7 @@ Stylist's tattoos and scars from level 30.
 LEAD's order: no photo stamps -> loot -> header at once -> QA's lag list -> pause off-screen -> repeat days -> sync in background -> photo
 work in background -> profile gallery -> login calendar -> notifications -> economy check -> the Shop restructure (7 categories, half drops,
 21-piece Vault) as ROOMS's clothes land.
+- Cal 11-26 (later, "Once everything is done"): redo the yawn/stretch so it is smoother (his reference: one hand to the open mouth, the
+  other arm up, head back, eyes shut, mouth wide), and a thinking animation (hand to chin, the other arm across, head down) with its own
+  thinking face. Both pictures are stock images: pose reference only, nothing copied. Needs: rig poses (LEAD), m/f_facethink and a better
+  faceyawn (ROOMS); the one-arm-up yawn bends a sleeve overhead, so check tears per top (painted yawn layers today are both arms).

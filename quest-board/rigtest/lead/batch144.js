@@ -46,7 +46,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await V(() => window.__qbV144.check()); ok((await V(() => window.__qbV144.left())) === 0 && !(await V(() => document.querySelector('#layer .surge'))), 'not given twice for the same absence');
   /* surprise loot */
   const kinds = await V(() => { const c = {}; for (let i = 0; i < 1000; i++) { const k = window.__qbV144.loot.kind((i + .5) / 1000); c[k] = (c[k] || 0) + 1; } return c; });
-  ok(kinds.chest === 450 && kinds.stone === 350 && kinds.cloth === 120 && kinds.furn === 60 && kinds.bout === 20 && Math.abs(await V(() => window.__qbV144.loot.p) - 1 / 15) < 1e-9, '1 in 15, split ' + JSON.stringify(kinds));
+  /* Cal 11-26 (29zz_v184.js): free clothes rarer */ ok(kinds.chest === 500 && kinds.stone === 390 && kinds.cloth === 40 && kinds.furn === 60 && kinds.bout === 10 && Math.abs(await V(() => window.__qbV144.loot.p) - 1 / 15) < 1e-9, '1 in 15, split ' + JSON.stringify(kinds));
   await mkq(); await V(() => { const S = window.__qb.x().S; S.lastDone = null; delete S.loot; window.__qbV144.loot.rnd(() => .5); });
   const noLoot = await V(async () => { const x = window.__qb.x(), S = x.S; x.toggle('s1'); await new Promise((r) => setTimeout(r, 1500)); return { n: window.__qbV144.loot.state().n, m: !!document.querySelector('#layer .lootm') }; });
   ok(noLoot.n === 0 && !noLoot.m, 'a roll over 1/15: no loot ' + JSON.stringify(noLoot));
@@ -63,7 +63,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const fu = await V(() => { const x = window.__qb.x(), S = x.S; try { window.__qbRooms.open('closet', 1); } catch (e) {} const list = window.__qbV144.loot.furn(), c0 = S.coins, sp0 = S.spent || 0; const o = window.__qbV144.loot.give('furn'); document.querySelectorAll('#layer .modal').forEach((q) => q.remove());
     const r = S.base.slots.find((q) => q && (x.ADDONS[q.t] || []).some((a) => a[0] === o.ad)); const ad = r && (x.ADDONS[r.t] || []).find((a) => a[0] === o.ad); return { list, o, in: !!(r && r.a[o.ad]), free: S.coins >= c0 && (S.spent || 0) === sp0, dc: S.coins - c0, opens: !!(ad && ad[3] && ad[3].opens) }; });
   ok(fu.list.length > 0 && fu.list.every((f) => f[2] > 0 && f[2] < 1000), 'furniture on offer for loot: the cheapest buyable piece per room, all under 1,000: ' + JSON.stringify(fu.list));
-  ok(fu.o.k === 'furn' && fu.in && fu.free && !fu.opens && fu.o.price < 1000, 'a furniture drop is installed, costs nothing and opens no room: ' + JSON.stringify(fu.o) + ' ' + JSON.stringify({ in: fu.in, free: fu.free, dc: fu.dc, opens: fu.opens }));
+  /* Cal 11-26: a furniture find waits in its room for free, not installed (loot184.js) */ ok(fu.o.k === 'furn' && !fu.in && fu.free && !fu.opens && fu.o.price < 1000, 'a furniture drop is not installed; it waits free and opens no room: ' + JSON.stringify(fu.o) + ' ' + JSON.stringify({ in: fu.in, free: fu.free, dc: fu.dc, opens: fu.opens }));
   await V(() => { window.__qbV144.loot.give('stone'); }); await p.waitForTimeout(700); await p.screenshot({ path: OUT + '/batch144_loot.png' }); await V(() => document.querySelectorAll('#layer .modal').forEach((q) => q.remove()));
   /* the info sheets */
   const inf = await V(() => ({ dq: window.__qbV144.info('dq').join(' | '), tr: window.__qbV144.info('train').join(' | ') }));
