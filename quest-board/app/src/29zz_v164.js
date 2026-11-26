@@ -9,7 +9,7 @@
 var V64BOX={};
 function v64Box(im){try{var u0=im.currentSrc||im.src,u=u0&&u0.length>200?u0.length+":"+u0.slice(-64)+":"+(im.dataset.pzk||""):u0;/* QA: a short key, not a 300 KB data URL */if(!u||!im.complete||!im.naturalWidth||im.naturalWidth<4)return null;if(V64BOX[u])return V64BOX[u];
     var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,160/Math.max(w,h)),cw=Math.max(1,Math.round(w*k)),ch=Math.max(1,Math.round(h*k)),c=document.createElement("canvas");c.width=cw;c.height=ch;
-    var x=c.getContext("2d");x.drawImage(im,0,0,cw,ch);var d=x.getImageData(0,0,cw,ch).data,x0=cw,y0=ch,x1=-1,y1=-1;
+    var x=c.getContext("2d",{willReadFrequently:true});x.drawImage(im,0,0,cw,ch);var d=x.getImageData(0,0,cw,ch).data,x0=cw,y0=ch,x1=-1,y1=-1;
     for(var y=0;y<ch;y++)for(var i=0;i<cw;i++)if(d[(y*cw+i)*4+3]>24){if(i<x0)x0=i;if(i>x1)x1=i;if(y<y0)y0=y;if(y>y1)y1=y}
     if(x1<0)return null;var b=[x0/cw,y0/ch,(x1+1)/cw,(y1+1)/ch];var keys=Object.keys(V64BOX);if(keys.length>80)delete V64BOX[keys[0]];V64BOX[u]=b;return b}catch(e){return null}}
 function v64On(im,b){var r=im.getBoundingClientRect();return {l:r.left+b[0]*r.width,t:r.top+b[1]*r.height,r:r.left+b[2]*r.width,b:r.top+b[3]*r.height}}
