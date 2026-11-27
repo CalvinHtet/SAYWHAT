@@ -1,0 +1,23 @@
+// QA for LEAD (v1.77): what a hair try-on in the Stylist encodes. 4x throttled. Records, from the tap until 3 s later: every rig render
+// (which rig: its frame size, the pose/clip), every canvas toBlob / toDataURL (canvas size, sync time, the call stack's app functions),
+// and long tasks. Plain build.
+//   PORT=<plain build> NODE_PATH=<playwright> node rigtest/qa/tryon197qa.js
+const pw = require('playwright'); const PORT = process.env.PORT || 8819;
+const T = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
+(async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 });
+  await ctx.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
+  await ctx.addInitScript(() => { window.__enc = { on: 0, ev: [] }; const st = () => (new Error().stack || '').split('\n').slice(2, 9).map((l) => (l.match(/at (\S+)/) || [])[1] || '').filter((f) => f && !/^(new|Object|Array|Promise|async)$/.test(f)).join('<');
+    const P = HTMLCanvasElement.prototype; for (const k of ['toBlob', 'toDataURL']) { const o = P[k]; P[k] = function (...a) { const t0 = performance.now(); const r = o.apply(this, a); if (window.__enc.on) window.__enc.ev.push({ k, w: this.width, h: this.height, t: Math.round(t0 - window.__enc.t0), ms: Math.round(performance.now() - t0), by: st() }); return r; }; }
+    let R; Object.defineProperty(window, 'QBRig', { configurable: true, get() { return R; }, set(v) { R = v; if (v && v.create && !v.__qa) { const c = v.create; v.create = async function (o) { const rig = await c.apply(this, arguments); const fr = o && o.rig && o.rig.frame ? o.rig.frame.join('x') : '?'; const rr = rig.render;
+      rig.render = function (look, pose) { const t0 = performance.now(); const p = rr.apply(this, arguments); const done = () => { if (window.__enc.on) window.__enc.ev.push({ k: 'render', frame: fr, pose: typeof pose === 'string' ? pose : JSON.stringify(pose).slice(0, 30), t: Math.round(t0 - window.__enc.t0), ms: Math.round(performance.now() - t0), by: st() }); }; if (p && p.then) p.then(done, done); else done(); return p; }; return rig; }; v.__qa = 1; } } });
+    window.__lt = []; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__lt.push([Math.round(e.startTime), Math.round(e.duration)]); }).observe({ type: 'longtask', buffered: true }); } catch (e) {} });
+  const p = await ctx.newPage(); await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV149, null, { timeout: 120000 }); await p.waitForTimeout(800);
+  await p.evaluate((T) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Try', sex: 'm' }); S.xp = x.cum(30) + 10; S.gates = S.gates || []; let g, n = 0; while ((g = x.gated()) !== null && n++ < 20) S.gates.push(g); S.tutDone = 1; S.coins = 99999; S.tours = T; S.v67ref = 1; delete S.areaOn; try { window.__qbRooms.open('closet', 1); } catch (e) {} try { S.v92 = { n: 1, d: '9999' }; } catch (e) {} x.persist(); x.render(); }, T);
+  await p.waitForTimeout(1500); await p.evaluate(() => { document.querySelectorAll('#layer > *').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="shop"]').click(); }); await p.waitForTimeout(1500);
+  await p.evaluate(() => { document.querySelectorAll('#layer > *').forEach((m) => m.remove()); window.__qbV149.go('stylist'); }); await p.waitForTimeout(5000);
+  const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); await p.waitForTimeout(1500);
+  for (const k of [2, 4]) { const r = await p.evaluate(async (k) => { const E = window.__enc; E.ev = []; E.t0 = performance.now(); E.on = 1; const lt0 = window.__lt.length; const b = document.querySelectorAll('[data-act="qstry"]')[k]; const id = b && b.dataset.id; b.click(); await new Promise((r) => setTimeout(r, 3000)); E.on = 0;
+      return { id, lt: window.__lt.slice(lt0).map((x) => [Math.round(x[0] - E.t0), x[1]]), ev: E.ev }; }, k);
+    console.log('TRY ' + r.id + ' long tasks ' + JSON.stringify(r.lt)); const agg = {}; for (const e of r.ev) { const key = e.k + ' ' + (e.k === 'render' ? e.frame + ' ' + e.pose : e.w + 'x' + e.h) + ' by ' + e.by.split('<').slice(0, 3).join('<'); agg[key] = agg[key] || { n: 0, ms: 0, first: e.t }; agg[key].n++; agg[key].ms += e.ms; }
+    for (const [k2, v] of Object.entries(agg).sort((a, b) => b[1].ms - a[1].ms)) console.log('   ' + v.n + 'x ' + v.ms + ' ms (from +' + v.first + ') ' + k2); }
+  await b.close(); })();
