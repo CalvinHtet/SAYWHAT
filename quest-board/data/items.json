@@ -2140,5 +2140,15 @@
   "slot": "glasses",
   "neutral": true,
   "frontOnly": true
+ },
+ "nc_towel": {
+  "slot": "neck"
+ },
+ "nc_neckerchief": {
+  "slot": "neck"
+ },
+ "nc_tagchain": {
+  "slot": "neck",
+  "frontOnly": true
  }
 }
