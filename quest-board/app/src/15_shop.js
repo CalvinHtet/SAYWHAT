@@ -153,6 +153,8 @@ var EXTRA_ITEMS=[
  ["gx_nc_visor","a_hat","Terry Visor",750,1,"Jet-black terry, cream binding, silver buckle.",{gar:"nc_visor",b:"nc"}],
  ["gx_nc_pendant","a_acc","Cashmere Scarf",1100,1,"Ash cashmere, cream edges, worn loose.",{gar:"nc_pendant",b:"nc"}],
  ["gx_nc_shades","a_acc","Rimless Aviators",900,1,"Smoke gradient lenses, silver bridge.",{gar:"nc_shades",b:"nc"}],
+ ["gx_nc_ovals","a_acc","Silver Oval Shades",800,1,"Small smoke-grey ovals, thin polished silver frame.",{gar:"nc_ovals",b:"nc"}],
+ ["gx_nc_shield","a_acc","Shield Sunglasses",850,1,"One-piece wraparound smoke lens, silver brow bar.",{gar:"nc_shield",b:"nc"}],
  ["gx_nc_hoodie","a_top","Embossed Crest Hoodie",1700,1,"Jet black, rooster in relief.",{gar:"nc_hoodie",b:"nc"}],
  ["gx_nc_tee","a_top","Layered Lounge Tee",1100,1,"Cream oversized tee over a charcoal thermal.",{gar:"nc_tee",b:"nc"}],
  ["gx_nc_tank","a_top","Waffle Lounge Zip",1500,1,"Ivory waffle knit, half zipped.",{gar:"nc_tank",b:"nc"}],
@@ -230,6 +232,7 @@ var EXTRA_ITEMS=[
  ["gx_smk_bomber","a_top","Cropped Bomber",1500,1,"Ember lining, a smoke swirl on the back.",{gar:"smk_bomber",b:"smk"}],
  /* ROOMS's batches 5 and 6, QA-passed (5ff18b69, 6790548a, 30c0d7b4) */
  ["gx_smk_platecollar","a_acc","Plated Collar",800,1,"A high steel neck guard on black straps.",{gar:"smk_platecollar",b:"smk"}],
+ ["gx_smk_gaiter","a_acc","Smoke Gaiter",700,1,"Matte-black rib, ash smoke print, ember top band and toggle cord.",{gar:"smk_gaiter",b:"smk"}],
  ["gx_smk_ashwrap","a_acc","Ash Neck Wrap",600,1,"Loose ash wrap, ember stitching, a three-bead charm.",{gar:"smk_ashwrap",b:"smk"}],
  ["gx_smk_gauntlets","a_acc","Shadow Gauntlets",800,1,"Black to the elbow, segmented plates.",{gar:"smk_gauntlets",b:"smk"}],
  ["gx_smk_embercuffs","a_acc","Ember Cuffs",700,1,"Wide black cuffs, glowing ember seams.",{gar:"smk_embercuffs",b:"smk"}],
