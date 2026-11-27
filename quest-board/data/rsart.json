@@ -1883,6 +1883,70 @@
 "h": 994,
 "w": 1242
 },
+"trw_banner": {
+"h": 200,
+"w": 139
+},
+"trw_beak": {
+"h": 200,
+"w": 191
+},
+"trw_bow": {
+"h": 200,
+"w": 163
+},
+"trw_dragon": {
+"h": 200,
+"w": 151
+},
+"trw_greatsword": {
+"h": 200,
+"w": 180
+},
+"trw_lantern": {
+"h": 200,
+"w": 120
+},
+"trw_shield": {
+"h": 200,
+"w": 234
+},
+"trx_clock_chest": {
+"h": 280,
+"w": 143
+},
+"trx_clock_gauntlets": {
+"h": 280,
+"w": 143
+},
+"trx_clock_halberd": {
+"h": 280,
+"w": 143
+},
+"trx_clock_mask": {
+"h": 280,
+"w": 143
+},
+"trx_clock_mq": {
+"h": 280,
+"w": 143
+},
+"trx_drowned_coat": {
+"h": 280,
+"w": 136
+},
+"trx_drowned_cutlass": {
+"h": 280,
+"w": 136
+},
+"trx_drowned_helm": {
+"h": 280,
+"w": 136
+},
+"trx_drowned_mq": {
+"h": 280,
+"w": 136
+},
 "trx_mq": {
 "h": 280,
 "w": 137
@@ -1906,6 +1970,30 @@
 "trx_mq_sword": {
 "h": 280,
 "w": 137
+},
+"trx_warden_blade": {
+"h": 280,
+"w": 150
+},
+"trx_warden_crown": {
+"h": 280,
+"w": 150
+},
+"trx_warden_greaves": {
+"h": 280,
+"w": 150
+},
+"trx_warden_mantle": {
+"h": 280,
+"w": 150
+},
+"trx_warden_mq": {
+"h": 280,
+"w": 150
+},
+"trx_warden_plate": {
+"h": 280,
+"w": 150
 },
 "vrw_t1": {
 "h": 1368,
