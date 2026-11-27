@@ -21,10 +21,10 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(same, 'the Vault is the same all week and on every phone (the week is the seed)');
   /* a live brand's drop: 3 a category */
   const hf = await V(() => { const out = {}; window.__qbDrops.state().live.forEach((b) => { const h = window.__qbV201.half(b), c = {}; Object.keys(h).forEach((id) => { const k = window.__qbV201.cat(id); c[k] = (c[k] || 0) + 1; }); out[b.id] = c; }); return out; });
-  ok(Object.keys(hf).length >= 1 && Object.values(hf).every((c) => Object.values(c).every((n) => n <= 3)), 'every live brand shows at most 3 a category ' + JSON.stringify(hf));
+  ok(Object.keys(hf).length >= 1 && Object.values(hf).every((c) => Object.values(c).every((n) => n <= 4)), 'every live brand shows at most 4 a category (Cal 11-26) ' + JSON.stringify(hf));
   const smk = await V(() => { const b = { id: 'smk', start: '2026-12-02' }; const ids = Object.keys(window.__qbV201.half(b)); const hats = ids.filter((id) => window.__qbV201.cat(id) === 'hat');
     const b2 = { id: 'smk', start: '2026-12-30' }; return { hats: hats.length, all: ids.length }; });
-  ok(smk.hats === 3, 'Smoke Bomb (6 hats now) shows 3 hats in a drop ' + JSON.stringify(smk));
+  ok(smk.hats === 4, 'Smoke Bomb (6 hats now) shows 4 hats in a drop, the other 2 and 2 again the next ' + JSON.stringify(smk));
   /* the pages */
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.coins = 50000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {});
     S.base.slots = [{ t: 'bedroom', a: { bd_ward1: 1, bd_ward2: 1 }, st: 0, pend: 0 }, { t: 'closet', a: {}, st: 0, pend: 0 }]; S.areaOn = null; if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); });
