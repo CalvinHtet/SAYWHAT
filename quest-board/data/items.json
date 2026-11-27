@@ -2050,5 +2050,15 @@
  },
  "smk_tacpants": {
   "slot": "pants"
+ },
+ "smk_wrappants": {
+  "slot": "pants",
+  "wide": true
+ },
+ "smk_wrapboots": {
+  "slot": "shoes"
+ },
+ "smk_strapsneaker": {
+  "slot": "shoes"
  }
 }
