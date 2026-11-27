@@ -78,4 +78,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
      frogged jacket, the capelet tunic, the mess jacket, the tall riding boots, the stiletto boots); the rest premium */
   put("luxury","gx_rg_cap gx_rg_cord gx_rg_jacket gx_rg_capelet gx_rg_mess gx_rg_boot gx_rg_stiletto");
   put("premium","gx_rg_side gx_rg_sash gx_rg_gloves gx_rg_vest gx_rg_breeches gx_rg_trouser gx_rg_skirt gx_rg_spat");
+  /* Smoke Bomb to 6 a category (ROOMS, QA c414f017; LEAD 11-26): standard like the brand's first pieces; the steel and the respirator premium */
+  put("standard","gx_smk_hoodcap gx_smk_visorbeanie gx_smk_tails gx_smk_goggles gx_smk_scoutlens gx_smk_ventmask gx_smk_trailscarf gx_smk_kunai gx_smk_grips gx_smk_handwraps gx_smk_hoodie gx_smk_wrapjacket gx_smk_harness gx_smk_bomber");
+  put("premium","gx_smk_platehood gx_smk_slitvisor gx_smk_resp gx_smk_bracers");
   }return m[id]||null}
