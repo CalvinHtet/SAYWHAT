@@ -18,7 +18,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(!r0.box && !r0.q && r1.box && r1.helm && !r1.q && !r1.others, 'no relic box before the first relic; after it, only the found piece (no "? ? ?", no other sets) ' + JSON.stringify({ r0, r1 }));
   /* the Armory */
   const ar = await V(() => { const x = window.__qb.x(); const loot = JSON.stringify(window.__qbV216.where); const tr = x.ADDONS.lair.filter((a) => a[0] === 'lr_troom')[0]; return { addon: tr && tr[1], sets: Object.keys(window.__qbV216.sets), art: window.__qbV216.art('wall', 'dragon') }; });
-  ok(ar.addon === 'Stairs to the Armory' && ar.sets.length === 4 && ar.art === false, 'the Trophy Room is the Armory; four new relic sets defined, waiting on their art ' + JSON.stringify(ar));
+  ok(ar.addon === 'Stairs to the Armory' && ar.sets.length === 4 && ar.art === true, 'the Trophy Room is the Armory; four new relic sets defined, their icons in (8a4eeb1d) ' + JSON.stringify(ar));
   /* Checkout */
   await V(() => document.querySelector('.nav button[data-v="shop"]').click()); await w(700); await clear();
   await V(() => { const s = document.querySelector('[data-shub="street"]'); if (s) s.click(); }); await w(700); await clear();
