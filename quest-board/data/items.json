@@ -2047,5 +2047,8 @@
  },
  "smk_joggers": {
   "slot": "pants"
+ },
+ "smk_tacpants": {
+  "slot": "pants"
  }
 }
