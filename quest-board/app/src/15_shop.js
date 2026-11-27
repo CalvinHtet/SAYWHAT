@@ -198,7 +198,7 @@ var EXTRA_ITEMS=[
  ["gx_sm_boots","a_shoes","Neon-Lace Boots",1400,1,"Combat boots, cyan laces.",{gar:"sm_boots",b:"sm"}],
  /* Cal 11-18 SAYMØRE: the GO OFF Tee's replacement (ROOMS cefab81) */
  ["gx_sm_grille","a_top","Speaker-Grille Bomber",1600,1,"Grille-mesh panels, cyan EQ bars up the back, orange \u00d8 badge.",{gar:"sm_grille",b:"sm"}],
- ["gx_smk_band","a_hat","Stitched Headband",700,1,"Ash-grey cloth, a stitched smoke puff.",{gar:"smk_band",b:"smk"}],
+ ["gx_smk_band","a_hat","Stitched Headband",700,1,"Ash-grey cloth, an ember-stitched smoke puff trailing a long wisp.",{gar:"smk_band",b:"smk"}],
  ["gx_smk_wrap","a_hat","Spiky Headwrap",650,1,"Ink black, an ember-orange tie.",{gar:"smk_wrap",b:"smk"}],
  ["gx_smk_cowl","a_acc","Half-Face Cowl",800,1,"Up over the nose, eyes only.",{gar:"smk_cowl",b:"smk"}],
  ["gx_smk_tape","a_acc","Wrap Tape Set",500,1,"Cream tape on the forearms.",{gar:"smk_tape",b:"smk"}],
