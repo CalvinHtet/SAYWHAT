@@ -98,7 +98,7 @@ try{var RD=ROOMDEF.trophy;RD.name="Armory";if(RD.help){RD.help.k="Armory";RD.hel
   (ADDONS.lair||[]).forEach(function(a){if(a[0]==="lr_troom"){a[1]="Stairs to the Armory";a[8]="A hall upstairs where every relic your allies bring home goes on show."}})}catch(e){}
 /* where each new stand and wall piece goes (ROOMS fits these to the painted hall as the art lands) */
 var V216MQ={drowned:[1.75,.05,106],clock:[4.15,.05,106],warden:[6.55,.05,106]};
-var V216WALL={banner:[7.6,.1,.3,.3,46,-86],greatsword:[.1,2.05,.3,.3,54,-52],dragon:[.1,3.45,.3,.3,42,-80],bow:[.1,4.95,.3,.3,54,-50],shield:[.1,6.25,.3,.3,34,-80],lantern:[2.8,.1,.3,.3,34,-106],beak:[5.15,.1,.3,.3,30,-104]};
+var V216WALL={banner:[.1,.6,.3,.3,33,-68],greatsword:[.1,1.9,.3,.3,36,-70],dragon:[.1,3.45,.3,.3,38,-82],bow:[.1,4.8,.3,.3,37,-66],shield:[.1,6.55,.3,.3,30,-84],lantern:[2.95,.1,.3,.3,32,-106],beak:[5.4,.1,.3,.3,25,-108]};
 try{var v216Draw=ROOMDEF.trophy.draw;ROOMDEF.trophy.draw=function(C){var r=v216Draw?v216Draw.apply(this,arguments):undefined;
   try{["drowned","clock","warden"].forEach(function(k){var T=TSETS[k];if(!T.pieces.some(function(p){return trHas(k,p.id)}))return;var P=V216MQ[k];
       if(lfSpr(C,"trx_"+k+"_mq",P[0],P[1],1.3,1.3,{H:P[2]||136,ctr:1,h:60}))T.pieces.forEach(function(p,i){if(trHas(k,p.id))lfSpr(C,"trx_"+k+"_"+p.id,P[0],P[1],1.3,1.3,{H:P[2]||136,ctr:1,nosh:1,nob:1,dk:-.001*(i+1)})})});
