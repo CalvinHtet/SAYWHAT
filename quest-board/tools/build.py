@@ -27,6 +27,11 @@ def read(*path):
 
 
 os.makedirs(os.path.join(DIST, "art"), exist_ok=True)
+# QA 11-26: art removed from art/app must not linger in dist/art (it would stay in arthash and the build)
+_src = {os.path.basename(a) for a in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")) + glob.glob(os.path.join(ROOT, "art", "app", "*.mp4"))}
+for _old in glob.glob(os.path.join(DIST, "art", "*.webp")) + glob.glob(os.path.join(DIST, "art", "*.mp4")):
+    if os.path.basename(_old) not in _src:
+        os.remove(_old)
 # scripts from the last build go first, so a pack that is now cut into pieces (or no longer cut) leaves nothing behind
 for old in glob.glob(os.path.join(DIST, "*.js")):
     os.remove(old)
