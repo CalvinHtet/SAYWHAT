@@ -17,10 +17,11 @@ try{
     ["Grow and sell","Produce builds up as it grows. Tap Sell in the Garden window to turn it into coins."],
     ["Coins while you are away","The more you grow and sell, the more the Garden earns on its own."],
     ["Upgrade it","New beds and tools grow more, and grow it faster."]]};
-  ROOMHELP.restaurant={k:"New room",t:"The Restaurant is open",sub:"Your first business. Guests come in, eat and pay, even while you are away.",pts:[
+  ROOMHELP.restaurant={k:"New room",t:"The Restaurant is open",sub:"A business of your own. Guests come in, eat and pay, even while you are away.",pts:[
     ["Collect your takings","Coins build up in the room. Tap the coin bubble to collect them. It holds 8 hours, so check in once or twice a day."],
     ["Your quests run the kitchen","Each day it pays out a share of what your quests earned. No quests, no takings."],
-    ["Upgrade it","Kitchen gear and staff raise what it earns. Decor is for looks."]]};
+    ["Upgrade it","Kitchen gear and staff raise what it earns. Decor adds a little too."]]};
+  if(ROOMHELP.theater)ROOMHELP.theater.sub="Guests line up, buy a ticket and head in.";
   if(ROOMHELP.theater)ROOMHELP.theater.pts=[["Tickets pay you","Ticket money builds up in the room. Collect it like the others."],["Grow the lobby","Upgrades bring in more guests and more ticket money."]];
   if(ROOMHELP.auditorium)ROOMHELP.auditorium.pts=[["Make it a real cinema","Upgrade the seats, the projector, the sound, the walls and the floors."],["Collect your coins","Takings build up in the room. Tap the coin bubble to collect them."]];
   if(ROOMHELP.loft)ROOMHELP.loft.pts=[["Start with your Bedroom","Tap it to see what you can add."],["Make it yours","Every upgrade changes how the room looks."]];
@@ -33,7 +34,7 @@ try{
   ROOMHELP.vault={k:"New",t:"The Vault",sub:"Every Sunday morning, a mix from every brand: four pieces in each category, on sale all week.",pts:[
     ["One week only","When the week ends, the Vault restocks with a new mix."],["Try it on","Try pieces on your character first, then check out."]]};
   /* the Game Room's own window */
-  Object.keys(ROOMDEF).forEach(function(k){var d=ROOMDEF[k];if(d&&d.name==="Game Room"&&!ROOMHELP[k])ROOMHELP[k]={k:"New room",t:"The Game Room is open",sub:"Games, snacks and a couch. Friends drop by to hang out.",pts:[["Make it fun","Upgrades add games and places to sit."],["Rest up","A good room to unwind in after a day of quests."]]}});
+  Object.keys(ROOMDEF).forEach(function(k){var d=ROOMDEF[k];if(d&&d.name==="Game Room"&&!ROOMHELP[k])ROOMHELP[k]={k:"New room",t:"The Game Room is open",sub:"Games, snacks and a couch. Friends drop by to hang out.",pts:[["Make it fun","Upgrades add games and places to sit."],["A little extra","While it is built, your quests earn 2% more XP."]]}});
 }catch(e){}
 /* ---- the spoiler lines, fixed where they are written ---- */
 function v219Fix(s){return typeof s!=="string"?s:s
@@ -43,12 +44,15 @@ function v219Fix(s){return typeof s!=="string"?s:s
   .replace(" A Pet Shop creature gets its own bed out here.","").replace("A Pet Shop creature gets its own bed out here.","A warm spot to sit out by the fire.")
   .replace(" There may be a secret door.","")
   .replace("Coins build your home and buy clothes, once those open. For now, finish a few tasks.","Coins pay for everything you build. Finish a few tasks to get started.")
-  .replace("Later you add snacks and a bar.","Add snacks and more as it grows.")
+  .replace("Later you add snacks and a bar.","Upgrades bring in more guests.")
   .replace("The fuller the bar, the more your rooms earn today.","The fuller the bar, the more you earn today.")
   .replace("New brands drop Mondays and Thursdays","New brands drop three times a week")
+  .replace(" The Shop opens with it.","")
+  .replace(", and some open a new room next door.",".")
+  .replace("For now it is an empty marble strip mall with a row of empty storefronts.","An empty marble strip mall with a row of storefronts waiting to be filled.")
   .replace(" plus themes and upgrades","").replace(", plus themes and upgrades","")}
 try{Object.keys(ADDONS).forEach(function(r){(ADDONS[r]||[]).forEach(function(a){for(var i=0;i<a.length;i++)if(typeof a[i]==="string")a[i]=v219Fix(a[i])})})}catch(e){}
-try{Object.keys(ROOMDEF).forEach(function(k){var d=ROOMDEF[k];if(!d)return;d.desc=v219Fix(d.desc);if(d.help&&d.help.pts)d.help.pts.forEach(function(p){p[1]=v219Fix(p[1])});if(ROOMHELP[k]&&ROOMHELP[k].pts)ROOMHELP[k].pts=ROOMHELP[k].pts.filter(function(p){return p[1]!==""}).map(function(p){return [p[0],v219Fix(p[1])]})})}catch(e){}
+try{Object.keys(ROOMDEF).forEach(function(k){var d=ROOMDEF[k];if(!d)return;d.desc=v219Fix(d.desc);if(d.help)d.help.sub=v219Fix(d.help.sub);if(ROOMHELP[k])ROOMHELP[k].sub=v219Fix(ROOMHELP[k].sub);if(d.help&&d.help.pts)d.help.pts.forEach(function(p){p[1]=v219Fix(p[1])});if(ROOMHELP[k]&&ROOMHELP[k].pts)ROOMHELP[k].pts=ROOMHELP[k].pts.filter(function(p){return p[1]!==""}).map(function(p){return [p[0],v219Fix(p[1])]})})}catch(e){}
 try{Object.keys(ROOMT).forEach(function(k){if(ROOMT[k]&&typeof ROOMT[k].desc==="string")ROOMT[k].desc=v219Fix(ROOMT[k].desc)})}catch(e){}
 try{TOURS.forEach(function(T){(T.steps||[]).forEach(function(s){if(typeof s.x==="string")s.x=v219Fix(s.x)})})}catch(e){}
 try{Object.keys(AREALINE).forEach(function(k){AREALINE[k]=v219Fix(AREALINE[k])})}catch(e){}

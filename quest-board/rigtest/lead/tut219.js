@@ -6,11 +6,11 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV219, null, { timeout: 90000 }); await p.waitForTimeout(300);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a); const w = (ms) => p.waitForTimeout(ms);
   /* no spoilers anywhere in the help, the room words, the upgrades, the tours, the (i) sheets */
-  const sp = await V(() => { const x = window.__qb.x(), bad = [], rx = /sprinkler[s]? (do|will)|later|once those open|secret door|Pet Shop creature|what comes next|on the menu|next month's dinner|never have to|IMAX|Behind the doors|Mara will have/i;
+  const sp = await V(() => { const x = window.__qb.x(), bad = [], rx = /sprinkler[s]? (do|will)|later|once those open|secret door|Pet Shop creature|what comes next|on the menu|next month's dinner|never have to|IMAX|Behind the doors|Mara will have|first business|For now it is|Shop opens with it|new room next door|once it opens|for looks|snacks and more as it grows/i;
     const look = (where, s) => { if (typeof s === 'string' && rx.test(s)) bad.push(where + ': ' + s.slice(0, 90)); };
     const H = window.__qbV219.help; Object.keys(H).forEach((k) => { look('help.' + k, H[k].sub); (H[k].pts || []).forEach((q) => { look('help.' + k, q[0]); look('help.' + k, q[1]); }); });
     Object.keys(x.ADDONS).forEach((r) => (x.ADDONS[r] || []).forEach((a) => { if (r === 'garden' || r === 'restaurant' || r === 'closet' || r === 'patio') a.forEach((s) => look('addon.' + r, s)); }));
-    Object.keys(x.ROOMT).forEach((k) => look('room.' + k, x.ROOMT[k] && x.ROOMT[k].desc)); return bad; });
+    Object.keys(x.ROOMT).forEach((k) => look('room.' + k, x.ROOMT[k] && x.ROOMT[k].desc)); Object.keys(x.ADDONS).forEach((r) => (x.ADDONS[r] || []).forEach((a) => a.forEach((s) => { if (/Shop opens with it/.test(s)) look('addon.' + r, s); }))); return bad; });
   ok(sp.length === 0, 'no lines that spoil later rooms or upgrades ' + JSON.stringify(sp.slice(0, 6)));
   const g = await V(() => { const H = window.__qbV219.help.garden; return H.pts.map((q) => q[0] + ': ' + q[1]).join(' | '); });
   ok(/Water/.test(g) && /Sell/.test(g) && /on its own/.test(g) && !/[Ss]prinkler/.test(g), 'the Garden teaches watering, selling and earning on its own ' + g);
