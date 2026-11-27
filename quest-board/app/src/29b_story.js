@@ -191,7 +191,7 @@ var BEATS=[
   {id:"desmond2",pic:"lockkey",who:"Desmond Hale",role:"Investor",at:"Lock and Key",gate:function(){return styUps("skybar")>=6},lines:["The singer you booked? Sold out three weekends running.","I've backed a lot of rooms. This is one of the good ones."]},
   {id:"rafe2",pic:"rafe",who:"Rafe Calloway",role:"Traveling adventurer",at:"the rooftop",gate:function(){return teamHas("rafe")&&styHas("rooftop")},lines:["You can see the whole city from up here. Reminds me of the lighthouse at the edge of the Coral Reach.","Did I ever tell you about the sunken temple? Pull up a chair."]},
   /* QA (story read): Sable names the Old Metro first, Rafe asks about it later */
-  {id:"sable2",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",gate:function(){return teamHas("sable")&&(styState().missions||0)>=5},lines:["The Old Metro's gone quiet.","Something deeper down is collecting crowns. I've seen the scratch marks."]},
+  {id:"sable2",pic:"sable",who:"Sable",role:"Scout",at:"the lounge",gate:function(){return teamHas("sable")&&(styState().missions||0)>=5},lines:["The Old Metro's gone quiet.","Something deeper down is collecting crowns. I've seen the scratch marks."]},
   {id:"rafe3",pic:"rafe",who:"Rafe Calloway",role:"Traveling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&teamHas("sable")&&(styState().missions||0)>=8},lines:["Your scouts have been down in the Old Metro? Next time, take me.","I've been down worse tunnels than those."]},
   {id:"priya2",pic:"mall",who:"Priya Okafor",role:"Investor",at:"the strip mall",gate:function(){return styHas("theater")},lines:["A movie theater. In our strip mall.","Do you know what this does to foot traffic? Weekends are going to be full."]},
   {id:"nova2",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the strip mall",gate:function(){return teamHas("nova")&&styUps("mall")>=6},lines:["The haul video just passed a million views.","Brace yourself for Saturday."]},
@@ -215,7 +215,7 @@ function styBeat(){var o=styState(),now=Date.now();o.beats=o.beats||{};if(now-(o
 /* returns that step's own level, or 0 when none is ready */
 function styReadyLow(){var o=styState();if(o.stepDay===today()&&!(S.testFree>0))return 0;for(var i=0;i<STORY.length;i++){var s=STORY[i],L=ECON.stepLv[s.id]||0;
   if(o.done[s.id]||o.offer[s.id]||s.how==="never"||L>=ECON.oneSlotBelow||ECON.slotFree[s.id])continue;var ok=false;try{ok=s.gate()&&effLvl()>=L&&styChainOk(s)}catch(e){}if(ok)return L||1}return 0}
-function styCheck(){if(!loaded||!S.base||!S.created||view==="shop")return;/* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
+function styCheck(){if(!loaded||!S.base||!S.created||view==="shop"||view==="away")return;/* QA v1.79: not over the Crawls tab either *//* QA: never in the middle of a purchase */var o=styState(),now=Date.now();
   STORY.forEach(function(s){if(!o.done[s.id]&&styHas(s.room))o.done[s.id]=1});styOpened();
   /* the 4-room Garden rule (2026-11-09) also applies to a save that was offered the lot before it and never built it: the offer
      goes back, and the hobby scene comes once The Loft has 4 rooms */

@@ -40,7 +40,7 @@ var SIDEQ=[
     snap:"Your dog on the walk, outside.",
     check:"a dog being walked outside: a dog on a leash, or a dog out on a walk on a street, path, park or beach",
     done:[function(){return sdqDogName()+(sdqDogName().indexOf(" and ")>0?" know":" knows")+" every tree on the block now."},"There's a box on the porch with their names on it."],reward:"An outfit for the dogs. They wear it once it's finished."},
-  {id:"sable",pic:"sable",who:"Sable",role:"Scout",at:"the Hero's Lair",name:"Night watch",need:3,gate:function(){return teamHas("sable")},
+  {id:"sable",pic:"sable",who:"Sable",role:"Scout",at:"the lounge",name:"Night watch",need:3,gate:function(){return teamHas("sable")},
     ask:["Your lights were on at two last night.","Bed before midnight. Three nights in a row.","Send me a picture from bed each night. The time goes on it."],yes:"Start the watch",
     snap:"A picture of you in bed, taken between 8 pm and midnight.",
     check:"a person lying in a bed at night: a selfie or photo taken from bed, with low or night-time light. An empty bed, a couch or daylight do not count",self:1,

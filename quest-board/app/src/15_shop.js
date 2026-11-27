@@ -232,6 +232,12 @@ var EXTRA_ITEMS=[
  ["gx_smk_embercuffs","a_acc","Ember Cuffs",700,1,"Wide black cuffs, glowing ember seams.",{gar:"smk_embercuffs",b:"smk"}],
  ["gx_smk_watch","a_acc","Smoke Watch",600,1,"A blank ember face; a vented band on the other wrist.",{gar:"smk_watch",b:"smk"}],
  ["gx_smk_joggers","a_pants","Wrap Joggers",1100,1,"An ember side stripe, shins wrapped in cloth.",{gar:"smk_joggers",b:"smk"}],
+ /* ROOMS's last five, QA-passed (971c8fe8, 8bdf9d35, 1a04e8f4, 6a6296cd, 37c9bc3f): Smoke Bomb complete at 29 new */
+ ["gx_smk_tacpants","a_pants","Strap Tactical Pants",1100,1,"Slim charcoal, thigh straps and pouches.",{gar:"smk_tacpants",b:"smk"}],
+ ["gx_smk_wrappants","a_pants","Layered Wrap Pants",1100,1,"Wide black trousers under a long ash wrap panel, ember stitching.",{gar:"smk_wrappants",b:"smk"}],
+ ["gx_smk_strapsneaker","a_shoes","Strap High-Tops",1000,1,"Black high-tops, ember-orange straps.",{gar:"smk_strapsneaker",b:"smk"}],
+ ["gx_smk_wrapboots","a_shoes","Wrapped Boots",1100,1,"Soft black boots wrapped in cloth to the shin.",{gar:"smk_wrapboots",b:"smk"}],
+ ["gx_smk_embersole","a_shoes","Ember Sole Sneakers",1000,1,"Sleek black, glowing ember split soles.",{gar:"smk_embersole",b:"smk"}],
  ["gx_gp_cathood","a_hat","Cat-Ear Hood",800,1,"Lilac knit, pink-lined ears.",{gar:"gp_cathood",b:"gp"}],
  ["gx_gp_bunny","a_hat","Bunny Beanie",750,1,"Candy pink, one ear flopped.",{gar:"gp_bunny",b:"gp"}],
  ["gx_gp_bow","a_hat","Satin Bow",500,1,"Lilac, a gold star in the knot.",{gar:"gp_bow",b:"gp"}],

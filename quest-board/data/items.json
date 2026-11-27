@@ -2047,5 +2047,22 @@
  },
  "smk_joggers": {
   "slot": "pants"
+ },
+ "smk_tacpants": {
+  "slot": "pants"
+ },
+ "smk_wrappants": {
+  "slot": "pants",
+  "wide": true
+ },
+ "smk_wrapboots": {
+  "slot": "shoes",
+  "over": true
+ },
+ "smk_strapsneaker": {
+  "slot": "shoes"
+ },
+ "smk_embersole": {
+  "slot": "shoes"
  }
 }
