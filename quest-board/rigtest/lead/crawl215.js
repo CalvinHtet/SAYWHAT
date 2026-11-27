@@ -8,7 +8,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const clear = () => V(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()));
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(11); S.gates = [5, 10]; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 };
     S.unl = { console: 1, pets: 1, acc2: 1, sable7: 1 }; S.mile = { since: 999, fx1: 1 }; S.story = S.story || {}; S.story.team = { sable: 1, mara: 1 }; S.dng = S.dng || {}; S.dng.npcs = { pip: 1 }; S.dng.runs = []; S.dng.cd = { d: '', n: 0 }; S.dng.dry = 0;
-    S.owned = Object.assign(S.owned || {}, { bf_away: 1 }); S.areaOn = { board: 1, train: 1, hideout: 1, hall: 1, shop: 1, away: 1 };
+    S.owned = Object.assign(S.owned || {}, { bf_away: 1 }); S.areaOn = { board: 1, train: 1, hideout: 1, hall: 1, shop: 1, away: 1 }; S.base.slots = [{ t: 'bedroom', a: { bd_ward1: 1, bd_ward2: 1 }, st: 0, pend: 0 }, { t: 'closet', a: {}, st: 0, pend: 0 }];
     if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="away"]').click(); });
   await p.waitForTimeout(900); await clear();
   const top = await V(() => { const t = document.querySelector('#app').innerText; return { cap: (t.match(/Crawls today\s*(\d+)\/(\d+)/) || []).slice(1).join('/'), sure: /finds something rare/.test(t) }; });
@@ -24,7 +24,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(go.used.join() === '1,2' && go.n === 2 && go.who.indexOf('Sable') < 0 && go.who.length === 2 + 0 - go.hurt.filter((k) => k !== 't:sable').length, 'Sable goes twice, then Who goes? offers only the others ' + JSON.stringify(go));
   await p.screenshot({ path: OUT + '/crawl215_cards.png' });
   /* the Vault: in, then "< Shop" back to the Shop's home screen */
-  await clear(); const navs = await V(() => [...document.querySelectorAll('.nav button')].map((b) => b.dataset.v)); await V(() => { const n = document.querySelector('.nav button[data-v="shop"]'); if (n) n.click(); else { const x = window.__qb.x(); x.S.view = 'shop'; x.render(); } });
+  await clear(); const navs = []; await V(() => document.querySelector('.nav button[data-v="shop"]').click()); await p.waitForTimeout(600); await clear(); await V(() => { const h = document.querySelector('.shub-back[data-shub="home"]'); if (h) h.click(); });
   await p.waitForTimeout(600); await clear();
   const vt = await V(async (NAVS) => { const w = (ms) => new Promise((r) => setTimeout(r, ms)); const d = document.querySelector('[data-shub="vault"]'); if (!d) return { door: false, navs: NAVS }; d.click(); await w(500);
     const inV = !!document.querySelector('.v201v'); document.querySelector('.v201v .shub-back').click(); await w(500);

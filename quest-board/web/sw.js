@@ -14,6 +14,8 @@ self.addEventListener("fetch", function (e) {
       .catch(function () { return caches.open(PAGE).then(function (k) { return k.match("./index.html"); }); }));
     return;
   }
+  /* video (banner loops) goes to the network and the browser's own cache: Safari asks for byte ranges (206), which a cached whole file cannot answer (QA v213 MED) */
+  if (/\.mp4$/i.test(u.pathname) || r.headers.has("range")) return;
   if (u.searchParams.has("h")) {
     e.respondWith(caches.open(FILES).then(function (k) {
       return k.match(r).then(function (hit) { return hit || fetch(r).then(function (res) { if (res.ok) k.put(r, res.clone()); return res; }); });
