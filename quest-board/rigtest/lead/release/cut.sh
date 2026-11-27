@@ -13,7 +13,7 @@ TMP=${TMPDIR:-/tmp}/qb_cut_$NEW
 cd "$R" || exit 1
 git worktree add -q -b "release/$NEW" "$TMP" "refs/heads/release/$PREV" || exit 1
 cd "$TMP" || exit 1
-P="quest-board/app quest-board/src quest-board/data quest-board/art quest-board/tools quest-board/web/web.js"  # web.js yes, config.js (noTest) no
+P="quest-board/app quest-board/src quest-board/data quest-board/art quest-board/tools quest-board/web/web.js quest-board/web/sw.js"  # web.js and sw.js (QA 15c4f48d: the notification tap handler was left out) yes, config.js (noTest) no
 git checkout -q "$SRC" -- $P || { echo "STOP: checkout from $SRC failed"; exit 1; }
 git diff --name-only --diff-filter=D "refs/heads/release/$PREV" "$SRC" -- $P > "$TMP.del"
 while read -r f; do [ -n "$f" ] && git rm -q "$f"; done < "$TMP.del"
