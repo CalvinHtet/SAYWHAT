@@ -51,5 +51,5 @@ for art, meta in items.items():
 text = json.dumps(items, indent=1)
 # the same layout as tools/items.py: each trim line on one row
 text = re.sub(r"\[\s+([0-9.,\s]+?)\s+\]", lambda m: "[" + re.sub(r"\s+", "", m.group(1)) + "]", text)
-open(path, "w").write(text if text.endswith("\n") else text)
+open(path, "w").write(text)
 print("clip lines redone:", n)
