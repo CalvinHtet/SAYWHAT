@@ -276,6 +276,22 @@ but not them plus the day's room upgrades.
 forward and prints each day's coins by source, purchases and new rooms (needs the sandbox build on 8765 and headless Chrome on
 9350, see `docs/WINDOWS_HANDOFF_2026-11-09.md`). Run it after any change to `ECON`.
 
+**Check, 2026-11-26 (Cal: "passive income ... shouldn't overshadow" tasks; "use my profile as a metric for a heavy player").**
+`econsim.js cal 21` on qa-local 101c3c0f (sandbox build, LEAD's Mac: headless shell on 9350, URL passed as the third argument).
+Cal's day: 10 chores, a photo, the gym every weekday. Coins a day split into tasks (quests, the Daily Quest, Training, the weekly
+bonus, level pay) and passive (businesses, produce, crawls):
+
+| Days | Coins a day | From tasks | Passive |
+| --- | --- | --- | --- |
+| 1-6 | 3,200 to 8,600 | all | 0 (no business yet) |
+| 7-13 | 4,000 to 10,800 | 78-93% | 7-22% (Garden, then the Restaurant) |
+| 14-21 | 6,100 to 15,200 | 60-76% | 24-40% (businesses about 2,000, crawls 600 to 1,900) |
+
+Tasks stay the larger share through day 21, so nothing was changed. Passive climbs as businesses and crawls grow: rerun this after
+any new business or crawl change, and if passive passes about 45% of a day, trim `ECON.bizDay` or the crawl bands first (not task
+pay). This is the simulator, not Cal's real save; Cal said the Hero's Lair at 4,000 was "about 2 days" for him (11-25, before task
+pay went up 60%), so his real days are well under the simulator's.
+
 ## Testing
 
 The Test pill has Get 10,000 coins and Level up. Remove it and the `window.__qb` hooks before release (a Live build with
