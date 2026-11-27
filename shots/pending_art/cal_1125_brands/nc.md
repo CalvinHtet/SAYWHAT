@@ -37,7 +37,7 @@ jog_black, jog_ash, jog_slate, short; shoes court, knit, slide.
 ## Extra 14 for 8 per category (Cal 11-26)
 | Category (slot) | id | Name | Line |
 |---|---|---|---|
-| hat | nc_fleecetrapper | Sherpa Trapper Hat | Jet-black suede trapper hat lined with cream sherpa, ear flaps up, a silver snap under the chin. |
+| hat | nc_fleecetrapper | Sherpa Trapper Hat | Jet-black suede trapper hat lined with cream sherpa, the sherpa-lined ear flaps hanging down, a silver snap on each flap. |
 | hat | nc_ribcap | Ribbed Knit Cap | Close-fitting heather-ash rib-knit skullcap with a black tipped edge and a tiny silver ring tab at the side. |
 | head (glasses) | nc_catshades | Silver Cat-Eye Shades | Sharp cat-eye frames in polished silver with gradient smoke lenses. |
 | head (glasses) | nc_visorshade | Mirror Visor Shades | Narrow rimless mirror-silver visor lens across both eyes, thin silver arms. |

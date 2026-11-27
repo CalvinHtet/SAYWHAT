@@ -6,7 +6,8 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
 clear = '--clear' in sys.argv
-nofill = '--nofill' in sys.argv   # necklaces and scarves: a chain loop encloses the chest, so nothing inside is filled
+nofill = '--nofill' in sys.argv
+nodark = '--nodark' in sys.argv   # with --nofill: the piece has no dark parts of its own, so thick dark areas (a shaded head) go too   # necklaces and scarves: a chain loop encloses the chest, so nothing inside is filled
 for p in [a for a in sys.argv[1:] if not a.startswith('--')]:
     im = np.asarray(Image.open(p).convert('RGBA')).copy().astype(int)
     al = im[..., 3]; lum = im[..., :3].mean(-1)
@@ -20,7 +21,8 @@ for p in [a for a in sys.argv[1:] if not a.startswith('--')]:
     else:   # scarves and chains: thick dark parts (a black stripe) stay; only thin dark strokes away from the colour go
         dark = (al > 60) & (lum < 70)
         thick = ndi.binary_dilation(ndi.binary_opening(dark, structure=np.ones((15, 15))), iterations=2)
-        keep = keep | thick
+        if not nodark:
+            keep = keep | thick
     im[~keep | green, 3] = 0
     a = im[..., 3] > 20; lab, n = ndi.label(a, structure=np.ones((3, 3)))
     sz = ndi.sum(a, lab, range(1, n + 1)); im[~np.isin(lab, [i + 1 for i, v in enumerate(sz) if v >= 0.08 * sz.max()]), 3] = 0   # every sizeable part (a towel has two ends)
