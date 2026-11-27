@@ -16,8 +16,8 @@ var V221LETTER={id:"patch190",from:"Cal",d:"",subj:"Update 1.90",coins:700,body:
   +'<li>New places explain themselves the first time you open them.</li>'
   +'</ul><p>Some coins on me. Thanks for playing.</p>'};
 var V221FORCE=0;/* tests only, through the hook below */
-/* QA: a player who has not opened Crawls yet gets the letter without the four Crawls lines (no spoilers), and one general line instead */
-var V221SHORT=V221LETTER.body.replace(/<li>Everyone who crawls[\s\S]*?for a few days\.<\/li>/,'<li>Some of the places you have not reached yet got bigger.</li>');
+/* QA: a player who has not opened Crawls yet gets the letter without the four Crawls lines and nothing in their place (no spoilers) */
+var V221SHORT=V221LETTER.body.replace(/<li>Everyone who crawls[\s\S]*?for a few days\.<\/li>/,'');
 function v221Crawls(){try{return effLvl()>=V210LV&&v210Team().length>0}catch(e){return false}}
 function v221On(){try{return V221FORCE||(typeof APPV!=="undefined"&&APPV>=1900)}catch(e){return false}}
 function v221Day(){try{if(!v221On())return "";if(!S.v221d){S.v221d=today();persist()}return S.v221d}catch(e){return ""}}
