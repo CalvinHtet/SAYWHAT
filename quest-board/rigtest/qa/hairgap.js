@@ -16,9 +16,9 @@
 // score = cut + notch + 2*scalp + 2*float. Lists every piece by its worst frame; saves the worst TOP frames as dressed | bare | marks (red
 // notch, orange cut, magenta scalp, cyan float, yellow holes) in OUT/hairgap_*.png, and per piece and hairstyle the worst score in
 // OUT/hairgap.json. SHEET=1 instead saves, for each id in IDS, one sheet per body: hairstyles down, poses across.
-//   BASE=<server> OUT=<dir> [IDS=a,b] [SLOTS=hat,glasses,mask] [HI=2] [D=14] [TOP=40] [PS=idle,...] NODE_PATH=<playwright> node rigtest/qa/hairgap.js
+//   BASE=<server> OUT=<dir> [IDS=a,b] [GARS=gar,gar (no Shop row yet)] [SLOTS=hat,glasses,mask] [HI=2] [D=14] [TOP=40] [PS=idle,...] NODE_PATH=<playwright> node rigtest/qa/hairgap.js
 const pw = require('playwright'), fs = require('fs'); const BASE = process.env.BASE || 'http://127.0.0.1:8824', OUT = process.env.OUT || '.', HI = +process.env.HI || 2;
-const CFG = { ids: process.env.IDS || '', slots: (process.env.SLOTS || 'hat,glasses,mask').split(','), D: +process.env.D || 14, top: +process.env.TOP || 40, sheet: !!process.env.SHEET,
+const CFG = { gars: (process.env.GARS || '').split(',').filter(Boolean), ids: process.env.IDS || '', slots: (process.env.SLOTS || 'hat,glasses,mask').split(','), D: +process.env.D || 14, top: +process.env.TOP || 40, sheet: !!process.env.SHEET,
   ps: (process.env.PS || 'idle,stretch,sideL,sideR,rearStand,dance1,wave1,thinkA').split(','), HI };
 (async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--mute-audio'] }); const p = await (await b.newContext({ viewport: { width: 1200, height: 900 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   p.on('console', (m) => { if (/^PROG/.test(m.text())) console.log(m.text()); }); await p.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
@@ -27,7 +27,9 @@ const CFG = { ids: process.env.IDS || '', slots: (process.env.SLOTS || 'hat,glas
   const r = await p.evaluate(async (CFG) => { const HI = CFG.HI, Q = window.QBDATA, x = window.__qb.x(), S = x.S, I = QBLoft.data.items; const { clips, ...poses } = Q.poses;
     const rig = await QBRig.create({ rig: Object.assign({}, Q.rig, { frame: [Q.loft.frame[0] * HI, Q.loft.frame[1] * HI], frameScale: Q.loft.frameScale * HI, anchorPad: Q.loft.anchorPad * HI, frameCache: 4 }), bodies: Q.bodies, poses, clips, assetUrl: (a) => (window.QBART && QBART[a]) || Q.loft.artBase + a + (Q.arthash && Q.arthash[a] ? '?h=' + Q.arthash[a] : '') });
     const PS = CFG.ps.filter((k) => poses[k]); const HAIRS = { m: Q.creator.hairStyles.m.map((h) => h.id), f: Q.creator.hairStyles.f.map((h) => h.id) }; const HL = { m: {}, f: {} }; ['m', 'f'].forEach((s) => Q.creator.hairStyles[s].forEach((h) => { HL[s][h.id] = h.label; }));
-    const ONLY = CFG.ids.split(',').filter(Boolean); const items = x.SHOP.filter((it) => it[6] && it[6].gar && !(it[6].cut || it[6].gone) && I[it[6].gar] && CFG.slots.includes(I[it[6].gar].slot) && (!ONLY.length || ONLY.includes(it[0])));
+    /* GARS=a,b: pieces with no Shop row yet get a temporary row gx_qa_<gar> (in the hat slot for hats, a_acc otherwise) */
+    CFG.gars.forEach((g) => { if (!x.SHOP.some((it) => it[0] === 'gx_qa_' + g)) x.SHOP.push(['gx_qa_' + g, (I[g] && I[g].slot === 'hat') ? 'a_hat' : 'a_acc', 'QA ' + g, 0, 1, '', { gar: g }]); });
+    const ONLY = CFG.ids.split(',').filter(Boolean).concat(CFG.gars.map((g) => 'gx_qa_' + g)); const items = x.SHOP.filter((it) => it[6] && it[6].gar && !(it[6].cut || it[6].gone) && I[it[6].gar] && CFG.slots.includes(I[it[6].gar].slot) && (!ONLY.length || ONLY.includes(it[0])));
     const fits = (it, sex) => { const M = I[it[6].gar] || {}; return !(sex === 'm' && (it[6].fo || M.femaleOnly)) && !(sex === 'f' && (it[6].mo || M.maleOnly)); };
     const look = (sex, hair, ov, skin, hc) => { S.created = true; S.char = window.__qb.fixChar({ name: 'H', sex }); S.char.rig = Object.assign({}, QBLoft.data.creator.defaults, { body: sex, hairStyle: hair, hairColor: hc || 'brown', skin: skin || 's1' }); S.owned = S.owned || {}; Object.values(ov).forEach((id) => { S.owned[id] = true; }); return QBLook.build(Q.creator, window.__qb.lookOf(ov).rig); };
     const copy = (c) => { const cc = document.createElement('canvas'); cc.width = c.width; cc.height = c.height; cc.getContext('2d').drawImage(c, 0, 0); return cc; };
