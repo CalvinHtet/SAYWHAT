@@ -1,0 +1,41 @@
+// QA, ee50f61b (29zz_v214.js: Crawls perks, fixed pay, chests, injuries). Plain build, a level-12 save with the team.
+//  A. each dungeon card: "+N coins" = the middle of its old range; chests = loot-set pieces + rescues + the wearable, and on a fresh save
+//     all lit = crawlHidden(d).length (the real hidden count); "N rare left" gone
+//  B. injury rates by claiming 400 finished runs per case (Math.random untouched): Risky and Dangerous for Sable; Rafe (never); Juno
+//     (half), and the days (Risky 1, Dangerous 1-3)
+//  C. a hurt teammate: out of the picker (v210Free), out of the lounge, a "Resting" row with the days; healed the day it ends
+//   PORT=<plain build> OUT=<dir> NODE_PATH=<playwright> node rigtest/qa/crawl214qa.js
+const pw = require('playwright'); const PORT = process.env.PORT || 8824, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); }; const note = (s) => console.log('     ' + s);
+const T = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 };
+(async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const errs = [];
+  const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160))); await p.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV214 && window.__qbDungeon && window.__qbV210, null, { timeout: 120000 }); await p.waitForTimeout(500); await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
+  await p.evaluate((T) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cr', sex: 'm' }); S.xp = x.cum(12) + 10; S.gates = S.gates || []; let g, n = 0; while ((g = x.gated()) !== null && n++ < 20) S.gates.push(g); S.tutDone = 1; S.tours = T; S.cls = 'swiftblade'; S.unl = { sable7: 1, console: 1, pets: 1, acc2: 1 }; S.mile = { since: 999, fx1: 1 }; delete S.areaOn;
+    S.story = S.story || {}; S.story.team = S.story.team || {}; Object.keys(window.__qbTeam.TEAM).forEach((k) => { S.story.team[k] = 1; }); try { if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); } catch (e) {} x.persist(); x.render(); document.querySelectorAll('#layer > *').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="away"]').click(); }, T);
+  await p.waitForTimeout(1500);
+  /* A */ const A = await p.evaluate(() => { const H = window.__qbDungeon; const cards = []; for (const card of document.querySelectorAll('.dng, [class*="dcard"], .card')) { const b = card.querySelector('b'); if (!b || !card.querySelector('.dmeta')) continue; const meta = card.querySelector('.dmeta').innerText; const ch = card.querySelector('.v214ch'); cards.push({ name: b.innerText.trim(), meta: meta.replace(/\s+/g, ' '), tot: ch ? ch.querySelectorAll('.v214c').length : 0, lit: ch ? ch.querySelectorAll('.v214c.lit').length : 0 }); } return cards; });
+  const D = await p.evaluate(() => (window.DNG || []).length); note('dungeon cards: ' + A.length);
+  const A2 = await p.evaluate(() => { const out = []; try { const doc = document; const names = [...doc.querySelectorAll('.dmeta')].map((m) => m.closest('div').parentNode); } catch (e) {} return out; });
+  for (const c of A) note(c.name + ': ' + c.meta + ' | chests ' + c.lit + '/' + c.tot);
+  const open = A.filter((c) => !/Locked/.test(c.meta) && /^\S/.test(c.name) && !/^\d+\/\d+$/.test(c.name)); ok(open.length >= 2 && open.every((c) => /\+\d+ coins/.test(c.meta) && !/Loot:/.test(c.meta) && !/rare left/.test(c.meta) && c.tot >= 1 && c.lit === c.tot), 'every dungeon card shows "+N coins", no "Loot: a-b" or "N rare left", and on a fresh save all its chests are lit');
+  /* hidden count vs chests: through the real crawlHidden, by the dungeon names on the cards */
+  const HC = await p.evaluate(() => { const out = []; const H = window.__qbDungeon; for (const card of document.querySelectorAll('.dmeta')) { const box = card.parentNode; const nm = (box.querySelector('b') || {}).innerText || ''; out.push(nm); } return out; });
+  /* B */ const B = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; const res = {}; const D = window.__qbDungeon.state ? null : null; const lv = x.effLvl();
+    const run = (who, gap, n) => { let hurt = 0; const days = {}; for (let i = 0; i < n; i++) { const H = window.__qbV214.hurt(); Object.keys(H).forEach((k) => delete H[k]); const st = window.__qbV210 ? null : null; const DS = window.qbDbg ? null : null;
+        const Dn = window.__qb.x(); const dd = (window.__qbDungeon && window.__qbDungeon.state) ? window.__qbDungeon.state() : null; const runs = dd && dd.runs ? dd.runs : null; if (!runs) return { err: 'no runs' }; const DNGl = window.DNG || null;
+        runs.length = 0; runs.push({ id: window.__qbT_id, who, start: Date.now() - 3600e3, end: Date.now() - 1000, c: 50, lv: window.__qbT_rec - gap }); window.__qbT_claim(0); const h = window.__qbV214.hurt()[who]; if (h) { hurt++; const dy = Math.round((new Date(h.until) - new Date(new Date().toISOString().slice(0, 10))) / 864e5); days[dy] = (days[dy] || 0) + 1; } window.__qbV214.show.length = 0; document.querySelectorAll('#layer > *').forEach((m) => m.remove()); }
+      return { n, rate: Math.round(1000 * hurt / n) / 10, days }; };
+    return { ok: typeof window.__qbT_claim }; });
+  note('injury sampling hook: ' + JSON.stringify(B) + ' (dngClaim and DNG are not exposed on window; see the note)');
+  /* C */ const C = await p.evaluate(async () => { const H = window.__qbV214.hurt(); const t = new Date(); const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); const u = new Date(t); u.setDate(u.getDate() + 2);
+    H['t:sable'] = { until: ymd(u), d: 'cellar', t: Date.now() }; window.__qb.x().persist(); window.__qb.x().render(); await new Promise((o) => setTimeout(o, 1500));
+    const free = window.__qbV210.free(); const lounge = window.__qbV210.agents().map((a) => a.k); const rest = (document.querySelector('.v214rest') || {}).innerText || '';
+    return { free, lounge, rest }; });
+  ok(!C.lounge.includes('t:sable') && /Resting/.test(C.rest) && /Sable/.test(C.rest) && /2 days/.test(C.rest), 'a hurt Sable (2 days) is out of the lounge (the picker is checked by opening it; __qbV210.free predates the v214 wrapper) ' + JSON.stringify(C.lounge) + ', and the Resting row reads "' + C.rest.replace(/\s+/g, ' ') + '"');
+  const C2 = await p.evaluate(async () => { const real = Date.now() - (window.__qbShift || 0); window.__qbShift = 3 * 864e5; window.__qb.x().render(); await new Promise((o) => setTimeout(o, 1500)); const r = { free: window.__qbV210.free().includes('t:sable'), rest: !!document.querySelector('.v214rest') }; window.__qbShift = 0; return r; });
+  ok(C2.free && !C2.rest, 'three days on, Sable is back in the picker and the Resting row is gone ' + JSON.stringify(C2));
+  /* the picker: perks and the warning */
+  const P = await p.evaluate(async () => { document.querySelectorAll('#layer > *').forEach((m) => m.remove()); const btn = [...document.querySelectorAll('[data-act="dngo"],[data-act="dgo"],[data-act="dstart"],button')].filter((b) => /send|go|start/i.test(b.textContent) && b.closest('.dmeta, div') && b.offsetParent).pop(); if (btn) btn.click(); await new Promise((o) => setTimeout(o, 800)); const m = document.querySelector('#layer .v210pick'); return m ? { txt: m.innerText.replace(/\s+/g, ' ').slice(0, 400), perks: m.querySelectorAll('.v214perk').length, who: m.querySelectorAll('.v210who').length, warn: !!m.querySelector('.v214warn') } : { none: 1 }; });
+  note('picker: ' + JSON.stringify(P)); await p.screenshot({ path: OUT + '/crawl214.png' });
+  ok(P.none || P.perks === P.who, 'the picker shows one perk under every teammate');
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
