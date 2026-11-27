@@ -2094,5 +2094,15 @@
  "nc_visor": {
   "slot": "hat",
   "noClip": true
+ },
+ "nc_ovals": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "nc_shield": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
  }
 }
