@@ -11,11 +11,11 @@
 /* the blanket tap block of the fast start goes; this file decides per tap instead */
 (function(){try{[].forEach.call(document.querySelectorAll("style"),function(st){var t=st.textContent;if(t.indexOf("html.qb-sync body *{pointer-events:none!important}")>=0)st.textContent=t.replace("html.qb-sync body *{pointer-events:none!important}","")})}catch(e){}})();
 var V88Q=[],V88LOOK=['.avbtn','[data-act="pcard"]','[data-act="char"]','[data-act="qbinfo"]','.ibbtn','.ibrow','.ibback','.scbtn','[data-act="pcbgs"]','[data-act="wardrobe"]','[data-shub]','.shub-char','[data-act="stab"]','[data-qsfl]','[data-act="stytab"]','[data-wdf]',
-  '[data-act="qstry"]','[data-act="qsclear"]','[data-act="pctry"]','[data-act="fshview"]','[data-act="phopen"]','[data-act="sxtab"]','.nav','[data-act="nav"]','.htab','.mx','[data-act="mclose"]','.v81cats','[data-v87]','[data-v87d]','.v87m'].join(","),V88POP=0;
+  '[data-act="qstry"]','[data-act="qsclear"]','[data-act="pctry"]','[data-act="fshview"]','[data-act="phopen"]','[data-act="sxtab"]',/* QA LOW: folding a gym card only looks (a plan itself starts a session in the save, so it stays queued) */'[data-act="wkfold"]','.nav','[data-act="nav"]','.htab','.mx','[data-act="mclose"]','.v81cats','[data-v87]','[data-v87d]','.v87m'].join(","),V88POP=0;
 function v88Sync(){return document.documentElement.classList.contains("qb-sync")}
 /* the tapped control, named by its data attributes so it can be found again after the screen is redrawn */
 function v88Sel(el){var s=el.tagName.toLowerCase();[].forEach.call(el.attributes,function(a){if(/^data-/.test(a.name)&&!/^data-(v88|hy|v85|v67k)/.test(a.name))s+='['+a.name+'="'+(window.CSS&&CSS.escape?CSS.escape(a.value):a.value.replace(/"/g,'\\"'))+'"]'});return s}
-function v88Mark(sel,on){try{[].forEach.call(document.querySelectorAll(sel),function(el){el.classList.toggle("v88q",on)})}catch(e){}}
+function v88Mark(sel,on,el0){try{if(sel)[].forEach.call(document.querySelectorAll(sel),function(el){el.classList.toggle("v88q",on)});else if(el0)el0.classList.toggle("v88q",on)}catch(e){}}
 window.addEventListener("click",function(e){if(!v88Sync())return;var t=e.target;if(!t||!t.closest)return;
   if(t.closest(V88LOOK))return;
   var el=t.closest("button,[data-act],label,[role=button]");if(!el)return;
@@ -23,18 +23,27 @@ window.addEventListener("click",function(e){if(!v88Sync())return;var t=e.target;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   /* the camera: a photo picker must come from the tap itself */
   if(el.tagName==="LABEL"&&el.getAttribute("for")){var inp=document.getElementById(el.getAttribute("for"));if(inp&&inp.type==="file"){pop("The camera opens once your save is in. One moment.");return}}
-  var sel=v88Sel(el);if(sel===el.tagName.toLowerCase()){pop("One moment, your save is coming in.");return}
-  var i=V88Q.indexOf(sel);
-  if(i>=0){if(el.getAttribute("data-act")==="toggle"){V88Q.splice(i,1);v88Mark(sel,false)}return}
-  V88Q.push(sel);v88Mark(sel,true);
+  /* QA af6a81be MED: the intent is kept, not just the tap: a task to tick (or untick) and any on/off control's wanted state, so a
+     save that lands with it already that way is left alone (a task ticked on another phone is not unticked) */
+  var sel=v88Sel(el),bare=sel===el.tagName.toLowerCase();if(bare)sel=null;/* QA LOW: a button with no data attributes is kept by reference */
+  var key=sel||el,i=-1;V88Q.forEach(function(q,n){if(q.key===key)i=n});
+  if(i>=0){if(el.getAttribute("data-act")==="toggle"||el.hasAttribute("aria-pressed")){V88Q.splice(i,1);v88Mark(sel,false,el)}return}
+  var ent={key:key,sel:sel,el:el,act:el.getAttribute("data-act")||"",id:el.getAttribute("data-id")||""};
+  if(ent.act==="toggle"&&ent.id)try{ent.want=!S.done[ent.id]}catch(x){}
+  else if(el.hasAttribute("aria-pressed"))ent.press=el.getAttribute("aria-pressed")!=="true";
+  V88Q.push(ent);v88Mark(sel,true,el);
   if(!V88POP){V88POP=1;pop("Got it. It goes through as soon as your save is in.")}},true);
 /* a redraw while syncing keeps the marks */
-var v88Render=render;render=function(){var r=v88Render.apply(this,arguments);if(V88Q.length)V88Q.forEach(function(s){v88Mark(s,true)});return r};
-/* the save is in: run the queue in order on the save that won */
+var v88Render=render;render=function(){var r=v88Render.apply(this,arguments);if(V88Q.length)V88Q.forEach(function(q){v88Mark(q.sel,true,q.el)});return r};
+/* the save is in: run the queue in order on the save that won, each only if it still needs doing */
 function v88Run(){var q=V88Q.slice();V88Q=[];var miss=0;
-  q.forEach(function(sel,n){setTimeout(function(){try{v88Mark(sel,false);var el=document.querySelector(sel);if(el&&el.isConnected&&!el.disabled)el.click();else miss++}catch(e){miss++}
+  q.forEach(function(en,n){setTimeout(function(){try{v88Mark(en.sel,false,en.el);
+        if(en.act==="toggle"&&en.id&&typeof en.want==="boolean"){if(!!S.done[en.id]===en.want)return;}
+        var el=en.sel?document.querySelector(en.sel):null;if(!el&&en.el&&en.el.isConnected)el=en.el;
+        if(el&&typeof en.press==="boolean"&&el.hasAttribute("aria-pressed")&&(el.getAttribute("aria-pressed")==="true")===en.press)return;
+        if(el&&el.isConnected&&!el.disabled)el.click();else miss++}catch(e){miss++}
       if(n===q.length-1&&miss)pop(miss===1?"One tap from while it synced no longer applies.":miss+" taps from while it synced no longer apply.")},60+n*140)})}
 new MutationObserver(function(){if(!v88Sync()&&V88Q.length)setTimeout(v88Run,80)}).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
 htabCss("qb-v188-css",".v88q{position:relative;animation:v88pulse 1.1s ease-in-out infinite}.qmain.v88q .box{background:var(--accent,#7cf0ff)!important;border-color:var(--accent,#7cf0ff)!important;color:#0b0e1a!important;opacity:.75}"
   +"@keyframes v88pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,240,255,0)}50%{box-shadow:0 0 0 3px rgba(124,240,255,.45)}}");
-if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV188={q:function(){return V88Q.slice()},sel:v88Sel,run:v88Run};
+if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV188={q:function(){return V88Q.map(function(x){return x.sel||"(button)"})},sel:v88Sel,run:v88Run};

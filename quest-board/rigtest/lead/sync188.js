@@ -28,4 +28,13 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await tap('.qmain[data-id="a2"]'); await p.waitForTimeout(300);
   const s5 = await V(() => Object.keys(window.__qb.x().S.done).sort());
   ok(s5.indexOf('a2') >= 0, 'after the sync, taps act at once as before ' + JSON.stringify(s5));
+  /* QA af6a81be MED: the save that lands already has the task done (another phone): the queued tick must not untick it */
+  await V(() => { const S = window.__qb.x().S; S.quests.push({ id: 'a3', name: 'Fold the laundry', cl: 'home', xp: 15, stat: 'discipline', rep: 'daily' }); window.__qb.x().render(); document.documentElement.classList.add('qb-sync'); });
+  await tap('.qmain[data-id="a3"]');
+  const s6 = await V(async () => { const x = window.__qb.x(), S = x.S; const q1 = window.__qbV188.q().length; S.done.a3 = 1; x.render(); document.documentElement.classList.remove('qb-sync'); await new Promise((r) => setTimeout(r, 900)); return { q1, done: !!S.done.a3 }; });
+  ok(s6.q1 === 1 && s6.done, 'a tick queued during sync leaves a task the landing save already has done alone (not unticked) ' + JSON.stringify(s6));
+  /* QA LOW: a button with no data attributes is queued by reference and goes through */
+  const s7 = await V(async () => { const b = document.createElement('button'); b.className = 'v88bare'; b.textContent = 'Add'; let hit = 0; b.addEventListener('click', () => hit++); document.querySelector('#layer').appendChild(b); document.documentElement.classList.add('qb-sync');
+    b.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); const q = window.__qbV188.q(); const h0 = hit; document.documentElement.classList.remove('qb-sync'); await new Promise((r) => setTimeout(r, 900)); b.remove(); return { q, h0, hit }; });
+  ok(s7.q.length === 1 && s7.h0 === 0 && s7.hit === 1, 'a button without data attributes is queued and then goes through ' + JSON.stringify(s7));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
