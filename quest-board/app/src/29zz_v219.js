@@ -30,7 +30,7 @@ try{
     ["Claim","When someone is back, tap Claim for the coins and anything they found."],
     ["Chests","Each lit chest is something rare still hidden in that dungeon. Bring it home and the chest goes dark."],
     ["Mind the danger","A dungeon above your level can send someone home hurt for a few days."]]};
-  ROOMHELP.vault={k:"New",t:"The Vault",sub:"Every Sunday morning, a mix from every brand: three pieces in each category, on sale all week.",pts:[
+  ROOMHELP.vault={k:"New",t:"The Vault",sub:"Every Sunday morning, a mix from every brand: four pieces in each category, on sale all week.",pts:[
     ["One week only","When the week ends, the Vault restocks with a new mix."],["Try it on","Try pieces on your character first, then check out."]]};
   /* the Game Room's own window */
   Object.keys(ROOMDEF).forEach(function(k){var d=ROOMDEF[k];if(d&&d.name==="Game Room"&&!ROOMHELP[k])ROOMHELP[k]={k:"New room",t:"The Game Room is open",sub:"Games, snacks and a couch. Friends drop by to hang out.",pts:[["Make it fun","Upgrades add games and places to sit."],["Rest up","A good room to unwind in after a day of quests."]]}});

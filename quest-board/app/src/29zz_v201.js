@@ -15,7 +15,7 @@
 /* Cal 11-26 (later): "Change the brand drops to 6 am on all the days instead of 8 am": every drop (brands, the Vault, pet clothes, the sale)
    turns over at 6 am Pacific (DROPHOUR, 29l_drops.js). */
 try{DROPHOUR=6;dropCadence=function(){return "Mondays, Wednesdays and Fridays at 6 am Pacific"}}catch(e){}
-var V201={sun:0,perCat:3,dropCat:4,premMax:4,petFrom:"2026-11-28",petDays:[2,4,6]};
+var V201={sun:0,perCat:4,dropCat:4,premMax:4,petFrom:"2026-11-28",petDays:[2,4,6]};
 /* ---- the calendar ---- */
 try{V72.days=[1,3,5];V72C=null}catch(e){}
 try{QS_WHEN.street="New brands Mon, Wed and Fri 6 am";var F0=flGet("street");if(F0)F0.line="New brands Mondays, Wednesdays and Fridays, 6 am"}catch(e){}
@@ -32,7 +32,7 @@ function v201Sellable(it){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!m.c
 function v201R(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return function(){h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
 function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
 /* ---- a brand's drop: 4 a category, the other 4 the next time (Cal 11-26: "I actually like how symmetrical it looks with 4 items in each
-   category ... 8 pieces for each category. And each time the brand drops again, it will be the other 4"); the Vault keeps perCat 3 ---- */
+   category ... 8 pieces for each category. And each time the brand drops again, it will be the other 4"); the Vault 4 too (Cal 11-26 via APPROVALS: "And yes to 4 per vault") ---- */
 /* QA 9b80a82b LOW: a visit from before the rotation began (live when it started, or already gone) counts too, so the next visit shows
    the other half */
 function v201Times(id,start){try{var n=0;try{var k=v72Slot(dropStart(start));if(k>=0)v72Run(k)}catch(x){}if(!V72C)try{dropState()}catch(x){}if(!V72C)return 0;V72C.snap.forEach(function(q){if(q.pick===id&&q.day<start)n++});
@@ -69,13 +69,13 @@ var v201Shop=shopHtml;shopHtml=function(){if(shopTab===V201ID&&SHUB!=="vault"){s
   if(shopTab!==V201ID){V201ON=0;return v201Shop.apply(this,arguments)}
   var V=v201Vault(),n=dropNow(),left=dropStart(V.until)-n;V201ON=1;
   try{var h='<div class="qshop shub-in shub-vault v201v"><div class="qs-bar shub-bar"><button class="qs-tab shub-back" data-shub="home">&lsaquo; Shop</button><b class="shub-title">The Vault</b></div>'
-      +'<p class="qs-note qs-lead">Three pieces a category from every brand. New every Sunday at 6 am; this one leaves in '+esc(cdTxt(left))+'.</p>'
+      +'<p class="qs-note qs-lead">Four pieces a category from every brand. New every Sunday at 6 am; this one leaves in '+esc(cdTxt(left))+'.</p>'
       +'<div class="qs-fit">'+qsMirror()+'<div class="qs-rack">'+qsGroups(function(){return true})+'</div></div></div>';
     return h}finally{V201ON=0}};
 /* the home screen's tile wording */
 var v201Hub=typeof shubHome==="function"?shubHome:null;
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-shub="vault"]');if(!b)return;try{SHUB="vault";shopTab=V201ID;window._qsSeen=1}catch(x){}},true);
 var v201R2=render;render=function(){var r=v201R2.apply(this,arguments);
-  try{var t=document.querySelector('[data-shub="vault"]');if(t){var s=t.querySelector("small");if(s&&!/all week/.test(s.textContent))s.textContent="All week: 3 a category from every brand"}}catch(e){}return r};
+  try{var t=document.querySelector('[data-shub="vault"]');if(t){var s=t.querySelector("small");if(s&&!/All week: 4/.test(s.textContent))s.textContent="All week: 4 a category from every brand"}}catch(e){}return r};
 htabCss("qb-v201-css",".qshop.v201v .qs-lead{margin:4px 0 10px}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV201={vault:function(n){return v201Vault(n)},half:function(b){return v201Half(b)},cat:function(id){var it=SHOP.filter(function(x){return x[0]===id})[0];return it?v201Cat(it):null},sun:v201Sun,cfg:V201,reset:function(){V201VC={};V201HALF={}}};

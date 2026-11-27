@@ -15,7 +15,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
     for (let w = 0; w < 6; w++) { const v = window.__qbV201.vault(t0 + w * 7 * day); const prem = {}; const cats = {}; const premIn = {};
       v.list.forEach(([c, id, b]) => { cats[c] = (cats[c] || 0) + 1; const isP = window.__qbV167.prem(b); if (isP) { prem[b] = 1; premIn[c] = (premIn[c] || 0) + 1; } });
       out.push({ wk: v.wk, n: v.list.length, cats, premBrands: Object.keys(prem).length, maxPremInCat: Math.max(0, ...Object.values(premIn)) }); } return out; });
-  ok(vs.every((v) => v.n >= 18 && v.premBrands <= 4 && v.maxPremInCat <= 1 && Object.values(v.cats).every((n) => n <= 3)) && vs[0].wk === '2026-11-29' && vs[1].wk === '2026-12-06',
+  ok(vs.every((v) => v.n >= 18 && v.premBrands <= 4 && v.maxPremInCat <= 1 && Object.values(v.cats).every((n) => n <= 4)) && vs[0].wk === '2026-11-29' && vs[1].wk === '2026-12-06',
     'each Sunday\'s Vault: 3 a category (7 categories), at most 4 pricier brands, never two pricier pieces in a category ' + JSON.stringify(vs.slice(0, 3)));
   const same = await V(() => { const t = Date.parse('2026-12-02T20:00:00Z'); window.__qbV201.reset(); const a = window.__qbV201.vault(t).list.join(); window.__qbV201.reset(); return a === window.__qbV201.vault(t).list.join() && window.__qbV201.vault(t).wk === '2026-11-29'; });
   ok(same, 'the Vault is the same all week and on every phone (the week is the seed)');
