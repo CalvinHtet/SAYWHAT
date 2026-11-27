@@ -29,7 +29,10 @@ function v201Sellable(it){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!m.c
 function v201R(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return function(){h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
 function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
 /* ---- a brand's drop: 3 a category, the next 3 the next time ---- */
-function v201Times(id,start){try{var n=0;if(!V72C)return 0;V72C.snap.forEach(function(q){if(q.pick===id&&q.day<start)n++});return n}catch(e){return 0}}
+/* QA 9b80a82b LOW: a visit from before the rotation began (live when it started, or already gone) counts too, so the next visit shows
+   the other half */
+function v201Times(id,start){try{var n=0;try{var k=v72Slot(dropStart(start));if(k>=0)v72Run(k)}catch(x){}if(!V72C)try{dropState()}catch(x){}if(!V72C)return 0;V72C.snap.forEach(function(q){if(q.pick===id&&q.day<start)n++});
+    if((V72C.live0||[]).some(function(b){return b.id===id&&b.start<start}))n++;else if(V72C.left0&&V72C.left0[id]&&V72C.left0[id]<start)n++;return n}catch(e){return 0}}
 var V201HALF={};
 function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return c;var times=v201Times(b.id,b.start||""),keep={},by={};
   SHOP.forEach(function(it){if(!v201Sellable(it)||it[6].b!==b.id)return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
