@@ -10,10 +10,14 @@
 /* QA 38a3fed4 LOW 3: more chores (wipe, bedding and sheets, trash, the dishwasher, counters and floors, putting away and folding),
    and nothing digital or admin (inboxes, files, code, a resume, eating, a backlog) */
 var V82NOT=/\b(inbox|e-?mails?|files?|folders?|desktop|computer|laptop|phone|google drive|hard drive|thumb drive|cloud drive|downloads|savings|money|dollars|bank|\$\d+|calendar|code|codebase|refactor|resume|cv|backlog|social media|eating|diet|notes|tabs|apps?|account|budget|spreadsheet)\b/i;
-var V82RX0=/\b(clean|cleans|cleaning|tidy|tidying|declutter|decluttering|organi[sz]e|organi[sz]ing|vacuum|vacuuming|hoover|mop|mopping|sweep|sweeping|dust|dusting|scrub|scrubbing|wipe down|wash (every |all |the |my )?(\w+ )?(dishes|car|windows?|blankets?|bedding|towels|curtains|floors?|sheets)|do (the |my )?(dishes|laundry)|laundry|make (the |my )?bed|clear (out |off )?(the |my |one |a )?(desk|table|closet|garage|counters?|floor|hallway|(shower |sink )?drain|room|shelf|shelves))\b/i;
-var V82RX=/\b(wipe|wiping|bedding|bed ?sheets|sheets|trash|garbage|bins?|recycling|dishwasher|counters?|put away|putting away|fold|folding|iron|ironing|hang up)\b/i;
+/* Cal 11-26: "That should also NOT require a before photo. Only before photos for things that have a before and after potential such
+   as cleaning a room. Not cooking or buying groceries": only a place or a thing that visibly goes from messy to clean asks. Laundry,
+   trash, folding, putting away, cooking and errands do not. */
+var V82RX0=/\b((deep |spring )?clean(ing)?|tidy(ing)?( up)?|declutter(ing)?|organi[sz]e|organi[sz]ing|vacuum(ing)?|hoover|mop(ping)?|sweep(ing)?|dust(ing)?|scrub(bing)?|wipe down|wiping down)\b/i;
+var V82RX=/\b(wash (the |my |every |all |each )?(\w+ )?(car|windows?|dishes)|do (the |my )?dishes|make (the |my )?bed|clear (out |off )?(the |my |one |a )?(\w+ )?(desk|table|closet|garage|counters?|floor|hallway|room|shelf|shelves|(shower |sink )?drain)|wipe (the |my |down the )?(counters?|table|stove|desk|mirror|bathroom|kitchen))\b/i;
+var V82NOTX=/\b(laundry|dryer|washer|fold|folding|iron|ironing|put away|putting away|hang up|trash|garbage|recycling|bins?|cook|cooking|meal|groceries|grocery|shopping|errand|teeth|face|hair|yourself|myself|body|shower)\b/i;
 var V82KEY="qb-ba-",V82ASK={},V82PEND={};/* QA 38a3fed4 MED: every task whose after is on its way, by quest id */
-function v82Is(q){var n=(q&&q.name)||"";return !!q&&!q.bty&&q.rep!=="weekly4"&&!/^(admin|social)$/.test(q.cl||"")&&!V82NOT.test(n)&&!/\$\s?\d/.test(n)&&(V82RX0.test(n)||V82RX.test(n))}
+function v82Is(q){var n=(q&&q.name)||"";return !!q&&!q.bty&&q.rep!=="weekly4"&&!/^(admin|social)$/.test(q.cl||"")&&!V82NOT.test(n)&&!V82NOTX.test(n)&&!/\$\s?\d/.test(n)&&(V82RX0.test(n)||V82RX.test(n))}
 function v82Get(id){try{var o=JSON.parse(localStorage.getItem(V82KEY+id)||"null");if(o&&o.d&&Date.now()-o.t<2*864e5)return o;if(o)localStorage.removeItem(V82KEY+id)}catch(e){}return null}
 function v82Set(id,d){try{localStorage.setItem(V82KEY+id,JSON.stringify({d:d,t:Date.now()}));return true}catch(e){return false}}
 function v82Del(id){try{localStorage.removeItem(V82KEY+id)}catch(e){}}

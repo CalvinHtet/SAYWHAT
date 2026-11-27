@@ -14,7 +14,7 @@
 var V76MASK={};
 function v76Mask(im){try{var u0=im.currentSrc||im.src,key=u0&&u0.length>200?u0.length+":"+u0.slice(-64):u0;if(!key||!im.complete||!im.naturalWidth)return null;if(V76MASK[key])return V76MASK[key];
     var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,512/Math.max(w,h)),cw=Math.max(1,Math.round(w*k)),ch=Math.max(1,Math.round(h*k)),c=document.createElement("canvas");c.width=cw;c.height=ch;
-    var x=c.getContext("2d");x.drawImage(im,0,0,cw,ch);var d=x.getImageData(0,0,cw,ch),a=d.data;for(var i=0;i<a.length;i+=4){var on=a[i+3]>60;a[i]=a[i+1]=a[i+2]=255;a[i+3]=on?255:0}x.putImageData(d,0,0);
+    var x=c.getContext("2d",{willReadFrequently:true});x.drawImage(im,0,0,cw,ch);var d=x.getImageData(0,0,cw,ch),a=d.data;for(var i=0;i<a.length;i+=4){var on=a[i+3]>60;a[i]=a[i+1]=a[i+2]=255;a[i+3]=on?255:0}x.putImageData(d,0,0);
     var u=c.toDataURL("image/png"),ks=Object.keys(V76MASK);if(ks.length>40)delete V76MASK[ks[0]];return V76MASK[key]=u}catch(e){return null}}
 function v76R(i){var x=Math.sin(i*91.17+7.3)*43758.5453;return x-Math.floor(x)}
 /* bolts in a 100 x 100 box (the figure's drawn box), from its outline outwards */

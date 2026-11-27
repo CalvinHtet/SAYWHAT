@@ -10,11 +10,11 @@ function v81Key(){try{return (typeof SHUB!=="undefined"?SHUB:"")+"|"+(typeof sho
 function v81Apply(){try{if(typeof view==="undefined"||view!=="shop")return;var rack=document.querySelector(".qshop .qs-rack");if(!rack)return;
     var secs=[].filter.call(rack.children,function(e){return e.classList&&e.classList.contains("qs-sec")&&e.querySelector("h3")});
     var old=document.querySelector(".qshop .v81cats");if(secs.length<2){if(old)old.remove();secs.forEach(function(s){s.classList.remove("v81off")});return}
-    var names=secs.map(function(s){return s.querySelector("h3").textContent.trim()}),k=v81Key(),sel=V81SEL[k];if(names.indexOf(sel)<0)sel=V81SEL[k]=names[0];
-    if(!old||old.getAttribute("data-k")!==k+"|"+names.join(",")){if(old)old.remove();
-      rack.insertAdjacentHTML("beforebegin",'<nav class="v81cats qs-tabs" data-k="'+esc(k+"|"+names.join(","))+'" aria-label="Categories">'+names.map(function(n){return '<button type="button" class="qs-tab v81c" data-v81="'+esc(n)+'">'+esc(n)+'</button>'}).join("")+'</nav>')}
+    var names=secs.map(function(s){return s.querySelector("h3").textContent.trim()}),k=v81Key(),sel=V81SEL[k],tabs=names.slice();/* Cal 11-26: "Add an All tab for the individual shop brands": a brand's page starts on All */if(document.querySelector(".qshop.v60room"))tabs.unshift("All");if(tabs.indexOf(sel)<0)sel=V81SEL[k]=tabs[0];
+    if(!old||old.getAttribute("data-k")!==k+"|"+tabs.join(",")){if(old)old.remove();
+      rack.insertAdjacentHTML("beforebegin",'<nav class="v81cats qs-tabs" data-k="'+esc(k+"|"+tabs.join(","))+'" aria-label="Categories">'+tabs.map(function(n){return '<button type="button" class="qs-tab v81c" data-v81="'+esc(n)+'">'+esc(n)+'</button>'}).join("")+'</nav>')}
     [].forEach.call(document.querySelectorAll(".qshop .v81cats .v81c"),function(b){b.classList.toggle("on",b.getAttribute("data-v81")===sel)});
-    secs.forEach(function(s,i){var on=names[i]===sel;s.classList.toggle("v81off",!on);s.classList.add("v81sec")});v81Stick()}catch(e){}}
+    var all=sel==="All";secs.forEach(function(s,i){var on=all||names[i]===sel;s.classList.toggle("v81off",!on);s.classList.toggle("v81sec",!all)});v81Stick()}catch(e){}}
 /* just under the character card when it shows (it is pinned to the top on a phone and fades in with the scroll, 29zz_v160.js) */
 /* Cal 11-25 (later): "Instead of having the opaque fade in for the character box in the shop, just have it sit under the stuff on top, and
    then have it follow me when I scroll down": on a phone the card is in the page under the header and tabs, always shown, and sticks to
