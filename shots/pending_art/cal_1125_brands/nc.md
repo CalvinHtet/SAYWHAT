@@ -28,7 +28,7 @@ jog_black, jog_ash, jog_slate, short; shoes court, knit, slide.
 | gloves (arms) | nc_wristbands | Terry Wristbands | Thick cream terry wristbands on both wrists with one black stripe each. |
 | top | nc_cardigan | Shawl Cardigan | Chunky cream cable-knit cardigan with a wide shawl collar, ash elbow patches and dark horn buttons. |
 | top | nc_puffer | Cropped Puffer | Cropped heather-ash quilted puffer jacket, cream lining at the collar, silver zip and toggles. |
-| bottom | nc_waffle | Waffle Lounge Pants | Ivory waffle-knit wide-leg lounge pants with a cream drawcord and ribbed ankles. |
+| bottom | nc_waffle | Waffle Lounge Pants | Relaxed ivory waffle-knit lounge pants with a cream drawcord and ribbed cuffs gathered at the ankles. |
 | bottom | nc_cargo | Fleece Cargo Jogger | Charcoal fleece joggers with big side cargo pockets and silver cord toggles. |
 | shoes | nc_loafer | Shearling Loafers | Taupe suede loafers with cream shearling lining folding over the collar. |
 | shoes | nc_socksneaker | Knit Sock Sneakers | Heather-ash knit sock sneakers with chunky cream soles and a silver heel tab. |
