@@ -83,7 +83,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   put("premium","gx_smk_platehood gx_smk_slitvisor gx_smk_resp gx_smk_bracers");
   put("standard","gx_smk_ashwrap gx_smk_embercuffs gx_smk_watch gx_smk_joggers");
   put("premium","gx_smk_platecollar gx_smk_gauntlets");
-  put("standard","gx_smk_gaiter gx_nc_ovals gx_nc_shield gx_nc_rope gx_nc_snood");
+  put("standard","gx_smk_gaiter gx_nc_ovals gx_nc_shield gx_nc_rope gx_nc_snood gx_nc_clear gx_nc_catshades gx_nc_visorshade");
   put("standard","gx_smk_tacpants gx_smk_wrappants gx_smk_strapsneaker gx_smk_wrapboots");
   put("premium","gx_smk_embersole");
   }return m[id]||null}
