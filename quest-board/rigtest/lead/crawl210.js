@@ -38,6 +38,6 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const run = await V(() => ({ who: (window.__qb.x().S.dng.runs[0] || {}).who, icon: !!document.querySelector('.v210run .v210rimg'), src: !!(document.querySelector('.v210run .v210rimg') || {}).src, lounge: window.__qbV210.agents().map((a) => a.k) }));
   ok(run.who === 'a:kit' && run.icon && run.lounge.indexOf('a:kit') < 0 && run.lounge.length === 3, 'Kit goes: she runs beside the crawl and is not in the lounge ' + JSON.stringify(run));
   await V(() => document.querySelector('.v210run').scrollIntoView({ block: 'center' })); await p.waitForTimeout(800); await p.screenshot({ path: OUT + '/crawl210_run.png' });
-  const rel = await V(() => ({ relics: !!document.querySelector('.v210rs'), team: !!document.querySelector('.team, .tmgrid, [class*="team"]') }));
-  ok(rel.relics, 'the tab lists the relics found ' + JSON.stringify(rel));
+  const rel = await V(async () => { const none = !document.querySelector('.v210rs') || Object.keys(window.__qb.x().S.trophy || {}).length > 0; window.__qb.x().S.trophy = { goblin: { helm: Date.now() } }; window.__qb.x().render(); await new Promise((r) => setTimeout(r, 300)); return { none, relics: !!document.querySelector('.v210rs'), team: !!document.querySelector('.team, .tmgrid, [class*="team"]') }; });
+  ok(rel.none && rel.relics, 'no relic box until the first one (Cal 11-26), then the tab lists it ' + JSON.stringify(rel));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

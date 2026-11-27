@@ -101,9 +101,9 @@ var DGPEND=null;
 /* show a find (DGPEND = {g}); dgGive keeps it if that has not happened yet */
 function dgReveal(){var P=DGPEND;if(!P)return;DGPEND=null;var g=dgGive(P.g),h;
   if(g.kind==="piece"){var T=TSETS[g.set],p=T.pieces.filter(function(x){return x.id===g.id})[0];
-    h='<span class="label">'+(g.set==="amulet"?'A relic shard':'For the Trophy Room')+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(T.name)+'. '+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
+    h='<span class="label">'+(g.set==="amulet"?'A relic shard':'For the Armory')+'</span>'+dgIcon(g.set,g.id,1)+'<h3>'+esc(p.name)+'</h3><p class="note">'+esc(T.name)+'. '+esc(p.d)+'</p><p class="dg-buff">'+esc(p.buff.text)+'</p>'
       +(dgDone(g.set)?dgSetIcon(g.set)+'<p class="dg-buff">Set complete. '+esc(T.bonus.text)+'.</p>':'<p class="note">'+T.pieces.filter(function(x){return dgHas(g.set,x.id)}).length+' of '+T.pieces.length+' pieces</p>')
-      +(g.first?'<p class="note">The first trophy is home. A Trophy Room can now be built above the Hero\'s Lair.</p>':'')}
+      +(g.first?'<p class="note">The first trophy is home. The Armory can now be opened above the Hero\'s Lair.</p>':'')}
   else if(g.kind==="ally"){var n=DNPC.filter(function(x){return x.id===g.id})[0]||{name:"Someone",line:"",buff:{text:""}};
     h='<span class="label">A new ally</span><h3>'+esc(n.name)+'</h3><p class="note">'+esc(n.line)+' They followed you home and moved into your Loft.</p><p class="dg-buff">'+esc(n.buff.text)+'</p>'}
   else if(g.kind==="wear"){var it=shopItem(g.id);h='<span class="label">Something to wear</span><img class="dg-ic big" src="'+itemArt(it)+'" alt=""><h3>'+esc(it[2])+'</h3><p class="note">'+esc(it[5])+'</p><p class="dg-buff">'+(g.shop?'It is in your Closet.':'It is in your Closet. Nobody can buy one.')+'</p>'}
@@ -129,7 +129,7 @@ setInterval(dgRelicCheck,20000);setTimeout(dgRelicCheck,6000);
 var DGTAB="relics";
 trophyHtml=function(){dgState();var h='',tabs='<nav class="dg-tabs" aria-label="Relics sections"><button class="dg-tab'+(DGTAB==="relics"?" on":"")+'" data-act="dgtab" data-v="relics">Relics</button>'+(dgPieces()?'<button class="dg-tab'+(DGTAB==="trophies"?" on":"")+'" data-act="dgtab" data-v="trophies">Trophies</button>':'')+'</nav>';
   if(DGTAB==="trophies"&&dgPieces()){
-    if(!dgRoomBuilt())return tabs+'<section class="card panel"><h3 class="label">Trophies</h3><p class="note">You have '+dgPieces()+' piece'+(dgPieces()>1?'s':'')+' in storage. Build the Trophy Room above the Hero\'s Lair to put them on display.</p></section>';
+    if(!dgRoomBuilt())return tabs+'<section class="card panel"><h3 class="label">Trophies</h3><p class="note">You have '+dgPieces()+' piece'+(dgPieces()>1?'s':'')+' in storage. Open the Armory above the Hero\'s Lair to put them on display.</p></section>';
     Object.keys(TSETS).forEach(function(s){var T=TSETS[s],n=T.pieces.filter(function(p){return dgHas(s,p.id)}).length;if(!n)return;
       h+='<section class="card panel dg-set">'+(dgSetIcon(s)?'<div class="dg-sethead">'+dgSetIcon(s)+'</div>':'')+'<h3 class="label">'+esc(T.name)+' &middot; '+n+'/'+T.pieces.length+'</h3><p class="note">'+esc(T.lore)+'</p><div class="dg-grid">'
         +T.pieces.map(function(p){var g=dgHas(s,p.id);return '<div class="dg-pc'+(g?'':' lock')+'">'+(g?dgIcon(s,p.id):'<span class="dg-ic dg-ic0">?</span>')+'<b>'+(g?esc(p.name):'Not found yet')+'</b><small>'+(g?esc(p.buff.text):'')+'</small></div>'}).join("")
