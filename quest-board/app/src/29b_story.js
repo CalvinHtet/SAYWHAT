@@ -198,7 +198,7 @@ var BEATS=[
   {id:"nova3",pic:"nova",who:"Nova Lin",role:"Fashion vlogger",at:"the arcade",gate:function(){return teamHas("nova")&&styHas("arcade")},lines:["I'm streaming from the arcade tonight.","Twelve thousand people watching me lose at the claw machine."]},
   {id:"theo2",pic:"theo",who:"Theo",role:"Theater crew",at:"the auditorium",gate:function(){return teamHas("theo")&&styUps("auditorium")>=3},lines:["First sold-out screening.","I watched the whole thing from the projection booth."]},
   /* the dungeon sets (29d_dungeon.js): someone remarks when each is finished */
-  {id:"sable3",pic:"sable",who:"Sable",role:"Scout",at:"the Trophy Room",gate:function(){return teamHas("sable")&&typeof dgDone==="function"&&dgDone("goblin")},lines:["That's the whole set. Helm to boots.","Whatever was wearing that crown down there isn't wearing it anymore."]},
+  {id:"sable3",pic:"sable",who:"Sable",role:"Scout",at:"the Armory",gate:function(){return teamHas("sable")&&typeof dgDone==="function"&&dgDone("goblin")},lines:["That's the whole set. Helm to boots.","Whatever was wearing that crown down there isn't wearing it anymore."]},
   {id:"rafe4",pic:"rafe",who:"Rafe Calloway",role:"Traveling adventurer",at:"Lock and Key",gate:function(){return teamHas("rafe")&&typeof dgDone==="function"&&dgDone("amulet")},lines:["Those five shards your scouts kept bringing up from the Old Metro? Together they make an amulet. I saw a drawing of it once, in a museum in Lisbon.","The card under it said lost at sea, 1891."]}
 ];
 /* a return visit uses the character's own portrait, else their first scene's (Mara: chef, Theo: auditorium), else their team banner */

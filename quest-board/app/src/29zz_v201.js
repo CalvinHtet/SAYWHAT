@@ -15,7 +15,7 @@
 /* Cal 11-26 (later): "Change the brand drops to 6 am on all the days instead of 8 am": every drop (brands, the Vault, pet clothes, the sale)
    turns over at 6 am Pacific (DROPHOUR, 29l_drops.js). */
 try{DROPHOUR=6;dropCadence=function(){return "Mondays, Wednesdays and Fridays at 6 am Pacific"}}catch(e){}
-var V201={sun:0,perCat:3,premMax:4,petFrom:"2026-11-28",petDays:[2,4,6]};
+var V201={sun:0,perCat:3,dropCat:4,premMax:4,petFrom:"2026-11-28",petDays:[2,4,6]};
 /* ---- the calendar ---- */
 try{V72.days=[1,3,5];V72C=null}catch(e){}
 try{QS_WHEN.street="New brands Mon, Wed and Fri 6 am";var F0=flGet("street");if(F0)F0.line="New brands Mondays, Wednesdays and Fridays, 6 am"}catch(e){}
@@ -31,7 +31,8 @@ function v201Cat(it){var s=it[1];if(s==="a_hat")return "hat";if(s==="a_top")retu
 function v201Sellable(it){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!m.cut&&!m.basic&&/^a_(hat|acc|top|pants|shoes)$/.test(it[1])&&(typeof isRigItem!=="function"||isRigItem(it)))}
 function v201R(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return function(){h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
 function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
-/* ---- a brand's drop: 3 a category, the next 3 the next time ---- */
+/* ---- a brand's drop: 4 a category, the other 4 the next time (Cal 11-26: "I actually like how symmetrical it looks with 4 items in each
+   category ... 8 pieces for each category. And each time the brand drops again, it will be the other 4"); the Vault keeps perCat 3 ---- */
 /* QA 9b80a82b LOW: a visit from before the rotation began (live when it started, or already gone) counts too, so the next visit shows
    the other half */
 function v201Times(id,start){try{var n=0;try{var k=v72Slot(dropStart(start));if(k>=0)v72Run(k)}catch(x){}if(!V72C)try{dropState()}catch(x){}if(!V72C)return 0;V72C.snap.forEach(function(q){if(q.pick===id&&q.day<start)n++});
@@ -39,8 +40,8 @@ function v201Times(id,start){try{var n=0;try{var k=v72Slot(dropStart(start));if(
 var V201HALF={};
 function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return c;var times=v201Times(b.id,b.start||""),keep={},by={};
   SHOP.forEach(function(it){if(!v201Sellable(it)||it[6].b!==b.id)return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
-  Object.keys(by).forEach(function(c){var L=v201Shuf(by[c].sort(),"v201|"+b.id+"|"+c);if(L.length<=V201.perCat){L.forEach(function(id){keep[id]=1});return}
-    var st=(times*V201.perCat)%L.length;for(var i=0;i<V201.perCat;i++)keep[L[(st+i)%L.length]]=1});
+  Object.keys(by).forEach(function(c){var L=v201Shuf(by[c].sort(),"v201|"+b.id+"|"+c);var P=V201.dropCat||V201.perCat;if(L.length<=P){L.forEach(function(id){keep[id]=1});return}
+    var st=(times*P)%L.length;for(var i=0;i<P;i++)keep[L[(st+i)%L.length]]=1});
   V201HALF[key]=keep;return keep}
 /* ---- the Vault ---- */
 function v201Sun(n){var t=dropYmd(n),x=ymdN(t);while(ymdWd(x)!==V201.sun)x--;var s=ymdOfN(x);if(dropStart(s)>n){x-=7;s=ymdOfN(x)}return s}
@@ -63,7 +64,9 @@ var v201Groups=qsGroups;qsGroups=function(pick){var a=arguments;
 /* the Vault's door and page (29zz_v149.js's home screen opens shopTab = the door's id) */
 var V201ID="v201vault";
 shubVault=function(){return {id:V201ID,name:"The Vault",fl:"street",vault7:1}};
-var v201Shop=shopHtml;shopHtml=function(){if(shopTab!==V201ID){V201ON=0;return v201Shop.apply(this,arguments)}
+var v201Shop=shopHtml;shopHtml=function(){if(shopTab===V201ID&&SHUB!=="vault"){shopTab="";window._qsSeen=0}
+  /* Cal 11-26 (major): "When I'm in the vault, I can't go back to the shop": "< Shop" set SHUB home but shopTab stayed the Vault's */
+  if(shopTab!==V201ID){V201ON=0;return v201Shop.apply(this,arguments)}
   var V=v201Vault(),n=dropNow(),left=dropStart(V.until)-n;V201ON=1;
   try{var h='<div class="qshop shub-in shub-vault v201v"><div class="qs-bar shub-bar"><button class="qs-tab shub-back" data-shub="home">&lsaquo; Shop</button><b class="shub-title">The Vault</b></div>'
       +'<p class="qs-note qs-lead">Three pieces a category from every brand. New every Sunday at 6 am; this one leaves in '+esc(cdTxt(left))+'.</p>'
