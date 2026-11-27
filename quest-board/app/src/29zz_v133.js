@@ -48,7 +48,7 @@ function msHtml(L){var o=msOffer(L);
     +o.map(function(id,i){if(id==="coins")return '<button class="ms-opt" data-act="mspick" data-l="'+L+'" data-id="coins"><div class="qs-img ms-coin"><i class="coin"></i></div><b>'+msCoins(L).toLocaleString()+' coins</b><small>&nbsp;</small></button>';
       var it=shopItem(id);if(!it)return "";return '<button class="ms-opt" data-act="mspick" data-l="'+L+'" data-id="'+esc(id)+'">'+qsThumb(it)+'<b>'+esc(it[2])+'</b><small>'+esc(freeBrand(it))+'</small></button>'}).join("")
     +'</div><button class="btn ghost" data-act="mclose">Later</button></div>'}
-function msOpen(L){if(document.querySelector("#layer .modal .ms-pick"))return;modal(msHtml(L))}
+function msOpen(L){/* a held copy (a tour is running, 29zz_v135.js) counts too: it was opened again on every redraw */if(document.querySelector("#layer .modal .ms-pick,#layer .qb-held .ms-pick"))return;modal(msHtml(L))}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=mspick]");if(!b)return;var L=+b.dataset.l,id=b.dataset.id,M=msState();if(M["g"+L])return;
   var got;if(id==="coins"){var c=msCoins(L);S.coins+=c;S.earnedC+=c;got="+"+c+" coins"}else{var it=shopItem(id);if(!it||S.owned[id])return;S.owned[id]=true;got=it[2]+" is in your Closet"}
   M["g"+L]=id;delete M["o"+L];persist();var m=b.closest(".modal");if(m)m.remove();try{qbSnd("coins")}catch(x){}pop(got);render()});

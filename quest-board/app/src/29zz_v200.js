@@ -23,3 +23,8 @@ try{TOURS.push({id:"banner",ready:function(){return effLvl()>=V100LV&&!(typeof a
    t:"Pick one",x:"Preview shows it on your card. Buy it, then tap Use to put it on. A banner you own just needs Use."},
   {sel:".qshop .pc-prev",t:"Where it shows",x:"Your card at the top left, your profile, and the Town board when you post your card. Change it any time from your profile: Change banner."}]})}catch(e){}
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV200={gate:v100Gate,unlocks:function(f,l){return v79Unlocks(f,l)},lv:function(id){return pcLv(id)}};
+/* QA run (pets150 on the v1.77 batch): steps 3 and 4 are in the Shop; a player who leaves the Shop part-way (or closes the profile at
+   step 2 and the tour moves on to a Shop step) ended up with the tour waiting on the Board, and while a tour runs every new window is
+   held (29zz_v135.js), so a level-up, a milestone or the pet's change waited behind it. The tour now ends as soon as its Shop steps are
+   not on screen. */
+setInterval(function(){try{if(TOUR&&TOUR.id==="banner"&&TOUR.i>=2&&typeof view!=="undefined"&&view!=="shop")tourEnd()}catch(e){}},700);
