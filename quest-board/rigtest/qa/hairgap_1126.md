@@ -83,3 +83,13 @@ Under 150 on every hairstyle and pose (43): Velvet Pillbox Hat, Smoke Rectangle 
 In QA's scratchpad: hg2/hairgap_NN_*.png (dressed | bare | marks; red = gap, orange = hard cut, magenta = bald scalp, cyan = loose bit), and hgs/sheet_*.png (every hairstyle in stretch, sideL and rearStand) for the Earflap Cap, Newsboy Cap, Wizard Hat, Rib Knit Hood and Mohawk Helmet.
 
 To redo it: BASE=<build> OUT=<dir> NODE_PATH=<playwright> node rigtest/qa/hairgap.js. Use IDS=... SHEET=1 for one piece's sheet.
+
+## Recheck after the fix (QA, 11-26 late)
+
+LEAD 664d24f3 (the rig fades hair over a short band above the clip line) + ROOMS 658eb9bd (tools/clip_lines.py over 56 hats). Full rerun of hairgap.js, same 89 pieces × 13 hairstyles × 8 poses, built from qa-local 658eb9bd.
+- Totals (hard cut + gap + loose bits + 2 × bald scalp, summed over every hairstyle): 228,767 before, 156,218 after (−32%). Ponytail alone: 34,117 → 22,746 (−33%). 45 hats better, 1 worse (Velvet Pillbox Hat: 4,848 → 6,120, on the retire list), the rest unchanged (no clip line: glasses, clips, horns, headphones, circlet, bow).
+- By eye (every female hairstyle, stretch, sideL, sideR, rearStand; Newsboy Cap, Trapper Hat, Earflap Cap; Coin Cap on every male hairstyle): long, wavy and bob hair now falls naturally under the brim from behind and from the side. No more diagonal or vertical slices. The ponytail hangs out behind caps (Newsboy sideR and rearStand). The ear-flap hats show hair below the flaps.
+- Left (LOW):
+  - (a) On the Trapper Hat and Earflap Cap, the ponytail's tip peeks out past the flap as a thin loose wisp in sideR, and as a small spike above the flap in sideL.
+  - (b) Coin Cap: a doubled outline arc just outside the crown at the top in the front and side views, on every hairstyle (art, not the clip).
+  - (c) The two bunny pieces are still the worst, but both are retiring.
