@@ -13,6 +13,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.waitForTimeout(900); await clear();
   const top = await V(() => { const t = document.querySelector('#app').innerText; return { cap: (t.match(/Crawls today\s*(\d+)\/(\d+)/) || []).slice(1).join('/'), sure: /finds something rare/.test(t) }; });
   ok(top.cap === '0/6' && !top.sure, 'three teammates make 6 crawls a day, and no "Your next crawl finds something rare" ' + JSON.stringify(top));
+  const legacy = await V(() => { const x = window.__qb.x(), D = x.S.dng; D.cd = { d: D.cd.d || '', n: 3 }; x.render(); const t = document.querySelector('#app').innerText; const m = t.match(/Crawls today\s*(\d+)\/(\d+)/); x.S.dng.cd = { d: '', n: 0 }; x.render(); return m ? m[1] + '/' + m[2] : ''; });
+  ok(legacy === '0/6', 'crawls from before the per-teammate rule do not use up today (Cal: 3/2 and stuck) ' + legacy);
   /* send Sable twice (each run brought home at once), then she is not offered */
   const go = await V(async () => { const w = (ms) => new Promise((r) => setTimeout(r, ms)), x = window.__qb.x(), out = [];
     for (let i = 0; i < 2; i++) { x.render(); await w(200); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('[data-act="dgo"][data-id="cellar"]').click(); await w(300);

@@ -8,12 +8,16 @@
    - The Vault page sits on ROOMS's painting (ui_vault_bg.webp) held still behind the page while it scrolls, darkened so the cards read;
      without the file the page looks as before. */
 var V215PER=2;
-function v215Day(){var D=dngInit(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};if(!D.cd.who||typeof D.cd.who!=="object")D.cd.who={};return D.cd}
+function v215Day(){var D=dngInit(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};if(!D.cd.who||typeof D.cd.who!=="object")D.cd.who={};
+  /* Cal 11-26: "I have 3/2 dungeon crawls and i can't do anymore": crawls from before this rule (no teammate counted) do not use up today's */
+  var sum=0;Object.keys(D.cd.who).forEach(function(k){sum+=D.cd.who[k]||0});if(D.cd.n!==sum){D.cd.n=sum;try{persist()}catch(e){}}return D.cd}
+var v215Html0=dngHtml;dngHtml=function(){try{v215Day()}catch(e){}return v215Html0.apply(this,arguments)};
+var v215Start0=dngStart;dngStart=function(){try{v215Day()}catch(e){}return v215Start0.apply(this,arguments)};
 function v215Used(k){return v215Day().who[k]||0}
 dngPerDay=function(){var n=0;try{n=v210Team().length}catch(e){}return V215PER*Math.max(1,n)};
 var v215Free=v210Free;v210Free=function(){return v215Free.apply(this,arguments).filter(function(k){return v215Used(k)<V215PER})};
 var v215Start=dngStart;dngStart=function(id){var D=dngInit(),n0=D.runs.length,r=v215Start.apply(this,arguments);
-  try{if(D.runs.length>n0){var who=D.runs[D.runs.length-1].who;if(who){var c=v215Day();c.who[who]=(c.who[who]||0)+1;persist()}}}catch(e){}return r};
+  try{if(D.runs.length>n0){var who=D.runs[D.runs.length-1].who;if(who){var c=v215Day();c.who[who]=(c.who[who]||0)+1;v215Day();persist();render()}}}catch(e){}return r};
 /* nobody left to send today (all out, resting, or done twice) reads plainly on the cards */
 var v215Html=dngHtml;dngHtml=function(){var h=v215Html.apply(this,arguments);
   try{var c=v215Day();if(c.n<dngPerDay()&&!v210Free().length&&v210Team().length){var o=v210Out(),busy=v210Team().some(function(k){return o[k]});
