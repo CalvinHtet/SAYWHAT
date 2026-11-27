@@ -17,10 +17,10 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8838), OUT = process.env
   ok(row && row.un && /Update 1\.70/.test(row.t) && /Cal/.test(row.t), 'a player from 11-10 has "Update 1.70" from Cal, unread ' + JSON.stringify(row));
   await p.click('.ibrow[data-id="patch170"]'); await p.waitForTimeout(400);
   const r = await p.evaluate(() => { const e = document.querySelector('.ibox'); return { t: e ? e.innerText : '', claim: !!document.querySelector('[data-ib="claim"][data-id="patch170"]'), wide: document.documentElement.scrollWidth > innerWidth + 1 }; });
-  ok(/three brands/.test(r.t) && /workout/i.test(r.t) && /level-up/i.test(r.t) && /seasons/.test(r.t) && r.claim && /Claim 1,000 coins/i.test(r.t) && !r.wide, 'the letter has its notes, a Claim 1,000 coins button, and fits a 390 px phone');
+  ok(/three brands/.test(r.t) && /workout/i.test(r.t) && /level-up/i.test(r.t) && /seasons/.test(r.t) && r.claim && /Claim 700 coins/i.test(r.t) && !r.wide, 'the letter has its notes, a Claim 700 coins button (Cal 11-26), and fits a 390 px phone');
   const pay = await p.evaluate(async () => { const S = window.__qb.x().S, c0 = S.coins; document.querySelector('[data-ib="claim"][data-id="patch170"]').click(); await new Promise((q) => setTimeout(q, 400)); const c1 = S.coins;
     const b = document.createElement('button'); b.dataset.ib = 'claim'; b.dataset.id = 'patch170'; document.body.appendChild(b); b.click(); b.remove(); await new Promise((q) => setTimeout(q, 300)); return { d1: c1 - c0, d2: S.coins - c1 }; });
-  ok(pay.d1 === 1000 && pay.d2 === 0, 'Claim pays 1,000 coins once (Cal 11-25) (' + pay.d1 + ', then ' + pay.d2 + ')');
+  ok(pay.d1 === 700 && pay.d2 === 0, 'Claim pays 700 coins once (Cal 11-26) (' + pay.d1 + ', then ' + pay.d2 + ')');
   ok(!/\bpets?\b|companion|wolf|wyvern|slime|dragon|evol|transform|Pet Store|treat|milk|soul stone|loot|HANGANG|DIAL-UP|OVERPASS|ALTITUDE|SAYMORE|KODE|Atelier|Boutique|Vault|Monday|Tuesday|Wednesday|Thursday|Friday|8 am|level 25|\b20\d\d\b/i.test(r.t), 'no spoilers: no companion, creature, brand, floor, weekday or date in it');
   await p.screenshot({ path: OUT + '/patch170_letter.png' }); ok(!p.errs.length, 'no page errors ' + JSON.stringify(p.errs.slice(0, 2)));
   p = await page(); await setup(p, '2026-11-26'); await p.click('.ibbtn'); await p.waitForTimeout(400);
