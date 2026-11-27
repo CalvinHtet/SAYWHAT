@@ -4,7 +4,7 @@
    still out from before gets that mission's coins once, then the old mission state goes. */
 var MS_OLD={m1:45,m2:85,m3:160,m4:250,m5:400};
 setInterval(function(){if(typeof loaded==="undefined"||!loaded||!S||!S.created||!S.ms)return;var run=S.ms.run||{},n=0;Object.keys(run).forEach(function(id){n+=MS_OLD[id]||0});
-  delete S.ms;if(n){S.coins+=n;S.earnedC+=n;pop("Your team came home from their last missions: +"+n+" coins. Missions are Dungeon Crawls now.")}persist();render()},5000);
+  delete S.ms;if(n){S.coins+=n;S.earnedC+=n;pop("Your allies came home from their last missions: +"+n+" coins. Missions are Dungeon Crawls now.")}persist();render()},5000);
 /* ---------- the dogs ---------- */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-act=dogclean]");if(!b)return;
   var P=S.base.poops||[];P.shift();S.base.poops=P;S.coins+=20;S.earnedC+=20;pop("Cleaned up. +20 coins");persist();render();var om=document.querySelector(".rmodal .rm-scroll");if(om)roomModal(+om.dataset.i)});

@@ -16,7 +16,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await V(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(7); window.qbDbg.levelUp(7, null, 6); });
   await p.waitForTimeout(600);
   const lv = await V(() => { const m = document.querySelector('#layer .modal'); return { txt: m ? m.innerText.replace(/\s+/g, ' ') : '', team: window.__qbV210.team(), unl: (window.__qb.x().S.unl || {}).sable7 }; });
-  ok(/Sable joined your team/.test(lv.txt) && /Crawls is open/.test(lv.txt) && lv.team.indexOf('t:sable') >= 0 && lv.unl === 1, 'level 7\'s level-up tells Sable\'s story and opens Crawls; she is on the team ' + JSON.stringify({ team: lv.team, txt: lv.txt.slice(0, 220) }));
+  ok(/Sable is your first ally/.test(lv.txt) && /Crawls is open/.test(lv.txt) && lv.team.indexOf('t:sable') >= 0 && lv.unl === 1, 'level 7\'s level-up tells Sable\'s story and opens Crawls; she is on the team ' + JSON.stringify({ team: lv.team, txt: lv.txt.slice(0, 220) }));
   await p.screenshot({ path: OUT + '/crawl210_lvup.png' });
   await clear(); await V(() => { window.__qb.x().render(); }); await p.waitForTimeout(400);
   const nav = await V(() => { const bs = [...document.querySelectorAll('.nav button[data-v]')].map((x) => x.dataset.v); return { bs, tile: !!document.querySelector('.zx-tile[data-v="away"]') }; });

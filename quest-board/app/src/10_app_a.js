@@ -265,7 +265,7 @@ var CLASSES={
   p:{bg:"#030a14",s:"#08121f",s2:"#0e1d30",line:"#17406a",fg:"#e8f6ff",muted:"#7ea2bd",a:"#22d3ee",b:"#818cf8",ink:"#021018"}},
  tamer:{name:"Tamer",tag:"You never walk alone.",
   role:"For people and companions: friends, family, your partner, your pets. Pick this if your best moments are shared.",
-  sig:{name:"Bond",text:"Every team member's buff is 50% stronger."},
+  sig:{name:"Bond",text:"Every ally's buff is 50% stronger."},
   perk:{stat:"social",pct:15,text:"Social quests +15% XP"},
   tiers:["Novice Tamer","Adept Tamer"],
   story:["A whistle, an open field, and something small and curious steps out of the tall grass. It does not run.","More follow. Each one brings something different, and each one stays."],
@@ -671,7 +671,7 @@ function aclaim(id,ev){
 function viewHtml(v){return v==="train"?trainHtml():v==="shop"?shopHtml():v==="trophy"?trophyHtml():v==="hall"?hallHtml():v==="wheel"?wheelHtml():v==="away"?dngHtml():baseHtml()}
 
 var AREAS=[["board","Board",1],["train","Training",1],["hideout","The Loft",2],["shop","Shop",1],["hall","Town",2],["players","Players",3],["trophy","Relics",8],["wheel","Scratch card",6],["away","Dungeon Crawls",1]];
-var AREALINE={shop:"The Shop. New brands drop Mondays and Thursdays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A scratch card every day, once you have finished 3 tasks. Match three to win coins, and the golden mascots hold a piece of clothing.",away:"Dungeon Crawls: five a day under the city. Every crawl brings coins, and now and then something rare."};
+var AREALINE={shop:"The Shop. New brands drop Mondays and Thursdays: clothes for your character, plus themes and upgrades.",trophy:"Relics mark what you have achieved. Each one pays coins when you earn it.",hall:"The Hall: the town hall where everyone posts, and your class story, perks and advancements.",wheel:"A scratch card every day, once you have finished 3 tasks. Match three to win coins, and the golden mascots hold a piece of clothing.",away:"Dungeon Crawls: send your allies under the city. Every crawl brings coins, and now and then something rare."};
 var view="board";
 /* Cal (2026-11-08): "Gym 4 times a week only gives 625 coins but the closet and other big upgrades cost thousands ... I want you to be
    able to upgrade way more per day if you play often." All upgrades cost 381,500 coins; a good day earned about 1,500. Tasks now pay 6

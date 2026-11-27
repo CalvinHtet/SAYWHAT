@@ -68,7 +68,7 @@ var TOURS=[
     {sel:'.nav button[data-v="shop"]',t:"You unlocked the Shop!",x:"Clothes for your character. Tap here.",tap:1},
     {sel:"#app",t:"The Shop",x:"New brands drop every Monday and Thursday. Buy a piece and put it on in your Closet."}]},
   {id:"away",ready:function(){return view==="board"&&tourVis('.zx-tile[data-v="away"]')},steps:[
-    {sel:'.zx-tile[data-v="away"]',t:"New: Dungeon Crawls",x:"Send your team down for coins and, now and then, something rare. Tap here.",tap:1},
+    {sel:'.zx-tile[data-v="away"]',t:"New: Dungeon Crawls",x:"Send your allies down for coins and, now and then, something rare. Tap here.",tap:1},
     {sel:"#app",t:"Dungeon Crawls",x:"Pick a dungeon and send a crawl. It comes back on its own while you get on with your day."}]},
   {id:"wheel",ready:function(){return view==="board"&&tourVis(".zx-spin")},steps:[
     {sel:".zx-spin",t:"New: the scratch card",x:"One card a day, once you have finished 3 tasks. When it is ready, it shows up here. Tap to open it.",tap:1}]},

@@ -55,7 +55,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* ---- the relics box: only once something came home, only what came home ---- */
 v210Relics=function(){try{var t=dgState(),rows=Object.keys(TSETS).map(function(k){var T=TSETS[k],got=T.pieces.filter(function(p){return t[k]&&t[k][p.id]});if(!got.length)return "";
       return '<div class="v210rs"><b>'+esc(T.name)+'</b><div class="v210rp">'+got.map(function(p){return '<span class="chip on">'+esc(p.name)+'</span>'}).join("")+'</div></div>'}).join("");
-    if(!rows)return "";return '<section class="card panel"><h3 class="label">Relics found</h3><p class="note">What your team brought home. '+(dgRoomBuilt()?'Each one is on show in the Armory.':'Open the Armory above the Hero\'s Lair to show them off.')+'</p>'+rows+'</section>'}catch(e){return ""}};
+    if(!rows)return "";return '<section class="card panel"><h3 class="label">Relics found</h3><p class="note">What your allies brought home. '+(dgRoomBuilt()?'Each one is on show in the Armory.':'Open the Armory above the Hero\'s Lair to show them off.')+'</p>'+rows+'</section>'}catch(e){return ""}};
 /* ---- the Armory's new relics ---- */
 var V216SETS={
   drowned:{name:"The Drowned Captain's Kit",art:"drowned",lore:"A captain who would not leave the flooded arcade, and the gear he left on the last cabinet.",
@@ -92,10 +92,10 @@ try{Object.keys(V216SETS).forEach(function(k){if(!TSETS[k])TSETS[k]=V216SETS[k]}
   /* only what has its art can be found; the rest waits for ROOMS */
   Object.keys(V216WHERE).forEach(function(d){V216WHERE[d].forEach(function(L){var ok=L[1].filter(function(id){return v216Art(L[0],id)});if(ok.length)(DGLOOT[d]=DGLOOT[d]||[]).push([L[0],ok])})})}catch(e){}
 /* the room: the Armory */
-try{var RD=ROOMDEF.trophy;RD.name="Armory";if(RD.help){RD.help.k="Armory";RD.help.t="The Armory is open";RD.help.sub="Every relic your team brings home goes on show here, by itself.";
+try{var RD=ROOMDEF.trophy;RD.name="Armory";if(RD.help){RD.help.k="Armory";RD.help.t="The Armory is open";RD.help.sub="Every relic your allies bring home goes on show here, by itself.";
     RD.help.pts=[["On their own","Sets go onto their stands piece by piece; single prizes go up on the walls."],["Buffs","Every relic has its own small buff, and a full set a big one."]]}
   if(typeof ROOMT!=="undefined"&&ROOMT.trophy){if(typeof ROOMT.trophy==="string")ROOMT.trophy="Armory";else if(ROOMT.trophy.name)ROOMT.trophy.name="Armory"}
-  (ADDONS.lair||[]).forEach(function(a){if(a[0]==="lr_troom"){a[1]="Stairs to the Armory";a[8]="A hall upstairs where every relic your team brings home goes on show."}})}catch(e){}
+  (ADDONS.lair||[]).forEach(function(a){if(a[0]==="lr_troom"){a[1]="Stairs to the Armory";a[8]="A hall upstairs where every relic your allies bring home goes on show."}})}catch(e){}
 /* where each new stand and wall piece goes (ROOMS fits these to the painted hall as the art lands) */
 var V216MQ={drowned:[1.5,3.1],clock:[4.9,3.1],warden:[6.5,3.1]};
 var V216WALL={banner:[.6,.3,1.0],lantern:[1.9,.3,1.0],shield:[2.9,.3,1.0],greatsword:[4.1,.3,1.2],bow:[5.4,.3,1.0],beak:[6.5,.3,1.0],dragon:[3.4,.3,1.6]};

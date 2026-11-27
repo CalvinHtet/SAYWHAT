@@ -115,7 +115,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function dgFullRooms(){return (S.base?S.base.slots:[]).filter(function(r){if(!r||!ADDONS[r.t])return false;var L=ADDONS[r.t].filter(function(a){return !(a[3]&&(a[3].retired||a[3].opens))});return L.length&&L.every(function(a){return r.a&&r.a[a[0]]})}).length}
 var DGRELICS=[
   {id:"streak",name:"Unbroken",tiers:[7,14,30],d:function(n){return "Kept a streak going for "+n+" days."},v:function(){return S.best||0}},
-  {id:"team",name:"Good Company",tiers:[1,3,5],d:function(n){return n===1?"Your first teammate.":n+" people on your team."},v:function(){return typeof teamList==="function"?teamList().length:0}},
+  {id:"team",name:"Good Company",tiers:[1,3,5],d:function(n){return n===1?"Your first ally.":n+" allies."},v:function(){return typeof teamList==="function"?teamList().length:0}},
   {id:"build",name:"Finishing Touch",tiers:[1,3,6],d:function(n){return n===1?"A room upgraded all the way.":n+" rooms upgraded all the way."},v:dgFullRooms},
   {id:"exped",name:"Expedition Ledger",tiers:[10,50,150],d:function(n){return n+" dungeon crawls brought home."},v:function(){return (S.story&&S.story.missions)||0}},
   {id:"quests",name:"Tally",tiers:[50,250,1000],d:function(n){return n+" quests completed."},v:function(){return S.total||0}},

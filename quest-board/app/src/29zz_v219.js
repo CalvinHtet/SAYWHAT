@@ -25,8 +25,8 @@ try{
   if(ROOMHELP.theater)ROOMHELP.theater.pts=[["Tickets pay you","Ticket money builds up in the room. Collect it like the others."],["Grow the lobby","Upgrades bring in more guests and more ticket money."]];
   if(ROOMHELP.auditorium)ROOMHELP.auditorium.pts=[["Make it a real cinema","Upgrade the seats, the projector, the sound, the walls and the floors."],["Collect your coins","Takings build up in the room. Tap the coin bubble to collect them."]];
   if(ROOMHELP.loft)ROOMHELP.loft.pts=[["Start with your Bedroom","Tap it to see what you can add."],["Make it yours","Every upgrade changes how the room looks."]];
-  ROOMHELP.crawls={k:"New tab",t:"Dungeon Crawls",sub:"Your team lives in the lounge. Send them into dungeons for coins and rare finds.",pts:[
-    ["Send someone","Tap Crawl on a dungeon and pick who goes. Each teammate has one perk, and each can go twice a day."],
+  ROOMHELP.crawls={k:"New tab",t:"Dungeon Crawls",sub:"Your allies live in the lounge. Send them into dungeons for coins and rare finds.",pts:[
+    ["Send someone","Tap Crawl on a dungeon and pick who goes. Each ally has one perk, and each can go twice a day."],
     ["They go on their own","A crawl takes a while. Get on with your day; they come back by themselves."],
     ["Claim","When someone is back, tap Claim for the coins and anything they found."],
     ["Chests","Each lit chest is something rare still hidden in that dungeon. Bring it home and the chest goes dark."],
