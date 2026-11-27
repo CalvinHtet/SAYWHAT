@@ -11,7 +11,9 @@
    - Crawls: a teammate who is back waves beside the crawl (29zz_v210.js); the Crawls tab gets a "!" while someone waits to be claimed;
      the row reads "<Name> has returned!" next to the dungeon's name, and the button says Claim (10_app_a.js).
    - The chests always sit on one line (a dungeon has 3 today: Mossy Cellar's two Goblin King pieces and Pip). */
-try{SHOP.forEach(function(it){if(it&&(it[0]==="gx_smk_platecollar"||it[0]==="gx_smk_platehood")&&it[6])it[6].cut=1})}catch(e){}
+/* off sale, owners keep them (Cal: the plated collar; QA's hair sweep: pieces that show bald scalp or gaps, on ROOMS's streetwear retire list) */
+var V217CUT=["gx_smk_platecollar","gx_smk_platehood","gx_v_bunny","gx_v_veil","gx_gp_bunny","gx_bb_cloak","gx_km_straw"];
+try{SHOP.forEach(function(it){if(it&&V217CUT.indexOf(it[0])>=0&&it[6])it[6].cut=1})}catch(e){}
 /* ---- round head icons: zoomed out a little ---- */
 nbAv=function(L,sz){return L&&L.rig?'<span class="calav nbav" style="width:'+sz+'px;height:'+sz+'px">'+calImg(L,"still",Math.round(sz*2.1),"")+'</span>':figSvg(L||lookOf(),"30 6 40 40",sz,sz)};
 /* ---- the Vault's "!" ---- */
