@@ -2061,5 +2061,8 @@
  },
  "smk_strapsneaker": {
   "slot": "shoes"
+ },
+ "smk_embersole": {
+  "slot": "shoes"
  }
 }
