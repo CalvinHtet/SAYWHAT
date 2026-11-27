@@ -15,7 +15,7 @@ const NEW = (process.env.NEW || 'gx_nc_clear,gx_nc_catshades,gx_nc_visorshade').
     return { rows: NEW.map((id) => { const it = x.SHOP.find((r) => r[0] === id); if (!it) return { id, missing: 1 }; const g = it[6].gar, M = QBDATA.items[g] || {}; return { id, slot: it[1], b: it[6].b, gar: g, itemSlot: M.slot, front: !!(window.QBART && (QBART['m_' + g + '_front.webp'] || QBART['f_' + g + '_front.webp'])) || null, cat: V.cat(id), price: it[3], cut: !!it[6].cut, name: it[2] }; }),
       head: nc.map((it) => it[0] + ' ' + it[3]), dropCat: (V.cfg && (V.cfg.dropCat || V.cfg.perCat)) || null }; }, NEW);
   A.rows.forEach((r) => note(JSON.stringify(r))); note('nc head pieces and prices: ' + A.head.join(', ') + ' | dropCat ' + A.dropCat);
-  ok(A.rows.every((r) => !r.missing && r.slot === 'a_acc' && r.b === 'nc' && r.itemSlot === SLOT && r.cat === CAT && !r.cut), 'the new rows: a_acc, brand nc, slot ' + SLOT + ', category ' + CAT + ', on sale');
+  ok(A.rows.every((r) => !r.missing && r.slot === (CAT === 'hat' ? 'a_hat' : 'a_acc') && r.b === 'nc' && r.itemSlot === SLOT && r.cat === CAT && !r.cut), 'the new rows: ' + (CAT === 'hat' ? 'a_hat' : 'a_acc') + ', brand nc, slot ' + SLOT + ', category ' + CAT + ', on sale');
   const NCAT = +(process.env.COUNT || 6); ok(A.head.length === NCAT, 'nc has ' + NCAT + ' ' + CAT + ' pieces (' + A.head.length + ')');
   /* B */ const B = await p.evaluate(() => { const real = Date.now() - (window.__qbShift || 0), V = window.__qbV201, x = window.__qb.x(), seen = {}, drops = [];
     for (let k = 0; k < 400; k++) { const d = new Date('2026-11-27T09:00:00'); d.setDate(d.getDate() + k); window.__qbShift = d.getTime() - real; const st = window.__qbDrops.state(); const L = st.live.find((q) => q.id === 'nc'); if (!L) continue;
