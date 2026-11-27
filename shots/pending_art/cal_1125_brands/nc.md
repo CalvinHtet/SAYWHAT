@@ -16,7 +16,7 @@ jog_black, jog_ash, jog_slate, short; shoes court, knit, slide.
 | head (glasses) | nc_chainspecs | Chain Readers | Thin round silver frames with pale tinted lenses and a fine silver chain looping behind the head. |
 | head (mask) | nc_knitmask | Knit Face Mask | Heather-ash rib-knit lower-face mask with a cream edge, sitting soft over the nose and chin. |
 | necklace (neck) | nc_rope | Silver Rope Chain | Chunky twisted silver rope chain worn close at the collarbone. |
-| necklace (neck) | nc_snood | Sherpa Zip Snood | Cream sherpa top over a jet-black diagonal-quilted fleece base, a brushed-silver zip and black drawcords with silver cord locks. (ROOMS 11-27: redone per QA, the plain grey one read as plain.) |
+| necklace (neck) | nc_snood | Sherpa Zip Snood | Short cream sherpa roll over a narrow jet-black diagonal-quilted ring that ends at the collarbone, a silver zip pull and one short black cord with a silver cord lock. (ROOMS 11-27: redone per QA, the plain grey one read as plain.) |
 | necklace (neck) | nc_towel | Lounge Towel Scarf | Cream terry towel draped round the neck, ends hanging down the chest, a thin black stripe at each end. |
 | necklace (neck) | nc_tagchain | Ball Chain Tag | Fine silver ball chain with a plain brushed-silver rectangular tag. |
 | necklace (neck) | nc_neckerchief | Tonal Neckerchief | Ash neckerchief tied at the side, cream topstitched edges. |
