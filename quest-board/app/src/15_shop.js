@@ -145,6 +145,7 @@ var EXTRA_ITEMS=[
  ["gx_nc_jog_ash","a_pants","Signature Jogger, Ash",1500,1,"Heather grey, navy wordmark.",{gar:"nc_jog_ash",b:"nc"}],
  ["gx_nc_jog_slate","a_pants","Signature Jogger, Slate",1500,1,"Mid grey, cuffs that stack.",{gar:"nc_jog_slate",b:"nc"}],
  ["gx_nc_short","a_pants","Training Short",950,1,"Seven inches, wordmark on the leg.",{gar:"nc_short",b:"nc"}],
+ ["gx_nc_waffle","a_pants","Waffle Lounge Pants",1300,1,"Ivory waffle knit, silver-tipped drawcord, ribbed cuffs.",{gar:"nc_waffle",b:"nc",from:"2026-11-27"}],
  ["gx_nc_cap","a_hat","Wordmark Cap",800,1,"Black six-panel. nicecock.",{gar:"nc_cap",b:"nc"}],
  ["gx_nc_beanie","a_hat","Rooster Beanie",750,1,"Ash rib knit, woven rooster.",{gar:"nc_beanie",b:"nc"}],
  ["gx_nc_band","a_hat","Fleece Dad Cap",800,1,"Heather ash fleece, tonal rooster.",{gar:"nc_band",b:"nc"}],
@@ -173,9 +174,11 @@ var EXTRA_ITEMS=[
  ["gx_nc_tee","a_top","Layered Lounge Tee",1100,1,"Cream oversized tee over a charcoal thermal.",{gar:"nc_tee",b:"nc"}],
  ["gx_nc_tank","a_top","Waffle Lounge Zip",1500,1,"Ivory waffle knit, half zipped.",{gar:"nc_tank",b:"nc"}],
  ["gx_nc_qzip","a_top","Sherpa Fleece Zip",1700,1,"Heather ash, cream sherpa collar.",{gar:"nc_qzip",b:"nc"}],
+ ["gx_nc_cardigan","a_top","Shawl Cardigan",1700,1,"Chunky cream cable knit, shawl collar, ash elbow patches, horn buttons.",{gar:"nc_cardigan",b:"nc",from:"2026-11-27"}],
  ["gx_nc_court","a_shoes","Silver Court High-Top",1600,1,"Cream leather, silver panels.",{gar:"nc_court",b:"nc"}],
  ["gx_nc_knit","a_shoes","Suede Runner",1400,1,"Ash suede over silver mesh.",{gar:"nc_knit",b:"nc"}],
  ["gx_nc_slide","a_shoes","Shearling Clogs & Socks",1500,1,"Taupe suede, shearling lining, lounge socks.",{gar:"nc_slide",b:"nc"}],
+ ["gx_nc_loafer","a_shoes","Shearling Loafers",1500,1,"Taupe suede moc-toe, cream shearling collar, silver bar.",{gar:"nc_loafer",b:"nc",from:"2026-11-27"}],
  /* KODE PINK "Night drive" (Cal 11-13: "Make it more city pop but actually cool and more sleek"; approved 11-18; ROOMS 52dda64, shop text
     shots/pending_art/kodepink/final/shop_text.md): new names and lines, same ids, slots and prices */
  ["gx_kp_bucket","a_hat","Neon Stripe Bucket",800,1,"Black bucket hat, a pink-to-coral neon band.",{gar:"kp_bucket",b:"kp"}],
