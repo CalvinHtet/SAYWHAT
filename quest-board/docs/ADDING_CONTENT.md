@@ -29,6 +29,8 @@ two walking directions.
 Shop items: add a line to `EXTRA_ITEMS` in `app/src/15_shop.js` and an entry to
 `data/items.json` (its rig slot, plus `over`, `frontOnly`, `femaleOnly` or `maleOnly` if
 they apply, and `neutral` for dark art that picks up a purple cast from the template).
+A brand piece added to a brand that is already dropping gets `from:"YYYY-MM-DD"` (the day it goes in) in its row's
+options, so a drop or Vault week that is already running keeps its pieces; it joins from the next one (LEAD, 11-27).
 Pants cut wide enough to stick out around a boot set `wide`, so tall footwear goes under
 their hem. Overalls and suspenders set `overTop`, so the whole piece (bib, straps and legs) draws
 over the top while the arms still draw over it. Bracers, gloves and anything else worn on the forearms use `"slot": "arms"`: they bind to
