@@ -8,6 +8,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const clear = () => V(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()));
   const cal = await V(() => ({ days: window.__qbV172.cfg.days, next: window.__qbV172.days(6) }));
   ok(JSON.stringify(cal.days) === '[1,3,5]' && JSON.stringify(cal.next.slice(0, 4)) === JSON.stringify(['2026-11-30', '2026-12-02', '2026-12-04', '2026-12-07']), 'brand drops on Mondays, Wednesdays and Fridays from Mon 11-30 ' + JSON.stringify(cal));
+  const six = await V(() => ['2026-11-30', '2026-11-29', '2026-12-01'].map((d) => new Date(window.__qbDrops.start(d)).toLocaleString('en-US', { timeZone: 'America/Los_Angeles', hour: 'numeric' })));
+  ok(six.every((h) => h === '6 AM'), 'every drop (brands, the Vault, pets) turns over at 6 am Pacific (Cal 11-26) ' + JSON.stringify(six));
   /* the Vault, over several weeks */
   const vs = await V(() => { const out = []; const day = 864e5, t0 = Date.parse('2026-11-29T20:00:00Z'); window.__qbV201.reset();
     for (let w = 0; w < 6; w++) { const v = window.__qbV201.vault(t0 + w * 7 * day); const prem = {}; const cats = {}; const premIn = {};
