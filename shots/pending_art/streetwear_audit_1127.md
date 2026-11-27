@@ -35,3 +35,17 @@ streetwear piece in the same category, counted toward that brand's 8 per categor
 hanga, nc, kp, y2k, alt (gorpcore), sp (gamer graphics), and the rest of the brands above.
 
 Counts: A about 60 pieces, B about 25.
+
+## Decisions (LEAD 2026-11-27, Cal's rule "even for the seasonal ones")
+- Method: retire and replace. The old id gets cut (owners keep it); a new streetwear piece with its own id and name goes in the same
+  category, counted toward that brand's 8. ROOMS sends LEAD the retire list plus the new rows per brand, inside each brand's 8-per-category pass.
+- Already gone in code, not on the list: gx_o_durag (V17GONE), gx_v_robe (V66CUT), gx_smk_platecollar (29zz_v217.js).
+- A: all remade.
+- B remade: sv Puffy Snow Pants (-> puffer cargo), Ski Leggings (-> nylon track pants), Shearling Slippers, Snowflake Mittens;
+  oak Tennis Visor (-> nylon cap), Terry Headband; km Straw Sun Hat (-> bucket), Zip Rash Guard; all oc painter props (felt hat, palette
+  pendant, brush roll sling, drip smock, brushstroke slingbacks); cr Mohawk Helmet, Street Armour Vest, Chrome Arm Sleeve; sm Neon Halo,
+  Halo Mask.
+- B kept (ROOMS's call, QA to check on the figure): sv Ski Goggles pushed up (gorpcore accessory), Nordic Sweater (knitwear reads street
+  under a coat; recheck), oak Pleated Tennis Skirt and Cable-Knit Tennis Vest (tennis-core is a street trend), km Crochet Cardigan
+  (fashion knit), cr LED Visor and Holo Trench (techwear). Any of these QA flags on the figure moves to the remake list.
+- smk Plated Hood is on the remake list, so QA's gap sweep can skip fixing it.
