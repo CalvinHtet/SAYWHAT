@@ -153,6 +153,7 @@ var EXTRA_ITEMS=[
  ["gx_nc_visor","a_hat","Terry Visor",750,1,"Jet-black terry, cream binding, silver buckle.",{gar:"nc_visor",b:"nc"}],
  ["gx_nc_pendant","a_acc","Cashmere Scarf",1100,1,"Ash cashmere, cream edges, worn loose.",{gar:"nc_pendant",b:"nc"}],
  ["gx_nc_rope","a_acc","Silver Rope Chain",850,1,"Chunky twisted silver rope, close at the collarbone.",{gar:"nc_rope",b:"nc"}],
+ ["gx_nc_snood","a_acc","Sherpa Zip Snood",900,1,"Cream sherpa roll, black quilted ring, silver zip pull.",{gar:"nc_snood",b:"nc"}],
  ["gx_nc_shades","a_acc","Rimless Aviators",900,1,"Smoke gradient lenses, silver bridge.",{gar:"nc_shades",b:"nc"}],
  ["gx_nc_ovals","a_acc","Silver Oval Shades",800,1,"Small smoke-grey ovals, thin polished silver frame.",{gar:"nc_ovals",b:"nc"}],
  ["gx_nc_shield","a_acc","Shield Sunglasses",850,1,"One-piece wraparound smoke lens, silver brow bar.",{gar:"nc_shield",b:"nc"}],
@@ -197,7 +198,7 @@ var EXTRA_ITEMS=[
  ["gx_sm_boots","a_shoes","Neon-Lace Boots",1400,1,"Combat boots, cyan laces.",{gar:"sm_boots",b:"sm"}],
  /* Cal 11-18 SAYMØRE: the GO OFF Tee's replacement (ROOMS cefab81) */
  ["gx_sm_grille","a_top","Speaker-Grille Bomber",1600,1,"Grille-mesh panels, cyan EQ bars up the back, orange \u00d8 badge.",{gar:"sm_grille",b:"sm"}],
- ["gx_smk_band","a_hat","Stitched Headband",700,1,"Ash-grey cloth, a stitched smoke puff.",{gar:"smk_band",b:"smk"}],
+ ["gx_smk_band","a_hat","Stitched Headband",700,1,"Ash-grey cloth, an ember-stitched smoke puff trailing a long wisp.",{gar:"smk_band",b:"smk"}],
  ["gx_smk_wrap","a_hat","Spiky Headwrap",650,1,"Ink black, an ember-orange tie.",{gar:"smk_wrap",b:"smk"}],
  ["gx_smk_cowl","a_acc","Half-Face Cowl",800,1,"Up over the nose, eyes only.",{gar:"smk_cowl",b:"smk"}],
  ["gx_smk_tape","a_acc","Wrap Tape Set",500,1,"Cream tape on the forearms.",{gar:"smk_tape",b:"smk"}],

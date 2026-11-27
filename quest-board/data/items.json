@@ -2122,5 +2122,8 @@
  },
  "nc_rope": {
   "slot": "neck"
+ },
+ "nc_snood": {
+  "slot": "neck"
  }
 }

@@ -31,7 +31,7 @@ function teamList(){return Object.keys(TEAM).filter(teamHas)}
 function teamJoin(id){var t=TEAM[id];if(!t)return;var o=styState();o.team[id]=1;persist();
   var art=window.QBART&&QBART["ui_team_"+id+".webp"],ini=t.name.split(" ").map(function(w){return w[0]}).join("").slice(0,2);
   var bars=Object.keys(t.stats).map(function(k){return '<div class="tm-st"><span>'+k+'</span><i><b style="width:'+(t.stats[k]*10)+'%"></b></i><em>'+t.stats[k]+'</em></div>'}).join("");
-  setTimeout(function(){modal('<div class="card box2 tmj" style="--tac:'+t.ac+'"><span class="label">New team member</span>'
+  setTimeout(function(){modal('<div class="card box2 tmj" style="--tac:'+t.ac+'"><span class="label">New ally</span>'
     +(art?'<img class="tmj-art" src="'+art+'" alt="">':'<div class="tmj-art tmj-art0"><b>'+esc(ini)+'</b></div>')
     +'<h2>'+esc(t.name)+'</h2><span class="chip">'+esc(t.role)+'</span><p class="note">'+esc(t.how)+'</p>'+bars
     +'<p class="tmj-buff">'+esc(tmBuffTxt(t))+'</p><div class="row"><button class="btn" data-act="mclose">Welcome aboard</button></div></div>');try{burst(innerWidth/2,innerHeight/3,30)}catch(e){}},400)}
@@ -42,7 +42,7 @@ function teamCrawlMult(){var f=1,k=S.cls==="tamer"?1.5:1;teamList().forEach(func
 /* Sable joins on the first dungeon crawl home (dngClaim in 10_app_a.js) */
 /* the team, on top of the Dungeon Crawls tab (dngHtml) */
 function teamHtml(){var ids=teamList();if(!ids.length)return '';
-  return '<section class="card panel"><h3 class="label">Your team</h3><div class="tm-grid">'+ids.map(function(id){var t=TEAM[id],art=window.QBART&&QBART["ui_team_"+id+".webp"];
+  return '<section class="card panel"><h3 class="label">Your allies</h3><div class="tm-grid">'+ids.map(function(id){var t=TEAM[id],art=window.QBART&&QBART["ui_team_"+id+".webp"];
     return '<div class="tm-card" style="--tac:'+t.ac+'">'+(art?'<img src="'+art+'" alt="">':'<i>'+esc(t.name[0])+'</i>')+'<b>'+esc(t.name)+'</b><small>'+esc(t.role)+'</small><span>'+esc(tmBuffTxt(t))+'</span></div>'}).join("")+'</div></section>'}
 /* class pictures: a man's and a woman's version when ROOMS has painted them (ui_class_<id>_m.webp, _f.webp) */
 function clsArt(id){var x=(S.char&&S.char.sex)==="f"?"f":"m",u=window.QBART&&QBART["ui_class_"+id+"_"+x+".webp"];return u||ART["class_"+id]}

@@ -47,7 +47,7 @@ function v214Pic(k){var p=k.split(":"),id=p[1];try{var u=window.QBART&&(QBART["u
 setInterval(function(){try{if(!V214SHOW.length||document.querySelector("#layer .modal,#layer .qb-held"))return;var s=V214SHOW.shift(),pic=v214Pic(s.k),L=v210Look(s.k);
     modal('<div class="card box2 v214hurt"><span class="label">Back from '+esc(s.d)+'</span><h2 style="font-size:26px">'+esc(v210Name(s.k))+' is hurt</h2>'
       +'<div class="v214pic">'+(pic?'<img src="'+esc(pic.u)+'" alt="">'+(pic.real?'':'<i class="v214band" aria-hidden="true"></i>'):(L?calImg(L,"still",200,""):''))+'</div>'
-      +'<p class="note">That dungeon was more than '+esc(v210Name(s.k))+' was ready for. Resting for '+s.days+' day'+(s.days>1?'s':'')+', then back on the team. A stronger level, or a tougher teammate, keeps this from happening.</p>'
+      +'<p class="note">That dungeon was more than '+esc(v210Name(s.k))+' was ready for. Resting for '+s.days+' day'+(s.days>1?'s':'')+', then back with the others. A stronger level, or a tougher ally, keeps this from happening.</p>'
       +'<div class="btns"><button class="btn" data-act="mclose">Get well soon</button></div></div>')}catch(e){}},1500);
 /* ---- the screen: pay and chests on each dungeon, perks in the picker and the team ---- */
 function v214Chests(d){var tot=0,left=0;try{(DGLOOT[d.id]||[]).forEach(function(L){tot+=L[1].length});DNPC.forEach(function(n){if(n.d===d.id)tot++});if(DGWEAR.from.indexOf(d.id)>=0)tot++;left=crawlLeft(d)}catch(e){}

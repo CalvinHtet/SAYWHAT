@@ -40,22 +40,22 @@ var v210Nav=navHtml;navHtml=function(){var h=v210Nav.apply(this,arguments);
   try{var m=/<button[^>]*data-v="away"[\s\S]*?<\/button>/.exec(h);if(m){h=h.replace(m[0],"");var i=h.lastIndexOf("</div></nav>");if(i>=0)h=h.slice(0,i)+m[0]+h.slice(i)}}catch(e){}return h};
 try{for(var i=ZXHUB.length-1;i>=0;i--)if(ZXHUB[i][0]==="away")ZXHUB.splice(i,1)}catch(e){}
 try{TOURS.forEach(function(t){if(t.id!=="away")return;t.ready=function(){return view==="board"&&!!tourVis('.nav button[data-v="away"]')};
-    t.steps=[{sel:'.nav button[data-v="away"]',t:"New: Dungeon Crawls",x:"Your team's lounge and their expeditions. Tap here, then send someone into a dungeon.",tap:1}]})}catch(e){}
+    t.steps=[{sel:'.nav button[data-v="away"]',t:"New: Dungeon Crawls",x:"Your allies' lounge and their crawls. Tap here, then send someone into a dungeon.",tap:1}]})}catch(e){}
 /* ---- level 7: Sable joins ---- */
 try{TEAM.sable.how="Maps the tunnels under the city. Heard about your streak and asked to join when you reached level 7."}catch(e){}
-var V210STORY="Sable joined your team. She has mapped the tunnels under the city for years, and word of your streak reached her down there. She knocked on your door with a lantern and a hand-drawn map: “I know a way into the Mossy Cellar. Want to see what’s down there?”";
+var V210STORY="Sable is your first ally. She has mapped the tunnels under the city for years, and word of your streak reached her down there. She knocked on your door with a lantern and a hand-drawn map: “I know a way into the Mossy Cellar. Want to see what’s down there?”";
 function v210Join(){try{if(effLvl()>=V210LV&&typeof teamHas==="function"&&!teamHas("sable")&&TEAM.sable){styState().team.sable=1;persist();return true}}catch(e){}return false}
 var v210Un=v79Unlocks;v79Unlocks=function(from,lv){var out=v210Un.apply(this,arguments);
   try{if(from<V210LV&&lv>=V210LV){out.unshift("Dungeon Crawls is open: a new tab, bottom right");out.unshift(V210STORY)}}catch(e){}return out};
 var v210Lv=levelUp;levelUp=function(lv,extra,from){try{if(lv>=V210LV&&v210Join()){var o=v204St();o.sable7=1;persist()}}catch(e){}return v210Lv.apply(this,arguments)};
 /* an older save already past level 7: Sable now, and her story once (the unlock windows, 29zz_v204.js) */
-try{V204.unshift({id:"sable7",test:function(){v210Join();return effLvl()>=V210LV&&typeof teamHas==="function"&&teamHas("sable")},t:"Sable joined your team",x:V210STORY+" Send her on Dungeon Crawls from the new tab at the bottom right.",go:"Open Crawls",
+try{V204.unshift({id:"sable7",test:function(){v210Join();return effLvl()>=V210LV&&typeof teamHas==="function"&&teamHas("sable")},t:"Sable is your first ally",x:V210STORY+" Send her on Dungeon Crawls from the new tab at the bottom right.",go:"Open Crawls",
   act:function(){try{closeModals()}catch(e){}view="away";render();window.scrollTo(0,0)}})}catch(e){}
 setInterval(function(){try{if(loaded&&S&&S.created)v210Join()}catch(e){}},5000);
 /* ---- who goes ---- */
 var V210WHO=null;
 var v210Start=dngStart;dngStart=function(id){var free=v210Free();
-  if(!free.length){pop(v210Team().length?"Everyone is out on a crawl. Wait for someone to come back.":"Crawls open when someone joins your team.");return}
+  if(!free.length){pop(v210Team().length?"Everyone is out on a crawl. Wait for someone to come back.":"Crawls open when you have an ally.");return}
   var who=V210WHO&&free.indexOf(V210WHO)>=0?V210WHO:(free.length===1?free[0]:null);V210WHO=null;
   if(!who){v210Pick(id,free);return}
   var D=dngInit(),n0=D.runs.length;v210Start.apply(this,arguments);if(D.runs.length>n0){D.runs[D.runs.length-1].who=who;persist();render();pop(v210Name(who)+" heads into the dungeon.")}};
@@ -67,7 +67,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 /* ---- the screen ---- */
 function v210Relics(){try{var t=dgState(),rows=Object.keys(TSETS).map(function(k){var T=TSETS[k],got=T.pieces.filter(function(p){return t[k]&&t[k][p.id]});
       return '<div class="v210rs"><b>'+esc(T.name)+'</b> <small class="note">'+got.length+' of '+T.pieces.length+'</small><div class="v210rp">'+T.pieces.map(function(p){var h=t[k]&&t[k][p.id];return '<span class="chip'+(h?' on':'')+'">'+(h?esc(p.name):'? ? ?')+'</span>'}).join("")+'</div></div>'}).join("");
-    return '<section class="card panel"><h3 class="label">Relics found</h3><p class="note">Pieces your team brought home from the dungeons.</p>'+rows+'</section>'}catch(e){return ""}}
+    return '<section class="card panel"><h3 class="label">Relics found</h3><p class="note">Pieces your allies brought home from the dungeons.</p>'+rows+'</section>'}catch(e){return ""}}
 var v210Html=dngHtml;dngHtml=function(){var h=v210Html.apply(this,arguments);
   try{var D=dngInit(),k=0;
     /* the running teammate beside each crawl */
@@ -90,10 +90,10 @@ var V210SP=[
   {x:82,y:60,a:"look"},{x:91,y:70,a:"look"},{x:30,y:74,a:"idle"},{x:70,y:76,a:"idle"},{x:24,y:92,a:"idle"},{x:84,y:88,a:"idle"}];
 var V210A={},V210T=0,V210LAST=0;
 function v210LoungeHtml(){var u=window.QBART&&QBART["ui_lounge.webp"],ks=v210Free();
-  return '<section class="card v210lounge" aria-label="Your team\'s lounge"><div class="v210room'+(u?'':' v210plain')+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'>'
+  return '<section class="card v210lounge" aria-label="Your allies\' lounge"><div class="v210room'+(u?'':' v210plain')+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'>'
     +(u?'':'<span class="v210bar"></span><span class="v210couch"></span><span class="v210map"></span><span class="v210chair"></span><span class="v210table"></span>')
-    +'<div class="v210ppl"></div><div class="v210tags"></div>'+(ks.length?'':'<p class="v210empty">'+(v210Team().length?"Everyone is out on a crawl.":"Your team will hang out here.")+'</p>')+'</div>'
-    +'<div class="v210cap"><b>Your team</b><small class="note">'+v210Team().length+' member'+(v210Team().length===1?'':'s')+(Object.keys(v210Out()).length?' &middot; '+Object.keys(v210Out()).length+' out on a crawl':'')+'</small></div></section>'}
+    +'<div class="v210ppl"></div><div class="v210tags"></div>'+(ks.length?'':'<p class="v210empty">'+(v210Team().length?"Everyone is out on a crawl.":"Your allies will hang out here.")+'</p>')+'</div>'
+    +'<div class="v210cap"><b>Your allies</b><small class="note">'+v210Team().length+' all'+(v210Team().length===1?'y':'ies')+(Object.keys(v210Out()).length?' &middot; '+Object.keys(v210Out()).length+' out on a crawl':'')+'</small></div></section>'}
 function v210Spot(a,ks){var taken={};Object.keys(V210A).forEach(function(k){var b=V210A[k];if(b!==a&&b.si!=null)taken[b.si]=1});
   var pick=[];V210SP.forEach(function(s,i){if(taken[i]||i===a.si)return;var w=s.a==="talk"?(V210SP[s.pair]&&taken[s.pair]?6:2):s.a==="idle"?1:3;for(var j=0;j<w;j++)pick.push(i)});
   return pick.length?pick[Math.floor(Math.random()*pick.length)]:a.si}

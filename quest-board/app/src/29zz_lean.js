@@ -29,7 +29,7 @@ var QBINFO={
   crawl:["Dungeon Crawls",["Pick a dungeon, put the phone down and go do your real quests. Come back when the timer is up.",
     "Every crawl brings home coins, and deeper dungeons hide more. Now and then you find something rare.",
     "Quest effort: the fuller your Daily Quest, the better the loot."]],
-  allies:["Rescued allies",["Someone is trapped in every dungeon. Find them on a crawl and they move into your Loft with a perk for good."]],
+  allies:["Allies",["Everyone who fights beside you is an ally, each with a perk of their own. Someone is trapped in every dungeon: find them on a crawl and they join you for good."]],
   wheel:["Scratch card",["One card a day, once you have finished 3 tasks that day. Scratch three panels: three of a kind wins."]],/* 29zz_v146.js writes the full text */
   likes:["Likes",function(){var r="";try{r=fshRule()+". "}catch(e){}var pz="";try{pz=" The top 3 win "+FSHPRIZE.map(function(c){return c.toLocaleString()}).join(" / ")+" coins and a medal."}catch(e){}return [
     "Tap a look to like it. "+r+"Every like counts.","The week ends Sunday 7 pm Pacific."+pz]}],
