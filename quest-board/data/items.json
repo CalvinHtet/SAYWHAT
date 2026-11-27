@@ -2104,5 +2104,8 @@
   "slot": "glasses",
   "neutral": true,
   "frontOnly": true
+ },
+ "smk_gaiter": {
+  "slot": "neck"
  }
 }
