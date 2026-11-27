@@ -155,7 +155,8 @@ autoRoom("trophy",{name:"Trophy Room",lv:12,startLv:12,step:1,wall:"#151a2e",wai
  /* the painted hall is the room's shell (floor and walls); shell:0 keeps the themed walls from being drawn over it */
  draw:function(C){if(window.LFSPR&&LFSPR.tpw_t1)C.shellK="tpw_t1";
   /* on the rug, under the spotlight; each piece a hair in front of the one before so they draw in order */
-  if(lfSpr(C,"trx_mq",3.2,2.7,1.3,1.3,{H:136,ctr:1,h:60}))TRMQ.forEach(function(p,i){if(trHas("goblin",p))lfSpr(C,"trx_mq_"+p,3.2,2.7,1.3,1.3,{H:136,ctr:1,nosh:1,nob:1,dk:-.001*(i+1)})})},
+  /* Cal 11-26: the Armory fills itself; the stand waits for its first piece, like the newer stands (QA 5e7e2775) */
+  if(TRMQ.some(function(p){return trHas("goblin",p)})&&lfSpr(C,"trx_mq",3.0,3.2,1.3,1.3,{H:136,ctr:1,h:60}))TRMQ.forEach(function(p,i){if(trHas("goblin",p))lfSpr(C,"trx_mq_"+p,3.0,3.2,1.3,1.3,{H:136,ctr:1,nosh:1,nob:1,dk:-.001*(i+1)})})},
  help:{k:"Trophy Room",t:"The Trophy Room is open",sub:"Every set piece your team brings home goes on display here.",pts:[["Piece by piece","Each piece of the Goblin King's Regalia goes onto the stand as it comes home."],["Buffs","Every piece has its own small buff, and a full set a big one."]]},
  items:[]});
 /* Downtown LA at golden hour, far behind the railing */

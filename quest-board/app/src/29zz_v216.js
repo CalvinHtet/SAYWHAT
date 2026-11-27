@@ -97,12 +97,12 @@ try{var RD=ROOMDEF.trophy;RD.name="Armory";if(RD.help){RD.help.k="Armory";RD.hel
   if(typeof ROOMT!=="undefined"&&ROOMT.trophy){if(typeof ROOMT.trophy==="string")ROOMT.trophy="Armory";else if(ROOMT.trophy.name)ROOMT.trophy.name="Armory"}
   (ADDONS.lair||[]).forEach(function(a){if(a[0]==="lr_troom"){a[1]="Stairs to the Armory";a[8]="A hall upstairs where every relic your allies bring home goes on show."}})}catch(e){}
 /* where each new stand and wall piece goes (ROOMS fits these to the painted hall as the art lands) */
-var V216MQ={drowned:[1.5,3.1],clock:[4.9,3.1],warden:[6.5,3.1]};
-var V216WALL={banner:[.6,.3,1.0],lantern:[1.9,.3,1.0],shield:[2.9,.3,1.0],greatsword:[4.1,.3,1.2],bow:[5.4,.3,1.0],beak:[6.5,.3,1.0],dragon:[3.4,.3,1.6]};
+var V216MQ={drowned:[1.75,.05,106],clock:[4.15,.05,106],warden:[6.55,.05,106]};
+var V216WALL={banner:[.1,.6,.3,.3,33,-68],greatsword:[.1,1.9,.3,.3,36,-70],dragon:[.1,3.45,.3,.3,38,-82],bow:[.1,4.8,.3,.3,37,-66],shield:[.1,6.55,.3,.3,30,-84],lantern:[2.95,.1,.3,.3,32,-106],beak:[5.4,.1,.3,.3,25,-108]};
 try{var v216Draw=ROOMDEF.trophy.draw;ROOMDEF.trophy.draw=function(C){var r=v216Draw?v216Draw.apply(this,arguments):undefined;
   try{["drowned","clock","warden"].forEach(function(k){var T=TSETS[k];if(!T.pieces.some(function(p){return trHas(k,p.id)}))return;var P=V216MQ[k];
-      if(lfSpr(C,"trx_"+k+"_mq",P[0],P[1],1.3,1.3,{H:136,ctr:1,h:60}))T.pieces.forEach(function(p,i){if(trHas(k,p.id))lfSpr(C,"trx_"+k+"_"+p.id,P[0],P[1],1.3,1.3,{H:136,ctr:1,nosh:1,nob:1,dk:-.001*(i+1)})})});
-    TSETS.wall.pieces.forEach(function(p){if(!trHas("wall",p.id))return;var P=V216WALL[p.id];if(P)lfSpr(C,"trw_"+p.id,P[0],P[1],P[2],.3,{H:90,ctr:1,nosh:1})})}catch(e){}
+      if(lfSpr(C,"trx_"+k+"_mq",P[0],P[1],1.3,1.3,{H:P[2]||136,ctr:1,h:60}))T.pieces.forEach(function(p,i){if(trHas(k,p.id))lfSpr(C,"trx_"+k+"_"+p.id,P[0],P[1],1.3,1.3,{H:P[2]||136,ctr:1,nosh:1,nob:1,dk:-.001*(i+1)})})});
+    TSETS.wall.pieces.forEach(function(p){if(!trHas("wall",p.id))return;var P=V216WALL[p.id];if(P)lfSpr(C,"trw_"+p.id,P[0],P[1],P[2],P[3]||.3,{H:P[4]||90,dy:P[5]||0,ctr:1,nosh:1})})}catch(e){}
   return r}}catch(e){}
 htabCss("qb-v216-css",".v216ls{list-style:none;margin:10px 0;padding:0;display:flex;flex-direction:column;gap:8px}.v216ls li{display:flex;align-items:center;gap:10px}"
   +".v216ls .qs-img{width:52px;height:52px;flex:0 0 52px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);padding:4px;box-sizing:border-box}.v216ls .qs-img img{width:100%;height:100%;object-fit:contain}.v216ls .qs-mark{display:none}"
