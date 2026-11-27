@@ -33,7 +33,9 @@ function v210Out(){var o={};try{dngInit().runs.forEach(function(r){if(r.who)o[r.
 function v210Free(){var o=v210Out();return v210Team().filter(function(k){return !o[k]})}
 /* ---- the gate, the bottom bar, the Board ---- */
 try{AREAS.forEach(function(a){if(a[0]==="away")a[2]=V210LV});delete NAVHIDE.away}catch(e){}
-var v210Gate=areaGate;areaGate=function(id){if(id==="away")return !(effLvl()>=V210LV&&v210Team().length>0);return v210Gate.apply(this,arguments)};
+var v210Gate=areaGate;areaGate=function(id){if(id==="away"){var ok=effLvl()>=V210LV&&v210Team().length>0;
+    /* open means revealed too (29h_unlocks.js reveals one area a day below level 10): the tab and a tap on it always agree */
+    if(ok&&loaded&&S&&S.created)try{var o=areaOn();if(!o.away){o.away=1;persist()}}catch(e){}return !ok}return v210Gate.apply(this,arguments)};
 var v210Nav=navHtml;navHtml=function(){var h=v210Nav.apply(this,arguments);
   try{var m=/<button[^>]*data-v="away"[\s\S]*?<\/button>/.exec(h);if(m){h=h.replace(m[0],"");var i=h.lastIndexOf("</div></nav>");if(i>=0)h=h.slice(0,i)+m[0]+h.slice(i)}}catch(e){}return h};
 try{for(var i=ZXHUB.length-1;i>=0;i--)if(ZXHUB[i][0]==="away")ZXHUB.splice(i,1)}catch(e){}

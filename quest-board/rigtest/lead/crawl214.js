@@ -1,0 +1,27 @@
+// Cal 11-26 (29zz_v214.js): perks per teammate in the Who goes? picker; fixed pay on each dungeon; chests for what a dungeon still hides;
+// a risky crawl can send someone home hurt (a window, then resting, not pickable).
+//   PORT=<build server> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/crawl214.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8838, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV214 && window.__qbV210, null, { timeout: 90000 }); await p.waitForTimeout(300);
+  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
+  const clear = () => V(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()));
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(11); S.gates = [5, 10]; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 };
+    S.unl = { console: 1, pets: 1, acc2: 1, sable7: 1 }; S.mile = { since: 999, fx1: 1 }; S.story = S.story || {}; S.story.team = { sable: 1, mara: 1 }; S.dng = S.dng || {}; S.dng.npcs = { pip: 1, juno: 1 }; S.dng.runs = []; S.dng.cd = { d: '', n: 0 };
+    if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="away"]').click(); });
+  await p.waitForTimeout(900); await clear();
+  const card = await V(() => [...document.querySelectorAll('.dng:not(.lock):not(.run)')].filter((c) => c.querySelector('.dmeta')).map((c) => ({ t: c.querySelector('b').textContent, pay: (c.innerText.match(/\+(\d+) coins/) || [])[1], rare: /rare left/.test(c.innerText), ch: c.querySelectorAll('.v214c').length, lit: c.querySelectorAll('.v214c.lit').length })));
+  ok(card.length >= 2 && card.every((c) => c.pay && !c.rare && c.ch >= 1 && c.lit <= c.ch), 'each dungeon shows its fixed pay and a chest per hidden find, no "rare left" ' + JSON.stringify(card));
+  await p.screenshot({ path: OUT + '/crawl214_cards.png', fullPage: false });
+  /* the picker with perks, on the Forgotten Metro (dangerous at level 11) */
+  const pk = await V(async () => { const b = document.querySelector('[data-act="dgo"][data-id="metro"]') || document.querySelector('[data-act="dgo"]'); b.click(); await new Promise((r) => setTimeout(r, 400)); return { warn: (document.querySelector('#layer .v214warn') || {}).textContent || '', who: [...document.querySelectorAll('#layer .v210who')].map((w) => w.querySelector('b').textContent + ': ' + ((w.querySelector('.v214perk') || {}).textContent || '')) }; });
+  ok(pk.who.length === 4 && pk.who.every((w) => /: \S/.test(w)) && /hurt/.test(pk.warn), 'Who goes? shows each one\'s perk in plain words, and warns that a risky dungeon can hurt them ' + JSON.stringify(pk));
+  await p.screenshot({ path: OUT + '/crawl214_pick.png' });
+  /* Mara goes (+15% coins); make it come back now, and force an injury */
+  const run = await V(async () => { const m = [...document.querySelectorAll('#layer .v210who')].find((w) => /Mara/.test(w.textContent)); m.click(); await new Promise((r) => setTimeout(r, 400)); const D = window.__qb.x().S.dng, r = D.runs[0]; const c0 = r.c; r.end = Date.now() - 1000; r.bad = false;
+    window.__qb.x().render(); await new Promise((q) => setTimeout(q, 300)); const R = Math.random; Math.random = () => 0.01; const coins0 = window.__qb.x().S.coins; document.querySelector('[data-act="dclaim"]').click(); Math.random = R; await new Promise((q) => setTimeout(q, 300));
+    const got = window.__qb.x().S.coins - coins0; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); await new Promise((q) => setTimeout(q, 2200));
+    const hurt = window.__qbV214.hurt(); const w = document.querySelector('#layer .v214hurt'); return { who: r.who, c0, got, hurt: Object.keys(hurt), win: w ? w.innerText.replace(/\s+/g, ' ').slice(0, 160) : null, free: await (async () => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); window.__qb.x().render(); await new Promise((q) => setTimeout(q, 300)); const g = document.querySelector('[data-act="dgo"]'); if (!g) return ['no go']; g.click(); await new Promise((q) => setTimeout(q, 400)); return [...document.querySelectorAll('#layer .v210who b')].map((x) => x.textContent); })() }; });
+  ok(run.who === 't:mara' && run.got >= Math.round(run.c0 * 1.15 * 0.5) && run.hurt.indexOf('t:mara') >= 0 && run.win && /Mara is hurt/.test(run.win) && run.free.indexOf('Mara') < 0 && run.free.length === 3, 'Mara brings more coins; a risky crawl hurt her: a window shows her hurt, and she rests (not pickable) ' + JSON.stringify(run));
+  await p.screenshot({ path: OUT + '/crawl214_hurt.png' });
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
