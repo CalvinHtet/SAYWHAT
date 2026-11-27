@@ -90,7 +90,7 @@ var V210A={},V210T=0,V210LAST=0;
 function v210LoungeHtml(){var u=window.QBART&&QBART["ui_lounge.webp"],ks=v210Free();
   return '<section class="card v210lounge" aria-label="Your team\'s lounge"><div class="v210room'+(u?'':' v210plain')+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'>'
     +(u?'':'<span class="v210bar"></span><span class="v210couch"></span><span class="v210map"></span><span class="v210chair"></span><span class="v210table"></span>')
-    +'<div class="v210ppl"></div>'+(ks.length?'':'<p class="v210empty">'+(v210Team().length?"Everyone is out on a crawl.":"Your team will hang out here.")+'</p>')+'</div>'
+    +'<div class="v210ppl"></div><div class="v210tags"></div>'+(ks.length?'':'<p class="v210empty">'+(v210Team().length?"Everyone is out on a crawl.":"Your team will hang out here.")+'</p>')+'</div>'
     +'<div class="v210cap"><b>Your team</b><small class="note">'+v210Team().length+' member'+(v210Team().length===1?'':'s')+(Object.keys(v210Out()).length?' &middot; '+Object.keys(v210Out()).length+' out on a crawl':'')+'</small></div></section>'}
 function v210Spot(a,ks){var taken={};Object.keys(V210A).forEach(function(k){var b=V210A[k];if(b!==a&&b.si!=null)taken[b.si]=1});
   var pick=[];V210SP.forEach(function(s,i){if(taken[i]||i===a.si)return;var w=s.a==="talk"?(V210SP[s.pair]&&taken[s.pair]?6:2):s.a==="idle"?1:3;for(var j=0;j<w;j++)pick.push(i)});
@@ -98,10 +98,12 @@ function v210Spot(a,ks){var taken={};Object.keys(V210A).forEach(function(k){var 
 function v210Tick(){var room=document.querySelector(".v210room");if(!room||!room.isConnected){V210T&&clearInterval(V210T);V210T=0;return}if(document.hidden)return;
   var ppl=room.querySelector(".v210ppl"),W=room.clientWidth,H=room.clientHeight;if(!W||!H||typeof QBLoft==="undefined"||!QBLoft.frameOrNear)return;
   var now=performance.now(),dt=Math.min(.25,(now-(V210LAST||now))/1000);V210LAST=now;var ks=v210Free(),live={};ks.forEach(function(k){live[k]=1});
-  Object.keys(V210A).forEach(function(k){if(!live[k]){var e=V210A[k].el;if(e&&e.parentNode)e.parentNode.removeChild(e);delete V210A[k]}});
+  Object.keys(V210A).forEach(function(k){if(!live[k]){var e=V210A[k].el,t=V210A[k].tag;if(e&&e.parentNode)e.parentNode.removeChild(e);if(t&&t.parentNode)t.parentNode.removeChild(t);delete V210A[k]}});
   ks.forEach(function(k,n){var a=V210A[k];if(!a){var L=v210Look(k);if(!L||!L.rig)return;var s0=V210SP[(n*5)%V210SP.length];a=V210A[k]={k:k,ch:L.rig,x:s0.x+(Math.random()*6-3),y:Math.max(62,s0.y),mode:"idle",until:now+500+n*400,si:null,face:1,ph:Math.random()*4};
-      a.el=document.createElement("div");a.el.className="v210p";a.el.innerHTML='<img alt=""><i class="v210prop"></i><em class="v210say"></em><small style="--c:'+v210Col(k)+'">'+esc(v210Name(k))+'</small>';ppl.appendChild(a.el)}
-    if(a.el.parentNode!==ppl)ppl.appendChild(a.el);
+      a.el=document.createElement("div");a.el.className="v210p";a.el.innerHTML='<img alt=""><i class="v210prop"></i><em class="v210say"></em>';ppl.appendChild(a.el);
+      /* QA v1.79 LOW 1: the name tags are a layer above every figure, so one in front never cuts a name behind it */
+      a.tag=document.createElement("small");a.tag.className="v210tag";a.tag.style.setProperty("--c",v210Col(k));a.tag.textContent=v210Name(k)}
+    if(a.el.parentNode!==ppl)ppl.appendChild(a.el);var tg=room.querySelector(".v210tags");if(tg&&a.tag.parentNode!==tg)tg.appendChild(a.tag);
     /* the brain */
     if(a.mode!=="walk"&&now>a.until){var si=v210Spot(a,ks);if(si!=null&&si!==a.si){a.si=si;var s=V210SP[si];a.tx=s.x;a.ty=s.y;a.mode="walk"}else{a.until=now+3000}}
     if(a.mode==="walk"){var dx=a.tx-a.x,dy=(a.ty-a.y)*(H/W),d=Math.sqrt(dx*dx+dy*dy),sp=9*dt;a.ph+=dt*4.6;
@@ -124,8 +126,9 @@ function v210Tick(){var room=document.querySelector(".v210room");if(!room||!room
     a.el.style.transform="translate("+px.toFixed(1)+"px,"+py.toFixed(1)+"px)";a.el.style.zIndex=String(Math.round(a.y*10));
     img.style.transform=a.face<0?"scaleX(-1)":"";
     var pr=a.el.querySelector(".v210prop"),say=a.el.querySelector(".v210say");pr.className="v210prop"+(a.mode==="do"&&a.act==="bar"?" mug":a.mode==="do"&&a.act==="read"?" book":a.mode==="do"&&a.act==="cards"?" cards":"");
-    pr.style.top=(-hgt*.42).toFixed(1)+"px";say.className="v210say"+(clip==="chat"?" on":"");say.style.top=(-hgt*1.05).toFixed(1)+"px";
-    a.el.querySelector("small").style.top=(4).toFixed(0)+"px"});
+    /* QA v1.79 LOW 2: props sized to the figure */var pw=a.act==="read"?.17:a.act==="cards"?.08:.06,ph=a.act==="read"?.11:a.act==="cards"?.11:.08;pr.style.width=(hgt*pw).toFixed(1)+"px";pr.style.height=(hgt*ph).toFixed(1)+"px";pr.style.left=(-hgt*pw/2+(a.act==="bar"?hgt*.1*(a.face<0?-1:1):0)).toFixed(1)+"px";pr.style.top=(-hgt*.40).toFixed(1)+"px";
+    a.tag.style.transform="translate("+px.toFixed(1)+"px,"+(py+3).toFixed(1)+"px) translateX(-50%)";say.className="v210say"+(clip==="chat"?" on":"");say.style.top=(-hgt*1.05).toFixed(1)+"px";
+  });
   /* the running teammates beside the crawls */
   [].forEach.call(document.querySelectorAll(".v210rimg"),function(im){var k=im.getAttribute("data-rk"),L=v210Look(k);if(!L||!L.rig)return;var f=QBLoft.walkFrame(now/1000*5,"walk"),u=QBLoft.frameOrNear(L.rig,"walk",f-f%2);
     if(u&&im.getAttribute("src")!==u)im.setAttribute("src",u);if(!im.style.width){var G=QBLoft.geometry(40);im.style.width=G.w+"px";im.style.height=G.h+"px";im.style.marginLeft=G.x+"px";im.style.marginTop=G.y+"px"}})}
@@ -140,10 +143,10 @@ htabCss("qb-v210-css",".v210lounge{padding:0;overflow:hidden}.v210room{position:
   +".v210plain .v210chair{position:absolute;left:3%;top:76%;width:11%;height:12%;background:#6b2f2f;border-radius:10px}"
   +".v210plain .v210table{position:absolute;left:45%;top:67%;width:10%;height:7%;background:#2e5a3a;border-radius:50%}"
   +".v210ppl{position:absolute;inset:0}.v210p{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}.v210p img{position:absolute;display:block;max-width:none;pointer-events:none;image-rendering:auto}"
-  +".v210p small{position:absolute;left:0;transform:translateX(-50%);font-size:9px;font-weight:800;white-space:nowrap;color:#fff;text-shadow:0 1px 3px #000;border-bottom:2px solid var(--c);padding:0 3px;opacity:.85}"
-  +".v210prop{position:absolute;left:4px;width:12px;height:12px;display:none}.v210prop.mug{display:block;background:radial-gradient(circle at 50% 30%,#fff3 0 30%,transparent 31%),linear-gradient(#e7b14a,#b9772b);border-radius:2px 2px 4px 4px;width:8px;height:10px;box-shadow:3px 2px 0 -1px #b9772b}"
-  +".v210prop.book{display:block;width:16px;height:11px;left:-8px;background:linear-gradient(90deg,#8a2b2b 0 48%,#f4ead2 48% 52%,#8a2b2b 52%);border-radius:2px}"
-  +".v210prop.cards{display:block;width:10px;height:13px;left:-2px;background:#fff;border:1px solid #333;border-radius:2px;transform:rotate(-12deg)}"
+  +".v210tags{position:absolute;inset:0;pointer-events:none;z-index:2000}.v210tag{position:absolute;left:0;top:0;font-size:9px;font-weight:800;white-space:nowrap;color:#fff;text-shadow:0 1px 3px #000;border-bottom:2px solid var(--c);padding:0 3px;opacity:.9;will-change:transform}"
+  +".v210prop{position:absolute;display:none;z-index:2}.v210prop.mug{display:block;background:linear-gradient(#fff6 0 18%,#e7b14a 18%,#b9772b);border-radius:1px 1px 3px 3px}"
+  +".v210prop.book{display:block;background:linear-gradient(90deg,#8a2b2b 0 46%,#f4ead2 46% 54%,#8a2b2b 54%);border-radius:2px}"
+  +".v210prop.cards{display:block;background:radial-gradient(circle at 50% 50%,#d62828 0 22%,transparent 23%),#fffdf6;border:1px solid #3a3030;border-radius:2px;transform:rotate(-12deg)}.v210prop.cards::after{content:'';position:absolute;left:30%;top:-12%;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#222 0 20%,transparent 21%),#fffdf6;border:1px solid #3a3030;border-radius:2px;transform:rotate(18deg);z-index:-1}"
   +".v210say{position:absolute;left:-2px;display:none;font-style:normal;font-size:11px;font-weight:900;color:#1a1420;background:#fff;border-radius:9px;padding:0 5px;line-height:15px}.v210say.on{display:block;animation:v210dots 1.2s steps(3) infinite}.v210say.on::after{content:'\\2026'}"
   +"@keyframes v210dots{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}"
   +".v210empty{position:absolute;left:0;right:0;bottom:8%;text-align:center;color:#fff;opacity:.8;font-size:13px;margin:0}"
