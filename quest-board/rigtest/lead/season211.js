@@ -10,4 +10,6 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(JSON.stringify(r.seasons) === '["winter","spring","summer","fall","winter"]', 'brand seasons: winter Nov-Feb, spring Mar-May, summer Jun-Aug, fall Sep-Oct ' + JSON.stringify(r.seasons));
   ok(r.svDays.length >= 2 && !r.badSv.length, 'SØLVBERG drops only in winter (' + r.svDays.join(', ') + ')');
   ok(r.vault.length >= 1 && !r.vaultBad.length, 'and is in the Sunday Vault only in winter (' + r.vault.length + ' weeks)');
+  const sp = await V(() => { const o = window.__qbV211.out; return { oakDec: o('oak', '2026-12-07'), oakApr: o('oak', '2027-04-05'), altDec: o('alt', '2026-12-07'), altOct: o('alt', '2027-10-04') }; });
+  ok(sp.oakDec && !sp.oakApr && sp.altDec && !sp.altOct, 'OAKMONT drops only in spring, ALTITUDE only in fall (Cal 11-26) ' + JSON.stringify(sp));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
