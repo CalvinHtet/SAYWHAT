@@ -38,8 +38,10 @@ function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0
 function v201Times(id,start){try{var n=0;try{var k=v72Slot(dropStart(start));if(k>=0)v72Run(k)}catch(x){}if(!V72C)try{dropState()}catch(x){}if(!V72C)return 0;V72C.snap.forEach(function(q){if(q.pick===id&&q.day<start)n++});
     if((V72C.live0||[]).some(function(b){return b.id===id&&b.start<start}))n++;else if(V72C.left0&&V72C.left0[id]&&V72C.left0[id]<start)n++;return n}catch(e){return 0}}
 var V201HALF={};
+/* QA b5975d05: a row with {from:"YYYY-MM-DD"} joins only drops and Vault weeks that start on or after that day, so adding pieces never
+   changes a drop or a Vault week that is already running (or one already past) */
 function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return c;var times=v201Times(b.id,b.start||""),keep={},by={};
-  SHOP.forEach(function(it){if(!v201Sellable(it)||it[6].b!==b.id)return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
+  SHOP.forEach(function(it){if(!v201Sellable(it)||it[6].b!==b.id||(it[6].from&&(b.start||"")<it[6].from))return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
   Object.keys(by).forEach(function(c){var L=v201Shuf(by[c].sort(),"v201|"+b.id+"|"+c);var P=V201.dropCat||V201.perCat;if(L.length<=P){L.forEach(function(id){keep[id]=1});return}
     var st=(times*P)%L.length;for(var i=0;i<P;i++)keep[L[(st+i)%L.length]]=1});
   V201HALF[key]=keep;return keep}
@@ -49,7 +51,7 @@ var V201VC={};
 function v201Vault(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V201VC[wk];
   var prem=function(id){return brandFloor(id)!=="street"},on=BRANDS.map(function(b){return b.id}).filter(function(id){return !zxHeld(id,wk)});
   var P=v201Shuf(on.filter(prem).sort(),"v201v|"+wk+"|prem").slice(0,V201.premMax),okB={};on.forEach(function(id){if(!prem(id)||P.indexOf(id)>=0)okB[id]=1});
-  var by={};SHOP.forEach(function(it){if(!v201Sellable(it)||!okB[it[6].b])return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
+  var by={};SHOP.forEach(function(it){if(!v201Sellable(it)||!okB[it[6].b]||(it[6].from&&wk<it[6].from))return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
   var keep={},list=[];["hat","head","neck","gloves","top","bottom","shoes"].forEach(function(c){var L=v201Shuf((by[c]||[]).sort(function(a,b){return a[0]<b[0]?-1:1}),"v201v|"+wk+"|"+c),got=[],pr=0,br={};
     /* first pass: different brands; then any brand; never a second pricier piece */
     [true,false].forEach(function(spread){L.forEach(function(it){if(got.length>=V201.perCat||got.indexOf(it)>=0)return;var b=it[6].b,p=prem(b);if(p&&pr>=1)return;if(spread&&br[b])return;got.push(it);br[b]=1;if(p)pr++})});
