@@ -2,11 +2,11 @@
    Cal (idea 9, yes): notifications for town hall posts and bounties about to expire.
    - A new post on the town board by someone else puts a "!" on the Town tab until the Posts tab is opened. The board is asked for its
      newest post every 3 minutes while the game is open (one small read).
-   - A running bounty with under 3 hours left says so once ("Hydration Check ends in 2 hours"), at launch or while playing.
+   - A running bounty with under 8 hours left says so once ("Hydration Check ends in 2 hours"), at launch or while playing.
    - Phone notifications: the profile has "Notifications: off/on" beside Sound. Switched on (the phone asks once), the same two notices
      also come as a notification while the game is open in the background. A notification to a closed app needs a server to send it;
      that part waits on Cal (APPROVALS). Nothing is ever sent from a Live phone to anyone else. */
-var V93H=3*3600e3,V93POLL=180e3,V93NEW=0,V93LAST=0;
+var V93H=8*3600e3,/* Cal 11-26 (APPROVALS): "Give an 8 hr heads up before a bounty ends rather than a 3 hr" */V93POLL=180e3,V93NEW=0,V93LAST=0;
 function v93St(){if(!S.v93||typeof S.v93!=="object")S.v93={seen:0,b:{}};if(!S.v93.b||typeof S.v93.b!=="object")S.v93.b={};return S.v93}
 function v93Perm(){try{return typeof Notification!=="undefined"&&Notification.permission==="granted"&&!!S.ntfOn}catch(e){return false}}
 /* a phone notification, only while the game is in the background (in front, the game shows its own notice) */
