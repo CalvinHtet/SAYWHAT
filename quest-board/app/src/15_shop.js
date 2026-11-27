@@ -207,7 +207,7 @@ var EXTRA_ITEMS=[
  ["gx_smk_tabi","a_shoes","Split-Toe Tabi Boots",1100,1,"Worn over the trouser hem.",{gar:"smk_tabi",b:"smk"}],
  ["gx_smk_runner","a_shoes","Wrapped Runners",1000,1,"Running shoes bound in cloth tape.",{gar:"smk_runner",b:"smk"}],
  /* Cal 11-25/26: Smoke Bomb to 6 a category; ROOMS's 18 QA-passed pieces (QA c414f017; shots/pending_art/cal_1125_brands/smk.md) */
- ["gx_smk_hoodcap","a_hat","Shadow Hood Cap",700,1,"A neck flap, a stitched smoke swirl.",{gar:"smk_hoodcap",b:"smk"}],
+ ["gx_smk_hoodcap","a_hat","Shadow Hood Cap",700,1,"A neck flap, a stitched puff and wisp.",{gar:"smk_hoodcap",b:"smk"}],
  ["gx_smk_visorbeanie","a_hat","Visor Beanie",700,1,"Ribbed black, a smoked visor band.",{gar:"smk_visorbeanie",b:"smk"}],
  ["gx_smk_platehood","a_hat","Plated Hood",800,1,"Steel plates, ember lining.",{gar:"smk_platehood",b:"smk"}],
  ["gx_smk_tails","a_hat","Twin-Tail Bandana",600,1,"Two long ash tails, an ember knot.",{gar:"smk_tails",b:"smk"}],
