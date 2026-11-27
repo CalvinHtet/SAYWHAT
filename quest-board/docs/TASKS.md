@@ -6469,6 +6469,7 @@ QA findings (QA adds one line each: what, where, how to see it, screenshot, owne
   grey on pale grey, hard to read. `shots/street_390.png`. Owner: LEAD. DONE in 861bee1.
 
 Requests for LEAD (from ROOMS):
+- NEW (Cal 2026-11-26, typed to ROOMS, sent to LEAD): drop schedule. Cal's words: "Change the clothing brand drops to Monday, Wednesday, and Friday. I want Sunday to be the vault which lasts for 1 week which has 3 random pieces for every category from every brand. But never more than 4 premium brands in here and never two premium brand items in one category. Tues and Thursday and Saturday will be the pet shop brand drops". Shop/drop code is LEAD's; ROOMS changed nothing.
 - TAKEN by LEAD, done in cc5eccc (on main, ships with the next Live cut; drawn from his spec, no missing art, one pose looked at by LEAD). READY (Cal approved 2026-11-08, committed d7d318c): in 29k_friends.js set Victor's spec to `hairStyle:"fr_victor_hair"`. No change to 15_shop.js is needed: the style is deliberately NOT in creator.json's hairStyles, so the Shop and the creator never list it; look.js only uses the name to find m_fr_victor_hair_front/back.
 - DONE by LEAD in 68fcc56: `window.qbRaidTrophies()` returns trophy pieces brought home (0 before the first); the first is
   announced ("The first trophy is home. A Trophy Room can now be built above the Hero's Lair."). Please give the room the id
