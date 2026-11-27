@@ -31,3 +31,8 @@ htabCss("qb-v192-css",".v92grid{display:grid;grid-template-columns:repeat(4,1fr)
   +".v92d.big{grid-column:span 2;background:linear-gradient(160deg,rgba(124,240,255,.10),rgba(155,92,255,.12))}.v92d.v92got{opacity:.45}.v92d.v92now{border-color:#7cf0ff;box-shadow:0 0 0 1px #7cf0ff,0 0 16px rgba(124,240,255,.35);opacity:1}"
   +".v92ck{position:absolute;top:4px;right:6px;color:#4de8b0;font-weight:800}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV192={st:v92St,due:v92Due,open:v92Open,claim:v92Claim,pay:function(i){return v92Coins(i)}};
+/* QA 945babd0 LOW: a level-up (or a gate) while the calendar is open opened on top of it. The calendar steps aside and comes back
+   once nothing else is open, still unclaimed. */
+function v92Aside(){try{var m=document.querySelector("#layer .v92m");if(m){var w=m.closest(".modal");if(w)w.remove();V92TRY=""}}catch(e){}}
+var v92Lv=levelUp;levelUp=function(){v92Aside();return v92Lv.apply(this,arguments)};
+var v92Gate=gateOpened;gateOpened=function(){v92Aside();return v92Gate.apply(this,arguments)};

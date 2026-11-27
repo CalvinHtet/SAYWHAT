@@ -4,7 +4,7 @@
    animation is playing and is visible in the town hall chat." and "Make sure clicking on a character in the town hall to see their
    profile also shows their profile banner".
    - A card posted on the Town board is 230 px wide at most (was 300).
-   - The header's card shows the character still (it breathed, idle); the cards were already still. Sharp, as the other cards.
+   - The header's card shows the character still (it breathed, idle); the cards were already still.
    - The banner's 8 s loop (29zz_v177.js) and the worn effects (halo, ring, storm) run on posted cards, on another player's window and
      on the Town Hall square's card too, not only on your own cards.
    - Tapping a character on the Town Hall square opens their card, banner and all, in place of the bare figure. */
@@ -12,7 +12,7 @@ pcPostW=function(){var w=230;try{w=Math.max(170,Math.min(230,window.innerWidth-9
 /* the header's character: still and sharp */
 var v97Av=v55Av;v55Av=function(){var h=v97Av.apply(this,arguments);
   try{var H=window.innerWidth<350?78:88,k=1;try{k=Math.max(1,Math.min(3,Math.round(H*(window.devicePixelRatio||1)/QBLoft.data.loft.standPx*2)/2))}catch(e){}
-    h=h.replace(/(<img [^>]*?class="calp[^>]*?)data-pose="idle"/,'$1data-pose="still"').replace(/<img ([^>]*?class="calp)/,'<img data-hi="'+k+'" $1');
+    h=h.replace(/(<img [^>]*?class="calp[^>]*?)data-pose="idle"/,'$1data-pose="still"');/* QA f85e7045 NOTE: no data-hi here: a sharp (3x) frame for the small header was rendered again on every try-on (423 ms); the plain frame is as sharp as the breathing one was */
     /* the kept launch picture (29zz_v185.js) is keyed by the pose: look it up again for "still" */
     var c=typeof v85Get==="function"?v85Get():null,m=/data-pose="([^"]*)" data-h="([^"]*)" data-look="([^"]*)"/.exec(h);
     if(c&&c.d&&m&&/src="data:image\/gif;base64,[^"]*"/.test(h)){var d=document.createElement("textarea");d.innerHTML=m[3];if(d.value+"|"+m[2]+"|"+m[1]===c.k)h=h.replace(/src="data:image\/gif;base64,[^"]*"/,'src="'+c.d+'" data-v85="1"')}}catch(e){}return h};
