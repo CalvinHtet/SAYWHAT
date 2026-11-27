@@ -163,6 +163,7 @@ var EXTRA_ITEMS=[
  ["gx_nc_clear","a_acc","Cream Frame Glasses",850,1,"Rounded cream acetate, clear lenses, silver hinge pins.",{gar:"nc_clear",b:"nc",from:"2026-11-27"}],
  ["gx_nc_catshades","a_acc","Silver Cat-Eye Shades",900,1,"Sharp polished-silver cat-eyes, gradient smoke lenses.",{gar:"nc_catshades",b:"nc",from:"2026-11-27"}],
  ["gx_nc_visorshade","a_acc","Mirror Visor Shades",850,1,"One narrow rimless blue-violet mirror lens, thin silver arms.",{gar:"nc_visorshade",b:"nc",from:"2026-11-27"}],
+ ["gx_nc_knitmask","a_acc","Knit Face Mask",850,1,"Heather-ash rib knit over nose and chin, cream edge, silver tab.",{gar:"nc_knitmask",b:"nc",from:"2026-11-27"}],
  ["gx_nc_hoodie","a_top","Embossed Crest Hoodie",1700,1,"Jet black, rooster in relief.",{gar:"nc_hoodie",b:"nc"}],
  ["gx_nc_tee","a_top","Layered Lounge Tee",1100,1,"Cream oversized tee over a charcoal thermal.",{gar:"nc_tee",b:"nc"}],
  ["gx_nc_tank","a_top","Waffle Lounge Zip",1500,1,"Ivory waffle knit, half zipped.",{gar:"nc_tank",b:"nc"}],
