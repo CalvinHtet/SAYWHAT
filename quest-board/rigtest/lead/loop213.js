@@ -5,8 +5,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
 (async () => { const b = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] }); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV213, null, { timeout: 90000 }); await p.waitForTimeout(300);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
-  const u = await V(() => ({ a: window.__qbV213.url('ink_peaks'), b: window.__qbV213.url('neon') }));
-  ok(/bl_pc_ink_peaks_loop\.mp4\?h=/.test(u.a || '') && !u.b, 'the build carries the loops (ink_peaks has one, neon does not) ' + JSON.stringify(u));
+  const u = await V(() => ({ a: window.__qbV213.url('ink_peaks'), b: window.__qbV213.url('studio') }));
+  ok(/bl_pc_ink_peaks_loop\.mp4\?h=/.test(u.a || '') && !u.b, 'the build carries the loops (ink_peaks has one, studio does not) ' + JSON.stringify(u));
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(20); S.gates = [5, 10, 20]; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 }; S.unl = { console: 1, pets: 1, acc2: 1, sable7: 1 }; S.mile = { since: 999, fx1: 1 };
     S.pc = Object.assign(S.pc || {}, { bg: 'ink_peaks', own: Object.assign((S.pc && S.pc.own) || {}, { ink_peaks: 1 }) }); S.bfix = Object.assign(S.bfix || {}, { ink_peaks: 15 }); if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); });
   await p.waitForTimeout(2500);
