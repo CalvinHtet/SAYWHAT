@@ -1,0 +1,39 @@
+// QA, v1.90 candidate: the 1.90 letter (29zz_v221.js, patch190) on the real 1.90 build (APPV 1900, no force).
+//  for each body (m, f):
+//   A. old save with allies (joined 11-10, level 12, all allies): "Update 1.90" from Cal, unread, 10 lines incl. the four Crawls lines;
+//      Claim pays 700 once (a second click pays 0); after a reload it is still claimed and read, the coins unchanged, no Claim button
+//   B. old save without allies (joined 11-10, level 3): 6 lines, none about crawls, allies or dungeons
+//   C. old save at level 12 that never took an ally: 6 lines
+//   D. fresh save (joined today): no letter, today and with the clock moved on 1 and 30 days
+//   PORT=<plain build> NODE_PATH=<playwright> node rigtest/qa/letter190qa.js
+const pw = require('playwright'); const PORT = process.env.PORT || 8828; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+const T = { welcome: 1, hideout: 1, train: 1, dq: 1, bty: 1, hall: 1, shop: 1, players: 1, wheel: 1, away: 1, banner: 1, trophy: 1, freeze: 1 };
+(async () => { const b = await pw.chromium.launch({ args: ['--mute-audio'] }); const errs = [];
+  const open = async (ctx) => { const p = await ctx.newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160))); await p.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
+    await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV221 && document.querySelector('.nav button, #ccname'), null, { timeout: 120000 }); await p.waitForTimeout(800);
+    await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); return p; };
+  const setup = (p, o) => p.evaluate(async ([o, T]) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Q', sex: o.sex }); S.xp = x.cum(o.lv) + 10; S.gates = S.gates || []; let g, n = 0; while ((g = x.gated()) !== null && n++ < 20) S.gates.push(g);
+    S.cls = 'vanguard'; S.tutDone = 1; S.tours = T; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, shop: 1, hideout: 1 };
+    S.letters = { read: { welcome: 1, roadmap: 1 }, paid: { welcome: 3000 }, at: { welcome: o.join, roadmap: o.join } }; S.story = S.story || {}; S.story.team = {};
+    if (o.allies) Object.keys(window.__qbTeam.TEAM).forEach((k) => { S.story.team[k] = 1; }); delete S.v221d; x.persist(); x.render(); await new Promise((r) => setTimeout(r, 500)); document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); }, [o, T]);
+  const look = (p) => p.evaluate(async () => { document.querySelectorAll('#layer > *').forEach((m) => m.remove()); document.querySelector('.ibbtn').click(); await new Promise((r) => setTimeout(r, 500)); let row = document.querySelector('.ibrow[data-id="patch190"]'), tab = 'Unread'; if (!row) { const rb = [...document.querySelectorAll('#layer button')].find((x) => /^Read\b/.test(x.innerText.trim())); if (rb) { rb.click(); await new Promise((r) => setTimeout(r, 400)); row = document.querySelector('.ibrow[data-id="patch190"]'); tab = 'Read'; } } if (!row) return { row: null };
+    const out = { tab, row: { un: row.classList.contains('un'), t: row.innerText.replace(/\s+/g, ' ').slice(0, 80) } }; row.click(); await new Promise((r) => setTimeout(r, 500)); const box = document.querySelector('.ibox');
+    out.lines = box ? box.querySelectorAll('li').length : -1; out.text = box ? box.innerText : ''; out.body = box ? [...box.querySelectorAll('li')].map((l) => l.innerText).join(' | ') : ''; out.claim = !!document.querySelector('[data-ib="claim"][data-id="patch190"]'); out.wide = document.documentElement.scrollWidth > innerWidth + 1; return out; });
+  const CRAWL = /\b(crawl\w*|ally|allies|dungeons?|hurt)\b/i;
+  for (const sex of ['m', 'f']) { const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 }); let p = await open(ctx);
+    await setup(p, { sex, lv: 12, allies: 1, join: '2026-11-10' }); const team = await p.evaluate(() => { try { return window.__qbV210.agents().length; } catch (e) { return -1; } }); let L = await look(p);
+    ok(L.row && L.row.un && /Update 1\.90/.test(L.row.t) && /Cal/i.test(L.row.t) && L.lines === 10 && (L.text.match(CRAWL) || []).length > 0 && L.claim && /Claim 700 coins/i.test(L.text) && !L.wide, sex + ' A. old save with allies (' + team + ' in the lounge): unread "Update 1.90" from Cal, ' + L.lines + ' lines, the Crawls lines, Claim 700 coins, fits 390 px');
+    const pay = await p.evaluate(async () => { const S = window.__qb.x().S, c0 = S.coins; document.querySelector('[data-ib="claim"][data-id="patch190"]').click(); await new Promise((q) => setTimeout(q, 500)); const c1 = S.coins;
+      const bt = document.createElement('button'); bt.dataset.ib = 'claim'; bt.dataset.id = 'patch190'; document.body.appendChild(bt); bt.click(); bt.remove(); await new Promise((q) => setTimeout(q, 400)); window.__qb.x().persist(); return { d1: c1 - c0, d2: S.coins - c1, coins: S.coins }; });
+    ok(pay.d1 === 700 && pay.d2 === 0, sex + ' A. Claim pays 700, a second claim pays 0 ' + JSON.stringify(pay));
+    await p.reload(); await p.waitForFunction(() => window.__qb && window.__qbV221 && document.querySelector('.nav button'), null, { timeout: 120000 }); await p.waitForTimeout(1200); await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
+    const after = await p.evaluate(() => window.__qb.x().S.coins); L = await look(p);
+    ok(after === pay.coins && L.row && L.tab === 'Read' && !L.row.un && !L.claim, sex + ' A. after a reload: coins unchanged (' + after + '), the letter under Read, no Claim button ' + JSON.stringify({ tab: L.tab, row: L.row, claim: L.claim }));
+    await p.close(); await ctx.close();
+    for (const [tag, o] of [['B. old save without allies (level 3)', { lv: 3, allies: 0 }], ['C. old save, level 12, no ally taken', { lv: 12, allies: 0 }]]) { const c2 = await b.newContext({ viewport: { width: 390, height: 844 } }); const q = await open(c2); await setup(q, Object.assign({ sex, join: '2026-11-10' }, o)); const M = await look(q);
+      ok(M.row && M.lines === 6 && !CRAWL.test(M.body) && M.claim, sex + ' ' + tag + ': ' + M.lines + ' lines, none about crawls or allies, Claim there' + (M.lines === 6 && !CRAWL.test(M.body) && M.claim ? '' : ' ' + JSON.stringify({ claim: M.claim, body: M.body }))); await c2.close(); }
+    const c3 = await b.newContext({ viewport: { width: 390, height: 844 } }); const f = await open(c3); const today = await f.evaluate(() => window.__qb.x().today ? window.__qb.x().today() : new Date().toISOString().slice(0, 10));
+    await setup(f, { sex, lv: 12, allies: 1, join: today }); const F0 = await look(f); const res = [!!F0.row];
+    for (const days of [1, 30]) { const r = await f.evaluate(async (days) => { window.__qbShift = days * 864e5; window.__qb.x().render(); await new Promise((q) => setTimeout(q, 600)); return 1; }, days); const F = await look(f); res.push(!!F.row); }
+    ok(res.every((v) => !v), sex + ' D. fresh save (joined ' + today + '): no letter today, +1 day or +30 days ' + JSON.stringify(res)); await c3.close(); }
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
