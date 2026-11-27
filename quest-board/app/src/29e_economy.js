@@ -406,8 +406,10 @@ function brandFloor(id){var b=(typeof BRANDS!=="undefined"?BRANDS:[]).filter(fun
       if(/^a_/.test(s)){var v=Math.max(10,Math.round(it[3]*ECON.shopK/10)*10);it[3]=e.basic?v:Math.min(ECON.clothesMax,Math.max(ECON.clothesMin,v));return}
       it[3]=Math.round(ECON.uiDay*econDayInc(+it[4]||1)/50)*50})});
   /* each brand's average old price, so a piece its brand priced above the rest sits higher in its band */
-  var avg={};graded.forEach(function(g){var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
-  graded.forEach(function(g){var it=g[0],b=(it[6]&&it[6].b)||"",fb=ECON.clothFloor[brandFloor(b)],B=(fb&&fb[g[1]])||ECON.cloth[g[1]],a=avg[b],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
+  /* QA b5fbe6a7: a row added later (it carries from:) stays out of the average, so adding pieces never reprices the live ones;
+     the new piece is placed against the brand as it was */
+  var avg={};graded.forEach(function(g){if(g[0][6]&&g[0][6].from)return;var b=(g[0][6]&&g[0][6].b)||"",a=avg[b]=avg[b]||[0,0];a[0]+=+g[0][3];a[1]++});
+  graded.forEach(function(g){var it=g[0],b=(it[6]&&it[6].b)||"",fb=ECON.clothFloor[brandFloor(b)],B=(fb&&fb[g[1]])||ECON.cloth[g[1]],a=avg[b]||[0,0],rel=a[0]/a[1]>0?it[3]/(a[0]/a[1])-1:0,
       p=ECON.clothSlot[it[1]]+(ECON.clothBrand[b]||0)+Math.max(-.2,Math.min(.2,ECON.clothNudge*rel));
     var fw=ECON.clothFloorWas[brandFloor(b)],W=fw&&fw[g[1]];
     it[3]=Math.round((B[0]+(B[1]-B[0])*Math.max(0,Math.min(1,p)))/10)*10;
