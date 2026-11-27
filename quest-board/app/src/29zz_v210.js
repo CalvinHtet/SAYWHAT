@@ -81,7 +81,7 @@ var v210Html=dngHtml;dngHtml=function(){var h=v210Html.apply(this,arguments);
    above their floor) */
 var V210SP=[
   {x:18.5,y:57,fy:60,a:"bar"},{x:26,y:57,fy:60,a:"bar"},{x:34.5,y:57,fy:60,a:"bar"},
-  {x:52.5,y:53,fy:55,a:"couch"},{x:64,y:53,fy:55,a:"couch"},{x:75.5,y:53,fy:55,a:"couch"},
+  {x:52.5,y:53,fy:55,a:"couch"},{x:64,y:50,fy:55,a:"couch"}/* QA v1.79 LOW: back on the couch, not on the coffee table */,{x:75.5,y:53,fy:55,a:"couch"},
   {x:14,y:66,fy:70,a:"read",fx:1},
   {x:43,y:65,fy:67,a:"cards",fx:1},{x:58,y:65,fy:67,a:"cards",fx:-1},
   {x:38,y:80,a:"talk",fx:1,pair:10},{x:48,y:80,a:"talk",fx:-1,pair:9},{x:56,y:91,a:"talk",fx:1,pair:12},{x:66,y:91,a:"talk",fx:-1,pair:11},
