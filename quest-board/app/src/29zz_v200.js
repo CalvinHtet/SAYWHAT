@@ -13,7 +13,7 @@ v100Gate();var v100Render=render;render=function(){v100Gate();return v100Render.
 /* the level-up line */
 var v100Un=v79Unlocks;v79Unlocks=function(from,lv){v100Gate();var out=v100Un.apply(this,arguments);
   try{if(from<V100LV&&lv>=V100LV){var i=-1;out.forEach(function(t,k){if(i<0&&/^\d+ new banners? in the Shop$/.test(t))i=k});
-      if(i>=0){var n=+/^\d+/.exec(out[i])[0],shut=typeof areaGate==="function"&&areaGate("shop");out[i]="You unlocked "+n+" banners for your player card"+(shut?" (in the Shop, once it opens)":"")}}}catch(e){}
+      if(i>=0){var n=+/^\d+/.exec(out[i])[0],shut=typeof areaGate==="function"&&areaGate("shop");out[i]="You unlocked "+n+" banners for your player card"}}}catch(e){}
   return out};
 /* the tour */
 try{TOURS.push({id:"banner",ready:function(){return effLvl()>=V100LV&&!(typeof areaGate==="function"&&areaGate("shop"))&&view==="board"&&!!tourVis(".strip .avbtn")},steps:[

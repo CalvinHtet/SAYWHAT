@@ -234,7 +234,7 @@ function baseAct(a,b,e){
   if(a==="lfz"){lfZoom(+b.dataset.d);return true}
   if(a==="lflight"){var rm=bslot(i);if(!rm)return true;rm.lit=rm.lit?0:1;delete S.lfLight;persist();var sc=b.closest(".modal"),top=sc?sc.scrollTop:0;roomModal(i);var nm=document.querySelector("#layer .modal");if(nm)nm.scrollTop=top;render();return true}
   if(a==="room"){roomModal(i);return true}
-  if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("Behind these doors: not yet.");return true}roomModal(ix);return true}
+  if(a==="gotoaud"||a==="gotolobby"){var tt=a==="gotoaud"?"auditorium":"theater",ix=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===tt)ix=k});if(ix<0){pop("These doors are locked.");return true}roomModal(ix);return true}
   if(a==="rbuild"){buildModal(i);return true}
   if(a==="rdo"){var t=b.dataset.t,T=ROOMT[t];if(hasRoom(t)||S.base.slots[i]||(T.needCls&&!S.cls)||T.bundled)return true;if(S.coins<T.cost){pop("Need "+(T.cost-S.coins)+" more coins");return true}
     S.coins-=T.cost;S.spent+=T.cost;simulate();S.base.slots[i]={t:t,a:{},st:0,pend:0};if(t==="lounge")S.base.loungeT=Date.now();try{qbSnd("big")}catch(x){}closeModals();render();persist();roomSplash(t);return true}
@@ -1158,7 +1158,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=1820, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=1830, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};
@@ -1937,7 +1937,7 @@ document.addEventListener("click",function(e){
   if(a==="bldout"){LFBSEL=null;LFV.init=0;render();return}
   if(a==="gotoroom"){var gi=-1;S.base.slots.forEach(function(r,k){if(r&&r.t===b.dataset.t)gi=k});if(gi>=0)roomModal(gi);return}
   if(a==="rhelp"){roomSplash(b.dataset.t,1);return}
-  if(a==="thdoorlock"){pop("Behind these doors: not yet.");return}
+  if(a==="thdoorlock"){pop("These doors are locked.");return}
   if(a==="bsgo"){var bm=b.closest(".modal");if(bm)bm.remove();view="shop";shopTab=b.dataset.b;render();window.scrollTo(0,0);return}
   if(a==="simcoin"){S.coins+=10000;render();persist();pop("Test coins added");return}
   if(a==="simundo"){var ui=+b.dataset.i,ur=bslot(ui),back=0,n=0;if(!ur)return;(ADDONS[ur.t]||[]).forEach(function(u){if(ur.a[u[0]]&&!(u[3]&&u[3].opens)){delete ur.a[u[0]];back+=u[2]||0;n++}});S.coins+=back;persist();render();roomModal(ui);pop("Undid "+n+" upgrades, refunded "+back+" coins");return}

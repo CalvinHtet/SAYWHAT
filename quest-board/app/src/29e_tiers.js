@@ -9,7 +9,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
     +"gx_h_sneak gx_h_boots gx_h_chain gx_h_coach gx_h_knit gx_h_tech gx_h_pleat gx_h_derby gx_h_loafer gx_y_truck "
     +"gx_y_velcap gx_y_pend gx_y_vjkt gx_y_track gx_y_plat gx_y_mary gx_y_flame gx_y_skate gx_y_runner gx_o_camp "
     +"gx_o_wrap gx_o_lock gx_o_puffer gx_o_flannel gx_o_wind gx_o_crop gx_o_work gx_o_para gx_o_camo gx_o_skirt "
-    +"gx_o_hoop gx_o_rigg gx_v_cap gx_v_choke gx_v_shade gx_v_mesh gx_nc_short gx_nc_cap gx_nc_beanie gx_nc_band "
+    +"gx_o_hoop gx_o_rigg gx_v_cap gx_v_choke gx_v_shade gx_v_mesh gx_nc_short gx_nc_cap gx_nc_beanie gx_nc_band gx_nc_bucket gx_nc_wafflecap gx_nc_visor "
     +"gx_nc_shades gx_nc_tee gx_nc_tank gx_nc_qzip gx_nc_knit gx_nc_slide gx_al_bucket gx_al_flap gx_al_goggle "
     +"gx_al_fleece gx_al_shell gx_al_vest gx_al_anorak gx_al_cargo gx_al_tight gx_al_short gx_al_hiker gx_kp_bucket "
     +"gx_kp_phones gx_kp_bag gx_kp_pendant gx_kp_sailor gx_kp_hoodie gx_kp_track gx_kp_skirt gx_kp_cargo gx_kp_runner "
