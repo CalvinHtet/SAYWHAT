@@ -20,38 +20,9 @@ import numpy as np
 from PIL import Image
 import os
 
-COLUMNS = 64  # must match CLIP_COLUMNS in src/rig.js
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cliplib import trim_line  # noqa: E402
 
-
-def trim_line(hat):
-    h, w = hat.shape
-    bottom = np.full(w, -1.0)
-    for x in np.nonzero(hat.any(axis=0))[0]:
-        rows = np.nonzero(hat[:, x])[0]
-        gaps = np.nonzero(np.diff(rows) > 40)[0]
-        end = rows[gaps[0]] if len(gaps) else rows[-1]
-        bottom[x] = end - min(0.25 * (end - rows[0]), 40)
-    covered = np.nonzero(bottom >= 0)[0]
-    lo, hi = covered.min(), covered.max()
-    # the brim's height at each side: the lower edge over the outer eighth of the hat
-    span = max(8, (hi - lo) // 8)
-    left_y = float(np.median(bottom[lo:lo + span][bottom[lo:lo + span] >= 0]))
-    right_y = float(np.median(bottom[hi - span + 1:hi + 1][bottom[hi - span + 1:hi + 1] >= 0]))
-    line = np.zeros(w)
-    for x in range(w):
-        if bottom[x] >= 0:
-            line[x] = bottom[x]
-        elif x < lo:
-            line[x] = left_y
-        elif x > hi:
-            line[x] = right_y
-        else:  # a strap gap inside the hat: the lower of its neighbours
-            l = bottom[:x][bottom[:x] >= 0]
-            r = bottom[x:][bottom[x:] >= 0]
-            line[x] = min(l[-1] if len(l) else 0, r[0] if len(r) else 0)
-    edges = np.linspace(0, w, COLUMNS, endpoint=False).astype(int)
-    step = w // COLUMNS
-    return [round(float(line[e:e + step].min()) / h, 4) for e in edges]
 
 
 layers, path = sys.argv[1:3]
@@ -80,5 +51,5 @@ for art, meta in items.items():
 text = json.dumps(items, indent=1)
 # the same layout as tools/items.py: each trim line on one row
 text = re.sub(r"\[\s+([0-9.,\s]+?)\s+\]", lambda m: "[" + re.sub(r"\s+", "", m.group(1)) + "]", text)
-open(path, "w").write(text)
+open(path, "w").write(text if text.endswith("\n") else text)
 print("clip lines redone:", n)
