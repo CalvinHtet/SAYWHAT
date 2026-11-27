@@ -2035,5 +2035,8 @@
  },
  "smk_gauntlets": {
   "slot": "arms"
+ },
+ "smk_ashwrap": {
+  "slot": "neck"
  }
 }
