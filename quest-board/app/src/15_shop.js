@@ -225,6 +225,13 @@ var EXTRA_ITEMS=[
  ["gx_smk_wrapjacket","a_top","Wrap Jacket",1500,1,"Wraps across the chest, ember belt.",{gar:"smk_wrapjacket",b:"smk"}],
  ["gx_smk_harness","a_top","Harness Tee",1300,1,"A strapped chest harness, small pouches.",{gar:"smk_harness",b:"smk"}],
  ["gx_smk_bomber","a_top","Cropped Bomber",1500,1,"Ember lining, a smoke swirl on the back.",{gar:"smk_bomber",b:"smk"}],
+ /* ROOMS's batches 5 and 6, QA-passed (5ff18b69, 6790548a, 30c0d7b4) */
+ ["gx_smk_platecollar","a_acc","Plated Collar",800,1,"A high steel neck guard on black straps.",{gar:"smk_platecollar",b:"smk"}],
+ ["gx_smk_ashwrap","a_acc","Ash Neck Wrap",600,1,"Loose ash wrap, ember stitching, a three-bead charm.",{gar:"smk_ashwrap",b:"smk"}],
+ ["gx_smk_gauntlets","a_acc","Shadow Gauntlets",800,1,"Black to the elbow, segmented plates.",{gar:"smk_gauntlets",b:"smk"}],
+ ["gx_smk_embercuffs","a_acc","Ember Cuffs",700,1,"Wide black cuffs, glowing ember seams.",{gar:"smk_embercuffs",b:"smk"}],
+ ["gx_smk_watch","a_acc","Smoke Watch",600,1,"A blank ember face; a vented band on the other wrist.",{gar:"smk_watch",b:"smk"}],
+ ["gx_smk_joggers","a_pants","Wrap Joggers",1100,1,"An ember side stripe, shins wrapped in cloth.",{gar:"smk_joggers",b:"smk"}],
  ["gx_gp_cathood","a_hat","Cat-Ear Hood",800,1,"Lilac knit, pink-lined ears.",{gar:"gp_cathood",b:"gp"}],
  ["gx_gp_bunny","a_hat","Bunny Beanie",750,1,"Candy pink, one ear flopped.",{gar:"gp_bunny",b:"gp"}],
  ["gx_gp_bow","a_hat","Satin Bow",500,1,"Lilac, a gold star in the knot.",{gar:"gp_bow",b:"gp"}],

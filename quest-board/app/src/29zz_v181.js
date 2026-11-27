@@ -10,7 +10,7 @@ function v81Key(){try{return (typeof SHUB!=="undefined"?SHUB:"")+"|"+(typeof sho
 function v81Apply(){try{if(typeof view==="undefined"||view!=="shop")return;var rack=document.querySelector(".qshop .qs-rack");if(!rack)return;
     var secs=[].filter.call(rack.children,function(e){return e.classList&&e.classList.contains("qs-sec")&&e.querySelector("h3")});
     var old=document.querySelector(".qshop .v81cats");if(secs.length<2){if(old)old.remove();secs.forEach(function(s){s.classList.remove("v81off")});return}
-    var names=secs.map(function(s){return s.querySelector("h3").textContent.trim()}),k=v81Key(),sel=V81SEL[k],tabs=names.slice();/* Cal 11-26: "Add an All tab for the individual shop brands": a brand's page starts on All */if(document.querySelector(".qshop.v60room"))tabs.unshift("All");if(tabs.indexOf(sel)<0)sel=V81SEL[k]=tabs[0];
+    var names=secs.map(function(s){return s.querySelector("h3").textContent.trim()}),k=v81Key(),sel=V81SEL[k],tabs=names.slice();/* Cal 11-26: "Add an All tab for the individual shop brands": a brand's page starts on All */if(document.querySelector(".qshop.v60room,.qshop.v201v"))tabs.unshift("All");if(tabs.indexOf(sel)<0)sel=V81SEL[k]=tabs[0];
     if(!old||old.getAttribute("data-k")!==k+"|"+tabs.join(",")){if(old)old.remove();
       rack.insertAdjacentHTML("beforebegin",'<nav class="v81cats qs-tabs" data-k="'+esc(k+"|"+tabs.join(","))+'" aria-label="Categories">'+tabs.map(function(n){return '<button type="button" class="qs-tab v81c" data-v81="'+esc(n)+'">'+esc(n)+'</button>'}).join("")+'</nav>')}
     [].forEach.call(document.querySelectorAll(".qshop .v81cats .v81c"),function(b){b.classList.toggle("on",b.getAttribute("data-v81")===sel)});

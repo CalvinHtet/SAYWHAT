@@ -7,7 +7,7 @@
 var PATCHES=[
   {id:"patch106",d:"2026-11-17",subj:"Update 1.06",coins:500,body:'<ul class="wl">'
     +'<li>The Street now has 3 brands on sale at once.</li>'
-    +'<li>New brands drop in a new order. Keep checking the Shop.</li>'
+    +'<li>New brands drop in a new order, so keep checking the Shop.</li>'
     +'<li>Photos you post now go up on the town board.</li>'
     +'<li>The Shop fits small phones better.</li>'
     +'</ul><p>500 coins on me. Thanks for playing.</p>'}

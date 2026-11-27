@@ -2029,5 +2029,23 @@
  },
  "smk_handwraps": {
   "slot": "arms"
+ },
+ "smk_platecollar": {
+  "slot": "neck"
+ },
+ "smk_gauntlets": {
+  "slot": "arms"
+ },
+ "smk_ashwrap": {
+  "slot": "neck"
+ },
+ "smk_embercuffs": {
+  "slot": "arms"
+ },
+ "smk_watch": {
+  "slot": "arms"
+ },
+ "smk_joggers": {
+  "slot": "pants"
  }
 }
