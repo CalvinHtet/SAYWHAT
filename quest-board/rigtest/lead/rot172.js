@@ -20,17 +20,17 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   ok(r.every((d) => d.ids.length === 3 && new Set(d.ids).size === 3), 'every day for 16 weeks has exactly 3 brands (plus the vault on a Wednesday): ' + r.filter((d) => d.ids.length !== 3).slice(0, 4).map((d) => d.ymd + ' ' + d.ids.join('/') + ' [' + d.floors + ']').join('; '));
   let wrongDay = [], twoAtOnce = [], drops = [];
   for (let i = 1; i < r.length; i++) { const a = r[i - 1], c = r[i], gone = a.ids.filter((x) => c.ids.indexOf(x) < 0), came = c.ids.filter((x) => a.ids.indexOf(x) < 0);
-    if (came.length) { drops.push({ ymd: c.ymd, id: came[0], left: gone[0] }); if (!(c.wd === 1 || c.wd === 4) || came.length !== 1 || gone.length !== 1) wrongDay.push(c.ymd + ' +' + came.join('/') + ' -' + gone.join('/')); } }
+    if (came.length) { drops.push({ ymd: c.ymd, id: came[0], left: gone[0] }); if (!(c.wd === 1 || c.wd === 3 || c.wd === 5) || came.length !== 1 || gone.length !== 1) wrongDay.push(c.ymd + ' +' + came.join('/') + ' -' + gone.join('/')); } }
   r.forEach((d) => { if (d.ids.filter((id) => info.prem.indexOf(id) >= 0).length > 1) twoAtOnce.push(d.ymd); });
-  ok(!wrongDay.length && drops.length >= 30, drops.length + ' drops, each on a Monday or Thursday, one brand in and one out ' + wrongDay.slice(0, 4).join('; '));
+  ok(!wrongDay.length && drops.length >= 30, drops.length + ' drops, each on a Monday, Wednesday or Friday (Cal 11-26), one brand in and one out ' + wrongDay.slice(0, 4).join('; '));
   const after = drops.filter((d) => d.ymd >= '2026-11-30'), pc = after.filter((d) => info.prem.indexOf(d.id) >= 0);
   ok(Math.abs(pc.length - after.length / 3) <= 1.01 && !twoAtOnce.length, 'from 11-30 every third drop is a pricier brand (' + pc.length + ' of ' + after.length + '), never two in the Shop at once ' + twoAtOnce.slice(0, 3).join(','));
   const heldIn = drops.filter((d) => info.held.indexOf(d.id) >= 0); ok(!heldIn.length, 'no held brand drops ' + JSON.stringify(heldIn.slice(0, 3)));
   const back = []; after.forEach((d, i) => { const j = after.slice(0, i).map((q) => q.left).lastIndexOf(d.id); if (j >= 0 && i - j < 3) back.push(d.ymd + ' ' + d.id); }); ok(!back.length, 'no brand comes back within 3 drops of leaving ' + back.join(', '));
   const pturn = info.prem.filter((id) => info.held.indexOf(id) < 0 && !pc.some((d) => d.id === id)); ok(!pturn.length, 'every pricier brand not held gets a turn in 16 weeks (' + info.prem.filter((id) => info.held.indexOf(id) < 0).join(', ') + ') ' + pturn.join(','));
   const today = r[0]; ok(today.ids.every((id) => info.prem.indexOf(id) < 0) || today.ymd >= '2026-11-30', 'today: the Street\'s 3 only (' + today.ids.join(', ') + ')' + (today.vb ? ', vault ' + today.vb : ''));
-  const wed = r.filter((d) => d.wd === 3 && d.vb); ok(wed.length >= 8 && r.every((d) => !d.vb || d.wd === 3), 'the vault brand comes on Wednesdays only, on top of the 3 (' + wed.length + ' Wednesdays)');
+  /* Cal 11-26: no Wednesday vault brand; the Sunday Vault is week201's */ ok(r.every((d) => !d.vb), 'no Wednesday vault brand any more');
   const pm = []; for (let i = 1; i < r.length; i++) if (r[i].pet !== r[i - 1].pet) pm.push(r[i].ymd + ':' + r[i].wd);
-  ok(pm.filter((x) => x.split(':')[0] >= '2026-11-28').every((x) => /:(2|5)$/.test(x)) && pm.length >= 25, 'pet clothes move on on Tuesdays and Fridays (' + pm.slice(0, 6).join(' ') + ' ...)');
+  ok(pm.filter((x) => x.split(':')[0] >= '2026-11-28').every((x) => /:(2|4|6)$/.test(x)) && pm.length >= 25, 'pet clothes move on on Tuesdays, Thursdays and Saturdays (' + pm.slice(0, 6).join(' ') + ' ...)');
   console.log('     first drops: ' + drops.slice(0, 10).map((d) => d.ymd.slice(5) + ' ' + d.id).join(', '));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

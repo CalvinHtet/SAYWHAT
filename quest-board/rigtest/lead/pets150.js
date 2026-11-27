@@ -56,7 +56,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   ok(sw[0].asked && sw[0].form === null && sw[0].d === 1500 && sw[1].form === 'k5' && sw[1].d === 3000, 'back to the first form for 1,500, and 1,500 to change again');
   /* the clothes tab: I and II only for one that has changed */
   await tap('[data-act="p2tab"][data-id="wolf"]'); t = await V(() => ({ forms: [...document.querySelectorAll('.p2forms .qs-tab')].map((q) => q.innerText.trim()), cards: document.querySelectorAll('.qs-card.pz-cl').length, txt: document.querySelector('.qshop').innerText }));
-  ok(t.forms.join() === 'I,II' && t.cards >= 1 && /Tuesdays and Fridays/.test(t.txt) /* Cal 11-25 */ && !/dogs|Pluto|Chopstick/i.test(t.txt), 'the wolf\'s clothes: tabs I and II, this drop\'s pieces (' + t.cards + '), no dogs'); await p.screenshot({ path: OUT + '/pets150_clothes.png' });
+  ok(t.forms.join() === 'I,II' && t.cards >= 1 && /Tuesdays, Thursdays and Saturdays/.test(t.txt) /* Cal 11-26 */ && !/dogs|Pluto|Chopstick/i.test(t.txt), 'the wolf\'s clothes: tabs I and II, this drop\'s pieces (' + t.cards + '), no dogs'); await p.screenshot({ path: OUT + '/pets150_clothes.png' });
   await tap('[data-act="p2tab"][data-id="slime"]'); ok(await V(() => !document.querySelector('.p2forms')), 'the slime has not changed: no I and II');
   /* pet clothes: try on first, then a checkout */
   const tr = await V(async () => { const x = window.__qb.x(), S = x.S, w = (ms) => new Promise((q) => setTimeout(q, ms)); const bt = document.querySelector('.qs-card.pz-cl [data-act="p2try"]'); if (!bt) return { none: document.querySelector('.qshop').innerText.slice(0, 200) }; const id = bt.dataset.id, c0 = S.coins; bt.click(); await w(300);

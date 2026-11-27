@@ -10,12 +10,12 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     out.wed = ['2026-12-02', '2026-12-03'].map((d) => { const bk = D.back(D.start(d) + 12 * 36e5); return d + ':' + (bk ? 'vault ' + bk.id : 'none'); }); out.floors = D.floors().map((F) => F.id + ': ' + F.line); return out; });
   console.log(JSON.stringify(r, null, 1));
   const nx = (a) => a.map((s) => s.split(' -> ')[1]);
-  /* Cal 11-25 (29zz_v172.js): one rotation, Mondays and Thursdays */ ok(nx(r.street).join() === '2026-11-23 Mon,2026-11-26 Thu,2026-11-30 Mon,2026-12-03 Thu,2026-12-07 Mon,2026-12-10 Thu,2026-12-14 Mon', 'Street: Mondays and Thursdays: ' + nx(r.street).join(' | '));
+  /* Cal 11-26 (29zz_v201.js): one rotation, Mondays, Wednesdays and Fridays from 11-30 */ ok(nx(r.street).join() === '2026-11-23 Mon,2026-11-26 Thu,2026-11-30 Mon,2026-12-02 Wed,2026-12-07 Mon,2026-12-09 Wed,2026-12-14 Mon', 'Street: Mondays, Wednesdays and Fridays: ' + nx(r.street).join(' | '));
   ok(nx(r.boutique).every((s) => /none/.test(s)), 'Boutique: no drops of its own (its brands are in the one rotation): ' + nx(r.boutique).join(' | '));
-  ok(r.floors.some((l) => /Mondays and Thursdays/.test(l)) && r.floors.every((l) => !/Friday/.test(l)), 'the floors say Mondays and Thursdays: ' + r.floors.join(' | '));
+  ok(r.floors.some((l) => /Mondays, Wednesdays and Fridays/.test(l)), 'the floors say Mondays, Wednesdays and Fridays: ' + r.floors.join(' | '));
   const txt = await p.evaluate(() => /Mondays and Fridays|Monday and Friday/.test(document.documentElement.innerHTML)); ok(!txt, 'no "Mondays and Fridays" on screen');
   /* a window during sync can be closed */
   const cl = await p.evaluate(async () => { const x = window.__qb.x(); x.render(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); const bt = document.createElement('button'); bt.dataset.act = 'qbinfo'; bt.dataset.k = 'trial'; bt.style.display = 'none'; document.body.appendChild(bt); bt.click(); bt.remove(); /* v1.61: the Daily Quest's (i) moved into the profile; any (i) window will do */ await new Promise((r) => setTimeout(r, 300)); document.documentElement.classList.add('qb-sync'); await new Promise((r) => setTimeout(r, 100));
     const m = document.querySelector('#layer .modal'), xb = m && m.querySelector('.mx'), ok2 = m && m.querySelector('[data-act="mclose"]:not(.mx)'); const r = { modal: !!m, x: xb ? getComputedStyle(xb).pointerEvents : 'none?', btn: ok2 ? getComputedStyle(ok2).pointerEvents : 'n/a', other: m ? getComputedStyle(m.querySelector('p,h2')).pointerEvents : '' }; document.documentElement.classList.remove('qb-sync'); document.querySelectorAll('#layer .modal').forEach((q) => q.remove()); return r; });
-  ok(cl.modal && cl.x === 'auto' && cl.other === 'none', 'while syncing a window\'s close button takes taps ' + JSON.stringify(cl));
+  ok(cl.modal && cl.x === 'auto' /* v1.75 (29zz_v188.js): other buttons take taps too, queued */, 'while syncing a window\'s close button takes taps ' + JSON.stringify(cl));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
