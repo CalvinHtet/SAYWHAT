@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV188, null, { timeout: 90000 }); await p.waitForTimeout(300);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); const V = (f, a) => p.evaluate(f, a);
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(8); S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
-    S.quests = [{ id: 'a1', name: 'Water the plants', cl: 'home', xp: 15, stat: 'discipline', rep: 'daily' }, { id: 'a2', name: 'Read ten pages', cl: 'learn', xp: 15, stat: 'intellect', rep: 'daily' }]; S.done = {}; x.render(); });
+    S.quests = [{ id: 'a1', name: 'Water the plants', cl: 'home', xp: 15, stat: 'discipline', rep: 'daily' }, { id: 'a2', name: 'Read ten pages', cl: 'learn', xp: 15, stat: 'intellect', rep: 'daily' }]; S.done = {}; x.render(); if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); S.coins = 0; });
   await p.waitForTimeout(400); await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
   await V(() => document.documentElement.classList.add('qb-sync'));
   const tap = async (sel) => { const r = await V((s) => { const e = document.querySelector(s); if (!e) return null; e.scrollIntoView({ block: 'center' }); const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, sel); if (r) await p.mouse.click(r.x, r.y); await p.waitForTimeout(250); return !!r; };

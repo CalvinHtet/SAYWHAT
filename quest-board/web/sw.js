@@ -28,3 +28,11 @@ self.addEventListener("message", function (e) {
     return k.keys().then(function (rs) { return Promise.all(rs.map(function (q) { var u = new URL(q.url); return set[u.pathname.replace(/^.*\//, "") + u.search] ? null : k.delete(q); })); });
   }));
 });
+/* a tap on one of the game's notifications (app/src/29zz_v193.js) brings the game forward, or opens it */
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (cs) {
+    for (var i = 0; i < cs.length; i++) { if ("focus" in cs[i]) return cs[i].focus(); }
+    return self.clients.openWindow ? self.clients.openWindow("./") : null;
+  }));
+});
