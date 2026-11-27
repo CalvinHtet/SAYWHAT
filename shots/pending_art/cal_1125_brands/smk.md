@@ -17,7 +17,8 @@ Existing: hats band, wrap; head cowl; neck tape, pouch; tops (2 live); bottoms c
 | head (mask) | smk_ventmask | Vent Mask | Matte-black lower-face guard with stacked vent slits, ember-orange edge piping and steel side clasps. (ROOMS 11-26: replaces the Mesh Mask; see-through mesh cannot be keyed over magenta.) |
 | necklace (neck) | smk_trailscarf | Trail Scarf | Long ink-black scarf with ember-orange tips trailing behind. |
 | necklace (neck) | smk_kunai | Kunai Chain | Steel chain with a small kunai-blade pendant. |
-| necklace (neck) | smk_platecollar | Plated Collar | High segmented steel neck guard on black straps. |
+| necklace (neck) | smk_platecollar | Plated Collar | High segmented steel neck guard on black straps. (Off sale 29zz_v217.js, Cal 11-26: looks weird over a shirt or hoodie.) |
+| necklace (neck) | smk_gaiter | Smoke Gaiter | Snug matte-black ribbed neck gaiter worn down, ash-grey smoke print, ember-orange top band and toggle cord; slim, sits over tees and hoodie collars. (ROOMS 11-27: replaces the Plated Collar.) |
 | necklace (neck) | smk_ashwrap | Ash Neck Wrap | Loose ash-grey wrap with ember stitching and a dangling smoke-puff charm. |
 | gloves (arms) | smk_grips | Grip Gloves | Black fingerless gloves with ember-orange knuckle panels. |
 | gloves (arms) | smk_bracers | Steel Bracers | Steel forearm guards over black wraps. |
