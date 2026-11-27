@@ -2056,7 +2056,8 @@
   "wide": true
  },
  "smk_wrapboots": {
-  "slot": "shoes"
+  "slot": "shoes",
+  "over": true
  },
  "smk_strapsneaker": {
   "slot": "shoes"
