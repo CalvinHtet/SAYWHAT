@@ -10,7 +10,7 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
   const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 150)));
   await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbLoft && window.QBLoft, null, { timeout: 120000 }); await p.waitForTimeout(1000);
   await p.evaluate(() => { const x = window.__qb.x(), S = x.S, L = window.__qbLoft(); S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(40); S.calm = false;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1 }; S.areaOn = { board: 1, hideout: 1 };
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1 };
     S.base.slots = ['bedroom', 'skybar'].map((t) => ({ t, a: Object.fromEntries((x.ADDONS[t] || []).map((u) => [u[0], 1])), st: 0, pend: 0 }));
     const d = L.defs.skybar; window.__stf0 = d.staff.length; const look = d.staff[0][1];
     d.staff.push([null, look, { post: 'tpost' }], [null, look, { wand: 1 }]);

@@ -12,7 +12,7 @@ const MOCK = fs.readFileSync(path.join(__dirname, 'mockfirebase.js'), 'utf8'), C
   const open = async (uid, name) => { const p = await ctx.newPage(); p.on('pageerror', (e) => errs.push(uid + ': ' + e.message.slice(0, 160))); await p.addInitScript((u) => { window.__mockUid = u; window.__mockSignedIn = 1; }, uid); await p.goto(URL);
     await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 90000 }); await p.fill('#ccname', name); await p.click('[data-act="ccnext"]');
     await p.waitForFunction(() => document.querySelector('[data-act="ccdone"]'), null, { timeout: 60000 }); await p.waitForTimeout(700); await p.click('[data-act="ccdone"]'); await p.waitForTimeout(3000);
-    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(4); S.areaOn = Object.assign(S.areaOn || {}, { hideout: 1, hall: 1 }); S.tours = { welcome: 1, hideout: 1, hall: 1, train: 1, players: 1, dq: 1, bty: 1 }; window.__qbV136.tour.id = null; x.persist(); x.render(); }); return p; };
+    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(4); S.areaOn = Object.assign(S.areaOn || {}, { hideout: 1, hall: 1 }); S.tours = { welcome: 1, hideout: 1, hall: 1, train: 1, players: 1, dq: 1, bty: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); window.__qbV136.tour.id = null; x.persist(); x.render(); }); return p; };
   const w = await open('ann', 'Ann');
   await w.evaluate(async () => { await window.__qbKudos.load(); await window.__qbKudos.send('Cal, you made a game that got me to do my laundry. Legend.'); });
   const cal = await open('cal', 'Cal'); await cal.evaluate(async () => { await window.__qbKudos.load(); }); await cal.waitForTimeout(500);

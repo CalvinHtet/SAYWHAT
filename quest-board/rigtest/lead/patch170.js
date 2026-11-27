@@ -10,7 +10,7 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8838), OUT = process.env
   const page = async () => { const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage(); p.errs = []; p.on('pageerror', (e) => p.errs.push(e.message.slice(0, 150)));
     await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && document.querySelector('.nav button, #ccname'), null, { timeout: 90000 }); await p.waitForTimeout(800); return p; };
   const setup = (p, join) => p.evaluate(async (join) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.cls = 'vanguard'; S.tutDone = 1;
-    S.tours = { welcome: 1, hideout: 1, train: 1, dq: 1, bty: 1, hall: 1, shop: 1, players: 1, wheel: 1 }; S.areaOn = { board: 1, shop: 1, hideout: 1 };
+    S.tours = { welcome: 1, hideout: 1, train: 1, dq: 1, bty: 1, hall: 1, shop: 1, players: 1, wheel: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, shop: 1, hideout: 1 };
     S.letters = { read: { welcome: 1, roadmap: 1 }, paid: { welcome: 3000 }, at: { welcome: join, roadmap: join } }; x.persist(); x.render(); await new Promise((o) => setTimeout(o, 500)); document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => m.remove()); }, join);
   let p = await page(); await setup(p, '2026-11-10'); await p.click('.ibbtn'); await p.waitForTimeout(400);
   const row = await p.evaluate(() => { const r = document.querySelector('.ibrow[data-id="patch170"]'); return r ? { un: r.classList.contains('un'), t: r.innerText.replace(/\s+/g, ' ') } : null; });

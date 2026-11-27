@@ -26,7 +26,7 @@ fs.mkdirSync(OUT, { recursive: true });
     console.log(name, 'created', await p.evaluate(() => window.__qb.x().S.created));
     await p.evaluate((name) => { const x = window.__qb.x(), S = x.S;
       S.xp = x.cum(35); S.gates = Array.from({ length: 200 }, (_, i) => i); S.coins = 20000; S.calm = false; S.cls = Object.keys(window.__qbCls || {})[0] || S.cls || 'vanguard';
-      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, loft: 1, town: 1, shop: 1, players: 1, hall: 1 };
+      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, loft: 1, town: 1, shop: 1, players: 1, hall: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {});
       S.areaOn = { board: 1, train: 1, hideout: 1, shop: 1, hall: 1, players: 1, trophy: 1, wheel: 1, away: 1 };
       const order = ['bedroom', 'closet', 'lair', 'patio', 'gameroom', 'restaurant'];
       S.base.slots = order.map((t) => ({ t, a: Object.fromEntries((x.ADDONS[t] || []).map((u) => [u[0], 1])), st: 0, pend: 0 }));

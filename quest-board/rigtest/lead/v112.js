@@ -12,7 +12,7 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
     await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 90000 }); await p.waitForTimeout(1000);
     await p.evaluate((fz) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(20); S.gates = Array.from({ length: 200 }, (_, i) => i);
       S.coins = 1000; S.calm = false; S.freezes = fz; S.wheel = ''; S.wheelAt = 0;
-      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1 };
+      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {});
       S.areaOn = { board: 1, train: 1, hideout: 1, shop: 1, hall: 1, players: 1, trophy: 1, wheel: 1, away: 1 }; x.render(); }, fz);
     /* a new save's welcome letter and the like open on their own and hold back tours: keep closing them */
     await p.evaluate(() => { const S = window.__qb.x().S; setInterval(() => document.querySelectorAll('#layer .modal,.dropsplash,.bsplash').forEach((m) => { if (!window.__keepModal) m.remove(); }), 300); }); return p; };

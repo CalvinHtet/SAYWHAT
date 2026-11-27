@@ -5,7 +5,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV144, null, { timeout: 90000 }); await p.waitForTimeout(800);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
   const V = (f, a) => p.evaluate(f, a);
-  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.calm = false; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; x.render(); });
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.calm = false; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); x.render(); });
   const rk = await V(() => window.__qbV144.ranks()); ok(rk.join() === 'Awakened,Hunter,Knight,Paragon,Sovereign,Monarch', 'ranks: ' + rk.join(', '));
   const page = await V(() => document.body.innerText); ok(!/Bass Hunter|Drop Knight|Headliner|Shadow Monarch/.test(page), 'no old rank name on the Board');
   ok((await V(() => window.__qbV144.sqk())).join() === 'wave', 'one greeting: Wave');

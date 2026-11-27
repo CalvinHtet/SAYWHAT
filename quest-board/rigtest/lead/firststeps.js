@@ -13,9 +13,9 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
   const wait = (p, ms = 3600) => p.waitForTimeout(ms);
   // ---- a new player
   { const { p, errs } = await page();
-    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Newbie', sex: 'f' }); delete S.calm; delete S.tours; delete S.fsd; delete S.fsall; S.coins = 0; S.tours = { welcome: 1 }; x.render(); });
+    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Newbie', sex: 'f' }); delete S.calm; delete S.tours; delete S.fsd; delete S.fsall; S.coins = 0; S.tours = { welcome: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); x.render(); });
     for (let k = 0; k < 5; k++) { await wait(p, 700); await clear(p); }
-    await p.evaluate(() => { window.__qb.x().S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; window.__qb.x().render(); });
+    await p.evaluate(() => { window.__qb.x().S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, banner: 1 }; window.__qb.x().S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, window.__qb.x().S.unl || {}); window.__qb.x().render(); });
     const c0 = await card(p), s0 = await S(p);
     ok('new player: the card shows the two open steps, the first with Show me', c0 && c0.head.startsWith('0 of 2') && c0.items.join('|') === ">Add today's tasks|-Finish one and tick it" && c0.show, { c0, s0 });
     if (OUT) await p.screenshot({ path: OUT + '/fs_new.png' });

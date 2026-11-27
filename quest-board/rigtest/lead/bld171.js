@@ -7,7 +7,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
     await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV167, null, { timeout: 90000 }); await p.waitForTimeout(800);
     await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(30); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false; S.v67ref = 1;
-      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1 }; S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
+      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
       S.base.slots = ['bedroom', 'closet', 'garden', 'restaurant'].map((t) => ({ t, a: {}, st: 0, pend: 0 })); S.coins = 902; x.render(); });
     await p.waitForTimeout(800); await p.evaluate(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
     await p.evaluate(() => document.querySelector('.nav button[data-v="hideout"]').click()); await p.waitForTimeout(2500);

@@ -10,7 +10,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const at = (y, mo, d) => V(([y, mo, d]) => { const real = Date.now() - (window.__qbShift || 0); window.__qbShift = new Date(y, mo, d, 12).getTime() - real; }, [y, mo, d]);
   await at(2026, 10, 27);
   await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.total = 100; S.coins = 0; S.v67ref = 1;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 }; S.letters = { read: { welcome: 1 }, paid: {}, at: { welcome: '2026-11-10' } }; try { window.__qbRooms.open('closet', 1); } catch (e) {} x.render(); });
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.letters = { read: { welcome: 1 }, paid: {}, at: { welcome: '2026-11-10' } }; try { window.__qbRooms.open('closet', 1); } catch (e) {} x.render(); });
   await p.waitForTimeout(600); await V(() => document.querySelectorAll('#layer .modal').forEach((m) => m.remove()));
   const nov = await V(() => ({ rows: window.__qbV174.goals().list.map((r) => r.k), letter: window.__qb.x() && (typeof ibAll === 'undefined') }));
   ok(nov.rows.indexOf('ch') < 0, 'November: no chapter row ' + JSON.stringify(nov.rows));

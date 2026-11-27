@@ -13,7 +13,7 @@ const MOCK = fs.readFileSync(path.join(__dirname, 'mockfirebase.js'), 'utf8'), C
     await p.waitForFunction(() => document.querySelector('[data-act="ccnext"]'), null, { timeout: 90000 }); await p.fill('#ccname', name); await p.click('[data-act="ccnext"]');
     await p.waitForFunction(() => document.querySelector('[data-act="ccdone"]'), null, { timeout: 60000 }); await p.waitForTimeout(700); await p.click('[data-act="ccdone"]'); await p.waitForTimeout(3000);
     await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
-    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(4); S.areaOn = Object.assign(S.areaOn || {}, { hideout: 1, hall: 1 }); S.tours = { welcome: 1, hideout: 1, hall: 1, train: 1, players: 1, dq: 1, bty: 1, shop: 1, away: 1, wheel: 1, trophy: 1, sys: 1 }; window.__qbV136.tour.id = null; S.coins = 100; x.persist(); x.render(); });
+    await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.xp = x.cum(4); S.areaOn = Object.assign(S.areaOn || {}, { hideout: 1, hall: 1 }); S.tours = { welcome: 1, hideout: 1, hall: 1, train: 1, players: 1, dq: 1, bty: 1, shop: 1, away: 1, wheel: 1, trophy: 1, sys: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); window.__qbV136.tour.id = null; S.coins = 100; x.persist(); x.render(); });
     P[uid] = p; return p; };
   const hall = async (p) => { await p.evaluate(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.nav button[data-v="hall"]').click(); }); await p.waitForTimeout(2500); };
   const a = await open('ann', 'Ann'), bo = await open('bo', 'Bo'), cy = await open('cy', 'Cy'), di = await open('di', 'Di');

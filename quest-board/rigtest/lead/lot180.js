@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 90000 }); await p.waitForTimeout(400);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
   const r = await p.evaluate(async () => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(14); S.gates = [5, 10]; S.tutDone = 1; S.v67ref = 1;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1 }; S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
     const full = (t) => { const a = {}; (x.ADDONS[t] || []).forEach((q) => { if (!(q[3] && (q[3].opens || q[3].retired))) a[q[0]] = 1; }); return a; };
     S.base.slots = [{ t: 'bedroom', a: full('bedroom'), st: 0, pend: 0 }, { t: 'closet', a: full('closet'), st: 0, pend: 0 }]; x.render();
     await new Promise((o) => setTimeout(o, 600)); document.querySelectorAll('#layer .modal').forEach((m) => m.remove());

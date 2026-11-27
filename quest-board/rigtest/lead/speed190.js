@@ -8,7 +8,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const a0 = await V(() => window.__qbV190.ac()); await p.mouse.click(5, 300); await p.waitForTimeout(2500);
   const a1 = await V(() => ({ ac: window.__qbV190.ac(), nz: window.__qbV190.nz() }));
   ok(a0 === null && a1.ac && a1.nz, 'the sound system is made after the first tap, while idle, not at a purchase ' + JSON.stringify({ a0, a1 }));
-  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(6); S.tutDone = 1; S.coins = 50000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1 };
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(6); S.tutDone = 1; S.coins = 50000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {});
     S.base.slots = [{ t: 'bedroom', a: { bd_ward1: 1, bd_ward2: 1 }, st: 0, pend: 0 }, { t: 'closet', a: {}, st: 0, pend: 0 }]; S.quests = [{ id: 't1', name: 'Stretch', cl: 'health', xp: 10, stat: 'vitality', rep: 'daily' }]; S.done = {}; x.render(); });
   await p.waitForTimeout(1500);
   const ms = await V(async () => { let o = document.querySelector('.ms-opt img'); if (!o) { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); if (window.msOpen) window.msOpen(5); } o = document.querySelector('.ms-opt img'); if (!o) return { none: 1 };

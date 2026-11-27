@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
 (async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV140, null, { timeout: 90000 }); await p.waitForTimeout(800);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
-  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(6); S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; S.tutDone = 1; x.render(); });
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(6); S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.tutDone = 1; x.render(); });
   /* the multiplier */
   const mm = await p.evaluate(() => { const S = window.__qb.x().S, H = window.__qbV140, wk = (n) => { const d = new Date(); d.setHours(12); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - 7 * n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
     const r = {}, set = (ns) => { S.weekPaid = {}; ns.forEach((n) => { S.weekPaid[wk(n)] = 1 }); return H.mult(); };

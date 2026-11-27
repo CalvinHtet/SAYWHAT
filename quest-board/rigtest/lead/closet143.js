@@ -8,7 +8,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
   const V = (f, a) => p.evaluate(f, a);
   const setup = (lv) => V((lv) => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(lv); S.calm = false; S.coins = 0;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; S.tutDone = 1; S.areaOn = { board: 1, hideout: 1, hall: 1, players: 1 }; x.render(); return x.effLvl(); }, lv);
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.tutDone = 1; S.areaOn = { board: 1, hideout: 1, hall: 1, players: 1 }; x.render(); return x.effLvl(); }, lv);
   const bed = () => V(() => { const x = window.__qb.x(), S = x.S; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); const i = S.base.slots.findIndex((r) => r && r.t === 'bedroom'); window.__qb.roomModal(i);
     const cards = [...document.querySelectorAll('.rmodal .addon')].filter((c) => !c.classList.contains('got')); const r = { first: cards[0] ? cards[0].innerText.replace(/\s+/g, ' ').slice(0, 90) : '', firstId: cards[0] && cards[0].dataset.aid,
       buy: !!document.querySelector('.rmodal button[data-act="raddon"][data-id="bd_ward2"]'), mystery: [...document.querySelectorAll('.rmodal .addon.mystery')].map((c) => c.innerText.replace(/\s+/g, ' ')).join(' | '),

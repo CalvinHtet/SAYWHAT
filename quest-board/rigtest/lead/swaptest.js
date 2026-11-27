@@ -9,7 +9,7 @@ let fails = 0; const ok = (n, c, i) => { if (!c) fails++; console.log((c ? '  ok
   const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 150)));
   const boot = async () => { await p.waitForFunction(() => window.__qb && window.__qb.x && window.QBLoft, null, { timeout: 90000 }); await p.waitForTimeout(1500); };
   await p.goto(BASE + '/dist/index.html'); await boot();
-  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.total = 20; S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1 }; x.render(); });
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.total = 20; S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); x.render(); });
   await p.waitForTimeout(800);
   const clear = () => p.evaluate(() => { document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelectorAll('.coachscr').forEach((m) => m.remove()); });
   await clear(); await p.evaluate(() => document.querySelector('.nav button[data-v="board"]').click()); await p.waitForTimeout(800);

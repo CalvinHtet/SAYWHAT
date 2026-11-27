@@ -14,7 +14,7 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779);
   ok(cfg.fine === 12 && cfg.slots === 'top,arms,skinArms' && cfg.cap === 4 && cfg.capSlots === 'top,arms,body', 'the rig: finer mesh on tops and arm pieces, solid-stretch cap 4 on top/arms/body (arms-up poses only, QA 2d2c911) ' + JSON.stringify(cfg));
   ok(cfg.think && cfg.side && cfg.wave && /sideL/.test(cfg.stretch) && !/^idle,stretch/.test(cfg.stretch), 'clips: think, stretchSide, waveP; the Loft stretch is the side stretch ' + cfg.stretch);
   await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false;
-    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1 }; S.areaOn = { board: 1, hideout: 1 }; S.base.slots = [{ t: 'bedroom', a: {}, st: 0, pend: 0 }]; x.render(); });
+    S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1 }; S.base.slots = [{ t: 'bedroom', a: {}, st: 0, pend: 0 }]; x.render(); });
   await p.evaluate(() => document.querySelector('.nav button[data-v="hideout"]').click()); await p.waitForTimeout(2500);
   await p.evaluate(() => { const e = document.querySelector('[data-act="bldgo"][data-v="0"]'); if (e) e.dispatchEvent(new MouseEvent('click', { bubbles: true })); }); await p.waitForTimeout(2000);
   const seen = await p.evaluate(async () => { const out = { em: [], bubble: false, me: false }; const t0 = Date.now();

@@ -9,7 +9,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV135, null, { timeout: 90000 }); await p.waitForTimeout(800);
   const hair = await p.evaluate(() => window.QBDATA.creator.hairStyles.m.filter((o) => !o.stylistOnly).map((o) => o.label));
   ok(hair.join() === 'Buzz Cut,Mid Part,Tousled,Combover', 'his starting cuts: ' + hair.join(', '));
-  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1 }; S.areaOn = { board: 1, hideout: 1, hall: 1, players: 1 }; x.render(); });
+  await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.calm = false; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1, hall: 1, players: 1 }; x.render(); });
   const V = (f) => p.evaluate(f);
   const inbox = await V(() => window.__qbV135.inbox()); ok(inbox.length === 2 && inbox.some((l) => l[0] === 'welcome' && l[2] === 1000) && inbox.some((l) => l[0] === 'live137' && l[2] === 500), 'two letters: ' + JSON.stringify(inbox));
   const cl = await V(() => window.__qbV135.cl().map((c) => c[0] + '=' + c[1]).join(', ')); ok(/reset=Self care/.test(cl) && /admin=Work and admin/.test(cl), 'groups: ' + cl);

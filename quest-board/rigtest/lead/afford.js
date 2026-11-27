@@ -13,7 +13,7 @@ const base = 'http://127.0.0.1:' + (process.env.PORT || 8779), SHOTS = process.e
     await p.goto(base + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x, null, { timeout: 90000 }); await p.waitForTimeout(1000);
     await p.evaluate(() => setInterval(() => document.querySelectorAll('#layer .modal:not(.glmodal),.dropsplash,.bsplash').forEach((m) => m.remove()), 300));
     await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(30); S.gates = Array.from({ length: 200 }, (_, i) => i); S.calm = false;
-      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1 }; S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
+      S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, loft: 1, hall: 1, players: 1, shop: 1, away: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.areaOn = { board: 1, hideout: 1, shop: 1, train: 1 };
       S.base.slots = ['bedroom', 'closet', 'garden', 'restaurant'].map((t) => ({ t, a: {}, st: 0, pend: 0 })); S.coins = 100000;
       S.quests = [{ id: 'q1', name: 'Wash the dishes', cl: 'home', xp: 10, stat: 'productivity', rep: 'daily' }]; S.done = {}; x.render(); });
     await p.waitForTimeout(800);

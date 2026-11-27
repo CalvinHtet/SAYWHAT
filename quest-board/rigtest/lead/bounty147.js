@@ -7,7 +7,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qb.x && window.__qbV147 && window.__qbV144, null, { timeout: 90000 }); await p.waitForTimeout(800);
   await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
   const V = (f, a) => p.evaluate(f, a);
-  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.calm = false; S.tutDone = 1; S.coins = 1000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1 }; S.quests = []; S.done = {}; delete S.bq;
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'Cal', sex: 'm' }); S.xp = x.cum(12); S.calm = false; S.tutDone = 1; S.coins = 1000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, away: 1, banner: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {}); S.quests = []; S.done = {}; delete S.bq;
     window.__qbV144.loot.rnd(() => .5); window.__qbV147.photosOn(1); window.__qbV147.othersOn(1); x.render(); document.querySelector('.nav button[data-v="board"]').click(); });
   await p.waitForTimeout(400);
   const cards = () => V(() => [...document.querySelectorAll('.bty .bty-card')].map((c) => ({ lab: c.querySelector('.label').innerText, name: c.querySelector('b').innerText, txt: c.innerText.replace(/\s+/g, ' '), btns: [...c.querySelectorAll('button')].map((q) => q.dataset.act + ':' + q.innerText.replace(/\s+/g, ' ')) })));

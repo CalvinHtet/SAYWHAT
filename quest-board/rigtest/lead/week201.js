@@ -26,7 +26,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
     const b2 = { id: 'smk', start: '2026-12-30' }; return { hats: hats.length, all: ids.length }; });
   ok(smk.hats === 3, 'Smoke Bomb (6 hats now) shows 3 hats in a drop ' + JSON.stringify(smk));
   /* the pages */
-  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.coins = 50000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1 };
+  await V(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.coins = 50000; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1, away: 1 }; S.unl = Object.assign({ console: 1, pets: 1, acc2: 1, sable7: 1 }, S.unl || {});
     S.base.slots = [{ t: 'bedroom', a: { bd_ward1: 1, bd_ward2: 1 }, st: 0, pend: 0 }, { t: 'closet', a: {}, st: 0, pend: 0 }]; S.areaOn = null; if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); });
   await clear(); await V(() => document.querySelector('.nav button[data-v="shop"]').click()); await p.waitForTimeout(1200); await clear();
   const tile = await V(() => { const t = document.querySelector('[data-shub="vault"]'); return t ? t.innerText.replace(/\s+/g, ' ') : null; });
