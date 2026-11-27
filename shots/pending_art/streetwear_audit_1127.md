@@ -51,3 +51,5 @@ Counts: A about 60 pieces, B about 25.
 - QA 82e2fa04 on the figure: cr LED Visor and Holo Trench read as sci-fi costume, so both move to the remakes. The keeps hold (Nordic
   Sweater borderline, but fine for the winter brand).
 - smk Plated Hood is on the remake list, so QA's gap sweep can skip fixing it.
+- LEAD 11-27 (V217CUT, 29zz_v217.js): already off sale, owners keep: gx_v_bunny, gx_v_veil, gx_gp_bunny, gx_bb_cloak, gx_km_straw. Their replacements still come with each brand's 8-per-category pass.
+- Note: the ally Seraphine's look (26_world.js ALLOOK.sera) is built from bb pieces (cloak, circlet, crystal, skirt, slipper), and Kit wears sv_goggles. Retired art must stay in art/app for NPC looks, or the ally gets a new look.
