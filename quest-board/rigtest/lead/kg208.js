@@ -1,0 +1,16 @@
+// Cal 11-26 (29zz_v208.js): the guided set's weight box shows "37.5" whole on a phone.
+//   PORT=<build server> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/kg208.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8838, OUT = process.env.OUT || '.'; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch(); for (const W of [390, 320]) { const p = await (await b.newContext({ viewport: { width: W, height: 844 }, deviceScaleFactor: 2 })).newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV208 && window.qbDbg, null, { timeout: 90000 }); await p.waitForTimeout(300);
+  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' });
+  const r = await p.evaluate(async () => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(12); S.gates = [5, 10]; S.tutDone = 1; S.tours = { welcome: 1, dq: 1, bty: 1, train: 1, hideout: 1, hall: 1, players: 1, shop: 1, wheel: 1, trophy: 1, freeze: 1, banner: 1 }; S.unl = { console: 1, pets: 1, acc2: 1 }; S.mile = { since: 999, fx1: 1 };
+    if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); x.render(); document.querySelectorAll('#layer .modal').forEach((m) => m.remove());
+    document.querySelector('.nav button[data-v="train"]') ? document.querySelector('.nav button[data-v="train"]').click() : document.querySelector('.zx-tile[data-v="train"]').click(); await new Promise((o) => setTimeout(o, 600));
+    const plan = document.querySelector('[data-act="wkplan"]'); if (plan) plan.click(); await new Promise((o) => setTimeout(o, 800)); document.querySelectorAll('#layer .modal').forEach((m) => m.remove());
+    const go = document.querySelector('[data-act="wkgo"],[data-act="wkcoach"],[data-act="wkstart"]'); if (go) go.click(); await new Promise((o) => setTimeout(o, 900));
+    let inp = document.querySelector('.ckg'); for (let i = 0; i < 12 && !inp; i++) { const nx = [...document.querySelectorAll('.coachscr button')].find((b) => /next/i.test(b.textContent)); if (!nx) break; nx.click(); await new Promise((o) => setTimeout(o, 400)); inp = document.querySelector('.ckg'); }
+    if (!inp) return { none: 1, go: !!go, coach: !!document.querySelector('.coachscr') }; inp.value = '37.5'; inp.dispatchEvent(new Event('input', { bubbles: true })); inp.focus(); inp.setSelectionRange(0, 0); await new Promise((o) => setTimeout(o, 200));
+    return { sw: inp.scrollWidth, cw: inp.clientWidth, w: Math.round(inp.getBoundingClientRect().width) }; });
+  ok(!r.none && r.sw <= r.cw + 1, W + ' px: "37.5" fits the weight box ' + JSON.stringify(r)); if (W === 390) await p.screenshot({ path: OUT + '/kg208.png' });
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await p.context().close(); } await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
