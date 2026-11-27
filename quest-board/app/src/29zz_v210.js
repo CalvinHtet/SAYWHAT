@@ -77,13 +77,15 @@ var v210Html=dngHtml;dngHtml=function(){var h=v210Html.apply(this,arguments);
 /* ---- the lounge ---- */
 /* spots, in % of the room (ROOMS's brief): act sit (bar, couch, card table, reading chair), talk (stand facing a partner), look (the map
    wall, back turned), idle (wander) */
+/* ROOMS's painting (ui_lounge.webp, measured 11-26): x,y is where the feet go, fy the floor line that sets the size (seated people sit
+   above their floor) */
 var V210SP=[
-  {x:13,y:70,a:"bar"},{x:23,y:70,a:"bar"},{x:33,y:70,a:"bar"},
-  {x:66,y:64,a:"couch"},{x:75,y:64,a:"couch"},{x:84,y:64,a:"couch"},
-  {x:9,y:86,a:"read"},
-  {x:43,y:74,a:"cards",fx:1},{x:57,y:74,a:"cards",fx:-1},
-  {x:40,y:89,a:"talk",fx:1,pair:10},{x:50,y:89,a:"talk",fx:-1,pair:9},{x:57,y:93,a:"talk",fx:1,pair:12},{x:67,y:93,a:"talk",fx:-1,pair:11},
-  {x:55,y:58,a:"look"},{x:28,y:92,a:"idle"},{x:78,y:86,a:"idle"},{x:90,y:72,a:"idle"},{x:48,y:82,a:"idle"}];
+  {x:18.5,y:57,fy:60,a:"bar"},{x:26,y:57,fy:60,a:"bar"},{x:34.5,y:57,fy:60,a:"bar"},
+  {x:52.5,y:53,fy:55,a:"couch"},{x:64,y:53,fy:55,a:"couch"},{x:75.5,y:53,fy:55,a:"couch"},
+  {x:14,y:66,fy:70,a:"read",fx:1},
+  {x:43,y:65,fy:67,a:"cards",fx:1},{x:58,y:65,fy:67,a:"cards",fx:-1},
+  {x:38,y:80,a:"talk",fx:1,pair:10},{x:48,y:80,a:"talk",fx:-1,pair:9},{x:56,y:91,a:"talk",fx:1,pair:12},{x:66,y:91,a:"talk",fx:-1,pair:11},
+  {x:82,y:60,a:"look"},{x:91,y:70,a:"look"},{x:30,y:74,a:"idle"},{x:70,y:76,a:"idle"},{x:24,y:92,a:"idle"},{x:84,y:88,a:"idle"}];
 var V210A={},V210T=0,V210LAST=0;
 function v210LoungeHtml(){var u=window.QBART&&QBART["ui_lounge.webp"],ks=v210Free();
   return '<section class="card v210lounge" aria-label="Your team\'s lounge"><div class="v210room'+(u?'':' v210plain')+'"'+(u?' style="background-image:url(&quot;'+esc(u)+'&quot;)"':'')+'>'
@@ -97,7 +99,7 @@ function v210Tick(){var room=document.querySelector(".v210room");if(!room||!room
   var ppl=room.querySelector(".v210ppl"),W=room.clientWidth,H=room.clientHeight;if(!W||!H||typeof QBLoft==="undefined"||!QBLoft.frameOrNear)return;
   var now=performance.now(),dt=Math.min(.25,(now-(V210LAST||now))/1000);V210LAST=now;var ks=v210Free(),live={};ks.forEach(function(k){live[k]=1});
   Object.keys(V210A).forEach(function(k){if(!live[k]){var e=V210A[k].el;if(e&&e.parentNode)e.parentNode.removeChild(e);delete V210A[k]}});
-  ks.forEach(function(k,n){var a=V210A[k];if(!a){var L=v210Look(k);if(!L||!L.rig)return;var s0=V210SP[(n*5)%V210SP.length];a=V210A[k]={k:k,ch:L.rig,x:s0.x+(Math.random()*6-3),y:Math.max(58,s0.y),mode:"idle",until:now+500+n*400,si:null,face:1,ph:Math.random()*4};
+  ks.forEach(function(k,n){var a=V210A[k];if(!a){var L=v210Look(k);if(!L||!L.rig)return;var s0=V210SP[(n*5)%V210SP.length];a=V210A[k]={k:k,ch:L.rig,x:s0.x+(Math.random()*6-3),y:Math.max(62,s0.y),mode:"idle",until:now+500+n*400,si:null,face:1,ph:Math.random()*4};
       a.el=document.createElement("div");a.el.className="v210p";a.el.innerHTML='<img alt=""><i class="v210prop"></i><em class="v210say"></em><small style="--c:'+v210Col(k)+'">'+esc(v210Name(k))+'</small>';ppl.appendChild(a.el)}
     if(a.el.parentNode!==ppl)ppl.appendChild(a.el);
     /* the brain */
@@ -112,13 +114,14 @@ function v210Tick(){var room=document.querySelector(".v210room");if(!room||!room
     else if(a.act==="talk"){var s3=V210SP[a.si],mate=null;Object.keys(V210A).forEach(function(q){var b=V210A[q];if(b!==a&&b.mode==="do"&&b.si===(s3&&s3.pair))mate=b});
       clip=mate?"chat":"idle";if(mate)a.face=mate.x>a.x?1:-1;f=QBLoft.clipFrame(clip,now)}
     else{var cyc=["idle","idle","wave","idle","laugh","idle","stretch"],c2=cyc[Math.floor(((a.t0||0)/1000+a.k.length)%cyc.length)];clip=QBLoft.clips&&QBLoft.clips[c2]?c2:"idle";f=QBLoft.clipFrame(clip,now)}
-    f-=f%2;var u=QBLoft.frameOrNear(a.ch,clip,f);
+    /* a seated person holds one frame and a talker every 4th: a steady request is drawn at once, a frame that changes every tick never catches up (QBLoft renders the newest request first) */
+    if(clip==="sit"||clip==="back")f=0;else if(clip==="chat")f-=f%4;else f-=f%2;var u=QBLoft.frameOrNear(a.ch,clip,f);
     /* depth: smaller at the back */
-    var dep=Math.max(0,Math.min(1,(a.y-55)/41)),hgt=H*(.15+.09*dep),G=QBLoft.geometry(hgt),px=a.x/100*W,py=a.y/100*H,img=a.el.firstChild;
+    var sp=a.mode==='do'&&a.si!=null?V210SP[a.si]:null,fl=sp&&sp.fy?sp.fy:a.y,hgt=H*Math.max(.12,.0068*(fl-35)),G=QBLoft.geometry(hgt),px=a.x/100*W,py=a.y/100*H,img=a.el.firstChild;
     if(u&&img.getAttribute("src")!==u)img.setAttribute("src",u);
     img.style.width=G.w.toFixed(1)+"px";img.style.height=G.h.toFixed(1)+"px";img.style.left=G.x.toFixed(1)+"px";img.style.top=G.y.toFixed(1)+"px";
     var sit=/^(bar|couch|read|cards)$/.test(a.act||"")&&a.mode==="do";
-    a.el.style.transform="translate("+px.toFixed(1)+"px,"+(py-(sit?hgt*.08:0)).toFixed(1)+"px)";a.el.style.zIndex=String(Math.round(a.y*10));
+    a.el.style.transform="translate("+px.toFixed(1)+"px,"+py.toFixed(1)+"px)";a.el.style.zIndex=String(Math.round(a.y*10));
     img.style.transform=a.face<0?"scaleX(-1)":"";
     var pr=a.el.querySelector(".v210prop"),say=a.el.querySelector(".v210say");pr.className="v210prop"+(a.mode==="do"&&a.act==="bar"?" mug":a.mode==="do"&&a.act==="read"?" book":a.mode==="do"&&a.act==="cards"?" cards":"");
     pr.style.top=(-hgt*.42).toFixed(1)+"px";say.className="v210say"+(clip==="chat"?" on":"");say.style.top=(-hgt*1.05).toFixed(1)+"px";

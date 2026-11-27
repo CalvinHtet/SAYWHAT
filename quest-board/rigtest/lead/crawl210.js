@@ -29,7 +29,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const imgs = await V(() => [...document.querySelectorAll('.v210p img')].filter((i) => i.getAttribute('src')).length);
   ok(t1.length === 4 && moved >= 2 && imgs >= 3, 'the lounge has all 4 (Sable, Pip, Kit, Bram), drawn, and they move between spots ' + JSON.stringify({ t0, t1, imgs }));
   await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(400); await p.screenshot({ path: OUT + '/crawl210_lounge.png' });
-  await p.waitForTimeout(6000); await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/crawl210_lounge2.png' });
+  await p.waitForTimeout(14000); await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/crawl210_lounge2.png' }); console.log('     at 2nd shot: ' + JSON.stringify(await V(() => window.__qbV210.agents())));
   /* who goes */
   await V(() => { const b = document.querySelector('[data-act="dgo"]'); b.click(); }); await p.waitForTimeout(500);
   const pk = await V(() => [...document.querySelectorAll('#layer .v210who b')].map((b) => b.textContent));
