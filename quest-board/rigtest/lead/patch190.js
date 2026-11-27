@@ -16,4 +16,10 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
     const r = !!document.querySelector('.ibrow[data-id="patch190"]'); document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); return r; }, join);
   const old = await inbox('2026-11-10'); const fresh = await inbox(await p.evaluate(() => window.__qb.x().S.v221d || ''));
   ok(old && !fresh, 'at 1.90 a player from before gets the letter, one who started that day does not ' + JSON.stringify({ old, fresh }));
+  /* the body: the four Crawls lines only for a player who has allies */
+  const body = async (team) => p.evaluate(async (team) => { const x = window.__qb.x(), S = x.S; S.story = S.story || {}; S.story.team = team ? { sable: 1 } : {}; x.render(); await new Promise((o) => setTimeout(o, 300));
+    document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); document.querySelector('.ibbtn').click(); await new Promise((o) => setTimeout(o, 400)); const r = document.querySelector('.ibrow[data-id="patch190"]'); if (!r) return null; r.click(); await new Promise((o) => setTimeout(o, 400));
+    const t = (document.querySelector('.ibox') || document.querySelector('#layer .modal') || {}).innerText || ''; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); return t.replace(/\s+/g, ' '); }, team);
+  await inbox('2026-11-10'); const noAlly = await body(false), withAlly = await body(true);
+  ok(noAlly && !/\bally|allies|dungeon/i.test(noAlly) && /got bigger/.test(noAlly) && withAlly && /ally/i.test(withAlly), 'no Crawls lines for a player without allies; the full letter with them ' + JSON.stringify({ noAlly: (noAlly || '').slice(0, 120), withAlly: (withAlly || '').slice(0, 80) }));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
