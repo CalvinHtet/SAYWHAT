@@ -19,7 +19,7 @@ function v81Apply(){try{if(typeof view==="undefined"||view!=="shop")return;var r
 /* Cal 11-25 (later): "Instead of having the opaque fade in for the character box in the shop, just have it sit under the stuff on top, and
    then have it follow me when I scroll down": on a phone the card is in the page under the header and tabs, always shown, and sticks to
    the top once scrolled to; the category tabs stick right under it (CSS below overrides 29zz_v160.js's fixed, fading card) */
-function v81Stick(){try{var n=document.querySelector(".qshop .v81cats");if(!n)return;var m=document.querySelector(".qs-mirror.v60m"),top=6;
+function v81Stick(){try{var n=document.querySelector(".qshop .v81cats");if(!n)return;var m=document.querySelector(".qs-mirror.v60m");if(!m){var m2=document.querySelector(".qshop .qs-mirror");if(m2&&getComputedStyle(m2).position==="sticky")m=m2}var top=6;/* QA v1.81 LOW: the Vault page's card too */
     if(m&&window.innerWidth<=640)top=Math.round(6+m.offsetHeight+6);n.style.top=top+"px"}catch(e){}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-v81]");if(!b)return;e.preventDefault();e.stopPropagation();V81SEL[v81Key()]=b.getAttribute("data-v81");v81Apply();
   try{var n=document.querySelector(".qshop .v81cats"),r=document.querySelector(".qshop .qs-rack");if(n&&r){var y=r.getBoundingClientRect().top+window.scrollY-n.offsetHeight-(parseFloat(n.style.top)||6)-8;if(window.scrollY>y)window.scrollTo(0,Math.max(0,y))}}catch(x){}},true);
