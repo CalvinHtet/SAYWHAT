@@ -11,7 +11,7 @@
 //   SETUP: run rigtest/qa/_explore186.js first (OUT/state.json, a level-30 sandbox player with every area and the Closet)
 //   OUT=<dir> [RATE=4] NODE_PATH=<playwright> node rigtest/qa/perf186qa.js
 const pw = require('playwright'), fs = require('fs');
-const BASE = process.env.BASE || 'http://127.0.0.1:8824/dist-web/index.html', OUT = process.env.OUT, RATE = +process.env.RATE || 4;
+const FOCUS = !!process.env.FOCUS; const BASE = process.env.BASE || 'http://127.0.0.1:8824/dist-web/index.html', OUT = process.env.OUT, RATE = +process.env.RATE || 4;
 const INIT = () => { window.__pf = { lt: [], loads: [], lastMut: 0, nmut: 0, cold: {} };
   try { new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__pf.lt.push([Math.round(e.startTime), Math.round(e.duration)]); }).observe({ type: 'longtask', buffered: true }); } catch (e) {}
   document.addEventListener('load', (e) => { const t = e.target; if (!t || t.tagName !== 'IMG') return; if (t.classList && t.classList.contains('calp') && t.closest && t.closest('.strip')) { window.__pf.hdr = (window.__pf.hdr || 0) + 1; return; } const r = t.getBoundingClientRect(); const vis = r.width > 2 && r.height > 2 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth;
@@ -26,18 +26,18 @@ const INIT = () => { window.__pf = { lt: [], loads: [], lastMut: 0, nmut: 0, col
 const top = (prof, n) => { const self = {}; const byId = {}; prof.nodes.forEach((nd) => { byId[nd.id] = nd; }); const dt = prof.timeDeltas; for (let i = 0; i < prof.samples.length; i++) { const nd = byId[prof.samples[i]]; const cf = nd.callFrame; const k = (cf.functionName || '(anon)') + ' ' + (cf.url ? cf.url.replace(/^.*\//, '').replace(/\?.*$/, '') + ':' + (cf.lineNumber + 1) : ''); self[k] = (self[k] || 0) + (dt[i] || 0) / 1000; }
   return Object.entries(self).filter(([k]) => !/^\(idle\)/.test(k)).sort((a, b) => b[1] - a[1]).slice(0, n).map(([k, v]) => k.trim() + ' ' + Math.round(v)); };
 (async () => { const b = await pw.chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); const res = { rate: RATE, cold: [], steps: [], sync: {} }; const errs = [];
-  const mk = async (net) => { const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, storageState: OUT + '/state.json' }); await ctx.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
+  const mk = async (net) => { const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, storageState: process.env.STATE || (OUT + '/state.json') }); await ctx.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
     await ctx.addInitScript(INIT); const p = await ctx.newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160))); const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: RATE });
     if (net) { await cdp.send('Network.enable'); await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 70, downloadThroughput: 1.6e6, uploadThroughput: 0.75e6 }); } return { ctx, p, cdp }; };
   const coldRead = async (p, lab) => { await p.waitForFunction(() => window.__pf && window.__pf.cold.fig && window.__pf.cold.board, null, { timeout: 120000 }).catch(() => {}); await p.waitForTimeout(3000);
     const r = await p.evaluate(() => { const C = window.__pf.cold; return Object.assign({}, C, { lt100: window.__pf.lt.filter((x) => x[1] > 100 && x[0] < (C.fig || 9e9) + 500), ltAll: window.__pf.lt.filter((x) => x[1] > 100).length, ltMax: Math.max(0, ...window.__pf.lt.map((x) => x[1])) }); }); r.lab = lab; res.cold.push(r); console.log('COLD ' + lab + ' ' + JSON.stringify(r)); };
   /* 1. cold starts */
-  { const { ctx, p } = await mk(false); await p.goto(BASE); await coldRead(p, 'empty cache, local network'); await p.reload(); await coldRead(p, 'warm reload'); await ctx.close(); }
-  { const { ctx, p } = await mk(true); await p.goto(BASE); await coldRead(p, 'empty cache, 4G-like (70 ms, 1.6 MB/s)'); await ctx.close(); }
+  if (!FOCUS) { const { ctx, p } = await mk(false); await p.goto(BASE); await coldRead(p, 'empty cache, local network'); await p.reload(); await coldRead(p, 'warm reload'); await ctx.close(); }
+  if (!FOCUS) { const { ctx, p } = await mk(true); await p.goto(BASE); await coldRead(p, 'empty cache, 4G-like (70 ms, 1.6 MB/s)'); await ctx.close(); }
   /* 2. steps, one page */
   const { ctx, p, cdp } = await mk(false); await p.goto(BASE); await coldRead(p, 'empty cache (step page)'); await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 500 });
   const V = (f, a) => p.evaluate(f, a); const clr = () => V(() => document.querySelectorAll('#layer > *,.bsplash,.dropsplash,#qbtour,.tour-ring,.tour-bub').forEach((m) => m.remove()));
-  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); await clr();
+  await p.addStyleTag({ content: '#qbtour,.tour-ring,.tour-bub{display:none!important}' }); await V(() => { try { if (window.__qbV192 && window.__qbV192.due()) window.__qbV192.claim(); } catch (e) {} }); await p.waitForTimeout(500); await clr();
   /* the header's idle animation: how often its picture changes, how many different pictures, and what it costs, over 10 s on the Board */
   { await cdp.send('Profiler.start'); const h = await V(async () => { const im = document.querySelector('.strip .avbtn img'); const seen = new Set(); let n = 0; const lt0 = window.__pf.lt.length; const t0 = performance.now();
       const ob = new MutationObserver(() => { n++; seen.add(im.getAttribute('src')); }); ob.observe(im, { attributes: true, attributeFilter: ['src'] }); await new Promise((r) => setTimeout(r, 10000)); ob.disconnect();
@@ -58,8 +58,8 @@ const top = (prof, n) => { const self = {}; const byId = {}; prof.nodes.forEach(
     await p.screenshot({ path: OUT + '/pf_' + name.replace(/\W+/g, '_') + '.png', scale: 'css' }).catch(() => {}); return r; };
   const nav = (v) => "document.querySelector('.nav button[data-v=\"" + v + "\"]').click()";
   /* tabs */
-  for (const [v, sel] of [['train', '[data-act="wkplan"]'], ['hideout', '[data-act="bldgo"]'], ['shop', '.qshop'], ['hall', '[data-act="htab"]'], ['board', '.qmain']]) await step('tab ' + v, nav(v), sel);
-  for (const [v, sel] of [['train', '[data-act="wkplan"]'], ['hideout', '[data-act="bldgo"]'], ['shop', '.qshop'], ['hall', '[data-act="htab"]'], ['board', '.qmain']]) await step('tab ' + v + ' (again)', nav(v), sel);
+  if (!FOCUS) for (const [v, sel] of [['train', '[data-act="wkplan"]'], ['hideout', '[data-act="bldgo"]'], ['shop', '.qshop'], ['hall', '[data-act="htab"]'], ['board', '.qmain']]) await step('tab ' + v, nav(v), sel);
+  if (!FOCUS) for (const [v, sel] of [['train', '[data-act="wkplan"]'], ['hideout', '[data-act="bldgo"]'], ['shop', '.qshop'], ['hall', '[data-act="htab"]'], ['board', '.qmain']]) await step('tab ' + v + ' (again)', nav(v), sel);
   /* the Shop */
   await step('tab shop', nav('shop'), '.shub-tiles');
   await step('Shop door Street', "document.querySelector('[data-shub=\"street\"]').click()", '.qs-sec [data-act="qstry"]');
@@ -85,6 +85,7 @@ const top = (prof, n) => { const self = {}; const byId = {}; prof.nodes.forEach(
   await step('buy an upgrade', "(()=>{const x=window.__qb.x();const b=[...document.querySelectorAll('#layer [data-act=\"raddon\"]')].find((e)=>!e.disabled);if(b)b.click();window.__pfBuy=b?b.dataset.id:'none'})()", null, 1);
   console.log('     bought: ' + await V(() => window.__pfBuy));
   await step('back to the street', "document.querySelector('[data-act=\"bldout\"]').click()", '[data-act="bldgo"]');
+  if (!FOCUS) {
   /* the Town */
   await step('tab hall', nav('hall'), '[data-act="htab"]');
   const ht = await V(() => [...document.querySelectorAll('[data-act="htab"]')].map((e) => e.dataset.v || e.textContent.trim()));
@@ -113,4 +114,5 @@ const top = (prof, n) => { const self = {}; const byId = {}; prof.nodes.forEach(
   await V(() => document.querySelector('.nav button[data-v="hall"]').click()); await p.waitForTimeout(1500); await clr(); await blocked('Town');
   await V(() => document.querySelector('.nav button[data-v="board"]').click()); await p.waitForTimeout(1000); await clr(); await V(() => document.querySelector('.strip .avbtn').click()); await p.waitForTimeout(1500); await blocked('Player card');
   await clr(); await V(() => document.querySelector('[data-act="nav"][data-v="wheel"]').click()); await p.waitForTimeout(1500); await blocked('Scratch card');
+  }
   res.errs = errs; fs.writeFileSync(OUT + '/perf186.json', JSON.stringify(res, null, 1)); console.log('page errors ' + errs.length + ' ' + JSON.stringify(errs.slice(0, 3))); await b.close(); })();
