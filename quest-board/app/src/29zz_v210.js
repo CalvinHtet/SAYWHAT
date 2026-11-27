@@ -71,7 +71,7 @@ function v210Relics(){try{var t=dgState(),rows=Object.keys(TSETS).map(function(k
 var v210Html=dngHtml;dngHtml=function(){var h=v210Html.apply(this,arguments);
   try{var D=dngInit(),k=0;
     /* the running teammate beside each crawl */
-    h=h.replace(/<div class="dng run"><b>/g,function(m){var r=D.runs[k++],who=r&&r.who,L=who?v210Look(who):null;return who?'<div class="dng run v210run"><span class="v210rn" data-who="'+esc(who)+'" title="'+esc(v210Name(who))+'">'+(L?'<img class="v210rimg" alt="" data-rk="'+esc(who)+'">':'')+'</span><b>':m});
+    h=h.replace(/<div class="dng run"><b>/g,function(m){var r=D.runs[k++],who=r&&r.who,L=who?v210Look(who):null;return who?'<div class="dng run v210run"><span class="v210rn" data-who="'+esc(who)+'" title="'+esc(v210Name(who))+'">'+(L?'<img class="v210rimg" alt="" data-rk="'+esc(who)+'"'+(r&&Date.now()>=r.end?' data-done="1"':'')+'>':'')+'</span><b>':m});
     /* the team's own window replaces the old grid at the top; relics go under the rescued allies */
     var team=typeof teamHtml==="function"?teamHtml():"";if(team&&h.indexOf(team)===0)h=h.slice(team.length);
     h=v210LoungeHtml()+h+(team||"")+v210Relics()}catch(e){}
@@ -132,7 +132,7 @@ function v210Tick(){var room=document.querySelector(".v210room");if(!room||!room
     a.tag.style.transform="translate("+px.toFixed(1)+"px,"+(py+3).toFixed(1)+"px) translateX(-50%)";say.className="v210say"+(clip==="chat"?" on":"");say.style.top=(-hgt*1.05).toFixed(1)+"px";
   });
   /* the running teammates beside the crawls */
-  [].forEach.call(document.querySelectorAll(".v210rimg"),function(im){var k=im.getAttribute("data-rk"),L=v210Look(k);if(!L||!L.rig)return;var f=QBLoft.walkFrame(now/1000*5,"walk"),u=QBLoft.frameOrNear(L.rig,"walk",f-f%2);
+  [].forEach.call(document.querySelectorAll(".v210rimg"),function(im){var k=im.getAttribute("data-rk"),L=v210Look(k);if(!L||!L.rig)return;/* Cal 11-26: back from the crawl, they wave */var wv=im.getAttribute("data-done")&&QBLoft.clips&&QBLoft.clips.wave,f=wv?QBLoft.clipFrame("wave",now):QBLoft.walkFrame(now/1000*5,"walk"),u=QBLoft.frameOrNear(L.rig,wv?"wave":"walk",wv?f:f-f%2);
     if(u&&im.getAttribute("src")!==u)im.setAttribute("src",u);if(!im.style.width){var G=QBLoft.geometry(40);im.style.width=G.w+"px";im.style.height=G.h+"px";im.style.marginLeft=G.x+"px";im.style.marginTop=G.y+"px"}})}
 function v210Run(){if(typeof view==="undefined"||view!=="away"){if(V210T){clearInterval(V210T);V210T=0}return}if(!V210T){V210LAST=0;V210T=setInterval(v210Tick,80)}try{QBLoft.warm&&v210Free().forEach(function(k){var L=v210Look(k);if(L&&L.rig)QBLoft.warm(L.rig)})}catch(e){}}
 /* a redraw rebuilds the room: the people are put back where they were, and the room runs only while the tab is on screen */

@@ -616,7 +616,7 @@ function dngHtml(){
     +'<p class="note">Crawls today <b>'+D.cd.n+'/'+dngPerDay()+'</b> &middot; Quest effort <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>'+(sure?'<br><b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
     var d=DNG.filter(function(q){return q.id===r.id})[0]||DNG[0],left=r.end-now,done=left<=0,pct=Math.min(100,Math.round((now-r.start)/(r.end-r.start)*100)),mins=Math.ceil(left/60000);
-    h+='<div class="dng run"><b>'+d.ic+' '+esc(d.name)+'</b>'+(done?'<small class="note"> You made it back.</small><button class="btn" data-act="dclaim" data-k="'+k+'">Return</button>':'<small class="note"> back in '+mins+' min</small><div class="dbar"><i style="width:'+pct+'%"></i></div>')+'</div>'});
+    h+='<div class="dng run"><b>'+d.ic+' '+esc(d.name)+'</b>'+(done?'<small class="note v217back"> '+(r.who&&typeof v210Name==="function"?esc(v210Name(r.who))+' has returned!':'You made it back.')+'</small><button class="btn" data-act="dclaim" data-k="'+k+'">Claim</button>':'<small class="note"> back in '+mins+' min</small><div class="dbar"><i style="width:'+pct+'%"></i></div>')+'</div>'});
     h+='</div>'}
   /* Cal, 2026-11-09: "Only show 5 dungeons total to keep the size of the screen low": the deepest one open now, the two below
      it that are still open, and the two locked ones above it */
