@@ -2199,5 +2199,14 @@
  },
  "nc_loafer": {
   "slot": "shoes"
+ },
+ "nc_puffer": {
+  "slot": "top"
+ },
+ "nc_cargo": {
+  "slot": "pants"
+ },
+ "nc_socksneaker": {
+  "slot": "shoes"
  }
 }
