@@ -2029,5 +2029,11 @@
  },
  "smk_handwraps": {
   "slot": "arms"
+ },
+ "smk_platecollar": {
+  "slot": "neck"
+ },
+ "smk_gauntlets": {
+  "slot": "arms"
  }
 }
