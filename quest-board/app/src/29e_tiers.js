@@ -81,4 +81,6 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   /* Smoke Bomb to 6 a category (ROOMS, QA c414f017; LEAD 11-26): standard like the brand's first pieces; the steel and the respirator premium */
   put("standard","gx_smk_hoodcap gx_smk_visorbeanie gx_smk_tails gx_smk_goggles gx_smk_scoutlens gx_smk_ventmask gx_smk_trailscarf gx_smk_kunai gx_smk_grips gx_smk_handwraps gx_smk_hoodie gx_smk_wrapjacket gx_smk_harness gx_smk_bomber");
   put("premium","gx_smk_platehood gx_smk_slitvisor gx_smk_resp gx_smk_bracers");
+  put("standard","gx_smk_ashwrap gx_smk_embercuffs gx_smk_watch gx_smk_joggers");
+  put("premium","gx_smk_platecollar gx_smk_gauntlets");
   }return m[id]||null}
