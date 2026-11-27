@@ -2208,5 +2208,14 @@
  },
  "nc_socksneaker": {
   "slot": "shoes"
+ },
+ "nc_bralette": {
+  "slot": "top"
+ },
+ "nc_robe": {
+  "slot": "top"
+ },
+ "nc_chukka": {
+  "slot": "shoes"
  }
 }
