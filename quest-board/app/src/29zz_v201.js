@@ -63,7 +63,9 @@ var v201Groups=qsGroups;qsGroups=function(pick){var a=arguments;
 /* the Vault's door and page (29zz_v149.js's home screen opens shopTab = the door's id) */
 var V201ID="v201vault";
 shubVault=function(){return {id:V201ID,name:"The Vault",fl:"street",vault7:1}};
-var v201Shop=shopHtml;shopHtml=function(){if(shopTab!==V201ID){V201ON=0;return v201Shop.apply(this,arguments)}
+var v201Shop=shopHtml;shopHtml=function(){if(shopTab===V201ID&&SHUB!=="vault"){shopTab="";window._qsSeen=0}
+  /* Cal 11-26 (major): "When I'm in the vault, I can't go back to the shop": "< Shop" set SHUB home but shopTab stayed the Vault's */
+  if(shopTab!==V201ID){V201ON=0;return v201Shop.apply(this,arguments)}
   var V=v201Vault(),n=dropNow(),left=dropStart(V.until)-n;V201ON=1;
   try{var h='<div class="qshop shub-in shub-vault v201v"><div class="qs-bar shub-bar"><button class="qs-tab shub-back" data-shub="home">&lsaquo; Shop</button><b class="shub-title">The Vault</b></div>'
       +'<p class="qs-note qs-lead">Three pieces a category from every brand. New every Sunday at 6 am; this one leaves in '+esc(cdTxt(left))+'.</p>'

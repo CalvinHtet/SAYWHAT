@@ -611,7 +611,7 @@ function dngClaim(k,ev){
 }
 function dngHtml(){
   var D=dngInit(),now=Date.now(),lv=effLvl(),t=today();if(D.cd.d!==t)D.cd={d:t,n:0};
-  var sure=typeof ECON!=="undefined"&&(D.dry||0)>=ECON.crawlPity-1;
+  var sure=typeof ECON!=="undefined"&&ECON.crawlPity>0&&(D.dry||0)>=ECON.crawlPity-1;
   var h=(typeof teamHtml==="function"?teamHtml():'')+'<section class="card panel"><h3 class="label lbi">Dungeon Crawls'+qbI("crawl")+'</h3>'
     +'<p class="note">Crawls today <b>'+D.cd.n+'/'+dngPerDay()+'</b> &middot; Quest effort <b>'+Math.round(Math.max(.5,openMult())*100)+'%</b>'+(sure?'<br><b>Your next crawl finds something rare.</b>':'')+'</p>';
   if(D.runs.length){h+='<div class="lrows">';D.runs.forEach(function(r,k){
