@@ -33,7 +33,9 @@
     if(uOnly>=0.&&abs(part.r-uOnly)>.5&&abs(part.g-uOnly)>.5){o=vec4(0.);return;}
     // uClip hides art above a line that follows the hat, one height per column.
     float cx=clamp(vUV.x,0.,1.)*float(${CLIP_COLUMNS}-1); int ci=int(cx);
-    if(vUV.y<mix(uClip[ci],uClip[min(ci+1,${CLIP_COLUMNS}-1)],fract(cx))){o=vec4(0.);return;}
+    // Cal 11-26 ("no weird gaps ... natural"): the hair fades out over a short band above the line instead of ending in a hard edge.
+    float cl=mix(uClip[ci],uClip[min(ci+1,${CLIP_COLUMNS}-1)],fract(cx)),fe=cl>0.?smoothstep(cl-.018,cl,vUV.y):1.;
+    if(fe<=0.){o=vec4(0.);return;}
     if(t.a<.004){o=vec4(0.);return;}
     vec3 c=t.rgb/t.a;
     float l=dot(c,vec3(.299,.587,.114));
@@ -44,7 +46,7 @@
       float k=smoothstep(.05,.14,max(c.r,max(c.g,c.b))-min(c.r,min(c.g,c.b)));
       c=mix(c,c*uA,k);
     }
-    o=vec4(c*t.a,t.a);
+    o=vec4(c*t.a,t.a)*fe;
   }`;
 
   const smooth = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
