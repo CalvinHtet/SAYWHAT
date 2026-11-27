@@ -47,5 +47,7 @@ Counts: A about 60 pieces, B about 25.
   Halo Mask.
 - B kept (ROOMS's call, QA to check on the figure): sv Ski Goggles pushed up (gorpcore accessory), Nordic Sweater (knitwear reads street
   under a coat; recheck), oak Pleated Tennis Skirt and Cable-Knit Tennis Vest (tennis-core is a street trend), km Crochet Cardigan
-  (fashion knit), cr LED Visor and Holo Trench (techwear). Any of these QA flags on the figure moves to the remake list.
+  (fashion knit). Any of these QA flags on the figure moves to the remake list.
+- QA 82e2fa04 on the figure: cr LED Visor and Holo Trench read as sci-fi costume, so both move to the remakes. The keeps hold (Nordic
+  Sweater borderline, but fine for the winter brand).
 - smk Plated Hood is on the remake list, so QA's gap sweep can skip fixing it.
