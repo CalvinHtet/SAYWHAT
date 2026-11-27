@@ -16,7 +16,7 @@ function v91Data(b){return new Promise(function(ok,no){var fr=new FileReader();f
 function v91Make(file){var one=function(max,q){return (typeof v89Scale==="function"?v89Scale(file,{max:max,q:q}).then(function(d){return d.full}):Promise.reject()).catch(function(){
       return new Promise(function(ok,no){var u=URL.createObjectURL(file),im=new Image();im.onload=function(){var k=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement("canvas");c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);
           c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){b?ok(b):no(new Error("image"))},"image/jpeg",q)};im.onerror=function(){URL.revokeObjectURL(u);no(new Error("image"))};im.src=u})})};
-  return one(900,.78).then(function(b){return b.size>520*1024?one(760,.66):b}).then(function(full){return one(200,.62).then(function(th){return Promise.all([v91Data(full),v91Data(th)])})})}
+  return one(900,.78).then(function(b){return b.size>520*1024?one(760,.66):b}).then(function(full){/* QA: 60 thumbs at 200 px came to 280-494 KB in the index; 150 px at .55 keeps it near half that */return one(150,.55).then(function(th){return Promise.all([v91Data(full),v91Data(th)])})})}
 function v91Keep(r){if(!r||!r.file||!v91Can())return;var file=r.file,meta={t:Date.now(),what:String(r.what||"").slice(0,60),kind:r.kind||"quest",ba:r.ba?1:0};
   V91Q=V91Q.then(function(){return Promise.all([v91Make(file),v91Index()])}).then(function(L){var full=L[0][0],th=L[0][1],ix=L[1];if(full.length>900000)return;
       var id="g"+meta.t+Math.floor(Math.random()*1000);meta.id=id;meta.th=th;

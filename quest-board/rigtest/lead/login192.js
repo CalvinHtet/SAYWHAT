@@ -16,4 +16,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const d7 = await V(() => { const S = window.__qb.x().S; S.v92 = { n: 6, d: '2000-01-01' }; const c0 = S.coins, f0 = S.freezes || 0; window.__qbV192.open(); document.querySelector('[data-v92="claim"]').click(); return { dc: S.coins - c0, fz: (S.freezes || 0) - f0, n: S.v92.n }; });
   ok(d7.dc === await V(() => window.__qbV192.pay(6)) && d7.fz === 1 && d7.n === 0, 'a missed week waits; day 7 pays the most and a streak freeze, then day 1 again ' + JSON.stringify(d7));
   const tot = await V(() => [0, 1, 2, 3, 4, 5, 6].reduce((a, i) => a + window.__qbV192.pay(i), 0)); ok(tot === 2200, 'a full week is small next to tasks: ' + tot + ' coins, flat');
+  /* QA 945babd0 LOW: a level-up while it is open: the calendar steps aside, then comes back */
+  const lv = await V(async () => { const x = window.__qb.x(), S = x.S; S.v92 = { n: 2, d: '2000-01-01' }; document.querySelectorAll('#layer .modal').forEach((m) => m.remove()); window.__qbV192.open(); const before = !!document.querySelector('#layer .v92m');
+    const L = S.xp; S.xp = x.cum(13); x.toggle && 0; try { window.qbDbg.levelUp(13, null, 12) } catch (e) {} const both = document.querySelectorAll('#layer .modal').length, cal = !!document.querySelector('#layer .v92m'); return { before, both, cal, has: !!(window.qbDbg && window.qbDbg.levelUp) }; });
+  ok(!lv.has || (lv.before && !lv.cal), 'a level-up while the calendar is open puts the calendar aside (one window at a time) ' + JSON.stringify(lv));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

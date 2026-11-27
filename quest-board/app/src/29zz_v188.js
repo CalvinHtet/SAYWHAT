@@ -25,7 +25,7 @@ window.addEventListener("click",function(e){if(!v88Sync())return;var t=e.target;
   if(el.tagName==="LABEL"&&el.getAttribute("for")){var inp=document.getElementById(el.getAttribute("for"));if(inp&&inp.type==="file"){pop("The camera opens once your save is in. One moment.");return}}
   /* QA af6a81be MED: the intent is kept, not just the tap: a task to tick (or untick) and any on/off control's wanted state, so a
      save that lands with it already that way is left alone (a task ticked on another phone is not unticked) */
-  var sel=v88Sel(el),bare=sel===el.tagName.toLowerCase();if(bare)sel=null;/* QA LOW: a button with no data attributes is kept by reference */
+  var sel=v88Sel(el),bare=sel===el.tagName.toLowerCase();/* QA bb329b08 LOW: a button with an id (the brain dump's ADD, #capgo) is found again by it after the Board is redrawn */if(bare&&el.id&&/^[A-Za-z][\w-]*$/.test(el.id)){sel="#"+el.id;bare=false}if(bare)sel=null;/* QA LOW: a button with no data attributes is kept by reference */
   var key=sel||el,i=-1;V88Q.forEach(function(q,n){if(q.key===key)i=n});
   if(i>=0){if(el.getAttribute("data-act")==="toggle"||el.hasAttribute("aria-pressed")){V88Q.splice(i,1);v88Mark(sel,false,el)}return}
   var ent={key:key,sel:sel,el:el,act:el.getAttribute("data-act")||"",id:el.getAttribute("data-id")||""};

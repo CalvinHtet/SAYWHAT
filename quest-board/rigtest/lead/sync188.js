@@ -37,4 +37,9 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const s7 = await V(async () => { const b = document.createElement('button'); b.className = 'v88bare'; b.textContent = 'Add'; let hit = 0; b.addEventListener('click', () => hit++); document.querySelector('#layer').appendChild(b); document.documentElement.classList.add('qb-sync');
     b.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); const q = window.__qbV188.q(); const h0 = hit; document.documentElement.classList.remove('qb-sync'); await new Promise((r) => setTimeout(r, 900)); b.remove(); return { q, h0, hit }; });
   ok(s7.q.length === 1 && s7.h0 === 0 && s7.hit === 1, 'a button without data attributes is queued and then goes through ' + JSON.stringify(s7));
+  /* QA bb329b08 LOW: the brain dump's ADD (#capgo) queued during sync still adds the typed task after the Board is redrawn */
+  const s8 = await V(async () => { const x = window.__qb.x(), S = x.S, n0 = S.quests.length; const ta = document.getElementById('cap'); ta.value = 'Water the fern'; ta.dispatchEvent(new Event('input', { bubbles: true }));
+    document.documentElement.classList.add('qb-sync'); document.getElementById('capgo').dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); const q = window.__qbV188.q();
+    x.render(); const kept = (document.getElementById('cap') || {}).value; document.documentElement.classList.remove('qb-sync'); await new Promise((r) => setTimeout(r, 2500)); return { q, kept, added: S.quests.length - n0, names: S.quests.slice(-1).map((t) => t.name) }; });
+  ok(s8.q[0] === '#capgo' && s8.added === 1 && /fern/i.test(s8.names[0]), 'ADD queued during sync adds the typed task once the save is in, after a redraw ' + JSON.stringify(s8));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
