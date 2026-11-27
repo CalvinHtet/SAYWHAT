@@ -2038,5 +2038,14 @@
  },
  "smk_ashwrap": {
   "slot": "neck"
+ },
+ "smk_embercuffs": {
+  "slot": "arms"
+ },
+ "smk_watch": {
+  "slot": "arms"
+ },
+ "smk_joggers": {
+  "slot": "pants"
  }
 }
