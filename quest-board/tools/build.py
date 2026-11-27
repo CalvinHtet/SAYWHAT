@@ -39,6 +39,9 @@ for name in ("rig.js", "look.js", "creator.js", "loft_bridge.js"):
     shutil.copy(os.path.join(ROOT, "src", name), os.path.join(DIST, name))
 for art in glob.glob(os.path.join(ROOT, "art", "app", "*.webp")):
     shutil.copy(art, os.path.join(DIST, "art", os.path.basename(art)))
+# banner loops (bl_pc_<id>_loop.mp4, Cal 11-25/26: Higgsfield banner animations) travel as loose files in every build, never packed
+for art in glob.glob(os.path.join(ROOT, "art", "app", "*.mp4")):
+    shutil.copy(art, os.path.join(DIST, "art", os.path.basename(art)))
 
 # character layers and icons travel as two packs, so a published page stays under its file limit
 import base64
@@ -97,7 +100,7 @@ def fp(path):
 
 
 data = {name: json.loads(read(ROOT, "data", name + ".json")) for name in ("rig", "bodies", "poses", "creator", "loft", "items", "rsart", "pet_art", "pet_clothes", "banners")}
-data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.join(DIST, "art", "*.webp")))}
+data["arthash"] = {os.path.basename(a): fp(a) for a in sorted(glob.glob(os.path.join(DIST, "art", "*.webp")) + glob.glob(os.path.join(DIST, "art", "*.mp4")))}
 # every runtime picture by name, packed or loose, for the rig test pages (rigtest/matrix.html; written there, never into dist, so a
 # publish carries no extra file), which load art straight from
 # art/app and so cannot tell from the packs which pictures exist (QA: the yawn fallback and the hair lock key on that)
