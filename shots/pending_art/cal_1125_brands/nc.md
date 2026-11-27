@@ -1,4 +1,4 @@
-# nc: 26 new pieces to reach 6 per category (Cal 11-25 via LEAD)
+# nc: 40 new pieces to reach 8 per category (Cal 11-25 for 6; Cal 11-26 via LEAD: 8 per category, 4 shown per drop)
 
 Brand look: luxe lounge streetwear. Jet black, heather ash, cream, ivory, taupe, silver. Soft heavy fabrics (fleece, waffle,
 cashmere, sherpa, suede), clean silver hardware. No wordmarks or rooster marks painted in (no text, no logos in the art).
@@ -33,3 +33,21 @@ jog_black, jog_ash, jog_slate, short; shoes court, knit, slide.
 | shoes | nc_loafer | Shearling Loafers | Taupe suede loafers with cream shearling lining folding over the collar. |
 | shoes | nc_socksneaker | Knit Sock Sneakers | Heather-ash knit sock sneakers with chunky cream soles and a silver heel tab. |
 | shoes | nc_chukka | Suede Chukkas | Cream suede chukka boots with silver eyelets and black laces. |
+
+## Extra 14 for 8 per category (Cal 11-26)
+| Category (slot) | id | Name | Line |
+|---|---|---|---|
+| hat | nc_fleecetrapper | Sherpa Trapper Hat | Jet-black suede trapper hat lined with cream sherpa, ear flaps up, a silver snap under the chin. |
+| hat | nc_ribcap | Ribbed Knit Cap | Close-fitting heather-ash rib-knit skullcap with a black tipped edge and a tiny silver ring tab at the side. |
+| head (glasses) | nc_catshades | Silver Cat-Eye Shades | Sharp cat-eye frames in polished silver with gradient smoke lenses. |
+| head (glasses) | nc_visorshade | Mirror Visor Shades | Narrow rimless mirror-silver visor lens across both eyes, thin silver arms. |
+| necklace (neck) | nc_pearls | Black Pearl Strand | Short strand of glossy black pearls with a silver bar clasp, worn at the base of the neck. |
+| necklace (neck) | nc_lariat | Silver Lariat | Long fine silver lariat chain dropping in a Y down the chest with a small silver bar at the end. |
+| gloves (arms) | nc_opera | Satin Opera Gloves | Long black satin gloves reaching above the elbow with a soft sheen and a tiny silver button at each wrist. |
+| gloves (arms) | nc_bangles | Stacked Silver Bangles | A stack of thin polished silver bangles on one wrist and a single thick one on the other. |
+| top | nc_bralette | Cashmere Bralette Set | Cropped heather-ash cashmere knit bralette with thin straps and a cream ribbed band, a light cream cardigan off the shoulders. |
+| top | nc_robe | Lounge Robe Jacket | Short black satin-trimmed fleece robe jacket, wrapped and belted at the waist, deep V neckline, cream piping. |
+| bottom | nc_satinshort | Satin Lounge Shorts | Short black satin lounge shorts with cream piping and a silver drawcord tip. |
+| bottom | nc_flares | Ribbed Flare Pants | High-waisted heather-ash ribbed knit flare pants, close at the hip and wide at the ankle. |
+| shoes | nc_mules | Satin Slide Mules | Black satin slide mules with a soft cream shearling strap and a small silver bar. |
+| shoes | nc_platform | Cream Platform Sneakers | Chunky cream leather platform sneakers with ash suede panels and silver lace tips. |
