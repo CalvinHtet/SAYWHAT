@@ -318,7 +318,7 @@ Requests for ROOMS (Cal, 2026-11-13; approvals go to Cal first):
   26_world.js already does. That way Sable, Rafe and Nova no longer look alike: TEAM.look gives all three the same y_bucket hat.
 
 QA Doing:
-- Now (on release/v1.85 fffedeff, LIVE): v1.85 live check PASS (QA findings). Next: loops papercut, sky_paper, tidal; smk_band cloud repaint; LEAD's v1.86 batch.
+- Now (on release/v1.85 fffedeff, LIVE): v1.85 live check PASS (QA findings). Next: loops papercut, sky_paper, tidal; the v1.86 candidate.
   Was: Now (on release/v1.85 fffedeff = lead/v185src + APPV 1850): v1.85 candidate PASS, can ship, with stand-by rollback-v1.84 5cba9d34 (v1.84.5) (QA findings). Next: the v1.85 live check; the short nc_snood; loops orrery and the papercuts.
   Was: Now (on release/v1.84 709dc551, LIVE): v1.84 live check PASS; e811bfda PASS (QA findings). Next: the nc_snood shape; LEAD's v1.85 batch.
   Was: Now (on release/v1.84 709dc551 = lead/v184src + APPV 1840): v1.84 candidate PASS, can ship, with stand-by rollback-v1.83 7a443192 (v1.83.5) (QA findings). Next: the v1.84 live check; the Coin Cap outline redo; the aurora and fire loops; nc_snood redo.
@@ -531,6 +531,7 @@ QA Doing:
   Was: Now (on efe8e2d): v1.04 LIVE as efe8e2d, verified (QA findings).
 
 QA findings (Mac team; one line each: what, where, how to see it, pictures, owner):
+- PASS with a LOW, ROOMS 1162f54d (smk_band repaint, Cal: "repaint it") + LEAD f7ab4aa8 (its row line) (owners ROOMS, LEAD). Only m and f front layers and the icon changed; both backs are byte-identical to the passed art. Zoomed old against new: the stitched cloud with a speech-bubble tail is gone, replaced by an ember outline of a smoke wisp ending in a small puff (the Shadow Hood Cap's mark). No letter, glyph or logo. On the figure (every hairstyle; idle, sideL, sideR, rearStand, stretch) it reads as a thin smoke squiggle; hairgap.js scores 110, clean. The row line (ash-grey cloth, an ember-stitched smoke puff trailing a long wisp) matches. LOW: the transplanted mark's lines are thin and a little scratchy next to the bold dashed stitching, with two loose specks at the wisp's tail, so it reads fainter than the old cloud did.
 - PASS, LEAD 13564724 (gx_nc_snood "Sherpa Zip Snood" on sale, standard; owner LEAD). Clean build: artcheck 407, 0 gaps; week201 and shop149 PASS; the line (cream sherpa roll, black quilted ring, silver zip pull) matches the short art QA passed in 82b64033.
 - PASS, LEAD ef8a4758 (one group, allies; 29zz_v220.js; owner LEAD). allies220, crawl210 and tut219 PASS on a clean build. QA's runtime scan (rigtest/qa/allies220qa.js) over the level-5 Board, the Crawls tab with its first window, the tab, a hurt ally, the (i) sheet and the picker found no team or teammate a player can read, and allies on every Crawls screen. QA's static sweep of every quoted string, after v220Fix, finds team only in 29m_tester.js's test steps ("Rafe on the team ..."), which players do not see. No page errors.
 - PASS, ROOMS 82b64033 nc_snood shortened (owner ROOMS, rows LEAD). A sherpa roll over a narrow black quilted ring, ending at the collarbone, with one short cord and a silver cord lock; the top shows below it. Both bodies, all 19 poses, alone and over nc_tee, nc_hoodie, o_tee and smk_bomber: no gaps, and it reads as a neck piece. Never-plain is met.
