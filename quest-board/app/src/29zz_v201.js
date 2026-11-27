@@ -67,6 +67,6 @@ var v201Shop=shopHtml;shopHtml=function(){if(shopTab!==V201ID){V201ON=0;return v
 var v201Hub=typeof shubHome==="function"?shubHome:null;
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[data-shub="vault"]');if(!b)return;try{SHUB="vault";shopTab=V201ID;window._qsSeen=1}catch(x){}},true);
 var v201R2=render;render=function(){var r=v201R2.apply(this,arguments);
-  try{var t=document.querySelector('[data-shub="vault"]');if(t){var s=t.querySelector("small,span:last-child");if(s&&!/all week/.test(s.textContent))s.textContent="All week: 3 a category from every brand"}}catch(e){}return r};
+  try{var t=document.querySelector('[data-shub="vault"]');if(t){var s=t.querySelector("small");if(s&&!/all week/.test(s.textContent))s.textContent="All week: 3 a category from every brand"}}catch(e){}return r};
 htabCss("qb-v201-css",".qshop.v201v .qs-lead{margin:4px 0 10px}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV201={vault:function(n){return v201Vault(n)},half:function(b){return v201Half(b)},cat:function(id){var it=SHOP.filter(function(x){return x[0]===id})[0];return it?v201Cat(it):null},sun:v201Sun,cfg:V201,reset:function(){V201VC={};V201HALF={}}};

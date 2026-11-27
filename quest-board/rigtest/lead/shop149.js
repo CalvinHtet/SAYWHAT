@@ -15,7 +15,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
   const tap = async (sel) => { await V((sel) => document.querySelector(sel).click(), sel); await p.waitForTimeout(700); await V(() => document.querySelectorAll('#layer .modal,.bsplash,.dropsplash').forEach((m) => m.remove())); };
   /* level 12: the home screen, no Pet Store */
   await setup(12); await shop(); let s = await scr();
-  ok(s.hub === 'home' && s.tiles.join('|') === 'Street Shop|Stylist|Interface' && /* v1.53: square doors, Interface bottom left */ s.closet && !s.back, 'the Shop opens on its home screen: ' + s.tiles.join(', ') + ', and Closet (no Pet Store at level 12)'); await p.waitForTimeout(2500); await p.screenshot({ path: OUT + '/shop149_home.png' });
+  ok(s.hub === 'home' && s.tiles.map((t) => t.replace(/\s*!$/, '')).join('|') === 'The Vault|Street Shop|Stylist|Interface' && /* v1.53: square doors, Interface bottom left; Cal 11-26: the Vault's door every week (29zz_v201.js) */ s.closet && !s.back, 'the Shop opens on its home screen: ' + s.tiles.join(', ') + ', and Closet (no Pet Store at level 12)'); await p.waitForTimeout(2500); await p.screenshot({ path: OUT + '/shop149_home.png' });
   ok(!/Wardrobe/.test(s.text), 'no "Wardrobe" on the home screen');
   await tap('[data-shub="street"]'); s = await scr();
   ok(s.hub === 'street' && s.back && s.tabs.length >= 1 && !s.tabs.some((t) => /Stylist|Closet|Wardrobe|Pets/.test(t)) && !s.closet && s.rack > 0, 'Street Shop: a back button and only this week\'s brands across the top: ' + s.tabs.join(', ')); await p.screenshot({ path: OUT + '/shop149_street.png' });
@@ -31,7 +31,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 877
     let m = null; for (let i = 0; i < 40 && !m; i++) { await new Promise((r) => setTimeout(r, 150)); m = document.querySelector('.bsplash'); } const r = { splash: !!m }; if (!m) return r; const xb = m.querySelector('.mx,[data-act="mclose"]'); if (xb) xb.click(); else m.remove(); await new Promise((q) => setTimeout(q, 400)); r.afterX = window.__qbV149.hub(); return r; });
   ok(sp.splash && sp.afterX === 'home', 'closing a brand\'s window with its x leaves the Shop on its home screen ' + JSON.stringify(sp));
   /* level 30: the Pet Store and the Boutique */
-  await setup(30); await shop(); s = await scr(); ok(s.tiles.join('|') === 'Street Shop|Stylist|Interface|Pet Store', 'level 30: ' + s.tiles.join(', '));
+  await setup(30); await shop(); s = await scr(); ok(s.tiles.map((t) => t.replace(/\s*!$/, '')).join('|') === 'The Vault|Street Shop|Stylist|Interface|Pet Store', 'level 30: ' + s.tiles.join(', '));
   await tap('[data-shub="pets"]'); s = await scr(); ok(s.hub === 'pets' && /pet store/i.test(s.title) && s.back && !s.tabs.length, 'Pet Store: its own screen'); await p.screenshot({ path: OUT + '/shop149_pets.png' });
   /* v1.67 (Cal 11-25): every brand in one row, no floor tabs, no Boutique level window (shop167.js) */
   await tap('.shub-back'); await tap('[data-shub="street"]'); s = await scr(); ok(s.hub === 'street' && !s.floors.length && s.tabs.length >= 2 && !s.tabs.some((t) => /Pets|Stylist/.test(t)), 'the Street Shop has one row of brands, no floor tabs, no Pets or Stylist tab: ' + s.tabs.join(', '));
