@@ -1,0 +1,9 @@
+// Cal 11-26 (29zz_v218.js): the banner shop grouped by style, one style at a time, opening on the style on your card.
+//   PORT=<build server> NODE_PATH=<playwright's parent> OUT=<dir> node rigtest/lead/ban218.js
+const { chromium } = require('playwright'); const PORT = process.env.PORT || 8838; let bad = 0; const ok = (c, s) => { if (!c) bad++; console.log((c ? 'ok   ' : 'BAD  ') + s); };
+(async () => { const b = await chromium.launch(); const p = await b.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+  await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbV218 && window.QBLoft && window.QBLoft.data && window.QBLoft.data.arthash, null, { timeout: 90000 });
+  const r = await p.evaluate(() => { const x = window.__qb.x(), S = x.S; S.created = true; S.char = window.__qb.fixChar({ name: 'C', sex: 'm' }); S.xp = x.cum(22); S.gates = [5, 10, 15, 20]; S.tutDone = 1; const parse = (h) => { const d = document.createElement('div'); d.innerHTML = h; return { chips: [...d.querySelectorAll('.v218st [data-v218]')].map((c) => c.getAttribute('data-v218') + (c.classList.contains('on') ? '*' : '')), cards: [...d.querySelectorAll('.pc-bgc')].map((c) => c.getAttribute('data-card').slice(5)) }; };
+    const a = parse(window.__qbV218.html()); window.__qbV218.sel('ink'); const ink = parse(window.__qbV218.html()); window.__qbV218.sel('paper'); const pap = parse(window.__qbV218.html()); window.__qbV218.sel(''); return { a, ink, pap }; });
+  ok(r.a.chips.length >= 3 && r.a.chips.some((c) => c.endsWith('*')) && r.ink.cards.length && r.ink.cards.every((id) => /ink/.test(id)) && r.pap.cards.every((id) => /paper/.test(id)), 'style chips, one style at a time ' + JSON.stringify(r));
+  ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();
