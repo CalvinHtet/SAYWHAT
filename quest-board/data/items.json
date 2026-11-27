@@ -2150,5 +2150,8 @@
  "nc_tagchain": {
   "slot": "neck",
   "frontOnly": true
+ },
+ "nc_pearls": {
+  "slot": "neck"
  }
 }
