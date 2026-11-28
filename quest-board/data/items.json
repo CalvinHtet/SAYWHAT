@@ -2303,5 +2303,14 @@
  "y_tube": {
   "slot": "top",
   "bare": true
+ },
+ "y_mini": {
+  "slot": "pants",
+  "skirt": true,
+  "femaleOnly": true
+ },
+ "y_puffboot": {
+  "slot": "shoes",
+  "over": true
  }
 }
