@@ -2364,5 +2364,14 @@
  },
  "oc_tube": {
   "slot": "neck"
+ },
+ "oc_cord": {
+  "slot": "neck"
+ },
+ "oc_lanyard": {
+  "slot": "neck"
+ },
+ "oc_ring": {
+  "slot": "neck"
  }
 }

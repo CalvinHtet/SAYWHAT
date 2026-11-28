@@ -32,7 +32,7 @@ shoes 2 (boot, derby). New below: hat 7, head 8, neck 8, top 5, bottom 5, shoes 
 | neck | oc_bandana | Splatter Neck Bandana | Cream bandana knotted at the neck, indigo and cadmium splatter. |
 | neck | oc_tube | Canvas Tube Scarf | Cream canvas snood, indigo brush stripes. |
 | neck | oc_cord | Knotted Cord Choker | Charcoal waxed cord, three cadmium enamel beads. |
-| neck | oc_lanyard | Indigo Key Lanyard | Indigo webbing lanyard, copper clip and a key ring (no tags). |
+| neck | oc_lanyard | Indigo Key Lanyard | Wide indigo webbing lanyard flecked with cadmium paint, chunky copper clip, a ring with two plain keys (no tags, not a phone lanyard). |
 | neck | oc_ring | Paint-Dipped Ring Chain | Silver ball chain, a chunky ring dipped half in cadmium. |
 | neck | oc_scarf | Indigo Knit Scarf | Long raw-indigo rib scarf, cream fringe, cadmium flecks. |
 | neck | oc_pearl | Gesso Pearl Strand | Matte cream "gesso" beads on a charcoal cord, one cadmium bead. |
