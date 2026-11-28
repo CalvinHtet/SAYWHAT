@@ -2482,5 +2482,8 @@
  },
  "oc_chore": {
   "slot": "top"
+ },
+ "oc_workboot": {
+  "slot": "shoes"
  }
 }

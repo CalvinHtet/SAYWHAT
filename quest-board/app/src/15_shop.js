@@ -413,6 +413,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_platform","a_shoes","Scraped Platform Sneakers",1700,1,"Cream platforms, cadmium palette-knife scrapes.",{gar:"oc_platform",b:"oc",from:"2026-12-02"}],
  ["gx_oc_slide","a_shoes","Gesso Slides",1500,1,"Thick cream slides, gesso-crusted strap, cadmium stripe.",{gar:"oc_slide",b:"oc",from:"2026-12-02"}],
  ["gx_oc_mule","a_shoes","Indigo Clog Mules",1600,1,"Raw indigo denim, copper rivets, cream wooden soles.",{gar:"oc_mule",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_workboot","a_shoes","Drip Work Boots",1700,1,"Charcoal lug-sole boots, cadmium drips over the toes.",{gar:"oc_workboot",b:"oc",from:"2026-12-02"}],
  /* REGIMENT (Boutique; ROOMS 21c67e7, b1fa777; QA 806a9bf): held until Cal approves the painted sheet (29zx_simple.js DROPS.hold) */
  ["gx_rg_cap","a_hat","Cord Peaked Cap",1100,1,"Navy wool, scarlet band, brass chin cord, a knot crest.",{gar:"rg_cap",b:"rg"}],
  ["gx_rg_side","a_hat","Piped Side Cap",950,1,"Navy side cap worn tilted, scarlet piping, brass buttons.",{gar:"rg_side",b:"rg"}],
