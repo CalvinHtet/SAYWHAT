@@ -2485,5 +2485,15 @@
  },
  "oc_chore": {
   "slot": "top"
+ },
+ "oc_tee": {
+  "slot": "top"
+ },
+ "oc_vest": {
+  "slot": "top"
+ },
+ "oc_crop": {
+  "slot": "top",
+  "bare": true
  }
 }
