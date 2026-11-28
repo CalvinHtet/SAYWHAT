@@ -2301,6 +2301,7 @@
   "slot": "top"
  },
  "y_tube": {
-  "slot": "top"
+  "slot": "top",
+  "bare": true
  }
 }
