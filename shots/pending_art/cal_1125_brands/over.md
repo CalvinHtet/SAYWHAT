@@ -34,9 +34,9 @@ gloves. Fri 12-04 will not take all 31; the rest wait for over's next drop.
 | top | o_anorak | Concrete Anorak | Concrete-grey half-zip anorak, orange drawcords, a black kangaroo pocket. |
 | bottom | o_short | Nylon Cargo Shorts | Black nylon cargo shorts to the knee, orange pull tabs, reflective strip. |
 | bottom | o_jogger | Concrete Tech Joggers | Concrete-grey nylon joggers, orange zip pockets, black cuffs. |
-| shoes | o_tabi | Split-Toe Trainers | Black split-toe trainers, orange heel tab, chunky grey soles. |
-| shoes | o_platform | Grip Platform Sneakers | Charcoal suede platforms, grip-tape side panels, orange laces. |
-| shoes | o_hiker | Concrete Hiker Mids | Grey suede hiker mids, black lug soles, orange laces and pull loops. |
+| shoes | o_tabi | Split-Toe Trainers | Black split-toe trainers, a small flat orange heel patch, chunky grey soles (QA FIX 11-28). |
+| shoes | o_platform | Grip Platform Sneakers | Charcoal suede on tall stacked black soles, grip-tape toe caps and heel counters, orange laces; plain sides (side panels kept drifting toward a real brand stripe, 11-28). |
+| shoes | o_hiker | Concrete Hiker Mids | Grey suede hiker mids, black lug soles, orange laces, a flat orange heel stripe (QA FIX 11-28: no loop above a wide hem). |
 | gloves (arms) | o_fingerless | Grip Fingerless Gloves | Black fingerless gloves, grip-tape palms, orange stitching. |
 | gloves (arms) | o_mech | Mechanic Gloves | Concrete-grey mechanic gloves, black knuckle pads, orange cuffs. |
 | gloves (arms) | o_band | Reflective Wristbands | Black terry wristbands with a reflective stripe, one each wrist. |

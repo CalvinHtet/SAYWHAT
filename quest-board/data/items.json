@@ -2681,5 +2681,14 @@
  },
  "o_chain": {
   "slot": "arms"
+ },
+ "o_platform": {
+  "slot": "shoes"
+ },
+ "o_tapewrap": {
+  "slot": "arms"
+ },
+ "o_watch": {
+  "slot": "arms"
  }
 }
