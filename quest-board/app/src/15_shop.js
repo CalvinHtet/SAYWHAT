@@ -40,6 +40,7 @@ var EXTRA_ITEMS=[
  ["gx_y_shield","a_acc","Chrome Shield Shades",750,1,"One wraparound chrome mirror lens, pink-to-blue sheen.",{gar:"y_shield",b:"y2k",from:"2026-11-30"}],
  ["gx_y_heart","a_acc","Pink Heart Shades",750,1,"Glossy hot-pink hearts, rose lenses, silver arms.",{gar:"y_heart",b:"y2k",from:"2026-11-30"}],
  ["gx_y_starglass","a_acc","Star Frame Glasses",800,1,"Chrome stars, smoky lilac lenses, a rhinestone on each point.",{gar:"y_starglass",b:"y2k",from:"2026-11-30"}],
+ ["gx_y_tinted","a_acc","Tiny Oval Tints",700,1,"Rimless baby-blue ovals, thin silver bridge.",{gar:"y_tinted",b:"y2k",from:"2026-11-30"}],
  ["gx_y_phone","a_acc","Flip Phone Lanyard",700,1,"Chrome flip phone on a beaded strap.",{gar:"y_phone",b:"y2k"}],
  ["gx_y_chains","a_acc","Layered Chrome Chains",850,1,"Ball chain over a chunky curb.",{gar:"y_chains",b:"y2k"}],
  ["gx_y_moto","a_top","Racing Moto Jacket",1800,1,"Black leather, coral panels, patches.",{gar:"y_moto",b:"y2k"}],
