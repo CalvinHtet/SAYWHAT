@@ -46,6 +46,8 @@ var EXTRA_ITEMS=[
  ["gx_y_phone","a_acc","Flip Phone Lanyard",700,1,"Chrome flip phone on a beaded strap.",{gar:"y_phone",b:"y2k"}],
  ["gx_y_chains","a_acc","Layered Chrome Chains",850,1,"Ball chain over a chunky curb.",{gar:"y_chains",b:"y2k"}],
  ["gx_y_disc","a_acc","Chrome Disc Pendant",700,1,"Iridescent mirror disc on a chunky chrome ball chain.",{gar:"y_disc",b:"y2k",from:"2026-11-30"}],
+ ["gx_y_beads","a_acc","Candy Bead Choker",650,1,"Chunky pink, lilac and cyan pony beads, one chrome heart.",{gar:"y_beads",b:"y2k",from:"2026-11-30"}],
+ ["gx_y_pearlstar","a_acc","Pearl and Star Strand",750,1,"Big cream pearls, three chunky chrome stars hanging at the front.",{gar:"y_pearlstar",b:"y2k",from:"2026-11-30"}],
  ["gx_y_moto","a_top","Racing Moto Jacket",1800,1,"Black leather, coral panels, patches.",{gar:"y_moto",b:"y2k"}],
  ["gx_y_mesh","a_top","Mesh Layer Top",1200,1,"Cyan mesh long sleeve under a black tank.",{gar:"y_mesh",b:"y2k"}],
  ["gx_y_furden","a_top","Fur-Collar Denim Jacket",1600,1,"Cropped dark denim over a white tee, cream fur collar.",{gar:"y_furden",b:"y2k"}],
