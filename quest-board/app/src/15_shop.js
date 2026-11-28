@@ -90,6 +90,7 @@ var EXTRA_ITEMS=[
  /* new240 OVERPASS (Cal: "Approve after QA", 2026-11-17; art ROOMS cbc3709) */
  ["gx_o_5panel","a_hat","Five-Panel Skate Cap",850,1,"Black nylon, orange side tab.",{gar:"o_5panel",b:"over"}],
  ["gx_o_reflect","a_hat","Reflective Bucket",950,1,"Grey reflective nylon that flares at night.",{gar:"o_reflect",b:"over"}],
+ ["gx_o_skull","a_hat","Reflective Skull Cap",900,1,"Black nylon skull cap, reflective edge, orange seam tape.",{gar:"o_skull",b:"over",from:"2026-12-04"}],
  ["gx_o_durag","a_hat","Satin Durag",750,1,"Black satin, long tails.",{gar:"o_durag",b:"over"}],
  ["gx_o_tool","a_acc","Skate Tool Lanyard",650,1,"Orange lanyard, steel T-tool.",{gar:"o_tool",b:"over"}],
  ["gx_o_rect","a_acc","Smoke Rectangle Shades",750,1,"Slim black frames, smoke lenses.",{gar:"o_rect",b:"over"}],
