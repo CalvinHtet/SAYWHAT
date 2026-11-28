@@ -2258,5 +2258,14 @@
   "slot": "mask",
   "frontOnly": true,
   "neutral": true
+ },
+ "y_beads": {
+  "slot": "neck"
+ },
+ "y_disc": {
+  "slot": "neck"
+ },
+ "y_pearlstar": {
+  "slot": "neck"
  }
 }
