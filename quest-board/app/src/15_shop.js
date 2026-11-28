@@ -36,6 +36,7 @@ var EXTRA_ITEMS=[
  ["gx_y_visor","a_hat","Holo Sun Visor",900,1,"Iridescent brim, black band.",{gar:"y_visor",b:"y2k"}],
  ["gx_y_race","a_hat","Racing Patch Cap",850,1,"Black twill, coral and cyan racing patches.",{gar:"y_race",b:"y2k"}],
  ["gx_y_furtrap","a_hat","Faux Fur Trapper",950,1,"Shaggy black fur, cyan satin lining.",{gar:"y_furtrap",b:"y2k"}],
+ ["gx_y_bandana","a_hat","Rhinestone Bandana",800,1,"Black, hot-pink star print, rhinestones along the edge.",{gar:"y_bandana",b:"y2k",from:"2026-11-30"}],
  ["gx_y_rimless","a_acc","Rimless Gradient Shades",750,1,"Cyan to clear, thin silver bridge.",{gar:"y_rimless",b:"y2k"}],
  ["gx_y_shield","a_acc","Chrome Shield Shades",750,1,"One wraparound chrome mirror lens, pink-to-blue sheen.",{gar:"y_shield",b:"y2k",from:"2026-11-30"}],
  ["gx_y_heart","a_acc","Pink Heart Shades",750,1,"Glossy hot-pink hearts, rose lenses, silver arms.",{gar:"y_heart",b:"y2k",from:"2026-11-30"}],
