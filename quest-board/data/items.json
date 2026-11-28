@@ -2663,5 +2663,17 @@
  },
  "o_jogger": {
   "slot": "pants"
+ },
+ "o_tabi": {
+  "slot": "shoes"
+ },
+ "o_hiker": {
+  "slot": "shoes"
+ },
+ "o_mech": {
+  "slot": "arms"
+ },
+ "o_fingerless": {
+  "slot": "arms"
  }
 }

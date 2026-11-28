@@ -124,8 +124,12 @@ var EXTRA_ITEMS=[
  ["gx_o_suede","a_shoes","Suede Low Skaters",1400,1,"Grey suede, orange laces, padded tongue.",{gar:"o_suede",b:"over"}],
  ["gx_o_moc","a_shoes","Moc-Toe Work Boots",1600,1,"Black leather, orange laces, white wedge.",{gar:"o_moc",b:"over"}],
  ["gx_o_slipon","a_shoes","Knit Slip-On Trainers",1300,1,"Black knit, orange heel pull.",{gar:"o_slipon",b:"over"}],
+ ["gx_o_tabi","a_shoes","Split-Toe Trainers",1100,1,"Black split-toe trainers, chunky grey soles, orange heel tab.",{gar:"o_tabi",b:"over",from:"2026-12-04"}],
+ ["gx_o_hiker","a_shoes","Concrete Hiker Mids",1150,1,"Grey suede hiker mids, black lug soles, orange laces.",{gar:"o_hiker",b:"over",from:"2026-12-04"}],
  /* Cal 11-18 OVERPASS: the chain and skate tool's replacements ("Redo those two accessories with something else"; ROOMS cefab81) */
  ["gx_o_guards","a_acc","Grip-Tape Wrist Guards",850,1,"Grip-tape facing, orange straps, scuffed grey plates.",{gar:"o_guards",b:"over"}],
+ ["gx_o_mech","a_acc","Mechanic Gloves",900,1,"Concrete-grey mechanic gloves, black knuckle pads, orange cuffs.",{gar:"o_mech",b:"over",from:"2026-12-04"}],
+ ["gx_o_fingerless","a_acc","Grip Fingerless Gloves",850,1,"Black fingerless gloves, grip-tape palms, orange stitching.",{gar:"o_fingerless",b:"over",from:"2026-12-04"}],
  ["gx_o_resp","a_acc","Spray Respirator",700,1,"Matte black half mask, orange filter caps, reflective strip.",{gar:"o_resp",b:"over"}],
  ["gx_v_cap","a_hat","Leather Dad Cap",850,1,"Soft black leather.",{gar:"v_cap",b:"rose"}],
  ["gx_v_lace","a_hat","Lace Headband",700,1,"Black lace and one rose.",{gar:"v_lace",b:"rose",fo:1}],
