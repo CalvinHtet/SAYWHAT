@@ -4,15 +4,20 @@ Brand look: concrete-and-skate streetwear under the overpass. Black, washed char
 as the one loud colour; reflective strips, grip tape, nylon, steel hardware, spray-paint overspray. Never cute, never plain.
 No text, no logos, no real brand marks.
 
-Retire (audit 11-27 + Cal 11-17 no durags; owner keeps): gx_o_durag Satin Durag.
+Nothing to retire: the durag and paisley bandana were cut in v1.17 (Cal's no-durag rule), with the beanie, camp cap, lock,
+flannel, crop hoodie, slides, tool lanyard, thermal and jorts (LEAD 11-28, on sale only, v201Cat).
 
-Live (from 15_shop.js, 36 rows): hat 6 (5 after the durag), head 4, neck 3, top 9, bottom 7, shoes 6, gloves 1.
-New below: hat 3 (one replaces the durag), head 4, neck 5, bottom 1, shoes 2, gloves 7 = 22. Tops are already at 9: none.
+On sale: hat 2, head 4, neck 1, top 6, bottom 6, shoes 5, gloves 1.
+New below: hat 6, head 4, neck 7, top 2, bottom 2, shoes 3, gloves 7 = 31. Order: head, neck, hats, tops, bottoms, shoes,
+gloves. Fri 12-04 will not take all 31; the rest wait for over's next drop.
 
 | Category (slot) | id | Name | Line |
 |---|---|---|---|
-| hat | o_skull | Reflective Skull Cap | Tight black nylon skull cap, a reflective strip round the edge, orange seam tape. (Replaces gx_o_durag.) |
+| hat | o_skull | Reflective Skull Cap | Tight black nylon skull cap, a reflective strip round the edge, orange seam tape. |
 | hat | o_ear | Concrete Ear-Flap Cap | Concrete-grey nylon cap with short ear flaps, orange toggles, black brim. |
+| hat | o_trapper | Olive Nylon Trapper | Washed olive nylon trapper, black fleece flaps, orange toggles. |
+| hat | o_beanie2 | Reflective Rib Beanie | Charcoal rib beanie, a reflective band round the cuff, orange tab. |
+| hat | o_hardcap | Grip Brim Cap | Black six-panel cap, a grip-tape top on the brim, orange eyelets. |
 | hat | o_balaclava | Rib Open Balaclava | Black rib-knit open-face balaclava hood, an orange tab at the crown. |
 | head (glasses) | o_slit | Slit Visor Shades | Narrow black wrap visor, a thin orange mirror slit, rubber nose bridge. |
 | head (glasses) | o_goggle | Dust Goggles | Smoke-lens dust goggles, black rubber frame, orange strap. |
@@ -22,10 +27,16 @@ New below: hat 3 (one replaces the durag), head 4, neck 5, bottom 1, shoes 2, gl
 | neck | o_carabiner | Carabiner Key Clip | Black cord, a chunky orange carabiner, two plain steel keys. |
 | neck | o_snood | Reflective Snood | Charcoal fleece neck snood, a reflective band round the middle. |
 | neck | o_cuban | Matte Cuban Chain | Thick matte-black curb chain, one orange-enamel link. |
+| neck | o_dogtag2 | Orange Cord Pendant | Thick orange paracord necklace, a matte black steel washer pendant. |
+| neck | o_reflect | Reflective Lanyard | Black lanyard with a reflective stripe and a steel clip (no tags, no text). |
 | neck | o_tape | Grip-Tape Choker | Black grip-tape choker band, a steel ring at the front. |
+| top | o_vest | Utility Chest Rig Vest | Black nylon utility vest, many pockets, orange buckles, reflective strips. |
+| top | o_anorak | Concrete Anorak | Concrete-grey half-zip anorak, orange drawcords, a black kangaroo pocket. |
+| bottom | o_short | Nylon Cargo Shorts | Black nylon cargo shorts to the knee, orange pull tabs, reflective strip. |
 | bottom | o_jogger | Concrete Tech Joggers | Concrete-grey nylon joggers, orange zip pockets, black cuffs. |
 | shoes | o_tabi | Split-Toe Trainers | Black split-toe trainers, orange heel tab, chunky grey soles. |
 | shoes | o_platform | Grip Platform Sneakers | Charcoal suede platforms, grip-tape side panels, orange laces. |
+| shoes | o_hiker | Concrete Hiker Mids | Grey suede hiker mids, black lug soles, orange laces and pull loops. |
 | gloves (arms) | o_fingerless | Grip Fingerless Gloves | Black fingerless gloves, grip-tape palms, orange stitching. |
 | gloves (arms) | o_mech | Mechanic Gloves | Concrete-grey mechanic gloves, black knuckle pads, orange cuffs. |
 | gloves (arms) | o_band | Reflective Wristbands | Black terry wristbands with a reflective stripe, one each wrist. |
