@@ -28,8 +28,8 @@ gloves. Fri 12-04 will not take all 31; the rest wait for over's next drop.
 | neck | o_snood | Reflective Snood | Charcoal fleece neck snood, a reflective band round the middle. |
 | neck | o_cuban | Matte Cuban Chain | Thick matte-black curb chain, one orange-enamel link. |
 | neck | o_dogtag2 | Orange Cord Pendant | Thick orange braided paracord necklace, a matte black steel washer pendant (not tags: o_tags is live). |
-| neck | o_ziptie | Zip-Tie Chain | Thick black cable ties looped into chunky links, orange cut tails at each link. (Replaces a reflective lanyard: too close to oc_lanyard, LEAD 11-28.) |
-| neck | o_tape | Grip-Tape Neckband | Wide black grip-tape neckband, orange stitched edges, a small steel ring at the front. |
+| neck | o_bearing | Skate Bearing Strand | Thick black waxed cord, three chunky steel skate bearings, bright orange spacer beads. (Replaces a reflective lanyard, too close to oc_lanyard, LEAD 11-28, then a zip-tie chain that muddled at chibi size.) |
+| neck | o_tape | Grip-Tape Neckband | Black grip-tape neckband, orange stitched edges, two steel hex bolts at the front (no ring; line matched to the art, QA 11-28). |
 | top | o_vest | Utility Chest Rig Vest | Black nylon utility vest, many pockets, orange buckles, reflective strips. |
 | top | o_anorak | Concrete Anorak | Concrete-grey half-zip anorak, orange drawcords, a black kangaroo pocket. |
 | bottom | o_short | Nylon Cargo Shorts | Black nylon cargo shorts to the knee, orange pull tabs, reflective strip. |

@@ -2583,5 +2583,8 @@
  },
  "o_tape": {
   "slot": "neck"
+ },
+ "o_bearing": {
+  "slot": "neck"
  }
 }
