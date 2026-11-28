@@ -74,6 +74,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
      the painted denim jacket, the patchwork coat, the drip smock and halter, the gesso boots, the slingbacks on tiptoe); the rest premium */
   put("luxury","gx_oc_felt gx_oc_denim gx_oc_coat gx_oc_smock gx_oc_halter gx_oc_boot gx_oc_sling");
   put("premium","gx_oc_cap gx_oc_roll gx_oc_palette gx_oc_gloves gx_oc_trouser gx_oc_jean gx_oc_skirt gx_oc_derby");
+  put("premium","gx_oc_round gx_oc_shield gx_oc_square");/* oc to 8 a category (ROOMS 11-28) */
   /* REGIMENT (LEAD, 2026-11-18, by QA's rules; QA to check): brass, braid and frogging luxury (the corded peaked cap, the aiguillette, the
      frogged jacket, the capelet tunic, the mess jacket, the tall riding boots, the stiletto boots); the rest premium */
   put("luxury","gx_rg_cap gx_rg_cord gx_rg_jacket gx_rg_capelet gx_rg_mess gx_rg_boot gx_rg_stiletto");
