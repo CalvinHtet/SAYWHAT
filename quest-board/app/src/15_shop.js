@@ -134,6 +134,7 @@ var EXTRA_ITEMS=[
  ["gx_o_chain","a_acc","Steel Wrist Chain",850,1,"Chunky steel curb chain on each wrist, an orange tag.",{gar:"o_chain",b:"over",from:"2026-12-04"}],
  ["gx_o_tapewrap","a_acc","Taped Wrists",650,1,"Black athletic tape round both wrists, an orange stripe.",{gar:"o_tapewrap",b:"over",from:"2026-12-04"}],
  ["gx_o_watch","a_acc","Rugged Digital Watch",900,1,"Chunky black rubber watch, blank grey screen, orange buttons.",{gar:"o_watch",b:"over",from:"2026-12-04"}],
+ ["gx_o_spraycap","a_acc","Overspray Work Gloves",850,1,"Black nitrile work gloves, orange overspray on the fingers.",{gar:"o_spraycap",b:"over",from:"2026-12-04"}],
  ["gx_o_resp","a_acc","Spray Respirator",700,1,"Matte black half mask, orange filter caps, reflective strip.",{gar:"o_resp",b:"over"}],
  ["gx_v_cap","a_hat","Leather Dad Cap",850,1,"Soft black leather.",{gar:"v_cap",b:"rose"}],
  ["gx_v_lace","a_hat","Lace Headband",700,1,"Black lace and one rose.",{gar:"v_lace",b:"rose",fo:1}],
