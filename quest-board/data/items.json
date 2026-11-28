@@ -2669,5 +2669,8 @@
  },
  "o_hiker": {
   "slot": "shoes"
+ },
+ "o_mech": {
+  "slot": "arms"
  }
 }
