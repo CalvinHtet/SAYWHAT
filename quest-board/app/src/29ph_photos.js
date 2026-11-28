@@ -125,7 +125,7 @@ function hallPostsMount(){if(phOn()&&Date.now()-PH.loaded>20000)phLoad(true)}
 function phLikersLine(p){var L=phLikers(p.id);if(!L.length)return "";var nm=L.map(function(u){return u===MYUID?"you":typeof sqName==="function"?sqName(u,"Someone"):"Someone"}),more=nm.length>3?nm.length-3:0;
   nm=nm.slice(0,3);return 'Liked by '+esc(nm.length>1&&!more?nm.slice(0,-1).join(", ")+" and "+nm[nm.length-1]:nm.join(", "))+(more?' and '+more+' more':'')}
 function phCmHtml(p){var L=PH.cm[p.id]||[];if(!L.length)return '<p class="note ph-nocm">No comments yet.</p>';
-  return L.map(function(c){return '<div class="ph-cm">'+phAv(c.u,c.name,24)+'<div><b>'+esc(c.u===MYUID?"You":c.name)+'</b> <small>'+socAgo(c.t)+'</small><p>'+esc(c.x)+'</p></div>'
+  return L.map(function(c){return '<div class="ph-cm">'+phAv(c.u,c.name,24)+'<div><b>'+esc(c.u===MYUID?"You":c.name)+'</b> <small>'+socAgo(c.t)+'</small><p>'+phLink(c.x)+'</p></div>'
     +(phCanDelCm(p,c)?'<button type="button" class="ph-x" data-act="phcmdel" data-p="'+esc(p.id)+'" data-c="'+esc(c.id)+'" aria-label="Delete this comment">&times;</button>':'')+'</div>'}).join("")}
 function phLikeHtml(p){var n=phLikers(p.id).length,on=phLiked(p.id);
   return '<button type="button" class="btn sm'+(on?'':' ghost')+' ph-likeb" data-act="phlike" data-p="'+esc(p.id)+'" aria-pressed="'+on+'"><span class="ph-heart'+(on?' on':'')+'">&#9829;</span> '+(on?'Liked':'Like')+'</button><span class="note">'+n+(n===1?' like':' likes')+'</span>'
@@ -133,7 +133,7 @@ function phLikeHtml(p){var n=phLikers(p.id).length,on=phLiked(p.id);
 function phViewHtml(p){var what=p.kind==="trial"?"Level trial":p.kind==="quest"&&p.what?"Proof: "+p.what:"";
   return '<div class="card box2 ph-view" data-p="'+esc(p.id)+'"><div class="ph-vhead">'+phAv(p.u,p.name,34)+'<div><b>'+esc(p.u===MYUID?"You":p.name)+'</b><small>'+socAgo(p.t)+'</small></div></div>'
     +'<div class="ph-vimg" style="background-image:url(\''+esc(p.thumb)+'\')"><img src="'+esc(p.full)+'" alt="Photo by '+esc(p.name)+'"></div>'
-    +(p.cap?'<p class="ph-vcap">'+esc(p.cap)+'</p>':'')+(what?'<p class="note ph-what">'+esc(what)+'</p>':'')
+    +(p.cap?'<p class="ph-vcap">'+phLink(p.cap)+'</p>':'')+(what?'<p class="note ph-what">'+esc(what)+'</p>':'')
     +'<div class="ph-like" id="phlike">'+phLikeHtml(p)+'</div>'
     +'<h3 class="label ph-cmh">Comments</h3><div class="ph-cms" id="phcms">'+phCmHtml(p)+'</div>'
     +'<div class="ph-cmadd"><input id="phcmin" type="text" maxlength="'+PHCM+'" placeholder="Add a comment" aria-label="Add a comment"><button class="btn" data-act="phcm" data-p="'+esc(p.id)+'">Post</button></div>'
