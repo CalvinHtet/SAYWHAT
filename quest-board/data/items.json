@@ -2564,5 +2564,8 @@
  },
  "o_snood": {
   "slot": "neck"
+ },
+ "o_dogtag2": {
+  "slot": "neck"
  }
 }
