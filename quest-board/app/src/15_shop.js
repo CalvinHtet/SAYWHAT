@@ -397,6 +397,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_smear","a_acc","Cheek Paint Smear",650,1,"One cadmium brush swipe across the cheek and nose.",{gar:"oc_smear",b:"oc",from:"2026-12-02"}],
  ["gx_oc_gloves","a_acc","Paint-Stained Leather Gloves",950,1,"Fitted cream fingerless leather, orange-stained tips, indigo strap.",{gar:"oc_gloves",b:"oc"}],
  ["gx_oc_fingerless","a_acc","Splatter Fingerless Gloves",850,1,"Charcoal knit, cream and cadmium flecks.",{gar:"oc_fingerless",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_leather","a_acc","Indigo Leather Gloves",950,1,"Raw indigo leather, copper snap, a cadmium smear.",{gar:"oc_leather",b:"oc",from:"2026-12-02"}],
  ["gx_oc_denim","a_top","Hand-Painted Denim Jacket",1900,1,"Indigo denim, cadmium brush sweeps across the back, copper buttons.",{gar:"oc_denim",b:"oc"}],
  ["gx_oc_coat","a_top","Patchwork Studio Coat",1900,1,"Cream canvas offcuts, indigo running stitch, a brush in the pocket.",{gar:"oc_coat",b:"oc"}],
  ["gx_oc_smock","a_top","Drip Smock Shirt",1700,1,"Oversized cream smock, open chest, cadmium and cobalt drips.",{gar:"oc_smock",b:"oc",cut:"2026-12-02"/* retired (audit), replaced by the Splatter Studio Hoodie; owners keep it */}],
