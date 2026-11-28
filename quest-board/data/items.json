@@ -2474,6 +2474,9 @@
  "oc_slide": {
   "slot": "shoes"
  },
+ "oc_workboot": {
+  "slot": "shoes"
+ },
  "oc_mule": {
   "slot": "shoes"
  },
@@ -2483,7 +2486,14 @@
  "oc_chore": {
   "slot": "top"
  },
- "oc_workboot": {
-  "slot": "shoes"
+ "oc_tee": {
+  "slot": "top"
+ },
+ "oc_vest": {
+  "slot": "top"
+ },
+ "oc_crop": {
+  "slot": "top",
+  "bare": true
  }
 }
