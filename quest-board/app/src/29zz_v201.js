@@ -30,7 +30,7 @@ function v201Cat(it){var s=it[1];if(s==="a_hat")return "hat";if(s==="a_top")retu
   return /^(glasses|mask|face|eyes|head)/.test(sl)?"head":/^neck/.test(sl)?"neck":/^(arms|hands|gloves|wrist)/.test(sl)?"gloves":"acc"}
 /* QA 11-28: a row may be cut on a date (cut:"YYYY-MM-DD"): drops and Vault weeks that started before it keep it in their pool, so a
    retirement never reshuffles a running Vault or drop; from that day it is out (and off sale everywhere, as any cut) */
-function v201Cut(m,day){return !!(m.cut&&!(typeof m.cut==="string"&&day&&day<m.cut))}
+function v201Cut(m,day){if(m.cutOn){if(!day)try{day=dropYmd(dropNow())}catch(e){}return !(day&&day<m.cutOn)}return !!(m.cut&&!(typeof m.cut==="string"&&day&&day<m.cut))}
 function v201Sellable(it,day){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!v201Cut(m,day)&&!m.basic&&/^a_(hat|acc|top|pants|shoes)$/.test(it[1])&&(typeof isRigItem!=="function"||isRigItem(it)))}
 function v201R(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return function(){h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
 function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
@@ -63,7 +63,8 @@ function v201VaultW(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return 
 /* QA 11-27: a brand held mid-week (SØLVBERG, Cal 11-27) leaves the Vault that day, and only its pieces go: the week's draw stays
    as it was (drawn with the holds as of the week's Sunday), so nothing else in a running Vault changes */
 function v201Vault(n){var V=v201VaultW(n),hd=dropYmd(n==null?dropNow():n),out={};
-  var list=V.list.filter(function(q){return !zxHeld(q[2],hd)});if(list.length===V.list.length)return V;
+  /* only a brand held on purpose (DROPS.hold) leaves mid-week; a brand going out of season (29zz_v211.js) stays until the week ends */
+  var held=typeof v211Held==="function"?v211Held:zxHeld,list=V.list.filter(function(q){return !held(q[2],hd)});if(list.length===V.list.length)return V;
   list.forEach(function(q){out[q[1]]=1});return Object.assign({},V,{list:list,keep:out})}
 /* the Shop's racks: a live brand shows its half; the Vault its own */
 var V201ON=0;
