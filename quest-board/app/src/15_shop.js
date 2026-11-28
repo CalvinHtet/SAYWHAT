@@ -401,6 +401,8 @@ var EXTRA_ITEMS=[
  ["gx_oc_workglove","a_acc","Canvas Work Gloves",900,1,"Cream canvas, indigo knit cuffs, gesso-crusted fingertips.",{gar:"oc_workglove",b:"oc",from:"2026-12-02"}],
  ["gx_oc_cuff","a_acc","Copper Cuff Pair",950,1,"Hammered copper cuffs, an indigo enamel line.",{gar:"oc_cuff",b:"oc",from:"2026-12-02"}],
  ["gx_oc_bangle","a_acc","Gesso Bangle Stack",850,1,"Chunky cream, indigo and cadmium bangles, a paint drip.",{gar:"oc_bangle",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_watch","a_acc","Paint-Fleck Sport Watch",900,1,"Chunky charcoal watch, cream strap with cadmium flecks.",{gar:"oc_watch",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_wrap","a_acc","Taped Knuckle Wraps",800,1,"Cream cloth tape, cadmium paint across the knuckles.",{gar:"oc_wrap",b:"oc",from:"2026-12-02"}],
  ["gx_oc_denim","a_top","Hand-Painted Denim Jacket",1900,1,"Indigo denim, cadmium brush sweeps across the back, copper buttons.",{gar:"oc_denim",b:"oc"}],
  ["gx_oc_coat","a_top","Patchwork Studio Coat",1900,1,"Cream canvas offcuts, indigo running stitch, a brush in the pocket.",{gar:"oc_coat",b:"oc"}],
  ["gx_oc_smock","a_top","Drip Smock Shirt",1700,1,"Oversized cream smock, open chest, cadmium and cobalt drips.",{gar:"oc_smock",b:"oc",cut:"2026-12-02"/* retired (audit), replaced by the Splatter Studio Hoodie; owners keep it */}],
