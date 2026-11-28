@@ -2531,5 +2531,8 @@
  },
  "oc_watch": {
   "slot": "arms"
+ },
+ "oc_wrap": {
+  "slot": "arms"
  }
 }
