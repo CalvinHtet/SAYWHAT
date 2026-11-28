@@ -2476,5 +2476,14 @@
  },
  "oc_workboot": {
   "slot": "shoes"
+ },
+ "oc_mule": {
+  "slot": "shoes"
+ },
+ "oc_hoodie": {
+  "slot": "top"
+ },
+ "oc_chore": {
+  "slot": "top"
  }
 }
