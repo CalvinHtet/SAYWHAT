@@ -445,6 +445,7 @@
   "_note": "Cal 11-25 accessory sweep (QA): a piece drawn in another slot than its items.json one. Headphones over the arms (their cups were cut by the upper arms), wings behind the body, wide-temple sunglasses under the hair (their temples ran over it). look.js reads this. backAcc pieces draw their back view in backAccTop, the last slot of the head group, so from behind they sit on top (QA e17f9be2).",
   "sm_phones": "neckOver",
   "h_phones": "neckOver",
+  "y_fur": "neckOver",
   "gp_wings": "backAcc",
   "h_shades": "glassesUnder",
   "y_bfly": "glassesUnder",
