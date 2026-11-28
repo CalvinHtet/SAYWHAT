@@ -28,7 +28,7 @@ gloves. Fri 12-04 will not take all 31; the rest wait for over's next drop.
 | neck | o_snood | Reflective Snood | Charcoal fleece neck snood, a reflective band round the middle. |
 | neck | o_cuban | Matte Cuban Chain | Thick matte-black curb chain, one orange-enamel link. |
 | neck | o_dogtag2 | Orange Cord Pendant | Thick orange paracord necklace, a matte black steel washer pendant. |
-| neck | o_reflect | Reflective Lanyard | Black lanyard with a reflective stripe and a steel clip (no tags, no text). |
+| neck | o_reflanyard | Reflective Lanyard | Black lanyard with a reflective stripe and a steel clip (no tags, no text). |
 | neck | o_tape | Grip-Tape Choker | Black grip-tape choker band, a steel ring at the front. |
 | top | o_vest | Utility Chest Rig Vest | Black nylon utility vest, many pockets, orange buckles, reflective strips. |
 | top | o_anorak | Concrete Anorak | Concrete-grey half-zip anorak, orange drawcords, a black kangaroo pocket. |
