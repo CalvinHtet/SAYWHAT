@@ -92,6 +92,8 @@ var EXTRA_ITEMS=[
  ["gx_o_reflect","a_hat","Reflective Bucket",950,1,"Grey reflective nylon that flares at night.",{gar:"o_reflect",b:"over"}],
  ["gx_o_skull","a_hat","Reflective Skull Cap",900,1,"Black nylon skull cap, reflective edge, orange seam tape.",{gar:"o_skull",b:"over",from:"2026-12-04"}],
  ["gx_o_ear","a_hat","Concrete Ear-Flap Cap",950,1,"Concrete-grey nylon cap, black brim, ear flaps, orange toggles.",{gar:"o_ear",b:"over",from:"2026-12-04"}],
+ ["gx_o_trapper","a_hat","Olive Nylon Trapper",950,1,"Washed olive nylon trapper, black fleece flaps, orange toggles.",{gar:"o_trapper",b:"over",from:"2026-12-04"}],
+ ["gx_o_beanie2","a_hat","Reflective Rib Beanie",850,1,"Charcoal rib beanie, a reflective band round the cuff, orange tab.",{gar:"o_beanie2",b:"over",from:"2026-12-04"}],
  ["gx_o_durag","a_hat","Satin Durag",750,1,"Black satin, long tails.",{gar:"o_durag",b:"over"}],
  ["gx_o_tool","a_acc","Skate Tool Lanyard",650,1,"Orange lanyard, steel T-tool.",{gar:"o_tool",b:"over"}],
  ["gx_o_rect","a_acc","Smoke Rectangle Shades",750,1,"Slim black frames, smoke lenses.",{gar:"o_rect",b:"over"}],
