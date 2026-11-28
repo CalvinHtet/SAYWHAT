@@ -113,6 +113,7 @@ var EXTRA_ITEMS=[
  ["gx_o_bearing","a_acc","Skate Bearing Strand",850,1,"Black cord, three steel skate bearings, orange spacers.",{gar:"o_bearing",b:"over",from:"2026-12-04"}],
  ["gx_o_bridge","a_top","Bridge Graphic Hoodie",1500,1,"Washed black, cracked orange overpass print.",{gar:"o_bridge",b:"over"}],
  ["gx_o_liner","a_top","Quilted Liner Jacket",1500,1,"Safety orange diamond quilting, snap front.",{gar:"o_liner",b:"over"}],
+ ["gx_o_vest","a_top","Utility Chest Rig Vest",1400,1,"Black nylon chest-rig vest, orange buckles, reflective strips.",{gar:"o_vest",b:"over",from:"2026-12-04"}],
  ["gx_o_thermal","a_top","Layered Thermal Tee",1200,1,"Boxy black tee over a grey waffle thermal.",{gar:"o_thermal",b:"over"}],
  ["gx_o_dknee","a_pants","Double-Knee Carpenters",1350,1,"Grey canvas, orange tab, hammer loop.",{gar:"o_dknee",b:"over"}],
  ["gx_o_snap","a_pants","Snap Track Pants",1200,1,"Black nylon, orange piping, snap legs.",{gar:"o_snap",b:"over"}],
