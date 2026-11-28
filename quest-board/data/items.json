@@ -2244,5 +2244,19 @@
   "slot": "glasses",
   "neutral": true,
   "frontOnly": true
+ },
+ "y_tinted": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "y_goggle": {
+  "slot": "glasses",
+  "neutral": true
+ },
+ "y_glitter": {
+  "slot": "mask",
+  "frontOnly": true,
+  "neutral": true
  }
 }
