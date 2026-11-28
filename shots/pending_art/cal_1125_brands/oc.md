@@ -44,7 +44,7 @@ shoes 2 (boot, derby). New below: hat 7, head 8, neck 8, top 5, bottom 5, shoes 
 | bottom | oc_cargo | Gesso Cargo Pants | Charcoal cargos, gesso-dipped knees, cadmium pocket flaps. |
 | bottom | oc_carpenter | Indigo Carpenter Jeans | Baggy raw indigo carpenter jeans, hammer loop, cream splatter. |
 | bottom | oc_short | Splatter Work Shorts | Cream canvas work shorts, indigo and cadmium drips. |
-| bottom | oc_jogger | Brushstroke Joggers | Charcoal joggers, a cream brush stroke down each leg. |
+| bottom | oc_jogger | Brushstroke Joggers | Charcoal joggers, one long cream brush stroke down one leg, cadmium flecks (line matched to the art, QA 11-28). |
 | bottom | oc_mini | Canvas Cargo Mini | Cream canvas cargo mini skirt, indigo pocket flaps, cadmium drips. |
 | shoes | oc_hightop | Splatter High-Tops | Cream canvas high-tops, cadmium and indigo splatter, charcoal soles. |
 | shoes | oc_skate | Indigo Skate Shoes | Chunky indigo suede skate shoes, cream laces, gesso toe caps. |
