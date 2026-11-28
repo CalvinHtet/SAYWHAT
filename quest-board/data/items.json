@@ -2293,5 +2293,14 @@
  },
  "y_velour": {
   "slot": "top"
+ },
+ "y_cargo": {
+  "slot": "pants"
+ },
+ "y_jersey": {
+  "slot": "top"
+ },
+ "y_tube": {
+  "slot": "top"
  }
 }
