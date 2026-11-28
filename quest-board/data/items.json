@@ -2267,5 +2267,8 @@
  },
  "y_pearlstar": {
   "slot": "neck"
+ },
+ "y_fur": {
+  "slot": "neck"
  }
 }

@@ -18,7 +18,7 @@ Live now (my count from 15_shop.js; LEAD to confirm cuts): hat 6, head 2, neck 3
 | head (glasses) | y_goggle | Frosted Ski Goggles | Frosted baby-blue goggles with a mirrored pink lens and a glossy black strap, worn over the eyes. |
 | neck | y_beads | Candy Bead Choker | Chunky multicolour pony-bead choker in hot pink, lilac and cyan with one chrome heart bead. |
 | neck | y_disc | Chrome Disc Pendant | A small iridescent mirror-disc pendant (rainbow sheen, no print) on a chunky chrome ball chain. Replaces y_flip, which doubled the live y_phone. |
-| neck | y_pearlstar | Pearl and Star Strand | Short strand of faux pearls with small chrome star charms between them. |
+| neck | y_pearlstar | Pearl and Star Strand | Short strand of big cream faux pearls with three chunky chrome star charms hanging at the front (line matched to the art, QA 11-28). |
 | neck | y_tattoo | Tattoo Choker | Black stretchy tattoo choker web with a small chrome butterfly charm at the front. |
 | neck | y_fur | Faux Fur Stole | Short fluffy lilac faux fur stole draped round the neck with a chrome clasp. |
 | top | y_velour | Velour Zip Hoodie | Cropped baby-pink velour zip hoodie with rhinestone zip pull and silver piping. |
