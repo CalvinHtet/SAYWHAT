@@ -2516,5 +2516,8 @@
  },
  "oc_fingerless": {
   "slot": "arms"
+ },
+ "oc_leather": {
+  "slot": "arms"
  }
 }
