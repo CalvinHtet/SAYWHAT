@@ -40,7 +40,7 @@ const NEW = (process.env.NEW || 'gx_nc_clear,gx_nc_catshades,gx_nc_visorshade').
     const head = x.SHOP.filter((it) => it[6] && it[6].b === 'nc' && window.__qbV201.cat(it[0]) === window.__qaCAT).map((it) => it[0]);
     return { start: L && L.start, tab: !!st, shown: [...new Set(ids)].filter((id) => head.includes(id)), calc: head.filter((id) => keep[id]) }; }, when);
   const R0 = await room(null); note('now: nc drop ' + R0.start + ', head shown ' + R0.shown.join(', ') + ' | calc ' + R0.calc.join(', '));
-  ok(R0.tab && JSON.stringify(R0.shown.slice().sort()) === JSON.stringify(R0.calc.slice().sort()) && NEW.every((id) => !R0.shown.includes(id)), 'the running nc drop shows exactly its own calc, without the three new pieces (from: dates)');
+  if (!R0.start) note('nc is not in a running drop now, so there is no running room to check'); else ok(R0.tab && JSON.stringify(R0.shown.slice().sort()) === JSON.stringify(R0.calc.slice().sort()) && NEW.every((id) => !R0.shown.includes(id)), 'the running nc drop shows exactly its own calc, without the new pieces (from: dates)');
   const nxt = (B.find((d) => d.start > (R0.start || '')) || {}).start; const R1 = await room(nxt + 'T09:00:00'); note('next: nc drop ' + R1.start + ', head shown ' + R1.shown.join(', ') + ' | calc ' + R1.calc.join(', '));
   ok(R1.tab && R1.start === nxt && JSON.stringify(R1.shown.slice().sort()) === JSON.stringify(R1.calc.slice().sort()), 'the next nc drop (' + nxt + ') shows exactly its calc');
   for (const id of NEW) { const t = await p.evaluate(async (id) => { const sleep = (t) => new Promise((o) => setTimeout(o, t)); const bt = document.querySelector('.qshop [data-act="qstry"][data-id="' + id + '"]'); if (!bt) return { shown: false };
