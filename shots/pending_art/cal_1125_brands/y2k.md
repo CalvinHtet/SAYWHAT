@@ -9,7 +9,7 @@ Live now (my count from 15_shop.js; LEAD to confirm cuts): hat 6, head 2, neck 3
 | Category (slot) | id | Name | Line |
 |---|---|---|---|
 | hat | y_bandana | Rhinestone Bandana | Black bandana tied over the head, the edges studded with clear rhinestones, a small hot-pink star print all over. |
-| hat | y_clipz | Butterfly Clip Crown | A crown of chunky frosted lilac and cyan butterfly hair clips across the top of the head, with one chrome star clip. |
+| hat | y_clipz | Butterfly Clip Crown | A thin chrome band over the head set with chunky glossy lilac and cyan butterflies and a big chrome star at the top (line matched to the art 11-28). |
 | head (glasses) | y_shield | Chrome Shield Shades | Wraparound one-piece chrome mirror shield shades with a pink-to-blue iridescent sheen. |
 | head (glasses) | y_heart | Pink Heart Shades | Small heart-shaped frames in glossy hot pink with rose-tinted lenses and silver arms. |
 | head (glasses) | y_tinted | Tiny Oval Tints | Tiny rimless oval lenses tinted baby blue, thin silver bridge and arms. |
