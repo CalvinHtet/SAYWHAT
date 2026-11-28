@@ -17,7 +17,7 @@ shoes 2 (boot, derby). New below: hat 7, head 8, neck 8, top 5, bottom 5, shoes 
 | hat | oc_bucket | Indigo Patch Bucket | Raw indigo denim bucket hat, cream canvas patches, orange running stitch. |
 | hat | oc_five | Gesso Five-Panel | Cream five-panel cap, gesso drips down the crown, indigo strap. |
 | hat | oc_newsboy | Splatter Newsboy Cap | Charcoal wool newsboy cap, cream and cadmium splatter, indigo button. |
-| hat | oc_tied | Knotted Canvas Headwrap | Cream canvas strip tied high at the front, indigo brush strokes. |
+| hat | oc_cord6 | Indigo Corduroy Cap | Raw indigo wide-wale corduroy six-panel cap, cream splatter, copper eyelets. (Replaces a planned headwrap: too close to cultural headwear, Cal 11-17.) |
 | hat | oc_visor | Scraped Visor | Charcoal visor, palette-knife scrapes of cadmium across the brim. |
 | hat | oc_trapper | Indigo Shearling Trapper | Raw indigo trapper, cream shearling lining, splatter on the flaps. |
 | head (glasses) | oc_round | Splattered Round Frames | Round charcoal frames, cream paint flecks, amber lenses. |
