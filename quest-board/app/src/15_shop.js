@@ -148,6 +148,7 @@ var EXTRA_ITEMS=[
  ["gx_nc_waffle","a_pants","Waffle Lounge Pants",1300,1,"Ivory waffle knit, silver-tipped drawcord, ribbed cuffs.",{gar:"nc_waffle",b:"nc",from:"2026-11-27"}],
  ["gx_nc_cargo","a_pants","Fleece Cargo Jogger",1500,1,"Charcoal fleece, flap cargo pockets, silver cord tips, ribbed ankles.",{gar:"nc_cargo",b:"nc",from:"2026-11-27"}],
  ["gx_nc_satinshort","a_pants","Satin Lounge Shorts",1300,1,"Short black satin, cream piping, cream drawcord with silver tips.",{gar:"nc_satinshort",b:"nc",from:"2026-11-27"}],
+ ["gx_nc_flares","a_pants","Ribbed Flare Pants",1300,1,"High-waisted heather-ash rib knit, close at the hip, wide at the ankle.",{gar:"nc_flares",b:"nc",from:"2026-11-27"}],
  ["gx_nc_cap","a_hat","Wordmark Cap",800,1,"Black six-panel. nicecock.",{gar:"nc_cap",b:"nc"}],
  ["gx_nc_beanie","a_hat","Rooster Beanie",750,1,"Ash rib knit, woven rooster.",{gar:"nc_beanie",b:"nc"}],
  ["gx_nc_band","a_hat","Fleece Dad Cap",800,1,"Heather ash fleece, tonal rooster.",{gar:"nc_band",b:"nc"}],
