@@ -2270,5 +2270,8 @@
  },
  "y_fur": {
   "slot": "neck"
+ },
+ "y_tattoo": {
+  "slot": "neck"
  }
 }
