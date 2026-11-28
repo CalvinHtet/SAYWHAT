@@ -126,6 +126,7 @@ var EXTRA_ITEMS=[
  ["gx_o_slipon","a_shoes","Knit Slip-On Trainers",1300,1,"Black knit, orange heel pull.",{gar:"o_slipon",b:"over"}],
  /* Cal 11-18 OVERPASS: the chain and skate tool's replacements ("Redo those two accessories with something else"; ROOMS cefab81) */
  ["gx_o_guards","a_acc","Grip-Tape Wrist Guards",850,1,"Grip-tape facing, orange straps, scuffed grey plates.",{gar:"o_guards",b:"over"}],
+ ["gx_o_mech","a_acc","Mechanic Gloves",900,1,"Concrete-grey mechanic gloves, black knuckle pads, orange cuffs.",{gar:"o_mech",b:"over",from:"2026-12-04"}],
  ["gx_o_resp","a_acc","Spray Respirator",700,1,"Matte black half mask, orange filter caps, reflective strip.",{gar:"o_resp",b:"over"}],
  ["gx_v_cap","a_hat","Leather Dad Cap",850,1,"Soft black leather.",{gar:"v_cap",b:"rose"}],
  ["gx_v_lace","a_hat","Lace Headband",700,1,"Black lace and one rose.",{gar:"v_lace",b:"rose",fo:1}],
