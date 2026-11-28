@@ -28,7 +28,10 @@ dropBack=function(){return null};
 function v201Cat(it){var s=it[1];if(s==="a_hat")return "hat";if(s==="a_top")return "top";if(s==="a_pants")return "bottom";if(s==="a_shoes")return "shoes";
   if(s!=="a_acc")return null;var g=(it[6]&&it[6].gar)||"",sl="";try{sl=((window.QBDATA&&QBDATA.items&&QBDATA.items[g])||{}).slot||""}catch(e){}
   return /^(glasses|mask|face|eyes|head)/.test(sl)?"head":/^neck/.test(sl)?"neck":/^(arms|hands|gloves|wrist)/.test(sl)?"gloves":"acc"}
-function v201Sellable(it){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!m.cut&&!m.basic&&/^a_(hat|acc|top|pants|shoes)$/.test(it[1])&&(typeof isRigItem!=="function"||isRigItem(it)))}
+/* QA 11-28: a row may be cut on a date (cut:"YYYY-MM-DD"): drops and Vault weeks that started before it keep it in their pool, so a
+   retirement never reshuffles a running Vault or drop; from that day it is out (and off sale everywhere, as any cut) */
+function v201Cut(m,day){return !!(m.cut&&!(typeof m.cut==="string"&&day&&day<m.cut))}
+function v201Sellable(it,day){var m=it&&it[6];return !!(m&&m.b&&m.b!=="basics"&&!v201Cut(m,day)&&!m.basic&&/^a_(hat|acc|top|pants|shoes)$/.test(it[1])&&(typeof isRigItem!=="function"||isRigItem(it)))}
 function v201R(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return function(){h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
 function v201Shuf(a,seed){var r=v201R(seed),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
 /* ---- a brand's drop: 4 a category, the other 4 the next time (Cal 11-26: "I actually like how symmetrical it looks with 4 items in each
@@ -41,7 +44,7 @@ var V201HALF={};
 /* QA b5975d05: a row with {from:"YYYY-MM-DD"} joins only drops and Vault weeks that start on or after that day, so adding pieces never
    changes a drop or a Vault week that is already running (or one already past) */
 function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return c;var times=v201Times(b.id,b.start||""),keep={},by={};
-  SHOP.forEach(function(it){if(!v201Sellable(it)||it[6].b!==b.id||(it[6].from&&(b.start||"")<it[6].from))return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
+  SHOP.forEach(function(it){if(!v201Sellable(it,b.start||"")||it[6].b!==b.id||(it[6].from&&(b.start||"")<it[6].from))return;var c=v201Cat(it);(by[c]=by[c]||[]).push(it[0])});
   Object.keys(by).forEach(function(c){var L=v201Shuf(by[c].sort(),"v201|"+b.id+"|"+c);var P=V201.dropCat||V201.perCat;if(L.length<=P){L.forEach(function(id){keep[id]=1});return}
     var st=(times*P)%L.length;for(var i=0;i<P;i++)keep[L[(st+i)%L.length]]=1});
   V201HALF[key]=keep;return keep}
@@ -51,7 +54,7 @@ var V201VC={};
 function v201VaultW(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V201VC[wk];
   var prem=function(id){return brandFloor(id)!=="street"},on=BRANDS.map(function(b){return b.id}).filter(function(id){return !zxHeld(id,wk)});
   var P=v201Shuf(on.filter(prem).sort(),"v201v|"+wk+"|prem").slice(0,V201.premMax),okB={};on.forEach(function(id){if(!prem(id)||P.indexOf(id)>=0)okB[id]=1});
-  var by={};SHOP.forEach(function(it){if(!v201Sellable(it)||!okB[it[6].b]||(it[6].from&&wk<it[6].from))return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
+  var by={};SHOP.forEach(function(it){if(!v201Sellable(it,wk)||!okB[it[6].b]||(it[6].from&&wk<it[6].from))return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
   var keep={},list=[];["hat","head","neck","gloves","top","bottom","shoes"].forEach(function(c){var L=v201Shuf((by[c]||[]).sort(function(a,b){return a[0]<b[0]?-1:1}),"v201v|"+wk+"|"+c),got=[],pr=0,br={};
     /* first pass: different brands; then any brand; never a second pricier piece */
     [true,false].forEach(function(spread){L.forEach(function(it){if(got.length>=V201.perCat||got.indexOf(it)>=0)return;var b=it[6].b,p=prem(b);if(p&&pr>=1)return;if(spread&&br[b])return;got.push(it);br[b]=1;if(p)pr++})});
