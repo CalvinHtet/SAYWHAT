@@ -5,7 +5,12 @@
    borders": the post window scrolled inside its own card (.ph-modal .card), so the HUD corner brackets (body.fx-brackets .card::before)
    scrolled away with the comments. The window itself scrolls now, the card is as tall as the post, and its four corners frame all of it;
    the close button stays pinned at the top (it is sticky). */
-function phLink(s){return esc(s).replace(/\bhttps?:\/\/[^\s<"']+/gi,function(u){var tail="",m=/[.,!?;:)\]]+$/.exec(u);if(m){tail=m[0];u=u.slice(0,-tail.length)}
-  return '<a class="ph-link" href="'+u+'" target="_blank" rel="noopener noreferrer nofollow">'+u+'</a>'+tail})}
+/* QA 789e4bc5: links are found in the raw text (quotes and brackets around a link stay outside it), and every piece is escaped on
+   its own; trailing punctuation stays outside, except a ")" that closes a "(" inside the link (Foo_(bar)) */
+function phLink(s){s=String(s==null?"":s);var re=/\bhttps?:\/\/[^\s<>"']+/gi,out="",last=0,m;
+  while((m=re.exec(s))){var u=m[0],tail="",t=/[.,!?;:)\]&]+$/.exec(u);if(t){tail=t[0];u=u.slice(0,-tail.length)}
+    while(tail.charAt(0)===")"&&u.split("(").length>u.split(")").length){u+=")";tail=tail.slice(1)}
+    out+=esc(s.slice(last,m.index))+(u.length>8?'<a class="ph-link" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(u)+'</a>':esc(u))+esc(tail);last=m.index+m[0].length}
+  return out+esc(s.slice(last))}
 htabCss("qb-v225-css",".ph-modal .card{max-height:none!important;overflow:visible!important}.ph-link{color:var(--accent);text-decoration:underline;word-break:break-all}");
 if(!(window.QB_WEB&&QB_WEB.noTest))window.__qbV225={link:phLink};
