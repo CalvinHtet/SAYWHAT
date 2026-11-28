@@ -405,7 +405,10 @@ var EXTRA_ITEMS=[
  ["gx_oc_skirt","a_pants","Brushstroke Wrap Skirt",1500,1,"Cream canvas wrap, an indigo stroke at the hem, a side slit.",{gar:"oc_skirt",b:"oc",fo:1}],
  ["gx_oc_boot","a_shoes","Gesso Studio Boots",1700,1,"Cream canvas lace-ups crusted in gesso, cadmium flecks.",{gar:"oc_boot",b:"oc"}],
  ["gx_oc_derby","a_shoes","Splatter Suede Derbies",1600,1,"Indigo suede, cream splatter, cadmium-red laces.",{gar:"oc_derby",b:"oc"}],
- ["gx_oc_sling","a_shoes","Brushstroke Slingbacks",1700,1,"Cream slingbacks, a cadmium stroke over the toe, indigo heel.",{gar:"oc_sling",b:"oc",fo:1}],
+ ["gx_oc_sling","a_shoes","Brushstroke Slingbacks",1700,1,"Cream slingbacks, a cadmium stroke over the toe, indigo heel.",{gar:"oc_sling",b:"oc",fo:1,cut:"2026-12-02"/* retired (audit), replaced by the Scraped Platform Sneakers; owners keep it */}],
+ ["gx_oc_hightop","a_shoes","Splatter High-Tops",1600,1,"Cream canvas, cadmium and indigo splatter, charcoal soles.",{gar:"oc_hightop",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_skate","a_shoes","Indigo Skate Shoes",1600,1,"Puffy indigo suede, gesso toe caps, gum soles.",{gar:"oc_skate",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_platform","a_shoes","Scraped Platform Sneakers",1700,1,"Cream platforms, cadmium palette-knife scrapes.",{gar:"oc_platform",b:"oc",from:"2026-12-02"}],
  /* REGIMENT (Boutique; ROOMS 21c67e7, b1fa777; QA 806a9bf): held until Cal approves the painted sheet (29zx_simple.js DROPS.hold) */
  ["gx_rg_cap","a_hat","Cord Peaked Cap",1100,1,"Navy wool, scarlet band, brass chin cord, a knot crest.",{gar:"rg_cap",b:"rg"}],
  ["gx_rg_side","a_hat","Piped Side Cap",950,1,"Navy side cap worn tilted, scarlet piping, brass buttons.",{gar:"rg_side",b:"rg"}],
