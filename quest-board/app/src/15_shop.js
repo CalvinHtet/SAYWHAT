@@ -369,7 +369,8 @@ var EXTRA_ITEMS=[
  ["gx_gd_mule","a_shoes","Sculpted-Heel Mules",1700,1,"Black satin, a sculpted gold stiletto, worn on tiptoe.",{gar:"gd_mule",b:"gd",fo:1}],
  /* OIL & CANVAS (Boutique; ROOMS f041b24, 4c60022; QA 87b5dd0; Cal 11-18 "Approve OIL & CANVAS"): first drop Mon 11-30 */
  ["gx_oc_cap","a_hat","Finger-Swipe Studio Cap",950,1,"Cream cotton, finger-wiped cadmium smears, an indigo brim.",{gar:"oc_cap",b:"oc"}],
- ["gx_oc_felt","a_hat","Dipped-Brim Felt Hat",1100,1,"Cream felt, indigo-dipped brim, cadmium drips, a brush in the band.",{gar:"oc_felt",b:"oc"}],
+ ["gx_oc_felt","a_hat","Dipped-Brim Felt Hat",1100,1,"Cream felt, indigo-dipped brim, cadmium drips, a brush in the band.",{gar:"oc_felt",b:"oc",cut:"2026-12-02"/* retired (audit), replaced by the Splatter Rib Beanie; owners keep it */}],
+ ["gx_oc_beanie","a_hat","Splatter Rib Beanie",950,1,"Charcoal rib knit, thick cuff, cream and cadmium flecks.",{gar:"oc_beanie",b:"oc",from:"2026-12-02"}],
  ["gx_oc_roll","a_acc","Brush Roll Sling",1000,1,"Canvas brush roll across the body, worn handles, stained strap.",{gar:"oc_roll",b:"oc",cut:"2026-12-02"/* retired (audit), replaced by the Splatter Neck Bandana; owners keep it */}],
  ["gx_oc_palette","a_acc","Palette Pendant",950,1,"A small carved palette charm on a waxed cord, four paint dots.",{gar:"oc_palette",b:"oc",cut:"2026-12-02"/* retired (streetwear audit), replaced by the Copper Curb Chain; owners keep it; out of drops and Vaults that start from oc's 12-02 drop, so the running Vault keeps its draw */}],
  ["gx_oc_chain","a_acc","Copper Curb Chain",1000,1,"Chunky copper curb, a cadmium enamel drip charm.",{gar:"oc_chain",b:"oc",from:"2026-12-02"}],
@@ -378,6 +379,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_cord","a_acc","Knotted Cord Choker",750,1,"Charcoal waxed cord, three cadmium enamel beads.",{gar:"oc_cord",b:"oc",from:"2026-12-02"}],
  ["gx_oc_lanyard","a_acc","Indigo Key Lanyard",850,1,"Paint-flecked indigo webbing, copper clip, two keys.",{gar:"oc_lanyard",b:"oc",from:"2026-12-02"}],
  ["gx_oc_ring","a_acc","Paint-Dipped Ring Chain",950,1,"Silver ball chain, a ring dipped in cadmium.",{gar:"oc_ring",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_scarf","a_acc","Indigo Knit Scarf",950,1,"Raw indigo rib knit, cream fringe, cadmium flecks.",{gar:"oc_scarf",b:"oc",from:"2026-12-02"}],
  ["gx_oc_round","a_acc","Splattered Round Frames",950,1,"Charcoal rounds, cream paint flecks, amber lenses.",{gar:"oc_round",b:"oc",from:"2026-12-02"}],
  ["gx_oc_shield","a_acc","Cadmium Shield Shades",1000,1,"One cadmium-orange mirror lens, cream arms.",{gar:"oc_shield",b:"oc",from:"2026-12-02"}],
  ["gx_oc_square","a_acc","Gesso Square Frames",950,1,"Chunky cream acetate, gesso drips, smoke lenses.",{gar:"oc_square",b:"oc",from:"2026-12-02"}],
