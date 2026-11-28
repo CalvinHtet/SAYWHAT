@@ -2690,5 +2690,8 @@
  },
  "o_watch": {
   "slot": "arms"
+ },
+ "o_spraycap": {
+  "slot": "arms"
  }
 }
