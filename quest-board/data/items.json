@@ -2210,7 +2210,8 @@
   "slot": "shoes"
  },
  "nc_bralette": {
-  "slot": "top"
+  "slot": "top",
+  "bare": true
  },
  "nc_robe": {
   "slot": "top"
@@ -2299,5 +2300,21 @@
  },
  "y_jersey": {
   "slot": "top"
+ },
+ "y_tube": {
+  "slot": "top",
+  "bare": true
+ },
+ "y_mini": {
+  "slot": "pants",
+  "skirt": true,
+  "femaleOnly": true
+ },
+ "y_puffboot": {
+  "slot": "shoes",
+  "over": true
+ },
+ "y_flips": {
+  "slot": "shoes"
  }
 }

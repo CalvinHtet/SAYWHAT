@@ -87,6 +87,6 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   put("standard","gx_smk_tacpants gx_smk_wrappants gx_smk_strapsneaker gx_smk_wrapboots");
   put("premium","gx_smk_embersole");
   put("thrift","gx_y_shield gx_y_heart gx_y_starglass gx_y_tinted gx_y_goggle gx_y_glitter gx_y_beads gx_y_tattoo");
-  put("standard","gx_y_disc gx_y_pearlstar gx_y_fur gx_y_bandana gx_y_clipz gx_y_velour gx_y_jersey gx_y_cargo");/* like DIAL-UP's pendant and chains *//* DIAL-UP 8 a category (ROOMS 11-27), like its other glasses */
+  put("standard","gx_y_disc gx_y_pearlstar gx_y_fur gx_y_bandana gx_y_clipz gx_y_velour gx_y_jersey gx_y_cargo gx_y_tube gx_y_mini gx_y_puffboot gx_y_flips");/* like DIAL-UP's pendant and chains *//* DIAL-UP 8 a category (ROOMS 11-27), like its other glasses */
   put("premium","gx_nc_cardigan gx_nc_waffle gx_nc_loafer gx_nc_puffer gx_nc_cargo gx_nc_socksneaker gx_nc_bralette gx_nc_robe gx_nc_satinshort gx_nc_chukka gx_nc_mules gx_nc_platform gx_nc_flares");/* like nc's joggers, hoodie, zips and clogs */
   }return m[id]||null}
