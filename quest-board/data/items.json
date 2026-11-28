@@ -2470,5 +2470,17 @@
  },
  "oc_platform": {
   "slot": "shoes"
+ },
+ "oc_slide": {
+  "slot": "shoes"
+ },
+ "oc_mule": {
+  "slot": "shoes"
+ },
+ "oc_hoodie": {
+  "slot": "top"
+ },
+ "oc_chore": {
+  "slot": "top"
  }
 }
