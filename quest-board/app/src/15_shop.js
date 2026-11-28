@@ -376,6 +376,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_five","a_hat","Gesso Five-Panel",950,1,"Cream cap, gesso drips, indigo strap, copper buckle.",{gar:"oc_five",b:"oc",from:"2026-12-02"}],
  ["gx_oc_trapper","a_hat","Indigo Shearling Trapper",1100,1,"Indigo canvas, cream shearling, splatter on the flaps.",{gar:"oc_trapper",b:"oc",from:"2026-12-02"}],
  ["gx_oc_visor","a_hat","Scraped Visor",900,1,"Charcoal visor, cadmium palette-knife scrapes.",{gar:"oc_visor",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_cord6","a_hat","Indigo Corduroy Cap",1000,1,"Raw indigo wide-wale cord, copper eyelets, cream splatter.",{gar:"oc_cord6",b:"oc",from:"2026-12-02"}],
  ["gx_oc_roll","a_acc","Brush Roll Sling",1000,1,"Canvas brush roll across the body, worn handles, stained strap.",{gar:"oc_roll",b:"oc",cut:"2026-12-02"/* retired (audit), replaced by the Splatter Neck Bandana; owners keep it */}],
  ["gx_oc_palette","a_acc","Palette Pendant",950,1,"A small carved palette charm on a waxed cord, four paint dots.",{gar:"oc_palette",b:"oc",cut:"2026-12-02"/* retired (streetwear audit), replaced by the Copper Curb Chain; owners keep it; out of drops and Vaults that start from oc's 12-02 drop, so the running Vault keeps its draw */}],
  ["gx_oc_chain","a_acc","Copper Curb Chain",1000,1,"Chunky copper curb, a cadmium enamel drip charm.",{gar:"oc_chain",b:"oc",from:"2026-12-02"}],
