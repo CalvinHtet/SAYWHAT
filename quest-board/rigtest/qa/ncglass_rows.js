@@ -1,4 +1,4 @@
-// QA: a brand's new Shop rows (first written for b76d3168, NOIR CODE's three glasses; BRAND/PFX/NEW/CAT/SLOT/COUNT pick any brand).
+// QA: a brand's new Shop rows (COUNT = pieces on sale in the category, cut rows left out) (first written for b76d3168, NOIR CODE's three glasses; BRAND/PFX/NEW/CAT/SLOT/COUNT pick any brand).
 //  A. the rows: a_acc, brand nc, gar with art (slot glasses), category "head", price after tiers next to nc's other glasses
 //  B. nc's drops for a year (clock moved to each Mon/Wed/Fri 9 am): each drop shows dropCat of nc's head pieces; every one of the six
 //     shows in some drop; the three new ones appear
@@ -12,7 +12,7 @@ const NEW = (process.env.NEW || 'gx_nc_clear,gx_nc_catshades,gx_nc_visorshade').
   const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, timezoneId: 'America/Los_Angeles' })).newPage(); p.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
   await p.route('**/*', (r) => (r.request().url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
   await p.addInitScript(([c, br, pf]) => { window.__qaCAT = c; window.__qaBR = br; window.__qaPFX = pf; }, [CAT, BR, PFX]); await p.goto('http://127.0.0.1:' + PORT + '/dist/index.html'); await p.waitForFunction(() => window.__qb && window.__qbDrops && window.__qbV201 && window.QBDATA, null, { timeout: 120000 }); await p.waitForTimeout(600);
-  /* A */ const A = await p.evaluate((NEW) => { const x = window.__qb.x(), V = window.__qbV201; const nc = x.SHOP.filter((it) => it[6] && it[6].b === window.__qaBR && V.cat(it[0]) === window.__qaCAT);
+  /* A */ const A = await p.evaluate((NEW) => { const x = window.__qb.x(), V = window.__qbV201; const nc = x.SHOP.filter((it) => it[6] && it[6].b === window.__qaBR && V.cat(it[0]) === window.__qaCAT && !it[6].cut); /* on sale only: cut rows (V31CUT and the like) never drop */
     return { rows: NEW.map((id) => { const it = x.SHOP.find((r) => r[0] === id); if (!it) return { id, missing: 1 }; const g = it[6].gar, M = QBDATA.items[g] || {}; return { id, slot: it[1], b: it[6].b, gar: g, itemSlot: M.slot, front: !!(window.QBART && (QBART['m_' + g + '_front.webp'] || QBART['f_' + g + '_front.webp'])) || null, cat: V.cat(id), price: it[3], cut: !!it[6].cut, name: it[2] }; }),
       head: nc.map((it) => it[0] + ' ' + it[3]), dropCat: (V.cfg && (V.cfg.dropCat || V.cfg.perCat)) || null }; }, NEW);
   A.rows.forEach((r) => note(JSON.stringify(r))); note(BR + ' '+CAT+' pieces and prices: ' + A.head.join(', ') + ' | dropCat ' + A.dropCat);
@@ -38,7 +38,7 @@ const NEW = (process.env.NEW || 'gx_nc_clear,gx_nc_catshades,gx_nc_visorshade').
     const nb = document.querySelector('.nav button[data-v="shop"]'); if (nb) { nb.click(); await sleep(1000); } document.querySelectorAll('#layer .modal,.bsplash').forEach((m) => m.remove()); window.__qbV149.go('street'); await sleep(1000); document.querySelectorAll('#layer .modal,.bsplash').forEach((m) => m.remove());
     const st = document.querySelector('[data-act="stab"][data-v="' + window.__qaBR + '"]'); if (st) st.click(); await sleep(1200); const L = window.__qbDrops.state().live.find((q) => q.id === window.__qaBR);
     const ids = [...document.querySelectorAll('.qshop .qs-card[data-card^="' + window.__qaPFX + '"]')].map((e) => e.dataset.card); const keep = L ? window.__qbV201.half(L) : {};
-    const head = x.SHOP.filter((it) => it[6] && it[6].b === window.__qaBR && window.__qbV201.cat(it[0]) === window.__qaCAT).map((it) => it[0]);
+    const head = x.SHOP.filter((it) => it[6] && it[6].b === window.__qaBR && window.__qbV201.cat(it[0]) === window.__qaCAT && !it[6].cut).map((it) => it[0]);
     return { start: L && L.start, tab: !!st, shown: [...new Set(ids)].filter((id) => head.includes(id)), calc: head.filter((id) => keep[id]) }; }, when);
   const R0 = await room(null); note('now: ' + BR + ' drop ' + R0.start + ', head shown ' + R0.shown.join(', ') + ' | calc ' + R0.calc.join(', '));
   if (!R0.start) note(BR + ' is not in a running drop now, so there is no running room to check'); else ok(R0.tab && JSON.stringify(R0.shown.slice().sort()) === JSON.stringify(R0.calc.slice().sort()) && NEW.every((id) => !R0.shown.includes(id)), 'the running ' + BR + ' drop shows exactly its own calc, without the new pieces (from: dates)');
