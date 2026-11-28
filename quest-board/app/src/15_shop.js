@@ -380,6 +380,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_lanyard","a_acc","Indigo Key Lanyard",850,1,"Paint-flecked indigo webbing, copper clip, two keys.",{gar:"oc_lanyard",b:"oc",from:"2026-12-02"}],
  ["gx_oc_ring","a_acc","Paint-Dipped Ring Chain",950,1,"Silver ball chain, a ring dipped in cadmium.",{gar:"oc_ring",b:"oc",from:"2026-12-02"}],
  ["gx_oc_scarf","a_acc","Indigo Knit Scarf",950,1,"Raw indigo rib knit, cream fringe, cadmium flecks.",{gar:"oc_scarf",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_pearl","a_acc","Gesso Pearl Strand",850,1,"Matte plaster-cream beads, one cadmium bead.",{gar:"oc_pearl",b:"oc",from:"2026-12-02"}],
  ["gx_oc_round","a_acc","Splattered Round Frames",950,1,"Charcoal rounds, cream paint flecks, amber lenses.",{gar:"oc_round",b:"oc",from:"2026-12-02"}],
  ["gx_oc_shield","a_acc","Cadmium Shield Shades",1000,1,"One cadmium-orange mirror lens, cream arms.",{gar:"oc_shield",b:"oc",from:"2026-12-02"}],
  ["gx_oc_square","a_acc","Gesso Square Frames",950,1,"Chunky cream acetate, gesso drips, smoke lenses.",{gar:"oc_square",b:"oc",from:"2026-12-02"}],
