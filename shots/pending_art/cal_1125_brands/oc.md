@@ -48,7 +48,7 @@ shoes 2 (boot, derby). New below: hat 7, head 8, neck 8, top 5, bottom 5, shoes 
 | bottom | oc_mini | Canvas Cargo Mini | Cream canvas cargo mini skirt, indigo pocket flaps, cadmium drips. |
 | shoes | oc_hightop | Splatter High-Tops | Cream canvas high-tops, cadmium and indigo splatter, charcoal soles. |
 | shoes | oc_skate | Indigo Skate Shoes | Chunky indigo suede skate shoes, cream laces, gesso toe caps. |
-| shoes | oc_work | Drip Work Boots | Charcoal work boots, cadmium drips on the toes, cream laces. |
+| shoes | oc_workboot | Drip Work Boots | Charcoal work boots, cadmium drips on the toes, cream laces. |
 | shoes | oc_slide | Gesso Slides | Thick cream slides, gesso crust, a cadmium stripe. |
 | shoes | oc_platform | Scraped Platform Sneakers | Cream platform sneakers, palette-knife cadmium scrapes on the side. |
 | shoes | oc_mule | Indigo Clog Mules | Raw indigo denim clog mules, copper rivets, cream splatter. |
