@@ -57,6 +57,7 @@ var EXTRA_ITEMS=[
  ["gx_y_furden","a_top","Fur-Collar Denim Jacket",1600,1,"Cropped dark denim over a white tee, cream fur collar.",{gar:"y_furden",b:"y2k"}],
  ["gx_y_velour","a_top","Velour Zip Hoodie",1300,1,"Cropped baby-pink velour, silver piping, rhinestone zip pull.",{gar:"y_velour",b:"y2k",from:"2026-11-30"}],
  ["gx_y_jersey","a_top","Mesh Football Jersey",1300,1,"Oversized cyan mesh, black and chrome sleeve stripes, chrome star.",{gar:"y_jersey",b:"y2k",from:"2026-11-30"}],
+ ["gx_y_tube","a_top","Satin Tube Top",1300,1,"Hot-pink satin, rhinestone star, sheer lilac shrug.",{gar:"y_tube",b:"y2k",from:"2026-11-30"}],
  ["gx_y_patch","a_pants","Patchwork Wide Jeans",1350,1,"Mixed washes, low rise.",{gar:"y_patch",b:"y2k"}],
  ["gx_y_pcamo","a_pants","Coral Camo Cargos",1250,1,"Low-rise, coral and grey camo.",{gar:"y_pcamo",b:"y2k"}],
  ["gx_y_maxi","a_pants","Denim Cargo Maxi",1300,1,"Long dark denim, cargo pockets, a slit.",{gar:"y_maxi",b:"y2k",fo:1}],
