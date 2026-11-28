@@ -76,7 +76,7 @@ function clothTier(id){var m=clothTier.m;if(!m){m=clothTier.m={};var put=functio
   put("premium","gx_oc_cap gx_oc_roll gx_oc_palette gx_oc_gloves gx_oc_trouser gx_oc_jean gx_oc_skirt gx_oc_derby");
   put("premium","gx_oc_round gx_oc_shield gx_oc_square gx_oc_tint gx_oc_cat gx_oc_goggle gx_oc_dots gx_oc_smear gx_oc_chain gx_oc_bandana gx_oc_tube gx_oc_cord gx_oc_lanyard gx_oc_ring gx_oc_scarf gx_oc_beanie gx_oc_pearl gx_oc_newsboy gx_oc_bucket gx_oc_five gx_oc_trapper gx_oc_visor gx_oc_cord6 gx_oc_hightop gx_oc_skate gx_oc_platform gx_oc_slide gx_oc_mule");
   put("luxury","gx_oc_hoodie gx_oc_chore gx_oc_workboot gx_oc_vest");
-  put("premium","gx_oc_tee gx_oc_crop gx_oc_short gx_oc_carpenter gx_oc_cargo gx_oc_jogger gx_oc_mini gx_oc_fingerless gx_oc_leather");/* simpler cuts than oc's jackets *//* like oc's other tops *//* oc to 8 a category (ROOMS 11-28) */
+  put("premium","gx_oc_tee gx_oc_crop gx_oc_short gx_oc_carpenter gx_oc_cargo gx_oc_jogger gx_oc_mini gx_oc_fingerless gx_oc_leather gx_oc_workglove gx_oc_cuff gx_oc_bangle");/* simpler cuts than oc's jackets *//* like oc's other tops *//* oc to 8 a category (ROOMS 11-28) */
   /* REGIMENT (LEAD, 2026-11-18, by QA's rules; QA to check): brass, braid and frogging luxury (the corded peaked cap, the aiguillette, the
      frogged jacket, the capelet tunic, the mess jacket, the tall riding boots, the stiletto boots); the rest premium */
   put("luxury","gx_rg_cap gx_rg_cord gx_rg_jacket gx_rg_capelet gx_rg_mess gx_rg_boot gx_rg_stiletto");
