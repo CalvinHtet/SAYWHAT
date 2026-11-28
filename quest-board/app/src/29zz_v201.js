@@ -71,7 +71,7 @@ var V201ON=0;
 var v201Groups=qsGroups;qsGroups=function(pick){var a=arguments;
   if(V201ON){var V=v201Vault();return v201Groups.call(this,function(x){return !!V.keep[x[0]]})}
   try{var d=dropState(),live=(d&&d.live)||[],H={};live.forEach(function(b){H[b.id]=v201Half(b)});
-    return v201Groups.call(this,function(x){if(!pick(x))return false;var m=x[6]||{},h=H[m.b];if(!h||!v201Sellable(x))return true;return !!h[x[0]]||!!(S.owned&&S.owned[x[0]])})}catch(e){return v201Groups.apply(this,a)}};
+    return v201Groups.call(this,function(x){if(!pick(x))return false;var m=x[6]||{},h=H[m.b];/* QA 11-28: a dated-cut row in a brand room only if this drop drew it, or it is owned */if(h&&m.cutOn)return !!h[x[0]]||!!(S.owned&&S.owned[x[0]]);if(!h||!v201Sellable(x))return true;return !!h[x[0]]||!!(S.owned&&S.owned[x[0]])})}catch(e){return v201Groups.apply(this,a)}};
 /* the Vault's door and page (29zz_v149.js's home screen opens shopTab = the door's id) */
 var V201ID="v201vault";
 shubVault=function(){return {id:V201ID,name:"The Vault",fl:"street",vault7:1}};
