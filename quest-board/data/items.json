@@ -2519,5 +2519,14 @@
  },
  "oc_leather": {
   "slot": "arms"
+ },
+ "oc_bangle": {
+  "slot": "arms"
+ },
+ "oc_cuff": {
+  "slot": "arms"
+ },
+ "oc_workglove": {
+  "slot": "arms"
  }
 }

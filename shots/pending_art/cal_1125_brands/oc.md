@@ -58,9 +58,9 @@ tops, bottoms, gloves; rows per QA batch with from: the ship date; retirements c
 (send LEAD which replacement covers which retirement); Boutique price grades like oc's current pieces.
 
 | gloves (arms) | oc_fingerless | Splatter Fingerless Gloves | Charcoal knit fingerless gloves, cream and cadmium flecks. |
-| gloves (arms) | oc_workglove | Canvas Work Gloves | Cream canvas work gloves, indigo cuffs, gesso-crusted fingertips. |
+| gloves (arms) | oc_workglove | Canvas Work Gloves | Cream canvas work gloves, indigo knit cuffs, gesso-crusted fingertips. |
 | gloves (arms) | oc_leather | Indigo Leather Gloves | Raw indigo leather gloves, copper snap, a cadmium smear. |
 | gloves (arms) | oc_wrap | Taped Knuckle Wraps | Cream cloth hand wraps, cadmium paint on the knuckles. |
 | gloves (arms) | oc_cuff | Copper Cuff Pair | Two wide hammered copper wrist cuffs, an indigo enamel line. |
 | gloves (arms) | oc_watch | Paint-Fleck Sport Watch | Chunky charcoal sport watch with a cream band, cadmium flecks (no dial numbers). |
-| gloves (arms) | oc_bangle | Gesso Bangle Stack | A stack of matte cream and indigo bangles on each wrist. |
+| gloves (arms) | oc_bangle | Gesso Bangle Stack | Chunky cream, indigo and cadmium bangles stacked on each wrist, a cadmium drip. |
