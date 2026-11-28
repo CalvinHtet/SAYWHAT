@@ -126,6 +126,7 @@ var EXTRA_ITEMS=[
  ["gx_o_slipon","a_shoes","Knit Slip-On Trainers",1300,1,"Black knit, orange heel pull.",{gar:"o_slipon",b:"over"}],
  ["gx_o_tabi","a_shoes","Split-Toe Trainers",1100,1,"Black split-toe trainers, chunky grey soles, orange heel tab.",{gar:"o_tabi",b:"over",from:"2026-12-04"}],
  ["gx_o_hiker","a_shoes","Concrete Hiker Mids",1150,1,"Grey suede hiker mids, black lug soles, orange laces.",{gar:"o_hiker",b:"over",from:"2026-12-04"}],
+ ["gx_o_platform","a_shoes","Grip Platform Sneakers",1200,1,"Charcoal suede on tall stacked soles, grip-tape toe caps, orange laces.",{gar:"o_platform",b:"over",from:"2026-12-04"}],
  /* Cal 11-18 OVERPASS: the chain and skate tool's replacements ("Redo those two accessories with something else"; ROOMS cefab81) */
  ["gx_o_guards","a_acc","Grip-Tape Wrist Guards",850,1,"Grip-tape facing, orange straps, scuffed grey plates.",{gar:"o_guards",b:"over"}],
  ["gx_o_mech","a_acc","Mechanic Gloves",900,1,"Concrete-grey mechanic gloves, black knuckle pads, orange cuffs.",{gar:"o_mech",b:"over",from:"2026-12-04"}],
