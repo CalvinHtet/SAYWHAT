@@ -111,5 +111,5 @@ for b in ("m", "f"):
 text = json.dumps(items, indent=1)
 # Keep each trim line on one row.
 text = re.sub(r"\[\s+([0-9.,\s]+?)\s+\]", lambda m: "[" + re.sub(r"\s+", "", m.group(1)) + "]", text)
-open(path, "w").write(text)
+open(path, "w").write(text if text.endswith("\n") else text + "\n")  # keep the file's trailing newline (ROOMS 11-28)
 print("items", len(items))
