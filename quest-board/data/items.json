@@ -2548,5 +2548,21 @@
  "o_goggle": {
   "slot": "glasses",
   "neutral": true
+ },
+ "o_cuban": {
+  "slot": "neck"
+ },
+ "o_spray": {
+  "slot": "mask",
+  "neutral": true
+ },
+ "o_whistle": {
+  "slot": "neck"
+ },
+ "o_carabiner": {
+  "slot": "neck"
+ },
+ "o_snood": {
+  "slot": "neck"
  }
 }
