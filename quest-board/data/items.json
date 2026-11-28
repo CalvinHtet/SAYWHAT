@@ -2534,5 +2534,19 @@
  },
  "oc_wrap": {
   "slot": "arms"
+ },
+ "o_round": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "o_slit": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "o_goggle": {
+  "slot": "glasses",
+  "neutral": true
  }
 }
