@@ -7,14 +7,12 @@ plain, never cute; sexy pieces welcome (skin fine, never nude).
 
 Live after the cut (GO OFF Tee cut in V22CUT): hat 3 (halomask, halo, beanie), head 0, neck 2 (phones, pendant), top 4 (hoodie,
 track, vest, grille), bottom 3 (cargo, nightcargo, shorts), shoes 3 (hightop, runner, boots), gloves 0.
-New below: hat 5, head 8, neck 6, top 4, bottom 5, shoes 5, gloves 8 = 41. Order: head, neck, hats, tops, bottoms, shoes, gloves.
+New below: hat 5, head 8, neck 6, top 4, bottom 7, shoes 5, gloves 8 = 43 (LEAD 11-28: bottoms count 1 live after the two retirements). Order: head, neck, hats, tops, bottoms, shoes, gloves.
 
-Audit of the live 15, for LEAD to decide (no retirements made):
-- sm_hoodie Signature Neon Hoodie: the sleeve carries glyph-like marks that read as script, which breaks the no-text rule. Needs a
-  repaint (clean the sleeve) or a retire-and-replace.
-- Plain-leaning (Cal 11-18 never-plain rule): sm_shorts Mesh Shorts, sm_nightcargo Night Cargo, sm_track Glow Track Jacket (one
-  cyan stripe each); sm_halo Neon Halo is a bare ring. Suggest retiring sm_shorts and sm_nightcargo with their replacements below
-  (sm_biker, sm_parachute) and keeping the halo as the brand icon.
+LEAD 11-28 decisions on the audit:
+- sm_hoodie: REPAINT (same id, owners keep it). The sleeve reads as katakana; swap it for a cyan/orange chevron or circuit run, no letters. Goes to QA as a FIX with a real-letters zoom.
+- RETIRE sm_shorts (replaced by sm_biker) and sm_nightcargo (replaced by sm_parachute); owners keep them; LEAD dates the cut on the drop the replacements go live.
+- Keep sm_track and sm_halo (the brand icon). The Ø badge stays small and only on the pieces named below.
 
 | Category (slot) | id | Name | Line |
 |---|---|---|---|
@@ -46,6 +44,8 @@ Audit of the live 15, for LEAD to decide (no retirements made):
 | bottom | sm_biker | Ø Biker Shorts | Black biker shorts, a cyan side stripe, a small orange Ø. |
 | bottom | sm_wideleg | Flare Wide-Leg Pants | Black wide-leg pants fading to flare orange at the hem, cyan waist piping. |
 | bottom | sm_trackpant | Night Track Pants | Black track pants, glowing cyan side stripes, orange ankle zips. |
+| bottom | sm_strapcargo | Strap Cargo Pants | Black cargo pants, hanging cyan reflective straps at the knees, orange buckles, glow-piped pockets. |
+| bottom | sm_flares | Glow-Seam Flares | Black denim flares, glowing cyan outer seams, orange rivets and a flare-orange hem facing. |
 | shoes | sm_platform | Neon Platform Boots | Black chunky platform boots, a cyan glowing sole edge, orange buckles (flat, below a wide hem). |
 | shoes | sm_slide | Glow Slides | Chunky black slides, glowing cyan straps, an orange footbed. |
 | shoes | sm_lowtop | Ø Low-Tops | Black low sneakers, a small orange Ø on the side, a cyan glow sole. |
