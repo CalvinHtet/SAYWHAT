@@ -17,7 +17,7 @@ var V82RX0=/\b((deep |spring )?clean(ing)?|tidy(ing)?( up)?|declutter(ing)?|orga
 var V82RX=/\b(wash (the |my |every |all |each )?(\w+ )?(car|windows?|dishes)|do (the |my )?dishes|make (the |my )?bed|clear (out |off )?(the |my |one |a )?(\w+ )?(desk|table|closet|garage|counters?|floor|hallway|room|shelf|shelves|(shower |sink )?drain)|wipe (the |my |down the )?(counters?|table|stove|desk|mirror|bathroom|kitchen))\b/i;
 /* Cal 11-27: "For making your bed, do not require a before and after. Only before and after is for cleaning a big area such as living room
    or clearing desk or cleaning kitchen. Not for something quick like making the bed": the bed, the dishes and a mirror never ask */
-var V82NOTX=/\b(bed|beds|dishes|mirror|laundry|dryer|washer|fold|folding|iron|ironing|put away|putting away|hang up|trash|garbage|recycling|bins?|cook|cooking|meal|groceries|grocery|shopping|errand|teeth|face|hair|yourself|myself|body|shower)\b/i;
+var V82NOTX=/\b(make (the |my |your )?beds?|making (the |my |your )?beds?|dishes|mirror|laundry|dryer|washer|fold|folding|iron|ironing|put away|putting away|hang up|trash|garbage|recycling|bins?|cook|cooking|meal|groceries|grocery|shopping|errand|teeth|face|hair|yourself|myself|body|shower)\b/i;
 var V82KEY="qb-ba-",V82ASK={},V82PEND={};/* QA 38a3fed4 MED: every task whose after is on its way, by quest id */
 function v82Is(q){var n=(q&&q.name)||"";return !!q&&!q.bty&&q.rep!=="weekly4"&&!/^(admin|social)$/.test(q.cl||"")&&!V82NOT.test(n)&&!V82NOTX.test(n)&&!/\$\s?\d/.test(n)&&(V82RX0.test(n)||V82RX.test(n))}
 function v82Get(id){try{var o=JSON.parse(localStorage.getItem(V82KEY+id)||"null");if(o&&o.d&&Date.now()-o.t<2*864e5)return o;if(o)localStorage.removeItem(V82KEY+id)}catch(e){}return null}

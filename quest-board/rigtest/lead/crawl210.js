@@ -17,7 +17,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await p.waitForTimeout(600);
   const lv = await V(() => { const m = document.querySelector('#layer .modal'); return { txt: m ? m.innerText.replace(/\s+/g, ' ') : '', team: window.__qbV210.team(), unl: (window.__qb.x().S.unl || {}).sable7 }; });
   ok(/Sable is your first ally/.test(lv.txt) && /Crawls is open/.test(lv.txt) && lv.team.indexOf('t:sable') >= 0 && lv.unl === 1, 'level 7\'s level-up tells Sable\'s story and opens Crawls; she is on the team ' + JSON.stringify({ team: lv.team, txt: lv.txt.slice(0, 220) }));
-  await p.screenshot({ path: OUT + '/crawl210_lvup.png' });
+  await p.screenshot({ path: OUT + '/crawl210_lvup.png', animations: 'disabled', timeout: 60000 });
   await clear(); await V(() => { window.__qb.x().render(); }); await p.waitForTimeout(400);
   const nav = await V(() => { const bs = [...document.querySelectorAll('.nav button[data-v]')].map((x) => x.dataset.v); return { bs, tile: !!document.querySelector('.zx-tile[data-v="away"]') }; });
   ok(nav.bs[nav.bs.length - 1] === 'away' && !nav.tile, 'Crawls is the last tab on the bottom bar (right), not a Board tile ' + JSON.stringify(nav));
@@ -28,8 +28,8 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   const moved = t1.filter((a) => { const o = t0.find((x) => x.k === a.k); return o && (o.x !== a.x || o.y !== a.y || o.mode !== a.mode); }).length;
   const imgs = await V(() => [...document.querySelectorAll('.v210p img')].filter((i) => i.getAttribute('src')).length);
   ok(t1.length === 4 && moved >= 2 && imgs >= 3, 'the lounge has all 4 (Sable, Pip, Kit, Bram), drawn, and they move between spots ' + JSON.stringify({ t0, t1, imgs }));
-  await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(400); await p.screenshot({ path: OUT + '/crawl210_lounge.png' });
-  await p.waitForTimeout(14000); await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/crawl210_lounge2.png' }); console.log('     at 2nd shot: ' + JSON.stringify(await V(() => window.__qbV210.agents())));
+  await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(400); await p.screenshot({ path: OUT + '/crawl210_lounge.png', animations: 'disabled', timeout: 60000 });
+  await p.waitForTimeout(14000); await clear(); await V(() => window.scrollTo(0, 0)); await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/crawl210_lounge2.png', animations: 'disabled', timeout: 60000 }); console.log('     at 2nd shot: ' + JSON.stringify(await V(() => window.__qbV210.agents())));
   /* who goes */
   await V(() => { const b = document.querySelector('[data-act="dgo"]'); b.click(); }); await p.waitForTimeout(500);
   const pk = await V(() => [...document.querySelectorAll('#layer .v210who b')].map((b) => b.textContent));
@@ -37,7 +37,7 @@ const { chromium } = require('playwright'); const PORT = process.env.PORT || 883
   await V(() => { const b = [...document.querySelectorAll('#layer .v210who')].find((x) => /Kit/.test(x.textContent)); b.click(); }); await p.waitForTimeout(1200);
   const run = await V(() => ({ who: (window.__qb.x().S.dng.runs[0] || {}).who, icon: !!document.querySelector('.v210run .v210rimg'), src: !!(document.querySelector('.v210run .v210rimg') || {}).src, lounge: window.__qbV210.agents().map((a) => a.k) }));
   ok(run.who === 'a:kit' && run.icon && run.lounge.indexOf('a:kit') < 0 && run.lounge.length === 3, 'Kit goes: she runs beside the crawl and is not in the lounge ' + JSON.stringify(run));
-  await V(() => document.querySelector('.v210run').scrollIntoView({ block: 'center' })); await p.waitForTimeout(800); await p.screenshot({ path: OUT + '/crawl210_run.png' });
+  await V(() => document.querySelector('.v210run').scrollIntoView({ block: 'center' })); await p.waitForTimeout(800); await p.screenshot({ path: OUT + '/crawl210_run.png', animations: 'disabled', timeout: 60000 });
   const rel = await V(async () => { const none = !document.querySelector('.v210rs') || Object.keys(window.__qb.x().S.trophy || {}).length > 0; window.__qb.x().S.trophy = { goblin: { helm: Date.now() } }; window.__qb.x().render(); await new Promise((r) => setTimeout(r, 300)); return { none, relics: !!document.querySelector('.v210rs'), team: !!document.querySelector('.team, .tmgrid, [class*="team"]') }; });
   ok(rel.none && rel.relics, 'no relic box until the first one (Cal 11-26), then the tab lists it ' + JSON.stringify(rel));
   ok(!errs.length, 'no page errors ' + JSON.stringify(errs.slice(0, 3))); await b.close(); console.log(bad ? 'FAILED ' + bad : 'PASS'); })();

@@ -48,15 +48,16 @@ function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return 
 /* ---- the Vault ---- */
 function v201Sun(n){var t=dropYmd(n),x=ymdN(t);while(ymdWd(x)!==V201.sun)x--;var s=ymdOfN(x);if(dropStart(s)>n){x-=7;s=ymdOfN(x)}return s}
 var V201VC={};
-function v201Vault(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V201VC[wk];
-  var prem=function(id){return brandFloor(id)!=="street"},on=BRANDS.map(function(b){return b.id}).filter(function(id){return !zxHeld(id,wk)});
+/* QA LOW (11-27): a brand held mid-week (SØLVBERG, Cal 11-27) leaves the Vault that day too */
+function v201Vault(n){var wk=v201Sun(n==null?dropNow():n),hd=dropYmd(n==null?dropNow():n),hk=wk+"|"+BRANDS.filter(function(b){return zxHeld(b.id,hd)}).map(function(b){return b.id}).join(",");if(V201VC[hk])return V201VC[hk];
+  var prem=function(id){return brandFloor(id)!=="street"},on=BRANDS.map(function(b){return b.id}).filter(function(id){return !zxHeld(id,wk)&&!zxHeld(id,hd)});
   var P=v201Shuf(on.filter(prem).sort(),"v201v|"+wk+"|prem").slice(0,V201.premMax),okB={};on.forEach(function(id){if(!prem(id)||P.indexOf(id)>=0)okB[id]=1});
   var by={};SHOP.forEach(function(it){if(!v201Sellable(it)||!okB[it[6].b]||(it[6].from&&wk<it[6].from))return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
   var keep={},list=[];["hat","head","neck","gloves","top","bottom","shoes"].forEach(function(c){var L=v201Shuf((by[c]||[]).sort(function(a,b){return a[0]<b[0]?-1:1}),"v201v|"+wk+"|"+c),got=[],pr=0,br={};
     /* first pass: different brands; then any brand; never a second pricier piece */
     [true,false].forEach(function(spread){L.forEach(function(it){if(got.length>=V201.perCat||got.indexOf(it)>=0)return;var b=it[6].b,p=prem(b);if(p&&pr>=1)return;if(spread&&br[b])return;got.push(it);br[b]=1;if(p)pr++})});
     got.forEach(function(it){keep[it[0]]=1;list.push([c,it[0],it[6].b])})});
-  return V201VC[wk]={wk:wk,until:ymdAdd(wk,7),keep:keep,list:list,prem:P}}
+  return V201VC[hk]={wk:wk,until:ymdAdd(wk,7),keep:keep,list:list,prem:P}}
 /* the Shop's racks: a live brand shows its half; the Vault its own */
 var V201ON=0;
 var v201Groups=qsGroups;qsGroups=function(pick){var a=arguments;
