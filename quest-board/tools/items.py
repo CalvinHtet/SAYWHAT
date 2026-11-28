@@ -18,6 +18,7 @@ layers, app, path = sys.argv[1:4]
 items = json.load(open(path))
 ICON = 320
 COLUMNS = 64  # must match CLIP_COLUMNS in src/rig.js
+RECLIP = set(x for x in os.environ.get("RECLIP", "").split(",") if x)
 
 
 # the hats' clip line lives in tools/cliplib.py (shared with tools/clip_lines.py), so running this never brings the old line back
@@ -47,6 +48,11 @@ for art, meta in items.items():
     if meta.get("noClip"):
         meta.pop("clip", None)
     elif meta.get("slot") == "hat":
+        # LEAD 11-28: a hat that already has a clip keeps it (QA passed that one); re-running this for other items used to
+        # re-derive every hat's line from its current layer and drift live hats (nc_fleecetrapper). Redo on purpose with
+        # RECLIP=<art,art> (or RECLIP=all) in the environment, or with tools/clip_lines.py.
+        if meta.get("clip") and art not in RECLIP and "all" not in RECLIP:
+            continue
         meta["clip"] = {}
         for b in ("m", "f"):
             meta["clip"][b] = {}
