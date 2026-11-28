@@ -2461,5 +2461,14 @@
  "oc_visor": {
   "slot": "hat",
   "noClip": true
+ },
+ "oc_hightop": {
+  "slot": "shoes"
+ },
+ "oc_skate": {
+  "slot": "shoes"
+ },
+ "oc_platform": {
+  "slot": "shoes"
  }
 }
