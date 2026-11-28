@@ -375,6 +375,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_round","a_acc","Splattered Round Frames",950,1,"Charcoal rounds, cream paint flecks, amber lenses.",{gar:"oc_round",b:"oc",from:"2026-12-02"}],
  ["gx_oc_shield","a_acc","Cadmium Shield Shades",1000,1,"One cadmium-orange mirror lens, cream arms.",{gar:"oc_shield",b:"oc",from:"2026-12-02"}],
  ["gx_oc_square","a_acc","Gesso Square Frames",950,1,"Chunky cream acetate, gesso drips, smoke lenses.",{gar:"oc_square",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_tint","a_acc","Indigo Tints",900,1,"Small deep-indigo ovals, copper wire frame.",{gar:"oc_tint",b:"oc",from:"2026-12-02"}],
  ["gx_oc_gloves","a_acc","Paint-Stained Leather Gloves",950,1,"Fitted cream fingerless leather, orange-stained tips, indigo strap.",{gar:"oc_gloves",b:"oc"}],
  ["gx_oc_denim","a_top","Hand-Painted Denim Jacket",1900,1,"Indigo denim, cadmium brush sweeps across the back, copper buttons.",{gar:"oc_denim",b:"oc"}],
  ["gx_oc_coat","a_top","Patchwork Studio Coat",1900,1,"Cream canvas offcuts, indigo running stitch, a brush in the pocket.",{gar:"oc_coat",b:"oc"}],
