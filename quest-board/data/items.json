@@ -2505,5 +2505,16 @@
  },
  "oc_cargo": {
   "slot": "pants"
+ },
+ "oc_jogger": {
+  "slot": "pants"
+ },
+ "oc_mini": {
+  "slot": "pants",
+  "skirt": true,
+  "femaleOnly": true
+ },
+ "oc_fingerless": {
+  "slot": "arms"
  }
 }
