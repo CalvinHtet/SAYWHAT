@@ -2341,5 +2341,14 @@
   "slot": "glasses",
   "neutral": true,
   "frontOnly": true
+ },
+ "oc_goggle": {
+  "slot": "glasses",
+  "neutral": true
+ },
+ "oc_dots": {
+  "slot": "mask",
+  "frontOnly": true,
+  "neutral": true
  }
 }

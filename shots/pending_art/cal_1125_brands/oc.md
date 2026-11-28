@@ -26,7 +26,7 @@ shoes 2 (boot, derby). New below: hat 7, head 8, neck 8, top 5, bottom 5, shoes 
 | head (glasses) | oc_tint | Indigo Tints | Small oval tints in deep indigo, thin copper wire frame. |
 | head (glasses) | oc_goggle | Clear Wrap Goggles | Clear wrap goggles, charcoal band, cadmium splatter on the rims. |
 | head (mask) | oc_smear | Cheek Paint Smear | A single cadmium brush swipe across one cheek and the nose bridge. |
-| head (mask) | oc_dots | Indigo Dot Marks | A row of indigo paint dots under each eye. |
+| head (mask) | oc_dots | Indigo Dot Marks | Three glossy indigo paint dots under each eye along the cheekbone, smaller toward the outer corner. |
 | head (glasses) | oc_cat | Charcoal Cat-Eyes | Sharp charcoal cat-eye frames, a cadmium fleck on each wing. |
 | neck | oc_chain | Copper Curb Chain | Chunky copper curb chain, a small enamel drip charm. |
 | neck | oc_bandana | Splatter Neck Bandana | Cream bandana knotted at the neck, indigo and cadmium splatter. |
