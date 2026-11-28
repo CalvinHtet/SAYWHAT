@@ -2229,5 +2229,20 @@
  },
  "nc_platform": {
   "slot": "shoes"
+ },
+ "y_shield": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "y_heart": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "y_starglass": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
  }
 }
