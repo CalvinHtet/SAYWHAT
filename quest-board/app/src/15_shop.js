@@ -101,6 +101,7 @@ var EXTRA_ITEMS=[
  ["gx_o_cuban","a_acc","Matte Cuban Chain",950,1,"Thick matte-black curb chain, one orange-enamel link.",{gar:"o_cuban",b:"over",from:"2026-12-04"}],
  ["gx_o_carabiner","a_acc","Carabiner Key Clip",850,1,"Black braided cord, an orange carabiner, two steel keys.",{gar:"o_carabiner",b:"over",from:"2026-12-04"}],
  ["gx_o_snood","a_acc","Reflective Snood",900,1,"Charcoal fleece snood, a reflective band, orange pull tab.",{gar:"o_snood",b:"over",from:"2026-12-04"}],
+ ["gx_o_dogtag2","a_acc","Orange Cord Pendant",800,1,"Thick orange paracord, a matte black steel washer.",{gar:"o_dogtag2",b:"over",from:"2026-12-04"}],
  ["gx_o_bridge","a_top","Bridge Graphic Hoodie",1500,1,"Washed black, cracked orange overpass print.",{gar:"o_bridge",b:"over"}],
  ["gx_o_liner","a_top","Quilted Liner Jacket",1500,1,"Safety orange diamond quilting, snap front.",{gar:"o_liner",b:"over"}],
  ["gx_o_thermal","a_top","Layered Thermal Tee",1200,1,"Boxy black tee over a grey waffle thermal.",{gar:"o_thermal",b:"over"}],
