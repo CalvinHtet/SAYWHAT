@@ -2331,5 +2331,15 @@
   "slot": "glasses",
   "neutral": true,
   "frontOnly": true
+ },
+ "oc_cat": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "oc_tint": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
  }
 }
