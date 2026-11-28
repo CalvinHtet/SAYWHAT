@@ -48,7 +48,7 @@ function v201Half(b){var key=b.id+"|"+(b.start||""),c=V201HALF[key];if(c)return 
 /* ---- the Vault ---- */
 function v201Sun(n){var t=dropYmd(n),x=ymdN(t);while(ymdWd(x)!==V201.sun)x--;var s=ymdOfN(x);if(dropStart(s)>n){x-=7;s=ymdOfN(x)}return s}
 var V201VC={};
-function v201Vault(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V201VC[wk];
+function v201VaultW(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V201VC[wk];
   var prem=function(id){return brandFloor(id)!=="street"},on=BRANDS.map(function(b){return b.id}).filter(function(id){return !zxHeld(id,wk)});
   var P=v201Shuf(on.filter(prem).sort(),"v201v|"+wk+"|prem").slice(0,V201.premMax),okB={};on.forEach(function(id){if(!prem(id)||P.indexOf(id)>=0)okB[id]=1});
   var by={};SHOP.forEach(function(it){if(!v201Sellable(it)||!okB[it[6].b]||(it[6].from&&wk<it[6].from))return;var c=v201Cat(it);if(c==="acc")return;(by[c]=by[c]||[]).push(it)});
@@ -57,6 +57,11 @@ function v201Vault(n){var wk=v201Sun(n==null?dropNow():n);if(V201VC[wk])return V
     [true,false].forEach(function(spread){L.forEach(function(it){if(got.length>=V201.perCat||got.indexOf(it)>=0)return;var b=it[6].b,p=prem(b);if(p&&pr>=1)return;if(spread&&br[b])return;got.push(it);br[b]=1;if(p)pr++})});
     got.forEach(function(it){keep[it[0]]=1;list.push([c,it[0],it[6].b])})});
   return V201VC[wk]={wk:wk,until:ymdAdd(wk,7),keep:keep,list:list,prem:P}}
+/* QA 11-27: a brand held mid-week (SØLVBERG, Cal 11-27) leaves the Vault that day, and only its pieces go: the week's draw stays
+   as it was (drawn with the holds as of the week's Sunday), so nothing else in a running Vault changes */
+function v201Vault(n){var V=v201VaultW(n),hd=dropYmd(n==null?dropNow():n),out={};
+  var list=V.list.filter(function(q){return !zxHeld(q[2],hd)});if(list.length===V.list.length)return V;
+  list.forEach(function(q){out[q[1]]=1});return Object.assign({},V,{list:list,keep:out})}
 /* the Shop's racks: a live brand shows its half; the Vault its own */
 var V201ON=0;
 var v201Groups=qsGroups;qsGroups=function(pick){var a=arguments;

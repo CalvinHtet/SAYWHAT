@@ -54,6 +54,8 @@ function roomAvail(i,r,T,list){
     if(elv&&elv-effLvl()>=2){avail.push('<div class="addon next mystery" aria-label="A mystery upgrade, unlocks at level '+e.lv+'"><b>? ? ?</b><small>A mystery upgrade</small><button class="btn ghost" disabled>Unlocks at level '+e.lv+'</button></div>');return}
     var blk=elv&&effLvl()<elv?'Reach level '+elv:e.also&&!(r.a&&r.a[e.also])?'Needs '+addonName(r,e.also):false&&!(S.cls||(S.gates&&S.gates.length>=e.adv))?'Needs a job advancement first':e.req&&!hasRoom(e.req)?'Build a '+ROOMT[e.req].name+' first':e.served&&S.base.served<e.served?'Dishes served: '+Math.floor(S.base.served):'';
     var tag=T.coin||T.food?(e.p?'<em class="uptag up">+'+Math.round(e.p*100)+'% '+(T.food?'produce':'income')+'</em>':'<em class="uptag">Looks only</em>'):e.xp?'<em class="uptag up">+'+e.xp+'% XP</em>':'';
+    /* Cal 11-27 (29zz_v223.js): every room upgrade adds a little XP */
+    if(e.rx)tag=tag.replace('<em class="uptag">Looks only</em>','')+'<em class="uptag up">+'+(Math.round(e.rx*100)/100||"<0.01")+'% XP</em>';
     /* Cal: a piece waiting on dishes shows how far along it is, with a bar and no total */
     if(e.served&&S.base.served<e.served)tag+='<i class="stybar"><i style="width:'+Math.round(100*Math.min(1,S.base.served/e.served))+'%"></i></i>';
     avail.push('<div class="addon next" data-aid="'+a[0]+'">'+(e.g?'<span class="label">'+esc(e.g)+'</span>':'')+'<b>'+esc(a[1])+'</b><small>'+esc(a[4])+'</small>'+tag+(blk?'<button class="btn ghost" disabled>'+esc(blk)+'</button>':'<button class="btn'+(S.coins<a[2]?' ghost':'')+'" data-act="raddon" data-i="'+i+'" data-id="'+a[0]+'">'+(S.coins<a[2]?price+' · need '+(a[2]-S.coins)+' more':price)+'</button>')+'</div>');
@@ -1158,7 +1160,7 @@ function mults(q,o){
 function payXp(q,r){r.hx=Math.max(1,Math.round(q.xp*r.m));r.xp=Math.ceil(r.hx*r.vb);r.cx=Math.max(1,Math.round(q.xp*(r.cm||1)));return r}
 
 var SAVEOK=0,SAVEERR="";function saveLbl(){/* the fast start: the device copy is on screen and the online save is on its way (QA: "this device only" read as not saving) */if(!loaded&&typeof FAST!=="undefined"&&FAST)return "syncing…";if(saveMode!=="cloud")return "this device only"+(window.__qbBootErr?" ("+String(window.__qbBootErr).replace(/[<>]/g,"").slice(0,80)+")":"");if(SAVEERR)return "NOT SAVING ("+SAVEERR+")";if(!SAVEOK)return "cloud save";var d=new Date(SAVEOK);return "saved "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}
-var DOC="player/state", ownerView=false, APPV=1940, saveMode="local", newerSeen=false, saveWarned=false;
+var DOC="player/state", ownerView=false, APPV=1950, saveMode="local", newerSeen=false, saveWarned=false;
 async function checkInbox(){
   if(!db||!ownerView||!loaded)return;
   try{var sn=await db.doc("inbox/owner").get();if(!sn.exists)return;var it=(sn.data().items)||[],n=0;if(!S.inbox||typeof S.inbox!=="object")S.inbox={};

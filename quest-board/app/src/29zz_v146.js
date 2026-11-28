@@ -50,13 +50,18 @@ function scGoldPiece(n){var lux=function(it){return clothTier(it[0])==="luxury"}
   if(!r)r=pick(pool.filter(function(it){return on(it,"street")&&!lux(it)}));
   return r}
 /* the six never scratched, filled in for the reveal */
-function scRest(){var a=[];for(var i=0;i<6;i++)a.push(scPick(SCMIX));return a}
+/* Cal 11-27: "There should be 3 of each logo. With this card, you can never get the 2000 bonus": the whole card always holds three
+   mascots, three orange and three cyan, so any three could have matched. The three scratched are rolled as before (the odds are
+   unchanged); the six left are whatever brings each logo to three, in a random order (a golden mascot counts as a mascot). */
+function scRest(out){var need={m:3,o:3,c:3},a=[];(out||[]).forEach(function(q){need[scBase(q)]--});
+  Object.keys(need).forEach(function(k){for(var i=0;i<need[k];i++)a.push(k)});
+  for(var j=a.length-1;j>0;j--){var r=Math.floor(Math.random()*(j+1)),t=a[j];a[j]=a[r];a[r]=t}return a}
 function scPay(c){var o=c.out,B=o.map(scBase),match=B[0]===B[1]&&B[1]===B[2],k=B[0],gold=o.filter(function(q){return q==="g"}).length,extra="";
   var coins=match?SCPRIZE[k]:B.reduce(function(a,q){return a+SCVAL[q]},0);
   if(gold){var g=null;try{g=scGoldPiece(gold)}catch(e){}
     if(g){var it=g.it,br=BRANDS.filter(function(x){return x.id===it[6].b})[0];S.owned[it[0]]=true;c.item=it[0];c.itemFl=g.fl;
       extra=" and "+SCGOLD[gold][1]+": "+it[2]+(br?" from "+br.name:"")+(hasRoom("closet")?" (in your Closet)":" (saved for later)")}}
-  S.coins+=coins;S.earnedC+=coins;c.done=1;c.win=match?k:"";c.gold=gold;c.coins=coins;c.rest=scRest();
+  S.coins+=coins;S.earnedC+=coins;c.done=1;c.win=match?k:"";c.gold=gold;c.coins=coins;c.rest=scRest(c.out);
   c.res=(match?SCNAME[k]+": ":"")+coins.toLocaleString()+" coins"+extra;S.wheel=today();S.wheelRes=c.res;S.wheelAt=Date.now();
   persist();return c}
 function scScratch(i){var c=scState();if(c.done||scTasks()<SCNEED||c.pick.indexOf(i)>=0||c.pick.length>=3||i<0||i>8)return;

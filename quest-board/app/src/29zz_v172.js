@@ -29,7 +29,9 @@ function v72Run(k){var key=v72Key();if(!V72C||V72C.key!==key){
     var ok=function(id){return !isLive[id]&&!(since[id]!=null&&at-since[id]<V72.cool)};
     var take=function(w){var fr=pool(w);if(!fr.length)return null;var bag=C.bag[w],el=bag.filter(function(id){return fr.indexOf(id)>=0&&ok(id)});
       if(!el.length){C.bag[w]=bag=bag.concat(dropShuffle(fr.filter(function(id){return bag.indexOf(id)<0}),V72.seed+"|"+w+"|"+(C.r[w]++)));el=bag.filter(function(id){return fr.indexOf(id)>=0&&ok(id)})}
-      if(!el.length)el=fr.filter(ok);if(!el.length)return null;var id=el[0],i=bag.indexOf(id);if(i>=0)bag.splice(i,1);return id};
+      if(!el.length)el=fr.filter(ok);
+      /* QA LOW (11-27): with every Street brand cooling down, take one that is not live rather than a second pricier brand in a row */
+      if(!el.length&&w==="s")el=fr.filter(function(id){return !isLive[id]});if(!el.length)return null;var id=el[0],i=bag.indexOf(id);if(i>=0)bag.splice(i,1);return id};
     pick=take(want)||take(want==="p"?"s":"p");
     if(pick){live.push({id:pick,start:day});while(live.length>V72.live){var o=live.shift();left[o.id]=day;since[o.id]=at}}
     C.snap.push({live:live,left:left,since:since,pick:pick,day:day})}
