@@ -2316,5 +2316,20 @@
  },
  "y_flips": {
   "slot": "shoes"
+ },
+ "oc_round": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "oc_shield": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
+ },
+ "oc_square": {
+  "slot": "glasses",
+  "neutral": true,
+  "frontOnly": true
  }
 }
