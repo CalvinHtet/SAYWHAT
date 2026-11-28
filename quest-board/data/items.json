@@ -2495,5 +2495,15 @@
  "oc_crop": {
   "slot": "top",
   "bare": true
+ },
+ "oc_short": {
+  "slot": "pants"
+ },
+ "oc_carpenter": {
+  "slot": "pants",
+  "wide": true
+ },
+ "oc_cargo": {
+  "slot": "pants"
  }
 }
