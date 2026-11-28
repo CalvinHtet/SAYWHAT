@@ -2654,5 +2654,14 @@
  },
  "o_vest": {
   "slot": "top"
+ },
+ "o_anorak": {
+  "slot": "top"
+ },
+ "o_short": {
+  "slot": "pants"
+ },
+ "o_jogger": {
+  "slot": "pants"
  }
 }
