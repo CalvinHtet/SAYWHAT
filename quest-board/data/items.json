@@ -2217,5 +2217,17 @@
  },
  "nc_chukka": {
   "slot": "shoes"
+ },
+ "nc_satinshort": {
+  "slot": "pants"
+ },
+ "nc_flares": {
+  "slot": "pants"
+ },
+ "nc_mules": {
+  "slot": "shoes"
+ },
+ "nc_platform": {
+  "slot": "shoes"
  }
 }
