@@ -412,7 +412,7 @@ var EXTRA_ITEMS=[
  ["gx_oc_short","a_pants","Splatter Work Shorts",1300,1,"Cream canvas, cuffed hem, indigo and cadmium drips.",{gar:"oc_short",b:"oc",from:"2026-12-02"}],
  ["gx_oc_carpenter","a_pants","Indigo Carpenter Jeans",1500,1,"Baggy raw indigo, hammer loop, cream splatter.",{gar:"oc_carpenter",b:"oc",from:"2026-12-02"}],
  ["gx_oc_cargo","a_pants","Gesso Cargo Pants",1500,1,"Charcoal cargos, gesso-dipped knees, cadmium flaps.",{gar:"oc_cargo",b:"oc",from:"2026-12-02"}],
- ["gx_oc_jogger","a_pants","Brushstroke Joggers",1400,1,"Charcoal joggers, one cream brush stroke down the leg.",{gar:"oc_jogger",b:"oc",from:"2026-12-02"}],
+ ["gx_oc_jogger","a_pants","Brushstroke Joggers",1400,1,"Charcoal joggers, a long cream brush stroke down one leg.",{gar:"oc_jogger",b:"oc",from:"2026-12-02"}],
  ["gx_oc_mini","a_pants","Canvas Cargo Mini",1400,1,"Cream canvas, indigo flap pockets, cadmium drips.",{gar:"oc_mini",b:"oc",fo:1,from:"2026-12-02"}],
  ["gx_oc_boot","a_shoes","Gesso Studio Boots",1700,1,"Cream canvas lace-ups crusted in gesso, cadmium flecks.",{gar:"oc_boot",b:"oc"}],
  ["gx_oc_derby","a_shoes","Splatter Suede Derbies",1600,1,"Indigo suede, cream splatter, cadmium-red laces.",{gar:"oc_derby",b:"oc"}],
