@@ -2350,5 +2350,19 @@
   "slot": "mask",
   "frontOnly": true,
   "neutral": true
+ },
+ "oc_smear": {
+  "slot": "mask",
+  "frontOnly": true,
+  "neutral": true
+ },
+ "oc_chain": {
+  "slot": "neck"
+ },
+ "oc_bandana": {
+  "slot": "neck"
+ },
+ "oc_tube": {
+  "slot": "neck"
  }
 }
